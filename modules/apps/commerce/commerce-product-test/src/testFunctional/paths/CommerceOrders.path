@@ -276,6 +276,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_SHIPMENT_FROM_LIST</td>
+	<td>//a[contains(@href,'${currentShipmentId}') and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_ORDER_FROM_LIST</td>
 	<td>//a[contains(@href,'${currentOrderId}') and contains(.,'View')]</td>
 	<td></td>

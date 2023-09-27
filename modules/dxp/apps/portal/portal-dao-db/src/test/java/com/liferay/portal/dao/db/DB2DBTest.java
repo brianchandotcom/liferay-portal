@@ -1,19 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -48,15 +40,26 @@ public class DB2DBTest extends BaseDBTestCase {
 	public void testRewordAlterColumnType() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName set data type " +
-				"varchar(75);\n",
+				"varchar(75);alter table DLFolder alter column userName drop " +
+					"default;\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75);"));
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeBigDecimal() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder alter column userId set data type " +
+				"decimal(30, 16);alter table DLFolder alter column userId " +
+					"drop default;\n",
+			buildSQL("alter_column_type DLFolder userId BIGDECIMAL;"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeNoSemicolon() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName set data type " +
-				"varchar(75);\n",
+				"varchar(75);alter table DLFolder alter column userName drop " +
+					"default;\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75)"));
 	}
 
@@ -64,9 +67,23 @@ public class DB2DBTest extends BaseDBTestCase {
 	public void testRewordAlterColumnTypeNotNull() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName set data type " +
-				"varchar(75);\n",
+				"varchar(75);alter table DLFolder alter column userName drop " +
+					"default;\n",
 			buildSQL(
 				"alter_column_type DLFolder userName VARCHAR(75) not null;"));
+		Assert.assertEquals(
+			"alter table DLFolder alter column userName set not null;",
+			_nullableAlter);
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeNotNullUpperCase() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder alter column userName set data type " +
+				"varchar(75);alter table DLFolder alter column userName drop " +
+					"default;\n",
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) NOT NULL;"));
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName set not null;",
 			_nullableAlter);
@@ -76,10 +93,38 @@ public class DB2DBTest extends BaseDBTestCase {
 	public void testRewordAlterColumnTypeNull() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName set data type " +
-				"varchar(75);\n",
+				"varchar(75);alter table DLFolder alter column userName drop " +
+					"default;\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75) null;"));
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName drop not null;",
+			_nullableAlter);
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeNullUpperCase() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder alter column userName set data type " +
+				"varchar(75);alter table DLFolder alter column userName drop " +
+					"default;\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75) NULL;"));
+		Assert.assertEquals(
+			"alter table DLFolder alter column userName drop not null;",
+			_nullableAlter);
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeWithDefault() throws Exception {
+		Assert.assertEquals(
+			StringBundler.concat(
+				"alter table DLFolder alter column userName set data type ",
+				"varchar(75);alter table DLFolder alter column userName set ",
+				"default 'test test';\n"),
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) default " +
+					"'test test' not null;"));
+		Assert.assertEquals(
+			"alter table DLFolder alter column userName set not null;",
 			_nullableAlter);
 	}
 

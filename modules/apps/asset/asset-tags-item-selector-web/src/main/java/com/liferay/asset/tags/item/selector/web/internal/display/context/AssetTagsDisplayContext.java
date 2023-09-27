@@ -1,27 +1,22 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.asset.tags.item.selector.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetTagServiceUtil;
+import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.web.internal.search.EntriesChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import javax.portlet.PortletURL;
@@ -37,10 +32,13 @@ public class AssetTagsDisplayContext {
 
 	public AssetTagsDisplayContext(
 		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion,
+		AssetTagService assetTagService, GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_assetTagsItemSelectorCriterion = assetTagsItemSelectorCriterion;
+		_assetTagService = assetTagService;
+		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_renderRequest = renderRequest;
@@ -70,12 +68,11 @@ public class AssetTagsDisplayContext {
 		tagsSearchContainer.setOrderByType(orderByType);
 
 		tagsSearchContainer.setResultsAndTotal(
-			() -> AssetTagServiceUtil.getTags(
-				_assetTagsItemSelectorCriterion.getGroupIds(), _getKeywords(),
-				tagsSearchContainer.getStart(), tagsSearchContainer.getEnd(),
+			() -> _assetTagService.getTags(
+				_getGroupIds(), _getKeywords(), tagsSearchContainer.getStart(),
+				tagsSearchContainer.getEnd(),
 				tagsSearchContainer.getOrderByComparator()),
-			AssetTagServiceUtil.getTagsCount(
-				_assetTagsItemSelectorCriterion.getGroupIds(), _getKeywords()));
+			_assetTagService.getTagsCount(_getGroupIds(), _getKeywords()));
 
 		if (_assetTagsItemSelectorCriterion.isMultiSelection()) {
 			String[] selectedTagNames = StringUtil.split(
@@ -88,6 +85,27 @@ public class AssetTagsDisplayContext {
 		_tagsSearchContainer = tagsSearchContainer;
 
 		return _tagsSearchContainer;
+	}
+
+	private long[] _getGroupIds() {
+		if (_groupIds != null) {
+			return _groupIds;
+		}
+
+		if (_assetTagsItemSelectorCriterion.isAllGroupIds()) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_groupIds = ArrayUtil.toLongArray(
+				_groupLocalService.getGroupIds(
+					themeDisplay.getCompanyId(), true));
+		}
+		else {
+			_groupIds = _assetTagsItemSelectorCriterion.getGroupIds();
+		}
+
+		return _groupIds;
 	}
 
 	private String _getKeywords() {
@@ -110,8 +128,11 @@ public class AssetTagsDisplayContext {
 		return _orderByType;
 	}
 
+	private final AssetTagService _assetTagService;
 	private final AssetTagsItemSelectorCriterion
 		_assetTagsItemSelectorCriterion;
+	private long[] _groupIds;
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByType;

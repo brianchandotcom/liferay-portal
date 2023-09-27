@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
@@ -34,7 +25,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
@@ -43,7 +33,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -54,7 +44,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.internal.blueprint.parameter.BooleanArraySXPParameter;
@@ -98,8 +87,8 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetTagLocalService assetTagLocalService,
 		ExpandoColumnLocalService expandoColumnLocalService,
-		ExpandoValueLocalService expandoValueLocalService, Language language,
-		Portal portal, RoleLocalService roleLocalService,
+		ExpandoValueLocalService expandoValueLocalService,
+		GroupLocalService groupLocalService, Language language, Portal portal,
 		SegmentsEntryRetriever segmentsEntryRetriever,
 		UserGroupGroupRoleLocalService userGroupGroupRoleLocalService,
 		UserGroupLocalService userGroupLocalService,
@@ -110,9 +99,9 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 		_assetTagLocalService = assetTagLocalService;
 		_expandoColumnLocalService = expandoColumnLocalService;
 		_expandoValueLocalService = expandoValueLocalService;
+		_groupLocalService = groupLocalService;
 		_language = language;
 		_portal = portal;
-		_roleLocalService = roleLocalService;
 		_segmentsEntryRetriever = segmentsEntryRetriever;
 		_userGroupGroupRoleLocalService = userGroupGroupRoleLocalService;
 		_userGroupLocalService = userGroupLocalService;
@@ -272,7 +261,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				expandoColumn.getColumnId());
 
 			if (expandoValue == null) {
-				expandoValue = new ExpandoValueImpl();
+				expandoValue = _expandoValueLocalService.createExpandoValue(0);
 
 				expandoValue.setData(expandoColumn.getDefaultData());
 			}
@@ -612,21 +601,18 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 	}
 
 	private Long[] _getRegularRoleIds(User user) throws PortalException {
-		List<Long> roleIds = ListUtil.fromArray(user.getRoleIds());
+		long[] roleIds = user.getRoleIds();
 
 		List<UserGroup> userGroups = _userGroupLocalService.getUserUserGroups(
 			user.getUserId());
 
 		for (UserGroup userGroup : userGroups) {
-			List<Role> roles = _roleLocalService.getGroupRoles(
-				userGroup.getGroupId());
-
-			for (Role role : roles) {
-				roleIds.add(role.getRoleId());
-			}
+			roleIds = ArrayUtil.append(
+				roleIds,
+				_groupLocalService.getRolePrimaryKeys(userGroup.getGroupId()));
 		}
 
-		return roleIds.toArray(new Long[0]);
+		return ArrayUtil.toLongArray(roleIds);
 	}
 
 	private List<SXPParameterContributorDefinition>
@@ -820,9 +806,9 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 	private final AssetTagLocalService _assetTagLocalService;
 	private final ExpandoColumnLocalService _expandoColumnLocalService;
 	private final ExpandoValueLocalService _expandoValueLocalService;
+	private final GroupLocalService _groupLocalService;
 	private final Language _language;
 	private final Portal _portal;
-	private final RoleLocalService _roleLocalService;
 	private final SegmentsEntryRetriever _segmentsEntryRetriever;
 	private final UserGroupGroupRoleLocalService
 		_userGroupGroupRoleLocalService;

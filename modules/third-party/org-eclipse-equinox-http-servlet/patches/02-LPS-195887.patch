@@ -1,0 +1,961 @@
+diff --git a/org/eclipse/equinox/http/servlet/internal/HttpServiceRuntimeImpl.java b/org/eclipse/equinox/http/servlet/internal/HttpServiceRuntimeImpl.java
+index 6c572162d59cb..902dd361399d7 100644
+--- a/org/eclipse/equinox/http/servlet/internal/HttpServiceRuntimeImpl.java
++++ b/org/eclipse/equinox/http/servlet/internal/HttpServiceRuntimeImpl.java
+@@ -42,7 +42,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
+  */
+ public class HttpServiceRuntimeImpl
+ 	implements
+-		HttpServiceRuntime,
++		HttpServiceRuntime, HttpServletEndpointController,
+ 		ServiceTrackerCustomizer<ServletContextHelper, AtomicReference<ContextController>> {
+ 
+ 	public HttpServiceRuntimeImpl(
+@@ -54,7 +54,7 @@ public class HttpServiceRuntimeImpl
+ 
+ 		this.parentServletContext = parentServletContext;
+ 		this.attributes = attributes;
+-		this.targetFilter = "(" + Activator.UNIQUE_SERVICE_ID + "=" + attributes.get(Activator.UNIQUE_SERVICE_ID) + ")";  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
++		this.targetFilter = "(http.servlet.endpoint.id=" + attributes.get("http.servlet.endpoint.id") + ")";  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+ 
+ 		contextServiceTracker =
+ 			new ServiceTracker<ServletContextHelper, AtomicReference<ContextController>>(
+@@ -112,13 +112,9 @@ public class HttpServiceRuntimeImpl
+ 		}
+ 		catch (HttpWhiteboardFailureException hwfe) {
+ 			parentServletContext.log(hwfe.getMessage(), hwfe);
+-
+-			recordFailedServletContextDTO(serviceReference, contextName, contextPath, hwfe.getFailureReason());
+ 		}
+ 		catch (Exception e) {
+ 			parentServletContext.log(e.getMessage(), e);
+-
+-			recordFailedServletContextDTO(serviceReference, contextName, contextPath, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
+ 		}
+ 
+ 		return result;
+@@ -175,12 +171,6 @@ public class HttpServiceRuntimeImpl
+ 		controllerMap.clear();
+ 		registeredObjects.clear();
+ 
+-		failedFilterDTOs.clear();
+-		failedListenerDTOs.clear();
+-		failedResourceDTOs.clear();
+-		failedServletContextDTOs.clear();
+-		failedServletDTOs.clear();
+-
+ 		attributes = null;
+ 		trackingContext = null;
+ 		consumingContext = null;
+@@ -191,6 +181,16 @@ public class HttpServiceRuntimeImpl
+ 		contextPathCustomizerHolder = null;
+ 	}
+ 
++	@Override
++	public Collection<ContextController> getContextControllers() {
++		return controllerMap.values();
++	}
++
++	@Override
++	public DispatchTargets getDispatchTargets(String pathString) {
++		return getDispatchTargets(pathString, null);
++	}
++
+ 	public DispatchTargets getDispatchTargets(
+ 		String pathString, RequestInfoDTO requestInfoDTO) {
+ 
+@@ -250,11 +250,11 @@ public class HttpServiceRuntimeImpl
+ 		// TODO FailedErrorDTOs
+ 
+ 		runtimeDTO.failedErrorPageDTOs = null;
+-		runtimeDTO.failedFilterDTOs = getFailedFilterDTOs();
+-		runtimeDTO.failedListenerDTOs = getFailedListenerDTOs();
+-		runtimeDTO.failedResourceDTOs = getFailedResourceDTOs();
+-		runtimeDTO.failedServletContextDTOs = getFailedServletContextDTO();
+-		runtimeDTO.failedServletDTOs = getFailedServletDTOs();
++		runtimeDTO.failedFilterDTOs = null;
++		runtimeDTO.failedListenerDTOs = null;
++		runtimeDTO.failedResourceDTOs = null;
++		runtimeDTO.failedServletContextDTOs = null;
++		runtimeDTO.failedServletDTOs = null;
+ 		runtimeDTO.servletContextDTOs = getServletContextDTOs();
+ 
+ 		return runtimeDTO;
+@@ -321,7 +321,6 @@ public class HttpServiceRuntimeImpl
+ 			contextController.destroy();
+ 		}
+ 		controllerMap.remove(serviceReference);
+-		failedServletContextDTOs.remove(serviceReference);
+ 		trackingContext.ungetService(serviceReference);
+ 	}
+ 
+@@ -431,66 +430,6 @@ public class HttpServiceRuntimeImpl
+ 		return null;
+ 	}
+ 
+-	private FailedFilterDTO[] getFailedFilterDTOs() {
+-		Collection<FailedFilterDTO> ffDTOs = failedFilterDTOs.values();
+-
+-		List<FailedFilterDTO> copies = new ArrayList<FailedFilterDTO>();
+-
+-		for (FailedFilterDTO failedFilterDTO : ffDTOs) {
+-			copies.add(DTOUtil.clone(failedFilterDTO));
+-		}
+-
+-		return copies.toArray(new FailedFilterDTO[copies.size()]);
+-	}
+-
+-	private FailedListenerDTO[] getFailedListenerDTOs() {
+-		Collection<FailedListenerDTO> flDTOs = failedListenerDTOs.values();
+-
+-		List<FailedListenerDTO> copies = new ArrayList<FailedListenerDTO>();
+-
+-		for (FailedListenerDTO failedListenerDTO : flDTOs) {
+-			copies.add(DTOUtil.clone(failedListenerDTO));
+-		}
+-
+-		return copies.toArray(new FailedListenerDTO[copies.size()]);
+-	}
+-
+-	private FailedResourceDTO[] getFailedResourceDTOs() {
+-		Collection<FailedResourceDTO> frDTOs = failedResourceDTOs.values();
+-
+-		List<FailedResourceDTO> copies = new ArrayList<FailedResourceDTO>();
+-
+-		for (FailedResourceDTO failedResourceDTO : frDTOs) {
+-			copies.add(DTOUtil.clone(failedResourceDTO));
+-		}
+-
+-		return copies.toArray(new FailedResourceDTO[copies.size()]);
+-	}
+-
+-	private FailedServletContextDTO[] getFailedServletContextDTO() {
+-		Collection<FailedServletContextDTO> fscDTOs = failedServletContextDTOs.values();
+-
+-		List<FailedServletContextDTO> copies = new ArrayList<FailedServletContextDTO>();
+-
+-		for (FailedServletContextDTO failedServletContextDTO : fscDTOs) {
+-			copies.add(DTOUtil.clone(failedServletContextDTO));
+-		}
+-
+-		return copies.toArray(new FailedServletContextDTO[copies.size()]);
+-	}
+-
+-	private FailedServletDTO[] getFailedServletDTOs() {
+-		Collection<FailedServletDTO> fsDTOs = failedServletDTOs.values();
+-
+-		List<FailedServletDTO> copies = new ArrayList<FailedServletDTO>();
+-
+-		for (FailedServletDTO failedServletDTO : fsDTOs) {
+-			copies.add(DTOUtil.clone(failedServletDTO));
+-		}
+-
+-		return copies.toArray(new FailedServletDTO[copies.size()]);
+-	}
+-
+ 	private ServletContextDTO[] getServletContextDTOs() {
+ 		List<ServletContextDTO> servletContextDTOs = new ArrayList<ServletContextDTO>();
+ 
+@@ -873,95 +812,6 @@ public class HttpServiceRuntimeImpl
+ 		}
+ 	}
+ 
+-	public void recordFailedFilterDTO(
+-		ServiceReference<Filter> serviceReference,
+-		FailedFilterDTO failedFilterDTO) {
+-
+-		if (failedFilterDTOs.containsKey(serviceReference)) {
+-			return;
+-		}
+-
+-		failedFilterDTOs.put(serviceReference, failedFilterDTO);
+-	}
+-
+-	public void recordFailedListenerDTO(
+-		ServiceReference<EventListener> serviceReference,
+-		FailedListenerDTO failedListenerDTO) {
+-
+-		if (failedListenerDTOs.containsKey(serviceReference)) {
+-			return;
+-		}
+-
+-		failedListenerDTOs.put(serviceReference, failedListenerDTO);
+-	}
+-
+-	public void recordFailedResourceDTO(
+-		ServiceReference<Object> serviceReference, FailedResourceDTO failedResourceDTO) {
+-
+-		if (failedResourceDTOs.containsKey(serviceReference)) {
+-			return;
+-		}
+-
+-		failedResourceDTOs.put(serviceReference, failedResourceDTO);
+-	}
+-
+-	private void recordFailedServletContextDTO(
+-		ServiceReference<ServletContextHelper> serviceReference, String contextName,
+-		String contextPath, int failureReason) {
+-
+-		FailedServletContextDTO failedServletContextDTO = new FailedServletContextDTO();
+-
+-		failedServletContextDTO.attributes = Collections.emptyMap();
+-		failedServletContextDTO.contextPath = contextPath;
+-		failedServletContextDTO.errorPageDTOs = new ErrorPageDTO[0];
+-		failedServletContextDTO.failureReason = failureReason;
+-		failedServletContextDTO.filterDTOs = new FilterDTO[0];
+-		failedServletContextDTO.initParams = ServiceProperties.parseInitParams(
+-			serviceReference, HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX);
+-		failedServletContextDTO.listenerDTOs = new ListenerDTO[0];
+-		failedServletContextDTO.name = contextName;
+-		failedServletContextDTO.resourceDTOs = new ResourceDTO[0];
+-		failedServletContextDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
+-		failedServletContextDTO.servletDTOs = new ServletDTO[0];
+-
+-		failedServletContextDTOs.put(serviceReference, failedServletContextDTO);
+-	}
+-
+-	public void recordFailedServletDTO(
+-		ServiceReference<Servlet> serviceReference,
+-		FailedServletDTO failedServletDTO) {
+-
+-		if (failedServletDTOs.containsKey(serviceReference)) {
+-			return;
+-		}
+-
+-		failedServletDTOs.put(serviceReference, failedServletDTO);
+-	}
+-
+-	public void removeFailedFilterDTO(
+-		ServiceReference<Filter> serviceReference) {
+-
+-		failedFilterDTOs.remove(serviceReference);
+-	}
+-
+-	public void removeFailedListenerDTO(
+-		ServiceReference<EventListener> serviceReference) {
+-
+-		failedListenerDTOs.remove(serviceReference);
+-	}
+-
+-	public void removeFailedResourceDTO(
+-		ServiceReference<Object> serviceReference) {
+-
+-		failedResourceDTOs.remove(serviceReference);
+-	}
+-
+-	public void removeFailedServletDTOs(
+-		ServiceReference<Servlet> serviceReference) {
+-
+-		failedServletDTOs.remove(serviceReference);
+-	}
+-
+ 	public void fireSessionIdChanged(String oldSessionId) {
+ 		for (ContextController contextController : controllerMap.values()) {
+ 			contextController.fireSessionIdChanged(oldSessionId);
+@@ -989,17 +839,6 @@ public class HttpServiceRuntimeImpl
+ 	private ConcurrentMap<ServiceReference<ServletContextHelper>, ContextController> controllerMap =
+ 		new ConcurrentHashMap<ServiceReference<ServletContextHelper>, ContextController>();
+ 
+-	private final ConcurrentMap<ServiceReference<Filter>, FailedFilterDTO> failedFilterDTOs =
+-		new ConcurrentHashMap<ServiceReference<Filter>, FailedFilterDTO>();
+-	private final ConcurrentMap<ServiceReference<EventListener>, FailedListenerDTO> failedListenerDTOs =
+-		new ConcurrentHashMap<ServiceReference<EventListener>, FailedListenerDTO>();
+-	private final ConcurrentMap<ServiceReference<Object>, FailedResourceDTO> failedResourceDTOs =
+-		new ConcurrentHashMap<ServiceReference<Object>, FailedResourceDTO>();
+-	private final ConcurrentMap<ServiceReference<ServletContextHelper>, FailedServletContextDTO> failedServletContextDTOs =
+-		new ConcurrentHashMap<ServiceReference<ServletContextHelper>, FailedServletContextDTO>();
+-	private final ConcurrentMap<ServiceReference<Servlet>, FailedServletDTO> failedServletDTOs =
+-		new ConcurrentHashMap<ServiceReference<Servlet>, FailedServletDTO>();
+-
+ 	private AtomicLong legacyIdGenerator = new AtomicLong(0);
+ 
+ 	private Set<Object> registeredObjects = Collections.newSetFromMap(new ConcurrentHashMap<Object, Boolean>());
+@@ -1216,3 +1055,4 @@ public class HttpServiceRuntimeImpl
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/HttpServletEndpointController.java b/org/eclipse/equinox/http/servlet/internal/HttpServletEndpointController.java
+new file mode 100644
+index 0000000000000..187e959d4a977
+--- /dev/null
++++ b/org/eclipse/equinox/http/servlet/internal/HttpServletEndpointController.java
+@@ -0,0 +1,40 @@
++/**
++ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
++ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
++ */
++
++package org.eclipse.equinox.http.servlet.internal;
++
++import java.util.Collection;
++import java.util.List;
++import java.util.Set;
++
++import javax.servlet.ServletContext;
++
++import org.eclipse.equinox.http.servlet.internal.context.ContextController;
++import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
++
++import org.osgi.framework.ServiceReference;
++
++/**
++ * @author Dante Wang
++ */
++public interface HttpServletEndpointController {
++
++	public void destroy();
++
++	public Collection<ContextController> getContextControllers();
++
++	public DispatchTargets getDispatchTargets(String pathString);
++
++	public List<String> getHttpServiceEndpoints();
++
++	public ServletContext getParentServletContext();
++
++	public Set<Object> getRegisteredObjects();
++
++	public void log(String message, Throwable throwable);
++
++	public boolean matches(ServiceReference<?> serviceReference);
++
++}
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/context/ContextController.java b/org/eclipse/equinox/http/servlet/internal/context/ContextController.java
+index 3f4d0d4c7fffb..de9472db194fd 100644
+--- a/org/eclipse/equinox/http/servlet/internal/context/ContextController.java
++++ b/org/eclipse/equinox/http/servlet/internal/context/ContextController.java
+@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
+ import javax.servlet.*;
+ import javax.servlet.Filter;
+ import javax.servlet.http.*;
+-import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
++import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+ import org.eclipse.equinox.http.servlet.internal.customizer.*;
+ import org.eclipse.equinox.http.servlet.internal.error.*;
+ import org.eclipse.equinox.http.servlet.internal.registration.*;
+@@ -108,7 +108,7 @@ public class ContextController {
+ 	public ContextController(
+ 		BundleContext trackingContextParam, BundleContext consumingContext,
+ 		ServiceReference<ServletContextHelper> servletContextHelperRef,
+-		ProxyContext proxyContext, HttpServiceRuntimeImpl httpServiceRuntime,
++		ProxyContext proxyContext, HttpServletEndpointController httpServletEndpointController,
+ 		String contextName, String contextPath) {
+ 
+ 		validate(contextName, contextPath);
+@@ -118,7 +118,7 @@ public class ContextController {
+ 		long serviceId = (Long)servletContextHelperRef.getProperty(Constants.SERVICE_ID);
+ 
+ 		this.proxyContext = proxyContext;
+-		this.httpServiceRuntime = httpServiceRuntime;
++		this.httpServletEndpointController = httpServletEndpointController;
+ 		this.contextName = contextName;
+ 
+ 		if (contextPath.equals(Const.SLASH)) {
+@@ -137,52 +137,52 @@ public class ContextController {
+ 		servletContextListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
+ 			trackingContext, ServletContextListener.class.getName(),
+ 			new ContextListenerTrackerCustomizer(
+-				trackingContext, httpServiceRuntime, this));
++				trackingContext, httpServletEndpointController, this));
+ 
+ 		servletContextListenerServiceTracker.open();
+ 
+ 		servletContextAttributeListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
+ 			trackingContext, ServletContextAttributeListener.class.getName(),
+ 			new ContextListenerTrackerCustomizer(
+-				trackingContext, httpServiceRuntime, this));
++				trackingContext, httpServletEndpointController, this));
+ 
+ 		servletContextAttributeListenerServiceTracker.open();
+ 
+ 		servletRequestListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
+ 			trackingContext, ServletRequestListener.class.getName(),
+ 			new ContextListenerTrackerCustomizer(
+-				trackingContext, httpServiceRuntime, this));
++				trackingContext, httpServletEndpointController, this));
+ 
+ 		servletRequestListenerServiceTracker.open();
+ 
+ 		servletRequestAttributeListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
+ 			trackingContext, ServletRequestAttributeListener.class.getName(),
+ 			new ContextListenerTrackerCustomizer(
+-				trackingContext, httpServiceRuntime, this));
++				trackingContext, httpServletEndpointController, this));
+ 
+ 		servletRequestAttributeListenerServiceTracker.open();
+ 
+ 		httpSessionListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
+ 			trackingContext, HttpSessionListener.class.getName(),
+ 			new ContextListenerTrackerCustomizer(
+-				trackingContext, httpServiceRuntime, this));
++				trackingContext, httpServletEndpointController, this));
+ 
+ 		httpSessionListenerServiceTracker.open();
+ 
+ 		httpSessionAttributeListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
+ 			trackingContext, HttpSessionAttributeListener.class.getName(),
+ 			new ContextListenerTrackerCustomizer(
+-				trackingContext, httpServiceRuntime, this));
++				trackingContext, httpServletEndpointController, this));
+ 
+ 		httpSessionAttributeListenerServiceTracker.open();
+ 
+-		ServletContext servletContext = httpServiceRuntime.getParentServletContext();
++		ServletContext servletContext = httpServletEndpointController.getParentServletContext();
+ 
+ 		if ((servletContext.getMajorVersion() >= 3) && (servletContext.getMinorVersion() > 0)) {
+ 			httpSessionIdListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
+ 				trackingContext, HttpSessionIdListener.class.getName(),
+ 				new ContextListenerTrackerCustomizer(
+-					trackingContext, httpServiceRuntime, this));
++					trackingContext, httpServletEndpointController, this));
+ 
+ 			httpSessionIdListenerServiceTracker.open();
+ 		}
+@@ -193,21 +193,21 @@ public class ContextController {
+ 		filterServiceTracker = new ServiceTracker<Filter, AtomicReference<FilterRegistration>>(
+ 			trackingContext, Filter.class,
+ 			new ContextFilterTrackerCustomizer(
+-				trackingContext, httpServiceRuntime, this));
++				trackingContext, httpServletEndpointController, this));
+ 
+ 		filterServiceTracker.open();
+ 
+ 		servletServiceTracker =  new ServiceTracker<Servlet, AtomicReference<ServletRegistration>>(
+ 			trackingContext, Servlet.class,
+ 			new ContextServletTrackerCustomizer(
+-				trackingContext, httpServiceRuntime, this));
++				trackingContext, httpServletEndpointController, this));
+ 
+ 		servletServiceTracker.open();
+ 
+ 		resourceServiceTracker = new ServiceTracker<Object, AtomicReference<ResourceRegistration>>(
+ 			trackingContext, Object.class,
+ 			new ContextResourceTrackerCustomizer(
+-				trackingContext, httpServiceRuntime, this));
++				trackingContext, httpServletEndpointController, this));
+ 
+ 		resourceServiceTracker.open();
+ 	}
+@@ -223,7 +223,7 @@ public class ContextController {
+ 			if (filter == null) {
+ 				throw new IllegalArgumentException("Filter cannot be null");
+ 			}
+-			addedRegisteredObject = httpServiceRuntime.getRegisteredObjects().add(filter);
++			addedRegisteredObject = httpServletEndpointController.getRegisteredObjects().add(filter);
+ 			if (addedRegisteredObject) {
+ 				registration = doAddFilterRegistration(filterHolder, filterRef);
+ 			}
+@@ -231,7 +231,7 @@ public class ContextController {
+ 			if (registration == null) {
+ 				filterHolder.release();
+ 				if (addedRegisteredObject) {
+-					httpServiceRuntime.getRegisteredObjects().remove(filter);
++					httpServletEndpointController.getRegisteredObjects().remove(filter);
+ 				}
+ 			}
+ 		}
+@@ -483,7 +483,7 @@ public class ContextController {
+ 			if (servlet == null) {
+ 				throw new IllegalArgumentException("Servlet cannot be null");
+ 			}
+-			addedRegisteredObject = httpServiceRuntime.getRegisteredObjects().add(servlet);
++			addedRegisteredObject = httpServletEndpointController.getRegisteredObjects().add(servlet);
+ 			if (addedRegisteredObject) {
+ 				registration = doAddServletRegistration(servletHolder, servletRef);
+ 			}
+@@ -491,7 +491,7 @@ public class ContextController {
+ 			if (registration == null) {
+ 				servletHolder.release();
+ 				if (addedRegisteredObject) {
+-					httpServiceRuntime.getRegisteredObjects().remove(servlet);
++					httpServletEndpointController.getRegisteredObjects().remove(servlet);
+ 				}
+ 			}
+ 		}
+@@ -831,7 +831,7 @@ public class ContextController {
+ 	}
+ 
+ 	public String getFullContextPath() {
+-		List<String> endpoints = httpServiceRuntime.getHttpServiceEndpoints();
++		List<String> endpoints = httpServletEndpointController.getHttpServiceEndpoints();
+ 
+ 		if (endpoints.isEmpty()) {
+ 			return proxyContext.getServletPath().concat(contextPath);
+@@ -847,8 +847,8 @@ public class ContextController {
+ 		return defaultEndpoint + contextPath;
+ 	}
+ 
+-	public HttpServiceRuntimeImpl getHttpServiceRuntime() {
+-		return httpServiceRuntime;
++	public HttpServletEndpointController getHttpServletEndpointController() {
++		return httpServletEndpointController;
+ 	}
+ 
+ 	public Map<String, String> getInitParams() {
+@@ -895,12 +895,9 @@ public class ContextController {
+ 		}
+ 
+ 		if (contextSelector == null) {
+-			contextSelector = httpServiceRuntime.getDefaultContextSelectFilter(whiteBoardService);
+-			if (contextSelector == null) {
+-				contextSelector = "(" + //$NON-NLS-1$
+-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME + "=" //$NON-NLS-1$
+-					+ HttpWhiteboardConstants.HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME + ")"; //$NON-NLS-1$
+-			}
++			contextSelector = "(" + //$NON-NLS-1$
++				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME + "=" //$NON-NLS-1$
++				+ HttpWhiteboardConstants.HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME + ")"; //$NON-NLS-1$
+ 		}
+ 
+ 		if (contextSelector.startsWith(Const.OPEN_PAREN)) {
+@@ -1316,7 +1313,7 @@ public class ContextController {
+ 	private final Set<FilterRegistration> filterRegistrations = new ConcurrentSkipListSet<FilterRegistration>();
+ 	private final ConcurrentMap<String, HttpSessionAdaptor> activeSessions = new ConcurrentHashMap<String, HttpSessionAdaptor>();
+ 
+-	private final HttpServiceRuntimeImpl httpServiceRuntime;
++	private final HttpServletEndpointController httpServletEndpointController;
+ 	private final Set<ListenerRegistration> listenerRegistrations = new HashSet<ListenerRegistration>();
+ 	private final ProxyContext proxyContext;
+ 	private final ServiceReference<ServletContextHelper> servletContextHelperRef;
+diff --git a/org/eclipse/equinox/http/servlet/internal/customizer/ContextFilterTrackerCustomizer.java b/org/eclipse/equinox/http/servlet/internal/customizer/ContextFilterTrackerCustomizer.java
+index b2aa52673372d..183273ef9c39c 100644
+--- a/org/eclipse/equinox/http/servlet/internal/customizer/ContextFilterTrackerCustomizer.java
++++ b/org/eclipse/equinox/http/servlet/internal/customizer/ContextFilterTrackerCustomizer.java
+@@ -13,14 +13,12 @@ package org.eclipse.equinox.http.servlet.internal.customizer;
+ 
+ import java.util.concurrent.atomic.AtomicReference;
+ import javax.servlet.Filter;
+-import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
++
++import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+ import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+ import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
+ import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
+-import org.eclipse.equinox.http.servlet.internal.util.*;
+ import org.osgi.framework.*;
+-import org.osgi.service.http.runtime.dto.DTOConstants;
+-import org.osgi.service.http.runtime.dto.FailedFilterDTO;
+ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+ 
+ /**
+@@ -30,10 +28,10 @@ public class ContextFilterTrackerCustomizer
+ 	extends RegistrationServiceTrackerCustomizer<Filter, AtomicReference<FilterRegistration>> {
+ 
+ 	public ContextFilterTrackerCustomizer(
+-		BundleContext bundleContext, HttpServiceRuntimeImpl httpServiceRuntime,
++		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController,
+ 		ContextController contextController) {
+ 
+-		super(bundleContext, httpServiceRuntime);
++		super(bundleContext, httpServletEndpointController);
+ 
+ 		this.contextController = contextController;
+ 	}
+@@ -53,7 +51,7 @@ public class ContextFilterTrackerCustomizer
+ 			return null;
+ 		}
+ 
+-		if (!httpServiceRuntime.matches(serviceReference)) {
++		if (!httpServletEndpointController.matches(serviceReference)) {
+ 			return null;
+ 		}
+ 
+@@ -63,14 +61,10 @@ public class ContextFilterTrackerCustomizer
+ 			result.set(contextController.addFilterRegistration(serviceReference));
+ 		}
+ 		catch (HttpWhiteboardFailureException hwfe) {
+-			httpServiceRuntime.log(hwfe.getMessage(), hwfe);
+-
+-			recordFailedFilterDTO(serviceReference, hwfe.getFailureReason());
++			httpServletEndpointController.log(hwfe.getMessage(), hwfe);
+ 		}
+ 		catch (Exception e) {
+-			httpServiceRuntime.log(e.getMessage(), e);
+-
+-			recordFailedFilterDTO(serviceReference, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
++			httpServletEndpointController.log(e.getMessage(), e);
+ 		}
+ 
+ 		return result;
+@@ -95,35 +89,9 @@ public class ContextFilterTrackerCustomizer
+ 			// Destroy now ungets the object we are using
+ 			registration.destroy();
+ 		}
+-
+-		contextController.getHttpServiceRuntime().removeFailedFilterDTO(serviceReference);
+-	}
+-
+-	private void recordFailedFilterDTO(
+-		ServiceReference<Filter> serviceReference, int failureReason) {
+-
+-		FailedFilterDTO failedFilterDTO = new FailedFilterDTO();
+-
+-		failedFilterDTO.asyncSupported = BooleanPlus.from(
+-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED), false);
+-		failedFilterDTO.dispatcher = StringPlus.from(
+-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER)).toArray(new String[0]);
+-		failedFilterDTO.failureReason = failureReason;
+-		failedFilterDTO.initParams = ServiceProperties.parseInitParams(
+-			serviceReference, HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX);
+-		failedFilterDTO.name = (String)serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME);
+-		failedFilterDTO.patterns = StringPlus.from(
+-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN)).toArray(new String[0]);
+-		failedFilterDTO.regexs = StringPlus.from(
+-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_REGEX)).toArray(new String[0]);
+-		failedFilterDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
+-		failedFilterDTO.servletContextId = contextController.getServiceId();
+-		failedFilterDTO.servletNames = StringPlus.from(
+-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET)).toArray(new String[0]);
+-
+-		contextController.getHttpServiceRuntime().recordFailedFilterDTO(serviceReference, failedFilterDTO);
+ 	}
+ 
+ 	private ContextController contextController;
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/customizer/ContextListenerTrackerCustomizer.java b/org/eclipse/equinox/http/servlet/internal/customizer/ContextListenerTrackerCustomizer.java
+index 2c9e97d80f433..f10428f705e91 100644
+--- a/org/eclipse/equinox/http/servlet/internal/customizer/ContextListenerTrackerCustomizer.java
++++ b/org/eclipse/equinox/http/servlet/internal/customizer/ContextListenerTrackerCustomizer.java
+@@ -13,14 +13,13 @@ package org.eclipse.equinox.http.servlet.internal.customizer;
+ 
+ import java.util.EventListener;
+ import java.util.concurrent.atomic.AtomicReference;
+-import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
++
++import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+ import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+ import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
+ import org.eclipse.equinox.http.servlet.internal.registration.ListenerRegistration;
+-import org.eclipse.equinox.http.servlet.internal.util.StringPlus;
+ import org.osgi.framework.*;
+ import org.osgi.service.http.runtime.dto.DTOConstants;
+-import org.osgi.service.http.runtime.dto.FailedListenerDTO;
+ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+ 
+ /**
+@@ -30,10 +29,10 @@ public class ContextListenerTrackerCustomizer
+ 	extends RegistrationServiceTrackerCustomizer<EventListener,  AtomicReference<ListenerRegistration>> {
+ 
+ 	public ContextListenerTrackerCustomizer(
+-		BundleContext bundleContext, HttpServiceRuntimeImpl httpServiceRuntime,
++		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController,
+ 		ContextController contextController) {
+ 
+-		super(bundleContext, httpServiceRuntime);
++		super(bundleContext, httpServletEndpointController);
+ 
+ 		this.contextController = contextController;
+ 	}
+@@ -50,7 +49,7 @@ public class ContextListenerTrackerCustomizer
+ 			return null;
+ 		}
+ 
+-		if (!httpServiceRuntime.matches(serviceReference)) {
++		if (!httpServletEndpointController.matches(serviceReference)) {
+ 			return null;
+ 		}
+ 
+@@ -76,14 +75,10 @@ public class ContextListenerTrackerCustomizer
+ 			result.set(contextController.addListenerRegistration(serviceReference));
+ 		}
+ 		catch (HttpWhiteboardFailureException hwfe) {
+-			httpServiceRuntime.log(hwfe.getMessage(), hwfe);
+-
+-			recordFailedListenerDTO(serviceReference, hwfe.getFailureReason());
++			httpServletEndpointController.log(hwfe.getMessage(), hwfe);
+ 		}
+ 		catch (Exception e) {
+-			httpServiceRuntime.log(e.getMessage(), e);
+-
+-			recordFailedListenerDTO(serviceReference, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
++			httpServletEndpointController.log(e.getMessage(), e);
+ 		}
+ 
+ 		return result;
+@@ -108,24 +103,9 @@ public class ContextListenerTrackerCustomizer
+ 			// Destroy now ungets the object we are using
+ 			listenerRegistration.destroy();
+ 		}
+-
+-		contextController.getHttpServiceRuntime().removeFailedListenerDTO(serviceReference);
+-	}
+-
+-	private void recordFailedListenerDTO(
+-		ServiceReference<EventListener> serviceReference, int failureReason) {
+-
+-		FailedListenerDTO failedListenerDTO = new FailedListenerDTO();
+-
+-		failedListenerDTO.failureReason = failureReason;
+-		failedListenerDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
+-		failedListenerDTO.servletContextId = contextController.getServiceId();
+-		failedListenerDTO.types = StringPlus.from(
+-			serviceReference.getProperty(Constants.OBJECTCLASS)).toArray(new String[0]);
+-
+-		contextController.getHttpServiceRuntime().recordFailedListenerDTO(serviceReference, failedListenerDTO);
+ 	}
+ 
+ 	private ContextController contextController;
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/customizer/ContextResourceTrackerCustomizer.java b/org/eclipse/equinox/http/servlet/internal/customizer/ContextResourceTrackerCustomizer.java
+index 309cc8d745a75..c5a337db1a093 100644
+--- a/org/eclipse/equinox/http/servlet/internal/customizer/ContextResourceTrackerCustomizer.java
++++ b/org/eclipse/equinox/http/servlet/internal/customizer/ContextResourceTrackerCustomizer.java
+@@ -12,14 +12,12 @@
+ package org.eclipse.equinox.http.servlet.internal.customizer;
+ 
+ import java.util.concurrent.atomic.AtomicReference;
+-import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
++
++import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+ import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+ import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
+ import org.eclipse.equinox.http.servlet.internal.registration.ResourceRegistration;
+-import org.eclipse.equinox.http.servlet.internal.util.StringPlus;
+ import org.osgi.framework.*;
+-import org.osgi.service.http.runtime.dto.DTOConstants;
+-import org.osgi.service.http.runtime.dto.FailedResourceDTO;
+ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+ 
+ /**
+@@ -29,10 +27,10 @@ public class ContextResourceTrackerCustomizer
+ 	extends RegistrationServiceTrackerCustomizer<Object, AtomicReference<ResourceRegistration>> {
+ 
+ 	public ContextResourceTrackerCustomizer(
+-		BundleContext bundleContext, HttpServiceRuntimeImpl httpServiceRuntime,
++		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController,
+ 		ContextController contextController) {
+ 
+-		super(bundleContext, httpServiceRuntime);
++		super(bundleContext, httpServletEndpointController);
+ 
+ 		this.contextController = contextController;
+ 	}
+@@ -51,7 +49,7 @@ public class ContextResourceTrackerCustomizer
+ 			return null;
+ 		}
+ 
+-		if (!httpServiceRuntime.matches(serviceReference)) {
++		if (!httpServletEndpointController.matches(serviceReference)) {
+ 			return null;
+ 		}
+ 
+@@ -61,14 +59,10 @@ public class ContextResourceTrackerCustomizer
+ 			result.set(contextController.addResourceRegistration(serviceReference));
+ 		}
+ 		catch (HttpWhiteboardFailureException hwfe) {
+-			httpServiceRuntime.log(hwfe.getMessage(), hwfe);
+-
+-			recordFailedResourceDTO(serviceReference, hwfe.getFailureReason());
++			httpServletEndpointController.log(hwfe.getMessage(), hwfe);
+ 		}
+ 		catch (Exception e) {
+-			httpServiceRuntime.log(e.getMessage(), e);
+-
+-			recordFailedResourceDTO(serviceReference, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
++			httpServletEndpointController.log(e.getMessage(), e);
+ 		}
+ 
+ 		return result;
+@@ -93,25 +87,9 @@ public class ContextResourceTrackerCustomizer
+ 			// destroy will unget the service object we were using
+ 			registration.destroy();
+ 		}
+-
+-		contextController.getHttpServiceRuntime().removeFailedResourceDTO(serviceReference);
+-	}
+-
+-	private void recordFailedResourceDTO(
+-		ServiceReference<Object> serviceReference, int failureReason) {
+-
+-		FailedResourceDTO failedResourceDTO = new FailedResourceDTO();
+-
+-		failedResourceDTO.failureReason = failureReason;
+-		failedResourceDTO.patterns = StringPlus.from(
+-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN)).toArray(new String[0]);
+-		failedResourceDTO.prefix = (String)serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX);
+-		failedResourceDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
+-		failedResourceDTO.servletContextId = contextController.getServiceId();
+-
+-		contextController.getHttpServiceRuntime().recordFailedResourceDTO(serviceReference, failedResourceDTO);
+ 	}
+ 
+ 	private ContextController contextController;
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/customizer/ContextServletTrackerCustomizer.java b/org/eclipse/equinox/http/servlet/internal/customizer/ContextServletTrackerCustomizer.java
+index 634c4644220d1..6a0204d73a4d0 100644
+--- a/org/eclipse/equinox/http/servlet/internal/customizer/ContextServletTrackerCustomizer.java
++++ b/org/eclipse/equinox/http/servlet/internal/customizer/ContextServletTrackerCustomizer.java
+@@ -13,14 +13,12 @@ package org.eclipse.equinox.http.servlet.internal.customizer;
+ 
+ import java.util.concurrent.atomic.AtomicReference;
+ import javax.servlet.Servlet;
+-import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
++
++import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+ import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+ import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
+ import org.eclipse.equinox.http.servlet.internal.registration.ServletRegistration;
+-import org.eclipse.equinox.http.servlet.internal.util.*;
+ import org.osgi.framework.*;
+-import org.osgi.service.http.runtime.dto.DTOConstants;
+-import org.osgi.service.http.runtime.dto.FailedServletDTO;
+ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+ 
+ /**
+@@ -30,10 +28,10 @@ public class ContextServletTrackerCustomizer
+ 	extends RegistrationServiceTrackerCustomizer<Servlet, AtomicReference<ServletRegistration>> {
+ 
+ 	public ContextServletTrackerCustomizer(
+-		BundleContext bundleContext, HttpServiceRuntimeImpl httpServiceRuntime,
++		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController,
+ 		ContextController contextController) {
+ 
+-		super(bundleContext, httpServiceRuntime);
++		super(bundleContext, httpServletEndpointController);
+ 
+ 		this.contextController = contextController;
+ 	}
+@@ -53,7 +51,7 @@ public class ContextServletTrackerCustomizer
+ 			return null;
+ 		}
+ 
+-		if (!httpServiceRuntime.matches(serviceReference)) {
++		if (!httpServletEndpointController.matches(serviceReference)) {
+ 			return null;
+ 		}
+ 
+@@ -63,14 +61,10 @@ public class ContextServletTrackerCustomizer
+ 			result.set(contextController.addServletRegistration(serviceReference));
+ 		}
+ 		catch (HttpWhiteboardFailureException hwfe) {
+-			httpServiceRuntime.log(hwfe.getMessage(), hwfe);
+-
+-			recordFailedServletDTO(serviceReference, hwfe.getFailureReason());
++			httpServletEndpointController.log(hwfe.getMessage(), hwfe);
+ 		}
+ 		catch (Exception e) {
+-			httpServiceRuntime.log(e.getMessage(), e);
+-
+-			recordFailedServletDTO(serviceReference, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
++			httpServletEndpointController.log(e.getMessage(), e);
+ 		}
+ 
+ 		return result;
+@@ -95,30 +89,9 @@ public class ContextServletTrackerCustomizer
+ 			// destroy will unget the service object we were using
+ 			registration.destroy();
+ 		}
+-
+-		contextController.getHttpServiceRuntime().removeFailedServletDTOs(serviceReference);
+-	}
+-
+-	private void recordFailedServletDTO(
+-		ServiceReference<Servlet> serviceReference, int failureReason) {
+-
+-		FailedServletDTO failedServletDTO = new FailedServletDTO();
+-
+-		failedServletDTO.asyncSupported = BooleanPlus.from(
+-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED), false);
+-		failedServletDTO.failureReason = failureReason;
+-		failedServletDTO.initParams = ServiceProperties.parseInitParams(
+-			serviceReference, HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX);
+-		failedServletDTO.name = (String)serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME);
+-		failedServletDTO.patterns = StringPlus.from(
+-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN)).toArray(new String[0]);
+-		failedServletDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
+-		failedServletDTO.servletContextId = contextController.getServiceId();
+-		failedServletDTO.servletInfo = Const.BLANK;
+-
+-		contextController.getHttpServiceRuntime().recordFailedServletDTO(serviceReference, failedServletDTO);
+ 	}
+ 
+ 	private ContextController contextController;
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/customizer/RegistrationServiceTrackerCustomizer.java b/org/eclipse/equinox/http/servlet/internal/customizer/RegistrationServiceTrackerCustomizer.java
+index 4ea84a508c9c4..29e8e769378b5 100644
+--- a/org/eclipse/equinox/http/servlet/internal/customizer/RegistrationServiceTrackerCustomizer.java
++++ b/org/eclipse/equinox/http/servlet/internal/customizer/RegistrationServiceTrackerCustomizer.java
+@@ -11,7 +11,7 @@
+ 
+ package org.eclipse.equinox.http.servlet.internal.customizer;
+ 
+-import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
++import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+ import org.osgi.framework.BundleContext;
+ import org.osgi.util.tracker.ServiceTrackerCustomizer;
+ 
+@@ -22,13 +22,14 @@ public abstract class RegistrationServiceTrackerCustomizer<S, T>
+ 	implements ServiceTrackerCustomizer<S, T> {
+ 
+ 	public RegistrationServiceTrackerCustomizer(
+-		BundleContext bundleContext, HttpServiceRuntimeImpl httpServiceRuntime) {
++		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController) {
+ 
+ 		this.bundleContext = bundleContext;
+-		this.httpServiceRuntime = httpServiceRuntime;
++		this.httpServletEndpointController = httpServletEndpointController;
+ 	}
+ 
+ 	protected BundleContext bundleContext;
+-	protected HttpServiceRuntimeImpl httpServiceRuntime;
++	protected HttpServletEndpointController httpServletEndpointController;
+ 
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java b/org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java
+index c1be818880158..70754a28b7194 100644
+--- a/org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java
++++ b/org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java
+@@ -55,7 +55,7 @@ public abstract class EndpointRegistration<D extends DTO>
+ 			Thread.currentThread().setContextClassLoader(classLoader);
+ 
+ 			contextController.getEndpointRegistrations().remove(this);
+-			contextController.getHttpServiceRuntime().getRegisteredObjects().remove(this.getT());
++			contextController.getHttpServletEndpointController().getRegisteredObjects().remove(this.getT());
+ 			contextController.ungetServletContextHelper(servletHolder.getBundle());
+ 
+ 			super.destroy();
+@@ -187,3 +187,4 @@ public abstract class EndpointRegistration<D extends DTO>
+ 
+ 	private String _toString;
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java b/org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java
+index 43ad87c42dc78..4b6cc2b656344 100644
+--- a/org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java
++++ b/org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java
+@@ -91,7 +91,7 @@ public class FilterRegistration
+ 		ClassLoader original = Thread.currentThread().getContextClassLoader();
+ 		try {
+ 			Thread.currentThread().setContextClassLoader(classLoader);
+-			contextController.getHttpServiceRuntime().getRegisteredObjects().remove(this.getT());
++			contextController.getHttpServletEndpointController().getRegisteredObjects().remove(this.getT());
+ 			contextController.getFilterRegistrations().remove(this);
+ 			contextController.ungetServletContextHelper(filterHolder.getBundle());
+ 			super.destroy();
+@@ -271,3 +271,4 @@ public class FilterRegistration
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

@@ -1,12 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
@@ -82,6 +76,7 @@ function EditSXPBlueprintForm({
 	initialConfiguration = {},
 	initialDescription = '',
 	initialDescriptionI18n = {},
+	initialExternalReferenceCode,
 	initialSXPElementInstances = [],
 	initialTitle = '',
 	initialTitleI18n = {},
@@ -226,13 +221,15 @@ function EditSXPBlueprintForm({
 							formatLocaleWithUnderscores
 						),
 						elementInstances,
+						externalReferenceCode:
+							formik.values.externalReferenceCode,
 						title_i18n: renameKeys(
 							formik.values.title_i18n,
 							formatLocaleWithUnderscores
 						),
 					}),
 					headers: DEFAULT_HEADERS,
-					method: 'PATCH',
+					method: 'PUT',
 				}
 			).then((response) => {
 				if (!response.ok) {
@@ -396,6 +393,7 @@ function EditSXPBlueprintForm({
 					id: index,
 				})
 			),
+			externalReferenceCode: initialExternalReferenceCode,
 			frameworkConfig: initialConfiguration.generalConfiguration || {
 				clauseContributorsExcludes: [],
 				clauseContributorsIncludes: [],
@@ -589,32 +587,6 @@ function EditSXPBlueprintForm({
 		formik.setFieldValue('applyIndexerClauses', value);
 	};
 
-	const _handleChangeTab = (tab) => {
-		if (
-			tab !== 'query-builder' &&
-			(openSidebar === SIDEBAR_TYPES.CLAUSE_CONTRIBUTORS ||
-				openSidebar === SIDEBAR_TYPES.INDEXER_CLAUSES)
-		) {
-			setOpenSidebar('');
-		}
-
-		setTab(tab);
-	};
-
-	const _handleChangeTitleAndDescription = ({
-		description_i18n,
-		title_i18n,
-	}) => {
-		formik.setFieldValue('description_i18n', description_i18n);
-		formik.setFieldValue('title_i18n', title_i18n);
-
-		setIsTitleAndDescriptionEdited(true);
-	};
-
-	const _handleCloseSidebar = () => {
-		setOpenSidebar('');
-	};
-
 	const _handleDeleteSXPElement = (id) => {
 		const index = formik.values.elementInstances.findIndex(
 			(item) => item.id === id
@@ -637,6 +609,10 @@ function EditSXPBlueprintForm({
 		openSuccessToast({
 			message: Liferay.Language.get('element-removed'),
 		});
+	};
+
+	const _handleExternalReferenceCodeChange = (externalReferenceCode) => {
+		formik.setFieldValue('externalReferenceCode', externalReferenceCode);
 	};
 
 	/**
@@ -846,6 +822,10 @@ function EditSXPBlueprintForm({
 		[formik]
 	);
 
+	const _handleSidebarClose = () => {
+		setOpenSidebar('');
+	};
+
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 
@@ -858,6 +838,28 @@ function EditSXPBlueprintForm({
 				),
 			});
 		}
+	};
+
+	const _handleTabChange = (tab) => {
+		if (
+			tab !== 'query-builder' &&
+			(openSidebar === SIDEBAR_TYPES.CLAUSE_CONTRIBUTORS ||
+				openSidebar === SIDEBAR_TYPES.INDEXER_CLAUSES)
+		) {
+			setOpenSidebar('');
+		}
+
+		setTab(tab);
+	};
+
+	const _handleTitleAndDescriptionChange = ({
+		description_i18n,
+		title_i18n,
+	}) => {
+		formik.setFieldValue('description_i18n', description_i18n);
+		formik.setFieldValue('title_i18n', title_i18n);
+
+		setIsTitleAndDescriptionEdited(true);
 	};
 
 	const _handleToggleSidebar = (type) => () => {
@@ -899,7 +901,7 @@ function EditSXPBlueprintForm({
 						<AddSXPElementSidebar
 							isIndexCompany={_isIndexCompany()}
 							onAddSXPElement={_handleAddSXPElement}
-							onClose={_handleCloseSidebar}
+							onClose={_handleSidebarClose}
 							visible={
 								openSidebar === SIDEBAR_TYPES.ADD_SXP_ELEMENT
 							}
@@ -921,7 +923,7 @@ function EditSXPBlueprintForm({
 									value: queryPrefilterContributors,
 								},
 							]}
-							onClose={_handleCloseSidebar}
+							onClose={_handleSidebarClose}
 							onFetchContributors={() => {
 								refetchKeywordQueryContributors();
 								refetchModelPrefilterContributors();
@@ -938,7 +940,7 @@ function EditSXPBlueprintForm({
 
 						<Sidebar
 							className="info-sidebar"
-							onClose={_handleCloseSidebar}
+							onClose={_handleSidebarClose}
 							title={Liferay.Language.get(
 								'search-framework-indexer-clauses'
 							)}
@@ -1033,11 +1035,16 @@ function EditSXPBlueprintForm({
 			<PageToolbar
 				description={initialDescription}
 				descriptionI18n={formik.values.description_i18n}
+				entityId={sxpBlueprintId}
+				externalReferenceCode={formik.values.externalReferenceCode}
 				isSubmitting={formik.isSubmitting}
 				onCancel={redirectURL}
-				onChangeTab={_handleChangeTab}
+				onChangeTab={_handleTabChange}
+				onExternalReferenceCodeChange={
+					_handleExternalReferenceCodeChange
+				}
 				onSubmit={_handleSubmit}
-				onTitleAndDescriptionChange={_handleChangeTitleAndDescription}
+				onTitleAndDescriptionChange={_handleTitleAndDescriptionChange}
 				tab={tab}
 				tabs={TABS}
 				title={initialTitle}
@@ -1064,7 +1071,7 @@ function EditSXPBlueprintForm({
 				errors={previewInfo.results.errors}
 				hits={transformToSearchPreviewHits(previewInfo.results)}
 				loading={previewInfo.loading}
-				onClose={_handleCloseSidebar}
+				onClose={_handleSidebarClose}
 				onFetchCancel={_handleFetchPreviewCancel}
 				onFetchResults={_handleFetchPreviewSearch}
 				onFocusSXPElement={_handleFocusSXPElement}
@@ -1093,6 +1100,7 @@ EditSXPBlueprintForm.propTypes = {
 	initialSXPElementInstances: PropTypes.arrayOf(PropTypes.object),
 	initialTitle: PropTypes.string,
 	initialTitleI18n: PropTypes.object,
+	sxpBlueprintExternalReferenceCode: PropTypes.string,
 	sxpBlueprintId: PropTypes.string,
 };
 

@@ -71,33 +71,28 @@ definition {
 		task ("Go to the Requirements tab") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Cases");
+			Navigator.gotoNavTab(navTab = "Cases");
 
-			Testray.goToProjectPage(projectName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 
-			Testray.projectTabNavigator(navTabName = "Requirements");
+			Navigator.gotoNavTab(navTab = "Requirements");
 		}
 
 		task ("add a case to the requirement") {
-			TestrayRequirements.addRequirementCase(
+			Testray.selectCheckboxOptions(
 				buttonText = "Select Requirements",
-				caseName = "Requirement 1",
-				linkText = "Link Requirements");
-
-			TestrayRequirements.addRequirementCase(
-				buttonText = "Select Requirements",
-				caseName = "Requirement 2",
+				checkboxNameList = "Requirement 1,Requirement 2",
 				linkText = "Link Requirements");
 		}
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete case type and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "casetypes",
@@ -108,8 +103,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -118,99 +111,62 @@ definition {
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter case requirements by link"
 	@priority = 3
 	test AdminCanFilterCaseRequirementsByLink {
-		property test.liferay.virtual.instance = "false";
-
 		task ("When the user filter a case requirement by link") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Link",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "google");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Link",
+				inputValue = "google");
 		}
 
 		task ("Then can see the filters apply in the list by link") {
-			TestrayRequirements.verifyRequirement(
-				linkTitle = "The front page of the internet",
-				requirementComponent = "Component 1",
-				requirementSummary = "Requirement 1",
-				requirementTeam = "Team 1");
+			Testray.viewTableEntryList(listEntry = "The front page of the internet,Component 1,Requirement 1,Team 1");
 
-			Testray.assertItemNotPresent(key_name = "Requirement 2");
+			Testray.viewTableEntryListNotPresent(listEntry = "Requirement 2");
 		}
 	}
 
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter case requirements by summary"
 	@priority = 3
 	test AdminCanFilterCaseRequirementsBySummary {
-		property test.liferay.virtual.instance = "false";
-
 		task ("When the user filter a case requirement by summary") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Summary",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Requirement 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Summary",
+				inputValue = "Requirement 1");
 		}
 
 		task ("Then can see the filters apply in the list by summary") {
-			Testray.assertItemName(key_name = "Requirement 1");
+			Testray.viewTableEntryList(listEntry = "Requirement 1");
 
-			Testray.assertItemNotPresent(key_name = "Requirement 2");
+			Testray.viewTableEntryListNotPresent(listEntry = "Requirement 2");
 		}
 	}
 
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter case requirements using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterCaseRequirementsWithMultipleOptions {
-		property test.liferay.virtual.instance = "false";
-
 		task ("When the user filter a case requirement with multiple options") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Summary",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Requirement 1");
-
-			Type(
-				key_fieldLabel = "Link",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "google");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Summary",
+				inputValue = "Requirement 1");
 		}
 
 		task ("Then can see the multiple options in the table and do not see the requirement 2") {
-			TestrayRequirements.verifyRequirement(
-				linkTitle = "The front page of the internet",
-				requirementComponent = "Component 1",
-				requirementSummary = "Requirement 1",
-				requirementTeam = "Team 1");
+			Testray.viewTableEntryList(listEntry = "The front page of the internet,Component 1,Requirement 1,Team 1");
 
-			Testray.assertItemNotPresent(key_name = "Requirement 2");
+			Testray.viewTableEntryListNotPresent(listEntry = "Requirement 2");
 		}
 	}
 
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should not see case requirements that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanFilterForNonexistentCaseRequirements {
-		property test.liferay.virtual.instance = "false";
-
 		task ("When the user filters a case requirement by its non-existent name") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Summary",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Requirement 3");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Summary",
+				inputValue = "Requirement 3");
 		}
 
 		task ("Then can see message no results found") {
@@ -221,12 +177,10 @@ definition {
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
 	@priority = 2
 	test AdminCanFilterOptionsToFilter {
-		property test.liferay.virtual.instance = "false";
-
 		task ("When the user search field called link") {
 			TestrayFilter.clickFilter();
 
-			TestrayFilter.searchFilter(value = "Link");
+			TestrayFilter.searchFilter(filterName = "Link");
 		}
 
 		task ("Then can see the field called link and do not see the field key") {

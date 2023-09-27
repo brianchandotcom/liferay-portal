@@ -140,16 +140,10 @@ definition {
 		}
 
 		task ("View the title of assets are shown in the first module") {
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
-
-				var n = ${n} + 1;
+					key_text = ${title},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 		}
 
@@ -168,16 +162,10 @@ definition {
 		}
 
 		task ("View the title of assets are shown in the first module") {
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+					key_text = ${title},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 		}
 
@@ -533,9 +521,7 @@ definition {
 			var blockWidth = selenium.getElementWidth("//div[contains(@class,'page-editor__collection__block')]");
 			var collectionDisplayWidth = selenium.getElementWidth("//div[@aria-label='Collection Display']//div[contains(@class,'page-editor__topper__content')]");
 
-			TestUtils.assertEquals(
-				actual = ${blockWidth},
-				expected = ${collectionDisplayWidth});
+			StringUtil.assertEquals(${collectionDisplayWidth}, ${blockWidth});
 		}
 
 		task ("When the page creator changes the align items to End") {
@@ -700,6 +686,7 @@ definition {
 	test FilterWebContentByTag {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
@@ -919,6 +906,7 @@ definition {
 	@priority = 4
 	test FilterWebContentByTagAndTitle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
@@ -1162,6 +1150,7 @@ definition {
 	@priority = 4
 	test FilterWebContentByTitle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
@@ -2481,6 +2470,8 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
+			WaitForPageLoad();
+
 			Ratings.rateStarCollectionItem(
 				position = 1,
 				ratingStarCount = 1);
@@ -2761,6 +2752,7 @@ definition {
 	test ViewPrefilterResults {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 

@@ -13,7 +13,7 @@
 		<field name="logTypeSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="quantity" type="int" />
+		<field name="quantity" type="BigDecimal" />
 		<field name="sku" type="String" />
 		<field name="unitOfMeasureKey" type="String" />
 	</model>
@@ -27,7 +27,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="bookedNote" type="String" />
 		<field name="expirationDate" type="Date" />
-		<field name="quantity" type="int" />
+		<field name="quantity" type="BigDecimal" />
 		<field name="sku" type="String" />
 		<field name="unitOfMeasureKey" type="String" />
 	</model>
@@ -43,7 +43,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceInventoryWarehouseId" type="long" />
 		<field name="availabilityDate" type="Date" />
-		<field name="quantity" type="int" />
+		<field name="quantity" type="BigDecimal" />
 		<field name="sku" type="String" />
 		<field name="unitOfMeasureKey" type="String" />
 	</model>
@@ -82,8 +82,8 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceInventoryWarehouseId" type="long" />
-		<field name="quantity" type="int" />
-		<field name="reservedQuantity" type="int" />
+		<field name="quantity" type="BigDecimal" />
+		<field name="reservedQuantity" type="BigDecimal" />
 		<field name="sku" type="String" />
 		<field name="unitOfMeasureKey" type="String" />
 	</model>

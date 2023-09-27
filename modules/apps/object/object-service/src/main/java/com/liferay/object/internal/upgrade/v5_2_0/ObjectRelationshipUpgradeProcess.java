@@ -1,21 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.internal.upgrade.v5_2_0;
 
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
@@ -31,19 +23,26 @@ public class ObjectRelationshipUpgradeProcess extends UpgradeProcess {
 		DBInspector dbInspector = new DBInspector(connection);
 
 		processConcurrently(
-			StringBundler.concat(
-				"select ObjectDefinition.pkObjectFieldDBColumnName, ",
-				"ObjectRelationship.dbTableName from ObjectDefinition inner ",
-				"join ObjectRelationship on ObjectRelationship.type_ = '",
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, "' where ",
-				"ObjectDefinition.objectDefinitionId = ",
-				"ObjectRelationship.objectDefinitionId1"),
+			SQLTransformer.transform(
+				StringBundler.concat(
+					"select distinct ",
+					"ObjectDefinition.pkObjectFieldDBColumnName, ",
+					"ObjectRelationship.dbTableName, ",
+					"ObjectRelationship.objectDefinitionId1, ",
+					"ObjectRelationship.objectDefinitionId2 from ",
+					"ObjectDefinition inner join ObjectRelationship on ",
+					"ObjectRelationship.type_ = '",
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY, "' where ",
+					"ObjectDefinition.objectDefinitionId = ",
+					"ObjectRelationship.objectDefinitionId1 and ",
+					"ObjectDefinition.active_ = [$TRUE$]")),
 			resultSet -> new Object[] {
-				resultSet.getString(1), resultSet.getString(2)
+				resultSet.getString(1), resultSet.getString(2),
+				resultSet.getLong(3), resultSet.getLong(4)
 			},
 			values -> _createIndex(
 				String.valueOf(values[0]), dbInspector,
-				String.valueOf(values[1])),
+				String.valueOf(values[1]), (long)values[2], (long)values[3]),
 			null);
 	}
 
@@ -57,6 +56,20 @@ public class ObjectRelationshipUpgradeProcess extends UpgradeProcess {
 
 		if (!dbInspector.hasIndex(tableName, indexMetadata.getIndexName())) {
 			runSQL(indexMetadata.getCreateSQL(null));
+		}
+	}
+
+	private void _createIndex(
+			String columnName, DBInspector dbInspector, String tableName,
+			long objectDefinitionId1, long objectDefinitionId2)
+		throws Exception {
+
+		if (objectDefinitionId1 != objectDefinitionId2) {
+			_createIndex(columnName, dbInspector, tableName);
+		}
+		else {
+			_createIndex(columnName.concat("1"), dbInspector, tableName);
+			_createIndex(columnName.concat("2"), dbInspector, tableName);
 		}
 	}
 

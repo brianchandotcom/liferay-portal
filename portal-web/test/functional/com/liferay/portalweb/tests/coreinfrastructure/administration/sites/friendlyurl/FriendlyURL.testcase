@@ -30,8 +30,9 @@ definition {
 	@description = "If virtual.hosts.strict.access=true is set, do not redirect to a default instance if there is no associated company"
 	@priority = 4
 	test DoNotRedirectToDefaultInstanceWithNoCompany {
-		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com${line.separator}virtual.hosts.strict.access=true";
+		property custom.properties = "virtual.hosts.strict.access=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -57,6 +58,7 @@ definition {
 	test RedirectToDefaultInstanceWithNoCompany {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(
 			baseURL = "http://www.able.com:8080",
@@ -76,6 +78,7 @@ definition {
 	test RedirectToLocalizedFriendlyURLWithVirtualHost {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given two pages on a site") {
 			JSONLayout.addPublicLayout(
@@ -153,6 +156,7 @@ definition {
 	@priority = 3
 	test UppercaseVirtualHostNamesConvertedToLowercase {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When an uppercase virtual host is added to a site url") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
@@ -199,7 +203,7 @@ definition {
 
 		Type(
 			inputFieldId = "friendlyURL",
-			locator1 = "TextInput#INPUT_ID",
+			locator1 = "TextInput#TEXT_INPUT_ID",
 			value1 = "/teszt-page");
 
 		Button.clickSave();
@@ -237,6 +241,7 @@ definition {
 	test ViewFriendlyURLWithSharedLocalesButDifferentLanguages {
 		property custom.properties = "locale.prepend.friendly.url.style=2${line.separator}locales.enabled=en_US,fr_FR,fr_CA";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var siteName : list "USA Site Name,France Site Name,Canada Site Name") {
 			HeadlessSite.addSite(siteName = ${siteName});
@@ -340,7 +345,7 @@ definition {
 			ContentPages.viewFragmentImage(
 				fragmentName = "image",
 				id = "image-square",
-				image = "tree.png");
+				image = "tree-png");
 		}
 
 		task ("Change the locale to Chinese") {
@@ -358,7 +363,7 @@ definition {
 			ContentPages.viewFragmentImage(
 				fragmentName = "image",
 				id = "image-square",
-				image = "tree.png");
+				image = "tree-png");
 		}
 
 		task ("Change the locale to Portuguese") {
@@ -376,7 +381,7 @@ definition {
 			ContentPages.viewFragmentImage(
 				fragmentName = "image",
 				id = "image-square",
-				image = "tree.png");
+				image = "tree-png");
 		}
 
 		task ("Change the locale to French") {
@@ -394,7 +399,7 @@ definition {
 			ContentPages.viewFragmentImage(
 				fragmentName = "image",
 				id = "image-square",
-				image = "tree.png");
+				image = "tree-png");
 		}
 
 		task ("Change the locale to English") {

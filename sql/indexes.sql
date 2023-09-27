@@ -61,14 +61,6 @@ create index IX_5B55565F on AssetEntry (layoutUuid[$COLUMN_LENGTH:75$], ctCollec
 create index IX_788964E3 on AssetEntry (publishDate, ctCollectionId);
 create index IX_5B6AC3B8 on AssetEntry (visible, ctCollectionId);
 
-create index IX_5D969E8E on AssetLink (ctCollectionId);
-create index IX_9BB95D26 on AssetLink (entryId1, ctCollectionId);
-create index IX_97B1F7F on AssetLink (entryId1, entryId2, ctCollectionId);
-create unique index IX_7FC555F2 on AssetLink (entryId1, entryId2, type_, ctCollectionId);
-create index IX_F75CBE6B on AssetLink (entryId1, type_, ctCollectionId);
-create index IX_6963BEE7 on AssetLink (entryId2, ctCollectionId);
-create index IX_F936118A on AssetLink (entryId2, type_, ctCollectionId);
-
 create index IX_E534924E on AssetTag (ctCollectionId);
 create index IX_24286918 on AssetTag (groupId, ctCollectionId);
 create unique index IX_AA52E757 on AssetTag (groupId, name[$COLUMN_LENGTH:75$], ctCollectionId);

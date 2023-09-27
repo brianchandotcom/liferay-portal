@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {fetch, navigate, openToast, sub} from 'frontend-js-web';
@@ -86,6 +77,14 @@ export function Editor({autocompleteData, initialScript, mode}) {
 	}, [initialScript, portletNamespace]);
 
 	useEffect(() => {
+		const saveAndContinueButton = document.getElementById(
+			`${portletNamespace}saveAndContinueButton`
+		);
+
+		const saveButton = document.getElementById(
+			`${portletNamespace}saveButton`
+		);
+
 		const saveTemplate = (redirect) => {
 			const form = document.getElementById(`${portletNamespace}fm`);
 
@@ -97,12 +96,9 @@ export function Editor({autocompleteData, initialScript, mode}) {
 				saveAndContinueInput.value = true;
 			}
 
-			const saveButtons = document.querySelectorAll('save-button');
-
 			const changeDisabled = (disabled) => {
-				saveButtons.forEach((button) => {
-					button.disabled = disabled;
-				});
+				saveButton.disabled = disabled;
+				saveAndContinueButton.disabled = disabled;
 			};
 
 			const formData = new FormData(form);
@@ -123,6 +119,9 @@ export function Editor({autocompleteData, initialScript, mode}) {
 
 				if (validator.hasErrors()) {
 					validator.focusInvalidField();
+					changeDisabled(false);
+
+					return;
 				}
 			}
 
@@ -155,15 +154,9 @@ export function Editor({autocompleteData, initialScript, mode}) {
 					}
 				})
 				.catch(() => {
-					changeDisabled(true);
+					changeDisabled(false);
 				});
 		};
-
-		const saveAndContinueButton = document.querySelector(
-			'.save-and-continue-button'
-		);
-
-		const saveButton = document.querySelector('.save-button');
 
 		const onSaveAndContinueButtonClick = (event) => {
 			event.preventDefault();
@@ -177,18 +170,27 @@ export function Editor({autocompleteData, initialScript, mode}) {
 			saveTemplate(true);
 		};
 
-		saveAndContinueButton.addEventListener(
-			'click',
-			onSaveAndContinueButtonClick
-		);
-		saveButton.addEventListener('click', onSaveButtonClick);
-
-		return () => {
-			saveAndContinueButton.removeEventListener(
+		if (saveAndContinueButton) {
+			saveAndContinueButton.addEventListener(
 				'click',
 				onSaveAndContinueButtonClick
 			);
-			saveButton.removeEventListener('click', onSaveButtonClick);
+		}
+
+		if (saveButton) {
+			saveButton.addEventListener('click', onSaveButtonClick);
+		}
+
+		return () => {
+			if (saveAndContinueButton) {
+				saveAndContinueButton.removeEventListener(
+					'click',
+					onSaveAndContinueButtonClick
+				);
+			}
+			if (saveButton) {
+				saveButton.removeEventListener('click', onSaveButtonClick);
+			}
 		};
 	}, [portletNamespace, script]);
 

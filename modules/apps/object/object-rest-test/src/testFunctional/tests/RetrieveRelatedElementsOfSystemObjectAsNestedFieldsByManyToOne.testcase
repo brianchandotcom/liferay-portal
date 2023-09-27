@@ -1,0 +1,96 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Object Entries REST APIs";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given a Subject object with a custom text field name") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "subject",
+				en_US_plural_label = "subjects",
+				name = "Subject",
+				requiredStringFieldName = "name");
+		}
+
+		task ("Given a new custom integer field teacherCode in User system object") {
+			var userObjectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "User");
+
+			ObjectFieldAPI.setUpGlobalObjectFieldId(
+				dbType = "Integer",
+				name = "teacherCode",
+				objectDefinitionId = ${userObjectId});
+		}
+
+		task ("Given oneToMany relationship teacherSubjects created") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Subject",
+				deletionType = "cascade",
+				name = "teacherSubjects",
+				parentObjectName = "User",
+				type = "oneToMany");
+		}
+
+		task ("Given a User with a value in the teacherCode created") {
+			UserAccountAPI.setUpGlobalUserAccountId(
+				alternateName = "teacher_1",
+				dbType = "Integer",
+				emailAddress = "teacher_1@liferay.com",
+				familyName = "teacher_1",
+				fieldName = "teacherCode",
+				fieldValue = 1106,
+				givenName = "teacher_1");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		ObjectFieldAPI.deleteObjectField();
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		JSONUser.tearDownNonAdminUsersNoSelenium();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetCustomFieldsDetailsInNestedFields {
+		task ("Given a subject entry and relate it to the previously created User") {
+			var subjectEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "Math");
+
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = ${subjectEntryId},
+				relationshipName = "teacherSubjects",
+				userAccountId = ${staticUserAccountId});
+		}
+
+		task ("When I call userAccount object GET endpoint with nestedFields=teacherSubjects") {
+			var response = ObjectDefinitionAPI.getObjectsWithNestedField(
+				nestedField = "teacherSubjects",
+				objects = "subjects");
+		}
+
+		task ("Then I can receive custom fields in the subject object GET endpoint with nestedFields=teacherSubjects") {
+			var actualValue1 = JSONUtil.getWithJSONPath(${response}, "$..teacherSubjects.teacherCode");
+			var actualValue2 = JSONUtil.getWithJSONPath(${response}, "$..r_teacherSubjects_user.teacherCode");
+
+			for (var actualValue : list "${actualValue1},${actualValue2}") {
+				TestUtils.assertEquals(
+					actual = ${actualValue},
+					expected = 1106);
+			}
+		}
+	}
+
+}

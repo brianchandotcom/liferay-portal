@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.taglib.internal.display.context;
@@ -28,6 +19,7 @@ import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemDetails;
@@ -39,6 +31,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistryUtil;
 import com.liferay.info.type.WebImage;
+import com.liferay.info.type.WebURL;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -51,6 +44,7 @@ import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -414,6 +408,22 @@ public class RenderLayoutStructureDisplayContext {
 		return null;
 	}
 
+	public String getInfoFormCheckboxNames(InfoForm infoForm) {
+		List<String> checkboxNames = TransformUtil.transform(
+			infoForm.getAllInfoFields(),
+			infoField -> {
+				if (infoField.getInfoFieldType() instanceof
+						BooleanInfoFieldType) {
+
+					return infoField.getName();
+				}
+
+				return null;
+			});
+
+		return StringUtil.merge(checkboxNames);
+	}
+
 	public Map<String, Object> getInfoItemActionComponentContext() {
 		return HashMapBuilder.<String, Object>put(
 			"executeInfoItemActionURL",
@@ -453,6 +463,49 @@ public class RenderLayoutStructureDisplayContext {
 			layoutStructure.getLayoutStructureItem(_getMainItemId());
 
 		return layoutStructureItem.getChildrenItemIds();
+	}
+
+	public String getNotificationText(
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem)
+		throws Exception {
+
+		JSONObject successMessageJSONObject =
+			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
+
+		if ((successMessageJSONObject == null) ||
+			!GetterUtil.getBoolean(
+				successMessageJSONObject.getBoolean("showNotification"))) {
+
+			return StringPool.BLANK;
+		}
+
+		JSONObject textJSONObject = successMessageJSONObject.getJSONObject(
+			"notificationText");
+
+		if (textJSONObject == null) {
+			return LanguageUtil.get(
+				_themeDisplay.getLocale(),
+				"your-information-was-successfully-received");
+		}
+
+		String notificationText = textJSONObject.getString(
+			_themeDisplay.getLanguageId());
+
+		if (Validator.isNull(notificationText)) {
+			String siteDefaultLanguageId = LanguageUtil.getLanguageId(
+				PortalUtil.getSiteDefaultLocale(
+					_themeDisplay.getScopeGroupId()));
+
+			notificationText = textJSONObject.getString(siteDefaultLanguageId);
+		}
+
+		if (Validator.isNotNull(notificationText)) {
+			return notificationText;
+		}
+
+		return LanguageUtil.get(
+			_themeDisplay.getLocale(),
+			"your-information-was-successfully-received");
 	}
 
 	public String getStyle(StyledLayoutStructureItem styledLayoutStructureItem)
@@ -633,7 +686,7 @@ public class RenderLayoutStructureDisplayContext {
 		String backgroundImageURL = jsonObject.getString("url");
 
 		if (Validator.isNotNull(backgroundImageURL)) {
-			return PortalUtil.getPathContext() + backgroundImageURL;
+			return backgroundImageURL;
 		}
 
 		return StringPool.BLANK;
@@ -1003,16 +1056,24 @@ public class RenderLayoutStructureDisplayContext {
 			return (String)value;
 		}
 
-		if (!(value instanceof WebImage)) {
-			return StringPool.BLANK;
+		if (value instanceof WebImage) {
+			WebImage webImage = (WebImage)value;
+
+			String url = webImage.getURL();
+
+			if (Validator.isNotNull(url)) {
+				return url;
+			}
 		}
 
-		WebImage webImage = (WebImage)value;
+		if (value instanceof WebURL) {
+			WebURL webURL = (WebURL)value;
 
-		String url = webImage.getUrl();
+			String url = webURL.getURL();
 
-		if (Validator.isNotNull(url)) {
-			return url;
+			if (Validator.isNotNull(url)) {
+				return url;
+			}
 		}
 
 		return StringPool.BLANK;

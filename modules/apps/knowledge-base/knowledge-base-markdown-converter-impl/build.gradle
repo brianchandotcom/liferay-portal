@@ -15,7 +15,7 @@ dependencies {
 	compileOnly project(":apps:knowledge-base:knowledge-base-markdown-converter-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile project(":core:petra:petra-lang")
+	testImplementation project(":core:petra:petra-lang")
 }
 
 findSecurityBugs {

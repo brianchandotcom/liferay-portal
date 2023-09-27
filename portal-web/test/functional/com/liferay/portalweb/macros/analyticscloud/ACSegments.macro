@@ -246,10 +246,12 @@ definition {
 			var index = 1;
 		}
 
-		Click(
-			criteriaName = ${criteriaName},
-			index = ${index},
-			locator1 = "ACSegments#CRITERIA_ELLIPSIS");
+		if (IsElementNotPresent(locator1 = "ACSegments#CRITERIA_ELLIPSIS_OPTION_OPEN")) {
+			Click(
+				criteriaName = ${criteriaName},
+				index = ${index},
+				locator1 = "ACSegments#CRITERIA_ELLIPSIS");
+		}
 
 		MenuItem.click(menuItem = "Duplicate");
 	}
@@ -284,14 +286,6 @@ definition {
 		Click(
 			key_day = ${day},
 			locator1 = "ACSegments#DAY_CALENDAR_OPTION");
-	}
-
-	macro editFormControlCriterion {
-		var key_criterion = ${criterionName};
-
-		Select(
-			locator1 = "ACSegments#FORM_CONTROL_CRITERION",
-			value1 = ${option});
 	}
 
 	macro editNumberCriterion {
@@ -377,10 +371,13 @@ definition {
 
 	macro editWebBehaviorTimeCriterion {
 		if (isSet(timeOption)) {
-			Select(
+			Click(
 				key_indexField = ${indexField},
-				locator1 = "ACSegments#TIME_INPUT_CRITERION_CONJUNCTION",
-				value1 = ${timeOption});
+				locator1 = "ACSegments#TIME_INPUT_CRITERION_CONJUNCTION");
+
+			Click(
+				locator1 = "ACSegments#ACTIVITIES_CRITERION_DROPDOWN",
+				operator = ${timeOption});
 		}
 
 		if (isSet(timePeriod)) {
@@ -594,10 +591,13 @@ definition {
 			var index = 1;
 		}
 
-		Select(
+		Click(
 			key_indexField = ${index},
-			locator1 = "ACSegments#ACTIVITIES_CRITERION",
-			value1 = ${operator});
+			locator1 = "ACSegments#ACTIVITIES_CRITERION");
+
+		Click(
+			locator1 = "ACSegments#ACTIVITIES_CRITERION_DROPDOWN",
+			operator = ${operator});
 	}
 
 	macro selectSegmentType {

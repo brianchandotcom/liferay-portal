@@ -1,19 +1,22 @@
 dependencies {
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
-	testIntegrationCompile group: "commons-lang", name: "commons-lang", version: "2.6"
-	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	testIntegrationCompile project(":apps:account:account-api")
-	testIntegrationCompile project(":apps:captcha:captcha-api")
-	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-api")
-	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-client")
-	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
-	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
-	testIntegrationCompile project(":apps:portal-security:portal-security-service-access-policy-api")
-	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
-	testIntegrationCompile project(":apps:segments:segments-api")
-	testIntegrationCompile project(":apps:segments:segments-test-util")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
+	testIntegrationImplementation group: "commons-lang", name: "commons-lang", version: "2.6"
+	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationImplementation project(":apps:account:account-api")
+	testIntegrationImplementation project(":apps:captcha:captcha-api")
+	testIntegrationImplementation project(":apps:headless:headless-admin-user:headless-admin-user-api")
+	testIntegrationImplementation project(":apps:headless:headless-admin-user:headless-admin-user-client")
+	testIntegrationImplementation project(":apps:oauth-client:oauth-client-api")
+	testIntegrationImplementation project(":apps:oauth2-provider:oauth2-provider-api")
+	testIntegrationImplementation project(":apps:oauth2-provider:oauth2-provider-rest-spi")
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")
+	testIntegrationImplementation project(":apps:portal-search:portal-search-test-util")
+	testIntegrationImplementation project(":apps:portal-security:portal-security-service-access-policy-api")
+	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationImplementation project(":apps:segments:segments-api")
+	testIntegrationImplementation project(":apps:segments:segments-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

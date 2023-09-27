@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -53,6 +44,16 @@ else {
 				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTRemote.class.getName(), "url") %></aui:validator>
 				<aui:validator name="required" />
 				<aui:validator name="url" />
+			</aui:input>
+
+			<aui:input label="client-id" name="clientId" placeholder="ct-remote-client-id-placeholder" value='<%= (ctRemote != null) ? ctRemote.getClientId() : "" %>'>
+				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTRemote.class.getName(), "clientId") %></aui:validator>
+				<aui:validator name="required" />
+			</aui:input>
+
+			<aui:input label="client-secret" name="clientSecret" placeholder="ct-remote-client-secret-placeholder" type="password" value='<%= (ctRemote != null) ? ctRemote.getClientSecret() : "" %>'>
+				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTRemote.class.getName(), "clientSecret") %></aui:validator>
+				<aui:validator name="required" />
 			</aui:input>
 
 			<aui:button-row>

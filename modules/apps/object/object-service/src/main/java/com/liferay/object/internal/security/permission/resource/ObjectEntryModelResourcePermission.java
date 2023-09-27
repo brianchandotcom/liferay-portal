@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.internal.security.permission.resource;
@@ -19,12 +10,18 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.object.definition.tree.Edge;
+import com.liferay.object.definition.tree.Node;
+import com.liferay.object.definition.tree.Tree;
+import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -67,8 +64,10 @@ public class ObjectEntryModelResourcePermission
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
+		ObjectRelationshipLocalService objectRelationshipLocalService,
 		PortletResourcePermission portletResourcePermission,
 		ResourcePermissionLocalService resourcePermissionLocalService,
+		TreeFactory treeFactory,
 		UserGroupRoleLocalService userGroupRoleLocalService) {
 
 		_accountEntryLocalService = accountEntryLocalService;
@@ -79,8 +78,10 @@ public class ObjectEntryModelResourcePermission
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
+		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_portletResourcePermission = portletResourcePermission;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
+		_treeFactory = treeFactory;
 		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}
 
@@ -91,8 +92,10 @@ public class ObjectEntryModelResourcePermission
 		throws PortalException {
 
 		if (!contains(permissionChecker, objectEntryId, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, _modelName, objectEntryId, actionId);
+			_throwPrincipalException(
+				actionId,
+				_objectEntryLocalService.getObjectEntry(objectEntryId),
+				permissionChecker);
 		}
 	}
 
@@ -103,9 +106,7 @@ public class ObjectEntryModelResourcePermission
 		throws PortalException {
 
 		if (!contains(permissionChecker, objectEntry, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, _modelName, objectEntry.getObjectEntryId(),
-				actionId);
+			_throwPrincipalException(actionId, objectEntry, permissionChecker);
 		}
 	}
 
@@ -128,26 +129,28 @@ public class ObjectEntryModelResourcePermission
 
 		User user = permissionChecker.getUser();
 
-		if (user.isGuestUser()) {
-			return permissionChecker.hasPermission(
-				objectEntry.getGroupId(), _modelName,
-				objectEntry.getObjectEntryId(), actionId);
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				permissionChecker.getCompanyId(), _modelName,
-				objectEntry.getObjectEntryId(), objectEntry.getUserId(),
-				actionId) ||
-			permissionChecker.hasPermission(
-				objectEntry.getGroupId(), _modelName,
-				objectEntry.getObjectEntryId(), actionId)) {
-
-			return true;
-		}
+		objectEntry = _getContextObjectEntry(objectEntry);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectEntry.getObjectDefinitionId());
+
+		if (user.isGuestUser()) {
+			return permissionChecker.hasPermission(
+				objectEntry.getGroupId(), objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId(), actionId);
+		}
+
+		if (permissionChecker.hasOwnerPermission(
+				permissionChecker.getCompanyId(),
+				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
+				objectEntry.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				objectEntry.getGroupId(), objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId(), actionId)) {
+
+			return true;
+		}
 
 		if (!objectDefinition.isAccountEntryRestricted()) {
 			return false;
@@ -255,6 +258,58 @@ public class ObjectEntryModelResourcePermission
 		return _portletResourcePermission;
 	}
 
+	private ObjectEntry _getContextObjectEntry(ObjectEntry objectEntry)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		if (!objectDefinition.isRootDescendantNode()) {
+			return objectEntry;
+		}
+
+		Tree tree = _treeFactory.create(
+			objectDefinition.getRootObjectDefinitionId());
+
+		Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
+
+		while (!node.isRoot()) {
+			Edge edge = node.getEdge();
+
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					edge.getObjectRelationshipId());
+
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				objectRelationship.getObjectFieldId2());
+
+			objectEntry = _objectEntryLocalService.getObjectEntry(
+				MapUtil.getLong(
+					objectEntry.getValues(), objectField.getName()));
+
+			node = tree.getNode(objectEntry.getObjectDefinitionId());
+		}
+
+		return objectEntry;
+	}
+
+	private void _throwPrincipalException(
+			String actionId, ObjectEntry objectEntry,
+			PermissionChecker permissionChecker)
+		throws PortalException {
+
+		objectEntry = _getContextObjectEntry(objectEntry);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		throw new PrincipalException.MustHavePermission(
+			permissionChecker, objectDefinition.getClassName(),
+			objectEntry.getObjectEntryId(), actionId);
+	}
+
 	private final AccountEntryLocalService _accountEntryLocalService;
 	private final AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
@@ -263,9 +318,12 @@ public class ObjectEntryModelResourcePermission
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
 	private final PortletResourcePermission _portletResourcePermission;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
+	private final TreeFactory _treeFactory;
 	private final UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

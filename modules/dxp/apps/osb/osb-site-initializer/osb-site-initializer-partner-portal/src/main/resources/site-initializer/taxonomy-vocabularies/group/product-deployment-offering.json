@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC069",
+	"name": "Product Deployment Offering",
+	"name_i18n": {
+		"ar_SA": "Product Deployment Offering",
+		"ca_ES": "Product Deployment Offering",
+		"de_DE": "Product Deployment Offering",
+		"en_US": "Product Deployment Offering",
+		"es_ES": "Product Deployment Offering",
+		"fi_FI": "Product Deployment Offering",
+		"fr_FR": "Product Deployment Offering",
+		"hu_HU": "Product Deployment Offering",
+		"ja_JP": "Product Deployment Offering",
+		"nl_NL": "Product Deployment Offering",
+		"pt_BR": "Product Deployment Offering",
+		"sv_SE": "Product Deployment Offering",
+		"zh_CN": "Product Deployment Offering"
+	},
+	"viewableBy": "Anyone"
+}

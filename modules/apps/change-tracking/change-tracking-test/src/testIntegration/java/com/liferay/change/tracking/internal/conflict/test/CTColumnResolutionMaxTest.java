@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.internal.conflict.test;
@@ -62,62 +53,14 @@ public class CTColumnResolutionMaxTest {
 	@Before
 	public void setUp() throws Exception {
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			CTColumnResolutionMaxTest.class.getSimpleName(), null);
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, CTColumnResolutionMaxTest.class.getSimpleName(), null);
 
 		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
 	public void testResolveModificationConflictMax() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		DLFolder parentDLFolder = _dlFolderLocalService.addFolder(
-			null, _group.getCreatorUserId(), _group.getGroupId(),
-			_group.getGroupId(), false,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			serviceContext);
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
-
-			_dlFolderLocalService.addFolder(
-				null, _group.getCreatorUserId(), _group.getGroupId(),
-				_group.getGroupId(), false, parentDLFolder.getFolderId(),
-				_ctCollection.getName(), null, false, serviceContext);
-		}
-
-		Date lastPostDate = parentDLFolder.getLastPostDate();
-
-		_dlFolderLocalService.updateLastPostDate(
-			parentDLFolder.getFolderId(),
-			new Date(lastPostDate.getTime() + Time.HOUR));
-
-		Map<Long, List<ConflictInfo>> conflictsMap =
-			_ctCollectionLocalService.checkConflicts(_ctCollection);
-
-		Assert.assertEquals(conflictsMap.toString(), 1, conflictsMap.size());
-
-		List<ConflictInfo> conflictInfos = conflictsMap.get(
-			_classNameLocalService.getClassNameId(DLFolder.class));
-
-		Assert.assertEquals(conflictsMap.toString(), 1, conflictInfos.size());
-
-		ConflictInfo conflictInfo = conflictInfos.get(0);
-
-		Assert.assertEquals(
-			parentDLFolder.getPrimaryKey(), conflictInfo.getSourcePrimaryKey());
-		Assert.assertEquals(
-			parentDLFolder.getPrimaryKey(), conflictInfo.getTargetPrimaryKey());
-
-		Assert.assertTrue(conflictInfo.isResolved());
-	}
-
-	@Test
-	public void testUnresolvedModificationConflictMax() throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
@@ -164,8 +107,7 @@ public class CTColumnResolutionMaxTest {
 			parentDLFolder.getPrimaryKey(), conflictInfo.getSourcePrimaryKey());
 		Assert.assertEquals(
 			parentDLFolder.getPrimaryKey(), conflictInfo.getTargetPrimaryKey());
-
-		Assert.assertFalse(conflictInfo.isResolved());
+		Assert.assertTrue(conflictInfo.isResolved());
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(

@@ -152,7 +152,9 @@ definition {
 			isNotPresent = "INST_DAY,INST_WEEK,INST_MONTH,INST_YEAR",
 			isPresent = "INST_HOUR");
 
-		WorkflowMetrics.assertChartTotalValueNotEquals(velocityValueTotal = 0);
+		AssertTextNotEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_ITEMS_VALUE",
+			value1 = 0);
 
 		WorkflowMetrics.verifyDefaultUnitsForEachDateRange(
 			completionVelocityDateRange = "Yesterday",

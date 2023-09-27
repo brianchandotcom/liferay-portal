@@ -114,9 +114,11 @@ definition {
 	@description = "This is a use case for LPS-95670."
 	@priority = 4
 	test AssertSuggestionsCannotOfferInvalidWordsAsSuggestion {
-		property custom.properties = "locales.enabled=de_DE,en_US${line.separator}locales=de_DE,en_US${line.separator}index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE";
+		property custom.properties = "index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE${line.separator}locales=de_DE,en_US${line.separator}locales.enabled=de_DE,en_US";
 		property index.search.spell.checker.enabled = "true";
+		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addBasicWebContentLocalized(
 			contentMap = "en_US:WC Content,de_DE:ächten angreifen anmarschieren",
@@ -144,7 +146,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeReindex(action = "Reindex spell-check dictionaries.");
+		SearchAdministration.executeReindex(action = "Reindex Spell-Check Dictionaries");
 
 		AssertConsoleTextPresent(value1 = "Finished indexing dictionary spellchecker/dictionary_de_DE.txt");
 
@@ -223,6 +225,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-112599."
+	@priority = 3
 	test NavigateToAssetEditPageViaSearchResults {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -270,7 +273,7 @@ definition {
 
 		SearchPortlets.searchWidget(searchTerm = "Potato");
 
-		SearchFacetPortlet.checkFacet(facetValueName = "Blogs Entry");
+		SearchFacetPortlet.checkFacet(facetTerm = "Blogs Entry");
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -294,6 +297,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-95798."
+	@priority = 3
 	test SearchAfterViewingResultDetails {
 		JSONWebcontent.addWebContent(
 			content = "Web Content",
@@ -654,6 +658,7 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"name1\"");
 	}
 
+	@priority = 3
 	test SearchBlogsScopedToPage {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -716,7 +721,7 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Site Name");
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPortlets.searchWidget(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
@@ -931,7 +936,7 @@ definition {
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 
-		SearchFacetPortlet.checkFacet(facetValueName = "moon rocks");
+		SearchFacetPortlet.checkFacet(facetTerm = "moon rocks");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
@@ -1187,11 +1192,26 @@ definition {
 
 	@priority = 4
 	test SearchWikiPage {
-		JSONWiki.addWikiPage(
-			groupName = "Guest",
-			wikiNodeName = "Main",
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(pageName = "Wiki Test Page");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		Portlet.addPG(portletName = "Wiki");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			pageName = "Wiki Test Page",
 			wikiPageContent = "Wiki Page Content",
-			wikiPageName = "Wiki Page Title");
+			wikiPageTitle = "Wiki Page Title");
+
+		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "Wiki Page Title");
 
@@ -1418,7 +1438,9 @@ definition {
 
 	@priority = 5
 	test ViewSearchResultDetails {
+		property app.server.types = "tomcat";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1442,6 +1464,7 @@ definition {
 			userName = "Test Test");
 	}
 
+	@priority = 3
 	test ViewSortedSearchResults {
 		JSONWebcontent.addWebContent(
 			content = "Content",

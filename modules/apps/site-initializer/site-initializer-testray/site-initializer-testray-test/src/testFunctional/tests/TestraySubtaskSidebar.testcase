@@ -1,7 +1,7 @@
 @component-name = "portal-solutions"
 definition {
 
-	property custom.properties = "feature.flag.LPS-163118=true${line.separator}feature.flag.LPS-154672=true";
+	property custom.properties = "feature.flag.LPS-154672=true${line.separator}feature.flag.LPS-163118=true";
 	property osgi.modules.includes = "site-initializer-testray";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -118,6 +118,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete subtask, task, routine, case type, factor category and project via API") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "subtasks",
@@ -150,8 +152,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -160,14 +160,10 @@ definition {
 	@description = "Story ID: LPS-164985 | Test Summary: Verify that can go to the build associated with a task from the sidebar"
 	@priority = 3
 	test AdminCanGoToBuildFromTheSidebar {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user reanalyze a task") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
-			Button.click(button = "Abandon");
-
-			Button.click(button = "Reanalyze");
+			TestrayTestflow.reanalyzeTask();
 
 			Refresh();
 		}
@@ -175,36 +171,29 @@ definition {
 		task ("When the user click in the build from the sidebar") {
 			Click(
 				key_subtaskName = ${buildName},
-				locator1 = "TestraySubtask#VIEW_SUBTASK_SIDEBAR");
+				locator1 = "TestraySubtask#SUBTASK_SIDEBAR");
 		}
 
-		task ("Then the user can go to the build page") {
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 1",
-				casePriority = 3);
+		task ("Then the user can be redirected to the build page") {
+			TestrayDropdown.assertBreadcrumbTitle(text = ${buildName});
 		}
 	}
 
 	@description = "Story ID: LPS-164985 | Test Summary: Verify that can go to the Subtask from the sidebar"
 	@priority = 3
 	test AdminCanGoToSubtaskFromTheSidebar {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user reanalyze a task") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
-			Button.click(button = "Abandon");
-
-			Button.click(button = "Reanalyze");
+			TestrayTestflow.reanalyzeTask();
 		}
 
 		task ("And the user assign a subtask") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
-			Button.click(button = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Begin Analysis",
+				userName = "Test Test");
 
 			TestrayTestflow.goToTestflow();
 
@@ -212,89 +201,71 @@ definition {
 		}
 
 		task ("When the user click in the subtask from the sidebar") {
-			Click(
-				key_subtaskName = "Subtask_1",
-				locator1 = "TestraySubtask#VIEW_SUBTASK_SIDEBAR");
+			TestrayManage.clickOptionSidebar(optionSidebar = "Subtask_1");
 		}
 
-		task ("Then the user can go to the subtask page") {
-			TestrayTestflow.assertStatus(
-				label = "Subtask Details",
-				status = "In Analysis");
+		task ("Then the user can be redirected to the subtask page") {
+			TestrayDropdown.assertBreadcrumbTitle(text = "Subtask_1");
 		}
 	}
 
 	@description = "Story ID: LPS-164985 | Test Summary: Verify that can go to the task from the sidebar"
 	@priority = 3
 	test AdminCanGoToTaskFromTheSidebar {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user reanalyze a task") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
-			Button.click(button = "Abandon");
+			TestrayTestflow.reanalyzeTask();
 
-			Button.click(button = "Reanalyze");
+			TestrayTestflow.goToTestflow();
 
 			Refresh();
 		}
 
 		task ("When the user click in the task from the sidebar") {
-			Click(
-				key_subtaskName = ${taskName},
-				locator1 = "TestraySubtask#VIEW_SUBTASK_SIDEBAR");
+			TestrayManage.clickOptionSidebar(optionSidebar = ${taskName});
 		}
 
-		task ("Then the user can go to the task page") {
-			TestrayTestflow.assertStatus(
-				label = "Task Details",
-				status = "In Analysis");
+		task ("Then the user can be redirected to the task page") {
+			TestrayDropdown.assertBreadcrumbTitle(text = ${taskName});
 		}
 	}
 
 	@description = "Story ID: LPS-164985 | Test Summary: Verify that can see the details of a re-examined subtask in the sidebar"
 	@priority = 3
 	test AdminCanSeeSubtaskReexaminedInSidebar {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user reanalyze a task") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
-			Button.click(button = "Abandon");
-
-			Button.click(button = "Reanalyze");
+			TestrayTestflow.reanalyzeTask();
 		}
 
 		task ("And the user assign two subtasks") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
-			Button.click(button = "Assign and Begin Analysis");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Begin Analysis",
+				userName = "Test Test");
 
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			Testray.clickBreadcrumb(text = ${taskName});
 
-			TR2Utils.clickBreadcrumb(text = ${taskName});
+			Testray.clickTableEntry(tableEntry = "Subtask_2");
 
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_2");
-
-			Button.click(button = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Begin Analysis",
+				userName = "Test Test");
 		}
 
 		task ("And the user complete the subtask") {
-			Button.click(button = "Complete");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-
-			TestrayTestflow.assertStatus(
-				label = "Subtask Details",
-				status = "Complete");
+			TestrayTestflow.editStatus(
+				button = "Complete",
+				selectStatus = "Passed");
 		}
 
 		task ("When the user reanalyze the subtask") {
-			Button.click(button = "Assign and Reanalyze");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Reanalyze",
+				userName = "Test Test");
 		}
 
 		task ("Then the subtask should appear on the sidebar") {

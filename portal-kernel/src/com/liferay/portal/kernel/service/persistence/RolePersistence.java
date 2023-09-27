@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.service.persistence;
@@ -2462,32 +2453,37 @@ public interface RolePersistence
 	 *
 	 * @param pk the primary key of the role
 	 * @param groupPK the primary key of the group
+	 * @return <code>true</code> if an association between the role and the group was added; <code>false</code> if they were already associated
 	 */
-	public void addGroup(long pk, long groupPK);
+	public boolean addGroup(long pk, long groupPK);
 
 	/**
 	 * Adds an association between the role and the group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the role
 	 * @param group the group
+	 * @return <code>true</code> if an association between the role and the group was added; <code>false</code> if they were already associated
 	 */
-	public void addGroup(long pk, com.liferay.portal.kernel.model.Group group);
+	public boolean addGroup(
+		long pk, com.liferay.portal.kernel.model.Group group);
 
 	/**
 	 * Adds an association between the role and the groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the role
 	 * @param groupPKs the primary keys of the groups
+	 * @return <code>true</code> if at least one association between the role and the groups was added; <code>false</code> if they were all already associated
 	 */
-	public void addGroups(long pk, long[] groupPKs);
+	public boolean addGroups(long pk, long[] groupPKs);
 
 	/**
 	 * Adds an association between the role and the groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the role
 	 * @param groups the groups
+	 * @return <code>true</code> if at least one association between the role and the groups was added; <code>false</code> if they were all already associated
 	 */
-	public void addGroups(
+	public boolean addGroups(
 		long pk, java.util.List<com.liferay.portal.kernel.model.Group> groups);
 
 	/**
@@ -2628,32 +2624,36 @@ public interface RolePersistence
 	 *
 	 * @param pk the primary key of the role
 	 * @param userPK the primary key of the user
+	 * @return <code>true</code> if an association between the role and the user was added; <code>false</code> if they were already associated
 	 */
-	public void addUser(long pk, long userPK);
+	public boolean addUser(long pk, long userPK);
 
 	/**
 	 * Adds an association between the role and the user. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the role
 	 * @param user the user
+	 * @return <code>true</code> if an association between the role and the user was added; <code>false</code> if they were already associated
 	 */
-	public void addUser(long pk, com.liferay.portal.kernel.model.User user);
+	public boolean addUser(long pk, com.liferay.portal.kernel.model.User user);
 
 	/**
 	 * Adds an association between the role and the users. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the role
 	 * @param userPKs the primary keys of the users
+	 * @return <code>true</code> if at least one association between the role and the users was added; <code>false</code> if they were all already associated
 	 */
-	public void addUsers(long pk, long[] userPKs);
+	public boolean addUsers(long pk, long[] userPKs);
 
 	/**
 	 * Adds an association between the role and the users. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the role
 	 * @param users the users
+	 * @return <code>true</code> if at least one association between the role and the users was added; <code>false</code> if they were all already associated
 	 */
-	public void addUsers(
+	public boolean addUsers(
 		long pk, java.util.List<com.liferay.portal.kernel.model.User> users);
 
 	/**

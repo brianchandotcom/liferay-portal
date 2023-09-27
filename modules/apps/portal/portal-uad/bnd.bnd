@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Portal UAD
 Bundle-SymbolicName: com.liferay.portal.uad
-Bundle-Version: 6.0.12
+Bundle-Version: 6.0.13
 -dsannotations-options: inherit

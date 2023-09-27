@@ -1,22 +1,14 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.batch.engine.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.engine.unit.BatchEngineUnit;
-import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
+import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -24,10 +16,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.BooleanWrapper;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -37,7 +28,6 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Enumeration;
-import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -94,10 +84,7 @@ public class BatchEngineBundleTrackerTest {
 			String dirName, int expectedCount)
 		throws Exception {
 
-		Bundle bundle = _bundleContext.installBundle(
-			RandomTestUtil.randomString(), _toInputStream(dirName));
-
-		Class<?> clazz = _batchEngineUnitProcessor.getClass();
+		Class<?> clazz = _batchEngineImportTaskExecutor.getClass();
 
 		ComponentDescriptionDTO componentDescriptionDTO =
 			_serviceComponentRuntime.getComponentDescriptionDTO(
@@ -109,23 +96,34 @@ public class BatchEngineBundleTrackerTest {
 		promise.getValue();
 
 		IntegerWrapper actualCount = new IntegerWrapper();
-		BooleanWrapper processed = new BooleanWrapper();
 
-		ServiceRegistration<BatchEngineUnitProcessor> serviceRegistration =
+		ServiceRegistration<BatchEngineImportTaskExecutor> serviceRegistration =
 			_bundleContext.registerService(
-				BatchEngineUnitProcessor.class,
-				batchEngineUnits -> {
-					for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
-						if (batchEngineUnit.isValid()) {
-							actualCount.increment();
-						}
+				BatchEngineImportTaskExecutor.class,
+				new BatchEngineImportTaskExecutor() {
+
+					@Override
+					public void execute(
+						BatchEngineImportTask batchEngineImportTask) {
+
+						actualCount.increment();
 					}
 
-					processed.setValue(true);
+					@Override
+					public void execute(
+						BatchEngineImportTask batchEngineImportTask,
+						BatchEngineTaskItemDelegate<?>
+							batchEngineTaskItemDelegate,
+						boolean checkPermissions) {
 
-					return CompletableFuture.completedFuture(null);
+						actualCount.increment();
+					}
+
 				},
 				null);
+
+		Bundle bundle = _bundleContext.installBundle(
+			RandomTestUtil.randomString(), _toInputStream(dirName));
 
 		try {
 			bundle.start();
@@ -133,9 +131,6 @@ public class BatchEngineBundleTrackerTest {
 			Thread.sleep(2000);
 
 			Assert.assertEquals(expectedCount, actualCount.getValue());
-			Assert.assertTrue(processed.getValue());
-
-			processed.setValue(false);
 
 			bundle.stop();
 
@@ -144,7 +139,6 @@ public class BatchEngineBundleTrackerTest {
 			Thread.sleep(2000);
 
 			Assert.assertEquals(expectedCount, actualCount.getValue());
-			Assert.assertFalse(processed.getValue());
 		}
 		finally {
 			bundle.uninstall();
@@ -159,7 +153,7 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	private InputStream _toInputStream(String dirName) throws Exception {
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		String basePath = StringBundler.concat(
 			"com/liferay/batch/engine/internal/test/dependencies/", dirName,
@@ -191,7 +185,7 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	@Inject
-	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
+	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
@@ -201,5 +195,8 @@ public class BatchEngineBundleTrackerTest {
 
 	@Inject
 	private ServiceComponentRuntime _serviceComponentRuntime;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

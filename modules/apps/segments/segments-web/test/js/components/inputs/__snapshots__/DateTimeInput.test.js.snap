@@ -12,7 +12,7 @@ exports[`DateTimeInput renders date with no change in the input 1`] = `
         class="input-group"
       >
         <div
-          class="input-group-item"
+          class="input-group-item input-group-item-focusable"
         >
           <input
             name="datePicker"
@@ -66,7 +66,7 @@ exports[`DateTimeInput renders date-time with no change in the input 1`] = `
         class="input-group"
       >
         <div
-          class="input-group-item"
+          class="input-group-item input-group-item-focusable"
         >
           <input
             name="datePicker"
@@ -120,7 +120,7 @@ exports[`DateTimeInput renders previous date with wrong date 1`] = `
         class="input-group"
       >
         <div
-          class="input-group-item"
+          class="input-group-item input-group-item-focusable"
         >
           <input
             name="datePicker"
@@ -174,7 +174,7 @@ exports[`DateTimeInput renders previous date with wrong date-time 1`] = `
         class="input-group"
       >
         <div
-          class="input-group-item"
+          class="input-group-item input-group-item-focusable"
         >
           <input
             name="datePicker"
@@ -228,7 +228,7 @@ exports[`DateTimeInput renders type date 1`] = `
         class="input-group"
       >
         <div
-          class="input-group-item"
+          class="input-group-item input-group-item-focusable"
         >
           <input
             name="datePicker"
@@ -282,7 +282,7 @@ exports[`DateTimeInput renders type date-time 1`] = `
         class="input-group"
       >
         <div
-          class="input-group-item"
+          class="input-group-item input-group-item-focusable"
         >
           <input
             name="datePicker"

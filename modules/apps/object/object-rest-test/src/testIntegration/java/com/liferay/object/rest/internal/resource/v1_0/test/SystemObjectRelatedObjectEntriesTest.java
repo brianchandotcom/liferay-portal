@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.rest.internal.resource.v1_0.test;
@@ -22,11 +13,11 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectFieldTestUtil;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.UserAccountTestUtil;
+import com.liferay.object.rest.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
+import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
+import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.rest.test.util.UserAccountTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
@@ -61,7 +52,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -88,13 +78,19 @@ public class SystemObjectRelatedObjectEntriesTest {
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
+			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1, false),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+					ObjectFieldConstants.DB_TYPE_INTEGER, true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_2,
+					false)));
 
 		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition, _OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE);
+			_objectDefinition, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE);
 
 		_user = TestPropsValues.getUser();
 
@@ -151,7 +147,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			null, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
 
@@ -159,7 +155,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			1, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
 
@@ -167,7 +163,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			2, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
@@ -176,11 +172,11 @@ public class SystemObjectRelatedObjectEntriesTest {
 			5, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
 
@@ -188,11 +184,11 @@ public class SystemObjectRelatedObjectEntriesTest {
 			6, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
 
@@ -207,7 +203,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			null, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
 
@@ -215,7 +211,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			1, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
 
@@ -223,7 +219,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			2, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
@@ -232,11 +228,11 @@ public class SystemObjectRelatedObjectEntriesTest {
 			5, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
 
@@ -244,11 +240,11 @@ public class SystemObjectRelatedObjectEntriesTest {
 			6, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
 	}
@@ -293,7 +289,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			null, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE}
 			},
 			Type.ONE_TO_MANY);
 
@@ -301,7 +297,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			1, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE}
 			},
 			Type.ONE_TO_MANY);
 
@@ -309,7 +305,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			2, objectRelationship.getName(),
 			new String[][] {
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
-				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
 				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE}
 			},
 			Type.ONE_TO_MANY);
@@ -474,7 +470,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 				objectRelationship.getName(),
 				JSONFactoryUtil.createJSONObject(
 					JSONUtil.put(
-						_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
+						_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 					).put(
 						"externalReferenceCode", _ERC_VALUE_1
 					).toString())
@@ -568,7 +564,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 				objectRelationship.getName(),
 				JSONFactoryUtil.createJSONObject(
 					JSONUtil.put(
-						_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
+						_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 					).put(
 						"externalReferenceCode", _ERC_VALUE_1
 					).toString())
@@ -580,7 +576,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 				objectRelationship.getName(),
 				JSONFactoryUtil.createJSONObject(
 					JSONUtil.put(
-						_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1
+						_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1
 					).put(
 						"externalReferenceCode", _ERC_VALUE_1
 					).toString())
@@ -588,7 +584,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		_assertObjectEntryField(
 			_getObjectEntryByExternalReferenceCodeJSONObject(_ERC_VALUE_1),
-			_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1);
+			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 	}
 
 	@Test
@@ -609,7 +605,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 				objectRelationship.getName(),
 				JSONFactoryUtil.createJSONObject(
 					JSONUtil.put(
-						_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
+						_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 					).put(
 						"externalReferenceCode", _ERC_VALUE_1
 					).toString())
@@ -621,7 +617,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 				objectRelationship.getName(),
 				JSONFactoryUtil.createJSONObject(
 					JSONUtil.put(
-						_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1
+						_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1
 					).put(
 						"externalReferenceCode", _ERC_VALUE_1
 					).toString())
@@ -629,7 +625,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		_assertObjectEntryField(
 			_getObjectEntryByExternalReferenceCodeJSONObject(_ERC_VALUE_1),
-			_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1);
+			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 	}
 
 	private ObjectRelationship _addObjectRelationship(
@@ -825,11 +821,27 @@ public class SystemObjectRelatedObjectEntriesTest {
 					objectRelationship.getName(),
 					_createObjectEntriesJSONArray(
 						new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
-						_OBJECT_FIELD_NAME,
+						_OBJECT_FIELD_NAME_1,
 						new String[] {
 							_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
 						})
 				).build());
+
+			Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+
+			jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
+				_userSystemObjectDefinitionManager,
+				HashMapBuilder.<String, Serializable>put(
+					objectRelationship.getName(),
+					JSONFactoryUtil.createJSONObject(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
+						).put(
+							"externalReferenceCode", _ERC_VALUE_1
+						).toString())
+				).build());
+
+			Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		}
 		else {
 			jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
@@ -841,9 +853,24 @@ public class SystemObjectRelatedObjectEntriesTest {
 							"externalReferenceCode", _ERC_VALUE_1
 						).toString())
 				).build());
-		}
 
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+			Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+
+			jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
+				_userSystemObjectDefinitionManager,
+				HashMapBuilder.<String, Serializable>put(
+					objectRelationship.getName(),
+					_createObjectEntriesJSONArray(
+						new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
+						_OBJECT_FIELD_NAME_2,
+						new String[] {
+							RandomTestUtil.randomString(),
+							RandomTestUtil.randomString()
+						})
+				).build());
+
+			Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		}
 	}
 
 	private void _testPostSystemObjectEntryWithNestedCustomObjectEntries(
@@ -858,7 +885,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 					if (manyToOne) {
 						return JSONFactoryUtil.createJSONObject(
 							JSONUtil.put(
-								_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1
+								_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1
 							).put(
 								"externalReferenceCode", _ERC_VALUE_1
 							).toString());
@@ -866,7 +893,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 					return _createObjectEntriesJSONArray(
 						new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
-						_OBJECT_FIELD_NAME,
+						_OBJECT_FIELD_NAME_1,
 						new String[] {
 							_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
 						});
@@ -876,7 +903,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 		if (manyToOne) {
 			_assertObjectEntryField(
 				jsonObject.getJSONObject(objectRelationship.getName()),
-				_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1);
+				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 
 			Assert.assertEquals(
 				jsonObject.getString(
@@ -895,10 +922,10 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 			_assertObjectEntryField(
 				(JSONObject)nestedObjectEntriesJSONArray.get(0),
-				_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1);
+				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 			_assertObjectEntryField(
 				(JSONObject)nestedObjectEntriesJSONArray.get(1),
-				_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_2);
+				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_2);
 
 			jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -913,10 +940,10 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 			_assertObjectEntryField(
 				(JSONObject)nestedObjectEntriesJSONArray.get(0),
-				_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1);
+				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 			_assertObjectEntryField(
 				(JSONObject)nestedObjectEntriesJSONArray.get(1),
-				_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_2);
+				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_2);
 		}
 	}
 
@@ -930,7 +957,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 				objectRelationship.getName(),
 				_createObjectEntriesJSONArray(
 					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
-					_OBJECT_FIELD_NAME,
+					_OBJECT_FIELD_NAME_1,
 					new String[] {
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString()
@@ -959,7 +986,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 				objectRelationship.getName(),
 				_createObjectEntriesJSONArray(
 					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
-					_OBJECT_FIELD_NAME,
+					_OBJECT_FIELD_NAME_1,
 					new String[] {
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString()
@@ -971,7 +998,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			HashMapBuilder.<String, Serializable>put(
 				objectRelationship.getName(),
 				_createObjectEntriesJSONArray(
-					new String[] {_ERC_VALUE_1}, _OBJECT_FIELD_NAME,
+					new String[] {_ERC_VALUE_1}, _OBJECT_FIELD_NAME_1,
 					new String[] {_NEW_OBJECT_FIELD_VALUE_1})
 			).build());
 
@@ -981,8 +1008,8 @@ public class SystemObjectRelatedObjectEntriesTest {
 		Assert.assertEquals(1, nestedObjectEntriesJSONArray.length());
 
 		_assertObjectEntryField(
-			(JSONObject)nestedObjectEntriesJSONArray.get(0), _OBJECT_FIELD_NAME,
-			_NEW_OBJECT_FIELD_VALUE_1);
+			(JSONObject)nestedObjectEntriesJSONArray.get(0),
+			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -996,8 +1023,8 @@ public class SystemObjectRelatedObjectEntriesTest {
 		Assert.assertEquals(1, nestedObjectEntriesJSONArray.length());
 
 		_assertObjectEntryField(
-			(JSONObject)nestedObjectEntriesJSONArray.get(0), _OBJECT_FIELD_NAME,
-			_NEW_OBJECT_FIELD_VALUE_1);
+			(JSONObject)nestedObjectEntriesJSONArray.get(0),
+			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 	}
 
 	private void
@@ -1011,7 +1038,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 				objectRelationship.getName(),
 				_createObjectEntriesJSONArray(
 					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
-					_OBJECT_FIELD_NAME,
+					_OBJECT_FIELD_NAME_1,
 					new String[] {
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString()
@@ -1025,7 +1052,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 					HashMapBuilder.<String, Serializable>put(
 						objectRelationship.getName(),
 						_createObjectEntriesJSONArray(
-							new String[] {_ERC_VALUE_1}, _OBJECT_FIELD_NAME,
+							new String[] {_ERC_VALUE_1}, _OBJECT_FIELD_NAME_1,
 							new String[] {_NEW_OBJECT_FIELD_VALUE_1})
 					).build());
 
@@ -1035,8 +1062,8 @@ public class SystemObjectRelatedObjectEntriesTest {
 		Assert.assertEquals(1, nestedObjectEntriesJSONArray.length());
 
 		_assertObjectEntryField(
-			(JSONObject)nestedObjectEntriesJSONArray.get(0), _OBJECT_FIELD_NAME,
-			_NEW_OBJECT_FIELD_VALUE_1);
+			(JSONObject)nestedObjectEntriesJSONArray.get(0),
+			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -1050,8 +1077,8 @@ public class SystemObjectRelatedObjectEntriesTest {
 		Assert.assertEquals(1, nestedObjectEntriesJSONArray.length());
 
 		_assertObjectEntryField(
-			(JSONObject)nestedObjectEntriesJSONArray.get(0), _OBJECT_FIELD_NAME,
-			_NEW_OBJECT_FIELD_VALUE_1);
+			(JSONObject)nestedObjectEntriesJSONArray.get(0),
+			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 	}
 
 	private static final String _ERC_VALUE_1 = RandomTestUtil.randomString();
@@ -1064,7 +1091,10 @@ public class SystemObjectRelatedObjectEntriesTest {
 	private static final String _NEW_OBJECT_FIELD_VALUE_2 =
 		"x" + RandomTestUtil.randomString();
 
-	private static final String _OBJECT_FIELD_NAME =
+	private static final String _OBJECT_FIELD_NAME_1 =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_NAME_2 =
 		"x" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_VALUE =

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.taglib.internal.display.context;
@@ -18,6 +9,8 @@ import com.liferay.fragment.helper.FragmentEntryLinkHelper;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
@@ -34,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -52,15 +46,18 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Pavel Savinov
  */
 public class LayoutClassedModelUsagesDisplayContext {
 
 	public LayoutClassedModelUsagesDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		String className, long classPK) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse, String className, long classPK) {
 
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_className = className;
@@ -320,6 +317,76 @@ public class LayoutClassedModelUsagesDisplayContext {
 		).build();
 	}
 
+	public VerticalNavItemList getVerticalNavItemList() {
+		return VerticalNavItemListBuilder.add(
+			verticalNavItem -> {
+				String name = LanguageUtil.format(
+					_httpServletRequest, "all-x", getAllUsageCount());
+
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "all"));
+				verticalNavItem.setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setNavigation(
+						"all"
+					).buildString());
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+			}
+		).add(
+			verticalNavItem -> {
+				String name = LanguageUtil.format(
+					_httpServletRequest, "pages-x", getPagesUsageCount());
+
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "pages"));
+				verticalNavItem.setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setNavigation(
+						"pages"
+					).buildString());
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+			}
+		).add(
+			verticalNavItem -> {
+				String name = LanguageUtil.format(
+					_httpServletRequest, "page-templates-x",
+					getPageTemplatesUsageCount());
+
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "page-templates"));
+				verticalNavItem.setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setNavigation(
+						"page-templates"
+					).buildString());
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+			}
+		).add(
+			verticalNavItem -> {
+				String name = LanguageUtil.format(
+					_httpServletRequest, "display-page-templates-x",
+					getDisplayPagesUsageCount());
+
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "display-page-templates"));
+				verticalNavItem.setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setNavigation(
+						"display-page-templates"
+					).buildString());
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+			}
+		).build();
+	}
+
 	public boolean isShowPreview(
 		LayoutClassedModelUsage layoutClassedModelUsage) {
 
@@ -373,6 +440,7 @@ public class LayoutClassedModelUsagesDisplayContext {
 	private final long _classNameId;
 	private final long _classPK;
 	private final FragmentEntryLinkHelper _fragmentEntryLinkHelper;
+	private final HttpServletRequest _httpServletRequest;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;

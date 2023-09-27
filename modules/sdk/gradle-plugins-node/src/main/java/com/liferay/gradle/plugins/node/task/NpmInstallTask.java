@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.node.task;
@@ -43,6 +34,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.PathSensitive;
@@ -103,10 +95,14 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 		executeNpmInstall(false);
 	}
 
+	@Internal
 	public File getNodeModulesCacheDir() {
 		return GradleUtil.toFile(getProject(), _nodeModulesCacheDir);
 	}
 
+	@InputFile
+	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getNodeModulesDigestFile() {
 		return GradleUtil.toFile(getProject(), _nodeModulesDigestFile);
 	}
@@ -151,6 +147,7 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 		return _getExistentFile("npm-shrinkwrap.json");
 	}
 
+	@Input
 	public boolean isCheckDigest() {
 		if (_isCacheEnabled()) {
 			return false;
@@ -169,14 +166,17 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 		return false;
 	}
 
+	@Input
 	public boolean isNodeModulesCacheNativeSync() {
 		return _nodeModulesCacheNativeSync;
 	}
 
+	@Input
 	public boolean isRemoveShrinkwrappedUrls() {
 		return GradleUtil.toBoolean(_removeShrinkwrappedUrls);
 	}
 
+	@Input
 	public boolean isUseNpmCI() {
 		return GradleUtil.toBoolean(_useNpmCI);
 	}
@@ -262,6 +262,7 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 		}
 	}
 
+	@Internal
 	@Override
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();

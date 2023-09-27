@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.wiki.web.internal.portlet.action;
@@ -28,6 +19,7 @@ import com.liferay.document.library.kernel.exception.InvalidFileVersionException
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,6 +34,7 @@ import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -57,8 +50,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.upload.UploadFileEntryHandler;
 import com.liferay.upload.UploadHandler;
 import com.liferay.upload.UploadResponseHandler;
 import com.liferay.wiki.constants.WikiConstants;
@@ -67,7 +62,9 @@ import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.web.internal.helper.WikiAttachmentsHelper;
-import com.liferay.wiki.web.internal.upload.TempAttachmentWikiUploadFileEntryHandler;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.Map;
 
@@ -408,6 +405,9 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 	private volatile DLConfiguration _dlConfiguration;
 
 	@Reference
+	private DLValidator _dlValidator;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
@@ -416,9 +416,9 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private TempAttachmentWikiUploadFileEntryHandler
-		_tempAttachmentWikiUploadFileEntryHandler;
+	private final TempAttachmentWikiUploadFileEntryHandler
+		_tempAttachmentWikiUploadFileEntryHandler =
+			new TempAttachmentWikiUploadFileEntryHandler();
 
 	@Reference
 	private UploadHandler _uploadHandler;
@@ -431,5 +431,41 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private WikiPageService _wikiPageService;
+
+	private class TempAttachmentWikiUploadFileEntryHandler
+		implements UploadFileEntryHandler {
+
+		@Override
+		public FileEntry upload(UploadPortletRequest uploadPortletRequest)
+			throws IOException, PortalException {
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)uploadPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_dlValidator.validateFileSize(
+				themeDisplay.getScopeGroupId(),
+				uploadPortletRequest.getFileName(_PARAMETER_NAME),
+				uploadPortletRequest.getContentType(_PARAMETER_NAME),
+				uploadPortletRequest.getSize(_PARAMETER_NAME));
+
+			long nodeId = ParamUtil.getLong(
+				uploadPortletRequest.getPortletRequest(), "nodeId");
+
+			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					_PARAMETER_NAME)) {
+
+				return _wikiPageService.addTempFileEntry(
+					nodeId, WikiConstants.TEMP_FOLDER_NAME,
+					TempFileEntryUtil.getTempFileName(
+						uploadPortletRequest.getFileName(_PARAMETER_NAME)),
+					inputStream,
+					uploadPortletRequest.getContentType(_PARAMETER_NAME));
+			}
+		}
+
+		private static final String _PARAMETER_NAME = "file";
+
+	}
 
 }

@@ -1,0 +1,3504 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "0",
+								"paddingRight": "0"
+							},
+							"id": "tablet"
+						}
+					],
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#F4F6F9",
+								"borderWidth": "0"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
+									"id": "landscapeMobile"
+								}
+							],
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "content-container",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"background": "",
+										"backgroundDarkOrLight": "light",
+										"backgroundImageUrl": "",
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "container",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "5",
+												"paddingRight": "5"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true
+								},
+								"pageElements": [
+									{
+										"definition": {
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "spacer",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"hidden": true,
+														"paddingBottom": "4",
+														"paddingTop": "4"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"paddingBottom": "4",
+														"paddingTop": "4"
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+														},
+														"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"gutters": true,
+													"indexed": true,
+													"modulesPerRow": 2,
+													"numberOfColumns": 2,
+													"reverseOrder": false,
+													"rowViewports": [
+														{
+															"id": "landscapeMobile",
+															"rowViewportDefinition": {
+																"modulesPerRow": 1
+															}
+														},
+														{
+															"id": "portraitMobile",
+															"rowViewportDefinition": {
+															}
+														},
+														{
+															"id": "tablet",
+															"rowViewportDefinition": {
+															}
+														}
+													],
+													"verticalAlignment": "top"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 8
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "flex",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"alignItems": "align-items-start",
+																		"flexDirection": "",
+																		"flexWrap": "",
+																		"items": 3,
+																		"justifyContent": "justify-content-start"
+																	},
+																	"fragmentFields": [
+																	],
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"hidden": false
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"indexed": true
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-image"
+																					},
+																					"fragmentConfig": {
+																						"imageSize": "w-100"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "image-square",
+																							"value": {
+																								"fragmentImage": {
+																									"url": {
+																										"mapping": {
+																											"fieldKey": "FileEntry_previewImage",
+																											"itemReference": {
+																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/crosswired/3_Community.png#]"
+																											}
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"marginRight": "3",
+																						"marginTop": "2",
+																						"width": "110px"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"definition": {
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-heading-f1",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Crosswired"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"fontWeight": "fontWeightBolder",
+																						"textColor": "bodyColor"
+																					},
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"width": ""
+																							},
+																							"id": "portraitMobile"
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "flex",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"alignItems": "align-items-start",
+																						"flexDirection": "",
+																						"flexWrap": "",
+																						"items": 2,
+																						"justifyContent": "justify-content-start"
+																					},
+																					"fragmentFields": [
+																					],
+																					"indexed": true
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																						},
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "BASIC_COMPONENT-image"
+																									},
+																									"fragmentConfig": {
+																										"imageSize": "w-100"
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "image-square",
+																											"value": {
+																												"fragmentImage": {
+																													"url": {
+																														"mapping": {
+																															"fieldKey": "FileEntry_previewImage",
+																															"itemReference": {
+																																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/crosswired/logo_khalibre.png#]"
+																															}
+																														}
+																													}
+																												},
+																												"fragmentLink": {
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"width": "120px"
+																									},
+																									"indexed": true
+																								},
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "FragmentDropZone"
+																					},
+																					{
+																						"definition": {
+																						},
+																						"type": "FragmentDropZone"
+																					}
+																				],
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-heading-f1",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": ""
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"fontWeight": "fontWeightBolder",
+																						"textColor": "whiteColor"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"definition": {
+																		},
+																		"type": "FragmentDropZone"
+																	}
+																],
+																"type": "Fragment"
+															}
+														],
+														"type": "Column"
+													},
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 4
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "flex",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"alignItems": "align-items-start",
+																		"flexDirection": "",
+																		"flexWrap": "",
+																		"items": 1,
+																		"justifyContent": "justify-content-center"
+																	},
+																	"fragmentFields": [
+																	],
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"hidden": true
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"indexed": true
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-button"
+																					},
+																					"fragmentConfig": {
+																						"buttonSize": "nm",
+																						"buttonType": "primary",
+																						"type": "link"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "link",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Contact Developer"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"hidden": true
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"fragmentViewportStyle": {
+																								"hidden": true
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"definition": {
+																		},
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"definition": {
+																		},
+																		"type": "FragmentDropZone"
+																	}
+																],
+																"type": "Fragment"
+															}
+														],
+														"type": "Column"
+													}
+												],
+												"type": "Row"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "spacer",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"paddingBottom": "6",
+														"paddingTop": "6"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"hidden": false
+															},
+															"id": "tablet"
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#0B5FFF",
+								"borderWidth": "0"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
+									"id": "landscapeMobile"
+								}
+							],
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"background": "",
+												"backgroundDarkOrLight": "dark",
+												"backgroundImageUrl": "",
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "5",
+														"paddingRight": "5"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 2,
+															"numberOfColumns": 2,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1,
+																		"reverseOrder": true
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {
+																		"reverseOrder": false
+																	}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {
+																	}
+																}
+															],
+															"verticalAlignment": "top"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 7
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "5",
+																				"paddingTop": "5"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-heading-f1",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Community Training and Collaboration Platform"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBolder",
+																				"textAlign": "justify",
+																				"textColor": "whiteColor"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "5",
+																				"paddingTop": "5"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-paragraph-large",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Crosswired is a comprehensive and holistic platform that enables large organizations, associations, and movements to inspire their partners and volunteers to build flourishing<br />\ncommunities. The platform combines powerful training and collaboration tools and empowers communities to multiply and safely work together toward a common purpose."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textAlign": "justify",
+																				"textColor": "whiteColor"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "5",
+																				"paddingTop": "5"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 5
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "5",
+																				"paddingTop": "5"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "image-carousel",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"colorScheme": "dark",
+																				"imageAspectRatio": "aspect-ratio-4-to-3",
+																				"imageCarouselMaxWidth": "517px",
+																				"lazyLoadingImage": true,
+																				"numberOfImages": "4"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "imageCarousel0",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/crosswired/01_slider01.png#]"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "imageCarousel1",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/crosswired/02_slider02.png#]"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "imageCarousel2",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/crosswired/03_slider03.png#]"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "imageCarousel3",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/crosswired/04_slider04.png#]"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"background": "",
+												"backgroundDarkOrLight": "light",
+												"backgroundImageUrl": "",
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "0"
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "0",
+														"paddingRight": "0"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "5",
+																		"paddingRight": "5"
+																	},
+																	"id": "tablet"
+																}
+															],
+															"indexed": true,
+															"layout": {
+																"borderWidth": 0,
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fixed"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "5",
+																				"paddingTop": "5"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-heading-f1",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Crosswired enables flourishing communities"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBolder"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"paddingLeft": "0",
+																						"paddingRight": "0"
+																					},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
+																						"paddingLeft": "0"
+																					},
+																					"id": "tablet"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-paragraph-base",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Many organizations need a solution that enables their members, external partners, and inquirers to collaborate and train together without compromising privacy and security. With our unique insights, Crosswired addresses this challenge so that our customers can focus on their core business, seek growth, and deliver their services more efficiently together. &nbsp; This is uniquely achieved through communities to help your organization flourish."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textAlign": "justify"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-spacer"
+																			},
+																			"fragmentConfig": {
+																				"height": "py-3"
+																			},
+																			"fragmentFields": [
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-spacer"
+																	},
+																	"fragmentConfig": {
+																		"height": "py-4"
+																	},
+																	"fragmentFields": [
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "gray200Color"
+															},
+															"indexed": true,
+															"layout": {
+																"borderWidth": 0,
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-spacer"
+																	},
+																	"fragmentConfig": {
+																		"height": "py-4"
+																	},
+																	"fragmentFields": [
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingLeft": "5",
+																				"paddingRight": "5"
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fixed"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"gutters": true,
+																			"indexed": true,
+																			"modulesPerRow": 2,
+																			"numberOfColumns": 2,
+																			"reverseOrder": false,
+																			"rowViewports": [
+																				{
+																					"id": "landscapeMobile",
+																					"rowViewportDefinition": {
+																						"modulesPerRow": 1
+																					}
+																				},
+																				{
+																					"id": "portraitMobile",
+																					"rowViewportDefinition": {
+																					}
+																				},
+																				{
+																					"id": "tablet",
+																					"rowViewportDefinition": {
+																					}
+																				}
+																			],
+																			"verticalAlignment": "middle"
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"columnViewports": [
+																						{
+																							"columnViewportDefinition": {
+																								"size": 12
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {
+																							},
+																							"id": "portraitMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"size": 6
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
+																							},
+																							"fragmentConfig": {
+																								"fontSize": "font-size-heading-f1",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "text",
+																									"value": {
+																										"fragmentLink": {
+																										},
+																										"text": {
+																											"value_i18n": {
+																												"en_US": "A platform that supports networks, associations and multiple organizations to collaborate securely, share resources and deliver training through a common trusted platform"
+																											}
+																										}
+																									}
+																								}
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "BASIC_COMPONENT-spacer"
+																							},
+																							"fragmentConfig": {
+																								"height": "py-3"
+																							},
+																							"fragmentFields": [
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
+																							},
+																							"fragmentConfig": {
+																								"fontSize": "font-size-paragraph-base",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "text",
+																									"value": {
+																										"fragmentLink": {
+																										},
+																										"text": {
+																											"value_i18n": {
+																												"en_US": "Crosswired provides a beautiful UX out of the box that provides the features that are really needed, with a licensing model that provides the flexibility to engage external partners and a broader ecosystem."
+																											}
+																										}
+																									}
+																								}
+																							],
+																							"fragmentStyle": {
+																								"textAlign": "justify"
+																							},
+																							"fragmentViewports": [
+																								{
+																									"fragmentViewportStyle": {
+																										"paddingBottom": "2"
+																									},
+																									"id": "portraitMobile"
+																								}
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					}
+																				],
+																				"type": "Column"
+																			},
+																			{
+																				"definition": {
+																					"columnViewports": [
+																						{
+																							"columnViewportDefinition": {
+																								"size": 12
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {
+																							},
+																							"id": "portraitMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"size": 6
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "BASIC_COMPONENT-external-video"
+																							},
+																							"fragmentConfig": {
+																								"align": "flex-start",
+																								"video": "{\"html\":\"<iframe allow=\\\"autoplay; encrypted-media\\\" allowfullscreen height=\\\"315\\\" frameborder=\\\"0\\\" src=\\\"https://www.youtube.com/embed/P1hl_xjHTYc?rel=0\\\" width=\\\"560\\\"><\\/iframe>\",\"title\":\"Crosswired Features\",\"type\":\"com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType\"}",
+																								"videoHeight": "",
+																								"videoWidth": ""
+																							},
+																							"fragmentFields": [
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					}
+																				],
+																				"type": "Column"
+																			}
+																		],
+																		"type": "Row"
+																	}
+																],
+																"type": "Section"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-spacer"
+																	},
+																	"fragmentConfig": {
+																		"height": "py-4"
+																	},
+																	"fragmentFields": [
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "5",
+																		"paddingRight": "5"
+																	},
+																	"id": "tablet"
+																}
+															],
+															"indexed": true,
+															"layout": {
+																"borderWidth": 0,
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fixed"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "5",
+																				"paddingTop": "5"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-heading-f1",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Experienced with proven results across organizations"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBolder"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"paddingLeft": "0",
+																						"paddingRight": "0"
+																					},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
+																						"paddingLeft": "0"
+																					},
+																					"id": "tablet"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-spacer"
+																			},
+																			"fragmentConfig": {
+																				"height": "py-3"
+																			},
+																			"fragmentFields": [
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"borderWidth": "0"
+																			},
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragmentStyle": {
+																						"textAlign": "center"
+																					},
+																					"gutters": true,
+																					"indexed": true,
+																					"modulesPerRow": 3,
+																					"numberOfColumns": 3,
+																					"reverseOrder": false,
+																					"rowViewports": [
+																						{
+																							"id": "landscapeMobile",
+																							"rowViewportDefinition": {
+																								"modulesPerRow": 1
+																							}
+																						},
+																						{
+																							"id": "portraitMobile",
+																							"rowViewportDefinition": {
+																							}
+																						},
+																						{
+																							"id": "tablet",
+																							"rowViewportDefinition": {
+																							}
+																						}
+																					],
+																					"verticalAlignment": "middle"
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"columnViewports": [
+																								{
+																									"columnViewportDefinition": {
+																										"size": 12
+																									},
+																									"id": "landscapeMobile"
+																								},
+																								{
+																									"columnViewportDefinition": {
+																									},
+																									"id": "portraitMobile"
+																								},
+																								{
+																									"columnViewportDefinition": {
+																									},
+																									"id": "tablet"
+																								}
+																							],
+																							"size": 4
+																						},
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragmentStyle": {
+																										"borderWidth": "0"
+																									},
+																									"indexed": true,
+																									"layout": {
+																										"borderWidth": 0,
+																										"marginBottom": 0,
+																										"marginLeft": 0,
+																										"marginRight": 0,
+																										"marginTop": 0,
+																										"opacity": 100,
+																										"paddingBottom": 0,
+																										"paddingLeft": 0,
+																										"paddingRight": 0,
+																										"paddingTop": 0,
+																										"widthType": "Fluid"
+																									}
+																								},
+																								"pageElements": [
+																									{
+																										"definition": {
+																											"fragment": {
+																												"key": "flex",
+																												"siteKey": "[$GROUP_KEY$]"
+																											},
+																											"fragmentConfig": {
+																												"alignItems": "align-items-center",
+																												"flexDirection": "flex-column",
+																												"flexWrap": "",
+																												"items": 2,
+																												"justifyContent": "justify-content-start"
+																											},
+																											"fragmentFields": [
+																											],
+																											"fragmentViewports": [
+																												{
+																													"fragmentViewportStyle": {
+																														"marginBottom": "4"
+																													},
+																													"id": "portraitMobile"
+																												}
+																											],
+																											"indexed": true
+																										},
+																										"pageElements": [
+																											{
+																												"definition": {
+																												},
+																												"pageElements": [
+																													{
+																														"definition": {
+																															"fragment": {
+																																"key": "BASIC_COMPONENT-image"
+																															},
+																															"fragmentConfig": {
+																																"imageSize": "w-100"
+																															},
+																															"fragmentFields": [
+																																{
+																																	"id": "image-square",
+																																	"value": {
+																																		"fragmentImage": {
+																																			"url": {
+																																				"mapping": {
+																																					"fieldKey": "FileEntry_previewImage",
+																																					"itemReference": {
+																																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/crosswired/icon_flexible_licensing.png#]"
+																																					}
+																																				}
+																																			}
+																																		},
+																																		"fragmentLink": {
+																																		}
+																																	}
+																																}
+																															],
+																															"fragmentStyle": {
+																																"height": "64px",
+																																"width": "64px"
+																															},
+																															"indexed": true
+																														},
+																														"type": "Fragment"
+																													}
+																												],
+																												"type": "FragmentDropZone"
+																											},
+																											{
+																												"definition": {
+																												},
+																												"pageElements": [
+																													{
+																														"definition": {
+																															"fragment": {
+																																"key": "text",
+																																"siteKey": "[$GROUP_KEY$]"
+																															},
+																															"fragmentConfig": {
+																																"fontSize": "font-size-paragraph-base",
+																																"smallCaps": false,
+																																"tabletScreenCenter": false
+																															},
+																															"fragmentFields": [
+																																{
+																																	"id": "text",
+																																	"value": {
+																																		"fragmentLink": {
+																																		},
+																																		"text": {
+																																			"value_i18n": {
+																																				"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Flexible Licensing<br />\nModel</h4>\n"
+																																			}
+																																		}
+																																	}
+																																}
+																															],
+																															"fragmentStyle": {
+																																"paddingTop": "3"
+																															},
+																															"indexed": true
+																														},
+																														"type": "Fragment"
+																													},
+																													{
+																														"definition": {
+																															"fragment": {
+																																"key": "text",
+																																"siteKey": "[$GROUP_KEY$]"
+																															},
+																															"fragmentConfig": {
+																																"fontSize": "font-size-paragraph-base",
+																																"smallCaps": false,
+																																"tabletScreenCenter": false
+																															},
+																															"fragmentFields": [
+																																{
+																																	"id": "text",
+																																	"value": {
+																																		"fragmentLink": {
+																																		},
+																																		"text": {
+																																			"value_i18n": {
+																																				"en_US": "<div style=\"text-align:center\">A highly competitive and flexible model that maximised external reach</div>\n"
+																																			}
+																																		}
+																																	}
+																																}
+																															],
+																															"fragmentStyle": {
+																																"paddingTop": "2"
+																															},
+																															"indexed": true
+																														},
+																														"type": "Fragment"
+																													}
+																												],
+																												"type": "FragmentDropZone"
+																											}
+																										],
+																										"type": "Fragment"
+																									}
+																								],
+																								"type": "Section"
+																							}
+																						],
+																						"type": "Column"
+																					},
+																					{
+																						"definition": {
+																							"columnViewports": [
+																								{
+																									"columnViewportDefinition": {
+																										"size": 12
+																									},
+																									"id": "landscapeMobile"
+																								},
+																								{
+																									"columnViewportDefinition": {
+																									},
+																									"id": "portraitMobile"
+																								},
+																								{
+																									"columnViewportDefinition": {
+																									},
+																									"id": "tablet"
+																								}
+																							],
+																							"size": 4
+																						},
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragmentStyle": {
+																										"borderWidth": "0"
+																									},
+																									"indexed": true,
+																									"layout": {
+																										"borderWidth": 0,
+																										"marginBottom": 0,
+																										"marginLeft": 0,
+																										"marginRight": 0,
+																										"marginTop": 0,
+																										"opacity": 100,
+																										"paddingBottom": 0,
+																										"paddingLeft": 0,
+																										"paddingRight": 0,
+																										"paddingTop": 0,
+																										"widthType": "Fluid"
+																									}
+																								},
+																								"pageElements": [
+																									{
+																										"definition": {
+																											"fragment": {
+																												"key": "flex",
+																												"siteKey": "[$GROUP_KEY$]"
+																											},
+																											"fragmentConfig": {
+																												"alignItems": "align-items-center",
+																												"flexDirection": "flex-column",
+																												"flexWrap": "",
+																												"items": 2,
+																												"justifyContent": "justify-content-center"
+																											},
+																											"fragmentFields": [
+																											],
+																											"fragmentViewports": [
+																												{
+																													"fragmentViewportStyle": {
+																														"marginBottom": "4"
+																													},
+																													"id": "portraitMobile"
+																												}
+																											],
+																											"indexed": true
+																										},
+																										"pageElements": [
+																											{
+																												"definition": {
+																												},
+																												"pageElements": [
+																													{
+																														"definition": {
+																															"fragment": {
+																																"key": "BASIC_COMPONENT-image"
+																															},
+																															"fragmentConfig": {
+																																"imageSize": "w-100"
+																															},
+																															"fragmentFields": [
+																																{
+																																	"id": "image-square",
+																																	"value": {
+																																		"fragmentImage": {
+																																			"url": {
+																																				"mapping": {
+																																					"fieldKey": "FileEntry_previewImage",
+																																					"itemReference": {
+																																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/crosswired/icon_network_training_communities.png#]"
+																																					}
+																																				}
+																																			}
+																																		},
+																																		"fragmentLink": {
+																																		}
+																																	}
+																																}
+																															],
+																															"fragmentStyle": {
+																																"height": "64px",
+																																"width": "64px"
+																															},
+																															"indexed": true
+																														},
+																														"type": "Fragment"
+																													}
+																												],
+																												"type": "FragmentDropZone"
+																											},
+																											{
+																												"definition": {
+																												},
+																												"pageElements": [
+																													{
+																														"definition": {
+																															"fragment": {
+																																"key": "text",
+																																"siteKey": "[$GROUP_KEY$]"
+																															},
+																															"fragmentConfig": {
+																																"fontSize": "font-size-paragraph-base",
+																																"smallCaps": false,
+																																"tabletScreenCenter": false
+																															},
+																															"fragmentFields": [
+																																{
+																																	"id": "text",
+																																	"value": {
+																																		"fragmentLink": {
+																																		},
+																																		"text": {
+																																			"value_i18n": {
+																																				"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Network and Training Communities</h4>\n"
+																																			}
+																																		}
+																																	}
+																																}
+																															],
+																															"fragmentStyle": {
+																																"paddingTop": "3"
+																															},
+																															"indexed": true
+																														},
+																														"type": "Fragment"
+																													},
+																													{
+																														"definition": {
+																															"fragment": {
+																																"key": "text",
+																																"siteKey": "[$GROUP_KEY$]"
+																															},
+																															"fragmentConfig": {
+																																"fontSize": "font-size-paragraph-base",
+																																"smallCaps": false,
+																																"tabletScreenCenter": false
+																															},
+																															"fragmentFields": [
+																																{
+																																	"id": "text",
+																																	"value": {
+																																		"fragmentLink": {
+																																		},
+																																		"text": {
+																																			"value_i18n": {
+																																				"en_US": "<div style=\"text-align:center\">Use Crosswired to build your own network and training community where members and external guests may buy and sell content</div>\n"
+																																			}
+																																		}
+																																	}
+																																}
+																															],
+																															"fragmentStyle": {
+																																"paddingTop": "2"
+																															},
+																															"indexed": true
+																														},
+																														"type": "Fragment"
+																													}
+																												],
+																												"type": "FragmentDropZone"
+																											}
+																										],
+																										"type": "Fragment"
+																									}
+																								],
+																								"type": "Section"
+																							}
+																						],
+																						"type": "Column"
+																					},
+																					{
+																						"definition": {
+																							"columnViewports": [
+																								{
+																									"columnViewportDefinition": {
+																										"size": 12
+																									},
+																									"id": "landscapeMobile"
+																								},
+																								{
+																									"columnViewportDefinition": {
+																									},
+																									"id": "portraitMobile"
+																								},
+																								{
+																									"columnViewportDefinition": {
+																									},
+																									"id": "tablet"
+																								}
+																							],
+																							"size": 4
+																						},
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragmentStyle": {
+																										"borderWidth": "0"
+																									},
+																									"indexed": true,
+																									"layout": {
+																										"borderWidth": 0,
+																										"marginBottom": 0,
+																										"marginLeft": 0,
+																										"marginRight": 0,
+																										"marginTop": 0,
+																										"opacity": 100,
+																										"paddingBottom": 0,
+																										"paddingLeft": 0,
+																										"paddingRight": 0,
+																										"paddingTop": 0,
+																										"widthType": "Fluid"
+																									}
+																								},
+																								"pageElements": [
+																									{
+																										"definition": {
+																											"fragment": {
+																												"key": "flex",
+																												"siteKey": "[$GROUP_KEY$]"
+																											},
+																											"fragmentConfig": {
+																												"alignItems": "align-items-center",
+																												"flexDirection": "flex-column",
+																												"flexWrap": "",
+																												"items": 2,
+																												"justifyContent": "justify-content-center"
+																											},
+																											"fragmentFields": [
+																											],
+																											"indexed": true
+																										},
+																										"pageElements": [
+																											{
+																												"definition": {
+																												},
+																												"pageElements": [
+																													{
+																														"definition": {
+																															"fragment": {
+																																"key": "BASIC_COMPONENT-image"
+																															},
+																															"fragmentConfig": {
+																																"imageSize": "w-100"
+																															},
+																															"fragmentFields": [
+																																{
+																																	"id": "image-square",
+																																	"value": {
+																																		"fragmentImage": {
+																																			"url": {
+																																				"mapping": {
+																																					"fieldKey": "FileEntry_previewImage",
+																																					"itemReference": {
+																																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/crosswired/icon_connect_existing.png#]"
+																																					}
+																																				}
+																																			}
+																																		},
+																																		"fragmentLink": {
+																																		}
+																																	}
+																																}
+																															],
+																															"fragmentStyle": {
+																																"height": "64px",
+																																"width": "64px"
+																															},
+																															"indexed": true
+																														},
+																														"type": "Fragment"
+																													}
+																												],
+																												"type": "FragmentDropZone"
+																											},
+																											{
+																												"definition": {
+																												},
+																												"pageElements": [
+																													{
+																														"definition": {
+																															"fragment": {
+																																"key": "text",
+																																"siteKey": "[$GROUP_KEY$]"
+																															},
+																															"fragmentConfig": {
+																																"fontSize": "font-size-paragraph-base",
+																																"smallCaps": false,
+																																"tabletScreenCenter": false
+																															},
+																															"fragmentFields": [
+																																{
+																																	"id": "text",
+																																	"value": {
+																																		"fragmentLink": {
+																																		},
+																																		"text": {
+																																			"value_i18n": {
+																																				"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Connect Existing<br />\nSystems</h4>\n"
+																																			}
+																																		}
+																																	}
+																																}
+																															],
+																															"fragmentStyle": {
+																																"paddingTop": "3"
+																															},
+																															"indexed": true
+																														},
+																														"type": "Fragment"
+																													},
+																													{
+																														"definition": {
+																															"fragment": {
+																																"key": "text",
+																																"siteKey": "[$GROUP_KEY$]"
+																															},
+																															"fragmentConfig": {
+																																"fontSize": "font-size-paragraph-base",
+																																"smallCaps": false,
+																																"tabletScreenCenter": false
+																															},
+																															"fragmentFields": [
+																																{
+																																	"id": "text",
+																																	"value": {
+																																		"fragmentLink": {
+																																		},
+																																		"text": {
+																																			"value_i18n": {
+																																				"en_US": "<div style=\"text-align:center\">Extend the core data of Crosswired with your own datasets and workflows</div>\n"
+																																			}
+																																		}
+																																	}
+																																}
+																															],
+																															"fragmentStyle": {
+																																"paddingTop": "2",
+																																"textAlign": "center"
+																															},
+																															"indexed": true
+																														},
+																														"type": "Fragment"
+																													}
+																												],
+																												"type": "FragmentDropZone"
+																											}
+																										],
+																										"type": "Fragment"
+																									}
+																								],
+																								"type": "Section"
+																							}
+																						],
+																						"type": "Column"
+																					}
+																				],
+																				"type": "Row"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-spacer"
+																					},
+																					"fragmentConfig": {
+																						"height": "py-3"
+																					},
+																					"fragmentFields": [
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	},
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"textAlign": "center"
+																			},
+																			"gutters": true,
+																			"indexed": true,
+																			"modulesPerRow": 3,
+																			"numberOfColumns": 3,
+																			"reverseOrder": false,
+																			"rowViewports": [
+																				{
+																					"id": "landscapeMobile",
+																					"rowViewportDefinition": {
+																						"modulesPerRow": 1
+																					}
+																				},
+																				{
+																					"id": "portraitMobile",
+																					"rowViewportDefinition": {
+																					}
+																				},
+																				{
+																					"id": "tablet",
+																					"rowViewportDefinition": {
+																					}
+																				}
+																			],
+																			"verticalAlignment": "middle"
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"columnViewports": [
+																						{
+																							"columnViewportDefinition": {
+																								"size": 12
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {
+																							},
+																							"id": "portraitMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"size": 4
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragmentStyle": {
+																								"borderWidth": "0"
+																							},
+																							"indexed": true,
+																							"layout": {
+																								"borderWidth": 0,
+																								"marginBottom": 0,
+																								"marginLeft": 0,
+																								"marginRight": 0,
+																								"marginTop": 0,
+																								"opacity": 100,
+																								"paddingBottom": 0,
+																								"paddingLeft": 0,
+																								"paddingRight": 0,
+																								"paddingTop": 0,
+																								"widthType": "Fluid"
+																							}
+																						},
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "flex",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"alignItems": "align-items-center",
+																										"flexDirection": "flex-column",
+																										"flexWrap": "",
+																										"items": 2,
+																										"justifyContent": "justify-content-start"
+																									},
+																									"fragmentFields": [
+																									],
+																									"fragmentViewports": [
+																										{
+																											"fragmentViewportStyle": {
+																												"marginBottom": "4"
+																											},
+																											"id": "portraitMobile"
+																										}
+																									],
+																									"indexed": true
+																								},
+																								"pageElements": [
+																									{
+																										"definition": {
+																										},
+																										"pageElements": [
+																											{
+																												"definition": {
+																													"fragment": {
+																														"key": "BASIC_COMPONENT-image"
+																													},
+																													"fragmentConfig": {
+																														"imageSize": "w-100"
+																													},
+																													"fragmentFields": [
+																														{
+																															"id": "image-square",
+																															"value": {
+																																"fragmentImage": {
+																																	"url": {
+																																		"mapping": {
+																																			"fieldKey": "FileEntry_previewImage",
+																																			"itemReference": {
+																																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/crosswired/icon_private_cloud_hosting.png#]"
+																																			}
+																																		}
+																																	}
+																																},
+																																"fragmentLink": {
+																																}
+																															}
+																														}
+																													],
+																													"fragmentStyle": {
+																														"height": "64px",
+																														"width": "64px"
+																													},
+																													"indexed": true
+																												},
+																												"type": "Fragment"
+																											}
+																										],
+																										"type": "FragmentDropZone"
+																									},
+																									{
+																										"definition": {
+																										},
+																										"pageElements": [
+																											{
+																												"definition": {
+																													"fragment": {
+																														"key": "text",
+																														"siteKey": "[$GROUP_KEY$]"
+																													},
+																													"fragmentConfig": {
+																														"fontSize": "font-size-paragraph-base",
+																														"smallCaps": false,
+																														"tabletScreenCenter": false
+																													},
+																													"fragmentFields": [
+																														{
+																															"id": "text",
+																															"value": {
+																																"fragmentLink": {
+																																},
+																																"text": {
+																																	"value_i18n": {
+																																		"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Private Cloud Hosting</h4>\n"
+																																	}
+																																}
+																															}
+																														}
+																													],
+																													"fragmentStyle": {
+																														"paddingTop": "3"
+																													},
+																													"indexed": true
+																												},
+																												"type": "Fragment"
+																											},
+																											{
+																												"definition": {
+																													"fragment": {
+																														"key": "text",
+																														"siteKey": "[$GROUP_KEY$]"
+																													},
+																													"fragmentConfig": {
+																														"fontSize": "font-size-paragraph-base",
+																														"smallCaps": false,
+																														"tabletScreenCenter": false
+																													},
+																													"fragmentFields": [
+																														{
+																															"id": "text",
+																															"value": {
+																																"fragmentLink": {
+																																},
+																																"text": {
+																																	"value_i18n": {
+																																		"en_US": "<div style=\"text-align:center\">A rapid deployment solution of Liferay delivering tremendous value out of the box yet can be developed further according to your needs.</div>\n"
+																																	}
+																																}
+																															}
+																														}
+																													],
+																													"fragmentStyle": {
+																														"paddingTop": "2"
+																													},
+																													"indexed": true
+																												},
+																												"type": "Fragment"
+																											}
+																										],
+																										"type": "FragmentDropZone"
+																									}
+																								],
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "Section"
+																					}
+																				],
+																				"type": "Column"
+																			},
+																			{
+																				"definition": {
+																					"columnViewports": [
+																						{
+																							"columnViewportDefinition": {
+																								"size": 12
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {
+																							},
+																							"id": "portraitMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"size": 4
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragmentStyle": {
+																								"borderWidth": "0"
+																							},
+																							"indexed": true,
+																							"layout": {
+																								"borderWidth": 0,
+																								"marginBottom": 0,
+																								"marginLeft": 0,
+																								"marginRight": 0,
+																								"marginTop": 0,
+																								"opacity": 100,
+																								"paddingBottom": 0,
+																								"paddingLeft": 0,
+																								"paddingRight": 0,
+																								"paddingTop": 0,
+																								"widthType": "Fluid"
+																							}
+																						},
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "flex",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"alignItems": "align-items-center",
+																										"flexDirection": "flex-column",
+																										"flexWrap": "",
+																										"items": 2,
+																										"justifyContent": "justify-content-center"
+																									},
+																									"fragmentFields": [
+																									],
+																									"fragmentViewports": [
+																										{
+																											"fragmentViewportStyle": {
+																												"marginBottom": "4"
+																											},
+																											"id": "portraitMobile"
+																										}
+																									],
+																									"indexed": true
+																								},
+																								"pageElements": [
+																									{
+																										"definition": {
+																										},
+																										"pageElements": [
+																											{
+																												"definition": {
+																													"fragment": {
+																														"key": "BASIC_COMPONENT-image"
+																													},
+																													"fragmentConfig": {
+																														"imageSize": "w-100"
+																													},
+																													"fragmentFields": [
+																														{
+																															"id": "image-square",
+																															"value": {
+																																"fragmentImage": {
+																																	"url": {
+																																		"mapping": {
+																																			"fieldKey": "FileEntry_previewImage",
+																																			"itemReference": {
+																																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/crosswired/icon_trusted_msp.png#]"
+																																			}
+																																		}
+																																	}
+																																},
+																																"fragmentLink": {
+																																}
+																															}
+																														}
+																													],
+																													"fragmentStyle": {
+																														"height": "64px",
+																														"width": "64px"
+																													},
+																													"indexed": true
+																												},
+																												"type": "Fragment"
+																											}
+																										],
+																										"type": "FragmentDropZone"
+																									},
+																									{
+																										"definition": {
+																										},
+																										"pageElements": [
+																											{
+																												"definition": {
+																													"fragment": {
+																														"key": "text",
+																														"siteKey": "[$GROUP_KEY$]"
+																													},
+																													"fragmentConfig": {
+																														"fontSize": "font-size-paragraph-base",
+																														"smallCaps": false,
+																														"tabletScreenCenter": false
+																													},
+																													"fragmentFields": [
+																														{
+																															"id": "text",
+																															"value": {
+																																"fragmentLink": {
+																																},
+																																"text": {
+																																	"value_i18n": {
+																																		"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Trusted MSP</h4>\n"
+																																	}
+																																}
+																															}
+																														}
+																													],
+																													"fragmentStyle": {
+																														"paddingTop": "3"
+																													},
+																													"indexed": true
+																												},
+																												"type": "Fragment"
+																											},
+																											{
+																												"definition": {
+																													"fragment": {
+																														"key": "text",
+																														"siteKey": "[$GROUP_KEY$]"
+																													},
+																													"fragmentConfig": {
+																														"fontSize": "font-size-paragraph-base",
+																														"smallCaps": false,
+																														"tabletScreenCenter": false
+																													},
+																													"fragmentFields": [
+																														{
+																															"id": "text",
+																															"value": {
+																																"fragmentLink": {
+																																},
+																																"text": {
+																																	"value_i18n": {
+																																		"en_US": "<div style=\"text-align:center\">A trusted managed service provider who understands and knows how our customers work</div>\n"
+																																	}
+																																}
+																															}
+																														}
+																													],
+																													"fragmentStyle": {
+																														"paddingTop": "2"
+																													},
+																													"indexed": true
+																												},
+																												"type": "Fragment"
+																											}
+																										],
+																										"type": "FragmentDropZone"
+																									}
+																								],
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "Section"
+																					}
+																				],
+																				"type": "Column"
+																			},
+																			{
+																				"definition": {
+																					"columnViewports": [
+																						{
+																							"columnViewportDefinition": {
+																								"size": 12
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {
+																							},
+																							"id": "portraitMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"size": 4
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragmentStyle": {
+																								"borderWidth": "0"
+																							},
+																							"indexed": true,
+																							"layout": {
+																								"borderWidth": 0,
+																								"marginBottom": 0,
+																								"marginLeft": 0,
+																								"marginRight": 0,
+																								"marginTop": 0,
+																								"opacity": 100,
+																								"paddingBottom": 0,
+																								"paddingLeft": 0,
+																								"paddingRight": 0,
+																								"paddingTop": 0,
+																								"widthType": "Fluid"
+																							}
+																						},
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "flex",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"alignItems": "align-items-center",
+																										"flexDirection": "flex-column",
+																										"flexWrap": "",
+																										"items": 2,
+																										"justifyContent": "justify-content-center"
+																									},
+																									"fragmentFields": [
+																									],
+																									"indexed": true
+																								},
+																								"pageElements": [
+																									{
+																										"definition": {
+																										},
+																										"pageElements": [
+																											{
+																												"definition": {
+																													"fragment": {
+																														"key": "BASIC_COMPONENT-image"
+																													},
+																													"fragmentConfig": {
+																														"imageSize": "w-100"
+																													},
+																													"fragmentFields": [
+																														{
+																															"id": "image-square",
+																															"value": {
+																																"fragmentImage": {
+																																	"url": {
+																																		"mapping": {
+																																			"fieldKey": "FileEntry_previewImage",
+																																			"itemReference": {
+																																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/crosswired/icon_top_level_security.png#]"
+																																			}
+																																		}
+																																	}
+																																},
+																																"fragmentLink": {
+																																}
+																															}
+																														}
+																													],
+																													"fragmentStyle": {
+																														"height": "64px",
+																														"width": "64px"
+																													},
+																													"indexed": true
+																												},
+																												"type": "Fragment"
+																											}
+																										],
+																										"type": "FragmentDropZone"
+																									},
+																									{
+																										"definition": {
+																										},
+																										"pageElements": [
+																											{
+																												"definition": {
+																													"fragment": {
+																														"key": "text",
+																														"siteKey": "[$GROUP_KEY$]"
+																													},
+																													"fragmentConfig": {
+																														"fontSize": "font-size-paragraph-base",
+																														"smallCaps": false,
+																														"tabletScreenCenter": false
+																													},
+																													"fragmentFields": [
+																														{
+																															"id": "text",
+																															"value": {
+																																"fragmentLink": {
+																																},
+																																"text": {
+																																	"value_i18n": {
+																																		"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Top Level Security</h4>\n"
+																																	}
+																																}
+																															}
+																														}
+																													],
+																													"fragmentStyle": {
+																														"paddingTop": "3"
+																													},
+																													"indexed": true
+																												},
+																												"type": "Fragment"
+																											},
+																											{
+																												"definition": {
+																													"fragment": {
+																														"key": "text",
+																														"siteKey": "[$GROUP_KEY$]"
+																													},
+																													"fragmentConfig": {
+																														"fontSize": "font-size-paragraph-base",
+																														"smallCaps": false,
+																														"tabletScreenCenter": false
+																													},
+																													"fragmentFields": [
+																														{
+																															"id": "text",
+																															"value": {
+																																"fragmentLink": {
+																																},
+																																"text": {
+																																	"value_i18n": {
+																																		"en_US": "<div style=\"text-align:center\">From profile management, organization settings and personal encryption options, all hurdles have been overcome for your multi-national non-profit organization.</div>\n"
+																																	}
+																																}
+																															}
+																														}
+																													],
+																													"fragmentStyle": {
+																														"paddingTop": "2",
+																														"textAlign": "center"
+																													},
+																													"indexed": true
+																												},
+																												"type": "Fragment"
+																											}
+																										],
+																										"type": "FragmentDropZone"
+																									}
+																								],
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "Section"
+																					}
+																				],
+																				"type": "Column"
+																			}
+																		],
+																		"type": "Row"
+																	}
+																],
+																"type": "Section"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-spacer"
+																	},
+																	"fragmentConfig": {
+																		"height": "py-2"
+																	},
+																	"fragmentFields": [
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 1,
+															"numberOfColumns": 1,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1,
+																		"reverseOrder": true
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {
+																	}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {
+																	}
+																}
+															],
+															"verticalAlignment": "top"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 12
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-spacer"
+																			},
+																			"fragmentConfig": {
+																				"height": "py-3"
+																			},
+																			"fragmentFields": [
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"backgroundColor": "whiteColor",
+																				"borderWidth": "0"
+																			},
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-spacer"
+																					},
+																					"fragmentConfig": {
+																						"height": "py-3"
+																					},
+																					"fragmentFields": [
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragmentStyle": {
+																						"borderWidth": "0"
+																					},
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"paddingLeft": "5",
+																								"paddingRight": "5"
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"indexed": true,
+																					"layout": {
+																						"borderWidth": 0,
+																						"marginBottom": 0,
+																						"marginLeft": 0,
+																						"marginRight": 0,
+																						"marginTop": 0,
+																						"opacity": 100,
+																						"paddingBottom": 0,
+																						"paddingLeft": 0,
+																						"paddingRight": 0,
+																						"paddingTop": 0,
+																						"widthType": "Fixed"
+																					}
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
+																							},
+																							"fragmentConfig": {
+																								"fontSize": "font-size-heading-f1",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "text",
+																									"value": {
+																										"fragmentLink": {
+																										},
+																										"text": {
+																											"value_i18n": {
+																												"en_US": "A full service community platform that:"
+																											}
+																										}
+																									}
+																								}
+																							],
+																							"fragmentStyle": {
+																								"fontWeight": "fontWeightBolder"
+																							},
+																							"fragmentViewports": [
+																								{
+																									"fragmentViewportStyle": {
+																										"paddingLeft": "0",
+																										"paddingRight": "0"
+																									},
+																									"id": "portraitMobile"
+																								}
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "BASIC_COMPONENT-spacer"
+																							},
+																							"fragmentConfig": {
+																								"height": "py-3"
+																							},
+																							"fragmentFields": [
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
+																							},
+																							"fragmentConfig": {
+																								"fontSize": "font-size-paragraph-large",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "text",
+																									"value": {
+																										"fragmentLink": {
+																										},
+																										"text": {
+																											"value_i18n": {
+																												"en_US": " \n<ol>\n\t<li>Provides a safe place for community engagement.\n\t<ul>\n\t\t<li>Dashboard aggregating organization and community feeds, notifications,<br />\n\t\tdiscussion boards and chats.</li>\n\t\t<li>Global search for courses, communities, people, and files</li>\n\t\t<li>Secure portal to integrate all your apps</li>\n\t\t<li>Profiles - Full and granular&nbsp;&nbsp;control of your profile visibility for peace of mind and privacy</li>\n\t</ul>\n\t</li>\n\t<li>Equips and empowers your members, partners and communities.\n\t<ul>\n\t\t<li>Fully featured Community based Learning Management Solution</li>\n\t\t<li>Learning Paths, Course catalog, course activities, blended learning and reporting.</li>\n\t\t<li>Shared learning content marketplace</li>\n\t</ul>\n\t</li>\n\t<li>Helps you tell your stories, inspire your partners, and facilitate collaboration\n\t<ul>\n\t\t<li>Posts and Timelines to share your story.</li>\n\t\t<li>&nbsp;Community registration and administration tools to simplify onboarding.</li>\n\t\t<li>Newsletter subscriptions and bulk emailer integration for advertising.</li>\n\t</ul>\n\t</li>\n\t<li>Enables efficient organizations\n\t<ul>\n\t\t<li>Organization structure administration tools to define your network and assign community leaders.</li>\n\t\t<li>Consent management tools to enable compliance to privacy and community rules.</li>\n\t\t<li>Define granular organization security standards, bandwidth, and storage constraints.</li>\n\t\t<li>Opensource identity access management and second factor authentication.</li>\n\t\t<li>White labelling / multi-domain</li>\n\t</ul>\n\t</li>\n</ol>\n"
+																											}
+																										}
+																									}
+																								}
+																							],
+																							"fragmentStyle": {
+																								"paddingLeft": "4"
+																							},
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "BASIC_COMPONENT-spacer"
+																							},
+																							"fragmentConfig": {
+																								"height": "py-3"
+																							},
+																							"fragmentFields": [
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
+																							},
+																							"fragmentConfig": {
+																								"fontSize": "font-size-heading-f4",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "text",
+																									"value": {
+																										"fragmentLink": {
+																										},
+																										"text": {
+																											"value_i18n": {
+																												"en_US": "Company Profile"
+																											}
+																										}
+																									}
+																								}
+																							],
+																							"fragmentStyle": {
+																								"fontWeight": "fontWeightBolder"
+																							},
+																							"fragmentViewports": [
+																								{
+																									"fragmentViewportStyle": {
+																										"paddingLeft": "0",
+																										"paddingRight": "0"
+																									},
+																									"id": "portraitMobile"
+																								},
+																								{
+																									"fragmentViewportStyle": {
+																										"paddingLeft": "0"
+																									},
+																									"id": "tablet"
+																								}
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
+																							},
+																							"fragmentConfig": {
+																								"fontSize": "font-size-paragraph-large",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "text",
+																									"value": {
+																										"fragmentLink": {
+																										},
+																										"text": {
+																											"value_i18n": {
+																												"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\"><span style=\"background-color: var(--white); color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit;\">Khalibre was incorporated in 2010 in Singapore and Cambodia. We are trusted provider for not-for-profit organisations with a presence in more than 60 countries around the world and the provider of the Crosswired platform.&nbsp;</span></h4>\n<br />\nWebsites<br />\n<a href=\"http://www.crosswired.com/\" target=\"_blank\">https://www.crosswired.com</a><br />\n<a href=\"https://www.khalibre.com/\" target=\"_blank\">https://www.khalibre.com</a><br />\n<br />\nEmail<br />\n<a href=\"mailto:sales@crosswired.com\">sales@crosswired.com</a><br />\n&nbsp;"
+																											}
+																										}
+																									}
+																								}
+																							],
+																							"fragmentStyle": {
+																								"marginTop": "1",
+																								"paddingTop": "2"
+																							},
+																							"fragmentViewports": [
+																								{
+																									"fragmentViewportStyle": {
+																										"paddingLeft": "0",
+																										"paddingRight": "0"
+																									},
+																									"id": "portraitMobile"
+																								}
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					}
+																				],
+																				"type": "Section"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-spacer"
+																					},
+																					"fragmentConfig": {
+																						"height": "py-5"
+																					},
+																					"fragmentFields": [
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#f7f8f9",
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"background": "",
+												"backgroundDarkOrLight": "light",
+												"backgroundImageUrl": "",
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "container",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"backgroundColor": "gray200Color"
+											},
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-spacer"
+															},
+															"fragmentConfig": {
+																"height": "py-4"
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-heading-f1",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Contact Us"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontWeight": "fontWeightBolder",
+																"textColor": "brandColor4"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "5",
+																		"paddingRight": "5"
+																	},
+																	"id": "tablet"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-paragraph-base",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Find out more about Crosswired"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "5",
+																		"paddingRight": "5"
+																	},
+																	"id": "portraitMobile"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "spacer",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "2",
+																"paddingTop": "2"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "spacer",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "2",
+																"paddingTop": "9"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "marketplace-master"
+		}
+	},
+	"version": 1.1
+}

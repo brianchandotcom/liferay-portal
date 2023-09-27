@@ -4,7 +4,6 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Fragments";
 
 	static var randomSiteName = StringUtil.randomString(8);
@@ -12,6 +11,10 @@ definition {
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
@@ -83,8 +86,6 @@ definition {
 				columnsNumber = 1,
 				fieldLabelName = "Name",
 				tabName = "Field Tab");
-
-			// Need to rewrite when LPS-182835 get fixed
 
 			ObjectAdmin.addCategorizationOnLayoutTab();
 
@@ -161,8 +162,6 @@ definition {
 				portlet = "${labelName}s");
 
 			ObjectPortlet.viewEntryDetails(entry = "Test Name");
-
-			// Need to rewrite when LPS-182835 get fixed
 
 			for (var tagName : list "${tagName1},${tagName2},local tag") {
 				AssetCategorization.viewTag(tagName = ${tagName});

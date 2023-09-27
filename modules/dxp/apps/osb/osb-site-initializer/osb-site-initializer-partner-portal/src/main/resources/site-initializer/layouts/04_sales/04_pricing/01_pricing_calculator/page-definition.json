@@ -1,0 +1,186 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "content-welcome-banner"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "first-welcome-banner-title",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Welcome to Pricing Calculator",
+												"ca_ES": "Welcome to Pricing Calculator",
+												"de_DE": "Welcome to Pricing Calculator",
+												"en_US": "Welcome to Pricing Calculator",
+												"es_ES": "Welcome to Pricing Calculator",
+												"fi_FI": "Welcome to Pricing Calculator",
+												"fr_FR": "Welcome to Pricing Calculator",
+												"hu_HU": "Welcome to Pricing Calculator",
+												"ja_JP": "Welcome to Pricing Calculator",
+												"nl_NL": "Welcome to Pricing Calculator",
+												"pt_BR": "Welcome to Pricing Calculator",
+												"sv_SE": "Welcome to Pricing Calculator",
+												"zh_CN": "Welcome to Pricing Calculator"
+											}
+										}
+									}
+								},
+								{
+									"id": "first-welcome-banner-description",
+									"value": {
+										"fragmentLink": {
+										}
+									}
+								},
+								{
+									"id": "second-welcome-banner-title",
+									"value": {
+										"fragmentLink": {
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"pageElements": [
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "button-welcome-banner"
+											},
+											"fragmentConfig": {
+												"videoButtonLink": "https://www.youtube.com/embed/bZeAh7dpskw"
+											},
+											"fragmentFields": [
+												{
+													"id": "first-banner-primary-button-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Watch Video",
+																"ca_ES": "Watch Video",
+																"de_DE": "Watch Video",
+																"en_US": "Watch Video",
+																"es_ES": "Watch Video",
+																"fi_FI": "Watch Video",
+																"fr_FR": "Watch Video",
+																"hu_HU": "Watch Video",
+																"ja_JP": "Watch Video",
+																"nl_NL": "Watch Video",
+																"pt_BR": "Watch Video",
+																"sv_SE": "Watch Video",
+																"zh_CN": "Watch Video"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-image"
+											},
+											"fragmentConfig": {
+												"imageSize": "w-100"
+											},
+											"fragmentFields": [
+												{
+													"id": "image-square",
+													"value": {
+														"fragmentImage": {
+															"url": {
+																"mapping": {
+																	"fieldKey": "FileEntry_previewImage",
+																	"itemReference": {
+																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/content-welcome-banner-resources/sales-welcome-banner-bg.png#]"
+																	}
+																}
+															}
+														},
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

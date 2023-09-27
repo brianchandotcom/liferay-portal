@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Site Navigation Item Selector API
 Bundle-SymbolicName: com.liferay.site.navigation.item.selector.api
-Bundle-Version: 4.0.6
+Bundle-Version: 4.0.7
 Export-Package:\
 	com.liferay.site.navigation.item.selector,\
 	com.liferay.site.navigation.item.selector.criterion

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.security.permission.resource;
@@ -25,7 +16,7 @@ import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
+import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 
 import java.util.Objects;
 import java.util.function.ToLongFunction;
@@ -37,12 +28,10 @@ public class WorkflowedModelPermissionLogic<T extends GroupedModel>
 	implements ModelResourcePermissionLogic<T> {
 
 	public WorkflowedModelPermissionLogic(
-		WorkflowPermission workflowPermission,
 		ModelResourcePermission<T> modelResourcePermission,
 		GroupLocalService groupLocalService,
 		ToLongFunction<T> primKeyToLongFunction) {
 
-		_workflowPermission = Objects.requireNonNull(workflowPermission);
 		_modelResourcePermission = Objects.requireNonNull(
 			modelResourcePermission);
 		_groupLocalService = groupLocalService;
@@ -103,7 +92,7 @@ public class WorkflowedModelPermissionLogic<T extends GroupedModel>
 			return false;
 		}
 		else if (workflowedModel.isPending()) {
-			return _workflowPermission.hasPermission(
+			return WorkflowPermissionUtil.hasPermission(
 				permissionChecker, model.getGroupId(), name,
 				_primKeyToLongFunction.applyAsLong(model), actionId);
 		}
@@ -114,6 +103,5 @@ public class WorkflowedModelPermissionLogic<T extends GroupedModel>
 	private final GroupLocalService _groupLocalService;
 	private final ModelResourcePermission<T> _modelResourcePermission;
 	private final ToLongFunction<T> _primKeyToLongFunction;
-	private final WorkflowPermission _workflowPermission;
 
 }

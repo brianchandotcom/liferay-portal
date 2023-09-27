@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.set.prototype.web.internal.portlet;
@@ -20,6 +11,7 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.layout.set.prototype.configuration.LayoutSetPrototypeConfiguration;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.exception.RequiredLayoutSetPrototypeException;
@@ -39,7 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.sites.kernel.util.Sites;
 
 import java.io.IOException;
 
@@ -133,7 +124,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		long layoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "layoutSetPrototypeId");
 
-		sites.setMergeFailCount(
+		layoutSetPrototypeHelper.setMergeFailCount(
 			layoutSetPrototypeService.getLayoutSetPrototype(
 				layoutSetPrototypeId),
 			0);
@@ -304,6 +295,9 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 	}
 
 	@Reference
+	protected LayoutSetPrototypeHelper layoutSetPrototypeHelper;
+
+	@Reference
 	protected LayoutSetPrototypeService layoutSetPrototypeService;
 
 	@Reference
@@ -314,9 +308,6 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 
 	@Reference
 	protected PanelCategoryRegistry panelCategoryRegistry;
-
-	@Reference
-	protected Sites sites;
 
 	private void _addSessionMessages(
 		ActionRequest actionRequest, boolean oldReadyForPropagation,

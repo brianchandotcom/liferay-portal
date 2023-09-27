@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.defaults;
@@ -43,16 +34,18 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
-import org.gradle.api.plugins.MavenPlugin;
+import org.gradle.api.publish.PublicationContainer;
+import org.gradle.api.publish.PublishingExtension;
+import org.gradle.api.publish.maven.MavenPublication;
+import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
+import org.gradle.api.publish.plugins.PublishingPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.Upload;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.util.GUtil;
 
@@ -80,10 +73,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
 
 		_applyPlugins(project);
-
-		// GRADLE-2427
-
-		_addTaskInstall(project);
 
 		_applyConfigScripts(project);
 
@@ -125,14 +114,16 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		GradleUtil.excludeTasksWithProperty(
 			project, LiferayOSGiDefaultsPlugin.SNAPSHOT_IF_STALE_PROPERTY_NAME,
-			true, MavenPlugin.INSTALL_TASK_NAME,
-			BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+			true, MavenPublishPlugin.PUBLISH_LOCAL_LIFECYCLE_TASK_NAME,
+			PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
+					_configureExtensionPublishing(project);
+
 					if (liferayThemeDefaultsExtension.
 							isUseLocalDependencies()) {
 
@@ -147,10 +138,10 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 						project);
 
 					// setProjectSnapshotVersion must be called before
-					// configureTaskUploadArchives, because the latter one needs
+					// configureTaskPublish, because the latter one needs
 					// to know if we are publishing a snapshot or not.
 
-					_configureTaskUploadArchives(project, updateVersionTask);
+					_configureTaskPublish(project, updateVersionTask);
 				}
 
 			});
@@ -231,21 +222,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		copy.setIncludeEmptyDirs(false);
 
 		return copy;
-	}
-
-	private Upload _addTaskInstall(Project project) {
-		Upload upload = GradleUtil.addTask(
-			project, MavenPlugin.INSTALL_TASK_NAME, Upload.class);
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, Dependency.ARCHIVES_CONFIGURATION);
-
-		upload.setConfiguration(configuration);
-		upload.setDescription(
-			"Installs the '" + configuration.getName() +
-				"' artifacts into the local Maven repository.");
-
-		return upload;
 	}
 
 	private ReplaceRegexTask _addTaskUpdateVersion(
@@ -384,12 +360,12 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyScript(
 			project,
 			"com/liferay/gradle/plugins/defaults/dependencies" +
-				"/config-maven.gradle",
+				"/config-maven-publish.gradle",
 			project);
 	}
 
 	private void _applyPlugins(Project project) {
-		GradleUtil.applyPlugin(project, MavenPlugin.class);
+		GradleUtil.applyPlugin(project, MavenPublishPlugin.class);
 	}
 
 	private void _configureDeployDir(Project project) {
@@ -423,6 +399,30 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 				});
 		}
+	}
+
+	private void _configureExtensionPublishing(final Project project) {
+		PublishingExtension publishingExtension = GradleUtil.getExtension(
+			project, PublishingExtension.class);
+
+		publishingExtension.publications(
+			new Action<PublicationContainer>() {
+
+				@Override
+				public void execute(PublicationContainer publicationContainer) {
+					MavenPublication mavenPublication =
+						publicationContainer.maybeCreate(
+							"maven", MavenPublication.class);
+
+					mavenPublication.setArtifactId(
+						GradleUtil.getArchivesBaseName(project));
+					mavenPublication.setGroupId(
+						String.valueOf(project.getGroup()));
+
+					mavenPublication.artifact(_getWarFile(project));
+				}
+
+			});
 	}
 
 	private void _configureProject(Project project) {
@@ -478,6 +478,34 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			themeProject.getPath() + ":" + JavaPlugin.CLASSES_TASK_NAME);
 	}
 
+	private void _configureTaskPublish(
+		final Project project, Task updateVersionTask) {
+
+		Task publishTask = GradleUtil.getTask(
+			project, PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
+
+		publishTask.dependsOn(BasePlugin.ASSEMBLE_TASK_NAME);
+
+		if (FileUtil.exists(project, ".lfrbuild-missing-resources-importer")) {
+			Action<Task> action = new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					throw new GradleException(
+						"Unable to publish " + project +
+							", resources-importer directory is missing");
+				}
+
+			};
+
+			publishTask.doFirst(action);
+		}
+
+		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
+			publishTask.finalizedBy(updateVersionTask);
+		}
+	}
+
 	private void _configureTasksPackageRunBuild(
 		Project project, final Task zipResourcesImporterArchivesTask) {
 
@@ -514,32 +542,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskUploadArchives(
-		final Project project, Task updateVersionTask) {
-
-		Task uploadArchivesTask = GradleUtil.getTask(
-			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
-
-		if (FileUtil.exists(project, ".lfrbuild-missing-resources-importer")) {
-			Action<Task> action = new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					throw new GradleException(
-						"Unable to publish " + project +
-							", resources-importer directory is missing");
-				}
-
-			};
-
-			uploadArchivesTask.doFirst(action);
-		}
-
-		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
-			uploadArchivesTask.finalizedBy(updateVersionTask);
-		}
-	}
-
 	private boolean _getPluginPackageProperty(Project project, String key) {
 		File file = project.file(
 			"src/WEB-INF/liferay-plugin-package.properties");
@@ -564,6 +566,11 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		}
 
 		return themeProject;
+	}
+
+	private File _getWarFile(Project project) {
+		return project.file(
+			"dist/" + GradleUtil.getArchivesBaseName(project) + ".war");
 	}
 
 	private static final String _FRONTEND_COMMON_CSS_NAME =

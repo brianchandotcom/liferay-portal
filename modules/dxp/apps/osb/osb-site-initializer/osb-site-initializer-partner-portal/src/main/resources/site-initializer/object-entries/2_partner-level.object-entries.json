@@ -1,0 +1,25 @@
+{
+	"object-entries": [
+		{
+			"claimPercent": 0.5,
+			"externalReferenceCode": "AUTHORIZED-PRTLVL",
+			"partnerLevelType": "authorized"
+		},
+		{
+			"claimPercent": 0.5,
+			"externalReferenceCode": "SILVER-PRTLVL",
+			"partnerLevelType": "silver"
+		},
+		{
+			"claimPercent": 0.5,
+			"externalReferenceCode": "GOLD-PRTLVL",
+			"partnerLevelType": "gold"
+		},
+		{
+			"claimPercent": 0.5,
+			"externalReferenceCode": "PLATINUM-PRTLVL",
+			"partnerLevelType": "platinum"
+		}
+	],
+	"objectDefinitionName": "PartnerLevel"
+}

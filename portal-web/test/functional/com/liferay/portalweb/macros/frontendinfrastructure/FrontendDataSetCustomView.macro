@@ -159,12 +159,6 @@ definition {
 			value1 = ${key_filter});
 	}
 
-	macro viewColumn {
-		VerifyElementPresent(
-			key_field = ${key_field},
-			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
-	}
-
 	macro viewNoColumn {
 		AssertElementNotPresent(
 			key_field = ${key_field},

@@ -1,0 +1,65 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test OpenAPIAvailableWhenAppPublishedAndServerRestarted {
+		property portal.acceptance = "true";
+
+		task ("Given api-application with GET endpoint is published") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "App-test");
+		}
+
+		task ("Given I restart the server") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("When I navigate to /o/application/openapi.json") {
+			User.firstLoginPG();
+
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "app-test");
+		}
+
+		task ("Then the openapi.json is available") {
+			WaitForElementPresent(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getOpenAPI",
+				service = "default");
+
+			WaitForElementPresent(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getTestEndpointPage",
+				service = "default");
+		}
+	}
+
+}

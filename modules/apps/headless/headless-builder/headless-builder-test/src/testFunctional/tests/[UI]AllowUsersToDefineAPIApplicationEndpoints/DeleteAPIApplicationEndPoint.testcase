@@ -1,0 +1,193 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 3
+	test CanCancelAPIEndpointDeletion {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given published API Application with Endpoint created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("And Given delete API Endpoint") {
+			APIBuilderUI.deleteAPIEndpoint(
+				applicationTitle = "My-app",
+				endpointPath = "/testEndpoint");
+		}
+
+		task ("When I click cancel button") {
+			Click(locator1 = "Button#CANCEL");
+		}
+
+		task ("Then I can see the API Endpoint in the UI") {
+			AssertElementPresent(
+				key_name = "/testEndpoint",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 3
+	test CanDeleteAPISchema {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given published API Application with Endpoint created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("And Given goto dropdown menu and click delete") {
+			APIBuilderUI.deleteAPIEndpoint(
+				applicationTitle = "My-app",
+				endpointPath = "/testEndpoint");
+		}
+
+		task ("When I click delete button") {
+			Click(locator1 = "APIBuilder#MODAL_DELETE_BUTTON");
+		}
+
+		task ("Then the API Endpoint has been deleted in the UI with a successful message") {
+			Alert.viewSuccessMessageText(successMessage = "The endpoint was deleted successfully.");
+
+			AssertElementNotPresent(
+				key_name = "/testEndpoint",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 4
+	test CannotSeeComapnyScopedEndpointInAPIExplorerAfterDelete {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given published API Application with Endpoint created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("When I delete the API Endpoint") {
+			APIBuilderUI.deleteAPIEndpoint(
+				applicationTitle = "My-app",
+				confirmDeletion = "true",
+				endpointPath = "/testEndpoint");
+		}
+
+		task ("Then API Endpoint is not visible in the created API Application in API Explorer") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			AssertElementNotPresent(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getTestEndpointPage",
+				service = "default");
+		}
+	}
+
+	@priority = 4
+	test CannotSeeSiteScopedEndpointInAPIExplorerAfterDelete {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given published API Application with group scoped Endpoint with related schema created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				schemaName = "testSchema",
+				scopeKey = "group",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("And Given I delete the API Endpoint") {
+			APIBuilderUI.deleteAPIEndpoint(
+				applicationTitle = "My-app",
+				confirmDeletion = "true",
+				endpointPath = "/testEndpoint");
+		}
+
+		task ("When navigate to API Explorer's created API Application") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+		}
+
+		task ("Then API Endpoint is not visible under {schema} in the created API Application in API Explorer") {
+			AssertElementNotPresent(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getScopeScopeKeyTestEndpointPage",
+				service = "testSchema");
+		}
+	}
+
+	@priority = 4
+	test CanSeeWarningMessageBeforeEndpointDeleted {
+		property portal.acceptance = "true";
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given published API Application with Endpoint created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("When delete API Endpoint") {
+			APIBuilderUI.deleteAPIEndpoint(
+				applicationTitle = "My-app",
+				endpointPath = "/testEndpoint");
+		}
+
+		task ("Then I can see the Delete API Endpoint dialog with warning message") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#BODY",
+				value1 = "This action cannot be undone and will delete all the endpoint information. Applications or systems consuming this endpoint might stop working.");
+		}
+	}
+
+}

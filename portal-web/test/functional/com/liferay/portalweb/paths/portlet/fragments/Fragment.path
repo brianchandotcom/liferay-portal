@@ -177,7 +177,7 @@
 </tr>
 <tr>
 	<td>INPUT_LABEL</td>
-	<td>xpath=(//div[contains(@id,'fragment-')]/div[contains(@class,'${type}')])[${index}]//*[self::label or self::legend][normalize-space()='${fieldLabel}']</td>
+	<td>xpath=(//div[contains(@id,'fragment-')]/div[contains(@class,'${type}')])[${index}]//*[self::label or self::legend or self::span][normalize-space()='${fieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -197,7 +197,7 @@
 </tr>
 <tr>
 	<td>INPUT_REQUIRED</td>
-	<td>xpath=(//div[contains(@id,'fragment-')]/div[contains(@class,'${type}')]//*[self::label or self::legend][normalize-space()='${fieldLabel}'])[${index}]//*[name()='svg'][contains(@class,'icon-asterisk')]</td>
+	<td>xpath=(//div[contains(@id,'fragment-')]/div[contains(@class,'${type}')]//*[self::label or self::legend or self::span][normalize-space()='${fieldLabel}'])[${index}]//*[name()='svg'][contains(@class,'icon-asterisk')]</td>
 	<td></td>
 </tr>
 <tr>

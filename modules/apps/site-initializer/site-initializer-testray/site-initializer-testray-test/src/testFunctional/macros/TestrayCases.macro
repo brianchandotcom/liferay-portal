@@ -1,112 +1,127 @@
 definition {
 
-	macro editCases {
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${caseName});
-
-		Select(
-			locator1 = "TestrayCases#CASE_PRIORITY",
-			value1 = ${priority});
-
-		Select(
-			locator1 = "TestrayCases#CASE_TYPE",
-			value1 = ${caseTypeId});
-
-		Select(
-			locator1 = "TestrayCases#MAIN_COMPONENT",
-			value1 = ${componentId});
-
-		Type(
-			locator1 = "TestrayCases#ESTIMATED_DURATION",
-			value1 = ${duration});
-
-		Type(
-			locator1 = "TestrayCases#FIELD_DESCRIPTION",
-			value1 = ${description});
-
-		Type(
-			locator1 = "TestrayCases#FIELD_STEPS",
-			value1 = ${steps});
-
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
-	}
-
-	macro exportCases {
-		Button.click(button = "Add Cases");
-
-		if (isSet(caseName)) {
-			Click.clickAtNotVisible(
-				key_checkboxOption = ${caseName},
-				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
-		}
-
-		Button.click(button = "Select Cases");
-
-		Button.click(button = "Export");
-	}
-
-	macro linkCasesRequirement {
-		TestrayRequirements.addRequirementCase(
-			buttonText = ${buttonText},
-			caseName = ${requirementName},
-			linkText = ${linkText});
-	}
-
-	macro typeCasesField {
+	macro createCases {
 		LexiconEntry.gotoAdd();
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${caseName});
+		if (isSet(caseName)) {
+			PortletEntry.inputName(name = ${caseName});
+		}
 
-		Select(
-			locator1 = "TestrayCases#CASE_PRIORITY",
-			value1 = ${priority});
+		if (isSet(priority)) {
+			Select(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "priority",
+				value1 = ${priority});
+		}
 
-		Select(
-			locator1 = "TestrayCases#CASE_TYPE",
-			value1 = ${caseTypeId});
+		if (isSet(caseType)) {
+			Select(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "caseTypeId",
+				value1 = ${caseType});
+		}
 
-		Select(
-			locator1 = "TestrayCases#MAIN_COMPONENT",
-			value1 = ${componentId});
+		if (isSet(component)) {
+			Select(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "componentId",
+				value1 = ${component});
+		}
 
-		Type(
-			locator1 = "TestrayCases#ESTIMATED_DURATION",
-			value1 = ${duration});
+		if (isSet(duration)) {
+			PortletEntry.inputNumber(
+				fieldLabel = "Estimated Duration",
+				number = ${duration});
+		}
 
-		Type(
-			locator1 = "TestrayCases#FIELD_DESCRIPTION",
-			value1 = ${description});
+		if (isSet(description)) {
+			Type(
+				locator1 = "TextArea#DESCRIPTION",
+				value1 = ${description});
+		}
 
-		Type(
-			locator1 = "TestrayCases#FIELD_STEPS",
-			value1 = ${steps});
+		if (isSet(steps)) {
+			Type(
+				key_text = "steps",
+				locator1 = "TextArea#ANY",
+				value1 = ${steps});
+		}
 
 		if (isSet(addAnotherCase)) {
 			Click.clickAtNotVisible(
 				key_checkboxOption = ${addAnotherCase},
 				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+
+			Button.clickSave();
+
+			Click.clickAtNotVisible(
+				key_checkboxOption = ${addAnotherCase},
+				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+
+			Button.clickSave();
+		}
+		else {
+			Button.clickSave();
+		}
+	}
+
+	macro editCases {
+		if (isSet(newName)) {
+			PortletEntry.inputName(name = ${newName});
 		}
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		if (isSet(priority)) {
+			Select(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "priority",
+				value1 = ${priority});
+		}
+
+		if (isSet(caseType)) {
+			Select(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "caseTypeId",
+				value1 = ${caseType});
+		}
+
+		if (isSet(component)) {
+			Select(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "componentId",
+				value1 = ${component});
+		}
+
+		if (isSet(duration)) {
+			PortletEntry.inputNumber(
+				fieldLabel = "Estimated Duration",
+				number = ${duration});
+		}
+
+		if (isSet(description)) {
+			Type(
+				locator1 = "TextArea#DESCRIPTION",
+				value1 = ${description});
+		}
+
+		if (isSet(steps)) {
+			Type(
+				key_text = "steps",
+				locator1 = "TextArea#ANY",
+				value1 = ${steps});
+		}
+
+		Button.clickSave();
 	}
 
-	macro verifyCase {
-		AssertElementPresent(
-			key_caseComponent = ${caseComponent},
-			key_caseName = ${caseName},
-			key_casePriority = ${casePriority},
-			locator1 = "TestrayCases#CASE_DETAIL");
-	}
+	macro selectExportCases {
+		Testray.selectCheckboxOptions(
+			buttonText = "Select Cases",
+			checkboxNameList = ${caseList},
+			linkText = "Add Cases");
 
-	macro verifyLinkCaseRequirement {
-		AssertElementPresent(
-			key_component = ${component},
-			key_summary = ${summary},
-			key_teamName = ${teamName},
-			locator1 = "TestrayCases#CASE_REQUIREMENT_DETAIL");
+		if (${exportedCases} == "true") {
+			Button.click(button = "Export");
+		}
 	}
 
 }

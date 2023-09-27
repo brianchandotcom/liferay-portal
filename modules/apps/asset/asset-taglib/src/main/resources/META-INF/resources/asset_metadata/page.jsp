@@ -1,23 +1,13 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
 <%@ include file="/asset_metadata/init.jsp" %>
 
 <%
-AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-asset:asset-metadata:assetEntry");
 String[] metadataFields = (String[])request.getAttribute("liferay-asset:asset-metadata:metadataFields");
 %>
 
@@ -61,17 +51,13 @@ String[] metadataFields = (String[])request.getAttribute("liferay-asset:asset-me
 			</liferay-util:buffer>
 
 			<c:if test="<%= Validator.isNotNull(metadataPanelContent) %>">
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					cssClass="asset-metadata-panel mb-0"
-					defaultState="closed"
-					extended="<%= false %>"
-					id='<%= "metadataPanel" + assetEntry.getEntryId() %>'
-					persistState="<%= false %>"
-					title="more-details"
+				<clay:panel
+					displayTitle='<%= LanguageUtil.get(request, "more-details") %>'
 				>
-					<%= metadataPanelContent %>
-				</liferay-ui:panel>
+					<div class="panel-body">
+						<%= metadataPanelContent %>
+					</div>
+				</clay:panel>
 			</c:if>
 		</c:otherwise>
 	</c:choose>

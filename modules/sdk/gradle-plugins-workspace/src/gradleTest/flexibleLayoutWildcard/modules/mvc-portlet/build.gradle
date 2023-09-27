@@ -15,5 +15,5 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
 
-	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.1.2"
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.1.3"
 }

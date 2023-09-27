@@ -6,8 +6,9 @@
 				"kind": "build"
 			},
 			"isBackground": true,
+			"label": "TS Watch",
 			"presentation": {
-				"reveal": "never"
+				"reveal": "always"
 			},
 			"problemMatcher": "$tsc-watch",
 			"script": "watch",

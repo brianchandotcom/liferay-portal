@@ -1,6 +1,6 @@
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "8.0.0"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "8.0.2"
 	}
 
 	repositories {
@@ -26,9 +26,10 @@ buildscript {
 
 apply plugin: "com.liferay.css.builder"
 apply plugin: "com.liferay.node"
-apply plugin: "java"
+apply plugin: "java-library"
 
 node {
+	nodeVersion = "8.9.0"
 	useNpm = true
 }
 

@@ -177,7 +177,11 @@ definition {
 
 	macro viewMSBUpgrade {
 		task ("Assert the fragments survived") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Fragments");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Content");
 

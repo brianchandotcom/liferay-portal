@@ -2047,7 +2047,7 @@ definition {
 			type = "One to Many");
 
 		AssertElementPresent(
-			key_fieldLabel = "Object",
+			key_fieldLabel = "Many Records Of",
 			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
@@ -2065,9 +2065,7 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship",
-			object = "Custom Object 51");
+		ObjectAdmin.addObjectRelationshipViaUI(label = "Relationship");
 
 		AssertElementPresent(
 			key_fieldLabel = "Type",
@@ -2101,6 +2099,7 @@ definition {
 	@priority = 4
 	test CannotPublishObjectWithouPublishPermission {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 53",
@@ -2313,9 +2312,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject59");
 
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -2730,6 +2727,16 @@ definition {
 				labelName = "Custom Object",
 				objectName = "CustomObject",
 				pluralLabelName = "Custom Objects");
+
+			// Workaround for LPS-193897
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
 		}
 
 		task ("Add Relationship Account to Custom Object (via API)") {
@@ -2973,6 +2980,7 @@ definition {
 	@priority = 5
 	test CanRelateManyOtherEntriesBothObjects {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given two custom objects, A and B, each with a text field and a layout") {
 			for (var nameObject : list "A,B") {
@@ -3541,9 +3549,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject85");
 
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -3979,7 +3985,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 96");
 
 		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+			locator1 = "CreateObject#PANEL_LINK",
 			value1 = "Control Panel > Users");
 	}
 
@@ -4008,7 +4014,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 97");
 
 		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+			locator1 = "CreateObject#PANEL_LINK",
 			value1 = "Control Panel > Users");
 	}
 
@@ -4186,7 +4192,7 @@ definition {
 			value1 = "Company");
 
 		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+			locator1 = "CreateObject#PANEL_LINK",
 			value1 = "Control Panel > Object");
 	}
 
@@ -4968,7 +4974,7 @@ definition {
 
 		VisualizeObjectCollectionDisplay.viewMappedFragment(fieldLabel = "Custom Field");
 
-		PageEditor.selectItemToPreviewWithObject(objectLabel = "Custom Object 116");
+		PageEditor.selectItemToPreviewWithObject(entryValue = "Test Entry");
 
 		AssertElementPresent(
 			key_entry = "Test Entry",
@@ -5889,7 +5895,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_LABEL_COLUMN");
+		AssertElementPresent(locator1 = "ObjectAdmin#GENERIC_LABEL_COLUMN");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_TYPE_COLUMN");
 	}
@@ -6260,7 +6266,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_STATE_INFO",
-			value1 = "No Results Found");
+			value1 = "No Objects Created Yet");
 	}
 
 	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"
@@ -6601,9 +6607,7 @@ definition {
 
 		CreateObject.saveObject();
 
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
@@ -6689,6 +6693,7 @@ definition {
 	@priority = 4
 	test ObjectDisappearsProcessBuilderWhenInactivated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 143",
@@ -6718,6 +6723,7 @@ definition {
 	@priority = 4
 	test ObjectDisappearsWorkflowSiteMenuWhenInactivated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 144",
@@ -7594,9 +7600,7 @@ definition {
 
 		CreateObject.saveObject();
 
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
@@ -8336,6 +8340,10 @@ definition {
 		AssertElementNotPresent(
 			key_entryName = "Entry A",
 			locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+
+		AssertElementPresent(
+			key_entryName = "Entry B",
+			locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed to be selected for a Page fragment when the parent object is inactivated"
@@ -8548,6 +8556,8 @@ definition {
 		CreateObject.checkToggleActive();
 
 		PortletEntry.save();
+
+		Refresh();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -9183,9 +9193,7 @@ definition {
 
 		Navigator.openURL();
 
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form Object");
 

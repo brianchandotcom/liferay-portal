@@ -1,5 +1,5 @@
 dependencies {
-	compile group: "com.liferay", name: "org.freemarker", version: "2.3.29.LIFERAY-PATCHED-4"
-	compile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
-	compile group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	api group: "com.liferay", name: "org.freemarker", version: "2.3.29.LIFERAY-PATCHED-5"
+	api group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	api group: "org.osgi", name: "osgi.core", version: "6.0.0"
 }

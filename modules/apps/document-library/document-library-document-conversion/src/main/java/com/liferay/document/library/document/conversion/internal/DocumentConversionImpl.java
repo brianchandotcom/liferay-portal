@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.document.conversion.internal;
@@ -22,28 +13,39 @@ import com.artofsolving.jodconverter.openoffice.connection.SocketOpenOfficeConne
 import com.artofsolving.jodconverter.openoffice.converter.OpenOfficeDocumentConverter;
 import com.artofsolving.jodconverter.openoffice.converter.StreamOpenOfficeDocumentConverter;
 
+import com.liferay.document.library.document.conversion.internal.background.task.OpenOfficeConversionPreviewBackgroundTaskExecutor;
 import com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,7 +54,9 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -145,10 +149,32 @@ public class DocumentConversionImpl implements DocumentConversion {
 	}
 
 	@Override
-	public void disconnect() {
-		if (_openOfficeConnection != null) {
-			_openOfficeConnection.disconnect();
-		}
+	public void generatePreviews() {
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				try {
+					String jobName = "generatePreviews-".concat(
+						_portalUUID.generate());
+
+					_backgroundTaskManager.addBackgroundTask(
+						UserConstants.USER_ID_DEFAULT, CompanyConstants.SYSTEM,
+						jobName,
+						OpenOfficeConversionPreviewBackgroundTaskExecutor.class.
+							getName(),
+						HashMapBuilder.<String, Serializable>put(
+							BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,
+							true
+						).put(
+							"companyId", companyId
+						).build(),
+						new ServiceContext());
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(portalException);
+					}
+				}
+			});
 	}
 
 	@Override
@@ -251,6 +277,13 @@ public class DocumentConversionImpl implements DocumentConversion {
 			OpenOfficeConfiguration.class, properties);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		if (_openOfficeConnection != null) {
+			_openOfficeConnection.disconnect();
+		}
+	}
+
 	private String _fixExtension(String extension) {
 		if (extension.equals("htm")) {
 			extension = "html";
@@ -315,9 +348,18 @@ public class DocumentConversionImpl implements DocumentConversion {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentConversionImpl.class);
 
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
 	private DocumentConverter _documentConverter;
 	private volatile OpenOfficeConfiguration _openOfficeConfiguration;
 	private OpenOfficeConnection _openOfficeConnection;
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	private static class ConversionsHolder {
 

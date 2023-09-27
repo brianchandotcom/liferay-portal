@@ -3,8 +3,10 @@ definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
-	property portal.suite.search.engine = "elasticsearch7";
+	property portal.suite.search.engine = "elasticsearch7,solr";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
 	property testray.main.component.name = "Upgrades Search";
 
 	setUp {
@@ -149,8 +151,8 @@ definition {
 
 	@priority = 5
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade721 {
-		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.auto.upgrade.enabled = "true";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.release = "quarantine";
 		property portal.version = "7.2.1";
@@ -162,8 +164,8 @@ definition {
 
 	@priority = 5
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade730 {
-		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.auto.upgrade.enabled = "true";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.release = "quarantine";
 		property portal.version = "7.3.0";
@@ -175,8 +177,8 @@ definition {
 
 	@priority = 5
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade7110 {
-		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.auto.upgrade.enabled = "true";
 		property portal.release = "quarantine";
 		property portal.version = "7.1.10";
 		property skip.upgrade-legacy-database = "true";
@@ -187,8 +189,8 @@ definition {
 
 	@priority = 5
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade7210 {
-		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.auto.upgrade.enabled = "true";
 		property portal.release = "quarantine";
 		property portal.version = "7.2.10";
 		property skip.upgrade-legacy-database = "true";
@@ -200,8 +202,8 @@ definition {
 
 	@priority = 5
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade70106 {
-		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.auto.upgrade.enabled = "true";
 		property portal.release = "quarantine";
 		property portal.version = "7.0.10.6";
 		property skip.upgrade-legacy-database = "true";
@@ -226,8 +228,8 @@ definition {
 
 	@priority = 5
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade72101 {
-		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.auto.upgrade.enabled = "true";
 		property portal.release = "quarantine";
 		property portal.version = "7.2.10.1";
 		property skip.upgrade-legacy-database = "true";
@@ -360,8 +362,8 @@ definition {
 
 	@priority = 5
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade721 {
-		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-search-portlets";
+		property database.auto.upgrade.enabled = "true";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.release = "quarantine";
 		property portal.version = "7.2.1";
@@ -373,8 +375,8 @@ definition {
 
 	@priority = 5
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade730 {
-		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-search-portlets";
+		property database.auto.upgrade.enabled = "true";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.release = "quarantine";
 		property portal.version = "7.3.0";
@@ -386,8 +388,8 @@ definition {
 
 	@priority = 5
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade7110 {
-		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-search-portlets";
+		property database.auto.upgrade.enabled = "true";
 		property portal.release = "quarantine";
 		property portal.version = "7.1.10";
 		property skip.upgrade-legacy-database = "true";
@@ -398,8 +400,8 @@ definition {
 
 	@priority = 5
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade7210 {
-		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-search-portlets";
+		property database.auto.upgrade.enabled = "true";
 		property portal.release = "quarantine";
 		property portal.version = "7.2.10";
 		property skip.upgrade-legacy-database = "true";
@@ -411,8 +413,8 @@ definition {
 
 	@priority = 5
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade72101 {
-		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-search-portlets";
+		property database.auto.upgrade.enabled = "true";
 		property portal.release = "quarantine";
 		property portal.version = "7.2.10.1";
 		property skip.upgrade-legacy-database = "true";
@@ -422,6 +424,7 @@ definition {
 		ValidateSearchUpgrade.viewSearchPortletsConfiguration();
 	}
 
+	@priority = 3
 	test ViewSearchWidgetTemplatesArchive7413U43 {
 		property data.archive.type = "data-archive-search-widget-templates";
 		property portal.version = "7.4.13.u43";
@@ -491,10 +494,11 @@ definition {
 
 		AssertElementPresent(
 			facetName = "User Facet",
-			facetValue = "test test",
+			facetValue = "Test Test",
 			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 	}
 
+	@priority = 3
 	test ViewSXPBlueprintsAndElementsArchive7310U6 {
 		property data.archive.type = "data-archive-sxp";
 		property portal.version = "7.3.10.u6";
@@ -504,16 +508,24 @@ definition {
 		ValidateSearchExperiencesUpgrade.viewSXPBlueprintAndElements();
 	}
 
+	@priority = 3
 	test ViewSXPBlueprintsAndElementsArchive7413U33 {
 		property data.archive.type = "data-archive-sxp";
 		property portal.version = "7.4.13.u33";
 		property test.assert.warning.exceptions = "true";
 		property test.run.environment = "EE";
 
+		Blueprints.openBlueprintsAdmin();
+
+		AssertElementPresent(
+			key_entryTitle = "Empty Blueprint",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
+
 		ValidateSearchExperiencesUpgrade.viewSXPBlueprintAndElements();
 	}
 
 	@description = "This is a use case for LPS-147329."
+	@priority = 3
 	test ViewSXPLocalizedElementsArchive7413U63 {
 		property data.archive.type = "data-archive-sxp-localized";
 		property portal.version = "7.4.13.u63";

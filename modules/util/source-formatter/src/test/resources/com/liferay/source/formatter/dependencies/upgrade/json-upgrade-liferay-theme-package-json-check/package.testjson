@@ -1,0 +1,17 @@
+{
+	"devDependencies": {
+		"gulp": "4.0.2",
+		"liferay-font-awesome": "3.4.1",
+		"liferay-frontend-css-common": "5.0.4",
+		"liferay-frontend-theme-styled": "4.0.10",
+		"liferay-theme-tasks": "^11.2.2"
+	},
+	"liferayTheme": {
+		"version": "7.3"
+	},
+	"scripts": {
+		"build": "liferay-npm-scripts theme build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	}
+}

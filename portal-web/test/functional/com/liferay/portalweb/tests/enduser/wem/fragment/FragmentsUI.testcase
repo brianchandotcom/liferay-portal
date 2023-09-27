@@ -188,11 +188,11 @@ definition {
 		}
 
 		task ("Assert the actions order of collections menu") {
-			Click.waitForMenuToggleJSClick(locator1 = "MenuBar#ELLIPSIS");
+			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
 
 			MenuItem.viewOrder(menuItemList = "Export,Import,Delete");
 
-			Click.waitForMenuToggleJSClick(locator1 = "MenuBar#ELLIPSIS");
+			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
 		}
 
 		task ("Assert the actions order of a collection") {

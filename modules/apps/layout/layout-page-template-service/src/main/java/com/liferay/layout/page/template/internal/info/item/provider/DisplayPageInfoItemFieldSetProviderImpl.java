@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.page.template.internal.info.item.provider;
@@ -26,21 +17,29 @@ import com.liferay.info.field.type.DisplayPageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
+import com.liferay.info.type.WebURL;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,13 +57,14 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 
 	@Override
 	public InfoFieldSet getInfoFieldSet(
-		String itemClassName, String infoItemFormVariationKey,
+		String itemClassName, String infoItemFormVariationKey, String namespace,
 		long scopeGroupId) {
 
 		return InfoFieldSet.builder(
 		).infoFieldSetEntries(
 			_getInfoFieldSetEntries(
-				itemClassName, infoItemFormVariationKey, scopeGroupId)
+				itemClassName, infoItemFormVariationKey, namespace,
+				scopeGroupId)
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "display-page")
 		).name(
@@ -75,10 +75,11 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 	@Override
 	public List<InfoFieldValue<Object>> getInfoFieldValues(
 			InfoItemReference infoItemReference,
-			String infoItemFormVariationKey, ThemeDisplay themeDisplay)
+			String infoItemFormVariationKey, String namespace,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727") ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195205") ||
 			(themeDisplay == null)) {
 
 			return Collections.emptyList();
@@ -89,7 +90,7 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		infoFieldValues.add(
 			new InfoFieldValue<>(
 				InfoField.builder(
-					infoItemReference.getClassName()
+					namespace
 				).infoFieldType(
 					URLInfoFieldType.INSTANCE
 				).name(
@@ -98,6 +99,13 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 					InfoLocalizedValue.localize(getClass(), "default")
 				).build(),
 				_getDefaultDisplayPageURL(infoItemReference, themeDisplay)));
+
+		Group group = themeDisplay.getScopeGroup();
+
+		String groupFriendlyURL = _portal.getGroupFriendlyURL(
+			group.getPublicLayoutSet(), themeDisplay, false, false);
+
+		String url = groupFriendlyURL + "/e";
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
@@ -108,6 +116,9 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				layoutPageTemplateEntry.getPlid());
 
 			infoFieldValues.add(
 				new InfoFieldValue<>(
@@ -120,32 +131,30 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 								getLayoutPageTemplateEntryKey())
 					).name(
 						layoutPageTemplateEntry.getName()
+					).attribute(
+						URLInfoFieldType.NOFOLLOW, Boolean.TRUE
 					).labelInfoLocalizedValue(
 						InfoLocalizedValue.singleValue(
 							layoutPageTemplateEntry.getName())
 					).build(),
-					HttpComponentsUtil.addParameters(
-						themeDisplay.getPortalURL() + "/display-page/custom/",
-						"className", infoItemReference.getClassName(),
-						"classPK", _getClassPK(infoItemReference), "selPlid",
-						layoutPageTemplateEntry.getPlid())));
+					new FunctionInfoLocalizedValue<>(
+						locale -> {
+							WebURL webURL = new WebURL(
+								StringBundler.concat(
+									url, layout.getFriendlyURL(locale),
+									StringPool.SLASH,
+									_portal.getClassNameId(
+										infoItemReference.getClassName()),
+									StringPool.SLASH,
+									_getInfoItemIdentifier(infoItemReference)));
+
+							webURL.setNofollow(true);
+
+							return webURL;
+						})));
 		}
 
 		return infoFieldValues;
-	}
-
-	private long _getClassPK(InfoItemReference infoItemReference) {
-		if (infoItemReference.getInfoItemIdentifier() instanceof
-				ClassPKInfoItemIdentifier) {
-
-			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				(ClassPKInfoItemIdentifier)
-					infoItemReference.getInfoItemIdentifier();
-
-			return classPKInfoItemIdentifier.getClassPK();
-		}
-
-		return 0;
 	}
 
 	private String _getDefaultDisplayPageURL(
@@ -162,9 +171,18 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		}
 
 		try {
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(
-					_getClassPK(infoItemReference));
+			AssetRenderer<?> assetRenderer = null;
+
+			if (infoItemReference.getInfoItemIdentifier() instanceof
+					ClassPKInfoItemIdentifier) {
+
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier)
+						infoItemReference.getInfoItemIdentifier();
+
+				assetRenderer = assetRendererFactory.getAssetRenderer(
+					classPKInfoItemIdentifier.getClassPK());
+			}
 
 			if (assetRenderer == null) {
 				return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
@@ -189,10 +207,10 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 	}
 
 	private InfoField<InfoFieldType> _getDefaultDisplayPageURLInfoField(
-		String className) {
+		String namespace) {
 
 		return InfoField.builder(
-			className
+			namespace
 		).infoFieldType(
 			_getDisplayPageInfoFieldType()
 		).name(
@@ -203,27 +221,23 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 	}
 
 	private InfoFieldType _getDisplayPageInfoFieldType() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-183498")) {
-			return DisplayPageInfoFieldType.INSTANCE;
-		}
-
-		return URLInfoFieldType.INSTANCE;
+		return DisplayPageInfoFieldType.INSTANCE;
 	}
 
 	private List<InfoFieldSetEntry> _getInfoFieldSetEntries(
-		String itemClassName, String infoItemFormVariationKey,
+		String itemClassName, String infoItemFormVariationKey, String namespace,
 		long scopeGroupId) {
 
 		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
 
-		infoFieldSetEntries.add(
-			_getDefaultDisplayPageURLInfoField(itemClassName));
+		infoFieldSetEntries.add(_getDefaultDisplayPageURLInfoField(namespace));
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				scopeGroupId, _portal.getClassNameId(itemClassName),
 				GetterUtil.getLong(infoItemFormVariationKey),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+				WorkflowConstants.STATUS_APPROVED);
 
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {
@@ -246,6 +260,27 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		return infoFieldSetEntries;
 	}
 
+	private String _getInfoItemIdentifier(InfoItemReference infoItemReference) {
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+			return String.valueOf(classPKInfoItemIdentifier.getClassPK());
+		}
+
+		if (infoItemIdentifier instanceof ERCInfoItemIdentifier) {
+			ERCInfoItemIdentifier ercInfoItemIdentifier =
+				(ERCInfoItemIdentifier)infoItemIdentifier;
+
+			return ercInfoItemIdentifier.getExternalReferenceCode();
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String _getUniqueId(String layoutPageTemplateEntryKey) {
 		return LayoutPageTemplateEntry.class.getSimpleName() +
 			StringPool.UNDERLINE + layoutPageTemplateEntryKey;
@@ -257,6 +292,9 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

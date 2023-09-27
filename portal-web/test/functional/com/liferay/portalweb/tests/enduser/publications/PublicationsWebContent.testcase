@@ -260,6 +260,8 @@ definition {
 	@description = "Manage Conflicting Web Content Folder changes and discard the changes."
 	@priority = 4
 	test ManageConflictingWebContentFolderChanges {
+		property test.assert.warning.exceptions = "true";
+
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONWebcontent.addFolder(
@@ -321,9 +323,7 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");*/
 
-		Publications.publishPublication(
-			publicationName = "Publication 2 Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication 2 Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
 
@@ -582,9 +582,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -651,9 +649,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/-/friendlyUrl");
 
@@ -699,7 +695,7 @@ definition {
 			templateName = "WC Template Name",
 			templateScript = "themeDisplay.getScopeGroupId()");
 
-		DDLDataDefinition.save();
+		PortletEntry.save();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

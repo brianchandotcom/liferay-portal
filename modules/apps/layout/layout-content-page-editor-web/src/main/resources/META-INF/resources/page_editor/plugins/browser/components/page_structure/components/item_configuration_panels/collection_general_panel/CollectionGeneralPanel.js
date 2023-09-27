@@ -1,21 +1,14 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLabel from '@clayui/label';
+import ClayPanel from '@clayui/panel';
 import ClayPopover from '@clayui/popover';
+import {useId} from 'frontend-js-components-web';
 import {openConfirmModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
@@ -42,9 +35,7 @@ import updateItemConfig from '../../../../../../../app/thunks/updateItemConfig';
 import {CACHE_KEYS} from '../../../../../../../app/utils/cache';
 import {getResponsiveConfig} from '../../../../../../../app/utils/getResponsiveConfig';
 import useCache from '../../../../../../../app/utils/useCache';
-import Collapse from '../../../../../../../common/components/Collapse';
 import CollectionSelector from '../../../../../../../common/components/CollectionSelector';
-import {useId} from '../../../../../../../common/hooks/useId';
 import {CommonStyles} from '../CommonStyles';
 import {FlexOptions} from '../FlexOptions';
 import {EmptyCollectionOptions} from './EmptyCollectionOptions';
@@ -116,6 +107,38 @@ export function CollectionGeneralPanel({item}) {
 			collection?.key,
 			item.itemId,
 			segmentsExperienceId,
+		],
+	});
+
+	const warningMessage = useCache({
+		fetcher: async () => {
+			if (!collection) {
+				return '';
+			}
+
+			try {
+				const response = await CollectionService.getCollectionWarningMessage(
+					{
+						layoutDataItemId: item.itemId,
+						segmentsExperienceId,
+					}
+				);
+
+				return response.warningMessage;
+			}
+			catch (error) {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+
+				return '';
+			}
+		},
+		key: [
+			CACHE_KEYS.collectionWarningMessage,
+			segmentsExperienceId,
+			item.itemId,
+			JSON.stringify(item.config),
 		],
 	});
 
@@ -260,168 +283,185 @@ export function CollectionGeneralPanel({item}) {
 
 	return (
 		<>
-			<div className="mb-3">
-				<Collapse
-					label={Liferay.Language.get('collection-display-options')}
-					open
-				>
-					{selectedViewportSize === VIEWPORT_SIZES.desktop && (
-						<>
-							<CollectionSelector
-								collectionItem={collection}
-								itemSelectorURL={config.collectionSelectorURL}
-								label={Liferay.Language.get('collection')}
-								onBeforeCollectionSelect={
-									onBeforeCollectionSelect
-								}
-								onCollectionSelect={handleCollectionSelect}
-								optionsMenuItems={optionsMenuItems}
-							/>
-
-							{collection?.classPK && (
-								<VariationsPopover
-									classPK={collection.classPK}
-								/>
-							)}
-						</>
+			<div className="mb-3 panel-group-sm">
+				<ClayPanel
+					collapsable
+					defaultExpanded
+					displayTitle={Liferay.Language.get(
+						'collection-display-options'
 					)}
-
-					{collection && (
-						<>
-							{selectedViewportSize ===
-								VIEWPORT_SIZES.desktop && (
-								<StyleDisplaySelector
-									collectionItemType={collectionItemType}
-									handleConfigurationChanged={
-										handleConfigurationChanged
+					displayType="unstyled"
+					showCollapseIcon
+				>
+					<ClayPanel.Body>
+						{selectedViewportSize === VIEWPORT_SIZES.desktop && (
+							<>
+								<CollectionSelector
+									collectionItem={collection}
+									itemSelectorURL={
+										config.collectionSelectorURL
 									}
-									listStyle={listStyle}
+									label={Liferay.Language.get('collection')}
+									onBeforeCollectionSelect={
+										onBeforeCollectionSelect
+									}
+									onCollectionSelect={handleCollectionSelect}
+									optionsMenuItems={optionsMenuItems}
 								/>
-							)}
 
-							{flexEnabled && (
-								<FlexOptions
-									itemConfig={collectionConfig}
-									onConfigChange={(name, value) => {
-										handleConfigurationChanged({
-											[name]: value,
-										});
-									}}
-								/>
-							)}
+								{collection?.classPK && (
+									<VariationsPopover
+										classPK={collection.classPK}
+									/>
+								)}
+							</>
+						)}
 
-							{listStyle === LIST_STYLES.grid && (
-								<>
-									<LayoutSelector
-										collectionConfig={collectionConfig}
-										collectionLayoutId={collectionLayoutId}
+						{collection && (
+							<>
+								{selectedViewportSize ===
+									VIEWPORT_SIZES.desktop && (
+									<StyleDisplaySelector
+										collectionItemType={collectionItemType}
 										handleConfigurationChanged={
 											handleConfigurationChanged
 										}
+										listStyle={listStyle}
 									/>
+								)}
 
-									{selectedViewportSize ===
-										VIEWPORT_SIZES.desktop && (
-										<>
-											{numberOfColumns > 1 && (
-												<ShowGutterSelector
-													checked={
-														item.config.gutters
+								{flexEnabled && (
+									<FlexOptions
+										itemConfig={collectionConfig}
+										onConfigChange={(name, value) => {
+											handleConfigurationChanged({
+												[name]: value,
+											});
+										}}
+									/>
+								)}
+
+								{listStyle === LIST_STYLES.grid && (
+									<>
+										<LayoutSelector
+											collectionConfig={collectionConfig}
+											collectionLayoutId={
+												collectionLayoutId
+											}
+											handleConfigurationChanged={
+												handleConfigurationChanged
+											}
+										/>
+
+										{selectedViewportSize ===
+											VIEWPORT_SIZES.desktop && (
+											<>
+												{numberOfColumns > 1 && (
+													<ShowGutterSelector
+														checked={
+															item.config.gutters
+														}
+														handleConfigurationChanged={
+															handleConfigurationChanged
+														}
+													/>
+												)}
+
+												<VerticalAlignmentSelector
+													collectionVerticalAlignmentId={
+														collectionVerticalAlignmentId
 													}
 													handleConfigurationChanged={
 														handleConfigurationChanged
 													}
+													value={
+														item.config
+															.verticalAlignment
+													}
+												/>
+											</>
+										)}
+									</>
+								)}
+
+								{selectedViewportSize ===
+									VIEWPORT_SIZES.desktop && (
+									<>
+										{listStyle !== LIST_STYLES.grid &&
+											!!availableListItemStyles.length && (
+												<ListItemStyleSelector
+													availableListItemStyles={
+														availableListItemStyles
+													}
+													collectionListItemStyleId={
+														collectionListItemStyleId
+													}
+													handleConfigurationChanged={
+														handleConfigurationChanged
+													}
+													item={item}
 												/>
 											)}
 
-											<VerticalAlignmentSelector
-												collectionVerticalAlignmentId={
-													collectionVerticalAlignmentId
-												}
-												handleConfigurationChanged={
-													handleConfigurationChanged
-												}
-												value={
-													item.config
-														.verticalAlignment
-												}
-											/>
-										</>
-									)}
-								</>
-							)}
+										<EmptyCollectionOptions
+											collectionEmptyCollectionMessageId={
+												collectionEmptyCollectionMessageId
+											}
+											emptyCollectionOptions={
+												emptyCollectionOptions
+											}
+											handleConfigurationChanged={
+												handleConfigurationChanged
+											}
+										/>
 
-							{selectedViewportSize ===
-								VIEWPORT_SIZES.desktop && (
-								<>
-									{listStyle !== LIST_STYLES.grid &&
-										!!availableListItemStyles.length && (
-											<ListItemStyleSelector
-												availableListItemStyles={
-													availableListItemStyles
-												}
-												collectionListItemStyleId={
-													collectionListItemStyleId
+										<PaginationSelector
+											collectionPaginationTypeId={
+												collectionPaginationTypeId
+											}
+											handleConfigurationChanged={
+												handleConfigurationChanged
+											}
+											value={paginationType || 'none'}
+										/>
+
+										{paginationType !== 'none' ? (
+											<PaginationOptions
+												displayAllPages={
+													displayAllPages
 												}
 												handleConfigurationChanged={
 													handleConfigurationChanged
 												}
-												item={item}
+												initialNumberOfItemsPerPage={
+													initialNumberOfItemsPerPage
+												}
+												initialNumberOfPages={
+													initialNumberOfPages
+												}
+												warningMessage={warningMessage}
+											/>
+										) : (
+											<NoPaginationOptions
+												collection={collection}
+												displayAllItems={
+													displayAllItems
+												}
+												handleConfigurationChanged={
+													handleConfigurationChanged
+												}
+												initialNumberOfItems={
+													initialNumberOfItems
+												}
+												warningMessage={warningMessage}
 											/>
 										)}
-
-									<EmptyCollectionOptions
-										collectionEmptyCollectionMessageId={
-											collectionEmptyCollectionMessageId
-										}
-										emptyCollectionOptions={
-											emptyCollectionOptions
-										}
-										handleConfigurationChanged={
-											handleConfigurationChanged
-										}
-									/>
-
-									<PaginationSelector
-										collectionPaginationTypeId={
-											collectionPaginationTypeId
-										}
-										handleConfigurationChanged={
-											handleConfigurationChanged
-										}
-										value={paginationType || 'none'}
-									/>
-
-									{paginationType !== 'none' ? (
-										<PaginationOptions
-											displayAllPages={displayAllPages}
-											handleConfigurationChanged={
-												handleConfigurationChanged
-											}
-											initialNumberOfItemsPerPage={
-												initialNumberOfItemsPerPage
-											}
-											initialNumberOfPages={
-												initialNumberOfPages
-											}
-										/>
-									) : (
-										<NoPaginationOptions
-											collection={collection}
-											displayAllItems={displayAllItems}
-											handleConfigurationChanged={
-												handleConfigurationChanged
-											}
-											initialNumberOfItems={
-												initialNumberOfItems
-											}
-										/>
-									)}
-								</>
-							)}
-						</>
-					)}
-				</Collapse>
+									</>
+								)}
+							</>
+						)}
+					</ClayPanel.Body>
+				</ClayPanel>
 			</div>
 
 			<CommonStyles

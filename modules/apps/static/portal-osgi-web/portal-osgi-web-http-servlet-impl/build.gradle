@@ -1,0 +1,14 @@
+dependencies {
+	compileInclude group: "com.liferay", name: "org.eclipse.equinox.http.servlet", version: "1.2.2.v20211118-0920.LIFERAY-PATCHED-2"
+
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.http", version: "1.2.1"
+	compileOnly group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:static:portal-osgi-web:portal-osgi-web-http-servlet-api")
+	compileOnly project(":core:osgi-service-tracker-collections")
+	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-string")
+}

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.page.template.service.impl;
@@ -48,8 +39,8 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, String name, String description,
-			ServiceContext serviceContext)
+			long groupId, long parentLayoutPageTemplateCollection, String name,
+			String description, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -58,7 +49,8 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 		return layoutPageTemplateCollectionLocalService.
 			addLayoutPageTemplateCollection(
-				getUserId(), groupId, name, description, serviceContext);
+				getUserId(), groupId, parentLayoutPageTemplateCollection, name,
+				description, type, serviceContext);
 	}
 
 	@Override
@@ -113,52 +105,52 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId) {
+		long groupId, int type) {
 
-		return layoutPageTemplateCollectionPersistence.filterFindByGroupId(
-			groupId);
+		return layoutPageTemplateCollectionPersistence.filterFindByG_T(
+			groupId, type);
 	}
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end) {
+		long groupId, int type, int start, int end) {
 
-		return layoutPageTemplateCollectionPersistence.filterFindByGroupId(
-			groupId, start, end);
+		return layoutPageTemplateCollectionPersistence.filterFindByG_T(
+			groupId, type, start, end);
 	}
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end,
+		long groupId, int type, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
-		return layoutPageTemplateCollectionPersistence.filterFindByGroupId(
-			groupId, start, end, orderByComparator);
+		return layoutPageTemplateCollectionPersistence.filterFindByG_T(
+			groupId, type, start, end, orderByComparator);
 	}
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, String name, int start, int end,
+		long groupId, String name, int type, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
-		return layoutPageTemplateCollectionPersistence.filterFindByG_LikeN(
+		return layoutPageTemplateCollectionPersistence.filterFindByG_LikeN_T(
 			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
-			start, end, orderByComparator);
+			type, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getLayoutPageTemplateCollectionsCount(long groupId) {
-		return layoutPageTemplateCollectionPersistence.filterCountByGroupId(
-			groupId);
+	public int getLayoutPageTemplateCollectionsCount(long groupId, int type) {
+		return layoutPageTemplateCollectionPersistence.filterCountByG_T(
+			groupId, type);
 	}
 
 	@Override
 	public int getLayoutPageTemplateCollectionsCount(
-		long groupId, String name) {
+		long groupId, String name, int type) {
 
-		return layoutPageTemplateCollectionPersistence.filterCountByG_LikeN(
-			groupId,
-			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
+		return layoutPageTemplateCollectionPersistence.filterCountByG_LikeN_T(
+			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			type);
 	}
 
 	@Override

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.fragment.internal.util.configuration;
@@ -25,6 +16,8 @@ import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.pagination.InfoPage;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
@@ -217,7 +210,8 @@ public class FragmentEntryConfigurationParserImpl
 
 				Object contextListObject = _getInfoListObjectEntry(
 					configurationValuesJSONObject.getString(name),
-					segmentsEntryIds);
+					segmentsEntryIds,
+					fragmentConfigurationField.getTypeOptionsJSONObject());
 
 				if (contextListObject != null) {
 					contextObjects.put(
@@ -683,7 +677,8 @@ public class FragmentEntryConfigurationParserImpl
 	}
 
 	private Object _getInfoListObjectEntry(
-		String value, long[] segmentsEntryIds) {
+		String value, long[] segmentsEntryIds,
+		JSONObject typeOptionsJSONObject) {
 
 		if (Validator.isNull(value)) {
 			return Collections.emptyList();
@@ -718,12 +713,24 @@ public class FragmentEntryConfigurationParserImpl
 				defaultLayoutListRetrieverContext =
 					new DefaultLayoutListRetrieverContext();
 
+			if (typeOptionsJSONObject != null) {
+				int numberOfItems = typeOptionsJSONObject.getInt(
+					"numberOfItems", 0);
+
+				if (numberOfItems > 0) {
+					defaultLayoutListRetrieverContext.setPagination(
+						Pagination.of(numberOfItems, 0));
+				}
+			}
+
 			defaultLayoutListRetrieverContext.setSegmentsEntryIds(
 				segmentsEntryIds);
 
-			return layoutListRetriever.getList(
+			InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
 				listObjectReferenceFactory.getListObjectReference(jsonObject),
 				defaultLayoutListRetrieverContext);
+
+			return infoPage.getPageItems();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

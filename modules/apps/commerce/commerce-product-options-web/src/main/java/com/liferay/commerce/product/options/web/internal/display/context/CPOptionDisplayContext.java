@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.options.web.internal.display.context;
@@ -19,37 +10,24 @@ import com.liferay.commerce.product.configuration.CPOptionConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.option.CommerceOptionType;
+import com.liferay.commerce.product.option.CommerceOptionTypeRegistry;
 import com.liferay.commerce.product.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
-import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
+import com.liferay.commerce.product.util.CommerceOptionTypeUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowStateException;
 
@@ -57,22 +35,38 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CPOptionDisplayContext {
 
 	public CPOptionDisplayContext(
-			ConfigurationProvider configurationProvider, CPOption cpOption,
-			DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
-			PortletResourcePermission portletResourcePermission,
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
+		CommerceOptionTypeRegistry commerceOptionTypeRegistry,
+		ConfigurationProvider configurationProvider, CPOption cpOption,
+		HttpServletRequest httpServletRequest) {
 
+		_commerceOptionTypeRegistry = commerceOptionTypeRegistry;
 		_configurationProvider = configurationProvider;
 		_cpOption = cpOption;
-		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
-		_portletResourcePermission = portletResourcePermission;
 
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
+	}
+
+	public List<CommerceOptionType> getCommerceOptionTypes()
+		throws PortalException {
+
+		List<CommerceOptionType> commerceOptionTypes =
+			_commerceOptionTypeRegistry.getCommerceOptionTypes();
+
+		CPOptionConfiguration cpOptionConfiguration =
+			_configurationProvider.getConfiguration(
+				CPOptionConfiguration.class,
+				new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
+
+		String[] allowedCommerceOptionTypes =
+			cpOptionConfiguration.allowedCommerceOptionTypes();
+
+		return CommerceOptionTypeUtil.getAllowedCommerceOptionTypes(
+			commerceOptionTypes, allowedCommerceOptionTypes);
 	}
 
 	public CPOption getCPOption() {
@@ -108,49 +102,6 @@ public class CPOptionDisplayContext {
 		).build();
 	}
 
-	public String getDDMFormFieldTypeLabel(
-		DDMFormFieldType ddmFormFieldType, Locale locale) {
-
-		String label = MapUtil.getString(
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
-				ddmFormFieldType.getName()),
-			"ddm.form.field.type.label");
-
-		try {
-			if (Validator.isNotNull(label)) {
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language", locale, ddmFormFieldType.getClass());
-
-				return LanguageUtil.get(resourceBundle, label);
-			}
-		}
-		catch (MissingResourceException missingResourceException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(missingResourceException);
-			}
-		}
-
-		return ddmFormFieldType.getName();
-	}
-
-	public List<DDMFormFieldType> getDDMFormFieldTypes()
-		throws PortalException {
-
-		List<DDMFormFieldType> ddmFormFieldTypes =
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypes();
-
-		CPOptionConfiguration cpOptionConfiguration =
-			_configurationProvider.getConfiguration(
-				CPOptionConfiguration.class,
-				new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
-
-		String[] ddmFormFieldTypesAllowed =
-			cpOptionConfiguration.ddmFormFieldTypesAllowed();
-
-		return DDMFormFieldTypeUtil.getDDMFormFieldTypesAllowed(
-			ddmFormFieldTypes, ddmFormFieldTypesAllowed);
-	}
-
 	public List<HeaderActionModel> getHeaderActionModels() {
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
@@ -165,9 +116,7 @@ public class CPOptionDisplayContext {
 		return headerActionModels;
 	}
 
-	public List<FDSActionDropdownItem> getOptionFDSActionDropdownItems()
-		throws PortalException {
-
+	public List<FDSActionDropdownItem> getOptionFDSActionDropdownItems() {
 		return _getFDSActionDropdownItems(
 			PortletURLBuilder.createRenderURL(
 				cpRequestHelper.getRenderResponse()
@@ -184,9 +133,7 @@ public class CPOptionDisplayContext {
 			false);
 	}
 
-	public CreationMenu getOptionValueCreationMenu(long cpOptionId)
-		throws Exception {
-
+	public CreationMenu getOptionValueCreationMenu(long cpOptionId) {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
@@ -233,25 +180,16 @@ public class CPOptionDisplayContext {
 		return _getFDSActionDropdownItems(portletURL.toString(), true);
 	}
 
-	public boolean hasPermission(String actionId) throws PortalException {
-		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return _portletResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), null, actionId);
-	}
-
 	public boolean hasValues(CPOption cpOption) {
-		if (_hasDDMFormFieldTypeProperties(
-				cpOption.getDDMFormFieldTypeName()) &&
-			_isListFieldTypeDataDomain(cpOption.getDDMFormFieldTypeName())) {
+		CommerceOptionType commerceOptionType =
+			_commerceOptionTypeRegistry.getCommerceOptionType(
+				cpOption.getCommerceOptionTypeKey());
 
-			return true;
+		if (commerceOptionType == null) {
+			return false;
 		}
 
-		return false;
+		return commerceOptionType.hasValues();
 	}
 
 	protected final CPRequestHelper cpRequestHelper;
@@ -281,44 +219,8 @@ public class CPOptionDisplayContext {
 		return fdsActionDropdownItems;
 	}
 
-	private boolean _hasDDMFormFieldTypeProperties(
-		String ddmFormFieldTypeName) {
-
-		Map<String, Object> ddmFormFieldTypeProperties =
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
-				ddmFormFieldTypeName);
-
-		if (ddmFormFieldTypeProperties == null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private boolean _isListFieldTypeDataDomain(String ddmFormFieldTypeName) {
-		Map<String, Object> properties =
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
-				ddmFormFieldTypeName);
-
-		String fieldTypeDataDomain = MapUtil.getString(
-			properties, "ddm.form.field.type.data.domain");
-
-		if (Validator.isNotNull(fieldTypeDataDomain) &&
-			fieldTypeDataDomain.equals("list")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPOptionDisplayContext.class);
-
+	private final CommerceOptionTypeRegistry _commerceOptionTypeRegistry;
 	private final ConfigurationProvider _configurationProvider;
 	private CPOption _cpOption;
-	private final DDMFormFieldTypeServicesRegistry
-		_ddmFormFieldTypeServicesRegistry;
-	private final PortletResourcePermission _portletResourcePermission;
 
 }

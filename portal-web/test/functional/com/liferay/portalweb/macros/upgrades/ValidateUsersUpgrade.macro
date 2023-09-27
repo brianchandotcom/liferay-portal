@@ -85,6 +85,20 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
+	macro viewAccountUserRoleNoPermissions {
+		Role.openRolesAdmin();
+
+		RoleNavigator.gotoRoleType(roleType = "Account");
+
+		LexiconEntry.gotoEntry(rowEntry = ${accountRoleTitle});
+
+		Navigator.gotoNavItem(navItem = "Define Permissions");
+
+		Role.viewNoPermissionCP(
+			permissionDefinitionValue = ${permissionDefinitionValue},
+			permissionNavigationValue = ${permissionNavigationValue});
+	}
+
 	macro viewAndEditUser {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

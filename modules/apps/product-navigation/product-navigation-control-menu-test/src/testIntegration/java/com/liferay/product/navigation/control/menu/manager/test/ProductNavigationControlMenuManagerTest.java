@@ -1,26 +1,19 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.product.navigation.control.menu.manager.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -28,11 +21,21 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.product.navigation.control.menu.manager.ProductNavigationControlMenuManager;
 import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
+
+import java.util.Collections;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,6 +43,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Mikel Lorza
@@ -70,7 +75,44 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertTrue(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_group, _layout, TestPropsValues.getUserId()));
+				_getHttpServletRequest(
+					Collections.emptyMap(), TestPropsValues.getUser())));
+	}
+
+	@Test
+	public void testIsShowControlMenuWithAdministratorInContentLayoutLockedLayoutMVCRenderCommand()
+		throws Exception {
+
+		_menuAccessConfigurationManager.updateMenuAccessConfiguration(
+			_group.getGroupId(), new String[0], true);
+
+		String mvcRenderCommandName =
+			_portal.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES) +
+				"mvcRenderCommandName";
+
+		Assert.assertFalse(
+			_productNavigationControlMenuManager.isShowControlMenu(
+				_getHttpServletRequest(
+					HashMapBuilder.put(
+						mvcRenderCommandName, "/layout_admin/locked_layout"
+					).build(),
+					TestPropsValues.getUser())));
+	}
+
+	@Test
+	public void testIsShowControlMenuWithAdministratorInContentLayoutPreviewMode()
+		throws Exception {
+
+		_menuAccessConfigurationManager.updateMenuAccessConfiguration(
+			_group.getGroupId(), new String[0], true);
+
+		Assert.assertFalse(
+			_productNavigationControlMenuManager.isShowControlMenu(
+				_getHttpServletRequest(
+					HashMapBuilder.put(
+						"p_l_mode", Constants.PREVIEW
+					).build(),
+					TestPropsValues.getUser())));
 	}
 
 	@Test
@@ -84,7 +126,7 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertFalse(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_group, _layout, user.getUserId()));
+				_getHttpServletRequest(Collections.emptyMap(), user)));
 	}
 
 	@Test
@@ -103,7 +145,7 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertTrue(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_group, _layout, user.getUserId()));
+				_getHttpServletRequest(Collections.emptyMap(), user)));
 	}
 
 	@Test
@@ -115,7 +157,8 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertTrue(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_group, _layout, TestPropsValues.getUserId()));
+				_getHttpServletRequest(
+					Collections.emptyMap(), TestPropsValues.getUser())));
 	}
 
 	@Test
@@ -127,8 +170,36 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertTrue(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_group, _layout, TestPropsValues.getUserId()));
+				_getHttpServletRequest(
+					Collections.emptyMap(), TestPropsValues.getUser())));
 	}
+
+	private HttpServletRequest _getHttpServletRequest(
+			Map<String, ?> params, User user)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setRequest(mockHttpServletRequest);
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setUser(user);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockHttpServletRequest.setParameters(params);
+
+		return mockHttpServletRequest;
+	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -137,6 +208,9 @@ public class ProductNavigationControlMenuManagerTest {
 
 	@Inject
 	private MenuAccessConfigurationManager _menuAccessConfigurationManager;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private ProductNavigationControlMenuManager

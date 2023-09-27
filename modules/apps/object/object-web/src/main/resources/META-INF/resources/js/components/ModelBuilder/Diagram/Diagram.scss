@@ -1,0 +1,20 @@
+.lfr-objects__model-builder-diagram {
+	&-area {
+		width: 100%;
+
+		&-loading {
+			> span {
+				left: 50%;
+				position: absolute;
+				top: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+	}
+
+	&-container {
+		display: flex;
+		height: calc(100vh - 129px);
+		width: 100%;
+	}
+}

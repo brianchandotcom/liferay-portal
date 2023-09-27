@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.exportimport.test;
@@ -43,7 +34,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -80,7 +72,7 @@ public class PortletDataContextReferencesTest {
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
 				TestPropsValues.getCompanyId(), _group.getGroupId(),
 				new HashMap<String, String[]>(), null, null,
-				ZipWriterFactoryUtil.getZipWriter());
+				_zipWriterFactory.getZipWriter());
 
 		Document document = SAXReaderUtil.createDocument();
 
@@ -347,7 +339,7 @@ public class PortletDataContextReferencesTest {
 
 	@Test
 	public void testNotReferenceMissingReference() throws Exception {
-		_portletDataContext.setZipWriter(ZipWriterFactoryUtil.getZipWriter());
+		_portletDataContext.setZipWriter(_zipWriterFactory.getZipWriter());
 
 		Element bookmarksEntryElement =
 			_portletDataContext.getExportDataElement(_bookmarksEntry);
@@ -454,5 +446,8 @@ public class PortletDataContextReferencesTest {
 
 	private PortletDataContext _portletDataContext;
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

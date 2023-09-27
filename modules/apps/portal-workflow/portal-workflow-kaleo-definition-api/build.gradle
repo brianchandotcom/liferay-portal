@@ -1,6 +1,10 @@
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
+	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
+
+	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testCompileOnly group: "org.apache.commons", name: "commons-lang3", version: "3.11"
 }

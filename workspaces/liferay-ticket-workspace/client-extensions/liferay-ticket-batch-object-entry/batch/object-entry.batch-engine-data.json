@@ -1,0 +1,66 @@
+{
+	"actions": {
+		"create": {
+			"href": "http://localhost:8080/o/c/j3y7tickets/",
+			"method": "POST"
+		},
+		"createBatch": {
+			"href": "http://localhost:8080/o/c/j3y7tickets/batch",
+			"method": "POST"
+		},
+		"deleteBatch": {
+			"href": "http://localhost:8080/o/c/j3y7tickets/batch",
+			"method": "DELETE"
+		},
+		"updateBatch": {
+			"href": "http://localhost:8080/o/c/j3y7tickets/batch",
+			"method": "PUT"
+		}
+	},
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"companyId": 0,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "C_J3Y7Ticket",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "C_J3Y7Ticket",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"facets": [
+	],
+	"items": [
+		{
+			"dateCreated": "2023-05-04T21:49:04Z",
+			"dateModified": "2023-05-04T21:49:04Z",
+			"description": "When I access my site, I receive a 404 error.",
+			"externalReferenceCode": "1",
+			"priority": {
+				"key": "minor",
+				"name": "Minor"
+			},
+			"region": {
+				"key": "lATAM",
+				"name": "LATAM"
+			},
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"subject": "Website is not responding",
+			"ticketStatus": {
+				"key": "open",
+				"name": "Open"
+			},
+			"type": {
+				"key": "siteIssue",
+				"name": "Site Issue"
+			}
+		}
+	]
+}

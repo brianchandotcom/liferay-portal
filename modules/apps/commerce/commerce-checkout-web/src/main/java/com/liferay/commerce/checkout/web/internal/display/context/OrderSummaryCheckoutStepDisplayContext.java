@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.checkout.web.internal.display.context;
@@ -48,18 +39,18 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -128,8 +119,11 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	}
 
 	public int getCommerceOrderItemsQuantity() throws PortalException {
-		return _commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
-			_httpServletRequest);
+		BigDecimal quantity =
+			_commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
+				_httpServletRequest);
+
+		return quantity.intValue();
 	}
 
 	public CommerceOrderPrice getCommerceOrderPrice() throws PortalException {
@@ -363,15 +357,17 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		CommerceProductPriceRequest commerceProductPriceRequest =
 			new CommerceProductPriceRequest();
 
+		commerceProductPriceRequest.setCalculateTax(true);
+		commerceProductPriceRequest.setCommerceContext(commerceContext);
+		commerceProductPriceRequest.setCommerceOptionValues(
+			cpDefinitionCommerceOptionValues);
 		commerceProductPriceRequest.setCpInstanceId(
 			commerceOrderItem.getCPInstanceId());
 		commerceProductPriceRequest.setQuantity(
 			commerceOrderItem.getQuantity());
 		commerceProductPriceRequest.setSecure(false);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			cpDefinitionCommerceOptionValues);
-		commerceProductPriceRequest.setCalculateTax(true);
+		commerceProductPriceRequest.setUnitOfMeasureKey(
+			commerceOrderItem.getUnitOfMeasureKey());
 
 		return _commerceProductPriceCalculation.getCommerceProductPrice(
 			commerceProductPriceRequest);
@@ -391,19 +387,32 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		BigDecimal promoPrice = commerceOrderItem.getPromoPrice();
 
 		if ((promoPrice != null) &&
-			CommerceBigDecimalUtil.gt(promoPrice, BigDecimal.ZERO) &&
-			CommerceBigDecimalUtil.lte(promoPrice, activePrice)) {
+			BigDecimalUtil.gt(promoPrice, BigDecimal.ZERO) &&
+			BigDecimalUtil.lte(promoPrice, activePrice)) {
 
 			activePrice = promoPrice;
 			activePriceWithTaxAmount =
 				commerceOrderItem.getPromoPriceWithTaxAmount();
 		}
 
+		BigDecimal quantity = commerceOrderItem.getQuantity();
+
+		BigDecimal unitOfMeasureIncrementalOrderQuantity =
+			commerceOrderItem.getUnitOfMeasureIncrementalOrderQuantity();
+
+		if (unitOfMeasureIncrementalOrderQuantity == null) {
+			unitOfMeasureIncrementalOrderQuantity = BigDecimal.ONE;
+		}
+
 		commerceProductPriceImpl.setFinalPrice(
 			commerceOrderItem.getFinalPriceMoney());
 		commerceProductPriceImpl.setFinalPriceWithTaxAmount(
 			commerceOrderItem.getFinalPriceWithTaxAmountMoney());
-		commerceProductPriceImpl.setQuantity(commerceOrderItem.getQuantity());
+		commerceProductPriceImpl.setQuantity(quantity);
+		commerceProductPriceImpl.setUnitOfMeasureIncrementalOrderQuantity(
+			unitOfMeasureIncrementalOrderQuantity);
+		commerceProductPriceImpl.setUnitOfMeasureKey(
+			commerceOrderItem.getUnitOfMeasureKey());
 		commerceProductPriceImpl.setUnitPrice(
 			commerceOrderItem.getUnitPriceMoney());
 		commerceProductPriceImpl.setUnitPriceWithTaxAmount(
@@ -415,14 +424,16 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 		BigDecimal discountAmount = commerceOrderItem.getDiscountAmount();
 
-		if ((discountAmount == null) ||
-			CommerceBigDecimalUtil.isZero(discountAmount)) {
-
+		if ((discountAmount == null) || BigDecimalUtil.isZero(discountAmount)) {
 			return commerceProductPriceImpl;
 		}
 
-		activePrice = activePrice.multiply(
-			BigDecimal.valueOf(commerceOrderItem.getQuantity()));
+		BigDecimal baseQuantity = quantity.divide(
+			unitOfMeasureIncrementalOrderQuantity,
+			unitOfMeasureIncrementalOrderQuantity.scale(),
+			RoundingMode.HALF_UP);
+
+		activePrice = activePrice.multiply(baseQuantity);
 
 		BigDecimal discountedAmount = activePrice.subtract(discountAmount);
 
@@ -450,7 +461,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			commerceDiscountValue);
 
 		activePriceWithTaxAmount = activePriceWithTaxAmount.multiply(
-			BigDecimal.valueOf(commerceOrderItem.getQuantity()));
+			baseQuantity);
 
 		CommerceMoney discountWithTaxAmountCommerceMoney =
 			commerceOrderItem.getDiscountWithTaxAmountMoney();

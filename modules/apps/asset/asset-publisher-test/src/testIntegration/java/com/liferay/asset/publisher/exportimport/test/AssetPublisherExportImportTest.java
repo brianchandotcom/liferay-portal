@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.asset.publisher.exportimport.test;
@@ -1254,7 +1245,9 @@ public class AssetPublisherExportImportTest
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
-	@Inject(filter = "component.name=*.LayoutStagedModelDataHandler")
+	@Inject(
+		filter = "component.name=com.liferay.layout.admin.web.internal.exportimport.data.handler.LayoutStagedModelDataHandler"
+	)
 	private StagedModelDataHandler<?> _layoutStagedModelDataHandler;
 
 	private PermissionChecker _permissionChecker;
@@ -1262,10 +1255,14 @@ public class AssetPublisherExportImportTest
 	@Inject
 	private Portal _portal;
 
-	@Inject(filter = "component.name=*.StagedGroupStagedModelDataHandler")
+	@Inject(
+		filter = "component.name=com.liferay.site.internal.exportimport.data.handler.StagedGroupStagedModelDataHandler"
+	)
 	private StagedModelDataHandler<?> _stagedGroupStagedModelDataHandler;
 
-	@Inject(filter = "component.name=*.StagedLayoutSetStagedModelDataHandler")
+	@Inject(
+		filter = "component.name=com.liferay.layout.internal.exportimport.data.handler.StagedLayoutSetStagedModelDataHandler"
+	)
 	private StagedModelDataHandler<?> _stagedLayoutSetStagedModelDataHandler;
 
 }

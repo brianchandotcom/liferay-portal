@@ -21,7 +21,7 @@ runGradleTest {
 		Exception expectedException = null
 
 		try {
-			subproject.configurations.compile.resolvedConfiguration.resolvedArtifacts
+			subproject.configurations.compileClasspath.resolvedConfiguration.resolvedArtifacts
 		}
 		catch (ResolveException re) {
 			expectedException = re.cause

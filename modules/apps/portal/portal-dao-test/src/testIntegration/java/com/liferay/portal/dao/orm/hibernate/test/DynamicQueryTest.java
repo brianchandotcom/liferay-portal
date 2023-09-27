@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.dao.orm.hibernate.test;
@@ -24,9 +15,14 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -140,6 +136,21 @@ public class DynamicQueryTest {
 	}
 
 	@Test
+	public void testLikeEscapeSQLRestriction() throws Exception {
+		_role = RoleTestUtil.addRole("Role%Name", RoleConstants.TYPE_REGULAR);
+
+		DynamicQuery dynamicQuery = _roleLocalService.dynamicQuery();
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.sqlRestriction(
+				"name like 'Role=%%' ESCAPE '=' and roleId > 0"));
+
+		List<Role> roles = _roleLocalService.dynamicQuery(dynamicQuery);
+
+		Assert.assertTrue(roles.contains(_role));
+	}
+
+	@Test
 	public void testLowerBound() {
 		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
@@ -234,6 +245,21 @@ public class DynamicQueryTest {
 	}
 
 	@Test
+	public void testNotLikeSQLRestriction() throws Exception {
+		_role = RoleTestUtil.addRole("RoleName", RoleConstants.TYPE_REGULAR);
+
+		DynamicQuery dynamicQuery = _roleLocalService.dynamicQuery();
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.sqlRestriction(
+				"name not like 'RoleNam%' and roleId > 0"));
+
+		List<Role> roles = _roleLocalService.dynamicQuery(dynamicQuery);
+
+		Assert.assertFalse(roles.contains(_role));
+	}
+
+	@Test
 	public void testOrderBy() {
 		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
@@ -305,5 +331,11 @@ public class DynamicQueryTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@DeleteAfterTestRun
+	private Role _role;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

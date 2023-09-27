@@ -1,0 +1,176 @@
+<html>
+<head>
+<title>APIBuilder</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">APIBuilder</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>ADD_API_ENDPOINT</td>
+	<td>//button[contains(.,'Add API Endpoint')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_API_APPLICATION</td>
+	<td>//button[contains(.,'Add New API Application')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_SCHEMA</td>
+	<td>//button[contains(.,'Add New Schema')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_APPLICATION_TO_API_ENDPOINTS</td>
+	<td>//button[@class='dropdown-item' and text()='${applicationId}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_STATUS</td>
+	<td>//div[@class='table-list-title' and contains(.,'${key_title}')]/../..//div[contains(.,'${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTOMATED_URL</td>
+	<td>//input[(@placeholder='Automated URL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_PUBLICATION_STATUS_BUTTON</td>
+	<td>//div[@class='dropdown-menu show']//button[contains(text(),'Change Publication Status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTINUE_WITHOUT_SAVING_BUTTON</td>
+	<td>//button[contains(text(),'Continue Without Saving')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY_URL</td>
+	<td>//div[@class='dropdown-menu show']//button[contains(text(),'Copy URL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_BUTTON</td>
+	<td>//button[contains(text(),'Create')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_IN_DROPDOWN_MENU</td>
+	<td>//div[@class='dropdown-menu show']//button[contains(text(),'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION</td>
+	<td>//textarea[(@placeholder='Add a short description that describes this API.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DND_TD_WITH_TEXT</td>
+	<td>//div[@class='dnd-td' and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DND_TR_WITH_TEXT</td>
+	<td>//div[contains(@class,'dnd-tr')]/div[contains(text(),'${text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DND_TR_BUTTON</td>
+	<td>//div[contains(@class,'dnd-tr')]//button[contains(.,'${value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DROPDOWN_MENU</td>
+	<td>//div[@class='table-list-title' and contains(.,'${key_title}')]/../..//button[contains(.,'Action')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_BUTTON</td>
+	<td>//div[@class='dropdown-menu show']//button[contains(text(),'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTER_TITLE</td>
+	<td>//input[(@placeholder='Enter title.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXCLUDE_TOGGLE</td>
+	<td>//div[@class='dropdown-menu show']//*[@type="checkbox" and @id='autocomplete-exclude-applicationStatus']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FROM_DATE</td>
+	<td>//input[contains(@id,'from-dateModified') and @placeholder='yyyy-mm-dd']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LAST_UPDATED_IN_FILTER</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(text(),'Last updated')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_DELETE_BUTTON</td>
+	<td>//button[@id='modalDeleteButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//button[contains(text(),'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_IN_FILTER</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(text(),'Status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_LIST</td>
+	<td>xpath=(//span[(@class='label-item label-item-expand')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_LIST</td>
+	<td>xpath=(//div[(@class='table-list-title')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TO_DATE</td>
+	<td>//input[contains(@id,'to-dateModified') and @placeholder='yyyy-mm-dd']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_TITLE_IN_DELETE_MODAL</td>
+	<td>//input[@class='form-control']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNPUBLISH_API_APPLICATION_WARNING_DIALOG_TITLE</td>
+	<td>//h1[@class='modal-title' and contains(text(),'Unpublish API Application')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_LABEL</td>
+	<td>//p[@id='hostTextPreview']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_PROMPT_MESSAGE_IN_CREATE_APPLICATION_DIALOG</td>
+	<td>//span[contains(text(),'The URL can be modified.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WARNING_MESSAGE_IN_DIALOG</td>
+	<td>//div[@class='form-feedback-item mt-2' and contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

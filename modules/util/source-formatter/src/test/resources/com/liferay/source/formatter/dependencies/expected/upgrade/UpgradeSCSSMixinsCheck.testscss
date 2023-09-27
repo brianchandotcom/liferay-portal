@@ -1,0 +1,23 @@
+@include media-breakpoint-up(xl) {}
+
+@include media-breakpoint-up(lg) {}
+
+@include media-breakpoint-up(lg) {}
+
+@include media-query(null, $screen-xs-max) {}
+
+@include media-breakpoint-up(md) {}
+
+@include media-breakpoint-up(lg) {}
+
+@include media-breakpoint-down(sm) {}
+
+@include media-breakpoint-only(md) {}
+
+@include media-breakpoint-up(md) {}
+
+@include media-breakpoint-down(md) {}
+
+@include media-breakpoint-up(md) {}
+
+@include media-breakpoint-up(sm) {}

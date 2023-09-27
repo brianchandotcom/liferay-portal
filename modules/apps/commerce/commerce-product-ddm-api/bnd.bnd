@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Commerce Product DDM API
-Bundle-SymbolicName: com.liferay.commerce.product.ddm.api
-Bundle-Version: 7.0.1
-Export-Package: com.liferay.commerce.product.ddm

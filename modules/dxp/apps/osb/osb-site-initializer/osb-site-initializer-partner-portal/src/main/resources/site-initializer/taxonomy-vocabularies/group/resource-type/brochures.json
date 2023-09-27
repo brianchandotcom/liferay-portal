@@ -1,0 +1,21 @@
+{
+	"description": "Brochures",
+	"externalReferenceCode": "PRMC044",
+	"name": "Brochures",
+	"name_i18n": {
+		"ar_SA": "Brochures",
+		"ca_ES": "Brochures",
+		"de_DE": "Brochures",
+		"en_US": "Brochures",
+		"es_ES": "Brochures",
+		"fi_FI": "Brochures",
+		"fr_FR": "Brochures",
+		"hu_HU": "Brochures",
+		"ja_JP": "Brochures",
+		"nl_NL": "Brochures",
+		"pt_BR": "Brochures",
+		"sv_SE": "Brochures",
+		"zh_CN": "Brochures"
+	},
+	"viewableBy": "Anyone"
+}

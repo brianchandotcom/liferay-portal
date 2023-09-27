@@ -1,17 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {useModal} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useState} from 'react';
+import {getRolesFiltered} from '~/common/utils/getProjectRoles';
+import {rolesHighPriorityContacts} from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import i18n from '../../../../../../../common/I18n';
 import StatusTag from '../../../../../../../common/components/StatusTag';
 import Table from '../../../../../../../common/components/Table';
@@ -30,6 +26,9 @@ import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccoun
 import {getColumns} from './utils/getColumns';
 import getFilteredRoleBriefsByName from './utils/getFilteredRoleBriefsByName';
 
+const MAXIMUM_REQUESTORS_DEFAULT = -1;
+const UNLIMITED_RESQUESTORS = 9999;
+
 const TeamMembersTable = ({
 	koroneikiAccount,
 	loading: koroneikiAccountLoading,
@@ -44,9 +43,12 @@ const TeamMembersTable = ({
 
 	const {observer, onOpenChange, open} = useModal();
 
-	const [currentIndexEditing, setCurrentIndexEditing] = useState();
-	const [currentIndexRemoving, setCurrentIndexRemoving] = useState();
+	const [currentUserEditing, setCurrentUserEditing] = useState();
+	const [currentUserRemoving, setCurrentUserRemoving] = useState();
 	const [selectedAccountRoleItem, setSelectedAccountRoleItem] = useState();
+	const [highPriorityContactsNames, setHighPriorityContactsNames] = useState(
+		[]
+	);
 
 	const {
 		data: myUserAccountData,
@@ -74,10 +76,22 @@ const TeamMembersTable = ({
 		koroneikiAccountLoading
 	);
 
-	let availableSupportSeatsCount =
-		koroneikiAccount?.maxRequestors - supportSeatsCount;
-	availableSupportSeatsCount =
-		availableSupportSeatsCount < 0 ? 0 : availableSupportSeatsCount;
+	const [
+		availableSupportSeatsCount,
+		setAvailableSupportSeatsCount,
+	] = useState(1);
+
+	useEffect(() => {
+		let remainingAdmins =
+			koroneikiAccount?.maxRequestors - supportSeatsCount;
+		remainingAdmins = remainingAdmins < 0 ? 0 : remainingAdmins;
+
+		setAvailableSupportSeatsCount(
+			koroneikiAccount?.maxRequestors === MAXIMUM_REQUESTORS_DEFAULT
+				? UNLIMITED_RESQUESTORS
+				: remainingAdmins
+		);
+	}, [koroneikiAccount, supportSeatsCount]);
 
 	const userAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.items;
@@ -86,8 +100,46 @@ const TeamMembersTable = ({
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.totalCount;
 
 	const {paginationConfig, teamMembersByStatusPaginated} = usePagination(
-            userAccounts
-    );
+		userAccounts
+	);
+
+	const getHighPriorityContactsByFilter = async (filter) => {
+		return userAccountsData?.accountUserAccountsByExternalReferenceCode?.items
+			.filter((account) =>
+				account?.selectedAccountSummary?.roleBriefs?.some(
+					(role) => role?.name === filter
+				)
+			)
+			.map((account) => ({
+				email: account.emailAddress,
+			}));
+	};
+
+	useEffect(() => {
+		const fetchHighPriorityContacts = async () => {
+			try {
+				const highPriorityContactsResults = await Promise.all(
+					rolesHighPriorityContacts.map((role) =>
+						getHighPriorityContactsByFilter(role)
+					)
+				);
+
+				const flattenedHighPriorityContacts = highPriorityContactsResults
+					.flat()
+					.filter((contact) => contact);
+
+				const highPriorityEmails = flattenedHighPriorityContacts.map(
+					(contact) => contact.email
+				);
+
+				setHighPriorityContactsNames(highPriorityEmails);
+			} catch (error) {
+				console.error('Error:', error);
+			}
+		};
+
+		fetchHighPriorityContacts();
+	}, [userAccountsData]);
 
 	const {
 		data: accountRolesData,
@@ -98,8 +150,10 @@ const TeamMembersTable = ({
 		!loggedUserAccount?.selectedAccountSummary.hasAdministratorRole
 	);
 
-	const availableAccountRoles =
-		accountRolesData?.accountAccountRolesByExternalReferenceCode.items;
+	const availableAccountRoles = getRolesFiltered(
+		accountRolesData?.accountAccountRolesByExternalReferenceCode.items,
+		koroneikiAccount
+	);
 
 	const loading =
 		myUserAccountLoading || userAccountsLoading || accountRolesLoading;
@@ -108,22 +162,22 @@ const TeamMembersTable = ({
 		if (!updating) {
 			onOpenChange(false);
 
-			setCurrentIndexRemoving();
+			setCurrentUserRemoving();
 		}
 	}, [onOpenChange, updating]);
 
 	useEffect(() => {
 		if (!updating) {
-			setCurrentIndexEditing();
+			setCurrentUserEditing();
 			setSelectedAccountRoleItem();
 		}
 	}, [onOpenChange, updating]);
 
 	useEffect(() => {
-		if (currentIndexEditing) {
+		if (currentUserEditing?.id) {
 			setSelectedAccountRoleItem();
 		}
-	}, [currentIndexEditing]);
+	}, [currentUserEditing]);
 
 	const getCurrentRoleBriefs = useCallback(
 		(accountBrief) =>
@@ -133,10 +187,10 @@ const TeamMembersTable = ({
 
 	const handleEdit = () => {
 		const currentAccountRoles =
-			userAccounts[currentIndexEditing].selectedAccountSummary.roleBriefs;
+			currentUserEditing.selectedAccountSummary.roleBriefs;
 
 		update(
-			userAccounts[currentIndexEditing],
+			currentUserEditing,
 			currentAccountRoles,
 			selectedAccountRoleItem
 		);
@@ -144,13 +198,24 @@ const TeamMembersTable = ({
 
 	return (
 		<>
-			{open && currentIndexRemoving !== undefined && (
+			{open && currentUserRemoving !== undefined && (
 				<RemoveUserModal
+					modalTitle={i18n.translate('remove-user')}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
-					onRemove={() => remove(userAccounts[currentIndexRemoving])}
+					onRemove={() => remove(currentUserRemoving)}
 					removing={updating}
-				/>
+				>
+					<p className="my-0 text-neutral-10">
+						<p>
+							<b>Team Member:</b> {currentUserRemoving.name}
+						</p>
+
+						{i18n.translate(
+							'are-you-sure-you-want-to-remove-this-team-member-from-the-project'
+						)}
+					</p>
+				</RemoveUserModal>
 			)}
 
 			<TeamMembersTableHeader
@@ -176,92 +241,118 @@ const TeamMembersTable = ({
 				)}
 
 				{!!teamMembersByStatusPaginated &&
-				(totalUserAccounts || loading || searching) && (
-					<Table
-						className="border-0"
-						columns={getColumns(
-							loggedUserAccount?.selectedAccountSummary
-								.hasAdministratorRole,
-							articleAccountSupportURL
-						)}
-						hasPagination
-						isLoading={loading || searching}
-						paginationConfig={paginationConfig}
-						rows={teamMembersByStatusPaginated?.map((userAccount, index) => ({
-							email: (
-								<p className="m-0 text-truncate">
-									{userAccount.emailAddress}
-								</p>
-							),
-							name: (
-								<NameColumn
-									gravatarAPI={gravatarAPI}
-									userAccount={userAccount}
-								/>
-							),
-							options: (
-								<OptionsColumn
-									edit={index === currentIndexEditing}
-									onCancel={() => {
-										setCurrentIndexEditing();
-										setSelectedAccountRoleItem();
-									}}
-									onEdit={() => setCurrentIndexEditing(index)}
-									onRemove={() => {
-										setCurrentIndexRemoving(index);
-										onOpenChange(true);
-									}}
-									onSave={() => handleEdit()}
-									saveDisabled={
-										!selectedAccountRoleItem || updating
-									}
-								/>
-							),
-							role: (
-								<RolesColumn
-									accountRoles={availableAccountRoles}
-									availableSupportSeatsCount={
-										availableSupportSeatsCount
-									}
-									currentRoleBriefName={
-										getCurrentRoleBriefs(
-											userAccount.selectedAccountSummary
-										)?.[0]?.name || 'User'
-									}
-									edit={index === currentIndexEditing}
-									hasAccountSupportSeatRole={
-										userAccount.selectedAccountSummary
-											.hasSupportSeatRole
-									}
-									onClick={(selectedAccountRoleItem) =>
-										setSelectedAccountRoleItem(
-											selectedAccountRoleItem
-										)
-									}
-									supportSeatsCount={supportSeatsCount}
-								/>
-							),
-							status: (
-								<StatusTag
-									currentStatus={
-										userAccount.lastLoginDate ||
-										userAccount.dateCreated <= importDate
-											? STATUS_TAG_TYPES.active
-											: STATUS_TAG_TYPES.invited
-									}
-								/>
-							),
-							supportSeat: userAccount.selectedAccountSummary
-								.hasSupportSeatRole &&
-								!userAccount.isLiferayStaff && (
-									<ClayIcon
-										className="text-brand-primary-darken-2"
-										symbol="check-circle-full"
-									/>
-								),
-						}))}
-					/>
-				)}
+					(totalUserAccounts || loading || searching) && (
+						<Table
+							className="border-0"
+							columns={getColumns(
+								loggedUserAccount?.selectedAccountSummary
+									.hasAdministratorRole,
+								articleAccountSupportURL
+							)}
+							hasPagination
+							isLoading={loading || searching}
+							paginationConfig={paginationConfig}
+							rows={teamMembersByStatusPaginated?.map(
+								(userAccount) => ({
+									email: (
+										<p className="m-0 text-truncate">
+											{userAccount.emailAddress}
+										</p>
+									),
+									name: (
+										<NameColumn
+											gravatarAPI={gravatarAPI}
+											userAccount={userAccount}
+										/>
+									),
+									options: (
+										<OptionsColumn
+											edit={
+												userAccount?.id ===
+												currentUserEditing?.id
+											}
+											highPriorityContactsNames={
+												highPriorityContactsNames
+											}
+											onCancel={() => {
+												setCurrentUserEditing();
+												setSelectedAccountRoleItem();
+											}}
+											onEdit={() =>
+												setCurrentUserEditing(
+													userAccount
+												)
+											}
+											onRemove={() => {
+												setCurrentUserRemoving(
+													userAccount
+												);
+												onOpenChange(true);
+											}}
+											onSave={() => handleEdit()}
+											saveDisabled={
+												!selectedAccountRoleItem ||
+												updating
+											}
+											userAccount={userAccount}
+										/>
+									),
+									role: (
+										<RolesColumn
+											accountRoles={availableAccountRoles}
+											availableSupportSeatsCount={
+												availableSupportSeatsCount
+											}
+											currentRoleBriefName={
+												getCurrentRoleBriefs(
+													userAccount.selectedAccountSummary
+												)?.[0]?.name || 'User'
+											}
+											edit={
+												userAccount?.id ===
+												currentUserEditing?.id
+											}
+											hasAccountSupportSeatRole={
+												userAccount
+													.selectedAccountSummary
+													.hasSupportSeatRole
+											}
+											onClick={(
+												selectedAccountRoleItem
+											) =>
+												setSelectedAccountRoleItem(
+													selectedAccountRoleItem
+												)
+											}
+											supportSeatsCount={
+												supportSeatsCount
+											}
+										/>
+									),
+									status: (
+										<StatusTag
+											currentStatus={
+												userAccount.lastLoginDate ||
+												userAccount.dateCreated <=
+													importDate
+													? STATUS_TAG_TYPES.active
+													: STATUS_TAG_TYPES.invited
+											}
+										/>
+									),
+									supportSeat: userAccount
+										.selectedAccountSummary
+										.hasSupportSeatRole &&
+										!userAccount.isLiferayStaff && (
+											<ClayIcon
+												className="text-brand-primary-darken-2"
+												symbol="check-circle-full"
+											/>
+										),
+								})
+							)}
+						/>
+					)}
 			</div>
 		</>
 	);

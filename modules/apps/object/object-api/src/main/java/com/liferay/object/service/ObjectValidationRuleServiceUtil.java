@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.service;
@@ -40,17 +31,19 @@ public class ObjectValidationRuleServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectValidationRuleServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectValidationRule addObjectValidationRule(
-			long objectDefinitionId, boolean active, String engine,
+			String externalReferenceCode, long objectDefinitionId,
+			boolean active, String engine,
 			Map<java.util.Locale, String> errorLabelMap,
 			Map<java.util.Locale, String> nameMap, String outputType,
-			String script,
+			String script, boolean system,
 			List<com.liferay.object.model.ObjectValidationRuleSetting>
 				objectValidationRuleSettings)
 		throws PortalException {
 
 		return getService().addObjectValidationRule(
-			objectDefinitionId, active, engine, errorLabelMap, nameMap,
-			outputType, script, objectValidationRuleSettings);
+			externalReferenceCode, objectDefinitionId, active, engine,
+			errorLabelMap, nameMap, outputType, script, system,
+			objectValidationRuleSettings);
 	}
 
 	public static ObjectValidationRule deleteObjectValidationRule(
@@ -77,7 +70,8 @@ public class ObjectValidationRuleServiceUtil {
 	}
 
 	public static ObjectValidationRule updateObjectValidationRule(
-			long objectValidationRuleId, boolean active, String engine,
+			String externalReferenceCode, long objectValidationRuleId,
+			boolean active, String engine,
 			Map<java.util.Locale, String> errorLabelMap,
 			Map<java.util.Locale, String> nameMap, String outputType,
 			String script,
@@ -86,8 +80,9 @@ public class ObjectValidationRuleServiceUtil {
 		throws PortalException {
 
 		return getService().updateObjectValidationRule(
-			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
-			outputType, script, objectValidationRuleSettings);
+			externalReferenceCode, objectValidationRuleId, active, engine,
+			errorLabelMap, nameMap, outputType, script,
+			objectValidationRuleSettings);
 	}
 
 	public static ObjectValidationRuleService getService() {

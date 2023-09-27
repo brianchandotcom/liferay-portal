@@ -11,5 +11,5 @@ dependencies {
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "junit", name: "junit", version: "4.13.1"
+	testImplementation group: "junit", name: "junit", version: "4.13.1"
 }

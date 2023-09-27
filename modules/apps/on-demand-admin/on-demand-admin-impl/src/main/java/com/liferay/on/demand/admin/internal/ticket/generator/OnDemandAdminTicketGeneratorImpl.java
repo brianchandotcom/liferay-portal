@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.on.demand.admin.internal.ticket.generator;
@@ -18,8 +9,10 @@ import com.liferay.on.demand.admin.constants.OnDemandAdminConstants;
 import com.liferay.on.demand.admin.internal.configuration.OnDemandAdminConfiguration;
 import com.liferay.on.demand.admin.internal.helper.OnDemandAdminHelper;
 import com.liferay.on.demand.admin.ticket.generator.OnDemandAdminTicketGenerator;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,10 +20,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
@@ -59,7 +53,9 @@ public class OnDemandAdminTicketGeneratorImpl
 		_onDemandAdminHelper.checkRequestAdministratorAccessPermission(
 			company.getCompanyId(), requestorUserId);
 
-		User user = _addOnDemandAdminUser(company, requestorUserId);
+		User requestorUser = _userLocalService.getUser(requestorUserId);
+
+		User user = _addOnDemandAdminUser(company, requestorUser);
 
 		AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
 			OnDemandAdminConstants.
@@ -84,46 +80,57 @@ public class OnDemandAdminTicketGeneratorImpl
 		int expirationTime =
 			onDemandAdminConfiguration.authenticationTokenExpirationTime();
 
-		return _ticketLocalService.addDistinctTicket(
-			user.getCompanyId(), User.class.getName(), user.getUserId(),
-			OnDemandAdminConstants.TICKET_TYPE_ON_DEMAND_ADMIN_LOGIN,
-			justification,
-			new Date(
-				System.currentTimeMillis() +
-					TimeUnit.MINUTES.toMillis(expirationTime)),
-			null);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					company.getCompanyId())) {
+
+			return _ticketLocalService.addDistinctTicket(
+				user.getCompanyId(), User.class.getName(), user.getUserId(),
+				TicketConstants.TYPE_ON_DEMAND_ADMIN_LOGIN, justification,
+				new Date(
+					System.currentTimeMillis() +
+						TimeUnit.MINUTES.toMillis(expirationTime)),
+				null);
+		}
 	}
 
-	private User _addOnDemandAdminUser(Company company, long userId)
+	private User _addOnDemandAdminUser(Company company, User requestorUser)
 		throws PortalException {
 
-		User requestorUser = _userLocalService.getUser(userId);
-		String password = PwdGenerator.getPassword(20);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					company.getCompanyId())) {
 
-		String screenName = _getScreenName(requestorUser.getUserId(), 0);
+			String password = PwdGenerator.getPassword(20);
 
-		Date date = new Date();
-		Role role = _roleLocalService.getRole(
-			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+			String screenName = _getScreenName(requestorUser.getUserId(), 0);
 
-		User user = _userLocalService.addUser(
-			requestorUser.getUserId(), company.getCompanyId(), false, password,
-			password, true, null, screenName + StringPool.AT + company.getMx(),
-			requestorUser.getLocale(), requestorUser.getFirstName(),
-			requestorUser.getMiddleName(), requestorUser.getLastName(), 0, 0,
-			requestorUser.getMale(), date.getMonth(), date.getDay(),
-			date.getYear(), null, UserConstants.TYPE_REGULAR, null, null,
-			new long[] {role.getRoleId()}, null, false, new ServiceContext());
+			String emailAddress = screenName + StringPool.AT + company.getMx();
 
-		screenName = _getScreenName(
-			requestorUser.getUserId(), user.getUserId());
+			Date date = new Date();
+			Role role = _roleLocalService.getRole(
+				company.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
-		user.setScreenName(screenName);
-		user.setEmailAddress(screenName + StringPool.AT + company.getMx());
+			User user = _userLocalService.addUser(
+				0, company.getCompanyId(), false, password, password, true,
+				null, emailAddress, requestorUser.getLocale(),
+				requestorUser.getFirstName(), requestorUser.getMiddleName(),
+				requestorUser.getLastName(), 0, 0, requestorUser.isMale(),
+				date.getMonth(), date.getDay(), date.getYear(), null,
+				UserConstants.TYPE_REGULAR, null, null,
+				new long[] {role.getRoleId()}, null, false,
+				new ServiceContext());
 
-		user.setEmailAddressVerified(true);
+			screenName = _getScreenName(
+				requestorUser.getUserId(), user.getUserId());
 
-		return _userLocalService.updateUser(user);
+			user.setScreenName(screenName);
+			user.setEmailAddress(screenName + StringPool.AT + company.getMx());
+
+			user.setEmailAddressVerified(true);
+
+			return _userLocalService.updateUser(user);
+		}
 	}
 
 	private String _getScreenName(long requestorUserId, long userId)

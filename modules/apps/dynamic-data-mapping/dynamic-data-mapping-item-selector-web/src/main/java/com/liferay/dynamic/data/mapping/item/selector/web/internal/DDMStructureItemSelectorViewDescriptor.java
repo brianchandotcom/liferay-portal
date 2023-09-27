@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dynamic.data.mapping.item.selector.web.internal;
@@ -116,17 +107,17 @@ public class DDMStructureItemSelectorViewDescriptor
 			emptyResultsMessage = "no-structures-were-found";
 		}
 
-		SearchContainer<DDMStructure> ddmStructureSearch =
+		SearchContainer<DDMStructure> ddmStructureSearchContainer =
 			new SearchContainer<>(
 				(PortletRequest)_httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST),
 				_portletURL, null, emptyResultsMessage);
 
-		ddmStructureSearch.setOrderByCol(getOrderByCol());
-		ddmStructureSearch.setOrderByComparator(
+		ddmStructureSearchContainer.setOrderByCol(getOrderByCol());
+		ddmStructureSearchContainer.setOrderByComparator(
 			DDMUtil.getStructureOrderByComparator(
 				getOrderByCol(), getOrderByType()));
-		ddmStructureSearch.setOrderByType(getOrderByType());
+		ddmStructureSearchContainer.setOrderByType(getOrderByType());
 
 		long[] groupIds =
 			SiteConnectedGroupGroupProviderUtil.
@@ -134,31 +125,33 @@ public class DDMStructureItemSelectorViewDescriptor
 					_themeDisplay.getScopeGroupId(), true);
 
 		if (Validator.isNotNull(_getKeywords())) {
-			ddmStructureSearch.setResultsAndTotal(
+			ddmStructureSearchContainer.setResultsAndTotal(
 				() -> DDMStructureServiceUtil.search(
 					_themeDisplay.getCompanyId(), groupIds,
 					_ddmStructureItemSelectorCriterion.getClassNameId(),
 					_getKeywords(), WorkflowConstants.STATUS_ANY,
-					ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
-					ddmStructureSearch.getOrderByComparator()),
+					ddmStructureSearchContainer.getStart(),
+					ddmStructureSearchContainer.getEnd(),
+					ddmStructureSearchContainer.getOrderByComparator()),
 				DDMStructureServiceUtil.searchCount(
 					_themeDisplay.getCompanyId(), groupIds,
 					_ddmStructureItemSelectorCriterion.getClassNameId(),
 					_getKeywords(), WorkflowConstants.STATUS_ANY));
 		}
 		else {
-			ddmStructureSearch.setResultsAndTotal(
+			ddmStructureSearchContainer.setResultsAndTotal(
 				() -> DDMStructureServiceUtil.getStructures(
 					_themeDisplay.getCompanyId(), groupIds,
 					_ddmStructureItemSelectorCriterion.getClassNameId(),
-					ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
-					ddmStructureSearch.getOrderByComparator()),
+					ddmStructureSearchContainer.getStart(),
+					ddmStructureSearchContainer.getEnd(),
+					ddmStructureSearchContainer.getOrderByComparator()),
 				DDMStructureServiceUtil.getStructuresCount(
 					_themeDisplay.getCompanyId(), groupIds,
 					_ddmStructureItemSelectorCriterion.getClassNameId()));
 		}
 
-		return ddmStructureSearch;
+		return ddmStructureSearchContainer;
 	}
 
 	@Override

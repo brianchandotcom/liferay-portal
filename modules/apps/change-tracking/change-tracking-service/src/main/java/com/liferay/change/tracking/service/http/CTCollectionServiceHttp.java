@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.service.http;
@@ -52,8 +43,9 @@ public class CTCollectionServiceHttp {
 
 	public static com.liferay.change.tracking.model.CTCollection
 			addCTCollection(
-				HttpPrincipal httpPrincipal, long companyId, long userId,
-				String name, String description)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId, long userId, long ctRemoteId, String name,
+				String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -62,7 +54,8 @@ public class CTCollectionServiceHttp {
 				_addCTCollectionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, userId, name, description);
+				methodKey, externalReferenceCode, companyId, userId, ctRemoteId,
+				name, description);
 
 			Object returnObj = null;
 
@@ -317,23 +310,22 @@ public class CTCollectionServiceHttp {
 		}
 	}
 
-	public static com.liferay.change.tracking.model.CTProcess moveCTEntries(
+	public static void moveCTEntry(
 			HttpPrincipal httpPrincipal, long fromCTCollectionId,
-			long toCTCollectionId, long[] ctEntryIds)
+			long toCTCollectionId, long modelClassNameId, long modelClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CTCollectionServiceUtil.class, "moveCTEntries",
-				_moveCTEntriesParameterTypes7);
+				CTCollectionServiceUtil.class, "moveCTEntry",
+				_moveCTEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, fromCTCollectionId, toCTCollectionId, ctEntryIds);
-
-			Object returnObj = null;
+				methodKey, fromCTCollectionId, toCTCollectionId,
+				modelClassNameId, modelClassPK);
 
 			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
 				if (exception instanceof
@@ -346,8 +338,6 @@ public class CTCollectionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
-
-			return (com.liferay.change.tracking.model.CTProcess)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -482,7 +472,10 @@ public class CTCollectionServiceHttp {
 		CTCollectionServiceHttp.class);
 
 	private static final Class<?>[] _addCTCollectionParameterTypes0 =
-		new Class[] {long.class, long.class, String.class, String.class};
+		new Class[] {
+			String.class, long.class, long.class, long.class, String.class,
+			String.class
+		};
 	private static final Class<?>[] _deleteCTAutoResolutionInfoParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _deleteCTCollectionParameterTypes2 =
@@ -501,8 +494,9 @@ public class CTCollectionServiceHttp {
 		};
 	private static final Class<?>[] _getCTCollectionsCountParameterTypes6 =
 		new Class[] {long.class, int[].class, String.class};
-	private static final Class<?>[] _moveCTEntriesParameterTypes7 =
-		new Class[] {long.class, long.class, long[].class};
+	private static final Class<?>[] _moveCTEntryParameterTypes7 = new Class[] {
+		long.class, long.class, long.class, long.class
+	};
 	private static final Class<?>[] _publishCTCollectionParameterTypes8 =
 		new Class[] {long.class, long.class};
 	private static final Class<?>[] _undoCTCollectionParameterTypes9 =

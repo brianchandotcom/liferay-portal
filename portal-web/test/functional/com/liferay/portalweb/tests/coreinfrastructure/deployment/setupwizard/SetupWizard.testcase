@@ -56,6 +56,7 @@ definition {
 	test BasicConfigurationVisualLook {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.viewDefaultPortalNamePG();
 
@@ -69,11 +70,70 @@ definition {
 
 	}
 
+	@description = "This is a use case for LPS-187661. Verify the admin user can be configured to a non liferay domain via setup wizard."
+	@priority = 5
+	test ConfigureNonLiferayDomain {
+		property database.types = "mysql";
+		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		SetupWizard.configurePG(
+			administratorEmail = "test@test.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseType = "MySQL",
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url"));
+
+		Smoke.viewWelcomeContentPage();
+
+		Smoke.runSmoke();
+	}
+
+	@description = "This is a use case for LPS-187661. Verify there are no errors after configuring a non liferay domain via editing the admin email."
+	@priority = 5
+	test ConfigureNonLiferayDomainViaUserEdit {
+		property custom.properties = "setup.wizard.enabled=false${line.separator}company.security.strangers.verify=false";
+		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.prepare.bundle.properties = "true";
+		property test.run.type = "single";
+
+		User.firstLoginPG();
+
+		User.openUsersAdmin();
+
+		User.editEmailAddressCP(
+			password = "test",
+			userEmailAddress = "test@test.com",
+			userScreenName = "test");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "test@test.com");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "test@test.com");
+	}
+
 	@priority = 4
 	test HypersonicToMySQL {
 		property database.types = "mysql";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.configurePG(
 			administratorEmail = "test@liferay.com",
@@ -94,6 +154,7 @@ definition {
 	test HypersonicWithSpecialContent {
 		property database.types = "hypersonic";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.configurePortalNamePG(portalName = "");
 
@@ -157,10 +218,62 @@ definition {
 			value1 = "Please enter a valid email address.");
 	}
 
+	@description = "This is a use case for LPS-187661. Verify a user created with default liferay admin credentials is not given admin rights by default if created by an admin with a non liferay domain."
+	@priority = 5
+	test NonLiferayDomainDoesNotGiveAdminRightsByDefault {
+		property database.types = "mysql";
+		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=company.security.strangers.verify=false");
+
+		SetupWizard.configurePG(
+			administratorEmail = "test@test.com",
+			administratorFirstName = "Test1",
+			administratorLastName = "Test1",
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseType = "MySQL",
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url"));
+
+		User.openUsersAdmin();
+
+		UserNavigator.gotoUser(userScreenName = "test");
+
+		User.editUserInformation(userScreenNameEdit = "test1");
+
+		User.openUsersAdmin();
+
+		User.addCP(
+			userEmailAddress = "test@liferay.com",
+			userFirstName = "test",
+			userLastName = "test",
+			userScreenName = "test");
+
+		User.openUsersAdmin();
+
+		UserNavigator.gotoUser(userScreenName = "test");
+
+		User.editPassword(
+			newPassword = "tester",
+			requirePasswordReset = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "tester",
+			userEmailAddress = "test@liferay.com");
+
+		AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
+	}
+
 	@priority = 5
 	test ViewConfiguredSetupWizardValue {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.viewDefaultPortalNamePG();
 

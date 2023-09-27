@@ -1,0 +1,85 @@
+definition {
+
+	macro createProject {
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame(locator1 = "Testray#MODAL_BODY");
+
+		if (isSet(projectName)) {
+			PortletEntry.inputName(name = ${projectName});
+		}
+
+		if (isSet(description)) {
+			PortletEntry.inputText(
+				fieldLabel = "Description",
+				text = ${description});
+		}
+
+		Button.clickSave();
+	}
+
+	macro createProjectByDropdown {
+		TestrayDropdown.selectOptionSidebar(
+			buttonOption = "Manage",
+			menuItem = "Add Project");
+
+		if (isSet(projectName)) {
+			PortletEntry.inputName(name = ${projectName});
+		}
+
+		if (isSet(description)) {
+			PortletEntry.inputText(
+				fieldLabel = "Description",
+				text = ${description});
+		}
+
+		Button.clickSave();
+	}
+
+	macro deleteAllProjects {
+		TestrayDropdown.goToResultSidebar();
+
+		Refresh();
+
+		Testray.changePagination(quantity = 150);
+
+		while (IsElementPresent(key_tableEntry = "Projects_", locator1 = "Testray#TABLE_ENTRY")) {
+			TestrayManage.selectTableRowOption(
+				rowOption = "Delete",
+				tableEntry = "Projects_");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro deleteProject {
+		TestrayDropdown.goToResultSidebar();
+
+		Testray.changePagination(quantity = 150);
+
+		TestrayManage.selectTableRowOption(
+			rowOption = "Delete",
+			tableEntry = ${projectName});
+
+		AssertConfirm(value1 = "Are you sure you want to delete this item?");
+	}
+
+	macro editProject {
+		SelectFrame(locator1 = "Testray#MODAL_BODY");
+
+		if (isSet(newName)) {
+			PortletEntry.inputName(name = ${newName});
+		}
+
+		if (isSet(newDescription)) {
+			PortletEntry.inputText(
+				fieldLabel = "Description",
+				text = ${newDescription});
+		}
+
+		Button.clickSave();
+	}
+
+}

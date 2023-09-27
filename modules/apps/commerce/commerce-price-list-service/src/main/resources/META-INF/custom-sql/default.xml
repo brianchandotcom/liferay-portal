@@ -131,21 +131,6 @@
 				CommercePriceEntry.CPInstanceUuid = ?
 		]]>
 	</sql>
-	<sql id="com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder.findBasePriceEntry">
-		<![CDATA[
-			SELECT
-				CommercePriceEntry.*
-			FROM
-				CommercePriceEntry
-			JOIN
-				CommercePriceList ON
-					CommercePriceEntry.commercePriceListId = CommercePriceList.commercePriceListId
-			WHERE
-				(CommercePriceEntry.CPInstanceUuid = ?) AND
-				(CommercePriceList.type_ = ?) AND
-				(CommercePriceList.catalogBasePriceList = [$TRUE$])
-		]]>
-	</sql>
 	<sql id="com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder.findByExpirationDate">
 		<![CDATA[
 			SELECT

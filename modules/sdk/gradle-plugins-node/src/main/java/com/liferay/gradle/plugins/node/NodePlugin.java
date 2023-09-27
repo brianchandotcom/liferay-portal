@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.node;
@@ -57,7 +48,9 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
@@ -351,12 +344,12 @@ public class NodePlugin implements Plugin<Project> {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(
-			JavaPlugin.class,
-			new Action<JavaPlugin>() {
+			JavaLibraryPlugin.class,
+			new Action<JavaLibraryPlugin>() {
 
 				@Override
-				public void execute(JavaPlugin javaPlugin) {
-					_configureTaskPackageRunBuildForJavaPlugin(
+				public void execute(JavaLibraryPlugin javaLibraryPlugin) {
+					_configureTaskPackageRunBuildForJavaLibraryPlugin(
 						packageRunBuildTask);
 				}
 
@@ -685,7 +678,7 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	@SuppressWarnings("serial")
-	private void _configureTaskPackageRunBuildForJavaPlugin(
+	private void _configureTaskPackageRunBuildForJavaLibraryPlugin(
 		final PackageRunBuildTask packageRunBuildTask) {
 
 		final Project project = packageRunBuildTask.getProject();
@@ -773,6 +766,9 @@ public class NodePlugin implements Plugin<Project> {
 			}
 
 			processResourcesCopy.dependsOn(packageRunBuildTask);
+
+			processResourcesCopy.setDuplicatesStrategy(
+				DuplicatesStrategy.INCLUDE);
 
 			processResourcesCopy.from(
 				new Callable<File>() {

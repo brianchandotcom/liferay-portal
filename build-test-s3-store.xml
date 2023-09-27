@@ -122,7 +122,10 @@
 		<echo>${bucket.objects}</echo>
 
 		<if>
-			<contains string="${bucket.objects}" substring="1.0" />
+			<and>
+				<contains string="${bucket.objects}" substring="Contents" />
+				<contains string="${bucket.objects}" substring="1.0" />
+			</and>
 			<then>
 				<echo>Document is in bucket.</echo>
 			</then>
@@ -156,7 +159,9 @@
 		<echo>${bucket.objects}</echo>
 
 		<if>
-			<equals arg1="${bucket.objects}" arg2="" />
+			<not>
+				<contains string="${bucket.objects}" substring="Contents" />
+			</not>
 			<then>
 				<echo>The bucket is empty.</echo>
 			</then>

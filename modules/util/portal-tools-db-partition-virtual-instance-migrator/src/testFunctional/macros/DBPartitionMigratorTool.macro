@@ -1,0 +1,42 @@
+definition {
+
+	macro clean {
+		AntCommands.runCommand("modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/build-test-db-partitioning-migrator.xml", "clean-db-partition-migrator-tool");
+	}
+
+	macro execute {
+		AntCommands.runCommand("modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/build-test-db-partitioning-migrator.xml", "execute-db-partition-migrator-tool -Ddatabase.schema.source.name=${databaseSchemaSourceName} -Ddatabase.schema.source.password=${databaseSchemaSourcePassword} -Ddatabase.schema.target.name=${databaseSchemaTargetName} -Ddatabase.schema.target.password=${databaseSchemaTargetPassword}");
+	}
+
+	macro generateTargetDatabase {
+		DBPartitionMigratorTool.prepareTargetSchema();
+
+		TestCase.updatePortalProperties(newProperty = "company.default.web.id=lportaltarget.com");
+
+		Portlet.startServer(keepOsGiState = "true");
+	}
+
+	macro prepareTargetSchema {
+		SQL.executeMySQLStatement(mysqlStatement = "CREATE DATABASE lportal_target character set utf8;");
+
+		var liferayPortalWeb = PropsUtil.get("liferay.app.server.classes.portal.dir");
+
+		FileUtil.replaceStringInFile("${liferayPortalWeb}/portal-ext.properties", "lportal", "lportal_target");
+	}
+
+	macro validateOutput {
+		var projectDir = PropsUtil.get("project.dir");
+
+		var dbPartitionMigratorOutputFile = FileUtil.read("${projectDir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db-partition-virtual-instance-migrator.log");
+
+		if (!(contains(${dbPartitionMigratorOutputFile}, ${outputMessage}))) {
+			fail("Expected output not found: ${outputMessage}.");
+		}
+		else {
+			echo("Expected output present: ${outputMessage}");
+		}
+
+		DBPartitionMigratorTool.clean();
+	}
+
+}

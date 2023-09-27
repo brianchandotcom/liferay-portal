@@ -11,53 +11,13 @@
 
 <tbody>
 <tr>
-	<td>ROUTINE_ID</td>
-	<td>//select[contains(@id, 'routineId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_VERSION</td>
-	<td>//select[contains(@id, 'productVersionId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TYPE_PRODUCT_VERSION_IN_BUILD</td>
-	<td>//div[@class='modal-body']//input[@id='name']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GIT_HASH_FIELD</td>
-	<td>//input[contains(@id, 'gitHash')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BUILD_DETAILS_PRODUCT_VERSION</td>
-	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Product Version')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BUILD_DETAILS_DESCRIPTION</td>
-	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Description')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BUILD_DETAILS_GIT_HASH</td>
-	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Git Hash')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PROMOTE_BUILD</td>
 	<td>//span[contains(@title,'promoted')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_STACKS_PARAMETER_LABEL_FIELD</td>
-	<td>//div[@class='modal-body']//label[text()='${parameterLabel}']//following::option[text()='${stackoptions}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_STACKS_PARAMETER_LABEL_FIELD_2</td>
-	<td>//div[@class='modal-body']//label[text()='${parameterLabel2}']//following::option[text()='${stackoptions2}']</td>
+	<td>//div[@class='modal-body']//label[text()='${parameterLabel}']//following::option[text()='${stackOptions}']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayTabs from '@clayui/tabs';
@@ -17,12 +8,12 @@ import {
 	API,
 	SidePanelForm,
 	SidebarCategory,
+	getLocalizableLabel,
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {defaultLanguageId} from '../../utils/constants';
 import {BasicInfo} from './BasicInfo';
 import {Conditions} from './Conditions';
 import {
@@ -31,9 +22,19 @@ import {
 } from './useObjectValidationForm';
 
 interface EditObjectValidationProps {
-	objectValidationRule: ObjectValidation;
+	creationLanguageId: Liferay.Language.Locale;
+	learnResources: object;
+	objectDefinitionId: number;
 	objectValidationRuleElements: SidebarCategory[];
+	objectValidationRuleId: number;
 	readOnly: boolean;
+}
+
+export interface PartialValidationFields {
+	id: number;
+	label: string;
+	name: string;
+	value: string;
 }
 
 interface ErrorDetails extends Error {
@@ -51,24 +52,38 @@ const TABS = [
 	},
 ];
 
+const initialValues: ObjectValidation = {
+	active: false,
+	engine: '',
+	engineLabel: '',
+	errorLabel: {},
+	id: 0,
+	name: {en_US: ''},
+	script: '',
+};
+
 export default function EditObjectValidation({
-	objectValidationRule: initialValues,
+	creationLanguageId,
+	learnResources,
+	objectDefinitionId,
 	objectValidationRuleElements,
+	objectValidationRuleId,
 	readOnly,
 }: EditObjectValidationProps) {
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [errorMessage, setErrorMessage] = useState<ObjectValidationErrors>(
 		{}
 	);
+	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
 
 	const onSubmit = async (objectValidation: ObjectValidation) => {
 		delete objectValidation.lineCount;
 
 		try {
-			await API.save(
-				`/o/object-admin/v1.0/object-validation-rules/${objectValidation.id}`,
-				objectValidation
-			);
+			await API.save({
+				item: objectValidation,
+				url: `/o/object-admin/v1.0/object-validation-rules/${objectValidation.id}`,
+			});
 			saveAndReload();
 			openToast({
 				message: Liferay.Language.get(
@@ -78,14 +93,17 @@ export default function EditObjectValidation({
 		}
 		catch (error) {
 			const {detail, message} = error as ErrorDetails;
-			const {fieldName, message: detailMessage} = JSON.parse(
-				detail as string
-			) as {
-				fieldName: keyof ObjectValidationErrors;
-				message: string;
-			};
 
-			setErrorMessage({[fieldName]: detailMessage});
+			if (detail) {
+				const {fieldName, message: detailMessage} = JSON.parse(
+					detail as string
+				) as {
+					fieldName: keyof ObjectValidationErrors;
+					message: string;
+				};
+
+				setErrorMessage({[fieldName]: detailMessage});
+			}
 
 			openToast({message, type: 'danger'});
 		}
@@ -100,13 +118,6 @@ export default function EditObjectValidation({
 	} = useObjectValidationForm({initialValues, onSubmit});
 
 	useEffect(() => {
-		if (initialValues.script === 'script_placeholder') {
-			initialValues.script = '';
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	useEffect(() => {
 		if (Object.keys(errors).length) {
 			openToast({
 				message: Liferay.Language.get(
@@ -117,21 +128,55 @@ export default function EditObjectValidation({
 		}
 	}, [errors]);
 
+	useEffect(() => {
+		const makeFetch = async () => {
+			const validationResponseJSON = await API.getObjectValidationRuleById<
+				ObjectValidation
+			>(objectValidationRuleId);
+
+			const newObjectValidation: ObjectValidation = {
+				...validationResponseJSON,
+				script:
+					validationResponseJSON.script === 'script_placeholder'
+						? ''
+						: validationResponseJSON.script,
+			};
+
+			const fieldsResponseJSON = await API.getObjectDefinitionObjectFields(
+				objectDefinitionId
+			);
+
+			setObjectFields(
+				fieldsResponseJSON.filter((field) => !field.system)
+			);
+			setValues(newObjectValidation);
+		};
+
+		makeFetch();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [objectDefinitionId, objectValidationRuleId]);
+
+	const disabled = readOnly || !!values?.system;
+
 	return (
 		<SidePanelForm
 			onSubmit={handleSubmit}
-			title={initialValues.name?.[defaultLanguageId]!}
+			title={getLocalizableLabel(creationLanguageId, values.name)}
 		>
 			<ClayTabs className="side-panel-iframe__tabs">
-				{TABS.map(({label}, index) => (
-					<ClayTabs.Item
-						active={activeIndex === index}
-						key={index}
-						onClick={() => setActiveIndex(index)}
-					>
-						{label}
-					</ClayTabs.Item>
-				))}
+				{TABS.map(({label}, index) =>
+					values.engine?.startsWith('function#') && index === 1 ? (
+						<React.Fragment key={index} />
+					) : (
+						<ClayTabs.Item
+							active={activeIndex === index}
+							key={index}
+							onClick={() => setActiveIndex(index)}
+						>
+							{label}
+						</ClayTabs.Item>
+					)
+				)}
 			</ClayTabs>
 
 			<ClayTabs.Content activeIndex={activeIndex} fade>
@@ -140,13 +185,16 @@ export default function EditObjectValidation({
 						<ClayTabs.TabPane key={index}>
 							<Component
 								componentLabel={label}
-								disabled={readOnly}
+								creationLanguageId={creationLanguageId}
+								disabled={disabled}
 								errors={
 									Object.keys(errors).length !== 0
 										? errors
 										: errorMessage
 								}
 								handleChange={handleChange}
+								learnResources={learnResources}
+								objectFields={objectFields ?? []}
 								objectValidationRuleElements={
 									objectValidationRuleElements
 								}

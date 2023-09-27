@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.seo.web.internal.util;
@@ -17,8 +8,8 @@ package com.liferay.layout.seo.web.internal.util;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -45,13 +36,13 @@ import java.util.Locale;
 public class OpenGraphImageProvider {
 
 	public OpenGraphImageProvider(
+		DDMFieldLocalService ddmFieldLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		DLAppLocalService dlAppLocalService,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
 		DLURLHelper dlurlHelper,
 		LayoutSEOSiteLocalService layoutSEOSiteLocalService,
-		LayoutSEOTemplateProcessor layoutSEOTemplateProcessor, Portal portal,
-		StorageEngine storageEngine) {
+		LayoutSEOTemplateProcessor layoutSEOTemplateProcessor, Portal portal) {
 
 		_dlAppLocalService = dlAppLocalService;
 		_dlurlHelper = dlurlHelper;
@@ -60,8 +51,8 @@ public class OpenGraphImageProvider {
 
 		_fileEntryMetadataOpenGraphTagsProvider =
 			new FileEntryMetadataOpenGraphTagsProvider(
-				ddmStructureLocalService, dlFileEntryMetadataLocalService,
-				portal, storageEngine);
+				ddmFieldLocalService, ddmStructureLocalService,
+				dlFileEntryMetadataLocalService, portal);
 	}
 
 	public OpenGraphImage getOpenGraphImage(
@@ -87,7 +78,7 @@ public class OpenGraphImageProvider {
 
 		public String getMimeType();
 
-		public String getUrl();
+		public String getURL();
 
 	}
 
@@ -145,7 +136,7 @@ public class OpenGraphImageProvider {
 				}
 
 				@Override
-				public String getUrl() {
+				public String getURL() {
 					return imagePreviewURL;
 				}
 
@@ -241,9 +232,9 @@ public class OpenGraphImageProvider {
 				}
 
 				@Override
-				public String getUrl() {
+				public String getURL() {
 					return _getAbsoluteURL(
-						themeDisplay, mappedWebImage.getUrl());
+						themeDisplay, mappedWebImage.getURL());
 				}
 
 			};

@@ -1,8 +1,8 @@
 dependencies {
-	testIntegrationCompile project(":apps:blogs:blogs-api")
-	testIntegrationCompile project(":apps:info:info-api")
-	testIntegrationCompile project(":apps:journal:journal-api")
-	testIntegrationCompile project(":apps:journal:journal-test-util")
-	testIntegrationCompile project(":apps:layout:layout-display-page-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:blogs:blogs-api")
+	testIntegrationImplementation project(":apps:info:info-api")
+	testIntegrationImplementation project(":apps:journal:journal-api")
+	testIntegrationImplementation project(":apps:journal:journal-test-util")
+	testIntegrationImplementation project(":apps:layout:layout-display-page-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

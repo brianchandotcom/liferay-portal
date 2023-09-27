@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.workflow.kaleo.metrics.integration.internal.model.listener;
@@ -20,6 +11,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.metrics.model.DeleteNodeRequest;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndex;
 
 import java.util.Objects;
 
@@ -37,7 +29,9 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			getKaleoDefinitionVersion(kaleoTask.getKaleoDefinitionVersionId());
 
-		if (Objects.isNull(kaleoDefinitionVersion)) {
+		if (Objects.isNull(kaleoDefinitionVersion) ||
+			!_workflowMetricsIndex.exists(kaleoTask.getCompanyId())) {
+
 			return;
 		}
 
@@ -48,6 +42,10 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 
 	@Override
 	public void onAfterRemove(KaleoTask kaleoTask) {
+		if (!_workflowMetricsIndex.exists(kaleoTask.getCompanyId())) {
+			return;
+		}
+
 		DeleteNodeRequest.Builder builder = new DeleteNodeRequest.Builder();
 
 		_nodeWorkflowMetricsIndexer.deleteNode(
@@ -63,5 +61,8 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 
 	@Reference
 	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=task)")
+	private WorkflowMetricsIndex _workflowMetricsIndex;
 
 }

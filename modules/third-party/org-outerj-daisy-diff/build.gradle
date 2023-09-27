@@ -5,7 +5,7 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "org.outerj.daisy", name: "daisydiff", version: "1.2.0-atlassian-hosted"
+	api group: "org.outerj.daisy", name: "daisydiff", version: "1.2.0-atlassian-hosted"
 
 	compileOnly group: "net.sourceforge.htmlunit", name: "neko-htmlunit", transitive: false, version: "2.66.0"
 	compileOnly group: "xerces", name: "xercesImpl", transitive: false, version: "2.12.1"

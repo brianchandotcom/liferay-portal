@@ -1,0 +1,27 @@
+{
+	"cpu": 1,
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "__PROJECT_ID__",
+	"kind": "Deployment",
+	"livenessProbe": {
+		"httpGet": {
+			"path": "/",
+			"port": 3001
+		}
+	},
+	"loadBalancer": {
+		"targetPort": 3001
+	},
+	"memory": 512,
+	"readinessProbe": {
+		"httpGet": {
+			"path": "/",
+			"port": 3001
+		}
+	},
+	"scale": 1
+}

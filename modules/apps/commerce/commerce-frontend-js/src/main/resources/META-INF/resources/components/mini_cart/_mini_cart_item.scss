@@ -9,7 +9,7 @@
 	grid-template-areas:
 		'info quantity price delete'
 		'errors errors errors errors';
-	grid-template-columns: auto 90px minmax(min-content, 100px) min-content;
+	grid-template-columns: auto 120px minmax(min-content, 100px) min-content;
 	overflow: visible;
 	position: relative;
 	transition: height 0.2s ease-in, padding 0.1s ease-in;
@@ -38,16 +38,15 @@
 	}
 
 	.mini-cart-item-info {
+		max-width: 250px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		width: 250px;
 
 		& *:not(& .child-items-quantity) {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-			width: 250px;
 		}
 
 		&.has-options {
@@ -80,6 +79,12 @@
 					font-weight: 400;
 				}
 			}
+		}
+
+		.item-info-replacement {
+			align-items: center;
+			display: flex;
+			gap: 0.4em;
 		}
 
 		p,
@@ -221,5 +226,9 @@
 		span {
 			margin-left: 10px;
 		}
+	}
+
+	.quantity-selector {
+		max-width: 70px;
 	}
 }

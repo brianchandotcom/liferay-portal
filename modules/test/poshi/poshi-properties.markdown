@@ -113,6 +113,12 @@ Sets a boolean that determines whether BrowserMob Proxy is enabled. The proxy ca
 
 Sets the port number assigned to the BrowserMob Proxy server.
 
+### report.type
+
+Sets the type of report to generate. Available report types are `test-properties` and `usage`.
+* `test-properties`: This generates a CSV file of tests and their properties specified in `test.csv.report.property.names`.
+* `usage`: This generates an HTML file showing usages of all macros in a project.
+
 ### save.screenshot
 
 Sets a boolean for whether a screenshot is saved when tests fail.
@@ -262,6 +268,16 @@ environments are denoted by the *CE* or *EE* values, respectively.
 
 Sets a boolean for whether Poshi log frontend resources are used locally or
 remotely.
+
+### test.run.thread.pool.size
+
+Sets the maximum number of threads to be used when running tests in parallel.
+This is only applicable when `test.run.type` is set to `parallel`.
+
+### test.run.type
+
+Sets the mode of execution Poshi will use. Valid options are `sequential` or
+`parallel`.
 
 ### test.skip.tear.down
 

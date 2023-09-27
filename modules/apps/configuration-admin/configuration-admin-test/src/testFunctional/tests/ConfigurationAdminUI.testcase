@@ -1,0 +1,58 @@
+@component-name = "portal-platform-experience-and-design-system"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.name = "Configuration Admin UI";
+	property testray.main.component.name = "System Settings";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		task ("Given signed into portal as admin") {
+			User.firstLoginPG();
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-194725 - configuration admin UI can autogenerate a doc link"
+	@priority = 3
+	test CanRenderADocLink {
+		property portal.acceptance = "false";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When navigate to Bundle Blacklist edit configuration page ") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Module Container",
+				configurationName = "Bundle Blacklist",
+				configurationScope = "System Scope");
+		}
+
+		task ("Then hyperlink is available within an anchor tag") {
+			AssertElementPresent(
+				key_href = "https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps.html",
+				key_text = "How does bundle",
+				locator1 = "Link#ANY_HREF");
+		}
+
+		task ("And Then text of hyperlink says “How does bundle blacklisting work?") {
+			AssertVisible(
+				key_href = "blacklisting-apps",
+				key_text = "How does bundle blacklisting work?",
+				locator1 = "Link#ANY_HREF_2");
+
+			takeScreenshot();
+		}
+	}
+
+}

@@ -36,14 +36,6 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("Add user via API") {
-			JSONUser.addUser(
-				userEmailAddress = "user@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
 		task ("create project, routine, team, component, case, case type, enviroment factor, product version, build, category, option, run, case result, task and subtask via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
@@ -124,14 +116,12 @@ definition {
 		task ("Go to Task") {
 			TestrayTestflow.goToTestflow();
 
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 		}
 	}
 
 	tearDown {
-		task ("Delete user via API") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
-		}
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		task ("Delete task, routine, component, case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
@@ -159,8 +149,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -169,192 +157,120 @@ definition {
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by assignee"
 	@priority = 4
 	test AdminCanFilterSubtasksByAssignee {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that subtask 1 is assigned to user userfn userln") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "userfn userln");
+		task ("Given that subtask 1 is assigned to user 'User User'") {
+			TestrayTestflow.assignUsers(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_1",
+				userName = "User User");
 		}
 
-		task ("And that subtask 2 is assigned to user Test") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+		task ("And that subtask 2 is assigned to user 'Test'") {
+			TestrayTestflow.assignUsers(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_2",
+				userName = "Test Test");
 		}
 
-		task ("When the user select the user userfn userln in the filter") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+		task ("When the user select the user 'User User' in the filter") {
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Assignee",
-				value1 = "userfn");
-
-			Button.click(button = "Apply");
+				selectValue = "User");
 		}
 
-		task ("Then can see only user userfn userln in the table") {
-			AssertElementPresent(
-				key_projectName = "userfn userln",
-				locator1 = "Testray#ITEM_NAME");
+		task ("Then can see only user 'User User' in the table") {
+			Testray.viewTableEntryList(listEntry = "User User");
 		}
 
 		task ("And do not see the user Test in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Test Test",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Test Test");
 		}
 	}
 
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by errors"
 	@priority = 3
 	test AdminCanFilterSubtasksByError {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two subtasks different in the table") {
-			AssertElementPresent(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Subtask_1,Subtask_2");
 		}
 
 		task ("When the user filter the subtask in the filter by error") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
-
-			TestrayFilter.typeFilter(
-				label = "Errors",
-				value = "Failed prior to running test");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Errors",
+				inputValue = "Failed prior to running test");
 		}
 
 		task ("Then the user see only subtask 1 with error in the table") {
-			AssertElementPresent(
-				key_projectName = "Failed prior to running test",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Failed prior to running test");
 		}
 
 		task ("And do not see the subtask 2 without error in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Subtask_2");
 		}
 	}
 
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by name"
 	@priority = 3
 	test AdminCanFilterSubtasksByName {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two subtasks different in the table") {
-			AssertElementPresent(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Subtask_1,Subtask_2");
 		}
 
 		task ("When the user select the subtask 2 in the filter by name") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
-
-			TestrayFilter.typeFilter(
-				label = "Subtask Name",
-				value = "Subtask_2");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Subtask Name",
+				inputValue = "Subtask_2");
 		}
 
 		task ("Then the user see only subtask 2 in the table") {
-			AssertElementPresent(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Subtask_2");
 		}
 
 		task ("And do not see the subtask 1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Subtask_1");
 		}
 	}
 
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtask using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterSubtaskWithMultipleOptions {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that subtask 1 is assigned to user userfn userln") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "userfn userln");
+		task ("Given that subtask 1 is assigned to user 'User User'") {
+			TestrayTestflow.assignUsers(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_1",
+				userName = "User User");
 		}
 
 		task ("And that subtask 2 is assigned to user Test Test") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_2",
+				userName = "Test Test");
 		}
 
 		task ("And that subtask 2 is completed with blocked") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
-
-			TestrayTestflow.editStatus(
+			TestrayTestflow.editStatusByRightClick(
 				comment = "button does not work",
 				issues = "LPS-166191",
-				selectStatus = "Blocked");
-
-			WaitForPageLoad();
+				selectStatus = "Blocked",
+				tableEntry = "Subtask_2");
 		}
 
 		task ("When the user filter multiple options by: Assignee, user and status in the filter") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				checkboxFieldLabel = "Status",
+				checkboxValue = "Complete",
+				fieldType = "checkbox,input,select",
+				inputFieldLabel = "Subtask Name",
+				inputValue = "Subtask_2",
 				selectFieldLabel = "Assignee",
-				value1 = "Test");
-
-			Click.clickAtNotVisible(
-				key_label = "Status",
-				key_status = "Complete",
-				locator1 = "TestrayFilter#STATUS_IN_FILTER");
-
-			TestrayFilter.typeFilter(
-				label = "Subtask Name",
-				value = "Subtask_2");
+				selectValue = "Test");
 		}
 
-		task ("Then can see only user userfn userln and complete status in the table") {
-			AssertElementPresent(
-				key_projectName = "Test Test",
-				locator1 = "Testray#ITEM_NAME");
+		task ("Then can see only user 'User User' and complete status in the table") {
+			Testray.viewTableEntryList(listEntry = "Test Test");
 
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -362,63 +278,40 @@ definition {
 		}
 
 		task ("And do not see the Subtask_2 and user test test in the table") {
-			AssertElementNotPresent(
-				key_projectName = "userfn userln",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementNotPresent(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "User User,Subtask_1");
 		}
 	}
 
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should not see subtask that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanNotFilterForNonExistentSubtask {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two subtasks that existent in the table") {
-			AssertElementPresent(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Subtask_1,Subtask_2");
 		}
 
 		task ("When filtering a subtask by his non-existent name") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
-
-			TestrayFilter.typeFilter(
-				label = "Subtask Name",
-				value = "Subtask_3");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Subtask Name",
+				inputValue = "Subtask_3");
 		}
 
 		task ("Then the user is not present in the subtask table") {
-			AssertElementNotPresent(
-				key_projectName = "Subtask_3",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Subtask_3");
 		}
 	}
 
 	@description = "Story ID: LPS-173522 | Test Summary: Verify that can search for a field"
 	@priority = 2
 	test AdminCanSearchForField {
-		property test.liferay.virtual.instance = "false";
-
 		task ("When the user searches for a field called Assignee") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Subtask_1",
+				locator1 = "Testray#TABLE_ENTRY");
 
-			TestrayFilter.searchFilter(value = "Assignee");
+			TestrayFilter.searchFilter(filterName = "Assignee");
 		}
 
 		task ("Then the user can see the field label called Assignee") {
@@ -428,7 +321,7 @@ definition {
 		}
 
 		task ("When the user searches for a field that does not exist") {
-			TestrayFilter.searchFilter(value = "Assignee 2");
+			TestrayFilter.searchFilter(filterName = "Assignee 2");
 		}
 
 		task ("Then the user can no more see the label called Assignee in the filter") {

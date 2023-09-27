@@ -94,6 +94,7 @@ definition {
 	test CanEnableArticleExpirationLabel {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the Notification Date is changed to 2 weeks") {
 			KBNavigator.openToConfigInSystemSettings(portlet = "System Service");
@@ -152,10 +153,10 @@ definition {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.moveArticleCP(
-			kbArticleCurrentParent = "Home",
+			destinationItem = "Knowledge Base Article Title Parent",
 			kbArticleTitle = "Knowledge Base Article Title Child");
 
-		KBArticle.selectParentArticleCP(kbArticleTitle = "Knowledge Base Article Title Parent");
+		Alert.reloadPageAfterSuccessMessage(successMessage = "Your request completed successfully.");
 
 		KBArticle.gotoViaKBAdminCP(
 			hasChildArticle = "true",
@@ -166,10 +167,11 @@ definition {
 			kbChildArticleTitle = "Knowledge Base Article Title Child");
 
 		KBArticle.moveArticleCP(
-			kbArticleCurrentParent = "Knowledge Base Article Title Parent",
-			kbArticleTitle = "Knowledge Base Article Title Child");
+			destinationItem = "Home",
+			kbArticleTitle = "Knowledge Base Article Title Child",
+			navigationPane = "true");
 
-		KBFolder.selectParentCP(kbFolderName = "Home");
+		Alert.reloadPageAfterSuccessMessage(successMessage = "Your request completed successfully.");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -194,10 +196,10 @@ definition {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.moveArticleCP(
-			kbArticleCurrentParent = "Home",
+			destinationItem = "Knowledge Base Article Title Parent",
 			kbArticleTitle = "Knowledge Base Article Title Child");
 
-		KBArticle.selectParentArticleCP(kbArticleTitle = "Knowledge Base Article Title Parent");
+		Alert.reloadPageAfterSuccessMessage(successMessage = "Your request completed successfully.");
 
 		KBArticle.gotoViaKBAdminCP(
 			hasChildArticle = "true",
@@ -291,7 +293,6 @@ definition {
 			KBArticle.addCP(
 				enableExpirationDate = "true",
 				extendedMinutes = 2,
-				getExpirationDateByPortal = "true",
 				kbArticleContent = "Knowledge Base Article Content",
 				kbArticleTitle = "Knowledge Base Article Title",
 				notificationDate = 7);

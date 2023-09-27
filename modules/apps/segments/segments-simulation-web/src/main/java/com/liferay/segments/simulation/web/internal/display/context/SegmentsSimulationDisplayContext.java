@@ -1,21 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.segments.simulation.web.internal.display.context;
 
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -23,10 +13,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -36,9 +24,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.item.selector.SegmentsEntryItemSelectorReturnType;
-import com.liferay.segments.item.selector.criterion.SegmentsEntryItemSelectorCriterion;
-import com.liferay.segments.item.selector.criterion.SegmentsExperienceItemSelectorCriterion;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -98,10 +83,6 @@ public class SegmentsSimulationDisplayContext {
 			"segmentsEntries", _getSegmentsEntriesJSONArray()
 		).put(
 			"segmentsExperiences", _getSegmentsExperiencesJSONArray()
-		).put(
-			"selectSegmentsEntryURL", _getSelectSegmentsEntryURL()
-		).put(
-			"selectSegmentsExperienceURL", _getSelectSegmentsExperienceURL()
 		).put(
 			"simulateSegmentsEntriesURL", getSimulateSegmentsEntriesURL()
 		).build();
@@ -213,6 +194,8 @@ public class SegmentsSimulationDisplayContext {
 		_segmentsExperiencesJSONArray = JSONUtil.toJSONArray(
 			segmentsExperiences,
 			segmentsExperience -> JSONUtil.put(
+				"active", _isActive(segmentsExperience, segmentsExperiences)
+			).put(
 				"segmentsEntryName",
 				() -> {
 					SegmentsEntry segmentsEntry =
@@ -227,16 +210,13 @@ public class SegmentsSimulationDisplayContext {
 						_themeDisplay.getLocale());
 				}
 			).put(
-				"segmentsExperienceActive",
-				_isActive(segmentsExperience, segmentsExperiences)
-			).put(
 				"segmentsExperienceId",
 				segmentsExperience.getSegmentsExperienceId()
 			).put(
 				"segmentsExperienceName",
 				segmentsExperience.getName(_themeDisplay.getLocale())
 			).put(
-				"segmentsExperienceStatusLabel",
+				"statusLabel",
 				() -> {
 					String statusLabelKey = "inactive";
 
@@ -249,53 +229,6 @@ public class SegmentsSimulationDisplayContext {
 			));
 
 		return _segmentsExperiencesJSONArray;
-	}
-
-	private String _getSelectSegmentsEntryURL() {
-		SegmentsEntryItemSelectorCriterion segmentsEntryItemSelectorCriterion =
-			new SegmentsEntryItemSelectorCriterion();
-
-		segmentsEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new SegmentsEntryItemSelectorReturnType());
-
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		Group group = _themeDisplay.getScopeGroup();
-
-		if (!stagingGroupHelper.isStagedPortlet(
-				_themeDisplay.getScopeGroupId(),
-				SegmentsPortletKeys.SEGMENTS)) {
-
-			group = stagingGroupHelper.getStagedPortletGroup(
-				_themeDisplay.getScopeGroup(), SegmentsPortletKeys.SEGMENTS);
-		}
-
-		segmentsEntryItemSelectorCriterion.setGroupId(group.getGroupId());
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_liferayPortletResponse.getNamespace() + "selectSegmentsEntry",
-				segmentsEntryItemSelectorCriterion));
-	}
-
-	private String _getSelectSegmentsExperienceURL() {
-		SegmentsExperienceItemSelectorCriterion
-			segmentsExperienceItemSelectorCriterion =
-				new SegmentsExperienceItemSelectorCriterion();
-
-		segmentsExperienceItemSelectorCriterion.
-			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
-		segmentsExperienceItemSelectorCriterion.setPlid(
-			_themeDisplay.getPlid());
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_liferayPortletResponse.getNamespace() +
-					"selectSegmentsExperience",
-				segmentsExperienceItemSelectorCriterion));
 	}
 
 	private long _getStagingAwareGroupId() {

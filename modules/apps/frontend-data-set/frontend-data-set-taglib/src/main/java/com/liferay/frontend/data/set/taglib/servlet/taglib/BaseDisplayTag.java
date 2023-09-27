@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.frontend.data.set.taglib.servlet.taglib;
@@ -90,6 +81,10 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		return _additionalProps;
 	}
 
+	public Map<String, Object> getEmptyState() {
+		return _emptyState;
+	}
+
 	public String getId() {
 		return _id;
 	}
@@ -140,6 +135,10 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		_additionalProps = additionalProps;
 	}
 
+	public void setEmptyState(Map<String, Object> emptyState) {
+		_emptyState = emptyState;
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}
@@ -188,6 +187,7 @@ public class BaseDisplayTag extends AttributesTagSupport {
 
 	protected void cleanUp() {
 		_additionalProps = null;
+		_emptyState = null;
 		_fdsPaginationEntries = null;
 		_id = null;
 		_itemsPerPage = 0;
@@ -231,6 +231,8 @@ public class BaseDisplayTag extends AttributesTagSupport {
 			}
 		).put(
 			"customViews", _getCustomViews()
+		).put(
+			"emptyState", _emptyState
 		).put(
 			"namespace", getNamespace()
 		).put(
@@ -305,6 +307,7 @@ public class BaseDisplayTag extends AttributesTagSupport {
 	private static final Log _log = LogFactoryUtil.getLog(BaseDisplayTag.class);
 
 	private Map<String, Object> _additionalProps;
+	private Map<String, Object> _emptyState;
 	private List<FDSPaginationEntry> _fdsPaginationEntries;
 	private String _id;
 	private int _itemsPerPage;

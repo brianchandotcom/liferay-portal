@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>DISABLED_ADD_EVENT_BUTTON</td>
-	<td>//*[contains(@class,'link-disabled')]</td>
+	<td>//*[@disabled]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>EDIT_PENCIL</td>
-	<td>//button[contains(@class,'btn-secondary')]//*[contains(@class,'pencil')]</td>
+	<td>//div[contains(@class,'filter-info-root')]//button</td>
 	<td></td>
 </tr>
 <tr>

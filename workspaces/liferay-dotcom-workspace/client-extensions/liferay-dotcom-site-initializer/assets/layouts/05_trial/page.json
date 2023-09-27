@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/trial",
+	"hidden": false,
+	"name": "30 day Trial",
+	"name_i18n": {
+		"en_US": "30 day Trial"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

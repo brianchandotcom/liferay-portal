@@ -74,7 +74,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8523 | Test Summary: Assert segment membership list shows all known individuals"
 	@priority = 4
 	test AssertSegmentMembershipListShowsAllKnownIndividuals {
-		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
@@ -126,7 +126,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8512 | Test Summary: Segment membership list is searchable"
 	@priority = 5
 	test CanSearchMembershipList {
-		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
@@ -187,7 +187,7 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var nameList1 = "user2 user2,user3 user3";
 		var nameList2 = "user1 user1,user2 user2";
@@ -348,7 +348,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8513 | Test Summary: Order the Segment Profile Membership List"
 	@priority = 3
 	test OrderSegmentProfileMembershipList {
-		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
@@ -430,7 +430,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8519 | Test Summary: Search a Dynamic Segment's Membership Preview Modal"
 	@priority = 3
 	test SearchDynamicSegmentsMembershipPreviewModal {
-		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
@@ -467,9 +467,7 @@ definition {
 
 			ACSegments.addSegmentField(segmentField = "givenName");
 
-			ACSegments.editFormControlCriterion(
-				criterionName = "givenName",
-				option = "is unknown");
+			ACSegments.selectOperator(operator = "is unknown");
 		}
 
 		task ("View members of preview segment") {

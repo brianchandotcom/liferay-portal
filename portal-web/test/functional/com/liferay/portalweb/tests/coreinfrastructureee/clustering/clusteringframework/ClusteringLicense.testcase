@@ -24,6 +24,7 @@ definition {
 		property custom.properties = "license.cluster.overload.node.auto.shut.down=false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WaitForConsoleTextPresent(value1 = "Spring Extender Unavailable Component Checker check result");
 
@@ -63,7 +64,7 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "This current node is within the temporarily permitted node count and will be automatically deactivated after the grace period expires");
 
-		Clustering.waitForNodeShutdown(nodePort = 10080);
+		Clustering.waitForNodeDeactivation(nodePort = 10080);
 
 		// Pausing 30 seconds due to LRQA-75909
 
@@ -114,6 +115,7 @@ definition {
 		property app.server.bundles.size = "4";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var nodeNumber : list "8,9,10,11") {
 			User.firstLoginUI(
@@ -151,6 +153,7 @@ definition {
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property skip.start.app.server.index = "2";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.firstLoginPG();
 
@@ -232,6 +235,7 @@ definition {
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property skip.start.app.server.index = "2";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -274,7 +278,7 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated");
 
-		Clustering.waitForNodeShutdown(nodePort = 9080);
+		Clustering.waitForNodeDeactivation(nodePort = 9080);
 
 		Navigator.openSpecificURL(url = "http://localhost:8080");
 
@@ -286,6 +290,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 
@@ -389,6 +394,7 @@ definition {
 		property custom.properties = "license.cluster.overload.node.auto.shut.down=false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var nodeNumber : list "8,9,10") {
 			Clustering.viewTextPresentOnSpecificNode(
@@ -413,7 +419,7 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated");
 
-		Clustering.waitForNodeShutdown(nodePort = 10080);
+		Clustering.waitForNodeDeactivation(nodePort = 10080);
 
 		// Pausing 30 seconds due to LRQA-75909
 

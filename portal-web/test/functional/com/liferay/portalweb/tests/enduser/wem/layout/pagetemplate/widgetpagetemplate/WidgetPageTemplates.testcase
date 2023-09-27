@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Widget Page Templates";
@@ -550,8 +551,6 @@ definition {
 	@description = "View page template in Spanish and English."
 	@priority = 4
 	test LocalizeGlobalDefaultPageTemplates {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Edit Department Landing Page and add several widgets") {
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 

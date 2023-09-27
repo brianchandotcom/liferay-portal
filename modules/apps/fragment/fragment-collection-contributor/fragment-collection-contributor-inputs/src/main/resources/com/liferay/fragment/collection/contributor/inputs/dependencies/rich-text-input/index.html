@@ -1,5 +1,5 @@
 <div class="rich-text-input [#if !input.showLabel || !input.label?has_content]rich-text-input--hidden-label[/#if]">
-	<div class="form-group mb-0">
+	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0">
 		[#if layoutMode == "edit"]
 			[@liferay_editor["resources"] editorName="ckeditor" /]
 
@@ -107,6 +107,18 @@
 			</div>
 		[#else]
 			[@liferay_editor["editor"] contents=input.value editorName="ckeditor" name=input.name placeholder=input.label required=input.required /]
+		[/#if]
+
+		[#if input.errorMessage?has_content]
+			<p class="font-weight-semi-bold mt-1 text-danger">
+				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+					<use xlink:href="${siteSpritemap}#info-circle" />
+				</svg>
+
+				<span>
+					${input.errorMessage}
+				</span>
+			</p>
 		[/#if]
 
 		[#if input.showHelpText && input.helpText?has_content]

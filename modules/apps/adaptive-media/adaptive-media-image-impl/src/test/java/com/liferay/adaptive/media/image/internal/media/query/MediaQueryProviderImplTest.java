@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.adaptive.media.image.internal.media.query;
@@ -27,8 +18,8 @@ import com.liferay.adaptive.media.image.internal.processor.AMImage;
 import com.liferay.adaptive.media.image.media.query.Condition;
 import com.liferay.adaptive.media.image.media.query.MediaQuery;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.url.AMImageURLFactory;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -641,7 +632,7 @@ public class MediaQueryProviderImplTest {
 
 	private void _addAdaptiveMedias(
 			FileEntry fileEntry,
-			AdaptiveMedia<AMImageProcessor>... adaptiveMedias)
+			AdaptiveMedia<AMProcessor<FileVersion>>... adaptiveMedias)
 		throws Exception {
 
 		Mockito.when(
@@ -662,7 +653,7 @@ public class MediaQueryProviderImplTest {
 					return Collections.emptyList();
 				}
 
-				for (AdaptiveMedia<AMImageProcessor> adaptiveMedia :
+				for (AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia :
 						adaptiveMedias) {
 
 					String configurationUuid = adaptiveMedia.getValue(
@@ -727,7 +718,7 @@ public class MediaQueryProviderImplTest {
 		_assertCondition(conditions.get(1), "min-width", minWidth + "px");
 	}
 
-	private AdaptiveMedia<AMImageProcessor> _createAdaptiveMedia(
+	private AdaptiveMedia<AMProcessor<FileVersion>> _createAdaptiveMedia(
 			String amImageConfigurationEntryUuid, int height, int width,
 			String url)
 		throws Exception {

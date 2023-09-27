@@ -1,67 +1,59 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch, localStorage, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import BaseAPIApplicationField from '../baseComponents/BaseAPIApplicationFields';
-
-type DataError = {
-	baseURL: boolean;
-	title: boolean;
-};
+import {headers} from '../utils/fetchUtil';
+import {openEditURL} from '../utils/urlUtil';
 
 interface HandleCreateInModal {
 	apiApplicationsURLPath: string;
+	basePath: string;
 	closeModal: voidReturn;
+	editURL: string;
 	loadData: voidReturn;
+	portletId: string;
 }
-
-const headers = new Headers({
-	'Accept': 'application/json',
-	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-	'Content-Type': 'application/json',
-});
 
 export function CreateAPIApplicationModalContent({
 	apiApplicationsURLPath,
+	basePath,
 	closeModal,
+	editURL,
 	loadData,
+	portletId,
 }: HandleCreateInModal) {
-	const [data, setData] = useState<Partial<APIApplicationItem>>({});
-	const [displayError, setDisplayError] = useState<DataError>({
+	const [localUIData, setLocalUIData] = useState<APIApplicationUIData>({
+		baseURL: '',
+		description: '',
+		title: '',
+	});
+	const [displayError, setDisplayError] = useState<ApplicationDataError>({
 		baseURL: false,
 		title: false,
 	});
 
 	useEffect(() => {
-		for (const key in data) {
-			if (data[key as keyof APIApplicationItem] !== '') {
+		for (const key in localUIData) {
+			if (localUIData[key as keyof APIApplicationUIData] !== '') {
 				setDisplayError((previousErrors) => ({
 					...previousErrors,
 					[key]: false,
 				}));
 			}
 		}
-	}, [data]);
+	}, [localUIData]);
 
 	async function postData() {
 		fetch(apiApplicationsURLPath, {
 			body: JSON.stringify({
-				...data,
+				...localUIData,
 				applicationStatus: {key: 'unpublished'},
 				version: '1.0',
 			}),
@@ -70,28 +62,30 @@ export function CreateAPIApplicationModalContent({
 		})
 			.then((response) => {
 				if (response.ok) {
-					closeModal();
-					loadData();
-					openToast({
-						message: Liferay.Language.get(
-							'new-api-application-was-created'
-						),
-						type: 'success',
-					});
-				}
-				else {
 					return response.json();
 				}
-			})
-			.then((responseJson) => {
-				if (responseJson) {
-					throw new Error(responseJson.title);
+				else {
+					throw response.json();
 				}
 			})
+			.then((responseJSON) => {
+				loadData();
+				closeModal();
+				openEditURL({editURL, id: responseJSON.id, portletId});
+				localStorage.setItem(
+					'justCreated',
+					true,
+					localStorage.TYPES.FUNCTIONAL
+				);
+			})
 			.catch((error) => {
-				openToast({
-					message: error.message,
-					type: 'danger',
+				error.then((response: {message: string; title: string}) => {
+					{
+						openToast({
+							message: response.title ?? response.message,
+							type: 'danger',
+						});
+					}
 				});
 			});
 	}
@@ -100,18 +94,18 @@ export function CreateAPIApplicationModalContent({
 		let isDataValid = true;
 		const mandatoryFields = ['baseURL', 'title'];
 
-		if (!Object.keys(data).length) {
+		if (!Object.keys(localUIData).length) {
 			const errors = mandatoryFields.reduce(
 				(errors, field) => ({...errors, [field]: true}),
 				{}
 			);
-			setDisplayError(errors as DataError);
+			setDisplayError(errors as ApplicationDataError);
 
 			isDataValid = false;
 		}
 		else {
 			mandatoryFields.forEach((field) => {
-				if (data[field as keyof APIApplicationItem]) {
+				if (localUIData[field as keyof APIApplicationUIData]) {
 					setDisplayError((previousErrors) => ({
 						...previousErrors,
 						[field]: false,
@@ -149,9 +143,10 @@ export function CreateAPIApplicationModalContent({
 
 			<div className="modal-body">
 				<BaseAPIApplicationField
-					data={data}
+					basePath={basePath}
+					data={localUIData}
 					displayError={displayError}
-					setData={setData}
+					setData={setLocalUIData}
 				/>
 			</div>
 

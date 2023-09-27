@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/placecube-digital-place-public-services",
+	"hidden": true,
+	"name": "Digital Place for Local Public Services",
+	"name_i18n": {
+		"en_US": "Digital Place for Local Public Services"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

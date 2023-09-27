@@ -2,7 +2,6 @@ dependencies {
 	compileInclude group: "com.liferay", name: "javax.servlet.jsp", version: "2.3.3-b02.LIFERAY-PATCHED-9"
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
-	compileOnly group: "com.liferay", name: "org.eclipse.equinox.http.servlet", version: "1.2.2.v20211118-0920.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.LIFERAY-PATCHED-19"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -21,6 +20,7 @@ dependencies {
 	compileOnly group: "org.springframework", name: "spring-web", version: "5.2.24.RELEASE"
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":apps:static:portal-osgi-web:portal-osgi-web-http-servlet-api")
 	compileOnly project(":apps:static:portal-osgi-web:portal-osgi-web-servlet-api")
 	compileOnly project(":apps:static:portal-osgi-web:portal-osgi-web-servlet-context-helper-api")
 	compileOnly project(":apps:static:portal:portal-profile-api")
@@ -35,5 +35,4 @@ deployDependencies {
 
 	include "commons-fileupload-*.jar"
 	include "commons-io-*.jar"
-	include "org.eclipse.equinox.http.servlet-*.jar"
 }

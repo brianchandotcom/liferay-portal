@@ -194,9 +194,7 @@ definition {
 			content = "Web Content Content",
 			fieldLabel = "Content");
 
-		AssertClick(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		Button.clickPublish();
 
 		AssertElementPresent(locator1 = "Icon#ASTERISK");
 
@@ -219,6 +217,29 @@ definition {
 		UploadCommonFile(
 			locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_INPUT",
 			value1 = ${uploadFileName});
+	}
+
+	macro addFeaturedImageFromDocumentsAndMedia {
+		Panel.expandPanel(panel = "Featured Image");
+
+		Select(
+			locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_TYPE",
+			value1 = "From Documents and Media");
+
+		if (IsTextEqual(locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_INPUT", value1 = "")) {
+			Click(
+				key_title = "Select Image",
+				locator1 = "Button#ANY_TITLE");
+		}
+		else {
+			Click(
+				key_title = "Change Image",
+				locator1 = "Button#ANY_TITLE");
+		}
+
+		ItemSelector.selectDMImage(
+			dmFolderName = ${dmFolderName},
+			imageFileName = ${imageFileName});
 	}
 
 	macro addFeaturedImageFromURL {
@@ -255,9 +276,7 @@ definition {
 				fieldLabel = "Content");
 		}
 
-		AssertClick(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		Button.clickPublish();
 
 		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 
@@ -271,9 +290,7 @@ definition {
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
 
-		AssertClickNoError(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		PortletEntry.publish();
 
 		WaitForPageLoad();
 
@@ -301,9 +318,7 @@ definition {
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
 
-		AssertClickNoError(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		Button.clickPublish();
 
 		WaitForPageLoad();
 	}
@@ -933,7 +948,7 @@ definition {
 	macro copyCP {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = ${webContentTitle},
-			menuItem = "Copy");
+			menuItem = "Make a Copy");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1358,9 +1373,7 @@ definition {
 				fieldLabel = "Content");
 		}
 
-		AssertClick(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		Button.clickPublish();
 
 		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 	}
@@ -1528,22 +1541,17 @@ definition {
 	}
 
 	macro increaseDisplayDate {
-		var displayDate = selenium.getAttribute("//input[contains(@id,'displayDate')]@value");
-		var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
-		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
-
-		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
-
-		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
-		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
-
-		var displayDateMinuteFuture = ${displayDateMinute} + ${minuteIncrease};
-
-		var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";
+		var displayDate = DateTimeSchedule.getCurrentDisplayDate(field = "display");
+		var currentTime = DateTimeSchedule.getCurrentDisplayTime(field = "display");
+		var displayTime = DateTimeSchedule.increaseDisplayTime(
+			field = "display",
+			minuteIncreaseValue = ${minuteIncrease});
 
 		WebContent.editDisplayDate(
 			displayDate = ${displayDate},
 			displayTime = ${displayTime});
+
+		echo("Web Content display time increased ${minuteIncrease} minutes, changed from ${currentTime} to ${displayTime}");
 	}
 
 	macro moveArticlesToFolderCP {
@@ -2898,9 +2906,7 @@ definition {
 
 				var actual = TestUtils.getElementTextContent(element = "//label[normalize-space(text())='${webContentTextFieldLabel}']//..//textarea");
 
-				TestUtils.assertEquals(
-					actual = ${actual},
-					expected = ${webContentText});
+				StringUtil.assertEquals(${webContentText}, ${actual});
 			}
 			else {
 				AssertTextEquals.assertValue(

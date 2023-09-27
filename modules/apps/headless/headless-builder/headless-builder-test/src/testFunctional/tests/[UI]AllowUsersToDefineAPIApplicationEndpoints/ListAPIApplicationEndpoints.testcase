@@ -1,0 +1,354 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+
+		task ("Given an API application is created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				status = "unpublished",
+				title = "My-app");
+
+			ApplicationAPI.setUpGlobalAPIApplicationId();
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 5
+	test CanClickAddEndpointButtons {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I navigate to Endpoints in Edit API Application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+		}
+
+		task ("Then the two Add API Endpoint buttons are editable") {
+			AssertElementPresent(locator1 = "Button#PLUS");
+
+			AssertElementPresent(locator1 = "APIBuilder#ADD_API_ENDPOINT");
+		}
+
+		task ("And Then no error in console") {
+			AssertConsoleTextNotPresent(value1 = "Internal Server Error");
+		}
+	}
+
+	@priority = 4
+	test CanCopyURLOfAPIEndpoint {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I create an endpoint associate to the API application") {
+			EndpointAPI.createAPIEndpoint(
+				apiApplicationId = ${staticApplicationId},
+				name = "myEndpoint",
+				path = "/myEndpoint");
+		}
+
+		task ("When I click Copy URL in Actions icon") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+
+			Click(
+				locator1 = "APIBuilder#DND_TR_BUTTON",
+				value = "Actions");
+
+			Click(locator1 = "APIBuilder#COPY_URL");
+		}
+
+		task ("Then the copies url has the correct value") {
+			Type.sendKeys(
+				locator1 = "TextInput#SEARCH",
+				value1 = "keys=CONTROL,v");
+
+			var portalURL = JSONCompany.getPortalURL();
+
+			AssertTextEquals(
+				locator1 = "TextInput#SEARCH",
+				value1 = "${portalURL}/o/my-app/myEndpoint/");
+		}
+	}
+
+	@priority = 4
+	test CanFilterEndpointAPIByCreationDateAsLastUpdated {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I create an endpoint associate to the API application") {
+			EndpointAPI.createAPIEndpoint(
+				apiApplicationId = ${staticApplicationId},
+				name = "myEndpoint",
+				path = "/myEndpoint");
+		}
+
+		task ("When I filter endpoints with Last updated from ${schema_creation_date} to ${schema_creation_date}") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+
+			var creationDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy", "UTC");
+
+			APIBuilderUI.filterByLastUpdated(
+				fromDate = ${creationDate},
+				toDate = ${creationDate});
+		}
+
+		task ("Then I can see the endpoint is listed") {
+			AssertElementPresent(
+				key_name = "/myEndpoint/",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 4
+	test CanFilterEndpointAPIByDateBeforeCreationAsLastUpdated {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I create an endpoint associate to the API application") {
+			EndpointAPI.createAPIEndpoint(
+				apiApplicationId = ${staticApplicationId},
+				name = "myEndpoint",
+				path = "/myEndpoint");
+		}
+
+		task ("When I filter endpoints with Last updated from ${schema_creation_date} - 1 day to ${schema_creation_date} - 1 day") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+
+			var date = DateUtil.getDateOffsetByDays("-1", "MM/dd/yyyy");
+			var currentDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
+
+			APIBuilderUI.filterByLastUpdated(
+				fromDate = ${date},
+				toDate = ${date});
+		}
+
+		task ("Then I can see No API Endpoint Found") {
+			AssertElementNotPresent(
+				key_name = "/myEndpoint/",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 5
+	test CanListCreatedEndpoint {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given with postEndpointAPI to create an endpoint associate to the API application") {
+			EndpointAPI.createAPIEndpoint(
+				apiApplicationId = ${staticApplicationId},
+				name = "myEndpoint",
+				path = "/myEndpoint");
+		}
+
+		task ("When I navigate to Endpoints in Edit API Application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+		}
+
+		task ("Then the created endpoint is listed") {
+			AssertElementPresent(
+				key_name = "/myEndpoint/",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+
+		task ("And Then no error in console") {
+			AssertConsoleTextNotPresent(value1 = "Internal Server Error");
+		}
+	}
+
+	@priority = 4
+	test CanOrderEndpointAPI {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given with postEndpointAPI to create two endpoints associate to the API application") {
+			EndpointAPI.createNAPIEndpoints(
+				apiApplicationId = ${staticApplicationId},
+				name = "myEndpoint",
+				numberOfEndpoints = 2,
+				path = "/myEndpoint");
+		}
+
+		task ("And Given I navigate to Endpoints in Edit API Application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+		}
+
+		task ("When I order the endpoints by Last updated") {
+			Click(
+				locator1 = "APIBuilder#DND_TR_BUTTON",
+				value = "Last updated");
+		}
+
+		task ("Then the endpoints are ordered") {
+			APIBuilderUI.viewItemsInOrder(itemList = "/myEndpoint1/,/myEndpoint2/");
+		}
+	}
+
+	@priority = 4
+	test CanPaginateAPIEndpoints {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given postAPIEndpoint to create 11 endpoints associate to the API application") {
+			EndpointAPI.createNAPIEndpoints(
+				apiApplicationId = ${staticApplicationId},
+				name = "myEndpoint",
+				numberOfEndpoints = 11,
+				path = "/myEndpoint");
+		}
+
+		task ("And Given I navigate to Endpoints in Edit API Application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+		}
+
+		task ("And Given I select 10 Items in pagination combobox") {
+			Pagination.changePagination(itemsPerPage = "10 Items");
+
+			Pagination.viewResults(results = "Showing 1 to 10 of 11 entries.");
+		}
+
+		task ("When I go to the second page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
+
+		task ("Then the 11th endpoint is present with Showing 11 to 11 of 11 entries message") {
+			AssertElementPresent(
+				key_name = "/myEndpoint11/",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+
+			Pagination.viewResults(results = "Showing 11 to 11 of 11 entries.");
+		}
+	}
+
+	@priority = 4
+	test CanSearchEndpointAPI {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I create an edpoint associate to the API application") {
+			EndpointAPI.createAPIEndpoint(
+				apiApplicationId = ${staticApplicationId},
+				name = "myEndpoint",
+				path = "/myEndpoint");
+		}
+
+		task ("When I search endpoints with existing name") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+
+			APIBuilderUI.searchItem(value = "myEndpoint");
+		}
+
+		task ("Then I can see the endpoint is listed") {
+			AssertElementPresent(
+				key_name = "/myEndpoint/",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 5
+	test CanSeeAvailableFieldsAndActions {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I create an endpoint associate to the API application") {
+			EndpointAPI.createAPIEndpoint(
+				apiApplicationId = ${staticApplicationId},
+				name = "myEndpoint",
+				path = "/myEndpoint");
+		}
+
+		task ("Then Method, Path, Description and Last updated are visible") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+
+			AssertElementPresent(
+				locator1 = "APIBuilder#DND_TR_BUTTON",
+				value = "Last updated");
+
+			for (var value : list "Method,Path,Description") {
+				AssertElementPresent(
+					locator1 = "APIBuilder#DND_TR_WITH_TEXT",
+					text = ${value});
+			}
+		}
+
+		task ("And Then Actions icon with Edit, Copy URL and Delete are visible") {
+			Click(
+				locator1 = "APIBuilder#DND_TR_BUTTON",
+				value = "Actions");
+
+			AssertElementPresent(locator1 = "APIBuilder#DELETE_IN_DROPDOWN_MENU");
+
+			AssertElementPresent(locator1 = "APIBuilder#EDIT_BUTTON");
+
+			AssertElementPresent(locator1 = "APIBuilder#COPY_URL");
+		}
+	}
+
+	@priority = 4
+	test CanSeeNoEndpointAPIAndAddEndpointButton {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I navigate to Endpoints in Edit API Application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+		}
+
+		task ("Then I can see no API Endpoint Found message with a Add API Endpoint button") {
+			AssertElementPresent(
+				key_entryName = "No API Endpoint Found",
+				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+
+			AssertElementPresent(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "Add API Endpoint");
+		}
+	}
+
+}

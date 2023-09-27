@@ -1,8 +1,20 @@
 <div class="date-input">
-	<div class="form-group mb-0">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-date-input">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-date-input-label">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
-		<input aria-describedby="${fragmentEntryLinkNamespace}-date-input-help-text" class="form-control" id="${fragmentEntryLinkNamespace}-date-input" max="9999-12-31" name="${input.name}" ${input.required?then('required', '')} type="date" [#if input.value??]value="${input.value}"[/#if] />
+		<input aria-describedby="${fragmentEntryLinkNamespace}-date-input-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-date-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-date-input-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-date-input" max="9999-12-31" name="${input.name}" ${input.required?then('required', '')} type="date" [#if input.value??]value="${input.value}"[/#if] />
+
+		[#if input.errorMessage?has_content]
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentEntryLinkNamespace}-date-input-error-message">
+				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+					<use xlink:href="${siteSpritemap}#info-circle" />
+				</svg>
+
+				<span>
+					${input.errorMessage}
+				</span>
+			</p>
+		[/#if]
 
 		[#if input.showHelpText && input.helpText?has_content]
 			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-date-input-help-text">${htmlUtil.escape(input.helpText)}</p>

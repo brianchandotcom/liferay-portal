@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.javadoc.formatter;
@@ -24,8 +15,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.util.CollectionUtils;
 
@@ -36,7 +29,9 @@ import org.gradle.util.CollectionUtils;
 public class FormatJavadocTask extends JavaExec {
 
 	public FormatJavadocTask() {
-		setMain("com.liferay.javadoc.formatter.JavadocFormatter");
+		Property<String> mainClass = getMainClass();
+
+		mainClass.set("com.liferay.javadoc.formatter.JavadocFormatter");
 	}
 
 	@Override
@@ -118,6 +113,7 @@ public class FormatJavadocTask extends JavaExec {
 		_updateJavadocs = updateJavadocs;
 	}
 
+	@Internal
 	protected List<String> getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 

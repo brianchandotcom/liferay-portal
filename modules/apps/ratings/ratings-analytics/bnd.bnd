@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Ratings Analytics
 Bundle-SymbolicName: com.liferay.ratings.analytics
-Bundle-Version: 4.0.11
+Bundle-Version: 4.0.12
 Web-ContextPath: /ratings-analytics

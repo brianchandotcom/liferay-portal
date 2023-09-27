@@ -12,6 +12,22 @@
 			}
 		},
 		{
+			"template_expando_keyword": {
+				"mapping": {
+					"analyzer": "keyword_lowercase",
+					"fields": {
+						"raw": {
+							"type": "keyword"
+						}
+					},
+					"store": true,
+					"type": "text"
+				},
+				"match": "expando__keyword__*",
+				"match_mapping_type": "string"
+			}
+		},
+		{
 			"template_long_sortable": {
 				"mapping": {
 					"store": true,
@@ -903,22 +919,6 @@
 					"type": "keyword"
 				},
 				"match": "ddm__keyword__*",
-				"match_mapping_type": "string"
-			}
-		},
-		{
-			"template_expando_keyword": {
-				"mapping": {
-					"analyzer": "keyword_lowercase",
-					"fields": {
-						"raw": {
-							"type": "keyword"
-						}
-					},
-					"store": true,
-					"type": "text"
-				},
-				"match": "expando__keyword__*",
 				"match_mapping_type": "string"
 			}
 		},

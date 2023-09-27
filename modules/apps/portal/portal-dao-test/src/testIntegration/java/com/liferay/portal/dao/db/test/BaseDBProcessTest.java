@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.dao.db.test;
@@ -86,8 +77,10 @@ public class BaseDBProcessTest extends BaseDBProcess {
 				"key, notNilColumn VARCHAR(75) not null, nilColumn ",
 				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
 				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
-				"typeLong LONG null, typeSBlob SBLOB, typeString STRING null, ",
-				"typeText TEXT null, typeVarchar VARCHAR(75) null);"));
+				"typeLong LONG null, typeLongDefault LONG default 10 not null,",
+				"typeSBlob SBLOB, typeString STRING null, typeText TEXT null, ",
+				"typeVarchar VARCHAR(75) null, typeVarcharDefault VARCHAR(10) ",
+				"default 'testValue' not null);"));
 	}
 
 	@After
@@ -103,9 +96,9 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			Assert.fail();
 		}
 		catch (SQLException sqlException) {
+			Assert.assertFalse(
+				_dbInspector.hasColumn(_TABLE_NAME, "typeChanged"));
 		}
-
-		Assert.assertFalse(_dbInspector.hasColumn(_TABLE_NAME, "typeChanged"));
 	}
 
 	@Test
@@ -127,12 +120,13 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			Assert.fail();
 		}
 		catch (SQLException sqlException) {
+			Assert.assertTrue(
+				_dbInspector.hasColumn(_TABLE_NAME, "typeInteger"));
+
+			Assert.assertTrue(
+				_dbInspector.hasColumnType(
+					_TABLE_NAME, "typeBoolean", "BOOLEAN"));
 		}
-
-		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "typeInteger"));
-
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(_TABLE_NAME, "typeBoolean", "BOOLEAN"));
 	}
 
 	@Test
@@ -144,13 +138,13 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			Assert.fail();
 		}
 		catch (SQLException sqlException) {
+			Assert.assertFalse(
+				_dbInspector.hasColumn(_TABLE_NAME, "deletedColumn"));
+
+			Assert.assertFalse(
+				_dbInspector.hasColumnType(
+					_TABLE_NAME, "typeBoolean", "VARCHAR"));
 		}
-
-		Assert.assertFalse(
-			_dbInspector.hasColumn(_TABLE_NAME, "deletedColumn"));
-
-		Assert.assertFalse(
-			_dbInspector.hasColumnType(_TABLE_NAME, "typeBoolean", "VARCHAR"));
 	}
 
 	@Test
@@ -163,12 +157,13 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			Assert.fail();
 		}
 		catch (SQLException sqlException) {
+			Assert.assertTrue(
+				_dbInspector.hasColumn(_TABLE_NAME, "typeInteger"));
+
+			Assert.assertFalse(
+				_dbInspector.hasColumnType(
+					_TABLE_NAME, "typeBoolean", "VARCHAR"));
 		}
-
-		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "typeInteger"));
-
-		Assert.assertFalse(
-			_dbInspector.hasColumnType(_TABLE_NAME, "typeBoolean", "VARCHAR"));
 	}
 
 	@Test
@@ -181,10 +176,27 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			Assert.fail();
 		}
 		catch (SQLException sqlException) {
+			Assert.assertFalse(
+				_dbInspector.hasColumn(_TABLE_NAME, "nonexistentColumn"));
 		}
+	}
 
-		Assert.assertFalse(
-			_dbInspector.hasColumn(_TABLE_NAME, "nonexistentColumn"));
+	@Test
+	public void testAlterColumnNameNoNullableChange() throws Exception {
+		alterColumnName(
+			_TABLE_NAME, "nilColumn", "nilColumnTest VARCHAR(75) null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "nilColumnTest", "VARCHAR(75) null"));
+
+		alterColumnName(
+			_TABLE_NAME, "notNilColumn",
+			"notNilColumnTest VARCHAR(75) not null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "notNilColumnTest", "VARCHAR(75) not null"));
 	}
 
 	@Test
@@ -215,16 +227,9 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 	@Test
 	public void testAlterColumnTypeChangeToDefaultNotNull() throws Exception {
-		try {
-			alterColumnType(
-				_TABLE_NAME, "nilColumn", "LONG default 2 not null");
+		alterColumnType(_TABLE_NAME, "nilColumn", "LONG default 2 not null");
 
-			Assert.fail();
-		}
-		catch (SQLException sqlException) {
-		}
-
-		Assert.assertFalse(
+		Assert.assertTrue(
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "nilColumn", "LONG default 2 not null"));
 	}
@@ -253,6 +258,35 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(_TABLE_NAME, "typeString", "TEXT null"));
+	}
+
+	@Test
+	public void testAlterColumnTypeChangeWithoutDefaultClause()
+		throws Exception {
+
+		_db.alterColumnType(
+			_connection, _TABLE_NAME, "typeVarcharDefault",
+			"VARCHAR(10) not null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeVarcharDefault", "VARCHAR(10) not null"));
+	}
+
+	@Test
+	public void testAlterColumnTypeChangeWithoutNullClause() throws Exception {
+		_db.alterColumnType(
+			_connection, _TABLE_NAME, "notNilColumn", "VARCHAR(75)");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "notNilColumn", "VARCHAR(75) null"));
+
+		alterColumnType(_TABLE_NAME, "nilColumn", "VARCHAR(75)");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "nilColumn", "VARCHAR(75) null"));
 	}
 
 	@Test
@@ -289,11 +323,10 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			Assert.fail();
 		}
 		catch (SQLException sqlException) {
+			Assert.assertFalse(
+				_dbInspector.hasColumnType(
+					_TABLE_NAME, "nonexistentColumn", "TEXT not null"));
 		}
-
-		Assert.assertFalse(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "nonexistentColumn", "TEXT not null"));
 	}
 
 	@Test
@@ -396,9 +429,9 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			Assert.fail();
 		}
 		catch (SQLException sqlException) {
+			Assert.assertFalse(
+				hasColumnType(_TABLE_NAME, "typeDouble", "VARCHAR"));
 		}
-
-		Assert.assertFalse(hasColumnType(_TABLE_NAME, "typeDouble", "VARCHAR"));
 	}
 
 	@Test

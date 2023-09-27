@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.model;
@@ -17,6 +8,7 @@ package com.liferay.commerce.product.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -74,12 +66,20 @@ public class CPDefinitionOptionRelTable
 		createColumn(
 			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionRelTable, String>
-		DDMFormFieldTypeName = createColumn(
-			"DDMFormFieldTypeName", String.class, Types.VARCHAR,
+		commerceOptionTypeKey = createColumn(
+			"commerceOptionTypeKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionRelTable, String> infoItemServiceKey =
+		createColumn(
+			"infoItemServiceKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionRelTable, Double> priority =
 		createColumn(
 			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionRelTable, Boolean> definedExternally =
+		createColumn(
+			"definedExternally", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionRelTable, Boolean> facetable =
 		createColumn(
 			"facetable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
@@ -95,6 +95,9 @@ public class CPDefinitionOptionRelTable
 	public final Column<CPDefinitionOptionRelTable, String> priceType =
 		createColumn(
 			"priceType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionRelTable, Clob> typeSettings =
+		createColumn(
+			"typeSettings", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private CPDefinitionOptionRelTable() {
 		super("CPDefinitionOptionRel", CPDefinitionOptionRelTable::new);

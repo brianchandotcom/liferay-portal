@@ -5,8 +5,10 @@
     osgi.identity;filter:='(osgi.identity=javax.servlet-api)',\
     osgi.identity;filter:='(osgi.identity=slf4j.api)'
 -runprovidedcapabilities:\
+    osgi.ee;osgi.ee="JavaSE";version:List<Version>="1.8,11",\
     osgi.service;objectClass:List<String>='com.liferay.portal.kernel.model.Portlet',\
     osgi.service;objectClass:List<String>='com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle',\
     osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Portal',\
+    osgi.service;objectClass:List<String>='java.lang.Object',\
     osgi.service;objectClass:List<String>='javax.servlet.ServletContext'
 -runrequires: osgi.identity;filter:='(osgi.identity=${project.bundle.Bundle-SymbolicName})'

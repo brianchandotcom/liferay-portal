@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {
@@ -18,12 +9,11 @@ import {
 	// @ts-ignore
 
 } from '@liferay/frontend-data-set-web';
-import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
 
 // @ts-ignore
 
 import moment from 'moment/min/moment-with-locales';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 import {
 	IFDSTableProps,
@@ -31,6 +21,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import FDSSourceDataRenderer from '../FDSPropsTransformer/FDSSourceDataRenderer';
 
 interface ItemData {
 	active: boolean;
@@ -45,26 +36,9 @@ export default function Validations({
 	formName,
 	id,
 	items,
-	objectDefinitionExternalReferenceCode,
 	style,
 	url,
 }: IFDSTableProps) {
-	const [creationLanguageId, setCreationLanguageId] = useState<
-		Liferay.Language.Locale
-	>();
-
-	useEffect(() => {
-		const makeFetch = async () => {
-			const objectDefinition = await API.getObjectDefinitionByExternalReferenceCode(
-				objectDefinitionExternalReferenceCode
-			);
-
-			setCreationLanguageId(objectDefinition.defaultLanguageId);
-		};
-
-		makeFetch();
-	}, [objectDefinitionExternalReferenceCode]);
-
 	function objectFieldActiveDataRenderer({itemData}: {itemData: ItemData}) {
 		return itemData.active
 			? Liferay.Language.get('yes')
@@ -85,10 +59,7 @@ export default function Validations({
 		return (
 			<div className="table-list-title">
 				<a href="#" onClick={handleEditField}>
-					{getLocalizableLabel(
-						creationLanguageId as Liferay.Language.Locale,
-						value
-					)}
+					{value}
 				</a>
 			</div>
 		);
@@ -100,11 +71,57 @@ export default function Validations({
 		return moment().format('MMMM D, YYYY, h:mm:ss A');
 	}
 
+	const fdsSchemaFields = [
+		{
+			contentRenderer: 'objectFieldLabelDataRenderer',
+			expand: false,
+			fieldName: 'name',
+			label: Liferay.Language.get('label'),
+			localizeLabel: true,
+			sortable: true,
+		},
+		{
+			expand: false,
+			fieldName: 'engineLabel',
+			label: Liferay.Language.get('type'),
+			localizeLabel: true,
+			sortable: false,
+		},
+		{
+			contentRenderer: 'objectFieldActiveDataRenderer',
+			expand: false,
+			fieldName: 'active',
+			label: Liferay.Language.get('active'),
+			localizeLabel: true,
+			sortable: false,
+		},
+		{
+			contentRenderer: 'objectFieldModifiedDateDataRenderer',
+			expand: false,
+			fieldName: 'dateModified',
+			label: Liferay.Language.get('modified-date'),
+			localizeLabel: true,
+			sortable: false,
+		},
+	];
+
+	if (Liferay.FeatureFlags['LPS-193355']) {
+		fdsSchemaFields.push({
+			contentRenderer: 'FDSSourceDataRenderer',
+			expand: false,
+			fieldName: 'system',
+			label: Liferay.Language.get('source'),
+			localizeLabel: true,
+			sortable: false,
+		});
+	}
+
 	const dataSetProps = {
 		...defaultDataSetProps,
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
+			FDSSourceDataRenderer,
 			objectFieldActiveDataRenderer,
 			objectFieldLabelDataRenderer,
 			objectFieldModifiedDateDataRenderer,
@@ -124,41 +141,7 @@ export default function Validations({
 				label: 'Table',
 				name: 'table',
 				schema: {
-					fields: [
-						{
-							contentRenderer: 'objectFieldLabelDataRenderer',
-							expand: false,
-							fieldName: 'name',
-							label: Liferay.Language.get('label'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							expand: false,
-							fieldName: 'engineLabel',
-							label: Liferay.Language.get('type'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							contentRenderer: 'objectFieldActiveDataRenderer',
-							expand: false,
-							fieldName: 'active',
-							label: Liferay.Language.get('active'),
-							localizeLabel: true,
-							sortable: false,
-						},
-
-						{
-							contentRenderer:
-								'objectFieldModifiedDateDataRenderer',
-							expand: false,
-							fieldName: 'dateModified',
-							label: Liferay.Language.get('modified-date'),
-							localizeLabel: true,
-							sortable: false,
-						},
-					],
+					fields: fdsSchemaFields,
 				},
 				thumbnail: 'table',
 			},

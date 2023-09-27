@@ -1,9 +1,9 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
 	static var randomSiteName = StringUtil.randomString(8);
@@ -11,6 +11,10 @@ definition {
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
@@ -109,6 +113,15 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-188909. The portal version info shouldn't be shown on the Home page."
+	@priority = 4
+	test CannotViewPortalVersionInfoOnHomePage {
+		ContentPages.viewFragmentText(
+			fragmentName = "paragraph",
+			id = "element-text",
+			text = "Enjoy using the best DXP on Earth!");
+	}
+
 	@description = "This is a test for LPS-146373. The page creator could close the left sidebar panel via the times icon."
 	@priority = 4
 	test CloseLeftPageEditorSidebar {
@@ -132,8 +145,6 @@ definition {
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session on content page in card view."
 	@priority = 3
 	test CouldAddAndRemoveFragmentInCardView {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -215,7 +226,6 @@ definition {
 	@priority = 5
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToHighlightedSession {
 		property portal.release = "false";
-		property test.liferay.virtual.instance = "false";
 
 		task ("When go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -337,7 +347,6 @@ definition {
 	@priority = 5
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToHighlightedSessionOnReleaseBundle {
 		property portal.upstream = "false";
-		property test.liferay.virtual.instance = "false";
 
 		task ("When go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -603,10 +612,9 @@ definition {
 			var scrollBarWidth = ${offsetWidth} - ${clientWidth};
 			var bothSidebarWidth = ${leftSidebarWidth} + ${rightSidebarWidth};
 			var pageContentWidth = ${gridFragmentWidth} + ${scrollBarWidth};
+			var difference = ${bodyWidth} - ${bothSidebarWidth};
 
-			TestUtils.assertEquals(
-				actual = MathUtil.difference(${bodyWidth}, ${bothSidebarWidth}),
-				expected = ${pageContentWidth});
+			StringUtil.assertEquals(${pageContentWidth}, ${difference});
 		}
 	}
 
@@ -692,7 +700,7 @@ definition {
 
 			Panel.collapsePanel(panel = "Frame");
 
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'fieldset')]");
+			AssertNotVisible(locator1 = "//div[contains(@class,'fieldset')]");
 
 			Panel.expandPanel(panel = "Dropdown Options");
 
@@ -706,7 +714,7 @@ definition {
 				Panel.collapsePanel(panel = ${key_panel});
 			}
 
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'fieldset')]");
+			AssertNotVisible(locator1 = "//div[contains(@class,'fieldset')]");
 
 			for (var key_panel : list "Spacing,Text,Background,Borders,Effects") {
 				Panel.expandPanel(panel = ${key_panel});
@@ -717,8 +725,6 @@ definition {
 	@description = "This is a test for LPS-158746. The favorite fragment is hidden if it is not allowed on master page."
 	@priority = 3
 	test ViewFavoriteFragmentIsHiddenWhenItIsNotAllowedOnMasterPage {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -840,7 +846,6 @@ definition {
 	@priority = 4
 	test ViewFavoritesListInDifferentUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Given having 2 users") {
 			var userEmailAddress = StringUtil.randomString(8);
@@ -1113,9 +1118,9 @@ definition {
 
 			var bothSidebarWidth = ${leftSidebarWidth} + ${rightSidebarWidth};
 
-			TestUtils.assertEquals(
-				actual = MathUtil.difference(${bodyWidth}, ${bothSidebarWidth}),
-				expected = ${headingFragmentWidth});
+			var difference = ${bodyWidth} - ${bothSidebarWidth};
+
+			StringUtil.assertEquals(${headingFragmentWidth}, ${difference});
 		}
 	}
 
@@ -1136,23 +1141,6 @@ definition {
 			AssertElementNotPresent(locator1 = "Sidebar#PANEL_OPEN");
 
 			AssertElementNotPresent(locator1 = "PageEditor#ITEM_CONFIGURATION_SIDEBAR_OPEN");
-		}
-	}
-
-	@description = "This is a test for LPS-153650. The portal version info should be shown on the Home page."
-	@priority = 4
-	test ViewPortalVersionInfoOnHomePage {
-		takeScreenshot();
-
-		var portalVersionInfo = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'paragraph')]]//*[contains(@data-lfr-editable-id,'element-text')]");
-
-		var match = StringUtil.matches(${portalVersionInfo}, "Liferay Digital Experience Platform \/ \d+\.\d+\.\d{1,2} \([A-Z]\w+\)");
-
-		if (${match} == "true") {
-			echo("The portal version info ${portalVersionInfo} is shown on the Home page");
-		}
-		else {
-			fail("The portal version info ${portalVersionInfo} is missing on the Home page");
 		}
 	}
 

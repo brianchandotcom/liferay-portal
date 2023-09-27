@@ -1,0 +1,21 @@
+{
+	"description": "Guides",
+	"externalReferenceCode": "PRMC051",
+	"name": "Guides",
+	"name_i18n": {
+		"ar_SA": "Guides",
+		"ca_ES": "Guides",
+		"de_DE": "Guides",
+		"en_US": "Guides",
+		"es_ES": "Guides",
+		"fi_FI": "Guides",
+		"fr_FR": "Guides",
+		"hu_HU": "Guides",
+		"ja_JP": "Guides",
+		"nl_NL": "Guides",
+		"pt_BR": "Guides",
+		"sv_SE": "Guides",
+		"zh_CN": "Guides"
+	},
+	"viewableBy": "Anyone"
+}

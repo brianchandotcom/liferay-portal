@@ -1,0 +1,375 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given creating a Data Set via UI") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSet(
+				key_name = "Data Set Test",
+				key_type = "/data-set-manager/entries");
+
+			Refresh();
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToViews(dataSetName = "Data Set Test");
+		}
+
+		task ("And a data set view created via api") {
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Fields Test");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		DataSetAdmin.deleteAllDataSetEntries();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-185986. Confirm that the Items Per Page values have been changed"
+	@priority = 5
+	test AssertPaginationIsChanged {
+		task ("When goes to Fields Tab.") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("And add some fields//Go to fields tab and add") {
+			DataSetAdmin.addFields(key_fieldList = "id,status,label");
+		}
+
+		task ("When the user goes to the Pagination and assert default items") {
+			DataSetAdmin.goToTab(tabName = "Pagination");
+		}
+
+		task ("Then the default List of items per Page values are: 10, 20, 30 ,40 and default value per page is 10") {
+			Type(
+				key_label = "List of Items per Page",
+				locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
+				value1 = "10, 20, 30, 40");
+
+			Type(
+				key_type = "Default Items per Page",
+				locator1 = "DataSet#EDIT_DATA_SET_VIEW",
+				value1 = 10);
+
+			Button.clickSave();
+		}
+
+		task ("When the user adds a widget page and add a fragment Data Set") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Pagination");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And viewing the configuration menu of the portlet And selects View Fields Test") {
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "View Fields Test",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then the data set fragment pagination is according to the default configuration") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Data Set Pagination");
+
+			Click(
+				key_numberEntries = "10 Items",
+				locator1 = "Dropdown#ENTRIES_NUMBER");
+
+			for (var assertNumbers : list "10,20,30,40") {
+				AssertElementPresent(
+					key_selectOption = ${assertNumbers},
+					locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST");
+			}
+		}
+	}
+
+	@description = "LPS-185986. Confirm that the pagination of the view is in accordance with the default configuration"
+	@priority = 4
+	test AssertPaginationIsDefault {
+		task ("When goes to Fields Tab.") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("And add some fields") {
+			DataSetAdmin.addFields(key_fieldList = "id,status,label");
+		}
+
+		task ("When the user goes to the Pagination and assert default items") {
+			DataSetAdmin.goToTab(tabName = "Pagination");
+		}
+
+		task ("Then the default List of items per Page values are: 4, 8, 20, 40, 60/ and default value per gage is 20") {
+			AssertElementPresent(
+				key_label = "4, 8, 20, 40, 60",
+				locator1 = "TextArea#ANY_LABELED");
+		}
+
+		task ("When the user adds a widget page and add a fragment Data Set") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Pagination");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And viewing the configuration menu of the portlet And selects View Fields Test") {
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "View Fields Test",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then the data set fragment pagination is according to the default configuration") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Data Set Pagination");
+
+			Click(
+				key_numberEntries = "20 Items",
+				locator1 = "Dropdown#ENTRIES_NUMBER");
+
+			for (var assertNumbers : list "4,8,20,40,60") {
+				AssertElementPresent(
+					key_selectOption = ${assertNumbers},
+					locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST");
+			}
+		}
+	}
+
+	@description = "LPS-185986. Confirm that invalid values filled in are not displayed in pagination"
+	@priority = 5
+	test CanAddInvalidValuesInPagination {
+		task ("When goes to Fields Tab.") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("And add some fields") {
+			DataSetAdmin.addFields(key_fieldList = "id,status,label");
+		}
+
+		task ("When the user goes to the Pagination and assert default items") {
+			DataSetAdmin.goToTab(tabName = "Pagination");
+		}
+
+		task ("When the user adds invalid values on the Pagination fields //List of items per Page: 100, 200 //Default items per Page: 4") {
+			Type(
+				key_label = "List of Items per Page",
+				locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
+				value1 = "100, 200");
+
+			Type(
+				key_type = "Default Items per Page",
+				locator1 = "DataSet#EDIT_DATA_SET_VIEW",
+				value1 = 4);
+		}
+
+		task ("Then an error message is displayed And the user can t save the invalid values") {
+			SelectFrameTop();
+
+			AssertElementPresent(
+				key_sidebarMessage = "The default value must exist in the list of items per page.",
+				locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_MESSAGE_FEEDBACK");
+
+			AssertElementPresent(locator1 = "CreateObject#SAVE_BUTTON_DISABLED");
+		}
+
+		task ("When the user adds a widget page and add a fragment Data Set") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Pagination");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And viewing the configuration menu of the portlet And selects View Fields Test") {
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "View Fields Test",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then the invalid values are not present in the data set fragmented pagination") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Data Set Pagination");
+
+			Click(
+				key_numberEntries = "20 Items",
+				locator1 = "Dropdown#ENTRIES_NUMBER");
+
+			for (var assertNumbers : list "4,8,20,40,60") {
+				AssertElementPresent(
+					key_selectOption = ${assertNumbers},
+					locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST");
+			}
+		}
+	}
+
+	@description = "LPS-185986. Confirm that the changes made to pagination have been undone, and are set back to defaults."
+	@priority = 5
+	test CanCancelChangesInPagination {
+		task ("When goes to Fields Tab.") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("And add some fields//Go to fields tab and add") {
+			DataSetAdmin.addFields(key_fieldList = "id,status,label");
+		}
+
+		task ("When the user goes to the Pagination and assert default items") {
+			DataSetAdmin.goToTab(tabName = "Pagination");
+		}
+
+		task ("Then the default List of items per Page values are: 4, 8, 20, 40, 60/ and default value per gage is 20") {
+			Type(
+				key_label = "List of Items per Page",
+				locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
+				value1 = "10, 20, 30, 40");
+
+			Type(
+				key_type = "Default Items per Page",
+				locator1 = "DataSet#EDIT_DATA_SET_VIEW",
+				value1 = 10);
+		}
+
+		task ("And clicks on Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("When the user adds a widget page and add a fragment Data Set") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Pagination");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And viewing the configuration menu of the portlet And selects View Fields Test") {
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "View Fields Test",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then the data set fragment pagination is according to the default configuration") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Data Set Pagination");
+
+			Click(
+				key_numberEntries = "20 Items",
+				locator1 = "Dropdown#ENTRIES_NUMBER");
+
+			for (var assertNumbers : list "4,8,20,40,60") {
+				AssertElementPresent(
+					key_selectOption = ${assertNumbers},
+					locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST");
+			}
+		}
+	}
+
+}

@@ -109,6 +109,10 @@
 	@media (prefers-reduced-motion: reduce) {
 		transition: none;
 	}
+
+	.c-prefers-reduced-motion & {
+		transition: none;
+	}
 }
 
 @keyframes highlight-animation {

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.video.internal.helper;
@@ -18,7 +9,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -43,9 +34,9 @@ public class DLVideoExternalShortcutMetadataHelperFactory {
 				dlVideoExternalShortcutMetadataHelper =
 					new DLVideoExternalShortcutMetadataHelper(
 						_ddmFormValuesToFieldsConverter,
-						_ddmStructureLocalService, dlFileEntry,
-						_dlFileEntryMetadataLocalService,
-						_fieldsToDDMFormValuesConverter, _storageEngine);
+						_ddmStorageEngineManager, _ddmStructureLocalService,
+						dlFileEntry, _dlFileEntryMetadataLocalService,
+						_fieldsToDDMFormValuesConverter);
 
 			if (dlVideoExternalShortcutMetadataHelper.isExternalShortcut()) {
 				return dlVideoExternalShortcutMetadataHelper;
@@ -65,9 +56,9 @@ public class DLVideoExternalShortcutMetadataHelperFactory {
 				dlVideoExternalShortcutMetadataHelper =
 					new DLVideoExternalShortcutMetadataHelper(
 						_ddmFormValuesToFieldsConverter,
-						_ddmStructureLocalService, dlFileVersion,
-						_dlFileEntryMetadataLocalService,
-						_fieldsToDDMFormValuesConverter, _storageEngine);
+						_ddmStorageEngineManager, _ddmStructureLocalService,
+						dlFileVersion, _dlFileEntryMetadataLocalService,
+						_fieldsToDDMFormValuesConverter);
 
 			if (dlVideoExternalShortcutMetadataHelper.isExternalShortcut()) {
 				return dlVideoExternalShortcutMetadataHelper;
@@ -81,6 +72,9 @@ public class DLVideoExternalShortcutMetadataHelperFactory {
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
@@ -88,8 +82,5 @@ public class DLVideoExternalShortcutMetadataHelperFactory {
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

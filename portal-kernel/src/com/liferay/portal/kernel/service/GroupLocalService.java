@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.service;
@@ -103,13 +94,14 @@ public interface GroupLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addOrganizationGroup(long organizationId, Group group);
+	public boolean addOrganizationGroup(long organizationId, Group group);
 
-	public void addOrganizationGroup(long organizationId, long groupId);
+	public boolean addOrganizationGroup(long organizationId, long groupId);
 
-	public void addOrganizationGroups(long organizationId, List<Group> groups);
+	public boolean addOrganizationGroups(
+		long organizationId, List<Group> groups);
 
-	public void addOrganizationGroups(long organizationId, long[] groupIds);
+	public boolean addOrganizationGroups(long organizationId, long[] groupIds);
 
 	public Group addOrUpdateGroup(
 			String externalReferenceCode, long userId, long parentGroupId,
@@ -120,29 +112,29 @@ public interface GroupLocalService
 			boolean active, ServiceContext serviceContext)
 		throws Exception;
 
-	public void addRoleGroup(long roleId, Group group);
+	public boolean addRoleGroup(long roleId, Group group);
 
-	public void addRoleGroup(long roleId, long groupId);
+	public boolean addRoleGroup(long roleId, long groupId);
 
-	public void addRoleGroups(long roleId, List<Group> groups);
+	public boolean addRoleGroups(long roleId, List<Group> groups);
 
-	public void addRoleGroups(long roleId, long[] groupIds);
+	public boolean addRoleGroups(long roleId, long[] groupIds);
 
-	public void addUserGroup(long userId, Group group);
+	public boolean addUserGroup(long userId, Group group);
 
-	public void addUserGroup(long userId, long groupId);
+	public boolean addUserGroup(long userId, long groupId);
 
-	public void addUserGroupGroup(long userGroupId, Group group);
+	public boolean addUserGroupGroup(long userGroupId, Group group);
 
-	public void addUserGroupGroup(long userGroupId, long groupId);
+	public boolean addUserGroupGroup(long userGroupId, long groupId);
 
-	public void addUserGroupGroups(long userGroupId, List<Group> groups);
+	public boolean addUserGroupGroups(long userGroupId, List<Group> groups);
 
-	public void addUserGroupGroups(long userGroupId, long[] groupIds);
+	public boolean addUserGroupGroups(long userGroupId, long[] groupIds);
 
-	public void addUserGroups(long userId, List<Group> groups);
+	public boolean addUserGroups(long userId, List<Group> groups);
 
-	public void addUserGroups(long userId, long[] groupIds);
+	public boolean addUserGroups(long userId, long[] groupIds);
 
 	/**
 	 * Adds a company group if it does not exist. This method is typically used

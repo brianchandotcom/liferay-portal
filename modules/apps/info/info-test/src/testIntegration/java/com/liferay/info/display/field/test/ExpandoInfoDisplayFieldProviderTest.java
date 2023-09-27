@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.info.display.field.test;
@@ -28,12 +19,9 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -45,7 +33,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -66,21 +53,8 @@ public class ExpandoInfoDisplayFieldProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_defaultCompanyId = CompanyThreadLocal.getCompanyId();
-
-		_company = CompanyTestUtil.addCompany();
-
-		CompanyThreadLocal.setCompanyId(_company.getCompanyId());
-
 		_expandoTable = _expandoTableLocalService.addDefaultTable(
-			_company.getCompanyId(), User.class.getName());
-
-		_user = UserTestUtil.addUser(_company);
-	}
-
-	@After
-	public void tearDown() {
-		CompanyThreadLocal.setCompanyId(_defaultCompanyId);
+			TestPropsValues.getCompanyId(), User.class.getName());
 	}
 
 	@Test
@@ -194,10 +168,10 @@ public class ExpandoInfoDisplayFieldProviderTest {
 		throws Exception {
 
 		return _expandoValueLocalService.addValue(
-			_company.getCompanyId(),
+			TestPropsValues.getCompanyId(),
 			PortalUtil.getClassName(_expandoTable.getClassNameId()),
 			_expandoTable.getName(), expandoColumn.getName(),
-			_user.getPrimaryKey(), data);
+			TestPropsValues.getUserId(), data);
 	}
 
 	private String _getKey(String expandoColumnName) {
@@ -205,10 +179,12 @@ public class ExpandoInfoDisplayFieldProviderTest {
 			expandoColumnName.replaceAll("\\W", StringPool.UNDERLINE);
 	}
 
-	private Object _getValue(String expandoColumnName, Locale locale) {
+	private Object _getValue(String expandoColumnName, Locale locale)
+		throws Exception {
+
 		List<InfoFieldValue<Object>> infoDisplayFieldsValues =
 			_expandoInfoItemFieldSetProvider.getInfoFieldValues(
-				User.class.getName(), _user);
+				User.class.getName(), TestPropsValues.getUser());
 
 		for (InfoFieldValue<Object> infoFieldValue : infoDisplayFieldsValues) {
 			InfoField<?> infoField = infoFieldValue.getInfoField();
@@ -225,14 +201,10 @@ public class ExpandoInfoDisplayFieldProviderTest {
 
 	private static final String _CUSTOM_FIELD_PREFIX = "_CUSTOM_FIELD_";
 
-	@DeleteAfterTestRun
-	private Company _company;
-
-	private long _defaultCompanyId;
-
 	@Inject
 	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;
 
+	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;
 
 	@Inject
@@ -240,7 +212,5 @@ public class ExpandoInfoDisplayFieldProviderTest {
 
 	@Inject
 	private ExpandoValueLocalService _expandoValueLocalService;
-
-	private User _user;
 
 }

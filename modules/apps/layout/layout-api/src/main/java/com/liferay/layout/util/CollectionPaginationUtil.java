@@ -1,20 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.util;
 
 import com.liferay.info.pagination.Pagination;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Objects;
@@ -33,38 +25,32 @@ public class CollectionPaginationUtil {
 	public static final String PAGINATION_TYPE_SIMPLE = "simple";
 
 	public static Pagination getPagination(
-		int activePage, int count, boolean displayAllPages,
-		boolean displayAllItems, int numberOfItems, int numberOfItemsPerPage,
-		int numberOfPages, String paginationType) {
-
-		int end = numberOfItems;
-		int start = 0;
-
-		if ((numberOfItemsPerPage <= 0) ||
-			(numberOfItemsPerPage >
-				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA)) {
-
-			numberOfItemsPerPage = PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
-		}
+		int activePage, boolean displayAllItems, int numberOfItems,
+		int numberOfItemsPerPage, String paginationType) {
 
 		if (isPaginationEnabled(paginationType)) {
-			int maxNumberOfItems = count;
+			if ((numberOfItemsPerPage <= 0) ||
+				(numberOfItemsPerPage >
+					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA)) {
 
-			if (!displayAllPages && (numberOfPages > 0)) {
-				maxNumberOfItems = numberOfPages * numberOfItemsPerPage;
+				numberOfItemsPerPage =
+					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
 			}
 
-			end = Math.min(
-				Math.min(activePage * numberOfItemsPerPage, maxNumberOfItems),
-				count);
+			if (activePage < 1) {
+				activePage = 1;
+			}
 
-			start = (activePage - 1) * numberOfItemsPerPage;
-		}
-		else if (displayAllItems) {
-			end = count;
+			int start = (activePage - 1) * numberOfItemsPerPage;
+
+			return Pagination.of(start + numberOfItemsPerPage, start);
 		}
 
-		return Pagination.of(end, start);
+		if (displayAllItems) {
+			return Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
+		return Pagination.of(numberOfItems, 0);
 	}
 
 	public static int getTotalNumberOfItems(

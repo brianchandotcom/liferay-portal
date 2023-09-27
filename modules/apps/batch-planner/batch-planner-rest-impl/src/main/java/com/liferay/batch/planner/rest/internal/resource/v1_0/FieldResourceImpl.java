@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.batch.planner.rest.internal.resource.v1_0;
@@ -17,7 +8,6 @@ package com.liferay.batch.planner.rest.internal.resource.v1_0;
 import com.liferay.batch.planner.rest.dto.v1_0.Field;
 import com.liferay.batch.planner.rest.internal.vulcan.batch.engine.FieldProvider;
 import com.liferay.batch.planner.rest.resource.v1_0.FieldResource;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -38,12 +28,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class FieldResourceImpl extends BaseFieldResourceImpl {
 
 	@Override
-	public Page<Field> getPlanInternalClassNameFieldsPage(
-			String internalClassName, Boolean export)
+	public Page<Field> getPlanInternalClassNameKeyFieldsPage(
+			String internalClassNameKey, Boolean export)
 		throws Exception {
 
 		List<com.liferay.portal.vulcan.batch.engine.Field> vulcanFields =
-			_getVulcanFields(internalClassName);
+			_fieldProvider.getFields(
+				contextCompany.getCompanyId(), internalClassNameKey,
+				contextUriInfo);
 
 		if (GetterUtil.getBoolean(export)) {
 			vulcanFields = _fieldProvider.filter(
@@ -59,22 +51,6 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 		vulcanFields.sort(Comparator.comparing(field -> field.getName()));
 
 		return Page.of(transform(vulcanFields, this::_toField));
-	}
-
-	private List<com.liferay.portal.vulcan.batch.engine.Field> _getVulcanFields(
-			String internalClassName)
-		throws Exception {
-
-		int idx = internalClassName.indexOf(StringPool.POUND);
-
-		if (idx < 0) {
-			return _fieldProvider.getFields(
-				contextCompany.getCompanyId(), internalClassName);
-		}
-
-		return _fieldProvider.getFields(
-			contextCompany.getCompanyId(), internalClassName.substring(idx + 1),
-			contextUriInfo);
 	}
 
 	private Field _toField(

@@ -1,27 +1,16 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.exportimport.kernel.lar;
 
-import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.DateRange;
@@ -89,10 +78,6 @@ public interface PortletDataContext extends Serializable {
 
 	public void addDeletionSystemEventStagedModelTypes(
 		StagedModelType... stagedModelTypes);
-
-	public void addExpando(
-			Element element, String path, ClassedModel classedModel)
-		throws PortalException;
 
 	public void addLocks(Class<?> clazz, String key) throws PortalException;
 
@@ -192,8 +177,6 @@ public interface PortletDataContext extends Serializable {
 
 	public Date getEndDate();
 
-	public Map<String, List<ExpandoColumn>> getExpandoColumns();
-
 	public Element getExportDataElement(ClassedModel classedModel);
 
 	public Element getExportDataElement(
@@ -231,8 +214,6 @@ public interface PortletDataContext extends Serializable {
 	public Element getMissingReferenceElement(ClassedModel classedModel);
 
 	public Element getMissingReferencesElement();
-
-	public Object getNewPrimaryKey(Class<?> clazz, Object newPrimaryKey);
 
 	public Object getNewPrimaryKey(String className, Object newPrimaryKey);
 
@@ -274,14 +255,9 @@ public interface PortletDataContext extends Serializable {
 	public List<Element> getReferenceDataElements(
 		StagedModel parentStagedModel, Class<?> clazz, String referenceType);
 
-	public Element getReferenceElement(Class<?> clazz, Serializable classPK);
-
 	public Element getReferenceElement(
 		Element parentElement, Class<?> clazz, long groupId, String uuid,
 		String referenceType);
-
-	public Element getReferenceElement(
-		StagedModel parentStagedModel, Class<?> clazz, Serializable classPK);
 
 	public Element getReferenceElement(
 		StagedModel parentStagedModel, String className, Serializable classPK);
@@ -367,9 +343,6 @@ public interface PortletDataContext extends Serializable {
 
 	public void importPortletPermissions(String resourceName)
 		throws PortalException;
-
-	public boolean isCompanyStagedGroupedModel(
-		StagedGroupedModel stagedGroupedModel);
 
 	public boolean isDataStrategyMirror();
 

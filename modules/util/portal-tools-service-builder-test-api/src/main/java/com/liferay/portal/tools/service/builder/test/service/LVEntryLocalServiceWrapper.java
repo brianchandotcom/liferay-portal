@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.tools.service.builder.test.service;
@@ -36,38 +27,38 @@ public class LVEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void addBigDecimalEntryLVEntries(
+	public boolean addBigDecimalEntryLVEntries(
 		long bigDecimalEntryId,
 		java.util.List
 			<com.liferay.portal.tools.service.builder.test.model.LVEntry>
 				lvEntries) {
 
-		_lvEntryLocalService.addBigDecimalEntryLVEntries(
+		return _lvEntryLocalService.addBigDecimalEntryLVEntries(
 			bigDecimalEntryId, lvEntries);
 	}
 
 	@Override
-	public void addBigDecimalEntryLVEntries(
+	public boolean addBigDecimalEntryLVEntries(
 		long bigDecimalEntryId, long[] lvEntryIds) {
 
-		_lvEntryLocalService.addBigDecimalEntryLVEntries(
+		return _lvEntryLocalService.addBigDecimalEntryLVEntries(
 			bigDecimalEntryId, lvEntryIds);
 	}
 
 	@Override
-	public void addBigDecimalEntryLVEntry(
+	public boolean addBigDecimalEntryLVEntry(
 		long bigDecimalEntryId, long lvEntryId) {
 
-		_lvEntryLocalService.addBigDecimalEntryLVEntry(
+		return _lvEntryLocalService.addBigDecimalEntryLVEntry(
 			bigDecimalEntryId, lvEntryId);
 	}
 
 	@Override
-	public void addBigDecimalEntryLVEntry(
+	public boolean addBigDecimalEntryLVEntry(
 		long bigDecimalEntryId,
 		com.liferay.portal.tools.service.builder.test.model.LVEntry lvEntry) {
 
-		_lvEntryLocalService.addBigDecimalEntryLVEntry(
+		return _lvEntryLocalService.addBigDecimalEntryLVEntry(
 			bigDecimalEntryId, lvEntry);
 	}
 

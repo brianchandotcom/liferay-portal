@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/gdpr",
+	"hidden": false,
+	"name": "GDPR",
+	"name_i18n": {
+		"en_US": "GDPR"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

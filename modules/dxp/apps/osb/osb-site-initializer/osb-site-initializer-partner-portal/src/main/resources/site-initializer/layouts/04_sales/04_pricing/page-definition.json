@@ -1,0 +1,2029 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "content-welcome-banner"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "first-welcome-banner-title",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Liferay Pricing",
+												"ca_ES": "Liferay Pricing",
+												"de_DE": "Liferay Pricing",
+												"en_US": "Liferay Pricing",
+												"es_ES": "Liferay Pricing",
+												"fi_FI": "Liferay Pricing",
+												"fr_FR": "Liferay Pricing",
+												"hu_HU": "Liferay Pricing",
+												"ja_JP": "Liferay Pricing",
+												"nl_NL": "Liferay Pricing",
+												"pt_BR": "Liferay Pricing",
+												"sv_SE": "Liferay Pricing",
+												"zh_CN": "Liferay Pricing"
+											}
+										}
+									}
+								},
+								{
+									"id": "first-welcome-banner-description",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n",
+												"ca_ES": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n",
+												"de_DE": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n",
+												"en_US": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\nFind everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n",
+												"es_ES": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n",
+												"fi_FI": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n",
+												"fr_FR": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n",
+												"hu_HU": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n",
+												"ja_JP": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n",
+												"nl_NL": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n",
+												"pt_BR": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n",
+												"sv_SE": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n",
+												"zh_CN": "Find everything you need to know about Liferay product pricing and training to help you with it.&nbsp;<br />\n"
+											}
+										}
+									}
+								},
+								{
+									"id": "second-welcome-banner-title",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "This only displays after dismiss....",
+												"ca_ES": "This only displays after dismiss....",
+												"de_DE": "This only displays after dismiss....",
+												"en_US": "This only displays after dismiss....",
+												"es_ES": "This only displays after dismiss....",
+												"fi_FI": "This only displays after dismiss....",
+												"fr_FR": "This only displays after dismiss....",
+												"hu_HU": "This only displays after dismiss....",
+												"ja_JP": "This only displays after dismiss....",
+												"nl_NL": "This only displays after dismiss....",
+												"pt_BR": "This only displays after dismiss....",
+												"sv_SE": "This only displays after dismiss....",
+												"zh_CN": "This only displays after dismiss...."
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"pageElements": [
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "button-welcome-banner"
+											},
+											"fragmentConfig": {
+												"videoButtonLink": "https://www.youtube.com/embed/bZeAh7dpskw"
+											},
+											"fragmentFields": [
+												{
+													"id": "first-banner-primary-button-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Watch a Video Tour",
+																"ca_ES": "Watch a Video Tour",
+																"de_DE": "Watch a Video Tour",
+																"en_US": "Watch a Video Tour",
+																"es_ES": "Watch a Video Tour",
+																"fi_FI": "Watch a Video Tour",
+																"fr_FR": "Watch a Video Tour",
+																"hu_HU": "Watch a Video Tour",
+																"ja_JP": "Watch a Video Tour",
+																"nl_NL": "Watch a Video Tour",
+																"pt_BR": "Watch a Video Tour",
+																"sv_SE": "Watch a Video Tour",
+																"zh_CN": "Watch a Video Tour"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "dialect-dialect-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "",
+												"inverted": false,
+												"style": "primary",
+												"type": "solid",
+												"uppercase": false
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"itemReference": {
+																			"className": "com.liferay.portal.kernel.model.Layout",
+																			"fields": [
+																				{
+																					"fieldName": "friendlyURL",
+																					"fieldValue": "/pricing-calculator"
+																				},
+																				{
+																					"fieldName": "privatePage",
+																					"fieldValue": "false"
+																				},
+																				{
+																					"fieldName": "siteKey",
+																					"fieldValue": "[$GROUP_KEY$]"
+																				}
+																			]
+																		}
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Pricing Calculator",
+																"ca_ES": "Pricing Calculator",
+																"de_DE": "Pricing Calculator",
+																"en_US": "Pricing Calculator",
+																"es_ES": "Pricing Calculator",
+																"fi_FI": "Pricing Calculator",
+																"fr_FR": "Pricing Calculator",
+																"hu_HU": "Pricing Calculator",
+																"ja_JP": "Pricing Calculator",
+																"nl_NL": "Pricing Calculator",
+																"pt_BR": "Pricing Calculator",
+																"sv_SE": "Pricing Calculator",
+																"zh_CN": "Pricing Calculator"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-image"
+											},
+											"fragmentConfig": {
+												"imageSize": "w-100"
+											},
+											"fragmentFields": [
+												{
+													"id": "image-square",
+													"value": {
+														"fragmentImage": {
+															"url": {
+																"mapping": {
+																	"fieldKey": "FileEntry_previewImage",
+																	"itemReference": {
+																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/content-welcome-banner-resources/enablemant-welcome-banner.png#]"
+																	}
+																}
+															}
+														},
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "button-welcome-banner"
+											},
+											"fragmentConfig": {
+												"videoButtonLink": "https://www.youtube.com/embed/bZeAh7dpskw"
+											},
+											"fragmentFields": [
+												{
+													"id": "first-banner-primary-button-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Watch Recording",
+																"ca_ES": "Watch Recording",
+																"de_DE": "Watch Recording",
+																"en_US": "Watch Recording",
+																"es_ES": "Watch Recording",
+																"fi_FI": "Watch Recording",
+																"fr_FR": "Watch Recording",
+																"hu_HU": "Watch Recording",
+																"ja_JP": "Watch Recording",
+																"nl_NL": "Watch Recording",
+																"pt_BR": "Watch Recording",
+																"sv_SE": "Watch Recording",
+																"zh_CN": "Watch Recording"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "dialect-dialect-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "",
+												"inverted": false,
+												"style": "primary",
+												"type": "solid",
+												"uppercase": false
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"itemReference": {
+																			"className": "com.liferay.portal.kernel.model.Layout",
+																			"fields": [
+																				{
+																					"fieldName": "friendlyURL",
+																					"fieldValue": "/pricing-calculator"
+																				},
+																				{
+																					"fieldName": "privatePage",
+																					"fieldValue": "false"
+																				},
+																				{
+																					"fieldName": "siteKey",
+																					"fieldValue": "[$GROUP_KEY$]"
+																				}
+																			]
+																		}
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Pricing Calculator",
+																"ca_ES": "Pricing Calculator",
+																"de_DE": "Pricing Calculator",
+																"en_US": "Pricing Calculator",
+																"es_ES": "Pricing Calculator",
+																"fi_FI": "Pricing Calculator",
+																"fr_FR": "Pricing Calculator",
+																"hu_HU": "Pricing Calculator",
+																"ja_JP": "Pricing Calculator",
+																"nl_NL": "Pricing Calculator",
+																"pt_BR": "Pricing Calculator",
+																"sv_SE": "Pricing Calculator",
+																"zh_CN": "Pricing Calculator"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Liferay Pricing-SaaS",
+												"ca_ES": "Liferay Pricing-SaaS",
+												"de_DE": "Liferay Pricing-SaaS",
+												"en_US": "Liferay Pricing-SaaS",
+												"es_ES": "Liferay Pricing-SaaS",
+												"fi_FI": "Liferay Pricing-SaaS",
+												"fr_FR": "Liferay Pricing-SaaS",
+												"hu_HU": "Liferay Pricing-SaaS",
+												"ja_JP": "Liferay Pricing-SaaS",
+												"nl_NL": "Liferay Pricing-SaaS",
+												"pt_BR": "Liferay Pricing-SaaS",
+												"sv_SE": "Liferay Pricing-SaaS",
+												"zh_CN": "Liferay Pricing-SaaS"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginTop": "4"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-paragraph"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023.",
+												"ca_ES": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023.",
+												"de_DE": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023.",
+												"en_US": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023.",
+												"es_ES": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023.",
+												"fi_FI": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023.",
+												"fr_FR": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023.",
+												"hu_HU": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023.",
+												"ja_JP": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023.",
+												"nl_NL": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023.",
+												"pt_BR": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023.",
+												"sv_SE": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023.",
+												"zh_CN": "The Liferay Experience Cloud SaaS offering was launched in Q2 2022. A lot of feedback on this pricing has been received, the result of which is the new pricing which was introduced in Q1 2023."
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginTop": "4"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginTop": "4"
+							},
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 4,
+							"numberOfColumns": 4,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h4"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "FREE/HOBBY",
+																"ca_ES": "FREE/HOBBY",
+																"de_DE": "FREE/HOBBY",
+																"en_US": "FREE/HOBBY",
+																"es_ES": "FREE/HOBBY",
+																"fi_FI": "FREE/HOBBY",
+																"fr_FR": "FREE/HOBBY",
+																"hu_HU": "FREE/HOBBY",
+																"ja_JP": "FREE/HOBBY",
+																"nl_NL": "FREE/HOBBY",
+																"pt_BR": "FREE/HOBBY",
+																"sv_SE": "FREE/HOBBY",
+																"zh_CN": "FREE/HOBBY"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"textAlign": "center"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h4"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "PRO",
+																"ca_ES": "PRO",
+																"de_DE": "PRO",
+																"en_US": "PRO",
+																"es_ES": "PRO",
+																"fi_FI": "PRO",
+																"fr_FR": "PRO",
+																"hu_HU": "PRO",
+																"ja_JP": "PRO",
+																"nl_NL": "PRO",
+																"pt_BR": "PRO",
+																"sv_SE": "PRO",
+																"zh_CN": "PRO"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"textAlign": "center"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "pricing-card"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "t4",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t5",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t6",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t7",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t1",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Starts at *24000/yr",
+																"ca_ES": "Starts at *24000/yr",
+																"de_DE": "Starts at *24000/yr",
+																"en_US": "Starts at *24000/yr",
+																"es_ES": "Starts at *24000/yr",
+																"fi_FI": "Starts at *24000/yr",
+																"fr_FR": "Starts at *24000/yr",
+																"hu_HU": "Starts at *24000/yr",
+																"ja_JP": "Starts at *24000/yr",
+																"nl_NL": "Starts at *24000/yr",
+																"pt_BR": "Starts at *24000/yr",
+																"sv_SE": "Starts at *24000/yr",
+																"zh_CN": "Starts at *24000/yr"
+															}
+														}
+													}
+												},
+												{
+													"id": "t2",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t3",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h4"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "BUSINESS",
+																"ca_ES": "BUSINESS",
+																"de_DE": "BUSINESS",
+																"en_US": "BUSINESS",
+																"es_ES": "BUSINESS",
+																"fi_FI": "BUSINESS",
+																"fr_FR": "BUSINESS",
+																"hu_HU": "BUSINESS",
+																"ja_JP": "BUSINESS",
+																"nl_NL": "BUSINESS",
+																"pt_BR": "BUSINESS",
+																"sv_SE": "BUSINESS",
+																"zh_CN": "BUSINESS"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"textAlign": "center"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "pricing-card"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "t4",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t5",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t6",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t7",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t1",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Starts at *48000/yr",
+																"ca_ES": "Starts at *48000/yr",
+																"de_DE": "Starts at *48000/yr",
+																"en_US": "Starts at *48000/yr",
+																"es_ES": "Starts at *48000/yr",
+																"fi_FI": "Starts at *48000/yr",
+																"fr_FR": "Starts at *48000/yr",
+																"hu_HU": "Starts at *48000/yr",
+																"ja_JP": "Starts at *48000/yr",
+																"nl_NL": "Starts at *48000/yr",
+																"pt_BR": "Starts at *48000/yr",
+																"sv_SE": "Starts at *48000/yr",
+																"zh_CN": "Starts at *48000/yr"
+															}
+														}
+													}
+												},
+												{
+													"id": "t2",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t3",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h4"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "ENTERPRISE",
+																"ca_ES": "ENTERPRISE",
+																"de_DE": "ENTERPRISE",
+																"en_US": "ENTERPRISE",
+																"es_ES": "ENTERPRISE",
+																"fi_FI": "ENTERPRISE",
+																"fr_FR": "ENTERPRISE",
+																"hu_HU": "ENTERPRISE",
+																"ja_JP": "ENTERPRISE",
+																"nl_NL": "ENTERPRISE",
+																"pt_BR": "ENTERPRISE",
+																"sv_SE": "ENTERPRISE",
+																"zh_CN": "ENTERPRISE"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"textAlign": "center"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "pricing-card"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "t4",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t5",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t6",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t7",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t1",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Start at *78000/yr",
+																"ca_ES": "Start at *78000/yr",
+																"de_DE": "Start at *78000/yr",
+																"en_US": "Start at *78000/yr",
+																"es_ES": "Start at *78000/yr",
+																"fi_FI": "Start at *78000/yr",
+																"fr_FR": "Start at *78000/yr",
+																"hu_HU": "Start at *78000/yr",
+																"ja_JP": "Start at *78000/yr",
+																"nl_NL": "Start at *78000/yr",
+																"pt_BR": "Start at *78000/yr",
+																"sv_SE": "Start at *78000/yr",
+																"zh_CN": "Start at *78000/yr"
+															}
+														}
+													}
+												},
+												{
+													"id": "t2",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t3",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Liferay Pricing-PaaS",
+												"ca_ES": "Liferay Pricing-PaaS",
+												"de_DE": "Liferay Pricing-PaaS",
+												"en_US": "Liferay Pricing-PaaS",
+												"es_ES": "Liferay Pricing-PaaS",
+												"fi_FI": "Liferay Pricing-PaaS",
+												"fr_FR": "Liferay Pricing-PaaS",
+												"hu_HU": "Liferay Pricing-PaaS",
+												"ja_JP": "Liferay Pricing-PaaS",
+												"nl_NL": "Liferay Pricing-PaaS",
+												"pt_BR": "Liferay Pricing-PaaS",
+												"sv_SE": "Liferay Pricing-PaaS",
+												"zh_CN": "Liferay Pricing-PaaS"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginTop": "4"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-paragraph"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery.",
+												"ca_ES": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery.",
+												"de_DE": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery.",
+												"en_US": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery.",
+												"es_ES": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery.",
+												"fi_FI": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery.",
+												"fr_FR": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery.",
+												"hu_HU": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery.",
+												"ja_JP": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery.",
+												"nl_NL": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery.",
+												"pt_BR": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery.",
+												"sv_SE": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery.",
+												"zh_CN": "With Liferay’s PaaS offering, Liferay provides DXP with all of its capabilities included, and as of DXP 7.4 that also includes Commerce and Analytics capabilities. Liferay also provides and manages the Infrastructure, and the Platform Services, but the Customer is still responsible for most other activities such as Upgrades, Updates, Patches, Security Hotfixes, Software Troubleshooting And Application Delivery."
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginTop": "4"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginTop": "4"
+							},
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 3,
+							"numberOfColumns": 3,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "pricing-card"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "t4",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t5",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t6",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t7",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t1",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t2",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t3",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "pricing-card"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "t4",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t5",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t6",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t7",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t1",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t2",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t3",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "pricing-card"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "t4",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t5",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t6",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t7",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t1",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t2",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t3",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Liferay Pricing Self-Hosted",
+												"ca_ES": "Liferay Pricing Self-Hosted",
+												"de_DE": "Liferay Pricing Self-Hosted",
+												"en_US": "Liferay Pricing Self-Hosted",
+												"es_ES": "Liferay Pricing Self-Hosted",
+												"fi_FI": "Liferay Pricing Self-Hosted",
+												"fr_FR": "Liferay Pricing Self-Hosted",
+												"hu_HU": "Liferay Pricing Self-Hosted",
+												"ja_JP": "Liferay Pricing Self-Hosted",
+												"nl_NL": "Liferay Pricing Self-Hosted",
+												"pt_BR": "Liferay Pricing Self-Hosted",
+												"sv_SE": "Liferay Pricing Self-Hosted",
+												"zh_CN": "Liferay Pricing Self-Hosted"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginTop": "4"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-paragraph"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it.",
+												"ca_ES": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it.",
+												"de_DE": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it.",
+												"en_US": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it.",
+												"es_ES": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it.",
+												"fi_FI": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it.",
+												"fr_FR": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it.",
+												"hu_HU": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it.",
+												"ja_JP": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it.",
+												"nl_NL": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it.",
+												"pt_BR": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it.",
+												"sv_SE": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it.",
+												"zh_CN": "With Liferay DXP Self-Hosted, Liferay provides just the DXP software itself, with the Customer responsible for everything else, either doing it themselves or paying for someone else to do it."
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginTop": "4"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginTop": "4"
+							},
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 4,
+							"numberOfColumns": 4,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h4"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "PRO",
+																"ca_ES": "PRO",
+																"de_DE": "PRO",
+																"en_US": "PRO",
+																"es_ES": "PRO",
+																"fi_FI": "PRO",
+																"fr_FR": "PRO",
+																"hu_HU": "PRO",
+																"ja_JP": "PRO",
+																"nl_NL": "PRO",
+																"pt_BR": "PRO",
+																"sv_SE": "PRO",
+																"zh_CN": "PRO"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "pricing-card"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "t4",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t5",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t6",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t7",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t1",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t2",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t3",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h4"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "BUSINESS",
+																"ca_ES": "BUSINESS",
+																"de_DE": "BUSINESS",
+																"en_US": "BUSINESS",
+																"es_ES": "BUSINESS",
+																"fi_FI": "BUSINESS",
+																"fr_FR": "BUSINESS",
+																"hu_HU": "BUSINESS",
+																"ja_JP": "BUSINESS",
+																"nl_NL": "BUSINESS",
+																"pt_BR": "BUSINESS",
+																"sv_SE": "BUSINESS",
+																"zh_CN": "BUSINESS"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "pricing-card"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "t4",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t5",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t6",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t7",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t1",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t2",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "List Item 1",
+																"ca_ES": "List Item 1",
+																"de_DE": "List Item 1",
+																"en_US": "List Item 1",
+																"es_ES": "List Item 1",
+																"fi_FI": "List Item 1",
+																"fr_FR": "List Item 1",
+																"hu_HU": "List Item 1",
+																"ja_JP": "List Item 1",
+																"nl_NL": "List Item 1",
+																"pt_BR": "List Item 1",
+																"sv_SE": "List Item 1",
+																"zh_CN": "List Item 1"
+															}
+														}
+													}
+												},
+												{
+													"id": "t3",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h4"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "BUSINESS +",
+																"ca_ES": "BUSINESS +",
+																"de_DE": "BUSINESS +",
+																"en_US": "BUSINESS +",
+																"es_ES": "BUSINESS +",
+																"fi_FI": "BUSINESS +",
+																"fr_FR": "BUSINESS +",
+																"hu_HU": "BUSINESS +",
+																"ja_JP": "BUSINESS +",
+																"nl_NL": "BUSINESS +",
+																"pt_BR": "BUSINESS +",
+																"sv_SE": "BUSINESS +",
+																"zh_CN": "BUSINESS +"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "pricing-card"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "t4",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t5",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t6",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t7",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t1",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t2",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t3",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h4"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "ENTERPRISE",
+																"ca_ES": "ENTERPRISE",
+																"de_DE": "ENTERPRISE",
+																"en_US": "ENTERPRISE",
+																"es_ES": "ENTERPRISE",
+																"fi_FI": "ENTERPRISE",
+																"fr_FR": "ENTERPRISE",
+																"hu_HU": "ENTERPRISE",
+																"ja_JP": "ENTERPRISE",
+																"nl_NL": "ENTERPRISE",
+																"pt_BR": "ENTERPRISE",
+																"sv_SE": "ENTERPRISE",
+																"zh_CN": "ENTERPRISE"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "pricing-card"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "t4",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t5",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t6",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t7",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t1",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t2",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "t3",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

@@ -75,7 +75,12 @@ definition {
 			priceOnApplication = ${priceOnApplication},
 			promoPrice = ${promoPrice});
 
-		Button.clickPublish();
+		if (IsElementPresent(key_text = "Publish", locator1 = "Button#ANY")) {
+			Button.clickPublish();
+		}
+		else if (IsElementPresent(key_text = "Save", locator1 = "Button#ANY")) {
+			Button.clickSave();
+		}
 
 		Click(locator1 = "Icon#CLOSE");
 
@@ -158,6 +163,47 @@ definition {
 				key_text = "Cost",
 				locator1 = "TextInput#ANY",
 				value1 = ${cost});
+		}
+	}
+
+	macro setSkuUomInventory {
+		for (var uomQuantityList : list ${uomQuantityLists}) {
+			var warehouseItemList = StringUtil.extractFirst(${uomQuantityList}, ":");
+			var warehouseItemQuantity = StringUtil.extractLast(${uomQuantityList}, ":");
+
+			Type(
+				key_value1 = ${warehouseItemList},
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = ${warehouseItemQuantity});
+
+			Click(
+				key_value1 = ${warehouseItemList},
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+		}
+	}
+
+	macro viewSkuUomInventory {
+		for (var uomQuantityList : list ${uomQuantityLists}) {
+			var warehouseItemList = StringUtil.extractFirst(${uomQuantityList}, ":");
+			var warehouseItemQuantity = StringUtil.extractLast(${uomQuantityList}, ":");
+
+			AssertTextEquals(
+				key_value1 = ${warehouseItemList},
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = ${warehouseItemQuantity});
+		}
+	}
+
+	macro viewSkuUomWarehouse {
+		for (var uomList : list ${uomLists}) {
+			var index = StringUtil.extractFirst(${uomList}, ":");
+			var warehouseName = StringUtil.extractLast(${uomList}, ":");
+
+			AssertTextEquals(
+				key_index = ${index},
+				key_warehouseName = ${warehouseName},
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_UNIT_OF_MEASURE",
+				value1 = ${uomKey});
 		}
 	}
 

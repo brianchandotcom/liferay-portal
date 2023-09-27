@@ -11,12 +11,7 @@
 
 <tbody>
 <tr>
-	<td>DROPDOWN_PROJECT</td>
-	<td>//div[contains(@class, 'header-container')]//div[contains(@class, 'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_PROJECT_DIRECTORY</td>
+	<td>PROJECT_DIRECTORY</td>
 	<td>//div[contains(@class, 'dropdown-menu show')]//span[contains(text(),'${key_project}')]</td>
 	<td></td>
 </tr>
@@ -26,23 +21,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_SIDEBAR</td>
-	<td>//span[contains(text(),'${key_itemvalue}')]</td>
+	<td>SIDEBAR_CONTENT</td>
+	<td>//div[@class='tr-sidebar__content']//span[text()='${key_button}']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DROPDOWN_ITEM</td>
-	<td>//div[contains(@class, 'dropdown-action')]</td>
-	<td></td>
-</tr>
-	<tr>
-	<td>PICKLIST_KEBAB_MENU_OPTION</td>
-	<td>//button/div/span[contains(text(),'${key_picklistOption}')]</td>
-	<td></td>
-	</tr>
-<tr>
-	<td>PROJECT_NAME_BREADCRUMBS</td>
-	<td>//p[contains(text(),'${key_projectName}')]</td>
+	<td>SEARCH_TEMPLATE</td>
+	<td>//button/li[contains(text(),'${templateName}')]</td>
 	<td></td>
 </tr>
 <tr>

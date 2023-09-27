@@ -1,0 +1,245 @@
+[
+	{
+		"externalReferenceCode": "AEROSPACEDEFENSE",
+		"key": "aerospaceDefense",
+		"name": "Aerospace & Defense",
+		"name_i18n": {
+			"en-US": "Aerospace & Defense"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "AGRICULTURE",
+		"key": "agriculture",
+		"name": "Agriculture",
+		"name_i18n": {
+			"en-US": "Agriculture"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "AUTOMOTIVE",
+		"key": "automotive",
+		"name": "Automotive",
+		"name_i18n": {
+			"en-US": "Automotive"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "CHEMICALS",
+		"key": "chemicals",
+		"name": "Chemicals",
+		"name_i18n": {
+			"en-US": "Chemicals"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "CONSTRUCTIONENGINEERING",
+		"key": "constructionEngineering",
+		"name": "Construction/Engineering",
+		"name_i18n": {
+			"en-US": "Construction/Engineering"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "CONSULTINGMARKETRESEARCH",
+		"key": "consultingMarketresearch",
+		"name": "Consulting/Market Research",
+		"name_i18n": {
+			"en-US": "Consulting/Market Research"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "EDUCATION",
+		"key": "education",
+		"name": "Education",
+		"name_i18n": {
+			"en-US": "Education"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "ENERGY",
+		"key": "energy",
+		"name": "Energy",
+		"name_i18n": {
+			"en-US": "Energy"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "FINANCIALSERVICES",
+		"key": "financialservices",
+		"name": "Financial Services",
+		"name_i18n": {
+			"en-US": "Financial Services"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "FOODSERVICES",
+		"key": "foodservices",
+		"name": "Food Services",
+		"name_i18n": {
+			"en-US": "Food Services"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "GOVERNMENTFEDERAL",
+		"key": "governmentFederal",
+		"name": "Government (Federal)",
+		"name_i18n": {
+			"en-US": "Government (Federal)"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "GOVERNMENTSTATELOCAL",
+		"key": "governmentStateLocal",
+		"name": "Government (State/Local)",
+		"name_i18n": {
+			"en-US": "Government (State/Local)"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "HEALTHCARE",
+		"key": "healthcare",
+		"name": "Healthcare",
+		"name_i18n": {
+			"en-US": "Healthcare"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "HOSPITALITYLEISURE",
+		"key": "hospitalityLeisure",
+		"name": "Hospitality/Leisure",
+		"name_i18n": {
+			"en-US": "Hospitality/Leisure"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "INSURANCE",
+		"key": "insurance",
+		"name": "Insurance",
+		"name_i18n": {
+			"en-US": "Insurance"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "MANUFACTURING",
+		"key": "manufacturing",
+		"name": "Manufacturing",
+		"name_i18n": {
+			"en-US": "Manufacturing"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "MEDIAENTERTAINMENT",
+		"key": "mediaEntertainment",
+		"name": "Media/Entertainment",
+		"name_i18n": {
+			"en-US": "Media/Entertainment"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "NOTFORPROFITNGO",
+		"key": "notforprofitNgo",
+		"name": "Not For Profit/NGO",
+		"name_i18n": {
+			"en-US": "Not For Profit/NGO"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "PHARMACEUTICALS",
+		"key": "pharmaceuticals",
+		"name": "Pharmaceuticals",
+		"name_i18n": {
+			"en-US": "Pharmaceuticals"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "PROFESSIONALSERVICESAGENCYBUSINESS",
+		"key": "professionalservicesAgencyBusiness",
+		"name": "Professional Services (Agency/Business)",
+		"name_i18n": {
+			"en-US": "Professional Services (Agency/Business)"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "PROFESSIONALSERVICESTECHNICALWEBIT",
+		"key": "professionalservicesTechnicalWebIt",
+		"name": "Professional Services (Technical/Web/IT)",
+		"name_i18n": {
+			"en-US": "Professional Services (Technical/Web/IT)"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "RETAILCONSUMERPRODUCTS",
+		"key": "retailConsumerproducts",
+		"name": "Retail/Consumer Products",
+		"name_i18n": {
+			"en-US": "Retail/Consumer Products"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "TECHNOLOGY",
+		"key": "technology",
+		"name": "Technology",
+		"name_i18n": {
+			"en-US": "Technology"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "TELECOMMUNICATIONS",
+		"key": "telecommunications",
+		"name": "Telecommunications",
+		"name_i18n": {
+			"en-US": "Telecommunications"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "TRANSPORTATION",
+		"key": "transportation",
+		"name": "Transportation",
+		"name_i18n": {
+			"en-US": "Transportation"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "UTILITIES",
+		"key": "utilities",
+		"name": "Utilities",
+		"name_i18n": {
+			"en-US": "Utilities"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "WHOLESALEDISTRIBUTION",
+		"key": "wholesaleDistribution",
+		"name": "Wholesale/Distribution",
+		"name_i18n": {
+			"en-US": "Wholesale/Distribution"
+		},
+		"type": "string"
+	}
+]

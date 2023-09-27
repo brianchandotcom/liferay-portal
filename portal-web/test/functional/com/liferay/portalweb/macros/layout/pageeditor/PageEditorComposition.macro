@@ -35,6 +35,8 @@ definition {
 		AssertClick(
 			locator1 = "//button[normalize-space()='Save']",
 			value1 = "Save");
+
+		Alert.viewSuccessMessageText(successMessage = "The fragment was created successfully. You can view it in Fragments.");
 	}
 
 }

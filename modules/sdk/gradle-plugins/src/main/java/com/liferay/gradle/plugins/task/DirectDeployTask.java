@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.task;
@@ -25,30 +16,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.tasks.CacheableTask;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Internal;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class DirectDeployTask extends BasePortalToolsTask {
 
+	@Internal
 	public File getAppServerDeployDir() {
 		return GradleUtil.toFile(project, _appServerDeployDir);
 	}
 
+	@Internal
 	public File getAppServerDir() {
 		return GradleUtil.toFile(project, _appServerDir);
 	}
 
+	@Internal
 	public File getAppServerLibGlobalDir() {
 		return GradleUtil.toFile(project, _appServerLibGlobalDir);
 	}
 
+	@Internal
 	public File getAppServerPortalDir() {
 		return GradleUtil.toFile(project, _appServerPortalDir);
 	}
 
+	@Input
 	public String getAppServerType() {
 		return GradleUtil.toString(_appServerType);
 	}
@@ -145,18 +141,22 @@ public class DirectDeployTask extends BasePortalToolsTask {
 			StringUtil.capitalize(webAppType) + "Deployer";
 	}
 
+	@Internal
 	public File getWebAppFile() {
 		return GradleUtil.toFile(project, _webAppFile);
 	}
 
+	@Input
 	public String getWebAppType() {
 		return GradleUtil.toString(_webAppType);
 	}
 
+	@Input
 	public boolean isCustomPortletXml() {
 		return _customPortletXml;
 	}
 
+	@Input
 	public boolean isUnpackWar() {
 		return _unpackWar;
 	}

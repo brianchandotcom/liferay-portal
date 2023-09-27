@@ -1,0 +1,25 @@
+.lfr-object__object-web-view-modal-move-object-definition {
+	&-empty-state {
+		text-align: center;
+	}
+
+	&-list-item {
+		border: none;
+		padding: 0.5rem;
+	}
+
+	&-list-item-label {
+		padding-left: 8px;
+	}
+
+	&-toolbar {
+		> .container-fluid {
+			margin-bottom: 10px;
+			padding: 0;
+		}
+	}
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}

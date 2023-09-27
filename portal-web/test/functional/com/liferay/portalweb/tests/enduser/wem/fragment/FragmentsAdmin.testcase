@@ -4,7 +4,6 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Fragments";
 
 	static var randomSiteName = StringUtil.randomString(8);
@@ -12,6 +11,10 @@ definition {
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
@@ -566,8 +569,6 @@ definition {
 	@description = "This is a test for LPS-177286. Able to enable and disable the propagation of Contributed Fragments on the instance startup."
 	@priority = 4
 	test ManuallyPropagateChanges {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given a site administrator accesses to the Page Fragments configuration of Instance Settings") {
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Page Fragments",
@@ -907,7 +908,7 @@ definition {
 
 	@description = "This is a test for LPS-180331. The new site should inherit form fragment displayed by default per field type from the global site."
 	@priority = 4
-	test viewDefaultFormFragmentOfTextFieldAddedInGlobalSiteInheritesInNewSite {
+	test ViewDefaultFormFragmentOfTextFieldAddedInGlobalSiteInheritesInNewSite {
 		task ("Given a Text Input fragment copied from Form Components in global site") {
 			task ("Add a fragment set") {
 				JSONFragment.addFragmentCollection(
@@ -991,7 +992,7 @@ definition {
 
 	@description = "This is a test for LPS-180331. The site administrator could select the form fragment displayed by default per field type in normal site."
 	@priority = 4
-	test viewDefaultFormFragmentOfTextFieldChangedInNormalSite {
+	test ViewDefaultFormFragmentOfTextFieldChangedInNormalSite {
 		task ("Given a Text Input fragment copied from Form Components in normal site") {
 			task ("Add a fragment set") {
 				JSONFragment.addFragmentCollection(
@@ -1119,7 +1120,7 @@ definition {
 		}
 
 		task ("Then the Fragments creator can see the new icons on the dropdown menu of custom fragment") {
-			DropdownMenuItem.viewIcon(iconList = "pencil,change,upload,copy,move-folder,trash");
+			DropdownMenuItem.viewIcon(iconList = "pencil,change,export,copy,move-folder,trash");
 		}
 
 		task ("When the Fragments creator opens the dropdown menu of custom fragment set") {
@@ -1129,7 +1130,7 @@ definition {
 		}
 
 		task ("Then the Fragments creator can see the new icons on the dropdown menu of custom fragment set") {
-			DropdownMenuItem.viewIcon(iconList = "pencil,upload,import,trash");
+			DropdownMenuItem.viewIcon(iconList = "pencil,export,import,trash");
 		}
 
 		task ("When the Fragments creator opens the dropdown menu on the Fragment Sets") {
@@ -1137,7 +1138,7 @@ definition {
 		}
 
 		task ("Then the Fragments creator can see the new icons on the dropdown menu of Framents Sets") {
-			DropdownMenuItem.viewIcon(iconList = "upload,import,trash");
+			DropdownMenuItem.viewIcon(iconList = "export,import,trash");
 		}
 
 		task ("When the Fragments creator opens the dropdown menu of management toolbar after selecting the new fragment") {
@@ -1147,15 +1148,13 @@ definition {
 		}
 
 		task ("Then the Fragments creator can see the new icons on the dropdown menu") {
-			DropdownMenuItem.viewIcon(iconList = "upload,copy,move-folder,trash");
+			DropdownMenuItem.viewIcon(iconList = "export,copy,move-folder,trash");
 		}
 	}
 
 	@description = "This is a test for LPS-177286. View error alert and feedback message when failing to Propagate Contributed Fragments Changes During Deploy Process Automatically."
 	@priority = 3
 	test ViewErrorMessageWhenFailToPropagateChanges {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given a site administrator unchecks the Propagate Default Fragments Changes During Deploy Process Automatically") {
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Page Fragments",
@@ -1198,7 +1197,7 @@ definition {
 
 	@description = "This is a test for LPS-180331. The site administrator should see the link for configuration of the form fragments when configure a published form fragment."
 	@priority = 4
-	test viewLinkForConfigurationWhenConfigureFormFragment {
+	test ViewLinkForConfigurationWhenConfigureFormFragment {
 		task ("Given a Text Input fragment from Form Components in normal site") {
 			task ("Add a fragment set") {
 				JSONFragment.addFragmentCollection(
@@ -1276,7 +1275,7 @@ definition {
 
 	@description = "This is a test for LPS-180331. The site administrator should only see published form fragments in form fragment selector."
 	@priority = 4
-	test viewOnlyPublishedFormFragmentdDisplayInFromFragmentSelector {
+	test ViewOnlyPublishedFormFragmentdDisplayInFromFragmentSelector {
 		task ("Given a Text Input fragment copied from Form Components in normal site") {
 			task ("Add a fragment set") {
 				JSONFragment.addFragmentCollection(
@@ -1363,7 +1362,7 @@ definition {
 
 	@description = "This is a test for LPS-180331. The site administrator should only see same type form fragments in form fragment selector."
 	@priority = 4
-	test viewOnlySameTypeFormFragmentdDisplayInFromFragmentSelector {
+	test ViewOnlySameTypeFormFragmentdDisplayInFromFragmentSelector {
 		task ("Given a Text Input fragment and a Checkbox fragment copied from Form Components in normal site") {
 			task ("Add a fragment set") {
 				JSONFragment.addFragmentCollection(

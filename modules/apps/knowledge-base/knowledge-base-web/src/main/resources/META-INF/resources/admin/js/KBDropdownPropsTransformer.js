@@ -1,31 +1,24 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {
+	addParams,
 	fetch,
 	objectToFormData,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
 	openToast,
+	sub,
 } from 'frontend-js-web';
 
 import showSuccessMessage from './utils/showSuccessMessage';
 
 const ITEM_TYPES = {
-	article: 'article',
-	folder: 'folder',
+	KBArticle: 'KBArticle',
+	KBFolder: 'KBFolder',
 };
 
 const ACTIONS = {
@@ -44,22 +37,24 @@ const ACTIONS = {
 
 	move(
 		{
-			itemClassNameId,
-			itemId,
-			itemType,
-			moveKBItemActionURL,
-			moveKBItemModalURL,
+			kbObjectClassNameId,
+			kbObjectId,
+			kbObjectTitle,
+			kbObjectType,
+			moveKBObjectActionURL,
+			moveKBObjectModalURL,
 		},
 		portletNamespace
 	) {
 		openSelectionModal({
-			buttonAddLabel: Liferay.Language.get('move'),
+			buttonAddLabel: Liferay.Language.get('save'),
 			height: '50vh',
+			iframeBodyCssClass: '',
 			multiple: true,
 			onSelect: ({destinationItem, index}) => {
 				if (
-					itemType === ITEM_TYPES.folder &&
-					destinationItem.type === ITEM_TYPES.article
+					kbObjectType === ITEM_TYPES.KBFolder &&
+					destinationItem.type === ITEM_TYPES.KBArticle
 				) {
 					openToast({
 						message: Liferay.Language.get(
@@ -71,12 +66,12 @@ const ACTIONS = {
 					return false;
 				}
 
-				fetch(moveKBItemActionURL, {
+				fetch(moveKBObjectActionURL, {
 					body: objectToFormData({
 						[`${portletNamespace}dragAndDrop`]: true,
 						[`${portletNamespace}position`]: index?.next ?? -1,
-						[`${portletNamespace}resourceClassNameId`]: itemClassNameId,
-						[`${portletNamespace}resourcePrimKey`]: itemId,
+						[`${portletNamespace}resourceClassNameId`]: kbObjectClassNameId,
+						[`${portletNamespace}resourcePrimKey`]: kbObjectId,
 						[`${portletNamespace}parentResourceClassNameId`]: destinationItem.classNameId,
 						[`${portletNamespace}parentResourcePrimKey`]: destinationItem.id,
 					}),
@@ -113,8 +108,11 @@ const ACTIONS = {
 			},
 			selectEventName: `selectKBMoveFolder`,
 			size: 'md',
-			title: Liferay.Language.get('move'),
-			url: moveKBItemModalURL,
+			title: sub(Liferay.Language.get('move-x-to'), `"${kbObjectTitle}"`),
+			url: addParams(
+				`${portletNamespace}moveKBObjectId=${kbObjectId}&${portletNamespace}moveKBObjectClassName=${kbObjectType}`,
+				moveKBObjectModalURL
+			),
 		});
 	},
 

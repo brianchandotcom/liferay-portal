@@ -5,7 +5,6 @@ definition {
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
 	static var randomSiteName = StringUtil.randomString(8);
@@ -18,6 +17,10 @@ definition {
 	static var randomRoleKey = StringUtil.randomString(8);
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
@@ -544,7 +547,7 @@ definition {
 			}
 
 			task ("Create two object entries") {
-				JSONObject.addObjectEntryViaJSONAPI(
+				var objectEntryId = JSONObject.addObjectEntryViaJSONAPI(
 					fieldName = "name",
 					fieldValue = "Apple",
 					groupName = ${randomSiteName},
@@ -675,9 +678,8 @@ definition {
 				PageEditor.editContentDisplay(
 					entryContent = "Apple",
 					fragmentName = "Content Display",
-					index = 1,
-					objecEntrytName = "${labelName}s",
-					object = "true");
+					object = "${labelName}s",
+					objectEntryId = ${objectEntryId});
 
 				PageEditor.publish();
 			}
@@ -761,7 +763,7 @@ definition {
 			}
 
 			task ("Create two object entries") {
-				JSONObject.addObjectEntryViaJSONAPI(
+				var objectEntryId = JSONObject.addObjectEntryViaJSONAPI(
 					fieldName = "name",
 					fieldValue = "Apple",
 					groupName = ${randomSiteName},
@@ -890,9 +892,8 @@ definition {
 				PageEditor.editContentDisplay(
 					entryContent = "Apple",
 					fragmentName = "Content Display",
-					index = 1,
-					objecEntrytName = "${labelName}s",
-					object = "true");
+					object = "${labelName}s",
+					objectEntryId = ${objectEntryId});
 
 				PageEditor.publish();
 			}
@@ -1142,7 +1143,7 @@ definition {
 			}
 
 			task ("Create two object entries") {
-				JSONObject.addObjectEntryViaJSONAPI(
+				var objectEntryId = JSONObject.addObjectEntryViaJSONAPI(
 					fieldName = "name",
 					fieldValue = "Apple",
 					groupName = ${randomSiteName},
@@ -1257,9 +1258,8 @@ definition {
 				PageEditor.editContentDisplay(
 					entryContent = "Apple",
 					fragmentName = "Content Display",
-					index = 1,
-					objecEntrytName = "${labelName}s",
-					object = "true");
+					object = "${labelName}s",
+					objectEntryId = ${objectEntryId});
 
 				PageEditor.publish();
 			}
@@ -2118,6 +2118,7 @@ definition {
 	@priority = 4
 	test PublishContentPageWithoutCustomFieldsPermission {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a custom field for Page") {
 			ApplicationsMenu.gotoPortlet(
@@ -2240,7 +2241,7 @@ definition {
 			}
 
 			task ("Create two object entries") {
-				JSONObject.addObjectEntryViaJSONAPI(
+				var objectEntryId = JSONObject.addObjectEntryViaJSONAPI(
 					fieldName = "name",
 					fieldValue = "Apple",
 					groupName = ${randomSiteName},
@@ -2364,9 +2365,8 @@ definition {
 				PageEditor.editContentDisplay(
 					entryContent = "Apple",
 					fragmentName = "Content Display",
-					index = 1,
-					objecEntrytName = "${labelName}s",
-					object = "true");
+					object = "${labelName}s",
+					objectEntryId = ${objectEntryId});
 
 				PageEditor.publish();
 			}
@@ -2539,7 +2539,7 @@ definition {
 	@description = "This is a test for LPS-165556. The page creator without trigger permission could see the available actions in Action selector."
 	@priority = 4
 	test ViewAvailableActionsInActionSelectorAsUserWithoutTriggerPermission {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-169992=true";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var labelName = StringUtil.randomString(8);
 
@@ -2643,7 +2643,7 @@ definition {
 			AssertTextEquals(
 				key_fieldLabel = "Item",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "${labelName}2 ${objectEntryId}");
+				value1 = ${objectEntryId});
 
 			AssertElementPresent(
 				key_fieldLabel = "Action",

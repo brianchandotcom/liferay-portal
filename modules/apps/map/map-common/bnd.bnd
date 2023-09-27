@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Map Common
 Bundle-SymbolicName: com.liferay.map.common
-Bundle-Version: 6.0.13
+Bundle-Version: 6.0.14
 Liferay-JS-Submodules-Bridge: map-common
 Web-ContextPath: /map-common

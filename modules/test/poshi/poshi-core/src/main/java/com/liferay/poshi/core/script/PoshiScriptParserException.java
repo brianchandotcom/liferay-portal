@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.poshi.core.script;
@@ -65,13 +56,20 @@ public class PoshiScriptParserException extends PoshiElementException {
 
 	public static void throwExceptions() throws Exception {
 		if (!_poshiScriptParserExceptions.isEmpty()) {
+			List<Exception> filteredExceptions = getFilteredExceptions(
+				new ArrayList<>(_poshiScriptParserExceptions));
+
+			if (filteredExceptions.isEmpty()) {
+				return;
+			}
+
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("\n\n");
-			sb.append(_poshiScriptParserExceptions.size());
+			sb.append(filteredExceptions.size());
 			sb.append(" error");
 
-			if (_poshiScriptParserExceptions.size() > 1) {
+			if (filteredExceptions.size() > 1) {
 				sb.append("s");
 			}
 
@@ -79,7 +77,7 @@ public class PoshiScriptParserException extends PoshiElementException {
 
 			int i = 1;
 
-			for (Exception exception : _poshiScriptParserExceptions) {
+			for (Exception exception : filteredExceptions) {
 				sb.append(i);
 				sb.append(". ");
 				sb.append(exception.getMessage());

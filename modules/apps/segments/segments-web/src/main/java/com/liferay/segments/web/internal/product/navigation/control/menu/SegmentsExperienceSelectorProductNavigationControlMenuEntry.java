@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.segments.web.internal.product.navigation.control.menu;
@@ -26,6 +17,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
@@ -100,19 +92,19 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 						_segmentsExperimentLocalService,
 						_segmentsExperimentRelLocalService);
 
-			PrintWriter writer = httpServletResponse.getWriter();
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			writer.write("<div class=\"border-left border-secondary ");
-			writer.write("control-menu-nav-item ml-3 pl-3\">");
+			printWriter.write("<div class=\"border-left border-secondary ");
+			printWriter.write("control-menu-nav-item c-ml-3 c-pl-md-3\">");
 
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(
 					_npmResolver.resolveModuleName("segments-web") +
 						"/js/components/ExperiencePicker"),
 				segmentsExperienceSelectorDisplayContext.getData(),
-				httpServletRequest, writer);
+				httpServletRequest, printWriter);
 
-			writer.write("</div>");
+			printWriter.write("</div>");
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -150,7 +142,9 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!layout.isTypeContent() || !_sites.isLayoutUpdateable(layout)) {
+		if ((layout instanceof VirtualLayout) || !layout.isLayoutUpdateable() ||
+			!layout.isTypeContent()) {
+
 			return false;
 		}
 

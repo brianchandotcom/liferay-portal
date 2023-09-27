@@ -47,7 +47,7 @@ import org.gradle.composite.internal.RootOfNestedBuildTree
 import org.gradle.internal.build.BuildState
 import org.gradle.internal.build.BuildStateRegistry
 import org.gradle.internal.build.PublicBuildPath
-import org.gradle.internal.invocation.BuildController
+import org.gradle.tooling.BuildController
 import org.gradle.util.GUtil
 import org.gradle.util.VersionNumber
 
@@ -56,7 +56,7 @@ buildscript {
 
 	dependencies {
 		classpath group: "com.github.jengelman.gradle.plugins", name: "shadow", version: "2.0.4"
-		classpath group: "de.undercouch", name: "gradle-download-task", version: "3.4.3"
+		classpath group: "de.undercouch", name: "gradle-download-task", version: "5.4.0"
 		classpath group: "org.ajoberstar", name: "gradle-git", version: "1.6.0"
 	}
 
@@ -69,7 +69,7 @@ buildscript {
 
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: "de.undercouch.download"
-apply plugin: "java"
+apply plugin: "java-library"
 apply plugin: "org.ajoberstar.grgit"
 
 apply from: "releng-pom.gradle"
@@ -215,6 +215,7 @@ portalArtifactsJar {
 
 	baseName = "portal"
 	classifier = null
+	duplicatesStrategy = "exclude"
 	includeEmptyDirs = false
 	version = _getReleaseInfoVersion()
 	zip64 = true
@@ -319,6 +320,7 @@ portalSourcesJar {
 
 	baseName = "portal"
 	classifier = "sources"
+	duplicatesStrategy = "exclude"
 	includeEmptyDirs = false
 	version = _getReleaseInfoVersion()
 

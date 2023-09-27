@@ -146,6 +146,17 @@ interface ITitleSectionProps extends React.HTMLAttributes<HTMLDivElement> {
 	title?: string;
 }
 
+export interface IActionProps extends React.HTMLAttributes<HTMLDivElement> {
+	displayType: string;
+	label: string;
+	redirectURL?: string;
+	onClick?: () => void;
+}
+
+interface IActionsProps extends React.HTMLAttributes<HTMLDivElement> {
+	actions: IActionProps[];
+}
+
 const TitleSection: React.FC<ITitleSectionProps> = ({
 	children,
 	className,
@@ -165,6 +176,34 @@ const TitleSection: React.FC<ITitleSectionProps> = ({
 	</Section>
 );
 
+const Actions: React.FC<IActionsProps> = ({actions = []}) => (
+	<div className='header-actions'>
+		{actions.map(({displayType, label, onClick, redirectURL}, index) =>
+			redirectURL ? (
+				<a
+					className={getCN(`btn btn-${displayType}`, 'ml-2')}
+					href={redirectURL}
+					key={index}
+					target='_blank'
+				>
+					<ClayIcon className='mr-2' symbol='shortcut' />
+
+					{label}
+				</a>
+			) : (
+				<ClayButton
+					className='ml-2'
+					displayType={displayType as any}
+					key={index}
+					onClick={onClick}
+				>
+					{label}
+				</ClayButton>
+			)
+		)}
+	</div>
+);
+
 interface IHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 	breadcrumbs: IBreadcrumbArgs[];
 	groupId: string;
@@ -173,6 +212,7 @@ interface IHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 const Header: React.FC<IHeaderProps> & {
 	NavBar: typeof NavBar;
 	PageActions: typeof PageActions;
+	Actions: typeof Actions;
 	Section: typeof Section;
 	TitleSection: typeof TitleSection;
 } = ({breadcrumbs, children, groupId}) => {
@@ -199,6 +239,7 @@ const Header: React.FC<IHeaderProps> & {
 	);
 };
 
+Header.Actions = Actions;
 Header.NavBar = NavBar;
 Header.PageActions = PageActions;
 Header.Section = Section;

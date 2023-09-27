@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
@@ -22,10 +13,11 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.io.InputStream;
 
@@ -58,6 +50,42 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 		_workflowDefinitionManager.getWorkflowDefinition(
 			TestPropsValues.getCompanyId(), workflowDefinition.getName(),
 			workflowDefinition.getVersion());
+	}
+
+	@Test
+	public void testDeployWorkflowDefinitionWithContentAsJSON()
+		throws Exception {
+
+		String content = WorkflowDefinitionContentUtil.toJSON(
+			StringUtil.read(
+				getResourceInputStream(
+					"single-approver-workflow-definition.xml")));
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, "Single Approver", content.getBytes());
+
+		Assert.assertEquals(
+			workflowDefinition.getName(), workflowDefinition.getName());
+		Assert.assertTrue(workflowDefinition.isActive());
+	}
+
+	@Test
+	public void testDeployWorkflowDefinitionWithContentAsXML()
+		throws Exception {
+
+		String content = StringUtil.read(
+			getResourceInputStream("single-approver-workflow-definition.xml"));
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, "Single Approver", content.getBytes());
+
+		Assert.assertEquals(
+			workflowDefinition.getName(), workflowDefinition.getName());
+		Assert.assertTrue(workflowDefinition.isActive());
 	}
 
 	@Test

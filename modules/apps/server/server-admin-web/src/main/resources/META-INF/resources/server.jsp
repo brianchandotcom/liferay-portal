@@ -1,23 +1,14 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
 <%@ include file="/init.jsp" %>
 
 <%
-ServerDisplayContext serverDisplayContext = new ServerDisplayContext(request, renderResponse);
+ServerDisplayContext serverDisplayContext = new ServerDisplayContext(renderRequest, renderResponse);
 %>
 
 <clay:navigation-bar
@@ -25,6 +16,21 @@ ServerDisplayContext serverDisplayContext = new ServerDisplayContext(request, re
 />
 
 <div class="<%= (tabs1.equals("log-levels") || tabs1.equals("properties")) ? StringPool.BLANK : "container-fluid container-fluid-max-xl mt-3" %>">
+
+	<%
+	String key = serverDisplayContext.getSessionMessagesKey();
+	%>
+
+	<c:if test="<%= Validator.isNotNull(key) %>">
+		<aui:script>
+			Liferay.Util.openToast({
+				autoClose: 10000,
+				message: '<liferay-ui:message key="<%= key %>" />',
+				type: 'success',
+			});
+		</aui:script>
+	</c:if>
+
 	<c:choose>
 		<c:when test='<%= tabs1.equals("data-migration") %>'>
 			<liferay-util:include page="/data_migration.jsp" servletContext="<%= application %>" />

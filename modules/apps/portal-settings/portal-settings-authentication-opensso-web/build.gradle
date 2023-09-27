@@ -8,6 +8,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-security-sso:portal-security-sso-opensso-api")
 	compileOnly project(":apps:portal-settings:portal-settings-api")
 	compileOnly project(":core:petra:petra-lang")

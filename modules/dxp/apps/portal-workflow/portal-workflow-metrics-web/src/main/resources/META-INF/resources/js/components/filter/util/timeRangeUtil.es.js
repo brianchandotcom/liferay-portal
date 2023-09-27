@@ -1,12 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {
@@ -18,11 +12,11 @@ import {
 import moment from '../../../shared/util/moment.es';
 
 const convertQueryDate = (date = '', format = 'L') => {
-	return moment.utc(decodeURIComponent(date), null, 'en').format(format);
+	return moment(decodeURIComponent(date), null, 'en').format(format);
 };
 
 const parseDateMoment = (date, format = 'L') => {
-	return moment.utc(date, format, 'en');
+	return moment(date, format, 'en');
 };
 
 const formatDateTime = (date, format, isEndDate) => {
@@ -75,8 +69,8 @@ const formatTimeRange = (timeRange, isAmPm) => {
 		return null;
 	}
 
-	const dateEndMoment = moment.utc(dateEnd);
-	const dateStartMoment = moment.utc(dateStart);
+	const dateEndMoment = moment(dateEnd);
+	const dateStartMoment = moment(dateStart);
 
 	const {dateEndPattern, dateStartPattern} = getFormatPattern(
 		dateEndMoment,

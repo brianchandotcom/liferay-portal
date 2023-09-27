@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.service.impl;
@@ -20,7 +11,6 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -61,10 +51,10 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem addCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			long replacedCPInstanceId, int shippedQuantity,
-			String unitOfMeasureKey, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			long commerceOrderId, long cpInstanceId, String json,
+			BigDecimal quantity, long replacedCPInstanceId,
+			BigDecimal shippedQuantity, String unitOfMeasureKey,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -78,26 +68,16 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			long replacedCPInstanceId, int shippedQuantity,
-			String unitOfMeasureKey, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			long commerceOrderId, long cpInstanceId, String json,
+			BigDecimal quantity, long replacedCPInstanceId,
+			BigDecimal shippedQuantity, String unitOfMeasureKey,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
-
-		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
 		_commerceOrderModelResourcePermission.check(
 			getPermissionChecker(),
 			_commerceOrderService.getCommerceOrder(commerceOrderId),
 			ActionKeys.UPDATE);
-
-		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
-			cpInstanceId);
-
-		commerceProductViewPermission.check(
-			getPermissionChecker(), accountEntry.getAccountEntryId(),
-			commerceContext.getCommerceChannelGroupId(),
-			cpInstance.getCPDefinitionId());
 
 		return commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
 			getUserId(), commerceOrderId, cpInstanceId, json, quantity,
@@ -243,7 +223,7 @@ public class CommerceOrderItemServiceImpl
 	}
 
 	@Override
-	public int getCommerceInventoryWarehouseItemQuantity(
+	public BigDecimal getCommerceInventoryWarehouseItemQuantity(
 			long commerceOrderItemId, long commerceInventoryWarehouseId)
 		throws PortalException {
 
@@ -336,7 +316,7 @@ public class CommerceOrderItemServiceImpl
 	}
 
 	@Override
-	public int getCommerceOrderItemsQuantity(long commerceOrderId)
+	public BigDecimal getCommerceOrderItemsQuantity(long commerceOrderId)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -371,9 +351,10 @@ public class CommerceOrderItemServiceImpl
 	public CommerceOrderItem importCommerceOrderItem(
 			String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
-			String cpMeasurementUnitKey, BigDecimal decimalQuantity,
-			int quantity, int shippedQuantity, String unitOfMeasureKey,
-			ServiceContext serviceContext)
+			String cpMeasurementUnitKey, BigDecimal quantity,
+			BigDecimal shippedQuantity,
+			BigDecimal unitOfMeasureIncrementalOrderQuantity,
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -381,9 +362,9 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.importCommerceOrderItem(
 			getUserId(), externalReferenceCode, commerceOrderItemId,
-			commerceOrderId, cpInstanceId, cpMeasurementUnitKey,
-			decimalQuantity, quantity, shippedQuantity, unitOfMeasureKey,
-			serviceContext);
+			commerceOrderId, cpInstanceId, cpMeasurementUnitKey, quantity,
+			shippedQuantity, unitOfMeasureIncrementalOrderQuantity,
+			unitOfMeasureKey, serviceContext);
 	}
 
 	@Override
@@ -428,7 +409,7 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, int quantity,
+			long commerceOrderItemId, BigDecimal quantity,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -447,8 +428,9 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
+			long commerceOrderItemId, long cpMeasurementUnitId,
+			BigDecimal quantity, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
@@ -466,8 +448,8 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
-			ServiceContext serviceContext)
+			long commerceOrderItemId, long cpMeasurementUnitId,
+			BigDecimal quantity, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
@@ -485,7 +467,7 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, String json, int quantity,
+			long commerceOrderItemId, String json, BigDecimal quantity,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -685,33 +667,7 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItemUnitPrice(
-			long commerceOrderItemId, BigDecimal decimalQuantity,
-			BigDecimal unitPrice)
-		throws PortalException {
-
-		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemLocalService.getCommerceOrderItem(
-				commerceOrderItemId);
-
-		_commerceOrderModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
-			ActionKeys.UPDATE);
-
-		CommerceOrder commerceOrder =
-			_commerceOrderLocalService.getCommerceOrder(
-				commerceOrderItem.getCommerceOrderId());
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), commerceOrder.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_ORDER_PRICES);
-
-		return commerceOrderItemLocalService.updateCommerceOrderItemUnitPrice(
-			getUserId(), commerceOrderItemId, decimalQuantity, unitPrice);
-	}
-
-	@Override
-	public CommerceOrderItem updateCommerceOrderItemUnitPrice(
-			long commerceOrderItemId, int quantity, BigDecimal unitPrice)
+			long commerceOrderItemId, BigDecimal quantity, BigDecimal unitPrice)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =

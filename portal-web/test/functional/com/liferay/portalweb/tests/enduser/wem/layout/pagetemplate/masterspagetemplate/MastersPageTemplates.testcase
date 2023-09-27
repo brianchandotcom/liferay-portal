@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Master Page Templates";
@@ -1552,6 +1553,8 @@ definition {
 				scope = "Master");
 
 			MastersPageTemplates.propagateChange();
+
+			Navigator.gotoBack();
 
 			WebContentDisplayPortlet.viewMessage();
 		}

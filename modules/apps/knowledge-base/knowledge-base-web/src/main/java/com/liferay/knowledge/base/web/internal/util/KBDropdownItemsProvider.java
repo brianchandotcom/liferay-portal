@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.knowledge.base.web.internal.util;
@@ -39,7 +30,6 @@ import com.liferay.knowledge.base.web.internal.security.permission.resource.KBFo
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -731,62 +721,33 @@ public class KBDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getMoveActionUnsafeConsumer(KBArticle kbArticle) {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-180292")) {
-			return dropdownItem -> {
-				dropdownItem.putData("action", "move");
-				dropdownItem.putData(
-					"itemClassNameId",
-					String.valueOf(kbArticle.getClassNameId()));
-				dropdownItem.putData(
-					"itemId", String.valueOf(kbArticle.getResourcePrimKey()));
-				dropdownItem.putData("itemType", "article");
-				dropdownItem.putData(
-					"moveKBItemActionURL",
-					PortletURLBuilder.createActionURL(
-						_liferayPortletResponse
-					).setActionName(
-						"/knowledge_base/move_kb_object"
-					).buildString());
-				dropdownItem.putData(
-					"moveKBItemModalURL",
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/common/move_kb_object_modal.jsp"
-					).setParameter(
-						"itemToMoveId", kbArticle.getResourcePrimKey()
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).buildString());
-				dropdownItem.setIcon("move-folder");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"move"));
-			};
-		}
-
 		return dropdownItem -> {
-			dropdownItem.setHref(
-				PortletURLBuilder.create(
-					PortalUtil.getControlPanelPortletURL(
-						_liferayPortletRequest,
-						KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-						PortletRequest.RENDER_PHASE)
+			dropdownItem.putData("action", "move");
+			dropdownItem.putData(
+				"kbObjectClassNameId",
+				String.valueOf(kbArticle.getClassNameId()));
+			dropdownItem.putData(
+				"kbObjectId", String.valueOf(kbArticle.getResourcePrimKey()));
+			dropdownItem.putData("kbObjectTitle", kbArticle.getTitle());
+			dropdownItem.putData(
+				"kbObjectType", KBArticle.class.getSimpleName());
+			dropdownItem.putData(
+				"moveKBObjectActionURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/knowledge_base/move_kb_object"
+				).buildString());
+			dropdownItem.putData(
+				"moveKBObjectModalURL",
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
 				).setMVCPath(
-					"/admin/common/move_object.jsp"
-				).setRedirect(
-					_currentURL
+					"/admin/common/move_kb_object_modal.jsp"
 				).setParameter(
-					"parentResourceClassNameId",
-					kbArticle.getParentResourceClassNameId()
-				).setParameter(
-					"parentResourcePrimKey",
-					kbArticle.getParentResourcePrimKey()
-				).setParameter(
-					"resourceClassNameId", kbArticle.getClassNameId()
-				).setParameter(
-					"resourcePrimKey", kbArticle.getResourcePrimKey()
+					"kbObjectVersion", kbArticle.getVersion()
+				).setWindowState(
+					LiferayWindowState.POP_UP
 				).buildString());
 			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
@@ -798,58 +759,32 @@ public class KBDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getMoveActionUnsafeConsumer(KBFolder kbFolder) {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-180292")) {
-			return dropdownItem -> {
-				dropdownItem.putData("action", "move");
-				dropdownItem.putData(
-					"itemClassNameId",
-					String.valueOf(kbFolder.getClassNameId()));
-				dropdownItem.putData(
-					"itemId", String.valueOf(kbFolder.getKbFolderId()));
-				dropdownItem.putData("itemType", "folder");
-				dropdownItem.putData(
-					"moveKBItemActionURL",
-					PortletURLBuilder.createActionURL(
-						_liferayPortletResponse
-					).setActionName(
-						"/knowledge_base/move_kb_object"
-					).buildString());
-				dropdownItem.putData(
-					"moveKBItemModalURL",
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/common/move_kb_object_modal.jsp"
-					).setParameter(
-						"itemToMoveId", kbFolder.getKbFolderId()
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).buildString());
-				dropdownItem.setIcon("move-folder");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"move"));
-			};
-		}
-
 		return dropdownItem -> {
-			dropdownItem.setHref(
+			dropdownItem.putData("action", "move");
+			dropdownItem.putData(
+				"kbObjectClassNameId",
+				String.valueOf(kbFolder.getClassNameId()));
+			dropdownItem.putData(
+				"kbObjectId", String.valueOf(kbFolder.getKbFolderId()));
+			dropdownItem.putData("kbObjectTitle", kbFolder.getName());
+			dropdownItem.putData(
+				"kbObjectType", KBFolder.class.getSimpleName());
+			dropdownItem.putData(
+				"moveKBObjectActionURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/knowledge_base/move_kb_object"
+				).buildString());
+			dropdownItem.putData(
+				"moveKBObjectModalURL",
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
 				).setMVCPath(
-					"/admin/common/move_object.jsp"
-				).setRedirect(
-					_currentURL
-				).setParameter(
-					"parentResourceClassNameId", kbFolder.getClassNameId()
-				).setParameter(
-					"parentResourcePrimKey", kbFolder.getParentKBFolderId()
-				).setParameter(
-					"resourceClassNameId", kbFolder.getClassNameId()
-				).setParameter(
-					"resourcePrimKey", kbFolder.getKbFolderId()
-				).buildRenderURL());
+					"/admin/common/move_kb_object_modal.jsp"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
 			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
 				LanguageUtil.get(

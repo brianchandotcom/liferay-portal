@@ -12,6 +12,10 @@ definition {
 		ManagementBar.viewDisplayStyle(displayStyle = ${displayStyle});
 	}
 
+	macro clearFilter {
+		Click(locator1 = "ManagementBar#CLEAR_FILTER");
+	}
+
 	macro clickInfo {
 		if (IsElementPresent(locator1 = "Icon#INFO_DM")) {
 			Click.clickNoMouseOver(locator1 = "Icon#INFO_DM");
@@ -46,6 +50,34 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		MenuItem.click(menuItem = ${menuItem});
+	}
+
+	macro sortAssets {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		WaitForVisible(
+			key_text = "order-list",
+			locator1 = "ManagementBar#ANY_ICON");
+
+		if (${sortDirection} == "Ascending") {
+			Click(
+				key_text = "order-list-down",
+				locator1 = "ManagementBar#ANY_ICON");
+
+			VerifyVisible(
+				key_text = "order-list-up",
+				locator1 = "ManagementBar#ANY_ICON");
+		}
+
+		if (${sortDirection} == "Descending") {
+			Click(
+				key_text = "order-list-up",
+				locator1 = "ManagementBar#ANY_ICON");
+
+			VerifyVisible(
+				key_text = "order-list-down",
+				locator1 = "ManagementBar#ANY_ICON");
+		}
 	}
 
 	macro toggleViewOrder {

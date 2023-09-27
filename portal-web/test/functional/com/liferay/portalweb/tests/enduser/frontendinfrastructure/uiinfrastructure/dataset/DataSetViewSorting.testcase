@@ -1,7 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-188645=true${line.separator}feature.flag.LPS-167253=true";
+	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-188645=true";
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -16,27 +16,26 @@ definition {
 		task ("When Create a DataSet ") {
 			DataSetAdmin.goToDataSetAdminPage();
 
-			DataSetAdmin.createDataSet(
-				key_name = "Test Data Set",
-				key_type = "/data-set-manager/sorts");
-
-			Refresh();
-		}
-
-		task ("When go to the View page of the data set created.") {
-			DataSetAdmin.goToViews(dataSetName = "Test Data Set");
+			JSONDataSet._createDataSetEntry(
+				dataSetName = "Test Data Set",
+				restApplication = "/data-set-manager/sorts",
+				restEndpoint = "/",
+				restSchema = "FDSSort");
 		}
 
 		task ("And adding a data set view") {
-			DataSetAdmin.createDataSetView(
-				description = "View Description",
-				key_name = "View Test");
+			JSONDataSet._createFDSViewViaAPI(
+				dataSetName = "Test Data Set",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "View Test");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Test Data Set",
+				key_viewName = "View Test");
 		}
 
 		task ("When the user accesses the sorting tab") {
-			DataSetAdmin.goToTab(
-				dataSetViewName = "View Test",
-				tabName = "Sorting");
+			DataSetAdmin.goToTab(tabName = "Sorting");
 		}
 	}
 
@@ -49,6 +48,90 @@ definition {
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-182790. Confirms the sorting deletion message."
+	@priority = 5
+	test AssertDeleteSortingMessage {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+		}
+
+		task ("And clicks on the Delete option") {
+			Click(
+				key_itemName = "Delete",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+		}
+
+		task ("Then the Delete Sorting modal is displayed") {
+			AssertVisible(locator1 = "DataSet#MODAL_DIALOG");
+		}
+
+		task ("And the delete message is displayed") {
+			AssertVisible(
+				key_message = "Are you sure you want to delete this sorting? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
+				locator1 = "DataSet#MODAL_MESSAGE");
+		}
+	}
+
+	@description = "LPS-182790. Confirms the option of Edit a sorting appears."
+	@priority = 5
+	test AssertEditOptionAppears {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+		}
+
+		task ("Then the Edit and Delete options appear") {
+			AssertVisible(
+				key_itemName = "Edit",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+
+			AssertVisible(
+				key_itemName = "Delete",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+		}
+	}
+
+	@description = "LPS-182790. Confirms Ascending and Descending options appears when editing a sorting."
+	@priority = 5
+	test AssertEditSortingOptions {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_itemName = "Edit",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+		}
+
+		task ("And clicks on the Sorting field") {
+			Click(locator1 = "DataSet#SORTING_SELECT");
+		}
+
+		task ("Then a dropdown containing Ascending and Descending options is displayed") {
+			AssertVisible(locator1 = "DataSet#ASCENDING_SORTING_OPTION");
+
+			AssertVisible(locator1 = "DataSet#DESCENDING_SORTING_OPTION");
 		}
 	}
 
@@ -92,6 +175,86 @@ definition {
 		}
 	}
 
+	@description = "LPS-182790. Confirms it's possible to cancel a sorting deletion."
+	@priority = 4
+	test CanCancelDeleteSorting {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+		}
+
+		task ("And clicks on the Delete option") {
+			Click(
+				key_itemName = "Delete",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+		}
+
+		task ("Then the Delete Sorting modal is displayed") {
+			AssertVisible(locator1 = "DataSet#MODAL_DIALOG");
+		}
+
+		task ("When the user clicks on the Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then the Delete Sorting modal is closed") {
+			AssertElementNotPresent(locator1 = "DataSet#MODAL_DIALOG");
+		}
+
+		task ("And the sorting is not deleted") {
+			AssertVisible(
+				key_rowPosition = 1,
+				key_text = "creator",
+				locator1 = "DataSet#SORT_ENTRY_TABLE");
+		}
+	}
+
+	@description = "LPS-182790. Confirms it's possible to cancel a sorting edit."
+	@priority = 4
+	test CanCancelEditSorting {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_itemName = "Edit",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+		}
+
+		task ("And changes the option present in the Sorting field") {
+			Type(
+				locator1 = "DataSet#SORTING_SELECT",
+				value1 = "Ascending");
+		}
+
+		task ("And clicks on the Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then the modal is closed") {
+			AssertElementNotPresent(locator1 = "DataSet#MODAL_DIALOG");
+		}
+
+		task ("And the changes are not applied") {
+			AssertVisible(
+				key_rowPosition = 1,
+				key_text = "Descending",
+				locator1 = "DataSet#SORT_ENTRY_TABLE");
+		}
+	}
+
 	@description = "LPS-185326. Confirm that the Default Sort was created successfully."
 	@priority = 3
 	test CanCreateDefaultSort {
@@ -108,6 +271,49 @@ definition {
 		}
 	}
 
+	@description = "LPS-182790. Confirms it's possible to delete a sorting."
+	@priority = 5
+	test CanDeleteSorting {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+		}
+
+		task ("And clicks on the Delete option") {
+			Click(
+				key_itemName = "Delete",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+		}
+
+		task ("Then the Delete Sorting modal is displayed") {
+			AssertVisible(locator1 = "DataSet#MODAL_DIALOG");
+		}
+
+		task ("When the user clicks on Delete button") {
+			Button.click(button = "Delete");
+		}
+
+		task ("Then the Delete Sorting modal is closed") {
+			AssertElementNotPresent(locator1 = "DataSet#MODAL_DIALOG");
+		}
+
+		task ("And the default Liferay successful message is displayed") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the sorting does not appear in the Sorting tab table") {
+			AssertElementNotPresent(
+				key_rowPosition = 1,
+				key_text = "creator",
+				locator1 = "DataSet#SORT_ENTRY_TABLE");
+		}
+	}
+
 	@description = "LPS-185322. Confirm that the new default sorting modal is displayed."
 	@priority = 4
 	test CanDisplayedDefaultSort {
@@ -119,6 +325,98 @@ definition {
 			AssertElementPresent(
 				locator1 = "Portlet#MODAL_TITLE",
 				value1 = "New Default Sort");
+		}
+	}
+
+	@description = "LPS-182790. Confirms it's posible to order a sorting. Blocked by LPS-186225."
+	@ignore = "true"
+	@priority = 5
+	test CanOrderSorting {
+		task ("When the user creates 2 or more new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+
+			DataSetAdmin.createASort(
+				key_field = "id",
+				key_sorting = "Ascending");
+		}
+
+		task ("And drag the last sorting to the first position") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_rowPosition = 1,
+				key_text = "creator",
+				locator1 = "DataSet#SORT_ENTRY_TABLE",
+				locator2 = "//tr[@class='orderable-table-row'][2]//*[contains(text(), 'id')]");
+		}
+
+		task ("Then the sorting that was in the first position goes to the second position") {
+			if (IsElementPresent(key_rowPosition = 1, key_text = "id", locator1 = "DataSet#SORT_ENTRY_TABLE")) {
+				TestUtils.pass(message = "The sorting that was in the first position went to the second position");
+			}
+			else {
+				fail("The sorting that was in the first position didn't go to the second position");
+			}
+		}
+
+		task ("When the user edits a sorting") {
+			DataSetAdmin.editSorting(
+				key_entryPosition = 1,
+				key_sortingOption = "Descending");
+		}
+
+		task ("Then their position is still the same as before the edit") {
+			if (IsElementPresent(key_rowPosition = 1, key_text = "id", locator1 = "DataSet#SORT_ENTRY_TABLE")) {
+				TestUtils.pass(message = "The sortings position didn't change after the edit.");
+			}
+			else {
+				fail("The sorting position changed after editing. ");
+			}
+		}
+	}
+
+	@description = "LPS-182790. Confirms it's possible to save a sorting edition."
+	@priority = 5
+	test CanSaveEditSorting {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_itemName = "Edit",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+		}
+
+		task ("And changes the option present in the Sorting field") {
+			Type(
+				locator1 = "DataSet#SORTING_SELECT",
+				value1 = "Ascending");
+		}
+
+		task ("And clicks on the Save button") {
+			Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
+		}
+
+		task ("Then the modal is closed") {
+			AssertElementNotPresent(locator1 = "DataSet#MODAL_DIALOG");
+		}
+
+		task ("And the default Liferay successful message is displayed") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the changes are applied") {
+			AssertVisible(
+				key_rowPosition = 1,
+				key_text = "Ascending",
+				locator1 = "DataSet#SORT_ENTRY_TABLE");
 		}
 	}
 
@@ -149,6 +447,32 @@ definition {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_STATE_INFO",
 				value1 = "No Results Found");
+		}
+	}
+
+	@description = "LPS-182790. Confirms it's possible to edit a sorting."
+	@priority = 5
+	test CantEditField {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_itemName = "Edit",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+		}
+
+		task ("Then Field can’t be edited by the user") {
+			AssertElementPresent(
+				key_fieldName = "fdsSortFieldNameInput",
+				locator1 = "DataSet#INPUT_FIELD_DISABLED");
 		}
 	}
 

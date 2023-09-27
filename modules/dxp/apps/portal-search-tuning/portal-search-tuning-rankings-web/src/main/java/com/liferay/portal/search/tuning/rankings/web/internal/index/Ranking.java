@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
@@ -34,6 +25,7 @@ public class Ranking {
 
 	public Ranking(Ranking ranking) {
 		_aliases = new ArrayList<>(ranking._aliases);
+		_groupExternalReferenceCode = ranking._groupExternalReferenceCode;
 		_hiddenDocumentIds = new LinkedHashSet<>(ranking._hiddenDocumentIds);
 		_inactive = ranking._inactive;
 		_indexName = ranking._indexName;
@@ -42,10 +34,16 @@ public class Ranking {
 		_pins = new ArrayList<>(ranking._pins);
 		_queryString = ranking._queryString;
 		_rankingDocumentId = ranking._rankingDocumentId;
+		_sxpBlueprintExternalReferenceCode =
+			ranking._sxpBlueprintExternalReferenceCode;
 	}
 
 	public List<String> getAliases() {
 		return Collections.unmodifiableList(_aliases);
+	}
+
+	public String getGroupExternalReferenceCode() {
+		return _groupExternalReferenceCode;
 	}
 
 	public List<String> getHiddenDocumentIds() {
@@ -88,6 +86,10 @@ public class Ranking {
 
 	public String getRankingDocumentId() {
 		return _rankingDocumentId;
+	}
+
+	public String getSXPBlueprintExternalReferenceCode() {
+		return _sxpBlueprintExternalReferenceCode;
 	}
 
 	public boolean isInactive() {
@@ -136,6 +138,14 @@ public class Ranking {
 
 		public Ranking build() {
 			return new Ranking(_ranking);
+		}
+
+		public RankingBuilder groupExternalReferenceCode(
+			String groupExternalReferenceCode) {
+
+			_ranking._groupExternalReferenceCode = groupExternalReferenceCode;
+
+			return this;
 		}
 
 		public RankingBuilder hiddenDocumentIds(
@@ -196,6 +206,15 @@ public class Ranking {
 			return this;
 		}
 
+		public RankingBuilder sxpBlueprintExternalReferenceCode(
+			String sxpBlueprintExternalReferenceCode) {
+
+			_ranking._sxpBlueprintExternalReferenceCode =
+				sxpBlueprintExternalReferenceCode;
+
+			return this;
+		}
+
 		protected static <T, V extends T> List<T> toList(List<V> list) {
 			if (list != null) {
 				return new ArrayList<>(list);
@@ -212,6 +231,7 @@ public class Ranking {
 	}
 
 	private List<String> _aliases = new ArrayList<>();
+	private String _groupExternalReferenceCode;
 	private Set<String> _hiddenDocumentIds = new LinkedHashSet<>();
 	private boolean _inactive;
 	private String _indexName;
@@ -220,5 +240,6 @@ public class Ranking {
 	private List<Pin> _pins = new ArrayList<>();
 	private String _queryString;
 	private String _rankingDocumentId;
+	private String _sxpBlueprintExternalReferenceCode;
 
 }

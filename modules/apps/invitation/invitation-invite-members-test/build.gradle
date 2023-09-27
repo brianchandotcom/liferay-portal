@@ -1,4 +1,4 @@
 dependencies {
-	testIntegrationCompile project(":apps:invitation:invitation-invite-members-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:invitation:invitation-invite-members-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

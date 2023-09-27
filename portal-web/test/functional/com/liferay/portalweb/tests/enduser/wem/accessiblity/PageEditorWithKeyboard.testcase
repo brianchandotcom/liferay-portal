@@ -1,14 +1,18 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
 	static var randomSiteName = StringUtil.randomString(8);
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
@@ -237,6 +241,183 @@ definition {
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
 
 			PageEditor.viewFragment(fragmentName = "Blogs");
+		}
+	}
+
+	@description = "This is a test for LPS-194374. Using Keyboard navigation it is possible to access and use the Language Selector."
+	@priority = 3
+	test ChangeLocaleViaKeyboard {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("Then the page creator could change the locale via keyboard") {
+			KeyPress(
+				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
+				value1 = "\TAB");
+
+			KeyPress(
+				locator1 = "//button[contains(@aria-haspopup,'listbox')][.//*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]",
+				value1 = "\ENTER");
+
+			KeyPress(
+				locator1 = "//button[contains(@aria-haspopup,'listbox')][.//*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]",
+				value1 = "\DOWN");
+
+			KeyPress(
+				locator1 = "//button[contains(@aria-haspopup,'listbox')][.//*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]",
+				value1 = "\DOWN");
+
+			KeyPress(
+				locator1 = "//button[contains(@aria-haspopup,'listbox')][.//*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]",
+				value1 = "\DOWN");
+
+			KeyPress(
+				locator1 = "//button[contains(@aria-haspopup,'listbox')][.//*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]",
+				value1 = "\ENTER");
+
+			AssertVisible(
+				key_currentLocale = StringUtil.lowerCase("zh-CN"),
+				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+		}
+	}
+
+	@description = "This is a test for LPS-194375. Using Keyboard navigation it is possible to access and use the Page Editor filter."
+	@priority = 3
+	test FilterDisplayedAssetsViaKeyboard {
+		task ("Given a page creator has displayed assets on content page") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display",
+				targetFragmentName = "Heading");
+
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("When the page creator accesses to the Page Content panel") {
+			PageEditor.gotoTab(tabName = "Page Content");
+		}
+
+		task ("Then the page creator could filter the displayed assets via keyboard") {
+			KeyPress(
+				key_text = "times",
+				locator1 = "Icon#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\ENTER");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\DOWN");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\DOWN");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\ENTER");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "Inline Text");
+
+			AssertVisible(
+				key_itemName = "Heading Example",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertElementNotPresent(
+				key_itemName = "Web Content Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			KeyPress(
+				key_text = "times",
+				locator1 = "Icon#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\ENTER");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\UP");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\ENTER");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "Web Content Article");
+
+			AssertVisible(
+				key_itemName = "Web Content Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertElementNotPresent(
+				key_itemName = "Heading Example",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			KeyPress(
+				key_text = "times",
+				locator1 = "Icon#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\ENTER");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\UP");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\ENTER");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "All Content");
+
+			for (var itemName : list "Heading Example,Web Content Title") {
+				AssertVisible(
+					key_itemName = ${itemName},
+					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			}
 		}
 	}
 

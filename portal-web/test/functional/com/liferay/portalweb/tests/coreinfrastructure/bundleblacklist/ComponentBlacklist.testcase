@@ -23,6 +23,7 @@ definition {
 	@priority = 4
 	test BlacklistComponent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",
@@ -42,6 +43,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistComponentNames=[\"com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth\" ]";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
 
@@ -78,6 +80,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistComponentNames=[\"com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth\" ]";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth");
 
@@ -107,6 +110,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistComponentNames=[\"com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth\" ]";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth");
 

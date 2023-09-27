@@ -430,9 +430,10 @@ definition {
 
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
 
-		KBFolder.goToMoveCPViaNavigationPane(kbFolderName = "KB Folder 1");
-
-		KBFolder.selectParentCP(kbFolderName = "KB Folder 2");
+		KBFolder.moveFolder(
+			destinationItem = "KB Folder 2",
+			kbFolderName = "KB Folder 1",
+			navigationPane = "true");
 
 		KBFolder.gotoCP(
 			highlight = "true",

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.tuning.rankings.web.internal;
@@ -27,6 +18,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.Portal;
@@ -291,6 +283,38 @@ public abstract class BaseRankingsWebTestCase {
 		).getDocument();
 
 		return getDocumentResponse;
+	}
+
+	protected void setUpGroupLocalServiceFetchGroup() throws PortalException {
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.doReturn(
+			"groupExternalReferenceCode"
+		).when(
+			group
+		).getExternalReferenceCode();
+
+		Mockito.doReturn(
+			12345L
+		).when(
+			group
+		).getGroupId();
+
+		Mockito.doReturn(
+			group
+		).when(
+			groupLocalService
+		).fetchGroup(
+			Mockito.anyLong()
+		);
+
+		Mockito.doReturn(
+			group
+		).when(
+			groupLocalService
+		).fetchGroupByExternalReferenceCode(
+			Mockito.anyString(), Mockito.anyLong()
+		);
 	}
 
 	protected void setUpHttpServletRequestAttribute(
@@ -803,6 +827,8 @@ public abstract class BaseRankingsWebTestCase {
 		DLAppLocalService.class);
 	protected FastDateFormatFactory fastDateFormatFactory = Mockito.mock(
 		FastDateFormatFactory.class);
+	protected GroupLocalService groupLocalService = Mockito.mock(
+		GroupLocalService.class);
 	protected Language language = Mockito.mock(Language.class);
 	protected Portal portal = Mockito.mock(Portal.class);
 	protected Queries queries = Mockito.mock(Queries.class);

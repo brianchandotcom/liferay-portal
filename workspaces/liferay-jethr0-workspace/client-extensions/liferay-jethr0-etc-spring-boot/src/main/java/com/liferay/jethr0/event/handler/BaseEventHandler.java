@@ -1,28 +1,20 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.build.queue.BuildQueue;
-import com.liferay.jethr0.build.repository.BuildParameterRepository;
-import com.liferay.jethr0.build.repository.BuildRepository;
-import com.liferay.jethr0.build.repository.BuildRunRepository;
+import com.liferay.jethr0.bui1d.queue.BuildQueue;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
+import com.liferay.jethr0.event.controller.EventJmsController;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
-import com.liferay.jethr0.jms.JMSEventHandler;
-import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.json.JSONObject;
 
@@ -38,7 +30,7 @@ public abstract class BaseEventHandler implements EventHandler {
 		_messageJSONObject = messageJSONObject;
 	}
 
-	protected BuildParameterRepository getBuildParameterRepository() {
+	protected BuildParameterEntityRepository getBuildParameterRepository() {
 		return _eventHandlerContext.getBuildParameterRepository();
 	}
 
@@ -46,36 +38,40 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _eventHandlerContext.getBuildQueue();
 	}
 
-	protected BuildRepository getBuildRepository() {
+	protected BuildEntityRepository getBuildRepository() {
 		return _eventHandlerContext.getBuildRepository();
 	}
 
-	protected BuildRunRepository getBuildRunRepository() {
+	protected BuildRunEntityRepository getBuildRunRepository() {
 		return _eventHandlerContext.getBuildRunRepository();
 	}
 
-	protected JenkinsNodeRepository getJenkinsNodeRepository() {
-		return _eventHandlerContext.getJenkinsNodeRepository();
+	protected EventJmsController getEventJmsController() {
+		return _eventHandlerContext.getEventJmsController();
+	}
+
+	protected JenkinsCohortEntityRepository getJenkinsCohortEntityRepository() {
+		return _eventHandlerContext.getJenkinsCohortEntityRepository();
+	}
+
+	protected JenkinsNodeEntityRepository getJenkinsNodeEntityRepository() {
+		return _eventHandlerContext.getJenkinsNodeEntityRepository();
 	}
 
 	protected JenkinsQueue getJenkinsQueue() {
 		return _eventHandlerContext.getJenkinsQueue();
 	}
 
-	protected JenkinsServerRepository getJenkinsServerRepository() {
-		return _eventHandlerContext.getJenkinsServerRepository();
+	protected JenkinsServerEntityRepository getJenkinsServerEntityRepository() {
+		return _eventHandlerContext.getJenkinsServerEntityRepository();
 	}
 
-	protected JMSEventHandler getJMSEventHandler() {
-		return _eventHandlerContext.getJMSEventHandler();
+	protected JobEntityRepository getJobEntityRepository() {
+		return _eventHandlerContext.getJobEntityRepository();
 	}
 
 	protected JSONObject getMessageJSONObject() {
 		return _messageJSONObject;
-	}
-
-	protected ProjectRepository getProjectRepository() {
-		return _eventHandlerContext.getProjectRepository();
 	}
 
 	private final EventHandlerContext _eventHandlerContext;

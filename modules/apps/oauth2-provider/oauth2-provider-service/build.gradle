@@ -6,6 +6,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-security-oauth2", version: "3.4.10"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
@@ -15,6 +16,7 @@ dependencies {
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-liferay-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-spi")
+	compileOnly project(":apps:portal-remote:portal-remote-jaxrs-whiteboard")
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
@@ -26,6 +28,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "junit", name: "junit", version: "4.13.1"
-	testCompile group: "org.apache.commons", name: "commons-compress", version: "1.21"
+	testImplementation group: "junit", name: "junit", version: "4.13.1"
+	testImplementation group: "org.apache.commons", name: "commons-compress", version: "1.21"
+	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 }

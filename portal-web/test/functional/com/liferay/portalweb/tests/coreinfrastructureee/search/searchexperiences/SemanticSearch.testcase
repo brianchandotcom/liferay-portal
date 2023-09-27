@@ -22,11 +22,13 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-168704."
+	@priority = 3
 	test AssertBlacklistedTextEmbeddingProvidersAreUnavailable {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistComponentNames=[\"com.liferay.search.experiences.internal.ml.embedding.text.TXTAITextEmbeddingProvider\",\"com.liferay.search.experiences.internal.ml.embedding.text.HuggingFaceInferenceAPITextEmbeddingProvider\"]";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.search.experiences.internal.ml.embedding.text.TXTAITextEmbeddingProvider");
 
@@ -88,9 +90,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174623."
+	@priority = 3
 	test AssertReindexWarningAppearsForCriticalChanges {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When System Settings are using default configurations, assert the warning is not present") {
 			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
@@ -297,6 +301,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test AssertSearchUsingTxtaiWithTextEmbeddingElementHasNoError {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property txtai.enabled = "true";
@@ -327,6 +332,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 	}
 
+	@priority = 3
 	test AssertTxtaiTextEmbeddingIndexFieldAddedToAssets {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property txtai.enabled = "true";
@@ -371,6 +377,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test AssertTxtaiWithTextEmbeddingElementAffectsBlueprintPreview {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property txtai.enabled = "true";
@@ -417,6 +424,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test ViewHuggingFaceSystemSettingsRequiredFieldValidation {
 		property custom.properties = "feature.flag.LPS-122920=true";
 
@@ -494,9 +502,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-170345 and LPS-172161."
+	@priority = 3
 	test ViewSystemAndInstanceSettingsSaveUI {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Within System Settings, fill out required fields for Hugging Face Inference API and save") {
 			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
@@ -683,9 +693,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-173824."
+	@priority = 3
 	test ViewSystemSettingUnsuccessfulConnectionWarning {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property txtai.enabled = "true";
 
 		task ("Assert the warning doesn't appear when connection is successful and changes persist when configuration is saved") {
@@ -758,6 +770,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test ViewTxtaiSystemSettingsRequiredFieldValidation {
 		property custom.properties = "feature.flag.LPS-122920=true";
 
@@ -789,9 +802,11 @@ definition {
 		SemanticSearch.saveAndContinue();
 	}
 
+	@priority = 3
 	test ViewTxtaiSystemSettingsTestConfiguration {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property txtai.enabled = "true";
 
 		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");

@@ -1,0 +1,61 @@
+definition {
+
+	macro assertDetailsUser {
+		for (var details : list ${detailsList}) {
+			var key_text = ${details};
+
+			AssertElementPresent(locator1 = "MP2Dashboards#CARD_DETAILS");
+		}
+	}
+
+	macro firstLoginMKT {
+		var baseURL = PropsUtil.get("portal.url");
+
+		MockMock._gotoMailMessage(
+			asset = ${asset},
+			recipient = ${recipient});
+
+		var userPassword = selenium.getText("MP2Utils#MOCKMOCK_HTML_BODY_FORMATTED");
+
+		Navigator.openSpecificURL(url = "${baseURL}/c/login?redirect=/web/marketplace-site/loading");
+
+		Type(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = ${userEmailAddress});
+
+		Type(
+			locator1 = "TextInput#PASSWORD",
+			value1 = ${userPassword});
+
+		Click(locator1 = "MP2Utils#SIGN_IN_BUTTON");
+
+		User.acceptEndUserLicenseAgreement();
+
+		User.answerPasswordReminder();
+	}
+
+	macro selectCheckbox {
+		if (isSet(checkboxName)) {
+			Check.checkNotVisible(
+				checkboxName = ${checkboxName},
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (isSet(checkboxNameList)) {
+			for (var checkboxNameList : list ${checkboxNameList}) {
+				Check.checkNotVisible(
+					checkboxName = ${checkboxNameList},
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+
+		if (isSet(uncheckboxNameList)) {
+			for (var uncheckboxNameList : list ${uncheckboxNameList}) {
+				Uncheck.uncheckNotVisible(
+					checkboxName = ${uncheckboxNameList},
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+	}
+
+}

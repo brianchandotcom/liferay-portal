@@ -7,6 +7,9 @@ definition {
 	property portal.release = "true";
 	property portal.smoke.upgrades = "false";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
+	property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	@priority = 4
@@ -14,8 +17,6 @@ definition {
 		property database.bare.enabled = "true";
 		property skip.start.app.server = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.liferay.virtual.instance = "false";
-		property testcase.url = "http://www.example.com";
 
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
@@ -62,7 +63,7 @@ definition {
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",
-			image = "tree.png");
+			image = "tree-png");
 
 		User.firstLoginUI(
 			password = "test",
@@ -88,7 +89,6 @@ definition {
 		property database.types = "mysql";
 		property skip.start.app.server = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.liferay.virtual.instance = "false";
 
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
@@ -146,7 +146,7 @@ definition {
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",
-			image = "tree.png");
+			image = "tree-png");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -172,7 +172,6 @@ definition {
 		property database.types = "mysql";
 		property skip.start.app.server = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.liferay.virtual.instance = "false";
 
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
@@ -226,7 +225,7 @@ definition {
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",
-			image = "tree.png");
+			image = "tree-png");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

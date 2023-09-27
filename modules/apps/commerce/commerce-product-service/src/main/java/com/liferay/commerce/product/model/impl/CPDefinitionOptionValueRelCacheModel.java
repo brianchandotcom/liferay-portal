@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.model.impl;
@@ -83,7 +74,7 @@ public class CPDefinitionOptionValueRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -111,18 +102,20 @@ public class CPDefinitionOptionValueRelCacheModel
 		sb.append(CPInstanceUuid);
 		sb.append(", CProductId=");
 		sb.append(CProductId);
-		sb.append(", name=");
-		sb.append(name);
-		sb.append(", priority=");
-		sb.append(priority);
 		sb.append(", key=");
 		sb.append(key);
-		sb.append(", quantity=");
-		sb.append(quantity);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", preselected=");
 		sb.append(preselected);
 		sb.append(", price=");
 		sb.append(price);
+		sb.append(", priority=");
+		sb.append(priority);
+		sb.append(", quantity=");
+		sb.append(quantity);
+		sb.append(", unitOfMeasureKey=");
+		sb.append(unitOfMeasureKey);
 		sb.append("}");
 
 		return sb.toString();
@@ -183,15 +176,6 @@ public class CPDefinitionOptionValueRelCacheModel
 
 		cpDefinitionOptionValueRelImpl.setCProductId(CProductId);
 
-		if (name == null) {
-			cpDefinitionOptionValueRelImpl.setName("");
-		}
-		else {
-			cpDefinitionOptionValueRelImpl.setName(name);
-		}
-
-		cpDefinitionOptionValueRelImpl.setPriority(priority);
-
 		if (key == null) {
 			cpDefinitionOptionValueRelImpl.setKey("");
 		}
@@ -199,9 +183,25 @@ public class CPDefinitionOptionValueRelCacheModel
 			cpDefinitionOptionValueRelImpl.setKey(key);
 		}
 
-		cpDefinitionOptionValueRelImpl.setQuantity(quantity);
+		if (name == null) {
+			cpDefinitionOptionValueRelImpl.setName("");
+		}
+		else {
+			cpDefinitionOptionValueRelImpl.setName(name);
+		}
+
 		cpDefinitionOptionValueRelImpl.setPreselected(preselected);
 		cpDefinitionOptionValueRelImpl.setPrice(price);
+		cpDefinitionOptionValueRelImpl.setPriority(priority);
+		cpDefinitionOptionValueRelImpl.setQuantity(quantity);
+
+		if (unitOfMeasureKey == null) {
+			cpDefinitionOptionValueRelImpl.setUnitOfMeasureKey("");
+		}
+		else {
+			cpDefinitionOptionValueRelImpl.setUnitOfMeasureKey(
+				unitOfMeasureKey);
+		}
 
 		cpDefinitionOptionValueRelImpl.resetOriginalValues();
 
@@ -232,15 +232,15 @@ public class CPDefinitionOptionValueRelCacheModel
 		CPInstanceUuid = objectInput.readUTF();
 
 		CProductId = objectInput.readLong();
-		name = objectInput.readUTF();
-
-		priority = objectInput.readDouble();
 		key = objectInput.readUTF();
-
-		quantity = objectInput.readInt();
+		name = objectInput.readUTF();
 
 		preselected = objectInput.readBoolean();
 		price = (BigDecimal)objectInput.readObject();
+
+		priority = objectInput.readDouble();
+		quantity = (BigDecimal)objectInput.readObject();
+		unitOfMeasureKey = objectInput.readUTF();
 	}
 
 	@Override
@@ -285,15 +285,6 @@ public class CPDefinitionOptionValueRelCacheModel
 
 		objectOutput.writeLong(CProductId);
 
-		if (name == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
-
-		objectOutput.writeDouble(priority);
-
 		if (key == null) {
 			objectOutput.writeUTF("");
 		}
@@ -301,10 +292,25 @@ public class CPDefinitionOptionValueRelCacheModel
 			objectOutput.writeUTF(key);
 		}
 
-		objectOutput.writeInt(quantity);
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
 
 		objectOutput.writeBoolean(preselected);
 		objectOutput.writeObject(price);
+
+		objectOutput.writeDouble(priority);
+		objectOutput.writeObject(quantity);
+
+		if (unitOfMeasureKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(unitOfMeasureKey);
+		}
 	}
 
 	public long mvccVersion;
@@ -320,11 +326,12 @@ public class CPDefinitionOptionValueRelCacheModel
 	public long CPDefinitionOptionRelId;
 	public String CPInstanceUuid;
 	public long CProductId;
-	public String name;
-	public double priority;
 	public String key;
-	public int quantity;
+	public String name;
 	public boolean preselected;
 	public BigDecimal price;
+	public double priority;
+	public BigDecimal quantity;
+	public String unitOfMeasureKey;
 
 }

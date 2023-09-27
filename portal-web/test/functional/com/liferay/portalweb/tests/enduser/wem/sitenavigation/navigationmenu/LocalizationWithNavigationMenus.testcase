@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Navigation";
@@ -85,6 +86,7 @@ definition {
 
 		task ("Add a Spanish translation for the submenu item") {
 			NavigationMenusAdmin.addTranslation(
+				item = "Submenu",
 				itemName = "Submenu Name",
 				locale = "es-ES",
 				translation = "Submenú Nombre");
@@ -92,6 +94,7 @@ definition {
 
 		task ("Add a Spanish translation for the URL item") {
 			NavigationMenusAdmin.addTranslation(
+				item = "URL",
 				itemName = "Liferay",
 				locale = "es-ES",
 				translation = "Liferay (Spanish)");

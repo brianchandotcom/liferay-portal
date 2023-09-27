@@ -546,9 +546,7 @@ definition {
 			layoutName = ${layoutName},
 			widgetName = "Form");
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm(groupName = "Site Name");
 
 		Form.editName(formTitle = ${formAcTitle});
 
@@ -737,6 +735,12 @@ definition {
 
 		if (!(isSet(emailAddress))) {
 			var emailAddress = "test@liferay.com";
+		}
+
+		if ((IsElementNotPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) || (IsElementNotPresent(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE"))) {
+			Refresh();
+
+			WaitForPageLoad();
 		}
 
 		if (IsElementPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {

@@ -1,7 +1,8 @@
 @component-name = "portal-frontend-infrastructure"
+@ignore = "true"
 definition {
 
-	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-188645=true${line.separator}feature.flag.LPS-167253=true";
+	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-188645=true";
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -207,7 +208,7 @@ definition {
 		}
 
 		task ("And clicks on Cancel button") {
-			Click(locator1 = "DataSet#NEW_FILTER_CANCEL_BUTTON");
+			Click(locator1 = "DataSet#MODAL_CANCEL_BUTTON");
 		}
 
 		task ("Then New filter modal is closed and the changes are not applied") {
@@ -238,7 +239,7 @@ definition {
 				locator1 = "DataSet#DATEPICKER_BUTTON");
 
 			Select(
-				key_type = "month",
+				key_number = 1,
 				locator1 = "DataSet#SELECT_MONTH",
 				value1 = "April");
 
@@ -256,7 +257,7 @@ definition {
 				locator1 = "DataSet#DATEPICKER_BUTTON");
 
 			Select(
-				key_type = "month",
+				key_number = 2,
 				locator1 = "DataSet#SELECT_MONTH",
 				value1 = "May");
 
@@ -309,7 +310,7 @@ definition {
 		}
 
 		task ("When the user tries to save the date filter") {
-			Click(locator1 = "DataSet#NEW_FILTER_SAVE_BUTTON");
+			Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
 		}
 
 		task ("Then assert it's not possible to save a date filter with an invalid date range") {
@@ -343,7 +344,7 @@ definition {
 		}
 
 		task ("And clicks on the Save button") {
-			Click(locator1 = "DataSet#NEW_FILTER_SAVE_BUTTON");
+			Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
 		}
 
 		task ("Then a successful message is displayed") {

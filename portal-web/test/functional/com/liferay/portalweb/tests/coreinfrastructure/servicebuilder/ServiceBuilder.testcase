@@ -24,6 +24,7 @@ definition {
 		property external.database.enabled = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/test/external-data-source-test-api");
 
@@ -45,6 +46,7 @@ definition {
 		property database.bare.enabled = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AntCommands.runCommand("build-test.xml", "rename-finder-column");
 

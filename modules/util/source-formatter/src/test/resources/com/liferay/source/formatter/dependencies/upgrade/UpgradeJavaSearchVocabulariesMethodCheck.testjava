@@ -1,0 +1,31 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Tamyris Bernardo
+ */
+public class UpgradeJavaSearchVocabulariesMethodCheck {
+
+	public void method(
+		long companyId, long groupId, String title, int start, int end) {
+
+		_assetVocabularyService.searchVocabularies(
+			companyId, groupId, title, start, end);
+
+		return _assetVocabularyLocalService.searchVocabularies(
+			companyId, groupId, title, start, end);
+
+		// Test scenario when it is not possible to retrieve the parameter types
+
+		_assetVocabularyService.searchVocabularies(
+			companyId, 551, "test", start, end);
+	}
+
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+	private AssetVocabularyService _assetVocabularyService;
+
+}

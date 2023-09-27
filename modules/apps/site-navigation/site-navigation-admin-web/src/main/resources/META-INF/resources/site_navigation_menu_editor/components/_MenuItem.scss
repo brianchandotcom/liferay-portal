@@ -37,10 +37,6 @@
 			transform: translate(50%, 50%);
 		}
 
-		.lexicon-icon {
-			font-size: 0.75rem;
-		}
-
 		&.top-button {
 			top: 0;
 			transform: translate(50%, -50%);
@@ -101,10 +97,6 @@
 		color: $gray-500;
 		height: 20px;
 		width: 20px;
-	}
-
-	.lexicon-icon-times-circle {
-		color: $gray-600;
 	}
 
 	[draggable='true'] {

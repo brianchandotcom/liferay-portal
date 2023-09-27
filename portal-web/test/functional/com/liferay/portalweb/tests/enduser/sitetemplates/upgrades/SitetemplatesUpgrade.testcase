@@ -5,6 +5,8 @@ definition {
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
 	property testray.main.component.name = "Upgrades Staging";
 
 	setUp {
@@ -19,7 +21,6 @@ definition {
 		property custom.properties = "feature.flag.LPS-174417=true";
 		property data.archive.type = "data-archive-page-with-collision";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("When: Navigate to page admin of the Site template") {
 			SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = "Site Template Name");
@@ -61,12 +62,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174465 and LPS-174471. TC-8 Verify that the exclamation mark are present after upgrade."
-	@priority = 4
+	@priority = 3
 	test ExclamationMarkPresentAfterUpgrade701016 {
 		property custom.properties = "feature.flag.LPS-174417=true";
 		property data.archive.type = "data-archive-page-with-collision";
 		property portal.version = "7.0.10.16";
-		property test.liferay.virtual.instance = "false";
 
 		task ("When: Navigate to page admin of the Site template") {
 			SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = "Site Template Name");
@@ -108,12 +108,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
-	@priority = 5
+	@priority = 3
 	test TemplateNameAndStatusCanBeEditedAfterUpgrade71103 {
 		property data.archive.type = "data-archive-deactivated-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Change the new site template's name then verify it") {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
@@ -137,12 +136,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
-	@priority = 5
+	@priority = 3
 	test TemplateNameAndStatusCanBeEditedAfterUpgrade72101 {
 		property data.archive.type = "data-archive-deactivated-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Change the new site template's name then verify it") {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
@@ -166,12 +164,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
-	@priority = 5
+	@priority = 3
 	test TemplateNameAndStatusCanBeEditedAfterUpgrade73101 {
 		property data.archive.type = "data-archive-deactivated-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Change the new site template's name then verify it") {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
@@ -195,12 +192,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
-	@priority = 5
+	@priority = 3
 	test TemplateNameAndStatusCanBeEditedAfterUpgrade701016 {
 		property data.archive.type = "data-archive-deactivated-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.16";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Change the new site template's name then verify it") {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
@@ -224,12 +220,11 @@ definition {
 	}
 
 	@description = "Disabling propagation of the template should work after an upgrade. User can disable propagation and prevent any changes on template from reaching the site created from it."
-	@priority = 5
+	@priority = 3
 	test TemplatePropagationShouldWorkAfterUpgrade71103 {
 		property data.archive.type = "data-archive-page-from-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
 			Navigator.gotoSitePage(
@@ -252,7 +247,7 @@ definition {
 				pageName = "Home",
 				siteTemplateName = "Site Template Name");
 
-			Portlet.deletePG(key_portletName = "Asset Publisher");
+			Portlet.deletePG(portletName = "Asset Publisher");
 		}
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
@@ -267,12 +262,11 @@ definition {
 	}
 
 	@description = "Disabling propagation of the template should work after an upgrade. User can disable propagation and prevent any changes on template from reaching the site created from it."
-	@priority = 5
+	@priority = 3
 	test TemplatePropagationShouldWorkAfterUpgrade72101 {
 		property data.archive.type = "data-archive-page-from-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
 			Navigator.gotoSitePage(
@@ -295,7 +289,7 @@ definition {
 				pageName = "Home",
 				siteTemplateName = "Site Template Name");
 
-			Portlet.deletePG(key_portletName = "Asset Publisher");
+			Portlet.deletePG(portletName = "Asset Publisher");
 		}
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
@@ -310,12 +304,11 @@ definition {
 	}
 
 	@description = "Disabling propagation of the template should work after an upgrade. User can disable propagation and prevent any changes on template from reaching the site created from it."
-	@priority = 5
+	@priority = 3
 	test TemplatePropagationShouldWorkAfterUpgrade73101 {
 		property data.archive.type = "data-archive-page-from-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
 			Navigator.gotoSitePage(
@@ -351,12 +344,11 @@ definition {
 	}
 
 	@description = "Disabling propagation of the template should work after an upgrade. User can disable propagation and prevent any changes on template from reaching the site created from it."
-	@priority = 5
+	@priority = 3
 	test TemplatePropagationShouldWorkAfterUpgrade701016 {
 		property data.archive.type = "data-archive-page-from-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.16";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
 			Navigator.gotoSitePage(
@@ -379,7 +371,7 @@ definition {
 				siteTemplateName = "Site Template Name",
 				widgetPage = "true");
 
-			Portlet.deletePG(key_portletName = "Asset Publisher");
+			Portlet.deletePG(portletName = "Asset Publisher");
 		}
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {

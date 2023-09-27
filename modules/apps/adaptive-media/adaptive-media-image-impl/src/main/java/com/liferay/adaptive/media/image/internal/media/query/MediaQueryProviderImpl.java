@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.adaptive.media.image.internal.media.query;
@@ -24,14 +15,15 @@ import com.liferay.adaptive.media.image.media.query.Condition;
 import com.liferay.adaptive.media.image.media.query.MediaQuery;
 import com.liferay.adaptive.media.image.media.query.MediaQueryProvider;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.url.AMImageURLFactory;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -58,12 +50,12 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 
 		List<MediaQuery> mediaQueries = new ArrayList<>();
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			TransformUtil.transform(
 				_amImageConfigurationHelper.getAMImageConfigurationEntries(
 					fileEntry.getCompanyId()),
 				amImageConfigurationEntry -> {
-					AdaptiveMedia<AMImageProcessor> adaptiveMedia =
+					AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
 						_getAdaptiveMediaFromConfigurationEntry(
 							fileEntry, amImageConfigurationEntry);
 
@@ -76,10 +68,12 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 
 		adaptiveMedias.sort(_comparator);
 
-		AdaptiveMedia<AMImageProcessor> previousAdaptiveMedia = null;
+		AdaptiveMedia<AMProcessor<FileVersion>> previousAdaptiveMedia = null;
 
-		for (AdaptiveMedia<AMImageProcessor> adaptiveMedia : adaptiveMedias) {
-			AdaptiveMedia<AMImageProcessor> hdAdaptiveMedia =
+		for (AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia :
+				adaptiveMedias) {
+
+			AdaptiveMedia<AMProcessor<FileVersion>> hdAdaptiveMedia =
 				_getHDAdaptiveMedia(adaptiveMedia, adaptiveMedias);
 
 			mediaQueries.add(
@@ -92,12 +86,12 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		return mediaQueries;
 	}
 
-	private AdaptiveMedia<AMImageProcessor> _findAdaptiveMedia(
+	private AdaptiveMedia<AMProcessor<FileVersion>> _findAdaptiveMedia(
 		FileEntry fileEntry,
 		AMImageConfigurationEntry amImageConfigurationEntry) {
 
 		try {
-			List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 				_amImageFinder.getAdaptiveMedias(
 					amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 						fileEntry
@@ -120,13 +114,13 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		}
 	}
 
-	private AdaptiveMedia<AMImageProcessor>
+	private AdaptiveMedia<AMProcessor<FileVersion>>
 		_getAdaptiveMediaFromConfigurationEntry(
 			FileEntry fileEntry,
 			AMImageConfigurationEntry amImageConfigurationEntry) {
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = _findAdaptiveMedia(
-			fileEntry, amImageConfigurationEntry);
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
+			_findAdaptiveMedia(fileEntry, amImageConfigurationEntry);
 
 		if (adaptiveMedia != null) {
 			return adaptiveMedia;
@@ -152,8 +146,8 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 	}
 
 	private List<Condition> _getConditions(
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia,
-		AdaptiveMedia<AMImageProcessor> previousAdaptiveMedia) {
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia,
+		AdaptiveMedia<AMProcessor<FileVersion>> previousAdaptiveMedia) {
 
 		List<Condition> conditions = new ArrayList<>();
 
@@ -182,14 +176,16 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		}
 	}
 
-	private AdaptiveMedia<AMImageProcessor> _getHDAdaptiveMedia(
-		AdaptiveMedia<AMImageProcessor> originalAdaptiveMedia,
-		Collection<AdaptiveMedia<AMImageProcessor>> adaptiveMedias) {
+	private AdaptiveMedia<AMProcessor<FileVersion>> _getHDAdaptiveMedia(
+		AdaptiveMedia<AMProcessor<FileVersion>> originalAdaptiveMedia,
+		Collection<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias) {
 
 		int originalWidth = _getWidth(originalAdaptiveMedia) * 2;
 		int originalHeight = _getHeight(originalAdaptiveMedia) * 2;
 
-		for (AdaptiveMedia<AMImageProcessor> adaptiveMedia : adaptiveMedias) {
+		for (AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia :
+				adaptiveMedias) {
+
 			if ((Math.abs(originalWidth - _getWidth(adaptiveMedia)) <= 1) &&
 				(Math.abs(originalHeight - _getHeight(adaptiveMedia)) <= 1)) {
 
@@ -200,7 +196,9 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		return null;
 	}
 
-	private Integer _getHeight(AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
+	private Integer _getHeight(
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia) {
+
 		Integer height = adaptiveMedia.getValue(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
 
@@ -212,9 +210,9 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 	}
 
 	private MediaQuery _getMediaQuery(
-			AdaptiveMedia<AMImageProcessor> adaptiveMedia,
-			AdaptiveMedia<AMImageProcessor> previousAdaptiveMedia,
-			AdaptiveMedia<AMImageProcessor> hdAdaptiveMedia)
+			AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia,
+			AdaptiveMedia<AMProcessor<FileVersion>> previousAdaptiveMedia,
+			AdaptiveMedia<AMProcessor<FileVersion>> hdAdaptiveMedia)
 		throws PortalException {
 
 		StringBundler sb = new StringBundler(4);
@@ -251,7 +249,9 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		}
 	}
 
-	private Integer _getWidth(AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
+	private Integer _getWidth(
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia) {
+
 		Integer width = adaptiveMedia.getValue(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
 
@@ -274,7 +274,7 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 	@Reference
 	private AMImageURLFactory _amImageURLFactory;
 
-	private final Comparator<AdaptiveMedia<AMImageProcessor>> _comparator =
-		Comparator.comparingInt(this::_getWidth);
+	private final Comparator<AdaptiveMedia<AMProcessor<FileVersion>>>
+		_comparator = Comparator.comparingInt(this::_getWidth);
 
 }

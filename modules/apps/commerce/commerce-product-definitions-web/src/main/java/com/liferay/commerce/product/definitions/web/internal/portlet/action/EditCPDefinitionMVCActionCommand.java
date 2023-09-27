@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
@@ -18,6 +9,9 @@ import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.commerce.exception.CPDefinitionInventoryMaxOrderQuantityException;
+import com.liferay.commerce.exception.CPDefinitionInventoryMinOrderQuantityException;
+import com.liferay.commerce.exception.CPDefinitionInventoryMultipleOrderQuantityException;
 import com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
@@ -28,6 +22,7 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionExcepti
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionNameDefaultLanguageException;
+import com.liferay.commerce.product.exception.CPDefinitionSubscriptionLengthException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -40,11 +35,11 @@ import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -71,6 +66,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.math.BigDecimal;
 
 import java.net.URL;
 
@@ -213,11 +210,19 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					 throwable instanceof AssetTagException ||
 					 throwable instanceof CPDefinitionExpirationDateException ||
 					 throwable instanceof
+						 CPDefinitionInventoryMaxOrderQuantityException ||
+					 throwable instanceof
+						 CPDefinitionInventoryMinOrderQuantityException ||
+					 throwable instanceof
+						 CPDefinitionInventoryMultipleOrderQuantityException ||
+					 throwable instanceof
 						 CPDefinitionMetaDescriptionException ||
 					 throwable instanceof CPDefinitionMetaKeywordsException ||
 					 throwable instanceof CPDefinitionMetaTitleException ||
 					 throwable instanceof
 						 CPDefinitionNameDefaultLanguageException ||
+					 throwable instanceof
+						 CPDefinitionSubscriptionLengthException ||
 					 throwable instanceof FriendlyURLLengthException ||
 					 throwable instanceof NoSuchCatalogException ||
 					 throwable instanceof
@@ -600,14 +605,14 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		boolean displayStockQuantity = ParamUtil.getBoolean(
 			actionRequest, "displayStockQuantity");
 		boolean backOrders = ParamUtil.getBoolean(actionRequest, "backOrders");
-		int minStockQuantity = ParamUtil.getInteger(
-			actionRequest, "minStockQuantity");
-		int minOrderQuantity = ParamUtil.getInteger(
-			actionRequest, "minOrderQuantity");
-		int maxOrderQuantity = ParamUtil.getInteger(
-			actionRequest, "maxOrderQuantity");
-		int multipleOrderQuantity = ParamUtil.getInteger(
-			actionRequest, "multipleOrderQuantity");
+		BigDecimal minStockQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "minStockQuantity", BigDecimal.ZERO);
+		BigDecimal minOrderQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "minOrderQuantity", BigDecimal.ZERO);
+		BigDecimal maxOrderQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "maxOrderQuantity", BigDecimal.ZERO);
+		BigDecimal multipleOrderQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "multipleOrderQuantity", BigDecimal.ZERO);
 		String allowedOrderQuantities = ParamUtil.getString(
 			actionRequest, "allowedOrderQuantities");
 

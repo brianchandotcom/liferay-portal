@@ -6,12 +6,12 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-api", version: "0.14.0"
-	testCompile group: "org.apache.lucene", name: "lucene-analyzers-common", version: "7.1.0"
-	testCompile group: "org.apache.lucene", name: "lucene-core", version: "7.1.0"
-	testCompile group: "org.apache.lucene", name: "lucene-queries", version: "7.1.0"
-	testCompile group: "org.apache.lucene", name: "lucene-queryparser", version: "7.1.0"
-	testCompile group: "org.apache.lucene", name: "lucene-sandbox", version: "7.1.0"
-	testCompile project(":apps:document-library:document-library-repository-search")
-	testCompile project(":core:petra:petra-lang")
+	testImplementation group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-api", version: "0.14.0"
+	testImplementation group: "org.apache.lucene", name: "lucene-analyzers-common", version: "7.1.0"
+	testImplementation group: "org.apache.lucene", name: "lucene-core", version: "7.1.0"
+	testImplementation group: "org.apache.lucene", name: "lucene-queries", version: "7.1.0"
+	testImplementation group: "org.apache.lucene", name: "lucene-queryparser", version: "7.1.0"
+	testImplementation group: "org.apache.lucene", name: "lucene-sandbox", version: "7.1.0"
+	testImplementation project(":apps:document-library:document-library-repository-search")
+	testImplementation project(":core:petra:petra-lang")
 }

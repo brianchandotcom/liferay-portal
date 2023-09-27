@@ -52,7 +52,6 @@ const withQueryOptions = Component => ({
 	refetch: () => Promise<any>;
 }) => {
 	const [unsuppressUser] = useMutation(DataControlRequest);
-
 	return (
 		<Component
 			{...otherProps}
@@ -68,7 +67,9 @@ const withQueryOptions = Component => ({
 								variables: {
 									emailAddresses: [emailAddress],
 									ownerId: currentUser.id,
-									types: [GDPRRequestTypes.Unsuppress]
+									types: [GDPRRequestTypes.Unsuppress],
+									userId: currentUser.userId,
+									userName: currentUser.name
 								}
 							})
 								.then(() => {

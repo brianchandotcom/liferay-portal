@@ -12,5 +12,6 @@ dependencies {
 	compileOnly project(":apps:image:image-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-concurrent")
+	compileOnly project(":core:petra:petra-process")
 	compileOnly project(":core:petra:petra-string")
 }

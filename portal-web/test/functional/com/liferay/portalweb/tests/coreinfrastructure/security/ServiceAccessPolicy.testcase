@@ -25,12 +25,13 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-42767. Service access policy smoke. Blocked by POSHI-354."
-	@priority = 5
+	@description = "This is a use case for LRQA-42767. Service access policy smoke."
+	@priority = 4
 	test ServiceAccessPolicySmoke {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.auth.token.hosts.allowed=${line.separator}json.service.serialize.throwable=true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Assert access denied for viewing liferay email") {
 			var companyId = JSONCompany.getCompanyId();

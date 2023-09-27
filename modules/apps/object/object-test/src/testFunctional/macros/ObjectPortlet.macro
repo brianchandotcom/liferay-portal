@@ -387,7 +387,7 @@ definition {
 	}
 
 	macro viewWidgetButton {
-		AssertElementPresent(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+		AssertElementPresent(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 	}
 
 }

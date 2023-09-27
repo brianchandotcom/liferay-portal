@@ -18,11 +18,7 @@
 	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityManager" />
 	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityManager" />
 	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityManager" />
-	<bean class="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogImpl" id="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog">
-		<property name="legacyExternalRepositoryFactory">
-			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryFactory" />
-		</property>
-	</bean>
+	<bean class="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogImpl" id="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog" />
 	<bean class="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil" id="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil">
 		<property name="repositoryClassDefinitionCatalog" ref="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog" />
 	</bean>

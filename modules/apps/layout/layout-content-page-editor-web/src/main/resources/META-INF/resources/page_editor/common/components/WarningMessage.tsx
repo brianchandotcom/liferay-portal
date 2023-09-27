@@ -1,28 +1,37 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-export function WarningMessage({message}: {message: string}) {
+export function WarningMessage({
+	fontWeight = 'bold',
+	message,
+	title,
+}: {
+	fontWeight?: 'bold' | 'normal';
+	message: string;
+	title?: string;
+}) {
 	return (
-		<div className="font-weight-bold mt-1 small text-warning" role="status">
+		<div
+			className={`font-weight-${fontWeight} mt-1 small text-warning`}
+			role="status"
+		>
 			<span className="mr-2">
 				<ClayIcon symbol="warning-full" />
 			</span>
 
-			{message}
+			{title ? (
+				<>
+					<p className="text-weight-semi-bold">{title}</p>
+					<p>{message}</p>
+				</>
+			) : (
+				<span>{message}</span>
+			)}
 		</div>
 	);
 }

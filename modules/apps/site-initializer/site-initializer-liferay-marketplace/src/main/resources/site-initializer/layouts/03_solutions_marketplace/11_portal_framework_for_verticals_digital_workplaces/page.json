@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/base22-portal-framework",
+	"hidden": true,
+	"name": "Portal Framework for Verticals & Digital Workplaces",
+	"name_i18n": {
+		"en_US": "Portal Framework for Verticals & Digital Workplaces"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.exportimport.internal.messaging;
@@ -20,9 +11,9 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -39,8 +30,6 @@ public class ExportImportLifecycleMessagingConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
 		_registerDestination(
 			bundleContext, DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC,
 			DestinationConfiguration.DESTINATION_TYPE_SERIAL);
@@ -54,15 +43,8 @@ public class ExportImportLifecycleMessagingConfigurator {
 		for (ServiceRegistration<Destination> serviceRegistration :
 				_serviceRegistrations) {
 
-			Destination destination = _bundleContext.getService(
-				serviceRegistration.getReference());
-
 			serviceRegistration.unregister();
-
-			destination.destroy();
 		}
-
-		_bundleContext = null;
 	}
 
 	private ServiceRegistration<Destination> _registerDestination(
@@ -89,12 +71,10 @@ public class ExportImportLifecycleMessagingConfigurator {
 		return serviceRegistration;
 	}
 
-	private volatile BundleContext _bundleContext;
-
 	@Reference
 	private DestinationFactory _destinationFactory;
 
-	private final Set<ServiceRegistration<Destination>> _serviceRegistrations =
-		new HashSet<>();
+	private final List<ServiceRegistration<Destination>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/aca-group-intrablox",
+	"hidden": true,
+	"name": "IntraBLOX",
+	"name_i18n": {
+		"en_US": "IntraBLOX"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

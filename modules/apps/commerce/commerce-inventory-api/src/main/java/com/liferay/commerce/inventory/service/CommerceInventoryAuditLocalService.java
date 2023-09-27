@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.inventory.service;
@@ -33,6 +24,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.List;
@@ -78,8 +71,8 @@ public interface CommerceInventoryAuditLocalService
 		CommerceInventoryAudit commerceInventoryAudit);
 
 	public CommerceInventoryAudit addCommerceInventoryAudit(
-			long userId, String logType, String logTypeSettings, int quantity,
-			String sku, String unitOfMeasureKey)
+			long userId, String logType, String logTypeSettings,
+			BigDecimal quantity, String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 	public void checkCommerceInventoryAudit(Date date);
@@ -245,7 +238,8 @@ public interface CommerceInventoryAuditLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceInventoryAudit> getCommerceInventoryAudits(
-		long companyId, String sku, int start, int end);
+		long companyId, String sku, String unitOfMeasureKey, int start,
+		int end);
 
 	/**
 	 * Returns the number of commerce inventory audits.
@@ -256,7 +250,8 @@ public interface CommerceInventoryAuditLocalService
 	public int getCommerceInventoryAuditsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceInventoryAuditsCount(long companyId, String sku);
+	public int getCommerceInventoryAuditsCount(
+		long companyId, String sku, String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.odata.internal.filter;
@@ -41,16 +32,8 @@ import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.NavigationPropertyExpression;
-import com.liferay.portal.odata.internal.filter.expression.BinaryExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.CollectionPropertyExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.LambdaFunctionExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.LambdaVariableExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.ListExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.LiteralExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.MemberExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.MethodExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.NavigationPropertyExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.PrimitivePropertyExpressionImpl;
+import com.liferay.portal.odata.filter.expression.factory.ExpressionFactory;
+import com.liferay.portal.odata.internal.filter.expression.factory.ExpressionFactoryImpl;
 import com.liferay.portal.search.internal.query.NestedFieldQueryHelperImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -111,13 +94,15 @@ public class ExpressionConvertImplTest {
 	public void testConvertBinaryExpressionWithCount()
 		throws ExpressionVisitException {
 
-		BinaryExpression binaryExpression = new BinaryExpressionImpl(
-			new MemberExpressionImpl(
-				new NavigationPropertyExpressionImpl(
-					"EntityModelName",
-					NavigationPropertyExpression.Type.COUNT)),
-			BinaryExpression.Operation.GE,
-			new LiteralExpressionImpl("2", LiteralExpression.Type.INTEGER));
+		BinaryExpression binaryExpression =
+			_expressionFactory.createBinaryExpression(
+				_expressionFactory.createMemberExpression(
+					_expressionFactory.createNavigationPropertyExpression(
+						"EntityModelName",
+						NavigationPropertyExpression.Type.COUNT)),
+				BinaryExpression.Operation.GE,
+				_expressionFactory.createLiteralExpression(
+					"2", LiteralExpression.Type.INTEGER));
 
 		_expressionConvertImpl.convert(
 			binaryExpression, LocaleUtil.getDefault(), _entityModel);
@@ -127,11 +112,14 @@ public class ExpressionConvertImplTest {
 	public void testConvertBinaryExpressionWithEqOnPrimitiveField()
 		throws ExpressionVisitException {
 
-		BinaryExpression binaryExpression = new BinaryExpressionImpl(
-			new MemberExpressionImpl(
-				new PrimitivePropertyExpressionImpl("title")),
-			BinaryExpression.Operation.EQ,
-			new LiteralExpressionImpl("test", LiteralExpression.Type.STRING));
+		BinaryExpression binaryExpression =
+			_expressionFactory.createBinaryExpression(
+				_expressionFactory.createMemberExpression(
+					_expressionFactory.createPrimitivePropertyExpression(
+						"title")),
+				BinaryExpression.Operation.EQ,
+				_expressionFactory.createLiteralExpression(
+					"test", LiteralExpression.Type.STRING));
 
 		QueryFilter queryFilter = (QueryFilter)_expressionConvertImpl.convert(
 			binaryExpression, LocaleUtil.getDefault(), _entityModel);
@@ -148,12 +136,14 @@ public class ExpressionConvertImplTest {
 	public void testConvertBinaryExpressionWithGtOnPrimitiveFieldAndLiteralField()
 		throws ExpressionVisitException {
 
-		BinaryExpression binaryExpression = new BinaryExpressionImpl(
-			new MemberExpressionImpl(
-				new PrimitivePropertyExpressionImpl("dateTime")),
-			BinaryExpression.Operation.GT,
-			new LiteralExpressionImpl(
-				"2012-05-29T09:13:28Z", LiteralExpression.Type.DATE_TIME));
+		BinaryExpression binaryExpression =
+			_expressionFactory.createBinaryExpression(
+				_expressionFactory.createMemberExpression(
+					_expressionFactory.createPrimitivePropertyExpression(
+						"dateTime")),
+				BinaryExpression.Operation.GT,
+				_expressionFactory.createLiteralExpression(
+					"2012-05-29T09:13:28Z", LiteralExpression.Type.DATE_TIME));
 
 		QueryFilter queryFilter = (QueryFilter)_expressionConvertImpl.convert(
 			binaryExpression, LocaleUtil.getDefault(), _entityModel);
@@ -175,12 +165,14 @@ public class ExpressionConvertImplTest {
 
 		Instant initialInstant = initialDate.toInstant();
 
-		BinaryExpression binaryExpression = new BinaryExpressionImpl(
-			new MemberExpressionImpl(
-				new PrimitivePropertyExpressionImpl("dateTime")),
-			BinaryExpression.Operation.GT,
-			new MethodExpressionImpl(
-				Collections.emptyList(), MethodExpression.Type.NOW));
+		BinaryExpression binaryExpression =
+			_expressionFactory.createBinaryExpression(
+				_expressionFactory.createMemberExpression(
+					_expressionFactory.createPrimitivePropertyExpression(
+						"dateTime")),
+				BinaryExpression.Operation.GT,
+				_expressionFactory.createMethodExpression(
+					Collections.emptyList(), MethodExpression.Type.NOW));
 
 		ExpressionConvertImpl expressionConvertImpl =
 			new ExpressionConvertImpl() {
@@ -219,12 +211,12 @@ public class ExpressionConvertImplTest {
 	public void testConvertListExpressionWithInOnPrimitiveField()
 		throws ExpressionVisitException {
 
-		ListExpression listExpression = new ListExpressionImpl(
-			new MemberExpressionImpl(
-				new PrimitivePropertyExpressionImpl("title")),
+		ListExpression listExpression = _expressionFactory.createListExpression(
+			_expressionFactory.createMemberExpression(
+				_expressionFactory.createPrimitivePropertyExpression("title")),
 			ListExpression.Operation.IN,
 			Collections.singletonList(
-				new LiteralExpressionImpl(
+				_expressionFactory.createLiteralExpression(
 					"test", LiteralExpression.Type.STRING)));
 
 		QueryFilter queryFilter = (QueryFilter)_expressionConvertImpl.convert(
@@ -251,17 +243,20 @@ public class ExpressionConvertImplTest {
 	public void testConvertMemberExpressionWithLambdaAnyEqOnCollectionField()
 		throws ExpressionVisitException {
 
-		MemberExpression memberExpression = new MemberExpressionImpl(
-			new CollectionPropertyExpressionImpl(
-				new PrimitivePropertyExpressionImpl("keywords"),
-				new LambdaFunctionExpressionImpl(
-					LambdaFunctionExpression.Type.ANY, "k",
-					new BinaryExpressionImpl(
-						new MemberExpressionImpl(
-							new LambdaVariableExpressionImpl("k")),
-						BinaryExpression.Operation.EQ,
-						new LiteralExpressionImpl(
-							"'keyword1'", LiteralExpression.Type.STRING)))));
+		MemberExpression memberExpression =
+			_expressionFactory.createMemberExpression(
+				_expressionFactory.createCollectionPropertyExpression(
+					_expressionFactory.createLambdaFunctionExpression(
+						LambdaFunctionExpression.Type.ANY, "k",
+						_expressionFactory.createBinaryExpression(
+							_expressionFactory.createMemberExpression(
+								_expressionFactory.
+									createLambdaVariableExpression("k")),
+							BinaryExpression.Operation.EQ,
+							_expressionFactory.createLiteralExpression(
+								"'keyword1'", LiteralExpression.Type.STRING))),
+					_expressionFactory.createPrimitivePropertyExpression(
+						"keywords")));
 
 		QueryFilter queryFilter = (QueryFilter)_expressionConvertImpl.convert(
 			memberExpression, LocaleUtil.getDefault(), _entityModel);
@@ -298,6 +293,9 @@ public class ExpressionConvertImplTest {
 		}
 
 	};
+
+	private static final ExpressionFactory _expressionFactory =
+		new ExpressionFactoryImpl();
 
 	private final ExpressionConvertImpl _expressionConvertImpl =
 		new ExpressionConvertImpl() {

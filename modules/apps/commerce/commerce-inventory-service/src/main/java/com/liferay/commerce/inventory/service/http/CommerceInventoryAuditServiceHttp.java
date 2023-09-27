@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.inventory.service.http;
@@ -54,7 +45,7 @@ public class CommerceInventoryAuditServiceHttp {
 		<com.liferay.commerce.inventory.model.CommerceInventoryAudit>
 				getCommerceInventoryAudits(
 					HttpPrincipal httpPrincipal, long companyId, String sku,
-					int start, int end)
+					String unitOfMeasureKey, int start, int end)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -64,7 +55,7 @@ public class CommerceInventoryAuditServiceHttp {
 				_getCommerceInventoryAuditsParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, sku, start, end);
+				methodKey, companyId, sku, unitOfMeasureKey, start, end);
 
 			Object returnObj = null;
 
@@ -97,7 +88,8 @@ public class CommerceInventoryAuditServiceHttp {
 	}
 
 	public static int getCommerceInventoryAuditsCount(
-			HttpPrincipal httpPrincipal, long companyId, String sku)
+			HttpPrincipal httpPrincipal, long companyId, String sku,
+			String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -107,7 +99,7 @@ public class CommerceInventoryAuditServiceHttp {
 				_getCommerceInventoryAuditsCountParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, sku);
+				methodKey, companyId, sku, unitOfMeasureKey);
 
 			Object returnObj = null;
 
@@ -141,10 +133,12 @@ public class CommerceInventoryAuditServiceHttp {
 		CommerceInventoryAuditServiceHttp.class);
 
 	private static final Class<?>[] _getCommerceInventoryAuditsParameterTypes0 =
-		new Class[] {long.class, String.class, int.class, int.class};
+		new Class[] {
+			long.class, String.class, String.class, int.class, int.class
+		};
 	private static final Class<?>[]
 		_getCommerceInventoryAuditsCountParameterTypes1 = new Class[] {
-			long.class, String.class
+			long.class, String.class, String.class
 		};
 
 }

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.initializer.util;
@@ -20,6 +11,8 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalSer
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -44,7 +37,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+
+import java.math.BigDecimal;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -158,15 +154,19 @@ public class CommerceShipmentGenerator {
 				_getRandomCommerceInventoryWarehouse(
 					commerceInventoryWarehouses);
 
-			int quantity =
-				commerceOrderItem.getQuantity() -
-					commerceOrderItem.getShippedQuantity();
+			BigDecimal commerceOrderItemQuantity =
+				commerceOrderItem.getQuantity();
 
-			int commerceInventoryWarehouseItemQuantity =
+			BigDecimal quantity = commerceOrderItemQuantity.subtract(
+				commerceOrderItem.getShippedQuantity());
+
+			BigDecimal commerceInventoryWarehouseItemQuantity =
 				_getRandomCommerceInventoryWarehouseItemQuantity(
 					commerceOrderItem, commerceInventoryWarehouse, quantity);
 
-			if (commerceInventoryWarehouseItemQuantity <= 0) {
+			if (BigDecimalUtil.lte(
+					commerceInventoryWarehouseItemQuantity, BigDecimal.ZERO)) {
+
 				continue;
 			}
 
@@ -174,7 +174,8 @@ public class CommerceShipmentGenerator {
 				null, commerceShipmentId,
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceInventoryWarehouseItemQuantity, true, serviceContext);
+				commerceInventoryWarehouseItemQuantity, null, true,
+				serviceContext);
 		}
 	}
 
@@ -239,25 +240,37 @@ public class CommerceShipmentGenerator {
 			_randomInt(0, commerceInventoryWarehouses.size() - 1));
 	}
 
-	private int _getRandomCommerceInventoryWarehouseItemQuantity(
+	private BigDecimal _getRandomCommerceInventoryWarehouseItemQuantity(
 			CommerceOrderItem commerceOrderItem,
-			CommerceInventoryWarehouse commerceInventoryWarehouse, int quantity)
+			CommerceInventoryWarehouse commerceInventoryWarehouse,
+			BigDecimal quantity)
 		throws Exception {
 
-		int commerceInventoryWarehouseItemQuantity =
+		BigDecimal commerceInventoryWarehouseItemQuantity =
 			_commerceOrderItemService.getCommerceInventoryWarehouseItemQuantity(
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 
-		if (quantity < commerceInventoryWarehouseItemQuantity) {
+		if (BigDecimalUtil.lt(
+				quantity, commerceInventoryWarehouseItemQuantity)) {
+
 			commerceInventoryWarehouseItemQuantity = quantity;
 		}
 
-		if (commerceInventoryWarehouseItemQuantity <= 0) {
+		if (BigDecimalUtil.lte(
+				commerceInventoryWarehouseItemQuantity, BigDecimal.ZERO)) {
+
 			return commerceInventoryWarehouseItemQuantity;
 		}
 
-		return _randomInt(1, commerceInventoryWarehouseItemQuantity);
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+			_cpInstanceUnitOfMeasureLocalService.getCPInstanceUnitOfMeasures(
+				commerceOrderItem.getCompanyId(), commerceOrderItem.getSku());
+
+		return _randomQuantity(
+			BigDecimal.ONE, commerceInventoryWarehouseItemQuantity,
+			(cpInstanceUnitOfMeasures == null) ? null :
+				cpInstanceUnitOfMeasures.get(0));
 	}
 
 	private int _getRandomCommerceShipmentStatus() {
@@ -292,6 +305,31 @@ public class CommerceShipmentGenerator {
 		}
 
 		return (value % range) + min;
+	}
+
+	private BigDecimal _randomQuantity(
+		BigDecimal min, BigDecimal max,
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure) {
+
+		if (BigDecimalUtil.lt(max, min)) {
+			throw new IllegalArgumentException(
+				"Max value must be greater than or equal to the min value");
+		}
+
+		int randomInt = _random.nextInt();
+
+		if (cpInstanceUnitOfMeasure == null) {
+			int range = max.intValue() + 1 - min.intValue();
+
+			return BigDecimal.valueOf(
+				Math.floorMod(randomInt, range) + min.intValue());
+		}
+
+		return max.min(
+			cpInstanceUnitOfMeasure.getIncrementalOrderQuantity(
+			).multiply(
+				BigDecimal.valueOf(randomInt)
+			));
 	}
 
 	private void _setPermissionChecker(long groupId) throws Exception {
@@ -343,6 +381,10 @@ public class CommerceShipmentGenerator {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

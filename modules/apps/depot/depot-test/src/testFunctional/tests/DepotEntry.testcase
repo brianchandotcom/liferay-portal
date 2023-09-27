@@ -35,6 +35,7 @@ definition {
 	@refactordone
 	test CanAccessAppsViaProductMenu {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

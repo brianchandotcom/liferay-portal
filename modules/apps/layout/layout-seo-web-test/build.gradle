@@ -1,15 +1,15 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "org.jsoup", name: "jsoup", version: "1.15.3"
-	testIntegrationCompile project(":apps:asset:asset-display-page-api")
-	testIntegrationCompile project(":apps:document-library:document-library-api")
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	testIntegrationCompile project(":apps:info:info-api")
-	testIntegrationCompile project(":apps:layout:layout-display-page-api")
-	testIntegrationCompile project(":apps:layout:layout-page-template-api")
-	testIntegrationCompile project(":apps:layout:layout-seo-api")
-	testIntegrationCompile project(":apps:layout:layout-test-util")
-	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":apps:translation:translation-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "org.jsoup", name: "jsoup", version: "1.15.3"
+	testIntegrationImplementation project(":apps:asset:asset-display-page-api")
+	testIntegrationImplementation project(":apps:document-library:document-library-api")
+	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationImplementation project(":apps:info:info-api")
+	testIntegrationImplementation project(":apps:layout:layout-display-page-api")
+	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
+	testIntegrationImplementation project(":apps:layout:layout-seo-api")
+	testIntegrationImplementation project(":apps:layout:layout-test-util")
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationImplementation project(":apps:translation:translation-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

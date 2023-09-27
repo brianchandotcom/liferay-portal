@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.journal.web.internal.portlet.action.test;
@@ -24,9 +15,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -35,15 +28,21 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upload.test.util.UploadTestUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -75,6 +74,8 @@ public class ImportDataDefinitionMVCActionCommandTest {
 			_createMockLiferayPortletActionRequest(
 				"valid_data_definition.json", "Imported Structure");
 
+		_setUpUploadPortletRequest(mockLiferayPortletActionRequest);
+
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
@@ -104,6 +105,8 @@ public class ImportDataDefinitionMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_createMockLiferayPortletActionRequest(
 				"valid_data_definition.json", "Imported Structure");
+
+		_setUpUploadPortletRequest(mockLiferayPortletActionRequest);
 
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
@@ -147,6 +150,8 @@ public class ImportDataDefinitionMVCActionCommandTest {
 				"previous_version_valid_data_definition.json",
 				"Imported Structure");
 
+		_setUpUploadPortletRequest(mockLiferayPortletActionRequest);
+
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
@@ -178,24 +183,69 @@ public class ImportDataDefinitionMVCActionCommandTest {
 			_createMockLiferayPortletActionRequest(
 				"invalid_data_definition.json", "Imported Structure");
 
-		_mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.journal.web.internal.portlet.action." +
+					"ImportDataDefinitionMVCActionCommand",
+				LoggerTestUtil.ERROR)) {
 
-		_assertFailure(mockLiferayPortletActionRequest);
+			_setUpUploadPortletRequest(mockLiferayPortletActionRequest);
+
+			_mvcActionCommand.processAction(
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+
+			_assertFailure(mockLiferayPortletActionRequest);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertEquals(
+				"The sum of all column sizes of a row must be less than the " +
+					"maximum row size of 12",
+				throwable.getMessage());
+		}
 	}
 
 	@Test
 	public void testProcessActionWithoutName() throws Exception {
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_createMockLiferayPortletActionRequest(
-				"valid_data_definition.json", null);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.journal.web.internal.portlet.action." +
+					"ImportDataDefinitionMVCActionCommand",
+				LoggerTestUtil.ERROR)) {
 
-		_mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+				_createMockLiferayPortletActionRequest(
+					"valid_data_definition.json", null);
 
-		_assertFailure(mockLiferayPortletActionRequest);
+			_setUpUploadPortletRequest(mockLiferayPortletActionRequest);
+
+			_mvcActionCommand.processAction(
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+
+			_assertFailure(mockLiferayPortletActionRequest);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertTrue(
+				StringUtil.startsWith(
+					throwable.getMessage(), "Name is null for locale"));
+		}
 	}
 
 	@Test
@@ -205,6 +255,8 @@ public class ImportDataDefinitionMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_createMockLiferayPortletActionRequest(
 				"valid_data_definition.json", "Imported Structure");
+
+		_setUpUploadPortletRequest(mockLiferayPortletActionRequest);
 
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
@@ -323,6 +375,34 @@ public class ImportDataDefinitionMVCActionCommandTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
+	}
+
+	private void _setUpUploadPortletRequest(
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest) {
+
+		ReflectionTestUtil.setFieldValue(
+			_mvcActionCommand, "_portal",
+			ProxyUtil.newProxyInstance(
+				ImportDataDefinitionMVCActionCommandTest.class.getClassLoader(),
+				new Class<?>[] {Portal.class},
+				(proxy, method, args) -> {
+					if (Objects.equals(
+							method.getName(), "getUploadPortletRequest")) {
+
+						LiferayPortletRequest liferayPortletRequest =
+							_portal.getLiferayPortletRequest(
+								mockLiferayPortletActionRequest);
+
+						return UploadTestUtil.createUploadPortletRequest(
+							_portal.getUploadServletRequest(
+								liferayPortletRequest.getHttpServletRequest()),
+							liferayPortletRequest,
+							_portal.getPortletNamespace(
+								liferayPortletRequest.getPortletName()));
+					}
+
+					return method.invoke(_portal, args);
+				}));
 	}
 
 	@Inject

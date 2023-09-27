@@ -99,6 +99,9 @@
 									},
 									{
 										"key": "awaitingMoreInfoFromEmployee"
+									},
+									{
+										"key": "awaitingEmployeeProofOfExpenses"
 									}
 								]
 							},
@@ -270,6 +273,9 @@
 									},
 									{
 										"key": "awaitingMoreInfoFromEmployee"
+									},
+									{
+										"key": "awaitingApprovalOnManager"
 									}
 								]
 							}

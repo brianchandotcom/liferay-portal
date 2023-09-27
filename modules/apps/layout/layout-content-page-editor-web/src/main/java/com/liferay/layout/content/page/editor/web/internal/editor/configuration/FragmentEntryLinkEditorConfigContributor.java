@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.content.page.editor.web.internal.editor.configuration;
@@ -56,10 +47,10 @@ public class FragmentEntryLinkEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, "_EDITOR_NAME_selectItem",
 			getFileItemSelectorCriterion(), getLayoutItemSelectorURL());
-		PortletURL imageSelectorURL = _itemSelector.getItemSelectorURL(
+		PortletURL imageSelectorURL = itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, "_EDITOR_NAME_selectImage",
 			getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
 
@@ -82,7 +73,7 @@ public class FragmentEntryLinkEditorConfigContributor
 		).put(
 			"skin", "moono-lisa"
 		).put(
-			"toolbars", _jsonFactory.createJSONObject()
+			"toolbars", jsonFactory.createJSONObject()
 		);
 	}
 
@@ -118,13 +109,12 @@ public class FragmentEntryLinkEditorConfigContributor
 
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new URLItemSelectorReturnType());
-		layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 		return layoutItemSelectorCriterion;
 	}
 
 	protected String getRemovePluginsLists() {
-		return "contextmenu,elementspath,floatingspace,image,link,liststyle," +
+		return "contextmenu,elementspath,floatingspace,image,liststyle," +
 			"magicline,resize,tabletools,toolbar,ae_embed";
 	}
 
@@ -139,9 +129,9 @@ public class FragmentEntryLinkEditorConfigContributor
 	}
 
 	@Reference
-	private ItemSelector _itemSelector;
+	protected ItemSelector itemSelector;
 
 	@Reference
-	private JSONFactory _jsonFactory;
+	protected JSONFactory jsonFactory;
 
 }

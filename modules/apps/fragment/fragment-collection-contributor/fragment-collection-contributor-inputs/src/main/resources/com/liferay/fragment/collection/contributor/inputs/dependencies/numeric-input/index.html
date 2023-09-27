@@ -1,8 +1,21 @@
 <div class="numeric-input">
-	<div class="form-group mb-0">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-numeric-input">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-numeric-input-label">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
-	<input aria-describedby="${fragmentEntryLinkNamespace}-numeric-input-help-text" class="form-control" data-validation-message-text="${languageUtil.get(locale, "enter-a-valid-value.-the-value-has-too-many-decimals")}" id="${fragmentEntryLinkNamespace}-numeric-input" [#if input.attributes.max??]max="${input.attributes.max}"[/#if] [#if input.attributes.min??]min="${input.attributes.min}"[/#if] name="${input.name}" [#if input.required]required[/#if] [#if input.attributes.dataType?? && input.attributes.dataType="decimal" && input.attributes.step??]step="${input.attributes.step}"[/#if] placeholder="${configuration.placeholder}" type="number" [#if input.value??]value="${input.value}"[/#if] />
+	<input aria-describedby="${fragmentEntryLinkNamespace}-numeric-input-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-numeric-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-numeric-input-error-message[/#if]" class="form-control" data-validation-message-text="${languageUtil.get(locale, "enter-a-valid-value.-the-value-has-too-many-decimals")}" id="${fragmentEntryLinkNamespace}-numeric-input" [#if input.attributes.max??]max="${input.attributes.max}"[/#if] [#if input.attributes.min??]min="${input.attributes.min}"[/#if] name="${input.name}" [#if input.required]required[/#if] [#if input.attributes.dataType?? && input.attributes.dataType="decimal" && input.attributes.step??]step="${input.attributes.step}"[/#if] placeholder="${configuration.placeholder}" type="number" [#if input.value??]value="${input.value}"[/#if] />
+
+		[#if input.errorMessage?has_content]
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentEntryLinkNamespace}-numeric-input-error-message">
+				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+					<use xlink:href="${siteSpritemap}#info-circle" />
+				</svg>
+
+				<span>
+					${input.errorMessage}
+				</span>
+			</p>
+		[/#if]
+
 		[#if input.showHelpText && input.helpText?has_content]
 			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-numeric-input-help-text">${htmlUtil.escape(input.helpText)}</p>
 		[/#if]

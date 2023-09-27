@@ -1,5 +1,5 @@
 Bundle-Description: The Deployment Helper Gradle plugin lets you run the Liferay Deployment Helper tool to create a cluster deployable WAR from your OSGi artifacts.
 Bundle-Name: Liferay Gradle Plugins Deployment Helper
 Bundle-SymbolicName: com.liferay.gradle.plugins.deployment.helper
-Bundle-Version: 1.0.8
+Bundle-Version: 1.0.9
 Export-Package: com.liferay.gradle.plugins.deployment.helper

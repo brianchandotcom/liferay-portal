@@ -1,22 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.adaptive.media.image.internal.configuration;
 
 import com.liferay.adaptive.media.AMAttribute;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -36,14 +27,17 @@ public class AMImageAttributeMapping {
 		FileVersion fileVersion) {
 
 		return new AMImageAttributeMapping(
-			HashMapBuilder.<AMAttribute<AMImageProcessor, ?>, Object>put(
-				AMAttribute.getContentLengthAMAttribute(), fileVersion.getSize()
-			).put(
-				AMAttribute.getContentTypeAMAttribute(),
-				fileVersion.getMimeType()
-			).put(
-				AMAttribute.getFileNameAMAttribute(), fileVersion.getFileName()
-			).build());
+			HashMapBuilder.
+				<AMAttribute<AMProcessor<FileVersion>, ?>, Object>put(
+					AMAttribute.getContentLengthAMAttribute(),
+					fileVersion.getSize()
+				).put(
+					AMAttribute.getContentTypeAMAttribute(),
+					fileVersion.getMimeType()
+				).put(
+					AMAttribute.getFileNameAMAttribute(),
+					fileVersion.getFileName()
+				).build());
 	}
 
 	/**
@@ -62,27 +56,32 @@ public class AMImageAttributeMapping {
 		}
 
 		return new AMImageAttributeMapping(
-			HashMapBuilder.<AMAttribute<AMImageProcessor, ?>, Object>put(
-				AMAttribute.getConfigurationUuidAMAttribute(),
-				_getValue(
-					properties, AMAttribute.getConfigurationUuidAMAttribute())
-			).put(
-				AMAttribute.getContentLengthAMAttribute(),
-				_getValue(properties, AMAttribute.getContentLengthAMAttribute())
-			).put(
-				AMAttribute.getContentTypeAMAttribute(),
-				_getValue(properties, AMAttribute.getContentTypeAMAttribute())
-			).put(
-				AMAttribute.getFileNameAMAttribute(),
-				_getValue(properties, AMAttribute.getFileNameAMAttribute())
-			).put(
-				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT,
-				_getValue(
-					properties, AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT)
-			).put(
-				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH,
-				_getValue(properties, AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH)
-			).build());
+			HashMapBuilder.
+				<AMAttribute<AMProcessor<FileVersion>, ?>, Object>put(
+					AMAttribute.getConfigurationUuidAMAttribute(),
+					_getValue(
+						properties,
+						AMAttribute.getConfigurationUuidAMAttribute())
+				).put(
+					AMAttribute.getContentLengthAMAttribute(),
+					_getValue(
+						properties, AMAttribute.getContentLengthAMAttribute())
+				).put(
+					AMAttribute.getContentTypeAMAttribute(),
+					_getValue(
+						properties, AMAttribute.getContentTypeAMAttribute())
+				).put(
+					AMAttribute.getFileNameAMAttribute(),
+					_getValue(properties, AMAttribute.getFileNameAMAttribute())
+				).put(
+					AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT,
+					_getValue(
+						properties, AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT)
+				).put(
+					AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH,
+					_getValue(
+						properties, AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH)
+				).build());
 	}
 
 	/**
@@ -92,7 +91,9 @@ public class AMImageAttributeMapping {
 	 * @param  amAttribute a non <code>null</code> attribute
 	 * @return an instance that contains the value (if any)
 	 */
-	public <V> V getValue(AMAttribute<AMImageProcessor, V> amAttribute) {
+	public <V> V getValue(
+		AMAttribute<AMProcessor<FileVersion>, V> amAttribute) {
+
 		if (amAttribute == null) {
 			throw new IllegalArgumentException(
 				"Adaptive media attribute is null");
@@ -102,14 +103,14 @@ public class AMImageAttributeMapping {
 	}
 
 	protected AMImageAttributeMapping(
-		Map<AMAttribute<AMImageProcessor, ?>, Object> values) {
+		Map<AMAttribute<AMProcessor<FileVersion>, ?>, Object> values) {
 
 		_values = values;
 	}
 
 	private static <V> V _getValue(
 		Map<String, String> properties,
-		AMAttribute<AMImageProcessor, V> amAttribute) {
+		AMAttribute<AMProcessor<FileVersion>, V> amAttribute) {
 
 		String value = properties.get(amAttribute.getName());
 
@@ -120,6 +121,6 @@ public class AMImageAttributeMapping {
 		return amAttribute.convert(value);
 	}
 
-	private final Map<AMAttribute<AMImageProcessor, ?>, Object> _values;
+	private final Map<AMAttribute<AMProcessor<FileVersion>, ?>, Object> _values;
 
 }

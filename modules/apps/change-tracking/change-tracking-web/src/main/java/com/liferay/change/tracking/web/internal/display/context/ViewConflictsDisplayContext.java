@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.web.internal.display.context;
@@ -32,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -322,45 +314,53 @@ public class ViewConflictsDisplayContext {
 			if (!conflictInfo.isResolved()) {
 				JSONArray actionsJSONArray = JSONFactoryUtil.createJSONArray();
 
-				String editURL = _ctDisplayRendererRegistry.getEditURL(
-					_httpServletRequest, ctEntry);
+				String conflictDescription =
+					conflictInfo.getConflictDescription(resourceBundle);
 
-				if (Validator.isNotNull(editURL)) {
-					actionsJSONArray.put(
-						_createEditActionJSONObject(
-							_language.format(
-								_httpServletRequest,
-								"you-are-currently-working-on-production.-" +
-									"work-on-x",
-								new Object[] {_ctCollection.getName()}, false),
-							_ctCollection.getCtCollectionId(), editURL,
-							_language.format(
-								_httpServletRequest, "edit-in-x",
-								new Object[] {_ctCollection.getName()},
-								false)));
+				if (!conflictDescription.equals(
+						LanguageUtil.get(
+							resourceBundle,
+							"deletion-modification-conflict"))) {
 
-					T productionModel = _ctDisplayRendererRegistry.fetchCTModel(
-						modelClassNameId, conflictInfo.getTargetPrimaryKey());
+					String editURL = _ctDisplayRendererRegistry.getEditURL(
+						_httpServletRequest, ctEntry);
 
-					if (productionModel != null) {
+					if (Validator.isNotNull(editURL)) {
 						actionsJSONArray.put(
 							_createEditActionJSONObject(
 								_language.format(
 									_httpServletRequest,
-									"you-are-currently-working-on-x.-work-on-" +
-										"production",
+									"you-are-currently-working-on-" +
+										"production.-work-on-x",
 									new Object[] {_ctCollection.getName()},
 									false),
-								CTConstants.CT_COLLECTION_ID_PRODUCTION,
-								_ctDisplayRendererRegistry.getEditURL(
-									CTConstants.CT_COLLECTION_ID_PRODUCTION,
-									CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
-									_httpServletRequest, productionModel,
-									modelClassNameId),
-								_language.get(
-									_httpServletRequest,
-									"edit-in-production")));
+								_ctCollection.getCtCollectionId(), editURL,
+								_language.format(
+									_httpServletRequest, "edit-in-x",
+									new Object[] {_ctCollection.getName()},
+									false)));
 					}
+				}
+
+				T productionModel = _ctDisplayRendererRegistry.fetchCTModel(
+					modelClassNameId, conflictInfo.getTargetPrimaryKey());
+
+				if (productionModel != null) {
+					actionsJSONArray.put(
+						_createEditActionJSONObject(
+							_language.format(
+								_httpServletRequest,
+								"you-are-currently-working-on-x.-work-on-" +
+									"production",
+								new Object[] {_ctCollection.getName()}, false),
+							CTConstants.CT_COLLECTION_ID_PRODUCTION,
+							_ctDisplayRendererRegistry.getEditURL(
+								CTConstants.CT_COLLECTION_ID_PRODUCTION,
+								CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
+								_httpServletRequest, productionModel,
+								modelClassNameId),
+							_language.get(
+								_httpServletRequest, "edit-in-production")));
 				}
 
 				actionsJSONArray.put(

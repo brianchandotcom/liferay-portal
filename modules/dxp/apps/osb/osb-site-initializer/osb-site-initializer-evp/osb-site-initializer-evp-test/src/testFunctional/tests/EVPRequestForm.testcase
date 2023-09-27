@@ -30,6 +30,24 @@ definition {
 		task ("Navigate to Create a Request") {
 			EVPUtils.gotoEVP();
 
+			EVPOrganization.goToCreateOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				createRequest = "false",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zipCode = "12.345-67");
+
 			EVPRequest.goToCreateRequest();
 		}
 	}
@@ -68,7 +86,7 @@ definition {
 			EVPRequest.fillRequestForm(
 				grantAmount = 10,
 				grantRequestType = "Proposed",
-				organization = "Organization 3",
+				organization = "Organization Test",
 				phoneNumber = 12345,
 				requestBehalf = "Global/Local Poor",
 				requestDescription = "Request Description Test",
@@ -80,7 +98,7 @@ definition {
 			EVPNavigator.goToNavItem(navItem = "Request");
 
 			EVPUtils.viewStatus(
-				organizationName = "Organization 3",
+				organizationName = "Organization Test",
 				status = "Awaiting Approval On EVP");
 		}
 	}

@@ -1,5 +1,5 @@
 dependencies {
-	compile project(":modules:foo-api")
+	api project(":modules:foo-api")
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"

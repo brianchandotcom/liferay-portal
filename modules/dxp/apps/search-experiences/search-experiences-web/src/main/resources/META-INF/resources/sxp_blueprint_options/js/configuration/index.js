@@ -1,12 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
@@ -23,17 +17,20 @@ import SelectSXPBlueprintModal from './SelectSXPBlueprintModal';
 
 const Configuration = ({
 	initialFederatedSearchKey = '',
-	initialSXPBlueprintId = '',
+	initialSXPBlueprintExternalReferenceCode = '',
 	initialSXPBlueprintTitle = '',
 	learnMessages,
 	portletNamespace,
 	preferenceKeyFederatedSearchKey,
-	preferenceKeySXPBlueprintId,
+	preferenceKeySXPBlueprintExternalReferenceCode,
 }) => {
 	const [federatedSearchKey, setFederatedSearchKey] = useState(
 		initialFederatedSearchKey
 	);
-	const [sxpBlueprintId, setSXPBlueprintId] = useState(initialSXPBlueprintId);
+	const [
+		sxpBlueprintExternalReferenceCode,
+		setSXPBlueprintExternalReferenceCode,
+	] = useState(initialSXPBlueprintExternalReferenceCode);
 	const [sxpBlueprintTitle, setSXPBlueprintTitle] = useState(
 		initialSXPBlueprintTitle
 	);
@@ -53,7 +50,7 @@ const Configuration = ({
 	};
 
 	const _handleClickRemove = () => {
-		setSXPBlueprintId('');
+		setSXPBlueprintExternalReferenceCode('');
 		setSXPBlueprintTitle('');
 	};
 
@@ -61,8 +58,8 @@ const Configuration = ({
 		setVisibleModal(true);
 	};
 
-	const _handleSubmitModal = (id, title) => {
-		setSXPBlueprintId(id);
+	const _handleSubmitModal = (externalReferenceCode, title) => {
+		setSXPBlueprintExternalReferenceCode(externalReferenceCode);
 		setSXPBlueprintTitle(title);
 	};
 
@@ -73,14 +70,16 @@ const Configuration = ({
 					observer={observer}
 					onClose={onClose}
 					onSubmit={_handleSubmitModal}
-					selectedId={sxpBlueprintId}
+					selectedExternalReferenceCode={
+						sxpBlueprintExternalReferenceCode
+					}
 				/>
 			)}
 
 			<ClayInput
-				name={`${portletNamespace}${preferenceKeySXPBlueprintId}`}
+				name={`${portletNamespace}${preferenceKeySXPBlueprintExternalReferenceCode}`}
 				type="hidden"
-				value={sxpBlueprintId}
+				value={sxpBlueprintExternalReferenceCode}
 			/>
 
 			<ClayForm.Group>

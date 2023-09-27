@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -57,12 +48,15 @@ int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 	<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" />
 </portlet:renderURL>
 
-<aui:script use="liferay-admin">
-	new Liferay.Portlet.Admin({
-		form: document.<portlet:namespace />fm,
-		namespace: '<portlet:namespace />',
-		redirectUrl: '<%= redirectURL %>',
-		submitButton: '.save-server-button',
-		url: '<portlet:actionURL name="/server_admin/edit_server" />',
-	});
-</aui:script>
+<portlet:actionURL name="/server_admin/edit_server" var="url" />
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"redirectURL", redirectURL
+		).put(
+			"url", url
+		).build()
+	%>'
+	module="js/main"
+/>

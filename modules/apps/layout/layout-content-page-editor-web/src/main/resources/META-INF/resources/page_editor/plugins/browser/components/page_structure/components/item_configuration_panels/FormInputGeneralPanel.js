@@ -1,19 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useMemo} from 'react';
@@ -37,7 +29,6 @@ import {CACHE_KEYS} from '../../../../../../app/utils/cache';
 import {isRequiredFormField} from '../../../../../../app/utils/isRequiredFormField';
 import {setIn} from '../../../../../../app/utils/setIn';
 import useCache from '../../../../../../app/utils/useCache';
-import Collapse from '../../../../../../common/components/Collapse';
 import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
 import {FieldSet} from './FieldSet';
 import {FragmentGeneralPanel} from './FragmentGeneralPanel';
@@ -315,50 +306,58 @@ export function FormInputGeneralPanel({item}) {
 
 	return (
 		<>
-			<div className="mb-3">
-				<Collapse
-					label={sub(Liferay.Language.get('x-options'), fragmentName)}
-					open
+			<div className="mb-3 panel-group-sm">
+				<ClayPanel
+					collapsable
+					defaultExpanded
+					displayTitle={sub(
+						Liferay.Language.get('x-options'),
+						fragmentName
+					)}
+					displayType="unstyled"
+					showCollapseIcon
 				>
-					{!isSpecialInput && (
-						<FormInputMappingOptions
-							allowedInputTypes={allowedInputTypes}
-							configurationValues={configurationValues}
-							form={{
-								classNameId,
-								classTypeId,
-								fields: filteredFormFields,
-							}}
-							item={item}
-							onValueSelect={handleValueSelect}
-						/>
-					)}
-
-					{(configurationValues[FIELD_ID_CONFIGURATION_KEY] ||
-						isSpecialInput) && (
-						<>
-							<span className="sr-only">
-								{sub(
-									Liferay.Language.get('x-configuration'),
-									fragmentName
-								)}
-							</span>
-
-							<FieldSet
-								fields={configFields}
-								fragmentEntryLinks={
-									fragmentEntryLinksRef.current
-								}
+					<ClayPanel.Body>
+						{!isSpecialInput && (
+							<FormInputMappingOptions
+								allowedInputTypes={allowedInputTypes}
+								configurationValues={configurationValues}
+								form={{
+									classNameId,
+									classTypeId,
+									fields: filteredFormFields,
+								}}
 								item={item}
-								label=""
-								languageId={languageId}
 								onValueSelect={handleValueSelect}
-								selectedViewportSize={selectedViewportSize}
-								values={configurationValues}
 							/>
-						</>
-					)}
-				</Collapse>
+						)}
+
+						{(configurationValues[FIELD_ID_CONFIGURATION_KEY] ||
+							isSpecialInput) && (
+							<>
+								<span className="sr-only">
+									{sub(
+										Liferay.Language.get('x-configuration'),
+										fragmentName
+									)}
+								</span>
+
+								<FieldSet
+									fields={configFields}
+									fragmentEntryLinks={
+										fragmentEntryLinksRef.current
+									}
+									item={item}
+									label=""
+									languageId={languageId}
+									onValueSelect={handleValueSelect}
+									selectedViewportSize={selectedViewportSize}
+									values={configurationValues}
+								/>
+							</>
+						)}
+					</ClayPanel.Body>
+				</ClayPanel>
 			</div>
 
 			<FragmentGeneralPanel item={item} />

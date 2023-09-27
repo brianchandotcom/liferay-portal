@@ -1,0 +1,60 @@
+@import 'atlas-variables';
+
+.lfr-objects__model-builder-left-sidebar {
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	position: inherit;
+
+	&-current-object-folder-container {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		padding-right: 0.5rem;
+	}
+
+	&-current-object-folder-content {
+		align-items: center;
+		display: flex;
+		gap: 1rem;
+		width: 100%;
+
+		&:hover {
+			.lfr-objects__model-builder-left-sidebar-go-to-folder-button {
+				visibility: visible;
+
+				button {
+					padding-left: 0;
+					padding-right: 0;
+				}
+			}
+		}
+	}
+
+	&-go-to-folder-button {
+		margin-left: auto;
+		position: relative;
+		visibility: hidden;
+	}
+
+	&-item-linked.treeview-link {
+		background-color: transparent;
+		color: #6b6c7e80;
+	}
+
+	&-loading {
+		align-items: center;
+		display: flex;
+		height: 100%;
+		justify-content: center;
+	}
+
+	.container-fluid,
+	.navbar-form {
+		padding: 0 !important;
+	}
+
+	.navbar-form-autofit {
+		flex-basis: 75px;
+	}
+}

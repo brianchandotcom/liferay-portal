@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.message.boards.service.persistence.impl;
@@ -4363,6 +4354,277 @@ public class MBCategoryPersistenceImpl
 
 	private static final String _FINDER_COLUMN_G_P_PARENTCATEGORYID_7 =
 		"mbCategory.parentCategoryId IN (";
+
+	private FinderPath _finderPathFetchByG_F;
+	private FinderPath _finderPathCountByG_F;
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and friendlyURL = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly url
+	 * @return the matching message boards category
+	 * @throws NoSuchCategoryException if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory findByG_F(long groupId, String friendlyURL)
+		throws NoSuchCategoryException {
+
+		MBCategory mbCategory = fetchByG_F(groupId, friendlyURL);
+
+		if (mbCategory == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", friendlyURL=");
+			sb.append(friendlyURL);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCategoryException(sb.toString());
+		}
+
+		return mbCategory;
+	}
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly url
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory fetchByG_F(long groupId, String friendlyURL) {
+		return fetchByG_F(groupId, friendlyURL, true);
+	}
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly url
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory fetchByG_F(
+		long groupId, String friendlyURL, boolean useFinderCache) {
+
+		friendlyURL = Objects.toString(friendlyURL, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, friendlyURL};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_F, finderArgs, this);
+		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			MBCategory.class);
+
+		if (result instanceof MBCategory) {
+			MBCategory mbCategory = (MBCategory)result;
+
+			if ((groupId != mbCategory.getGroupId()) ||
+				!Objects.equals(friendlyURL, mbCategory.getFriendlyURL())) {
+
+				result = null;
+			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						MBCategory.class, mbCategory.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_F_GROUPID_2);
+
+			boolean bindFriendlyURL = false;
+
+			if (friendlyURL.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_F_FRIENDLYURL_3);
+			}
+			else {
+				bindFriendlyURL = true;
+
+				sb.append(_FINDER_COLUMN_G_F_FRIENDLYURL_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindFriendlyURL) {
+					queryPos.add(friendlyURL);
+				}
+
+				List<MBCategory> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache && productionMode) {
+						finderCache.putResult(
+							_finderPathFetchByG_F, finderArgs, list);
+					}
+				}
+				else {
+					MBCategory mbCategory = list.get(0);
+
+					result = mbCategory;
+
+					cacheResult(mbCategory);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (MBCategory)result;
+		}
+	}
+
+	/**
+	 * Removes the message boards category where groupId = &#63; and friendlyURL = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly url
+	 * @return the message boards category that was removed
+	 */
+	@Override
+	public MBCategory removeByG_F(long groupId, String friendlyURL)
+		throws NoSuchCategoryException {
+
+		MBCategory mbCategory = findByG_F(groupId, friendlyURL);
+
+		return remove(mbCategory);
+	}
+
+	/**
+	 * Returns the number of message boards categories where groupId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly url
+	 * @return the number of matching message boards categories
+	 */
+	@Override
+	public int countByG_F(long groupId, String friendlyURL) {
+		friendlyURL = Objects.toString(friendlyURL, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			MBCategory.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_F;
+
+			finderArgs = new Object[] {groupId, friendlyURL};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_F_GROUPID_2);
+
+			boolean bindFriendlyURL = false;
+
+			if (friendlyURL.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_F_FRIENDLYURL_3);
+			}
+			else {
+				bindFriendlyURL = true;
+
+				sb.append(_FINDER_COLUMN_G_F_FRIENDLYURL_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindFriendlyURL) {
+					queryPos.add(friendlyURL);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_F_GROUPID_2 =
+		"mbCategory.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_F_FRIENDLYURL_2 =
+		"mbCategory.friendlyURL = ?";
+
+	private static final String _FINDER_COLUMN_G_F_FRIENDLYURL_3 =
+		"(mbCategory.friendlyURL IS NULL OR mbCategory.friendlyURL = '')";
 
 	private FinderPath _finderPathWithPaginationFindByG_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_S;
@@ -11620,6 +11882,11 @@ public class MBCategoryPersistenceImpl
 			_finderPathFetchByUUID_G,
 			new Object[] {mbCategory.getUuid(), mbCategory.getGroupId()},
 			mbCategory);
+
+		finderCache.putResult(
+			_finderPathFetchByG_F,
+			new Object[] {mbCategory.getGroupId(), mbCategory.getFriendlyURL()},
+			mbCategory);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -11703,6 +11970,14 @@ public class MBCategoryPersistenceImpl
 		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByUUID_G, args, mbCategoryModelImpl);
+
+		args = new Object[] {
+			mbCategoryModelImpl.getGroupId(),
+			mbCategoryModelImpl.getFriendlyURL()
+		};
+
+		finderCache.putResult(_finderPathCountByG_F, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathFetchByG_F, args, mbCategoryModelImpl);
 	}
 
 	/**
@@ -12357,6 +12632,7 @@ public class MBCategoryPersistenceImpl
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("description");
 		ctStrictColumnNames.add("displayStyle");
+		ctStrictColumnNames.add("friendlyURL");
 		ctStrictColumnNames.add("lastPublishDate");
 		ctStrictColumnNames.add("status");
 		ctStrictColumnNames.add("statusByUserId");
@@ -12373,6 +12649,8 @@ public class MBCategoryPersistenceImpl
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
+
+		_uniqueIndexColumnNames.add(new String[] {"groupId", "friendlyURL"});
 	}
 
 	/**
@@ -12501,6 +12779,16 @@ public class MBCategoryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "parentCategoryId"}, false);
+
+		_finderPathFetchByG_F = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "friendlyURL"}, true);
+
+		_finderPathCountByG_F = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "friendlyURL"}, false);
 
 		_finderPathWithPaginationFindByG_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",

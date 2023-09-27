@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.defaults;
@@ -43,6 +34,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.compile.JavaCompile;
@@ -188,13 +180,17 @@ public class LiferayOSGiPortalCompatDefaultsPlugin
 			JavaExec.class);
 
 		javaExec.dependsOn(importFilesTask);
+
+		Property<String> mainClass = javaExec.getMainClass();
+
+		mainClass.set(
+			"com.liferay.portal.tools.portal.compat.bytecode.transformer." +
+				"PortalCompatBytecodeTransformer");
+
 		javaExec.setClasspath(bytecodeTransformerConfiguration);
 		javaExec.setDescription(
 			"Processes imported classes using the Liferay Portal Tools " +
 				"Portal Compat Bytecode Transformer.");
-		javaExec.setMain(
-			"com.liferay.portal.tools.portal.compat.bytecode.transformer." +
-				"PortalCompatBytecodeTransformer");
 
 		javaExec.systemProperty(
 			"classes.dir",

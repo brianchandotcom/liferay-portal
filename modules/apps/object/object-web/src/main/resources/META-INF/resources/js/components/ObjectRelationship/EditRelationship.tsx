@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
@@ -17,12 +8,12 @@ import {
 	API,
 	Card,
 	Input,
-	InputLocalized,
 	SidePanelForm,
 	SingleSelect,
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
 import {firstLetterUppercase} from '../../utils/string';
@@ -31,18 +22,30 @@ import {
 	ObjectRelationshipType,
 	useObjectRelationshipForm,
 } from './ObjectRelationshipFormBase';
-import SelectRelationship from './SelectRelationship';
+import SelectObjectRelationship from './SelectObjectRelationship';
+
+interface EditRelationshipProps {
+	baseResourceURL: string;
+	deletionTypes: LabelValueObject[];
+	hasUpdateObjectDefinitionPermission: boolean;
+	objectDefinitionExternalReferenceCode: string;
+	objectRelationship: ObjectRelationship;
+	parameterRequired: boolean;
+	restContextPath: string;
+}
 
 export default function EditRelationship({
+	baseResourceURL,
 	deletionTypes,
 	hasUpdateObjectDefinitionPermission,
+	objectDefinitionExternalReferenceCode,
 	objectRelationship: initialValues,
-	parameterEndpoint,
 	parameterRequired,
-}: IProps) {
+	restContextPath,
+}: EditRelationshipProps) {
 	const onSubmit = async (objectRelationship: ObjectRelationship) => {
 		try {
-			await API.updateRelationship(objectRelationship);
+			await API.putObjectRelationship(objectRelationship);
 			saveAndReload();
 
 			openToast({
@@ -107,8 +110,12 @@ export default function EditRelationship({
 				/>
 
 				<ObjectRelationshipFormBase
+					baseResourceURL={baseResourceURL}
 					errors={errors}
 					handleChange={handleChange}
+					objectDefinitionExternalReferenceCode1={
+						objectDefinitionExternalReferenceCode
+					}
 					readonly
 					setValues={setValues}
 					values={values}
@@ -132,12 +139,12 @@ export default function EditRelationship({
 						<Input
 							label={Liferay.Language.get('api-endpoint')}
 							readOnly
-							value={parameterEndpoint}
+							value={restContextPath}
 						/>
 
-						<SelectRelationship
+						<SelectObjectRelationship
 							error={errors.parameterObjectFieldName}
-							objectDefinitionExternalReferenceCode={
+							objectDefinitionExternalReferenceCode1={
 								values.objectDefinitionExternalReferenceCode2 as string
 							}
 							onChange={(parameterObjectFieldName) =>
@@ -150,16 +157,3 @@ export default function EditRelationship({
 		</SidePanelForm>
 	);
 }
-
-interface IProps {
-	deletionTypes: TDeletionType[];
-	hasUpdateObjectDefinitionPermission: boolean;
-	objectRelationship: ObjectRelationship;
-	parameterEndpoint: string;
-	parameterRequired: boolean;
-}
-
-type TDeletionType = {
-	label: string;
-	value: string;
-};

@@ -419,6 +419,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVBAR_ELLIPSIS</td>
+	<td>//ul[contains(@class,'navbar')]//*[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VERTICAL_ELLIPSIS_INDEXED</td>
 	<td>xpath=(//*[contains(.,'${key_text}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_index}]</td>
 	<td></td>

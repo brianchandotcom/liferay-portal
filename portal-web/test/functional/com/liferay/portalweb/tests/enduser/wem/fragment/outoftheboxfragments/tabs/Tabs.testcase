@@ -42,6 +42,7 @@ definition {
 	test AddElementToEachPanel {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Tabs fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -97,6 +98,7 @@ definition {
 	@priority = 4
 	test AddElementToEachPanelInMasterPageTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Master Page Templates";
 
 		task ("Add a custom master") {
@@ -238,6 +240,7 @@ definition {
 	@priority = 4
 	test MoveDropZoneIntoPanel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Master Page Templates";
 
 		task ("Add a custom master") {
@@ -476,6 +479,7 @@ definition {
 	@priority = 4
 	test ViewInheriatedTabsWithoutDropzoneInContentPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Master Page Templates";
 
 		task ("Add a custom master") {

@@ -1,0 +1,77 @@
+definition {
+
+	macro fillGoalsChat {
+		if (isSet(siteSettingsStrategy)) {
+			Select(
+				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+				value1 = ${siteSettingsStrategy});
+		}
+
+		if (isSet(chatProviderId)) {
+			Select(
+				locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+				value1 = ${chatProviderId});
+		}
+	}
+
+	macro getPassword {
+		var clickToChatPassword = PropsUtil.get("click.to.chat.${chatProviderChoosen}.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = ${clickToChatPassword});
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		echo("Password: ${clickToChatPassword}");
+
+		return ${clickToChatPassword};
+	}
+
+	macro navigateToComponent {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		Click(
+			key_itemName = ${nameComponent},
+			locator1 = "ListGroupItem#ITEM_TEXT");
+	}
+
+	macro typePassword {
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = ${key_password});
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+	}
+
+	macro viewTheFieldsPresent {
+		if (isSet(siteSettingsStrategy)) {
+			AssertElementPresent(
+				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
+				siteSettingsStrategy = ${siteSettingsStrategy});
+		}
+
+		AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
+
+		if (isSet(chatProviderOption)) {
+			AssertElementPresent(
+				chatProviderOption = ${chatProviderOption},
+				locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_OPTION");
+		}
+
+		if (isSet(chatProviderId)) {
+			AssertElementPresent(
+				chatProviderId = ${chatProviderId},
+				locator1 = "ClickToChatConfiguration#CHECK_CHAT_PROVIDER_ID");
+		}
+	}
+
+}

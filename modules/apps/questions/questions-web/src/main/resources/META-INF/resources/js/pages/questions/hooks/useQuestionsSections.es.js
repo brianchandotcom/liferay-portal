@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {useManualQuery} from 'graphql-hooks';
@@ -17,11 +8,11 @@ import {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../../AppContext.es';
 import {
+	getMessageBoardSectionByFriendlyUrlPathQuery,
 	getSectionBySectionTitleQuery,
 	getSectionsQuery,
 } from '../../../utils/client.es';
 import {ALL_SECTIONS_ID} from '../../../utils/contants.es';
-import {slugToText} from '../../../utils/utils.es';
 
 const useQuestionsSections = ({
 	location,
@@ -46,12 +37,10 @@ const useQuestionsSections = ({
 	});
 
 	const [getSectionBySectionTitle] = useManualQuery(
-		getSectionBySectionTitleQuery,
+		getMessageBoardSectionByFriendlyUrlPathQuery,
 		{
 			variables: {
-				filter: `title eq '${slugToText(
-					sectionTitle
-				)}' or id eq '${slugToText(sectionTitle)}'`,
+				filter: sectionTitle,
 				siteKey: context.siteKey,
 			},
 		}
@@ -60,16 +49,14 @@ const useQuestionsSections = ({
 	useEffect(() => {
 		if (sectionTitle && sectionTitle !== ALL_SECTIONS_ID) {
 			const variables = {
-				filter: `title eq '${slugToText(
-					sectionTitle
-				)}' or id eq '${slugToText(sectionTitle)}'`,
-				siteKey: context.siteKey,
+				friendlyUrlPath: sectionTitle,
+				siteKey: Number(context.siteKey),
 			};
 			getSectionBySectionTitle({
 				variables,
 			}).then(({data}) => {
-				if (data.messageBoardSections?.items[0]) {
-					setSection(data.messageBoardSections.items[0]);
+				if (data.messageBoardSectionByFriendlyUrlPath) {
+					setSection(data.messageBoardSectionByFriendlyUrlPath);
 					setSectionQuery(getSectionBySectionTitleQuery);
 					setSectionQueryVariables(variables);
 				}

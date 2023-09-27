@@ -1,14 +1,14 @@
 apply plugin: "com.liferay.whip"
 apply plugin: "eclipse"
-apply plugin: "java"
+apply plugin: "java-library"
 
 group = "com.example"
 
 task runGradleTest
 
 dependencies {
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.5.0"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.test", version: "3.0.0"
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.5.0"
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.test", version: "3.0.0"
 }
 
 repositories {

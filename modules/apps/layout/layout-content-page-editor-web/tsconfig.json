@@ -1,6 +1,12 @@
 {
-	"@generated": "2063bdd846f1aee98575b578271d15ec80ceefa3",
+	"@generated": "03063c6420a880be385e51b35241acd0a8cf347a",
 	"@overrides": {
+		"compilerOptions": {
+			"lib": [
+				"DOM",
+				"es2019"
+			]
+		}
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
 	"@see": "https://git.io/JY2EA",
@@ -9,18 +15,31 @@
 		"baseUrl": ".",
 		"composite": true,
 		"jsx": "react",
+		"lib": [
+			"DOM",
+			"es2019"
+		],
 		"module": "es6",
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
+			"@liferay/frontend-icons-web": [
+				"../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
 			"@liferay/frontend-js-react-web": [
 				"../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"@liferay/layout-js-components-web": [
-				"../layout-js-components-web/src/main/resources/META-INF/resources/js/index.d.ts"
+				"../layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"frontend-js-components-web": [
+				"../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"frontend-js-web": [
 				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
+			],
+			"item-selector-taglib": [
+				"../../item-selector/item-selector-taglib/src/main/resources/META-INF/resources/index.d.ts"
 			]
 		},
 		"sourceMap": false,
@@ -42,13 +61,22 @@
 	],
 	"references": [
 		{
+			"path": "../../frontend-icons/frontend-icons-web"
+		},
+		{
 			"path": "../../frontend-js/frontend-js-react-web"
 		},
 		{
 			"path": "../layout-js-components-web"
 		},
 		{
+			"path": "../../frontend-js/frontend-js-components-web"
+		},
+		{
 			"path": "../../frontend-js/frontend-js-web"
+		},
+		{
+			"path": "../../item-selector/item-selector-taglib"
 		}
 	]
 }

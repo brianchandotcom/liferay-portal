@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.page.template.service.http;
@@ -53,8 +44,9 @@ public class LayoutPageTemplateCollectionServiceHttp {
 	public static
 		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
 				addLayoutPageTemplateCollection(
-					HttpPrincipal httpPrincipal, long groupId, String name,
-					String description,
+					HttpPrincipal httpPrincipal, long groupId,
+					long parentLayoutPageTemplateCollection, String name,
+					String description, int type,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -66,7 +58,8 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				_addLayoutPageTemplateCollectionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, name, description, serviceContext);
+				methodKey, groupId, parentLayoutPageTemplateCollection, name,
+				description, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -227,7 +220,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 	public static java.util.List
 		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
 			getLayoutPageTemplateCollections(
-				HttpPrincipal httpPrincipal, long groupId) {
+				HttpPrincipal httpPrincipal, long groupId, int type) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -235,7 +228,8 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				"getLayoutPageTemplateCollections",
 				_getLayoutPageTemplateCollectionsParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, type);
 
 			Object returnObj = null;
 
@@ -263,7 +257,8 @@ public class LayoutPageTemplateCollectionServiceHttp {
 	public static java.util.List
 		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
 			getLayoutPageTemplateCollections(
-				HttpPrincipal httpPrincipal, long groupId, int start, int end) {
+				HttpPrincipal httpPrincipal, long groupId, int type, int start,
+				int end) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -272,7 +267,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				_getLayoutPageTemplateCollectionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, start, end);
+				methodKey, groupId, type, start, end);
 
 			Object returnObj = null;
 
@@ -300,7 +295,8 @@ public class LayoutPageTemplateCollectionServiceHttp {
 	public static java.util.List
 		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
 			getLayoutPageTemplateCollections(
-				HttpPrincipal httpPrincipal, long groupId, int start, int end,
+				HttpPrincipal httpPrincipal, long groupId, int type, int start,
+				int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.layout.page.template.model.
 						LayoutPageTemplateCollection> orderByComparator) {
@@ -312,7 +308,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				_getLayoutPageTemplateCollectionsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, start, end, orderByComparator);
+				methodKey, groupId, type, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -341,7 +337,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
 			getLayoutPageTemplateCollections(
 				HttpPrincipal httpPrincipal, long groupId, String name,
-				int start, int end,
+				int type, int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.layout.page.template.model.
 						LayoutPageTemplateCollection> orderByComparator) {
@@ -353,7 +349,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				_getLayoutPageTemplateCollectionsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, name, start, end, orderByComparator);
+				methodKey, groupId, name, type, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -379,7 +375,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 	}
 
 	public static int getLayoutPageTemplateCollectionsCount(
-		HttpPrincipal httpPrincipal, long groupId) {
+		HttpPrincipal httpPrincipal, long groupId, int type) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -387,7 +383,8 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				"getLayoutPageTemplateCollectionsCount",
 				_getLayoutPageTemplateCollectionsCountParameterTypes8);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, type);
 
 			Object returnObj = null;
 
@@ -411,7 +408,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 	}
 
 	public static int getLayoutPageTemplateCollectionsCount(
-		HttpPrincipal httpPrincipal, long groupId, String name) {
+		HttpPrincipal httpPrincipal, long groupId, String name, int type) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -420,7 +417,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				_getLayoutPageTemplateCollectionsCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, name);
+				methodKey, groupId, name, type);
 
 			Object returnObj = null;
 
@@ -494,7 +491,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 
 	private static final Class<?>[]
 		_addLayoutPageTemplateCollectionParameterTypes0 = new Class[] {
-			long.class, String.class, String.class,
+			long.class, long.class, String.class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
@@ -511,29 +508,29 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		};
 	private static final Class<?>[]
 		_getLayoutPageTemplateCollectionsParameterTypes4 = new Class[] {
-			long.class
+			long.class, int.class
 		};
 	private static final Class<?>[]
 		_getLayoutPageTemplateCollectionsParameterTypes5 = new Class[] {
-			long.class, int.class, int.class
+			long.class, int.class, int.class, int.class
 		};
 	private static final Class<?>[]
 		_getLayoutPageTemplateCollectionsParameterTypes6 = new Class[] {
-			long.class, int.class, int.class,
+			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
 		_getLayoutPageTemplateCollectionsParameterTypes7 = new Class[] {
-			long.class, String.class, int.class, int.class,
+			long.class, String.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
 		_getLayoutPageTemplateCollectionsCountParameterTypes8 = new Class[] {
-			long.class
+			long.class, int.class
 		};
 	private static final Class<?>[]
 		_getLayoutPageTemplateCollectionsCountParameterTypes9 = new Class[] {
-			long.class, String.class
+			long.class, String.class, int.class
 		};
 	private static final Class<?>[]
 		_updateLayoutPageTemplateCollectionParameterTypes10 = new Class[] {

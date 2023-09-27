@@ -1,20 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
@@ -28,15 +19,13 @@ import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.io.Serializable;
-
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -252,23 +241,27 @@ public class KnowledgeBaseFolderResourceImpl
 				externalReferenceCode, groupId, _getClassNameId(),
 				parentResourcePrimKey, knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(knowledgeBaseFolder), groupId,
-					contextHttpServletRequest,
+				_createServiceContext(
+					groupId, knowledgeBaseFolder,
 					knowledgeBaseFolder.getViewableByAsString())));
+	}
+
+	private ServiceContext _createServiceContext(
+		long groupId, KnowledgeBaseFolder knowledgeBaseFolder,
+		String viewableBy) {
+
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, viewableBy
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				KBFolder.class.getName(), contextCompany.getCompanyId(),
+				knowledgeBaseFolder.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	private long _getClassNameId() {
 		return _portal.getClassNameId(KBFolder.class.getName());
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		KnowledgeBaseFolder knowledgeBaseFolder) {
-
-		return CustomFieldsUtil.toMap(
-			KBFolder.class.getName(), contextCompany.getCompanyId(),
-			knowledgeBaseFolder.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private KnowledgeBaseFolder _toKnowledgeBaseFolder(KBFolder kbFolder)
@@ -295,8 +288,9 @@ public class KnowledgeBaseFolderResourceImpl
 						ActionKeys.UPDATE, kbFolder, "putKnowledgeBaseFolder")
 				).build();
 				creator = CreatorUtil.toCreator(
-					_portal, contextUriInfo,
-					_userLocalService.fetchUser(kbFolder.getUserId()));
+					new DefaultDTOConverterContext(
+						null, null, null, contextUriInfo, null),
+					_portal, _userLocalService.fetchUser(kbFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					KBFolder.class.getName(), kbFolder.getKbFolderId(),
@@ -331,9 +325,7 @@ public class KnowledgeBaseFolderResourceImpl
 				_getClassNameId(), kbFolder.getParentKBFolderId(),
 				kbFolder.getKbFolderId(), knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(knowledgeBaseFolder), 0,
-					contextHttpServletRequest, null)));
+				_createServiceContext(0, knowledgeBaseFolder, null)));
 	}
 
 	@Reference

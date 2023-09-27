@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.util.structure;
@@ -17,10 +8,12 @@ package com.liferay.layout.util.structure;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -115,7 +108,14 @@ public class CollectionStyledLayoutStructureItem
 		JSONObject jsonObject = super.getItemConfigJSONObject();
 
 		jsonObject = jsonObject.put(
-			"align", _align
+			"align",
+			() -> {
+				if (Validator.isBlank(_align)) {
+					return null;
+				}
+
+				return _align;
+			}
 		).put(
 			"collection", _collectionJSONObject
 		).put(
@@ -132,11 +132,25 @@ public class CollectionStyledLayoutStructureItem
 				return _emptyCollectionOptions.toJSONObject();
 			}
 		).put(
-			"flexWrap", _flexWrap
+			"flexWrap",
+			() -> {
+				if (Validator.isBlank(_flexWrap)) {
+					return null;
+				}
+
+				return _flexWrap;
+			}
 		).put(
 			"gutters", _gutters
 		).put(
-			"justify", _justify
+			"justify",
+			() -> {
+				if (Validator.isBlank(_justify)) {
+					return null;
+				}
+
+				return _justify;
+			}
 		).put(
 			"listItemStyle", _listItemStyle
 		).put(
@@ -156,7 +170,14 @@ public class CollectionStyledLayoutStructureItem
 		).put(
 			"templateKey", _templateKey
 		).put(
-			"verticalAlignment", _verticalAlignment
+			"verticalAlignment",
+			() -> {
+				if (Objects.equals(_verticalAlignment, "start")) {
+					return null;
+				}
+
+				return _verticalAlignment;
+			}
 		);
 
 		for (ViewportSize viewportSize : _viewportSizes) {
@@ -496,7 +517,8 @@ public class CollectionStyledLayoutStructureItem
 		CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC;
 	private boolean _showAllItems;
 	private String _templateKey;
-	private String _verticalAlignment = "start";
+	private String _verticalAlignment =
+		StyledLayoutStructureConstants.VERTICAL_ALIGNMENT_START;
 	private final Map<String, JSONObject> _viewportConfigurationJSONObjects =
 		new HashMap<>();
 

@@ -1,9 +1,9 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Display Page Templates";
 
 	static var randomSiteName = StringUtil.randomString(8);
@@ -11,6 +11,10 @@ definition {
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
@@ -332,8 +336,6 @@ definition {
 	@description = "This is a test for LPS-98031. Map manual URL to image fragment."
 	@priority = 4
 	test MapManualURLToImageFragment {
-		property ci.retries.disabled = "true";
-
 		task ("Add an Image fragment to the Display Page Name") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
@@ -448,8 +450,6 @@ definition {
 	@description = "This is a test for LPS-98031. Map manual URL to text fragment."
 	@priority = 4
 	test MapManualURLToTextFragment {
-		property ci.retries.disabled = "true";
-
 		task ("Add a Heading fragment to the Display Page Name") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
@@ -676,9 +676,6 @@ definition {
 	@description = "This is a use case for LPS-182999. The page designer could see mapped image from attachment field on associated display page template."
 	@priority = 4
 	test MapPreviewURLOfImageAttachmentToFragment {
-		property custom.properties = "feature.flag.LPS-176083=true";
-		property test.liferay.virtual.instance = "false";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -781,8 +778,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page designer could map a standalone action from current object to Button fragment in display page template."
 	@priority = 4
 	test MapStandaloneActionFromCurrentObjectToFragment {
-		property custom.properties = "feature.flag.LPS-169992=true";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -910,8 +905,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page designer could map a standalone action from current object to Button fragment inside Colllection Display in display page template."
 	@priority = 4
 	test MapStandaloneActionFromCurrentObjectToFragmentInsideCollectionDisplay {
-		property custom.properties = "feature.flag.LPS-169992=true";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -1043,8 +1036,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page designer could map a standalone action from a specific object entry to Button fragment in display page template."
 	@priority = 4
 	test MapStandaloneActionFromSpecificObjectEntryToFragment {
-		property custom.properties = "feature.flag.LPS-169992=true";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -1118,7 +1109,7 @@ definition {
 				value1 = "Specific Content");
 
 			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "${labelName}2 ${objectEntryId2}",
+				entryTitle = ${objectEntryId2},
 				navItem = "${labelName}2s",
 				rowItem = "//*[@data-qa-id='row'][contains(.,'${objectEntryId2}')]");
 
@@ -1793,7 +1784,7 @@ definition {
 		task ("Assert the image of the Document Title 1 is shown in Image fragment") {
 			AssertVisible(
 				id = "image-square",
-				key_image = "Document_1.jpg",
+				key_image = "document_1",
 				key_imageDescription = "",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
@@ -1829,7 +1820,7 @@ definition {
 		task ("Assert the image of the Document Title 1 is still shown in Image fragment") {
 			AssertVisible(
 				id = "image-square",
-				key_image = "Document_1.jpg",
+				key_image = "document_1",
 				key_imageDescription = "",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}

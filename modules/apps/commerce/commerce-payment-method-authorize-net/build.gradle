@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "net.authorize", name: "anet-java-sdk", version: "1.9.9"
+	compileInclude group: "net.authorize", name: "anet-java-sdk", version: "2.0.6"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.google.code.gson", name: "gson", version: "2.9.0"
@@ -15,6 +15,7 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-payment-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

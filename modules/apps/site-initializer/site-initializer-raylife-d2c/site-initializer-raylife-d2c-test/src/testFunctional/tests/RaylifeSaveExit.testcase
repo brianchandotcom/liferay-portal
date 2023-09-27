@@ -34,6 +34,7 @@ definition {
 	@priority = 3
 	test CanContinueQuoteAfterClickOnButton {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -72,6 +73,7 @@ definition {
 	@priority = 3
 	test CanContinueQuoteAfterClickOnX {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -112,6 +114,7 @@ definition {
 	@priority = 4
 	test CanSendLinkAndExit {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -134,6 +137,7 @@ definition {
 	@priority = 4
 	test CanViewErrorMessageForInactiveRaylifeObject {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -173,6 +177,7 @@ definition {
 	@priority = 4
 	test CanViewSavedProgressModal {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -199,6 +204,7 @@ definition {
 	@priority = 2
 	test IsContinueButtonEnabledAfterNotSavingAndExiting {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -225,6 +231,7 @@ definition {
 	@priority = 4
 	test IsModalEmailEqualsToBusinessEmail {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -263,6 +270,7 @@ definition {
 	@priority = 4
 	test IsSaveAndExitButtonEnabledOnBusiness {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -287,6 +295,7 @@ definition {
 	@priority = 5
 	test IsSaveAndExitButtonEnabledOnContactInfo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -321,6 +330,7 @@ definition {
 	@priority = 4
 	test IsSaveAndExitButtonEnabledOnEmployees {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -349,6 +359,7 @@ definition {
 	@priority = 4
 	test IsSaveAndExitButtonEnabledOnProductSelection {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -373,6 +384,7 @@ definition {
 	@priority = 4
 	test IsSaveAndExitButtonEnabledOnProperty {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

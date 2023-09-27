@@ -41,7 +41,7 @@ definition {
 	}
 
 	macro _addLayoutPageTemplateCollection {
-		Variables.assertDefined(parameterList = "${description},${groupId},${layoutPageTemplateCollectionName},${serviceContext}");
+		Variables.assertDefined(parameterList = "${description},${groupId},${layoutPageTemplateCollectionName},${serviceContext},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONUser();
@@ -50,8 +50,10 @@ definition {
 			${portalURL}/api/jsonws/layout.layoutpagetemplatecollection/add-layout-page-template-collection \
 				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
+				-d parentLayoutPageTemplateCollection=0 \
 				-d name=${layoutPageTemplateCollectionName} \
 				-d description=${description} \
+				-d type=${type} \
 				-d serviceContext=${serviceContext}
 		''';
 
@@ -149,7 +151,8 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/layout.layoutpagetemplatecollection/get-layout-page-template-collections \
 				-u ${userLoginInfo} \
-				-d groupId=${groupId}
+				-d groupId=${groupId} \
+				-d type=${type}
 		''';
 
 		var layoutPageTemplateCollectionId = JSONCurlUtil.post(${curl}, "$.[?(@['name'] == '${layoutPageTemplateCollectionName}')]['layoutPageTemplateCollectionId']");

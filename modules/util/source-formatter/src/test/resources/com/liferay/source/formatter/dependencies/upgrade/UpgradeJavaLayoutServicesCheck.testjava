@@ -1,0 +1,91 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Tamyris Bernardo
+ */
+public class UpgradeJavaLayoutServicesCheck {
+
+	public void addLayoutMethod(
+		long userId, long groupId, boolean privateLayout, long parentLayoutId,
+		long classNameId, long classPK, Map<java.util.Locale, String> nameMap,
+		Map<java.util.Locale, String> titleMap,
+		Map<java.util.Locale, String> descriptionMap,
+		Map<java.util.Locale, String> keywordsMap,
+		Map<java.util.Locale, String> robotsMap, String type,
+		String typeSettings, boolean hidden, boolean system,
+		Map<java.util.Locale, String> friendlyURLMap,
+		ServiceContext serviceContext) {
+
+		// Test LayoutLocalServiceUtil
+
+		LayoutLocalServiceUtil.addLayout(
+			userId, groupId, privateLayout, parentLayoutId, classNameId,
+			classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
+			type, typeSettings, hidden, system, friendlyURLMap, serviceContext);
+
+		// Test LayoutLocalService
+
+		_layoutLocalService.addLayout(
+			userId, groupId, privateLayout, parentLayoutId, classNameId,
+			classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
+			type, typeSettings, hidden, system, friendlyURLMap, serviceContext);
+	}
+
+	public void updateLayoutMethod(
+		long groupId, boolean privateLayout, long layoutId, long parentLayoutId,
+		Map<java.util.Locale, String> nameMap,
+		Map<java.util.Locale, String> titleMap,
+		Map<java.util.Locale, String> descriptionMap,
+		Map<java.util.Locale, String> keywordsMap,
+		Map<java.util.Locale, String> robotsMap, String type, boolean hidden,
+		Map<java.util.Locale, String> friendlyURLMap, boolean hasIconImage,
+		byte[] iconBytes, ServiceContext serviceContext) {
+
+		// Test LayoutLocalServiceUtil
+
+		LayoutLocalServiceUtil.updateLayout(
+			groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap, type, hidden,
+			friendlyURLMap, hasIconImage, iconBytes, serviceContext);
+
+		// Test LayoutLocalService
+
+		_layoutLocalService.updateLayout(
+			groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap, type, hidden,
+			friendlyURLMap, hasIconImage, iconBytes, serviceContext);
+
+		// Test LayoutService
+
+		_layoutService.updateLayout(
+			groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap, type, hidden,
+			friendlyURLMap, hasIconImage, iconBytes, serviceContext);
+
+		// Test LayoutServiceUtil
+
+		LayoutServiceUtil.updateLayout(
+			groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap, type, hidden,
+			friendlyURLMap, hasIconImage, iconBytes, serviceContext);
+
+		// Test scenario when it is not possible to validate parameter types
+
+		_layoutLocalService.updateLayout(
+			groupId, true, 12345, parentLayoutId, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap, test, hidden,
+			friendlyURLMap, hasIconImage, iconBytes, serviceContext);
+	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
+
+}

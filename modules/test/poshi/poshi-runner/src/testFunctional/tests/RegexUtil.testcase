@@ -1,0 +1,33 @@
+@component-name = "portal-tools"
+definition {
+
+	property poshi.runner.acceptance = "true";
+	property testray.main.component.name = "Smoke";
+
+	@disable-webdriver = "true"
+	@priority = 5
+	test EscapeRegexChars {
+		var unescapedVar = "$3.21 (test)";
+
+		var expected = RegexUtil.escapeRegexChars(${unescapedVar});
+		var actual = "\$3\.21 \(test\)";
+
+		if (${actual} == ${expected}) {
+			echo("The characters were escaped from the pattern.");
+
+			echo("actual: '${actual}'");
+
+			echo("expected: '${expected}'");
+		}
+		else {
+			echo("The characters were NOT escaped from the pattern.");
+
+			echo("actual: '${actual}'");
+
+			echo("expected: '${expected}'");
+
+			fail("Found the wrong value!");
+		}
+	}
+
+}

@@ -6,33 +6,39 @@ apply plugin: "org.ysb33r.gradletest"
 task copyGradleTestDependencies(type: Copy)
 task updateReadme(type: ReplaceRegexTask)
 
-String gradleVersion = "6.9.2"
+String gradleVersion = "7.3.3"
 
 tasks.eclipse {
 	ext.gradleVersion = gradleVersion
 }
 
 copyGradleTestDependencies {
-	from configurations.compile
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+	from configurations.compileClasspath
 	into jar.destinationDir
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.47"
+	api group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.48"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
-	compileOnly group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.1326"
+	compileOnly group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.1341"
 }
 
 gradleTest {
 	dependsOn copyGradleTestDependencies
 	dependsOn jar
 
-	versions "5.6.4", gradleVersion
+	versions gradleVersion
 }
 
 pluginBundle {
 	tags = ["java", "style"]
+}
+
+publish {
+	dependsOn updateReadme
 }
 
 updateReadme {
@@ -45,8 +51,4 @@ updateReadme {
 	replacement = {
 		project.version
 	}
-}
-
-uploadArchives {
-	dependsOn updateReadme
 }

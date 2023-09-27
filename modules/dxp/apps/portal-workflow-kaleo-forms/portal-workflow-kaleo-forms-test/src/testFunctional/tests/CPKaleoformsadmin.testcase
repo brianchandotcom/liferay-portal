@@ -99,6 +99,7 @@ definition {
 	@priority = 3
 	test AddProcessWithNewFieldSetAndWorkflowViaSourceTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -170,6 +171,7 @@ definition {
 		property ci.retries.disabled = "true";
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -231,6 +233,7 @@ definition {
 		property ci.retries.disabled = "true";
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1062,6 +1065,7 @@ definition {
 	test EditProcessFieldSetPaginationAndViewSelectedForm {
 		property portal.upstream = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var kfFieldSetName : list "Field1,Field2,Field3,Field4,Field5,Field6") {
 			ProductMenu.gotoPortlet(
@@ -1446,6 +1450,7 @@ definition {
 		property ci.retries.disabled = "true";
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1596,6 +1601,7 @@ definition {
 	test EditSingleApproverWorkflowViaSourceTabViaAddProcess {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1668,6 +1674,7 @@ definition {
 	test EditSingleApproverWorkflowViaViewTabViaAddProcess {
 		property ci.retries.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1745,6 +1752,7 @@ definition {
 	test EditUploadedWorkflowViaViewTabViaAddProcess {
 		property ci.retries.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

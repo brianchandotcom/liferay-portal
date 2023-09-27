@@ -3,13 +3,13 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "release.dxp.api", version: "7.4.13.u27"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 
-	testCompile group: "com.liferay.portal", name: "release.dxp.api", version: "7.4.13.u27"
-	testCompile group: "junit", name: "junit", version: "4.12"
-	testCompile group: "org.mockito", name: "mockito-all", version: "1.10.19"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.6.2"
-	testCompile group: "com.liferay", name: "com.liferay.journal.api", version: "3.0.2"
-	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "4.8.3"
-	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"
+	testImplementation group: "com.liferay.portal", name: "release.dxp.api", version: "7.4.13.u27"
+	testImplementation group: "junit", name: "junit", version: "4.12"
+	testImplementation group: "org.mockito", name: "mockito-all", version: "1.10.19"
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.6.2"
+	testImplementation group: "com.liferay", name: "com.liferay.journal.api", version: "3.0.2"
+	testImplementation group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "4.8.3"
+	testImplementation group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"
 }
 
 buildService {

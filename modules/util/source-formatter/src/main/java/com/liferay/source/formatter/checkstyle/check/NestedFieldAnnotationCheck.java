@@ -1,26 +1,20 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.source.formatter.checkstyle.check;
+
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Alan Huang
@@ -49,73 +43,71 @@ public class NestedFieldAnnotationCheck extends BaseCheck {
 		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 			detailAST, "Component");
 
-		List<String> serviceNamesList = _getServiceNamesList(
+		String nestedFieldSupportValue = _getNestedFieldSupportValue(
 			annotationDetailAST);
 
 		boolean hasNestedFieldAnnotation = _hasNestedFieldAnnotation(
 			getAllChildTokens(detailAST, true, TokenTypes.METHOD_DEF));
 
 		if (hasNestedFieldAnnotation &&
-			!serviceNamesList.contains("NestedFieldSupport")) {
+			!Objects.equals(nestedFieldSupportValue, "true")) {
 
-			log(annotationDetailAST, _MSG_NEEDED_SERVICE);
+			log(annotationDetailAST, _MSG_NESTED_FIELD_SUPPORT_MISSING);
 		}
 		else if (!hasNestedFieldAnnotation &&
-				 serviceNamesList.contains("NestedFieldSupport")) {
+				 (nestedFieldSupportValue != null)) {
 
-			log(annotationDetailAST, _MSG_UNNEEDED_SERVICE);
+			log(annotationDetailAST, _MSG_NESTED_FIELD_SUPPORT_UNNEEDED);
 		}
 	}
 
-	private List<String> _getServiceNamesList(DetailAST annotationDetailAST) {
+	private String _getNestedFieldSupportValue(DetailAST annotationDetailAST) {
 		if (annotationDetailAST == null) {
-			return Collections.emptyList();
+			return null;
 		}
 
 		DetailAST annotationMemberValuePairDetailAST =
 			getAnnotationMemberValuePairDetailAST(
-				annotationDetailAST, "service");
+				annotationDetailAST, "property");
 
 		if (annotationMemberValuePairDetailAST == null) {
-			return Collections.emptyList();
+			return null;
 		}
+
+		List<DetailAST> expressionDetailASTList = new ArrayList<>();
 
 		DetailAST annotationArrayInitDetailAST =
 			annotationMemberValuePairDetailAST.findFirstToken(
 				TokenTypes.ANNOTATION_ARRAY_INIT);
 
-		if (annotationArrayInitDetailAST == null) {
-			return Collections.emptyList();
+		if (annotationArrayInitDetailAST != null) {
+			expressionDetailASTList.addAll(
+				getAllChildTokens(
+					annotationArrayInitDetailAST, false, TokenTypes.EXPR));
 		}
-
-		List<String> serviceNamesList = new ArrayList<>();
-
-		List<DetailAST> expressionDetailASTList = getAllChildTokens(
-			annotationArrayInitDetailAST, false, TokenTypes.EXPR);
+		else {
+			expressionDetailASTList.add(
+				annotationMemberValuePairDetailAST.findFirstToken(
+					TokenTypes.EXPR));
+		}
 
 		for (DetailAST expressionDetailAST : expressionDetailASTList) {
 			DetailAST firstChildDetailAST = expressionDetailAST.getFirstChild();
 
-			if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+			if (firstChildDetailAST.getType() != TokenTypes.STRING_LITERAL) {
 				continue;
 			}
 
-			firstChildDetailAST = firstChildDetailAST.getFirstChild();
+			String[] property = StringUtil.split(
+				StringUtil.unquote(firstChildDetailAST.getText()),
+				CharPool.EQUAL);
 
-			if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
-				continue;
+			if (property[0].equals("nested.field.support")) {
+				return property[1];
 			}
-
-			DetailAST siblingDetailAST = firstChildDetailAST.getNextSibling();
-
-			if (siblingDetailAST.getType() != TokenTypes.LITERAL_CLASS) {
-				continue;
-			}
-
-			serviceNamesList.add(firstChildDetailAST.getText());
 		}
 
-		return serviceNamesList;
+		return null;
 	}
 
 	private boolean _hasNestedFieldAnnotation(List<DetailAST> detailASTList) {
@@ -133,8 +125,10 @@ public class NestedFieldAnnotationCheck extends BaseCheck {
 		return false;
 	}
 
-	private static final String _MSG_NEEDED_SERVICE = "service.needed";
+	private static final String _MSG_NESTED_FIELD_SUPPORT_MISSING =
+		"nested.field.support.missing";
 
-	private static final String _MSG_UNNEEDED_SERVICE = "service.unneeded";
+	private static final String _MSG_NESTED_FIELD_SUPPORT_UNNEEDED =
+		"nested.field.support.unneeded";
 
 }

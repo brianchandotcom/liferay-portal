@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -22,32 +13,26 @@ long exportImportConfigurationId = (Long)request.getAttribute(ExportImportWebKey
 ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 %>
 
-<liferay-ui:panel-container
-	extended="<%= true %>"
-	id="exportImportConfigurationPanelContainer"
-	persistState="<%= false %>"
->
-	<liferay-ui:panel
-		collapsible="<%= false %>"
-		extended="<%= true %>"
-		title="template-type"
-	>
-		<liferay-ui:message key="<%= ExportImportConfigurationConstants.getTypeLabel(exportImportConfiguration.getType()) %>" />
-	</liferay-ui:panel>
+<clay:sheet-section>
+	<h2 class="sheet-title">
+		<liferay-ui:message key="template-type" />
+	</h2>
 
-	<liferay-ui:panel
-		collapsible="<%= false %>"
-		extended="<%= true %>"
-		title="created-by"
-	>
-		<liferay-ui:message key="<%= exportImportConfiguration.getUserName() %>" />
-	</liferay-ui:panel>
+	<liferay-ui:message key="<%= ExportImportConfigurationConstants.getTypeLabel(exportImportConfiguration.getType()) %>" />
+</clay:sheet-section>
 
-	<liferay-ui:panel
-		collapsible="<%= false %>"
-		extended="<%= true %>"
-		title="description"
-	>
-		<liferay-ui:message key="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>" />
-	</liferay-ui:panel>
-</liferay-ui:panel-container>
+<clay:sheet-section>
+	<h2 class="sheet-title">
+		<liferay-ui:message key="created-by" />
+	</h2>
+
+	<liferay-ui:message key="<%= exportImportConfiguration.getUserName() %>" />
+</clay:sheet-section>
+
+<clay:sheet-section>
+	<h2 class="sheet-title">
+		<liferay-ui:message key="description" />
+	</h2>
+
+	<liferay-ui:message key="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>" />
+</clay:sheet-section>

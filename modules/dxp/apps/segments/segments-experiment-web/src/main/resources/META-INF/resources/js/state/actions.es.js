@@ -1,12 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 export function addSegmentsExperiment(payload) {
@@ -20,13 +14,6 @@ export function addVariant(payload) {
 	return {
 		payload,
 		type: 'ADD_VARIANT',
-	};
-}
-
-export function archiveExperiment(payload) {
-	return {
-		payload,
-		type: 'ARCHIVE_EXPERIMENT',
 	};
 }
 
@@ -48,15 +35,6 @@ export function closeReviewAndRunExperiment() {
 	};
 }
 
-export function deleteArchivedExperiment(experimentId) {
-	return {
-		payload: {
-			experimentId,
-		},
-		type: 'DELETE_ARCHIVED_EXPERIMENT',
-	};
-}
-
 export function editSegmentsExperiment(payload) {
 	return {
 		payload,
@@ -68,6 +46,48 @@ export function openCreationModal(payload) {
 	return {
 		payload,
 		type: 'CREATE_EXPERIMENT_START',
+	};
+}
+
+export function closeDeletionModal() {
+	return {
+		payload: {active: false},
+		type: 'DELETE_EXPERIMENT',
+	};
+}
+
+export function closePublishModal() {
+	return {
+		payload: {active: false, experience: null},
+		type: 'PUBLISH_EXPERIMENT',
+	};
+}
+
+export function openPublishModal(experience) {
+	return {
+		payload: {active: true, experience},
+		type: 'PUBLISH_EXPERIMENT',
+	};
+}
+
+export function openDeletionModal() {
+	return {
+		payload: {active: true},
+		type: 'DELETE_EXPERIMENT',
+	};
+}
+
+export function closeTerminateModal() {
+	return {
+		payload: {active: false},
+		type: 'TERMINATE_EXPERIMENT',
+	};
+}
+
+export function openTerminateModal() {
+	return {
+		payload: {active: true},
+		type: 'TERMINATE_EXPERIMENT',
 	};
 }
 

@@ -151,6 +151,7 @@ definition {
 	test CombineContentForMultisegmentDynamicCollectionWithoutPagination {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -285,6 +286,7 @@ definition {
 	test CombineContentForMultisegmentDynamicCollectionWithPagination {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -436,6 +438,7 @@ definition {
 	test CombineContentForMultisegmentManualCollectionWithoutPagination {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -537,6 +540,7 @@ definition {
 	test CombineContentForMultisegmentManualCollectionWithPagination {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -1902,6 +1906,68 @@ definition {
 			AssertTextEquals(
 				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_BULLET_LIST_TEXT",
 				value1 = "Blog_1");
+		}
+	}
+
+	@description = "This is a test for LPS-98466. Editing a collection fails after deleting a segment used by it."
+	@priority = 3
+	test EditManualCollectionAfterDeletingASegmentUsedByIt {
+		task ("Given a manual collection with variation") {
+			task ("Create web content articles") {
+				for (var i : list "1,2") {
+					JSONWebcontent.addWebContent(
+						content = "WC Content",
+						groupName = "Test Site Name",
+						title = "WC_Title_${i}");
+				}
+			}
+
+			task ("Create a segment") {
+				JSONSegmentsentry.addSegment(
+					fieldName = "Signed In",
+					groupName = "Test Site Name",
+					operator = "equals",
+					segmentName = "Segment Name",
+					text = "false");
+			}
+
+			task ("Create a manual Collection") {
+				JSONAssetlist.addManualAssetListEntryWithItemType(
+					groupName = "Test Site Name",
+					itemSubtype = "All Subtypes",
+					itemType = "Web Content Article",
+					title = "Manual Collection Test");
+			}
+
+			task ("Create a variation for the collection and select a web content") {
+				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+				AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+
+				AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment Name");
+
+				AssetListsAdmin.selectAsset(
+					assetListTitle = "Manual Collection Test",
+					assetType = "Basic Web Content",
+					entryList = "WC_Title_2");
+			}
+		}
+
+		task ("When delete the segment") {
+			JSONSegmentsentry.deleteSegment(
+				groupName = "Test Site Name",
+				segmentName = "Segment Name");
+		}
+
+		task ("Then assert user is able to edit the manual collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_1");
 		}
 	}
 
@@ -3691,6 +3757,7 @@ definition {
 	@priority = 3
 	test ViewCombineContentForMultisegmentDynamicCollectionInAssetPublisher {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -3792,6 +3859,7 @@ definition {
 	@priority = 3
 	test ViewCombineContentForMultisegmentDynamicCollectionInCollectionDisplayFragment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create web content articles") {
 			JSONWebcontent.addWebContent(
@@ -3903,6 +3971,7 @@ definition {
 	@priority = 3
 	test ViewCombineContentForMultisegmentManualCollectionInAssetPublisher {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -4005,6 +4074,7 @@ definition {
 	@priority = 3
 	test ViewCombineContentForMultisegmentManualCollectionInCollectionDisplayFragment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create web content articles") {
 			JSONWebcontent.addWebContent(
@@ -4118,6 +4188,7 @@ definition {
 	@priority = 3
 	test ViewCombineContentOrderForMultisegmentDynamicCollection {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create web content articles") {
 			for (var i : list "1,2,3,4") {
@@ -4241,6 +4312,7 @@ definition {
 	@priority = 3
 	test ViewCombineContentOrderForMultisegmentManualCollection {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -5093,15 +5165,17 @@ definition {
 	test ViewWCViaAPWithAssetListBasedOnGroupedKeywords {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Create public page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				layoutName = "Asset Publisher Page");
 		}
 
 		task ("Add an Asset Publisher portlet to the created public page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				layoutName = "Asset Publisher Page",
 				widgetName = "Asset Publisher");
 		}
@@ -5110,7 +5184,7 @@ definition {
 			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent Content ${text}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "WC WebContent Title ${text}");
 			}
 		}
@@ -5142,17 +5216,14 @@ definition {
 			}
 
 			task ("Create a dynamic asset list") {
-				JSONAssetlist.addDynamicAssetListEntryWithItemType(
-					groupName = "Test Site Name",
-					itemType = "All Types",
-					title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+				AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+				AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 			}
 
 			task ("Create filter rule for asset list") {
-				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-				AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
-
 				AssetListsAdmin.addKeywordsFilter(
 					keyWords = "\"2 3\" \"3 4\"",
 					queryAndOperator = ${queryAndOperator},
@@ -5202,15 +5273,17 @@ definition {
 	test ViewWebContentViaAssetPublisherWithAssetListBasedOnKeywords {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Create public page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				layoutName = "Asset Publisher Page");
 		}
 
 		task ("Add an Asset Publisher portlet to the created public page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				layoutName = "Asset Publisher Page",
 				widgetName = "Asset Publisher");
 		}
@@ -5219,7 +5292,7 @@ definition {
 			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent Content ${text}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "WC WebContent Title ${text}");
 			}
 		}
@@ -5251,17 +5324,14 @@ definition {
 			}
 
 			task ("Create a dynamic asset list") {
-				JSONAssetlist.addDynamicAssetListEntryWithItemType(
-					groupName = "Test Site Name",
-					itemType = "All Types",
-					title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+				AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+				AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 			}
 
 			task ("Create filter rule for asset list") {
-				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-				AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
-
 				AssetListsAdmin.addKeywordsFilter(
 					keyWords = "2 3",
 					queryAndOperator = ${queryAndOperator},

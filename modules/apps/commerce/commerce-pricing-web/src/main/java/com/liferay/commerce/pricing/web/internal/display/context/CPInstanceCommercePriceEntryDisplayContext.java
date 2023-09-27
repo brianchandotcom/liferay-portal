@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.pricing.web.internal.display.context;
@@ -20,12 +11,14 @@ import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHel
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -33,12 +26,16 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -103,24 +100,63 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		return cpInstanceId;
 	}
 
-	public CreationMenu getCreationMenu() throws PortalException {
-		return CreationMenuBuilder.addDropdownItem(
-			dropdownItem -> {
-				CPInstance cpInstance = getCPInstance();
+	public List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures()
+		throws PortalException {
 
-				dropdownItem.setHref(
-					liferayPortletResponse.getNamespace() +
-						"addCommercePriceEntry");
-				dropdownItem.setLabel(
-					LanguageUtil.format(
-						httpServletRequest, "add-x-to-price-list",
-						HtmlUtil.escape(cpInstance.getSku()), false));
-				dropdownItem.setTarget("event");
-			}
-		).build();
+		CPInstance cpInstance = getCPInstance();
+
+		return cpInstance.getCPInstanceUnitOfMeasures(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
-	public String getItemSelectorUrl() throws PortalException {
+	public CreationMenu getCreationMenu() throws PortalException {
+		CreationMenu creationMenu = new CreationMenu();
+
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+			getCPInstanceUnitOfMeasures();
+
+		if (cpInstanceUnitOfMeasures.isEmpty()) {
+			CPInstance cpInstance = getCPInstance();
+
+			return creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						liferayPortletResponse.getNamespace() +
+							"addCommercePriceEntry");
+					dropdownItem.setLabel(
+						LanguageUtil.format(
+							httpServletRequest, "add-x-to-price-list",
+							HtmlUtil.escape(cpInstance.getSku()), false));
+					dropdownItem.setTarget("event");
+				});
+		}
+
+		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
+				cpInstanceUnitOfMeasures) {
+
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						StringBundler.concat(
+							liferayPortletResponse.getNamespace(),
+							"addCommercePriceEntry",
+							HtmlUtil.escapeJS(
+								cpInstanceUnitOfMeasure.getKey())));
+					dropdownItem.setLabel(
+						LanguageUtil.format(
+							httpServletRequest, "add-x-to-price-list",
+							HtmlUtil.escape(cpInstanceUnitOfMeasure.getKey()),
+							false));
+					dropdownItem.setTarget("event");
+				});
+		}
+
+		return creationMenu;
+	}
+
+	public String getItemSelectorUrl(String unitOfMeasureKey)
+		throws PortalException {
+
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
 
@@ -139,8 +175,57 @@ public class CPInstanceCommercePriceEntryDisplayContext
 				commercePriceListItemSelectorCriterion)
 		).setParameter(
 			"checkedCommercePriceListIds",
-			StringUtil.merge(_getCheckedCommercePriceListIds())
+			StringUtil.merge(_getCheckedCommercePriceListIds(unitOfMeasureKey))
 		).buildString();
+	}
+
+	public HashMap<String, Object> getJSContext() throws PortalException {
+		CPInstance cpInstance = getCPInstance();
+
+		List<String> eventNames = new ArrayList<>();
+		List<String> keys = new ArrayList<>();
+		List<String> titles = new ArrayList<>();
+		List<String> urls = new ArrayList<>();
+
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+			getCPInstanceUnitOfMeasures();
+
+		if (cpInstanceUnitOfMeasures.isEmpty()) {
+			eventNames.add("addCommercePriceEntry");
+			keys.add(StringPool.BLANK);
+			titles.add(
+				LanguageUtil.format(
+					httpServletRequest, "add-x-to-price-list",
+					HtmlUtil.escape(cpInstance.getSku()), false));
+			urls.add(getItemSelectorUrl(null));
+		}
+		else {
+			for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
+					cpInstanceUnitOfMeasures) {
+
+				String key = cpInstanceUnitOfMeasure.getKey();
+
+				eventNames.add(
+					"addCommercePriceEntry" + HtmlUtil.escapeJS(key));
+				keys.add(key);
+				titles.add(
+					LanguageUtil.format(
+						httpServletRequest, "add-x-to-price-list",
+						HtmlUtil.escape(cpInstance.getSku() + " " + key),
+						false));
+				urls.add(getItemSelectorUrl(key));
+			}
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"eventNames", eventNames.toArray(new String[0])
+		).put(
+			"keys", keys.toArray(new String[0])
+		).put(
+			"titles", titles.toArray(new String[0])
+		).put(
+			"urls", urls.toArray(new String[0])
+		).build();
 	}
 
 	@Override
@@ -163,13 +248,25 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		return "price-lists";
 	}
 
-	private long[] _getCheckedCommercePriceListIds() throws PortalException {
+	private long[] _getCheckedCommercePriceListIds(String unitOfMeasureKey)
+		throws PortalException {
+
 		List<Long> commercePriceListIds = new ArrayList<>();
 
 		List<CommercePriceEntry> commercePriceEntries =
-			_getCommercePriceEntries();
+			_commercePriceEntryService.getInstanceCommercePriceEntries(
+				getCPInstanceId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (CommercePriceEntry commercePriceEntry : commercePriceEntries) {
+			if (Validator.isNotNull(commercePriceEntry.getUnitOfMeasureKey()) &&
+				Validator.isNotNull(unitOfMeasureKey) &&
+				!Objects.equals(
+					unitOfMeasureKey,
+					commercePriceEntry.getUnitOfMeasureKey())) {
+
+				continue;
+			}
+
 			commercePriceListIds.add(
 				commercePriceEntry.getCommercePriceListId());
 		}
@@ -179,13 +276,6 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		}
 
 		return new long[0];
-	}
-
-	private List<CommercePriceEntry> _getCommercePriceEntries()
-		throws PortalException {
-
-		return _commercePriceEntryService.getInstanceCommercePriceEntries(
-			getCPInstanceId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	private final CommercePriceEntryService _commercePriceEntryService;

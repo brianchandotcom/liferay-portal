@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.opener.onedrive.web.internal.portlet.action;
@@ -25,6 +16,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -61,15 +53,15 @@ public class OneDriveBackgroundTaskStatusMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		boolean complete = false;
-		boolean error = false;
-
 		long backgroundTaskId = ParamUtil.getLong(
 			resourceRequest, "backgroundTaskId");
 
 		BackgroundTaskStatus backgroundTaskStatus =
 			_backgroundTaskStatusRegistry.getBackgroundTaskStatus(
 				backgroundTaskId);
+
+		boolean complete = false;
+		boolean error = false;
 
 		long fileEntryId = ParamUtil.getLong(resourceRequest, "fileEntryId");
 
@@ -83,12 +75,10 @@ public class OneDriveBackgroundTaskStatusMVCResourceCommand
 
 		if (backgroundTaskStatus == null) {
 			if (dlOpenerFileEntryReference == null) {
-				complete = false;
 				error = true;
 			}
 			else {
 				complete = true;
-				error = false;
 			}
 		}
 		else {
@@ -104,7 +94,7 @@ public class OneDriveBackgroundTaskStatusMVCResourceCommand
 			"error", error
 		);
 
-		if (complete && (dlOpenerFileEntryReference != null)) {
+		if (complete && !error && (dlOpenerFileEntryReference != null)) {
 			if (Validator.isNull(
 					dlOpenerFileEntryReference.getReferenceKey())) {
 
@@ -125,13 +115,97 @@ public class OneDriveBackgroundTaskStatusMVCResourceCommand
 						_log.debug(graphServicePortalException);
 					}
 
-					jsonObject.put("error", true);
+					jsonObject.put(
+						"error", true
+					).put(
+						"errorMessage",
+						_language.get(
+							_portal.getHttpServletRequest(resourceRequest),
+							_getErrorMessageKey(graphServicePortalException))
+					);
 				}
 			}
 		}
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);
+	}
+
+	private String _getErrorMessageKey(
+		GraphServicePortalException graphServicePortalException) {
+
+		if (graphServicePortalException instanceof
+				GraphServicePortalException.AccessDenied) {
+
+			return "onedrive-exception-access-denied";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.ActivityLimitReached) {
+
+			return "onedrive-exception-activity-limit-reached";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.InvalidRange) {
+
+			return "onedrive-exception-invalid-range";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.InvalidRequest) {
+
+			return "onedrive-exception-invalid-request";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.ItemNotFound) {
+
+			return "onedrive-exception-item-not-found";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.MalwareDetected) {
+
+			return "onedrive-exception-malware-detected";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.NameAlreadyExists) {
+
+			return "onedrive-exception-name-already-exists";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.NotAllowed) {
+
+			return "onedrive-exception-not-allowed";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.NotSupported) {
+
+			return "onedrive-exception-not-supported";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.QuotaLimitReached) {
+
+			return "onedrive-exception-quota-limit-reached";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.ResourceModified) {
+
+			return "onedrive-exception-resource-modified";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.ResyncRequired) {
+
+			return "onedrive-exception-resync-required";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.ServiceNotAvailable) {
+
+			return "onedrive-exception-service-not-available";
+		}
+		else if (graphServicePortalException instanceof
+					GraphServicePortalException.Unauthenticated) {
+
+			return "onedrive-exception-unauthenticated";
+		}
+
+		return "onedrive-exception-general-exception";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -149,6 +223,9 @@ public class OneDriveBackgroundTaskStatusMVCResourceCommand
 
 	@Reference
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

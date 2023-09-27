@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
@@ -36,6 +27,7 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
+import com.liferay.saml.helper.RelayStateHelper;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
@@ -501,7 +493,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			outboundMessageContext.getSubcontext(
 				SAMLBindingContext.class, true);
 
-		samlBindingContext.setRelayState(relayState);
+		samlBindingContext.setRelayState(
+			_relayStateHelper.getRelayStateTokenFromRedirect(relayState));
 
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
@@ -1268,7 +1261,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SAMLBindingContext.class);
 
 		String relayState = portal.escapeRedirect(
-			samlBindingContext.getRelayState());
+			_relayStateHelper.getRedirectFromRelayStateToken(
+				samlBindingContext.getRelayState()));
 
 		if (Validator.isNull(relayState)) {
 			relayState = portal.getHomeURL(httpServletRequest);
@@ -2124,6 +2118,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Reference
 	private NameIdResolverRegistry _nameIdResolverRegistry;
+
+	@Reference
+	private RelayStateHelper _relayStateHelper;
 
 	private SamlConfiguration _samlConfiguration;
 

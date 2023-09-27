@@ -1,21 +1,21 @@
 dependencies {
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
-	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	testIntegrationCompile group: "org.apache.commons", name: "commons-collections4", version: "4.4"
-	testIntegrationCompile group: "org.apache.commons", name: "commons-compress", version: "1.21"
-	testIntegrationCompile group: "org.apache.poi", name: "poi", version: "5.2.2"
-	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
-	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
-	testIntegrationCompile group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
-	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
-	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testIntegrationCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
-	testIntegrationCompile project(":apps:batch-engine:batch-engine-api")
-	testIntegrationCompile project(":apps:blogs:blogs-api")
-	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-client")
-	testIntegrationCompile project(":apps:object:object-api")
-	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
+	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationImplementation group: "org.apache.commons", name: "commons-collections4", version: "4.4"
+	testIntegrationImplementation group: "org.apache.commons", name: "commons-compress", version: "1.21"
+	testIntegrationImplementation group: "org.apache.poi", name: "poi", version: "5.2.2"
+	testIntegrationImplementation group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
+	testIntegrationImplementation group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
+	testIntegrationImplementation group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
+	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
+	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
+	testIntegrationImplementation project(":apps:batch-engine:batch-engine-api")
+	testIntegrationImplementation project(":apps:blogs:blogs-api")
+	testIntegrationImplementation project(":apps:headless:headless-admin-user:headless-admin-user-client")
+	testIntegrationImplementation project(":apps:object:object-api")
+	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

@@ -1,11 +1,15 @@
 definition {
 
 	macro addTemplate {
+		WaitForElementPresent(
+			key_pageTabTitle = "Build History",
+			locator1 = "Testray#PAGE_TAB_TITLE");
+
 		Click(locator1 = "Button#PLUS");
 
 		Click.javaScriptClick(
-			key_picklistOption = ${dropdownItem},
-			locator1 = "TestrayDropdown#PICKLIST_KEBAB_MENU_OPTION");
+			key_menuItem = ${dropdownItem},
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 
 		if (isSet(fieldName)) {
 			Type(
@@ -16,7 +20,8 @@ definition {
 
 		if (isSet(routineName)) {
 			Select(
-				locator1 = "TestrayBuild#ROUTINE_ID",
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "routineId",
 				value1 = ${routineName});
 		}
 
@@ -33,15 +38,22 @@ definition {
 				value1 = ${description});
 		}
 
-		Button.clickSave();
-	}
+		if (isSet(caseList)) {
+			Testray.selectCheckboxOptions(
+				buttonText = "Select Cases",
+				checkboxNameList = ${caseList},
+				linkText = "Add Cases");
+		}
 
-	macro assertTemplateName {
-		Click(locator1 = "Button#PLUS");
+		if (isSet(duplicate)) {
+			Button.clickSave();
+		}
 
-		AssertElementPresent(
-			locator1 = "TestrayTemplate#SEARCH_TEMPLATE",
-			templateName = ${templateName});
+		if (!(isSet(duplicate))) {
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro goToBuildTemplate {
@@ -52,11 +64,18 @@ definition {
 			locator1 = "TestrayDropdown#TEMPLATE_DROPDOWN");
 	}
 
-	macro viewTemplateDetails {
-		AssertElementPresent(
-			locator1 = "TestrayTemplate#TEMPLATE_DETAILS",
-			templateName = ${templateName},
-			templateStatus = ${templateStatus});
+	macro searchTemplateName {
+		Click(locator1 = "Button#PLUS");
+
+		TestrayFilter.searchFilter(filterName = ${templateName});
+	}
+
+	macro viewTemplateName {
+		for (var templateName : list ${templateList}) {
+			AssertElementPresent(
+				locator1 = "TestrayDropdown#SEARCH_TEMPLATE",
+				templateName = ${templateName});
+		}
 	}
 
 }

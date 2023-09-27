@@ -1,29 +1,23 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.upgrade.test;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -44,24 +38,30 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.appender.WriterAppender;
+import org.apache.logging.log4j.core.impl.Log4jLogEvent;
 import org.apache.logging.log4j.core.layout.PatternLayout;
+import org.apache.logging.log4j.message.SimpleMessage;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -334,17 +334,23 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				longestUpgradeProcessesValue.indexOf(fasterUpgradeProcessName));
 	}
 
-	@Ignore
 	@Test
 	public void testLogEvents() throws Exception {
 		_appender.start();
 
-		Log log = LogFactoryUtil.getLog(BaseUpgradeLogAppenderTestCase.class);
+		LogEvent logEvent = Log4jLogEvent.newBuilder(
+		).setLoggerName(
+			"Warn"
+		).setLevel(
+			Level.WARN
+		).setMessage(
+			new SimpleMessage("Warning")
+		).build();
 
-		log.warn("Warning");
-		log.warn("Warning");
+		_appender.append(logEvent);
+		_appender.append(logEvent);
 
-		log = LogFactoryUtil.getLog(UpgradeProcess.class);
+		Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
 
 		log.info(
 			"Completed upgrade process com.liferay.portal.UpgradeTest in " +
@@ -440,26 +446,22 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testSchemaVersion() throws Exception {
-		Release release = _releaseLocalService.getRelease(1);
+		int initialBuildNumber = 0;
+		Version initialSchemaVersion = null;
 
-		int initialBuildNumber = release.getBuildNumber();
-		String initialSchemaVersion = release.getSchemaVersion();
+		try (Connection connection = DataAccess.getConnection()) {
+			initialBuildNumber = PortalUpgradeProcess.getCurrentBuildNumber(
+				connection);
+			initialSchemaVersion = PortalUpgradeProcess.getCurrentSchemaVersion(
+				connection);
+		}
 
-		release = _releaseLocalService.getRelease(1);
-
-		release.setSchemaVersion("1.0.0");
-		release.setBuildNumber(ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
-
-		_releaseLocalService.updateRelease(release);
+		_updatePortalRelease(
+			new Version(1, 0, 0), ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
 
 		_appender.start();
 
-		release = _releaseLocalService.getRelease(1);
-
-		release.setSchemaVersion(initialSchemaVersion);
-		release.setBuildNumber(initialBuildNumber);
-
-		_releaseLocalService.updateRelease(release);
+		_updatePortalRelease(initialSchemaVersion, initialBuildNumber);
 
 		_appender.stop();
 
@@ -618,6 +620,27 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		return () -> ReflectionTestUtil.getAndSetFieldValue(
 			PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT",
 			originalUpgradeReportDLStorageSizeTimeout);
+	}
+
+	private void _updatePortalRelease(Version schemaVersion, int buildNumber)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"update Release_ set schemaVersion = ?, buildNumber = ? " +
+					"where releaseId = ?")) {
+
+			preparedStatement.setString(1, schemaVersion.toString());
+			preparedStatement.setInt(2, buildNumber);
+			preparedStatement.setLong(3, ReleaseConstants.DEFAULT_ID);
+
+			preparedStatement.executeUpdate();
+		}
+
+		DCLSingleton<?> dclSingleton = ReflectionTestUtil.getFieldValue(
+			PortalUpgradeProcess.class, "_currentPortalReleaseDTODCLSingleton");
+
+		dclSingleton.destroy(null);
 	}
 
 	private static DB _db;

@@ -1,20 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.Creator;
+import com.liferay.headless.delivery.client.dto.v1_0.UserGroupBrief;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -161,6 +153,26 @@ public class CreatorSerDes {
 			sb.append("\"");
 		}
 
+		if (creator.getUserGroupBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userGroupBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < creator.getUserGroupBriefs().length; i++) {
+				sb.append(String.valueOf(creator.getUserGroupBriefs()[i]));
+
+				if ((i + 1) < creator.getUserGroupBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -236,6 +248,15 @@ public class CreatorSerDes {
 			map.put("profileURL", String.valueOf(creator.getProfileURL()));
 		}
 
+		if (creator.getUserGroupBriefs() == null) {
+			map.put("userGroupBriefs", null);
+		}
+		else {
+			map.put(
+				"userGroupBriefs",
+				String.valueOf(creator.getUserGroupBriefs()));
+		}
+
 		return map;
 	}
 
@@ -294,6 +315,22 @@ public class CreatorSerDes {
 			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
 				if (jsonParserFieldValue != null) {
 					creator.setProfileURL((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "userGroupBriefs")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					UserGroupBrief[] userGroupBriefsArray =
+						new UserGroupBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < userGroupBriefsArray.length; i++) {
+						userGroupBriefsArray[i] = UserGroupBriefSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					creator.setUserGroupBriefs(userGroupBriefsArray);
 				}
 			}
 		}

@@ -1,22 +1,17 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import React from 'react';
+import React, {useContext} from 'react';
+
+import {AppContext} from '../../../AppContext.es';
 
 export default function AskQuestionButton({navigateToNewQuestion}) {
+	const context = useContext(AppContext);
+
 	return (
 		<ClayInput.GroupItem shrink>
 			<ClayButton
@@ -24,7 +19,11 @@ export default function AskQuestionButton({navigateToNewQuestion}) {
 				displayType="primary"
 				onClick={navigateToNewQuestion}
 			>
-				{Liferay.Language.get('ask-question')}
+				{Liferay.FeatureFlags['LPS-185892']
+					? context.askQuestionButtonText !== ''
+						? context.askQuestionButtonText
+						: Liferay.Language.get('ask-question')
+					: Liferay.Language.get('ask-question')}
 			</ClayButton>
 		</ClayInput.GroupItem>
 	);

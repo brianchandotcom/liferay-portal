@@ -27,9 +27,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-45254. View URL validate."
-	@priority = 4
+	@priority = 3
 	test MaliciousURLScriptsAreNotValidated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Access malicious url and assert script was not validated") {
 			var maliciousUrl1 = '''
@@ -62,7 +63,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-7595. Validate XSS vulnerabilities."
-	@priority = 4
+	@priority = 3
 	test MaliciousURLScriptsDoNotExecute {
 		task ("Visit malicious urls and request error message") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -102,7 +103,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-92264. Assert no XSS pop up in asset publisher content."
-	@priority = 5
+	@priority = 3
 	test NoXSSVulnerabilityInAssetPublisherContent {
 		task ("Add web content") {
 			JSONWebcontent.addWebContent(
@@ -150,7 +151,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-90727. Assert no XSS vulnerability when modifying a specific URL from the control panel."
-	@priority = 5
+	@priority = 3
 	test NoXSSVulnerabilityInControlPanel {
 		property portal.acceptance = "true";
 
@@ -174,7 +175,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-83273. View forms entry with XSS."
-	@priority = 5
+	@priority = 3
 	test NoXSSVulnerabilityInForms {
 		var formDescription = '''<script>alert(222)</script>''';
 		var formName = '''<script>alert(111)</script>''';
@@ -251,6 +252,28 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-113685"
+	@priority = 3
+	test NoXSSVulnerabilityInGroovyScript {
+		property test.liferay.virtual.instance = "false";
+
+		ServerAdministration.openServerAdmin();
+
+		var script = '''
+			<script>alert(123)</script>
+		''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = ${script});
+
+		AssertElementPresent(
+			locator1 = "Message#ERROR",
+			value1 = "Your request failed to complete.");
+
+		AssertAlertNotPresent();
+	}
+
 	@description = "This is a use case for LRQA-10563. View JSONWS."
 	@priority = 3
 	test NoXSSVulnerabilityInJSONWS {
@@ -288,7 +311,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-10563. View liferay portlet list."
-	@priority = 4
+	@priority = 3
 	test NoXSSVulnerabilityInLiferayPortletList {
 		task ("Add public page") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -323,7 +346,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-10472. View, look and feel."
-	@priority = 4
+	@priority = 3
 	test NoXSSVulnerabilityInLookAndFeel {
 		task ("Add public page") {
 			JSONLayout.addPublicLayout(
@@ -362,6 +385,7 @@ definition {
 	@priority = 3
 	test NoXSSVulnerabilityInMatomo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Edit matomo CP") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -381,7 +405,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-10472. View Recycle bin."
-	@priority = 4
+	@priority = 3
 	test NoXSSVulnerabilityInRecycleBin {
 		var entryTitle = '''<script>alert(123);</script>''';
 
@@ -423,7 +447,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-48990. View roles."
-	@priority = 4
+	@priority = 3
 	test NoXSSVulnerabilityInRoles {
 		task ("Add role") {
 			Role.openRolesAdmin();
@@ -465,7 +489,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-30154. View search results."
-	@priority = 5
+	@priority = 3
 	test NoXSSVulnerabilityInSearchResults {
 		property portal.acceptance = "true";
 
@@ -498,7 +522,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-71236 and LPS-71307. View web content."
-	@priority = 5
+	@priority = 3
 	test NoXSSVulnerabilityInWebContent {
 		task ("Given: A Web Content is created with a script in the title") {
 			JSONWebcontent.addWebContent(
@@ -558,7 +582,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-45254. View wiki."
-	@priority = 5
+	@priority = 3
 	test NoXSSVulnerabilityInWiki {
 		task ("Edit user information") {
 			Navigator.openURL();

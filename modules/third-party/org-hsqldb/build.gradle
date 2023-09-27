@@ -1,0 +1,95 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.OSDetector
+
+import groovy.io.FileType
+
+task deleteSrcDirectory(type: Delete)
+task downloadSrc(type: Exec)
+task jarManifest
+task jarPatched(type: Zip)
+task unzip(type: Copy)
+
+String hsqldbVersion = "2.7.1"
+String srcUrl = "https://repo1.maven.org/maven2/org/hsqldb/hsqldb/${hsqldbVersion}/hsqldb-${hsqldbVersion}-sources.jar"
+String tempDir ="build/tmp/zip"
+
+compileJava {
+	dependsOn downloadSrc
+	dependsOn unzip
+	options.compilerArgs.add("-g:lines,source,vars")
+}
+
+deleteSrcDirectory {
+	delete file('src')
+}
+
+dependencies {
+	compileOnly group: "org.hsqldb", name: "hsqldb", transitive: false, version: "2.7.1"
+}
+
+downloadSrc {
+	File srcTmpDir = new File(temporaryDir, "src")
+
+	if (OSDetector.windows) {
+		executable "cmd.exe"
+
+		args "/c"
+	}
+	else {
+		executable "/bin/sh"
+
+		args "-c"
+	}
+
+	args "wget '${srcUrl}' -P '${tempDir}'"
+}
+
+jar {
+	dependsOn downloadSrc
+	dependsOn unzip
+	dependsOn compileJava
+	dependsOn jarPatched
+	finalizedBy deleteSrcDirectory
+	setActions([])
+}
+
+jarPatched {
+	archiveName = jar.archiveName
+	destinationDir = jar.destinationDir
+	duplicatesStrategy = 'exclude'
+
+	exclude "module-info.class"
+
+	from sourceSets.main.output
+
+	from {
+		zipTree(configurations.compileOnly.singleFile)
+	}
+}
+
+unzip {
+	dependsOn downloadSrc
+	from zipTree(file("${tempDir}/hsqldb-${hsqldbVersion}-sources.jar"))
+	into file("${tempDir}/src")
+
+	File srcTmpDir = new File("${tempDir}/src/org")
+
+	doLast {
+		srcTmpDir.eachFileRecurse(FileType.FILES) {
+			if (it.toPath().toString().contains("cmdline") ) {
+				return
+			}
+
+			if (it.name.endsWith(".java")) {
+				File destFile = new File(file("src/main/java"), FileUtil.relativize(it, srcTmpDir))
+
+				destFile.parentFile.mkdirs()
+
+				it.renameTo(destFile)
+			}
+		}
+	}
+	ext {
+		autoClean = false
+	}
+}

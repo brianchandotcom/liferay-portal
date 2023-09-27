@@ -1,21 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.web.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
@@ -35,16 +27,30 @@ import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
  * @author Amanda Costa, Joshua Cords
  */
 public abstract class BaseFacetDisplayContextTestCase {
+
+	@BeforeClass
+	public static void setUpClass() {
+		configurationProviderUtilMockedStatic = Mockito.mockStatic(
+			ConfigurationProviderUtil.class);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		configurationProviderUtilMockedStatic.close();
+	}
 
 	public FacetDisplayContext createFacetDisplayContext(String parameterValue)
 		throws Exception {
@@ -276,15 +282,12 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return termCollector;
 	}
 
-	protected static HttpServletRequest getHttpServletRequest(
-			Class<?> facetPortletConfiguration)
-		throws ConfigurationException {
-
+	protected static HttpServletRequest getHttpServletRequest() {
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
 		Mockito.doReturn(
-			getThemeDisplay(facetPortletConfiguration)
+			getThemeDisplay()
 		).when(
 			httpServletRequest
 		).getAttribute(
@@ -294,31 +297,25 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return httpServletRequest;
 	}
 
-	protected static PortletDisplay getPortletDisplay(
-			Class<?> facetPortletConfiguration)
-		throws ConfigurationException {
-
+	protected static PortletDisplay getPortletDisplay() {
 		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
 
-		Mockito.doReturn(
-			Mockito.mock(facetPortletConfiguration)
-		).when(
-			portletDisplay
-		).getPortletInstanceConfiguration(
-			Mockito.any()
+		Mockito.when(
+			portletDisplay.getPortletResource()
+		).thenReturn(
+			"test"
 		);
 
 		return portletDisplay;
 	}
 
-	protected static RenderRequest getRenderRequest(
-			Class<?> facetPortletConfiguration)
+	protected static RenderRequest getRenderRequest()
 		throws ConfigurationException {
 
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
 
 		Mockito.doReturn(
-			getThemeDisplay(facetPortletConfiguration)
+			getThemeDisplay()
 		).when(
 			renderRequest
 		).getAttribute(
@@ -340,14 +337,11 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return termCollectors;
 	}
 
-	protected static ThemeDisplay getThemeDisplay(
-			Class<?> facetPortletConfiguration)
-		throws ConfigurationException {
-
+	protected static ThemeDisplay getThemeDisplay() {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.doReturn(
-			getPortletDisplay(facetPortletConfiguration)
+			getPortletDisplay()
 		).when(
 			themeDisplay
 		).getPortletDisplay();
@@ -423,6 +417,9 @@ public abstract class BaseFacetDisplayContextTestCase {
 
 		throw new UnsupportedOperationException();
 	}
+
+	protected static MockedStatic<ConfigurationProviderUtil>
+		configurationProviderUtilMockedStatic;
 
 	protected int[] expectedFrequenciesFrequencyAscending = {4, 5, 5, 6};
 	protected int[] expectedFrequenciesFrequencyDescending = {6, 5, 5, 4};

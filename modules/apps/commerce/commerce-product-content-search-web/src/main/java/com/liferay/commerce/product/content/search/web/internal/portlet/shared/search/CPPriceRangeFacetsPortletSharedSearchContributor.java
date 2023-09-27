@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.content.search.web.internal.portlet.shared.search;
@@ -18,6 +9,7 @@ import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPPriceRangeFacetsPortletInstanceConfiguration;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -26,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -86,15 +77,12 @@ public class CPPriceRangeFacetsPortletSharedSearchContributor
 			RenderRequest renderRequest, SearchContext searchContext)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		CPPriceRangeFacetsPortletInstanceConfiguration
 			cpPriceRangeFacetsPortletInstanceConfiguration =
-				portletDisplay.getPortletInstanceConfiguration(
-					CPPriceRangeFacetsPortletInstanceConfiguration.class);
+				_configurationProvider.getPortletInstanceConfiguration(
+					CPPriceRangeFacetsPortletInstanceConfiguration.class,
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY));
 
 		Facet facet = _dateRangeFacetFactory.newInstance(searchContext);
 
@@ -132,6 +120,9 @@ public class CPPriceRangeFacetsPortletSharedSearchContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPPriceRangeFacetsPortletSharedSearchContributor.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DateRangeFacetFactory _dateRangeFacetFactory;

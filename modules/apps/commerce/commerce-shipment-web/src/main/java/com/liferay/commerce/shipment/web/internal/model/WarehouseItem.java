@@ -1,18 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.shipment.web.internal.model;
+
+import java.math.BigDecimal;
 
 /**
  * @author Alec Sloan
@@ -20,7 +13,8 @@ package com.liferay.commerce.shipment.web.internal.model;
 public class WarehouseItem {
 
 	public WarehouseItem(
-		String inputName, int maxQuantity, int minQuantity, int quantity) {
+		String inputName, BigDecimal maxQuantity, BigDecimal minQuantity,
+		BigDecimal quantity) {
 
 		_inputName = inputName;
 		_maxQuantity = maxQuantity;
@@ -32,21 +26,21 @@ public class WarehouseItem {
 		return _inputName;
 	}
 
-	public int getMaxQuantity() {
+	public BigDecimal getMaxQuantity() {
 		return _maxQuantity;
 	}
 
-	public int getMinQuantity() {
+	public BigDecimal getMinQuantity() {
 		return _minQuantity;
 	}
 
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
 	}
 
 	private final String _inputName;
-	private final int _maxQuantity;
-	private final int _minQuantity;
-	private final int _quantity;
+	private final BigDecimal _maxQuantity;
+	private final BigDecimal _minQuantity;
+	private final BigDecimal _quantity;
 
 }

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.admin.rest.client.serdes.v1_0;
@@ -152,6 +143,20 @@ public class ObjectValidationRuleSerDes {
 			sb.append(_toJSON(objectValidationRule.getErrorLabel()));
 		}
 
+		if (objectValidationRule.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectValidationRule.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (objectValidationRule.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -259,6 +264,16 @@ public class ObjectValidationRuleSerDes {
 			sb.append("\"");
 		}
 
+		if (objectValidationRule.getSystem() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"system\": ");
+
+			sb.append(objectValidationRule.getSystem());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -343,6 +358,16 @@ public class ObjectValidationRuleSerDes {
 				String.valueOf(objectValidationRule.getErrorLabel()));
 		}
 
+		if (objectValidationRule.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(
+					objectValidationRule.getExternalReferenceCode()));
+		}
+
 		if (objectValidationRule.getId() == null) {
 			map.put("id", null);
 		}
@@ -403,6 +428,13 @@ public class ObjectValidationRuleSerDes {
 		}
 		else {
 			map.put("script", String.valueOf(objectValidationRule.getScript()));
+		}
+
+		if (objectValidationRule.getSystem() == null) {
+			map.put("system", null);
+		}
+		else {
+			map.put("system", String.valueOf(objectValidationRule.getSystem()));
 		}
 
 		return map;
@@ -468,6 +500,14 @@ public class ObjectValidationRuleSerDes {
 					objectValidationRule.setErrorLabel(
 						(Map)ObjectValidationRuleSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					objectValidationRule.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -536,6 +576,12 @@ public class ObjectValidationRuleSerDes {
 				if (jsonParserFieldValue != null) {
 					objectValidationRule.setScript(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "system")) {
+				if (jsonParserFieldValue != null) {
+					objectValidationRule.setSystem(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 		}

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.message.boards.model;
@@ -59,6 +50,7 @@ public class MBCategoryWrapper
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("displayStyle", getDisplayStyle());
+		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -152,6 +144,12 @@ public class MBCategoryWrapper
 
 		if (displayStyle != null) {
 			setDisplayStyle(displayStyle);
+		}
+
+		String friendlyURL = (String)attributes.get("friendlyURL");
+
+		if (friendlyURL != null) {
+			setFriendlyURL(friendlyURL);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -282,6 +280,16 @@ public class MBCategoryWrapper
 	@Override
 	public String getDisplayStyle() {
 		return model.getDisplayStyle();
+	}
+
+	/**
+	 * Returns the friendly url of this message boards category.
+	 *
+	 * @return the friendly url of this message boards category
+	 */
+	@Override
+	public String getFriendlyURL() {
+		return model.getFriendlyURL();
 	}
 
 	/**
@@ -649,6 +657,16 @@ public class MBCategoryWrapper
 	@Override
 	public void setDisplayStyle(String displayStyle) {
 		model.setDisplayStyle(displayStyle);
+	}
+
+	/**
+	 * Sets the friendly url of this message boards category.
+	 *
+	 * @param friendlyURL the friendly url of this message boards category
+	 */
+	@Override
+	public void setFriendlyURL(String friendlyURL) {
+		model.setFriendlyURL(friendlyURL);
 	}
 
 	/**

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.test.util;
@@ -33,6 +24,8 @@ import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerB
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+
+import java.math.BigDecimal;
 
 import java.util.Locale;
 import java.util.Map;
@@ -129,22 +122,8 @@ public class CommerceInventoryTestUtil {
 
 	public static CommerceInventoryWarehouseItem
 			addCommerceInventoryWarehouseItem(
-				long userId,
-				CommerceInventoryWarehouse commerceInventoryWarehouse,
-				String sku, int quantity)
-		throws Exception {
-
-		return CommerceInventoryWarehouseItemLocalServiceUtil.
-			addCommerceInventoryWarehouseItem(
-				StringPool.BLANK, userId,
-				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				quantity, sku, StringPool.BLANK);
-	}
-
-	public static CommerceInventoryWarehouseItem
-			addCommerceInventoryWarehouseItem(
-				long commerceChannelId, String sku, int quantity,
-				ServiceContext serviceContext)
+				long commerceChannelId, BigDecimal quantity, String sku,
+				String unitOfMeasureKey, ServiceContext serviceContext)
 		throws Exception {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -159,7 +138,21 @@ public class CommerceInventoryTestUtil {
 			addCommerceInventoryWarehouseItem(
 				StringPool.BLANK, serviceContext.getUserId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				quantity, sku, StringPool.BLANK);
+				quantity, sku, unitOfMeasureKey);
+	}
+
+	public static CommerceInventoryWarehouseItem
+			addCommerceInventoryWarehouseItem(
+				long userId,
+				CommerceInventoryWarehouse commerceInventoryWarehouse,
+				BigDecimal quantity, String sku, String unitOfMeasureKey)
+		throws Exception {
+
+		return CommerceInventoryWarehouseItemLocalServiceUtil.
+			addCommerceInventoryWarehouseItem(
+				StringPool.BLANK, userId,
+				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				quantity, sku, unitOfMeasureKey);
 	}
 
 	public static CommerceInventoryWarehouse

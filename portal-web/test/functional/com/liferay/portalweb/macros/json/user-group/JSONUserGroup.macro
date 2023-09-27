@@ -42,9 +42,12 @@ definition {
 	}
 
 	macro assignGroupRoleToUserGroup {
-		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userGroupName}");
+		Variables.assertDefined(parameterList = "${roleTitle},${userGroupName}");
 
-		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
+		if (!(isSet(groupId))) {
+			var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
+		}
+
 		var roleId = JSONRoleAPI._getRoleIdByName(name = ${roleTitle});
 		var userGroupId = JSONUserGroupAPI._getUserGroupIdByName(userGroupName = ${userGroupName});
 

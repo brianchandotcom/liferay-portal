@@ -11,6 +11,7 @@ definition {
 		property skip.start.app.server = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");

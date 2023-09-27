@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.info.internal.request.helper;
@@ -20,6 +11,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
@@ -32,18 +24,22 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -56,8 +52,12 @@ import java.math.BigDecimal;
 
 import java.text.ParseException;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -75,11 +75,11 @@ public class InfoRequestFieldValuesProviderHelper {
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 	}
 
-	public List<InfoFieldValue<Object>> getInfoFieldValues(
+	public Map<String, InfoFieldValue<Object>> getInfoFieldValues(
 			HttpServletRequest httpServletRequest)
 		throws InfoFormFileUploadException {
 
-		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
+		Map<String, InfoFieldValue<Object>> infoFieldValues = new HashMap<>();
 
 		UploadServletRequest uploadServletRequest =
 			PortalUtil.getUploadServletRequest(httpServletRequest);
@@ -88,6 +88,8 @@ public class InfoRequestFieldValuesProviderHelper {
 			(ThemeDisplay)uploadServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		String[] checkboxNames = StringUtil.split(
+			ParamUtil.getString(uploadServletRequest, "checkboxNames"));
 		String className = PortalUtil.getClassName(
 			ParamUtil.getLong(uploadServletRequest, "classNameId"));
 		String classTypeId = ParamUtil.getString(
@@ -103,6 +105,10 @@ public class InfoRequestFieldValuesProviderHelper {
 		for (InfoField<?> infoField :
 				_getInfoFields(className, classTypeId, groupId)) {
 
+			if (!infoField.isEditable()) {
+				continue;
+			}
+
 			FileItem[] multipartParameters = multipartParameterMap.get(
 				infoField.getName());
 
@@ -110,18 +116,13 @@ public class InfoRequestFieldValuesProviderHelper {
 				(infoField.getInfoFieldType() instanceof FileInfoFieldType)) {
 
 				for (FileItem fileItem : multipartParameters) {
-					if ((fileItem.getSize() < 0) ||
-						Validator.isNull(fileItem.getFileName())) {
-
-						continue;
-					}
-
 					InfoFieldValue<Object> infoFieldValue =
 						_getFileInfoFieldValue(
 							fileItem, groupId, infoField, themeDisplay);
 
 					if (infoFieldValue != null) {
-						infoFieldValues.add(infoFieldValue);
+						infoFieldValues.put(
+							infoField.getUniqueId(), infoFieldValue);
 					}
 				}
 			}
@@ -129,16 +130,29 @@ public class InfoRequestFieldValuesProviderHelper {
 			if (infoField.getInfoFieldType() instanceof
 					MultiselectInfoFieldType) {
 
-				infoFieldValues.add(
+				infoFieldValues.put(
+					infoField.getUniqueId(),
 					_getInfoFieldValue(
 						infoField, themeDisplay.getLocale(),
 						regularParameterMap.get(infoField.getName())));
+
+				continue;
 			}
 
 			List<String> regularParameters = regularParameterMap.get(
 				infoField.getName());
 
 			if (regularParameters == null) {
+				if ((infoField.getInfoFieldType() instanceof
+						BooleanInfoFieldType) &&
+					ArrayUtil.contains(checkboxNames, infoField.getName())) {
+
+					infoFieldValues.put(
+						infoField.getUniqueId(),
+						_getInfoFieldValue(
+							infoField, themeDisplay.getLocale(), false));
+				}
+
 				continue;
 			}
 
@@ -147,7 +161,8 @@ public class InfoRequestFieldValuesProviderHelper {
 					infoField, themeDisplay.getLocale(), value);
 
 				if (infoFieldValue != null) {
-					infoFieldValues.add(infoFieldValue);
+					infoFieldValues.put(
+						infoField.getUniqueId(), infoFieldValue);
 				}
 			}
 		}
@@ -165,6 +180,11 @@ public class InfoRequestFieldValuesProviderHelper {
 	private InfoFieldValue<Object> _getDateInfoFieldValue(
 		InfoField<?> infoField, Locale locale, String value) {
 
+		if (Validator.isBlank(value)) {
+			return _getInfoFieldValue(
+				infoField, locale, (Object)StringPool.BLANK);
+		}
+
 		try {
 			Date date = DateUtil.parseDate("yyyy-MM-dd", value, locale);
 
@@ -179,10 +199,26 @@ public class InfoRequestFieldValuesProviderHelper {
 		return null;
 	}
 
+	private InfoFieldValue<Object> _getDateTimeInfoFieldValue(
+		InfoField<?> infoField, Locale locale, String value) {
+
+		LocalDateTime localDateTime = LocalDateTime.parse(
+			value, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
+
+		return _getInfoFieldValue(infoField, locale, localDateTime);
+	}
+
 	private InfoFieldValue<Object> _getFileInfoFieldValue(
 			FileItem fileItem, long groupId, InfoField infoField,
 			ThemeDisplay themeDisplay)
 		throws InfoFormFileUploadException {
+
+		if ((fileItem.getSize() < 0) ||
+			Validator.isNull(fileItem.getFileName())) {
+
+			return _getInfoFieldValue(
+				infoField, themeDisplay.getLocale(), (Object)StringPool.BLANK);
+		}
 
 		try (InputStream inputStream = fileItem.getInputStream()) {
 			if (inputStream == null) {
@@ -260,16 +296,18 @@ public class InfoRequestFieldValuesProviderHelper {
 	private InfoFieldValue<Object> _getInfoFieldValue(
 		InfoField<?> infoField, Locale locale, String value) {
 
-		if (Validator.isBlank(value)) {
-			return null;
-		}
-
 		if (infoField.getInfoFieldType() instanceof BooleanInfoFieldType) {
 			return _getBooleanInfoFieldValue(infoField, locale, value);
 		}
 
 		if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
 			return _getDateInfoFieldValue(infoField, locale, value);
+		}
+
+		if ((infoField.getInfoFieldType() instanceof DateTimeInfoFieldType) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+
+			return _getDateTimeInfoFieldValue(infoField, locale, value);
 		}
 
 		if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {
@@ -293,18 +331,18 @@ public class InfoRequestFieldValuesProviderHelper {
 	private InfoFieldValue<Object> _getNumberInfoFieldValue(
 		InfoField infoField, Locale locale, String value) {
 
-		Object objectValue = null;
-
 		if (GetterUtil.getBoolean(
 				infoField.getAttribute(NumberInfoFieldType.DECIMAL))) {
 
-			objectValue = new BigDecimal(value);
-		}
-		else {
-			objectValue = GetterUtil.getLong(value);
+			if (Validator.isBlank(value)) {
+				return _getInfoFieldValue(
+					infoField, locale, (Object)StringPool.BLANK);
+			}
+
+			return _getInfoFieldValue(infoField, locale, new BigDecimal(value));
 		}
 
-		return _getInfoFieldValue(infoField, locale, objectValue);
+		return _getInfoFieldValue(infoField, locale, GetterUtil.getLong(value));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

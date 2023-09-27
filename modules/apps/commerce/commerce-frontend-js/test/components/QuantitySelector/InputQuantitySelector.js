@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import '../../tests_utilities/polyfills';
@@ -48,10 +39,10 @@ describe('Quantity Selector', () => {
 			<InputQuantitySelector {...defaultProps} />
 		);
 
-		input = inputQuantitySelector.container.querySelector('input');
 		formGroup = inputQuantitySelector.container.querySelector(
 			'.form-group'
 		);
+		input = inputQuantitySelector.container.querySelector('input');
 	});
 
 	afterEach(() => {
@@ -97,9 +88,11 @@ describe('Quantity Selector', () => {
 	});
 
 	it('must handle the product configuration: minQuantity', () => {
-		inputQuantitySelector.rerender(
+		inputQuantitySelector = render(
 			<InputQuantitySelector min={4} onUpdate={onUpdate} />
 		);
+
+		input = inputQuantitySelector.container.querySelector('input');
 
 		expect(input.min).toBe('4');
 
@@ -123,25 +116,23 @@ describe('Quantity Selector', () => {
 	});
 
 	it('must show a feedback when the typed quantity is not correct: minQuantity', () => {
-		jest.useFakeTimers();
-
-		inputQuantitySelector.rerender(
+		inputQuantitySelector = render(
 			<InputQuantitySelector min={4} quantity={1} />
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
+		formGroup = inputQuantitySelector.container.querySelector(
+			'.form-group'
+		);
 
 		expect(formGroup.classList).toContain('has-error');
 	});
 
 	it('must handle the product configuration: maxQuantity', () => {
-		inputQuantitySelector.rerender(
+		inputQuantitySelector = render(
 			<InputQuantitySelector max={4} onUpdate={onUpdate} />
 		);
 
-		expect(input.max).toBe('4');
+		input = inputQuantitySelector.container.querySelector('input');
 
 		act(() => {
 			fireEvent.change(input, {target: {value: '6'}});
@@ -163,21 +154,19 @@ describe('Quantity Selector', () => {
 	});
 
 	it('must show a feedback when the typed quantity is not correct: maxQuantity', () => {
-		jest.useFakeTimers();
-
-		inputQuantitySelector.rerender(
+		inputQuantitySelector = render(
 			<InputQuantitySelector max={4} quantity={7} />
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
+		formGroup = inputQuantitySelector.container.querySelector(
+			'.form-group'
+		);
 
 		expect(formGroup.classList).toContain('has-error');
 	});
 
 	it('must handle the product configuration: multipleQuantity', async () => {
-		inputQuantitySelector.rerender(
+		inputQuantitySelector = render(
 			<InputQuantitySelector
 				alignment="top"
 				max={54}
@@ -186,6 +175,8 @@ describe('Quantity Selector', () => {
 				step={5}
 			/>
 		);
+
+		input = inputQuantitySelector.container.querySelector('input');
 
 		expect(input.min).toBe('10');
 		expect(input.max).toBe('50');
@@ -201,15 +192,13 @@ describe('Quantity Selector', () => {
 	});
 
 	it('must show a feedback when the typed quantity is not correct: multipleQuantity', () => {
-		jest.useFakeTimers();
-
-		inputQuantitySelector.rerender(
+		inputQuantitySelector = render(
 			<InputQuantitySelector quantity={7} step={4} />
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
+		formGroup = inputQuantitySelector.container.querySelector(
+			'.form-group'
+		);
 
 		expect(formGroup.classList).toContain('has-error');
 	});

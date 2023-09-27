@@ -29,6 +29,8 @@ definition {
 
 		if (${statusButton} == "Cancel") {
 			ClickNoError(locator1 = "Button#CANCEL");
+
+			Confirm.acceptAlert();
 		}
 		else {
 			ScrollWebElementIntoView(locator1 = "PRMMDFRequest#STATUS_DROPDOWN");
@@ -77,6 +79,9 @@ definition {
 			followUpStrategy = ${followUpStrategy},
 			leadFollowUpList = ${leadFollowUpList},
 			leadList = ${leadList},
+			nurtureDripCampaign = ${nurtureDripCampaign},
+			ofWeek = ${ofWeek},
+			requireLiferay = ${requireLiferay},
 			tactic = ${tactic},
 			targetOfLeads = ${targetOfLeads},
 			typeOfActivity = ${typeOfActivity});
@@ -87,11 +92,16 @@ definition {
 
 		ScrollWebElementIntoView(locator1 = "Button#SUBMIT");
 
-		Button.click(button = "Submit");
+		if (isSet(saveAsDraft)) {
+			Button.click(button = "Save as Draft");
+		}
+		else {
+			Button.click(button = "Submit");
 
-		WaitForPageLoad();
+			WaitForPageLoad();
 
-		Alert.viewSuccessMessage();
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro editActivity {
@@ -166,6 +176,8 @@ definition {
 				tactic = ${tactic},
 				targetOfLeads = ${targetOfLeads},
 				typeOfActivity = ${typeOfActivity});
+
+			Button.click(button = "Continue");
 		}
 
 		if (isSet(removeActivity)) {
@@ -185,9 +197,9 @@ definition {
 				newActivityName = ${newActivityName},
 				newBugdetValue = ${newBugdetValue},
 				removeBudgetByIndex = ${removeBudgetByIndex});
-		}
 
-		Button.click(button = "Continue");
+			Button.click(button = "Continue");
+		}
 
 		Button.click(button = "Continue");
 
@@ -305,13 +317,11 @@ definition {
 	}
 
 	macro filterMDF {
-		Click(
-			key_filterOption = ${filterOption},
-			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+		Button.click(button = "Filter");
 
 		Click(
-			key_partnerOptions = "Filter",
-			locator1 = "PRMMDFRequest#FILTER_TYPE");
+			key_text = ${filterOption},
+			locator1 = "Button#ANY_WITH_SPAN");
 
 		Click.clickAtNotVisible(
 			checkboxName = ${checkboxName},
@@ -328,6 +338,19 @@ definition {
 		}
 
 		return ${nextDayDate};
+	}
+
+	macro getRequestID {
+		var key_index = ${requestIndex};
+		var key_mdfType = ${mdfType};
+
+		WaitForElementPresent(locator1 = "PRMMDFRequest#MDF_ID_BY_INDEX");
+
+		var requestID = selenium.getText("PRMMDFRequest#MDF_ID_BY_INDEX");
+
+		var requestID = StringUtil.extractLast(${requestID}, "-");
+
+		return ${requestID};
 	}
 
 	macro getValueByFieldName {
@@ -349,9 +372,17 @@ definition {
 	}
 
 	macro goToMDF {
-		Click(
-			key_campaignName = ${campaignName},
-			locator1 = "PRMMDFRequest#REQUEST_ID");
+		if (isSet(campaignName)) {
+			Click(
+				key_campaignName = ${campaignName},
+				locator1 = "PRMMDFRequest#REQUEST_ID");
+		}
+
+		if (isSet(requestID)) {
+			Click(
+				key_requestID = ${requestID},
+				locator1 = "PRMMDFRequest#REQUEST_ID");
+		}
 	}
 
 	macro insertDate {
@@ -408,7 +439,7 @@ definition {
 			locator1 = "PRMMDFRequest#SELECT",
 			value1 = ${tactic});
 
-		if ((${typeOfActivity} == "Miscellaneous Marketing") && (${tactic} == "Other")) {
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && ((${tactic} == "Other") || (${tactic} == "List Purchase"))) {
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
@@ -418,6 +449,221 @@ definition {
 				key_buttonText = ${leadList},
 				key_fieldName = "activities[${activityIndex}].activityDescription.leadGenerated",
 				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+		}
+
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && ((${tactic} == "Print Advertising") || (${tactic} == "Campaign with Industry Publication"))) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${activityDescription});
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.publication",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Publication");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.cta",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity CTA");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.expectedImpressions",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Expected Impressions");
+		}
+
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && (${tactic} == "Broadcast Advertising")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${activityDescription});
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.broadcastChannel",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Broadcast Channel");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.cta",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity CTA");
+
+			if (isSet(ofWeek)) {
+				Type(
+					key_fieldName = "activities[${activityIndex}].activityDescription.weeksAiring",
+					locator1 = "PRMMDFRequest#TEXT_FIELD",
+					value1 = ${ofWeek});
+			}
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.guaranteedImpressions",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Guaranteed Impressions");
+		}
+
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && (${tactic} == "Co-branded Merchandise")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${activityDescription});
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.typeMerchandise",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Type Merchandise");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.quantity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = 5);
+		}
+
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && (${tactic} == "Direct Mail")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${activityDescription});
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.targetOfSends",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = 5);
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.cta",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity CTA");
+		}
+
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && (${tactic} == "Outbound Telemarketing Sales")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${activityDescription});
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.audienceTarget",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Audience Target");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.sourceAndSizeOfCallList",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Call List");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.resourcesNecessaryFromLiferay",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Resources Liferay");
+		}
+
+		if ((${typeOfActivity} == "Event") && ((${tactic} == "In-person networking event/seminar/meet-up") || (${tactic} == "In-person industry conference/trade show"))) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.description",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Description");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.location",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Location");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.venueName",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Venue Name");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.liferayBranding",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Required");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.liferayParticipationRequirements",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Partipation");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.sourceAndSizeOfInviteeList",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Invite List");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.activityPromotion",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Promotion");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.targetOfLeads",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = 03);
+
+			for (var leadFollowUp : list ${leadFollowUpList}) {
+				Click.clickAtNotVisible(
+					key_fieldName = "activities[${activityIndex}].activityDescription.leadFollowUpStrategies",
+					key_optionValue = ${leadFollowUp},
+					locator1 = "PRMMDFRequest#CHECKBOX");
+			}
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.detailsLeadFollowUp",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "FollowUp Strategy");
+		}
+
+		if ((${typeOfActivity} == "Event") && (${tactic} == "Webinar")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.description",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Description");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.webinarTopic",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Webinar");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.webinarHostPlatform",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Host");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.liferayBranding",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Required");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.liferayParticipationRequirements",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Partipation");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.sourceAndSizeOfInviteeList",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Invitee List");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.activityPromotion",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Promotion");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.targetOfLeads",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = 03);
+
+			for (var leadFollowUp : list ${leadFollowUpList}) {
+				Click.clickAtNotVisible(
+					key_fieldName = "activities[${activityIndex}].activityDescription.leadFollowUpStrategies",
+					key_optionValue = ${leadFollowUp},
+					locator1 = "PRMMDFRequest#CHECKBOX");
+			}
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.detailsLeadFollowUp",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "FollowUp Strategy");
 		}
 
 		if ((${typeOfActivity} == "Digital Marketing") && (${tactic} == "Digital Advertising/Banner Ad")) {
@@ -442,10 +688,84 @@ definition {
 				value1 = "Liferay Brand");
 		}
 
-		Click.clickAtNotVisible(
-			key_buttonText = ${leadList},
-			key_fieldName = "activities[${activityIndex}].activityDescription.leadGenerated",
-			locator1 = "PRMMDFRequest#INPUT_BUTTON");
+		if (${typeOfActivity} == "Content Marketing") {
+			Click.clickAtNotVisible(
+				key_buttonText = "No",
+				key_fieldName = "activities[${activityIndex}].activityDescription.gatedLandingPage",
+				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.primaryThemeOrMessage",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Primary Theme");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.goalOfContent",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Goal of Content");
+
+			Click.clickAtNotVisible(
+				key_buttonText = "No",
+				key_fieldName = "activities[${activityIndex}].activityDescription.hiringOutsideWriterOrAgency",
+				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+		}
+
+		if ((${typeOfActivity} == "Digital Marketing") && (${tactic} == "Email Campaign")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.overallMessageContentCTA",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Overall Message");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.landingPageCopy",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Landing Page");
+
+			if (isSet(nurtureDripCampaign)) {
+				Click.clickAtNotVisible(
+					key_buttonText = ${nurtureDripCampaign},
+					key_fieldName = "activities[${activityIndex}].activityDescription.nurtureDripCampaign",
+					locator1 = "PRMMDFRequest#INPUT_BUTTON");
+
+				if (${nurtureDripCampaign} == "Yes") {
+					Type(
+						key_fieldName = "activities[${activityIndex}].activityDescription.manySeries",
+						locator1 = "PRMMDFRequest#TEXT_FIELD",
+						value1 = 200);
+				}
+			}
+
+			if (isSet(requireLiferay)) {
+				Click.clickAtNotVisible(
+					key_buttonText = ${requireLiferay},
+					key_fieldName = "activities[${activityIndex}].activityDescription.assetsLiferayRequired",
+					locator1 = "PRMMDFRequest#INPUT_BUTTON");
+
+				if (${requireLiferay} == "Yes") {
+					Type(
+						key_fieldName = "activities[${activityIndex}].activityDescription.assetsLiferayDescription",
+						locator1 = "PRMMDFRequest#TEXT_FIELD",
+						value1 = "Require Liferay");
+				}
+			}
+
+			Click.clickAtNotVisible(
+				key_buttonText = "Yes",
+				key_fieldName = "activities[${activityIndex}].activityDescription.usingCIABAssets",
+				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.howLiferayBrandUsed",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Liferay Brand");
+		}
+
+		if (isSet(leadList)) {
+			Click.clickAtNotVisible(
+				key_buttonText = ${leadList},
+				key_fieldName = "activities[${activityIndex}].activityDescription.leadGenerated",
+				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+		}
 
 		if (${leadList} == "Yes") {
 			Type(
@@ -515,10 +835,23 @@ definition {
 	}
 
 	macro searchMDF {
-		Type(
+		WaitForElementPresent(
 			key_placeHolder = "Search",
-			locator1 = "TextInput#ANY_PLACEHOLDER",
-			value1 = ${campaignName});
+			locator1 = "TextInput#ANY_PLACEHOLDER");
+
+		if (isSet(campaignName)) {
+			Type(
+				key_placeHolder = "Search",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = ${campaignName});
+		}
+
+		if (isSet(requestID)) {
+			Type(
+				key_placeHolder = "Search",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = ${requestID});
+		}
 
 		KeyPress(
 			key_placeHolder = "Search",
@@ -647,33 +980,33 @@ definition {
 	}
 
 	macro viewExportedMDF {
-		for (var fileContentItem : list ${fileContentList}) {
-			var directoryPath = PropsUtil.get("output.dir.name");
+		DownloadTempFile();
 
-			var fileContent = FileUtil.read("${directoryPath}/${fileName}");
+		var directoryPath = PropsUtil.get("output.dir.name");
 
-			if (!(contains(${fileContent}, ${fileContentItem}))) {
-				echo(${fileContent});
+		var tempFileDir = FileUtil.read("${directoryPath}/${fileName}");
 
-				fail("The string '${fileContentItem}' doesn't exists on this file");
-			}
-			else {
-				echo("The string '${fileContentItem}' exists on this file");
+		if (isSet(fileContentList)) {
+			for (var fileContent : list ${fileContentList}) {
+				if (!(contains(${tempFileDir}, ${fileContent}))) {
+					echo(${fileContent});
+
+					fail("The string '${fileContent}' doesn't exists on this file");
+				}
+				else {
+					echo("The string '${fileContent}' exists on this file");
+				}
 			}
 		}
 
 		if (isSet(fileContentNotPresent)) {
-			var directoryPath = PropsUtil.get("output.dir.name");
+			if (contains(${tempFileDir}, ${fileContentNotPresent})) {
+				echo(${fileContentNotPresent});
 
-			var fileContent = FileUtil.read("${directoryPath}/${fileName}");
-
-			if (contains(${fileContent}, ${fileContentItem})) {
-				echo(${fileContent});
-
-				fail("The string '${fileContentItem}' exists on this file");
+				fail("The string '${fileContentNotPresent}' exists on this file");
 			}
 			else {
-				echo("The string '${fileContentItem}' doesn't exists on this file");
+				echo("The string '${fileContentNotPresent}' doesn't exists on this file");
 			}
 		}
 
@@ -883,6 +1216,18 @@ definition {
 
 	macro viewStateManager {
 		AssertElementPresent(locator1 = "PRMMDFRequest#STATUS_DROPDOWN");
+	}
+
+	macro viewTacticFields {
+		for (var tacticFieldValue : list ${tacticFields}) {
+			var typeOfActivity = StringUtil.extractFirst(${tacticFieldValue}, ": ");
+			var tactic = StringUtil.extractLast(${tacticFieldValue}, ": ");
+
+			AssertElementPresent(
+				key_fieldName = ${typeOfActivity},
+				key_nameValue = ${tactic},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 	}
 
 }

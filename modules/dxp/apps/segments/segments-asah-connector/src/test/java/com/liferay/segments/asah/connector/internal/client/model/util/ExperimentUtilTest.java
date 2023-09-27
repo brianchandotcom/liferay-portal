@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.segments.asah.connector.internal.client.model.util;
@@ -177,7 +168,7 @@ public class ExperimentUtilTest {
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			channelId, dataSourceId, RandomTestUtil.randomString(), layout,
-			LocaleUtil.ENGLISH, pageURL, _segmentsEntryLocalService,
+			locale, pageURL, _segmentsEntryLocalService,
 			_segmentsExperienceLocalService, segmentsExperiment);
 
 		Assert.assertEquals(channelId, experiment.getChannelId());
@@ -201,6 +192,95 @@ public class ExperimentUtilTest {
 			segmentsEntry.getName(locale), experiment.getDXPSegmentName());
 		Assert.assertEquals(
 			ExperimentStatus.COMPLETED, experiment.getExperimentStatus());
+		Assert.assertEquals(ExperimentType.AB, experiment.getExperimentType());
+
+		Goal goal = experiment.getGoal();
+
+		GoalMetric goalMetric = goal.getGoalMetric();
+
+		Assert.assertEquals(
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE.name(),
+			goalMetric.name());
+
+		Assert.assertEquals(
+			segmentsExperiment.getSegmentsExperimentKey(), experiment.getId());
+		Assert.assertEquals(
+			segmentsExperiment.getModifiedDate(), experiment.getModifiedDate());
+		Assert.assertEquals(segmentsExperiment.getName(), experiment.getName());
+		Assert.assertEquals(
+			layout.getFriendlyURL(), experiment.getPageRelativePath());
+		Assert.assertEquals(layout.getTitle(locale), experiment.getPageTitle());
+		Assert.assertEquals(pageURL, experiment.getPageURL());
+		Assert.assertEquals(
+			segmentsExperiment.getWinnerSegmentsExperienceKey(),
+			experiment.getPublishedDXPVariantId());
+	}
+
+	@Test
+	public void testToExperimentWithSegmentsExperimentWithStatusTerminated()
+		throws PortalException {
+
+		Locale locale = LocaleUtil.ENGLISH;
+
+		Layout layout = _createLayout(locale);
+
+		SegmentsEntry segmentsEntry = _createSegmentsEntry(locale);
+
+		long segmentsEntryId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId)
+		).thenReturn(
+			segmentsEntry
+		);
+
+		SegmentsExperience segmentsExperience = _createSegmentsExperience(
+			locale, segmentsEntryId);
+
+		long segmentsExperienceId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_segmentsExperienceLocalService.getSegmentsExperience(
+				segmentsExperienceId)
+		).thenReturn(
+			segmentsExperience
+		);
+
+		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
+			segmentsExperienceId,
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+			SegmentsExperimentConstants.STATUS_TERMINATED);
+
+		String channelId = RandomTestUtil.randomString();
+		String dataSourceId = RandomTestUtil.randomString();
+		String pageURL = RandomTestUtil.randomString();
+
+		Experiment experiment = ExperimentUtil.toExperiment(
+			channelId, dataSourceId, RandomTestUtil.randomString(), layout,
+			locale, pageURL, _segmentsEntryLocalService,
+			_segmentsExperienceLocalService, segmentsExperiment);
+
+		Assert.assertEquals(channelId, experiment.getChannelId());
+		Assert.assertEquals(
+			segmentsExperiment.getCreateDate(), experiment.getCreateDate());
+		Assert.assertEquals(dataSourceId, experiment.getDataSourceId());
+		Assert.assertEquals(
+			segmentsExperiment.getDescription(), experiment.getDescription());
+		Assert.assertEquals(
+			segmentsExperience.getSegmentsExperienceKey(),
+			experiment.getDXPExperienceId());
+		Assert.assertEquals(
+			segmentsExperience.getName(locale),
+			experiment.getDXPExperienceName());
+		Assert.assertEquals(
+			(Long)layout.getGroupId(), experiment.getDXPGroupId());
+		Assert.assertEquals(layout.getUuid(), experiment.getDXPLayoutId());
+		Assert.assertEquals(
+			segmentsEntry.getSegmentsEntryKey(), experiment.getDXPSegmentId());
+		Assert.assertEquals(
+			segmentsEntry.getName(locale), experiment.getDXPSegmentName());
+		Assert.assertEquals(
+			ExperimentStatus.TERMINATED, experiment.getExperimentStatus());
 		Assert.assertEquals(ExperimentType.AB, experiment.getExperimentType());
 
 		Goal goal = experiment.getGoal();

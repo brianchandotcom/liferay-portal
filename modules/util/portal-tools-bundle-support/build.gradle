@@ -17,8 +17,8 @@ configurations {
 
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.72"
+	compileInclude group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
-	compileInclude group: "commons-logging", name: "commons-logging", version: "1.2"
 	compileInclude group: "org.apache.commons", name: "commons-compress", version: "1.21"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
@@ -33,10 +33,10 @@ dependencies {
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
-	testCompile group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.2"
-	testCompile group: "com.sun.net.httpserver", name: "http", version: "20070405"
-	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
-	testCompile group: "org.littleshoot", name: "littleproxy", version: "1.1.1"
+	testImplementation group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.2"
+	testImplementation group: "com.sun.net.httpserver", name: "http", version: "20070405"
+	testImplementation group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
+	testImplementation group: "org.littleshoot", name: "littleproxy", version: "1.1.1"
 }
 
 liferayOSGi {
@@ -44,7 +44,7 @@ liferayOSGi {
 }
 
 test {
-	dependsOn install
+	dependsOn publishToMavenLocal
 
 	doFirst {
 		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile

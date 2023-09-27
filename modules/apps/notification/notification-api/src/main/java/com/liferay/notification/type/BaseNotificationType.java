@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.notification.type;
@@ -71,6 +62,7 @@ public abstract class BaseNotificationType implements NotificationType {
 		NotificationQueueEntry notificationQueueEntry =
 			notificationQueueEntryLocalService.createNotificationQueueEntry(0L);
 
+		notificationQueueEntry.setCompanyId(user.getCompanyId());
 		notificationQueueEntry.setUserId(user.getUserId());
 		notificationQueueEntry.setUserName(user.getFullName());
 
@@ -120,14 +112,14 @@ public abstract class BaseNotificationType implements NotificationType {
 					notificationRecipientId);
 				notificationRecipientSetting.setName(entry.getKey());
 
-				if (entry.getValue() instanceof String) {
-					notificationRecipientSetting.setValue(
-						String.valueOf(entry.getValue()));
-				}
-				else {
+				if (entry.getValue() instanceof LinkedHashMap) {
 					notificationRecipientSetting.setValueMap(
 						LocalizedMapUtil.getLocalizedMap(
 							(LinkedHashMap)entry.getValue()));
+				}
+				else {
+					notificationRecipientSetting.setValue(
+						String.valueOf(entry.getValue()));
 				}
 
 				notificationRecipientSettings.add(notificationRecipientSetting);
@@ -149,6 +141,13 @@ public abstract class BaseNotificationType implements NotificationType {
 
 	@Override
 	public void sendNotification(NotificationContext notificationContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void sendNotification(NotificationQueueEntry notificationQueueEntry)
 		throws PortalException {
 
 		throw new UnsupportedOperationException();

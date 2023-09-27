@@ -1,18 +1,10 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayPanel from '@clayui/panel';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -35,7 +27,6 @@ import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConf
 import isEmptyArray from '../../../../../../app/utils/isEmptyArray';
 import isEmptyObject from '../../../../../../app/utils/isEmptyObject';
 import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
-import Collapse from '../../../../../../common/components/Collapse';
 import getLayoutDataItemPropTypes from '../../../../../../prop_types/getLayoutDataItemPropTypes';
 import {CommonStyles} from './CommonStyles';
 
@@ -137,30 +128,39 @@ export function CollectionAppliedFiltersGeneralPanel({item}) {
 							'you-will-see-this-fragment-on-the-page-only-after-applying-a-filter'
 						)}
 					</p>
-					<div className="mb-3">
-						<Collapse
-							label={Liferay.Language.get(
+					<div className="mb-3 panel-group-sm">
+						<ClayPanel
+							collapsable
+							defaultExpanded
+							displayTitle={Liferay.Language.get(
 								'applied-filter-options'
 							)}
-							open
+							displayType="unstyled"
+							showCollapseIcon
 						>
-							<TargetCollectionsField
-								filterableCollections={filterableCollections}
-								onValueSelect={onValueSelect}
-								value={configurationValues.targetCollections}
-							/>
+							<ClayPanel.Body>
+								<TargetCollectionsField
+									filterableCollections={
+										filterableCollections
+									}
+									onValueSelect={onValueSelect}
+									value={
+										configurationValues.targetCollections
+									}
+								/>
 
-							<CheckboxField
-								field={{
-									label: Liferay.Language.get(
-										'include-clear-filters-option'
-									),
-									name: 'showClearFilters',
-								}}
-								onValueSelect={onValueSelect}
-								value={configurationValues.showClearFilters}
-							/>
-						</Collapse>
+								<CheckboxField
+									field={{
+										label: Liferay.Language.get(
+											'include-clear-filters-option'
+										),
+										name: 'showClearFilters',
+									}}
+									onValueSelect={onValueSelect}
+									value={configurationValues.showClearFilters}
+								/>
+							</ClayPanel.Body>
+						</ClayPanel>
 					</div>
 				</>
 			)}

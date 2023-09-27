@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.taxonomy.internal.dto.v1_0.converter;
@@ -138,6 +129,38 @@ public class TaxonomyCategoryDTOConverter
 					assetCategoryProperties -> _toTaxonomyCategoryProperty(
 						assetCategoryProperties),
 					TaxonomyCategoryProperty.class);
+				taxonomyCategoryUsageCount =
+					NestedFieldsSupplier.<Integer>supply(
+						"taxonomyCategoryUsageCount",
+						fieldName -> {
+							UriInfo uriInfo = dtoConverterContext.getUriInfo();
+
+							if (uriInfo != null) {
+								MultivaluedMap<String, String> queryParameters =
+									uriInfo.getQueryParameters();
+
+								if (StringUtil.contains(
+										queryParameters.getFirst(
+											"restrictFields"),
+										"taxonomyCategoryUsageCount")) {
+
+									return null;
+								}
+							}
+
+							return (int)_assetEntryLocalService.searchCount(
+								assetCategory.getCompanyId(),
+								new long[] {assetCategory.getGroupId()},
+								assetCategory.getUserId(), null, -1, null,
+								String.valueOf(assetCategory.getCategoryId()),
+								null, false, false,
+								new int[] {
+									WorkflowConstants.STATUS_APPROVED,
+									WorkflowConstants.STATUS_PENDING,
+									WorkflowConstants.STATUS_SCHEDULED
+								},
+								false);
+						});
 				taxonomyVocabularyId = assetCategory.getVocabularyId();
 
 				setParentTaxonomyCategory(
@@ -172,38 +195,6 @@ public class TaxonomyCategoryDTOConverter
 							}
 						};
 					});
-				setTaxonomyCategoryUsageCount(
-					NestedFieldsSupplier.<Integer>supply(
-						"taxonomyCategoryUsageCount",
-						fieldName -> {
-							UriInfo uriInfo = dtoConverterContext.getUriInfo();
-
-							if (uriInfo != null) {
-								MultivaluedMap<String, String> queryParameters =
-									uriInfo.getQueryParameters();
-
-								if (StringUtil.contains(
-										queryParameters.getFirst(
-											"restrictFields"),
-										"taxonomyCategoryUsageCount")) {
-
-									return null;
-								}
-							}
-
-							return (int)_assetEntryLocalService.searchCount(
-								assetCategory.getCompanyId(),
-								new long[] {assetCategory.getGroupId()},
-								assetCategory.getUserId(), null, -1, null,
-								String.valueOf(assetCategory.getCategoryId()),
-								null, false, false,
-								new int[] {
-									WorkflowConstants.STATUS_APPROVED,
-									WorkflowConstants.STATUS_PENDING,
-									WorkflowConstants.STATUS_SCHEDULED
-								},
-								false);
-						}));
 			}
 		};
 	}

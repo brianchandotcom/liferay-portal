@@ -1,8 +1,8 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
-	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
-	testIntegrationCompile project(":apps:item-selector:item-selector-api")
-	testIntegrationCompile project(":apps:item-selector:item-selector-criteria-api")
-	testIntegrationCompile project(":apps:item-selector:item-selector-taglib")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
+	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	testIntegrationImplementation project(":apps:item-selector:item-selector-api")
+	testIntegrationImplementation project(":apps:item-selector:item-selector-criteria-api")
+	testIntegrationImplementation project(":apps:item-selector:item-selector-taglib")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

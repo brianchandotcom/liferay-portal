@@ -44,7 +44,7 @@ definition {
 	macro copyCP {
 		InformationTemplates.gotoInformationTemplateEllipsisItem(
 			informationTemplateName = ${informationTemplateName},
-			item = "Copy");
+			item = "Make a Copy");
 
 		if (isSet(informationTemplateCopyName)) {
 			PortletEntry.inputName(name = ${informationTemplateCopyName});

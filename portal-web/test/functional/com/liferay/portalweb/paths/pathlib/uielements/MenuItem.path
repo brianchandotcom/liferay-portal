@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>SPACING_VALUE</td>
-	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//button[span[normalize-space(text())='${key_tokenName}']]//strong[contains(@class,'text-truncate')]</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//button[.//span[normalize-space(text())='${key_tokenName}']]//span[contains(@class,'semi-bold')][contains(@class,'text-truncate')]</td>
 	<td></td>
 </tr>
 </tbody>

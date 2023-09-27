@@ -126,6 +126,8 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-140183 | Test summary: Verify that when the DXP version of the project is 7.3 or there is no value for the DXP version. This page only contains a text pointing customers to 7.3 activation"
+	@priority = 4
 	test CanViewActivationTextWhenTheVersionHasNoValue {
 		var accountsList = "7.4,7.3";
 

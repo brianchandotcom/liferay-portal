@@ -20,6 +20,10 @@ definition {
 		task ("Create a new EVP Site") {
 			EVPUtils.addEVPSite();
 		}
+
+		task ("Add Liferay Manager Role to users can see Resquests and Organizations") {
+			EVPUtils.addLiferayManagerUserRole();
+		}
 	}
 
 	tearDown {

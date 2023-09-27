@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.web.internal.object.definitions.display.context;
@@ -20,12 +11,10 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldService;
-import com.liferay.object.system.JaxRsApplicationDescriptor;
-import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.object.web.internal.configuration.activator.FFOneToOneRelationshipConfigurationActivator;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -41,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,8 +41,6 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 	extends BaseObjectDefinitionsDisplayContext {
 
 	public ObjectDefinitionsRelationshipsDisplayContext(
-		FFOneToOneRelationshipConfigurationActivator
-			ffOneToOneRelationshipConfigurationActivator,
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
@@ -63,10 +51,6 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
-		_ffOneToOneRelationshipConfigurationActivator =
-			ffOneToOneRelationshipConfigurationActivator;
-		_objectDefinitionModelResourcePermission =
-			objectDefinitionModelResourcePermission;
 		_objectDefinitionService = objectDefinitionService;
 		_objectFieldService = objectFieldService;
 		_systemObjectDefinitionManagerRegistry =
@@ -152,6 +136,8 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		return JSONUtil.put(
 			"deletionType", objectRelationship.getDeletionType()
 		).put(
+			"id", Long.valueOf(objectRelationship.getObjectRelationshipId())
+		).put(
 			"label", objectRelationship.getLabelMap()
 		).put(
 			"name", objectRelationship.getName()
@@ -169,9 +155,6 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 			Long.valueOf(objectRelationship.getObjectDefinitionId2())
 		).put(
 			"objectDefinitionName2", objectDefinition2.getShortName()
-		).put(
-			"objectRelationshipId",
-			Long.valueOf(objectRelationship.getObjectRelationshipId())
 		).put(
 			"parameterObjectFieldId",
 			objectRelationship.getParameterObjectFieldId()
@@ -197,37 +180,21 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		);
 	}
 
-	public String getRESTContextPath(ObjectDefinition objectDefinition) {
-		if (!objectDefinition.isUnmodifiableSystemObject()) {
-			return objectDefinition.getRESTContextPath();
-		}
+	public Set<String> getObjectRelationshipTypes(
+		ObjectDefinition objectDefinition) {
 
-		SystemObjectDefinitionManager systemObjectDefinitionManager =
-			_systemObjectDefinitionManagerRegistry.
-				getSystemObjectDefinitionManager(objectDefinition.getName());
-
-		if (systemObjectDefinitionManager == null) {
-			return StringPool.BLANK;
-		}
-
-		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
-			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
-
-		return jaxRsApplicationDescriptor.getRESTContextPath();
+		return ObjectRelationshipUtil.getObjectRelationshipTypes(
+			objectDefinition, _systemObjectDefinitionManagerRegistry);
 	}
 
-	public boolean isFFOneToOneRelationshipConfigurationEnabled() {
-		return _ffOneToOneRelationshipConfigurationActivator.enabled();
+	public String getRESTContextPath(ObjectDefinition objectDefinition) {
+		return ObjectRelationshipUtil.getRESTContextPath(
+			objectDefinition, _systemObjectDefinitionManagerRegistry);
 	}
 
 	public boolean isParameterRequired(ObjectDefinition objectDefinition) {
-		String restContextPath = getRESTContextPath(objectDefinition);
-
-		if (restContextPath.matches(".*/\\{\\w+}/.*")) {
-			return true;
-		}
-
-		return false;
+		return ObjectRelationshipUtil.isParameterRequired(
+			objectDefinition, _systemObjectDefinitionManagerRegistry);
 	}
 
 	@Override
@@ -249,10 +216,6 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		};
 	}
 
-	private final FFOneToOneRelationshipConfigurationActivator
-		_ffOneToOneRelationshipConfigurationActivator;
-	private final ModelResourcePermission<ObjectDefinition>
-		_objectDefinitionModelResourcePermission;
 	private final ObjectDefinitionService _objectDefinitionService;
 	private final ObjectFieldService _objectFieldService;
 	private final ObjectRequestHelper _objectRequestHelper;

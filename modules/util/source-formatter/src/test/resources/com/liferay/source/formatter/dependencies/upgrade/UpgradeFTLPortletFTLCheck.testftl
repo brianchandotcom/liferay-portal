@@ -1,0 +1,5 @@
+<header class="portlet-topper">
+	<@liferay_portlet["icon-options"] portletConfigurationIcons=portlet_configuration_icons />
+
+	<@liferay_ui["menu"] menu=portletTitleMenu />
+</header>

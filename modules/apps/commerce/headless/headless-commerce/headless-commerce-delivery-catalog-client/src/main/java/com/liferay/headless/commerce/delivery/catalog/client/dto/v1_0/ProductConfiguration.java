@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0;
@@ -18,6 +9,8 @@ import com.liferay.headless.commerce.delivery.catalog.client.function.UnsafeSupp
 import com.liferay.headless.commerce.delivery.catalog.client.serdes.v1_0.ProductConfigurationSerDes;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.Objects;
 
@@ -55,16 +48,16 @@ public class ProductConfiguration implements Cloneable, Serializable {
 
 	protected Boolean allowBackOrder;
 
-	public Integer[] getAllowedOrderQuantities() {
+	public BigDecimal[] getAllowedOrderQuantities() {
 		return allowedOrderQuantities;
 	}
 
-	public void setAllowedOrderQuantities(Integer[] allowedOrderQuantities) {
+	public void setAllowedOrderQuantities(BigDecimal[] allowedOrderQuantities) {
 		this.allowedOrderQuantities = allowedOrderQuantities;
 	}
 
 	public void setAllowedOrderQuantities(
-		UnsafeSupplier<Integer[], Exception>
+		UnsafeSupplier<BigDecimal[], Exception>
 			allowedOrderQuantitiesUnsafeSupplier) {
 
 		try {
@@ -75,7 +68,7 @@ public class ProductConfiguration implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer[] allowedOrderQuantities;
+	protected BigDecimal[] allowedOrderQuantities;
 
 	public Boolean getDisplayAvailability() {
 		return displayAvailability;
@@ -161,16 +154,16 @@ public class ProductConfiguration implements Cloneable, Serializable {
 
 	protected String lowStockAction;
 
-	public Integer getMaxOrderQuantity() {
+	public BigDecimal getMaxOrderQuantity() {
 		return maxOrderQuantity;
 	}
 
-	public void setMaxOrderQuantity(Integer maxOrderQuantity) {
+	public void setMaxOrderQuantity(BigDecimal maxOrderQuantity) {
 		this.maxOrderQuantity = maxOrderQuantity;
 	}
 
 	public void setMaxOrderQuantity(
-		UnsafeSupplier<Integer, Exception> maxOrderQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> maxOrderQuantityUnsafeSupplier) {
 
 		try {
 			maxOrderQuantity = maxOrderQuantityUnsafeSupplier.get();
@@ -180,18 +173,18 @@ public class ProductConfiguration implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer maxOrderQuantity;
+	protected BigDecimal maxOrderQuantity;
 
-	public Integer getMinOrderQuantity() {
+	public BigDecimal getMinOrderQuantity() {
 		return minOrderQuantity;
 	}
 
-	public void setMinOrderQuantity(Integer minOrderQuantity) {
+	public void setMinOrderQuantity(BigDecimal minOrderQuantity) {
 		this.minOrderQuantity = minOrderQuantity;
 	}
 
 	public void setMinOrderQuantity(
-		UnsafeSupplier<Integer, Exception> minOrderQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> minOrderQuantityUnsafeSupplier) {
 
 		try {
 			minOrderQuantity = minOrderQuantityUnsafeSupplier.get();
@@ -201,18 +194,18 @@ public class ProductConfiguration implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer minOrderQuantity;
+	protected BigDecimal minOrderQuantity;
 
-	public Integer getMinStockQuantity() {
+	public BigDecimal getMinStockQuantity() {
 		return minStockQuantity;
 	}
 
-	public void setMinStockQuantity(Integer minStockQuantity) {
+	public void setMinStockQuantity(BigDecimal minStockQuantity) {
 		this.minStockQuantity = minStockQuantity;
 	}
 
 	public void setMinStockQuantity(
-		UnsafeSupplier<Integer, Exception> minStockQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> minStockQuantityUnsafeSupplier) {
 
 		try {
 			minStockQuantity = minStockQuantityUnsafeSupplier.get();
@@ -222,18 +215,18 @@ public class ProductConfiguration implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer minStockQuantity;
+	protected BigDecimal minStockQuantity;
 
-	public Integer getMultipleOrderQuantity() {
+	public BigDecimal getMultipleOrderQuantity() {
 		return multipleOrderQuantity;
 	}
 
-	public void setMultipleOrderQuantity(Integer multipleOrderQuantity) {
+	public void setMultipleOrderQuantity(BigDecimal multipleOrderQuantity) {
 		this.multipleOrderQuantity = multipleOrderQuantity;
 	}
 
 	public void setMultipleOrderQuantity(
-		UnsafeSupplier<Integer, Exception>
+		UnsafeSupplier<BigDecimal, Exception>
 			multipleOrderQuantityUnsafeSupplier) {
 
 		try {
@@ -244,7 +237,7 @@ public class ProductConfiguration implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer multipleOrderQuantity;
+	protected BigDecimal multipleOrderQuantity;
 
 	@Override
 	public ProductConfiguration clone() throws CloneNotSupportedException {

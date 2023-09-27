@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.model;
@@ -61,13 +52,16 @@ public class CPDefinitionOptionRelWrapper
 		attributes.put("CPOptionId", getCPOptionId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
+		attributes.put("commerceOptionTypeKey", getCommerceOptionTypeKey());
+		attributes.put("infoItemServiceKey", getInfoItemServiceKey());
 		attributes.put("priority", getPriority());
+		attributes.put("definedExternally", isDefinedExternally());
 		attributes.put("facetable", isFacetable());
 		attributes.put("required", isRequired());
 		attributes.put("skuContributor", isSkuContributor());
 		attributes.put("key", getKey());
 		attributes.put("priceType", getPriceType());
+		attributes.put("typeSettings", getTypeSettings());
 
 		return attributes;
 	}
@@ -159,17 +153,31 @@ public class CPDefinitionOptionRelWrapper
 			setDescription(description);
 		}
 
-		String DDMFormFieldTypeName = (String)attributes.get(
-			"DDMFormFieldTypeName");
+		String commerceOptionTypeKey = (String)attributes.get(
+			"commerceOptionTypeKey");
 
-		if (DDMFormFieldTypeName != null) {
-			setDDMFormFieldTypeName(DDMFormFieldTypeName);
+		if (commerceOptionTypeKey != null) {
+			setCommerceOptionTypeKey(commerceOptionTypeKey);
+		}
+
+		String infoItemServiceKey = (String)attributes.get(
+			"infoItemServiceKey");
+
+		if (infoItemServiceKey != null) {
+			setInfoItemServiceKey(infoItemServiceKey);
 		}
 
 		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Boolean definedExternally = (Boolean)attributes.get(
+			"definedExternally");
+
+		if (definedExternally != null) {
+			setDefinedExternally(definedExternally);
 		}
 
 		Boolean facetable = (Boolean)attributes.get("facetable");
@@ -201,6 +209,12 @@ public class CPDefinitionOptionRelWrapper
 		if (priceType != null) {
 			setPriceType(priceType);
 		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
+		}
 	}
 
 	@Override
@@ -218,6 +232,16 @@ public class CPDefinitionOptionRelWrapper
 	@Override
 	public String[] getAvailableLanguageIds() {
 		return model.getAvailableLanguageIds();
+	}
+
+	/**
+	 * Returns the commerce option type key of this cp definition option rel.
+	 *
+	 * @return the commerce option type key of this cp definition option rel
+	 */
+	@Override
+	public String getCommerceOptionTypeKey() {
+		return model.getCommerceOptionTypeKey();
 	}
 
 	/**
@@ -306,19 +330,19 @@ public class CPDefinitionOptionRelWrapper
 		return model.getCtCollectionId();
 	}
 
-	/**
-	 * Returns the ddm form field type name of this cp definition option rel.
-	 *
-	 * @return the ddm form field type name of this cp definition option rel
-	 */
-	@Override
-	public String getDDMFormFieldTypeName() {
-		return model.getDDMFormFieldTypeName();
-	}
-
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the defined externally of this cp definition option rel.
+	 *
+	 * @return the defined externally of this cp definition option rel
+	 */
+	@Override
+	public boolean getDefinedExternally() {
+		return model.getDefinedExternally();
 	}
 
 	/**
@@ -415,6 +439,16 @@ public class CPDefinitionOptionRelWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the info item service key of this cp definition option rel.
+	 *
+	 * @return the info item service key of this cp definition option rel
+	 */
+	@Override
+	public String getInfoItemServiceKey() {
+		return model.getInfoItemServiceKey();
 	}
 
 	/**
@@ -574,6 +608,23 @@ public class CPDefinitionOptionRelWrapper
 	}
 
 	/**
+	 * Returns the type settings of this cp definition option rel.
+	 *
+	 * @return the type settings of this cp definition option rel
+	 */
+	@Override
+	public String getTypeSettings() {
+		return model.getTypeSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsUnicodeProperties() {
+
+		return model.getTypeSettingsUnicodeProperties();
+	}
+
+	/**
 	 * Returns the user ID of this cp definition option rel.
 	 *
 	 * @return the user ID of this cp definition option rel
@@ -611,6 +662,16 @@ public class CPDefinitionOptionRelWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
+	}
+
+	/**
+	 * Returns <code>true</code> if this cp definition option rel is defined externally.
+	 *
+	 * @return <code>true</code> if this cp definition option rel is defined externally; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDefinedExternally() {
+		return model.isDefinedExternally();
 	}
 
 	/**
@@ -679,6 +740,16 @@ public class CPDefinitionOptionRelWrapper
 	}
 
 	/**
+	 * Sets the commerce option type key of this cp definition option rel.
+	 *
+	 * @param commerceOptionTypeKey the commerce option type key of this cp definition option rel
+	 */
+	@Override
+	public void setCommerceOptionTypeKey(String commerceOptionTypeKey) {
+		model.setCommerceOptionTypeKey(commerceOptionTypeKey);
+	}
+
+	/**
 	 * Sets the company ID of this cp definition option rel.
 	 *
 	 * @param companyId the company ID of this cp definition option rel
@@ -739,13 +810,13 @@ public class CPDefinitionOptionRelWrapper
 	}
 
 	/**
-	 * Sets the ddm form field type name of this cp definition option rel.
+	 * Sets whether this cp definition option rel is defined externally.
 	 *
-	 * @param DDMFormFieldTypeName the ddm form field type name of this cp definition option rel
+	 * @param definedExternally the defined externally of this cp definition option rel
 	 */
 	@Override
-	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName) {
-		model.setDDMFormFieldTypeName(DDMFormFieldTypeName);
+	public void setDefinedExternally(boolean definedExternally) {
+		model.setDefinedExternally(definedExternally);
 	}
 
 	/**
@@ -833,6 +904,16 @@ public class CPDefinitionOptionRelWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the info item service key of this cp definition option rel.
+	 *
+	 * @param infoItemServiceKey the info item service key of this cp definition option rel
+	 */
+	@Override
+	public void setInfoItemServiceKey(String infoItemServiceKey) {
+		model.setInfoItemServiceKey(infoItemServiceKey);
 	}
 
 	/**
@@ -976,6 +1057,16 @@ public class CPDefinitionOptionRelWrapper
 	@Override
 	public void setSkuContributor(boolean skuContributor) {
 		model.setSkuContributor(skuContributor);
+	}
+
+	/**
+	 * Sets the type settings of this cp definition option rel.
+	 *
+	 * @param typeSettings the type settings of this cp definition option rel
+	 */
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		model.setTypeSettings(typeSettings);
 	}
 
 	/**

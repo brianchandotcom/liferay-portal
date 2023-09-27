@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker;
@@ -27,6 +18,7 @@ import java.io.File;
 import java.io.StringWriter;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Shin
@@ -50,7 +42,8 @@ public class FreeMarker {
 	}
 
 	public String processTemplate(
-			File copyrightFile, String name, Map<String, Object> context)
+			File copyrightFile, String copyrightYear, String name,
+			Map<String, Object> context)
 		throws Exception {
 
 		Template template = _configuration.getTemplate(name);
@@ -62,7 +55,12 @@ public class FreeMarker {
 		String content = String.valueOf(stringWriter.getBuffer());
 
 		if ((copyrightFile != null) && copyrightFile.exists()) {
-			content = FileUtil.read(copyrightFile) + "\n\n" + content;
+			String copyright = FileUtil.read(copyrightFile);
+
+			copyright = copyright.replaceFirst(
+				Pattern.quote("{$year}"), copyrightYear);
+
+			content = copyright + "\n\n" + content;
 		}
 
 		return StringUtil.replace(content, "\r\n", "\n");

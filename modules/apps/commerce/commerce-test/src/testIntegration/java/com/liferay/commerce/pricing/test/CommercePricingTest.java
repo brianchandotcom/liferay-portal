@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.pricing.test;
@@ -182,11 +173,12 @@ public class CommercePricingTest {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		int quantity = 1;
+		BigDecimal quantity = BigDecimal.ONE;
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), quantity, commerceContext);
+				cpInstance.getCPInstanceId(), quantity, StringPool.BLANK,
+				commerceContext);
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -196,18 +188,18 @@ public class CommercePricingTest {
 		Assert.assertEquals(
 			price1.stripTrailingZeros(), finalPrice.stripTrailingZeros());
 
-		quantity = 100;
+		quantity = BigDecimal.valueOf(100);
 
 		commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), quantity, commerceContext);
+				cpInstance.getCPInstanceId(), quantity, StringPool.BLANK,
+				commerceContext);
 
 		finalPriceCommerceMoney = commerceProductPrice.getFinalPrice();
 
 		finalPrice = finalPriceCommerceMoney.getPrice();
 
-		BigDecimal expectedPrice = price10.multiply(
-			BigDecimal.valueOf(quantity));
+		BigDecimal expectedPrice = price10.multiply(quantity);
 
 		Assert.assertEquals(
 			expectedPrice.stripTrailingZeros(),
@@ -260,7 +252,8 @@ public class CommercePricingTest {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 10, false, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.TEN, false,
+				StringPool.BLANK, commerceContext);
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -341,8 +334,8 @@ public class CommercePricingTest {
 			commerceChannel.getCommerceChannelId());
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
-			10);
+			_user.getUserId(), commerceInventoryWarehouse, BigDecimal.TEN,
+			cpInstance.getSku(), StringPool.BLANK);
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			_user.getUserId(), commerceChannel.getGroupId(), _commerceCurrency);
@@ -354,7 +347,7 @@ public class CommercePricingTest {
 		CommerceOrderItem commerceOrderItem =
 			CommerceTestUtil.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), 10, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.TEN, commerceContext);
 
 		CommerceOrderItemPrice commerceOrderItemPrice =
 			_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
@@ -425,8 +418,8 @@ public class CommercePricingTest {
 			commerceChannel.getCommerceChannelId());
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
-			10);
+			_user.getUserId(), commerceInventoryWarehouse, BigDecimal.TEN,
+			cpInstance.getSku(), StringPool.BLANK);
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			_user.getUserId(), commerceChannel.getGroupId(), _commerceCurrency);
@@ -438,7 +431,7 @@ public class CommercePricingTest {
 		CommerceOrderItem commerceOrderItem =
 			CommerceTestUtil.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), 1, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, commerceContext);
 
 		CommerceOrderItemPrice commerceOrderItemPrice =
 			_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
@@ -490,7 +483,8 @@ public class CommercePricingTest {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 1, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
+				commerceContext);
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -551,7 +545,8 @@ public class CommercePricingTest {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 1, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
+				commerceContext);
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -662,7 +657,8 @@ public class CommercePricingTest {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 10, false, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.TEN, false,
+				StringPool.BLANK, commerceContext);
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -741,7 +737,8 @@ public class CommercePricingTest {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 10, false, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.TEN, false,
+				StringPool.BLANK, commerceContext);
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -811,7 +808,8 @@ public class CommercePricingTest {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 1, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
+				commerceContext);
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -824,7 +822,8 @@ public class CommercePricingTest {
 
 		commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 100, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.valueOf(100),
+				StringPool.BLANK, commerceContext);
 
 		finalPriceCommerceMoney = commerceProductPrice.getFinalPrice();
 
@@ -909,7 +908,8 @@ public class CommercePricingTest {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 1, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
+				commerceContext);
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -987,58 +987,59 @@ public class CommercePricingTest {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 1, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
+				commerceContext);
 
 		CommerceMoney commerceMoney1 = commerceProductPrice.getFinalPrice();
 
 		Assert.assertEquals(0, price1.compareTo(commerceMoney1.getPrice()));
 
-		int quantity = 10;
+		BigDecimal quantity = BigDecimal.TEN;
 
 		commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), quantity, commerceContext);
+				cpInstance.getCPInstanceId(), quantity, StringPool.BLANK,
+				commerceContext);
 
 		CommerceMoney commerceMoney10 = commerceProductPrice.getFinalPrice();
 
 		BigDecimal commercePrice10 = commerceMoney10.getPrice();
 
-		BigDecimal expectedPrice10 = price10.multiply(
-			BigDecimal.valueOf(quantity));
+		BigDecimal expectedPrice10 = price10.multiply(quantity);
 
 		Assert.assertEquals(
 			expectedPrice10.stripTrailingZeros(),
 			commercePrice10.stripTrailingZeros());
 
-		quantity = 18;
+		quantity = BigDecimal.valueOf(18);
 
 		commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), quantity, commerceContext);
+				cpInstance.getCPInstanceId(), quantity, StringPool.BLANK,
+				commerceContext);
 
 		CommerceMoney commerceMoney15 = commerceProductPrice.getFinalPrice();
 
 		BigDecimal commercePrice15 = commerceMoney15.getPrice();
 
-		BigDecimal expectedPrice15 = price15.multiply(
-			BigDecimal.valueOf(quantity));
+		BigDecimal expectedPrice15 = price15.multiply(quantity);
 
 		Assert.assertEquals(
 			expectedPrice15.stripTrailingZeros(),
 			commercePrice15.stripTrailingZeros());
 
-		quantity = 25;
+		quantity = BigDecimal.valueOf(25);
 
 		commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), quantity, commerceContext);
+				cpInstance.getCPInstanceId(), quantity, StringPool.BLANK,
+				commerceContext);
 
 		CommerceMoney commerceMoney20 = commerceProductPrice.getFinalPrice();
 
 		BigDecimal commercePrice20 = commerceMoney20.getPrice();
 
-		BigDecimal expectedPrice20 = price20.multiply(
-			BigDecimal.valueOf(quantity));
+		BigDecimal expectedPrice20 = price20.multiply(quantity);
 
 		Assert.assertEquals(
 			expectedPrice20.stripTrailingZeros(),
@@ -1120,7 +1121,8 @@ public class CommercePricingTest {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 10, false, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.TEN, false,
+				StringPool.BLANK, commerceContext);
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -1149,7 +1151,8 @@ public class CommercePricingTest {
 
 		commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 10, false, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.TEN, false,
+				StringPool.BLANK, commerceContext);
 
 		CommerceMoney finalPromoPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -1238,7 +1241,8 @@ public class CommercePricingTest {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 10, false, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.TEN, false,
+				StringPool.BLANK, commerceContext);
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -1281,7 +1285,8 @@ public class CommercePricingTest {
 
 		commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 10, false, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.TEN, false,
+				StringPool.BLANK, commerceContext);
 
 		CommerceMoney finalPromoPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();

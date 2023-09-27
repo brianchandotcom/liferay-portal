@@ -5,7 +5,7 @@ The TLDDoc Builder Gradle plugin lets you run the
 tool in order to generate documentation for the JSP Tag Library Descriptor (TLD)
 files in your project.
 
-The plugin has been successfully tested with Gradle 6.9.2.
+The plugin has been successfully tested with Gradle 7.3.3.
 
 ## Usage
 
@@ -14,7 +14,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.tlddoc.builder", version: "2.0.0"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.tlddoc.builder", version: "2.0.1"
 	}
 
 	repositories {

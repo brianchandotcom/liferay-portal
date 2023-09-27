@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.upgrade.internal.release.osgi.commands;
@@ -19,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
@@ -30,6 +22,8 @@ import java.util.Set;
 
 import org.apache.felix.service.command.Descriptor;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -59,7 +53,7 @@ public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("Execute upgrade for a specific module")
 	public String execute(String bundleSymbolicName) {
-		List<UpgradeInfo> upgradeInfos = _releaseManagerImpl.getUpgradeInfos(
+		List<UpgradeInfo> upgradeInfos = _upgradeExecutor.getUpgradeInfos(
 			bundleSymbolicName);
 
 		if (upgradeInfos == null) {
@@ -69,7 +63,10 @@ public class ReleaseManagerOSGiCommands {
 		TeeLoggingUtil.runWithTeeLogging(
 			() -> {
 				try {
-					_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos);
+					_upgradeExecutor.execute(
+						BundleUtil.getBundle(
+							_bundleContext, bundleSymbolicName),
+						upgradeInfos);
 				}
 				catch (Throwable throwable) {
 					_log.error(
@@ -84,7 +81,7 @@ public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("Execute upgrade for a specific module and final version")
 	public String execute(String bundleSymbolicName, String toVersionString) {
-		List<UpgradeInfo> upgradeInfos = _releaseManagerImpl.getUpgradeInfos(
+		List<UpgradeInfo> upgradeInfos = _upgradeExecutor.getUpgradeInfos(
 			bundleSymbolicName);
 
 		if (upgradeInfos == null) {
@@ -96,7 +93,7 @@ public class ReleaseManagerOSGiCommands {
 
 		TeeLoggingUtil.runWithTeeLogging(
 			() -> _upgradeExecutor.executeUpgradeInfos(
-				bundleSymbolicName,
+				BundleUtil.getBundle(_bundleContext, bundleSymbolicName),
 				releaseGraphManager.getUpgradeInfos(
 					_releaseManagerImpl.getSchemaVersionString(
 						bundleSymbolicName),
@@ -138,7 +135,7 @@ public class ReleaseManagerOSGiCommands {
 	@Descriptor("List registered upgrade processes for all modules")
 	public String list() {
 		Set<String> bundleSymbolicNames =
-			_releaseManagerImpl.getBundleSymbolicNames();
+			_upgradeExecutor.getBundleSymbolicNames();
 
 		StringBundler sb = new StringBundler(2 * bundleSymbolicNames.size());
 
@@ -154,7 +151,7 @@ public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("List registered upgrade processes for a specific module")
 	public String list(String bundleSymbolicName) {
-		List<UpgradeInfo> upgradeInfos = _releaseManagerImpl.getUpgradeInfos(
+		List<UpgradeInfo> upgradeInfos = _upgradeExecutor.getUpgradeInfos(
 			bundleSymbolicName);
 
 		StringBundler sb = new StringBundler(5 + (3 * upgradeInfos.size()));
@@ -177,6 +174,11 @@ public class ReleaseManagerOSGiCommands {
 		return sb.toString();
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
 	protected void executeAll(
 		Set<String> upgradeThrewExceptionBundleSymbolicNames) {
 
@@ -196,11 +198,13 @@ public class ReleaseManagerOSGiCommands {
 
 				try {
 					List<UpgradeInfo> upgradeInfos =
-						_releaseManagerImpl.getUpgradeInfos(
+						_upgradeExecutor.getUpgradeInfos(
 							upgradableBundleSymbolicName);
 
 					_upgradeExecutor.execute(
-						upgradableBundleSymbolicName, upgradeInfos);
+						BundleUtil.getBundle(
+							_bundleContext, upgradableBundleSymbolicName),
+						upgradeInfos);
 				}
 				catch (Throwable throwable) {
 					_log.error(
@@ -217,6 +221,8 @@ public class ReleaseManagerOSGiCommands {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReleaseManagerOSGiCommands.class);
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	private ReleaseManagerImpl _releaseManagerImpl;

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
@@ -106,18 +97,19 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
+import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -164,6 +156,10 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"company.administrator.can.publish", true
 			).build());
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
 
 	@AfterClass
@@ -171,6 +167,8 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 		_companyLocalService.deleteCompany(_company);
 
 		ConfigurationTestUtil.deleteConfiguration(_configuration);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Before
@@ -1210,8 +1208,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 				null, null, User.class.getName(),
 				new Long[] {_adminUser.getUserId()}, null, null, true, false,
 				false, null, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(
-					true));
+				_workflowComparatorFactory.getTaskModifiedDateComparator(true));
 
 		_assertEquals(
 			workflowTasks, workflowModelSearchResult.getWorkflowModels());
@@ -1221,7 +1218,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			null, User.class.getName(), new Long[] {_adminUser.getUserId()},
 			null, null, true, false, false, null, null, false,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(false));
+			_workflowComparatorFactory.getTaskModifiedDateComparator(false));
 
 		Collections.reverse(workflowTasks);
 
@@ -1250,7 +1247,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 					StringPool.BLANK, new String[] {StringPool.BLANK}, null,
 					null, null, null, null, null, null, true, true, null, null,
 					false, 0, 1,
-					WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(
+					_workflowComparatorFactory.getTaskModifiedDateComparator(
 						false));
 
 			List<WorkflowTask> workflowTasks =
@@ -1266,7 +1263,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 				StringPool.BLANK, new String[] {StringPool.BLANK}, null, null,
 				null, null, null, null, null, true, true, null, null, false, 0,
 				1,
-				WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(
+				_workflowComparatorFactory.getTaskModifiedDateComparator(
 					false));
 
 		List<WorkflowTask> workflowTasks =
@@ -1585,7 +1582,8 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 				_log.debug(workflowException);
 			}
 
-			String content = _read("join-xor-workflow-definition.xml");
+			String content = _readFileToJSON(
+				"join-xor-workflow-definition.xml");
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				_adminUser.getCompanyId(), _adminUser.getUserId(), _JOIN_XOR,
@@ -1619,7 +1617,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 				_log.debug(workflowException);
 			}
 
-			String content = _read(fileName);
+			String content = _readFileToJSON(fileName);
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				_adminUser.getCompanyId(), _adminUser.getUserId(), name, name,
@@ -1637,7 +1635,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 				_log.debug(workflowException);
 			}
 
-			String content = _read(
+			String content = _readFileToJSON(
 				"single-approver-site-member-workflow-definition.xml");
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
@@ -1814,11 +1812,11 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			workflowTask.getWorkflowTaskId());
 	}
 
-	private String _read(String fileName) throws Exception {
+	private String _readFileToJSON(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
-		return StringUtil.read(
-			clazz.getClassLoader(), _getBasePath() + fileName);
+		return WorkflowDefinitionContentUtil.toJSON(
+			StringUtil.read(clazz.getClassLoader(), _getBasePath() + fileName));
 	}
 
 	private List<WorkflowTask> _searchByAssetTypesAndAssetPrimaryKeys(
@@ -1829,7 +1827,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			_adminUser.getCompanyId(), _adminUser.getUserId(), null, null,
 			assetTypes, assetPrimaryKeys, null, null, null, null, false, true,
 			null, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(true));
+			_workflowComparatorFactory.getTaskModifiedDateComparator(true));
 	}
 
 	private int _searchCount(String keywords) throws Exception {
@@ -1986,6 +1984,8 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
 
+	private static String _originalName;
+
 	private User _adminUser;
 
 	@Inject
@@ -2050,6 +2050,9 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 	@Inject
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
+
+	@Inject
+	private WorkflowComparatorFactory _workflowComparatorFactory;
 
 	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;

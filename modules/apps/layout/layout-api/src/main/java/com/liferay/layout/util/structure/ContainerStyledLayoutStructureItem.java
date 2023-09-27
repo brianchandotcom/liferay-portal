@@ -1,20 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -90,25 +82,90 @@ public class ContainerStyledLayoutStructureItem
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = super.getItemConfigJSONObject();
 
-		return jsonObject.put(
-			"align", _align
+		jsonObject.put(
+			"align",
+			() -> {
+				if (Validator.isBlank(_align)) {
+					return null;
+				}
+
+				return _align;
+			}
 		).put(
-			"contentDisplay", _contentDisplay
+			"contentDisplay",
+			() -> {
+				if (Validator.isBlank(_contentDisplay)) {
+					return null;
+				}
+
+				return _contentDisplay;
+			}
 		).put(
-			"contentVisibility", _contentVisibility
+			"contentVisibility",
+			() -> {
+				if (Validator.isBlank(_contentVisibility)) {
+					return null;
+				}
+
+				return _contentVisibility;
+			}
 		).put(
-			"flexWrap", _flexWrap
+			"flexWrap",
+			() -> {
+				if (Validator.isBlank(_flexWrap)) {
+					return null;
+				}
+
+				return _flexWrap;
+			}
 		).put(
-			"htmlTag", _htmlTag
+			"htmlTag",
+			() -> {
+				if (Validator.isBlank(_htmlTag)) {
+					return null;
+				}
+
+				return _htmlTag;
+			}
 		).put(
-			"indexed", _indexed
+			"indexed",
+			() -> {
+				if (_indexed) {
+					return null;
+				}
+
+				return false;
+			}
 		).put(
-			"justify", _justify
+			"justify",
+			() -> {
+				if (Validator.isBlank(_justify)) {
+					return null;
+				}
+
+				return _justify;
+			}
 		).put(
-			"link", _linkJSONObject
+			"link",
+			() -> {
+				if (_linkJSONObject.length() == 0) {
+					return null;
+				}
+
+				return _linkJSONObject;
+			}
 		).put(
-			"widthType", _widthType
+			"widthType",
+			() -> {
+				if (Objects.equals(_widthType, "fluid")) {
+					return null;
+				}
+
+				return _widthType;
+			}
 		);
+
+		return jsonObject;
 	}
 
 	@Override
@@ -314,6 +371,6 @@ public class ContainerStyledLayoutStructureItem
 	private boolean _indexed = true;
 	private String _justify = "";
 	private JSONObject _linkJSONObject;
-	private String _widthType = "fluid";
+	private String _widthType = StyledLayoutStructureConstants.WIDTH_TYPE;
 
 }

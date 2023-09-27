@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CRITERIA_ELLIPSIS_OPTION_OPEN</td>
+	<td>xpath=(//div[contains(@class,'criterion')][.//div[contains(@class,'display-value')][normalize-space(.)='${criteriaName}']]//button[contains(@class,'dropdown-toggle') and @aria-expanded='true'])</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_TABLE_TOTAL_ACTIVITIES_NAME_AND_VALUE</td>
 	<td>//a[contains(text(),'${segmentName}')]//ancestor::tr//td[contains(@class,'table-column-text-end') and contains(text(),'${totalActivitiesNumber}')][2]]</td>
 	<td></td>
@@ -85,12 +90,12 @@
 </tr>
 <tr>
 	<td>CRITERION_TYPE_DROPDOWN</td>
-	<td>//div[@class='dropdown dropdown-root']/button</td>
+	<td>//div[@class='criteria-sidebar-root']/div[@class='sidebar-header']//button</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DELETE_SEGMENT</td>
-	<td>//div[contains(@class,'dropdown')]/button[contains(@class,'item')]</td>
+	<td>//div[contains(@class,'dropdown')]//button[contains(@class,'item') and text()='Delete']</td>
 	<td></td>
 </tr>
 <tr>
@@ -115,7 +120,7 @@
 </tr>
 <tr>
 	<td>EDIT_SEGMENT</td>
-	<td>//div[contains(@class,'dropdown')]/a[contains(@href,'edit')]</td>
+	<td>//a[@class='dropdown-item' and contains(@href,'edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -265,7 +270,7 @@
 </tr>
 <tr>
 	<td>SELECT_CRITERION_TYPE</td>
-	<td>//div[@class='dropdown-menu show']/button[text()='${key_criterion}']</td>
+	<td>//div[@class='dropdown-menu show']//button[text()='${key_criterion}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -382,28 +387,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_CONTROL_CRITERION</td>
-	<td>//div[contains(@class,'form-group-item')and text()='${key_criterion}']/..//select[contains(@class,'form-control')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_CONTROL_CRITERION_OPTION</td>
-	<td>//div[contains(@class,'form-group-item')and text()='${key_criterion}']/..//select[contains(@class,'form-control')]//option[text()='${key_option}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ACTIVITIES_CRITERION</td>
-	<td>xpath=(//div[contains(@class,'criteria-statement')]//select[contains(@class,'form-control')])[${key_indexField}]</td>
+	<td>xpath=(//div[contains(@class,'criteria-statement')]//button[contains(@class,'form-control')])[${key_indexField}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITIES_CRITERION_DROPDOWN</td>
+	<td>xpath=(//button[contains(@class,'dropdown-item') and text()='${operator}'])</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TIME_INPUT_CRITERION_CONJUNCTION</td>
-	<td>xpath=(//select[@data-testid='conjunction-input'])[${key_indexField}]</td>
+	<td>xpath=(//button[@data-testid='conjunction-input'])[${key_indexField}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TIME_INPUT_CRITERION</td>
-	<td>xpath=(//select[@data-testid='clay-select'])[${key_indexField}]</td>
+	<td>xpath=(//button[@data-testid='clay-select'])[${key_indexField}]</td>
 	<td></td>
 </tr>
 <tr>

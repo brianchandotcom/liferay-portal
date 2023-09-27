@@ -1,23 +1,22 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FileEntryLockException;
 import com.liferay.document.library.kernel.exception.InvalidFolderException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
@@ -31,6 +30,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -78,6 +79,8 @@ import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepos
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
+import com.liferay.ratings.kernel.model.RatingsEntry;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.File;
 import java.io.IOException;
@@ -85,10 +88,14 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Provides the remote service for accessing, adding, checking in/out, deleting,
@@ -719,7 +726,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	@Override
 	public FileEntry copyFileEntry(
 			long fileEntryId, long destinationFolderId,
-			long destinationRepositoryId, ServiceContext serviceContext)
+			long destinationRepositoryId, long fileEntryTypeId, long[] groupIds,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository sourceRepository = repositoryProvider.getFileEntryRepository(
@@ -728,7 +736,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return copyFileEntry(
 			getRepository(destinationRepositoryId),
 			sourceRepository.getFileEntry(fileEntryId), destinationFolderId,
-			serviceContext);
+			fileEntryTypeId, groupIds, serviceContext);
 	}
 
 	@Override
@@ -751,6 +759,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public Folder copyFolder(
 			long sourceRepositoryId, long sourceFolderId,
 			long destinationRepositoryId, long destinationParentFolderId,
+			Map<Long, Long> fileEntryTypeIds, long[] groupIds,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -762,7 +771,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return copyFolder(
 			sourceFolderId, destinationParentFolderId,
 			getRepository(sourceRepositoryId),
-			getRepository(destinationRepositoryId), serviceContext);
+			getRepository(destinationRepositoryId), fileEntryTypeIds, groupIds,
+			serviceContext);
 	}
 
 	/**
@@ -2297,6 +2307,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @see    #addTempFileEntry(long, long, String, String, File, String)
 	 * @see    TempFileEntryUtil
 	 */
+	@CTAware(onProduction = true)
 	@Override
 	public String[] getTempFileNames(
 			long groupId, long folderId, String folderName)
@@ -3119,6 +3130,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	protected FileEntry copyFileEntry(
 			Repository toRepository, FileEntry fileEntry, long targetFolderId,
+			long fileEntryTypeId, long[] groupIds,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -3130,6 +3142,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		String sourceFileName = DLAppUtil.getSourceFileName(latestFileVersion);
 
+		_populateServiceContext(
+			serviceContext, DLFileEntryConstants.getClassName(),
+			fileEntry.getFileEntryId(), fileEntryTypeId, groupIds,
+			toRepository.getRepositoryId());
+
 		FileEntry targetFileEntry = toRepository.addFileEntry(
 			null, getUserId(), targetFolderId, sourceFileName,
 			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
@@ -3137,6 +3154,17 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			StringPool.BLANK, latestFileVersion.getContentStream(false),
 			latestFileVersion.getSize(), latestFileVersion.getExpirationDate(),
 			latestFileVersion.getReviewDate(), serviceContext);
+
+		for (RatingsEntry ratingsEntry :
+				_ratingsEntryLocalService.getEntries(
+					DLFileEntryConstants.getClassName(),
+					fileEntry.getFileEntryId())) {
+
+			_ratingsEntryLocalService.updateEntry(
+				ratingsEntry.getUserId(), DLFileEntryConstants.getClassName(),
+				targetFileEntry.getFileEntryId(), ratingsEntry.getScore(),
+				serviceContext);
+		}
 
 		for (int i = fileVersions.size() - 2; i >= 0; i--) {
 			FileVersion fileVersion = fileVersions.get(i);
@@ -3175,9 +3203,21 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return targetFileEntry;
 	}
 
+	protected FileEntry copyFileEntry(
+			Repository toRepository, FileEntry fileEntry, long targetFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return copyFileEntry(
+			toRepository, fileEntry, targetFolderId,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
+			serviceContext);
+	}
+
 	protected Folder copyFolder(
 			long sourceFolderId, long parentFolderId, Repository fromRepository,
-			Repository toRepository, ServiceContext serviceContext)
+			Repository toRepository, Map<Long, Long> fileEntryTypeIds,
+			long[] groupIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		Folder targetFolder = null;
@@ -3192,9 +3232,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			_dlAppHelperLocalService.addFolder(
 				getUserId(), targetFolder, serviceContext);
 
+			for (RatingsEntry ratingsEntry :
+					_ratingsEntryLocalService.getEntries(
+						DLFolderConstants.getClassName(),
+						sourceFolder.getFolderId())) {
+
+				_ratingsEntryLocalService.updateEntry(
+					ratingsEntry.getUserId(), DLFolderConstants.getClassName(),
+					targetFolder.getFolderId(), ratingsEntry.getScore(),
+					serviceContext);
+			}
+
 			copyFolderDependencies(
 				sourceFolder, targetFolder, fromRepository, toRepository,
-				serviceContext);
+				fileEntryTypeIds, groupIds, serviceContext);
 
 			return targetFolder;
 		}
@@ -3275,7 +3326,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	protected void copyFolderDependencies(
 			Folder sourceFolder, Folder targetFolder, Repository fromRepository,
-			Repository toRepository, ServiceContext serviceContext)
+			Repository toRepository, Map<Long, Long> fileEntryTypeIds,
+			long[] groupIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		List<RepositoryEntry> repositoryEntries =
@@ -3287,9 +3339,22 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			if (repositoryEntry instanceof FileEntry) {
 				FileEntry fileEntry = (FileEntry)repositoryEntry;
 
+				long[] assetCategoryIds = serviceContext.getAssetCategoryIds();
+				String[] assetTagNames = serviceContext.getAssetTagNames();
+				long fileEntryTypeId = ParamUtil.getLong(
+					serviceContext, "fileEntryTypeId");
+
 				copyFileEntry(
 					toRepository, fileEntry, targetFolder.getFolderId(),
-					serviceContext);
+					fileEntryTypeIds.getOrDefault(
+						fileEntry.getFileEntryId(),
+						DLFileEntryTypeConstants.
+							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT),
+					groupIds, serviceContext);
+
+				serviceContext.setAssetCategoryIds(assetCategoryIds);
+				serviceContext.setAssetTagNames(assetTagNames);
+				serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
 			}
 			else if (repositoryEntry instanceof FileShortcut) {
 				if (targetFolder.isSupportsShortcuts()) {
@@ -3311,9 +3376,21 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				_dlAppHelperLocalService.addFolder(
 					getUserId(), newFolder, serviceContext);
 
+				for (RatingsEntry ratingsEntry :
+						_ratingsEntryLocalService.getEntries(
+							DLFolderConstants.getClassName(),
+							currentFolder.getFolderId())) {
+
+					_ratingsEntryLocalService.updateEntry(
+						ratingsEntry.getUserId(),
+						DLFolderConstants.getClassName(),
+						newFolder.getFolderId(), ratingsEntry.getScore(),
+						serviceContext);
+				}
+
 				copyFolderDependencies(
 					currentFolder, newFolder, fromRepository, toRepository,
-					serviceContext);
+					fileEntryTypeIds, groupIds, serviceContext);
 			}
 		}
 	}
@@ -3414,7 +3491,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Folder newFolder = copyFolder(
 			folderId, parentFolderId, fromRepository, toRepository,
-			serviceContext);
+			new HashMap<>(), null, serviceContext);
 
 		fromRepository.deleteFolder(folderId);
 
@@ -3423,6 +3500,103 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	@BeanReference(type = RepositoryProvider.class)
 	protected RepositoryProvider repositoryProvider;
+
+	private long[] _getAssetCategoryIds(
+		String className, long classPK, long[] groupIds, long repositoryId) {
+
+		long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
+			className, classPK);
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return assetCategoryIds;
+		}
+
+		Set<Long> allowedAssetCategoryIds = new HashSet<>();
+
+		for (long assetCategoryId : assetCategoryIds) {
+			if (_isAssetCategoryIdAllowed(
+					assetCategoryId, repositoryId, groupIds)) {
+
+				allowedAssetCategoryIds.add(assetCategoryId);
+			}
+		}
+
+		return ArrayUtil.toLongArray(allowedAssetCategoryIds);
+	}
+
+	private String[] _getAssetTagNames(
+		String className, long classPK, long[] groupIds) {
+
+		String[] assetTagNames = _assetTagLocalService.getTagNames(
+			className, classPK);
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return assetTagNames;
+		}
+
+		Set<String> allowedAssetTagNames = new HashSet<>();
+
+		for (String assetTagName : assetTagNames) {
+			if (_isAssetTagNameAllowed(groupIds, assetTagName)) {
+				allowedAssetTagNames.add(assetTagName);
+			}
+		}
+
+		return ArrayUtil.toStringArray(allowedAssetTagNames);
+	}
+
+	private boolean _isAssetCategoryIdAllowed(
+		long categoryId, long groupId, long[] groupsIds) {
+
+		AssetCategory assetCategory = _assetCategoryLocalService.fetchCategory(
+			categoryId);
+
+		if ((assetCategory == null) ||
+			!ArrayUtil.contains(groupsIds, assetCategory.getGroupId())) {
+
+			return false;
+		}
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchAssetVocabulary(
+				assetCategory.getVocabularyId());
+
+		if ((assetVocabulary.getVisibilityType() ==
+				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) &&
+			(assetVocabulary.getGroupId() != groupId)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isAssetTagNameAllowed(long[] groupIds, String tagName) {
+		for (Long groupId : groupIds) {
+			if (_assetTagLocalService.hasTag(groupId, tagName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private void _populateServiceContext(
+		ServiceContext serviceContext, String className, long classPK,
+		long fileEntryTypeId, long[] groupIds, long repositoryId) {
+
+		serviceContext.setAssetCategoryIds(
+			_getAssetCategoryIds(className, classPK, groupIds, repositoryId));
+		serviceContext.setAssetTagNames(
+			_getAssetTagNames(className, classPK, groupIds));
+
+		if (!Objects.equals(
+				fileEntryTypeId,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)) {
+
+			serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
+		}
+	}
 
 	private void _validateFolders(
 			long repositoryId, long sourceFolderId,
@@ -3483,8 +3657,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				DLAppServiceImpl.class, "_portletResourcePermission",
 				DLConstants.RESOURCE_NAME);
 
+	@BeanReference(type = AssetCategoryLocalService.class)
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@BeanReference(type = AssetTagLocalService.class)
+	private AssetTagLocalService _assetTagLocalService;
+
+	@BeanReference(type = AssetVocabularyLocalService.class)
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
 	@BeanReference(type = DLAppHelperLocalService.class)
 	private DLAppHelperLocalService _dlAppHelperLocalService;
+
+	@BeanReference(type = RatingsEntryLocalService.class)
+	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 	@BeanReference(type = RepositoryPersistence.class)
 	private RepositoryPersistence _repositoryPersistence;

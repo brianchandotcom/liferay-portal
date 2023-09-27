@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portlet.documentlibrary.service.persistence.impl;
@@ -15315,17 +15306,18 @@ public class DLFolderPersistenceImpl
 	 *
 	 * @param pk the primary key of the document library folder
 	 * @param dlFileEntryTypePK the primary key of the document library file entry type
+	 * @return <code>true</code> if an association between the document library folder and the document library file entry type was added; <code>false</code> if they were already associated
 	 */
 	@Override
-	public void addDLFileEntryType(long pk, long dlFileEntryTypePK) {
+	public boolean addDLFileEntryType(long pk, long dlFileEntryTypePK) {
 		DLFolder dlFolder = fetchByPrimaryKey(pk);
 
 		if (dlFolder == null) {
-			dlFolderToDLFileEntryTypeTableMapper.addTableMapping(
+			return dlFolderToDLFileEntryTypeTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk, dlFileEntryTypePK);
 		}
 		else {
-			dlFolderToDLFileEntryTypeTableMapper.addTableMapping(
+			return dlFolderToDLFileEntryTypeTableMapper.addTableMapping(
 				dlFolder.getCompanyId(), pk, dlFileEntryTypePK);
 		}
 	}
@@ -15335,9 +15327,10 @@ public class DLFolderPersistenceImpl
 	 *
 	 * @param pk the primary key of the document library folder
 	 * @param dlFileEntryType the document library file entry type
+	 * @return <code>true</code> if an association between the document library folder and the document library file entry type was added; <code>false</code> if they were already associated
 	 */
 	@Override
-	public void addDLFileEntryType(
+	public boolean addDLFileEntryType(
 		long pk,
 		com.liferay.document.library.kernel.model.DLFileEntryType
 			dlFileEntryType) {
@@ -15345,12 +15338,12 @@ public class DLFolderPersistenceImpl
 		DLFolder dlFolder = fetchByPrimaryKey(pk);
 
 		if (dlFolder == null) {
-			dlFolderToDLFileEntryTypeTableMapper.addTableMapping(
+			return dlFolderToDLFileEntryTypeTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk,
 				dlFileEntryType.getPrimaryKey());
 		}
 		else {
-			dlFolderToDLFileEntryTypeTableMapper.addTableMapping(
+			return dlFolderToDLFileEntryTypeTableMapper.addTableMapping(
 				dlFolder.getCompanyId(), pk, dlFileEntryType.getPrimaryKey());
 		}
 	}
@@ -15360,9 +15353,10 @@ public class DLFolderPersistenceImpl
 	 *
 	 * @param pk the primary key of the document library folder
 	 * @param dlFileEntryTypePKs the primary keys of the document library file entry types
+	 * @return <code>true</code> if at least one association between the document library folder and the document library file entry types was added; <code>false</code> if they were all already associated
 	 */
 	@Override
-	public void addDLFileEntryTypes(long pk, long[] dlFileEntryTypePKs) {
+	public boolean addDLFileEntryTypes(long pk, long[] dlFileEntryTypePKs) {
 		long companyId = 0;
 
 		DLFolder dlFolder = fetchByPrimaryKey(pk);
@@ -15374,8 +15368,15 @@ public class DLFolderPersistenceImpl
 			companyId = dlFolder.getCompanyId();
 		}
 
-		dlFolderToDLFileEntryTypeTableMapper.addTableMappings(
-			companyId, pk, dlFileEntryTypePKs);
+		long[] addedKeys =
+			dlFolderToDLFileEntryTypeTableMapper.addTableMappings(
+				companyId, pk, dlFileEntryTypePKs);
+
+		if (addedKeys.length > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -15383,14 +15384,15 @@ public class DLFolderPersistenceImpl
 	 *
 	 * @param pk the primary key of the document library folder
 	 * @param dlFileEntryTypes the document library file entry types
+	 * @return <code>true</code> if at least one association between the document library folder and the document library file entry types was added; <code>false</code> if they were all already associated
 	 */
 	@Override
-	public void addDLFileEntryTypes(
+	public boolean addDLFileEntryTypes(
 		long pk,
 		List<com.liferay.document.library.kernel.model.DLFileEntryType>
 			dlFileEntryTypes) {
 
-		addDLFileEntryTypes(
+		return addDLFileEntryTypes(
 			pk,
 			ListUtil.toLongArray(
 				dlFileEntryTypes,
@@ -15613,7 +15615,7 @@ public class DLFolderPersistenceImpl
 		ctStrictColumnNames.add("mountPoint");
 		ctStrictColumnNames.add("parentFolderId");
 		ctStrictColumnNames.add("treePath");
-		ctStrictColumnNames.add("name");
+		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("description");
 		ctMaxColumnNames.add("lastPostDate");
 		ctStrictColumnNames.add("defaultFileEntryTypeId");

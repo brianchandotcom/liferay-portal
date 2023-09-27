@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.service;
@@ -87,21 +78,21 @@ public interface TeamLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Team addTeam(Team team);
 
-	public void addUserGroupTeam(long userGroupId, long teamId);
+	public boolean addUserGroupTeam(long userGroupId, long teamId);
 
-	public void addUserGroupTeam(long userGroupId, Team team);
+	public boolean addUserGroupTeam(long userGroupId, Team team);
 
-	public void addUserGroupTeams(long userGroupId, List<Team> teams);
+	public boolean addUserGroupTeams(long userGroupId, List<Team> teams);
 
-	public void addUserGroupTeams(long userGroupId, long[] teamIds);
+	public boolean addUserGroupTeams(long userGroupId, long[] teamIds);
 
-	public void addUserTeam(long userId, long teamId);
+	public boolean addUserTeam(long userId, long teamId);
 
-	public void addUserTeam(long userId, Team team);
+	public boolean addUserTeam(long userId, Team team);
 
-	public void addUserTeams(long userId, List<Team> teams);
+	public boolean addUserTeams(long userId, List<Team> teams);
 
-	public void addUserTeams(long userId, long[] teamIds);
+	public boolean addUserTeams(long userId, long[] teamIds);
 
 	public void clearUserGroupTeams(long userGroupId);
 

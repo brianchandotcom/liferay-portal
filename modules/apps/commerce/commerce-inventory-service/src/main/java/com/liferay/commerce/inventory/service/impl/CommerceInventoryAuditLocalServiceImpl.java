@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.inventory.service.impl;
@@ -20,6 +11,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+
+import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.List;
@@ -40,8 +33,8 @@ public class CommerceInventoryAuditLocalServiceImpl
 
 	@Override
 	public CommerceInventoryAudit addCommerceInventoryAudit(
-			long userId, String logType, String logTypeSettings, int quantity,
-			String sku, String unitOfMeasureKey)
+			long userId, String logType, String logTypeSettings,
+			BigDecimal quantity, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -57,8 +50,8 @@ public class CommerceInventoryAuditLocalServiceImpl
 		commerceInventoryAudit.setLogType(logType);
 		commerceInventoryAudit.setLogTypeSettings(logTypeSettings);
 		commerceInventoryAudit.setQuantity(quantity);
-		commerceInventoryAudit.setUnitOfMeasureKey(unitOfMeasureKey);
 		commerceInventoryAudit.setSku(sku);
+		commerceInventoryAudit.setUnitOfMeasureKey(unitOfMeasureKey);
 
 		return commerceInventoryAuditPersistence.update(commerceInventoryAudit);
 	}
@@ -70,15 +63,19 @@ public class CommerceInventoryAuditLocalServiceImpl
 
 	@Override
 	public List<CommerceInventoryAudit> getCommerceInventoryAudits(
-		long companyId, String sku, int start, int end) {
+		long companyId, String sku, String unitOfMeasureKey, int start,
+		int end) {
 
-		return commerceInventoryAuditPersistence.findByC_S(
-			companyId, sku, start, end);
+		return commerceInventoryAuditPersistence.findByC_S_U(
+			companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	@Override
-	public int getCommerceInventoryAuditsCount(long companyId, String sku) {
-		return commerceInventoryAuditPersistence.countByC_S(companyId, sku);
+	public int getCommerceInventoryAuditsCount(
+		long companyId, String sku, String unitOfMeasureKey) {
+
+		return commerceInventoryAuditPersistence.countByC_S_U(
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	@Reference

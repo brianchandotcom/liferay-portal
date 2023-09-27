@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -21,7 +12,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 
-String smallImageSource = journalEditArticleDisplayContext.getSmallImageSource();
+int smallImageSource = journalEditArticleDisplayContext.getSmallImageSource();
 %>
 
 <liferay-ui:error-marker
@@ -43,65 +34,77 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 	<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(journalFileUploadsConfiguration.smallImageMaxSize(), locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
-<aui:select ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallImageSource" value="<%= smallImageSource %>" wrapperCssClass="mb-3">
-	<aui:option label="no-image" value="none" />
-	<aui:option label="from-url" value="url" />
-	<aui:option label="from-your-computer" value="file" />
-</aui:select>
-
-<div class="<%= Objects.equals(smallImageSource, "url") ? "" : "hide" %>" id="<portlet:namespace />smallImageURLContainer">
-	<c:if test="<%= (article != null) && Validator.isNotNull(article.getArticleImageURL(themeDisplay)) %>">
-		<div class="aspect-ratio aspect-ratio-16-to-9">
-			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="aspect-ratio-item-fluid" src="<%= HtmlUtil.escapeAttribute(article.getArticleImageURL(themeDisplay)) %>" />
+<c:choose>
+	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-180855") %>'>
+		<div>
+			<react:component
+				module="js/SmallImage"
+				props="<%= journalEditArticleDisplayContext.getProps() %>"
+			/>
 		</div>
-	</c:if>
+	</c:when>
+	<c:otherwise>
+		<aui:select ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallImageSource" value="<%= smallImageSource %>" wrapperCssClass="mb-3">
+			<aui:option label="no-image" value="<%= JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE %>" />
+			<aui:option label="from-url" value="<%= JournalArticleConstants.SMALL_IMAGE_SOURCE_URL %>" />
+			<aui:option label="from-your-computer" value="<%= JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER %>" />
+		</aui:select>
 
-	<aui:input ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallImageURL" title="small-image-url" wrapperCssClass="mb-3" />
-</div>
+		<div class="<%= (smallImageSource == JournalArticleConstants.SMALL_IMAGE_SOURCE_URL) ? "" : "hide" %>" id="<portlet:namespace />smallImageURLContainer">
+			<c:if test="<%= (article != null) && Validator.isNotNull(article.getArticleImageURL(themeDisplay)) %>">
+				<div class="aspect-ratio aspect-ratio-16-to-9">
+					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="aspect-ratio-item-fluid" src="<%= HtmlUtil.escapeAttribute(article.getArticleImageURL(themeDisplay)) %>" />
+				</div>
+			</c:if>
 
-<div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace />smallFileContainer">
-	<div>
+			<aui:input ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallImageURL" title="small-image-url" wrapperCssClass="mb-3" />
+		</div>
 
-		<%
-		ThemeDisplay finalThemeDisplay = themeDisplay;
-		%>
+		<div class="<%= (smallImageSource == JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER) ? "" : "hide" %>" id="<portlet:namespace />smallFileContainer">
+			<div>
 
-		<react:component
-			module="js/ImageInput.es"
-			props='<%=
-				HashMapBuilder.<String, Object>put(
-					"name",
-					() -> {
-						if (!journalEditArticleDisplayContext.isChangeStructure()) {
-							return "smallFile";
-						}
+				<%
+				ThemeDisplay finalThemeDisplay = themeDisplay;
+				%>
 
-						return StringPool.BLANK;
-					}
-				).put(
-					"previewURL",
-					() -> {
-						if ((article != null) && Validator.isNotNull(article.getArticleImageURL(finalThemeDisplay))) {
-							return article.getArticleImageURL(finalThemeDisplay);
-						}
+				<react:component
+					module="js/ImageInput.es"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"name",
+							() -> {
+								if (!journalEditArticleDisplayContext.isChangeStructure()) {
+									return "smallFile";
+								}
 
-						return StringPool.BLANK;
-					}
-				).build()
-			%>'
-		/>
-	</div>
-</div>
+								return StringPool.BLANK;
+							}
+						).put(
+							"previewURL",
+							() -> {
+								if ((article != null) && Validator.isNotNull(article.getArticleImageURL(finalThemeDisplay))) {
+									return article.getArticleImageURL(finalThemeDisplay);
+								}
 
-<aui:script>
-	Liferay.Util.toggleSelectBox(
-		'<portlet:namespace />smallImageSource',
-		'url',
-		'<portlet:namespace />smallImageURLContainer'
-	);
-	Liferay.Util.toggleSelectBox(
-		'<portlet:namespace />smallImageSource',
-		'file',
-		'<portlet:namespace />smallFileContainer'
-	);
-</aui:script>
+								return StringPool.BLANK;
+							}
+						).build()
+					%>'
+				/>
+			</div>
+		</div>
+
+		<aui:script>
+			Liferay.Util.toggleSelectBox(
+				'<portlet:namespace />smallImageSource',
+				'<%= JournalArticleConstants.SMALL_IMAGE_SOURCE_URL %>',
+				'<portlet:namespace />smallImageURLContainer'
+			);
+			Liferay.Util.toggleSelectBox(
+				'<portlet:namespace />smallImageSource',
+				'<%= JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER %>',
+				'<portlet:namespace />smallFileContainer'
+			);
+		</aui:script>
+	</c:otherwise>
+</c:choose>

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {
@@ -22,11 +13,7 @@ import {
 import openDeleteVocabularyModal from './openDeleteVocabularyModal';
 
 const ACTIONS = {
-	deleteVocabularies({
-		deleteVocabulariesURL,
-		portletNamespace,
-		viewVocabulariesURL,
-	}) {
+	deleteVocabularies(itemData, portletNamespace) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('delete'),
 			multiple: true,
@@ -35,10 +22,16 @@ const ACTIONS = {
 					openDeleteVocabularyModal({
 						multiple: true,
 						onDelete: () => {
-							fetch(deleteVocabulariesURL, {
+							fetch(itemData.deleteVocabulariesURL, {
 								body: objectToFormData({
 									[`${portletNamespace}rowIds`]: selectedItems
-										.map((item) => item.value)
+										.map((item) => {
+											const selectedValue = JSON.parse(
+												item.value
+											);
+
+											return selectedValue.vocabularyId;
+										})
 										.join(','),
 								}),
 								method: 'POST',
@@ -48,13 +41,12 @@ const ACTIONS = {
 				}
 			},
 			title: Liferay.Language.get('delete-vocabulary'),
-			url: viewVocabulariesURL,
+			url: itemData.viewVocabulariesURL,
 		});
 	},
 };
 
 export default function propsTransformer({
-	additionalProps: {deleteVocabulariesURL, viewVocabulariesURL},
 	items,
 	portletNamespace,
 	...otherProps
@@ -70,11 +62,7 @@ export default function propsTransformer({
 					if (action) {
 						event.preventDefault();
 
-						ACTIONS[action]({
-							deleteVocabulariesURL,
-							portletNamespace,
-							viewVocabulariesURL,
-						});
+						ACTIONS[action](item.data, portletNamespace);
 					}
 				},
 			};

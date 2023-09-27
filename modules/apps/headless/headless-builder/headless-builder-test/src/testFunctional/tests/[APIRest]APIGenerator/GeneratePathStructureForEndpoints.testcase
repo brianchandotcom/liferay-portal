@@ -1,0 +1,301 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test APIUrlIsPresentInAPIExplorerRestApplications {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given an published API application") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "published",
+				title = "App-test");
+		}
+
+		task ("When I go to API Explorer") {
+			APIExplorer.navigateToOpenAPI();
+		}
+
+		task ("Then the c/{url} is present in Rest Applications") {
+			AssertElementPresent(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "c/app-test");
+		}
+	}
+
+	@priority = 3
+	test APIUrlsArePresentInAPIExplorer {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given an published API application") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "published",
+				title = "App-test");
+		}
+
+		task ("When I navigate to /o/c/{applicationUrl}") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "app-test");
+		}
+
+		task ("Then {protocol}//{host}:{port}/o/c/{applicationUrl}/openapi.json is present") {
+			var portalURL = JSONCompany.getPortalURL();
+
+			AssertTextEquals(
+				locator1 = "OpenAPI#API_URL",
+				value1 = "${portalURL}/o/c/app-test/openapi.json");
+		}
+
+		task ("And Then {protocol}//{host}:{port}/o/c/{applicationUrl} is present in Servers") {
+			AssertTextEquals(
+				locator1 = "Select#HEADLESS_SERVERS",
+				value1 = "${portalURL}/o/c/app-test/");
+		}
+	}
+
+	@priority = 4
+	test CanCreateEndpointWithValidPath {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given creating an API application") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "unpublished",
+				title = "App-test");
+		}
+
+		task ("And Given setting Panel Category Key to Control Panel > Object for API Endpoint") {
+			APIBuilderUI.setPanelCategoryKeyToObject(objectDefinition = "API Endpoint");
+		}
+
+		task ("When I create an endpoint with id of API application and valid path") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Endpoints");
+
+			var applicationId = JSONPathUtil.getIdValue(response = ${response});
+
+			APIBuilderUI.createAPIEndpoint(
+				applicationId = ${applicationId},
+				name = "testEndpoint",
+				path = "/testEndpoint");
+		}
+
+		task ("Then I can see endpoint is created with correct path") {
+			Alert.viewSuccessMessage();
+
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "App-test");
+
+			AssertElementPresent(
+				key_name = "/testEndpoint/",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 4
+	test CanLoadAPIApplicationURL {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given an published API application") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "published",
+				title = "App-test");
+		}
+
+		task ("When I navigate to {protocol}//{host}:{port}/o/api?endpoint={protocol}//{host}:{port}/o/c/{applicationUrl}/openapi.json") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "app-test");
+		}
+
+		task ("Then the page can load without errors") {
+			WaitForElementPresent(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getOpenAPI",
+				service = "default");
+		}
+	}
+
+	@priority = 4
+	test CanValidatePathInAPIEndpoint {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given creating an API application") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "unpublished",
+				title = "App-test");
+		}
+
+		task ("And Given setting Panel Category Key to Control Panel > Object for API Endpoint") {
+			APIBuilderUI.setPanelCategoryKeyToObject(objectDefinition = "API Endpoint");
+		}
+
+		task ("When I create an endpoint with id of API application and path not start with '/'") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Endpoints");
+
+			APIBuilderUI.createAPIEndpoint(
+				name = "testEndpoint",
+				path = "testEndpoint");
+		}
+
+		task ("Then I can see error message") {
+			Alert.viewErrorMessage(errorMessage = "Path must start with the \"/\" character.");
+		}
+
+		task ("And Then the endpoint is not being created") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "App-test");
+
+			AssertElementNotPresent(
+				key_name = "/testEndpoint/",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 4
+	test PathIsPresentInEndpointsWithEditAPIApplication {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given with postAPIApplication including apiApplicationToAPIEndpoints and path to create an API application with its endpoint") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				relatedEndpoint = "true",
+				status = "unpublished",
+				title = "App-test");
+		}
+
+		task ("When I navigate to Endpoints tab in Edit API application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "App-test");
+		}
+
+		task ("Then I can see correct path") {
+			AssertElementPresent(
+				key_name = "/testEndpoint/",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 4
+	test PathIsPresentUnderGetEndpointPage {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given with postAPIApplication including apiApplicationToAPIEndpoints and path to create an published API application with its endpoint") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "App-test");
+		}
+
+		task ("When I navigate to /o/c/{applicationUrl}") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "app-test");
+		}
+
+		task ("Then I can see '/{path}' is present under get{Endpoint}Page") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getTestEndpointPage",
+				service = "default",
+				value1 = "/testEndpoint");
+		}
+	}
+
+	@priority = 3
+	test UrlSubtitleIsPresentInEditAPIApplication {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given creating an API application") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "unpublished",
+				title = "App-test");
+		}
+
+		task ("When Edit the API application") {
+			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
+		}
+
+		task ("Then I can see label under url is {protocol}//{host}:{port}/o/c") {
+			var portalURL = JSONCompany.getPortalURL();
+
+			AssertTextEquals(
+				locator1 = "APIBuilder#URL_LABEL",
+				value1 = "${portalURL}/o/c/");
+		}
+	}
+
+	@priority = 3
+	test UrlSubtitleIsPresentInNewAPIApplication {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given going to Control Panel > Object > Headless Builder") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+		}
+
+		task ("When I create a new API Application") {
+			Click(locator1 = "Button#PLUS");
+		}
+
+		task ("Then I can see label under url is {protocol}//{host}:{port}/o/c") {
+			var portalURL = JSONCompany.getPortalURL();
+
+			AssertTextEquals(
+				locator1 = "APIBuilder#URL_LABEL",
+				value1 = "${portalURL}/o/c/");
+		}
+	}
+
+}

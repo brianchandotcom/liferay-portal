@@ -1,0 +1,208 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 5
+	test CanGenerateOpenApiFromApiApplicationDefinition {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given APIApplication ‘my-app’ with APIEndpoints with related APISchemas created") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				schemaName = "testSchema",
+				status = "unpublished",
+				title = "My-app");
+
+			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");
+			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
+			var aPIApplicationId = JSONPathUtil.getIdValue(response = ${response});
+
+			SchemaAPI.relateRequestSchemaToEndpointByIds(
+				endpointId = ${endpointId},
+				requestSchemaId = ${schemaId});
+
+			SchemaAPI.relateResponseSchemaToEndpointByIds(
+				endpointId = ${endpointId},
+				responseSchemaId = ${schemaId});
+		}
+
+		task ("And Given I publish the APIApplication") {
+			ApplicationAPI.updateAPIApplication(
+				aPIApplicationId = ${aPIApplicationId},
+				parameter = "applicationStatus",
+				parameterValue = "published");
+		}
+
+		task ("When I click ‘my-app’ on the REST Applications list of API Explorer") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+		}
+
+		task ("Then I am redirected to the OpenApi page with endpoints and schemas details") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getTestEndpointPage",
+				service = "testSchema",
+				value1 = "/testEndpoint");
+
+			AssertElementPresent(
+				locator1 = "OpenAPI#SCHEMA_COLLAPSED",
+				schema = "testSchema");
+		}
+
+		task ("And Then no “Failed to load API definition.” error") {
+			AssertConsoleTextNotPresent(value1 = "Failed to load API definition.");
+		}
+	}
+
+	@priority = 4
+	test CanHideApiApplicationOnRestApplicationsListByUnbublishing {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given APIApplication ‘my-app’ of status ‘published’ with APIEndpoints with related APISchemas created") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				schemaName = "testSchema",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("When I change state to ‘unpublish’") {
+			var aPIApplicationId = JSONPathUtil.getIdValue(response = ${response});
+
+			ApplicationAPI.updateAPIApplication(
+				aPIApplicationId = ${aPIApplicationId},
+				parameter = "applicationStatus",
+				parameterValue = "unpublished");
+		}
+
+		task ("Then I cannot see ‘my-app’ on the REST Applications list of API Explorer") {
+			APIExplorer.navigateToOpenAPI();
+
+			AssertElementNotPresent(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "c/my-app");
+		}
+	}
+
+	@priority = 4
+	test CannotSeeUnpublishedApiApplicationListedAsRestApplication {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When APIApplication ‘my-app’ of status ‘unpublished’ with APIEndpoints with related APISchemas created") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				schemaName = "testSchema",
+				status = "unpublished",
+				title = "My-app");
+
+			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");
+			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
+
+			SchemaAPI.relateRequestSchemaToEndpointByIds(
+				endpointId = ${endpointId},
+				requestSchemaId = ${schemaId});
+
+			SchemaAPI.relateResponseSchemaToEndpointByIds(
+				endpointId = ${endpointId},
+				responseSchemaId = ${schemaId});
+		}
+
+		task ("Then I cannot see ‘my-app’ on the REST Applications list of API Explorer") {
+			APIExplorer.navigateToOpenAPI();
+
+			AssertElementNotPresent(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "c/my-app");
+		}
+	}
+
+	@priority = 4
+	test CanSeePublishedApiApplicationListedAsRestApplication {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given APIApplication ‘my-app’ with APIEndpoints with related APISchemas created") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				schemaName = "testSchema",
+				status = "unpublished",
+				title = "My-app");
+
+			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");
+			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
+			var aPIApplicationId = JSONPathUtil.getIdValue(response = ${response});
+
+			SchemaAPI.relateRequestSchemaToEndpointByIds(
+				endpointId = ${endpointId},
+				requestSchemaId = ${schemaId});
+
+			SchemaAPI.relateResponseSchemaToEndpointByIds(
+				endpointId = ${endpointId},
+				responseSchemaId = ${schemaId});
+		}
+
+		task ("When I publish the APIApplication") {
+			ApplicationAPI.updateAPIApplication(
+				aPIApplicationId = ${aPIApplicationId},
+				parameter = "applicationStatus",
+				parameterValue = "published");
+		}
+
+		task ("Then I can see ‘my-app’ on the REST Applications list of API Explorer") {
+			APIExplorer.navigateToOpenAPI();
+
+			AssertElementPresent(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "c/my-app");
+		}
+	}
+
+}

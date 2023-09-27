@@ -4,6 +4,8 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	setUp {
@@ -22,7 +24,6 @@ definition {
 	@priority = 4
 	test CoreAndModuleIndexesAreUpdatedWithIndexesUpdateOnStartup {
 		property custom.properties = "database.indexes.update.on.startup=true";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Restart portal and cleaning the logs") {
 			Portlet.shutdownServer();
@@ -84,10 +85,10 @@ definition {
 
 	@description = "LPS-162455: Given a user starts the portal with a database created previously. When property upgrade.database.auto.run is set to false. Then portal does not run any UpgradeProcess or VerifyProcess."
 	@priority = 4
-	test UpgradeProcessAndVerifyProcessOnlyRunOnFreshDB {
+	test UpgradeProcessAndVerifyProcessDoNotRunOnStaleDB {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 
-		AssertConsoleTextPresent(value1 = "UpgradeProcess");
+		AssertConsoleTextNotPresent(value1 = "UpgradeProcess");
 
 		AssertConsoleTextPresent(value1 = "VerifyProcess");
 

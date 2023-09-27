@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"item-selector-taglib": "*"
 	},
 	"name": "item-selector-upload-web",
 	"scripts": {
@@ -7,5 +8,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "6.0.16"
+	"version": "6.0.18"
 }

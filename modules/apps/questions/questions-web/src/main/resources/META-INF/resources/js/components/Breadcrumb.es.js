@@ -1,40 +1,47 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useManualQuery} from 'graphql-hooks';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
 import {getSectionQuery, getSectionsQuery} from '../utils/client.es';
 import {ALL_SECTIONS_ID} from '../utils/contants.es';
-import {historyPushWithSlug, stringToSlug} from '../utils/utils.es';
+import {historyPushWithSlug, slugToText, stringToSlug} from '../utils/utils.es';
 import Alert from './Alert.es';
 import BreadcrumbNode from './BreadcrumbNode.es';
 import NewTopicModal from './NewTopicModal.es';
+import {getSectionTitle} from './SectionLabel.es';
+
+const MAX_SECTIONS_IN_BREADCRUMB = 3;
 
 export default withRouter(
 	({allowCreateTopicInRootTopic, history, match, section}) => {
 		const context = useContext(AppContext);
 
 		const rootTopicId = context.rootTopicId;
-		const sections = context.sections;
-		const sectionTitle = match.params.sectionTitle;
+		const sections = useMemo(
+			() =>
+				(context.sections ?? []).map((section) => ({
+					...section,
+					title: getSectionTitle(section),
+				})),
+			[context.sections]
+		);
 
-		const MAX_SECTIONS_IN_BREADCRUMB = 3;
+		const sectionTitle = slugToText(match.params.sectionTitle);
+
 		const historyPushParser = historyPushWithSlug(history.push);
 		const [breadcrumbNodes, setBreadcrumbNodes] = useState([]);
 		const [error, setError] = useState({});
@@ -50,7 +57,11 @@ export default withRouter(
 			const sections = breadcrumbNodes
 				.slice(1, breadcrumbNodes.length - 1)
 				.map((section) => {
-					return {id: section.id, title: section.title};
+					return {
+						friendlyUrlPath: section.friendlyUrlPath,
+						id: section.id,
+						title: getSectionTitle(section),
+					};
 				});
 
 			return {subSections: sections, title: ''};
@@ -62,9 +73,10 @@ export default withRouter(
 		const buildBreadcrumbNodesData = useCallback(
 			(rootSection, section, acc = []) => {
 				acc.push({
+					friendlyUrlPath: section.friendlyUrlPath,
 					id: section.id,
 					subSections: getSubSections(section),
-					title: section.title,
+					title: getSectionTitle(section),
 				});
 				if (+rootSection !== +section.id) {
 					if (section.parentMessageBoardSectionId) {
@@ -109,6 +121,7 @@ export default withRouter(
 								}))
 								.then((data) => {
 									acc.push({
+										friendlyUrlPath: data.friendlyUrlPath,
 										id: data.id,
 										subSections:
 											data.messageBoardSections.items,
@@ -244,7 +257,6 @@ export default withRouter(
 								key={index}
 								section={section}
 								showDropdownSections={index === 0}
-								ui={section.title}
 							/>
 						))}
 				</>

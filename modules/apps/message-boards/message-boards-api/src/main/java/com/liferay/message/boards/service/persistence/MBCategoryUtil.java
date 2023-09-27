@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.message.boards.service.persistence;
@@ -1372,6 +1363,70 @@ public class MBCategoryUtil {
 	 */
 	public static int filterCountByG_P(long groupId, long[] parentCategoryIds) {
 		return getPersistence().filterCountByG_P(groupId, parentCategoryIds);
+	}
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and friendlyURL = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly url
+	 * @return the matching message boards category
+	 * @throws NoSuchCategoryException if a matching message boards category could not be found
+	 */
+	public static MBCategory findByG_F(long groupId, String friendlyURL)
+		throws com.liferay.message.boards.exception.NoSuchCategoryException {
+
+		return getPersistence().findByG_F(groupId, friendlyURL);
+	}
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly url
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	public static MBCategory fetchByG_F(long groupId, String friendlyURL) {
+		return getPersistence().fetchByG_F(groupId, friendlyURL);
+	}
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly url
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	public static MBCategory fetchByG_F(
+		long groupId, String friendlyURL, boolean useFinderCache) {
+
+		return getPersistence().fetchByG_F(
+			groupId, friendlyURL, useFinderCache);
+	}
+
+	/**
+	 * Removes the message boards category where groupId = &#63; and friendlyURL = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly url
+	 * @return the message boards category that was removed
+	 */
+	public static MBCategory removeByG_F(long groupId, String friendlyURL)
+		throws com.liferay.message.boards.exception.NoSuchCategoryException {
+
+		return getPersistence().removeByG_F(groupId, friendlyURL);
+	}
+
+	/**
+	 * Returns the number of message boards categories where groupId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly url
+	 * @return the number of matching message boards categories
+	 */
+	public static int countByG_F(long groupId, String friendlyURL) {
+		return getPersistence().countByG_F(groupId, friendlyURL);
 	}
 
 	/**

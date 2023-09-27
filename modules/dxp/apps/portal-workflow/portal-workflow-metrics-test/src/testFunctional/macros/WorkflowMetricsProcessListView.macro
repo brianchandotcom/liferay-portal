@@ -58,9 +58,9 @@ definition {
 
 		Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
 
-		Click(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
+		ManagementBar.clearFilter();
 
-		AssertElementNotPresent(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
+		AssertElementNotPresent(locator1 = "ManagementBar#CLEAR_FILTER");
 	}
 
 	macro viewResults {

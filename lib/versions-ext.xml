@@ -190,7 +190,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/catalina.jar</file-name>
-				<version>9.0.75</version>
+				<version>9.0.80</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -320,7 +320,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/freemarker.jar</file-name>
-				<version>2.3.29.LIFERAY-PATCHED-4</version>
+				<version>2.3.29.LIFERAY-PATCHED-5</version>
 				<project-name>FreeMarker</project-name>
 				<project-url>http://www.freemarker.org</project-url>
 				<licenses>
@@ -332,7 +332,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/guava.jar</file-name>
-				<version>30.1.1-jre</version>
+				<version>32.0.1-jre</version>
 				<project-name>Guava</project-name>
 				<project-url>https://opensource.google.com/projects/guava</project-url>
 				<licenses>
@@ -368,8 +368,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/hsql.jar</file-name>
-				<version>2.7.1</version>
-				<classifier>jdk8</classifier>
+				<version>2.7.1.LIFERAY-PATCHED-1</version>
 				<project-name>HSQL Database Engine</project-name>
 				<project-url>http://hsqldb.org</project-url>
 				<licenses>
@@ -444,7 +443,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jasper.jar</file-name>
-				<version>9.0.75</version>
+				<version>9.0.80</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -629,7 +628,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/mariadb.jar</file-name>
-				<version>2.7.4</version>
+				<version>3.2.0</version>
 				<project-name>MariaDB Connector/J</project-name>
 				<project-url>https://downloads.mariadb.org/connector-java</project-url>
 				<licenses>
@@ -677,7 +676,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/mysql.jar</file-name>
-				<version>8.0.29</version>
+				<version>8.0.32</version>
 				<project-name>MySQL Connector/J</project-name>
 				<project-url>http://www.mysql.com/products/connector/j</project-url>
 				<licenses>
@@ -963,7 +962,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-api.jar</file-name>
-				<version>9.0.75</version>
+				<version>9.0.80</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -975,7 +974,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-coyote.jar</file-name>
-				<version>9.0.75</version>
+				<version>9.0.80</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -987,7 +986,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-util.jar</file-name>
-				<version>9.0.75</version>
+				<version>9.0.80</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -999,7 +998,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-util-scan.jar</file-name>
-				<version>9.0.75</version>
+				<version>9.0.80</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -1086,7 +1085,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-logging.jar</file-name>
-				<version>1.2</version>
+				<version>1.2.LIFERAY-PATCHED-2</version>
 				<project-name>Commons Logging</project-name>
 				<project-url>http://commons.apache.org/logging</project-url>
 				<licenses>

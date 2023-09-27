@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DUPLICATE_WORKFLOW_MODAL_INPUT</td>
+	<td>//*[contains(@class,'modal-body')] //*[contains(@class,'field-wrapper')][*[contains(.,'Title')]] //input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

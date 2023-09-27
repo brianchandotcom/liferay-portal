@@ -1,146 +1,57 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-AUI.add(
-	'liferay-admin',
-	(A) => {
-		const Lang = A.Lang;
+import {delegate} from 'frontend-js-web';
 
-		const MAP_DATA_PARAMS = {
-			classname: 'className',
-		};
+const MAP_DATA_PARAMS = {
+	classname: 'className',
+};
 
-		const STR_CLICK = 'click';
+export default function ({namespace: portletNamespace, redirectURL, url}) {
+	const form = document.getElementById(`${portletNamespace}fm`);
 
-		const STR_FORM = 'form';
+	const addInputsFromData = (data) => {
+		Object.entries(data).forEach(([key, value]) => {
+			key = MAP_DATA_PARAMS[key] || key;
 
-		const STR_URL = 'url';
+			const nsKey = `${portletNamespace}${key}`;
 
-		const Admin = A.Component.create({
-			ATTRS: {
-				form: {
-					setter: A.one,
-					value: null,
-				},
+			const input = document.createElement('input');
+			input.name = nsKey;
+			input.id = nsKey;
+			input.value = value;
+			input.type = 'hidden';
 
-				redirectUrl: {
-					validator: Lang.isString,
-					value: null,
-				},
-
-				submitButton: {
-					validator: Lang.isString,
-					value: null,
-				},
-
-				url: {
-					value: null,
-				},
-			},
-
-			AUGMENTS: [Liferay.PortletBase],
-
-			EXTENDS: A.Base,
-
-			NAME: 'admin',
-
-			prototype: {
-				_addInputsFromData(data) {
-					const instance = this;
-
-					const form = instance.get(STR_FORM);
-
-					// eslint-disable-next-line @liferay/aui/no-object
-					const inputsArray = A.Object.map(data, (value, key) => {
-						key = MAP_DATA_PARAMS[key] || key;
-
-						const nsKey = instance.ns(key);
-
-						return (
-							'<input id="' +
-							nsKey +
-							'" name="' +
-							nsKey +
-							'" type="hidden" value="' +
-							value +
-							'" />'
-						);
-					});
-
-					form.append(inputsArray.join(''));
-				},
-
-				_onSubmit(event) {
-					const instance = this;
-
-					const data = event.currentTarget.getData();
-					const form = instance.get(STR_FORM);
-
-					const redirect = instance.one('#redirect', form);
-
-					if (redirect) {
-						redirect.val(instance.get('redirectURL'));
-					}
-
-					instance._addInputsFromData(data);
-
-					submitForm(form, instance.get(STR_URL));
-				},
-
-				bindUI() {
-					const instance = this;
-
-					instance._eventHandles.push(
-						instance
-							.get(STR_FORM)
-							.delegate(
-								STR_CLICK,
-								A.bind('_onSubmit', instance),
-								instance.get('submitButton')
-							)
-					);
-				},
-
-				destructor() {
-					const instance = this;
-
-					A.Array.invoke(instance._eventHandles, 'detach');
-
-					instance._eventHandles = null;
-
-					A.clearTimeout(instance._laterTimeout);
-				},
-
-				initializer() {
-					const instance = this;
-
-					instance._eventHandles = [];
-
-					instance.bindUI();
-				},
-			},
+			form.append(input);
 		});
+	};
 
-		Liferay.Portlet.Admin = Admin;
-	},
-	'',
-	{
-		requires: [
-			'aui-io-plugin-deprecated',
-			'io',
-			'liferay-portlet-base',
-			'querystring-parse',
-		],
-	}
-);
+	const onSubmit = (event) => {
+		const data = event.delegateTarget.dataset;
+
+		const redirect = document.getElementById(`${portletNamespace}redirect`);
+
+		if (redirect) {
+			redirect.value = redirectURL;
+		}
+
+		addInputsFromData(data);
+
+		submitForm(form, url);
+	};
+
+	const clickDelegate = delegate(
+		form,
+		'click',
+		'.save-server-button',
+		onSubmit
+	);
+
+	return {
+		dispose() {
+			clickDelegate.dispose();
+		},
+	};
+}

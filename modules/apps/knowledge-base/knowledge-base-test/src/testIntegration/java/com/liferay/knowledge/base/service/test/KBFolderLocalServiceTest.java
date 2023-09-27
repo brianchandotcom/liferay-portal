@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.knowledge.base.service.test;
@@ -772,7 +763,7 @@ public class KBFolderLocalServiceTest {
 			PortalUtil.getClassNameId(KBArticleConstants.getClassName()),
 			kbArticle.getResourcePrimKey(), title, title,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new String[0], null, null, null, new String[0],
+			new String[0], null, new Date(), null, null, new String[0],
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
 	}
@@ -792,8 +783,8 @@ public class KBFolderLocalServiceTest {
 			null, _user.getUserId(),
 			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
 			parentKbFolderId, title, title, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new String[0], null, null, null,
-			new String[0], serviceContext);
+			RandomTestUtil.randomString(), new String[0], null, new Date(),
+			null, null, new String[0], serviceContext);
 	}
 
 	protected KBArticle addKBArticle(long parentKbFolderId, String title)
@@ -803,8 +794,8 @@ public class KBFolderLocalServiceTest {
 			null, _user.getUserId(),
 			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
 			parentKbFolderId, title, title, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new String[0], null, null, null,
-			new String[0],
+			RandomTestUtil.randomString(), new String[0], null, new Date(),
+			null, null, new String[0],
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
 	}
@@ -827,8 +818,9 @@ public class KBFolderLocalServiceTest {
 		return _kbArticleLocalService.updateKBArticle(
 			kbArticle.getUserId(), kbArticle.getResourcePrimKey(), title,
 			kbArticle.getContent(), kbArticle.getDescription(), null,
-			kbArticle.getSourceURL(), kbArticle.getExpirationDate(),
-			kbArticle.getReviewDate(), new String[0], new long[0],
+			kbArticle.getSourceURL(), kbArticle.getDisplayDate(),
+			kbArticle.getExpirationDate(), kbArticle.getReviewDate(),
+			new String[0], new long[0],
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
 	}

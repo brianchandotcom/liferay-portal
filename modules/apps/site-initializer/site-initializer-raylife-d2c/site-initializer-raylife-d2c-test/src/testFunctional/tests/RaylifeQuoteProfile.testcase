@@ -34,6 +34,7 @@ definition {
 	@priority = 4
 	test CanGoToPropertyPageByEditButton {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -72,6 +73,7 @@ definition {
 	@priority = 4
 	test CanViewQuoteProfileInfoPanel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -112,6 +114,7 @@ definition {
 	@priority = 4
 	test CanViewUserDataAnnualRevenue {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -152,6 +155,7 @@ definition {
 	@priority = 4
 	test CanViewUserDataCity {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -192,6 +196,7 @@ definition {
 	@priority = 4
 	test CanViewUserDataPrimaryIndustry {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -232,6 +237,7 @@ definition {
 	@priority = 4
 	test CanViewUserDataState {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -272,6 +278,7 @@ definition {
 	@priority = 4
 	test CanViewUserDataStreetAddress {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -312,6 +319,7 @@ definition {
 	@priority = 4
 	test CanViewUserDataTotalEmployees {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -352,6 +360,7 @@ definition {
 	@priority = 4
 	test CanViewUserDataZipCode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

@@ -179,6 +179,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_LABEL_IN_SECTION</td>
+	<td>//div[contains(@class,'sheet-section')]//h3[normalize-space(text())='${key_sectionTitle}']//following-sibling::div//label[normalize-space(text())='${key_fieldLabel}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SECTION_TITLE</td>
 	<td>//div[contains(@class,'sheet-section')]//h3[normalize-space(text())='${key_sectionTitle}']</td>
 	<td></td>

@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Recycle Bin,Web Content Administration";
@@ -197,9 +198,11 @@ definition {
 		}
 
 		task ("Enbale local staging without web content") {
-			JSONStaging.enableLocalStaging(
-				groupName = "Test Site Name",
-				unCheckedContent = "com_liferay_journal_web_portlet_JournalPortlet");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+			Staging.activateStagingCP(
+				siteName = "Test Site Name",
+				uncheckContent = "Web Content");
 		}
 
 		task ("Add a blogs widget and entry to blogs in staging site") {
@@ -442,6 +445,7 @@ definition {
 				assetRestoreLocation = "Home",
 				assetType = "Web Content Folder",
 				assetType2 = "Web Content Article",
+				breadcrumbName = "Home",
 				documentName = "Web Content Title");
 		}
 

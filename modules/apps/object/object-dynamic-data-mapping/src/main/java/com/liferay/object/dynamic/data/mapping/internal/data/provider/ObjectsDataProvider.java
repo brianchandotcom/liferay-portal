@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.dynamic.data.mapping.internal.data.provider;
@@ -21,7 +12,6 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -51,23 +41,11 @@ public class ObjectsDataProvider implements DDMDataProvider {
 
 			List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
-			List<ObjectDefinition> objectDefinitions = null;
-
-			if (FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
-				objectDefinitions =
-					_objectDefinitionLocalService.
-						getModifiableObjectDefinitions(
-							ddmDataProviderRequest.getCompanyId(), true,
-							WorkflowConstants.STATUS_APPROVED);
-			}
-			else {
-				objectDefinitions =
+			for (ObjectDefinition objectDefinition :
 					_objectDefinitionLocalService.getObjectDefinitions(
 						ddmDataProviderRequest.getCompanyId(), true, false,
-						WorkflowConstants.STATUS_APPROVED);
-			}
+						WorkflowConstants.STATUS_APPROVED)) {
 
-			for (ObjectDefinition objectDefinition : objectDefinitions) {
 				keyValuePairs.add(
 					new KeyValuePair(
 						String.valueOf(

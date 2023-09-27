@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.web.internal.info.item.updater;
@@ -20,6 +11,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
@@ -29,6 +21,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 /**
@@ -52,6 +45,17 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 	@Override
 	public ObjectEntry updateFromInfoItemFieldValues(
 			ObjectEntry objectEntry, InfoItemFieldValues infoItemFieldValues)
+		throws Exception {
+
+		return updateFromInfoItemFieldValues(
+			objectEntry, infoItemFieldValues,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public ObjectEntry updateFromInfoItemFieldValues(
+			ObjectEntry objectEntry, InfoItemFieldValues infoItemFieldValues,
+			int status)
 		throws InfoFormException {
 
 		ServiceContext serviceContext =
@@ -63,10 +67,12 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
+		int objectEntryStatus = status;
+
 		try {
 			return ObjectEntryUtil.toObjectEntry(
 				objectEntry.getObjectDefinitionId(),
-				objectEntryManager.updateObjectEntry(
+				objectEntryManager.partialUpdateObjectEntry(
 					objectEntry.getCompanyId(),
 					new DefaultDTOConverterContext(
 						false, null, null, null, null, themeDisplay.getLocale(),
@@ -79,6 +85,12 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 								infoItemFieldValues);
 							taxonomyCategoryIds = ArrayUtil.toLongArray(
 								serviceContext.getAssetCategoryIds());
+
+							status = new Status() {
+								{
+									code = objectEntryStatus;
+								}
+							};
 						}
 					},
 					ObjectEntryUtil.getScopeKey(

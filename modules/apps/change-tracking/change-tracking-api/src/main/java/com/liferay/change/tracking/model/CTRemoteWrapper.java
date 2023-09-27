@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.model;
@@ -51,6 +42,8 @@ public class CTRemoteWrapper
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("url", getUrl());
+		attributes.put("clientId", getClientId());
+		attributes.put("clientSecret", getClientSecret());
 
 		return attributes;
 	}
@@ -110,11 +103,43 @@ public class CTRemoteWrapper
 		if (url != null) {
 			setUrl(url);
 		}
+
+		String clientId = (String)attributes.get("clientId");
+
+		if (clientId != null) {
+			setClientId(clientId);
+		}
+
+		String clientSecret = (String)attributes.get("clientSecret");
+
+		if (clientSecret != null) {
+			setClientSecret(clientSecret);
+		}
 	}
 
 	@Override
 	public CTRemote cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the client ID of this ct remote.
+	 *
+	 * @return the client ID of this ct remote
+	 */
+	@Override
+	public String getClientId() {
+		return model.getClientId();
+	}
+
+	/**
+	 * Returns the client secret of this ct remote.
+	 *
+	 * @return the client secret of this ct remote
+	 */
+	@Override
+	public String getClientSecret() {
+		return model.getClientSecret();
 	}
 
 	/**
@@ -235,6 +260,26 @@ public class CTRemoteWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the client ID of this ct remote.
+	 *
+	 * @param clientId the client ID of this ct remote
+	 */
+	@Override
+	public void setClientId(String clientId) {
+		model.setClientId(clientId);
+	}
+
+	/**
+	 * Sets the client secret of this ct remote.
+	 *
+	 * @param clientSecret the client secret of this ct remote
+	 */
+	@Override
+	public void setClientSecret(String clientSecret) {
+		model.setClientSecret(clientSecret);
 	}
 
 	/**

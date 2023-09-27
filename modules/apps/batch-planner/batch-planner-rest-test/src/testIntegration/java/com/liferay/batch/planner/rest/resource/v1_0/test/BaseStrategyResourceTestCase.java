@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.batch.planner.rest.resource.v1_0.test;
@@ -193,25 +184,27 @@ public abstract class BaseStrategyResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlanInternalClassNameStrategiesPage() throws Exception {
-		String internalClassName =
-			testGetPlanInternalClassNameStrategiesPage_getInternalClassName();
-		String irrelevantInternalClassName =
-			testGetPlanInternalClassNameStrategiesPage_getIrrelevantInternalClassName();
+	public void testGetPlanInternalClassNameKeyStrategiesPage()
+		throws Exception {
+
+		String internalClassNameKey =
+			testGetPlanInternalClassNameKeyStrategiesPage_getInternalClassNameKey();
+		String irrelevantInternalClassNameKey =
+			testGetPlanInternalClassNameKeyStrategiesPage_getIrrelevantInternalClassNameKey();
 
 		Page<Strategy> page =
-			strategyResource.getPlanInternalClassNameStrategiesPage(
-				internalClassName);
+			strategyResource.getPlanInternalClassNameKeyStrategiesPage(
+				internalClassNameKey);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		if (irrelevantInternalClassName != null) {
+		if (irrelevantInternalClassNameKey != null) {
 			Strategy irrelevantStrategy =
-				testGetPlanInternalClassNameStrategiesPage_addStrategy(
-					irrelevantInternalClassName, randomIrrelevantStrategy());
+				testGetPlanInternalClassNameKeyStrategiesPage_addStrategy(
+					irrelevantInternalClassNameKey, randomIrrelevantStrategy());
 
-			page = strategyResource.getPlanInternalClassNameStrategiesPage(
-				irrelevantInternalClassName);
+			page = strategyResource.getPlanInternalClassNameKeyStrategiesPage(
+				irrelevantInternalClassNameKey);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -220,20 +213,20 @@ public abstract class BaseStrategyResourceTestCase {
 				(List<Strategy>)page.getItems());
 			assertValid(
 				page,
-				testGetPlanInternalClassNameStrategiesPage_getExpectedActions(
-					irrelevantInternalClassName));
+				testGetPlanInternalClassNameKeyStrategiesPage_getExpectedActions(
+					irrelevantInternalClassNameKey));
 		}
 
 		Strategy strategy1 =
-			testGetPlanInternalClassNameStrategiesPage_addStrategy(
-				internalClassName, randomStrategy());
+			testGetPlanInternalClassNameKeyStrategiesPage_addStrategy(
+				internalClassNameKey, randomStrategy());
 
 		Strategy strategy2 =
-			testGetPlanInternalClassNameStrategiesPage_addStrategy(
-				internalClassName, randomStrategy());
+			testGetPlanInternalClassNameKeyStrategiesPage_addStrategy(
+				internalClassNameKey, randomStrategy());
 
-		page = strategyResource.getPlanInternalClassNameStrategiesPage(
-			internalClassName);
+		page = strategyResource.getPlanInternalClassNameKeyStrategiesPage(
+			internalClassNameKey);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -242,13 +235,13 @@ public abstract class BaseStrategyResourceTestCase {
 			(List<Strategy>)page.getItems());
 		assertValid(
 			page,
-			testGetPlanInternalClassNameStrategiesPage_getExpectedActions(
-				internalClassName));
+			testGetPlanInternalClassNameKeyStrategiesPage_getExpectedActions(
+				internalClassNameKey));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetPlanInternalClassNameStrategiesPage_getExpectedActions(
-				String internalClassName)
+			testGetPlanInternalClassNameKeyStrategiesPage_getExpectedActions(
+				String internalClassNameKey)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -256,8 +249,9 @@ public abstract class BaseStrategyResourceTestCase {
 		return expectedActions;
 	}
 
-	protected Strategy testGetPlanInternalClassNameStrategiesPage_addStrategy(
-			String internalClassName, Strategy strategy)
+	protected Strategy
+			testGetPlanInternalClassNameKeyStrategiesPage_addStrategy(
+				String internalClassNameKey, Strategy strategy)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -265,7 +259,7 @@ public abstract class BaseStrategyResourceTestCase {
 	}
 
 	protected String
-			testGetPlanInternalClassNameStrategiesPage_getInternalClassName()
+			testGetPlanInternalClassNameKeyStrategiesPage_getInternalClassNameKey()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -273,7 +267,7 @@ public abstract class BaseStrategyResourceTestCase {
 	}
 
 	protected String
-			testGetPlanInternalClassNameStrategiesPage_getIrrelevantInternalClassName()
+			testGetPlanInternalClassNameKeyStrategiesPage_getIrrelevantInternalClassNameKey()
 		throws Exception {
 
 		return null;

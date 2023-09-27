@@ -34,6 +34,7 @@ definition {
 	@priority = 4
 	test ArePasswordTheSame {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -82,6 +83,7 @@ definition {
 	@priority = 3
 	test CreateAccountSectionCompleted {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -132,6 +134,7 @@ definition {
 	@priority = 5
 	test ErrorMessageAppearInEmailField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -169,6 +172,7 @@ definition {
 	test IsCreateAccountButtonActive {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I go through all the forms Raylife basic, commercial, employees and properties") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
@@ -209,6 +213,7 @@ definition {
 	@priority = 3
 	test IsCreateAccountButtonDisabled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -245,6 +250,7 @@ definition {
 	@priority = 4
 	test IsEightCharactersRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -289,6 +295,7 @@ definition {
 	@priority = 4
 	test IsFiveUniqueCharactersRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -333,6 +340,7 @@ definition {
 	@priority = 4
 	test IsOneSymbolRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -377,6 +385,7 @@ definition {
 	@priority = 4
 	test NoSpacesAreAllowed {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

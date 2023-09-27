@@ -73,7 +73,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectAllTransitionTasks();
 
@@ -83,17 +83,16 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.assertAllItemsCurrentAssignee(
-			workflowInstanceAssignee = "Test Test",
-			workflowInstanceName = "Blogs Entry: Blogs Entry Title");
-
-		WorkflowMetrics.assertAllItemsCurrentAssignee(
-			workflowInstanceAssignee = "Test Test",
-			workflowInstanceName = "Blogs Entry: Blogs Entry Title");
+		for (var workflowInstanceName : list "Blogs Entry: Blogs Entry Title,Blogs Entry: Blogs Entry Title 1") {
+			AssertElementPresent(
+				key_workflowInstanceAssignee = "Test Test",
+				key_workflowInstanceName = ${workflowInstanceName},
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+		}
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectAllTransitionTasks();
 
@@ -103,13 +102,12 @@ definition {
 
 		Refresh();
 
-		WorkflowMetrics.assertAllItemsCurrentAssignee(
-			workflowInstanceAssignee = "User Test",
-			workflowInstanceName = "Blogs Entry: Blogs Entry Title");
-
-		WorkflowMetrics.assertAllItemsCurrentAssignee(
-			workflowInstanceAssignee = "User Test",
-			workflowInstanceName = "Blogs Entry: Blogs Entry Title 1");
+		for (var workflowInstanceName : list "Blogs Entry: Blogs Entry Title,Blogs Entry: Blogs Entry Title 1") {
+			AssertElementPresent(
+				key_workflowInstanceAssignee = "User Test",
+				key_workflowInstanceName = ${workflowInstanceName},
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+		}
 	}
 
 	@description = "LPS-106219 - Verify that, in the modal Select Tasks to Reassign, the Assignee filter contains only the options that are displayed in the modal"
@@ -145,11 +143,11 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToReassignSelectTask();
+		WorkflowMetrics.goToReassignTask(itemSubject = "Blogs Entry: Blogs Entry 1");
 
 		WorkflowMetrics.selectNewAssignee(taskList = 1);
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		Click(locator1 = "WorkflowReassignModal#ASSIGNEE_DROPDOWN");
 
@@ -192,7 +190,7 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
 
-		WorkflowMetrics.goToReassignSelectTask();
+		WorkflowMetrics.goToReassignTask(itemSubject = "Blogs Entry: Blogs Entry 1");
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
 
@@ -250,7 +248,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetricsAllItemsListReassignTasks.selectReassignTasksCardFilterValueProcessStep(workflowStep = "Review");
 
@@ -272,6 +270,7 @@ definition {
 	@priority = 3
 	test FilterOptionsAreAlphabeticallyOrdered {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.createUsersGroovy(numberOfUsers = 1);
 
@@ -302,7 +301,7 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
 
-		WorkflowMetrics.goToReassignSelectTask();
+		WorkflowMetrics.goToReassignTask(itemSubject = "Blogs Entry: Blogs Entry 1");
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
 
@@ -378,7 +377,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		AssertElementNotPresent(
 			key_workflowFilter = "Review",
@@ -444,7 +443,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
 
@@ -477,7 +476,7 @@ definition {
 
 		var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry Title");
 
@@ -485,9 +484,10 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		WorkflowMetrics.assertAllItemsCurrentAssignee(
-			workflowInstanceAssignee = "Test Test",
-			workflowInstanceName = "Blogs Entry: Blogs Entry Title");
+		AssertElementPresent(
+			key_workflowInstanceAssignee = "Test Test",
+			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
 	}
 
 	@description = "LPS-102664 - Verify that in Select Tasks to Reassign, the tasks are displayed in the same order rule displayed in All Items page"
@@ -524,7 +524,7 @@ definition {
 			AssertElementPresent(locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_ALL_ITEMS_LIST_ORDER");
 		}
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		for (var orderNumber : list "1,2") {
 			var key_order = ${orderNumber};
@@ -573,7 +573,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetricsAllItemsListReassignTasks.selectReassignTasksCardFilterValueProcessStep(workflowStep = "Review");
 
@@ -609,6 +609,7 @@ definition {
 	test UserCanFilterInstanceWithPendingTasksInParallelByStep {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -637,7 +638,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.viewTaskFilterOnReassignTasks(processStep = "task1");
 
@@ -672,7 +673,7 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
 
-		WorkflowMetrics.goToReassignSelectTask();
+		WorkflowMetrics.goToReassignTask(itemSubject = "Blogs Entry: Blogs Entry 1");
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
 
@@ -686,7 +687,7 @@ definition {
 
 		Button.clickDone();
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_DROPDOWN_DISABLED");
 	}
@@ -754,7 +755,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry Title");
 
@@ -772,7 +773,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectNewAssignee(
 			nameOfAssignee = "user1 user1",

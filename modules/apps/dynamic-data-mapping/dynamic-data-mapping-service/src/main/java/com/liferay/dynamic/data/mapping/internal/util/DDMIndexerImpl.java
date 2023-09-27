@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dynamic.data.mapping.internal.util;
@@ -76,6 +67,7 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -674,6 +666,18 @@ public class DDMIndexerImpl implements DDMIndexer {
 		else if (value instanceof Object[]) {
 			String[] valuesString = ArrayUtil.toStringArray((Object[])value);
 
+			String type = field.getType();
+
+			if (type.equals(DDMFormFieldTypeConstants.DATE) ||
+				type.equals(DDMFormFieldTypeConstants.DATE_TIME)) {
+
+				Date[] dateValues = _getDateValues(type, valuesString);
+
+				if (dateValues.length > 0) {
+					document.addDate(name.concat("_date"), dateValues);
+				}
+			}
+
 			if (indexType.equals("keyword")) {
 				document.addKeywordSortable(name, valuesString);
 			}
@@ -713,24 +717,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 					 type.equals(DDMFormFieldTypeConstants.DATE_TIME)) &&
 					Validator.isNotNull(valueString)) {
 
-					String pattern = "yyyy-MM-dd";
+					Date[] dateValues = _getDateValues(
+						type, new String[] {valueString});
 
-					if (type.equals(DDMFormFieldTypeConstants.DATE_TIME)) {
-						pattern = "yyyy-MM-dd hh:mm";
-					}
-
-					DateFormat dateFormat =
-						_dateFormatFactory.getSimpleDateFormat(pattern);
-
-					try {
-						document.addDate(
-							name.concat("_date"),
-							dateFormat.parse(valueString));
-					}
-					catch (ParseException parseException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(parseException);
-						}
+					if (dateValues.length > 0) {
+						document.addDate(name.concat("_date"), dateValues);
 					}
 				}
 				else if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
@@ -814,6 +805,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
+			if (ddmFormField == null) {
+				continue;
+			}
+
 			try {
 				Locale ddmFormFieldLocale = locale;
 
@@ -841,6 +836,35 @@ public class DDMIndexerImpl implements DDMIndexer {
 					ddmStructure, defaultLocale, locale, sb);
 			}
 		}
+	}
+
+	private Date[] _getDateValues(String type, String[] values) {
+		List<Date> dateValues = new ArrayList<>(values.length);
+
+		String pattern = "yyyy-MM-dd";
+
+		if (type.equals(DDMFormFieldTypeConstants.DATE_TIME)) {
+			pattern = "yyyy-MM-dd hh:mm";
+		}
+
+		DateFormat dateFormat = _dateFormatFactory.getSimpleDateFormat(pattern);
+
+		for (String value : values) {
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			try {
+				dateValues.add(dateFormat.parse(value));
+			}
+			catch (ParseException parseException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(parseException);
+				}
+			}
+		}
+
+		return dateValues.toArray(new Date[0]);
 	}
 
 	private String _getSortableFieldName(String name) {

@@ -82,7 +82,7 @@ const PublishOtherVariantModel = ({
 		currentStep === 1 ? () => {} : () => makeAllRefetch(allRefetch);
 
 	const link = dxpVariant
-		? getVariantLink(pageURL, dxpVariant.dxpVariantId)
+		? getVariantLink({id: dxpVariant.dxpVariantId, pageURL})
 		: '';
 
 	return (

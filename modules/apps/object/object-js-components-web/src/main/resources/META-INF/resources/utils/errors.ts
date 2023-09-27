@@ -1,22 +1,17 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
+import {sub} from 'frontend-js-web';
+
 interface IErrorMessage {
 	[key: string]: string;
 }
 export const ERRORS: IErrorMessage = {
-	'ObjectDefinitionNameException.MustBeLessThan41Characters': Liferay.Language.get(
-		'only-41-characters-are-allowed'
+	'ObjectDefinitionNameException.MustBeLessThan41Characters': sub(
+		Liferay.Language.get('only-x-characters-are-allowed-in-the-x-field'),
+		['41', 'name']
 	),
 	'ObjectDefinitionNameException.MustBeginWithUpperCaseLetter': Liferay.Language.get(
 		'the-first-character-of-a-name-must-be-an-upper-case-letter'
@@ -36,8 +31,9 @@ export const ERRORS: IErrorMessage = {
 	'ObjectDefinitionNameException.MustStartWithCAndUnderscoreForCustomObject': Liferay.Language.get(
 		'custom-object-definition-names-must-start-with-c'
 	),
-	'ObjectFieldNameException.MustBeLessThan41Characters': Liferay.Language.get(
-		'only-41-characters-are-allowed'
+	'ObjectFieldNameException.MustBeLessThan41Characters': sub(
+		Liferay.Language.get('only-x-characters-are-allowed-in-the-x-field'),
+		['41', 'name']
 	),
 	'ObjectFieldNameException.MustBeginWithLowerCaseLetter': Liferay.Language.get(
 		'the-first-character-of-a-name-must-be-an-lower-case-letter'

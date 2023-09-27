@@ -1,7 +1,7 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay", name: "org.hibernate.core", version: "5.6.7.LIFERAY-PATCHED-1"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
-	testIntegrationCompile project(":apps:journal:journal-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay", name: "org.hibernate.core", version: "5.6.7.LIFERAY-PATCHED-1"
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation project(":apps:change-tracking:change-tracking-test-util")
+	testIntegrationImplementation project(":apps:journal:journal-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

@@ -1,16 +1,9 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
+import {TRenderer} from 'frontend-js-web';
 
 export function FrontendDataSet({
 	actionParameterName,
@@ -27,6 +20,7 @@ export function FrontendDataSet({
 	filters,
 	formId,
 	formName,
+	header,
 	id,
 	initialSelectedItemsValues,
 	inlineAddingSettings,
@@ -48,7 +42,7 @@ export function FrontendDataSet({
 	showPagination,
 	showSearch,
 	sidePanelId,
-	sorting,
+	sorts,
 	style,
 	views,
 }: IFrontendDataSetProps): JSX.Element;
@@ -78,22 +72,37 @@ type TDelta = {
 	label: number;
 };
 
-type TInlineEditingSettings = {alwaysOn: boolean; defaultBodyContent: object};
+export interface IInlineEditingSettings {
+	alwaysOn: boolean;
+	defaultBodyContent: object;
+}
 
-type TItemsActions = {
+export interface IItemsActions {
 	data?: {
 		confirmationMessage?: string;
 		id?: string;
 		method?: 'delete' | 'get';
 		permissionKey?: string;
+		size?: 'sm' | 'lg' | 'full-screen';
+		status?: string;
+		title?: string;
 	};
 	href?: string;
 	icon?: string;
 	id?: string;
 	label?: string;
 	onClick?: Function;
-	target?: 'async' | 'headless' | 'link' | 'modal' | 'sidePanel' | 'event';
-};
+	separator?: boolean;
+	target?:
+		| 'async'
+		| 'headless'
+		| 'link'
+		| 'modal'
+		| 'modal-permissions'
+		| 'sidePanel'
+		| 'event';
+	type?: string;
+}
 
 type TSorting = {
 	direction?: 'asc' | 'desc';
@@ -123,6 +132,7 @@ export interface IFrontendDataSetProps {
 	};
 	currentURL?: string;
 	customDataRenderers?: any;
+	customRenderers?: {tableCell: Array<TRenderer>};
 	customViews?: string;
 	customViewsEnabled?: boolean;
 	emptyState?: {
@@ -136,15 +146,18 @@ export interface IFrontendDataSetProps {
 	filters?: any;
 	formId?: string;
 	formName?: string;
+	header?: {
+		title?: string;
+	};
 	id: string;
 	initialSelectedItemsValues?: any[];
 	inlineAddingSettings?: {
 		apiURL: string;
 		defaultBodyContent: object;
 	};
-	inlineEditingSettings?: boolean | TInlineEditingSettings;
+	inlineEditingSettings?: IInlineEditingSettings;
 	items?: any[];
-	itemsActions?: TItemsActions[];
+	itemsActions?: IItemsActions[];
 	namespace?: string;
 	nestedItemsKey?: string;
 	nestedItemsReferenceKey?: string;
@@ -164,14 +177,10 @@ export interface IFrontendDataSetProps {
 	showPagination?: boolean;
 	showSearch?: boolean;
 	sidePanelId?: string;
-	sorting?: TSorting[];
+	sorts?: TSorting[];
 	style?: 'default' | 'fluid' | 'stacked';
 	views: TViews[];
+	viewsTitle?: string;
 }
 
-export {
-	INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS,
-	InternalCellRenderer as FDSInternalCellRenderer,
-} from './cell_renderers/InternalCellRenderer';
-
-export {InternalRenderer} from './utils/renderer';
+export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from './cell_renderers/InternalCellRenderer';

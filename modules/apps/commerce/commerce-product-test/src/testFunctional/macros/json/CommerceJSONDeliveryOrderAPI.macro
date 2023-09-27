@@ -1,0 +1,57 @@
+definition {
+
+	macro _getCommerceOrderItemShipments {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-delivery-order/v1.0/placed-order-items/${placedOrderItemId}/placed-order-item-shipments \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
+	}
+
+	macro _getCommercePlacedOrderItemsByOrderId {
+		Variables.assertDefined(parameterList = ${placedOrderId});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-delivery-order/v1.0/placed-orders/${placedOrderId}/placed-order-items \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
+	}
+
+	macro getPlacedOrderItemsFieldByOrderId {
+		Variables.assertDefined(parameterList = "${jsonPath},${placedOrderId}");
+
+		var responseBody = CommerceJSONDeliveryOrderAPI._getCommercePlacedOrderItemsByOrderId(placedOrderId = ${placedOrderId});
+
+		var fieldValue = JSONUtil.getWithJSONPath(${responseBody}, ${jsonPath});
+
+		echo("Field: ${fieldValue}");
+
+		return ${fieldValue};
+	}
+
+}

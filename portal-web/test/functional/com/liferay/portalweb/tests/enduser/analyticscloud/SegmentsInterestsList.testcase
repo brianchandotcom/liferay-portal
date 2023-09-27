@@ -201,6 +201,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8605 | Test Summary: The top interests list is searchable"
 	@ignore = "true"
+	@priority = 3
 	test CanSearchTopInterestsListSegments {
 
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.

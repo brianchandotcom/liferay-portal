@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Portal DAO ORM Custom SQL API
 Bundle-SymbolicName: com.liferay.portal.dao.orm.custom.sql.api
-Bundle-Version: 4.1.5
+Bundle-Version: 4.1.6
 Export-Package: com.liferay.portal.dao.orm.custom.sql

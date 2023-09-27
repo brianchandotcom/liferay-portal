@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.service.http;
@@ -99,6 +90,140 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstanceUnitOfMeasure
+			addOrUpdateCPInstanceUnitOfMeasure(
+				HttpPrincipal httpPrincipal, long cpInstanceId, boolean active,
+				java.math.BigDecimal incrementalOrderQuantity, String key,
+				java.util.Map<java.util.Locale, String> nameMap, int precision,
+				boolean primary, double priority, java.math.BigDecimal rate,
+				String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPInstanceUnitOfMeasureServiceUtil.class,
+				"addOrUpdateCPInstanceUnitOfMeasure",
+				_addOrUpdateCPInstanceUnitOfMeasureParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpInstanceId, active, incrementalOrderQuantity, key,
+				nameMap, precision, primary, priority, rate, sku);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.CPInstanceUnitOfMeasure)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPInstanceUnitOfMeasure
+			deleteCPInstanceUnitOfMeasure(
+				HttpPrincipal httpPrincipal, long cpInstanceUnitOfMeasureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPInstanceUnitOfMeasureServiceUtil.class,
+				"deleteCPInstanceUnitOfMeasure",
+				_deleteCPInstanceUnitOfMeasureParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpInstanceUnitOfMeasureId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.CPInstanceUnitOfMeasure)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPInstanceUnitOfMeasure
+			fetchCPInstanceUnitOfMeasure(
+				HttpPrincipal httpPrincipal, long cpInstanceUnitOfMeasureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPInstanceUnitOfMeasureServiceUtil.class,
+				"fetchCPInstanceUnitOfMeasure",
+				_fetchCPInstanceUnitOfMeasureParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpInstanceUnitOfMeasureId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.CPInstanceUnitOfMeasure)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPInstanceUnitOfMeasure
 			fetchCPInstanceUnitOfMeasure(
 				HttpPrincipal httpPrincipal, long cpInstanceId, String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -107,10 +232,182 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPInstanceUnitOfMeasureServiceUtil.class,
 				"fetchCPInstanceUnitOfMeasure",
-				_fetchCPInstanceUnitOfMeasureParameterTypes1);
+				_fetchCPInstanceUnitOfMeasureParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, key);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.CPInstanceUnitOfMeasure)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPInstanceUnitOfMeasure
+			fetchPrimaryCPInstanceUnitOfMeasure(
+				HttpPrincipal httpPrincipal, long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPInstanceUnitOfMeasureServiceUtil.class,
+				"fetchPrimaryCPInstanceUnitOfMeasure",
+				_fetchPrimaryCPInstanceUnitOfMeasureParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpInstanceId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.CPInstanceUnitOfMeasure)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.product.model.CPInstanceUnitOfMeasure>
+				getActiveCPInstanceUnitOfMeasures(
+					HttpPrincipal httpPrincipal, long cpInstanceId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPInstanceUnitOfMeasureServiceUtil.class,
+				"getActiveCPInstanceUnitOfMeasures",
+				_getActiveCPInstanceUnitOfMeasuresParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpInstanceId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.product.model.CPInstanceUnitOfMeasure>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getActiveCPInstanceUnitOfMeasuresCount(
+			HttpPrincipal httpPrincipal, long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPInstanceUnitOfMeasureServiceUtil.class,
+				"getActiveCPInstanceUnitOfMeasuresCount",
+				_getActiveCPInstanceUnitOfMeasuresCountParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpInstanceId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPInstanceUnitOfMeasure
+			getCPInstanceUnitOfMeasure(
+				HttpPrincipal httpPrincipal, long cpInstanceUnitOfMeasureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPInstanceUnitOfMeasureServiceUtil.class,
+				"getCPInstanceUnitOfMeasure",
+				_getCPInstanceUnitOfMeasureParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpInstanceUnitOfMeasureId);
 
 			Object returnObj = null;
 
@@ -150,7 +447,7 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPInstanceUnitOfMeasureServiceUtil.class,
 				"getCPInstanceUnitOfMeasure",
-				_getCPInstanceUnitOfMeasureParameterTypes2);
+				_getCPInstanceUnitOfMeasureParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, key);
@@ -198,7 +495,7 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPInstanceUnitOfMeasureServiceUtil.class,
 				"getCPInstanceUnitOfMeasures",
-				_getCPInstanceUnitOfMeasuresParameterTypes3);
+				_getCPInstanceUnitOfMeasuresParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, start, end, orderByComparator);
@@ -233,6 +530,47 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 		}
 	}
 
+	public static int getCPInstanceUnitOfMeasuresCount(
+			HttpPrincipal httpPrincipal, long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPInstanceUnitOfMeasureServiceUtil.class,
+				"getCPInstanceUnitOfMeasuresCount",
+				_getCPInstanceUnitOfMeasuresCountParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpInstanceId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPInstanceUnitOfMeasure
 			updateCPInstanceUnitOfMeasure(
 				HttpPrincipal httpPrincipal, long cpInstanceUnitOfMeasureId,
@@ -247,7 +585,7 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPInstanceUnitOfMeasureServiceUtil.class,
 				"updateCPInstanceUnitOfMeasure",
-				_updateCPInstanceUnitOfMeasureParameterTypes4);
+				_updateCPInstanceUnitOfMeasureParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceUnitOfMeasureId, cpInstanceId, active,
@@ -293,18 +631,48 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 			java.math.BigDecimal.class, String.class
 		};
 	private static final Class<?>[]
-		_fetchCPInstanceUnitOfMeasureParameterTypes1 = new Class[] {
+		_addOrUpdateCPInstanceUnitOfMeasureParameterTypes1 = new Class[] {
+			long.class, boolean.class, java.math.BigDecimal.class, String.class,
+			java.util.Map.class, int.class, boolean.class, double.class,
+			java.math.BigDecimal.class, String.class
+		};
+	private static final Class<?>[]
+		_deleteCPInstanceUnitOfMeasureParameterTypes2 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_fetchCPInstanceUnitOfMeasureParameterTypes3 = new Class[] {long.class};
+	private static final Class<?>[]
+		_fetchCPInstanceUnitOfMeasureParameterTypes4 = new Class[] {
 			long.class, String.class
 		};
-	private static final Class<?>[] _getCPInstanceUnitOfMeasureParameterTypes2 =
+	private static final Class<?>[]
+		_fetchPrimaryCPInstanceUnitOfMeasureParameterTypes5 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_getActiveCPInstanceUnitOfMeasuresParameterTypes6 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_getActiveCPInstanceUnitOfMeasuresCountParameterTypes7 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getCPInstanceUnitOfMeasureParameterTypes8 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getCPInstanceUnitOfMeasureParameterTypes9 =
 		new Class[] {long.class, String.class};
 	private static final Class<?>[]
-		_getCPInstanceUnitOfMeasuresParameterTypes3 = new Class[] {
+		_getCPInstanceUnitOfMeasuresParameterTypes10 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_updateCPInstanceUnitOfMeasureParameterTypes4 = new Class[] {
+		_getCPInstanceUnitOfMeasuresCountParameterTypes11 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_updateCPInstanceUnitOfMeasureParameterTypes12 = new Class[] {
 			long.class, long.class, boolean.class, java.math.BigDecimal.class,
 			String.class, java.util.Map.class, int.class, boolean.class,
 			double.class, java.math.BigDecimal.class, String.class

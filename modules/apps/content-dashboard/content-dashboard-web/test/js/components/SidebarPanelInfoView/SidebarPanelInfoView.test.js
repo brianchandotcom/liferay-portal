@@ -1,18 +1,10 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fireEvent, render, waitFor} from '@testing-library/react';
+import {render, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -95,7 +87,7 @@ describe('SidebarPanelInfoView', () => {
 		expect(getByText('38070')).toBeInTheDocument();
 
 		expect(getByText('categorization')).toBeInTheDocument();
-		expect(getByLabelText(/^(view Details)$/i)).toBeInTheDocument();
+		expect(getByLabelText(/^(view Properties)$/i)).toBeInTheDocument();
 	});
 
 	it('renders sidebar panel with proper dates for a basic web content', () => {
@@ -131,6 +123,8 @@ describe('SidebarPanelInfoView', () => {
 	it('renders sidebar panel with proper tags for a basic web content', () => {
 		const {getByText} = render(_getSidebarComponent(mockedProps));
 
+		userEvent.click(getByText('categorization'));
+
 		expect(getByText('tags')).toBeInTheDocument();
 		expect(getByText('tag1')).toBeInTheDocument();
 		expect(getByText('tag2')).toBeInTheDocument();
@@ -138,6 +132,8 @@ describe('SidebarPanelInfoView', () => {
 
 	it('renders sidebar panel with proper vocabularies and categories for a basic web content', () => {
 		const {getByText} = render(_getSidebarComponent(mockedProps));
+
+		userEvent.click(getByText('categorization'));
 
 		expect(getByText('public-categories')).toBeInTheDocument();
 		expect(getByText('internal-categories')).toBeInTheDocument();
@@ -192,22 +188,26 @@ describe('SidebarPanelInfoView', () => {
 	});
 
 	it('renders sidebar panel with vocabularies subtitles in the proper order for a basic web content', () => {
-		const {container} = render(_getSidebarComponent(mockedProps));
-
-		const subtitles = container.querySelectorAll(
-			'.item-vocabularies h6.sidebar-section-subtitle-sm'
+		const {container, getByText} = render(
+			_getSidebarComponent(mockedProps)
 		);
-		expect(subtitles.length).toBe(2);
-		expect(subtitles[0].textContent).toBe('public-categories');
-		expect(subtitles[1].textContent).toBe('internal-categories');
+
+		userEvent.click(getByText('categorization'));
+
+		const subtitles = container.querySelectorAll('.panel-header');
+		expect(subtitles.length).toBe(4);
+		expect(subtitles[1].textContent).toBe('public-categories');
+		expect(subtitles[2].textContent).toBe('internal-categories');
 	});
 
 	it('renders sidebar panel with vocabularies names grouped and sorted for a basic web content', () => {
-		const {container} = render(_getSidebarComponent(mockedProps));
-
-		const vocabularies = container.querySelectorAll(
-			'.item-vocabularies h5.font-weight-semi-bold'
+		const {container, getByText} = render(
+			_getSidebarComponent(mockedProps)
 		);
+
+		userEvent.click(getByText('categorization'));
+
+		const vocabularies = container.querySelectorAll('.vocabulary');
 		expect(vocabularies.length).toBe(
 			Object.keys(mockedProps.vocabularies).length
 		);
@@ -527,15 +527,7 @@ describe('SidebarPanelInfoView', () => {
 			})
 		);
 
-		const button = getByTitle('Subscribe');
-
-		fireEvent(
-			button,
-			new MouseEvent('click', {
-				bubbles: true,
-				cancelable: true,
-			})
-		);
+		userEvent.click(getByTitle('Subscribe'));
 
 		await waitFor(() =>
 			expect(fetch).toHaveBeenCalledWith(mockedProps.subscribe.url)
@@ -564,15 +556,7 @@ describe('SidebarPanelInfoView', () => {
 			})
 		);
 
-		const button = getByTitle('Subscribe');
-
-		fireEvent(
-			button,
-			new MouseEvent('click', {
-				bubbles: true,
-				cancelable: true,
-			})
-		);
+		userEvent.click(getByTitle('Subscribe'));
 
 		expect(fetch).toHaveBeenCalledWith(mockedProps.subscribe.url);
 		await waitFor(() =>
@@ -605,7 +589,7 @@ describe('SidebarPanelInfoView', () => {
 	});
 
 	it('renders Details and Versions tabs when getItemVersionsURL prop is received', () => {
-		const {getAllByRole} = render(
+		const {getAllByRole, getByText} = render(
 			_getSidebarComponent({
 				...mockedProps,
 				...mockedContentWithVersions,
@@ -615,7 +599,11 @@ describe('SidebarPanelInfoView', () => {
 		const tabs = getAllByRole('tab');
 
 		expect(tabs[0].innerHTML).toContain('details');
-		expect(tabs[1].innerHTML).toContain('versions');
+		expect(tabs[1].innerHTML).toContain('categorization');
+
+		userEvent.click(getByText('more'));
+
+		expect(getByText('versions').innerHTML).toContain('versions');
 	});
 
 	it('renders Details tab active by default', () => {

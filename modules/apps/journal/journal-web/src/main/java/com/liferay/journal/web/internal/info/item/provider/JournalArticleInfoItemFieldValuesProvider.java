@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.journal.web.internal.info.item.provider;
@@ -47,6 +38,8 @@ import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFi
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -103,7 +96,7 @@ public class JournalArticleInfoItemFieldValuesProvider
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()),
 					String.valueOf(journalArticle.getDDMStructureId()),
-					_getThemeDisplay())
+					JournalArticle.class.getSimpleName(), _getThemeDisplay())
 			).infoFieldValues(
 				_expandoInfoItemFieldSetProvider.getInfoFieldValues(
 					JournalArticle.class.getName(), journalArticle)
@@ -112,6 +105,8 @@ public class JournalArticleInfoItemFieldValuesProvider
 					JournalArticle.class.getName(), journalArticle)
 			).infoFieldValues(
 				_getDDMStructureInfoFieldValues(journalArticle)
+			).infoFieldValues(
+				_getDefaultDDMStructureInfoFieldValues(journalArticle)
 			).infoFieldValues(
 				_getDDMTemplateInfoFieldValues(journalArticle)
 			).infoFieldValues(
@@ -137,8 +132,38 @@ public class JournalArticleInfoItemFieldValuesProvider
 	private List<InfoFieldValue<Object>> _getDDMStructureInfoFieldValues(
 		JournalArticle article) {
 
-		return _ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
-			article, article.getDDMFormValues());
+		DDMStructure ddmStructure = article.getDDMStructure();
+
+		JournalArticle ddmStructureArticle = null;
+
+		try {
+			ddmStructureArticle = _journalArticleLocalService.getArticle(
+				ddmStructure.getGroupId(), DDMStructure.class.getName(),
+				ddmStructure.getStructureId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		if (ddmStructureArticle == null) {
+			return _ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
+				article, article.getDDMFormValues());
+		}
+
+		List<InfoFieldValue<Object>> journalArticleFieldValues =
+			new ArrayList<>();
+
+		journalArticleFieldValues.addAll(
+			_ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
+				article, article.getDDMFormValues(false)));
+
+		journalArticleFieldValues.addAll(
+			_ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
+				ddmStructureArticle, ddmStructureArticle.getDDMFormValues()));
+
+		return journalArticleFieldValues;
 	}
 
 	private List<InfoFieldValue<Object>> _getDDMTemplateInfoFieldValues(
@@ -160,6 +185,32 @@ public class JournalArticleInfoItemFieldValuesProvider
 			});
 
 		return infoFieldValues;
+	}
+
+	private List<InfoFieldValue<Object>> _getDefaultDDMStructureInfoFieldValues(
+		JournalArticle article) {
+
+		DDMStructure ddmStructure = article.getDDMStructure();
+
+		JournalArticle ddmStructureArticle = null;
+
+		try {
+			ddmStructureArticle = _journalArticleLocalService.getArticle(
+				ddmStructure.getGroupId(), DDMStructure.class.getName(),
+				ddmStructure.getStructureId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		if (ddmStructureArticle != null) {
+			return _ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
+				ddmStructureArticle, ddmStructureArticle.getDDMFormValues());
+		}
+
+		return new ArrayList<>();
 	}
 
 	private String _getDisplayPageURL(
@@ -309,7 +360,7 @@ public class JournalArticleInfoItemFieldValuesProvider
 					journalArticle.getDisplayDate()));
 
 			if ((themeDisplay != null) &&
-				!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+				!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 
 				journalArticleFieldValues.add(
 					new InfoFieldValue<>(
@@ -425,6 +476,9 @@ public class JournalArticleInfoItemFieldValuesProvider
 
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleInfoItemFieldValuesProvider.class);
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider

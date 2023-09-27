@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.staging.test;
@@ -124,8 +115,13 @@ public class StagingDataPortletPreferencesTest
 			"formDDMTemplateId",
 			new String[] {String.valueOf(formDDMTemplate.getTemplateId())}
 		).put(
+			"groupId", new String[] {String.valueOf(ddlRecordSet.getGroupId())}
+		).put(
 			"recordSetId",
 			new String[] {String.valueOf(ddlRecordSet.getRecordSetId())}
+		).put(
+			"recordSetKey",
+			new String[] {String.valueOf(ddlRecordSet.getRecordSetKey())}
 		).build();
 
 		String portletId = publishLayoutWithDisplayPortlet(
@@ -140,8 +136,8 @@ public class StagingDataPortletPreferencesTest
 			livePortletPreferences.getValue(
 				"formDDMTemplateId", StringPool.BLANK));
 		Assert.assertEquals(
-			String.valueOf(ddlRecordSet.getRecordSetId()),
-			livePortletPreferences.getValue("recordSetId", StringPool.BLANK));
+			String.valueOf(ddlRecordSet.getRecordSetKey()),
+			livePortletPreferences.getValue("recordSetKey", StringPool.BLANK));
 
 		publishPortlet(DDLPortletKeys.DYNAMIC_DATA_LISTS);
 
@@ -167,8 +163,8 @@ public class StagingDataPortletPreferencesTest
 			livePortletPreferences.getValue(
 				"formDDMTemplateId", StringPool.BLANK));
 		Assert.assertEquals(
-			String.valueOf(liveDDLRecordSet.getRecordSetId()),
-			livePortletPreferences.getValue("recordSetId", StringPool.BLANK));
+			String.valueOf(liveDDLRecordSet.getRecordSetKey()),
+			livePortletPreferences.getValue("recordSetKey", StringPool.BLANK));
 	}
 
 	@Test

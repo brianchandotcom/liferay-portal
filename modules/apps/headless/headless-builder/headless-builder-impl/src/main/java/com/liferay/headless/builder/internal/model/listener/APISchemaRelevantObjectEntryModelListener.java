@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.builder.internal.model.listener;
@@ -20,11 +11,9 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -62,46 +51,32 @@ public class APISchemaRelevantObjectEntryModelListener
 		_validate(objectEntry);
 	}
 
-	private boolean _isValidAPIApplication(long apiApplicationId)
-		throws Exception {
-
-		if (apiApplicationId == 0) {
-			return false;
-		}
-
-		ObjectEntry apiApplicationObjectEntry =
-			_objectEntryLocalService.fetchObjectEntry(apiApplicationId);
-
-		if (apiApplicationObjectEntry == null) {
-			return false;
-		}
-
-		ObjectDefinition apiApplicationObjectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				apiApplicationObjectEntry.getObjectDefinitionId());
-
-		if (!StringUtil.equals(
-				apiApplicationObjectDefinition.getExternalReferenceCode(),
-				"L_API_APPLICATION")) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private void _validate(ObjectEntry objectEntry) {
-		Map<String, Serializable> values = objectEntry.getValues();
-
 		try {
-			if (!_isValidAPIApplication(
+			Map<String, Serializable> values = objectEntry.getValues();
+
+			if (!_objectEntryHelper.isValidObjectEntry(
 					(long)values.get(
-						"r_apiApplicationToAPISchemas_c_apiApplicationId"))) {
+						"r_apiApplicationToAPISchemas_c_apiApplicationId"),
+					"L_API_APPLICATION")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					"An API schema must be related to an API application",
-					"an-api-schema-must-be-related-to-an-api-application",
-					null);
+					null, "An API schema must be related to an API application",
+					"an-api-schema-must-be-related-to-an-api-application");
+			}
+
+			String mainObjectDefinitionERC = (String)values.get(
+				"mainObjectDefinitionERC");
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						mainObjectDefinitionERC, objectEntry.getCompanyId());
+
+			if (objectDefinition == null) {
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					null, "An API schema must be an existing object definition",
+					"an-api-schema-must-be-an-existing-object-definition");
 			}
 
 			if (Validator.isNotNull(
@@ -119,11 +94,11 @@ public class APISchemaRelevantObjectEntryModelListener
 						"L_API_SCHEMA"))) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
 					"There is an API schema with the same name in the API " +
 						"application",
 					"there-is-an-api-schema-with-the-same-name-in-the-api-" +
-						"application",
-					null);
+						"application");
 			}
 		}
 		catch (Exception exception) {
@@ -136,8 +111,5 @@ public class APISchemaRelevantObjectEntryModelListener
 
 	@Reference
 	private ObjectEntryHelper _objectEntryHelper;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
 
 }

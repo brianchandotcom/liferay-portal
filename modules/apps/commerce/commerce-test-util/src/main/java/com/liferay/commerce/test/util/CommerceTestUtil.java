@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.test.util;
@@ -212,11 +203,12 @@ public class CommerceTestUtil {
 			commerceChannel.getCommerceChannelId());
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-			userId, commerceInventoryWarehouse, cpInstance.getSku(), 10);
+			userId, commerceInventoryWarehouse, BigDecimal.TEN,
+			cpInstance.getSku(), StringPool.BLANK);
 
 		addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			4);
+			BigDecimal.valueOf(4));
 
 		CommerceAddress billingCommerceAddress = addUserCommerceAddress(
 			groupId, userId);
@@ -300,7 +292,7 @@ public class CommerceTestUtil {
 	}
 
 	public static CommerceOrderItem addCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, int quantity)
+			long commerceOrderId, long cpInstanceId, BigDecimal quantity)
 		throws Exception {
 
 		CommerceOrder commerceOrder =
@@ -331,7 +323,7 @@ public class CommerceTestUtil {
 	}
 
 	public static CommerceOrderItem addCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, int quantity,
+			long commerceOrderId, long cpInstanceId, BigDecimal quantity,
 			CommerceContext commerceContext)
 		throws Exception {
 
@@ -340,7 +332,55 @@ public class CommerceTestUtil {
 
 		return CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(
 			commerceOrder.getUserId(), commerceOrderId, cpInstanceId, null,
-			quantity, 0, 0, StringPool.BLANK, commerceContext,
+			quantity, 0, BigDecimal.ZERO, StringPool.BLANK, commerceContext,
+			ServiceContextTestUtil.getServiceContext(
+				commerceOrder.getGroupId()));
+	}
+
+	public static CommerceOrderItem addCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId, BigDecimal quantity,
+			String unitOfMeasureKey)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			CommerceOrderLocalServiceUtil.getCommerceOrder(commerceOrderId);
+
+		if (commerceOrder.getCommerceCurrency() == null) {
+			CommerceCurrency commerceCurrency =
+				CommerceCurrencyTestUtil.addCommerceCurrency(
+					commerceOrder.getCompanyId());
+
+			commerceOrder.setCommerceCurrencyId(
+				commerceCurrency.getCommerceCurrencyId());
+
+			commerceOrder = CommerceOrderLocalServiceUtil.updateCommerceOrder(
+				commerceOrder);
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				commerceOrder.getGroupId());
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			null, commerceOrder.getCommerceCurrency(), null, null,
+			serviceContext.getScopeGroup(), commerceOrder);
+
+		return addCommerceOrderItem(
+			commerceOrderId, cpInstanceId, quantity, unitOfMeasureKey,
+			commerceContext);
+	}
+
+	public static CommerceOrderItem addCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId, BigDecimal quantity,
+			String unitOfMeasureKey, CommerceContext commerceContext)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			CommerceOrderLocalServiceUtil.getCommerceOrder(commerceOrderId);
+
+		return CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(
+			commerceOrder.getUserId(), commerceOrderId, cpInstanceId, null,
+			quantity, 0, BigDecimal.ZERO, unitOfMeasureKey, commerceContext,
 			ServiceContextTestUtil.getServiceContext(
 				commerceOrder.getGroupId()));
 	}

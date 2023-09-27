@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.notification.recipient;
@@ -36,6 +27,7 @@ import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilder;
@@ -73,7 +65,7 @@ public class RoleNotificationRecipientBuilder
 		long roleId = kaleoNotificationRecipient.getRecipientClassPK();
 
 		addRoleRecipientAddresses(
-			notificationRecipients, _roleLocalService.getRole(roleId),
+			notificationRecipients, roleLocalService.getRole(roleId),
 			notificationReceptionType, executionContext);
 	}
 
@@ -88,7 +80,7 @@ public class RoleNotificationRecipientBuilder
 		long roleId = kaleoTaskAssignmentInstance.getAssigneeClassPK();
 
 		addRoleRecipientAddresses(
-			notificationRecipients, _roleLocalService.getRole(roleId),
+			notificationRecipients, roleLocalService.getRole(roleId),
 			notificationReceptionType, executionContext);
 	}
 
@@ -104,14 +96,12 @@ public class RoleNotificationRecipientBuilder
 			ExecutionContext executionContext)
 		throws Exception {
 
-		List<User> users = _getRoleUsers(role, executionContext);
+		for (User user : _getRoleUsers(role, executionContext)) {
+			if (user.isActive() &&
+				!_isSelfAssignedUser(executionContext, user)) {
 
-		for (User user : users) {
-			if (user.isActive()) {
-				NotificationRecipient notificationRecipient =
-					new NotificationRecipient(user, notificationReceptionType);
-
-				notificationRecipients.add(notificationRecipient);
+				notificationRecipients.add(
+					new NotificationRecipient(user, notificationReceptionType));
 			}
 		}
 	}
@@ -120,6 +110,24 @@ public class RoleNotificationRecipientBuilder
 	protected void deactivate() {
 		_serviceTrackerList.close();
 	}
+
+	@Reference
+	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected OrganizationLocalService organizationLocalService;
+
+	@Reference
+	protected RoleLocalService roleLocalService;
+
+	@Reference
+	protected UserGroupGroupRoleLocalService userGroupGroupRoleLocalService;
+
+	@Reference
+	protected UserGroupRoleLocalService userGroupRoleLocalService;
+
+	@Reference
+	protected UserLocalService userLocalService;
 
 	private List<Long> _getAncestorGroupIds(Group group, Role role)
 		throws Exception {
@@ -140,7 +148,7 @@ public class RoleNotificationRecipientBuilder
 
 		List<Long> groupIds = new ArrayList<>();
 
-		Organization organization = _organizationLocalService.getOrganization(
+		Organization organization = organizationLocalService.getOrganization(
 			group.getOrganizationId());
 
 		for (Organization ancestorOrganization : organization.getAncestors()) {
@@ -156,7 +164,7 @@ public class RoleNotificationRecipientBuilder
 		List<Long> groupIds = new ArrayList<>();
 
 		if (groupId != WorkflowConstants.DEFAULT_GROUP_ID) {
-			Group group = _groupLocalService.getGroup(groupId);
+			Group group = groupLocalService.getGroup(groupId);
 
 			if (group.isOrganization()) {
 				groupIds.addAll(_getAncestorOrganizationGroupIds(group, role));
@@ -181,7 +189,7 @@ public class RoleNotificationRecipientBuilder
 		long roleId = role.getRoleId();
 
 		if (role.getType() == RoleConstants.TYPE_REGULAR) {
-			return _userLocalService.getInheritedRoleUsers(
+			return userLocalService.getInheritedRoleUsers(
 				roleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
 
@@ -195,7 +203,7 @@ public class RoleNotificationRecipientBuilder
 
 		for (Long groupId : groupIds) {
 			List<UserGroupRole> userGroupRoles =
-				_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
+				userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
 					groupId, roleId);
 
 			for (UserGroupRole userGroupRole : userGroupRoles) {
@@ -203,12 +211,12 @@ public class RoleNotificationRecipientBuilder
 			}
 
 			List<UserGroupGroupRole> userGroupGroupRoles =
-				_userGroupGroupRoleLocalService.
+				userGroupGroupRoleLocalService.
 					getUserGroupGroupRolesByGroupAndRole(groupId, roleId);
 
 			for (UserGroupGroupRole userGroupGroupRole : userGroupGroupRoles) {
 				users.addAll(
-					_userLocalService.getUserGroupUsers(
+					userLocalService.getUserGroupUsers(
 						userGroupGroupRole.getUserGroupId()));
 			}
 
@@ -217,25 +225,44 @@ public class RoleNotificationRecipientBuilder
 				Objects.equals(role.getName(), RoleConstants.SITE_MEMBER)) {
 
 				users.addAll(
-					_userLocalService.getGroupUsers(
+					userLocalService.getGroupUsers(
 						groupId, WorkflowConstants.STATUS_APPROVED, null));
 			}
 
 			if (Objects.equals(
 					role.getName(), RoleConstants.ORGANIZATION_USER)) {
 
-				Group group = _groupLocalService.getGroup(groupId);
+				Group group = groupLocalService.getGroup(groupId);
 
 				if (group.isOrganization()) {
 					long organizationId = group.getClassPK();
 
 					users.addAll(
-						_userLocalService.getOrganizationUsers(organizationId));
+						userLocalService.getOrganizationUsers(organizationId));
 				}
 			}
 		}
 
 		return users;
+	}
+
+	private boolean _isSelfAssignedUser(
+		ExecutionContext executionContext, User user) {
+
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			executionContext.getKaleoTaskInstanceToken();
+
+		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
+			kaleoTaskInstanceToken.getFirstKaleoTaskAssignmentInstance();
+
+		if ((user.getUserId() == kaleoTaskAssignmentInstance.getUserId()) &&
+			(user.getUserId() ==
+				kaleoTaskAssignmentInstance.getAssigneeClassPK())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isValidGroup(Group group, Role role) throws Exception {
@@ -266,24 +293,6 @@ public class RoleNotificationRecipientBuilder
 		return false;
 	}
 
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private OrganizationLocalService _organizationLocalService;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
-
 	private ServiceTrackerList<GroupAwareRoleValidator> _serviceTrackerList;
-
-	@Reference
-	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
-
-	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

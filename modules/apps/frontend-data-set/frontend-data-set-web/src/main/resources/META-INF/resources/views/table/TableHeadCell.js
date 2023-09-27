@@ -1,19 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
@@ -30,7 +22,7 @@ function TableHeadCell({
 	sortable,
 	sortingKey: sortingKeyProp,
 }) {
-	const [{sorting}, viewsDispatch] = useContext(ViewsContext);
+	const [{sorts}, viewsDispatch] = useContext(ViewsContext);
 
 	const [sortingKey, setSortingKey] = useState(null);
 	const [sortingMatch, setSortingMatch] = useState(null);
@@ -41,16 +33,14 @@ function TableHeadCell({
 			(Array.isArray(fieldName) ? fieldName[0] : fieldName);
 
 		setSortingKey(newSortingKey);
-		setSortingMatch(
-			sorting.find((element) => element.key === newSortingKey)
-		);
-	}, [fieldName, sorting, sortingKeyProp]);
+		setSortingMatch(sorts.find((element) => element.key === newSortingKey));
+	}, [fieldName, sorts, sortingKeyProp]);
 
 	function handleSortingCellClick(event) {
 		event.preventDefault();
 
 		const updatedSortedElements = sortingMatch
-			? sorting.map((element) =>
+			? sorts.map((element) =>
 					element.key === sortingKey
 						? {
 								...element,
@@ -75,6 +65,58 @@ function TableHeadCell({
 		});
 	}
 
+	const content = Liferay.FeatureFlags['LPS-193005'] ? (
+		<ClayLink
+			className="inline-item text-truncate-inline"
+			href="#"
+			onClick={handleSortingCellClick}
+		>
+			{!hideColumnLabel && <span className="text-truncate">{label}</span>}
+
+			{sortingMatch && (
+				<span className="inline-item inline-item-after">
+					<ClayIcon
+						draggable
+						symbol={
+							sortingMatch?.direction === 'asc'
+								? 'order-arrow-up'
+								: 'order-arrow-down'
+						}
+					/>
+				</span>
+			)}
+		</ClayLink>
+	) : (
+		<ClayButton
+			className="btn-sorting inline-item text-nowrap text-truncate-inline"
+			displayType="unstyled"
+			onClick={handleSortingCellClick}
+			size="sm"
+		>
+			{!hideColumnLabel && label}
+
+			<span className="inline-item inline-item-after sorting-icons-wrapper">
+				<ClayIcon
+					className={classNames(
+						'sorting-icon',
+						sortingMatch?.direction === 'asc' && 'active'
+					)}
+					draggable
+					symbol="order-arrow-up"
+				/>
+
+				<ClayIcon
+					className={classNames(
+						'sorting-icon',
+						sortingMatch?.direction === 'desc' && 'active'
+					)}
+					draggable
+					symbol="order-arrow-down"
+				/>
+			</span>
+		</ClayButton>
+	);
+
 	return (
 		<Cell
 			className={classNames({
@@ -84,38 +126,7 @@ function TableHeadCell({
 			heading
 			resizable
 		>
-			{sortable ? (
-				<ClayButton
-					className="btn-sorting inline-item text-nowrap text-truncate-inline"
-					displayType="unstyled"
-					onClick={handleSortingCellClick}
-					small
-				>
-					{!hideColumnLabel && label}
-
-					<span className="inline-item inline-item-after sorting-icons-wrapper">
-						<ClayIcon
-							className={classNames(
-								'sorting-icon',
-								sortingMatch?.direction === 'asc' && 'active'
-							)}
-							draggable
-							symbol="order-arrow-up"
-						/>
-
-						<ClayIcon
-							className={classNames(
-								'sorting-icon',
-								sortingMatch?.direction === 'desc' && 'active'
-							)}
-							draggable
-							symbol="order-arrow-down"
-						/>
-					</span>
-				</ClayButton>
-			) : (
-				!hideColumnLabel && label
-			)}
+			{sortable ? content : !hideColumnLabel && label}
 		</Cell>
 	);
 }

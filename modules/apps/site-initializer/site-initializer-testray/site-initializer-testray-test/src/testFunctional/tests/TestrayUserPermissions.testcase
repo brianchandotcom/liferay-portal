@@ -26,6 +26,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -36,8 +38,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -46,8 +46,6 @@ definition {
 	@description = "Story ID: LPS-178274 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the user but can view"
 	@priority = 4
 	test AnalystRoleCanNotCreateEditAndDeleteUser {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -57,19 +55,13 @@ definition {
 		}
 
 		task ("When the user go to manage users") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Manage Users");
 		}
 
 		task ("Then can see the users in the table") {
-			AssertElementPresent(
-				key_projectName = "Test Test",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Analyst User",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Test Test,Analyst User");
 		}
 
 		task ("And can not see the add user button") {
@@ -77,13 +69,11 @@ definition {
 		}
 
 		task ("And when go to the users informations") {
-			Testray.goToProjectPage(projectName = "analyst@testray.com");
+			Testray.clickTableEntry(tableEntry = "analyst@testray.com");
 		}
 
 		task ("Then can not see the Delete user button") {
-			AssertElementNotPresent(
-				key_text = "Delete User",
-				locator1 = "Button#ANY");
+			Button.viewNotPresent(button = "Delete User");
 		}
 
 		task ("And can see the roles disabled") {
@@ -96,8 +86,6 @@ definition {
 	@description = "Story ID: LPS-178274 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create/edit/delete the user but can view"
 	@priority = 3
 	test LeadRoleCanNotCreateEditAndDeleteUser {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -107,19 +95,13 @@ definition {
 		}
 
 		task ("When the user go to manage users") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Manage Users");
 		}
 
 		task ("Then can see the users in the table") {
-			AssertElementPresent(
-				key_projectName = "Test Test",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Lead User",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Test Test,Lead User");
 		}
 
 		task ("And can not see the add user button") {
@@ -127,13 +109,11 @@ definition {
 		}
 
 		task ("And when go to the users informations") {
-			Testray.goToProjectPage(projectName = "lead@testray.com");
+			Testray.clickTableEntry(tableEntry = "lead@testray.com");
 		}
 
 		task ("Then can not see the Delete user button") {
-			AssertElementNotPresent(
-				key_text = "Delete User",
-				locator1 = "Button#ANY");
+			Button.viewNotPresent(button = "Delete User");
 		}
 
 		task ("And can see the roles disabled") {
@@ -146,8 +126,6 @@ definition {
 	@description = "Story ID: LPS-178274 | Test Summary: Verify that a new user with full admin permissions can create(with adm roles disabled)/edit and delete users"
 	@priority = 5
 	test NewUserWithAdmRoleCanCreateEditAndDeleteUser {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "administrator@testray.com",
@@ -157,15 +135,13 @@ definition {
 		}
 
 		task ("When the administrator add a user") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
-
-			Click(locator1 = "Button#PLUS");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Manage Users");
 
 			TestrayManageUser.addUser(
-				listRoles = "Testray User",
 				rePassword = "test",
+				rolePermissionList = "Testray User",
 				userEmailAddressEdit = "user@liferay.com",
 				userFirstNameEdit = "firstname",
 				userLastNameEdit = "Updateln",
@@ -174,13 +150,11 @@ definition {
 		}
 
 		task ("Then can see the user created in the list") {
-			AssertElementPresent(
-				key_projectName = "firstname Updateln",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "firstname Updateln");
 		}
 
 		task ("And can see the roles disabled") {
-			Testray.goToProjectPage(projectName = "user@liferay.com");
+			Testray.clickTableEntry(tableEntry = "user@liferay.com");
 
 			AssertElementPresent(
 				key_checkboxName = "Administrator",
@@ -188,25 +162,19 @@ definition {
 		}
 
 		task ("When delete the user") {
-			Button.clickNoError(button = "Delete User");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+			TestrayManageUser.deleteUser();
 		}
 
 		task ("Then can not see the user in the list") {
 			Refresh();
 
-			AssertElementNotPresent(
-				key_projectName = "firstname Updateln",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "firstname Updateln");
 		}
 	}
 
 	@description = "Story ID: LPS-178274 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the user but can view"
 	@priority = 4
 	test UserRoleCanNotCreateEditAndDeleteUser {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
@@ -216,19 +184,13 @@ definition {
 		}
 
 		task ("When the user go to manage users") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Manage Users");
 		}
 
 		task ("Then can see the users in the table") {
-			AssertElementPresent(
-				key_projectName = "Test Test",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "User User",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Test Test,User User");
 		}
 
 		task ("And can not see the add user button") {
@@ -236,13 +198,11 @@ definition {
 		}
 
 		task ("And when go to the users informations") {
-			Testray.goToProjectPage(projectName = "user@testray.com");
+			Testray.clickTableEntry(tableEntry = "user@testray.com");
 		}
 
 		task ("Then can not see the Delete user button") {
-			AssertElementNotPresent(
-				key_text = "Delete User",
-				locator1 = "Button#ANY");
+			Button.viewNotPresent(button = "Delete User");
 		}
 
 		task ("And can see the roles disabled") {

@@ -1,23 +1,14 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.journal.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetLinkLocalService;
+import com.liferay.asset.link.constants.AssetLinkConstants;
+import com.liferay.asset.link.service.AssetLinkLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -33,11 +24,16 @@ import com.liferay.journal.exception.FeedIdException;
 import com.liferay.journal.exception.FeedNameException;
 import com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException;
 import com.liferay.journal.model.JournalFeed;
+import com.liferay.journal.model.JournalFeedTable;
 import com.liferay.journal.service.base.JournalFeedLocalServiceBaseImpl;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -299,33 +295,29 @@ public class JournalFeedLocalServiceImpl
 		long companyId, long groupId, String keywords, int start, int end,
 		OrderByComparator<JournalFeed> orderByComparator) {
 
-		return journalFeedFinder.findByKeywords(
-			companyId, groupId, keywords, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<JournalFeed> search(
-		long companyId, long groupId, String feedId, String name,
-		String description, boolean andOperator, int start, int end,
-		OrderByComparator<JournalFeed> orderByComparator) {
-
-		return journalFeedFinder.findByC_G_F_N_D(
-			companyId, groupId, feedId, name, description, andOperator, start,
-			end, orderByComparator);
+		return journalFeedPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				JournalFeedTable.INSTANCE
+			).from(
+				JournalFeedTable.INSTANCE
+			).where(
+				_getWherePredicate(companyId, groupId, keywords)
+			).orderBy(
+				JournalFeedTable.INSTANCE, orderByComparator
+			).limit(
+				start, end
+			));
 	}
 
 	@Override
 	public int searchCount(long companyId, long groupId, String keywords) {
-		return journalFeedFinder.countByKeywords(companyId, groupId, keywords);
-	}
-
-	@Override
-	public int searchCount(
-		long companyId, long groupId, String feedId, String name,
-		String description, boolean andOperator) {
-
-		return journalFeedFinder.countByC_G_F_N_D(
-			companyId, groupId, feedId, name, description, andOperator);
+		return journalFeedPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				JournalFeedTable.INSTANCE
+			).where(
+				_getWherePredicate(companyId, groupId, keywords)
+			));
 	}
 
 	@Override
@@ -425,6 +417,49 @@ public class JournalFeedLocalServiceImpl
 		}
 
 		return feed;
+	}
+
+	private Predicate _getWherePredicate(
+		long companyId, long groupId, String keywords) {
+
+		return JournalFeedTable.INSTANCE.companyId.eq(
+			companyId
+		).and(
+			() -> {
+				if (groupId <= 0) {
+					return null;
+				}
+
+				return JournalFeedTable.INSTANCE.groupId.eq(groupId);
+			}
+		).and(
+			() -> {
+				if (Validator.isNull(keywords)) {
+					return null;
+				}
+
+				String[] keywordsArray = _customSQL.keywords(keywords, false);
+				String[] lowerCaseKeywordsArray = _customSQL.keywords(keywords);
+
+				return Predicate.withParentheses(
+					Predicate.withParentheses(
+						_customSQL.getKeywordsPredicate(
+							JournalFeedTable.INSTANCE.feedId, keywordsArray)
+					).or(
+						Predicate.withParentheses(
+							_customSQL.getKeywordsPredicate(
+								DSLFunctionFactoryUtil.lower(
+									JournalFeedTable.INSTANCE.name),
+								lowerCaseKeywordsArray))
+					).or(
+						Predicate.withParentheses(
+							_customSQL.getKeywordsPredicate(
+								DSLFunctionFactoryUtil.lower(
+									JournalFeedTable.INSTANCE.description),
+								lowerCaseKeywordsArray))
+					));
+			}
+		);
 	}
 
 	private boolean _isValidStructureOptionValue(
@@ -555,6 +590,9 @@ public class JournalFeedLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CustomSQL _customSQL;
 
 	@Reference
 	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;

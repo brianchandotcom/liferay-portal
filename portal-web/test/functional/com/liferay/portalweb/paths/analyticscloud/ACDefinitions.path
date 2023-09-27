@@ -61,12 +61,12 @@
 
 <tr>
 	<td>HIDE_EVENT_ICON</td>
-	<td>//*[text()='${key_nameList}']/ancestor::tr//td//*[contains(@class,'secondary-color')]</td>
+	<td>//*[text()='${key_nameList}']/ancestor::tr//td//*[contains(@class,'secondary')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HIDE_UNHIDE_EVENT_BUTTON</td>
-	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@alt,'${key_actionButton}')]</td>
+	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@title,'Set to ${key_actionButton}')]</td>
 	<td></td>
 </tr>
 </tbody>

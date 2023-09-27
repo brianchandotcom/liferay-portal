@@ -1,17 +1,9 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {throttle} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -21,7 +13,14 @@ import ViewsContext from '../../ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
 import Context from './TableContext';
 
-function Cell({children, className, columnName, heading, resizable}) {
+function Cell({
+	children,
+	className,
+	columnName,
+	defaultWidth = 'auto',
+	heading,
+	resizable,
+}) {
 	const {
 		draggingAllowed,
 		draggingColumnName,
@@ -86,14 +85,8 @@ function Cell({children, className, columnName, heading, resizable}) {
 		return columnDetails && isFixed && columnDetails.width;
 	}, [isFixed, modifiedFields, columnName]);
 
-	return (
-		<div
-			className={classNames(heading ? 'dnd-th' : 'dnd-td', className)}
-			ref={cellRef}
-			style={{
-				width,
-			}}
-		>
+	const content = (
+		<>
 			{children}
 
 			{resizable && (
@@ -105,6 +98,33 @@ function Cell({children, className, columnName, heading, resizable}) {
 					onMouseDown={initializeDrag}
 				/>
 			)}
+		</>
+	);
+
+	if (Liferay.FeatureFlags['LPS-193005']) {
+		return (
+			<ClayTable.Cell
+				className={className}
+				headingCell={heading}
+				ref={cellRef}
+				style={{
+					width: width ?? defaultWidth,
+				}}
+			>
+				{content}
+			</ClayTable.Cell>
+		);
+	}
+
+	return (
+		<div
+			className={classNames(heading ? 'dnd-th' : 'dnd-td', className)}
+			ref={cellRef}
+			style={{
+				width,
+			}}
+		>
+			{content}
 		</div>
 	);
 }

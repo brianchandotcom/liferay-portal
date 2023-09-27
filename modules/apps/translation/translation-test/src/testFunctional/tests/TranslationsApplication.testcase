@@ -434,7 +434,7 @@ definition {
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
-			modifiedDate = "Seconds Ago",
+			modifiedDate = "Second",
 			status = "Approved",
 			title = "Translation of WC WebContent Title to es-ES");
 	}

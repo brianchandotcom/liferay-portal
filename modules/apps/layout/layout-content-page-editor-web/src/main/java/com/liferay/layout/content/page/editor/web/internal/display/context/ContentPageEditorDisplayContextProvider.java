@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
@@ -28,6 +19,7 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.PageEdi
 import com.liferay.layout.content.page.editor.web.internal.util.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
+import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -98,8 +90,8 @@ public class ContentPageEditorDisplayContextProvider {
 				_frontendTokenDefinitionRegistry, _groupLocalService,
 				httpServletRequest, _infoItemServiceRegistry,
 				_infoSearchClassMapperRegistry, _itemSelector, _jsonFactory,
-				_language, _layoutLocalService, _layoutSetLocalService,
-				_layoutPageTemplateEntryLocalService,
+				_language, _layoutLocalService, _layoutLockManager,
+				_layoutSetLocalService, _layoutPageTemplateEntryLocalService,
 				_layoutPageTemplateEntryService,
 				_layoutPageTemplateStructureLocalService,
 				_layoutPageTemplateStructureRelLocalService, _layoutPermission,
@@ -136,7 +128,8 @@ public class ContentPageEditorDisplayContextProvider {
 			_frontendTokenDefinitionRegistry, httpServletRequest,
 			_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
 			_itemSelector, _jsonFactory, _language, _layoutLocalService,
-			_layoutSetLocalService, _layoutPageTemplateEntryLocalService,
+			_layoutLockManager, _layoutSetLocalService,
+			_layoutPageTemplateEntryLocalService,
 			_layoutPageTemplateEntryService, _layoutPermission,
 			_pageEditorConfiguration, pageIsDisplayPage, _portal,
 			portletRequest, _portletURLFactory, renderResponse,
@@ -210,6 +203,9 @@ public class ContentPageEditorDisplayContextProvider {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutLockManager _layoutLockManager;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

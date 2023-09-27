@@ -206,18 +206,18 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>VIEW_WIDGET_BUTTON</td>
-		<td>//span[text()='Show Widget']/preceding-sibling::span/input</td>
+		<td>VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE</td>
+		<td>//span[text()='Show Widget in Page Builder']/preceding-sibling::span/input</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENABLE_CATEGORIZATION_BUTTON</td>
-		<td>//span[text()='Enable Categorization']/preceding-sibling::span/input</td>
+		<td>//span[text()='Enable Categorization of Object entries']/preceding-sibling::span/input</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>ENABLE_ENTRY_HISTORY_BUTTON</td>
-		<td>//span[text()='Enable Entry History']/preceding-sibling::span/input</td>
+		<td>ENABLE_ENTRY_HISTORY_IN_AUDIT_FRAMEWORK_BUTTON</td>
+		<td>//span[text()='Enable Entry History in Audit Framework']/preceding-sibling::span/input</td>
 		<td></td>
 	</tr>
 	<tr>

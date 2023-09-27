@@ -37,6 +37,7 @@ definition {
 	test AutomateNumericFieldWithDecimalConfigurations {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -1094,7 +1095,7 @@ definition {
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 
@@ -1158,7 +1159,7 @@ definition {
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 

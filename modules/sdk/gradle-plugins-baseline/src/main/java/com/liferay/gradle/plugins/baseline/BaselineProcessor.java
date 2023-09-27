@@ -1,9 +1,6 @@
-/* @generated */
 /**
- * This class is mostly a copy of methods from
- * https://github.com/bndtools/bnd/blob/2.4.1.REL/biz.aQute.bndlib/src/aQute/bnd/build/ProjectBuilder.java
- * with small adaptations. As such it is licensed under the terms of it's
- * project.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.baseline;
@@ -32,6 +29,10 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.SortedSet;
 
+/**
+ * @generated
+ * @see https://github.com/bndtools/bnd/blob/2.4.1.REL/biz.aQute.bndlib/src/aQute/bnd/build/ProjectBuilder.java
+ */
 public class BaselineProcessor extends Analyzer {
 
 	/**

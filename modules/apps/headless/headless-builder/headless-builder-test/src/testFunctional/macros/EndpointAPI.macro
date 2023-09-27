@@ -1,0 +1,80 @@
+definition {
+
+	macro _curlAPIEndpoint {
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var api = "headless-builder/endpoints";
+
+		var curl = '''
+			${portalURL}/o/${api} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
+		''';
+
+		return ${curl};
+	}
+
+	macro createAPIEndpoint {
+		Variables.assertDefined(parameterList = "${apiApplicationId},${name},${path}");
+
+		var curl = EndpointAPI._curlAPIEndpoint(virtualHost = ${virtualHost});
+
+		if (!(isSet(httpMethod))) {
+			var httpMethod = "get";
+		}
+
+		var body = '''
+			"httpMethod": "${httpMethod}",
+			"name": "${name}",
+			"path": "${path}",
+			"r_apiApplicationToAPIEndpoints_c_apiApplicationId": ${apiApplicationId}
+		''';
+
+		if (isSet(requestSchemaId)) {
+			var body = StringUtil.add(${body}, ", \"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId\": ${requestSchemaId}", "");
+		}
+
+		if (isSet(responseSchemaId)) {
+			var body = StringUtil.add(${body}, ", \"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId\": ${responseSchemaId}", "");
+		}
+
+		var curl = StringUtil.add(${curl}, " -d { ${body} }", "");
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+	macro createNAPIEndpoints {
+		Variables.assertDefined(parameterList = "${apiApplicationId},${name},${numberOfEndpoints},${path}");
+
+		var i = 0;
+
+		while (${i} != ${numberOfEndpoints}) {
+			var i = ${i} + 1;
+
+			EndpointAPI.createAPIEndpoint(
+				apiApplicationId = ${apiApplicationId},
+				name = "${name}${i}",
+				path = "${path}${i}");
+		}
+	}
+
+	macro getAPIEndpoints {
+		var curl = EndpointAPI._curlAPIEndpoint();
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+}

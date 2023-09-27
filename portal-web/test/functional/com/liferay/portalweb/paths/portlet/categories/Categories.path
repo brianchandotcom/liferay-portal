@@ -81,7 +81,7 @@
 
 <tr>
 	<td>LOCKED_VOCABULARY</td>
-	<td>//a[contains(@class,'nav-link')][.//*[name()='svg'][contains(@class,'icon-lock')]]/span[normalize-space(text())='${key_vocabularyName}']</td>
+	<td>//a[contains(@class,'nav-link')][.//*[name()='svg'][contains(@class,'icon-lock')]][normalize-space(text())='${key_vocabularyName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -153,7 +153,7 @@
 </tr>
 <tr>
 	<td>VOCABULARY_ICON_INTERNAL_USE</td>
-	<td>//span[contains(text(), '${key_vocabularyName}')]/..//span[contains(@title, 'For Internal Use Only')]</td>
+	<td>//a[contains(text(), '${key_vocabularyName}')]//*[name()='svg'][contains(@class,'icon-low-vision')]</td>
 	<td></td>
 </tr>
 <tr>

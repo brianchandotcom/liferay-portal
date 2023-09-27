@@ -97,9 +97,12 @@ definition {
 
 	macro _allStructuredContent {
 		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByName(
-			groupName = "Guest",
-			site = "true");
+
+		if (!(isSet(siteId))) {
+			var siteId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Guest",
+				site = "true");
+		}
 
 		var curl = '''
 			${portalURL}/o/headless-admin-content/v1.0/sites/${siteId}/structured-contents \
@@ -497,9 +500,7 @@ definition {
 
 		var actualExternalReferenceCodeValue = JSONUtil.getWithJSONPath(${responseToParse}, "$..externalReferenceCode");
 
-		TestUtils.assertEquals(
-			actual = ${actualExternalReferenceCodeValue},
-			expected = ${expectedExternalReferenceCodeValue});
+		StringUtil.assertEquals(${expectedExternalReferenceCodeValue}, ${actualExternalReferenceCodeValue});
 	}
 
 	macro assertInFacetsWithCorrectValue {
@@ -507,42 +508,32 @@ definition {
 
 		var actualValue = JSONUtil.getWithJSONPath(${responseToParse}, "$.facets..facetValues[?(@.term=='${structuredContentId}' && @.numberOfOccurrences==${expectedValue})].numberOfOccurrences");
 
-		TestUtils.assertEquals(
-			actual = ${actualValue},
-			expected = ${expectedValue});
+		StringUtil.assertEquals(${expectedValue}, ${actualValue});
 	}
 
 	macro assertPriorityFieldWithCorrectValue {
 		var actualPriorityValue = JSONUtil.getWithJSONPath(${responseToParse}, "$..priority");
 
-		TestUtils.assertEquals(
-			actual = ${actualPriorityValue},
-			expected = ${expectedPriorityValue});
+		StringUtil.assertEquals(${expectedPriorityValue}, ${actualPriorityValue});
 	}
 
 	macro assertProperNumberOfItems {
 		var actualTotalElement = JSONUtil.getWithJSONPath(${responseToParse}, "$..['totalCount']");
 
-		TestUtils.assertEquals(
-			actual = ${actualTotalElement},
-			expected = ${expectedTotalElement});
+		StringUtil.assertEquals(${expectedTotalElement}, ${actualTotalElement});
 	}
 
 	macro assertStructuredContentIdIsFilteredWithCorrectValue {
 		var editStructuredContentId = JSONUtil.getWithJSONPath(${editStructuredContentId}, "$.['id']");
 		var filterStructuredContentId = JSONUtil.getWithJSONPath(${responseToParse}, "$..['items'][0].id");
 
-		TestUtils.assertEquals(
-			actual = ${filterStructuredContentId},
-			expected = ${editStructuredContentId});
+		StringUtil.assertEquals(${editStructuredContentId}, ${filterStructuredContentId});
 	}
 
 	macro assertTitleFieldWithCorrectName {
 		var actualTitleName = JSONUtil.getWithJSONPath(${responseToParse}, "$..title");
 
-		TestUtils.assertEquals(
-			actual = ${actualTitleName},
-			expected = ${expectedTitleName});
+		StringUtil.assertEquals(${expectedTitleName}, ${actualTitleName});
 	}
 
 	macro createStructuredContent {
@@ -657,7 +648,11 @@ definition {
 	macro getStructuredContentIdByTitle {
 		Variables.assertDefined(parameterList = ${title});
 
-		var response = HeadlessWebcontentAPI._allStructuredContent();
+		if (isSet(groupName)) {
+			var siteId = JSONGroupSetter.setGroupId(groupName = ${groupName});
+		}
+
+		var response = HeadlessWebcontentAPI._allStructuredContent(siteId = ${siteId});
 
 		var structuredContentId = JSONUtil.getWithJSONPath(${response}, "$..['items'][?(@.title == '${title}')].id");
 

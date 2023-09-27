@@ -1,0 +1,151 @@
+@component-name = "portal-liferay-online"
+definition {
+
+	property osgi.modules.includes = "site-initializer-liferay-marketplace";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property test.liferay.virtual.instance = "true";
+	property testray.main.component.name = "Site Initializer Liferay Marketplace";
+
+	var testSiteName = "Marketplace Site";
+	var testSiteURL = "marketplace-site";
+
+	setUp {
+		task ("Set up instance and create a new Marketplace Site") {
+			MP2Configuration.marketplaceSetUp();
+		}
+
+		task ("Create a New Account and assign a user") {
+			JSONMP2.updateAccount();
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "QA Development",
+				userEmailAddress = "da@administrator.com");
+		}
+
+		task ("Login with the created user and go to Marketplace") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "da@administrator.com",
+				userLoginFullName = "Dashboard Administrator");
+
+			MP2Navigator.gotoMP2();
+		}
+	}
+
+	tearDown {
+		MP2Configuration.marketplaceInitializersTearDown(doLogout = "true");
+	}
+
+	@description = "LPS-174844 | Verify that after inviting a member, as a Customer, the admin is taken back to the members section of the Dashboard."
+	@priority = 5
+	test AssertCustomerIsTakenBackDashboard {
+		task ("Given that the user goes to the Customer Dashboard page") {
+			MP2Navigator.openSitePage(pageName = "Customer Dashboard");
+		}
+
+		task ("When the admin user invites a new member") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Development");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "Account Administrator",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("Then after inviting a member, as a Customer, the admin is taken back to the members section of the Dashboard.") {
+			AssertElementPresent(
+				key_header = "Members",
+				locator1 = "MP2Dashboards#HEADER");
+		}
+	}
+
+	@description = "LPS-174844 | After inviting a member, the Administrator is able to see the new member listed in the user list, greyed out and with an “Invited” tag."
+	@priority = 3
+	test AssertNewMemberListedAndGreyedOut {
+		task ("Given that the user goes to the Customer Dashboard page") {
+			MP2Navigator.openSitePage(pageName = "Customer Dashboard");
+		}
+
+		task ("When the user invites a new member") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Development");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "Account Administrator",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("Then the admin user should be able to see the new member listed in the user list, greyed out and with an “Invited” tag.") {
+			AssertElementPresent(
+				key_name = "Test QA",
+				locator1 = "MP2Dashboards#INVITED_MEMBER");
+		}
+	}
+
+	@description = "LPS-174844 | When the user have an Account Buyer role, it should not be able to invite new members."
+	@priority = 5
+	test CannotInviteNewMembers {
+		task ("Given that the user goes to the Customer Dashboard page") {
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "QA Development",
+				userEmailAddress = "cab@buyer.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cab@buyer.com",
+				userLoginFullName = "Customer Account Buyer");
+
+			MP2Navigator.openSitePage(pageName = "Customer Dashboard");
+		}
+
+		task ("When the user tries to invite a new member") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Development");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+		}
+
+		task ("Then the user has an Account Buyer role, it should not be able to invite new members.") {
+			MP2Dashboards.viewNewMemberButtonNotPresent();
+		}
+	}
+
+	@description = "LPS-174844 | As a customer, after inviting a member, verify if when clicking on the invited member, listed on 'members', the admin is able to see its details."
+	@priority = 3
+	test CanSeeMemberDetails {
+		task ("Given that the user goes to the Customer Dashboard page") {
+			MP2Navigator.openSitePage(pageName = "Customer Dashboard");
+		}
+
+		task ("When the admin user invites a new member") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Development");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "Account Administrator",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("Then after inviting a member, verify if when clicking on the invited member, listed on 'members', the admin is able to see its details.") {
+			var cardDetailsList = "Profile,Roles,Account";
+
+			MP2Dashboards.clickOnTheInvitedUser(
+				label = "Role",
+				value = "Invited Member");
+
+			MP2Utils.assertDetailsUser(detailsList = ${cardDetailsList});
+		}
+	}
+
+}

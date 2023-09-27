@@ -96,7 +96,7 @@ definition {
 			var portalURL = ${specificURL};
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = JSONCompany.getDefaultPortalURL();
 		}
 
 		if (!(isSet(creatorEmailAddress))) {

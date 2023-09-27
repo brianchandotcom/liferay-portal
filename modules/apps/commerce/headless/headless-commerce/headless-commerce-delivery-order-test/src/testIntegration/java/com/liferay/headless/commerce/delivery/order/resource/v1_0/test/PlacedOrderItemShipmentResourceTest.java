@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.delivery.order.resource.v1_0.test;
@@ -128,8 +119,9 @@ public class PlacedOrderItemShipmentResourceTest
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				_user.getUserId(), _commerceOrder.getCommerceOrderId(),
 				_cpInstance.getCPInstanceId(), null,
-				RandomTestUtil.randomInt(1, 10), 0,
-				RandomTestUtil.randomInt(1, 10), StringPool.BLANK,
+				BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)), 0,
+				BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)),
+				StringPool.BLANK,
 				new TestCommerceContext(
 					_accountEntry, _commerceCurrency, _commerceChannel, _user,
 					testGroup, _commerceOrder),
@@ -172,7 +164,7 @@ public class PlacedOrderItemShipmentResourceTest
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
 				orderId = _commerceOrder.getCommerceOrderId();
-				quantity = RandomTestUtil.randomInt(1, 10);
+				quantity = BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10));
 				shippingAddressId = localShippingAddress.getAddressId();
 				shippingMethodId = RandomTestUtil.randomLong();
 				shippingOptionName = StringUtil.toLowerCase(
@@ -229,7 +221,8 @@ public class PlacedOrderItemShipmentResourceTest
 				RandomTestUtil.randomString(),
 				commerceShipment.getCommerceShipmentId(),
 				_commerceOrderItem.getCommerceOrderItemId(), 0,
-				placedOrderItemShipment.getQuantity(), false, _serviceContext);
+				placedOrderItemShipment.getQuantity(), null, false,
+				_serviceContext);
 
 		_commerceShipmentItems.add(commerceShipmentItem);
 

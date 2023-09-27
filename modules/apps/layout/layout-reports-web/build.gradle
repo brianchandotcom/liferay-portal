@@ -9,6 +9,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:blogs:blogs-api")
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
+	compileOnly project(":apps:fragment:fragment-api")
 	compileOnly project(":apps:frontend-js:frontend-js-loader-modules-extender-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
@@ -17,9 +18,13 @@ dependencies {
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:layout:layout-admin-api")
+	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-seo-api")
+	compileOnly project(":apps:layout:layout-taglib")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-template:portal-template-react-renderer-api")
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")
+	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-function")
@@ -27,5 +32,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 }

@@ -1,0 +1,42 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionService;
+
+/**
+ * @author Michael Cavalcanti
+ */
+public class UpgradeJavaFetchCPDefinitionByCProductExternalReferenceCodeCheck {
+
+	public ProductVirtualSettings
+		getProductByExternalReferenceCodeProductVirtualSettings(
+			String externalReferenceCode) {
+
+		CPDefinition cpDefinition1 =
+			_cpDefinitionService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
+
+		CPDefinition cpDefinition2 =
+			_cpDefinitionLocalService.
+				fetchCPDefinitionByCProductExternalReferenceCode(1L, "test");
+
+		CPDefinition cpDefinition3 =
+			_cpDefinitionService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+                    externalReferenceCode, contextCompany.getCompanyId());
+
+		return _toProductVirtualSettings(cpDefinition1.getCPDefinitionId());
+	}
+
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	private CPDefinitionService _cpDefinitionService;
+
+}

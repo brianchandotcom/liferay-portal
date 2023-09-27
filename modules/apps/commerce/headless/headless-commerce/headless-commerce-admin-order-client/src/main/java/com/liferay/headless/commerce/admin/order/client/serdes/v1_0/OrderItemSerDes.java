@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.order.client.serdes.v1_0;
@@ -518,6 +509,20 @@ public class OrderItemSerDes {
 			sb.append("\"");
 		}
 
+		if (orderItem.getUnitOfMeasureKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(orderItem.getUnitOfMeasureKey()));
+
+			sb.append("\"");
+		}
+
 		if (orderItem.getUnitPrice() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -921,6 +926,15 @@ public class OrderItemSerDes {
 				"unitOfMeasure", String.valueOf(orderItem.getUnitOfMeasure()));
 		}
 
+		if (orderItem.getUnitOfMeasureKey() == null) {
+			map.put("unitOfMeasureKey", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureKey",
+				String.valueOf(orderItem.getUnitOfMeasureKey()));
+		}
+
 		if (orderItem.getUnitPrice() == null) {
 			map.put("unitPrice", null);
 		}
@@ -1178,7 +1192,7 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "replacedSku")) {
@@ -1203,7 +1217,7 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "shippedQuantity")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setShippedQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingAddress")) {
@@ -1246,6 +1260,11 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "unitOfMeasure")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setUnitOfMeasure((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
+				if (jsonParserFieldValue != null) {
+					orderItem.setUnitOfMeasureKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "unitPrice")) {

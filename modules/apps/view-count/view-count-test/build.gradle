@@ -1,8 +1,8 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay", name: "org.hibernate.core", version: "5.6.7.LIFERAY-PATCHED-1"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testIntegrationCompile group: "org.springframework", name: "spring-tx", version: "5.2.24.RELEASE"
-	testIntegrationCompile project(":apps:view-count:view-count-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay", name: "org.hibernate.core", version: "5.6.7.LIFERAY-PATCHED-1"
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationImplementation group: "org.springframework", name: "spring-tx", version: "5.2.24.RELEASE"
+	testIntegrationImplementation project(":apps:view-count:view-count-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

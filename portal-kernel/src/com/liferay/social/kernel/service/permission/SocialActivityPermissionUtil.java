@@ -1,20 +1,14 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.social.kernel.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
@@ -26,26 +20,30 @@ public class SocialActivityPermissionUtil {
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
-		_socialActivityPermission.check(permissionChecker, groupId, actionId);
+		if (!contains(permissionChecker, groupId, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, _getPortletId(), groupId, actionId);
+		}
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return _socialActivityPermission.contains(
-			permissionChecker, groupId, actionId);
+		if (permissionChecker.isGroupAdmin(groupId) ||
+			permissionChecker.isGroupOwner(groupId) ||
+			permissionChecker.hasPermission(
+				groupId, _getPortletId(), _getPortletId(), actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
-	public static SocialActivityPermission getSocialActivityPermission() {
-		return _socialActivityPermission;
+	private static String _getPortletId() {
+		return PortletProviderUtil.getPortletId(
+			SocialActivityPermissionUtil.class.getName(),
+			PortletProvider.Action.EDIT);
 	}
-
-	public void setSocialActivityPermission(
-		SocialActivityPermission socialActivityPermission) {
-
-		_socialActivityPermission = socialActivityPermission;
-	}
-
-	private static SocialActivityPermission _socialActivityPermission;
 
 }

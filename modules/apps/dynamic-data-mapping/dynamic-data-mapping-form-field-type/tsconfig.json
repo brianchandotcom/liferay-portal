@@ -1,5 +1,5 @@
 {
-	"@generated": "a515cf31f55adad44dde2772ec5079c3b96d2d76",
+	"@generated": "7f124875bf0d964ac74e57d3b0fd6986b4daa703",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -13,6 +13,12 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
+			"@liferay/frontend-js-react-web": [
+				"../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/object-js-components-web": [
+				"../../object/object-js-components-web/src/main/resources/META-INF/resources/index.ts"
+			],
 			"data-engine-js-components-web": [
 				"../../data-engine/data-engine-js-components-web/src/main/resources/META-INF/resources/js/index.d.ts"
 			],
@@ -38,6 +44,12 @@
 		"../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../frontend-js/frontend-js-react-web"
+		},
+		{
+			"path": "../../object/object-js-components-web"
+		},
 		{
 			"path": "../../data-engine/data-engine-js-components-web"
 		},

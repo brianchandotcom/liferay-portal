@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.segments.service;
@@ -133,6 +124,10 @@ public interface SegmentsExperimentLocalService
 			long segmentsExperimentId)
 		throws PortalException;
 
+	public SegmentsExperiment deleteSegmentsExperiment(
+			long groupId, long segmentsExperienceId, long plid)
+		throws PortalException;
+
 	/**
 	 * Deletes the segments experiment from the database. Also notifies the appropriate model listeners.
 	 *
@@ -153,9 +148,6 @@ public interface SegmentsExperimentLocalService
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SegmentsExperiment deleteSegmentsExperiment(
 			SegmentsExperiment segmentsExperiment, boolean force)
-		throws PortalException;
-
-	public void deleteSegmentsExperiments(long segmentsExperienceId, long plid)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -236,7 +228,7 @@ public interface SegmentsExperimentLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(
-		long segmentsExperienceId, long plid, int[] statuses);
+		long groupId, long segmentsExperienceId, long plid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(
@@ -282,15 +274,6 @@ public interface SegmentsExperimentLocalService
 	public List<SegmentsExperiment> getSegmentsEntrySegmentsExperiments(
 		long segmentsEntryId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
-		long segmentsExperienceId, long plid);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
-		long[] segmentsExperienceIds, long plid, int[] statuses, int start,
-		int end);
-
 	/**
 	 * Returns the segments experiment with the primary key.
 	 *
@@ -334,15 +317,6 @@ public interface SegmentsExperimentLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperiment> getSegmentsExperiments(int start, int end);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperiment> getSegmentsExperiments(
-		long groupId, long plid);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperiment> getSegmentsExperiments(
-		long segmentsExperienceId, long plid, int[] statuses,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
-
 	/**
 	 * Returns all the segments experiments matching the UUID and company.
 	 *
@@ -376,10 +350,6 @@ public interface SegmentsExperimentLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsExperimentsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasSegmentsExperiment(
-		long segmentsExperienceId, long plid, int[] statuses);
 
 	public SegmentsExperiment runSegmentsExperiment(
 			long segmentsExperimentId, double confidenceLevel,

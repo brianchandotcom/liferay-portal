@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.adaptive.media.document.library.internal.document.library.exportimport.data.handler;
@@ -22,9 +13,9 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper
 import com.liferay.adaptive.media.image.finder.AMImageFinder;
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.image.util.AMImageSerializer;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.document.library.constants.DLPortletDataHandlerConstants;
 import com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -115,20 +106,22 @@ public class AMImageDLPluggableContentDataHandler
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					fileVersion
 				).done());
 
-		for (AdaptiveMedia<AMImageProcessor> adaptiveMedia : adaptiveMedias) {
+		for (AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia :
+				adaptiveMedias) {
+
 			_exportMedia(portletDataContext, fileEntry, adaptiveMedia);
 		}
 	}
 
 	private void _exportMedia(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
-			AdaptiveMedia<AMImageProcessor> adaptiveMedia)
+			AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia)
 		throws Exception {
 
 		String configurationUuid = adaptiveMedia.getValue(
@@ -162,7 +155,7 @@ public class AMImageDLPluggableContentDataHandler
 			basePath + ".json", _amImageSerializer.serialize(adaptiveMedia));
 	}
 
-	private List<AdaptiveMedia<AMImageProcessor>> _getAdaptiveMedias(
+	private List<AdaptiveMedia<AMProcessor<FileVersion>>> _getAdaptiveMedias(
 		FileEntry fileEntry,
 		AMImageConfigurationEntry amImageConfigurationEntry) {
 
@@ -201,7 +194,7 @@ public class AMImageDLPluggableContentDataHandler
 			"adaptive-media/%s.cf", amImageConfigurationEntry.getUUID());
 	}
 
-	private AdaptiveMedia<AMImageProcessor> _getExportedMedia(
+	private AdaptiveMedia<AMProcessor<FileVersion>> _getExportedMedia(
 		PortletDataContext portletDataContext, FileEntry fileEntry,
 		AMImageConfigurationEntry amImageConfigurationEntry) {
 
@@ -222,14 +215,15 @@ public class AMImageDLPluggableContentDataHandler
 					basePath + ".bin"));
 		}
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			_getAdaptiveMedias(fileEntry, amImageConfigurationEntry);
 
 		if (adaptiveMedias.isEmpty()) {
 			return null;
 		}
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
+			adaptiveMedias.get(0);
 
 		return _amImageSerializer.deserialize(
 			serializedAdaptiveMedia, adaptiveMedia::getInputStream);
@@ -257,8 +251,9 @@ public class AMImageDLPluggableContentDataHandler
 			return;
 		}
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = _getExportedMedia(
-			portletDataContext, fileEntry, amImageConfigurationEntry);
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
+			_getExportedMedia(
+				portletDataContext, fileEntry, amImageConfigurationEntry);
 
 		if (adaptiveMedia == null) {
 			return;

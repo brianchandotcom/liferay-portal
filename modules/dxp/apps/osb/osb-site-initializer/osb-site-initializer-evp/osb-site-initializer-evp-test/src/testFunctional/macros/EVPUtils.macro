@@ -8,6 +8,29 @@ definition {
 			siteTemplateName = "EVP");
 	}
 
+	macro addLiferayManagerUserRole {
+		for (var userScreenName : list "manager,finance") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.assignRegularRoleCP(
+				roleTitle = "Liferay Manager",
+				userScreenName = ${userScreenName});
+		}
+	}
+
+	macro addUserPhoneNumber {
+		Type(
+			locator1 = "TextInput#NUMBER",
+			value1 = ${key_number});
+
+		AssertElementPresent(
+			key_message = ${assertNumber},
+			locator1 = "TextInput#NUMBER");
+	}
+
 	macro assertCardsTitle {
 		for (var cardTitle : list ${listcardTitle}) {
 			AssertElementPresent(
@@ -22,6 +45,12 @@ definition {
 				key_columns = ${columnsPage},
 				locator1 = "EVPUtils#REQUEST_COLUMNS");
 		}
+	}
+
+	macro assertContactInformation {
+		AssertElementPresent(
+			key_message = ${inforMessage},
+			locator1 = "EVPUtils#VALIDATE_SECONDARY_TEXT");
 	}
 
 	macro assertDataOnEVPValue {
@@ -57,6 +86,12 @@ definition {
 				key_title = ${headerTitle},
 				locator1 = "Header#H4_TITLE");
 		}
+	}
+
+	macro assertNotAllowed {
+		AssertElementPresent(
+			field_disabled = ${notAllowed},
+			locator1 = "EVPUtils#NOT_ALLOWED");
 	}
 
 	macro assertTitlePage {
@@ -180,6 +215,29 @@ definition {
 		Button.click(button = "Generate");
 	}
 
+	macro gotoContactInformation {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test ");
+
+		ApplicationsMenu.gotoPortlet(
+			category = ${category},
+			panel = ${panel},
+			portlet = ${portlet});
+
+		Click(
+			key_roleTitle = ${enterUser},
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_ROLE_NAME");
+
+		Click(
+			key_navItem = ${contactUser},
+			locator1 = "PRMNavigation#NAV_LINK");
+
+		Click(
+			key_navItem = ${inforUser},
+			locator1 = "PRMNavigation#NAV_LINK");
+	}
+
 	macro gotoEVP {
 		Navigator.openSiteURL(siteName = "EVP Portal");
 
@@ -201,6 +259,24 @@ definition {
 			key_fieldLabel = ${endDateLabel},
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = ${nextDayDate});
+	}
+
+	macro managerApproval {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "manager@liferay.com",
+			userLoginFullName = "Manager User");
+
+		EVPUtils.gotoEVP();
+
+		EVPNavigator.goToNavItem(navItem = ${listingPage});
+
+		EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+
+		MenuItem.click(menuItem = "Review");
+
+		EVPUtils.changeStatus(
+			button = "Approve",
+			typeMessage = "Your organization has been approved!");
 	}
 
 	macro viewNotPresentStatus {

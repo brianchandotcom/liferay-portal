@@ -1,19 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.poshi.core.selenium;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,7 +20,8 @@ public interface LiferaySelenium {
 
 	public void antCommand(String fileName, String target) throws Exception;
 
-	public void assertAccessible() throws Exception;
+	public void assertAccessible(List<String> ignorableImpacts)
+		throws Exception;
 
 	public void assertAlert(String pattern) throws Exception;
 
@@ -62,7 +55,9 @@ public interface LiferaySelenium {
 
 	public void assertEditable(String locator) throws Exception;
 
-	public void assertElementAccessible(String locator) throws Exception;
+	public void assertElementAccessible(
+			String locator, List<String> ignorableImpacts)
+		throws Exception;
 
 	public void assertElementFocused(String locator) throws Exception;
 
@@ -158,6 +153,9 @@ public interface LiferaySelenium {
 	public void assertTextPresent(String pattern) throws Exception;
 
 	public void assertValue(String locator, String pattern) throws Exception;
+
+	public void assertValueMatches(String locator, String regex)
+		throws Exception;
 
 	public void assertVisible(String locator) throws Exception;
 

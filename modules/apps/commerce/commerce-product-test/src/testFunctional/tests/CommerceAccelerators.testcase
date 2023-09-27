@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Shopping Experience";
@@ -763,6 +763,7 @@ definition {
 			singleShippingOption = "true");
 	}
 
+	@priority = 4
 	test DeactivateCommerceAccount {
 		property portal.acceptance = "false";
 		property portal.release = "quarantine";
@@ -1092,6 +1093,7 @@ definition {
 		CommerceEntry.viewSpecificationGroupsEntries(specificationGroupsEntries = "Quantity,Fit,Material,Dimensions,Warranty");
 	}
 
+	@priority = 3
 	test MiniumSiteFullFlow {
 		property portal.acceptance = "false";
 		property portal.release = "quarantine";
@@ -1190,7 +1192,7 @@ definition {
 			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -1200,7 +1202,7 @@ definition {
 			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -1213,7 +1215,7 @@ definition {
 		CommerceOrders.viewOrdersEntry(
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 
@@ -1230,7 +1232,7 @@ definition {
 			paymentMethod = "Money Order",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
@@ -1333,7 +1335,7 @@ definition {
 			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -1343,7 +1345,7 @@ definition {
 			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -1356,7 +1358,7 @@ definition {
 		CommerceOrders.viewOrdersEntry(
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 
@@ -1373,7 +1375,7 @@ definition {
 			paymentMethod = "Money Order",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
@@ -1402,6 +1404,10 @@ definition {
 		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
 
 		Refresh();
+
+		Site.openSiteSettingsAdmin(siteURLKey = "speedwell");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1493,7 +1499,7 @@ definition {
 		CommerceOrders.viewOrdersEntry(
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "SPEED93015",
 			productTotalPrice = "100.00");
 
@@ -1510,7 +1516,7 @@ definition {
 			paymentMethod = "Money Order",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "SPEED93015",
 			productTotalPrice = "100.00");
 	}

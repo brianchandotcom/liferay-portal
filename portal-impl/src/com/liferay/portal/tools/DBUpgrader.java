@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.tools;
@@ -19,6 +10,7 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
+import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -55,9 +47,6 @@ import com.liferay.portal.verify.VerifyProperties;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.Collection;
 
@@ -74,17 +63,19 @@ import org.osgi.framework.ServiceReference;
 public class DBUpgrader {
 
 	public static void checkReleaseState() throws Exception {
-		if (_getReleaseColumnValue("state_") == ReleaseConstants.STATE_GOOD) {
-			return;
-		}
+		try (Connection connection = DataAccess.getConnection()) {
+			if (PortalUpgradeProcess.getCurrentState(connection) ==
+					ReleaseConstants.STATE_GOOD) {
 
-		if (StartupHelperUtil.isUpgrading()) {
-			try (Connection connection = DataAccess.getConnection()) {
-				if (PortalUpgradeProcess.supportsRetry(connection)) {
-					System.out.println("Retrying upgrade");
+				return;
+			}
 
-					return;
-				}
+			if (StartupHelperUtil.isUpgrading() &&
+				PortalUpgradeProcess.supportsRetry(connection)) {
+
+				System.out.println("Retrying upgrade");
+
+				return;
 			}
 		}
 
@@ -100,7 +91,7 @@ public class DBUpgrader {
 	public static void checkRequiredBuildNumber(int requiredBuildNumber)
 		throws Exception {
 
-		int buildNumber = _getReleaseColumnValue("buildNumber");
+		int buildNumber = _getBuildNumber();
 
 		if (buildNumber > ReleaseInfo.getParentBuildNumber()) {
 			throw new IllegalStateException(
@@ -163,7 +154,7 @@ public class DBUpgrader {
 
 			InitUtil.registerContext();
 
-			upgradeModules();
+			upgradeModules(false);
 
 			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
@@ -226,10 +217,12 @@ public class DBUpgrader {
 		}
 	}
 
-	public static void upgradeModules() {
+	public static void upgradeModules(boolean autoUpgrade) {
 		_registerModuleServiceLifecycle("portal.initialized");
 
-		DependencyManagerSyncUtil.sync();
+		if (!autoUpgrade) {
+			DependencyManagerSyncUtil.sync();
+		}
 
 		PortalCacheHelperUtil.clearPortalCaches(
 			PortalCacheManagerNames.MULTI_VM);
@@ -255,7 +248,7 @@ public class DBUpgrader {
 
 			checkReleaseState();
 
-			int buildNumber = _getReleaseColumnValue("buildNumber");
+			int buildNumber = _getBuildNumber();
 
 			try (Connection connection = DataAccess.getConnection()) {
 				if (PortalUpgradeProcess.isInLatestSchemaVersion(connection) &&
@@ -287,10 +280,16 @@ public class DBUpgrader {
 
 				StartupHelperUtil.upgradeProcess(buildNumber);
 
-				_updateReleaseState(ReleaseConstants.STATE_GOOD);
+				try (Connection connection = DataAccess.getConnection()) {
+					PortalUpgradeProcess.updateState(
+						connection, ReleaseConstants.STATE_GOOD);
+				}
 			}
 			catch (Exception exception) {
-				_updateReleaseState(ReleaseConstants.STATE_UPGRADE_FAILURE);
+				try (Connection connection = DataAccess.getConnection()) {
+					PortalUpgradeProcess.updateState(
+						connection, ReleaseConstants.STATE_UPGRADE_FAILURE);
+				}
 
 				throw exception;
 			}
@@ -302,7 +301,9 @@ public class DBUpgrader {
 
 			IndexUpdaterUtil.updatePortalIndexes();
 
-			_updateReleaseBuildInfo();
+			try (Connection connection = DataAccess.getConnection()) {
+				PortalUpgradeProcess.updateBuildInfo(connection);
+			}
 
 			CustomSQLUtil.reloadCustomSQL();
 			SQLTransformer.reloadSQLTransformer();
@@ -340,13 +341,27 @@ public class DBUpgrader {
 			_log.debug("Check class names");
 		}
 
-		ClassNameLocalServiceUtil.checkClassNames();
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					ClassNameLocalServiceUtil.checkClassNames();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Check resource actions");
+					if (_log.isDebugEnabled()) {
+						_log.debug("Check resource actions");
+					}
+
+					StartupHelperUtil.initResourceActions();
+				});
 		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
 
-		StartupHelperUtil.initResourceActions();
+	private static int _getBuildNumber() throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			return PortalUpgradeProcess.getCurrentBuildNumber(connection);
+		}
 	}
 
 	private static int _getBuildNumberForMissedUpgradeProcesses(int buildNumber)
@@ -364,28 +379,6 @@ public class DBUpgrader {
 		}
 
 		return buildNumber;
-	}
-
-	private static int _getReleaseColumnValue(String columnName)
-		throws Exception {
-
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select " + columnName +
-					" from Release_ where releaseId = ?")) {
-
-			preparedStatement.setLong(1, ReleaseConstants.DEFAULT_ID);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getInt(columnName);
-				}
-			}
-
-			throw new IllegalArgumentException(
-				"No Release exists with the primary key " +
-					ReleaseConstants.DEFAULT_ID);
-		}
 	}
 
 	private static void _initUpgradeStopwatch() {
@@ -416,38 +409,6 @@ public class DBUpgrader {
 		DB db = DBManagerUtil.getDB();
 
 		db.runSQL("update CompanyInfo set key_ = null");
-	}
-
-	private static void _updateReleaseBuildInfo() throws Exception {
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Release_ set buildNumber = ?, buildDate = ? where " +
-					"releaseId = ?")) {
-
-			preparedStatement.setInt(1, ReleaseInfo.getParentBuildNumber());
-
-			java.util.Date buildDate = ReleaseInfo.getBuildDate();
-
-			preparedStatement.setDate(2, new Date(buildDate.getTime()));
-
-			preparedStatement.setLong(3, ReleaseConstants.DEFAULT_ID);
-
-			preparedStatement.executeUpdate();
-		}
-	}
-
-	private static void _updateReleaseState(int state) throws Exception {
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Release_ set modifiedDate = ?, state_ = ? where " +
-					"releaseId = ?")) {
-
-			preparedStatement.setDate(1, new Date(System.currentTimeMillis()));
-			preparedStatement.setInt(2, state);
-			preparedStatement.setLong(3, ReleaseConstants.DEFAULT_ID);
-
-			preparedStatement.executeUpdate();
-		}
 	}
 
 	private static final boolean _UPGRADE_DATABASE_AUTO_RUN;

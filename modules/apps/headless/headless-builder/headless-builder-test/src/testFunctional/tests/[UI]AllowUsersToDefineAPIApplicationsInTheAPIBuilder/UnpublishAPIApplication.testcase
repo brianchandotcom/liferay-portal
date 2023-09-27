@@ -1,0 +1,158 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+
+		task ("Given publish an API application") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "published",
+				title = "App-test");
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanGetUnpublishedStatusInResponse {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I unpublish it with Change Publication Status") {
+			APIBuilderUI.changePublicationStatus(
+				key_title = "App-test",
+				unpublish = "true");
+		}
+
+		task ("When with getAPIApplicationsPage to retrieve the api application") {
+			var response = ApplicationAPI.getAPIApplications();
+		}
+
+		task ("Then I can get the unpublished status in response") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items..applicationStatus.name");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "unpublished");
+		}
+	}
+
+	@priority = 4
+	test CanPromptUnpublishAPIApplicationDialog {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I click Change Publication Status") {
+			APIBuilderUI.changePublicationStatus(key_title = "App-test");
+		}
+
+		task ("Then the unpublish warning dialog is present") {
+			AssertElementPresent(locator1 = "APIBuilder#UNPUBLISH_API_APPLICATION_WARNING_DIALOG_TITLE");
+		}
+	}
+
+	@priority = 3
+	test CanShowAvailableButtonsAfterUnpublish {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I unpublish the API application") {
+			APIBuilderUI.changePublicationStatus(
+				key_title = "App-test",
+				unpublish = "true");
+		}
+
+		task ("When I edit the API application") {
+			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
+		}
+
+		task ("Then I can see Cancel, Save and Publish buttons are present") {
+			AssertElementPresent(locator1 = "Button#CANCEL");
+
+			AssertElementPresent(locator1 = "Button#SAVE");
+
+			AssertElementPresent(locator1 = "APIBuilder#PUBLISH_BUTTON");
+		}
+	}
+
+	@priority = 4
+	test CanUnpublishThroughAPI {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When with patchAPIApplication and aPIApplicationId to unpublish the API") {
+			var responseFromGet = ApplicationAPI.getAPIApplications();
+
+			var aPIApplicationId = JSONPathUtil.getProperty(
+				property = "$.items[0].id",
+				response = ${responseFromGet});
+
+			var response = ApplicationAPI.updateAPIApplication(
+				aPIApplicationId = ${aPIApplicationId},
+				parameter = "applicationStatus",
+				parameterValue = "unpublished");
+		}
+
+		task ("Then the status is updated to unpublished in the response") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$..applicationStatus.name");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "unpublished");
+		}
+
+		task ("And Then I can see unpublished status in API Builder") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+
+			AssertElementPresent(
+				key_status = "Unpublished",
+				key_title = "App-test",
+				locator1 = "APIBuilder#APPLICATION_STATUS");
+		}
+	}
+
+	@priority = 4
+	test CanUpdatedToUnpublishedStatus {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I unpublish it with Change Publication Status") {
+			APIBuilderUI.changePublicationStatus(
+				key_title = "App-test",
+				unpublish = "true");
+		}
+
+		task ("Then the application status is updated to unpublished") {
+			AssertElementPresent(
+				key_status = "Unpublished",
+				key_title = "App-test",
+				locator1 = "APIBuilder#APPLICATION_STATUS");
+		}
+	}
+
+}

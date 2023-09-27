@@ -1,5 +1,3 @@
-apply plugin: "nebula.optional-base"
-
 task jarManifest
 task jarPatched(type: Zip)
 

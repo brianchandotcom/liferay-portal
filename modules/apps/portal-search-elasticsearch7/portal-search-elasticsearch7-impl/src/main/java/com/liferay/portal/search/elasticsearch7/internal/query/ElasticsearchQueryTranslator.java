@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.elasticsearch7.internal.query;
@@ -76,185 +67,235 @@ public class ElasticsearchQueryTranslator
 			queryBuilder = QueryBuilders.queryStringQuery(query.toString());
 		}
 
-		if (query.getBoost() != null) {
-			queryBuilder.boost(query.getBoost());
-		}
-
 		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(BooleanQuery booleanQuery) {
-		return _booleanQueryTranslator.translate(booleanQuery, this);
+		return _addBoost(
+			booleanQuery,
+			_booleanQueryTranslator.translate(booleanQuery, this));
 	}
 
 	@Override
 	public QueryBuilder visit(BoostingQuery boostingQuery) {
-		return _boostingQueryTranslator.translate(boostingQuery, this);
+		return _addBoost(
+			boostingQuery,
+			_boostingQueryTranslator.translate(boostingQuery, this));
 	}
 
 	@Override
 	public QueryBuilder visit(CommonTermsQuery commonTermsQuery) {
-		return _commonTermsQueryTranslator.translate(commonTermsQuery);
+		return _addBoost(
+			commonTermsQuery,
+			_commonTermsQueryTranslator.translate(commonTermsQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(ConstantScoreQuery constantScoreQuery) {
-		return _constantScoreQueryTranslator.translate(
-			constantScoreQuery, this);
+		return _addBoost(
+			constantScoreQuery,
+			_constantScoreQueryTranslator.translate(constantScoreQuery, this));
 	}
 
 	@Override
 	public QueryBuilder visit(DateRangeTermQuery dateRangeTermQuery) {
-		return _dateRangeTermQueryTranslator.translate(dateRangeTermQuery);
+		return _addBoost(
+			dateRangeTermQuery,
+			_dateRangeTermQueryTranslator.translate(dateRangeTermQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(DisMaxQuery disMaxQuery) {
-		return _disMaxQueryTranslator.translate(disMaxQuery, this);
+		return _addBoost(
+			disMaxQuery, _disMaxQueryTranslator.translate(disMaxQuery, this));
 	}
 
 	@Override
 	public QueryBuilder visit(ExistsQuery existsQuery) {
-		return _existsQueryTranslator.translate(existsQuery);
+		return _addBoost(
+			existsQuery, _existsQueryTranslator.translate(existsQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(FunctionScoreQuery functionScoreQuery) {
-		return _functionScoreQueryTranslator.translate(
-			functionScoreQuery, this);
+		return _addBoost(
+			functionScoreQuery,
+			_functionScoreQueryTranslator.translate(functionScoreQuery, this));
 	}
 
 	@Override
 	public QueryBuilder visit(FuzzyQuery fuzzyQuery) {
-		return _fuzzyQueryTranslator.translate(fuzzyQuery);
+		return _addBoost(
+			fuzzyQuery, _fuzzyQueryTranslator.translate(fuzzyQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(GeoBoundingBoxQuery geoBoundingBoxQuery) {
-		return _geoBoundingBoxQueryTranslator.translate(geoBoundingBoxQuery);
+		return _addBoost(
+			geoBoundingBoxQuery,
+			_geoBoundingBoxQueryTranslator.translate(geoBoundingBoxQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(GeoDistanceQuery geoDistanceQuery) {
-		return _geoDistanceQueryTranslator.translate(geoDistanceQuery);
+		return _addBoost(
+			geoDistanceQuery,
+			_geoDistanceQueryTranslator.translate(geoDistanceQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(GeoDistanceRangeQuery geoDistanceRangeQuery) {
-		return _geoDistanceRangeQueryTranslator.translate(
-			geoDistanceRangeQuery);
+		return _addBoost(
+			geoDistanceRangeQuery,
+			_geoDistanceRangeQueryTranslator.translate(geoDistanceRangeQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(GeoPolygonQuery geoPolygonQuery) {
-		return _geoPolygonQueryTranslator.translate(geoPolygonQuery);
+		return _addBoost(
+			geoPolygonQuery,
+			_geoPolygonQueryTranslator.translate(geoPolygonQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(GeoShapeQuery geoShapeQuery) {
-		return _geoShapeQueryTranslator.translate(geoShapeQuery);
+		return _addBoost(
+			geoShapeQuery, _geoShapeQueryTranslator.translate(geoShapeQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(IdsQuery idsQuery) {
-		return _idsQueryTranslator.translate(idsQuery);
+		return _addBoost(idsQuery, _idsQueryTranslator.translate(idsQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(MatchAllQuery matchAllQuery) {
-		return _matchAllQueryTranslator.translate(matchAllQuery);
+		return _addBoost(
+			matchAllQuery, _matchAllQueryTranslator.translate(matchAllQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(MatchPhrasePrefixQuery matchPhrasePrefixQuery) {
-		return _matchPhrasePrefixQueryTranslator.translate(
-			matchPhrasePrefixQuery);
+		return _addBoost(
+			matchPhrasePrefixQuery,
+			_matchPhrasePrefixQueryTranslator.translate(
+				matchPhrasePrefixQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(MatchPhraseQuery matchPhraseQuery) {
-		return _matchPhraseQueryTranslator.translate(matchPhraseQuery);
+		return _addBoost(
+			matchPhraseQuery,
+			_matchPhraseQueryTranslator.translate(matchPhraseQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(MatchQuery matchQuery) {
-		return _matchQueryTranslator.translate(matchQuery);
+		return _addBoost(
+			matchQuery, _matchQueryTranslator.translate(matchQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(MoreLikeThisQuery moreLikeThisQuery) {
-		return _moreLikeThisQueryTranslator.translate(moreLikeThisQuery);
+		return _addBoost(
+			moreLikeThisQuery,
+			_moreLikeThisQueryTranslator.translate(moreLikeThisQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(MultiMatchQuery multiMatchQuery) {
-		return _multiMatchQueryTranslator.translate(multiMatchQuery);
+		return _addBoost(
+			multiMatchQuery,
+			_multiMatchQueryTranslator.translate(multiMatchQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(NestedQuery nestedQuery) {
-		return _nestedQueryTranslator.translate(nestedQuery, this);
+		return _addBoost(
+			nestedQuery, _nestedQueryTranslator.translate(nestedQuery, this));
 	}
 
 	@Override
 	public QueryBuilder visit(PercolateQuery percolateQuery) {
-		return _percolateQueryTranslator.translate(percolateQuery);
+		return _addBoost(
+			percolateQuery,
+			_percolateQueryTranslator.translate(percolateQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(PrefixQuery prefixQuery) {
-		return _prefixQueryTranslator.translate(prefixQuery);
+		return _addBoost(
+			prefixQuery, _prefixQueryTranslator.translate(prefixQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(RangeTermQuery rangeTermQuery) {
-		return _rangeTermQueryTranslator.translate(rangeTermQuery);
+		return _addBoost(
+			rangeTermQuery,
+			_rangeTermQueryTranslator.translate(rangeTermQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(RegexQuery regexQuery) {
-		return _regexQueryTranslator.translate(regexQuery);
+		return _addBoost(
+			regexQuery, _regexQueryTranslator.translate(regexQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(ScriptQuery scriptQuery) {
-		return _scriptQueryTranslator.translate(scriptQuery);
+		return _addBoost(
+			scriptQuery, _scriptQueryTranslator.translate(scriptQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(SimpleStringQuery simpleStringQuery) {
-		return _simpleQueryStringQueryTranslator.translate(simpleStringQuery);
+		return _addBoost(
+			simpleStringQuery,
+			_simpleQueryStringQueryTranslator.translate(simpleStringQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(StringQuery stringQuery) {
-		return _stringQueryTranslator.translate(stringQuery);
+		return _addBoost(
+			stringQuery, _stringQueryTranslator.translate(stringQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(TermQuery termQuery) {
-		return _termQueryTranslator.translate(termQuery);
+		return _addBoost(termQuery, _termQueryTranslator.translate(termQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(TermsQuery termsQuery) {
-		return _termsQueryTranslator.translate(termsQuery);
+		return _addBoost(
+			termsQuery, _termsQueryTranslator.translate(termsQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(TermsSetQuery termsSetQuery) {
-		return _termsSetQueryTranslator.translate(termsSetQuery);
+		return _addBoost(
+			termsSetQuery, _termsSetQueryTranslator.translate(termsSetQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(WildcardQuery wildcardQuery) {
-		return _wildcardQueryTranslator.translate(wildcardQuery);
+		return _addBoost(
+			wildcardQuery, _wildcardQueryTranslator.translate(wildcardQuery));
 	}
 
 	@Override
 	public QueryBuilder visit(WrapperQuery wrapperQuery) {
-		return _wrapperQueryTranslator.translate(wrapperQuery);
+		return _addBoost(
+			wrapperQuery, _wrapperQueryTranslator.translate(wrapperQuery));
+	}
+
+	private QueryBuilder _addBoost(Query query, QueryBuilder queryBuilder) {
+		if (query.getBoost() != null) {
+			queryBuilder.boost(query.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Reference

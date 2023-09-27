@@ -1,21 +1,10 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.builder.internal.model.listener;
 
-import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -140,12 +129,37 @@ public class APIApplicationPublisherObjectEntryModelListener
 						apiFilterObjectEntryValues.get(
 							"r_apiEndpointToAPIFilters_c_apiEndpointId")));
 
+			if (apiEndpointObjectEntry == null) {
+				return 0;
+			}
+
 			Map<String, Serializable> apiEndpointObjectEntryValues =
 				apiEndpointObjectEntry.getValues();
 
 			return GetterUtil.getLong(
 				apiEndpointObjectEntryValues.get(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"));
+		}
+		else if (StringUtil.equals(externalReferenceCode, "L_API_PROPERTY")) {
+			Map<String, Serializable> apiPropertyObjectEntryValues =
+				objectEntry.getValues();
+
+			ObjectEntry apiSchemaObjectEntry =
+				_objectEntryLocalService.fetchObjectEntry(
+					GetterUtil.getLong(
+						apiPropertyObjectEntryValues.get(
+							"r_apiSchemaToAPIProperties_c_apiSchemaId")));
+
+			if (apiSchemaObjectEntry == null) {
+				return 0;
+			}
+
+			Map<String, Serializable> apiSchemaObjectEntryValues =
+				apiSchemaObjectEntry.getValues();
+
+			return GetterUtil.getLong(
+				apiSchemaObjectEntryValues.get(
+					"r_apiApplicationToAPISchemas_c_apiApplicationId"));
 		}
 		else if (StringUtil.equals(externalReferenceCode, "L_API_SCHEMA")) {
 			Map<String, Serializable> values = objectEntry.getValues();
@@ -162,6 +176,10 @@ public class APIApplicationPublisherObjectEntryModelListener
 					GetterUtil.getLong(
 						apiSortObjectEntryValues.get(
 							"r_apiEndpointToAPISorts_c_apiEndpointId")));
+
+			if (apiEndpointObjectEntry == null) {
+				return 0;
+			}
 
 			Map<String, Serializable> apiEndpointObjectEntryValues =
 				apiEndpointObjectEntry.getValues();
@@ -211,16 +229,9 @@ public class APIApplicationPublisherObjectEntryModelListener
 							apiApplicationObjectEntry.getCompanyId());
 					}
 					else {
-						APIApplication apiApplication =
-							_apiApplicationProvider.fetchAPIApplication(
-								(String)values.get("baseURL"),
-								apiApplicationObjectEntry.getCompanyId());
-
-						if (apiApplication == null) {
-							return null;
-						}
-
-						_apiApplicationPublisher.publish(apiApplication);
+						_apiApplicationPublisher.publish(
+							(String)values.get("baseURL"),
+							apiApplicationObjectEntry.getCompanyId());
 					}
 				}
 
@@ -230,9 +241,6 @@ public class APIApplicationPublisherObjectEntryModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		APIApplicationPublisherObjectEntryModelListener.class);
-
-	@Reference
-	private APIApplicationProvider _apiApplicationProvider;
 
 	@Reference
 	private APIApplicationPublisher _apiApplicationPublisher;

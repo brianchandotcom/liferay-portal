@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.upgrade.test;
@@ -71,7 +62,8 @@ public class LiveUpgradeExecutorTest {
 		_db.runSQL(
 			StringBundler.concat(
 				"create table ", _TABLE_NAME,
-				" (id LONG not null primary key, name VARCHAR(128) not null)"));
+				" (id LONG not null primary key, name VARCHAR(128) not null, ",
+				"description VARCHAR(255) null)"));
 		_db.runSQL(
 			StringBundler.concat(
 				"insert into ", _TABLE_NAME,
@@ -94,10 +86,27 @@ public class LiveUpgradeExecutorTest {
 		_liveUpgradeExecutor.upgrade(
 			_TABLE_NAME,
 			LiveUpgradeProcessFactory.addColumns(
-				"content SBLOB", "version LONG null"));
+				"content SBLOB", "version LONG default 1 not null"));
 
 		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "content"));
 		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "version"));
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select * from " + _TABLE_NAME + " order by id asc");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+
+			Assert.assertEquals(1, resultSet.getLong("id"));
+			Assert.assertEquals(1, resultSet.getLong("version"));
+
+			Assert.assertTrue(resultSet.next());
+
+			Assert.assertEquals(2, resultSet.getLong("id"));
+			Assert.assertEquals(1, resultSet.getLong("version"));
+
+			Assert.assertFalse(resultSet.next());
+		}
 	}
 
 	@Test
@@ -118,13 +127,36 @@ public class LiveUpgradeExecutorTest {
 		_liveUpgradeExecutor.upgrade(
 			_TABLE_NAME,
 			LiveUpgradeProcessFactory.alterColumnType(
-				"name", "VARCHAR(255) null"));
+				"name", "VARCHAR(255) null"),
+			LiveUpgradeProcessFactory.alterColumnType(
+				"description", "VARCHAR(255) default 'test' not null"));
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "name", "VARCHAR(255) null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "description",
+				"VARCHAR(255) default 'test' not null"));
 
-		_checkData("name");
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select * from " + _TABLE_NAME + " order by id asc");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+
+			Assert.assertEquals(1, resultSet.getLong("id"));
+			Assert.assertEquals("test_a", resultSet.getString("name"));
+			Assert.assertEquals("test", resultSet.getString("description"));
+
+			Assert.assertTrue(resultSet.next());
+
+			Assert.assertEquals(2, resultSet.getLong("id"));
+			Assert.assertEquals("test_b", resultSet.getString("name"));
+			Assert.assertEquals("test", resultSet.getString("description"));
+
+			Assert.assertFalse(resultSet.next());
+		}
 	}
 
 	@Test

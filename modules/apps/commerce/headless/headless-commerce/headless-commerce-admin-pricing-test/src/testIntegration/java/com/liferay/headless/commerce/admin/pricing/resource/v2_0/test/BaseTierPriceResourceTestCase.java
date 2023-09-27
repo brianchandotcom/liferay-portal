@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.pricing.resource.v2_0.test;
@@ -185,6 +176,7 @@ public abstract class BaseTierPriceResourceTestCase {
 		tierPrice.setExternalReferenceCode(regex);
 		tierPrice.setPriceEntryExternalReferenceCode(regex);
 		tierPrice.setPriceFormatted(regex);
+		tierPrice.setUnitOfMeasureKey(regex);
 
 		String json = TierPriceSerDes.toJSON(tierPrice);
 
@@ -196,6 +188,7 @@ public abstract class BaseTierPriceResourceTestCase {
 		Assert.assertEquals(
 			regex, tierPrice.getPriceEntryExternalReferenceCode());
 		Assert.assertEquals(regex, tierPrice.getPriceFormatted());
+		Assert.assertEquals(regex, tierPrice.getUnitOfMeasureKey());
 	}
 
 	@Test
@@ -987,6 +980,14 @@ public abstract class BaseTierPriceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (tierPrice.getUnitOfMeasureKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1306,6 +1307,17 @@ public abstract class BaseTierPriceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						tierPrice1.getUnitOfMeasureKey(),
+						tierPrice2.getUnitOfMeasureKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1565,9 +1577,8 @@ public abstract class BaseTierPriceResourceTestCase {
 		}
 
 		if (entityFieldName.equals("minimumQuantity")) {
-			sb.append(String.valueOf(tierPrice.getMinimumQuantity()));
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("neverExpire")) {
@@ -1678,6 +1689,52 @@ public abstract class BaseTierPriceResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("unitOfMeasureKey")) {
+			Object object = tierPrice.getUnitOfMeasureKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1729,13 +1786,14 @@ public abstract class BaseTierPriceResourceTestCase {
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
-				minimumQuantity = RandomTestUtil.randomInt();
 				neverExpire = RandomTestUtil.randomBoolean();
 				price = RandomTestUtil.randomDouble();
 				priceEntryExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				priceEntryId = RandomTestUtil.randomLong();
 				priceFormatted = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				unitOfMeasureKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}
 		};

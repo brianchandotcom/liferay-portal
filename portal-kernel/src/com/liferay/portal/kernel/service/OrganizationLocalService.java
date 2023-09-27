@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.service;
@@ -74,14 +65,15 @@ public interface OrganizationLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.OrganizationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the organization local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OrganizationLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public void addGroupOrganization(long groupId, long organizationId);
+	public boolean addGroupOrganization(long groupId, long organizationId);
 
-	public void addGroupOrganization(long groupId, Organization organization);
+	public boolean addGroupOrganization(
+		long groupId, Organization organization);
 
-	public void addGroupOrganizations(
+	public boolean addGroupOrganizations(
 		long groupId, List<Organization> organizations);
 
-	public void addGroupOrganizations(long groupId, long[] organizationIds);
+	public boolean addGroupOrganizations(long groupId, long[] organizationIds);
 
 	/**
 	 * Adds an organization.
@@ -104,6 +96,19 @@ public interface OrganizationLocalService
 	public Organization addOrganization(
 			long userId, long parentOrganizationId, String name, boolean site)
 		throws PortalException;
+
+	/**
+	 * Adds the organization to the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param organization the organization
+	 * @return the organization that was added
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public Organization addOrganization(Organization organization);
 
 	/**
 	 * Adds an organization.
@@ -132,23 +137,11 @@ public interface OrganizationLocalService
 	 * @return the organization
 	 */
 	public Organization addOrganization(
-			long userId, long parentOrganizationId, String name, String type,
-			long regionId, long countryId, long statusListTypeId,
-			String comments, boolean site, ServiceContext serviceContext)
+			String externalReferenceCode, long userId,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusListTypeId, String comments,
+			boolean site, ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	 * Adds the organization to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param organization the organization
-	 * @return the organization that was added
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Organization addOrganization(Organization organization);
 
 	/**
 	 * Adds a resource for each type of permission available on the
@@ -183,18 +176,18 @@ public interface OrganizationLocalService
 	public void addPasswordPolicyOrganizations(
 		long passwordPolicyId, long[] organizationIds);
 
-	public void addUserOrganization(long userId, long organizationId);
+	public boolean addUserOrganization(long userId, long organizationId);
 
-	public void addUserOrganization(long userId, Organization organization);
+	public boolean addUserOrganization(long userId, Organization organization);
 
 	public void addUserOrganizationByEmailAddress(
 			String emailAddress, long organizationId)
 		throws PortalException;
 
-	public void addUserOrganizations(
+	public boolean addUserOrganizations(
 		long userId, List<Organization> organizations);
 
-	public void addUserOrganizations(long userId, long[] organizationIds);
+	public boolean addUserOrganizations(long userId, long[] organizationIds);
 
 	public void clearGroupOrganizations(long groupId);
 
@@ -1294,6 +1287,19 @@ public interface OrganizationLocalService
 		throws PortalException;
 
 	/**
+	 * Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param organization the organization
+	 * @return the organization that was updated
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public Organization updateOrganization(Organization organization);
+
+	/**
 	 * Updates the organization.
 	 *
 	 * @param companyId the primary key of the organization's company
@@ -1317,24 +1323,12 @@ public interface OrganizationLocalService
 	 * @return the organization
 	 */
 	public Organization updateOrganization(
-			long companyId, long organizationId, long parentOrganizationId,
-			String name, String type, long regionId, long countryId,
-			long statusListTypeId, String comments, boolean hasLogo,
-			byte[] logoBytes, boolean site, ServiceContext serviceContext)
+			String externalReferenceCode, long companyId, long organizationId,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusListTypeId, String comments,
+			boolean hasLogo, byte[] logoBytes, boolean site,
+			ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	 * Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param organization the organization
-	 * @return the organization that was updated
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Organization updateOrganization(Organization organization);
 
 	@Override
 	@Transactional(enabled = false)

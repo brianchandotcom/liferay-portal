@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.model;
@@ -57,6 +48,7 @@ public class ObjectRelationshipWrapper
 		attributes.put("parameterObjectFieldId", getParameterObjectFieldId());
 		attributes.put("deletionType", getDeletionType());
 		attributes.put("dbTableName", getDBTableName());
+		attributes.put("edge", isEdge());
 		attributes.put("label", getLabel());
 		attributes.put("name", getName());
 		attributes.put("reverse", isReverse());
@@ -153,6 +145,12 @@ public class ObjectRelationshipWrapper
 			setDBTableName(dbTableName);
 		}
 
+		Boolean edge = (Boolean)attributes.get("edge");
+
+		if (edge != null) {
+			setEdge(edge);
+		}
+
 		String label = (String)attributes.get("label");
 
 		if (label != null) {
@@ -231,6 +229,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public String getDeletionType() {
 		return model.getDeletionType();
+	}
+
+	/**
+	 * Returns the edge of this object relationship.
+	 *
+	 * @return the edge of this object relationship
+	 */
+	@Override
+	public boolean getEdge() {
+		return model.getEdge();
 	}
 
 	/**
@@ -459,6 +467,28 @@ public class ObjectRelationshipWrapper
 		return model.getUuid();
 	}
 
+	@Override
+	public boolean isAllowedObjectRelationshipType(String type) {
+		return model.isAllowedObjectRelationshipType(type);
+	}
+
+	/**
+	 * Returns <code>true</code> if this object relationship is edge.
+	 *
+	 * @return <code>true</code> if this object relationship is edge; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEdge() {
+		return model.isEdge();
+	}
+
+	@Override
+	public boolean isEdgeCandidate()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.isEdgeCandidate();
+	}
+
 	/**
 	 * Returns <code>true</code> if this object relationship is reverse.
 	 *
@@ -532,6 +562,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public void setDeletionType(String deletionType) {
 		model.setDeletionType(deletionType);
+	}
+
+	/**
+	 * Sets whether this object relationship is edge.
+	 *
+	 * @param edge the edge of this object relationship
+	 */
+	@Override
+	public void setEdge(boolean edge) {
+		model.setEdge(edge);
 	}
 
 	/**

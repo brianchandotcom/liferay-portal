@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.internal.service.persistence;
@@ -22,12 +13,10 @@ import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
-import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactory;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactory;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -65,11 +54,16 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.internal.invocation.InterceptedInvocation;
 
 /**
  * @author Shuyang Zhou
@@ -109,15 +103,8 @@ public class TableMapperTest {
 		PortalCacheHelperUtil.clearPortalCaches(
 			PortalCacheManagerNames.MULTI_VM);
 
-		MappingSqlQueryFactoryUtil mappingSqlQueryFactoryUtil =
-			new MappingSqlQueryFactoryUtil();
-
-		mappingSqlQueryFactoryUtil.setMappingSqlQueryFactory(
-			new MockMappingSqlQueryFactory());
-
-		SqlUpdateFactoryUtil sqlUpdateFactoryUtil = new SqlUpdateFactoryUtil();
-
-		sqlUpdateFactoryUtil.setSqlUpdateFactory(new MockSqlUpdateFactory());
+		_mockMappingSqlQueryFactoryUtil();
+		_mockSqlUpdateFactoryUtil();
 
 		_dataSource = (DataSource)ProxyUtil.newProxyInstance(
 			TableMapperTest.class.getClassLoader(),
@@ -138,6 +125,12 @@ public class TableMapperTest {
 			_TABLE_NAME, _COMPANY_COLUMN_NAME, _LEFT_COLUMN_NAME,
 			_RIGHT_COLUMN_NAME, Left.class, Right.class, _leftBasePersistence,
 			_rightBasePersistence, false);
+	}
+
+	@After
+	public void tearDown() {
+		_mappingSqlQueryFactoryUtilMockedStatic.close();
+		_sqlUpdateFactoryUtilMockedStatic.close();
 	}
 
 	@Test
@@ -1788,6 +1781,139 @@ public class TableMapperTest {
 		Assert.assertTrue(portalCaches.toString(), portalCaches.isEmpty());
 	}
 
+	private void _mockMappingSqlQueryFactoryUtil() {
+		_mappingSqlQueryFactoryUtilMockedStatic = Mockito.mockStatic(
+			MappingSqlQueryFactoryUtil.class);
+
+		_mappingSqlQueryFactoryUtilMockedStatic.when(
+			() -> MappingSqlQueryFactoryUtil.getMappingSqlQuery(
+				Mockito.any(), Mockito.anyString(), Mockito.any(),
+				Mockito.any())
+		).thenAnswer(
+			invocation -> {
+				Object[] arguments =
+					((InterceptedInvocation)invocation).getRawArguments();
+
+				DataSource dataSource = (DataSource)arguments[0];
+				String sql = (String)arguments[1];
+				ParamSetter[] paramSetters = (ParamSetter[])arguments[3];
+
+				if (sql.equals(
+						StringBundler.concat(
+							"SELECT ", _LEFT_COLUMN_NAME, " FROM ", _TABLE_NAME,
+							" WHERE ", _RIGHT_COLUMN_NAME, " = ?"))) {
+
+					return new MockGetLeftPrimaryKeysSqlQuery(
+						dataSource, RowMapper.PRIMARY_KEY, paramSetters);
+				}
+
+				if (sql.equals(
+						StringBundler.concat(
+							"SELECT ", _RIGHT_COLUMN_NAME, " FROM ",
+							_TABLE_NAME, " WHERE ", _LEFT_COLUMN_NAME,
+							" = ?"))) {
+
+					return new MockGetRightPrimaryKeysSqlQuery(
+						dataSource, RowMapper.PRIMARY_KEY, paramSetters);
+				}
+
+				if (sql.equals(
+						StringBundler.concat(
+							"SELECT * FROM ", _TABLE_NAME, " WHERE ",
+							_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
+							" = ?"))) {
+
+					return new MockContainsTableMappingSQLQuery(
+						dataSource, paramSetters);
+				}
+
+				if (sql.contains("ctCollectionId")) {
+					return null;
+				}
+
+				throw new UnsupportedOperationException(sql);
+			}
+		);
+	}
+
+	private void _mockSqlUpdateFactoryUtil() {
+		_sqlUpdateFactoryUtilMockedStatic = Mockito.mockStatic(
+			SqlUpdateFactoryUtil.class);
+
+		_sqlUpdateFactoryUtilMockedStatic.when(
+			() -> SqlUpdateFactoryUtil.getSqlUpdate(
+				Mockito.any(), Mockito.anyString(), Mockito.any())
+		).thenAnswer(
+			invocation -> {
+				Object[] arguments =
+					((InterceptedInvocation)invocation).getRawArguments();
+
+				DataSource dataSource = (DataSource)arguments[0];
+				String sql = (String)arguments[1];
+				ParamSetter[] paramSetters = (ParamSetter[])arguments[2];
+
+				if (sql.equals(
+						StringBundler.concat(
+							"INSERT INTO ", _TABLE_NAME, " (",
+							_COMPANY_COLUMN_NAME, ", ", _LEFT_COLUMN_NAME, ", ",
+							_RIGHT_COLUMN_NAME, ") VALUES (?, ?, ?)"))) {
+
+					return new MockAddMappingSqlUpdate(
+						dataSource, paramSetters);
+				}
+
+				if (sql.equals(
+						StringBundler.concat(
+							"INSERT INTO ", _TABLE_NAME, " (",
+							_COMPANY_COLUMN_NAME, ", ", _RIGHT_COLUMN_NAME,
+							", ", _LEFT_COLUMN_NAME, ") VALUES (?, ?, ?)"))) {
+
+					return null;
+				}
+
+				if (sql.equals(
+						StringBundler.concat(
+							"DELETE FROM ", _TABLE_NAME, " WHERE ",
+							_LEFT_COLUMN_NAME, " = ?"))) {
+
+					return new MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
+						dataSource, paramSetters);
+				}
+
+				if (sql.equals(
+						StringBundler.concat(
+							"DELETE FROM ", _TABLE_NAME, " WHERE ",
+							_RIGHT_COLUMN_NAME, " = ?"))) {
+
+					return new MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
+						dataSource, paramSetters);
+				}
+
+				if (sql.equals(
+						StringBundler.concat(
+							"DELETE FROM ", _TABLE_NAME, " WHERE ",
+							_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
+							" = ?"))) {
+
+					return new MockDeleteMappingSqlUpdate(
+						dataSource, paramSetters);
+				}
+
+				if (sql.equals(
+						StringBundler.concat(
+							"DELETE FROM ", _TABLE_NAME, " WHERE ",
+							_RIGHT_COLUMN_NAME, " = ? AND ", _LEFT_COLUMN_NAME,
+							" = ?")) ||
+					sql.contains("ctCollectionId")) {
+
+					return null;
+				}
+
+				throw new UnsupportedOperationException(sql);
+			}
+		);
+	}
+
 	private static final String _COMPANY_COLUMN_NAME = "companyId";
 
 	private static final String _LEFT_COLUMN_NAME = "leftId";
@@ -1798,8 +1924,12 @@ public class TableMapperTest {
 
 	private DataSource _dataSource;
 	private MockBasePersistence<Left> _leftBasePersistence;
+	private MockedStatic<MappingSqlQueryFactoryUtil>
+		_mappingSqlQueryFactoryUtilMockedStatic;
 	private final Map<Long, long[]> _mappingStore = new HashMap<>();
 	private MockBasePersistence<Right> _rightBasePersistence;
+	private MockedStatic<SqlUpdateFactoryUtil>
+		_sqlUpdateFactoryUtilMockedStatic;
 	private TableMapperImpl<Left, Right> _tableMapperImpl;
 
 	private static class LeftRecorderModelListener
@@ -2358,116 +2488,6 @@ public class TableMapperTest {
 		}
 
 		private boolean _databaseError;
-
-	}
-
-	private class MockMappingSqlQueryFactory implements MappingSqlQueryFactory {
-
-		@Override
-		public <T> MappingSqlQuery<T> getMappingSqlQuery(
-			DataSource dataSource, String sql, RowMapper<T> rowMapper,
-			ParamSetter... paramSetters) {
-
-			if (sql.equals(
-					StringBundler.concat(
-						"SELECT ", _LEFT_COLUMN_NAME, " FROM ", _TABLE_NAME,
-						" WHERE ", _RIGHT_COLUMN_NAME, " = ?"))) {
-
-				return (MappingSqlQuery<T>)new MockGetLeftPrimaryKeysSqlQuery(
-					dataSource, RowMapper.PRIMARY_KEY, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"SELECT ", _RIGHT_COLUMN_NAME, " FROM ", _TABLE_NAME,
-						" WHERE ", _LEFT_COLUMN_NAME, " = ?"))) {
-
-				return (MappingSqlQuery<T>)new MockGetRightPrimaryKeysSqlQuery(
-					dataSource, RowMapper.PRIMARY_KEY, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"SELECT * FROM ", _TABLE_NAME, " WHERE ",
-						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
-						" = ?"))) {
-
-				return (MappingSqlQuery<T>)new MockContainsTableMappingSQLQuery(
-					dataSource, paramSetters);
-			}
-
-			if (sql.contains("ctCollectionId")) {
-				return null;
-			}
-
-			throw new UnsupportedOperationException(sql);
-		}
-
-	}
-
-	private class MockSqlUpdateFactory implements SqlUpdateFactory {
-
-		@Override
-		public SqlUpdate getSqlUpdate(
-			DataSource dataSource, String sql, ParamSetter... paramSetters) {
-
-			if (sql.equals(
-					StringBundler.concat(
-						"INSERT INTO ", _TABLE_NAME, " (", _COMPANY_COLUMN_NAME,
-						", ", _LEFT_COLUMN_NAME, ", ", _RIGHT_COLUMN_NAME,
-						") VALUES (?, ?, ?)"))) {
-
-				return new MockAddMappingSqlUpdate(dataSource, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"INSERT INTO ", _TABLE_NAME, " (", _COMPANY_COLUMN_NAME,
-						", ", _RIGHT_COLUMN_NAME, ", ", _LEFT_COLUMN_NAME,
-						") VALUES (?, ?, ?)"))) {
-
-				return null;
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"DELETE FROM ", _TABLE_NAME, " WHERE ",
-						_LEFT_COLUMN_NAME, " = ?"))) {
-
-				return new MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
-					dataSource, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"DELETE FROM ", _TABLE_NAME, " WHERE ",
-						_RIGHT_COLUMN_NAME, " = ?"))) {
-
-				return new MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
-					dataSource, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"DELETE FROM ", _TABLE_NAME, " WHERE ",
-						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
-						" = ?"))) {
-
-				return new MockDeleteMappingSqlUpdate(dataSource, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"DELETE FROM ", _TABLE_NAME, " WHERE ",
-						_RIGHT_COLUMN_NAME, " = ? AND ", _LEFT_COLUMN_NAME,
-						" = ?")) ||
-				sql.contains("ctCollectionId")) {
-
-				return null;
-			}
-
-			throw new UnsupportedOperationException(sql);
-		}
 
 	}
 

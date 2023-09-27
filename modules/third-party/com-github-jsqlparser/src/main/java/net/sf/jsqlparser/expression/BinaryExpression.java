@@ -12,6 +12,7 @@ package net.sf.jsqlparser.expression;
 import java.util.Deque;
 import java.util.LinkedList;
 
+import net.sf.jsqlparser.expression.internal.IrregularBinaryExpression;
 import net.sf.jsqlparser.parser.ASTNodeAccessImpl;
 
 /**
@@ -65,7 +66,8 @@ public abstract class BinaryExpression extends ASTNodeAccessImpl implements Expr
 		Expression expression = getLeftExpression();
 
 		while(!deque.isEmpty()) {
-			if (expression instanceof BinaryExpression) {
+			if ((expression instanceof BinaryExpression) &&
+				(!(expression instanceof IrregularBinaryExpression))) {
 				BinaryExpression binaryExpression =
 					(BinaryExpression)expression;
 

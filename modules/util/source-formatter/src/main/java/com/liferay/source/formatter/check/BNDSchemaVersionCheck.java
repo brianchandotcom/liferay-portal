@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.source.formatter.check;
@@ -39,7 +30,6 @@ import java.util.List;
 import java.util.Objects;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -50,7 +40,7 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException, ParseException {
+		throws IOException, ParseException {
 
 		String schemaVersion = BNDSourceUtil.getDefinitionValue(
 			content, "Liferay-Require-SchemaVersion");
@@ -110,7 +100,7 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 
 		int x = absolutePath.lastIndexOf(CharPool.SLASH);
 
-		List<String> upgradeFileNames = SourceFormatterUtil.scanForFiles(
+		List<String> upgradeFileNames = SourceFormatterUtil.scanForFileNames(
 			absolutePath.substring(0, x + 1), new String[0],
 			new String[] {"**/upgrade/*.java", "**/upgrade/**/*.java"},
 			new SourceFormatterExcludes(), false);
@@ -135,10 +125,11 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 		Version expectedSchemaVersion = null;
 
 		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
 			File file = new File(fileName);
+
+			if (!file.exists()) {
+				continue;
+			}
 
 			String content = FileUtil.read(file);
 
@@ -202,10 +193,12 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 		return null;
 	}
 
-	private boolean _isAllEmptyEntity(File file)
-		throws DocumentException, IOException {
-
+	private boolean _isAllEmptyEntity(File file) throws IOException {
 		Document document = SourceUtil.readXML(FileUtil.read(file));
+
+		if (document == null) {
+			return true;
+		}
 
 		Element rootElement = document.getRootElement();
 

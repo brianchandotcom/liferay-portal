@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.oauth2.provider.service;
@@ -44,31 +35,31 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth2.provider.service.impl.OAuth2ScopeGrantLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void addOAuth2AuthorizationOAuth2ScopeGrant(
+	public static boolean addOAuth2AuthorizationOAuth2ScopeGrant(
 		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
 
-		getService().addOAuth2AuthorizationOAuth2ScopeGrant(
+		return getService().addOAuth2AuthorizationOAuth2ScopeGrant(
 			oAuth2AuthorizationId, oAuth2ScopeGrantId);
 	}
 
-	public static void addOAuth2AuthorizationOAuth2ScopeGrant(
+	public static boolean addOAuth2AuthorizationOAuth2ScopeGrant(
 		long oAuth2AuthorizationId, OAuth2ScopeGrant oAuth2ScopeGrant) {
 
-		getService().addOAuth2AuthorizationOAuth2ScopeGrant(
+		return getService().addOAuth2AuthorizationOAuth2ScopeGrant(
 			oAuth2AuthorizationId, oAuth2ScopeGrant);
 	}
 
-	public static void addOAuth2AuthorizationOAuth2ScopeGrants(
+	public static boolean addOAuth2AuthorizationOAuth2ScopeGrants(
 		long oAuth2AuthorizationId, List<OAuth2ScopeGrant> oAuth2ScopeGrants) {
 
-		getService().addOAuth2AuthorizationOAuth2ScopeGrants(
+		return getService().addOAuth2AuthorizationOAuth2ScopeGrants(
 			oAuth2AuthorizationId, oAuth2ScopeGrants);
 	}
 
-	public static void addOAuth2AuthorizationOAuth2ScopeGrants(
+	public static boolean addOAuth2AuthorizationOAuth2ScopeGrants(
 		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds) {
 
-		getService().addOAuth2AuthorizationOAuth2ScopeGrants(
+		return getService().addOAuth2AuthorizationOAuth2ScopeGrants(
 			oAuth2AuthorizationId, oAuth2ScopeGrantIds);
 	}
 

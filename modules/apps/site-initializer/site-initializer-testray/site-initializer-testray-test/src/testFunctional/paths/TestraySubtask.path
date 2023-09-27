@@ -11,8 +11,8 @@
 
 <tbody>
 <tr>
-	<td>VERIFY_SUBTASK_MERGED</td>
-	<td>//th[normalize-space()='Merged With']//following::td[contains(text(),'${key_subtaskMerged}')]</td>
+	<td>SUBTASK_MERGED</td>
+	<td>//*[text()='Merged With']//following::*[contains(text(),'${key_subtaskName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -21,7 +21,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEW_SUBTASK_SIDEBAR</td>
+	<td>SUBTASK_SIDEBAR</td>
 	<td>//div[@class='tr-sidebar__content']//*[text()='${key_subtaskName}']</td>
 	<td></td>
 </tr>

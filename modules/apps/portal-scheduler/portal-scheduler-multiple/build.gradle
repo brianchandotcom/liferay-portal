@@ -8,10 +8,10 @@ dependencies {
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
-	testCompile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
-	testCompile project(":core:petra:petra-concurrent")
-	testCompile project(":core:petra:petra-memory")
-	testCompile project(":core:petra:petra-process")
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testImplementation group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	testImplementation group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
+	testImplementation project(":core:petra:petra-concurrent")
+	testImplementation project(":core:petra:petra-memory")
+	testImplementation project(":core:petra:petra-process")
 }

@@ -2,7 +2,19 @@
 	"externalReferenceCode": "PRMC001",
 	"name": "Featured",
 	"name_i18n": {
-		"en_US": "Featured"
+		"ar_SA": "Featured",
+		"ca_ES": "Featured",
+		"de_DE": "Featured",
+		"en_US": "Featured",
+		"es_ES": "Featured",
+		"fi_FI": "Featured",
+		"fr_FR": "Featured",
+		"hu_HU": "Featured",
+		"ja_JP": "Featured",
+		"nl_NL": "Featured",
+		"pt_BR": "Featured",
+		"sv_SE": "Featured",
+		"zh_CN": "Featured"
 	},
 	"viewableBy": "Anyone"
 }

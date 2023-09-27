@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.tools.service.builder;
@@ -97,10 +88,13 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -605,8 +599,6 @@ public class ServiceBuilder {
 			_badAliasNames = _readLines(_tplBadAliasNames);
 			_badColumnNames = _readLines(_tplBadColumnNames);
 			_badTableNames = _readLines(_tplBadTableNames);
-
-			_commercialPlugin = _isCommercialPlugin(Paths.get("."));
 
 			SAXReader saxReader = _getSAXReader();
 
@@ -2689,6 +2681,13 @@ public class ServiceBuilder {
 					content = StringUtil.replace(
 						content, "PortalException", "NoSuchModelException");
 				}
+
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+					"yyyy");
+
+				content = content.replaceFirst(
+					Pattern.quote("{$year}"),
+					simpleDateFormat.format(new Date()));
 
 				content = StringUtil.replace(content, "\r\n", "\n");
 
@@ -5279,23 +5278,28 @@ public class ServiceBuilder {
 				sb.append("LONG");
 			}
 			else if (type.equals("BigDecimal")) {
-				Map<String, String> hints = ModelHintsUtil.getHints(
-					_apiPackagePath + ".model." + entity.getName(),
-					entityColumn.getModelHintsName());
-
-				String precision = "30";
-				String scale = "16";
-
-				if (hints != null) {
-					precision = hints.getOrDefault("precision", precision);
-					scale = hints.getOrDefault("scale", scale);
+				if (isVersionGTE_7_4_0()) {
+					sb.append("BIGDECIMAL");
 				}
+				else {
+					Map<String, String> hints = ModelHintsUtil.getHints(
+						_apiPackagePath + ".model." + entity.getName(),
+						entityColumn.getModelHintsName());
 
-				sb.append("DECIMAL(");
-				sb.append(precision);
-				sb.append(", ");
-				sb.append(scale);
-				sb.append(")");
+					String precision = "30";
+					String scale = "16";
+
+					if (hints != null) {
+						precision = hints.getOrDefault("precision", precision);
+						scale = hints.getOrDefault("scale", scale);
+					}
+
+					sb.append("DECIMAL(");
+					sb.append(precision);
+					sb.append(", ");
+					sb.append(scale);
+					sb.append(")");
+				}
 			}
 			else if (type.equals("Blob")) {
 				sb.append("BLOB");
@@ -5925,52 +5929,6 @@ public class ServiceBuilder {
 			if (javaMethod.isPublic() && isCustomMethod(javaMethod)) {
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	private boolean _isCommercialPlugin(Path pluginPath) throws IOException {
-		if (pluginPath == null) {
-			return false;
-		}
-
-		Path absolutePath = pluginPath.toAbsolutePath();
-
-		absolutePath = absolutePath.normalize();
-
-		String absoluteFileName = _normalize(absolutePath.toString());
-
-		if (absoluteFileName.contains("/modules/dxp/apps/") ||
-			absoluteFileName.contains("/modules/private/apps/")) {
-
-			return true;
-		}
-
-		File dir = absolutePath.toFile();
-
-		while (dir != null) {
-			File file = new File(dir, "gradle.properties");
-
-			if (file.exists()) {
-				Properties properties = new Properties();
-
-				properties.load(new FileInputStream(file));
-
-				if (properties.containsKey("project.path.prefix")) {
-					String s = properties.getProperty("project.path.prefix");
-
-					if (s.startsWith(":dxp:apps") ||
-						s.startsWith(":private:apps")) {
-
-						return true;
-					}
-
-					return false;
-				}
-			}
-
-			dir = dir.getParentFile();
 		}
 
 		return false;
@@ -8002,14 +7960,23 @@ public class ServiceBuilder {
 			File file, String content, Set<String> modifiedFileNames)
 		throws Exception {
 
-		String header = null;
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
 
-		if (_commercialPlugin) {
-			header = _read("copyright-commercial.txt");
+		String year = simpleDateFormat.format(new Date());
+
+		if (file.exists()) {
+			String oldContent = _read(file);
+
+			int x = oldContent.indexOf("/**\n * SPDX-FileCopyrightText: (c) ");
+
+			if (x != -1) {
+				year = oldContent.substring(x + 35, x + 39);
+			}
 		}
-		else {
-			header = _read("copyright.txt");
-		}
+
+		String header = _read("copyright.txt");
+
+		header = header.replaceFirst(Pattern.quote("{$year}"), year);
 
 		content = header + "\n\n" + content;
 
@@ -8107,7 +8074,6 @@ public class ServiceBuilder {
 	private long _buildNumber;
 	private boolean _buildNumberIncrement;
 	private boolean _changeTrackingEnabled;
-	private boolean _commercialPlugin;
 	private Properties _compatProperties;
 	private String _currentTplName;
 	private int _databaseNameMaxLength = 30;

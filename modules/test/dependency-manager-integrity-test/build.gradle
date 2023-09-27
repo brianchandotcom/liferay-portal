@@ -1,4 +1,4 @@
 dependencies {
-	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "4.6.0"
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "4.6.0"
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

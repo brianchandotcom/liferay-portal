@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.initializer.util;
@@ -55,7 +46,6 @@ import com.liferay.commerce.service.CPDAvailabilityEstimateLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService;
 import com.liferay.commerce.util.comparator.CommerceAvailabilityEstimatePriorityComparator;
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -85,7 +75,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
-import java.io.Serializable;
 
 import java.math.BigDecimal;
 
@@ -260,46 +249,6 @@ public class CPDefinitionsImporter {
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
-	private void _addExpandoValue(
-		CPDefinition cpDefinition, JSONArray jsonArray) {
-
-		if (jsonArray == null) {
-			return;
-		}
-
-		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
-
-		if (expandoBridge == null) {
-			return;
-		}
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject customFieldJSONObject = jsonArray.getJSONObject(i);
-
-			JSONObject customValueJSONObject =
-				customFieldJSONObject.getJSONObject("customValue");
-
-			if (customValueJSONObject == null) {
-				continue;
-			}
-
-			if (customValueJSONObject.get("data") instanceof BigDecimal) {
-				BigDecimal customValue = (BigDecimal)customValueJSONObject.get(
-					"data");
-
-				expandoBridge.setAttribute(
-					customFieldJSONObject.getString("name"),
-					customValue.doubleValue());
-
-				continue;
-			}
-
-			expandoBridge.setAttribute(
-				customFieldJSONObject.getString("name"),
-				(Serializable)customValueJSONObject.get("data"));
-		}
-	}
-
 	private void _addWarehouseQuantities(
 			JSONObject skuJSONObject, long[] commerceInventoryWarehouseIds,
 			ServiceContext serviceContext, CPInstance cpInstance)
@@ -317,8 +266,9 @@ public class CPDefinitionsImporter {
 					addOrUpdateCommerceInventoryWarehouseItem(
 						StringPool.BLANK, serviceContext.getCompanyId(),
 						serviceContext.getUserId(),
-						commerceInventoryWarehouseId, quantity,
-						cpInstance.getSku(), StringPool.BLANK);
+						commerceInventoryWarehouseId,
+						BigDecimal.valueOf(quantity), cpInstance.getSku(),
+						StringPool.BLANK);
 			}
 		}
 	}
@@ -423,9 +373,6 @@ public class CPDefinitionsImporter {
 					externalReferenceCode, company.getCompanyId());
 
 		if (cpDefinition != null) {
-			_addExpandoValue(
-				cpDefinition, jsonObject.getJSONArray("customFields"));
-
 			CommerceChannelRel commerceChannelRel =
 				_commerceChannelRelLocalService.fetchCommerceChannelRel(
 					CPDefinition.class.getName(),
@@ -495,8 +442,6 @@ public class CPDefinitionsImporter {
 				subscriptionInfoJSONObject),
 			maxSubscriptionCycles, assetCategoryIds, assetTagNames,
 			serviceContext);
-
-		_addExpandoValue(cpDefinition, jsonObject.getJSONArray("customFields"));
 
 		serviceContext.setWorkflowAction(originalWorkflowAction);
 
@@ -598,19 +543,26 @@ public class CPDefinitionsImporter {
 			"displayAvailability");
 		boolean displayStockQuantity = jsonObject.getBoolean(
 			"displayStockQuantity");
-		int minStockQuantity = jsonObject.getInt("minStockQuantity");
+		BigDecimal minStockQuantity = BigDecimal.valueOf(
+			jsonObject.getInt("minStockQuantity"));
 		boolean backOrders = jsonObject.getBoolean("backOrders");
-		int minOrderQuantity = jsonObject.getInt(
-			"minOrderQuantity",
-			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY);
-		int maxOrderQuantity = jsonObject.getInt(
-			"maxOrderQuantity",
-			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY);
+		BigDecimal minOrderQuantity = BigDecimal.valueOf(
+			jsonObject.getInt(
+				"minOrderQuantity",
+				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY.
+					intValue()));
+		BigDecimal maxOrderQuantity = BigDecimal.valueOf(
+			jsonObject.getInt(
+				"maxOrderQuantity",
+				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY.
+					intValue()));
 		String allowedOrderQuantities = jsonObject.getString(
 			"allowedOrderQuantities");
-		int multipleOrderQuantity = jsonObject.getInt(
-			"multipleOrderQuantity",
-			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY);
+		BigDecimal multipleOrderQuantity = BigDecimal.valueOf(
+			jsonObject.getInt(
+				"multipleOrderQuantity",
+				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY.
+					intValue()));
 
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.

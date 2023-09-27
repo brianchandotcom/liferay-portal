@@ -1,21 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
@@ -31,6 +23,7 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
+import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -139,7 +132,7 @@ public class SalesforceObjectEntryManagerImpl
 
 		return _getObjectEntries(
 			companyId, objectDefinition, scopeKey, dtoConverterContext,
-			pagination, search, sorts);
+			pagination, filterString, search, sorts);
 	}
 
 	@Override
@@ -201,7 +194,7 @@ public class SalesforceObjectEntryManagerImpl
 			objectDefinition, scopeKey);
 	}
 
-	private String _getAccountRestrictionPredicateString(
+	private String _getAccountRestrictionSOSQLString(
 			long companyId, DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
@@ -217,7 +210,7 @@ public class SalesforceObjectEntryManagerImpl
 			objectDefinition.getAccountEntryRestrictedObjectFieldId());
 
 		return StringBundler.concat(
-			" WHERE ", objectField.getExternalReferenceCode(), " IN ('",
+			objectField.getExternalReferenceCode(), " IN ('",
 			StringUtil.merge(
 				TransformUtil.transform(
 					_accountEntryUserRelLocalService.
@@ -229,7 +222,7 @@ public class SalesforceObjectEntryManagerImpl
 
 						return accountEntry.getExternalReferenceCode();
 					}),
-				", '"),
+				"', '"),
 			"')");
 	}
 
@@ -262,20 +255,6 @@ public class SalesforceObjectEntryManagerImpl
 		};
 	}
 
-	private String _getListTypeEntryExternalReferenceCode(
-		long listTypeDefinitionId, String listTypeEntryKey) {
-
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.fetchListTypeEntry(
-				listTypeDefinitionId, listTypeEntryKey);
-
-		if (listTypeEntry == null) {
-			return null;
-		}
-
-		return listTypeEntry.getExternalReferenceCode();
-	}
-
 	private String _getLocation(
 		ObjectDefinition objectDefinition, Pagination pagination,
 		String predicateString, String search, Sort[] sorts) {
@@ -284,7 +263,7 @@ public class SalesforceObjectEntryManagerImpl
 			return HttpComponentsUtil.addParameter(
 				"search", "q",
 				StringBundler.concat(
-					"FIND {", search, "} IN ALL FIELDS RETURNING ",
+					"FIND {`", search, "`} IN ALL FIELDS RETURNING ",
 					objectDefinition.getExternalReferenceCode(), "(FIELDS(ALL)",
 					predicateString,
 					_getSorts(objectDefinition.getObjectDefinitionId(), sorts),
@@ -303,15 +282,16 @@ public class SalesforceObjectEntryManagerImpl
 	private Page<ObjectEntry> _getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			DTOConverterContext dtoConverterContext, Pagination pagination,
-			String search, Sort[] sorts)
+			String filterString, String search, Sort[] sorts)
 		throws Exception {
 
 		JSONObject responseJSONObject = _salesforceHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			_getLocation(
 				objectDefinition, pagination,
-				_getAccountRestrictionPredicateString(
-					companyId, dtoConverterContext, objectDefinition, scopeKey),
+				_getSOSQLString(
+					companyId, dtoConverterContext, objectDefinition,
+					filterString, scopeKey),
 				search, sorts));
 
 		if ((responseJSONObject == null) ||
@@ -330,8 +310,9 @@ public class SalesforceObjectEntryManagerImpl
 			pagination,
 			_getTotalCount(
 				companyId, objectDefinition,
-				_getAccountRestrictionPredicateString(
-					companyId, dtoConverterContext, objectDefinition, scopeKey),
+				_getSOSQLString(
+					companyId, dtoConverterContext, objectDefinition,
+					filterString, scopeKey),
 				scopeKey, search));
 	}
 
@@ -423,6 +404,42 @@ public class SalesforceObjectEntryManagerImpl
 		return sb.toString();
 	}
 
+	private String _getSOSQLString(
+			long companyId, DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, String filterString,
+			String scopeKey)
+		throws Exception {
+
+		String accountRestrictionSOSQLString =
+			_getAccountRestrictionSOSQLString(
+				companyId, dtoConverterContext, objectDefinition, scopeKey);
+
+		String filterSOSQLString = _filterFactory.create(
+			filterString, objectDefinition);
+
+		String sosqlString = StringPool.BLANK;
+
+		if (Validator.isNull(accountRestrictionSOSQLString) &&
+			Validator.isNotNull(filterSOSQLString)) {
+
+			sosqlString = " WHERE " + filterSOSQLString;
+		}
+		else if (Validator.isNotNull(accountRestrictionSOSQLString) &&
+				 Validator.isNull(filterSOSQLString)) {
+
+			sosqlString = " WHERE " + accountRestrictionSOSQLString;
+		}
+		else if (Validator.isNotNull(accountRestrictionSOSQLString) &&
+				 Validator.isNotNull(filterSOSQLString)) {
+
+			sosqlString = StringBundler.concat(
+				" WHERE ", filterSOSQLString, " AND ",
+				accountRestrictionSOSQLString);
+		}
+
+		return sosqlString;
+	}
+
 	private int _getTotalCount(
 		long companyId, ObjectDefinition objectDefinition,
 		String predicateString, String scopeKey, String search) {
@@ -503,7 +520,7 @@ public class SalesforceObjectEntryManagerImpl
 
 				for (String listTypeEntryKey : listTypeEntryKeys) {
 					String listTypeEntryExternalReferenceCode =
-						_getListTypeEntryExternalReferenceCode(
+						ListTypeEntryUtil.getListTypeEntryExternalReferenceCode(
 							objectField.getListTypeDefinitionId(),
 							listTypeEntryKey);
 
@@ -533,7 +550,7 @@ public class SalesforceObjectEntryManagerImpl
 					listTypeEntryKey = valueMap.get("key");
 				}
 
-				value = _getListTypeEntryExternalReferenceCode(
+				value = ListTypeEntryUtil.getListTypeEntryExternalReferenceCode(
 					objectField.getListTypeDefinitionId(), listTypeEntryKey);
 			}
 
@@ -705,6 +722,11 @@ public class SalesforceObjectEntryManagerImpl
 		).put(
 			"userName", "OwnerId"
 		).build();
+
+	@Reference(
+		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE + ")"
+	)
+	private FilterFactory<String> _filterFactory;
 
 	@Reference
 	private InlineSQLHelper _inlineSQLHelper;

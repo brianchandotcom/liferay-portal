@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.service.http;
@@ -87,9 +78,10 @@ public class OrganizationServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Organization addOrganization(
-			HttpPrincipal httpPrincipal, long parentOrganizationId, String name,
-			String type, long regionId, long countryId, long statusListTypeId,
-			String comments, boolean site,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusListTypeId, String comments,
+			boolean site,
 			java.util.List<com.liferay.portal.kernel.model.Address> addresses,
 			java.util.List<com.liferay.portal.kernel.model.EmailAddress>
 				emailAddresses,
@@ -105,9 +97,10 @@ public class OrganizationServiceHttp {
 				_addOrganizationParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, parentOrganizationId, name, type, regionId,
-				countryId, statusListTypeId, comments, site, addresses,
-				emailAddresses, orgLabors, phones, websites, serviceContext);
+				methodKey, externalReferenceCode, parentOrganizationId, name,
+				type, regionId, countryId, statusListTypeId, comments, site,
+				addresses, emailAddresses, orgLabors, phones, websites,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -138,9 +131,10 @@ public class OrganizationServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Organization addOrganization(
-			HttpPrincipal httpPrincipal, long parentOrganizationId, String name,
-			String type, long regionId, long countryId, long statusListTypeId,
-			String comments, boolean site,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusListTypeId, String comments,
+			boolean site,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -150,8 +144,9 @@ public class OrganizationServiceHttp {
 				_addOrganizationParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, parentOrganizationId, name, type, regionId,
-				countryId, statusListTypeId, comments, site, serviceContext);
+				methodKey, externalReferenceCode, parentOrganizationId, name,
+				type, regionId, countryId, statusListTypeId, comments, site,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -1116,11 +1111,11 @@ public class OrganizationServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Organization
 			updateOrganization(
-				HttpPrincipal httpPrincipal, long organizationId,
-				long parentOrganizationId, String name, String type,
-				long regionId, long countryId, long statusListTypeId,
-				String comments, boolean hasLogo, byte[] logoBytes,
-				boolean site,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long organizationId, long parentOrganizationId, String name,
+				String type, long regionId, long countryId,
+				long statusListTypeId, String comments, boolean hasLogo,
+				byte[] logoBytes, boolean site,
 				java.util.List<com.liferay.portal.kernel.model.Address>
 					addresses,
 				java.util.List<com.liferay.portal.kernel.model.EmailAddress>
@@ -1139,10 +1134,10 @@ public class OrganizationServiceHttp {
 				_updateOrganizationParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, organizationId, parentOrganizationId, name, type,
-				regionId, countryId, statusListTypeId, comments, hasLogo,
-				logoBytes, site, addresses, emailAddresses, orgLabors, phones,
-				websites, serviceContext);
+				methodKey, externalReferenceCode, organizationId,
+				parentOrganizationId, name, type, regionId, countryId,
+				statusListTypeId, comments, hasLogo, logoBytes, site, addresses,
+				emailAddresses, orgLabors, phones, websites, serviceContext);
 
 			Object returnObj = null;
 
@@ -1174,10 +1169,10 @@ public class OrganizationServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Organization
 			updateOrganization(
-				HttpPrincipal httpPrincipal, long organizationId,
-				long parentOrganizationId, String name, String type,
-				long regionId, long countryId, long statusListTypeId,
-				String comments, boolean site,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long organizationId, long parentOrganizationId, String name,
+				String type, long regionId, long countryId,
+				long statusListTypeId, String comments, boolean site,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1187,9 +1182,9 @@ public class OrganizationServiceHttp {
 				_updateOrganizationParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, organizationId, parentOrganizationId, name, type,
-				regionId, countryId, statusListTypeId, comments, site,
-				serviceContext);
+				methodKey, externalReferenceCode, organizationId,
+				parentOrganizationId, name, type, regionId, countryId,
+				statusListTypeId, comments, site, serviceContext);
 
 			Object returnObj = null;
 
@@ -1226,16 +1221,16 @@ public class OrganizationServiceHttp {
 		new Class[] {long.class, long[].class};
 	private static final Class<?>[] _addOrganizationParameterTypes1 =
 		new Class[] {
-			long.class, String.class, String.class, long.class, long.class,
-			long.class, String.class, boolean.class, java.util.List.class,
+			String.class, long.class, String.class, String.class, long.class,
+			long.class, long.class, String.class, boolean.class,
 			java.util.List.class, java.util.List.class, java.util.List.class,
-			java.util.List.class,
+			java.util.List.class, java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOrganizationParameterTypes2 =
 		new Class[] {
-			long.class, String.class, String.class, long.class, long.class,
-			long.class, String.class, boolean.class,
+			String.class, long.class, String.class, String.class, long.class,
+			long.class, long.class, String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
@@ -1317,16 +1312,17 @@ public class OrganizationServiceHttp {
 	};
 	private static final Class<?>[] _updateOrganizationParameterTypes27 =
 		new Class[] {
-			long.class, long.class, String.class, String.class, long.class,
-			long.class, long.class, String.class, boolean.class, byte[].class,
-			boolean.class, java.util.List.class, java.util.List.class,
+			String.class, long.class, long.class, String.class, String.class,
+			long.class, long.class, long.class, String.class, boolean.class,
+			byte[].class, boolean.class, java.util.List.class,
 			java.util.List.class, java.util.List.class, java.util.List.class,
+			java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateOrganizationParameterTypes28 =
 		new Class[] {
-			long.class, long.class, String.class, String.class, long.class,
-			long.class, long.class, String.class, boolean.class,
+			String.class, long.class, long.class, String.class, String.class,
+			long.class, long.class, long.class, String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

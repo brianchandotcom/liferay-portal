@@ -403,6 +403,14 @@
 	<td>//a[contains(.,'${key_dmRepositoryName}')]</td>
 	<td></td>
 </tr>
+
+<!--SETTINGS-->
+
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//div[contains(@class,'sheet-lg')]//div[contains(@class,'sheet-header')]//h2[contains(text(),'${key_portletTitle}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

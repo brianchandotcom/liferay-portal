@@ -1,18 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayPanel from '@clayui/panel';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -36,7 +29,6 @@ import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConf
 import isEmptyArray from '../../../../../../app/utils/isEmptyArray';
 import isEmptyObject from '../../../../../../app/utils/isEmptyObject';
 import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
-import Collapse from '../../../../../../common/components/Collapse';
 import getLayoutDataItemPropTypes from '../../../../../../prop_types/getLayoutDataItemPropTypes';
 import {CommonStyles} from './CommonStyles';
 import {FieldSet} from './FieldSet';
@@ -96,10 +88,16 @@ export function CollectionFilterGeneralPanel({item}) {
 		return <ClayLoadingIndicator className="my-0" size="sm" />;
 	}
 
+	const hasCollection = isEmptyObject(filterableCollections);
+
 	return (
 		<>
-			<div className="mb-3">
-				{isEmptyObject(filterableCollections) ? (
+			<div
+				className={classNames('mb-3', {
+					'panel-group-sm': !hasCollection,
+				})}
+			>
+				{hasCollection ? (
 					<p
 						aria-live="polite"
 						className="alert alert-info mt-2 text-center"
@@ -177,65 +175,72 @@ export function CollectionFilterGeneralPanelContent({
 
 	return (
 		<>
-			<Collapse
-				label={Liferay.Language.get('collection-filter-options')}
-				open
+			<ClayPanel
+				collapsable
+				defaultExpanded
+				displayTitle={Liferay.Language.get('collection-filter-options')}
+				displayType="unstyled"
+				showCollapseIcon
 			>
-				<TargetCollectionsField
-					enableCompatibleCollections
-					filterableCollections={filterableCollections}
-					onValueSelect={(name, value) => {
-						if (!isEmptyArray(value)) {
-							onValueSelect(name, value);
-						}
-						else {
-							const nextConfigurationValues = {
-								filterKey: '',
-								[name]: value,
-							};
+				<ClayPanel.Body>
+					<TargetCollectionsField
+						enableCompatibleCollections
+						filterableCollections={filterableCollections}
+						onValueSelect={(name, value) => {
+							if (!isEmptyArray(value)) {
+								onValueSelect(name, value);
+							}
+							else {
+								const nextConfigurationValues = {
+									filterKey: '',
+									[name]: value,
+								};
 
-							dispatch(
-								updateFragmentConfiguration({
-									configurationValues: nextConfigurationValues,
-									fragmentEntryLink,
-									languageId,
-								})
-							);
-						}
-					}}
-					value={targetCollections}
-				/>
+								dispatch(
+									updateFragmentConfiguration({
+										configurationValues: nextConfigurationValues,
+										fragmentEntryLink,
+										languageId,
+									})
+								);
+							}
+						}}
+						value={targetCollections}
+					/>
 
-				{!isEmptyArray(targetCollections) &&
-					!isEmptyObject(collectionFilters) && (
-						<SelectField
-							field={{
-								label: Liferay.Language.get('filter'),
-								name: 'filterKey',
-								typeOptions: {
-									validValues: [
-										{
-											label: Liferay.Language.get('none'),
-											value: '',
-										},
-										...filterSupportedFilters({
-											collectionFilters: Object.values(
-												collectionFilters
-											),
-											filterableCollections,
-											targetCollections,
-										}).map(({key, label}) => ({
-											label,
-											value: key,
-										})),
-									],
-								},
-							}}
-							onValueSelect={onValueSelect}
-							value={configurationValues.filterKey}
-						/>
-					)}
-			</Collapse>
+					{!isEmptyArray(targetCollections) &&
+						!isEmptyObject(collectionFilters) && (
+							<SelectField
+								field={{
+									label: Liferay.Language.get('filter'),
+									name: 'filterKey',
+									typeOptions: {
+										validValues: [
+											{
+												label: Liferay.Language.get(
+													'none'
+												),
+												value: '',
+											},
+											...filterSupportedFilters({
+												collectionFilters: Object.values(
+													collectionFilters
+												),
+												filterableCollections,
+												targetCollections,
+											}).map(({key, label}) => ({
+												label,
+												value: key,
+											})),
+										],
+									},
+								}}
+								onValueSelect={onValueSelect}
+								value={configurationValues.filterKey}
+							/>
+						)}
+				</ClayPanel.Body>
+			</ClayPanel>
 
 			{!isEmptyArray(targetCollections) &&
 				selectedFilter?.configuration &&

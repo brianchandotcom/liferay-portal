@@ -4,6 +4,7 @@ lib/development/com.liferay.ant.get.file.set.jar
 lib/development/com.liferay.ant.heap.dump.jar
 lib/development/com.liferay.ant.manifest.helper.jar
 lib/development/com.liferay.ant.mirrors.get.jar
+lib/development/com.liferay.ant.secure.property.jar
 lib/development/com.liferay.ant.sync.dir.jar
 lib/development/com.liferay.bnd.invoker.jar
 tmp/lib-pre/com.liferay.osgi.service.tracker.collections.jar

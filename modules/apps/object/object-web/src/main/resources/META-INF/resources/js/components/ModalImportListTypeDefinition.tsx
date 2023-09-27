@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
@@ -20,6 +11,7 @@ import {API, Input} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {FormEvent, useEffect, useRef, useState} from 'react';
 
+import {FormDataJSONFormat, jsonToFormData} from '../utils/formData';
 import {ModalImportWarning} from './ModalImportWarning';
 interface ModalImportListTypeDefinitionProps {
 	importListTypeDefinitionURL: string;
@@ -30,7 +22,6 @@ interface ModalImportListTypeDefinitionProps {
 type TFile = {
 	fileName?: string;
 	inputFile?: File | null;
-	inputFileValue?: string;
 };
 
 export default function ModalImportListTypeDefinition({
@@ -51,18 +42,14 @@ export default function ModalImportListTypeDefinition({
 	const importListTypeDefinitionFormId = `${portletNamespace}importListTypeDefinitionForm`;
 	const nameInputId = `${portletNamespace}name`;
 	const listTypeDefinitionJSONInputId = `${portletNamespace}listTypeDefinitionJSON`;
-	const [{fileName, inputFile, inputFileValue}, setFile] = useState<TFile>(
-		{}
-	);
+	const [{fileName, inputFile}, setFile] = useState<TFile>({});
 	const {observer, onClose} = useModal({
 		onClose: () => {
-			setError('');
 			setVisible(false);
 			setExternalReferenceCode('');
 			setFile({
 				fileName: '',
 				inputFile: null,
-				inputFileValue: '',
 			});
 			setName('');
 			setImportFormData(undefined);
@@ -81,7 +68,11 @@ export default function ModalImportListTypeDefinition({
 
 	const handleImport = async (formData: FormData) => {
 		try {
-			await API.save(importListTypeDefinitionURL, formData, 'POST');
+			await API.save({
+				item: formData,
+				method: 'POST',
+				url: importListTypeDefinitionURL,
+			});
 
 			window.location.reload();
 		}
@@ -94,15 +85,29 @@ export default function ModalImportListTypeDefinition({
 		event.preventDefault();
 
 		const formData = new FormData(event.currentTarget);
+		const formListType: FormDataJSONFormat = {};
+		formData.forEach((value, key) => {
+			if (key.includes('listTypeDefinitionJSON')) {
+				formListType[key] = inputFile as File;
+
+				return;
+			}
+
+			formListType[key] = value;
+
+			return;
+		});
+
+		const newFormData = jsonToFormData(formListType);
 		const response = await fetch(
 			`/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${externalReferenceCode}`
 		);
 
-		if (!response.ok) {
-			handleImport(formData);
+		if (response.status === 204) {
+			handleImport(newFormData);
 		}
 		else {
-			setImportFormData(formData);
+			setImportFormData(newFormData);
 			setVisible(false);
 			setWarningModalVisible(true);
 		}
@@ -133,9 +138,6 @@ export default function ModalImportListTypeDefinition({
 
 			<ClayModal.Body>
 				<ClayForm
-
-					// @ts-ignore
-
 					id={importListTypeDefinitionFormId}
 					onSubmit={handleSubmit}
 				>
@@ -205,7 +207,6 @@ export default function ModalImportListTypeDefinition({
 											setFile({
 												fileName: '',
 												inputFile: null,
-												inputFileValue: '',
 											});
 										}}
 									>
@@ -236,34 +237,32 @@ export default function ModalImportListTypeDefinition({
 						name={listTypeDefinitionJSONInputId}
 						onChange={({target}) => {
 							const inputFile = target.files?.item(0);
+							if (inputFile) {
+								setFile({
+									fileName: inputFile?.name,
+									inputFile,
+								});
 
-							setFile({
-								fileName: inputFile?.name,
-								inputFile,
-								inputFileValue: target.value,
-							});
+								const fileReader = new FileReader();
+								fileReader.readAsText(inputFile);
+								fileReader.onload = () => {
+									try {
+										const objectDefinitionJSON = JSON.parse(
+											fileReader.result as string
+										) as {externalReferenceCode: string};
 
-							const fileReader = new FileReader();
-
-							fileReader.onload = () => {
-								try {
-									const objectDefinitionJSON = JSON.parse(
-										fileReader.result as string
-									) as {externalReferenceCode: string};
-
-									setExternalReferenceCode(
-										objectDefinitionJSON.externalReferenceCode
-									);
-								}
-								catch (error) {
-									setExternalReferenceCode('');
-								}
-							};
-							fileReader.readAsText(inputFile!);
+										setExternalReferenceCode(
+											objectDefinitionJSON.externalReferenceCode
+										);
+									}
+									catch (error) {
+										setExternalReferenceCode('');
+									}
+								};
+							}
 						}}
 						ref={inputFileRef}
 						type="file"
-						value={inputFileValue}
 					/>
 				</ClayForm>
 			</ClayModal.Body>

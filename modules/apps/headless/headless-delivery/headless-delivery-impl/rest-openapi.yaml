@@ -184,7 +184,6 @@ components:
                         A list of related contents to this blog post.
                     items:
                         $ref: "#/components/schemas/RelatedContent"
-                    readOnly: true
                     type: array
                 renderedContents:
                     description:
@@ -342,6 +341,10 @@ components:
             description:
                 Represents a client extension
             properties:
+                clientExtensionConfig:
+                    additionalProperties:
+                        type: string
+                    type: object
                 externalReferenceCode:
                     # @review
                     description:
@@ -1048,6 +1051,12 @@ components:
                     format: uri
                     readOnly: true
                     type: string
+                userGroupBriefs:
+                    description:
+                        A list of userGroups information.
+                    items:
+                        $ref: "#/components/schemas/UserGroupBrief"
+                    type: array
             type: object
         CreatorStatistics:
             # @review
@@ -2892,6 +2901,8 @@ components:
                     description:
                         The section's description.
                     type: string
+                friendlyUrlPath:
+                    type: string
                 id:
                     description:
                         The section's ID.
@@ -3137,6 +3148,14 @@ components:
                     # @review
                     description:
                         The localized submission of message type.
+                messageType:
+                    # @review
+                    description:
+                        The message form submission type (embedded, none).
+                    enum: [Embedded, None]
+                    type: string
+                showNotification:
+                    type: boolean
             type: object
         NavigationMenu:
             # @review
@@ -5078,6 +5097,11 @@ components:
                         The number of comments the structured content has received.
                     readOnly: true
                     type: integer
+                permissions:
+                    items:
+                        type: permission
+                    type: array
+                    writeOnly: true
                 priority:
                     # @review
                     description:
@@ -5330,6 +5354,22 @@ components:
                     # @review
                     description:
                         The localized submission of URL type.
+            type: object
+        UserGroupBrief:
+            description:
+                The author's user groups information.
+            properties:
+                id:
+                    description:
+                        The ID of the user group.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description:
+                        The name of the user group.
+                    readOnly: true
+                    type: string
             type: object
         UtilityPageTemplate:
             description:
@@ -5677,7 +5717,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '4.0.61'."
+        'com.liferay.headless.delivery.client', and version '4.0.65'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -13632,6 +13672,35 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["MessageBoardMessage"]
+    "/sites/{siteId}/message-board-section/by-friendly-url-path/{friendlyUrlPath}":
+        get:
+            operationId: getSiteMessageBoardSectionByFriendlyUrlPath
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardSection"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardSection"
+            tags: ["MessageBoardSection"]
     "/sites/{siteId}/message-board-sections":
         get:
             description:
@@ -15490,6 +15559,47 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/WikiPageAttachment"
             tags: ["WikiPageAttachment"]
+    "/sites/{siteId}/{userId}/message-board-messages/activity":
+        # @review
+        get:
+            description:
+                Retrieves the site's message board messages user's activity.
+            operationId: getSiteUserMessageBoardMessagesActivityPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardMessage"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardMessage"
+                                type: array
+            tags: ["MessageBoardMessage"]
     "/structured-content-folder/{structuredContentFolderId}/permissions":
         get:
             operationId: getStructuredContentFolderPermissionsPage

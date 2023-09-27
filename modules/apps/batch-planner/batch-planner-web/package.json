@@ -1,15 +1,26 @@
 {
 	"dependencies": {
+		"@clayui/alert": "3.93.0",
+		"@clayui/button": "3.100.0",
+		"@clayui/form": "3.104.0",
+		"@clayui/icon": "3.56.0",
+		"@clayui/label": "3.88.0",
+		"@clayui/modal": "3.104.0",
+		"@clayui/progress-bar": "3.65.0",
+		"@clayui/table": "3.56.0",
 		"@liferay/frontend-js-react-web": "*",
+		"classnames": "2.3.1",
+		"fetch-mock": "5.13.1",
 		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},
 	"jest": {
 		"setupFiles": [
-			"<rootDir>test/setup.js"
+			"<rootDir>/test/setup.js"
 		],
 		"testPathIgnorePatterns": [
-			"setup.js"
+			"<rootDir>/test/setup.js"
 		]
 	},
 	"name": "@liferay/batch-planner-web",
@@ -20,5 +31,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "1.0.79"
+	"version": "1.0.82"
 }

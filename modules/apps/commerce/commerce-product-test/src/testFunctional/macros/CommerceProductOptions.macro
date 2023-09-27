@@ -148,6 +148,56 @@ definition {
 				value1 = ${key_priceType});
 		}
 
+		if (isSet(productOptionDefineExternally)) {
+			if (${productOptionDefineExternally} == "true") {
+				Check.checkNotVisible(
+					key_toggleSwitchLabel = "Define Externally",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				Button.clickSave();
+
+				Select(
+					key_selectFieldLabel = "Collection Provider",
+					locator1 = "CommerceEntry#ANY_SELECT",
+					value1 = ${collectionProvider});
+
+				Button.clickSave();
+			}
+			else {
+				Uncheck.uncheckNotVisible(
+					key_toggleSwitchLabel = "Define Externally",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+
+		if (isSet(productAddOptionCategoriesList)) {
+			for (var categoryName : list ${productAddOptionCategoriesList}) {
+				Type(
+					locator1 = "ACSettings#INVITE_USERS_INPUT",
+					value1 = ${categoryName});
+
+				KeyPress(
+					locator1 = "ACSettings#INVITE_USERS_INPUT",
+					value1 = "\RETURN");
+
+				AssertElementPresent(
+					key_category = ${categoryName},
+					locator1 = "CommerceEntry#OPTION_CATEGORY");
+			}
+		}
+
+		if (isSet(productRemoveOptionCategories)) {
+			for (var categoryName : list ${categoryNameList}) {
+				Click(
+					key_category = ${categoryName},
+					locator1 = "CommerceEntry#REMOVE_OPTION_CATEGORY");
+
+				AssertElementNotPresent(
+					key_category = ${categoryName},
+					locator1 = "CommerceEntry#OPTION_CATEGORY");
+			}
+		}
+
 		Button.clickSave();
 	}
 

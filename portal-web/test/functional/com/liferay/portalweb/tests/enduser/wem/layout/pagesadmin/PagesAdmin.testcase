@@ -4,7 +4,6 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
 	static var randomSiteName = StringUtil.randomString(8);
@@ -12,6 +11,10 @@ definition {
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
@@ -826,9 +829,11 @@ definition {
 					layoutName = "Test Page Name ${n}",
 					type = "content");
 
-				JSONLayout.publishLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Page Name ${n}");
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name ${n}",
+					siteName = ${randomSiteName});
+
+				PageEditor.publish();
 			}
 		}
 
@@ -839,9 +844,11 @@ definition {
 				parentLayoutName = "Test Page Name 1",
 				type = "content");
 
-			JSONLayout.publishLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Child Page Name 1");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Child Page Name 1",
+				siteName = ${randomSiteName});
+
+			PageEditor.publish();
 		}
 
 		task ("View child page in Pages admin") {
@@ -1878,7 +1885,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Copy",
+				menuItem = "Make a Copy",
 				pageName = "Test Content Page Name");
 
 			DropdownMenuItem.click(menuItem = "Page With Permissions");
@@ -1942,7 +1949,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Copy",
+				menuItem = "Make a Copy",
 				pageName = "Test Widget Page Name");
 
 			DropdownMenuItem.click(menuItem = "Page With Permissions");
@@ -2013,7 +2020,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${organizationName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Copy",
+				menuItem = "Make a Copy",
 				pageName = "Test Content Page Name");
 
 			DropdownMenuItem.click(menuItem = "Page With Permissions");
@@ -2062,7 +2069,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${organizationName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Copy",
+				menuItem = "Make a Copy",
 				pageName = "Test Widget Page Name");
 
 			DropdownMenuItem.click(menuItem = "Page With Permissions");
@@ -2545,7 +2552,7 @@ definition {
 
 		task ("When the page designer creates a copy of this page with permissions") {
 			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Copy",
+				menuItem = "Make a Copy",
 				pageName = "Test Content Page Name");
 
 			DropdownMenuItem.click(menuItem = "Page With Permissions");
@@ -2569,6 +2576,34 @@ definition {
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_roleTitle = "Guest",
 				locator1 = "Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX");
+		}
+	}
+
+	@description = "This is a test for LPS-175136. View Target Type and Query String are moved to URL module in General section."
+	@priority = 3
+	test ViewURLSectionOnGeneralSheet {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator configures the content page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Content Page Name");
+		}
+
+		task ("Then the page creators sees the URL section on the General sheet") {
+			for (var fieldLabel : list "Friendly URL,Query String,Target type,Target") {
+				AssertVisible(
+					key_fieldLabel = ${fieldLabel},
+					key_sectionTitle = "URL",
+					locator1 = "PagesAdmin#FIELD_LABEL_IN_SECTION");
+			}
 		}
 	}
 

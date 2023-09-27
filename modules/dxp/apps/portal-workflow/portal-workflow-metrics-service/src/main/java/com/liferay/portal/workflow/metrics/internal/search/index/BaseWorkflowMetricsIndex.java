@@ -1,19 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -27,7 +20,13 @@ import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
+import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndex;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -38,7 +37,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	@Override
 	public boolean createIndex(long companyId) throws PortalException {
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
-			_hasIndex(getIndexName(companyId))) {
+			exists(companyId)) {
 
 			return false;
 		}
@@ -61,9 +60,42 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	}
 
 	@Override
+	public boolean exists(long companyId) {
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+			return false;
+		}
+
+		Set<String> indexNames = portalCache.get(companyId);
+
+		if ((indexNames != null) &&
+			indexNames.contains(getIndexName(companyId))) {
+
+			return true;
+		}
+
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(getIndexName(companyId));
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+		if (indicesExistsIndexResponse.isExists()) {
+			if (indexNames == null) {
+				indexNames = new HashSet<>();
+			}
+
+			indexNames.add(getIndexName(companyId));
+
+			portalCache.put(companyId, indexNames);
+		}
+
+		return indicesExistsIndexResponse.isExists();
+	}
+
+	@Override
 	public boolean removeIndex(long companyId) throws PortalException {
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
-			!_hasIndex(getIndexName(companyId))) {
+			!exists(companyId)) {
 
 			return false;
 		}
@@ -71,8 +103,37 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 		searchEngineAdapter.execute(
 			new DeleteIndexRequest(getIndexName(companyId)));
 
+		Set<String> indexNames = portalCache.get(companyId);
+
+		if (indexNames == null) {
+			return true;
+		}
+
+		indexNames.remove(getIndexName(companyId));
+
+		portalCache.put(companyId, indexNames);
+
 		return true;
 	}
+
+	@Activate
+	protected void activate() {
+		if (portalCache != null) {
+			return;
+		}
+
+		portalCache =
+			(PortalCache<Long, Set<String>>)singleVMPool.getPortalCache(
+				BaseWorkflowMetricsIndex.class.getName());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		singleVMPool.removePortalCache(
+			BaseWorkflowMetricsIndex.class.getName());
+	}
+
+	protected PortalCache<Long, Set<String>> portalCache;
 
 	@Reference
 	protected SearchCapabilities searchCapabilities;
@@ -80,15 +141,8 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
 
-	private boolean _hasIndex(String indexName) {
-		IndicesExistsIndexRequest indicesExistsIndexRequest =
-			new IndicesExistsIndexRequest(indexName);
-
-		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			searchEngineAdapter.execute(indicesExistsIndexRequest);
-
-		return indicesExistsIndexResponse.isExists();
-	}
+	@Reference
+	protected SingleVMPool singleVMPool;
 
 	private String _readJSON(String fileName) {
 		try {

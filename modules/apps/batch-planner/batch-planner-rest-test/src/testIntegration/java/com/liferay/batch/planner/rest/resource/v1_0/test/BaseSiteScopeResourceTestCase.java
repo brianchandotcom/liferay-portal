@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.batch.planner.rest.resource.v1_0.test;
@@ -191,25 +182,28 @@ public abstract class BaseSiteScopeResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlanInternalClassNameSiteScopesPage() throws Exception {
-		String internalClassName =
-			testGetPlanInternalClassNameSiteScopesPage_getInternalClassName();
-		String irrelevantInternalClassName =
-			testGetPlanInternalClassNameSiteScopesPage_getIrrelevantInternalClassName();
+	public void testGetPlanInternalClassNameKeySiteScopesPage()
+		throws Exception {
+
+		String internalClassNameKey =
+			testGetPlanInternalClassNameKeySiteScopesPage_getInternalClassNameKey();
+		String irrelevantInternalClassNameKey =
+			testGetPlanInternalClassNameKeySiteScopesPage_getIrrelevantInternalClassNameKey();
 
 		Page<SiteScope> page =
-			siteScopeResource.getPlanInternalClassNameSiteScopesPage(
-				internalClassName, null);
+			siteScopeResource.getPlanInternalClassNameKeySiteScopesPage(
+				internalClassNameKey, null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		if (irrelevantInternalClassName != null) {
+		if (irrelevantInternalClassNameKey != null) {
 			SiteScope irrelevantSiteScope =
-				testGetPlanInternalClassNameSiteScopesPage_addSiteScope(
-					irrelevantInternalClassName, randomIrrelevantSiteScope());
+				testGetPlanInternalClassNameKeySiteScopesPage_addSiteScope(
+					irrelevantInternalClassNameKey,
+					randomIrrelevantSiteScope());
 
-			page = siteScopeResource.getPlanInternalClassNameSiteScopesPage(
-				irrelevantInternalClassName, null);
+			page = siteScopeResource.getPlanInternalClassNameKeySiteScopesPage(
+				irrelevantInternalClassNameKey, null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -218,20 +212,20 @@ public abstract class BaseSiteScopeResourceTestCase {
 				(List<SiteScope>)page.getItems());
 			assertValid(
 				page,
-				testGetPlanInternalClassNameSiteScopesPage_getExpectedActions(
-					irrelevantInternalClassName));
+				testGetPlanInternalClassNameKeySiteScopesPage_getExpectedActions(
+					irrelevantInternalClassNameKey));
 		}
 
 		SiteScope siteScope1 =
-			testGetPlanInternalClassNameSiteScopesPage_addSiteScope(
-				internalClassName, randomSiteScope());
+			testGetPlanInternalClassNameKeySiteScopesPage_addSiteScope(
+				internalClassNameKey, randomSiteScope());
 
 		SiteScope siteScope2 =
-			testGetPlanInternalClassNameSiteScopesPage_addSiteScope(
-				internalClassName, randomSiteScope());
+			testGetPlanInternalClassNameKeySiteScopesPage_addSiteScope(
+				internalClassNameKey, randomSiteScope());
 
-		page = siteScopeResource.getPlanInternalClassNameSiteScopesPage(
-			internalClassName, null);
+		page = siteScopeResource.getPlanInternalClassNameKeySiteScopesPage(
+			internalClassNameKey, null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -240,13 +234,13 @@ public abstract class BaseSiteScopeResourceTestCase {
 			(List<SiteScope>)page.getItems());
 		assertValid(
 			page,
-			testGetPlanInternalClassNameSiteScopesPage_getExpectedActions(
-				internalClassName));
+			testGetPlanInternalClassNameKeySiteScopesPage_getExpectedActions(
+				internalClassNameKey));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetPlanInternalClassNameSiteScopesPage_getExpectedActions(
-				String internalClassName)
+			testGetPlanInternalClassNameKeySiteScopesPage_getExpectedActions(
+				String internalClassNameKey)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -254,8 +248,9 @@ public abstract class BaseSiteScopeResourceTestCase {
 		return expectedActions;
 	}
 
-	protected SiteScope testGetPlanInternalClassNameSiteScopesPage_addSiteScope(
-			String internalClassName, SiteScope siteScope)
+	protected SiteScope
+			testGetPlanInternalClassNameKeySiteScopesPage_addSiteScope(
+				String internalClassNameKey, SiteScope siteScope)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -263,7 +258,7 @@ public abstract class BaseSiteScopeResourceTestCase {
 	}
 
 	protected String
-			testGetPlanInternalClassNameSiteScopesPage_getInternalClassName()
+			testGetPlanInternalClassNameKeySiteScopesPage_getInternalClassNameKey()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -271,7 +266,7 @@ public abstract class BaseSiteScopeResourceTestCase {
 	}
 
 	protected String
-			testGetPlanInternalClassNameSiteScopesPage_getIrrelevantInternalClassName()
+			testGetPlanInternalClassNameKeySiteScopesPage_getIrrelevantInternalClassNameKey()
 		throws Exception {
 
 		return null;

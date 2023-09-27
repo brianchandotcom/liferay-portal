@@ -1,25 +1,16 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.build.Build;
-import com.liferay.jethr0.build.repository.BuildRepository;
-import com.liferay.jethr0.build.repository.BuildRunRepository;
-import com.liferay.jethr0.build.run.BuildRun;
-import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
+import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.json.JSONObject;
 
@@ -30,47 +21,48 @@ public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 
 	@Override
 	public String process() throws Exception {
-		BuildRun buildRun = getBuildRun();
+		BuildRunEntity buildRunEntity = getBuildRun();
 
-		buildRun.setDuration(getBuildDuration());
-		buildRun.setResult(getBuildRunResult());
-		buildRun.setState(BuildRun.State.COMPLETED);
+		buildRunEntity.setDuration(getBuildDuration());
+		buildRunEntity.setResult(getBuildRunResult());
+		buildRunEntity.setState(BuildRunEntity.State.COMPLETED);
 
-		Build build = buildRun.getBuild();
+		BuildEntity buildEntity = buildRunEntity.getBuildEntity();
 
-		build.setState(Build.State.COMPLETED);
+		buildEntity.setState(BuildEntity.State.COMPLETED);
 
-		Project project = build.getProject();
+		JobEntity jobEntity = buildEntity.getJobEntity();
 
-		Project.State projectState = Project.State.COMPLETED;
+		JobEntity.State jobState = JobEntity.State.COMPLETED;
 
-		for (Build projectBuild : project.getBuilds()) {
-			Build.State buildState = projectBuild.getState();
+		for (BuildEntity jobBuildEntity : jobEntity.getBuildEntities()) {
+			BuildEntity.State buildState = jobBuildEntity.getState();
 
-			if (buildState != Build.State.COMPLETED) {
-				projectState = Project.State.RUNNING;
+			if (buildState != BuildEntity.State.COMPLETED) {
+				jobState = JobEntity.State.RUNNING;
 
 				break;
 			}
 		}
 
-		if (projectState == Project.State.COMPLETED) {
-			project.setState(projectState);
+		if (jobState == JobEntity.State.COMPLETED) {
+			jobEntity.setState(jobState);
 
-			ProjectRepository projectRepository = getProjectRepository();
+			JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
-			projectRepository.update(project);
+			jobEntityRepository.update(jobEntity);
 		}
 
-		BuildRepository buildRepository = getBuildRepository();
+		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
-		buildRepository.update(build);
+		buildEntityRepository.update(buildEntity);
 
-		BuildRunRepository buildRunRepository = getBuildRunRepository();
+		BuildRunEntityRepository buildRunEntityRepository =
+			getBuildRunRepository();
 
-		buildRunRepository.update(buildRun);
+		buildRunEntityRepository.update(buildRunEntity);
 
-		return buildRun.toString();
+		return buildRunEntity.toString();
 	}
 
 	protected BuildCompletedEventHandler(

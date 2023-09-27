@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- r*
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
@@ -18,100 +9,305 @@ import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import {openToast} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import {localStorage, openModal, openToast} from 'frontend-js-web';
+import React, {useCallback, useEffect, useState} from 'react';
 
-import APIApplicationsEndpointsTable from '../components/FDS/APIApplicationsEndpointsTable';
-import APIApplicationsSchemasTable from '../components/FDS/APIApplicationsSchemasTable';
+import EndpointsContent from '../components/EndpointsContent';
+import SchemasContent from '../components/SchemasContent';
 import {APIApplicationManagementToolbar} from './APIApplicationManagementToolbar';
+import {EditAPIApplicationContext} from './EditAPIApplicationContext';
 import BaseAPIApplicationField from './baseComponents/BaseAPIApplicationFields';
+import {CancelEditAPIApplicationModalContent} from './modals/CancelEditAPIApplicationModalContent';
+import {hasDataChanged, resetToFetched} from './utils/dataUtils';
 import {fetchJSON, updateData} from './utils/fetchUtil';
-import {getCurrentURLParamValue, updateHistory} from './utils/urlUtil';
+import {
+	getCurrentNavFromURL,
+	getCurrentURLParamValue,
+	updateHistory,
+} from './utils/urlUtil';
 
 import '../../css/main.scss';
 
 interface EditAPIApplicationProps {
 	apiURLPaths: APIURLPaths;
+	basePath: string;
 	portletId: string;
 }
 
-type DataError = {
-	baseURL: boolean;
-	title: boolean;
-};
-
 export default function EditAPIApplication({
 	apiURLPaths,
+	basePath,
 	portletId,
 }: EditAPIApplicationProps) {
-	const currentAPIApplicationID = getCurrentURLParamValue({
+	const currentAPIApplicationId = getCurrentURLParamValue({
 		paramSufix: 'apiApplicationId',
 		portletId,
 	});
 
-	const [data, setData] = useState<APIApplicationItem>();
-	const [title, setTitle] = useState<string>('');
-	const [activeTab, setActiveTab] = useState(
-		getCurrentURLParamValue(
-			{
-				paramSufix: 'editAPIApplicationNav',
-				portletId,
-			} || 'details'
-		)
+	const [activeNav, setActiveNav] = useState<ActiveNav>(
+		getCurrentNavFromURL({
+			portletId,
+		})
 	);
-	const [displayError, setDisplayError] = useState<DataError>({
+
+	const [displayError, setDisplayError] = useState<ApplicationDataError>({
 		baseURL: false,
 		title: false,
 	});
 
+	const [fetchedData, setFetchedData] = useState<FetchedData>({});
+
+	const [hideManagementButtons, setHideManagementButtons] = useState<boolean>(
+		false
+	);
+
+	const [isDataUnsaved, setIsDataUnsaved] = useState<boolean>(false);
+
+	const [localUIData, setLocalUIData] = useState<APIApplicationUIData>({
+		baseURL: '',
+		description: '',
+		title: '',
+	});
+
+	const defaultButtonProps = {onClick: () => {}, visible: true};
+	const [managementButtonsProps, setManagementButtonsProps] = useState<
+		ManagementButtonsProps
+	>({
+		cancel: defaultButtonProps,
+		publish: defaultButtonProps,
+		save: defaultButtonProps,
+	});
+
+	const [title, setTitle] = useState<string>('');
+	const [status, setStatus] = useState<ApplicationStatusKeys>('unpublished');
+
+	const fetchAPIApplication = () => {
+		fetchJSON<APIApplicationItem>({
+			input: apiURLPaths.applications + currentAPIApplicationId,
+		}).then((response) => {
+			if (response.id.toString() === currentAPIApplicationId) {
+				setFetchedData((previous) => ({
+					...previous,
+					apiApplication: response,
+				}));
+				setLocalUIData({
+					baseURL: response.baseURL,
+					description: response.description,
+					title: response.title,
+				});
+				setStatus(response.applicationStatus.key);
+				setTitle(response.title);
+			}
+		});
+	};
+
+	const handleCancel = () => {
+		if (
+			fetchedData?.apiApplication &&
+			hasDataChanged({
+				fetchedEntityData: fetchedData.apiApplication,
+				localUIData,
+			})
+		) {
+			openModal({
+				center: true,
+				contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
+					CancelEditAPIApplicationModalContent({
+						closeModal,
+						onConfirm: () => history.back(),
+					}),
+				id: 'confirmCancelEditModal',
+				size: 'md',
+				status: 'warning',
+			});
+		}
+		else {
+			history.back();
+		}
+	};
+
+	const handleUpdate = useCallback(
+		({
+			applicationStatusKey,
+			successMessage,
+		}: {
+			applicationStatusKey: 'published' | 'unpublished';
+			successMessage: string;
+		}) => {
+			const isDataValid = validateData();
+
+			if (isDataValid && localUIData && fetchedData.apiApplication) {
+				updateData<APIApplicationItem>({
+					dataToUpdate: {
+						applicationStatus: {key: applicationStatusKey},
+						baseURL: localUIData.baseURL,
+						description: localUIData.description,
+						title: localUIData.title,
+					},
+					method: 'PATCH',
+					onError: (error: string) => {
+						openToast({
+							message: error,
+							type: 'danger',
+						});
+					},
+					onSuccess: (responseJSON: APIApplicationItem) => {
+						setFetchedData((previous) => ({
+							...previous,
+							apiApplication: responseJSON,
+						}));
+						setIsDataUnsaved(false);
+						setTitle(responseJSON.title);
+						setStatus(responseJSON.applicationStatus.key);
+						openToast({
+							message: successMessage,
+							type: 'success',
+						});
+					},
+					url: fetchedData.apiApplication.actions.update.href,
+				});
+			}
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[localUIData]
+	);
+
+	const updateManagementButtons = () => {
+		setManagementButtonsProps({
+			cancel: {onClick: handleCancel, visible: true},
+			publish: {
+				onClick: () =>
+					handleUpdate({
+						applicationStatusKey: 'published',
+						successMessage: Liferay.Language.get(
+							'api-application-was-published'
+						),
+					}),
+				visible: true,
+			},
+			save: {
+				onClick: () =>
+					handleUpdate({
+						applicationStatusKey: 'unpublished',
+						successMessage: Liferay.Language.get(
+							'api-application-changes-were-saved'
+						),
+					}),
+				visible:
+					fetchedData?.apiApplication?.applicationStatus?.key ===
+					'unpublished',
+			},
+		});
+	};
+
+	const handleNavigate = (nav: ActiveNav) => {
+		const navigate = () => {
+			if (nav === 'details') {
+				setHideManagementButtons(false);
+				updateManagementButtons();
+			}
+			updateHistory({navState: nav, portletId});
+			setActiveNav(nav);
+		};
+
+		if (nav !== activeNav && isDataUnsaved) {
+			openModal({
+				center: true,
+				contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
+					CancelEditAPIApplicationModalContent({
+						closeModal,
+						onConfirm: () => {
+							if (fetchedData.apiApplication) {
+								setLocalUIData(
+									resetToFetched<
+										APIApplicationItem,
+										APIApplicationUIData
+									>({
+										fetchedEntityData:
+											fetchedData.apiApplication,
+										localUIData,
+									})
+								);
+							}
+
+							setIsDataUnsaved(false);
+							navigate();
+						},
+					}),
+				id: 'confirmCancelEditModal',
+				size: 'md',
+				status: 'warning',
+			});
+		}
+		else {
+			navigate();
+		}
+	};
+
 	useEffect(() => {
-		for (const key in data) {
-			if (data[key as keyof APIApplicationItem] !== '') {
+		if (fetchedData.apiApplication) {
+			setIsDataUnsaved(
+				hasDataChanged({
+					fetchedEntityData: fetchedData.apiApplication,
+					localUIData,
+				})
+			);
+		}
+
+		for (const key in localUIData) {
+			if (localUIData[key as keyof APIApplicationUIData] !== '') {
 				setDisplayError((previousErrors) => ({
 					...previousErrors,
 					[key]: false,
 				}));
 			}
 		}
-	}, [data]);
 
-	const fetchAPIApplication = () => {
-		fetchJSON<APIApplicationItem>({
-			input: apiURLPaths.applications + currentAPIApplicationID,
-		}).then((response) => {
-			if (response.id.toString() === currentAPIApplicationID) {
-				setData(response);
-				setTitle(response.title);
-			}
-		});
-	};
+		updateManagementButtons();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [localUIData]);
+
+	useEffect(() => {
+		updateManagementButtons();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [fetchedData.apiApplication]);
 
 	useEffect(() => {
 		fetchAPIApplication();
+
+		if (
+			localStorage.getItem('justCreated', localStorage.TYPES.FUNCTIONAL)
+		) {
+			openToast({
+				message: Liferay.Language.get(
+					'new-api-application-was-created'
+				),
+				type: 'success',
+			});
+			localStorage.removeItem('justCreated');
+		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	const handleNavigate = (nav: 'details' | 'endpoints' | 'schemas') => {
-		updateHistory({navState: nav, portletId});
-		setActiveTab(nav);
-	};
 
 	function validateData() {
 		let isDataValid = true;
 		const mandatoryFields = ['baseURL', 'title'];
 
-		if (!Object.keys(data!).length) {
+		if (!Object.keys(localUIData).length) {
 			const errors = mandatoryFields.reduce(
 				(errors, field) => ({...errors, [field]: true}),
 				{}
 			);
-			setDisplayError(errors as DataError);
+			setDisplayError(errors as ApplicationDataError);
 
 			isDataValid = false;
 		}
 		else {
 			mandatoryFields.forEach((field) => {
-				if (data![field as keyof APIApplicationItem]) {
+				if (localUIData[field as keyof APIApplicationUIData]) {
 					setDisplayError((previousErrors) => ({
 						...previousErrors,
 						[field]: false,
@@ -130,117 +326,92 @@ export default function EditAPIApplication({
 		return isDataValid;
 	}
 
-	const handleUpdate = async ({
-		applicationStatusKey,
-		successMessage,
-	}: {
-		applicationStatusKey: 'published' | 'unpublished';
-		successMessage: string;
-	}) => {
-		const isDataValid = validateData();
-
-		if (data && isDataValid) {
-			await updateData({
-				dataToUpdate: {
-					applicationStatus: {key: applicationStatusKey},
-					baseURL: data.baseURL,
-					description: data.description,
-					title: data.title,
-				},
-				onError: (error: string) => {
-					openToast({
-						message: error,
-						type: 'danger',
-					});
-				},
-				onSuccess: () => {
-					openToast({
-						message: successMessage,
-						type: 'success',
-					});
-					fetchAPIApplication();
-				},
-				url: data.actions.update.href,
-			});
-		}
-	};
-
-	return data ? (
-		<>
-			<APIApplicationManagementToolbar
-				hideButtons={activeTab !== 'details'}
-				itemData={data}
-				onPublish={() =>
-					handleUpdate({
-						applicationStatusKey: 'published',
-						successMessage: Liferay.Language.get(
-							'api-application-was-published'
-						),
-					})
-				}
-				onSave={() =>
-					handleUpdate({
-						applicationStatusKey: 'unpublished',
-						successMessage: Liferay.Language.get(
-							'api-application-changes-were-saved'
-						),
-					})
-				}
-				title={title}
-			/>
-			<ClayNavigationBar triggerLabel={activeTab as string}>
-				<ClayNavigationBar.Item active={activeTab === 'details'}>
-					<ClayButton onClick={() => handleNavigate('details')}>
-						{Liferay.Language.get('details')}
-					</ClayButton>
-				</ClayNavigationBar.Item>
-
-				<ClayNavigationBar.Item active={activeTab === 'endpoints'}>
-					<ClayButton onClick={() => handleNavigate('endpoints')}>
-						{Liferay.Language.get('endpoints')}
-					</ClayButton>
-				</ClayNavigationBar.Item>
-
-				<ClayNavigationBar.Item active={activeTab === 'schemas'}>
-					<ClayButton onClick={() => handleNavigate('schemas')}>
-						{Liferay.Language.get('schemas')}
-					</ClayButton>
-				</ClayNavigationBar.Item>
-			</ClayNavigationBar>
-			{activeTab === 'details' && (
-				<ClayLayout.Container className="api-app-details mt-5">
-					<ClayCard className="pt-2">
-						<ClayModal.Header withTitle={false}>
-							<Heading fontSize={5} level={3} weight="semi-bold">
-								{Liferay.Language.get('details')}
-							</Heading>
-						</ClayModal.Header>
-
-						<ClayCard.Body>
-							<BaseAPIApplicationField
-								data={data as APIApplicationItem}
-								displayError={displayError}
-								setData={setData as voidReturn}
-							/>
-						</ClayCard.Body>
-					</ClayCard>
-				</ClayLayout.Container>
-			)}
-			{activeTab === 'endpoints' && (
-				<APIApplicationsEndpointsTable
-					apiApplicationBaseURL={data.baseURL}
-					apiURLPaths={apiURLPaths}
-					portletId={portletId}
-					readOnly={false}
+	return fetchedData && currentAPIApplicationId && managementButtonsProps ? (
+		<EditAPIApplicationContext.Provider
+			value={{
+				fetchedData,
+				isDataUnsaved,
+				setFetchedData,
+				setHideManagementButtons,
+				setIsDataUnsaved,
+			}}
+		>
+			<>
+				<APIApplicationManagementToolbar
+					applicationStatusKey={status}
+					hideManagementButtons={hideManagementButtons}
+					managementButtonsProps={managementButtonsProps}
+					title={title}
 				/>
-			)}
-			{activeTab === 'schemas' && (
-				<APIApplicationsSchemasTable
-					apiURLPaths={apiURLPaths}
-					portletId={portletId}
-					readOnly={false}
-				/>
-			)}
-		</>
+				<ClayNavigationBar triggerLabel={activeNav as string}>
+					<ClayNavigationBar.Item active={activeNav === 'details'}>
+						<ClayButton onClick={() => handleNavigate('details')}>
+							{Liferay.Language.get('details')}
+						</ClayButton>
+					</ClayNavigationBar.Item>
+
+					<ClayNavigationBar.Item active={activeNav === 'endpoints'}>
+						<ClayButton onClick={() => handleNavigate('endpoints')}>
+							{Liferay.Language.get('endpoints')}
+						</ClayButton>
+					</ClayNavigationBar.Item>
+
+					<ClayNavigationBar.Item active={activeNav === 'schemas'}>
+						<ClayButton onClick={() => handleNavigate('schemas')}>
+							{Liferay.Language.get('schemas')}
+						</ClayButton>
+					</ClayNavigationBar.Item>
+				</ClayNavigationBar>
+				{activeNav === 'details' && (
+					<ClayLayout.Container className="api-app-details mt-5">
+						<ClayCard className="pt-2">
+							<ClayModal.Header withTitle={false}>
+								<Heading
+									fontSize={5}
+									level={3}
+									weight="semi-bold"
+								>
+									{Liferay.Language.get('details')}
+								</Heading>
+							</ClayModal.Header>
+
+							<ClayCard.Body>
+								<div className="application-fields-card-body">
+									<BaseAPIApplicationField
+										basePath={basePath}
+										data={localUIData}
+										disableURLAutoFill
+										displayError={displayError}
+										setData={setLocalUIData}
+									/>
+								</div>
+							</ClayCard.Body>
+						</ClayCard>
+					</ClayLayout.Container>
+				)}
+				{activeNav === 'endpoints' && (
+					<EndpointsContent
+						apiApplicationData={localUIData}
+						apiURLPaths={apiURLPaths}
+						basePath={basePath}
+						currentAPIApplicationId={currentAPIApplicationId}
+						portletId={portletId}
+						setManagementButtonsProps={setManagementButtonsProps}
+						setStatus={setStatus}
+						setTitle={setTitle}
+					/>
+				)}
+				{activeNav === 'schemas' && (
+					<SchemasContent
+						apiURLPaths={apiURLPaths}
+						currentAPIApplicationId={currentAPIApplicationId}
+						portletId={portletId}
+						setManagementButtonsProps={setManagementButtonsProps}
+						setStatus={setStatus}
+						setTitle={setTitle}
+					/>
+				)}
+			</>
+		</EditAPIApplicationContext.Provider>
 	) : null;
 }

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.knowledge.base.web.internal.display.context;
@@ -22,7 +13,9 @@ import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
+import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
+import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.service.KBTemplateServiceUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticleTitleComparator;
@@ -125,8 +118,31 @@ public class KBAdminNavigationDisplayContext {
 			).put(
 				"name", _themeDisplay.translate("home")
 			).put(
-				"type", "folder"
+				"type", KBFolder.class.getSimpleName()
 			));
+	}
+
+	public long getMoveParentKBObjectId() throws PortalException {
+		long moveKBObjectId = ParamUtil.getLong(
+			_httpServletRequest, "moveKBObjectId");
+
+		String moveKBObjectClassName = ParamUtil.getString(
+			_httpServletRequest, "moveKBObjectClassName");
+
+		if (moveKBObjectClassName.equals(KBFolder.class.getSimpleName())) {
+			KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(
+				moveKBObjectId);
+
+			return kbFolder.getParentKBFolderId();
+		}
+
+		int kbObjectVersion = ParamUtil.getInteger(
+			_httpServletRequest, "kbObjectVersion", -1);
+
+		KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
+			moveKBObjectId, kbObjectVersion);
+
+		return kbArticle.getParentResourcePrimKey();
 	}
 
 	public List<JSONObject> getVerticalNavigationJSONObjects()
@@ -269,12 +285,19 @@ public class KBAdminNavigationDisplayContext {
 
 		JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
 
+		long moveKBObjectId = ParamUtil.getLong(
+			_httpServletRequest, "moveKBObjectId");
+
 		List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticles(
 			parentKBArticle.getGroupId(), parentKBArticle.getResourcePrimKey(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, WorkflowConstants.STATUS_ANY,
 			new KBArticleTitleComparator(true));
 
 		for (KBArticle kbArticle : kbArticles) {
+			if (moveKBObjectId == kbArticle.getResourcePrimKey()) {
+				continue;
+			}
+
 			childrenJSONArray.put(
 				JSONUtil.put(
 					"actions",
@@ -294,7 +317,7 @@ public class KBAdminNavigationDisplayContext {
 				).put(
 					"name", kbArticle.getTitle()
 				).put(
-					"type", "article"
+					"type", KBArticle.class.getSimpleName()
 				));
 		}
 
@@ -314,73 +337,83 @@ public class KBAdminNavigationDisplayContext {
 
 		JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
 
+		long moveKBObjectId = ParamUtil.getLong(
+			_httpServletRequest, "moveKBObjectId");
+
 		List<Object> kbObjects = KBFolderServiceUtil.getKBFoldersAndKBArticles(
 			_themeDisplay.getScopeGroupId(), parentFolderId,
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new KBObjectsPriorityComparator<>(true));
 
 		for (Object kbObject : kbObjects) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 			if (kbObject instanceof KBFolder) {
 				KBFolder kbFolder = (KBFolder)kbObject;
 
-				jsonObject.put(
-					"actions",
-					_kbDropdownItemsProvider.getKBFolderDropdownItems(
-						kbFolder, _selectedItemAncestorIds)
-				).put(
-					"children",
-					_getKBFolderDataJSONArray(kbFolder.getKbFolderId())
-				).put(
-					"classNameId", kbFolder.getClassNameId()
-				).put(
-					"href",
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/view_kb_folders.jsp"
-					).setParameter(
-						"parentResourceClassNameId", kbFolder.getClassNameId()
-					).setParameter(
-						"parentResourcePrimKey", kbFolder.getKbFolderId()
-					).setParameter(
-						"selectedItemId", kbFolder.getKbFolderId()
-					).buildString()
-				).put(
-					"id", kbFolder.getKbFolderId()
-				).put(
-					"name", kbFolder.getName()
-				).put(
-					"type", "folder"
-				);
+				if (moveKBObjectId == kbFolder.getKbFolderId()) {
+					continue;
+				}
+
+				childrenJSONArray.put(
+					JSONUtil.put(
+						"actions",
+						_kbDropdownItemsProvider.getKBFolderDropdownItems(
+							kbFolder, _selectedItemAncestorIds)
+					).put(
+						"children",
+						_getKBFolderDataJSONArray(kbFolder.getKbFolderId())
+					).put(
+						"classNameId", kbFolder.getClassNameId()
+					).put(
+						"href",
+						PortletURLBuilder.createRenderURL(
+							_liferayPortletResponse
+						).setMVCPath(
+							"/admin/view_kb_folders.jsp"
+						).setParameter(
+							"parentResourceClassNameId",
+							kbFolder.getClassNameId()
+						).setParameter(
+							"parentResourcePrimKey", kbFolder.getKbFolderId()
+						).setParameter(
+							"selectedItemId", kbFolder.getKbFolderId()
+						).buildString()
+					).put(
+						"id", kbFolder.getKbFolderId()
+					).put(
+						"name", kbFolder.getName()
+					).put(
+						"type", KBFolder.class.getSimpleName()
+					));
 			}
 			else {
 				KBArticle kbArticle = (KBArticle)kbObject;
 
-				jsonObject.put(
-					"actions",
-					_kbDropdownItemsProvider.getKBArticleDropdownItems(
-						kbArticle, _selectedItemAncestorIds)
-				).put(
-					"children", _getChildKBArticlesJSONArray(kbArticle)
-				).put(
-					"classNameId", kbArticle.getClassNameId()
-				).put(
-					"href",
-					_kbArticleURLHelper.createViewWithRedirectURL(
-						kbArticle,
-						PortalUtil.getCurrentURL(_httpServletRequest))
-				).put(
-					"id", kbArticle.getResourcePrimKey()
-				).put(
-					"name", kbArticle.getTitle()
-				).put(
-					"type", "article"
-				);
-			}
+				if (moveKBObjectId == kbArticle.getResourcePrimKey()) {
+					continue;
+				}
 
-			childrenJSONArray.put(jsonObject);
+				childrenJSONArray.put(
+					JSONUtil.put(
+						"actions",
+						_kbDropdownItemsProvider.getKBArticleDropdownItems(
+							kbArticle, _selectedItemAncestorIds)
+					).put(
+						"children", _getChildKBArticlesJSONArray(kbArticle)
+					).put(
+						"classNameId", kbArticle.getClassNameId()
+					).put(
+						"href",
+						_kbArticleURLHelper.createViewWithRedirectURL(
+							kbArticle,
+							PortalUtil.getCurrentURL(_httpServletRequest))
+					).put(
+						"id", kbArticle.getResourcePrimKey()
+					).put(
+						"name", kbArticle.getTitle()
+					).put(
+						"type", KBArticle.class.getSimpleName()
+					));
+			}
 		}
 
 		return childrenJSONArray;
@@ -445,7 +478,7 @@ public class KBAdminNavigationDisplayContext {
 			).put(
 				"name", _themeDisplay.translate("home")
 			).put(
-				"type", "folder"
+				"type", KBFolder.class.getSimpleName()
 			));
 	}
 

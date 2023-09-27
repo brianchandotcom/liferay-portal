@@ -572,6 +572,7 @@ definition {
 	test ViewEmailNotificationDelivery {
 		property test.assert.javascript.errors = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
@@ -646,6 +647,7 @@ definition {
 	test ViewEmailRecipientDelivery {
 		property test.assert.javascript.errors = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 

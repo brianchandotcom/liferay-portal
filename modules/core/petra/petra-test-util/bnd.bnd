@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Petra Test Utilities
 Bundle-SymbolicName: com.liferay.petra.test.util
-Bundle-Version: 3.0.3
+Bundle-Version: 3.0.4
 Export-Package: com.liferay.petra.test.util

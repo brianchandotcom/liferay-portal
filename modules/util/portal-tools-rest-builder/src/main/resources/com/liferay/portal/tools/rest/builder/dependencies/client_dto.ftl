@@ -48,7 +48,7 @@ public class ${schemaName} implements Cloneable, Serializable {
 			<#assign capitalizedPropertyName = properties[propertyName] />
 		</#if>
 
-		<#assign propertyType = properties[propertyName] />
+		<#assign propertyType = properties[propertyName]?replace("com.liferay.portal.vulcan.permission.", "${configYAML.apiPackagePath}.client.permission.") />
 
 		public ${propertyType} get${capitalizedPropertyName}() {
 			return ${propertyName};

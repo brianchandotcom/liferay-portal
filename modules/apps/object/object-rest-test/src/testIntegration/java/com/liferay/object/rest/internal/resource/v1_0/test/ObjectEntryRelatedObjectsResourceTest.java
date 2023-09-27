@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.rest.internal.resource.v1_0.test;
@@ -22,11 +13,11 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectFieldTestUtil;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.UserAccountTestUtil;
+import com.liferay.object.rest.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
+import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
+import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.rest.test.util.UserAccountTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -75,6 +66,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
 /**
  * @author Carlos Correa
  */
@@ -111,6 +105,17 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
 		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+
+		_objectDefinition3 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_2,
+					false)));
+
+		_objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition3, _OBJECT_FIELD_NAME_2,
+			RandomTestUtil.randomString());
 
 		_user1 = TestPropsValues.getUser();
 		_user2 = UserTestUtil.addUser(TestPropsValues.getGroupId());
@@ -352,9 +357,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			String.valueOf(_objectEntry2.getPrimaryKey()), role.getRoleId(),
 			new String[] {ActionKeys.VIEW});
 
-		HTTPTestUtil.withCredentials(
-			user.getEmailAddress(), password,
-			this::testGetRelatedCustomObjectEntriesWhenRelationExists);
+		HTTPTestUtil.customize(
+		).withCredentials(
+			user.getEmailAddress(), password
+		).apply(
+			this::testGetRelatedCustomObjectEntriesWhenRelationExists
+		);
 	}
 
 	@Test
@@ -708,12 +716,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		// Many to many relationship
 
-		ObjectRelationship objectRelationship = _addObjectRelationship(
+		ObjectRelationship objectRelationship1 = _addObjectRelationship(
 			_objectDefinition1, _objectDefinition2,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
+			null, _getEndpoint(objectRelationship1.getName()), Http.Method.GET);
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
@@ -724,25 +732,156 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			HTTPTestUtil.invokeToJSONObject(
 				null,
 				_getEndpoint(
-					objectRelationship.getName(),
+					objectRelationship1.getName(),
 					_objectEntry2.getPrimaryKey()),
 				Http.Method.PUT));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
+			null, _getEndpoint(objectRelationship1.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
 
 		_assertEquals(_objectEntry2, jsonArray);
 
+		// Many to many and one to many relationships
+
+		ObjectRelationship objectRelationship2 = _addObjectRelationship(
+			_objectDefinition1, _objectDefinition3,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_assertEquals(
+			_objectEntry4,
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				_getEndpoint(
+					objectRelationship2.getName(),
+					_objectEntry4.getPrimaryKey()),
+				Http.Method.PUT));
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1
+				).put(
+					objectRelationship1.getName(),
+					JSONUtil.putAll(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1
+						).put(
+							"externalReferenceCode",
+							_objectEntry2.getExternalReferenceCode()
+						),
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_3))
+				).put(
+					objectRelationship2.getName(),
+					JSONUtil.putAll(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_1))
+				).toString(),
+				_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
+					_objectEntry1.getPrimaryKey(),
+				Http.Method.PUT));
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1
+					).put(
+						"externalReferenceCode",
+						_objectEntry2.getExternalReferenceCode()
+					),
+					JSONUtil.put(_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_3))
+			).put(
+				"lastPage", 1
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 20
+			).put(
+				"totalCount", 2
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null, _getEndpoint(objectRelationship1.getName()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put(_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_1))
+			).put(
+				"lastPage", 1
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 20
+			).put(
+				"totalCount", 1
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null, _getEndpoint(objectRelationship2.getName()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1
+				).put(
+					objectRelationship1.getName(), JSONUtil.putAll()
+				).put(
+					objectRelationship2.getName(),
+					JSONUtil.putAll(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1))
+				).toString(),
+				_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
+					_objectEntry1.getPrimaryKey(),
+				Http.Method.PUT));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, _getEndpoint(objectRelationship1.getName()), Http.Method.GET);
+
+		jsonArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(0, jsonArray.length());
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1))
+			).put(
+				"lastPage", 1
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 20
+			).put(
+				"totalCount", 1
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null, _getEndpoint(objectRelationship2.getName()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
 		// One to many relationship
 
-		objectRelationship = _addObjectRelationship(
+		objectRelationship1 = _addObjectRelationship(
 			_objectDefinition1, _objectDefinition2,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
+			null, _getEndpoint(objectRelationship1.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
 
@@ -753,12 +892,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			HTTPTestUtil.invokeToJSONObject(
 				null,
 				_getEndpoint(
-					objectRelationship.getName(),
+					objectRelationship1.getName(),
 					_objectEntry2.getPrimaryKey()),
 				Http.Method.PUT));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
+			null, _getEndpoint(objectRelationship1.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
 
@@ -1472,6 +1611,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		).toString();
 	}
 
+	private static final String _NEW_OBJECT_FIELD_VALUE_1 =
+		RandomTestUtil.randomString();
+
 	private static final String _OBJECT_FIELD_NAME_1 =
 		"x" + RandomTestUtil.randomString();
 
@@ -1482,6 +1624,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_VALUE_2 =
+		RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_VALUE_3 =
 		RandomTestUtil.randomString();
 
 	private static final String _SYSTEM_OBJECT_FIELD_NAME_1 =
@@ -1502,6 +1647,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
 
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition3;
+
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
@@ -1513,6 +1661,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 	@DeleteAfterTestRun
 	private ObjectEntry _objectEntry3;
+
+	@DeleteAfterTestRun
+	private ObjectEntry _objectEntry4;
+
+	@DeleteAfterTestRun
+	private ObjectEntry _objectEntry5;
 
 	private ObjectRelationship _objectRelationship;
 

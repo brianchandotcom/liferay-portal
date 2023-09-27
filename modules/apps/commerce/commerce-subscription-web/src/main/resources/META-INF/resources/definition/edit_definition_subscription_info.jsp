@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -48,11 +39,11 @@ CPSubscriptionType cpSubscriptionType = cpDefinitionSubscriptionInfoDisplayConte
 CPSubscriptionType deliveryCPSubscriptionType = cpDefinitionSubscriptionInfoDisplayContext.getCPSubscriptionType(deliverySubscriptionType);
 
 if (cpSubscriptionType != null) {
-	defaultCPSubscriptionTypeLabel = cpSubscriptionType.getLabel(locale);
+	defaultCPSubscriptionTypeLabel = cpDefinitionSubscriptionInfoDisplayContext.getCPSubscriptionTypeLabel(subscriptionLength, cpSubscriptionType, locale);
 }
 
 if (deliveryCPSubscriptionType != null) {
-	defaultDeliveryCPSubscriptionTypeLabel = deliveryCPSubscriptionType.getLabel(locale);
+	defaultDeliveryCPSubscriptionTypeLabel = cpDefinitionSubscriptionInfoDisplayContext.getCPSubscriptionTypeLabel(deliverySubscriptionLength, deliveryCPSubscriptionType, locale);
 }
 
 CPSubscriptionTypeJSPContributor paymentCPSubscriptionTypeJSPContributor = cpDefinitionSubscriptionInfoDisplayContext.getCPSubscriptionTypeJSPContributor(subscriptionType);
@@ -70,9 +61,11 @@ if (deliveryMaxSubscriptionCycles > 0) {
 }
 %>
 
-<aui:alert closeable="<%= false %>" cssClass="mt-3" type="warning">
-	<liferay-ui:message key="all-channels-associated-with-this-product-must-have-at-least-one-payment-method-active-that-supports-recurring-payments" />
-</aui:alert>
+<clay:alert
+	cssClass="mt-3"
+	displayType="warning"
+	message="all-channels-associated-with-this-product-must-have-at-least-one-payment-method-active-that-supports-recurring-payments"
+/>
 
 <portlet:actionURL name="/cp_definitions/edit_cp_definition" var="editProductDefinitionSubscriptionInfoActionURL" />
 
@@ -289,6 +282,16 @@ if (deliveryMaxSubscriptionCycles > 0) {
 			var A = AUI();
 
 			var subscriptionType = A.one(element).val();
+			var subscriptionTypeLabel = A.one(element)
+				.get('children')
+				.filter((item) => {
+					return item.get('selected');
+				})
+				.first();
+
+			if (subscriptionTypeLabel) {
+				subscriptionTypeLabel = subscriptionTypeLabel.getData('label');
+			}
 
 			A.one('#<portlet:namespace />subscriptionTypeContributors')
 				.get('children')
@@ -302,6 +305,10 @@ if (deliveryMaxSubscriptionCycles > 0) {
 			if (subscriptionTypeContributor) {
 				subscriptionTypeContributor.show();
 			}
+
+			A.one(
+				'#<portlet:namespace />cycleLengthContainer .input-group-text'
+			).html(subscriptionTypeLabel);
 		},
 		['liferay-portlet-url']
 	);
@@ -317,6 +324,16 @@ if (deliveryMaxSubscriptionCycles > 0) {
 			var A = AUI();
 
 			var subscriptionType = A.one(element).val();
+			var subscriptionTypeLabel = A.one(element)
+				.get('children')
+				.filter((item) => {
+					return item.get('selected');
+				})
+				.first();
+
+			if (subscriptionTypeLabel) {
+				subscriptionTypeLabel = subscriptionTypeLabel.getData('label');
+			}
 
 			A.one('#<portlet:namespace />deliverySubscriptionTypeContributors')
 				.get('children')
@@ -330,6 +347,10 @@ if (deliveryMaxSubscriptionCycles > 0) {
 			if (deliverySubscriptionTypeContributor) {
 				deliverySubscriptionTypeContributor.show();
 			}
+
+			A.one(
+				'#<portlet:namespace />deliveryCycleLengthContainer .input-group-text'
+			).html(subscriptionTypeLabel);
 		},
 		['liferay-portlet-url']
 	);

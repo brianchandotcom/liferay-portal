@@ -70,6 +70,7 @@ definition {
 	test CannotAddTemplateWhenDisableTemplateCreation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Template Creation") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -151,6 +152,7 @@ definition {
 	test SaveChangesInExistingTemplateWhenDisableTemplateCreation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a template for Basic Web Content Structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -249,7 +251,7 @@ definition {
 			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
 			value1 = "LinktoPage.getFriendlyUrl()");
 
-		DDLDataDefinition.save();
+		PortletEntry.save();
 
 		LexiconCard.viewCardTitle(card = "WC Template Name Edit");
 
@@ -287,6 +289,7 @@ definition {
 	@priority = 4
 	test ViewTemplateCreationFailureWhenDisableTemplateCreation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a template for Basic Web Content structure but not save") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -313,18 +316,11 @@ definition {
 
 			FormFields.disableCheckbox(fieldName = "Enable Template Creation");
 
-			if (IsElementPresent(locator1 = "Button#UPDATE")) {
-				PortletEntry.update();
-			}
-			else if (IsElementPresent(locator1 = "Button#SAVE")) {
-				PortletEntry.save();
-			}
+			SystemSettings.saveConfiguration();
 		}
 
 		task ("View template creation failure") {
-			var siteName = TestCase.getSiteName(siteName = ${siteName});
-
-			Close.closeAndSelectWindow(locator1 = "title=New Template - Test Site Name - ${siteName}");
+			Close.closeWindow();
 
 			WebContentTemplates.inputTemplateAddScreenFields(
 				structureName = "Basic Web Content",
@@ -332,7 +328,7 @@ definition {
 				templateFieldNames = "Content",
 				templateName = "WC Template Name");
 
-			ClickNoError.mouseDownMouseUp(locator1 = "//span[contains(@class,'btn')][normalize-space(text())='Save']/..");
+			Button.clickSave();
 
 			Alert.viewErrorMessage(errorMessage = "The template could not be created because template creation is disabled.");
 		}

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Adaptive Media Content Transformer API
 Bundle-SymbolicName: com.liferay.adaptive.media.content.transformer.api
-Bundle-Version: 5.0.6
+Bundle-Version: 5.0.7
 Export-Package:\
 	com.liferay.adaptive.media.content.transformer,\
 	com.liferay.adaptive.media.content.transformer.constants

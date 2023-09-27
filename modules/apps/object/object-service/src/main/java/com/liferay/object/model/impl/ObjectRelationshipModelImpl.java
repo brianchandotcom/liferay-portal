@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.model.impl;
@@ -89,8 +80,9 @@ public class ObjectRelationshipModelImpl
 		{"objectDefinitionId2", Types.BIGINT}, {"objectFieldId2", Types.BIGINT},
 		{"parameterObjectFieldId", Types.BIGINT},
 		{"deletionType", Types.VARCHAR}, {"dbTableName", Types.VARCHAR},
-		{"label", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"reverse", Types.BOOLEAN}, {"type_", Types.VARCHAR}
+		{"edge", Types.BOOLEAN}, {"label", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"reverse", Types.BOOLEAN},
+		{"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -111,6 +103,7 @@ public class ObjectRelationshipModelImpl
 		TABLE_COLUMNS_MAP.put("parameterObjectFieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("deletionType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("dbTableName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("edge", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("reverse", Types.BOOLEAN);
@@ -118,7 +111,7 @@ public class ObjectRelationshipModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectRelationship (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectRelationshipId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId1 LONG,objectDefinitionId2 LONG,objectFieldId2 LONG,parameterObjectFieldId LONG,deletionType VARCHAR(75) null,dbTableName VARCHAR(75) null,label STRING null,name VARCHAR(75) null,reverse BOOLEAN,type_ VARCHAR(75) null)";
+		"create table ObjectRelationship (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectRelationshipId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId1 LONG,objectDefinitionId2 LONG,objectFieldId2 LONG,parameterObjectFieldId LONG,deletionType VARCHAR(75) null,dbTableName VARCHAR(75) null,edge BOOLEAN,label STRING null,name VARCHAR(75) null,reverse BOOLEAN,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectRelationship";
 
@@ -150,50 +143,56 @@ public class ObjectRelationshipModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long EDGE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTDEFINITIONID1_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTDEFINITIONID2_COLUMN_BITMASK = 16L;
+	public static final long OBJECTDEFINITIONID1_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTFIELDID2_COLUMN_BITMASK = 32L;
+	public static final long OBJECTDEFINITIONID2_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long REVERSE_COLUMN_BITMASK = 64L;
+	public static final long OBJECTFIELDID2_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 128L;
+	public static final long REVERSE_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 256L;
+	public static final long TYPE_COLUMN_BITMASK = 256L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTRELATIONSHIPID_COLUMN_BITMASK = 512L;
+	public static final long OBJECTRELATIONSHIPID_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -336,6 +335,7 @@ public class ObjectRelationshipModelImpl
 				"deletionType", ObjectRelationship::getDeletionType);
 			attributeGetterFunctions.put(
 				"dbTableName", ObjectRelationship::getDBTableName);
+			attributeGetterFunctions.put("edge", ObjectRelationship::getEdge);
 			attributeGetterFunctions.put("label", ObjectRelationship::getLabel);
 			attributeGetterFunctions.put("name", ObjectRelationship::getName);
 			attributeGetterFunctions.put(
@@ -415,6 +415,10 @@ public class ObjectRelationshipModelImpl
 				"dbTableName",
 				(BiConsumer<ObjectRelationship, String>)
 					ObjectRelationship::setDBTableName);
+			attributeSetterBiConsumers.put(
+				"edge",
+				(BiConsumer<ObjectRelationship, Boolean>)
+					ObjectRelationship::setEdge);
 			attributeSetterBiConsumers.put(
 				"label",
 				(BiConsumer<ObjectRelationship, String>)
@@ -746,6 +750,37 @@ public class ObjectRelationshipModelImpl
 		}
 
 		_dbTableName = dbTableName;
+	}
+
+	@JSON
+	@Override
+	public boolean getEdge() {
+		return _edge;
+	}
+
+	@JSON
+	@Override
+	public boolean isEdge() {
+		return _edge;
+	}
+
+	@Override
+	public void setEdge(boolean edge) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_edge = edge;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public boolean getOriginalEdge() {
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("edge"));
 	}
 
 	@JSON
@@ -1092,6 +1127,7 @@ public class ObjectRelationshipModelImpl
 			getParameterObjectFieldId());
 		objectRelationshipImpl.setDeletionType(getDeletionType());
 		objectRelationshipImpl.setDBTableName(getDBTableName());
+		objectRelationshipImpl.setEdge(isEdge());
 		objectRelationshipImpl.setLabel(getLabel());
 		objectRelationshipImpl.setName(getName());
 		objectRelationshipImpl.setReverse(isReverse());
@@ -1135,6 +1171,8 @@ public class ObjectRelationshipModelImpl
 			this.<String>getColumnOriginalValue("deletionType"));
 		objectRelationshipImpl.setDBTableName(
 			this.<String>getColumnOriginalValue("dbTableName"));
+		objectRelationshipImpl.setEdge(
+			this.<Boolean>getColumnOriginalValue("edge"));
 		objectRelationshipImpl.setLabel(
 			this.<String>getColumnOriginalValue("label"));
 		objectRelationshipImpl.setName(
@@ -1291,6 +1329,8 @@ public class ObjectRelationshipModelImpl
 			objectRelationshipCacheModel.dbTableName = null;
 		}
 
+		objectRelationshipCacheModel.edge = isEdge();
+
 		objectRelationshipCacheModel.label = getLabel();
 
 		String label = objectRelationshipCacheModel.label;
@@ -1394,6 +1434,7 @@ public class ObjectRelationshipModelImpl
 	private long _parameterObjectFieldId;
 	private String _deletionType;
 	private String _dbTableName;
+	private boolean _edge;
 	private String _label;
 	private String _labelCurrentLanguageId;
 	private String _name;
@@ -1446,6 +1487,7 @@ public class ObjectRelationshipModelImpl
 			"parameterObjectFieldId", _parameterObjectFieldId);
 		_columnOriginalValues.put("deletionType", _deletionType);
 		_columnOriginalValues.put("dbTableName", _dbTableName);
+		_columnOriginalValues.put("edge", _edge);
 		_columnOriginalValues.put("label", _label);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("reverse", _reverse);
@@ -1502,13 +1544,15 @@ public class ObjectRelationshipModelImpl
 
 		columnBitmasks.put("dbTableName", 8192L);
 
-		columnBitmasks.put("label", 16384L);
+		columnBitmasks.put("edge", 16384L);
 
-		columnBitmasks.put("name", 32768L);
+		columnBitmasks.put("label", 32768L);
 
-		columnBitmasks.put("reverse", 65536L);
+		columnBitmasks.put("name", 65536L);
 
-		columnBitmasks.put("type_", 131072L);
+		columnBitmasks.put("reverse", 131072L);
+
+		columnBitmasks.put("type_", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

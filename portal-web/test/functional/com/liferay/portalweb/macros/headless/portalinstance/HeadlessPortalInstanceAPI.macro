@@ -106,12 +106,33 @@ definition {
 		var portalInstanceJson = HeadlessPortalInstanceAPI._getPortalInstances(authenticationMethod = ${authenticationMethod});
 
 		var portalInstanceIds = JSONUtil.getWithJSONPath(${portalInstanceJson}, "$.items..portalInstanceId");
+		var lxcEnvironment = JSONUtil2.getLXCEnvironment();
 
-		for (var portalInstanceId : list ${portalInstanceIds}) {
-			if (${portalInstanceId} != "liferay.com") {
-				HeadlessPortalInstanceAPI.deletePortalInstance(
-					authenticationMethod = ${authenticationMethod},
-					portalInstanceId = ${portalInstanceId});
+		if (${lxcEnvironment} != "true") {
+			for (var portalInstanceId : list ${portalInstanceIds}) {
+				if (${portalInstanceId} != "liferay.com") {
+					HeadlessPortalInstanceAPI.deletePortalInstance(
+						authenticationMethod = ${authenticationMethod},
+						portalInstanceId = ${portalInstanceId});
+				}
+			}
+		}
+		else {
+
+			// If LXC Environment, only delete the one we are using beforehand
+
+			var portalURL = JSONCompany.getPortalURL();
+
+			var portalInstance = Regex.removeHTTP(url = ${portalURL});
+
+			var portalInstance = Regex.removePortNumber(url = ${portalInstance});
+
+			for (var portalInstanceId : list ${portalInstanceIds}) {
+				if (${portalInstanceId} == ${portalInstance}) {
+					HeadlessPortalInstanceAPI.deletePortalInstance(
+						authenticationMethod = ${authenticationMethod},
+						portalInstanceId = ${portalInstanceId});
+				}
 			}
 		}
 	}

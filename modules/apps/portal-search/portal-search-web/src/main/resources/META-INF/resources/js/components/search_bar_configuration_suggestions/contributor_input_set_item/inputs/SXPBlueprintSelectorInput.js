@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
@@ -26,7 +17,7 @@ import SelectSXPBlueprintModal from '../../../select_sxp_blueprint_modal/SelectS
 function SXPBlueprintSelectorInput({
 	onBlur,
 	onSubmit,
-	sxpBlueprintId,
+	sxpBlueprintExternalReferenceCode,
 	touched,
 }) {
 	const [showModal, setShowModal] = useState(false);
@@ -58,22 +49,23 @@ function SXPBlueprintSelectorInput({
 		setShowModal(true);
 	};
 
-	const _handleSubmit = (id, title) => {
-		onSubmit(id);
+	const _handleSubmit = (externalReferenceCode, title) => {
+		onSubmit(externalReferenceCode);
 
 		setSXPBlueprint({loading: false, title});
 	};
 
 	useEffect(() => {
 
-		// Fetch the blueprint title using sxpBlueprintId inside attributes, since
-		// title is not saved within initialSuggestionsContributorConfiguration.
+		// Fetch the blueprint title using sxpBlueprintExternalReferenceCode
+		// inside attributes, since title is not saved within
+		// initialSuggestionsContributorConfiguration.
 
-		if (sxpBlueprintId) {
+		if (sxpBlueprintExternalReferenceCode) {
 			setSXPBlueprint({loading: true, title: ''});
 
 			fetch(
-				`/o/search-experiences-rest/v1.0/sxp-blueprints/${sxpBlueprintId}`,
+				`/o/search-experiences-rest/v1.0/sxp-blueprints/by-external-reference-code/${sxpBlueprintExternalReferenceCode}`,
 				{
 					headers: new Headers({
 						'Accept': 'application/json',
@@ -94,14 +86,14 @@ function SXPBlueprintSelectorInput({
 						loading: false,
 						title:
 							!ok || data.status === 'NOT_FOUND'
-								? JSON.stringify(sxpBlueprintId)
+								? sxpBlueprintExternalReferenceCode
 								: data.title,
 					});
 				})
 				.catch(() => {
 					setSXPBlueprint({
 						loading: false,
-						title: JSON.stringify(sxpBlueprintId),
+						title: sxpBlueprintExternalReferenceCode,
 					});
 				});
 		}
@@ -114,13 +106,15 @@ function SXPBlueprintSelectorInput({
 					observer={observer}
 					onClose={onClose}
 					onSubmit={_handleSubmit}
-					selectedId={sxpBlueprintId || ''}
+					selectedExternalReferenceCode={
+						sxpBlueprintExternalReferenceCode || ''
+					}
 				/>
 			)}
 
 			<ClayInput.GroupItem
 				className={getCN({
-					'has-error': !sxpBlueprintId && touched,
+					'has-error': !sxpBlueprintExternalReferenceCode && touched,
 				})}
 			>
 				<ClayForm.Group className="c-mb-0 w-100">

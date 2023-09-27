@@ -1,0 +1,110 @@
+@component-name = "portal-calendar"
+definition {
+
+	property portal.accessibility = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Calendar";
+
+	var pageName = "Calendar Page";
+	var portletName = "Calendar";
+
+	setUp {
+		var portalURL = PropsUtil.get("portal.url");
+
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given calendar portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Calendar Page");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Calendar Page",
+				layoutTemplate = "1 Column");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Calendar Page",
+				widgetName = "Calendar");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest/calendar-page");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Calendar Page");
+
+			JSONCalendar.tearDown();
+
+			CalendarConfiguration.tearDown();
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@description = "LPS-185844 Verifies that the last scrollable element is not hidden by modal footer at 200% page zoom."
+	@priority = 3
+	test AddCalendarContentMustBeVisibleAt200Zoom {
+		task ("When access add a new calendar modal") {
+			CalendarNavigator.gotoAddMyCalendars();
+		}
+
+		task ("And zoom in on the page to 200%") {
+			BrowserZoom.setZoomTo200();
+		}
+
+		task ("And scroll more options button into view") {
+			ScrollWebElementIntoView(
+				key_text = "More Options",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+
+		task ("Then More options role is visible") {
+			AssertVisible(
+				key_text = "More Options",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+	}
+
+	@description = "LPS-185089 Verifies that the focus is not lost after closing the 'Edit Event' modal."
+	@priority = 3
+	test FocusIsNotLostAfterClosingTheModal {
+		task ("And a new event is added") {
+			CalendarNavigator.gotoAddEvent();
+		}
+
+		task ("When the user tries to edit the event") {
+			CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+		}
+
+		task ("And clicks any 'Select' button on 'CATEGORIZATION'") {
+			Panel.expandPanel(panel = "Categorization");
+
+			ScrollWebElementIntoView(locator1 = "CalendarEditEvent#RELATED_ASSETS_PANEL_COLLAPSED");
+
+			Click(locator1 = "Button#SELECT_CATEGORIES");
+		}
+
+		task ("When the modal is closed by the keyboard") {
+			KeyPress(
+				key_modalTitle = "Select Topic",
+				locator1 = "Button#CLOSE_MODAL",
+				value1 = "\ENTER");
+		}
+
+		task ("Then the focus indicator goes the trigger action that opened the modal") {
+			AssertElementFocused(locator1 = "Button#SELECT_CATEGORIES");
+		}
+	}
+
+}

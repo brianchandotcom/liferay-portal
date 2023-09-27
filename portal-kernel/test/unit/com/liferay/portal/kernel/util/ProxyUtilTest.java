@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.util;
@@ -112,6 +103,10 @@ public class ProxyUtilTest {
 			}
 
 			@Override
+			public void method3() {
+			}
+
+			@Override
 			public String toString() {
 				return "Default Object";
 			}
@@ -126,6 +121,17 @@ public class ProxyUtilTest {
 
 		Assert.assertEquals("delegateMethod1", testInterface.method1());
 		Assert.assertEquals("defaultMethod2", testInterface.method2());
+
+		try {
+			testInterface.method3();
+
+			Assert.fail();
+		}
+		catch (IllegalStateException illegalStateException) {
+			Assert.assertSame(
+				DelegateClass._ILLEGAL_STATE_EXCEPTION, illegalStateException);
+		}
+
 		Assert.assertEquals("Delegate Object", testInterface.toString());
 		Assert.assertEquals(testInterface, identityObject);
 		Assert.assertNotEquals(testInterface, defaultTestInterface);
@@ -172,6 +178,10 @@ public class ProxyUtilTest {
 			return "delegateMethod1";
 		}
 
+		public void method3() {
+			throw _ILLEGAL_STATE_EXCEPTION;
+		}
+
 		@Override
 		public String toString() {
 			return "Delegate Object";
@@ -193,6 +203,9 @@ public class ProxyUtilTest {
 		private void _irrelevantMethod3() {
 		}
 
+		private static final IllegalStateException _ILLEGAL_STATE_EXCEPTION =
+			new IllegalStateException();
+
 		private final Object _identityObject;
 
 	}
@@ -202,6 +215,8 @@ public class ProxyUtilTest {
 		public String method1();
 
 		public String method2();
+
+		public void method3();
 
 	}
 

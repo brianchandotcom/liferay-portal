@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.exportimport.internal.configuration;
@@ -19,17 +10,15 @@ import com.liferay.exportimport.configuration.ExportImportServiceConfigurationWh
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.url.pattern.mapper.URLPatternMapper;
 import com.liferay.petra.url.pattern.mapper.URLPatternMapperFactory;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -48,15 +37,35 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 
 	@Override
 	public boolean isWhitelistedURL(long companyId, String url) {
+		if (!_urlPatternMappers.containsKey(companyId)) {
+			try {
+				rebuildURLPatternMapper(companyId);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Unable to instantiate URL pattern mapper for ",
+							"company ", companyId),
+						exception);
+				}
+				else {
+					_log.error(
+						StringBundler.concat(
+							"Unable to instantiate URL pattern mapper for ",
+							"company ", companyId, ": ",
+							exception.getMessage()));
+				}
+
+				return false;
+			}
+		}
+
 		URLPatternMapper<Boolean> urlPatternMapper = _urlPatternMappers.get(
 			companyId);
 
 		if (urlPatternMapper == null) {
-			urlPatternMapper = _urlPatternMappers.get(CompanyConstants.SYSTEM);
-
-			if (urlPatternMapper == null) {
-				return false;
-			}
+			return false;
 		}
 
 		Boolean result = urlPatternMapper.getValue(url);
@@ -90,7 +99,7 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 				validateLayoutReferencesWhitelistedURLPatterns();
 
 		if (ArrayUtil.isEmpty(whitelistedURLPatterns)) {
-			_urlPatternMappers.remove(companyId);
+			_urlPatternMappers.put(companyId, null);
 
 			return;
 		}
@@ -131,9 +140,19 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 			});
 	}
 
+	@Override
+	public void removeURLPatternMapper(long companyId) {
+		_urlPatternMappers.remove(companyId);
+	}
+
+	@Override
+	public void removeURLPatternMappers() {
+		_urlPatternMappers.clear();
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		rebuildURLPatternMappers();
+		removeURLPatternMappers();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -149,6 +168,6 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 	private SettingsLocatorHelper _settingsLocatorHelper;
 
 	private final Map<Long, URLPatternMapper<Boolean>> _urlPatternMappers =
-		Collections.synchronizedMap(new LinkedHashMap<>());
+		Collections.synchronizedMap(new HashMap<>());
 
 }

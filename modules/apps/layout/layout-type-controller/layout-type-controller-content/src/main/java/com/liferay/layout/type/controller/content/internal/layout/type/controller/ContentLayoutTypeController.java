@@ -1,21 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.type.controller.content.internal.layout.type.controller;
 
 import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -40,7 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.servlet.TransferHeadersHelper;
+import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -120,6 +112,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		String layoutMode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
+		String redirect = StringPool.BLANK;
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			if (hasUpdatePermissions == null) {
@@ -129,6 +122,14 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 			if (!hasUpdatePermissions) {
 				layoutMode = Constants.VIEW;
+			}
+			else if (!layout.isUnlocked(layoutMode, themeDisplay.getUserId())) {
+				redirect = _layoutLockManager.getLockedLayoutURL(
+					httpServletRequest);
+			}
+			else {
+				redirect = _getDraftLayoutFullURL(
+					httpServletRequest, layout, themeDisplay);
 			}
 		}
 
@@ -155,7 +156,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		}
 
 		RequestDispatcher requestDispatcher =
-			_transferHeadersHelper.getTransferHeadersRequestDispatcher(
+			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
 				_servletContext.getRequestDispatcher(page));
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -169,62 +170,15 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 		try {
-			LayoutPageTemplateEntry layoutPageTemplateEntry = null;
-
-			if (layoutMode.equals(Constants.EDIT)) {
-				layoutPageTemplateEntry = _fetchLayoutPageTemplateEntry(layout);
-			}
-
-			if (layoutPageTemplateEntry != null) {
-				httpServletRequest.setAttribute(
-					ContentPageEditorWebKeys.CLASS_NAME,
-					LayoutPageTemplateEntry.class.getName());
-				httpServletRequest.setAttribute(
-					ContentPageEditorWebKeys.CLASS_PK,
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			if (Validator.isNotNull(redirect)) {
+				httpServletResponse.sendRedirect(redirect);
 			}
 			else {
-				httpServletRequest.setAttribute(
-					ContentPageEditorWebKeys.CLASS_NAME,
-					Layout.class.getName());
-				httpServletRequest.setAttribute(
-					ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
-			}
+				_addContentPageEditorAttributes(
+					httpServletRequest, layout, layoutMode);
 
-			addAttributes(httpServletRequest);
+				addAttributes(httpServletRequest);
 
-			Layout draftLayout = layout.fetchDraftLayout();
-
-			if (layoutMode.equals(Constants.EDIT) && (draftLayout != null)) {
-				String layoutFullURL = _portal.getLayoutFullURL(
-					draftLayout, themeDisplay);
-
-				HttpServletRequest originalHttpServletRequest =
-					_portal.getOriginalServletRequest(httpServletRequest);
-
-				String backURL = originalHttpServletRequest.getParameter(
-					"p_l_back_url");
-
-				if (Validator.isNotNull(backURL)) {
-					layoutFullURL = HttpComponentsUtil.addParameter(
-						layoutFullURL, "p_l_back_url", backURL);
-				}
-
-				layoutFullURL = HttpComponentsUtil.addParameter(
-					layoutFullURL, "p_l_mode", Constants.EDIT);
-
-				long segmentsExperienceId = ParamUtil.getLong(
-					httpServletRequest, "segmentsExperienceId", -1);
-
-				if (segmentsExperienceId != -1) {
-					layoutFullURL = HttpComponentsUtil.setParameter(
-						layoutFullURL, "segmentsExperienceId",
-						segmentsExperienceId);
-				}
-
-				httpServletResponse.sendRedirect(layoutFullURL);
-			}
-			else {
 				requestDispatcher.include(httpServletRequest, servletResponse);
 			}
 		}
@@ -304,6 +258,32 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		return _VIEW_PAGE;
 	}
 
+	private void _addContentPageEditorAttributes(
+		HttpServletRequest httpServletRequest, Layout layout,
+		String layoutMode) {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry = null;
+
+		if (layoutMode.equals(Constants.EDIT)) {
+			layoutPageTemplateEntry = _fetchLayoutPageTemplateEntry(layout);
+		}
+
+		if (layoutPageTemplateEntry != null) {
+			httpServletRequest.setAttribute(
+				ContentPageEditorWebKeys.CLASS_NAME,
+				LayoutPageTemplateEntry.class.getName());
+			httpServletRequest.setAttribute(
+				ContentPageEditorWebKeys.CLASS_PK,
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		}
+		else {
+			httpServletRequest.setAttribute(
+				ContentPageEditorWebKeys.CLASS_NAME, Layout.class.getName());
+			httpServletRequest.setAttribute(
+				ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
+		}
+	}
+
 	private LayoutPageTemplateEntry _fetchLayoutPageTemplateEntry(
 		Layout layout) {
 
@@ -324,6 +304,45 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		}
 
 		return null;
+	}
+
+	private String _getDraftLayoutFullURL(
+			HttpServletRequest httpServletRequest, Layout layout,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			return StringPool.BLANK;
+		}
+
+		String layoutFullURL = _portal.getLayoutFullURL(
+			draftLayout, themeDisplay);
+
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(httpServletRequest);
+
+		String backURL = originalHttpServletRequest.getParameter(
+			"p_l_back_url");
+
+		if (Validator.isNotNull(backURL)) {
+			layoutFullURL = HttpComponentsUtil.addParameter(
+				layoutFullURL, "p_l_back_url", backURL);
+		}
+
+		layoutFullURL = HttpComponentsUtil.addParameter(
+			layoutFullURL, "p_l_mode", Constants.EDIT);
+
+		long segmentsExperienceId = ParamUtil.getLong(
+			httpServletRequest, "segmentsExperienceId", -1);
+
+		if (segmentsExperienceId != -1) {
+			layoutFullURL = HttpComponentsUtil.setParameter(
+				layoutFullURL, "segmentsExperienceId", segmentsExperienceId);
+		}
+
+		return layoutFullURL;
 	}
 
 	private boolean _hasUpdatePermissions(
@@ -401,6 +420,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
+	private LayoutLockManager _layoutLockManager;
+
+	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
@@ -417,8 +439,5 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)"
 	)
 	private ServletContext _servletContext;
-
-	@Reference
-	private TransferHeadersHelper _transferHeadersHelper;
 
 }

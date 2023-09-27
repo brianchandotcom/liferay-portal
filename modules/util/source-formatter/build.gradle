@@ -12,29 +12,29 @@ buildPluginDescriptor {
 }
 
 dependencies {
-	compile group: "com.googlecode.java-diff-utils", name: "diffutils", version: "1.3.0"
-	compile group: "com.puppycrawl.tools", name: "checkstyle", version: "8.29"
-	compile group: "com.thoughtworks.qdox", name: "qdox", version: "2.0-M5"
-	compile group: "commons-io", name: "commons-io", version: "2.11.0"
-	compile group: "commons-lang", name: "commons-lang", version: "2.6"
-	compile group: "commons-logging", name: "commons-logging", version: "1.2"
-	compile(group: "jaxen", name: "jaxen", version: "1.1.1") {
+	api group: "com.googlecode.java-diff-utils", name: "diffutils", version: "1.3.0"
+	api group: "com.puppycrawl.tools", name: "checkstyle", version: "8.29"
+	api group: "com.thoughtworks.qdox", name: "qdox", version: "2.0-M5"
+	api group: "commons-io", name: "commons-io", version: "2.11.0"
+	api group: "commons-lang", name: "commons-lang", version: "2.6"
+	api group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
+	api(group: "jaxen", name: "jaxen", version: "1.1.6") {
 		exclude group: "com.ibm.icu", module: "icu4j"
 	}
-	compile group: "junit", name: "junit", version: "4.13.1"
-	compile group: "org.antlr", name: "antlr4-runtime", version: "4.8-1"
-	compile group: "org.apache.ant", name: "ant", version: "1.10.11"
-	compile group: "org.apache.maven", name: "maven-artifact", version: "3.3.9"
-	compile group: "org.dom4j", name: "dom4j", version: "2.1.3"
-	compile group: "org.json", name: "json", version: "20230227"
-	compile group: "org.reflections", name: "reflections", "version": "0.10.2"
-	compile group: "xerces", name: "xercesImpl", version: "2.12.2"
+	api group: "junit", name: "junit", version: "4.13.1"
+	api group: "org.antlr", name: "antlr4-runtime", version: "4.8-1"
+	api group: "org.apache.ant", name: "ant", version: "1.10.11"
+	api group: "org.apache.maven", name: "maven-artifact", version: "3.3.9"
+	api group: "org.dom4j", name: "dom4j", version: "2.1.3"
+	api group: "org.json", name: "json", version: "20230227"
+	api group: "org.reflections", name: "reflections", "version": "0.10.2"
+	api group: "xerces", name: "xercesImpl", version: "2.12.2"
 
 	compileInclude group: "com.liferay", name: "com.liferay.petra.function", version: "5.5.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.nio", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "5.3.0"
-	compileInclude group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.123"
+	compileInclude group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.145"
 	compileInclude group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
 	compileInclude group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.14'
 	compileInclude group: "org.codehaus.groovy", name: "groovy", version: "2.4.21"
@@ -53,7 +53,7 @@ dependencies {
 }
 
 deployDependencies {
-	from (configurations.compile) {
+	from (configurations.compileClasspath) {
 		include "checkstyle-*.jar"
 	}
 
@@ -66,6 +66,15 @@ liferay {
 
 liferayOSGi {
 	expandCompileInclude = true
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			artifact distTar
+			artifact distZip
+		}
+	}
 }
 
 updateFileVersions {

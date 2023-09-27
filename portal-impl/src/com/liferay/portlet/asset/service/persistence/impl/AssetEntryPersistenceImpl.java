@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portlet.asset.service.persistence.impl;
@@ -5938,17 +5929,18 @@ public class AssetEntryPersistenceImpl
 	 *
 	 * @param pk the primary key of the asset entry
 	 * @param assetTagPK the primary key of the asset tag
+	 * @return <code>true</code> if an association between the asset entry and the asset tag was added; <code>false</code> if they were already associated
 	 */
 	@Override
-	public void addAssetTag(long pk, long assetTagPK) {
+	public boolean addAssetTag(long pk, long assetTagPK) {
 		AssetEntry assetEntry = fetchByPrimaryKey(pk);
 
 		if (assetEntry == null) {
-			assetEntryToAssetTagTableMapper.addTableMapping(
+			return assetEntryToAssetTagTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk, assetTagPK);
 		}
 		else {
-			assetEntryToAssetTagTableMapper.addTableMapping(
+			return assetEntryToAssetTagTableMapper.addTableMapping(
 				assetEntry.getCompanyId(), pk, assetTagPK);
 		}
 	}
@@ -5958,20 +5950,21 @@ public class AssetEntryPersistenceImpl
 	 *
 	 * @param pk the primary key of the asset entry
 	 * @param assetTag the asset tag
+	 * @return <code>true</code> if an association between the asset entry and the asset tag was added; <code>false</code> if they were already associated
 	 */
 	@Override
-	public void addAssetTag(
+	public boolean addAssetTag(
 		long pk, com.liferay.asset.kernel.model.AssetTag assetTag) {
 
 		AssetEntry assetEntry = fetchByPrimaryKey(pk);
 
 		if (assetEntry == null) {
-			assetEntryToAssetTagTableMapper.addTableMapping(
+			return assetEntryToAssetTagTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk,
 				assetTag.getPrimaryKey());
 		}
 		else {
-			assetEntryToAssetTagTableMapper.addTableMapping(
+			return assetEntryToAssetTagTableMapper.addTableMapping(
 				assetEntry.getCompanyId(), pk, assetTag.getPrimaryKey());
 		}
 	}
@@ -5981,9 +5974,10 @@ public class AssetEntryPersistenceImpl
 	 *
 	 * @param pk the primary key of the asset entry
 	 * @param assetTagPKs the primary keys of the asset tags
+	 * @return <code>true</code> if at least one association between the asset entry and the asset tags was added; <code>false</code> if they were all already associated
 	 */
 	@Override
-	public void addAssetTags(long pk, long[] assetTagPKs) {
+	public boolean addAssetTags(long pk, long[] assetTagPKs) {
 		long companyId = 0;
 
 		AssetEntry assetEntry = fetchByPrimaryKey(pk);
@@ -5995,8 +5989,14 @@ public class AssetEntryPersistenceImpl
 			companyId = assetEntry.getCompanyId();
 		}
 
-		assetEntryToAssetTagTableMapper.addTableMappings(
+		long[] addedKeys = assetEntryToAssetTagTableMapper.addTableMappings(
 			companyId, pk, assetTagPKs);
+
+		if (addedKeys.length > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -6004,12 +6004,13 @@ public class AssetEntryPersistenceImpl
 	 *
 	 * @param pk the primary key of the asset entry
 	 * @param assetTags the asset tags
+	 * @return <code>true</code> if at least one association between the asset entry and the asset tags was added; <code>false</code> if they were all already associated
 	 */
 	@Override
-	public void addAssetTags(
+	public boolean addAssetTags(
 		long pk, List<com.liferay.asset.kernel.model.AssetTag> assetTags) {
 
-		addAssetTags(
+		return addAssetTags(
 			pk,
 			ListUtil.toLongArray(
 				assetTags,

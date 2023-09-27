@@ -18,21 +18,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			ObjectAdmin.deleteAllCustomObjectsViaAPI();
-
-			JSONUser.tearDownNonAdminUsers();
-		}
-	}
-
 	@description = "This is a test for LPS-162848. The page creator without view permission for custom object cannot see Form Components in page editor."
 	@priority = 4
 	test CannotSeeFormComponentsInPageEditorAsUserWithoutViewPermissionForCustomObject {
@@ -292,7 +277,7 @@ definition {
 	@description = "This is a test for LPS-169924. The user without View permission for object cannot see Form Container at view and perview mode."
 	@priority = 5
 	test CannotSeeFormContainerAtViewAndPreviewModeAsUserWithoutViewPermissionForObject {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-169923=true";
+		property custom.properties = "feature.flag.LPS-169923=true${line.separator}jsonws.web.service.paths.excludes=";
 
 		task ("Given a user doesn't have view permission for custom object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -426,7 +411,7 @@ definition {
 				id = "submit-button-text",
 				text = "Submit");
 
-			ScrollBy(value1 = "0, 500");
+			ScrollBy(value1 = "0, 1200");
 
 			AssertVisible(
 				index = 1,
@@ -570,7 +555,7 @@ definition {
 	@description = "This is a test for LPS-169924. The user with Add Object Entry but without View permission for object should see Form Container at view and preview mode."
 	@priority = 4
 	test ViewFormContainerAtViewAndPreviewModeAsUserWithAddObjectEntryPermissionWithoutViewPermissionForObject {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-169923=true";
+		property custom.properties = "feature.flag.LPS-169923=true${line.separator}jsonws.web.service.paths.excludes=";
 
 		task ("Given a user doesn't have view permission for custom object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -708,7 +693,24 @@ definition {
 		task ("Given a fragment admin has a read-only fragment without field type") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "form-fragments.zip");
+			FragmentsAdminNavigator.gotoImportCollection();
+
+			WaitForPageLoad();
+
+			UploadDependencyFile.uploadArchiveFile(fileName = "form-fragments.zip");
+
+			Button.clickImport();
+
+			AssertTextEquals(
+				locator1 = "Message#WARNING_IMPORT",
+				value1 = "1 item was imported with warnings.");
+
+			AssertTextEquals.assertPartialText(
+				itemName = "Fragment Example",
+				locator1 = "Message#WARNING_IMPORT_SUBTEXT",
+				value1 = "Fragment type input must have at least one field type");
+
+			Button.clickDone();
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Form Fragments");
 		}

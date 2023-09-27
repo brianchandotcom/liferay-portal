@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.inventory.service.persistence;
@@ -188,17 +179,18 @@ public interface CommerceInventoryAuditPersistence
 	public int countByLtCreateDate(Date createDate);
 
 	/**
-	 * Returns all the commerce inventory audits where companyId = &#63; and sku = &#63;.
+	 * Returns all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @return the matching commerce inventory audits
 	 */
-	public java.util.List<CommerceInventoryAudit> findByC_S(
-		long companyId, String sku);
+	public java.util.List<CommerceInventoryAudit> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey);
 
 	/**
-	 * Returns a range of all the commerce inventory audits where companyId = &#63; and sku = &#63;.
+	 * Returns a range of all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryAuditModelImpl</code>.
@@ -206,15 +198,17 @@ public interface CommerceInventoryAuditPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param start the lower bound of the range of commerce inventory audits
 	 * @param end the upper bound of the range of commerce inventory audits (not inclusive)
 	 * @return the range of matching commerce inventory audits
 	 */
-	public java.util.List<CommerceInventoryAudit> findByC_S(
-		long companyId, String sku, int start, int end);
+	public java.util.List<CommerceInventoryAudit> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey, int start,
+		int end);
 
 	/**
-	 * Returns an ordered range of all the commerce inventory audits where companyId = &#63; and sku = &#63;.
+	 * Returns an ordered range of all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryAuditModelImpl</code>.
@@ -222,18 +216,19 @@ public interface CommerceInventoryAuditPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param start the lower bound of the range of commerce inventory audits
 	 * @param end the upper bound of the range of commerce inventory audits (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce inventory audits
 	 */
-	public java.util.List<CommerceInventoryAudit> findByC_S(
-		long companyId, String sku, int start, int end,
+	public java.util.List<CommerceInventoryAudit> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryAudit>
 			orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the commerce inventory audits where companyId = &#63; and sku = &#63;.
+	 * Returns an ordered range of all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryAuditModelImpl</code>.
@@ -241,106 +236,117 @@ public interface CommerceInventoryAuditPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param start the lower bound of the range of commerce inventory audits
 	 * @param end the upper bound of the range of commerce inventory audits (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce inventory audits
 	 */
-	public java.util.List<CommerceInventoryAudit> findByC_S(
-		long companyId, String sku, int start, int end,
+	public java.util.List<CommerceInventoryAudit> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryAudit>
 			orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Returns the first commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63;.
+	 * Returns the first commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce inventory audit
 	 * @throws NoSuchInventoryAuditException if a matching commerce inventory audit could not be found
 	 */
-	public CommerceInventoryAudit findByC_S_First(
-			long companyId, String sku,
+	public CommerceInventoryAudit findByC_S_U_First(
+			long companyId, String sku, String unitOfMeasureKey,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceInventoryAudit> orderByComparator)
 		throws NoSuchInventoryAuditException;
 
 	/**
-	 * Returns the first commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63;.
+	 * Returns the first commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce inventory audit, or <code>null</code> if a matching commerce inventory audit could not be found
 	 */
-	public CommerceInventoryAudit fetchByC_S_First(
-		long companyId, String sku,
+	public CommerceInventoryAudit fetchByC_S_U_First(
+		long companyId, String sku, String unitOfMeasureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryAudit>
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63;.
+	 * Returns the last commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce inventory audit
 	 * @throws NoSuchInventoryAuditException if a matching commerce inventory audit could not be found
 	 */
-	public CommerceInventoryAudit findByC_S_Last(
-			long companyId, String sku,
+	public CommerceInventoryAudit findByC_S_U_Last(
+			long companyId, String sku, String unitOfMeasureKey,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceInventoryAudit> orderByComparator)
 		throws NoSuchInventoryAuditException;
 
 	/**
-	 * Returns the last commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63;.
+	 * Returns the last commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce inventory audit, or <code>null</code> if a matching commerce inventory audit could not be found
 	 */
-	public CommerceInventoryAudit fetchByC_S_Last(
-		long companyId, String sku,
+	public CommerceInventoryAudit fetchByC_S_U_Last(
+		long companyId, String sku, String unitOfMeasureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryAudit>
 			orderByComparator);
 
 	/**
-	 * Returns the commerce inventory audits before and after the current commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63;.
+	 * Returns the commerce inventory audits before and after the current commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param commerceInventoryAuditId the primary key of the current commerce inventory audit
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce inventory audit
 	 * @throws NoSuchInventoryAuditException if a commerce inventory audit with the primary key could not be found
 	 */
-	public CommerceInventoryAudit[] findByC_S_PrevAndNext(
+	public CommerceInventoryAudit[] findByC_S_U_PrevAndNext(
 			long commerceInventoryAuditId, long companyId, String sku,
+			String unitOfMeasureKey,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceInventoryAudit> orderByComparator)
 		throws NoSuchInventoryAuditException;
 
 	/**
-	 * Removes all the commerce inventory audits where companyId = &#63; and sku = &#63; from the database.
+	 * Removes all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 */
-	public void removeByC_S(long companyId, String sku);
+	public void removeByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey);
 
 	/**
-	 * Returns the number of commerce inventory audits where companyId = &#63; and sku = &#63;.
+	 * Returns the number of commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @return the number of matching commerce inventory audits
 	 */
-	public int countByC_S(long companyId, String sku);
+	public int countByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey);
 
 	/**
 	 * Caches the commerce inventory audit in the entity cache if it is enabled.

@@ -229,6 +229,7 @@ definition {
 	@priority = 4
 	test CanPublishDeletedCoverImageViaSAP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Site Name (Staging)",
@@ -1119,6 +1120,7 @@ definition {
 	@priority = 5
 	test CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
@@ -1157,11 +1159,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "Test YouTube Video",
-			groupName = "Site Name (Staging)",
-			site = "false",
-			siteURLKey = "site-name-staging");
+		Refresh();
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 

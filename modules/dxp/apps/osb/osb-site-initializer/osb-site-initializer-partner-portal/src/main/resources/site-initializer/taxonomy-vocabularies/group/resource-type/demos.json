@@ -1,0 +1,21 @@
+{
+	"description": "Demos",
+	"externalReferenceCode": "PRMC049",
+	"name": "Demos",
+	"name_i18n": {
+		"ar_SA": "Demos",
+		"ca_ES": "Demos",
+		"de_DE": "Demos",
+		"en_US": "Demos",
+		"es_ES": "Demos",
+		"fi_FI": "Demos",
+		"fr_FR": "Demos",
+		"hu_HU": "Demos",
+		"ja_JP": "Demos",
+		"nl_NL": "Demos",
+		"pt_BR": "Demos",
+		"sv_SE": "Demos",
+		"zh_CN": "Demos"
+	},
+	"viewableBy": "Anyone"
+}

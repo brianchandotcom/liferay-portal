@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC035",
+	"name": "Excel",
+	"name_i18n": {
+		"ar_SA": "Excel",
+		"ca_ES": "Excel",
+		"de_DE": "Excel",
+		"en_US": "Excel",
+		"es_ES": "Excel",
+		"fi_FI": "Excel",
+		"fr_FR": "Excel",
+		"hu_HU": "Excel",
+		"ja_JP": "Excel",
+		"nl_NL": "Excel",
+		"pt_BR": "Excel",
+		"sv_SE": "Excel",
+		"zh_CN": "Excel"
+	},
+	"viewableBy": "Anyone"
+}

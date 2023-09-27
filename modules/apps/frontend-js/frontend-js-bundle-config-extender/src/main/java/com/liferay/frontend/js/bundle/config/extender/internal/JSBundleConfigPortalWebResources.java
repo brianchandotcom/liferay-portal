@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.frontend.js.bundle.config.extender.internal;
@@ -18,6 +9,8 @@ import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.servlet.delegate.ServletContextDelegate;
 
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.BundleContext;
@@ -37,9 +30,12 @@ public class JSBundleConfigPortalWebResources {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		try {
+			ServletConfig servletConfig =
+				_jsBundleConfigServlet.getServletConfig();
+
 			PortalWebResources portalWebResources =
 				new InternalPortalWebResources(
-					_jsBundleConfigServlet.getServletContext());
+					servletConfig.getServletContext());
 
 			_serviceRegistration = bundleContext.registerService(
 				PortalWebResources.class, portalWebResources, null);
@@ -59,8 +55,10 @@ public class JSBundleConfigPortalWebResources {
 	@Reference
 	private JSBundleConfigRegistry _jsBundleConfigRegistry;
 
-	@Reference
-	private JSBundleConfigServlet _jsBundleConfigServlet;
+	@Reference(
+		target = "(component.name=com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigServlet)"
+	)
+	private Servlet _jsBundleConfigServlet;
 
 	private ServiceRegistration<?> _serviceRegistration;
 

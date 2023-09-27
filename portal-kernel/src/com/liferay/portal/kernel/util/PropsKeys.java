@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.util;
@@ -684,9 +675,6 @@ public interface PropsKeys {
 	public static final String DISCUSSION_COMMENTS_ALLOWED_CONTENT =
 		"discussion.comments.allowed.content";
 
-	public static final String DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER =
-		"discussion.comments.always.editable.by.owner";
-
 	public static final String DISCUSSION_COMMENTS_DELTA_VALUE =
 		"discussion.comments.delta.value";
 
@@ -695,8 +683,6 @@ public interface PropsKeys {
 
 	public static final String DISCUSSION_MAX_COMMENTS =
 		"discussion.max.comments";
-
-	public static final String DISCUSSION_SUBSCRIBE = "discussion.subscribe";
 
 	public static final String DL_ACTIONS_VISIBLE = "dl.actions.visible";
 
@@ -2719,7 +2705,7 @@ public interface PropsKeys {
 		"upgrade.concurrent.fetch.size";
 
 	public static final String UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE =
-		"upgrade.concurrent.process.list.max.size";
+		"upgrade.concurrent.process.future.list.max.size";
 
 	public static final String UPGRADE_DATABASE_AUTO_RUN =
 		"upgrade.database.auto.run";

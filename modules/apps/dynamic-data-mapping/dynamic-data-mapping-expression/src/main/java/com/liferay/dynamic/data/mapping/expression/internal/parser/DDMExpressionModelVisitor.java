@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dynamic.data.mapping.expression.internal.parser;
@@ -51,20 +42,20 @@ public class DDMExpressionModelVisitor
 	public Expression visitAdditionExpression(
 		@NotNull DDMExpressionParser.AdditionExpressionContext context) {
 
-		Expression l = visitChild(context, 0);
-		Expression r = visitChild(context, 2);
+		Expression leftExpression = visitChild(context, 0);
+		Expression rightExpression = visitChild(context, 2);
 
-		return new ArithmeticExpression("+", l, r);
+		return new ArithmeticExpression("+", leftExpression, rightExpression);
 	}
 
 	@Override
 	public Expression visitAndExpression(
 		@NotNull DDMExpressionParser.AndExpressionContext context) {
 
-		Expression l = visitChild(context, 0);
-		Expression r = visitChild(context, 2);
+		Expression leftExpression = visitChild(context, 0);
+		Expression rightExpression = visitChild(context, 2);
 
-		return new AndExpression(l, r);
+		return new AndExpression(leftExpression, rightExpression);
 	}
 
 	@Override
@@ -85,20 +76,20 @@ public class DDMExpressionModelVisitor
 	public Expression visitDivisionExpression(
 		@NotNull DDMExpressionParser.DivisionExpressionContext context) {
 
-		Expression l = visitChild(context, 0);
-		Expression r = visitChild(context, 2);
+		Expression leftExpression = visitChild(context, 0);
+		Expression rightExpression = visitChild(context, 2);
 
-		return new ArithmeticExpression("/", l, r);
+		return new ArithmeticExpression("/", leftExpression, rightExpression);
 	}
 
 	@Override
 	public Expression visitEqualsExpression(
 		@NotNull DDMExpressionParser.EqualsExpressionContext context) {
 
-		Expression l = visitChild(context, 0);
-		Expression r = visitChild(context, 2);
+		Expression leftExpression = visitChild(context, 0);
+		Expression rightExpression = visitChild(context, 2);
 
-		return new ComparisonExpression("=", l, r);
+		return new ComparisonExpression("=", leftExpression, rightExpression);
 	}
 
 	@Override
@@ -134,10 +125,10 @@ public class DDMExpressionModelVisitor
 	public Expression visitGreaterThanExpression(
 		@NotNull DDMExpressionParser.GreaterThanExpressionContext context) {
 
-		Expression l = visitChild(context, 0);
-		Expression r = visitChild(context, 2);
+		Expression leftExpression = visitChild(context, 0);
+		Expression rightExpression = visitChild(context, 2);
 
-		return new ComparisonExpression(">", l, r);
+		return new ComparisonExpression(">", leftExpression, rightExpression);
 	}
 
 	@Override
@@ -145,10 +136,10 @@ public class DDMExpressionModelVisitor
 		@NotNull DDMExpressionParser.GreaterThanOrEqualsExpressionContext
 			context) {
 
-		Expression l = visitChild(context, 0);
-		Expression r = visitChild(context, 2);
+		Expression leftExpression = visitChild(context, 0);
+		Expression rightExpression = visitChild(context, 2);
 
-		return new ComparisonExpression(">=", l, r);
+		return new ComparisonExpression(">=", leftExpression, rightExpression);
 	}
 
 	@Override
@@ -162,10 +153,10 @@ public class DDMExpressionModelVisitor
 	public Expression visitLessThanExpression(
 		@NotNull DDMExpressionParser.LessThanExpressionContext context) {
 
-		Expression l = visitChild(context, 0);
-		Expression r = visitChild(context, 2);
+		Expression leftExpression = visitChild(context, 0);
+		Expression rightExpression = visitChild(context, 2);
 
-		return new ComparisonExpression("<", l, r);
+		return new ComparisonExpression("<", leftExpression, rightExpression);
 	}
 
 	@Override
@@ -173,10 +164,10 @@ public class DDMExpressionModelVisitor
 		@NotNull DDMExpressionParser.LessThanOrEqualsExpressionContext
 			context) {
 
-		Expression l = visitChild(context, 0);
-		Expression r = visitChild(context, 2);
+		Expression leftExpression = visitChild(context, 0);
+		Expression rightExpression = visitChild(context, 2);
 
-		return new ComparisonExpression("<=", l, r);
+		return new ComparisonExpression("<=", leftExpression, rightExpression);
 	}
 
 	@Override
@@ -206,20 +197,20 @@ public class DDMExpressionModelVisitor
 	public Expression visitMultiplicationExpression(
 		@NotNull DDMExpressionParser.MultiplicationExpressionContext context) {
 
-		Expression l = visitChild(context, 0);
-		Expression r = visitChild(context, 2);
+		Expression leftExpression = visitChild(context, 0);
+		Expression rightExpression = visitChild(context, 2);
 
-		return new ArithmeticExpression("*", l, r);
+		return new ArithmeticExpression("*", leftExpression, rightExpression);
 	}
 
 	@Override
 	public Expression visitNotEqualsExpression(
 		@NotNull DDMExpressionParser.NotEqualsExpressionContext context) {
 
-		Expression l = visitChild(context, 0);
-		Expression r = visitChild(context, 2);
+		Expression leftExpression = visitChild(context, 0);
+		Expression rightExpression = visitChild(context, 2);
 
-		return new ComparisonExpression("!=", l, r);
+		return new ComparisonExpression("!=", leftExpression, rightExpression);
 	}
 
 	@Override
@@ -255,10 +246,10 @@ public class DDMExpressionModelVisitor
 	public Expression visitOrExpression(
 		@NotNull DDMExpressionParser.OrExpressionContext context) {
 
-		Expression l = visitChild(context, 0);
-		Expression r = visitChild(context, 2);
+		Expression leftExpression = visitChild(context, 0);
+		Expression rightExpression = visitChild(context, 2);
 
-		return new OrExpression(l, r);
+		return new OrExpression(leftExpression, rightExpression);
 	}
 
 	@Override
@@ -272,10 +263,10 @@ public class DDMExpressionModelVisitor
 	public Expression visitSubtractionExpression(
 		@NotNull DDMExpressionParser.SubtractionExpressionContext context) {
 
-		Expression l = visitChild(context, 0);
-		Expression r = visitChild(context, 2);
+		Expression leftExpression = visitChild(context, 0);
+		Expression rightExpression = visitChild(context, 2);
 
-		return new ArithmeticExpression("-", l, r);
+		return new ArithmeticExpression("-", leftExpression, rightExpression);
 	}
 
 	protected String getFunctionName(Token functionNameToken) {
@@ -292,9 +283,9 @@ public class DDMExpressionModelVisitor
 		List<Expression> parameters = new ArrayList<>();
 
 		for (int i = 0; i < context.getChildCount(); i += 2) {
-			Expression parameter = visitChild(context, i);
+			Expression parameterExpression = visitChild(context, i);
 
-			parameters.add(parameter);
+			parameters.add(parameterExpression);
 		}
 
 		return parameters;

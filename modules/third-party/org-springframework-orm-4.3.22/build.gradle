@@ -11,8 +11,8 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compile group: "org.hibernate", name: "hibernate-core", version: "3.6.10.Final"
-	compile group: "org.springframework", name: "spring-orm", version: "4.3.22.RELEASE"
+	api group: "org.hibernate", name: "hibernate-core", version: "3.6.10.Final"
+	api group: "org.springframework", name: "spring-orm", version: "4.3.22.RELEASE"
 }
 
 deploy {

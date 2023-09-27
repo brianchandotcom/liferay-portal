@@ -38,6 +38,7 @@ definition {
 	test CannotSaveWhenConfigurationIsInvalid {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
 
@@ -54,6 +55,7 @@ definition {
 	@priority = 5
 	test CanTranslateContentFieldIndependently {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
@@ -87,7 +89,7 @@ definition {
 				webContentTitle = "This is the title of a web article");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Content", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
-			echo("There is a Google network issue. Ending test.");
+			fail("There is a Google network issue. Ending test.");
 		}
 	}
 
@@ -95,6 +97,7 @@ definition {
 	@priority = 5
 	test CanTranslateContentPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -154,7 +157,7 @@ definition {
 			Page.viewCurrentPage(pageName = "内容页面名称");
 		}
 		else if (IsTextEqual.isPartialText(locator1 = "Toolbar#FEEDBACK", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
-			echo("There is a Google network issue. Ending test.");
+			fail("There is a Google network issue. Ending test.");
 		}
 	}
 
@@ -162,6 +165,7 @@ definition {
 	@priority = 5
 	test CanTranslateContentPageFieldIndependently {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -229,7 +233,7 @@ definition {
 				text = "Überschrift");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "element-text", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
-			echo("There is a Google network issue. Ending test.");
+			fail("There is a Google network issue. Ending test.");
 		}
 	}
 
@@ -237,6 +241,7 @@ definition {
 	@priority = 5
 	test CanTranslateDescriptionFieldIndependently {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
@@ -270,7 +275,7 @@ definition {
 				webContentTitle = "This is the title of a web article");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Description", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
-			echo("There is a Google network issue. Ending test.");
+			fail("There is a Google network issue. Ending test.");
 		}
 	}
 
@@ -278,6 +283,7 @@ definition {
 	@priority = 5
 	test CanTranslateNumericAndDecimalFieldsIndependently {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -354,7 +360,7 @@ definition {
 				webContentNumber = 10);
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Decimal", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
-			echo("There is a Google network issue. Ending test.");
+			fail("There is a Google network issue. Ending test.");
 		}
 	}
 
@@ -362,6 +368,7 @@ definition {
 	@priority = 5
 	test CanTranslateRichTextFieldIndependently {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -423,7 +430,7 @@ definition {
 				webContentTitle = "これはリッチテキストフィールドのタイトルです");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
-			echo("There is a Google network issue. Ending test.");
+			fail("There is a Google network issue. Ending test.");
 		}
 	}
 
@@ -431,6 +438,7 @@ definition {
 	@priority = 5
 	test CanTranslateTextBoxFieldIndependently {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -503,6 +511,7 @@ definition {
 	@priority = 5
 	test CanTranslateTextFieldIndependently {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -572,6 +581,7 @@ definition {
 	@priority = 5
 	test CanTranslateTitleFieldIndependently {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "This is the content of a web article",
@@ -620,6 +630,7 @@ definition {
 	test CanTranslateWCToJapaneseWithGoogle {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -657,6 +668,7 @@ definition {
 	@priority = 5
 	test CanViewTranslationAfterDisablingGoogleConfiguration {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -707,6 +719,7 @@ definition {
 	@priority = 4
 	test TranslateButtonIsDisabledWhenFieldIsNull {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "This is the content of a web article",

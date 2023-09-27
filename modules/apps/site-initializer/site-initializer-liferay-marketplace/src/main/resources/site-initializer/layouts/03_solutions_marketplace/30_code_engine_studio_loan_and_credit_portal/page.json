@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/code-engine-studio-loan-and-credit-portal",
+	"hidden": true,
+	"name": "Code Engine Studio Loan and Credit Portal",
+	"name_i18n": {
+		"en_US": "Code Engine Studio Loan and Credit Portal"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.friendly.url.taglib.servlet.taglib;
@@ -56,6 +47,10 @@ public class InputTag extends IncludeTag {
 		return _classPK;
 	}
 
+	public String getHelpMessage() {
+		return _helpMessage;
+	}
+
 	public String getInputAddon() {
 		return _inputAddon;
 	}
@@ -92,6 +87,10 @@ public class InputTag extends IncludeTag {
 		_disabled = disabled;
 	}
 
+	public void setHelpMessage(String helpMessage) {
+		_helpMessage = helpMessage;
+	}
+
 	public void setInputAddon(String inputAddon) {
 		_inputAddon = inputAddon;
 	}
@@ -126,6 +125,7 @@ public class InputTag extends IncludeTag {
 		_className = null;
 		_classPK = 0;
 		_disabled = false;
+		_helpMessage = null;
 		_inputAddon = null;
 		_localizable = true;
 		_name = _DEFAULT_NAME;
@@ -151,6 +151,8 @@ public class InputTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:friendlyURLMaxLength",
 			_FRIENDLY_URL_MAX_LENGTH);
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:helpMessage", getHelpMessage());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:inputAddon", getInputAddon());
 		httpServletRequest.setAttribute(
@@ -294,6 +296,7 @@ public class InputTag extends IncludeTag {
 	private String _className;
 	private long _classPK;
 	private boolean _disabled;
+	private String _helpMessage;
 	private String _inputAddon;
 	private boolean _localizable = true;
 	private String _name = _DEFAULT_NAME;

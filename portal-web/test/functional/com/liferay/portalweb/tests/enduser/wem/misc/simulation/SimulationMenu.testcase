@@ -1,22 +1,27 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Simulation";
 	property testray.main.component.name = "Web Content Administration";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
 
-		User.firstLoginPG();
-	}
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -24,13 +29,22 @@ definition {
 	@priority = 3
 	@uitest
 	test NavigateToPageInSimulationMode {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Add an Asset Publisher to a widget page") {
+			HeadlessSite.addSite(
+				siteName = ${siteName},
+				templateName = "Welcome",
+				templateType = "Site Initializer");
+
 			JSONLayout.addPublicLayout(
-				groupName = "Guest",
+				groupName = ${siteName},
 				layoutName = "Test Page Name");
 
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				widgetName = "Asset Publisher");
 		}
@@ -38,7 +52,7 @@ definition {
 		task ("Navigate to the widget page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Guest");
+				siteName = ${siteName});
 		}
 
 		task ("Access to Mobile Device mode via simulation menu") {
@@ -58,17 +72,311 @@ definition {
 
 			Smoke.viewWelcomeContentPage();
 		}
+	}
 
-		task ("Quit simulation mode") {
-			SelectFrameTop();
+	@description = "This is a test for LPS-186155. View content in experience under Simulation panel in content page."
+	@priority = 4
+	test PreviewContentOnContentPageByExperience {
+		property custom.properties = "feature.flag.LPS-186558=true";
 
-			Click(locator1 = "ControlMenu#SIMULATION");
+		task ("Given a site administrator has a content page with experience based on new segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = ${randomSiteName},
+				operator = "contains",
+				segmentName = "Email Address Segment",
+				text = "liferay");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Email Address Segment");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Button",
+				id = "link",
+				text = "Contact Sales");
+
+			PageEditor.publish();
 		}
 
-		task ("Delete the widget page") {
-			JSONLayout.deletePublicLayout(
-				groupName = "Guest",
+		task ("When the site administrator accesses to the simulation panel on content page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+		}
+
+		task ("Then the site administrator could preview content by experience") {
+			MobileDevice.previewBy(previewBy = "Experiences");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+
+			SelectFrameTop();
+
+			MobileDevice.previewBy(experience = "New Experience");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Contact Sales");
+		}
+	}
+
+	@description = "This is a test for LPS-128810 and LPS-186155. View collection items on content page when select segment."
+	@priority = 4
+	test PreviewContentOnContentPageBySegment {
+		property custom.properties = "feature.flag.LPS-186558=true";
+
+		task ("Add a segment with a Regular Role field") {
+			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Owner");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "Regular Role",
+				groupName = ${randomSiteName},
+				operator = "equals",
+				segmentName = "New Segment",
+				text = ${roleId});
+		}
+
+		task ("Add a web content without tag") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title 1");
+		}
+
+		task ("Add a web content with tag") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tag name",
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title 2");
+		}
+
+		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("Add a new personalized variation with new segment") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "New Segment");
+		}
+
+		task ("Select the Web Content Article item type and Basic Web Content item subtype") {
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("Add a tag filter") {
+			AssetListsAdmin.addTagsFilter(tagNameList = "tag name");
+		}
+
+		task ("View both web contents shown in collection items when select Anyone personalized variation") {
+			AssetListsAdmin.viewContent(
+				assetTitleList = "Web Content Title 1,Web Content Title 2",
+				personalizedVariation = "Anyone");
+		}
+
+		task ("View only the web content with tag is shown in collection items when select New Segment personalized variation") {
+			AssetListsAdmin.viewContent(
+				assetTitle = "Web Content Title 2",
+				assetType = "Web Content Article",
+				personalizedVariation = "New Segment");
+
+			AssetListsAdmin.viewNoContent(
+				assetTitle = "Web Content Title 1",
+				assetType = "Web Content Article",
+				personalizedVariation = "New Segment");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "New Segment");
+		}
+
+		task ("Add a Collection Display fragment to content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Heading fragment into Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Web Content Title 2",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title field to editable field of Heading") {
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.publish();
+		}
+
+		task ("View both web contents shown in simulation modal by default") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			MobileDevice.previewPG();
+
+			var n = 1;
+
+			for (var title : list "Web Content Title 2,Web Content Title 1") {
+				ContentPages.viewFragmentTextInCollectionDisplay(
+					row = ${n},
+					text = ${title});
+
+				var n = ${n} + 1;
+			}
+
+			SelectFrameTop();
+		}
+
+		task ("Select the segment on Simulation panel") {
+			MobileDevice.previewBy(segment = "New Segment");
+		}
+
+		task ("View only the web content with tag shown in simulation modal when select segment") {
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
+
+			ContentPages.viewFragmentTextInCollectionDisplay(text = "Web Content Title 2");
+
+			AssertElementNotPresent(
+				column = 1,
+				locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
+				row = 2);
+		}
+	}
+
+	@description = "This is a test for LPS-186155. View content in segment under Simulation panel in widget page."
+	@priority = 4
+	test PreviewContentOnWidgetPageBySegment {
+		property asset.publisher.selection.style = "asset-list";
+		property custom.properties = "feature.flag.LPS-186558=true";
+
+		task ("Given a site administrator displays manual collection with variation on a widget page") {
+			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Owner");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "Regular Role",
+				groupName = ${randomSiteName},
+				operator = "equals",
+				segmentName = "New Segment",
+				text = ${roleId});
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title 1");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title 2");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
+
+			AssetListsAdmin.selectAsset(
+				assetType = "Basic Web Content",
+				entryList = "Web Content Title 1,Web Content Title 2");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "New Segment");
+
+			AssetListsAdmin.selectAsset(
+				assetName = "Web Content Title 2",
+				assetType = "Basic Web Content");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "New Segment");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			AssetPublisherPortlet.gotoSelectCollection();
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Manual Collection");
+
+			IFrame.closeFrame();
+		}
+
+		task ("When the site administrator accesses to the simulation menu") {
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+		}
+
+		task ("Then the site administrator could preview content by segment") {
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
+
+			for (var title : list "Web Content Title 2,Web Content Title 1") {
+				AssetPublisherPortlet.viewAssetPG(assetTitle = ${title});
+			}
+
+			SelectFrameTop();
+
+			MobileDevice.previewBy(segment = "New Segment");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
+
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "Web Content Title 2");
+
+			AssertElementNotPresent(
+				key_assetTitle = "Web Content Title 1",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE");
 		}
 	}
 
@@ -77,12 +385,32 @@ definition {
 		MobileDevice.previewPG(deviceType = "custom");
 	}
 
+	@description = "This is a test for LPS-186155. Preview the custom size on Simulation panel."
 	@priority = 3
-	test PreviewCustomHeightWidth {
-		MobileDevice.previewPG(
-			deviceType = "custom",
-			height = 500,
-			width = 500);
+	test PreviewCustomSize {
+		property custom.properties = "feature.flag.LPS-186558=true";
+
+		task ("When the site administrator applies custom size on simulation panel") {
+			MobileDevice.previewPG(
+				applyCustomSize = "true",
+				deviceType = "custom",
+				height = 500,
+				width = 500);
+		}
+
+		task ("Then the site administrator sees the custom size applied to preview window") {
+			SelectFrameTop();
+
+			AssertCssValue(
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME",
+				locator2 = "height",
+				value1 = "500px");
+
+			AssertCssValue(
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME",
+				locator2 = "width",
+				value1 = "500px");
+		}
 	}
 
 	@priority = 3
@@ -98,6 +426,185 @@ definition {
 	@priority = 3
 	test PreviewTablet {
 		MobileDevice.previewPG(deviceType = "tablet");
+	}
+
+	@description = "This is a test for LPS-186155. View no experience selector in the header when simulation is opened and view info for no available experiences and available segments in content page."
+	@priority = 3
+	test ViewEmptyMessage {
+		property custom.properties = "feature.flag.LPS-186558=true";
+
+		task ("Given a site administrator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site administrator accesses to the simulation panel on content page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+		}
+
+		task ("Then the site administrator sees empty message on page content section") {
+			AssertTextEquals(
+				key_panel = "Page Content",
+				locator1 = "Panel#PANEL_HELP_TEXT",
+				value1 = "No segments have been added yet. To add a new segment go to Product Menu > People > Segments.");
+
+			MobileDevice.previewBy(previewBy = "Experiences");
+
+			AssertTextEquals(
+				key_panel = "Page Content",
+				locator1 = "Panel#PANEL_HELP_TEXT",
+				value1 = "No experiences have been added yet.");
+		}
+
+		task ("When the site administrator adds an experience on content page") {
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Button",
+				id = "link",
+				text = "Contact Sales");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the site administrator cannot see the experience selector on control menu after opening the simulation menu") {
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+
+			AssertElementNotPresent(
+				ariaLabel = "Experience Selector",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		}
+	}
+
+	@description = "This is a test for LPS-187159. View info alert message under Simulation panel in content page."
+	@priority = 4
+	test ViewInfoMessageWhenPreviewContentPage {
+		property custom.properties = "feature.flag.LPS-186558=true";
+
+		task ("Given a site administrator has a content page with experience based on new segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = ${randomSiteName},
+				operator = "contains",
+				segmentName = "Email Address Segment",
+				text = "liferay");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Email Address Segment");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site administrator previews the content page by Anyone segment") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+		}
+
+		task ("Then the site administrator sees the info message shown on preview window") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Showing content for the segment \"Anyone\".");
+		}
+
+		task ("When the site administrator previews the content page by new segment") {
+			MobileDevice.previewBy(segment = "Email Address Segment");
+		}
+
+		task ("Then the site administrator sees the info message shown on preview window") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Showing content for the segment \"Email Address Segment\".");
+		}
+
+		task ("When the site administrator previews the content page by Default experience") {
+			MobileDevice.previewBy(previewBy = "Experiences");
+		}
+
+		task ("Then the site administrator sees the info message shown on preview window") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Showing content for the experience \"Default\".");
+		}
+
+		task ("When the site administrator previews the content page by new experience") {
+			MobileDevice.previewBy(experience = "New Experience");
+		}
+
+		task ("Then the site administrator sees the info message shown on preview window") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Showing content for the experience \"New Experience\".");
+		}
+	}
+
+	@description = "This is a test for LPS-187159. View info alert message under Simulation panel in widget page."
+	@priority = 4
+	test ViewInfoMessageWhenPreviewWidgetPage {
+		property custom.properties = "feature.flag.LPS-186558=true";
+
+		task ("Given a site administrator has a widget page") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = ${randomSiteName},
+				operator = "contains",
+				segmentName = "Email Address Segment",
+				text = "liferay");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
+		}
+
+		task ("When the site administrator previews the widget page by Anyone segment") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+		}
+
+		task ("Then the site administrator sees the info message shown on preview window") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Showing content for the segment \"Anyone\".");
+		}
+
+		task ("When the site administrator previews the content page by new segment") {
+			MobileDevice.previewBy(segment = "Email Address Segment");
+		}
+
+		task ("Then the site administrator sees the info message shown on preview window") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Showing content for the segment \"Email Address Segment\".");
+		}
 	}
 
 }

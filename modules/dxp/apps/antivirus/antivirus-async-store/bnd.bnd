@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Antivirus Async Store
 Bundle-SymbolicName: com.liferay.antivirus.async.store
-Bundle-Version: 3.0.1
+Bundle-Version: 3.0.2
 Export-Package:\
 	com.liferay.antivirus.async.store.configuration,\
 	com.liferay.antivirus.async.store.constants,\

@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -60,6 +51,7 @@ page import="com.liferay.commerce.product.definitions.web.internal.display.conte
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionSpecificationOptionValueDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionsDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceUnitOfMeasureDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.security.permission.resource.CommerceCatalogPermission" %><%@
 page import="com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionExpirationDateException" %><%@
@@ -82,8 +74,11 @@ page import="com.liferay.commerce.product.exception.CPInstanceJsonException" %><
 page import="com.liferay.commerce.product.exception.CPInstanceMaxPriceValueException" %><%@
 page import="com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUuidException" %><%@
 page import="com.liferay.commerce.product.exception.CPInstanceSkuException" %><%@
+page import="com.liferay.commerce.product.exception.CPInstanceUnitOfMeasureIncrementalOrderQuantityException" %><%@
+page import="com.liferay.commerce.product.exception.CPInstanceUnitOfMeasureRateException" %><%@
 page import="com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryException" %><%@
 page import="com.liferay.commerce.product.exception.DuplicateCPInstanceException" %><%@
+page import="com.liferay.commerce.product.exception.DuplicateCPInstanceUnitOfMeasureKeyException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException" %><%@
@@ -101,20 +96,22 @@ page import="com.liferay.commerce.product.model.CPDefinitionOptionValueRel" %><%
 page import="com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue" %><%@
 page import="com.liferay.commerce.product.model.CPDisplayLayout" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@
+page import="com.liferay.commerce.product.model.CPInstanceUnitOfMeasure" %><%@
 page import="com.liferay.commerce.product.model.CPOptionCategory" %><%@
 page import="com.liferay.commerce.product.model.CPSpecificationOption" %><%@
 page import="com.liferay.commerce.product.model.CPTaxCategory" %><%@
 page import="com.liferay.commerce.product.model.CProduct" %><%@
 page import="com.liferay.commerce.product.model.CommerceCatalog" %><%@
+page import="com.liferay.commerce.product.option.CommerceOptionType" %><%@
 page import="com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.product.servlet.taglib.ui.constants.CPInstanceScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants" %><%@
 page import="com.liferay.commerce.stock.activity.CommerceLowStockActivity" %><%@
 page import="com.liferay.commerce.util.CommerceUtil" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileEntryException" %><%@
-page import="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType" %><%@
 page import="com.liferay.friendly.url.exception.FriendlyURLLengthException" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
+page import="com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@

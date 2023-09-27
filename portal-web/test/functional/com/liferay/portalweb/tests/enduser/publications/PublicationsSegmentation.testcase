@@ -197,7 +197,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Segments Entry",
-			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
+			warningMessage = "Missing Entity");
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "Edited Segment Title");
 

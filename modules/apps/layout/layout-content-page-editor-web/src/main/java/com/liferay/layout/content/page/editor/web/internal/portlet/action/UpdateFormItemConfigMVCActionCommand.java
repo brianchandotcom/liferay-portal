@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
@@ -50,8 +41,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -90,17 +79,16 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
+public class UpdateFormItemConfigMVCActionCommand
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse,
-			_updateFormStyledLayoutStructureItemConfig(
-				actionRequest, actionResponse));
+		return _updateFormStyledLayoutStructureItemConfig(
+			actionRequest, actionResponse);
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
@@ -427,7 +415,8 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private JSONObject _updateFormStyledLayoutStructureItemConfig(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -439,115 +428,98 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		try {
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				_layoutPageTemplateStructureLocalService.
-					fetchLayoutPageTemplateStructure(
-						themeDisplay.getScopeGroupId(), themeDisplay.getPlid());
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					themeDisplay.getScopeGroupId(), themeDisplay.getPlid());
 
-			LayoutStructure layoutStructure = LayoutStructure.of(
-				layoutPageTemplateStructure.getData(segmentsExperienceId));
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
-			FormStyledLayoutStructureItem
-				previousFormStyledLayoutStructureItem =
-					(FormStyledLayoutStructureItem)
-						layoutStructure.getLayoutStructureItem(formItemId);
+		FormStyledLayoutStructureItem previousFormStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem(formItemId);
 
-			long previousClassNameId =
-				previousFormStyledLayoutStructureItem.getClassNameId();
-			long previousClassTypeId =
-				previousFormStyledLayoutStructureItem.getClassTypeId();
+		long previousClassNameId =
+			previousFormStyledLayoutStructureItem.getClassNameId();
+		long previousClassTypeId =
+			previousFormStyledLayoutStructureItem.getClassTypeId();
 
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-				(FormStyledLayoutStructureItem)layoutStructure.updateItemConfig(
-					_jsonFactory.createJSONObject(itemConfig), formItemId);
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)layoutStructure.updateItemConfig(
+				_jsonFactory.createJSONObject(itemConfig), formItemId);
 
-			JSONArray removedLayoutStructureItemsJSONArray =
-				_jsonFactory.createJSONArray();
+		JSONArray removedLayoutStructureItemsJSONArray =
+			_jsonFactory.createJSONArray();
 
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(actionRequest);
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
 
-			List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
-			if (!Objects.equals(
-					formStyledLayoutStructureItem.getClassNameId(),
-					previousClassNameId) ||
-				!Objects.equals(
-					formStyledLayoutStructureItem.getClassTypeId(),
-					previousClassTypeId)) {
+		if (!Objects.equals(
+				formStyledLayoutStructureItem.getClassNameId(),
+				previousClassNameId) ||
+			!Objects.equals(
+				formStyledLayoutStructureItem.getClassTypeId(),
+				previousClassTypeId)) {
 
-				removedLayoutStructureItemsJSONArray =
-					_removeLayoutStructureItemsJSONArray(
-						layoutStructure, formStyledLayoutStructureItem);
+			removedLayoutStructureItemsJSONArray =
+				_removeLayoutStructureItemsJSONArray(
+					layoutStructure, formStyledLayoutStructureItem);
 
-				if (formStyledLayoutStructureItem.getClassNameId() > 0) {
-					addedFragmentEntryLinks = _addFragmentEntryLinks(
-						formStyledLayoutStructureItem, httpServletRequest,
-						jsonObject, layoutStructure, segmentsExperienceId,
-						themeDisplay);
-				}
+			if (formStyledLayoutStructureItem.getClassNameId() > 0) {
+				addedFragmentEntryLinks = _addFragmentEntryLinks(
+					formStyledLayoutStructureItem, httpServletRequest,
+					jsonObject, layoutStructure, segmentsExperienceId,
+					themeDisplay);
 			}
-
-			layoutPageTemplateStructure =
-				_layoutPageTemplateStructureService.
-					updateLayoutPageTemplateStructureData(
-						themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-						segmentsExperienceId, layoutStructure.toString());
-
-			for (FragmentEntryLink addedFragmentEntryLink :
-					addedFragmentEntryLinks) {
-
-				for (FragmentEntryLinkListener fragmentEntryLinkListener :
-						_fragmentEntryLinkListenerRegistry.
-							getFragmentEntryLinkListeners()) {
-
-					fragmentEntryLinkListener.onAddFragmentEntryLink(
-						addedFragmentEntryLink);
-				}
-			}
-
-			JSONObject addedFragmentEntryLinksJSONObject =
-				_jsonFactory.createJSONObject();
-
-			HttpServletResponse httpServletResponse =
-				_portal.getHttpServletResponse(actionResponse);
-
-			LayoutStructure updatedLayoutStructure = LayoutStructure.of(
-				layoutPageTemplateStructure.getData(segmentsExperienceId));
-
-			for (FragmentEntryLink addedFragmentEntryLink :
-					addedFragmentEntryLinks) {
-
-				addedFragmentEntryLinksJSONObject.put(
-					String.valueOf(
-						addedFragmentEntryLink.getFragmentEntryLinkId()),
-					_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-						addedFragmentEntryLink, httpServletRequest,
-						httpServletResponse, updatedLayoutStructure));
-			}
-
-			jsonObject.put(
-				"addedFragmentEntryLinks", addedFragmentEntryLinksJSONObject
-			).put(
-				"layoutData", updatedLayoutStructure.toJSONObject()
-			).put(
-				"removedFragmentEntryLinkIds",
-				removedLayoutStructureItemsJSONArray
-			);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			jsonObject.put(
-				"error",
-				_language.get(
-					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
+		layoutPageTemplateStructure =
+			_layoutPageTemplateStructureService.
+				updateLayoutPageTemplateStructureData(
+					themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+					segmentsExperienceId, layoutStructure.toString());
 
-		return jsonObject;
+		for (FragmentEntryLink addedFragmentEntryLink :
+				addedFragmentEntryLinks) {
+
+			for (FragmentEntryLinkListener fragmentEntryLinkListener :
+					_fragmentEntryLinkListenerRegistry.
+						getFragmentEntryLinkListeners()) {
+
+				fragmentEntryLinkListener.onAddFragmentEntryLink(
+					addedFragmentEntryLink);
+			}
+		}
+
+		JSONObject addedFragmentEntryLinksJSONObject =
+			_jsonFactory.createJSONObject();
+
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
+
+		LayoutStructure updatedLayoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		for (FragmentEntryLink addedFragmentEntryLink :
+				addedFragmentEntryLinks) {
+
+			addedFragmentEntryLinksJSONObject.put(
+				String.valueOf(addedFragmentEntryLink.getFragmentEntryLinkId()),
+				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+					addedFragmentEntryLink, httpServletRequest,
+					httpServletResponse, updatedLayoutStructure));
+		}
+
+		return jsonObject.put(
+			"addedFragmentEntryLinks", addedFragmentEntryLinksJSONObject
+		).put(
+			"layoutData", updatedLayoutStructure.toJSONObject()
+		).put(
+			"removedFragmentEntryLinkIds", removedLayoutStructureItemsJSONArray
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

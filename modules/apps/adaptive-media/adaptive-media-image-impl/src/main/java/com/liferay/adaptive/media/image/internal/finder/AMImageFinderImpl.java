@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.adaptive.media.image.internal.finder;
@@ -28,9 +19,9 @@ import com.liferay.adaptive.media.image.internal.processor.AMImage;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.image.url.AMImageURLFactory;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -59,9 +50,10 @@ import org.osgi.service.component.annotations.Reference;
 public class AMImageFinderImpl implements AMImageFinder {
 
 	@Override
-	public List<AdaptiveMedia<AMImageProcessor>> getAdaptiveMedias(
+	public List<AdaptiveMedia<AMProcessor<FileVersion>>> getAdaptiveMedias(
 			Function
-				<AMImageQueryBuilder, AMQuery<FileVersion, AMImageProcessor>>
+				<AMImageQueryBuilder,
+				 AMQuery<FileVersion, AMProcessor<FileVersion>>>
 					amImageQueryBuilderFunction)
 		throws PortalException {
 
@@ -73,7 +65,7 @@ public class AMImageFinderImpl implements AMImageFinder {
 		AMImageQueryBuilderImpl amImageQueryBuilderImpl =
 			new AMImageQueryBuilderImpl();
 
-		AMQuery<FileVersion, AMImageProcessor> amQuery =
+		AMQuery<FileVersion, AMProcessor<FileVersion>> amQuery =
 			amImageQueryBuilderFunction.apply(amImageQueryBuilderImpl);
 
 		if (amQuery != AMImageQueryBuilderImpl.AM_QUERY) {
@@ -109,7 +101,7 @@ public class AMImageFinderImpl implements AMImageFinder {
 		Predicate<AMImageConfigurationEntry> filter =
 			amImageQueryBuilderImpl.getConfigurationEntryFilter();
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			TransformUtil.transform(
 				amImageConfigurationEntries,
 				amImageConfigurationEntry -> {
@@ -124,7 +116,7 @@ public class AMImageFinderImpl implements AMImageFinder {
 					return null;
 				});
 
-		AMDistanceComparator<AdaptiveMedia<AMImageProcessor>>
+		AMDistanceComparator<AdaptiveMedia<AMProcessor<FileVersion>>>
 			amDistanceComparator =
 				amImageQueryBuilderImpl.getAMDistanceComparator();
 
@@ -133,7 +125,7 @@ public class AMImageFinderImpl implements AMImageFinder {
 		return adaptiveMedias;
 	}
 
-	private AdaptiveMedia<AMImageProcessor> _createMedia(
+	private AdaptiveMedia<AMProcessor<FileVersion>> _createMedia(
 		FileVersion fileVersion,
 		BiFunction<FileVersion, AMImageConfigurationEntry, URI> uriFactory,
 		AMImageConfigurationEntry amImageConfigurationEntry) {
@@ -159,15 +151,17 @@ public class AMImageFinderImpl implements AMImageFinder {
 			fileVersion.getFileVersionId());
 
 		if (amImageEntry != null) {
-			AMAttribute<AMImageProcessor, Integer> imageHeightAMAttribute =
-				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT;
+			AMAttribute<AMProcessor<FileVersion>, Integer>
+				imageHeightAMAttribute =
+					AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT;
 
 			properties.put(
 				imageHeightAMAttribute.getName(),
 				String.valueOf(amImageEntry.getHeight()));
 
-			AMAttribute<AMImageProcessor, Integer> imageWidthAMAttribute =
-				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH;
+			AMAttribute<AMProcessor<FileVersion>, Integer>
+				imageWidthAMAttribute =
+					AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH;
 
 			properties.put(
 				imageWidthAMAttribute.getName(),
@@ -197,7 +191,7 @@ public class AMImageFinderImpl implements AMImageFinder {
 			uriFactory.apply(fileVersion, amImageConfigurationEntry));
 	}
 
-	private AdaptiveMedia<AMImageProcessor> _createRawAdaptiveMedia(
+	private AdaptiveMedia<AMProcessor<FileVersion>> _createRawAdaptiveMedia(
 		FileVersion fileVersion) {
 
 		return new AMImage(

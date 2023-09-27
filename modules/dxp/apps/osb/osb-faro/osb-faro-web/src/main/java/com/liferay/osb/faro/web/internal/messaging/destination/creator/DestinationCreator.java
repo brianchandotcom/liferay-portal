@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.osb.faro.web.internal.messaging.destination.creator;
@@ -18,8 +9,6 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-
-import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -33,36 +22,23 @@ public class DestinationCreator {
 		BundleContext bundleContext, DestinationFactory destinationFactory,
 		String destinationName) {
 
-		_bundleContext = bundleContext;
-
-		DestinationConfiguration destinationConfiguration =
-			DestinationConfiguration.createSerialDestinationConfiguration(
-				destinationName);
-
 		Destination destination = destinationFactory.createDestination(
-			destinationConfiguration);
+			DestinationConfiguration.createSerialDestinationConfiguration(
+				destinationName));
 
-		Dictionary<String, Object> dictionary =
+		_serviceRegistration = bundleContext.registerService(
+			Destination.class, destination,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"destination.name", destination.getName()
-			).build();
-
-		_serviceRegistration = _bundleContext.registerService(
-			Destination.class, destination, dictionary);
+			).build());
 	}
 
 	public void removeDestination() {
 		if (_serviceRegistration != null) {
-			Destination destination = _bundleContext.getService(
-				_serviceRegistration.getReference());
-
-			destination.destroy();
-
 			_serviceRegistration.unregister();
 		}
 	}
 
-	private volatile BundleContext _bundleContext;
 	private ServiceRegistration<Destination> _serviceRegistration;
 
 }

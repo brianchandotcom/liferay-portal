@@ -213,6 +213,7 @@ definition {
 	@priority = 4
 	test AddWebContentBasedOnStructureAndTemplateFromParentSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable ancestor scopes by default in System Settings") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -298,6 +299,7 @@ definition {
 	@priority = 4
 	test AddWebContentBasedOnStructureKeyWithAmpersand {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a web content creator has a structure with ampersand in its structure key") {
 			task ("Disable Autogenerate Structure Key in System Settings") {
@@ -487,8 +489,6 @@ definition {
 	@description = "The user can add a web content with image field."
 	@priority = 4
 	test AddWebContentWithImageField {
-		property timeout.explicit.wait = "10";
-
 		task ("Add a web content with an Image field") {
 			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
@@ -1033,6 +1033,7 @@ definition {
 	@priority = 4
 	test CannotAssociateDisplayPageToGlobalStructureInNormalSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a web content creator enables ancestor scopes by default in System Settings") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -1378,8 +1379,6 @@ definition {
 	@description = "This is a test for LPS-96545. Cancel reset and reset the default values when edit default values in imported web content structure."
 	@priority = 4
 	test ResetStructureDefaultValues {
-		property timeout.explicit.wait = "10";
-
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1411,8 +1410,6 @@ definition {
 		}
 
 		task ("Edit the default values of new structure") {
-			NavItem.gotoStructures();
-
 			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
@@ -1508,6 +1505,7 @@ definition {
 	@priority = 3
 	test SearchStructureWithDefaultValue {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a web content structure with text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");

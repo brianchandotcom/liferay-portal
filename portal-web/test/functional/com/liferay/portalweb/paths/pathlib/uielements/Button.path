@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>ANY_TITLE</td>
-	<td>//button[@title='${key_title}'] | //button//span[@*='${key_title}']</td>
+	<td>//button[@*='${key_title}'] | //button//span[@*='${key_title}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -192,7 +192,7 @@
 </tr>
 <tr>
 	<td>BUTTON_LABEL</td>
-	<td>//div[./label[normalize-space(text())='${fieldLabel}']]//button[normalize-space()='${text}']</td>
+	<td>//div[./label[normalize-space(text())='${fieldLabel}']]//button[normalize-space()='${text}'] | //div[contains(@class,'form-group')][.//label[normalize-space(text())='${fieldLabel}']]//button[normalize-space()='${text}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -731,11 +731,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESET_VALUES</td>
-	<td>//button/span[contains(.,'Reset Values')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RESOLVE</td>
 	<td>//button/span[*[name()='svg'][contains(@class,'lexicon-icon-check-circle')]]</td>
 	<td></td>
@@ -862,7 +857,7 @@
 </tr>
 <tr>
 	<td>TRANSLATIONS_LOCALIZATION</td>
-	<td>//div[contains(@class,'dropdown')]//button[contains(@class,'dropdown-toggle')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_currentLocale}')]</td>
+	<td>//div[contains(@class,'dropdown')]//button[contains(@class,'dropdown-toggle')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_currentLocale}')] | //button[contains(@aria-haspopup,'listbox')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_currentLocale}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -997,7 +992,7 @@
 </tr>
 <tr>
 	<td>UNSUBSCRIBE</td>
-	<td>//button[contains(.,'Unsubscribe')] | //li[contains(@class,'nav-item')]/*[contains(@class,'nav-link')]</td>
+	<td>//button[contains(.,'Unsubscribe')] | //a[contains(.,'Unsubscribe')]</td>
 	<td></td>
 </tr>
 <tr>

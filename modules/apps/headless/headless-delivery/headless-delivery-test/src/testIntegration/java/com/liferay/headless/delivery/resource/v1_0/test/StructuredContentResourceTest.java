@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.delivery.resource.v1_0.test;
@@ -58,6 +49,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
@@ -77,9 +69,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
@@ -94,6 +83,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -117,6 +107,10 @@ public class StructuredContentResourceTest
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
 		_blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
@@ -147,6 +141,14 @@ public class StructuredContentResourceTest
 		_layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 		_localizedDDMStructure = _addDDMStructure(
 			testGroup, "test-localized-ddm-structure.json");
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Override
@@ -266,42 +268,21 @@ public class StructuredContentResourceTest
 
 		long assetLibraryId = RandomTestUtil.randomLong();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
+		try {
+			structuredContentResource.
+				getAssetLibraryStructuredContentByExternalReferenceCode(
+					assetLibraryId,
+					postStructuredContent.getExternalReferenceCode());
 
-			try {
-				structuredContentResource.
-					getAssetLibraryStructuredContentByExternalReferenceCode(
-						assetLibraryId,
-						postStructuredContent.getExternalReferenceCode());
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
 
-				Assert.fail();
-			}
-			catch (Problem.ProblemException problemException) {
-				Problem problem = problemException.getProblem();
-
-				Assert.assertEquals("NOT_FOUND", problem.getStatus());
-				Assert.assertEquals(
-					"Unable to get a valid asset library with ID " +
-						assetLibraryId,
-					problem.getTitle());
-			}
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-			LogEntry logEntry = logEntries.get(0);
-
-			Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
-
-			Throwable throwable = logEntry.getThrowable();
-
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 			Assert.assertEquals(
 				"Unable to get a valid asset library with ID " + assetLibraryId,
-				throwable.getMessage());
+				problem.getTitle());
 		}
 
 		// Nonexistent external reference code
@@ -892,6 +873,8 @@ public class StructuredContentResourceTest
 					}
 				}
 			});
+		structuredContent.setStructuredContentFolderId(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return structuredContent;
 	}
@@ -1182,6 +1165,8 @@ public class StructuredContentResourceTest
 					}
 				}
 			});
+		structuredContent.setStructuredContentFolderId(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return structuredContent;
 	}
@@ -1444,6 +1429,8 @@ public class StructuredContentResourceTest
 					}
 				}
 			});
+		structuredContent.setStructuredContentFolderId(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Map<String, String> title_i18n = HashMapBuilder.put(
 			"en-US", RandomTestUtil.randomString()
@@ -1728,6 +1715,7 @@ public class StructuredContentResourceTest
 		_layoutPageTemplateEntryLocalService;
 
 	private DDMStructure _localizedDDMStructure;
+	private String _originalName;
 
 	@Inject
 	private Portal _portal;

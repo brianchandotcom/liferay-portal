@@ -1,25 +1,15 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import {useControlledState} from '@liferay/layout-js-components-web';
+import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import CurrentLanguageFlag from '../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../common/components/LayoutSelector';
-import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import isMappedToLayout from '../../utils/editable_value/isMappedToLayout';
 
@@ -93,12 +83,6 @@ export default function URLField({field, onValueSelect, value}) {
 								value={nextHref || ''}
 							/>
 						</ClayInput.GroupItem>
-
-						{field.localizable && (
-							<ClayInput.GroupItem shrink>
-								<CurrentLanguageFlag />
-							</ClayInput.GroupItem>
-						)}
 					</ClayInput.Group>
 				</ClayForm.Group>
 			)}

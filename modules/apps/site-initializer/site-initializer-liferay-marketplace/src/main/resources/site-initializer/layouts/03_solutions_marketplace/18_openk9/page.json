@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/smc-openk9",
+	"hidden": true,
+	"name": "OpenK9",
+	"name_i18n": {
+		"en_US": "OpenK9"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

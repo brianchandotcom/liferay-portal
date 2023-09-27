@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.segments.service;
@@ -129,6 +120,15 @@ public class SegmentsExperimentLocalServiceWrapper
 			segmentsExperimentId);
 	}
 
+	@Override
+	public SegmentsExperiment deleteSegmentsExperiment(
+			long groupId, long segmentsExperienceId, long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentLocalService.deleteSegmentsExperiment(
+			groupId, segmentsExperienceId, plid);
+	}
+
 	/**
 	 * Deletes the segments experiment from the database. Also notifies the appropriate model listeners.
 	 *
@@ -156,14 +156,6 @@ public class SegmentsExperimentLocalServiceWrapper
 
 		return _segmentsExperimentLocalService.deleteSegmentsExperiment(
 			segmentsExperiment, force);
-	}
-
-	@Override
-	public void deleteSegmentsExperiments(long segmentsExperienceId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_segmentsExperimentLocalService.deleteSegmentsExperiments(
-			segmentsExperienceId, plid);
 	}
 
 	@Override
@@ -279,10 +271,10 @@ public class SegmentsExperimentLocalServiceWrapper
 
 	@Override
 	public SegmentsExperiment fetchSegmentsExperiment(
-		long segmentsExperienceId, long plid, int[] statuses) {
+		long groupId, long segmentsExperienceId, long plid) {
 
 		return _segmentsExperimentLocalService.fetchSegmentsExperiment(
-			segmentsExperienceId, plid, statuses);
+			groupId, segmentsExperienceId, plid);
 	}
 
 	@Override
@@ -362,27 +354,6 @@ public class SegmentsExperimentLocalServiceWrapper
 			getSegmentsEntrySegmentsExperiments(segmentsEntryId);
 	}
 
-	@Override
-	public java.util.List<SegmentsExperiment>
-		getSegmentsExperienceSegmentsExperiments(
-			long segmentsExperienceId, long plid) {
-
-		return _segmentsExperimentLocalService.
-			getSegmentsExperienceSegmentsExperiments(
-				segmentsExperienceId, plid);
-	}
-
-	@Override
-	public java.util.List<SegmentsExperiment>
-		getSegmentsExperienceSegmentsExperiments(
-			long[] segmentsExperienceIds, long plid, int[] statuses, int start,
-			int end) {
-
-		return _segmentsExperimentLocalService.
-			getSegmentsExperienceSegmentsExperiments(
-				segmentsExperienceIds, plid, statuses, start, end);
-	}
-
 	/**
 	 * Returns the segments experiment with the primary key.
 	 *
@@ -443,24 +414,6 @@ public class SegmentsExperimentLocalServiceWrapper
 			start, end);
 	}
 
-	@Override
-	public java.util.List<SegmentsExperiment> getSegmentsExperiments(
-		long groupId, long plid) {
-
-		return _segmentsExperimentLocalService.getSegmentsExperiments(
-			groupId, plid);
-	}
-
-	@Override
-	public java.util.List<SegmentsExperiment> getSegmentsExperiments(
-		long segmentsExperienceId, long plid, int[] statuses,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
-			orderByComparator) {
-
-		return _segmentsExperimentLocalService.getSegmentsExperiments(
-			segmentsExperienceId, plid, statuses, orderByComparator);
-	}
-
 	/**
 	 * Returns all the segments experiments matching the UUID and company.
 	 *
@@ -506,14 +459,6 @@ public class SegmentsExperimentLocalServiceWrapper
 	@Override
 	public int getSegmentsExperimentsCount() {
 		return _segmentsExperimentLocalService.getSegmentsExperimentsCount();
-	}
-
-	@Override
-	public boolean hasSegmentsExperiment(
-		long segmentsExperienceId, long plid, int[] statuses) {
-
-		return _segmentsExperimentLocalService.hasSegmentsExperiment(
-			segmentsExperienceId, plid, statuses);
 	}
 
 	@Override

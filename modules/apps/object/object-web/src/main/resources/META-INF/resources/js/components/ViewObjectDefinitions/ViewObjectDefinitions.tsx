@@ -1,20 +1,16 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
-import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
-import {createResourceURL} from 'frontend-js-web';
+import {
+	API,
+	Card,
+	getLocalizableLabel,
+	stringToURLParameterFormat,
+} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {
@@ -23,82 +19,170 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import {ModalDeletionNotAllowed} from '../ModalDeletionNotAllowed';
 import objectDefinitionModifiedDateDataRenderer from './FDSDataRenderers/ObjectDefinitionModifiedDateDataRenderer';
 import objectDefinitionStatusDataRenderer from './FDSDataRenderers/ObjectDefinitionStatusDataRenderer';
 import objectDefinitionSystemDataRenderer from './FDSDataRenderers/ObjectDefinitionSystemDataRenderer';
 import {ModalAddObjectDefinition} from './ModalAddObjectDefinition';
+import {ModalAddObjectFolder} from './ModalAddObjectFolder';
+import {ModalBindToRootObjectDefinition} from './ModalBindToRootObjectDefinition';
 import {ModalDeleteObjectDefinition} from './ModalDeleteObjectDefinition';
-import {deleteObjectDefinition} from './objectDefinitionUtil';
+import {ModalDeleteObjectFolder} from './ModalDeleteObjectFolder';
+import {ModalEditObjectFolder} from './ModalEditObjectFolder';
+import {ModalMoveObjectDefinition} from './ModalMoveObjectDefinition';
+import {ModalUnbindObjectDefinition} from './ModalUnbindObjectDefinition';
+import ObjectFolderCardHeader from './ObjectFolderCardHeader';
+import ObjectFoldersSideBar from './ObjectFoldersSidebar';
+import {
+	deleteObjectDefinition,
+	getObjectFolderActions,
+} from './objectDefinitionUtil';
+
+import './ViewObjectDefinitions.scss';
 
 interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	baseResourceURL: string;
-	storages: LabelTypeObject[];
+	editObjectDefinitionURL: string;
+	modelBuilderURL: string;
+	objectDefinitionsAPIURL: any;
+	objectDefinitionsCreationMenu: {
+		primaryItems?: any[];
+		secondaryItems?: any[];
+	};
+	objectDefinitionsFDSActionDropdownItems: any[];
+	objectDefinitionsFDSName: any;
+	objectDefinitionsStorageTypes: LabelValueObject[];
+	objectFolderPermissionsURL: string;
 }
 
-export type ViewObjectDefinitionsModals = {
-	addObjectDefinition: boolean;
-	deleteObjectDefinition: boolean;
-	importObject: boolean;
-};
-
-export interface DeletedObjectDefinition extends ObjectDefinition {
+export interface DeletedObjectDefinition {
 	hasObjectRelationship: boolean;
+	id: number;
+	name: string;
 	objectEntriesCount: number;
 }
 
 export default function ViewObjectDefinitions({
-	apiURL,
 	baseResourceURL,
-	creationMenu,
-	id,
-	items,
-	sorting,
-	storages,
-	url,
+	editObjectDefinitionURL,
+	modelBuilderURL,
+	objectDefinitionsAPIURL,
+	objectDefinitionsCreationMenu,
+	objectDefinitionsFDSActionDropdownItems,
+	objectDefinitionsFDSName,
+	objectDefinitionsStorageTypes,
+	objectFolderPermissionsURL,
 }: ViewObjectDefinitionsProps) {
+	const emptyAction = {href: '', method: ''};
+
+	const initialValues: ObjectFolder = {
+		actions: {
+			delete: emptyAction,
+			get: emptyAction,
+			permissions: emptyAction,
+			update: emptyAction,
+		},
+		dateCreated: '',
+		dateModified: '',
+		externalReferenceCode: '',
+		id: 0,
+		label: {en_US: ''},
+		name: '',
+		objectFolderItems: [],
+	};
 	const [showModal, setShowModal] = useState<ViewObjectDefinitionsModals>({
 		addObjectDefinition: false,
+		addObjectField: false,
+		addObjectFolder: false,
+		bindToRootObjectDefinition: false,
 		deleteObjectDefinition: false,
-		importObject: false,
+		deleteObjectFolder: false,
+		deletionNotAllowed: false,
+		editObjectFolder: false,
+		moveObjectDefinition: false,
+		unbindFromRootObjectDefinition: false,
 	});
-
+	const [selectedObjectFolder, setSelectedObjectFolder] = useState<
+		Partial<ObjectFolder>
+	>(initialValues);
+	const [objectFolders, setObjectFolders] = useState<Partial<ObjectFolder>[]>(
+		[initialValues]
+	);
 	const [
 		deletedObjectDefinition,
 		setDeletedObjectDefinition,
 	] = useState<DeletedObjectDefinition | null>();
 
+	const [
+		moveObjectDefinition,
+		setMoveObjectDefinition,
+	] = useState<ObjectDefinition | null>();
+
+	const [selectedObjectDefinition, setSelectedObjectDefinition] = useState<
+		ObjectDefinition
+	>();
+
+	const [loading, setLoading] = useState(true);
+
+	function handleShowDeleteObjectDefinitionModal() {
+		setShowModal((previousState: ViewObjectDefinitionsModals) => ({
+			...previousState,
+			deleteObjectDefinition: true,
+		}));
+	}
+
 	function objectDefinitionLabelDataRenderer({
 		itemData,
 		value,
 	}: fdsItem<ObjectDefinition>) {
-		const handleEditDefinition = () => {
-			window.location.href = formatActionURL(url, itemData.id);
+		const handleEditObjectDefinition = () => {
+			window.location.href = formatActionURL(
+				editObjectDefinitionURL,
+				itemData.id
+			);
 		};
 
 		return (
 			<div className="table-list-title">
-				<a href="#" onClick={handleEditDefinition}>
-					{getLocalizableLabel(
-						itemData.defaultLanguageId as Liferay.Language.Locale,
-						value
-					)}
+				<a href="#" onClick={handleEditObjectDefinition}>
+					{value}
 				</a>
 			</div>
 		);
 	}
+	const getURL = () => {
+		let url: string = '';
+
+		if (selectedObjectFolder.externalReferenceCode) {
+			url = `/o/object-admin/v1.0/object-definitions?${stringToURLParameterFormat(
+				`filter=objectFolderExternalReferenceCode eq '${selectedObjectFolder.externalReferenceCode}'`
+			)}`;
+		}
+
+		return url;
+	};
 
 	const dataSetProps = {
 		...defaultDataSetProps,
-		apiURL,
-		creationMenu,
+		apiURL: Liferay.FeatureFlags['LPS-148856']
+			? getURL()
+			: objectDefinitionsAPIURL,
+		creationMenu: objectDefinitionsCreationMenu,
 		customDataRenderers: {
 			objectDefinitionLabelDataRenderer,
 			objectDefinitionModifiedDateDataRenderer,
 			objectDefinitionStatusDataRenderer,
 			objectDefinitionSystemDataRenderer,
 		},
-		id,
-		itemsActions: items,
+		emptyState: {
+			description: Liferay.Language.get(
+				'create-your-first-object-or-import-an-existing-one-to-start-working-with-object-folders'
+			),
+			image: '/states/empty_state.gif',
+			title: Liferay.Language.get('no-objects-created-yet'),
+		},
+		id: objectDefinitionsFDSName,
+		itemsActions: objectDefinitionsFDSActionDropdownItems,
 		namespace:
 			'_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_',
 		onActionDropdownItemClick({
@@ -108,53 +192,53 @@ export default function ViewObjectDefinitions({
 			action: {data: {id: string}};
 			itemData: ObjectDefinition;
 		}) {
+			if (
+				action.data.id === 'bind' &&
+				Liferay.FeatureFlags['LPS-187142']
+			) {
+				setSelectedObjectDefinition(itemData);
+
+				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
+					...previousState,
+					bindToRootObjectDefinition: true,
+				}));
+			}
+
 			if (action.data.id === 'deleteObjectDefinition') {
-				const getDeleteObjectDefinition = async () => {
-					const url = createResourceURL(baseResourceURL, {
-						objectDefinitionId: itemData.id,
-						p_p_resource_id:
-							'/object_definitions/get_object_definition_delete_info',
-					}).href;
+				deleteObjectDefinition({
+					baseResourceURL,
+					handleShowDeleteObjectDefinitionModal,
+					objectDefinitionId: itemData.id,
+					objectDefinitionName: itemData.name,
+					setDeletedObjectDefinition,
+					status: itemData.status.label,
+				});
+			}
 
-					const {
-						hasObjectRelationship,
-						objectEntriesCount,
-					} = await API.fetchJSON<{
-						hasObjectRelationship: boolean;
-						objectEntriesCount: number;
-					}>(url);
+			if (action.data.id === 'moveObjectDefinition') {
+				setMoveObjectDefinition(itemData);
 
-					if (itemData.status.code !== 0) {
-						await deleteObjectDefinition(
-							itemData.id,
-							itemData.name
-						);
-						setTimeout(() => window.location.reload(), 1000);
+				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
+					...previousState,
+					moveObjectDefinition: true,
+				}));
+			}
 
-						return;
-					}
+			if (
+				action.data.id === 'unbind' &&
+				Liferay.FeatureFlags['LPS-187142']
+			) {
+				setSelectedObjectDefinition(itemData);
 
-					setDeletedObjectDefinition({
-						...itemData,
-						hasObjectRelationship,
-						objectEntriesCount,
-					});
-
-					setShowModal(
-						(previousState: ViewObjectDefinitionsModals) => ({
-							...previousState,
-							deleteObjectDefinition: true,
-						})
-					);
-				};
-
-				getDeleteObjectDefinition();
+				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
+					...previousState,
+					unbindFromRootObjectDefinition: true,
+				}));
 			}
 		},
 		portletId:
 			'com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet',
 		sidePanelId: 'none',
-		sorting,
 		style: 'fluid' as 'fluid',
 		views: [
 			{
@@ -214,6 +298,17 @@ export default function ViewObjectDefinitions({
 	};
 
 	useEffect(() => {
+		if (Liferay.FeatureFlags['LPS-148856']) {
+			const makeFetch = async () => {
+				API.getAllObjectFolders().then((response) => {
+					setObjectFolders(response);
+					setSelectedObjectFolder(response[0]);
+					setLoading(false);
+				});
+			};
+
+			makeFetch();
+		}
 		Liferay.on('addObjectDefinition', () =>
 			setShowModal((previousState: ViewObjectDefinitionsModals) => ({
 				...previousState,
@@ -228,11 +323,58 @@ export default function ViewObjectDefinitions({
 
 	return (
 		<>
-			<FrontendDataSet {...dataSetProps} />
+			{Liferay.FeatureFlags['LPS-148856'] ? (
+				<div className="lfr__object-web-view-object-definitions">
+					{loading ? (
+						<ClayLoadingIndicator
+							displayType="secondary"
+							size="sm"
+						/>
+					) : (
+						<>
+							<ObjectFoldersSideBar
+								objectFolders={objectFolders as ObjectFolder[]}
+								selectedObjectFolder={
+									selectedObjectFolder as ObjectFolder
+								}
+								setSelectedObjectFolder={
+									setSelectedObjectFolder
+								}
+								setShowModal={setShowModal}
+							/>
+							<Card
+								className="lfr__object-web-view-object-definitions-card"
+								customHeader={
+									<ObjectFolderCardHeader
+										externalReferenceCode={
+											selectedObjectFolder.externalReferenceCode
+										}
+										items={
+											getObjectFolderActions(
+												selectedObjectFolder.id ?? 0,
+												objectFolderPermissionsURL,
+												setShowModal,
+												selectedObjectFolder.actions
+											) as IItem[]
+										}
+										label={selectedObjectFolder.label}
+										modelBuilderURL={modelBuilderURL}
+										name={selectedObjectFolder.name}
+									/>
+								}
+								viewMode="no-header-border"
+							>
+								<FrontendDataSet {...dataSetProps} />
+							</Card>
+						</>
+					)}
+				</div>
+			) : (
+				<FrontendDataSet {...dataSetProps} />
+			)}
 
 			{showModal.addObjectDefinition && (
 				<ModalAddObjectDefinition
-					apiURL={apiURL as string}
 					handleOnClose={() => {
 						setShowModal(
 							(previousState: ViewObjectDefinitionsModals) => ({
@@ -241,7 +383,12 @@ export default function ViewObjectDefinitions({
 							})
 						);
 					}}
-					storages={storages}
+					objectDefinitionsStorageTypes={
+						objectDefinitionsStorageTypes
+					}
+					objectFolderExternalReferenceCode={
+						selectedObjectFolder.externalReferenceCode
+					}
 				/>
 			)}
 
@@ -261,6 +408,131 @@ export default function ViewObjectDefinitions({
 					setDeletedObjectDefinition={setDeletedObjectDefinition}
 				/>
 			)}
+
+			{showModal.deletionNotAllowed &&
+				selectedObjectDefinition &&
+				Liferay.FeatureFlags['LPS-187142'] && (
+					<ModalDeletionNotAllowed
+						onVisibilityChange={() =>
+							setShowModal(
+								(
+									previousState: ViewObjectDefinitionsModals
+								) => ({
+									...previousState,
+									deletionNotAllowed: false,
+								})
+							)
+						}
+						selectedItemLabel={getLocalizableLabel(
+							selectedObjectDefinition.defaultLanguageId,
+							selectedObjectDefinition.label,
+							selectedObjectDefinition.name
+						)}
+					/>
+				)}
+
+			{showModal.addObjectFolder && (
+				<ModalAddObjectFolder
+					handleOnClose={() => {
+						setShowModal(
+							(previousState: ViewObjectDefinitionsModals) => ({
+								...previousState,
+								addObjectFolder: false,
+							})
+						);
+					}}
+				/>
+			)}
+
+			{showModal.deleteObjectFolder && (
+				<ModalDeleteObjectFolder
+					handleOnClose={() => {
+						setShowModal(
+							(previousState: ViewObjectDefinitionsModals) => ({
+								...previousState,
+								deleteObjectFolder: false,
+							})
+						);
+					}}
+					objectFolder={selectedObjectFolder as ObjectFolder}
+				/>
+			)}
+
+			{showModal.editObjectFolder && (
+				<ModalEditObjectFolder
+					externalReferenceCode={
+						selectedObjectFolder.externalReferenceCode as string
+					}
+					handleOnClose={() => {
+						setShowModal(
+							(previousState: ViewObjectDefinitionsModals) => ({
+								...previousState,
+								editObjectFolder: false,
+							})
+						);
+					}}
+					id={selectedObjectFolder.id as number}
+					initialLabel={selectedObjectFolder.label}
+					name={selectedObjectFolder.name}
+				/>
+			)}
+
+			{showModal.moveObjectDefinition && (
+				<ModalMoveObjectDefinition
+					handleOnClose={() => {
+						setShowModal(
+							(previousState: ViewObjectDefinitionsModals) => ({
+								...previousState,
+								moveObjectDefinition: false,
+							})
+						);
+					}}
+					objectDefinition={moveObjectDefinition as ObjectDefinition}
+					objectFolders={objectFolders as ObjectFolder[]}
+					selectedObjectFolder={selectedObjectFolder}
+					setMoveObjectDefinition={setMoveObjectDefinition}
+				/>
+			)}
+
+			{showModal.bindToRootObjectDefinition &&
+				Liferay.FeatureFlags['LPS-187142'] && (
+					<ModalBindToRootObjectDefinition
+						baseResourceURL={baseResourceURL}
+						onVisibilityChange={() => {
+							setShowModal(
+								(
+									previousState: ViewObjectDefinitionsModals
+								) => ({
+									...previousState,
+									bindToRootObjectDefinition: false,
+								})
+							);
+						}}
+						selectedObjectDefinitionToBind={
+							selectedObjectDefinition
+						}
+					/>
+				)}
+
+			{showModal.unbindFromRootObjectDefinition &&
+				Liferay.FeatureFlags['LPS-187142'] && (
+					<ModalUnbindObjectDefinition
+						baseResourceURL={baseResourceURL}
+						onVisibilityChange={() => {
+							setShowModal(
+								(
+									previousState: ViewObjectDefinitionsModals
+								) => ({
+									...previousState,
+									unbindFromRootObjectDefinition: false,
+								})
+							);
+						}}
+						selectedObjectDefinitionToUnbind={
+							selectedObjectDefinition
+						}
+					/>
+				)}
 		</>
 	);
 }

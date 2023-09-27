@@ -243,30 +243,30 @@ definition {
 			subscribe = "false");
 	}
 
-	@priority = 3
+	@priority = 4
 	@refactordone
-	test CannotViewDuplicateBreadcrumbsWhenAddingParentArticle {
+	test CanMoveArticle {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Content Parent",
-			kbArticleTitle = "Knowledge Base Article Title Parent");
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1");
 
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Content Child",
-			kbArticleTitle = "Knowledge Base Article Title Child");
+			kbArticleContent = "Knowledge Base Article Parent Content 1 Child 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Title Child");
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 
-		KBDisplayWidget.moveArticleViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Title Child");
+		KBDisplayWidget.moveArticleViaKBDisplayPG(
+			destinationItem = "Knowledge Base Article Parent Title 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		KBDisplayWidget.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
 
-		AssertElementPresent(locator1 = "KnowledgeBaseSelectParent#BREADCRUMB_HOME");
-
-		AssertElementNotPresent(locator1 = "//ul[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]");
+		KBDisplayWidget.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 	}
 
 	@priority = 3
@@ -296,32 +296,6 @@ definition {
 			kbArticleContent = "Knowledge Base Child Article Content",
 			kbArticleTitle = "Knowledge Base Child Article Title",
 			kbStatus = "Draft");
-	}
-
-	@priority = 4
-	@refactordone
-	test CanSelectParentArticle {
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Parent Content 1",
-			kbArticleTitle = "Knowledge Base Article Parent Title 1");
-
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Parent Content 1 Child 1",
-			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
-
-		KBDisplayWidget.moveArticleViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
-
-		KBDisplayWidget.selectParentViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
-
-		KBDisplayWidget.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
-
-		KBDisplayWidget.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 	}
 
 	@priority = 4
@@ -362,6 +336,7 @@ definition {
 	@refactorneeded
 	test CanViewArticlesWithDifferentSiteScopes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

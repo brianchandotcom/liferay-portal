@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.modules;
@@ -936,13 +927,13 @@ public class ModulesStructureTest {
 		String configuration, boolean hasSrcTestDir,
 		boolean hasSrcTestIntegrationDir) {
 
-		if (configuration.equals("testCompile") && !hasSrcTestDir &&
+		if (configuration.equals("testImplementation") && !hasSrcTestDir &&
 			!hasSrcTestIntegrationDir) {
 
 			return true;
 		}
 
-		if (configuration.equals("testRuntime") && !hasSrcTestDir &&
+		if (configuration.equals("testRuntimeOnly") && !hasSrcTestDir &&
 			!hasSrcTestIntegrationDir) {
 
 			return true;
@@ -1421,19 +1412,19 @@ public class ModulesStructureTest {
 		}
 
 		Map<String, Boolean> allowedConfigurationsMap = TreeMapBuilder.put(
-			"compile", mainConfigurationsAllowed
+			"api", mainConfigurationsAllowed
 		).put(
 			"compileOnly", mainConfigurationsAllowed
 		).put(
 			"provided", mainConfigurationsAllowed
 		).put(
-			"testCompile", hasSrcTestDir
+			"testImplementation", hasSrcTestDir
 		).put(
-			"testIntegrationCompile", hasSrcTestIntegrationDir
+			"testIntegrationImplementation", hasSrcTestIntegrationDir
 		).put(
-			"testIntegrationRuntime", hasSrcTestIntegrationDir
+			"testIntegrationRuntimeOnly", hasSrcTestIntegrationDir
 		).put(
-			"testRuntime", hasSrcTestDir
+			"testRuntimeOnly", hasSrcTestDir
 		).build();
 
 		for (GradleDependency gradleDependency : gradleDependencies) {
@@ -1705,8 +1696,9 @@ public class ModulesStructureTest {
 				"org.gradle.parallel", "pom.scm.connection",
 				"pom.scm.developerConnection", "pom.scm.url"));
 	private static final List<String> _gradleConfigurations = Arrays.asList(
-		"compileOnly", "provided", "compile", "runtime", "testCompile",
-		"testRuntime", "testIntegrationCompile", "testIntegrationRuntime");
+		"api", "compileOnly", "provided", "runtimeOnly", "testImplementation",
+		"testIntegrationImplementation", "testIntegrationRuntimeOnly",
+		"testRuntimeOnly");
 	private static final Pattern _jsonVersionPattern = Pattern.compile(
 		"\\n(\\t|  )\"version\": \"(.+)\"");
 	private static boolean _masterBranch;

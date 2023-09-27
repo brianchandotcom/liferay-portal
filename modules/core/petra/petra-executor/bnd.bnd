@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Petra Executor
 Bundle-SymbolicName: com.liferay.petra.executor
-Bundle-Version: 5.0.4
+Bundle-Version: 6.0.1
 Export-Package: com.liferay.petra.executor

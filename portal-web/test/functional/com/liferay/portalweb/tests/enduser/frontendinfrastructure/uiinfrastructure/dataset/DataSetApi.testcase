@@ -32,7 +32,9 @@ definition {
 
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/entries");
+				restApplication = "/data-set-manager/entries",
+				restEndpoint = "/",
+				restSchema = "FDSEntry");
 		}
 
 		task ("and given access to the Data Sets admin page") {

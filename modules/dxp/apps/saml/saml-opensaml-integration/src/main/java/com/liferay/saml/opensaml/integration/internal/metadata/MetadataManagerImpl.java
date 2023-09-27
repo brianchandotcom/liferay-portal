@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.saml.opensaml.integration.internal.metadata;
@@ -19,14 +10,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.provider.DBMetadataResolver;
-import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
@@ -35,7 +24,6 @@ import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
-import com.liferay.saml.util.SamlHttpRequestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,9 +72,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(service = {MetadataManager.class, SamlHttpRequestUtil.class})
-public class MetadataManagerImpl
-	implements MetadataManager, SamlHttpRequestUtil {
+@Component(service = MetadataManager.class)
+public class MetadataManagerImpl implements MetadataManager {
 
 	@Override
 	public int getAssertionLifetime(String entityId) {
@@ -202,20 +189,6 @@ public class MetadataManagerImpl
 	}
 
 	@Override
-	public String getEntityDescriptorString(
-			HttpServletRequest httpServletRequest)
-		throws SamlException {
-
-		try {
-			return OpenSamlUtil.marshall(
-				getEntityDescriptor(httpServletRequest));
-		}
-		catch (Exception exception) {
-			throw new SamlException(exception);
-		}
-	}
-
-	@Override
 	public MetadataCredentialResolver getMetadataCredentialResolver() {
 		return _metadataCredentialResolverDCLSingleton.getSingleton(
 			this::_createMetadataCredentialResolver);
@@ -287,21 +260,6 @@ public class MetadataManagerImpl
 		}
 
 		return null;
-	}
-
-	@Override
-	public String getRequestPath(HttpServletRequest httpServletRequest) {
-		String requestURI = httpServletRequest.getRequestURI();
-
-		String contextPath = httpServletRequest.getContextPath();
-
-		if (Validator.isNotNull(contextPath) &&
-			!contextPath.equals(StringPool.SLASH)) {
-
-			requestURI = requestURI.substring(contextPath.length());
-		}
-
-		return HttpComponentsUtil.removePathParameters(requestURI);
 	}
 
 	@Override

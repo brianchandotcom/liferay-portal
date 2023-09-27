@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.internal.search.spi.model.index.contributor;
@@ -142,7 +133,7 @@ public class ObjectEntryModelDocumentContributor
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
-				objectEntry.getObjectDefinitionId());
+				objectEntry.getObjectDefinitionId(), false);
 
 		StringBundler sb = new StringBundler(objectFields.size() * 4);
 
@@ -274,10 +265,7 @@ public class ObjectEntryModelDocumentContributor
 	}
 
 	private String _getDateString(Object value) {
-		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyyMMddHHmmss");
-
-		return format.format(value);
+		return _format.format(value);
 	}
 
 	private String _getSortableValue(String value) {
@@ -298,6 +286,9 @@ public class ObjectEntryModelDocumentContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryModelDocumentContributor.class);
+
+	private static final Format _format =
+		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss");
 
 	private final String _className;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

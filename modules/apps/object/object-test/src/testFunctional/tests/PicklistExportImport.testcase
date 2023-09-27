@@ -327,7 +327,9 @@ definition {
 		}
 
 		task ("When a picklist is imported with the same ERC as an existing picklist") {
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "Import Picklist");
+			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+
+			Click(locator1 = "Picklist#IMPORT_PICKLIST");
 
 			Picklist.selectPicklistImportFile(
 				picklistFileName = "ListType_New_Picklist_44198_20230322182913922",

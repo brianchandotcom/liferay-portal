@@ -34,14 +34,18 @@ definition {
 
 	macro addFile {
 		var portalURL = JSONCompany.getPortalURL();
-		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
+
+		if (!(isSet(repositoryId))) {
+			var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
+		}
 
 		if (isSet(folderName)) {
-			Variables.assertDefined(parameterList = "${folderName},${groupName}");
+			Variables.assertDefined(parameterList = ${folderName});
 
 			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 				groupName = ${groupName},
-				name = ${folderName});
+				name = ${folderName},
+				repositoryId = ${repositoryId});
 		}
 		else {
 			var folderId = 0;
@@ -499,6 +503,37 @@ definition {
 		var fileEntryUuid = JSONCurlUtil.post(${curl}, "$.[?(@['title'] == '${dmDocumentTitle}')]['uuid']");
 
 		return ${fileEntryUuid};
+	}
+
+	macro getFileEntryVersionId {
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var fileEntryId = JSONDocument.getFileEntryId(
+			dmDocumentTitle = ${dmDocumentTitle},
+			folderId = ${folderId},
+			groupName = ${groupName},
+			portalURL = ${baseURL},
+			site = ${site});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlfileversion/get-file-versions \
+				-u ${userLoginInfo} \
+				-d fileEntryId=${fileEntryId} \
+				-d status=0
+		''';
+
+		var fileVersionId = JSONCurlUtil.post(${curl}, "$.[?(@['version'] == '${dmDocumentVersion}')]['fileVersionId']");
+
+		echo("fileVersionId: ${fileVersionId}");
+
+		return ${fileVersionId};
 	}
 
 	macro getLatestVersionURL {

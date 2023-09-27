@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.web.internal.portlet.action;
@@ -20,12 +11,14 @@ import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -63,6 +56,7 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 		long ctCollectionId = ParamUtil.getLong(
 			actionRequest, "ctCollectionId");
 
+		long ctRemoteId = ParamUtil.getLong(actionRequest, "ctRemoteId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
@@ -75,8 +69,9 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				CTCollection ctCollection =
 					_ctCollectionService.addCTCollection(
-						themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-						name, description);
+						null, themeDisplay.getCompanyId(),
+						themeDisplay.getUserId(), ctRemoteId, name,
+						description);
 
 				CTPreferences ctPreferences =
 					_ctPreferencesLocalService.getCTPreferences(
@@ -99,21 +94,29 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 				).put(
 					"redirect", true
 				));
-
-			hideDefaultSuccessMessage(actionRequest);
 		}
-		catch (PortalException portalException) {
-			SessionErrors.add(actionRequest, portalException.getClass());
+		catch (Exception exception) {
+			if (exception instanceof ModelListenerException ||
+				exception instanceof PortalException) {
 
-			_portal.copyRequestParameters(actionRequest, actionResponse);
-
-			actionResponse.setRenderParameter(
-				"mvcPath", "/edit_ct_collection.jsp");
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"errorMessage",
+						_language.get(
+							_portal.getHttpServletRequest(actionRequest),
+							"an-unexpected-error-occurred")));
+			}
+			else {
+				throw new SystemException(exception);
+			}
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		if (Validator.isNotNull(redirect)) {
+			hideDefaultSuccessMessage(actionRequest);
+
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 	}
@@ -123,6 +126,9 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

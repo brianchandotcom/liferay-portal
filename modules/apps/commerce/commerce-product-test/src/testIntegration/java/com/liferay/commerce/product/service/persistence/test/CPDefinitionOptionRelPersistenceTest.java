@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.service.persistence.test;
@@ -155,10 +146,16 @@ public class CPDefinitionOptionRelPersistenceTest {
 
 		newCPDefinitionOptionRel.setDescription(RandomTestUtil.randomString());
 
-		newCPDefinitionOptionRel.setDDMFormFieldTypeName(
+		newCPDefinitionOptionRel.setCommerceOptionTypeKey(
+			RandomTestUtil.randomString());
+
+		newCPDefinitionOptionRel.setInfoItemServiceKey(
 			RandomTestUtil.randomString());
 
 		newCPDefinitionOptionRel.setPriority(RandomTestUtil.nextDouble());
+
+		newCPDefinitionOptionRel.setDefinedExternally(
+			RandomTestUtil.randomBoolean());
 
 		newCPDefinitionOptionRel.setFacetable(RandomTestUtil.randomBoolean());
 
@@ -170,6 +167,8 @@ public class CPDefinitionOptionRelPersistenceTest {
 		newCPDefinitionOptionRel.setKey(RandomTestUtil.randomString());
 
 		newCPDefinitionOptionRel.setPriceType(RandomTestUtil.randomString());
+
+		newCPDefinitionOptionRel.setTypeSettings(RandomTestUtil.randomString());
 
 		_cpDefinitionOptionRels.add(
 			_persistence.update(newCPDefinitionOptionRel));
@@ -223,11 +222,17 @@ public class CPDefinitionOptionRelPersistenceTest {
 			existingCPDefinitionOptionRel.getDescription(),
 			newCPDefinitionOptionRel.getDescription());
 		Assert.assertEquals(
-			existingCPDefinitionOptionRel.getDDMFormFieldTypeName(),
-			newCPDefinitionOptionRel.getDDMFormFieldTypeName());
+			existingCPDefinitionOptionRel.getCommerceOptionTypeKey(),
+			newCPDefinitionOptionRel.getCommerceOptionTypeKey());
+		Assert.assertEquals(
+			existingCPDefinitionOptionRel.getInfoItemServiceKey(),
+			newCPDefinitionOptionRel.getInfoItemServiceKey());
 		AssertUtils.assertEquals(
 			existingCPDefinitionOptionRel.getPriority(),
 			newCPDefinitionOptionRel.getPriority());
+		Assert.assertEquals(
+			existingCPDefinitionOptionRel.isDefinedExternally(),
+			newCPDefinitionOptionRel.isDefinedExternally());
 		Assert.assertEquals(
 			existingCPDefinitionOptionRel.isFacetable(),
 			newCPDefinitionOptionRel.isFacetable());
@@ -243,6 +248,9 @@ public class CPDefinitionOptionRelPersistenceTest {
 		Assert.assertEquals(
 			existingCPDefinitionOptionRel.getPriceType(),
 			newCPDefinitionOptionRel.getPriceType());
+		Assert.assertEquals(
+			existingCPDefinitionOptionRel.getTypeSettings(),
+			newCPDefinitionOptionRel.getTypeSettings());
 	}
 
 	@Test
@@ -359,7 +367,8 @@ public class CPDefinitionOptionRelPersistenceTest {
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "CPDefinitionId", true,
 			"CPOptionId", true, "name", true, "description", true,
-			"DDMFormFieldTypeName", true, "priority", true, "facetable", true,
+			"commerceOptionTypeKey", true, "infoItemServiceKey", true,
+			"priority", true, "definedExternally", true, "facetable", true,
 			"required", true, "skuContributor", true, "key", true, "priceType",
 			true);
 	}
@@ -724,10 +733,16 @@ public class CPDefinitionOptionRelPersistenceTest {
 
 		cpDefinitionOptionRel.setDescription(RandomTestUtil.randomString());
 
-		cpDefinitionOptionRel.setDDMFormFieldTypeName(
+		cpDefinitionOptionRel.setCommerceOptionTypeKey(
+			RandomTestUtil.randomString());
+
+		cpDefinitionOptionRel.setInfoItemServiceKey(
 			RandomTestUtil.randomString());
 
 		cpDefinitionOptionRel.setPriority(RandomTestUtil.nextDouble());
+
+		cpDefinitionOptionRel.setDefinedExternally(
+			RandomTestUtil.randomBoolean());
 
 		cpDefinitionOptionRel.setFacetable(RandomTestUtil.randomBoolean());
 
@@ -738,6 +753,8 @@ public class CPDefinitionOptionRelPersistenceTest {
 		cpDefinitionOptionRel.setKey(RandomTestUtil.randomString());
 
 		cpDefinitionOptionRel.setPriceType(RandomTestUtil.randomString());
+
+		cpDefinitionOptionRel.setTypeSettings(RandomTestUtil.randomString());
 
 		_cpDefinitionOptionRels.add(_persistence.update(cpDefinitionOptionRel));
 

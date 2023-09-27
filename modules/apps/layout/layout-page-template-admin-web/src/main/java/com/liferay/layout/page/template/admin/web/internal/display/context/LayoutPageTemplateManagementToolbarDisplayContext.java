@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.page.template.admin.web.internal.display.context;
@@ -29,6 +20,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,8 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -201,22 +191,19 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 	}
 
 	private String _getExportLayoutPageTemplateEntryURL() {
-		ResourceURL exportLayoutPageTemplateURL =
-			liferayPortletResponse.createResourceURL();
-
 		String.valueOf(
 			_layoutPageTemplateDisplayContext.
 				getLayoutPageTemplateCollectionId());
 
-		exportLayoutPageTemplateURL.setParameter(
+		return ResourceURLBuilder.createResourceURL(
+			liferayPortletResponse
+		).setParameter(
 			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				_layoutPageTemplateDisplayContext.
-					getLayoutPageTemplateCollectionId()));
-		exportLayoutPageTemplateURL.setResourceID(
-			"/layout_page_template_admin/export_layout_page_template_entries");
-
-		return exportLayoutPageTemplateURL.toString();
+			_layoutPageTemplateDisplayContext.
+				getLayoutPageTemplateCollectionId()
+		).setResourceID(
+			"/layout_page_template_admin/export_layout_page_template_entries"
+		).buildString();
 	}
 
 	private String _getSelectMasterLayoutURL() {

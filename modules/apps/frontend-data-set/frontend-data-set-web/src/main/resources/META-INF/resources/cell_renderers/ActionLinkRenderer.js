@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayIcon from '@clayui/icon';
@@ -20,6 +11,7 @@ import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../FrontendDataSetContext';
 import {formatActionURL} from '../utils/index';
+import {openPermissionsModal} from '../utils/modals/index';
 import DefaultContent from './DefaultRenderer';
 
 function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
@@ -70,6 +62,11 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 					title: currentAction.title,
 					url: formattedHref,
 				});
+			}
+			if (currentAction.target === 'modal-permissions') {
+				event.preventDefault();
+
+				openPermissionsModal(formattedHref);
 			}
 			else if (currentAction.target === 'sidePanel') {
 				event.preventDefault();
@@ -179,6 +176,7 @@ ActionLinkRenderer.propTypes = {
 			size: PropTypes.string,
 			target: PropTypes.oneOf([
 				'modal',
+				'modal-permissions',
 				'sidePanel',
 				'link',
 				'async',

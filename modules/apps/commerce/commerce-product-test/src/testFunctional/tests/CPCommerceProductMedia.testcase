@@ -114,6 +114,149 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "This is a test for COMMERCE-12305. The admin can delete a product's attachment via API"
+	@priority = 5
+	test CanDeleteProductAttachmentViaAPI {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an attachment for ABS Sensor is uploaded via API") {
+			var attachment = CommerceUtilities.getConvertedBase64File(file = "Commerce_Black.jpg");
+
+			CommerceJSONProductsAPI._patchCommerceProductAttachmentUsingERC(
+				attachment = ${attachment},
+				attachmentTitle = "Black T-Shirt",
+				productERC = "MIN93015minium-initializer");
+		}
+
+		task ("And the attachment is successfully uploaded") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			AssertElementPresent(
+				key_entryName = "Black T-Shirt",
+				key_table = "Attachments",
+				locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+		}
+
+		task ("When the admin tries to delete the attachment via API") {
+			CommerceJSONProductsAPI._deleteCommerceProductAttachment(
+				attachmentName = "Black T-Shirt",
+				productName = "ABS Sensor",
+				type = "attachment");
+		}
+
+		task ("Then the attachment item is successfully removed from the UI") {
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			AssertElementNotPresent(
+				key_entryName = "Black T-Shirt",
+				key_table = "Attachments",
+				locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12304. The admin can delete a product's image via API"
+	@priority = 5
+	test CanDeleteProductImageViaAPI {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium Site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an image for ABS Sensor is uploaded via API") {
+			var attachment = CommerceUtilities.getConvertedBase64File(file = "Commerce_Black.jpg");
+
+			CommerceJSONProductsAPI._patchCommerceProductImageUsingERC(
+				attachment = ${attachment},
+				contentType = "image/png",
+				imageTitle = "Black T-Shirt",
+				productERC = "MIN93015minium-initializer");
+		}
+
+		task ("And the image is successfully uploaded") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			AssertElementPresent(
+				key_entryName = "Black T-Shirt",
+				key_table = "Images",
+				locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+		}
+
+		task ("When the admin tries to delete the image via API") {
+			CommerceJSONProductsAPI._deleteCommerceProductAttachment(
+				attachmentName = "Black T-Shirt",
+				productName = "ABS Sensor",
+				type = "images");
+		}
+
+		task ("Then the image item is successfully removed from the UI") {
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			AssertElementNotPresent(
+				key_entryName = "Black T-Shirt",
+				key_table = "Images",
+				locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11447. The admin can post an attachment with a custom field to a product via API"
+	@priority = 3
+	test CanUploadProductAttachmentWithCustomFieldViaAPI {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium Site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a custom field for Commerce Product Attachments is added") {
+			CustomFields.addCP(
+				customFieldName = "Text Field",
+				customFieldType = "Input Field",
+				customInputDataType = "Text",
+				modelResource = "com.liferay.commerce.product.model.CPAttachmentFileEntry");
+		}
+
+		task ("When an attachment with custom field value for the product ABS Sensor is posted via API") {
+			var attachment = CommerceUtilities.getConvertedBase64File(file = "Commerce_Black.jpg");
+
+			CommerceJSONProductsAPI._patchCommerceProductAttachmentUsingERC(
+				attachment = ${attachment},
+				attachmentTitle = "Commerce_Black.jpg",
+				customFieldContent = "Yes",
+				customFieldName = "Text Field",
+				customFieldType = "Text",
+				productERC = "MIN93015minium-initializer");
+		}
+
+		task ("Then a new attachment with a custom field value is present on the product ABS Sensor Media tab") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceEntry.clickTableEntryEditButton(entryName = "Commerce_Black.jpg");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "Yes");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6031. EditAnAttachment"
 	@priority = 3
 	test EditAnAttachment {

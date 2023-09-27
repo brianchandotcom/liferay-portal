@@ -31,6 +31,10 @@
 		@media (prefers-reduced-motion: reduce) {
 			background-image: url(@theme_image_path@/states/empty_state_reduced_motion.gif);
 		}
+
+		.c-prefers-reduced-motion & {
+			background-image: url(@theme_image_path@/states/empty_state_reduced_motion.gif);
+		}
 	}
 
 	.taglib-empty-search-result-message-header {
@@ -39,6 +43,10 @@
 		padding-top: 232px;
 
 		@media (prefers-reduced-motion: reduce) {
+			background-image: url(@theme_image_path@/states/search_state_reduced_motion.gif);
+		}
+
+		.c-prefers-reduced-motion & {
 			background-image: url(@theme_image_path@/states/search_state_reduced_motion.gif);
 		}
 	}
@@ -52,6 +60,10 @@
 		@media (prefers-reduced-motion: reduce) {
 			background-image: url(@theme_image_path@/states/empty_state_reduced_motion.gif);
 		}
+
+		.c-prefers-reduced-motion & {
+			background-image: url(@theme_image_path@/states/empty_state_reduced_motion.gif);
+		}
 	}
 
 	.taglib-success-state {
@@ -63,6 +75,10 @@
 		@media (prefers-reduced-motion: reduce) {
 			background-image: url(@theme_image_path@/states/success_state_reduced_motion.gif);
 		}
+
+		.c-prefers-reduced-motion & {
+			background-image: url(@theme_image_path@/states/success_state_reduced_motion.gif);
+		}
 	}
 
 	.taglib-search-state {
@@ -72,6 +88,10 @@
 		padding-top: 250px;
 
 		@media (prefers-reduced-motion: reduce) {
+			background-image: url(@theme_image_path@/states/search_state_reduced_motion.gif);
+		}
+
+		.c-prefers-reduced-motion & {
 			background-image: url(@theme_image_path@/states/search_state_reduced_motion.gif);
 		}
 	}

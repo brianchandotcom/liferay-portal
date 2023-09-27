@@ -1,16 +1,16 @@
 dependencies {
 	compileInclude group: "com.github.scribejava", name: "scribejava-apis", version: "6.6.3"
 	compileInclude group: "com.github.scribejava", name: "scribejava-core", version: "6.6.3"
-	compileInclude group: "com.google.collections", name: "google-collections", version: "1.0"
-	compileInclude group: "com.google.guava", name: "guava", version: "30.1.1-jre"
 	compileInclude group: "com.googlecode.jsontoken", name: "jsontoken", version: "1.1"
 	compileInclude group: "com.microsoft.graph", name: "microsoft-graph", version: "1.5.0"
 	compileInclude group: "com.microsoft.graph", name: "microsoft-graph-core", version: "1.0.9"
 	compileInclude group: "com.squareup.okhttp3", name: "okhttp", version: "3.12.1"
-	compileInclude group: "com.squareup.okio", name: "okio", version: "1.15.0"
+	compileInclude group: "com.squareup.okio", name: "okio", version: "3.4.0"
 	compileInclude group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
+	compileInclude group: "org.jetbrains.kotlin", name: "kotlin-stdlib", version: "1.8.0"
 
 	compileOnly group: "com.google.code.gson", name: "gson", version: "2.9.0"
+	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -30,6 +30,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-util")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

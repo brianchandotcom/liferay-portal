@@ -5,9 +5,7 @@ definition {
 			attribute = ${attribute},
 			element = ${element});
 
-		TestUtils.assertEquals(
-			actual = ${actual},
-			expected = ${expected});
+		StringUtil.assertEquals(${expected}, ${actual});
 	}
 
 	macro assertCssValueIsGreaterThan {

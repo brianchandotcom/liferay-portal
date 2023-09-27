@@ -1,18 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package org.gradle.internal.resource.transport.http;
+
+import com.liferay.gradle.util.hash.HashUtil;
+import com.liferay.gradle.util.hash.HashValue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -47,8 +41,7 @@ import org.apache.maven.artifact.repository.metadata.io.xpp3.MetadataXpp3Writer;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 
 import org.gradle.internal.hash.HashCode;
-import org.gradle.internal.hash.HashUtil;
-import org.gradle.internal.hash.HashValue;
+import org.gradle.internal.resource.ExternalResourceName;
 import org.gradle.internal.resource.metadata.DefaultExternalResourceMetaData;
 import org.gradle.internal.resource.metadata.ExternalResourceMetaData;
 
@@ -65,21 +58,25 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 	}
 
 	@Override
-	public ExternalResourceMetaData getMetaData(URI uri, boolean revalidate) {
+	public ExternalResourceMetaData getMetaData(
+		ExternalResourceName externalResourceName, boolean revalidate) {
+
+		URI uri = externalResourceName.getUri();
+
 		if (!_isForcedCacheEnabled()) {
-			return super.getMetaData(uri, revalidate);
+			return super.getMetaData(externalResourceName, revalidate);
 		}
 
 		String location = _getLocation(uri);
 
 		if (StringUtils.isBlank(location)) {
-			return super.getMetaData(uri, revalidate);
+			return super.getMetaData(externalResourceName, revalidate);
 		}
 
 		File cachedArtifactFile = _getCachedArtifactFile(location);
 
 		if (cachedArtifactFile == null) {
-			return super.getMetaData(uri, revalidate);
+			return super.getMetaData(externalResourceName, revalidate);
 		}
 
 		HashValue hashValue = HashUtil.sha1(cachedArtifactFile);
@@ -91,15 +88,19 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 	}
 
 	@Override
-	public HttpResponseResource openResource(URI uri, boolean revalidate) {
+	public HttpResponseResource openResource(
+		ExternalResourceName externalResourceName, boolean revalidate) {
+
+		URI uri = externalResourceName.getUri();
+
 		if (!_isForcedCacheEnabled()) {
-			return super.openResource(uri, revalidate);
+			return super.openResource(externalResourceName, revalidate);
 		}
 
 		String location = _getLocation(uri);
 
 		if (StringUtils.isBlank(location)) {
-			return super.openResource(uri, revalidate);
+			return super.openResource(externalResourceName, revalidate);
 		}
 
 		HttpResponseResource httpResponseResource = null;
@@ -120,7 +121,8 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 		}
 
 		if (httpResponseResource == null) {
-			httpResponseResource = super.openResource(uri, revalidate);
+			httpResponseResource = super.openResource(
+				externalResourceName, revalidate);
 		}
 
 		return httpResponseResource;

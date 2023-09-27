@@ -1,10 +1,10 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.accessibility = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Echo Accessibility";
 	property testray.main.component.name = "Content Pages";
 
@@ -13,6 +13,10 @@ definition {
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
@@ -196,6 +200,8 @@ definition {
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Edit",
 				pageName = "Test Page Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
 		}
 
 		task ("When the page creator opens the Product Menu") {
@@ -383,20 +389,18 @@ definition {
 
 		task ("Then the page creator switchs to Content Editing via keyboard") {
 			KeyPress(
-				key_menuItem = "Page Design",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
-				value1 = "\DOWN");
+				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
+				value1 = "\UP");
 
 			KeyPress(
-				key_menuItem = "Content Editing",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
+				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
 				value1 = "\ENTER");
 
 			AssertTextEquals(
 				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
 				value1 = "Content Editing");
 
-			AssertElementFocused(locator1 = "//button[contains(@class,'edit-mode-selector')]");
+			AssertElementFocused(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
 		}
 	}
 
@@ -546,7 +550,7 @@ definition {
 			AssertAttributeValue(
 				attribute1 = "aria-label",
 				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
-				value1 = "Page Edition Mode: Page Design");
+				value1 = "Page Edition Mode");
 		}
 	}
 
@@ -606,8 +610,57 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-165625. The Language Selector shouldn't have aria-pressed attribute."
-	@priority = 2
+	@description = "This is a test for LPS-194375. The Page Editor filter is WCAG 2.1 AA compliant."
+	@priority = 3
+	test ViewAccessibilityOfFilterByContentTypeSelector {
+		task ("Given a page creator has displayed assets on content page") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display",
+				targetFragmentName = "Heading");
+
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("When the page creator opens the dropdown menu of Filter by Content Type") {
+			PageEditor.gotoTab(tabName = "Page Content");
+
+			Click(locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE");
+		}
+
+		task ("Then the dropdown menu should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li");
+
+			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[2]");
+
+			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[3]");
+		}
+	}
+
+	@description = "This is a test for LPS-165625 and LPS-194374. The Language Selector shouldn't have aria-pressed attribute. The Language Selector should comply with WCAG 2.1 AA standard."
+	@priority = 3
 	test ViewAccessibilityOfLanguageSelector {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -623,9 +676,23 @@ definition {
 		}
 
 		task ("Then the Language Selector should have correct accessibility") {
-			AssertElementNotPresent(locator1 = "//button[contains(@class,'dropdown-toggle')][@aria-pressed][*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]");
+			AssertElementNotPresent(locator1 = "//button[contains(@type,'button')][@aria-pressed][*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]");
 
-			AssertElementPresent(locator1 = "//button[contains(@class,'dropdown-toggle')]//span[normalize-space()='Select a language, current language: en-US.']");
+			AssertElementPresent(locator1 = "//button[contains(@type,'button')][@aria-label='Select a language, current language: en-US.']");
+		}
+
+		task ("When the page creator opens the dropdown menu of the language selector") {
+			Click(
+				key_currentLocale = StringUtil.lowerCase("en-US"),
+				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+		}
+
+		task ("Then the dropdown menu should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li");
+
+			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[2]");
+
+			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[3]");
 		}
 	}
 
@@ -718,6 +785,31 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-194373. The Page Design / Content Editing picker should comply with WCAG 2.1 AA standard."
+	@priority = 3
+	test ViewAccessibilityOfPageEditionModeSelector {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator opens the dropdown menu of page edition mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Click(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
+		}
+
+		task ("Then the dropdown menu should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li");
+
+			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[2]");
+		}
+	}
+
 	@description = "This is a test for LPS-165296. The screen reader should be able to distinguish between view mode and edit mode."
 	@priority = 3
 	test ViewPageTitleOfViewModeAndEditMode {
@@ -745,9 +837,7 @@ definition {
 		task ("Then the page title doesn't have (Editing)") {
 			var viewModeTitle = selenium.getTitle();
 
-			TestUtils.assertEquals(
-				actual = ${viewModeTitle},
-				expected = "Test Page Name - ${randomSiteName} - ${defaultSiteName}");
+			StringUtil.assertEquals("Test Page Name - ${randomSiteName} - ${defaultSiteName}", ${viewModeTitle});
 		}
 
 		task ("When the page creator accesses to the content page at edit mode") {
@@ -757,9 +847,7 @@ definition {
 		task ("Then the title has (Editing)") {
 			var editModeTitle = selenium.getTitle();
 
-			TestUtils.assertEquals(
-				actual = ${editModeTitle},
-				expected = "Test Page Name - ${randomSiteName} - ${defaultSiteName} (Editing)");
+			StringUtil.assertEquals("Test Page Name - ${randomSiteName} - ${defaultSiteName} (Editing)", ${editModeTitle});
 		}
 	}
 

@@ -5,9 +5,9 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "commons-logging", name: "commons-logging", version: "1.1.1"
-	compile group: "org.springframework", name: "spring-beans", version: "3.0.7.RELEASE"
-	compile group: "org.springframework", name: "spring-core", version: "3.0.7.RELEASE"
+	api group: "commons-logging", name: "commons-logging", version: "1.1.1"
+	api group: "org.springframework", name: "spring-beans", version: "3.0.7.RELEASE"
+	api group: "org.springframework", name: "spring-core", version: "3.0.7.RELEASE"
 }
 
 patch {

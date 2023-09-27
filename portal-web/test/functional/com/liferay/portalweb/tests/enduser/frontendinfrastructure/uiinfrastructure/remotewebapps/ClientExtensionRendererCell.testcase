@@ -148,6 +148,7 @@ definition {
 	test CanCreateCellRendererViaOSGI {
 		property fdsCellRenderer.client.extension.created = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given creating a Cell Renderer via OSGI") {
 			ClientExtension.createGlobalVariableClientExtensionType(type = "fdsCellRenderer");

@@ -1,24 +1,17 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.ant.mirrors.get;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
@@ -45,7 +38,7 @@ public class MirrorsGetTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 		try {
-			doExecute();
+			_execute();
 		}
 		catch (IOException ioException) {
 			throw new BuildException(ioException);
@@ -116,7 +109,7 @@ public class MirrorsGetTask extends Task {
 		_path = matcher.group(1);
 
 		if (_path.startsWith("mirrors/")) {
-			_path = _path.replaceFirst("mirrors", getMirrorsHostname());
+			_path = _path.replaceFirst("mirrors", _getMirrorsHostname());
 		}
 
 		while (_path.endsWith("/")) {
@@ -142,7 +135,7 @@ public class MirrorsGetTask extends Task {
 		_verbose = verbose;
 	}
 
-	protected void copyFile(File sourceFile, File targetFile)
+	private void _copyFile(File sourceFile, File targetFile)
 		throws IOException {
 
 		StringBuilder sb = new StringBuilder();
@@ -159,7 +152,7 @@ public class MirrorsGetTask extends Task {
 
 		long time = System.currentTimeMillis();
 
-		int size = toFile(sourceFileURI.toURL(), targetFile);
+		int size = _toFile(sourceFileURI.toURL(), targetFile);
 
 		if (_verbose) {
 			sb = new StringBuilder();
@@ -174,7 +167,103 @@ public class MirrorsGetTask extends Task {
 		}
 	}
 
-	protected void doExecute() throws IOException {
+	private void _downloadFile(URL sourceURL, File targetFile)
+		throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Downloading ");
+		sb.append(sourceURL.toExternalForm());
+		sb.append(" to ");
+		sb.append(targetFile.getPath());
+		sb.append(".");
+
+		System.out.println(sb.toString());
+
+		long time = System.currentTimeMillis();
+
+		int size = 0;
+
+		try {
+			size = _toFile(sourceURL, targetFile);
+		}
+		catch (IOException ioException) {
+			targetFile.delete();
+
+			if (!_ignoreErrors) {
+				throw ioException;
+			}
+
+			ioException.printStackTrace();
+		}
+
+		if (_verbose) {
+			sb = new StringBuilder();
+
+			sb.append("Downloaded ");
+			sb.append(sourceURL.toExternalForm());
+			sb.append(". ");
+			sb.append(size);
+			sb.append(" bytes in ");
+			sb.append(System.currentTimeMillis() - time);
+			sb.append(" milliseconds.");
+
+			System.out.println(sb.toString());
+		}
+
+		if (!_isValidMD5(
+				targetFile, new URL(sourceURL.toExternalForm() + ".md5"))) {
+
+			targetFile.delete();
+
+			throw new IOException(
+				targetFile.getAbsolutePath() + " failed checksum");
+		}
+
+		if (_isZipFileName(targetFile.getName()) && !_isZipFile(targetFile)) {
+			targetFile.delete();
+
+			throw new IOException(
+				targetFile.getAbsolutePath() + " is an invalid ZIP file");
+		}
+
+		if (_is7zFileName(targetFile.getName()) && !_is7zFile(targetFile)) {
+			targetFile.delete();
+
+			throw new IOException(
+				targetFile.getAbsolutePath() + " is an invalid 7z file");
+		}
+	}
+
+	private void _downloadFile(URL sourceURL, File targetFile, int retries)
+		throws IOException {
+
+		if (retries > 0) {
+			for (int i = 0; i < retries; i++) {
+				try {
+					_downloadFile(sourceURL, targetFile);
+
+					return;
+				}
+				catch (IOException ioException) {
+					System.out.println(
+						"Unable to connect to " + sourceURL +
+							", will retry in 30 seconds.");
+
+					try {
+						Thread.sleep(30000);
+					}
+					catch (InterruptedException interruptedException) {
+						interruptedException.printStackTrace();
+					}
+				}
+			}
+		}
+
+		_downloadFile(sourceURL, targetFile);
+	}
+
+	private void _execute() throws IOException {
 		if (_src.startsWith("file:")) {
 			File srcFile = new File(_src.substring("file:".length()));
 
@@ -184,7 +273,7 @@ public class MirrorsGetTask extends Task {
 				targetFile = new File(_dest, srcFile.getName());
 			}
 
-			copyFile(srcFile, targetFile);
+			_copyFile(srcFile, targetFile);
 
 			return;
 		}
@@ -213,14 +302,14 @@ public class MirrorsGetTask extends Task {
 		sb.append(File.separator);
 		sb.append("mirrors");
 		sb.append(File.separator);
-		sb.append(getPlatformIndependentPath(_path));
+		sb.append(_getPlatformIndependentPath(_path));
 
 		File localCacheDir = new File(sb.toString());
 
 		File localCacheFile = new File(localCacheDir, _fileName);
 
-		if (localCacheFile.exists() && !_force && isZipFileName(_fileName)) {
-			_force = !isValidZip(localCacheFile);
+		if (localCacheFile.exists() && !_force && _isZipFileName(_fileName)) {
+			_force = !_isZipFile(localCacheFile);
 		}
 
 		if (localCacheFile.exists() && _force) {
@@ -228,12 +317,12 @@ public class MirrorsGetTask extends Task {
 		}
 
 		if (!localCacheFile.exists()) {
-			String mirrorsHostname = getMirrorsHostname();
+			String mirrorsHostname = _getMirrorsHostname();
 
 			if (_tryLocalNetwork && !mirrorsHostname.isEmpty()) {
 				sb = new StringBuilder();
 
-				sb.append(getURLScheme());
+				sb.append(_getURLScheme());
 				sb.append(mirrorsHostname);
 				sb.append("/");
 				sb.append(_path);
@@ -243,7 +332,7 @@ public class MirrorsGetTask extends Task {
 				URL sourceURL = new URL(sb.toString());
 
 				try {
-					downloadFile(sourceURL, localCacheFile, _retries);
+					_downloadFile(sourceURL, localCacheFile, _retries);
 				}
 				catch (IOException ioException) {
 					URL defaultURL = new URL(_src);
@@ -252,57 +341,35 @@ public class MirrorsGetTask extends Task {
 						"Unable to connect to " + sourceURL +
 							", defaulting to " + defaultURL);
 
-					downloadFile(defaultURL, localCacheFile);
+					_downloadFile(defaultURL, localCacheFile, 0);
 				}
 			}
 			else {
-				downloadFile(new URL(_src), localCacheFile);
+				_downloadFile(new URL(_src), localCacheFile, 0);
 			}
 		}
 
 		if (_dest.exists() && _dest.isDirectory()) {
-			copyFile(localCacheFile, new File(_dest, _fileName));
+			_copyFile(localCacheFile, new File(_dest, _fileName));
 		}
 		else {
-			copyFile(localCacheFile, _dest);
+			_copyFile(localCacheFile, _dest);
 		}
 	}
 
-	protected void downloadFile(URL sourceURL, File targetFile)
-		throws IOException {
+	private Process _executeCommands(String[] commands)
+		throws InterruptedException, IOException, RuntimeException {
 
-		downloadFile(sourceURL, targetFile, 0);
+		ProcessBuilder processBuilder = new ProcessBuilder(commands);
+
+		Process process = processBuilder.start();
+
+		process.waitFor();
+
+		return process;
 	}
 
-	protected void downloadFile(URL sourceURL, File targetFile, int retries)
-		throws IOException {
-
-		if (retries > 0) {
-			for (int i = 0; i < retries; i++) {
-				try {
-					_downloadFile(sourceURL, targetFile);
-
-					return;
-				}
-				catch (IOException ioException) {
-					System.out.println(
-						"Unable to connect to " + sourceURL +
-							", will retry in 30 seconds.");
-
-					try {
-						Thread.sleep(30000);
-					}
-					catch (InterruptedException interruptedException) {
-						interruptedException.printStackTrace();
-					}
-				}
-			}
-		}
-
-		_downloadFile(sourceURL, targetFile);
-	}
-
-	protected String getMirrorsHostname() {
+	private String _getMirrorsHostname() {
 		if (_mirrorsHostname != null) {
 			return _mirrorsHostname;
 		}
@@ -318,7 +385,7 @@ public class MirrorsGetTask extends Task {
 		return _mirrorsHostname;
 	}
 
-	protected String getPassword() {
+	private String _getPassword() {
 		if (_password != null) {
 			return _password;
 		}
@@ -330,7 +397,7 @@ public class MirrorsGetTask extends Task {
 		return _password;
 	}
 
-	protected String getPlatformIndependentPath(String path) {
+	private String _getPlatformIndependentPath(String path) {
 		String[] separators = {"/", "\\"};
 
 		for (String separator : separators) {
@@ -342,7 +409,32 @@ public class MirrorsGetTask extends Task {
 		return path;
 	}
 
-	protected String getURLScheme() {
+	private String _getProcessOutput(Process process) {
+		StringBuilder processOutput = new StringBuilder();
+
+		try {
+			BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(process.getInputStream()));
+
+			String line = bufferedReader.readLine();
+
+			while (line != null) {
+				processOutput.append(line);
+				processOutput.append(System.lineSeparator());
+
+				line = bufferedReader.readLine();
+			}
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to get process output.");
+
+			exception.printStackTrace();
+		}
+
+		return processOutput.toString();
+	}
+
+	private String _getURLScheme() {
 		Project project = getProject();
 
 		boolean ssl = _ssl;
@@ -360,7 +452,7 @@ public class MirrorsGetTask extends Task {
 		return "http://";
 	}
 
-	protected String getUserAgent() {
+	private String _getUserAgent() {
 		if (_userAgent != null) {
 			return _userAgent;
 		}
@@ -372,7 +464,7 @@ public class MirrorsGetTask extends Task {
 		return _userAgent;
 	}
 
-	protected String getUsername() {
+	private String _getUsername() {
 		if (_username != null) {
 			return _username;
 		}
@@ -384,7 +476,69 @@ public class MirrorsGetTask extends Task {
 		return _username;
 	}
 
-	protected boolean isValidMD5(File file, URL url) throws IOException {
+	private boolean _has7z() {
+		String[] commands = {"/bin/bash", "-c", "type 7z"};
+
+		try {
+			Process process = _executeCommands(commands);
+
+			if (process.exitValue() != 0) {
+				System.out.println("Unable to validate 7z file.");
+
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to validate 7z file.");
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _is7zFile(File file) {
+		if (!_has7z()) {
+			return true;
+		}
+
+		String[] commands = {"/bin/bash", "-c", "7z t " + file.toString()};
+
+		Process process = null;
+
+		try {
+			process = _executeCommands(commands);
+		}
+		catch (Exception exception) {
+			System.out.println(file + " is invalid.");
+
+			return false;
+		}
+
+		String processOutput = _getProcessOutput(process);
+
+		int exitValue = process.exitValue();
+
+		if ((exitValue == 0) && !processOutput.contains("Files: 0\n")) {
+			return true;
+		}
+
+		System.out.println(processOutput);
+
+		System.out.println(file + " is invalid.");
+
+		return false;
+	}
+
+	private boolean _is7zFileName(String fileName) {
+		if (fileName.endsWith(".7z")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isValidMD5(File file, URL url) throws IOException {
 		if (_skipChecksum) {
 			return true;
 		}
@@ -396,7 +550,7 @@ public class MirrorsGetTask extends Task {
 		String remoteMD5 = null;
 
 		try {
-			remoteMD5 = toString(url);
+			remoteMD5 = _toString(url);
 		}
 		catch (Exception exception) {
 			if (_verbose) {
@@ -422,7 +576,7 @@ public class MirrorsGetTask extends Task {
 		return remoteMD5.contains(localMD5);
 	}
 
-	protected boolean isValidZip(File file) throws IOException {
+	private boolean _isZipFile(File file) throws IOException {
 		if (!file.exists()) {
 			return false;
 		}
@@ -465,7 +619,7 @@ public class MirrorsGetTask extends Task {
 		}
 	}
 
-	protected boolean isZipFileName(String fileName) {
+	private boolean _isZipFileName(String fileName) {
 		if (fileName.endsWith(".ear") || fileName.endsWith(".jar") ||
 			fileName.endsWith(".war") || fileName.endsWith(".zip")) {
 
@@ -475,7 +629,7 @@ public class MirrorsGetTask extends Task {
 		return false;
 	}
 
-	protected URLConnection openConnection(URL url) throws IOException {
+	private URLConnection _openConnection(URL url) throws IOException {
 		URLConnection urlConnection = null;
 
 		while (true) {
@@ -488,8 +642,8 @@ public class MirrorsGetTask extends Task {
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)urlConnection;
 
-			String password = getPassword();
-			String username = getUsername();
+			String password = _getPassword();
+			String username = _getUsername();
 
 			if ((password != null) && (username != null)) {
 				String auth = username + ":" + password;
@@ -500,9 +654,9 @@ public class MirrorsGetTask extends Task {
 					"Basic " + encoder.encodeToString(auth.getBytes()));
 			}
 
-			if (getUserAgent() != null) {
+			if (_getUserAgent() != null) {
 				httpURLConnection.setRequestProperty(
-					"User-Agent", getUserAgent());
+					"User-Agent", _getUserAgent());
 			}
 
 			int responseCode = httpURLConnection.getResponseCode();
@@ -519,7 +673,7 @@ public class MirrorsGetTask extends Task {
 		return urlConnection;
 	}
 
-	protected int toFile(URL url, File file) throws IOException {
+	private int _toFile(URL url, File file) throws IOException {
 		if (file.exists()) {
 			file.delete();
 		}
@@ -533,7 +687,7 @@ public class MirrorsGetTask extends Task {
 		OutputStream outputStream = new FileOutputStream(file);
 
 		try {
-			return toOutputStream(url, outputStream);
+			return _toOutputStream(url, outputStream);
 		}
 		catch (IOException ioException) {
 			if (file.exists()) {
@@ -549,10 +703,10 @@ public class MirrorsGetTask extends Task {
 		}
 	}
 
-	protected int toOutputStream(URL url, OutputStream outputStream)
+	private int _toOutputStream(URL url, OutputStream outputStream)
 		throws IOException {
 
-		URLConnection urlConnection = openConnection(url);
+		URLConnection urlConnection = _openConnection(url);
 
 		InputStream inputStream = urlConnection.getInputStream();
 
@@ -586,11 +740,11 @@ public class MirrorsGetTask extends Task {
 		}
 	}
 
-	protected String toString(URL url) throws IOException {
+	private String _toString(URL url) throws IOException {
 		OutputStream outputStream = new ByteArrayOutputStream();
 
 		try {
-			toOutputStream(url, outputStream);
+			_toOutputStream(url, outputStream);
 
 			return outputStream.toString();
 		}
@@ -598,67 +752,6 @@ public class MirrorsGetTask extends Task {
 			if (outputStream != null) {
 				outputStream.close();
 			}
-		}
-	}
-
-	private void _downloadFile(URL sourceURL, File targetFile)
-		throws IOException {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Downloading ");
-		sb.append(sourceURL.toExternalForm());
-		sb.append(" to ");
-		sb.append(targetFile.getPath());
-		sb.append(".");
-
-		System.out.println(sb.toString());
-
-		long time = System.currentTimeMillis();
-
-		int size = 0;
-
-		try {
-			size = toFile(sourceURL, targetFile);
-		}
-		catch (IOException ioException) {
-			targetFile.delete();
-
-			if (!_ignoreErrors) {
-				throw ioException;
-			}
-
-			ioException.printStackTrace();
-		}
-
-		if (_verbose) {
-			sb = new StringBuilder();
-
-			sb.append("Downloaded ");
-			sb.append(sourceURL.toExternalForm());
-			sb.append(". ");
-			sb.append(size);
-			sb.append(" bytes in ");
-			sb.append(System.currentTimeMillis() - time);
-			sb.append(" milliseconds.");
-
-			System.out.println(sb.toString());
-		}
-
-		if (!isValidMD5(
-				targetFile, new URL(sourceURL.toExternalForm() + ".md5"))) {
-
-			targetFile.delete();
-
-			throw new IOException(
-				targetFile.getAbsolutePath() + " failed checksum.");
-		}
-
-		if (isZipFileName(targetFile.getName()) && !isValidZip(targetFile)) {
-			targetFile.delete();
-
-			throw new IOException(
-				targetFile.getAbsolutePath() + " is an invalid zip file.");
 		}
 	}
 

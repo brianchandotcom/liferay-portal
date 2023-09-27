@@ -2,8 +2,8 @@ task zipPortlet(type: Zip)
 task zipTheme(type: Zip)
 
 dependencies {
-	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }
 
 testIntegrationClasses {

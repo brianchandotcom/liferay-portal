@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/omegabit-makesea",
+	"hidden": true,
+	"name": "MakeSEA",
+	"name_i18n": {
+		"en_US": "MakeSEA"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

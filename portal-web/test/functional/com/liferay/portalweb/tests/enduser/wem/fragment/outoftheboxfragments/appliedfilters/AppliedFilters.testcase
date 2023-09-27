@@ -253,23 +253,25 @@ definition {
 	test ViewAppliedCategoryAndKeywordsFilters {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Size");
 		}
 
 		task ("Add three categories in Size vocabulary") {
 			var largeId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Large",
 				vocabularyName = "Size");
 			var mediumId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Medium",
 				vocabularyName = "Size");
 			var smallId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Small",
 				vocabularyName = "Size");
 		}
@@ -278,7 +280,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${largeId},
 				content = "Levis 511",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Levis 511");
 		}
 
@@ -286,7 +288,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${mediumId},
 				content = "Levis 501",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Levis 501");
 		}
 
@@ -294,15 +296,16 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${smallId},
 				content = "Levis 510",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Levis 510");
 		}
 
 		task ("Add a dynamic collection for All Types") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add the first collection page based on dynamic collection") {

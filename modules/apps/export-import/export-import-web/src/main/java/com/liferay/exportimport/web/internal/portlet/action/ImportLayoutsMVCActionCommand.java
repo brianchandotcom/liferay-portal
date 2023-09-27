@@ -1,20 +1,10 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.exportimport.web.internal.portlet.action;
 
-import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
@@ -32,27 +22,17 @@ import com.liferay.exportimport.kernel.service.ExportImportService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.LayoutPrototypeException;
 import com.liferay.portal.kernel.exception.LocaleException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -63,11 +43,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.FileUploadBase;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,108 +55,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ExportImportPortletKeys.IMPORT,
 		"mvc.command.name=/export_import/import_layouts"
 	},
-	service = {ImportLayoutsMVCActionCommand.class, MVCActionCommand.class}
+	service = MVCActionCommand.class
 )
 public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
-
-	protected void addTempFileEntry(
-			ActionRequest actionRequest, String folderName)
-		throws Exception {
-
-		UploadPortletRequest uploadPortletRequest =
-			_portal.getUploadPortletRequest(actionRequest);
-
-		_checkExceededSizeLimit(uploadPortletRequest);
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-		deleteTempFileEntry(groupId, folderName);
-
-		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				"file")) {
-
-			String sourceFileName = uploadPortletRequest.getFileName("file");
-
-			_layoutService.addTempFileEntry(
-				groupId, folderName, sourceFileName, inputStream,
-				uploadPortletRequest.getContentType("file"));
-		}
-		catch (Exception exception) {
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if (uploadException != null) {
-				Throwable throwable = uploadException.getCause();
-
-				if (throwable instanceof FileUploadBase.IOFileUploadException) {
-					if (_log.isInfoEnabled()) {
-						_log.info("Temporary upload was cancelled");
-					}
-				}
-
-				if (uploadException.isExceededFileSizeLimit()) {
-					throw new FileSizeException(throwable);
-				}
-
-				if (uploadException.isExceededUploadRequestSizeLimit()) {
-					throw new UploadRequestSizeException(throwable);
-				}
-			}
-			else {
-				throw exception;
-			}
-		}
-	}
-
-	protected void deleteTempFileEntry(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			String folderName)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		try {
-			String fileName = ParamUtil.getString(actionRequest, "fileName");
-
-			_layoutService.deleteTempFileEntry(
-				themeDisplay.getScopeGroupId(), folderName, fileName);
-
-			jsonObject.put("deleted", Boolean.TRUE);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			String errorMessage = themeDisplay.translate(
-				"an-unexpected-error-occurred-while-deleting-the-file");
-
-			jsonObject.put(
-				"deleted", Boolean.FALSE
-			).put(
-				"errorMessage", errorMessage
-			);
-		}
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
-	}
-
-	protected void deleteTempFileEntry(long groupId, String folderName)
-		throws PortalException {
-
-		String[] tempFileNames = _layoutService.getTempFileNames(
-			groupId, folderName);
-
-		for (String tempFileEntryName : tempFileNames) {
-			_layoutService.deleteTempFileEntry(
-				groupId, folderName, tempFileEntryName);
-		}
-	}
 
 	@Override
 	protected void doProcessAction(
@@ -250,30 +126,6 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 		}
-	}
-
-	protected void handleUploadException(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			String folderName, Exception exception)
-		throws Exception {
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(actionResponse);
-
-		httpServletResponse.setContentType(ContentTypes.TEXT_HTML);
-		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		deleteTempFileEntry(themeDisplay.getScopeGroupId(), folderName);
-
-		JSONObject jsonObject = _staging.getExceptionMessagesJSONObject(
-			themeDisplay.getLocale(), exception,
-			(ExportImportConfiguration)null);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	protected void importData(ActionRequest actionRequest, String folderName)
@@ -406,26 +258,6 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			exportImportConfiguration, inputStream);
 	}
 
-	private void _checkExceededSizeLimit(HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		UploadException uploadException =
-			(UploadException)httpServletRequest.getAttribute(
-				WebKeys.UPLOAD_EXCEPTION);
-
-		if (uploadException != null) {
-			Throwable throwable = uploadException.getCause();
-
-			if (uploadException.isExceededFileSizeLimit() ||
-				uploadException.isExceededUploadRequestSizeLimit()) {
-
-				throw new LARFileSizeException(throwable);
-			}
-
-			throw new PortalException(throwable);
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportLayoutsMVCActionCommand.class);
 
@@ -445,15 +277,6 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ExportImportService _exportImportService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private LayoutService _layoutService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private Staging _staging;

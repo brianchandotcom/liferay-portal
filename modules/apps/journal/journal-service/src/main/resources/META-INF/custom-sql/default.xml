@@ -78,48 +78,6 @@
 				(tempJournalArticle.id_ IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByNoAssets">
-		<![CDATA[
-			SELECT
-				{JournalArticle.*}
-			FROM
-				JournalArticle
-			LEFT JOIN
-				AssetEntry ON
-					(AssetEntry.classNameId = ?) AND
-					(AssetEntry.classPK = JournalArticle.resourcePrimKey)
-			WHERE
-				AssetEntry.classPK IS NULL
-		]]>
-	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByNoPermissions">
-		<![CDATA[
-			SELECT
-				{JournalArticle.*}
-			FROM
-				JournalArticle
-			LEFT JOIN
-				ResourcePermission ON
-					(ResourcePermission.companyId = JournalArticle.companyId) AND
-					(ResourcePermission.name = 'com.liferay.journal.model.JournalArticle') AND
-					(ResourcePermission.primKeyId = JournalArticle.resourcePrimKey) AND
-					(ResourcePermission.scope = ?)
-			WHERE
-				ResourcePermission.primKey IS NULL
-		]]>
-	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByReviewDate">
-		<![CDATA[
-			SELECT
-				{JournalArticle.*}
-			FROM
-				JournalArticle
-			WHERE
-				(classNameId = ?) AND
-				(reviewDate >= ?) AND
-				(reviewDate <= ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByG_ST_L">
 		<![CDATA[
 			SELECT
@@ -258,40 +216,6 @@
 				(tempJournalArticle.id_ IS NULL)
 			ORDER BY
 				JournalArticle.id_ ASC
-		]]>
-	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalFeedFinder.countByC_G_F_N_D">
-		<![CDATA[
-			SELECT
-				COUNT(*) AS COUNT_VALUE
-			FROM
-				JournalFeed
-			WHERE
-				(companyId = ?) AND
-				(groupId = ?) AND
-				(
-					(feedId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(description) LIKE ? [$AND_OR_NULL_CHECK$])
-				)
-		]]>
-	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalFeedFinder.findByC_G_F_N_D">
-		<![CDATA[
-			SELECT
-				{JournalFeed.*}
-			FROM
-				JournalFeed
-			WHERE
-				(companyId = ?) AND
-				(groupId = ?) AND
-				(
-					(feedId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(description) LIKE ? [$AND_OR_NULL_CHECK$])
-				)
-			ORDER BY
-				feedId ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.countA_ByG_U_F_DDMSI">

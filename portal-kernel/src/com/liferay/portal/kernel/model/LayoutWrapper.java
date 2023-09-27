@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.model;
@@ -937,6 +928,11 @@ public class LayoutWrapper
 		return model.getLayoutSet();
 	}
 
+	@Override
+	public Layout getLayoutSetPrototypeLayout() {
+		return model.getLayoutSetPrototypeLayout();
+	}
+
 	/**
 	 * Returns the current layout's {@link LayoutType}.
 	 *
@@ -1716,6 +1712,11 @@ public class LayoutWrapper
 		return model.isInheritLookAndFeel();
 	}
 
+	@Override
+	public boolean isLayoutDeleteable() {
+		return model.isLayoutDeleteable();
+	}
+
 	/**
 	 * Returns <code>true</code> if the current layout is built from a layout
 	 * template and still maintains an active connection to it.
@@ -1737,6 +1738,16 @@ public class LayoutWrapper
 	@Override
 	public boolean isLayoutPrototypeLinkEnabled() {
 		return model.isLayoutPrototypeLinkEnabled();
+	}
+
+	@Override
+	public boolean isLayoutSortable() {
+		return model.isLayoutSortable();
+	}
+
+	@Override
+	public boolean isLayoutUpdateable() {
+		return model.isLayoutUpdateable();
 	}
 
 	/**
@@ -1879,6 +1890,11 @@ public class LayoutWrapper
 	@Override
 	public boolean isTypeURL() {
 		return model.isTypeURL();
+	}
+
+	@Override
+	public boolean isUnlocked(String mode, long userId) {
+		return model.isUnlocked(mode, userId);
 	}
 
 	@Override

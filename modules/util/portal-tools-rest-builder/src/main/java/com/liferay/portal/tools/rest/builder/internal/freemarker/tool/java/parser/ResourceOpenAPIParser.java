@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
@@ -155,9 +146,43 @@ public class ResourceOpenAPIParser {
 				sb.append("description=\"");
 				sb.append(operation.getDescription());
 				sb.append("\"");
+
+				if (javaMethodSignature.getRequestBodyMediaTypes(
+					).contains(
+						"multipart/form-data"
+					)) {
+
+					sb.append(", requestBody = ");
+					sb.append("@io.swagger.v3.oas.annotations.parameters.");
+					sb.append("RequestBody(content = @io.swagger.v3.oas.");
+					sb.append("annotations.media.Content( mediaType = ");
+					sb.append("\"multipart/form-data\", schema = @io.swagger.");
+					sb.append("v3.oas.annotations.media.Schema( ");
+					sb.append("implementation = ");
+					sb.append(
+						StringUtil.upperCaseFirstLetter(
+							operation.getOperationId()));
+					sb.append("RequestBody.class)))");
+				}
 			}
 
 			sb.append(")");
+
+			methodAnnotations.add(sb.toString());
+		}
+		else if (getMultipartBodySchemas(javaMethodSignature) != null) {
+			StringBundler sb = new StringBundler(
+				"@io.swagger.v3.oas.annotations.Operation(");
+
+			sb.append("requestBody = ");
+			sb.append("@io.swagger.v3.oas.annotations.parameters.");
+			sb.append("RequestBody(content = @io.swagger.v3.oas.annotations.");
+			sb.append("media.Content( mediaType = \"multipart/form-data\", ");
+			sb.append("schema = @io.swagger.v3.oas.annotations.media.Schema( ");
+			sb.append("implementation = ");
+			sb.append(
+				StringUtil.upperCaseFirstLetter(operation.getOperationId()));
+			sb.append("RequestBody.class))))");
 
 			methodAnnotations.add(sb.toString());
 		}
@@ -230,6 +255,30 @@ public class ResourceOpenAPIParser {
 		}
 
 		return StringUtil.merge(methodAnnotations, "\n");
+	}
+
+	public static Map<String, Schema> getMultipartBodySchemas(
+		JavaMethodSignature javaMethodSignature) {
+
+		Operation operation = javaMethodSignature.getOperation();
+
+		RequestBody requestBody = operation.getRequestBody();
+
+		if (requestBody == null) {
+			return null;
+		}
+
+		Map<String, Content> contentMap = requestBody.getContent();
+
+		Content content = contentMap.get("multipart/form-data");
+
+		if (content == null) {
+			return null;
+		}
+
+		Schema schema = content.getSchema();
+
+		return schema.getPropertySchemas();
 	}
 
 	public static String getParameters(

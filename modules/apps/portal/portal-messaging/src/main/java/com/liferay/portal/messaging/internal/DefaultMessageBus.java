@@ -1,62 +1,37 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.messaging.internal;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.messaging.internal.configuration.DestinationWorkerConfiguration;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -68,7 +43,7 @@ public class DefaultMessageBus implements MessageBus {
 
 	@Override
 	public Destination getDestination(String destinationName) {
-		return _destinations.get(destinationName);
+		return _serviceTrackerMap.getService(destinationName);
 	}
 
 	@Override
@@ -85,7 +60,8 @@ public class DefaultMessageBus implements MessageBus {
 			}
 		}
 
-		Destination destination = _destinations.get(destinationName);
+		Destination destination = _serviceTrackerMap.getService(
+			destinationName);
 
 		if (destination == null) {
 			if (_log.isWarnEnabled()) {
@@ -102,7 +78,7 @@ public class DefaultMessageBus implements MessageBus {
 			Long[] companyIds = (Long[])message.get("companyIds");
 
 			if (companyIds != null) {
-				long orignalCompanyId = CompanyThreadLocal.getCompanyId();
+				long originalCompanyId = CompanyThreadLocal.getCompanyId();
 
 				try {
 					for (Long id : companyIds) {
@@ -114,7 +90,7 @@ public class DefaultMessageBus implements MessageBus {
 					}
 				}
 				finally {
-					CompanyThreadLocal.setCompanyId(orignalCompanyId);
+					CompanyThreadLocal.setCompanyId(originalCompanyId);
 				}
 
 				return;
@@ -124,73 +100,49 @@ public class DefaultMessageBus implements MessageBus {
 		destination.send(message);
 	}
 
-	@Override
-	public void shutdown() {
-		shutdown(false);
-	}
-
-	@Override
-	public synchronized void shutdown(boolean force) {
-		for (Destination destination : _destinations.values()) {
-			destination.close(force);
-		}
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_messageListenerServiceTracker = new ServiceTracker<>(
-			bundleContext, MessageListener.class,
-			new ServiceTrackerCustomizer
-				<MessageListener, ObjectValuePair<String, MessageListener>>() {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, Destination.class, "destination.name",
+			new ServiceTrackerCustomizer<Destination, Destination>() {
 
 				@Override
-				public ObjectValuePair<String, MessageListener> addingService(
-					ServiceReference<MessageListener> serviceReference) {
+				public Destination addingService(
+					ServiceReference<Destination> serviceReference) {
 
-					String destinationName =
-						(String)serviceReference.getProperty(
-							"destination.name");
-
-					if (destinationName == null) {
-						return null;
-					}
-
-					MessageListener messageListener = bundleContext.getService(
+					Destination destination = bundleContext.getService(
 						serviceReference);
 
-					_registerMessageListener(destinationName, messageListener);
+					destination.open();
 
-					return new ObjectValuePair<>(
-						destinationName, messageListener);
+					DestinationWorkerConfiguration
+						destinationWorkerConfiguration =
+							_destinationWorkerConfigurations.get(
+								destination.getName());
+
+					_updateDestination(
+						destination, destinationWorkerConfiguration);
+
+					return destination;
 				}
 
 				@Override
 				public void modifiedService(
-					ServiceReference<MessageListener> serviceReference,
-					ObjectValuePair<String, MessageListener> objectValuePair) {
-
-					removedService(serviceReference, objectValuePair);
-
-					ObjectValuePair<String, MessageListener>
-						newObjectValuePair = addingService(serviceReference);
-
-					objectValuePair.setKey(newObjectValuePair.getKey());
+					ServiceReference<Destination> serviceReference,
+					Destination destination) {
 				}
 
 				@Override
 				public void removedService(
-					ServiceReference<MessageListener> serviceReference,
-					ObjectValuePair<String, MessageListener> objectValuePair) {
+					ServiceReference<Destination> serviceReference,
+					Destination destination) {
 
-					_unregisterMessageListener(
-						objectValuePair.getKey(), objectValuePair.getValue());
+					destination.destroy();
 
 					bundleContext.ungetService(serviceReference);
 				}
 
 			});
-
-		_messageListenerServiceTracker.open();
 
 		_serviceRegistration = bundleContext.registerService(
 			ManagedServiceFactory.class,
@@ -211,224 +163,7 @@ public class DefaultMessageBus implements MessageBus {
 
 		_serviceRegistration.unregister();
 
-		_messageListenerServiceTracker.close();
-
-		_messageBusEventListeners.clear();
-
-		shutdown(true);
-
-		for (Destination destination : _destinations.values()) {
-			destination.destroy();
-		}
-
-		_destinations.clear();
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(destination.name=*)"
-	)
-	protected synchronized void registerDestination(
-		Destination destination, Map<String, Object> properties) {
-
-		String destinationName = MapUtil.getString(
-			properties, "destination.name");
-
-		_addDestination(destination);
-
-		DestinationWorkerConfiguration destinationWorkerConfiguration =
-			_destinationWorkerConfigurations.get(destinationName);
-
-		_updateDestination(destination, destinationWorkerConfiguration);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(destination.name=*)"
-	)
-	protected synchronized void registerDestinationEventListener(
-		DestinationEventListener destinationEventListener,
-		Map<String, Object> properties) {
-
-		String destinationName = MapUtil.getString(
-			properties, "destination.name");
-
-		Destination destination = _destinations.get(destinationName);
-
-		if (destination == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Unable to unregister destination event listener for " +
-						destinationName);
-			}
-
-			return;
-		}
-
-		destination.addDestinationEventListener(destinationEventListener);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void registerMessageBusEventListener(
-		MessageBusEventListener messageBusEventListener) {
-
-		_messageBusEventListeners.add(messageBusEventListener);
-	}
-
-	protected synchronized void unregisterDestination(
-		Destination destination, Map<String, Object> properties) {
-
-		_removeDestination(destination.getName());
-	}
-
-	protected synchronized void unregisterDestinationEventListener(
-		DestinationEventListener destinationEventListener,
-		Map<String, Object> properties) {
-
-		String destinationName = MapUtil.getString(
-			properties, "destination.name");
-
-		Destination destination = _destinations.get(destinationName);
-
-		if (destination == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Unable to unregister destination event listener for " +
-						destinationName);
-			}
-
-			return;
-		}
-
-		destination.removeDestinationEventListener(destinationEventListener);
-	}
-
-	protected void unregisterMessageBusEventListener(
-		MessageBusEventListener messageBusEventListener) {
-
-		_messageBusEventListeners.remove(messageBusEventListener);
-	}
-
-	private void _addDestination(Destination destination) {
-		Destination oldDestination = _destinations.get(destination.getName());
-
-		if (oldDestination != null) {
-			oldDestination.copyDestinationEventListeners(destination);
-			oldDestination.copyMessageListeners(destination);
-		}
-		else {
-			List<MessageListener> messageListeners =
-				_queuedMessageListeners.remove(destination.getName());
-
-			if (ListUtil.isNotEmpty(messageListeners)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Registering ", messageListeners.size(),
-							" queued message listeners for destination ",
-							destination.getName()));
-				}
-
-				for (MessageListener messageListener : messageListeners) {
-					destination.register(messageListener);
-				}
-			}
-		}
-
-		destination.open();
-
-		_destinations.put(destination.getName(), destination);
-
-		if (oldDestination != null) {
-			oldDestination.destroy();
-
-			for (MessageBusEventListener messageBusEventListener :
-					_messageBusEventListeners) {
-
-				messageBusEventListener.destinationRemoved(oldDestination);
-			}
-		}
-
-		for (MessageBusEventListener messageBusEventListener :
-				_messageBusEventListeners) {
-
-			messageBusEventListener.destinationAdded(destination);
-		}
-	}
-
-	private synchronized boolean _registerMessageListener(
-		String destinationName, MessageListener messageListener) {
-
-		Destination destination = _destinations.get(destinationName);
-
-		if (destination != null) {
-			return destination.register(messageListener);
-		}
-
-		List<MessageListener> queuedMessageListeners =
-			_queuedMessageListeners.get(destinationName);
-
-		if (queuedMessageListeners == null) {
-			queuedMessageListeners = new ArrayList<>();
-
-			_queuedMessageListeners.put(
-				destinationName, queuedMessageListeners);
-		}
-
-		queuedMessageListeners.add(messageListener);
-
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				"Queuing message listener until destination " +
-					destinationName + " is added");
-		}
-
-		return false;
-	}
-
-	private Destination _removeDestination(String destinationName) {
-		Destination destination = _destinations.remove(destinationName);
-
-		if (destination == null) {
-			return null;
-		}
-
-		destination.destroy();
-
-		for (MessageBusEventListener messageBusEventListener :
-				_messageBusEventListeners) {
-
-			messageBusEventListener.destinationRemoved(destination);
-		}
-
-		return destination;
-	}
-
-	private synchronized boolean _unregisterMessageListener(
-		String destinationName, MessageListener messageListener) {
-
-		Destination destination = _destinations.get(destinationName);
-
-		if (destination != null) {
-			return destination.unregister(messageListener);
-		}
-
-		List<MessageListener> queuedMessageListeners =
-			_queuedMessageListeners.get(destinationName);
-
-		if (ListUtil.isEmpty(queuedMessageListeners)) {
-			return false;
-		}
-
-		return queuedMessageListeners.remove(messageListener);
+		_serviceTrackerMap.close();
 	}
 
 	private void _updateDestination(
@@ -454,21 +189,13 @@ public class DefaultMessageBus implements MessageBus {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultMessageBus.class);
 
-	private final Map<String, Destination> _destinations =
-		new ConcurrentHashMap<>();
 	private final Map<String, DestinationWorkerConfiguration>
 		_destinationWorkerConfigurations = new ConcurrentHashMap<>();
 	private final Map<String, String> _factoryPidsToDestinationNames =
 		new ConcurrentHashMap<>();
-	private final Set<MessageBusEventListener> _messageBusEventListeners =
-		Collections.newSetFromMap(new ConcurrentHashMap<>());
-	private ServiceTracker
-		<MessageListener, ObjectValuePair<String, MessageListener>>
-			_messageListenerServiceTracker;
-	private final Map<String, List<MessageListener>> _queuedMessageListeners =
-		new HashMap<>();
 	private ServiceRegistration<ManagedServiceFactory> _serviceRegistration;
 	private ServiceTrackerList<MessageBusInterceptor> _serviceTrackerList;
+	private ServiceTrackerMap<String, Destination> _serviceTrackerMap;
 
 	private class DefaultMessageBusManagedServiceFactory
 		implements ManagedServiceFactory {
@@ -487,8 +214,8 @@ public class DefaultMessageBus implements MessageBus {
 		}
 
 		@Override
-		public void updated(String factoryPid, Dictionary<String, ?> dictionary)
-			throws ConfigurationException {
+		public void updated(
+			String factoryPid, Dictionary<String, ?> dictionary) {
 
 			DestinationWorkerConfiguration destinationWorkerConfiguration =
 				ConfigurableUtil.createConfigurable(
@@ -501,7 +228,7 @@ public class DefaultMessageBus implements MessageBus {
 				destinationWorkerConfiguration.destinationName(),
 				destinationWorkerConfiguration);
 
-			Destination destination = _destinations.get(
+			Destination destination = _serviceTrackerMap.getService(
 				destinationWorkerConfiguration.destinationName());
 
 			_updateDestination(destination, destinationWorkerConfiguration);

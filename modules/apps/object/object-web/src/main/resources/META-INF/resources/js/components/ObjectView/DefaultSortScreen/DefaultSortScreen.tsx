@@ -1,20 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
 import {useModal} from '@clayui/modal';
-import {BuilderScreen} from '@liferay/object-js-components-web';
+import {BuilderScreen, Card} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {ModalAddDefaultSortColumn} from '../ModalAddDefaultSortColumn/ModalAddDefaultSortColumn';
@@ -69,29 +60,30 @@ export function DefaultSortScreen() {
 				)}
 			</ClayAlert>
 
-			<BuilderScreen
-				defaultSort
-				emptyState={{
-					buttonText: Liferay.Language.get('new-default-sort'),
-					description: Liferay.Language.get(
-						'start-creating-a-sort-to-display-specific-data'
-					),
-					title: Liferay.Language.get(
-						'no-default-sort-was-created-yet'
-					),
-				}}
-				firstColumnHeader={Liferay.Language.get('name')}
-				hasDragAndDrop
-				objectColumns={objectViewSortColumns ?? []}
-				onChangeColumnOrder={handleChangeColumnOrder}
-				onDeleteColumn={handleDeleteColumn}
-				onEditing={setIsEditingSort}
-				onEditingObjectFieldName={setEditingObjectFieldName}
-				onVisibleEditModal={setVisibleModal}
-				openModal={() => setVisibleModal(true)}
-				secondColumnHeader={Liferay.Language.get('sorting')}
-				title={Liferay.Language.get('default-sort')}
-			/>
+			<Card title={Liferay.Language.get('default-sort')}>
+				<BuilderScreen
+					defaultSort
+					emptyState={{
+						buttonText: Liferay.Language.get('new-default-sort'),
+						description: Liferay.Language.get(
+							'start-creating-a-sort-to-display-specific-data'
+						),
+						title: Liferay.Language.get(
+							'no-default-sort-was-created-yet'
+						),
+					}}
+					firstColumnHeader={Liferay.Language.get('name')}
+					hasDragAndDrop
+					objectColumns={objectViewSortColumns ?? []}
+					onChangeColumnOrder={handleChangeColumnOrder}
+					onDeleteColumn={handleDeleteColumn}
+					onEditing={setIsEditingSort}
+					onEditingObjectFieldName={setEditingObjectFieldName}
+					onVisibleEditModal={setVisibleModal}
+					openModal={() => setVisibleModal(true)}
+					secondColumnHeader={Liferay.Language.get('sorting')}
+				/>
+			</Card>
 
 			{visibleModal && (
 				<ModalAddDefaultSortColumn

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.service.impl;
@@ -28,7 +19,10 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.uuid.PortalUUID;
+
+import java.math.BigDecimal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,9 +43,9 @@ public class CPDefinitionInventoryLocalServiceImpl
 			long userId, long cpDefinitionId,
 			String cpDefinitionInventoryEngine, String lowStockActivity,
 			boolean displayAvailability, boolean displayStockQuantity,
-			int minStockQuantity, boolean backOrders, int minOrderQuantity,
-			int maxOrderQuantity, String allowedOrderQuantities,
-			int multipleOrderQuantity)
+			BigDecimal minStockQuantity, boolean backOrders,
+			BigDecimal minOrderQuantity, BigDecimal maxOrderQuantity,
+			String allowedOrderQuantities, BigDecimal multipleOrderQuantity)
 		throws PortalException {
 
 		_validateOrderQuantity(
@@ -179,9 +173,10 @@ public class CPDefinitionInventoryLocalServiceImpl
 	public CPDefinitionInventory updateCPDefinitionInventory(
 			long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
 			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity)
+			boolean displayStockQuantity, BigDecimal minStockQuantity,
+			boolean backOrders, BigDecimal minOrderQuantity,
+			BigDecimal maxOrderQuantity, String allowedOrderQuantities,
+			BigDecimal multipleOrderQuantity)
 		throws PortalException {
 
 		_validateOrderQuantity(
@@ -219,25 +214,25 @@ public class CPDefinitionInventoryLocalServiceImpl
 	}
 
 	private void _validateOrderQuantity(
-			int minOrderQuantity, int maxOrderQuantity,
-			int multipleOrderQuantity)
+			BigDecimal minOrderQuantity, BigDecimal maxOrderQuantity,
+			BigDecimal multipleOrderQuantity)
 		throws CPDefinitionInventoryMaxOrderQuantityException,
 			   CPDefinitionInventoryMinOrderQuantityException,
 			   CPDefinitionInventoryMultipleOrderQuantityException {
 
-		if (minOrderQuantity < 1) {
+		if (BigDecimalUtil.lte(minOrderQuantity, BigDecimal.ZERO)) {
 			throw new CPDefinitionInventoryMinOrderQuantityException(
-				"Minimum order quantity must be greater than or equal to 1");
+				"Minimum order quantity must be greater than 0");
 		}
 
-		if (maxOrderQuantity < 1) {
+		if (BigDecimalUtil.lte(maxOrderQuantity, BigDecimal.ZERO)) {
 			throw new CPDefinitionInventoryMaxOrderQuantityException(
-				"Maximum order quantity must be greater than or equal to 1");
+				"Maximum order quantity must be greater than 0");
 		}
 
-		if (multipleOrderQuantity < 1) {
+		if (BigDecimalUtil.lte(multipleOrderQuantity, BigDecimal.ZERO)) {
 			throw new CPDefinitionInventoryMultipleOrderQuantityException(
-				"Multiple order quantity must be greater than or equal to 1");
+				"Multiple order quantity must be greater than 0");
 		}
 	}
 

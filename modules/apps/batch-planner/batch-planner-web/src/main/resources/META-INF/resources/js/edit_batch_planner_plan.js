@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {render} from '@liferay/frontend-js-react-web';
@@ -60,8 +51,8 @@ export default function ({
 	namespace,
 	templatesOptions,
 }) {
-	const internalClassNameSelect = document.querySelector(
-		`#${namespace}internalClassName`
+	const internalClassNameKeySelect = document.querySelector(
+		`#${namespace}internalClassNameKey`
 	);
 	const externalTypeInput = document.querySelector(
 		`#${namespace}externalType`
@@ -102,9 +93,9 @@ export default function ({
 				externalTypeInput.value = template.externalType;
 			}
 
-			const selectedClassNameValue = template.internalClassName;
+			const selectedClassNameValue = template.internalClassNameKey;
 
-			const internalClassTemplateOption = internalClassNameSelect.querySelector(
+			const internalClassTemplateOption = internalClassNameKeySelect.querySelector(
 				`option[value='${selectedClassNameValue}']`
 			);
 			internalClassTemplateOption.selected = true;
@@ -119,13 +110,13 @@ export default function ({
 		}
 
 		const selectedOption =
-			internalClassNameSelect.options[
-				internalClassNameSelect.selectedIndex
+			internalClassNameKeySelect.options[
+				internalClassNameKeySelect.selectedIndex
 			];
 
-		const internalClassNameValue = trimPackage(selectedOption.value);
+		const internalClassNameKeyValue = trimPackage(selectedOption.value);
 
-		if (!internalClassNameValue) {
+		if (!internalClassNameKeyValue) {
 			Liferay.fire(SCHEMA_SELECTED_EVENT, {
 				schema: null,
 			});
@@ -166,7 +157,7 @@ export default function ({
 
 	Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateSelectedEvent);
 
-	internalClassNameSelect.addEventListener(
+	internalClassNameKeySelect.addEventListener(
 		'change',
 		handleClassNameSelectChange
 	);
@@ -176,7 +167,7 @@ export default function ({
 	if (initialTemplateClassName && initialTemplateMapping) {
 		initialTemplate = {
 			externalType: initialExternalType,
-			internalClassName: initialTemplateClassName,
+			internalClassNameKey: initialTemplateClassName,
 			mapping: initialTemplateMapping,
 		};
 	}

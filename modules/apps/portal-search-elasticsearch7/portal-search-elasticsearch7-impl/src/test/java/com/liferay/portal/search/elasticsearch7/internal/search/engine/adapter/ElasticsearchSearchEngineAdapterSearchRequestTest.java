@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter;
@@ -57,7 +48,6 @@ import java.util.Map;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -65,6 +55,7 @@ import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.PutMappingRequest;
 import org.elasticsearch.xcontent.XContentType;
 
 import org.junit.After;
@@ -126,7 +117,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		_createIndex();
 
 		_putMapping(
-			_MAPPING_NAME,
 			StringBundler.concat(
 				"{\n\"dynamic_templates\": [\n{\n",
 				"\"template_en\": {\n\"mapping\": {\n",
@@ -481,7 +471,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 
 		indexRequest.id(document.getUID());
 		indexRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
-		indexRequest.type(_MAPPING_NAME);
 
 		ElasticsearchDocumentFactory elasticsearchDocumentFactory =
 			new DefaultElasticsearchDocumentFactory();
@@ -517,12 +506,11 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 			"Expected document added: " + value, getResponse.isExists());
 	}
 
-	private void _putMapping(String mappingName, String mappingSource) {
+	private void _putMapping(String mappingSource) {
 		PutMappingRequest putMappingRequest = new PutMappingRequest(
 			_INDEX_NAME);
 
 		putMappingRequest.source(mappingSource, XContentType.JSON);
-		putMappingRequest.type(mappingName);
 
 		try {
 			_indicesClient.putMapping(
@@ -556,8 +544,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 
 	private static final String _LOCALIZED_FIELD_NAME =
 		"spellCheckKeyword_en_US";
-
-	private static final String _MAPPING_NAME = "test_mapping";
 
 	private static ElasticsearchFixture _elasticsearchFixture;
 	private static final MockedStatic<FrameworkUtil>

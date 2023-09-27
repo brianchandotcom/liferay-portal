@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter;
@@ -20,6 +11,7 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.TierPrice;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -85,24 +77,17 @@ public class TierPriceDTOConverter
 				externalReferenceCode =
 					commerceTierPriceEntry.getExternalReferenceCode();
 				id = commerceTierPriceEntry.getCommerceTierPriceEntryId();
+				minimumQuantity = _commerceQuantityFormatter.format(
+					commercePriceEntry.getCPInstance(),
+					commerceTierPriceEntry.getMinQuantity(),
+					commercePriceEntry.getUnitOfMeasureKey());
 				price = tierPriceEntryPrice.doubleValue();
 				priceEntryExternalReferenceCode =
 					commercePriceEntry.getExternalReferenceCode();
 				priceEntryId = commercePriceEntry.getCommercePriceEntryId();
 				priceFormatted = _formatPrice(
 					tierPriceEntryPrice, commerceCurrency, locale);
-
-				setMinimumQuantity(
-					() -> {
-						BigDecimal minQuantity =
-							commerceTierPriceEntry.getMinQuantity();
-
-						if (minQuantity == null) {
-							return 0;
-						}
-
-						return minQuantity.intValue();
-					});
+				unitOfMeasureKey = commercePriceEntry.getUnitOfMeasureKey();
 			}
 		};
 	}
@@ -120,6 +105,9 @@ public class TierPriceDTOConverter
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;

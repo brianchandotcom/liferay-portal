@@ -1,9 +1,10 @@
 Bundle-Name: Liferay Push Notifications Sender Firebase
 Bundle-SymbolicName: com.liferay.push.notifications.sender.firebase
-Bundle-Version: 5.0.16
+Bundle-Version: 5.0.18
 Import-Package:\
 	!android.util.*,\
 	\
 	!io.reactivex.*,\
 	\
 	*
+-fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning

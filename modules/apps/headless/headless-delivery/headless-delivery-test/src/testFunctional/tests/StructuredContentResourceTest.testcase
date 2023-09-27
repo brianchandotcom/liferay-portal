@@ -1,0 +1,242 @@
+@component-name = "portal-wcm"
+@disable-webdriver = "true"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Echo Headless";
+
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+	}
+
+	@description = "This is a test for LPS-190222. The user can get customized field reference value of options in GraphQL response."
+	@priority = 4
+	test GetCustomizedFieldReferenceValueInGraphQLResponse {
+		task ("Given the user has a structure with a select from list field using customized field reference value") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Select from List");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When the user add a web content based on the structure") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentSelectFromList = "Option 1",
+				webContentTitle = "Web Content Title");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the user could get customized field reference value of options in GraphQL response") {
+			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			var response = HeadlessUtil.executeGraphQLQuery(query = "{structuredContent(structuredContentId: ${structuredContentId}) {contentFields {contentFieldValue {data value}}}}");
+
+			var data = JSONUtil.getWithJSONPath(${response}, "$..data..data");
+
+			StringUtil.assertEquals("Option 1", ${data});
+
+			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
+
+			StringUtil.assertEquals("Value1", ${value});
+		}
+	}
+
+	@description = "This is a test for LPS-190222. The user can get default field reference value of options in GraphQL response."
+	@priority = 4
+	test GetDefaultFieldReferenceValueInGraphQLResponse {
+		task ("Given the user has a structure with a multiple selection field using default field reference value") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(fieldName = "Multiple Selection");
+
+			Click(
+				key_fieldFieldLabel = "Multiple Selection",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+			DataEngine.addFieldOption(
+				index = 1,
+				optionFieldLabel = "Options",
+				optionValue = "First");
+
+			DataEngine.addFieldOption(
+				index = 2,
+				optionFieldLabel = "Options",
+				optionValue = "Second");
+
+			DataEngine.addFieldOption(
+				index = 3,
+				optionFieldLabel = "Options",
+				optionValue = "Third");
+
+			var value1 = selenium.getElementValue("xpath=(//label[normalize-space(text())='Options']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'key-value-reference')])[1]");
+			var value2 = selenium.getElementValue("xpath=(//label[normalize-space(text())='Options']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'key-value-reference')])[2]");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When the user add a web content based on the structure") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentMultipleSelection = "First",
+				webContentTitle = "Web Content Title");
+
+			WebContent.addWithStructureCP(webContentMultipleSelection = "Second");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the user could get default field reference value of options in GraphQL response") {
+			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			var response = HeadlessUtil.executeGraphQLQuery(query = "{structuredContent(structuredContentId: ${structuredContentId}) {contentFields {contentFieldValue {data value}}}}");
+
+			var data = JSONUtil.getWithJSONPath(${response}, "$..data..data");
+
+			StringUtil.assertEquals("[\"First\",\"Second\"]", ${data});
+
+			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
+
+			StringUtil.assertEquals("[\"${value1}\",\"${value2}\"]", ${value});
+		}
+	}
+
+	@description = "This is a test for LPS-190222. The user can get field reference value of Grid’s options in GraphQL response."
+	@priority = 4
+	test GetFieldReferenceValueOfGridOptionsInGraphQLResponse {
+		task ("Given the user has a structure with a Grid field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Grid");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When the user add a web content based on the structure") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				column = 1,
+				row = 1,
+				webContentGrid = "true",
+				webContentTitle = "Web Content Title");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the user could get field reference value of Grid's options in GraphQL response") {
+			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			var response = HeadlessUtil.executeGraphQLQuery(query = "{structuredContent(structuredContentId: ${structuredContentId}) {contentFields {contentFieldValue {data value}}}}");
+
+			var data = JSONUtil.getWithJSONPath(${response}, "$..data..data");
+
+			var data = StringUtil.extractLast(${data}, "{%0A");
+
+			var data = StringUtil.extractFirst(${data}, "%0A}");
+
+			var data = StringUtil.trim(${data});
+
+			StringUtil.assertEquals("\"Row 1\": \"Column 1\"", ${data});
+
+			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
+
+			var value = StringUtil.extractLast(${value}, "{%0A");
+
+			var value = StringUtil.extractFirst(${value}, "%0A}");
+
+			var value = StringUtil.trim(${value});
+
+			StringUtil.assertEquals("\"R1\": \"C1\"", ${value});
+		}
+	}
+
+	@description = "This is a test for LPS-190222. The user can get field reference value of Single Selection’s options in GraphQL response."
+	@priority = 4
+	test GetFieldReferenceValueOfSingleSelectionOptionInGraphQLResponse {
+		task ("Given the user has a structure with a single selection field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Single Selection");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When the user add a web content based on the structure") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentSingleSelection = "Option 3",
+				webContentTitle = "Web Content Title");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the user could get field reference value of single selection's option in GraphQL response") {
+			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			var response = HeadlessUtil.executeGraphQLQuery(query = "{structuredContent(structuredContentId: ${structuredContentId}) {contentFields {contentFieldValue {data value}}}}");
+
+			var data = JSONUtil.getWithJSONPath(${response}, "$..data..data");
+
+			StringUtil.assertEquals("Option 3", ${data});
+
+			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
+
+			StringUtil.assertEquals("Value3", ${value});
+		}
+	}
+
+}

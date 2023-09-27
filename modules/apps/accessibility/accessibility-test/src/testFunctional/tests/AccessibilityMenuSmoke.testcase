@@ -1,0 +1,302 @@
+@component-name = "portal-platform-experience-and-design-system"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Accessibility Menu";
+	property testray.main.component.name = "Accessibility Menu";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		TestUtils.hardRefresh();
+
+		task ("Given user with admin privileges") {
+			User.firstLoginPG();
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+
+			TestUtils.hardRefresh();
+
+			HeadlessPortalInstanceAPI.cleanAllPortalInstances();
+
+			PagesAdmin.tearDownCP();
+
+			Site.tearDownCP();
+		}
+		else {
+			TestUtils.hardRefresh();
+
+			HeadlessPortalInstanceAPI.cleanAllPortalInstances();
+
+			PagesAdmin.tearDownCP();
+
+			Site.tearDownCP();
+		}
+	}
+
+	@description = "LPS-178192. Verifies only if the setting has never been changed by the user, either when signed in or not signed in, will the default value be displayed."
+	@priority = 5
+	test BrowserLocalStorageSmoke {
+		property portal.acceptance = "true";
+
+		task ("And the Accessibility Menu is activated") {
+			AccessibilityMenu.activateAccessibilityMenu(portlet = "Instance Settings");
+		}
+
+		task ("And given created new user A") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfnA",
+				userLastName = "userlnA",
+				userScreenName = "usersnA");
+		}
+
+		task ("And signed out as guest user") {
+			SignOut.signOut();
+		}
+
+		task ("When the toggle shows underline to ON state") {
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
+		}
+
+		task ("And sign in as a new user for first time") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfnA userlnA");
+		}
+
+		task ("And the toggle shows under to OFF state") {
+			AccessibilityMenu.disableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
+		}
+
+		task ("And user signs out") {
+			SignOut.signOut();
+		}
+
+		task ("Then the toggle shows underline is set to ON") {
+			AccessibilityMenu.openAccessibilityMenu();
+
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		task ("And When guest user toggles show underline to OFF") {
+			Navigator.openURL();
+
+			AccessibilityMenu.disableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
+		}
+
+		task ("And When guest user toggles show underline to ON") {
+			Navigator.openURL();
+
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
+		}
+
+		task ("And sign in as user A") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfnA userlnA");
+		}
+
+		task ("Then show underline is set to OFF state") {
+			AccessibilityMenu.openAccessibilityMenu();
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+	}
+
+	@description = "LPS-178192. Verifies that the user can enable it by Instance Settings."
+	@priority = 5
+	test CanBeEnabledByInstanceSettings {
+		task ("When Accessibility Menu is enabled at Instance Settings level") {
+			AccessibilityMenu.activateAccessibilityMenu(portlet = "Instance Settings");
+		}
+
+		task ("Then Accessibility Menu can be reached by keyboard") {
+			AccessibilityMenu.assertCanAccessAccessibilityMenuModal();
+		}
+	}
+
+	@description = "LPS-178192. Verifies that the user can enable it by Site Settings."
+	@priority = 3
+	test CanBeEnabledBySiteSettings {
+		property portal.acceptance = "false";
+
+		task ("When navigate to Site Settings > Accessibility And turn on Enable Accessibility Menu") {
+			AccessibilityMenu.activateAccessibilityMenuBySiteSettings(siteURLKey = "guest");
+		}
+
+		task ("Then Accessibility Menu can be reached by keyboard") {
+			AccessibilityMenu.assertCanAccessAccessibilityMenuModal();
+		}
+	}
+
+	@description = "LPS-178192.Verifies that the user can enable it by System Settings"
+	@priority = 5
+	test CanBeEnabledBySystemSettings {
+		property test.liferay.virtual.instance = "false";
+
+		task ("When Accessibility Menu is enabled at System Settings level") {
+			AccessibilityMenu.activateAccessibilityMenu(portlet = "System Settings");
+		}
+
+		task ("Then Accessibility Menu can be reached by keyboard") {
+			AccessibilityMenu.assertCanAccessAccessibilityMenuModal();
+		}
+	}
+
+	@description = "LPS-178192 Veryfies that settings can be overridden."
+	@priority = 4
+	test CanOverrideSettingsOrderSmoke {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("And new virtual instance B is created") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "liferay.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
+
+		task ("And new site is created A1") {
+			HeadlessSite.addSite(siteName = "Site A1");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site A1",
+				layoutName = "Site A1",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Site A1",
+				layoutName = "Site A1");
+		}
+
+		task ("And new site is created A2") {
+			HeadlessSite.addSite(siteName = "Site A2");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site A2",
+				layoutName = "Site A2",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Site A2",
+				layoutName = "Site A2");
+		}
+
+		task ("When enable Accessibility Menu on site settings A1") {
+			Navigator.gotoSitePage(
+				pageName = "Site A1",
+				siteName = "Site A1");
+
+			AccessibilityMenu.activateAccessibilityMenuBySiteSettings(siteURLKey = "site-a1");
+		}
+
+		task ("Then accessibility menu is available on site A1") {
+			AccessibilityMenu.assertCanAccessAccessibilityMenuModal();
+		}
+
+		task ("And accessibility menu is not available on site A2") {
+			Navigator.gotoSitePage(
+				pageName = "Site A2",
+				siteName = "Site A2");
+
+			AccessibilityMenu.assertCannotAccessAccessibilityMenuModal();
+		}
+
+		task ("When enable Accessibility Menu on virtual instance A") {
+			AccessibilityMenu.activateAccessibilityMenu(portlet = "Instance Settings");
+		}
+
+		task ("Then accessibility menu is available on site A1 and site A2") {
+			ApplicationsMenu.gotoSite(key_site = "Site A1");
+
+			AccessibilityMenu.assertCanAccessAccessibilityMenuModal();
+
+			ApplicationsMenu.gotoSite(key_site = "Site A2");
+
+			AccessibilityMenu.assertCanAccessAccessibilityMenuModal();
+		}
+
+		task ("And accessibility menu is not available on virtual instance B") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@liferay.com");
+
+			AccessibilityMenu.assertCannotAccessAccessibilityMenuModal();
+		}
+
+		task ("When disable Accessibility Menu on Site A1 settings") {
+			Navigator.gotoSitePage(
+				pageName = "Site A1",
+				siteName = "Site A1");
+
+			AccessibilityMenu.deactivateAccessibilityMenuBySiteSettings(siteURLKey = "site-a1");
+		}
+
+		task ("Then accessibility menu is not available on site A1") {
+			AccessibilityMenu.assertCannotAccessAccessibilityMenuModal();
+		}
+
+		task ("And accessibility menu is available on A2") {
+			Navigator.gotoSitePage(
+				pageName = "Site A2",
+				siteName = "Site A2");
+
+			AccessibilityMenu.assertCanAccessAccessibilityMenuModal();
+		}
+
+		task ("When enable accessibility menu on System Settings") {
+			AccessibilityMenu.activateAccessibilityMenu(portlet = "System Settings");
+		}
+
+		task ("And disable accessibility menu on virtual instance A") {
+			Navigator.openURL();
+
+			AccessibilityMenu.deactivateAccessibilityMenu(portlet = "Instance Settings");
+		}
+
+		task ("Then accessibility menu is not available on site A1") {
+			Navigator.gotoSitePage(
+				pageName = "Site A1",
+				siteName = "Site A1");
+
+			AccessibilityMenu.assertCannotAccessAccessibilityMenuModal();
+		}
+
+		task ("And accessibility menu is available on virtual instance B") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			AccessibilityMenu.assertCanAccessAccessibilityMenuModal();
+		}
+
+		task ("When enable accessibility menu on virtual instance A") {
+			Navigator.openURL();
+
+			AccessibilityMenu.activateAccessibilityMenu(portlet = "Instance Settings");
+		}
+
+		task ("Then accessibility menu is not available on site A1 ") {
+			Navigator.gotoSitePage(
+				pageName = "Site A1",
+				siteName = "Site A1");
+
+			AccessibilityMenu.assertCannotAccessAccessibilityMenuModal();
+		}
+	}
+
+}

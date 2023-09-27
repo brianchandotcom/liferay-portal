@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.segments.service.test;
@@ -47,8 +38,6 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
-
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -131,7 +120,7 @@ public class SegmentsExperimentServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_segmentsExperimentService.deleteSegmentsExperiment(
-				segmentsExperiment.getSegmentsExperimentKey());
+				segmentsExperiment.getSegmentsExperimentId());
 		}
 	}
 
@@ -145,7 +134,7 @@ public class SegmentsExperimentServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_segmentsExperimentService.deleteSegmentsExperiment(
-				segmentsExperiment.getSegmentsExperimentKey());
+				segmentsExperiment.getSegmentsExperimentId());
 		}
 	}
 
@@ -164,19 +153,17 @@ public class SegmentsExperimentServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_segmentsExperimentService.deleteSegmentsExperiment(
-				segmentsExperiment.getSegmentsExperimentKey());
+				segmentsExperiment.getSegmentsExperimentId());
 		}
 	}
 
 	@Test
-	public void testGetSegmentsExperimentsWithoutViewPermission()
+	public void testFetchSegmentsExperimentsWithoutViewPermission()
 		throws Exception {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		SegmentsExperiment segmentsExperiment1 = _addSegmentsExperiment(layout);
-		SegmentsExperiment segmentsExperiment2 = _addSegmentsExperiment(layout);
-		SegmentsExperiment segmentsExperiment3 = _addSegmentsExperiment(layout);
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment(layout);
 
 		for (Role role : RoleLocalServiceUtil.getRoles(_group.getCompanyId())) {
 			if (RoleConstants.OWNER.equals(role.getName())) {
@@ -187,25 +174,18 @@ public class SegmentsExperimentServiceTest {
 				_group.getCompanyId(),
 				"com.liferay.segments.model.SegmentsExperiment",
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(segmentsExperiment2.getSegmentsExperimentId()),
+				String.valueOf(segmentsExperiment.getSegmentsExperimentId()),
 				role.getRoleId(), ActionKeys.VIEW);
 		}
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-			List<SegmentsExperiment> segmentsExperiments =
-				_segmentsExperimentService.getSegmentsExperiments(
-					layout.getGroupId(), layout.getPlid());
-
-			Assert.assertEquals(
-				segmentsExperiments.toString(), 2, segmentsExperiments.size());
-
-			Assert.assertTrue(
-				segmentsExperiments.contains(segmentsExperiment1));
-
-			Assert.assertTrue(
-				segmentsExperiments.contains(segmentsExperiment3));
+			Assert.assertNull(
+				_segmentsExperimentService.fetchSegmentsExperiment(
+					layout.getGroupId(),
+					segmentsExperiment.getSegmentsExperienceId(),
+					layout.getPlid()));
 		}
 	}
 
@@ -215,25 +195,17 @@ public class SegmentsExperimentServiceTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		SegmentsExperiment segmentsExperiment1 = _addSegmentsExperiment(layout);
-		SegmentsExperiment segmentsExperiment2 = _addSegmentsExperiment(layout);
-		SegmentsExperiment segmentsExperiment3 = _addSegmentsExperiment(layout);
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment(layout);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-			List<SegmentsExperiment> segmentsExperiments =
-				_segmentsExperimentService.getSegmentsExperiments(
-					layout.getGroupId(), layout.getPlid());
-
 			Assert.assertEquals(
-				segmentsExperiments.toString(), 3, segmentsExperiments.size());
-			Assert.assertTrue(
-				segmentsExperiments.contains(segmentsExperiment1));
-			Assert.assertTrue(
-				segmentsExperiments.contains(segmentsExperiment2));
-			Assert.assertTrue(
-				segmentsExperiments.contains(segmentsExperiment3));
+				segmentsExperiment,
+				_segmentsExperimentService.fetchSegmentsExperiment(
+					layout.getGroupId(),
+					segmentsExperiment.getSegmentsExperienceId(),
+					layout.getPlid()));
 		}
 	}
 

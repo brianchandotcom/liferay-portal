@@ -93,13 +93,9 @@ definition {
 		}
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
-			TestUtils.assertEquals(
-				actual = ${width},
-				expected = 5464);
+			StringUtil.assertEquals(5464, ${width});
 
-			TestUtils.assertEquals(
-				actual = ${fileSizeDesktop},
-				expected = 4405);
+			StringUtil.assertEquals(4405, ${fileSizeDesktop});
 		}
 
 		task ("Change to the Tablet viewport") {
@@ -113,6 +109,10 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Tablet viewport") {
+			Navigator.gotoNavTab(navTab = "General");
+
+			Navigator.gotoNavTab(navTab = "Styles");
+
 			var fileSizeTablet = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}
@@ -124,9 +124,7 @@ definition {
 		}
 
 		task ("Assert the Width of selected image resolution is 1000px") {
-			TestUtils.assertEquals(
-				actual = ${width},
-				expected = 1000);
+			StringUtil.assertEquals(1000, ${width});
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
@@ -257,13 +255,9 @@ definition {
 		}
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
-			TestUtils.assertEquals(
-				actual = ${width},
-				expected = 5464);
+			StringUtil.assertEquals(5464, ${width});
 
-			TestUtils.assertEquals(
-				actual = ${fileSizeDesktop},
-				expected = 4405);
+			StringUtil.assertEquals(4405, ${fileSizeDesktop});
 		}
 
 		task ("Change to the Portrait Phone viewport") {
@@ -300,9 +294,7 @@ definition {
 		}
 
 		task ("Assert the Width of selected image resolution is 1000px") {
-			TestUtils.assertEquals(
-				actual = ${width},
-				expected = 1000);
+			StringUtil.assertEquals(1000, ${width});
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
@@ -341,6 +333,8 @@ definition {
 		}
 
 		task ("Select Desktop Device in simulation menu") {
+			WaitForPageLoad();
+
 			MobileDevice.previewPG(deviceType = "desktop");
 		}
 
@@ -430,13 +424,9 @@ definition {
 		}
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
-			TestUtils.assertEquals(
-				actual = ${width},
-				expected = 5464);
+			StringUtil.assertEquals(5464, ${width});
 
-			TestUtils.assertEquals(
-				actual = ${fileSizeDesktop},
-				expected = 4405);
+			StringUtil.assertEquals(4405, ${fileSizeDesktop});
 		}
 
 		task ("Change to the Landscape Phone viewport") {
@@ -472,9 +462,7 @@ definition {
 		}
 
 		task ("Assert the Width of selected image resolution is 1000px") {
-			TestUtils.assertEquals(
-				actual = ${width},
-				expected = 1000);
+			StringUtil.assertEquals(1000, ${width});
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
@@ -570,9 +558,7 @@ definition {
 
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DataEngine.addField(
-				fieldFieldLabel = "Image",
-				fieldName = "Image");
+			DataEngine.addField(fieldName = "Image");
 
 			WebContentStructures.saveCP();
 		}
@@ -638,6 +624,8 @@ definition {
 		}
 
 		task ("Select Desktop Device in simulation menu") {
+			WaitForPageLoad();
+
 			MobileDevice.previewPG(deviceType = "desktop");
 		}
 
@@ -887,13 +875,13 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "01-img",
 				imageDescription = "",
-				imageFileName = "high_resolution_photo.jpg");
+				imageFileName = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the orignal image is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/documents/",
-				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo-jpg')]");
 		}
 
 		task ("Change to the Tablet Device in simulation menu") {
@@ -914,13 +902,13 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "01-img",
 				imageDescription = "",
-				imageFileName = "high_resolution_photo.jpg");
+				imageFileName = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the Preview-1000x0 is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/Preview-1000x0/",
-				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo-jpg')]");
 		}
 	}
 

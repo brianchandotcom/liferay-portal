@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -29,12 +20,16 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
 
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
+
 <div>
 	<react:component
 		module="js/components/ObjectField/Fields"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsFieldsDisplayContext.getAPIURL()
+			).put(
+				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
 				"creationMenu", objectDefinitionsFieldsDisplayContext.getCreationMenu(objectDefinition)
 			).put(
@@ -46,34 +41,11 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(
+				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(false, locale)
+			).put(
 				"style", "fluid"
 			).put(
 				"url", objectDefinitionsFieldsDisplayContext.getEditObjectFieldURL()
-			).build()
-		%>'
-	/>
-</div>
-
-<div id="<portlet:namespace />AddObjectField">
-	<react:component
-		module="js/components/ObjectField/AddObjectField"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"apiURL", objectDefinitionsFieldsDisplayContext.getAPIURL()
-			).put(
-				"creationLanguageId", objectDefinition.getDefaultLanguageId()
-			).put(
-				"forbiddenChars", PropsUtil.getArray(PropsKeys.DL_CHAR_BLACKLIST)
-			).put(
-				"forbiddenLastChars", objectDefinitionsFieldsDisplayContext.getForbiddenLastCharacters()
-			).put(
-				"forbiddenNames", PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST)
-			).put(
-				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
-			).put(
-				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(false, locale)
-			).put(
-				"objectName", objectDefinition.getShortName()
 			).build()
 		%>'
 	/>
@@ -85,19 +57,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"sidebarElements", objectDefinitionsFieldsDisplayContext.getObjectFieldCodeEditorElements(ObjectFieldConstants.BUSINESS_TYPE_FORMULA)
-			).build()
-		%>'
-	/>
-</div>
-
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
-
-<div id="<portlet:namespace />deleteObjectField">
-	<react:component
-		module="js/components/ModalDeleteObjectField"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"baseResourceURL", String.valueOf(baseResourceURL)
 			).build()
 		%>'
 	/>

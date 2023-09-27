@@ -1,22 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.upgrade;
 
 import com.liferay.portal.dao.db.MySQLDB;
 import com.liferay.portal.kernel.log.LogContext;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.upgrade.BaseAdminPortletsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
@@ -48,16 +38,10 @@ public class UpgradeLogContextTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_logContext = UpgradeLogContext.getInstance();
-
-		_context = ReflectionTestUtil.getFieldValue(_logContext, "_context");
-		_defaultContext = ReflectionTestUtil.getFieldValue(
-			_logContext, "_defaultContext");
 	}
 
 	@Test
 	public void testNonupgradeClassWithContext() {
-		_testInitialContextStatus();
-
 		Assert.assertSame(
 			Collections.emptyMap(),
 			_logContext.getContext(CompanyTestUtil.class.getName()));
@@ -80,33 +64,31 @@ public class UpgradeLogContextTest {
 
 	@Test
 	public void testUpgradeClassesDefaultContext() {
-		_testInitialContextStatus();
-
-		Assert.assertSame(
+		Assert.assertEquals(
 			_defaultContext,
 			_logContext.getContext(
 				BaseAdminPortletsUpgradeProcess.class.getName()));
-		Assert.assertSame(
+		Assert.assertEquals(
 			_defaultContext,
 			_logContext.getContext(
 				BasePortletIdUpgradeProcess.class.getName()));
-		Assert.assertSame(
+		Assert.assertEquals(
 			_defaultContext,
 			_logContext.getContext(DBUpgrader.class.getName()));
-		Assert.assertSame(
+		Assert.assertEquals(
 			_defaultContext,
 			_logContext.getContext(LoggingTimer.class.getName()));
-		Assert.assertSame(
+		Assert.assertEquals(
 			_defaultContext, _logContext.getContext(MySQLDB.class.getName()));
-		Assert.assertSame(
+		Assert.assertEquals(
 			_defaultContext,
 			_logContext.getContext(VerifyProperties.class.getName()));
-		Assert.assertSame(
+		Assert.assertEquals(
 			_defaultContext,
 			_logContext.getContext(
-				"com.liferay.portal.upgrade.internal.registry." +
-					"UpgradeStepRegistratorTracker"));
-		Assert.assertSame(
+				"com.liferay.portal.upgrade.internal.executor." +
+					"UpgradeExecutor"));
+		Assert.assertEquals(
 			_defaultContext,
 			_logContext.getContext(
 				"com.liferay.portal.upgrade.internal.release." +
@@ -115,35 +97,28 @@ public class UpgradeLogContextTest {
 
 	@Test
 	public void testUpgradeClassWithContext() {
-		_testInitialContextStatus();
-
-		Assert.assertSame(
+		Assert.assertEquals(
 			_defaultContext,
 			_logContext.getContext(DBUpgrader.class.getName()));
 
 		try {
 			UpgradeLogContext.setContext("Test");
 
-			Assert.assertSame(
-				_context, _logContext.getContext(DBUpgrader.class.getName()));
+			Assert.assertEquals(
+				Collections.singletonMap("component", "Test"),
+				_logContext.getContext(DBUpgrader.class.getName()));
 		}
 		finally {
 			UpgradeLogContext.clearContext();
 
-			Assert.assertSame(
+			Assert.assertEquals(
 				_defaultContext,
 				_logContext.getContext(DBUpgrader.class.getName()));
 		}
 	}
 
-	private void _testInitialContextStatus() {
-		Assert.assertTrue(_context.isEmpty());
-		Assert.assertFalse(_defaultContext.isEmpty());
-		Assert.assertNotSame(_context, _defaultContext);
-	}
-
-	private static Map<String, String> _context;
-	private static Map<String, String> _defaultContext;
+	private static final Map<String, String> _defaultContext =
+		Collections.singletonMap("component", "framework");
 	private static LogContext _logContext;
 
 }

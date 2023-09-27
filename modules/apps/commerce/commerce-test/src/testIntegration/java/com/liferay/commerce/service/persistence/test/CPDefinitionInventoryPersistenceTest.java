@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.service.persistence.test;
@@ -40,6 +31,8 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -160,19 +153,22 @@ public class CPDefinitionInventoryPersistenceTest {
 		newCPDefinitionInventory.setDisplayStockQuantity(
 			RandomTestUtil.randomBoolean());
 
-		newCPDefinitionInventory.setMinStockQuantity(RandomTestUtil.nextInt());
+		newCPDefinitionInventory.setMinStockQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCPDefinitionInventory.setBackOrders(RandomTestUtil.randomBoolean());
 
-		newCPDefinitionInventory.setMinOrderQuantity(RandomTestUtil.nextInt());
+		newCPDefinitionInventory.setMinOrderQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
-		newCPDefinitionInventory.setMaxOrderQuantity(RandomTestUtil.nextInt());
+		newCPDefinitionInventory.setMaxOrderQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCPDefinitionInventory.setAllowedOrderQuantities(
 			RandomTestUtil.randomString());
 
 		newCPDefinitionInventory.setMultipleOrderQuantity(
-			RandomTestUtil.nextInt());
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		_cpDefinitionInventories.add(
 			_persistence.update(newCPDefinitionInventory));
@@ -671,19 +667,22 @@ public class CPDefinitionInventoryPersistenceTest {
 		cpDefinitionInventory.setDisplayStockQuantity(
 			RandomTestUtil.randomBoolean());
 
-		cpDefinitionInventory.setMinStockQuantity(RandomTestUtil.nextInt());
+		cpDefinitionInventory.setMinStockQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		cpDefinitionInventory.setBackOrders(RandomTestUtil.randomBoolean());
 
-		cpDefinitionInventory.setMinOrderQuantity(RandomTestUtil.nextInt());
+		cpDefinitionInventory.setMinOrderQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
-		cpDefinitionInventory.setMaxOrderQuantity(RandomTestUtil.nextInt());
+		cpDefinitionInventory.setMaxOrderQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		cpDefinitionInventory.setAllowedOrderQuantities(
 			RandomTestUtil.randomString());
 
 		cpDefinitionInventory.setMultipleOrderQuantity(
-			RandomTestUtil.nextInt());
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		_cpDefinitionInventories.add(
 			_persistence.update(cpDefinitionInventory));

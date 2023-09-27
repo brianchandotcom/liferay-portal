@@ -1,22 +1,16 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.info.exception;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -43,7 +37,9 @@ public class InfoFormValidationException extends InfoFormException {
 
 	public static class CustomValidation extends InfoFormValidationException {
 
-		public CustomValidation(String message) {
+		public CustomValidation(String infoFieldUniqueId, String message) {
+			super(infoFieldUniqueId);
+
 			_message = message;
 		}
 
@@ -169,6 +165,21 @@ public class InfoFormValidationException extends InfoFormException {
 
 	public static class InvalidCaptcha extends InfoFormValidationException {
 
+		public InvalidCaptcha(
+			CaptchaException captchaException, long fragmentEntryLinkId) {
+
+			_captchaException = captchaException;
+			_fragmentEntryLinkId = fragmentEntryLinkId;
+		}
+
+		public CaptchaException getCaptchaException() {
+			return _captchaException;
+		}
+
+		public long getFragmentEntryLinkId() {
+			return _fragmentEntryLinkId;
+		}
+
 		@Override
 		public String getLocalizedMessage(Locale locale) {
 			return LanguageUtil.get(locale, "captcha-verification-failed");
@@ -178,6 +189,9 @@ public class InfoFormValidationException extends InfoFormException {
 		public String getLocalizedMessage(String fieldLabel, Locale locale) {
 			return getLocalizedMessage(locale);
 		}
+
+		private final CaptchaException _captchaException;
+		private final long _fragmentEntryLinkId;
 
 	}
 
@@ -250,6 +264,38 @@ public class InfoFormValidationException extends InfoFormException {
 			return LanguageUtil.format(
 				locale, "the-x-is-required", fieldLabel, false);
 		}
+
+	}
+
+	public static class RuleValidation extends InfoFormValidationException {
+
+		public RuleValidation(String message) {
+			_message = message;
+		}
+
+		public void addCustomValidation(
+			String infoFieldUniqueId, String message) {
+
+			_customValidations.add(
+				new CustomValidation(infoFieldUniqueId, message));
+		}
+
+		public List<CustomValidation> getCustomValidations() {
+			return _customValidations;
+		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			if (_message != null) {
+				return _message;
+			}
+
+			return super.getLocalizedMessage(locale);
+		}
+
+		private final List<CustomValidation> _customValidations =
+			new ArrayList<>();
+		private final String _message;
 
 	}
 

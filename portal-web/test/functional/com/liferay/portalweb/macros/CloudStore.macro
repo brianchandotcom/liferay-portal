@@ -1,0 +1,64 @@
+definition {
+
+	macro VerifyConnectionWhenServingFileAsStream {
+		if (!(isSet(siteName))) {
+			var siteName = "Test Site Name";
+		}
+
+		var siteURLKey = StringUtil.replace(${siteName}, " ", "-");
+
+		var siteURLKey = StringUtil.lowerCase(${siteURLKey});
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = ${siteName},
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		ServerAdministration.openServerAdmin();
+
+		var script = '''
+			import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+			import com.liferay.document.library.kernel.store.DLStoreUtil;
+			import com.liferay.petra.string.StringPool;
+ 
+			List fileEntries = DLFileEntryLocalServiceUtil.getFileEntries(0,1);
+ 
+			fileEntries.each { fileEntry ->
+				(1..60).each {
+					InputStream is = null;
+
+					try {
+						is = DLStoreUtil.getFileAsStream(fileEntry.getCompanyId(), fileEntry.getRepositoryId(), fileEntry.getName(), StringPool.BLANK)
+					} 
+					catch (Exception e) {
+						e.printStackTrace();
+					}
+					finally {
+						is.close();
+					}
+				}
+			}
+		''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = ${script});
+
+		AssertConsoleTextNotPresent(value1 = "ConnectionPoolTimeoutException");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = ${siteURLKey});
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		DMDocument.viewEditCP(
+			dmDocumentTitleEdit = "DM Document Title Edit",
+			dmDocumentVersionNumber = "1.1");
+	}
+
+}

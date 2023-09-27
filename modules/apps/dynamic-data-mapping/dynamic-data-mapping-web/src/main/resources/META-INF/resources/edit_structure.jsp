@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -254,50 +245,14 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 
 					<aui:input name="name" />
 
-					<liferay-ui:panel-container
-						cssClass="lfr-structure-entry-details-container"
-						extended="<%= false %>"
-						id="structureDetailsPanelContainer"
-						persistState="<%= true %>"
-					>
-						<liferay-ui:panel
-							collapsible="<%= true %>"
-							defaultState="closed"
-							extended="<%= false %>"
-							id="structureDetailsSectionPanel"
-							markupView="lexicon"
-							persistState="<%= true %>"
-							title='<%= LanguageUtil.get(request, "details") %>'
+					<clay:panel-group>
+						<clay:panel
+							displayTitle='<%= LanguageUtil.get(request, "details") %>'
 						>
 							<clay:row
 								cssClass="lfr-ddm-types-form-column"
 							>
-								<c:choose>
-									<c:when test="<%= Validator.isNull(storageTypeValue) %>">
-										<clay:col
-											md="6"
-										>
-											<aui:field-wrapper>
-												<aui:select disabled="<%= structure != null %>" name="storageType">
-
-													<%
-													for (String storageType : ddmDisplayContext.getStorageTypes()) {
-													%>
-
-														<aui:option label="<%= storageType %>" value="<%= storageType %>" />
-
-													<%
-													}
-													%>
-
-												</aui:select>
-											</aui:field-wrapper>
-										</clay:col>
-									</c:when>
-									<c:otherwise>
-										<aui:input name="storageType" type="hidden" value="<%= storageTypeValue %>" />
-									</c:otherwise>
-								</c:choose>
+								<aui:input name="storageType" type="hidden" value="<%= storageTypeValue %>" />
 							</clay:row>
 
 							<c:if test="<%= !ddmDisplayContext.autogenerateStructureKey() %>">
@@ -327,8 +282,8 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 									<aui:input name="webDavURL" type="resource" value="<%= structure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
 								</c:if>
 							</c:if>
-						</liferay-ui:panel>
-					</liferay-ui:panel-container>
+						</clay:panel>
+					</clay:panel-group>
 
 					<%@ include file="/form_builder.jspf" %>
 				</aui:fieldset>

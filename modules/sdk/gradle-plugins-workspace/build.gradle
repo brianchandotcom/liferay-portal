@@ -21,7 +21,7 @@ task downloadProductInfo(type: Download)
 
 String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
 File gradleTestDependenciesDir = new File(buildDir, "gradle-test-dependencies")
-String gradleVersion = "6.9.2"
+String gradleVersion = "7.3.3"
 String hotFixZipUrl = "https://us-east-1.linodeobjects.com/devtools-s3.liferay.com/gradle-plugins-workspace/liferay-hotfix-1072-7210.zip"
 String pluginsSdkUrl = "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/portal/com.liferay.portal.plugins.sdk/1.0.22/com.liferay.portal.plugins.sdk-1.0.22-withdependencies.zip"
 
@@ -66,24 +66,25 @@ copyDistBundleZipPluginsSdk {
 	into "src/gradleTest/distBundleZip/plugins-sdk"
 }
 
-copyHotFixZip {
-	ext {
-		autoClean = false
-	}
-
-	dependsOn downloadHotFixZip
-
-	from {
-		downloadHotFixZip.dest
-	}
-
-	into "src/gradleTest/startDockerContainerWithPatch/configs/common/patching"
-}
-
 copyGradleTestDependencies {
-	from configurations.compile
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+	from configurations.compileClasspath
 	from jar
 	into gradleTestDependenciesDir
+
+	doLast {
+		configurations.compileClasspath.forEach {
+			File compileClasspathFile ->
+
+			if (compileClasspathFile.name.startsWith("com.liferay.portal.tools.soy.builder") || compileClasspathFile.name.startsWith("jackson-dataformat-yaml")) {
+				copy {
+					from compileClasspathFile
+					into jar.destinationDir
+				}
+			}
+		}
+	}
 }
 
 copyGradleTestProjects {
@@ -100,8 +101,24 @@ copyGradleTestProjects {
 	into "src/gradleTest/excludePatterns"
 }
 
+copyHotFixZip {
+	ext {
+		autoClean = false
+	}
+
+	dependsOn downloadHotFixZip
+
+	from {
+		downloadHotFixZip.dest
+	}
+
+	into "src/gradleTest/startDockerContainerWithPatch/configs/common/patching"
+}
+
 copyRepo {
-	from "src/gradleTest/repo"
+	dependsOn copyGradleTestDependencies
+
+	from gradleTestDependenciesDir
 	into new File(buildDir, "gradleTest/repo")
 }
 
@@ -124,38 +141,40 @@ copyWorkspacesSamples {
 }
 
 dependencies {
-	compile group: "com.bmuschko", name: "gradle-docker-plugin", version: "6.7.0"
-	compile group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.10.3"
-	compile group: "com.github.docker-java", name: "docker-java", version: "3.2.8"
-	compile group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
-	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.9"
-	compile(group: "com.liferay", name: "com.liferay.gradle.plugins", version: "14.0.156") {
+	api group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "5.3.0"
+	api group: "com.bmuschko", name: "gradle-docker-plugin", version: "6.7.0"
+	api group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.12.5"
+	api group: "com.github.docker-java", name: "docker-java", version: "3.2.8"
+	api group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
+	api group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.10"
+	api(group: "com.liferay", name: "com.liferay.gradle.plugins", version: "14.0.182") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
-	compile(group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.7") {
+	api(group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.10") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
-	compile(group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "3.0.73") {
+	api(group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "4.0.5") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.2.40"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "3.0.12"
-	compile(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.23") {
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.2.55"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "3.0.19"
+	api(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.25") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
-	compile group: "com.liferay", name: "com.liferay.petra.lang", version: "5.1.2"
-	compile group: "com.liferay", name: "com.liferay.petra.string", version: "5.2.0"
-	compile(group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.7.3") {
+	api group: "com.liferay", name: "com.liferay.petra.lang", version: "5.1.2"
+	api group: "com.liferay", name: "com.liferay.petra.string", version: "5.2.0"
+	api(group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.7.4") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
-	compile(group: "com.liferay", name: "com.liferay.portal.tools.soy.builder", version: "3.0.4") {
+	api(group: "com.liferay", name: "com.liferay.portal.tools.soy.builder", version: "3.0.4") {
 		exclude group: "com.google.template", module: "soy"
 		exclude group: "org.codehaus.plexus"
 		exclude group: "org.sonatype.plexus"
 	}
-	compile group: "de.undercouch", name: "gradle-download-task", version: "5.0.0"
-	compile group: "net.java.dev.jna", name: "jna", version: "5.8.0"
-	compile group: "net.saliman", name: "gradle-properties-plugin", version: "1.4.6"
+	api group: "de.undercouch", name: "gradle-download-task", version: "5.4.0"
+	api group: "net.java.dev.jna", name: "jna", version: "5.8.0"
+	api group: "net.saliman", name: "gradle-properties-plugin", version: "1.4.6"
+	api group: "org.ow2.asm", name: "asm", version: "5.1"
 
 	compileInclude files("lib/com.liferay.workspace.bundle.url.codec-1.0.0.jar")
 
@@ -211,7 +230,17 @@ gradleTest {
 	gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(gradleTestDependenciesDir)}"
 
-	versions "5.6.4", gradleVersion
+	versions gradleVersion
+
+	beforeTest {
+		println "  ${it.name}"
+	}
+}
+
+gradleTestGenerator {
+	mustRunAfter copyDistBundleZipPluginsSdk
+	mustRunAfter copyGradleTestProjects
+	mustRunAfter copyHotFixZip
 }
 
 liferayOSGi {

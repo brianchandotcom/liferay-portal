@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Source Formatter
 Bundle-SymbolicName: com.liferay.source.formatter
-Bundle-Version: 1.0.1327
+Bundle-Version: 1.0.1342
 Import-Package:\
 	!javax.portlet,\
 	\
@@ -74,6 +74,7 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/auth/CompanyThreadLocal.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProvider.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProviderUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/service/UserLocalServiceUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/*,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
 	@com.liferay.portal.tools.java.parser-*.jar!/com/liferay/portal/tools/java/parser/*.class,\

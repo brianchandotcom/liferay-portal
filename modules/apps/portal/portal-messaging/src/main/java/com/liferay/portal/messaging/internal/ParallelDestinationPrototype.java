@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.messaging.internal;
@@ -17,6 +8,7 @@ package com.liferay.portal.messaging.internal;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.MessageListenerRegistry;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -26,10 +18,12 @@ import com.liferay.portal.kernel.service.UserLocalService;
 public class ParallelDestinationPrototype implements DestinationPrototype {
 
 	public ParallelDestinationPrototype(
+		MessageListenerRegistry messageListenerRegistry,
 		PortalExecutorManager portalExecutorManager,
 		PermissionCheckerFactory permissionCheckerFactory,
 		UserLocalService userLocalService) {
 
+		_messageListenerRegistry = messageListenerRegistry;
 		_portalExecutorManager = portalExecutorManager;
 		_permissionCheckerFactory = permissionCheckerFactory;
 		_userLocalService = userLocalService;
@@ -47,6 +41,8 @@ public class ParallelDestinationPrototype implements DestinationPrototype {
 			destinationConfiguration.getDestinationName());
 		parallelDestination.setMaximumQueueSize(
 			destinationConfiguration.getMaximumQueueSize());
+		parallelDestination.setMessageListenerRegistry(
+			_messageListenerRegistry);
 		parallelDestination.setPermissionCheckerFactory(
 			_permissionCheckerFactory);
 		parallelDestination.setPortalExecutorManager(_portalExecutorManager);
@@ -60,6 +56,7 @@ public class ParallelDestinationPrototype implements DestinationPrototype {
 		return parallelDestination;
 	}
 
+	private final MessageListenerRegistry _messageListenerRegistry;
 	private final PermissionCheckerFactory _permissionCheckerFactory;
 	private final PortalExecutorManager _portalExecutorManager;
 	private final UserLocalService _userLocalService;

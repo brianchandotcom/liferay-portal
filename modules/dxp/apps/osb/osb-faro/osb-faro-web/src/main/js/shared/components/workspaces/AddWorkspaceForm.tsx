@@ -30,7 +30,7 @@ import {
 
 const {
 	faroURL,
-	projectLocations: {DEV, EU2, EU3, SA, UAT, US}
+	projectLocations: {AS1, DEV, EU2, EU3, SA, UAT, US}
 } = Constants;
 
 const DEFAULT_TIME_ZONE = 'UTC';
@@ -43,6 +43,7 @@ const getProjectLocations = (): {label: string; value: string}[] => {
 			return [{label: Liferay.Language.get('location-uat'), value: UAT}];
 		default:
 			return [
+				{label: Liferay.Language.get('location-as1'), value: AS1},
 				{label: Liferay.Language.get('location-eu'), value: EU2},
 				{label: Liferay.Language.get('location-eu2'), value: EU3},
 				{label: Liferay.Language.get('location-sa'), value: SA},

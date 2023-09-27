@@ -8,8 +8,8 @@ import java.util.concurrent.ConcurrentSkipListSet
 
 import org.apache.tools.ant.DirectoryScanner
 import org.apache.tools.ant.filters.ReplaceTokens
-import org.apache.tools.ant.types.selectors.SelectorUtils
 
+import org.gradle.api.execution.TaskExecutionGraph
 import org.gradle.plugins.ide.api.XmlFileContentMerger
 import org.gradle.plugins.ide.eclipse.model.Classpath
 import org.gradle.plugins.ide.eclipse.model.ClasspathEntry
@@ -25,13 +25,13 @@ apply plugin: "com.liferay.yarn.defaults.plugin"
 
 ext {
 	projectTemplateTokens = [
-		"biz.aQute.bnd.version": "5.2.0",
-		"com.liferay.ant.bnd.version": "3.2.9",
-		"com.liferay.css.builder.version": "3.1.0",
-		"com.liferay.gradle.plugins.css.builder.version": "5.0.4",
+		"biz.aQute.bnd.version": "5.3.0",
+		"com.liferay.ant.bnd.version": "3.2.10",
+		"com.liferay.css.builder.version": "3.1.3",
+		"com.liferay.gradle.plugins.css.builder.version": "5.0.9",
 		"com.liferay.gradle.plugins.theme.builder.version": "2.0.17",
-		"com.liferay.portal.tools.bundle.support.version": "3.7.3",
-		"com.liferay.portal.tools.service.builder.version": "1.0.454",
+		"com.liferay.portal.tools.bundle.support.version": "3.7.4",
+		"com.liferay.portal.tools.service.builder.version": "1.0.462",
 		"com.liferay.portal.tools.rest.builder.version": "1.0.222",
 		"com.liferay.portal.tools.soy.builder.version": "3.0.4",
 		"com.liferay.portal.tools.theme.builder.version": "1.1.9",
@@ -45,13 +45,17 @@ task portalYarnInstall
 
 Set<File> bndPrintJarFiles = null
 
+Set<Project> implicitDependencyProjects = allprojects.findAll {
+	it.file(".lfrbuild-app-server-lib").exists() || it.file(".lfrbuild-portal-pre").exists()
+}
+
 if (Boolean.getBoolean("build.bnd.print.enabled")) {
 	configurations {
 		bnd
 	}
 
 	dependencies {
-		bnd group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "4.3.0"
+		bnd group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "5.3.0"
 	}
 
 	repositories {
@@ -117,7 +121,7 @@ if (workspacesYarnLockFile.exists()) {
 
 buildDir = new File(rootDir.parentFile, "build")
 
-for (String gradleVersion in ["6.9.2"]) {
+for (String gradleVersion in ["7.3.3"]) {
 	String gradleDistributionURL = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 	String suffix = gradleVersion.replace(".", "")
 
@@ -375,12 +379,12 @@ gradle.beforeProject {
 			}
 
 			jar {
-				doFirst {
-					DirectoryScanner.removeDefaultExclude SelectorUtils.DEEP_TREE_MATCH + "/.gitignore"
-				}
-
 				doLast {
-					DirectoryScanner.resetDefaultExcludes()
+					String[] filteredDefaultExcludes = DirectoryScanner.defaultExcludes.findAll {
+						!it.endsWith(".gitignore")
+					}
+
+					ant.jar(basedir: project.file("classes"), defaultexcludes: false, destfile: jar.archivePath, excludes: filteredDefaultExcludes.join(","), includes: "**/.gitignore", update: true)
 				}
 			}
 
@@ -448,9 +452,90 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("com.liferay.jasper.jspc") {
+			if (!project.name.endsWith("-demo")) {
+				compileJSP {
+					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+						mustRunAfter "${it.dependencyProject.path}:deploy"
+						mustRunAfter "${it.dependencyProject.path}:deployDependencies"
+					}
+
+					if (!implicitDependencyProjects.contains(project)) {
+						implicitDependencyProjects.forEach {
+							mustRunAfter "${it.path}:deploy"
+							mustRunAfter "${it.path}:deployDependencies"
+
+							if (it.name.equals("portal-osgi-web-jasper-plugins-taglib")) {
+								mustRunAfter "${it.path}:deployAppServerPortalFile"
+							}
+						}
+					}
+				}
+
+				generateJSPJava {
+					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+						mustRunAfter "${it.dependencyProject.path}:deploy"
+						mustRunAfter "${it.dependencyProject.path}:deployDependencies"
+					}
+
+					if (!implicitDependencyProjects.contains(project)) {
+						implicitDependencyProjects.forEach {
+							mustRunAfter "${it.path}:deploy"
+							mustRunAfter "${it.path}:deployDependencies"
+
+							if (it.name.equals("portal-osgi-web-jasper-plugins-taglib")) {
+								mustRunAfter "${it.path}:deployAppServerPortalFile"
+							}
+						}
+					}
+				}
+			}
+		}
+
+		pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
+			generateMetadataFileForMavenPublication {
+				mustRunAfter "formatSource"
+			}
+
+			generatePomFileForMavenPublication {
+				mustRunAfter "formatSource"
+			}
+
+			jarSources {
+				mustRunAfter buildPluginDescriptor
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			configurations {
 				xmltask
+			}
+
+			compileTestJava {
+				configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+					if (!it.dependencyProject.name.endsWith("-theme")) {
+						mustRunAfter "${it.dependencyProject.path}:processResources"
+					}
+				}
+			}
+
+			compileTestIntegrationJava {
+				configurations.testIntegrationImplementation.allDependencies.withType(ProjectDependency) {
+					if (!it.dependencyProject.name.endsWith("-theme")) {
+						mustRunAfter "${it.dependencyProject.path}:processResources"
+					}
+				}
+
+				if (!implicitDependencyProjects.contains(project)) {
+					implicitDependencyProjects.forEach {
+						mustRunAfter "${it.path}:deploy"
+						mustRunAfter "${it.path}:deployDependencies"
+
+						if (it.name.equals("portal-osgi-web-jasper-plugins-taglib")) {
+							mustRunAfter "${it.path}:deployAppServerPortalFile"
+						}
+					}
+				}
 			}
 
 			dependencies {
@@ -563,7 +648,7 @@ gradle.beforeProject {
 
 		pluginManager.withPlugin("eclipse") {
 			tasks.eclipse.dependsOn {
-				Set<ProjectDependency> projectDependencies = configurations.runtime.allDependencies.withType(ProjectDependency)
+				Set<ProjectDependency> projectDependencies = configurations.runtimeOnly.allDependencies.withType(ProjectDependency)
 
 				projectDependencies.collect {
 					ProjectDependency projectDependency ->
@@ -575,9 +660,19 @@ gradle.beforeProject {
 
 		pluginManager.withPlugin("java") {
 			compileJava {
+				configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+					if (!it.dependencyProject.name.endsWith("-theme")) {
+						mustRunAfter "${it.dependencyProject.path}:processResources"
+					}
+				}
+
 				outputs.cacheIf {
 					false
 				}
+			}
+
+			processResources {
+				mustRunAfter "formatSource"
 			}
 		}
 
@@ -617,75 +712,35 @@ if (bndPrintJarFiles != null) {
 	}
 }
 
-gradle.taskGraph.useFilter {
-	Task task ->
+gradle.taskGraph.whenReady {
+	TaskExecutionGraph taskExecutionGraph ->
 
-	boolean skipReadOnly = Boolean.parseBoolean(GradleUtil.getTaskPrefixedProperty(task, "skipReadOnly"))
+	taskExecutionGraph.allTasks.each {
+		Task task ->
 
-	if (skipReadOnly) {
-		boolean publicBranch = GradleUtil.getProperty(task.project, "liferay.releng.public", false)
+		if (task.name == "compileJSP") {
+			FileTree jspFileTree = fileTree(dir: task.project.projectDir, excludes: ["**/custom_jsps/**/*", "**/dependencies/**/*"], includes: ["docroot/**/*.jsp", "src/main/resources/META-INF/resources/**/*.jsp"])
 
-		if (publicBranch && task.project.path.startsWith(":private:")) {
-			return false
-		}
-
-		File gitRepoDir = _getRootDir(task.project.projectDir, ".gitrepo")
-
-		if (gitRepoDir != null) {
-			File gitRepoFile = new File(gitRepoDir, ".gitrepo")
-
-			if (gitRepoFile.text.contains("mode = pull")) {
-				return false
+			if (jspFileTree.empty) {
+				task.setEnabled(false)
 			}
 		}
-	}
+		else if (task.name == "deploy") {
+			String buildProfile = System.getProperty("build.profile")
 
-	if (task.name == "compileJSP") {
-		FileTree jspFileTree = fileTree(dir: task.project.projectDir, excludes: ["**/custom_jsps/**/*", "**/dependencies/**/*"], includes: ["docroot/**/*.jsp", "src/main/resources/META-INF/resources/**/*.jsp"])
-
-		if (jspFileTree.empty) {
-			return false
+			if ((buildProfile != null) && FileUtil.exists(task.project, ".lfrbuild-portal-skip-deploy")) {
+				task.setEnabled(false)
+			}
 		}
-	}
-	else if (task.name == "deploy") {
-		String buildProfile = System.getProperty("build.profile")
-
-		if ((buildProfile != null) && FileUtil.exists(task.project, ".lfrbuild-portal-skip-deploy")) {
-			return false
+		else if (task.name == "test") {
+			if (!_hasTestClasses(task, "src/test/java")) {
+				task.setEnabled(false)
+			}
 		}
-
-		String deployOnlyProfile = System.properties["deploy.only.profile"]
-
-		if (deployOnlyProfile && !FileUtil.exists(task.project, ".lfrbuild-${deployOnlyProfile}")) {
-			return false
-		}
-	}
-	else if (task.name == "test") {
-		if (!_hasTestClasses(task, "src/test/java")) {
-			return false
-		}
-	}
-	else if (task.name == "testIntegration") {
-		if (!_hasTestClasses(task, "src/testIntegration/java")) {
-			return false
-		}
-	}
-
-	return true
-}
-
-private File _getRootDir(File dir, String markerFileName) {
-	while (true) {
-		File markerFile = new File(dir, markerFileName);
-
-		if (markerFile.exists()) {
-			return dir;
-		}
-
-		dir = dir.getParentFile();
-
-		if (dir == null) {
-			return null;
+		else if (task.name == "testIntegration") {
+			if (!_hasTestClasses(task, "src/testIntegration/java")) {
+				task.setEnabled(false)
+			}
 		}
 	}
 }

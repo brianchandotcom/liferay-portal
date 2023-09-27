@@ -1,0 +1,21 @@
+{
+	"description": "Analysts Insights",
+	"externalReferenceCode": "PRMC041",
+	"name": "Analysts Insights",
+	"name_i18n": {
+		"ar_SA": "Analysts Insights",
+		"ca_ES": "Analysts Insights",
+		"de_DE": "Analysts Insights",
+		"en_US": "Analysts Insights",
+		"es_ES": "Analysts Insights",
+		"fi_FI": "Analysts Insights",
+		"fr_FR": "Analysts Insights",
+		"hu_HU": "Analysts Insights",
+		"ja_JP": "Analysts Insights",
+		"nl_NL": "Analysts Insights",
+		"pt_BR": "Analysts Insights",
+		"sv_SE": "Analysts Insights",
+		"zh_CN": "Analysts Insights"
+	},
+	"viewableBy": "Anyone"
+}

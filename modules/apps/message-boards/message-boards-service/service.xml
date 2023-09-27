@@ -66,6 +66,7 @@
 		<column name="name" type="String" uad-nonanonymizable="true" />
 		<column name="description" type="String" uad-nonanonymizable="true" />
 		<column name="displayStyle" type="String" />
+		<column name="friendlyURL" type="String" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
@@ -90,6 +91,10 @@
 		<finder name="G_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" name="parentCategoryId" />
+		</finder>
+		<finder name="G_F" return-type="MBCategory" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="friendlyURL" />
 		</finder>
 		<finder name="G_S" return-type="Collection">
 			<finder-column name="groupId" />
@@ -563,6 +568,7 @@
 		<exception>MessageBody</exception>
 		<exception>MessageSubject</exception>
 		<exception>RequiredMessage</exception>
+		<exception>RequiredThread</exception>
 		<exception>SplitThread</exception>
 	</exceptions>
 </service-builder>

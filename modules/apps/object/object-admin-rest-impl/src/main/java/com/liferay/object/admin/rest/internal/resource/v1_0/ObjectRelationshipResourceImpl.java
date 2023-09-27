@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.admin.rest.internal.resource.v1_0;
@@ -24,6 +15,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -33,7 +25,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -51,11 +42,11 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/object-relationship.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, ObjectRelationshipResource.class}
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
+	service = ObjectRelationshipResource.class
 )
 public class ObjectRelationshipResourceImpl
-	extends BaseObjectRelationshipResourceImpl implements NestedFieldSupport {
+	extends BaseObjectRelationshipResourceImpl {
 
 	@Override
 	public void deleteObjectRelationship(Long objectRelationshipId)
@@ -74,7 +65,7 @@ public class ObjectRelationshipResourceImpl
 	public Page<ObjectRelationship>
 			getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
 				String externalReferenceCode, String search, Filter filter,
-				Pagination pagination)
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		com.liferay.object.model.ObjectDefinition objectDefinition =
@@ -84,7 +75,7 @@ public class ObjectRelationshipResourceImpl
 
 		return getObjectDefinitionObjectRelationshipsPage(
 			objectDefinition.getObjectDefinitionId(), search, filter,
-			pagination);
+			pagination, sorts);
 	}
 
 	@NestedField(
@@ -93,7 +84,7 @@ public class ObjectRelationshipResourceImpl
 	@Override
 	public Page<ObjectRelationship> getObjectDefinitionObjectRelationshipsPage(
 			Long objectDefinitionId, String search, Filter filter,
-			Pagination pagination)
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -129,7 +120,7 @@ public class ObjectRelationshipResourceImpl
 					"objectDefinitionId", objectDefinitionId);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
-			null,
+			sorts,
 			document -> _toObjectRelationship(
 				_objectRelationshipService.getObjectRelationship(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
@@ -157,7 +148,8 @@ public class ObjectRelationshipResourceImpl
 					externalReferenceCode, contextCompany.getCompanyId());
 
 		com.liferay.object.model.ObjectDefinition objectDefinition2 =
-			_getObjectDefinition2(objectRelationship);
+			_getObjectDefinition2(
+				objectDefinition1.getObjectFolderId(), objectRelationship);
 
 		objectRelationship.setParameterObjectFieldId(
 			() -> {
@@ -198,10 +190,15 @@ public class ObjectRelationshipResourceImpl
 			(objectRelationship.getObjectDefinitionExternalReferenceCode2() !=
 				null)) {
 
-			com.liferay.object.model.ObjectDefinition objectDefinition =
-				_getObjectDefinition2(objectRelationship);
+			com.liferay.object.model.ObjectDefinition objectDefinition1 =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionId);
 
-			objectDefinitionId2 = objectDefinition.getObjectDefinitionId();
+			com.liferay.object.model.ObjectDefinition objectDefinition2 =
+				_getObjectDefinition2(
+					objectDefinition1.getObjectFolderId(), objectRelationship);
+
+			objectDefinitionId2 = objectDefinition2.getObjectDefinitionId();
 		}
 
 		return _toObjectRelationship(
@@ -246,13 +243,13 @@ public class ObjectRelationshipResourceImpl
 				objectRelationshipId,
 				GetterUtil.getLong(
 					objectRelationship.getParameterObjectFieldId()),
-				objectRelationship.getDeletionTypeAsString(),
+				objectRelationship.getDeletionTypeAsString(), false,
 				LocalizedMapUtil.getLocalizedMap(
 					objectRelationship.getLabel())));
 	}
 
 	private com.liferay.object.model.ObjectDefinition _getObjectDefinition2(
-			ObjectRelationship objectRelationship)
+			long objectFolderId, ObjectRelationship objectRelationship)
 		throws Exception {
 
 		com.liferay.object.model.ObjectDefinition objectDefinition =
@@ -268,7 +265,7 @@ public class ObjectRelationshipResourceImpl
 
 		return _objectDefinitionLocalService.addObjectDefinition(
 			objectRelationship.getObjectDefinitionExternalReferenceCode2(),
-			contextUser.getUserId(),
+			contextUser.getUserId(), objectFolderId,
 			GetterUtil.get(
 				objectRelationship.getObjectDefinitionModifiable2(), true),
 			GetterUtil.get(

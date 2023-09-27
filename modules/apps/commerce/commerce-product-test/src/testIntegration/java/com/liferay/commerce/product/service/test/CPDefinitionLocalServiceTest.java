@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.service.test;
@@ -32,6 +23,7 @@ import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -401,17 +393,18 @@ public class CPDefinitionLocalServiceTest {
 		CommercePriceEntry duplicateCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				duplicateCPInstance.getCPInstanceUuid());
+				duplicateCPInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		duplicateCommercePriceEntry =
-			_commercePriceEntryLocalService.updateCommercePriceEntry(
+			_commercePriceEntryLocalService.updatePricingInfo(
 				duplicateCommercePriceEntry.getCommercePriceEntryId(),
-				BigDecimal.TEN, false, BigDecimal.ZERO, null, _serviceContext);
+				duplicateCommercePriceEntry.isBulkPricing(), BigDecimal.TEN,
+				false, BigDecimal.ZERO, null, _serviceContext);
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid());
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		Assert.assertEquals(
 			BigDecimal.TEN, duplicateCommercePriceEntry.getPrice());
@@ -499,20 +492,20 @@ public class CPDefinitionLocalServiceTest {
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				duplicateCPInstance.getCPInstanceUuid());
+				duplicateCPInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		BigDecimal newPrice = new BigDecimal(10);
 
-		commercePriceEntry =
-			_commercePriceEntryLocalService.updateCommercePriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(), newPrice,
-				commercePriceEntry.isPriceOnApplication(), promoPrice, null,
-				_serviceContext);
+		commercePriceEntry = _commercePriceEntryLocalService.updatePricingInfo(
+			commercePriceEntry.getCommercePriceEntryId(),
+			commercePriceEntry.isBulkPricing(), newPrice,
+			commercePriceEntry.isPriceOnApplication(), promoPrice, null,
+			_serviceContext);
 
 		CommercePriceEntry parentPriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid());
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		BigDecimal priceEntry = commercePriceEntry.getPrice();
 

@@ -11,6 +11,16 @@
 
 <tbody>
 <tr>
+	<td>REMOTE_SERVER_CLIENT_ID</td>
+	<td>//input[contains(@id,'PublicationsPortlet_clientId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOTE_SERVER_CLIENT_SECRET</td>
+	<td>//input[contains(@id,'PublicationsPortlet_clientSecret')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOTE_SERVER_DESCRIPTION</td>
 	<td>//textarea[contains(@id,'PublicationsPortlet_description')]</td>
 	<td></td>

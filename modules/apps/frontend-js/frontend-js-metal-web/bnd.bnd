@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend JS Metal Web
 Bundle-SymbolicName: com.liferay.frontend.js.metal.web
-Bundle-Version: 5.0.14
+Bundle-Version: 5.0.15
 Liferay-JS-Submodules-Bridge:\
 	incremental-dom,\
 	incremental-dom-string,\

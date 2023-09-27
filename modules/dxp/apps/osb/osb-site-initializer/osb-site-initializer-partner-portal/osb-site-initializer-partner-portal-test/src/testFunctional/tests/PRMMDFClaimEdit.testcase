@@ -25,6 +25,16 @@ definition {
 			JSONPRM.updateAccount();
 		}
 
+		task ("Assign the users to the account") {
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "pmu@partner.com");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
 		task ("Login with the Partner user and create an MDF Request") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "pmu@partner.com",
@@ -74,6 +84,7 @@ definition {
 	@priority = 5
 	test CanUnselectClaimedActivity {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the PMU creates a full claim with two activities") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -125,6 +136,7 @@ definition {
 	@priority = 5
 	test CFMCanEditClaimInClaimdPaidStatus {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the PMU creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -132,8 +144,11 @@ definition {
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
 			PRMMDFClaim.createNewClaim(
+				allContents = "Document_2.jpg",
 				listLeads = "Document_1.xlsx",
 				reimbursementInvoice = "Document_1.png",
+				telemarketingMetrics = "Metrics Description",
+				telemarketingScript = "Document_2.png",
 				thirdInvoice = "Document_1.jpg");
 
 			task ("The Claim ID is saved in a variable") {
@@ -186,6 +201,7 @@ definition {
 	@priority = 5
 	test CFMCanEditClaimInFinanceReviewStatus {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -242,6 +258,7 @@ definition {
 	@priority = 5
 	test CMMCanEditClaimInApprovedStatus {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -298,6 +315,7 @@ definition {
 	@priority = 5
 	test CMMCanEditClaimInCanceledStatus {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -354,6 +372,7 @@ definition {
 	@priority = 5
 	test CMMCanEditClaimInDirectorReviewStatus {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -410,6 +429,7 @@ definition {
 	@priority = 5
 	test CMMCanEditClaimInRejectedStatus {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -466,6 +486,7 @@ definition {
 	@priority = 5
 	test EditButtonIsDisplayedInSpecificStatusToPartner {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -530,6 +551,7 @@ definition {
 	@priority = 5
 	test IsNotPossibleToEditClaimWithoutFillAllRequiredFields {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -572,6 +594,7 @@ definition {
 	@priority = 5
 	test PartnerCanEditClaimInDraftStatus {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a new claim is saved as draft") {
 			PRMMDFClaim.createNewClaim(
@@ -618,6 +641,7 @@ definition {
 	@priority = 5
 	test PartnerCanEditClaimInRequestMoreInfoStatus {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 

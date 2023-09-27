@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -58,93 +49,73 @@ if (calendarResource != null) {
 	<aui:fieldset>
 		<aui:input name="name" />
 
-		<liferay-ui:panel-container
-			cssClass="panel-group-flush panel-group-sm"
-			extended="<%= true %>"
-			id="calendarResourceDetailsPanelContainer"
-			persistState="<%= true %>"
-		>
-			<liferay-ui:panel
-				collapsible="<%= true %>"
-				cssClass="panel-unstyled"
-				defaultState="closed"
-				extended="<%= false %>"
-				id="calendarResourceDetailsPanel"
-				markupView="lexicon"
-				persistState="<%= true %>"
-				title="details"
+		<clay:panel-group>
+			<clay:panel
+				displayTitle='<%= LanguageUtil.get(request, "details") %>'
 			>
-				<c:choose>
-					<c:when test="<%= calendarResource == null %>">
-						<c:if test="<%= !CalendarServiceConfigurationValues.CALENDAR_RESOURCE_FORCE_AUTOGENERATE_CODE %>">
-							<aui:input name="code" />
-						</c:if>
-					</c:when>
-					<c:otherwise>
-						<aui:input name="code" type="resource" value='<%= BeanParamUtil.getString(calendarResource, request, "code") %>' />
-					</c:otherwise>
-				</c:choose>
+				<div class="panel-body">
+					<c:choose>
+						<c:when test="<%= calendarResource == null %>">
+							<c:if test="<%= !CalendarServiceConfigurationValues.CALENDAR_RESOURCE_FORCE_AUTOGENERATE_CODE %>">
+								<aui:input name="code" />
+							</c:if>
+						</c:when>
+						<c:otherwise>
+							<aui:input name="code" type="resource" value='<%= BeanParamUtil.getString(calendarResource, request, "code") %>' />
+						</c:otherwise>
+					</c:choose>
 
-				<aui:input name="description" />
+					<aui:input name="description" />
 
-				<c:if test="<%= calendars != null %>">
-					<aui:select label="default-calendar" name="defaultCalendarId" value="<%= calendarResource.getDefaultCalendarId() %>">
+					<c:if test="<%= calendars != null %>">
+						<aui:select label="default-calendar" name="defaultCalendarId" value="<%= calendarResource.getDefaultCalendarId() %>">
 
-						<%
-						for (Calendar calendar : calendars) {
-						%>
+							<%
+							for (Calendar calendar : calendars) {
+							%>
 
-							<aui:option label="<%= HtmlUtil.escapeAttribute(calendar.getName(locale)) %>" value="<%= calendar.getCalendarId() %>" />
+								<aui:option label="<%= HtmlUtil.escapeAttribute(calendar.getName(locale)) %>" value="<%= calendar.getCalendarId() %>" />
 
-						<%
-						}
-						%>
+							<%
+							}
+							%>
 
-					</aui:select>
-				</c:if>
+						</aui:select>
+					</c:if>
 
-				<aui:input inlineLabel="left" name="active" type="checkbox" value="<%= (calendarResource == null) ? true : calendarResource.isActive() %>" />
-			</liferay-ui:panel>
+					<aui:input inlineLabel="left" name="active" type="checkbox" value="<%= (calendarResource == null) ? true : calendarResource.isActive() %>" />
+				</div>
+			</clay:panel>
 
-			<liferay-ui:panel
-				collapsible="<%= true %>"
-				cssClass="panel-unstyled"
-				defaultState="closed"
-				extended="<%= false %>"
-				id="calendarResourceCategorizationPanel"
-				markupView="lexicon"
-				persistState="<%= true %>"
-				title="categorization"
+			<clay:panel
+				displayTitle='<%= LanguageUtil.get(request, "categorization") %>'
 			>
-				<liferay-asset:asset-categories-selector
-					className="<%= CalendarResource.class.getName() %>"
-					classPK="<%= calendarResourceId %>"
-					visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
-				/>
+				<div class="panel-body">
+					<liferay-asset:asset-categories-selector
+						className="<%= CalendarResource.class.getName() %>"
+						classPK="<%= calendarResourceId %>"
+						visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
+					/>
 
-				<liferay-asset:asset-tags-selector
-					className="<%= CalendarResource.class.getName() %>"
-					classPK="<%= calendarResourceId %>"
-				/>
-			</liferay-ui:panel>
+					<liferay-asset:asset-tags-selector
+						className="<%= CalendarResource.class.getName() %>"
+						classPK="<%= calendarResourceId %>"
+					/>
+				</div>
+			</clay:panel>
 
 			<c:if test="<%= calendarResource == null %>">
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					cssClass="panel-unstyled"
-					defaultState="closed"
-					extended="<%= false %>"
-					id="calendarResourcePermissionsPanel"
-					markupView="lexicon"
-					persistState="<%= true %>"
-					title="permissions"
+				<clay:panel
+					displayTitle='<%= LanguageUtil.get(request, "permissions") %>'
 				>
-					<liferay-ui:input-permissions
-						modelName="<%= CalendarResource.class.getName() %>"
-					/>
-				</liferay-ui:panel>
+					<div class="panel-body">
+						<liferay-ui:input-permissions
+							modelName="<%= CalendarResource.class.getName() %>"
+						/>
+					</div>
+				</clay:panel>
 			</c:if>
-		</liferay-ui:panel-container>
+		</clay:panel-group>
 
 		<aui:button-row>
 			<aui:button type="submit" />

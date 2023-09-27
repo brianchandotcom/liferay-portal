@@ -1,21 +1,16 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {Liferay} from '.';
 
-const HEADLESS_BASE_URL = `${window.location.origin}/o/headless-delivery/v1.0`;
+const HEADLESS_DELIVERY_BASE_URL_ = `${window.location.origin}/o/headless-delivery/v1.0`;
+const HEADLESS_BASE_URL = `${window.location.origin}/o/`;
 
 const fetchHeadless = async ({resolveAsJson = true, url}) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(`${HEADLESS_BASE_URL}${url}`, {
+	const response = await fetch(`${HEADLESS_DELIVERY_BASE_URL_}${url}`, {
 		headers: {
 			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 			'Cache-Control': 'max-age=30, stale-while-revalidate=30',
@@ -30,4 +25,20 @@ const fetchHeadless = async ({resolveAsJson = true, url}) => {
 	return response;
 };
 
-export {fetchHeadless};
+const getHighPriorityContacts = async (filter) => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${HEADLESS_BASE_URL}${`c/highprioritycontactses/?nestedFields=user&filter=${filter}`}`,
+		{
+			headers: {
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Cache-Control': 'max-age=30, stale-while-revalidate=30',
+				'x-csrf-token': Liferay.authToken,
+			},
+		}
+	);
+
+	return response.json();
+};
+
+export {getHighPriorityContacts, fetchHeadless};

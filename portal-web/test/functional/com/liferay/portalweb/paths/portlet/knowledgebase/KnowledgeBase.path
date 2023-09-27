@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_DESCRIPTION_HEADER</td>
+	<td>//div[contains(@class,'subtitle') and contains(.,'Description')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ARTICLE_VERSION_NUMBER</td>
 	<td>//span[contains(@class,'label-info')]/span</td>
 	<td></td>
@@ -309,6 +314,16 @@
 <tr>
 	<td>MOVE_NEW_PARENT_PRIORITY_LABEL</td>
 	<td>//div[contains(@id,'knowledge_base_web') and contains(@id,'newParent')]//label[contains(@class,'control-label') and contains(.,'Priority')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_MODAL_SEARCH_BAR</td>
+	<td>//div[contains(@class,'container-fluid')]//div[contains(@class,'input-group-sm')]//input[@placeholder='Search for']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_MODAL_SEARCH_RESULT</td>
+	<td>//ul[contains(@class,'list-group')]//div[contains(@class,'autofit-col')]//span[contains(.,'${key_itemName}')]</td>
 	<td></td>
 </tr>
 

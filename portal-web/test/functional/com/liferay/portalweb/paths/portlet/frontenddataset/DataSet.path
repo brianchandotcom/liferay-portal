@@ -21,6 +21,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_LABEL_POSITION</td>
+	<td>//div[@class='dnd-tr'][${key_rowPosition}]//div[(text()='${key_labelName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_ICON</td>
+	<td>//button[contains(text(),'${key_labelName}')]//span[contains(@class,'inline-item inline-item-after')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_KEBAB_MENU</td>
 	<td>//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]/parent::div/following-sibling::div//button | //div[contains(@class, 'dnd-td') and contains(., '${key_entry}')]/following-sibling::div//button</td>
 	<td></td>
@@ -40,7 +50,7 @@
 
 <tr>
 	<td>VIEW_ENTRY_BUTTON</td>
-	<td>//div[contains(@class,'show')]//button[contains(.,'View')]</td>
+	<td>//div[contains(@class,'show')]//button[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,6 +131,11 @@
 	<td>//tr[contains(.,'${key_fieldName}')]//button[contains(@class,'dropdown-toggle')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FIELD_COLUMN_NAME</td>
+	<td>//tr//th[contains(.,'${key_type}')]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET PAGINATION -->
 
@@ -139,6 +154,11 @@
 	<td>//div[contains(@class,'form-group')]//input[contains(@id,'ViewDefaultItemsPerPage')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DEFOCUS</td>
+	<td>//*[@id="banner"]/div[1]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET DEFAULT SORT -->
 
@@ -150,6 +170,41 @@
 <tr>
 	<td>SORTING_SELECT</td>
 	<td>//div[label[contains(.,'Sorting')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_ELLIPSIS_BUTTON_BY_POSITION</td>
+	<td>//tr[contains(@class,'orderable-table-row')][${key_entryPosition}]//*[contains(@class, 'lexicon-icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASCENDING_SORTING_OPTION</td>
+	<td>//*[contains(@class, 'modal-dialog')]//option[contains(@value, 'asc')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCENDING_SORTING_OPTION</td>
+	<td>//*[contains(@class, 'modal-dialog')]//option[contains(@value, 'desc')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_ENTRY_TABLE</td>
+	<td>//tr[@class='orderable-table-row'][${key_rowPosition}]//*[contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_DIALOG</td>
+	<td>//*[contains(@class, 'modal-dialog')] | //*[contains(@class, 'modal-header')]//*[contains(text(), '${key_modalTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_MESSAGE</td>
+	<td>//*[contains(@class, 'modal-body')]//*[contains(text(), '${key_message}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INPUT_FIELD_DISABLED</td>
+	<td>//input[contains(@name, '${key_fieldName}')][@disabled]</td>
 	<td></td>
 </tr>
 
@@ -196,12 +251,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NEW_FILTER_SAVE_BUTTON</td>
-	<td>//button[contains(text(), 'Save')]</td>
+	<td>MODAL_SAVE_BUTTON</td>
+	<td>//*[contains(@class, 'modal-dialog')]//button[contains(text(), 'Save')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NEW_FILTER_CANCEL_BUTTON</td>
+	<td>MODAL_CANCEL_BUTTON</td>
 	<td>//*[contains(@class, 'modal-dialog')]//button[contains(text(), 'Cancel')]</td>
 	<td></td>
 </tr>
@@ -237,7 +292,7 @@
 </tr>
 <tr>
 	<td>SELECT_MONTH</td>
-	<td>//div[contains(@class,"dropdown-menu date-picker-dropdown-menu show")]//select[contains(@class,'form-control form-control-sm') and contains(@name,'${key_type}')]</td>
+	<td>xpath=(//div[contains(@class,"date-picker-nav")]//select[contains(@class,'form-control form-control-sm')])[${key_number}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -268,6 +323,15 @@
 	<td>//table[contains(@class,'table-list')]//tr[contains(@class,'orderable-table-row') and contains(.,'${key_nameField}')]//td[@class="drag-handle-cell"]//button[@aria-label="Drag Item"]</td>
 	<td></td>
 </tr>
+
+<!-- DATA SET FRAGMENT -->
+
+<tr>
+	<td>SELECT_DATA_SET_VIEW</td>
+	<td>//input[contains(@class,'content-input')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

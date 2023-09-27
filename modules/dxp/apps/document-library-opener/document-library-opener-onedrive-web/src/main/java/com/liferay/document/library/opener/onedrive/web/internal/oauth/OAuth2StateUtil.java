@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.opener.onedrive.web.internal.oauth;
@@ -31,7 +22,8 @@ public class OAuth2StateUtil {
 	public static void cleanUp(HttpServletRequest httpServletRequest) {
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		httpSession.removeAttribute(DLOpenerOneDriveWebKeys.OAUTH2_STATE);
+		httpSession.removeAttribute(
+			DLOpenerOneDriveWebKeys.DL_OPENER_ONE_DRIVE_OAUTH2_STATE);
 	}
 
 	public static OAuth2State getOAuth2State(
@@ -40,7 +32,7 @@ public class OAuth2StateUtil {
 		HttpSession httpSession = httpServletRequest.getSession();
 
 		return (OAuth2State)httpSession.getAttribute(
-			DLOpenerOneDriveWebKeys.OAUTH2_STATE);
+			DLOpenerOneDriveWebKeys.DL_OPENER_ONE_DRIVE_OAUTH2_STATE);
 	}
 
 	public static boolean isValid(
@@ -63,7 +55,8 @@ public class OAuth2StateUtil {
 		HttpSession httpSession = httpServletRequest.getSession();
 
 		httpSession.setAttribute(
-			DLOpenerOneDriveWebKeys.OAUTH2_STATE, oAuth2State);
+			DLOpenerOneDriveWebKeys.DL_OPENER_ONE_DRIVE_OAUTH2_STATE,
+			oAuth2State);
 	}
 
 }

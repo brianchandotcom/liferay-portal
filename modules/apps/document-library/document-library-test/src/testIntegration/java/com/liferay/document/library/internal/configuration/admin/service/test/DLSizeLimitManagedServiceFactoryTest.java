@@ -1,32 +1,21 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.internal.configuration.admin.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.lang.reflect.Method;
 
 import java.util.Dictionary;
 
@@ -199,22 +188,23 @@ public class DLSizeLimitManagedServiceFactoryTest {
 	private long _getCompanyMimeTypeSizeLimit(String mimeType)
 		throws Exception {
 
-		Method method = ReflectionUtil.getDeclaredMethod(
-			_managedServiceFactory.getClass(), "getCompanyMimeTypeSizeLimit",
-			long.class, String.class);
+		return ReflectionTestUtil.invoke(
+			_getDLSizeLimitConfigurationHelper(), "getCompanyMimeTypeSizeLimit",
+			new Class<?>[] {long.class, String.class},
+			TestPropsValues.getCompanyId(), mimeType);
+	}
 
-		return (long)method.invoke(
-			_managedServiceFactory, TestPropsValues.getCompanyId(), mimeType);
+	private Object _getDLSizeLimitConfigurationHelper() {
+		return ReflectionTestUtil.getFieldValue(
+			_managedServiceFactory, "_dlSizeLimitConfigurationHelper");
 	}
 
 	private long _getGroupMimeTypeSizeLimit(long groupId, String mimeType)
 		throws Exception {
 
-		Method method = ReflectionUtil.getDeclaredMethod(
-			_managedServiceFactory.getClass(), "getGroupMimeTypeSizeLimit",
-			long.class, String.class);
-
-		return (long)method.invoke(_managedServiceFactory, groupId, mimeType);
+		return ReflectionTestUtil.invoke(
+			_getDLSizeLimitConfigurationHelper(), "getGroupMimeTypeSizeLimit",
+			new Class<?>[] {long.class, String.class}, groupId, mimeType);
 	}
 
 	private long _getGroupMimeTypeSizeLimit(String mimeType) throws Exception {
@@ -244,7 +234,9 @@ public class DLSizeLimitManagedServiceFactoryTest {
 		}
 	}
 
-	@Inject(filter = "component.name=*.DLSizeLimitManagedServiceFactory")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.internal.configuration.admin.service.DLSizeLimitManagedServiceFactory"
+	)
 	private ManagedServiceFactory _managedServiceFactory;
 
 }

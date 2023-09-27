@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.content.web.internal.info.item.provider;
@@ -24,7 +15,7 @@ import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
-import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.commerce.product.content.helper.CPContentHelper;
 import com.liferay.commerce.product.content.web.internal.info.CPDefinitionInfoItemFields;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -52,6 +43,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +82,8 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					new InfoItemReference(
 						CPDefinition.class.getName(),
 						cpDefinition.getCPDefinitionId()),
-					StringPool.BLANK, _getThemeDisplay())
+					StringPool.BLANK, CPDefinition.class.getSimpleName(),
+					_getThemeDisplay())
 			).infoFieldValues(
 				_templateInfoItemFieldSetProvider.getInfoFieldValues(
 					CPDefinition.class.getName(), cpDefinition)
@@ -143,7 +137,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 				cpInstance.getCompanyId(), cpInstance.getGroupId(),
 				commerceChannel.getGroupId(),
 				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance),
-				cpInstance.getSku());
+				cpInstance.getSku(), StringPool.BLANK);
 		}
 
 		return StringPool.BLANK;
@@ -342,7 +336,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					cpDefinition.isIncomplete()));
 
 			if ((themeDisplay != null) &&
-				!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+				!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 
 				cpDefinitionInfoFieldValues.add(
 					new InfoFieldValue<>(
@@ -539,7 +533,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 
 		CommerceMoney commerceMoney =
 			_commerceProductPriceCalculation.getFinalPrice(
-				cpInstance.getCPInstanceId(), 1,
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
 				CommerceContextThreadLocal.get());
 
 		if (commerceMoney.isEmpty()) {
@@ -549,7 +543,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		return commerceMoney.format(themeDisplay.getLocale());
 	}
 
-	private Integer _getInventory(
+	private BigDecimal _getInventory(
 			CPInstance cpInstance, ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -577,7 +571,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 
 			return _commerceInventoryEngine.getStockQuantity(
 				cpInstance.getCompanyId(), cpInstance.getGroupId(),
-				commerceChannelGroupId, cpInstance.getSku());
+				commerceChannelGroupId, cpInstance.getSku(), StringPool.BLANK);
 		}
 
 		return null;

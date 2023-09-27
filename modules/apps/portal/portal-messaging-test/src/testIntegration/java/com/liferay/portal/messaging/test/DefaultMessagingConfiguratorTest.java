@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.messaging.test;
@@ -19,8 +10,10 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.MessageListenerRegistry;
 import com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -144,11 +137,16 @@ public class DefaultMessagingConfiguratorTest {
 			Assert.assertTrue(
 				destinationName, destinationName.contains("portaltest"));
 
+			List<MessageListener> destinationMessageListeners =
+				_messageListenerRegistry.getMessageListeners(destinationName);
+
 			if (destinationName.equals("liferay/portaltest1")) {
-				Assert.assertEquals(1, destination.getMessageListenerCount());
+				Assert.assertEquals(
+					destinationMessageListeners.toString(), 1,
+					destinationMessageListeners.size());
 			}
 
-			if (destination.getMessageListenerCount() > 0) {
+			if (!destinationMessageListeners.isEmpty()) {
 				Message message = new Message();
 
 				message.setDestinationName(destinationName);
@@ -161,6 +159,10 @@ public class DefaultMessagingConfiguratorTest {
 	private static BundleContext _bundleContext;
 
 	private DefaultMessagingConfigurator _defaultMessagingConfigurator;
+
+	@Inject
+	private MessageListenerRegistry _messageListenerRegistry;
+
 	private ServiceTracker<Destination, Destination> _serviceTracker;
 
 	private static class TestMessageListener implements MessageListener {

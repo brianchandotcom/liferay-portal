@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Adaptive Media Image Web
 Bundle-SymbolicName: com.liferay.adaptive.media.image.web
-Bundle-Version: 5.0.11
+Bundle-Version: 5.0.13
 Web-ContextPath: /adaptive-media-image-web

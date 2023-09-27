@@ -12,7 +12,12 @@
 <tbody>
 <tr>
 	<td>ADD_FIELD_POSITION</td>
-	<td>//*[contains(@class, 'criteria-group-item-root')]//*[contains(@class, 'empty-drop-zone-root')]/div[1] | //*[contains(@class, 'edit-container')]</td>
+	<td>//*[contains(@class, 'criteria-group-item-root')]/div[1] | //*[contains(@class, 'edit-container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FIELD_POSITION_N</td>
+	<td>xpath=(//*[contains(@class, 'criteria-group-item-root')]/div[1])[${indexNumber}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -22,7 +27,7 @@
 </tr>
 <tr>
 	<td>ADD_FIELD_POSITION_EMPTY</td>
-	<td>//div[contains(@class, 'empty-drop-zone-dashed')] //*[contains(@class, 'drop-zone-target')]</td>
+	<td>//div[contains(@class, 'empty-drop-zone--dashed')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -93,6 +98,11 @@
 <tr>
 	<td>DUPLICATE_BUTTON</td>
 	<td>//button//*[contains(@class,'lexicon-icon lexicon-icon-paste')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMPTY_DROP_ZONE_DASHED</td>
+	<td>//div[contains(@class,'empty-drop-zone--dashed')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,13 +1,7 @@
 {
-	"actions": {
-		"createBatch": {
-			"href": "/o/object-admin/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-			"method": "POST"
-		}
-	},
 	"configuration": {
 		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-		"companyId": 0,
+		"multiCompany": true,
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
@@ -50,7 +44,7 @@
 					],
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "Clob"
 				},
 				{
@@ -74,7 +68,7 @@
 					],
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -98,7 +92,7 @@
 					],
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],
@@ -179,11 +173,13 @@
 					"errorLabel": {
 						"en_US": "Please enter a valid URL."
 					},
+					"externalReferenceCode": "VALID_URL",
 					"name": {
 						"en_US": "Valid URL"
 					},
 					"objectDefinitionExternalReferenceCode": "L_BOOKMARK",
-					"script": "isURL(url)"
+					"script": "isURL(url)",
+					"system": true
 				}
 			],
 			"objectViews": [

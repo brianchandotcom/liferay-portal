@@ -1,21 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -31,7 +23,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -92,17 +83,20 @@ public class ObjectDefinitionsValidationsDisplayContext
 	}
 
 	public List<Map<String, String>> getObjectValidationRuleEngines() {
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
 		return ListUtil.sort(
 			TransformUtil.transform(
 				_objectValidationRuleEngineRegistry.
-					getObjectValidationRuleEngines(),
+					getObjectValidationRuleEngines(
+						objectDefinition.getCompanyId(),
+						objectDefinition.getName()),
 				objectValidationRuleEngine -> HashMapBuilder.put(
 					"label",
-					LanguageUtil.get(
-						objectRequestHelper.getLocale(),
-						objectValidationRuleEngine.getName())
+					objectValidationRuleEngine.getLabel(
+						objectRequestHelper.getLocale())
 				).put(
-					"name", objectValidationRuleEngine.getName()
+					"name", objectValidationRuleEngine.getKey()
 				).build()),
 			Comparator.comparing(item -> item.get("label")));
 	}
@@ -111,36 +105,24 @@ public class ObjectDefinitionsValidationsDisplayContext
 			ObjectValidationRule objectValidationRule)
 		throws PortalException {
 
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
 		return HashMapBuilder.<String, Object>put(
-			"objectValidationRule",
-			HashMapBuilder.<String, Object>put(
-				"active", objectValidationRule.isActive()
-			).put(
-				"engine", objectValidationRule.getEngine()
-			).put(
-				"engineLabel",
-				LanguageUtil.get(
-					objectRequestHelper.getLocale(),
-					objectValidationRule.getEngine())
-			).put(
-				"errorLabel",
-				LocalizationUtil.getLocalizationMap(
-					objectValidationRule.getErrorLabel())
-			).put(
-				"id", objectValidationRule.getObjectValidationRuleId()
-			).put(
-				"name",
-				LocalizationUtil.getLocalizationMap(
-					objectValidationRule.getName())
-			).put(
-				"script", objectValidationRule.getScript()
-			).build()
+			"creationLanguageId", objectDefinition.getDefaultLanguageId()
+		).put(
+			"learnResources",
+			LearnMessageUtil.getReactDataJSONObject("object-web")
+		).put(
+			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
 		).put(
 			"objectValidationRuleElements",
 			_createObjectValidationRuleElements(
 				objectValidationRule.getEngine())
 		).put(
 			"objectValidationRuleEngines", getObjectValidationRuleEngines()
+		).put(
+			"objectValidationRuleId",
+			objectValidationRule.getObjectValidationRuleId()
 		).put(
 			"readOnly", !hasUpdateObjectDefinitionPermission()
 		).build();

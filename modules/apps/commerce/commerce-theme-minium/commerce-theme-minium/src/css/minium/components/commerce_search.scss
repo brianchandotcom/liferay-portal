@@ -13,8 +13,9 @@
 			height: 100%;
 			width: 100%;
 
-			&:focus {
-				outline: none;
+			&:focus-visible {
+				background-color: transparent;
+				box-shadow: none;
 			}
 
 			&::placeholder {

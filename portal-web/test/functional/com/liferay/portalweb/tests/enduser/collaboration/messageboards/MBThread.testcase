@@ -290,7 +290,7 @@ definition {
 	@priority = 3
 	@refactordone
 	test CanDeleteThreadWithAttachment {
-		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
+		property custom.properties = "trash.entries.max.age=1${line.separator}trash.entry.check.interval=1";
 		property portal.acceptance = "false";
 
 		HeadlessSite.addSite(siteName = "Site Name");
@@ -393,6 +393,7 @@ definition {
 	@refactordone
 	test CanLimitThreadAttachmentSize {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 

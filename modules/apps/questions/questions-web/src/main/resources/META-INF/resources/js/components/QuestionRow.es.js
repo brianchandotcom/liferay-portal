@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
@@ -50,14 +41,23 @@ export default function QuestionRow({
 				name: question.creator.name,
 				portraitURL: question.creator.image,
 				userId: String(question.creator.id),
+				...(Liferay.FeatureFlags['LPS-185892'] && {
+					userGroups: question.creator?.userGroupBriefs?.map(
+						(userGroupBrief) => userGroupBrief.name
+					),
+				}),
 		  }
 		: {
 				link: `/questions/${sectionTitle}`,
 				name: '',
 				portraitURL: '',
 				userId: '0',
+				...(Liferay.FeatureFlags['LPS-185892'] && {
+					userGroups: null,
+				}),
 		  };
 
+	const isContentReviewer = context?.isContentReviewer;
 	const isRowSelected = question.friendlyUrlPath === rowSelected;
 
 	return (
@@ -196,12 +196,30 @@ export default function QuestionRow({
 							userId={creatorInformation.userId}
 						/>
 
-						<strong className="c-ml-2 text-dark">
+						<strong className="c-m-2 text-dark">
 							{creatorInformation.name ||
 								Liferay.Language.get(
 									'anonymous-user-configuration-name'
 								)}
 						</strong>
+
+						{Liferay.FeatureFlags['LPS-185892'] &&
+							!!isContentReviewer &&
+							creatorInformation.userGroups?.map(
+								(userGroup, index) => (
+									<ClayLabel
+										className="mb-2 mr-1"
+										displayType={
+											userGroup === 'Partner'
+												? 'info'
+												: 'warning'
+										}
+										key={index}
+									>
+										{userGroup}
+									</ClayLabel>
+								)
+							)}
 					</Link>
 
 					<EditedTimestamp

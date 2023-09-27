@@ -576,6 +576,7 @@ definition {
 	test CanCreateObjectEntryWithEveryField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Picklist and create new Picklist and item") {
 			ApplicationsMenu.gotoPortlet(
@@ -1148,6 +1149,55 @@ definition {
 		}
 	}
 
+	@description = "LPS-170122 - Verify the field value cannot be changed when the ready-only property condition is false"
+	@priority = 4
+	test CanEditConditionalReadOnlyFieldWhenConditionIsFalse {
+		task ("Given an object definition") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+		}
+
+		task ("And given a rich text field with the read-only property set as conditional with an expression") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "RichText",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "Clob",
+				isReadOnly = "conditional",
+				isRequired = "false",
+				objectName = "CustomObject",
+				readOnlyExpression = "customField == 'Test'");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("And given an object entry that makes the conditional expression false") {
+			Navigator.openURL();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject",
+				value = "Entry Test");
+		}
+
+		task ("When the entry is being edited") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+		}
+
+		task ("Then it's possible to edit the field's value") {
+			AssertEditable(
+				key_fieldLabel = "Custom Field",
+				locator1 = "FormFields#RICH_TEXT_CONTENT",
+				value = "Entry Test");
+		}
+	}
+
 	@description = "LPS-164948 - Verify the Formula Field can be edited in a Custom Object"
 	@priority = 4
 	test CanEditFormulaFieldOnCustomObject {
@@ -1582,6 +1632,7 @@ definition {
 	@priority = 4
 	test CanManageFormulaFieldWithCustomAction {
 		property custom.properties = "feature.flag.LPS-164948=true";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a custom object with a Formula Field and action") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1850,7 +1901,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 176851");
 
-			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
 			PortletEntry.publish();
 		}
@@ -2024,6 +2075,56 @@ definition {
 		}
 	}
 
+	@description = "LPS-170122 - Verify the field value cannot be changed when the ready-only property condition is true"
+	@priority = 5
+	test CannotEditConditionalReadOnlyFieldWhenConditionIsTrue {
+		property custom.properties = "feature.flag.LPS-170122=true";
+
+		task ("Given an object definition") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+		}
+
+		task ("And given a long text field with the the read-only property set as conditional with an expression") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "LongText",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "Clob",
+				isReadOnly = "conditional",
+				isRequired = "false",
+				objectName = "CustomObject",
+				readOnlyExpression = "customField == 'Entry Test'");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("And given an object entry that makes the conditional expression true") {
+			Navigator.openURL();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject",
+				value = "Entry Test");
+		}
+
+		task ("When the entry is being edited") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+		}
+
+		task ("Then it's not possible to edit the field's value") {
+			AssertNotEditable(
+				key_optionName = "Entry Test",
+				locator1 = "ObjectAdmin#VIEW_FIELD_LONG_TEXT_DISABLED");
+		}
+	}
+
 	@description = "LPS-162174 - Verify that it is not possible to edit ERC fields in Objects management."
 	@priority = 5
 	test CannotEditERCField {
@@ -2050,6 +2151,65 @@ definition {
 			AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
 
 			AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
+		}
+	}
+
+	@description = "LPS-170122 - Verify the field value cannot be changed when the ready-only property is set to true (via UI)"
+	@priority = 4
+	test CannotEditReadOnlyFieldWhenTrue {
+		property custom.properties = "feature.flag.LPS-170122=true";
+
+		task ("Given a custom object with a text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 189496",
+				objectName = "CustomObject189496",
+				pluralLabelName = "Custom Objects 189496");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Text Field",
+				fieldName = "customTextField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject189496");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject189496");
+		}
+
+		task ("And given an object entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customTextField",
+				objectName = "CustomObject189496",
+				value = "Entry Test");
+		}
+
+		task ("And given the read-only property is set to true on text field (via UI)") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 189496");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Text Field");
+
+			Click(locator1 = "ObjectAdmin#SIDEBAR_ADVANCED_TAB");
+
+			ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "True");
+
+			CreateObject.saveObject();
+		}
+
+		task ("When viewing the added entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject189496");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+		}
+
+		task ("Then it's not possible to edit the field's value") {
+			AssertNotEditable(
+				key_indexNumber = 1,
+				key_text = "Text Field",
+				locator1 = "TextInput#ANY_N");
 		}
 	}
 
@@ -3093,6 +3253,7 @@ definition {
 	@priority = 5
 	test CanUseERCFieldWithGroovyScript {
 		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -4271,6 +4432,7 @@ definition {
 	@priority = 4
 	test MaximumFileSizeIsSetBySystemConfigurationsWhenZero {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151561",

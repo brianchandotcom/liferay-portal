@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.vulcan.batch.engine;
@@ -20,12 +11,12 @@ package com.liferay.portal.vulcan.batch.engine;
 public class Field {
 
 	public static Field of(
-		String description, String name, boolean readOnly, boolean required,
-		String type, boolean writeOnly) {
+		String description, String name, boolean readOnly, String ref,
+		boolean required, String type, boolean writeOnly) {
 
 		return new Field(
-			_toAccessType(readOnly, writeOnly), description, name, required,
-			type);
+			_toAccessType(readOnly, writeOnly), description, name, ref,
+			required, type);
 	}
 
 	public AccessType getAccessType() {
@@ -38,6 +29,10 @@ public class Field {
 
 	public String getName() {
 		return _name;
+	}
+
+	public String getRef() {
+		return _ref;
 	}
 
 	public String getType() {
@@ -68,12 +63,13 @@ public class Field {
 	}
 
 	private Field(
-		AccessType accessType, String description, String name,
+		AccessType accessType, String description, String name, String ref,
 		boolean required, String type) {
 
 		_accessType = accessType;
 		_description = description;
 		_name = name;
+		_ref = ref;
 		_required = required;
 		_type = type;
 	}
@@ -81,6 +77,7 @@ public class Field {
 	private final AccessType _accessType;
 	private final String _description;
 	private final String _name;
+	private final String _ref;
 	private final boolean _required;
 	private final String _type;
 

@@ -1,5 +1,7 @@
 {
 	"dependencies": {
+		"@clayui/alert": "3.93.0",
+		"react": "16.12.0"
 	},
 	"main": "js/App.es",
 	"name": "frontend-js-clay-sample-web",
@@ -8,5 +10,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "2.0.18"
+	"version": "2.0.20"
 }

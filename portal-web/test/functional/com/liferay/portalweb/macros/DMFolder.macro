@@ -247,7 +247,7 @@ definition {
 			menuItem = "Copy To",
 			rowEntry = ${dmFolderName});
 
-		Alert.viewWarningSpecific(warningMessage = "The copying process may take some time. Note that categories, ratings, tags, and custom document types will not be copied.");
+		Alert.viewWarningSpecific(warningMessage = "The copying process may take some time. Only categories, tags, ratings, and document types in the global scope or asset libraries connected to both sites will be copied. Document type fields will be displayed empty.");
 
 		AssertElementPresent(
 			key_fieldLabel = "Copy From",
@@ -308,6 +308,12 @@ definition {
 
 		if (isSet(copyDuplicatedDocument)) {
 			Alert.viewErrorMessage(errorMessage = "A folder already exists with name ${dmFolderName}");
+		}
+		else if (isSet(copyToUnconnectedSite)) {
+			Alert.viewErrorMessage(errorMessage = "The item is not copied because the site and asset library are not connected.");
+		}
+		else if (isSet(copyToStagingSite)) {
+			Alert.viewErrorMessage(errorMessage = "Cannot copy folders to the live version of a site. Make your changes in staging and publish them to Live afterwards to make them public.");
 		}
 		else {
 			Alert.viewSuccessMessage();
@@ -521,9 +527,7 @@ definition {
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no documents or media files in this folder.");
+		DMFolder.viewEntryNotPresent(dmFolderName = ${dmFolderName});
 	}
 
 	macro removePermissions {

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.model.impl;
@@ -102,8 +93,8 @@ public class CommerceOrderItemCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", bookedQuantityId=");
-		sb.append(bookedQuantityId);
+		sb.append(", commerceInventoryBookedQuantityId=");
+		sb.append(commerceInventoryBookedQuantityId);
 		sb.append(", commerceOrderId=");
 		sb.append(commerceOrderId);
 		sb.append(", commercePriceListId=");
@@ -120,8 +111,6 @@ public class CommerceOrderItemCacheModel
 		sb.append(parentCommerceOrderItemId);
 		sb.append(", shippingAddressId=");
 		sb.append(shippingAddressId);
-		sb.append(", decimalQuantity=");
-		sb.append(decimalQuantity);
 		sb.append(", deliveryGroup=");
 		sb.append(deliveryGroup);
 		sb.append(", deliveryMaxSubscriptionCycles=");
@@ -208,6 +197,8 @@ public class CommerceOrderItemCacheModel
 		sb.append(subscriptionType);
 		sb.append(", subscriptionTypeSettings=");
 		sb.append(subscriptionTypeSettings);
+		sb.append(", unitOfMeasureIncrementalOrderQuantity=");
+		sb.append(unitOfMeasureIncrementalOrderQuantity);
 		sb.append(", unitOfMeasureKey=");
 		sb.append(unitOfMeasureKey);
 		sb.append(", unitPrice=");
@@ -271,7 +262,8 @@ public class CommerceOrderItemCacheModel
 			commerceOrderItemImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		commerceOrderItemImpl.setBookedQuantityId(bookedQuantityId);
+		commerceOrderItemImpl.setCommerceInventoryBookedQuantityId(
+			commerceInventoryBookedQuantityId);
 		commerceOrderItemImpl.setCommerceOrderId(commerceOrderId);
 		commerceOrderItemImpl.setCommercePriceListId(commercePriceListId);
 		commerceOrderItemImpl.setCPInstanceId(CPInstanceId);
@@ -282,7 +274,6 @@ public class CommerceOrderItemCacheModel
 		commerceOrderItemImpl.setParentCommerceOrderItemId(
 			parentCommerceOrderItemId);
 		commerceOrderItemImpl.setShippingAddressId(shippingAddressId);
-		commerceOrderItemImpl.setDecimalQuantity(decimalQuantity);
 
 		if (deliveryGroup == null) {
 			commerceOrderItemImpl.setDeliveryGroup("");
@@ -417,6 +408,9 @@ public class CommerceOrderItemCacheModel
 				subscriptionTypeSettings);
 		}
 
+		commerceOrderItemImpl.setUnitOfMeasureIncrementalOrderQuantity(
+			unitOfMeasureIncrementalOrderQuantity);
+
 		if (unitOfMeasureKey == null) {
 			commerceOrderItemImpl.setUnitOfMeasureKey("");
 		}
@@ -453,7 +447,7 @@ public class CommerceOrderItemCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		bookedQuantityId = objectInput.readLong();
+		commerceInventoryBookedQuantityId = objectInput.readLong();
 
 		commerceOrderId = objectInput.readLong();
 
@@ -470,7 +464,6 @@ public class CommerceOrderItemCacheModel
 		parentCommerceOrderItemId = objectInput.readLong();
 
 		shippingAddressId = objectInput.readLong();
-		decimalQuantity = (BigDecimal)objectInput.readObject();
 		deliveryGroup = objectInput.readUTF();
 
 		deliveryMaxSubscriptionCycles = objectInput.readLong();
@@ -515,8 +508,7 @@ public class CommerceOrderItemCacheModel
 		printedNote = objectInput.readUTF();
 		promoPrice = (BigDecimal)objectInput.readObject();
 		promoPriceWithTaxAmount = (BigDecimal)objectInput.readObject();
-
-		quantity = objectInput.readInt();
+		quantity = (BigDecimal)objectInput.readObject();
 
 		replacedCPInstanceId = objectInput.readLong();
 		replacedSku = objectInput.readUTF();
@@ -525,8 +517,7 @@ public class CommerceOrderItemCacheModel
 		shipSeparately = objectInput.readBoolean();
 
 		shippable = objectInput.readBoolean();
-
-		shippedQuantity = objectInput.readInt();
+		shippedQuantity = (BigDecimal)objectInput.readObject();
 
 		shippingExtraPrice = objectInput.readDouble();
 		sku = objectInput.readUTF();
@@ -536,6 +527,8 @@ public class CommerceOrderItemCacheModel
 		subscriptionLength = objectInput.readInt();
 		subscriptionType = objectInput.readUTF();
 		subscriptionTypeSettings = objectInput.readUTF();
+		unitOfMeasureIncrementalOrderQuantity =
+			(BigDecimal)objectInput.readObject();
 		unitOfMeasureKey = objectInput.readUTF();
 		unitPrice = (BigDecimal)objectInput.readObject();
 		unitPriceWithTaxAmount = (BigDecimal)objectInput.readObject();
@@ -581,7 +574,7 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(bookedQuantityId);
+		objectOutput.writeLong(commerceInventoryBookedQuantityId);
 
 		objectOutput.writeLong(commerceOrderId);
 
@@ -598,7 +591,6 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeLong(parentCommerceOrderItemId);
 
 		objectOutput.writeLong(shippingAddressId);
-		objectOutput.writeObject(decimalQuantity);
 
 		if (deliveryGroup == null) {
 			objectOutput.writeUTF("");
@@ -676,8 +668,7 @@ public class CommerceOrderItemCacheModel
 
 		objectOutput.writeObject(promoPrice);
 		objectOutput.writeObject(promoPriceWithTaxAmount);
-
-		objectOutput.writeInt(quantity);
+		objectOutput.writeObject(quantity);
 
 		objectOutput.writeLong(replacedCPInstanceId);
 
@@ -693,8 +684,7 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeBoolean(shipSeparately);
 
 		objectOutput.writeBoolean(shippable);
-
-		objectOutput.writeInt(shippedQuantity);
+		objectOutput.writeObject(shippedQuantity);
 
 		objectOutput.writeDouble(shippingExtraPrice);
 
@@ -723,6 +713,8 @@ public class CommerceOrderItemCacheModel
 			objectOutput.writeUTF(subscriptionTypeSettings);
 		}
 
+		objectOutput.writeObject(unitOfMeasureIncrementalOrderQuantity);
+
 		if (unitOfMeasureKey == null) {
 			objectOutput.writeUTF("");
 		}
@@ -748,7 +740,7 @@ public class CommerceOrderItemCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long bookedQuantityId;
+	public long commerceInventoryBookedQuantityId;
 	public long commerceOrderId;
 	public long commercePriceListId;
 	public long CPInstanceId;
@@ -757,7 +749,6 @@ public class CommerceOrderItemCacheModel
 	public long customerCommerceOrderItemId;
 	public long parentCommerceOrderItemId;
 	public long shippingAddressId;
-	public BigDecimal decimalQuantity;
 	public String deliveryGroup;
 	public long deliveryMaxSubscriptionCycles;
 	public int deliverySubscriptionLength;
@@ -788,19 +779,20 @@ public class CommerceOrderItemCacheModel
 	public String printedNote;
 	public BigDecimal promoPrice;
 	public BigDecimal promoPriceWithTaxAmount;
-	public int quantity;
+	public BigDecimal quantity;
 	public long replacedCPInstanceId;
 	public String replacedSku;
 	public long requestedDeliveryDate;
 	public boolean shipSeparately;
 	public boolean shippable;
-	public int shippedQuantity;
+	public BigDecimal shippedQuantity;
 	public double shippingExtraPrice;
 	public String sku;
 	public boolean subscription;
 	public int subscriptionLength;
 	public String subscriptionType;
 	public String subscriptionTypeSettings;
+	public BigDecimal unitOfMeasureIncrementalOrderQuantity;
 	public String unitOfMeasureKey;
 	public BigDecimal unitPrice;
 	public BigDecimal unitPriceWithTaxAmount;

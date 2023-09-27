@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Store S3
 Bundle-SymbolicName: com.liferay.portal.store.s3
-Bundle-Version: 6.0.32
+Bundle-Version: 6.0.34
 Import-Package:\
 	!com.ibm.aspera.faspmanager2,\
 	\
@@ -13,7 +13,6 @@ Import-Package:\
 	\
 	!org.apache.avalon.framework.logger,\
 	!org.apache.log,\
-	!org.apache.log4j,\
 	\
 	!org.ietf.jgss,\
 	\

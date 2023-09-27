@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Analytics Demo Data Creator API
 Bundle-SymbolicName: com.liferay.analytics.demo.data.creator.api
-Bundle-Version: 2.0.6
+Bundle-Version: 2.0.7
 Export-Package:\
 	com.liferay.analytics.demo.data.creator,\
 	com.liferay.analytics.demo.data.creator.configuration

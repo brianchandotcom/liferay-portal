@@ -7,6 +7,7 @@ import React from 'react';
 interface IRowActionsProps {
 	actions?: (React.HTMLAttributes<HTMLElement> & {
 		label: string;
+		onClick?: any;
 	})[];
 	quickActions?: {
 		iconSymbol: string;

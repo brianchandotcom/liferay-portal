@@ -16,6 +16,9 @@
 		<suppress checks="MapBuilderCheck" files="dynamic-data-mapping-test/src/testIntegration/java/com/liferay/dynamic/data/mapping/service/test/BaseDDMServiceTestCase\.java" />
 	</checkstyle>
 	<source-check>
+		<suppress checks="FTLEmptyLinesCheck" files="dynamic-data-mapping-test/src/testIntegration/resources/com/liferay/dynamic/data/mapping/dependencies/upgrade.v5_3_3/expected-ddm-template-browser-sniffer-content\.ftl" />
+		<suppress checks="FTLWhitespaceCheck" files="dynamic-data-mapping-test/src/testIntegration/resources/com/liferay/dynamic/data/mapping/dependencies/upgrade.v5_3_3/expected-ddm-template-browser-sniffer-content\.ftl" />
+		<suppress checks="HTMLWhitespaceCheck" files="dynamic-data-mapping-test/src/testIntegration/resources/com/liferay/dynamic/data/mapping/dependencies/upgrade.v5_3_3/expected-fragment-entry-browser-sniffer-content\.html" />
 		<suppress checks="JavaForLoopCheck" files="dynamic-data-mapping-form-values-query/src/main/java/com/liferay/dynamic/data/mapping/form/values/query/internal/model/DDMFormValuesFilterImpl\.java" />
 		<suppress checks="JavaUpgradeIndexCheck" files="dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/upgrade/v4_3_0/DLFileEntryTypeDataDefinitionIdUpgradeProcess\.java" />
 	</source-check>

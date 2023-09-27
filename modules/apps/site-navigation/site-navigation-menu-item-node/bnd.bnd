@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Site Navigation Menu Item Node
 Bundle-SymbolicName: com.liferay.site.navigation.menu.item.node
-Bundle-Version: 4.0.13
+Bundle-Version: 4.0.14
 Web-ContextPath: /site-navigation-menu-item-node
 -dsannotations-options: inherit

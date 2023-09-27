@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
@@ -22,6 +13,7 @@ import ServiceProvider from '../../ServiceProvider/index';
 import {
 	CP_INSTANCE_CHANGED,
 	CP_QUANTITY_SELECTOR_CHANGED,
+	CP_UNIT_OF_MEASURE_SELECTOR_CHANGED,
 } from '../../utilities/eventsDefinitions';
 import {liferayNavigate} from '../../utilities/index';
 import {showErrorNotification} from '../../utilities/notifications';
@@ -81,6 +73,13 @@ function RequestQuote({
 		[updateCPInstance]
 	);
 
+	const handleUOMChanged = useCallback(
+		({unitOfMeasure}) => {
+			cpInstance.skuUnitOfMeasure = unitOfMeasure;
+		},
+		[cpInstance]
+	);
+
 	useEffect(() => {
 		if (cpDefinitionId) {
 			Liferay.on(
@@ -93,6 +92,11 @@ function RequestQuote({
 				handleCPInstanceReplaced
 			);
 
+			Liferay.on(
+				`${namespace}${CP_UNIT_OF_MEASURE_SELECTOR_CHANGED}`,
+				handleUOMChanged
+			);
+
 			return () => {
 				Liferay.detach(
 					`${namespace}${CP_QUANTITY_SELECTOR_CHANGED}`,
@@ -103,12 +107,18 @@ function RequestQuote({
 					`${namespace}${CP_INSTANCE_CHANGED}`,
 					handleCPInstanceReplaced
 				);
+
+				Liferay.detach(
+					`${namespace}${CP_UNIT_OF_MEASURE_SELECTOR_CHANGED}`,
+					handleCPInstanceReplaced
+				);
 			};
 		}
 	}, [
 		cpDefinitionId,
 		handleCPInstanceReplaced,
 		handleQuantityChanged,
+		handleUOMChanged,
 		namespace,
 	]);
 
@@ -139,10 +149,12 @@ function RequestQuote({
 						accountId,
 						cartItems: [
 							{
-								options:
-									cpInstance.skuOptions || JSON.stringify([]),
+								options: JSON.stringify(
+									cpInstance.skuOptions || JSON.stringify([])
+								),
 								quantity: cpInstance.quantity || 1,
 								skuId: cpInstance.skuId,
+								skuUnitOfMeasure: cpInstance.skuUnitOfMeasure,
 							},
 						],
 						currencyCode: channel.currencyCode,

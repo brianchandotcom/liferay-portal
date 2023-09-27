@@ -1,13 +1,12 @@
 import com.liferay.gradle.plugins.patcher.PatchTask
 
 apply plugin: "com.liferay.patcher"
-apply plugin: "nebula.optional-base"
 
 task deployJar(type: Copy)
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "org.hibernate", name: "hibernate-core", optional, version: "5.6.7.Final"
+	compileOnly group: "org.hibernate", name: "hibernate-core", version: "5.6.7.Final"
 }
 
 deploy {

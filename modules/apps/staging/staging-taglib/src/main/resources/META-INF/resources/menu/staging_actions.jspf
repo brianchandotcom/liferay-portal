@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -55,6 +46,7 @@
 	<c:otherwise>
 
 		<%
+		ExportImportServiceConfiguration exportImportServiceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(ExportImportServiceConfiguration.class, CompanyThreadLocal.getCompanyId());
 		Group groupType = layout.getGroup();
 		%>
 
@@ -74,6 +66,25 @@
 
 			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" varImpl="simplePublishLayoutsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcRenderCommandName" value="/export_import/publish_layouts_simple" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+				<portlet:param name="redirect" value="<%= publishRedirectURL %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="lastImportUserName" value="<%= user.getFullName() %>" />
+				<portlet:param name="lastImportUserUuid" value="<%= String.valueOf(user.getUserUuid()) %>" />
+				<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
+				<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remoteAddress") %>' />
+				<portlet:param name="remotePathContext" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remotePathContext") %>' />
+				<portlet:param name="remotePort" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remotePort") %>' />
+				<portlet:param name="remoteGroupId" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remoteGroupId") %>' />
+				<portlet:param name="secureConnection" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("secureConnection") %>' />
+				<portlet:param name="sourceGroupId" value="<%= String.valueOf(stagingGroupId) %>" />
+				<portlet:param name="targetGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" varImpl="advancedPublishLayoutsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcRenderCommandName" value="/export_import/publish_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 				<portlet:param name="redirect" value="<%= publishRedirectURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
@@ -151,7 +162,7 @@
 				var="publishOnLayoutLink"
 			>
 				<div class="btn-group dropdown">
-					<button class="btn btn-primary btn-sm" href="<%= simplePublishLayoutsURL.toString() %>" id="<%= layoutSetBranchId %>publishToLiveLink" type="button">
+					<button class="btn btn-primary btn-sm" href="<%= (exportImportServiceConfiguration.showAdvancedStagingConfigurationByDefault() && FeatureFlagManagerUtil.isEnabled("LPS-189187")) ? advancedPublishLayoutsURL : simplePublishLayoutsURL %>" id="<%= layoutSetBranchId %>publishToLiveLink" type="button">
 						<liferay-ui:message key="publish-to-live" />
 					</button>
 

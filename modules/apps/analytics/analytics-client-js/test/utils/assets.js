@@ -1,18 +1,9 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getNumberOfWords} from '../../src/utils/assets';
+import {getNumberOfWords, isTrackable} from '../../src/utils/assets';
 
 describe('getNumberOfWords()', () => {
 	let document;
@@ -50,5 +41,47 @@ describe('getNumberOfWords()', () => {
 		const numberOfWords = getNumberOfWords(element);
 
 		expect(numberOfWords).toBe(0);
+	});
+});
+
+describe('isTrackable', () => {
+	it('checks if asset is trackable', () => {
+		const element = document.createElement('div');
+
+		expect(isTrackable(element)).toBeFalsy();
+
+		element.dataset.analyticsAssetId = 'assetId';
+
+		expect(isTrackable(element)).toBeFalsy();
+
+		element.dataset.analyticsAssetTitle = 'assetTitle';
+
+		expect(isTrackable(element)).toBeFalsy();
+
+		element.dataset.analyticsAssetType = 'blog';
+
+		expect(isTrackable(element)).toBeTruthy();
+	});
+
+	it('checks if asset is trackable with custom dataset list', () => {
+		const element = document.createElement('div');
+
+		expect(isTrackable(element, ['analyticsCustomName'])).toBeFalsy();
+
+		element.dataset.analyticsAssetId = 'assetId';
+
+		expect(isTrackable(element, ['analyticsCustomName'])).toBeFalsy();
+
+		element.dataset.analyticsAssetTitle = 'assetTitle';
+
+		expect(isTrackable(element, ['analyticsCustomName'])).toBeFalsy();
+
+		element.dataset.analyticsAssetType = 'blog';
+
+		expect(isTrackable(element, ['analyticsCustomName'])).toBeFalsy();
+
+		element.dataset.analyticsCustomName = 'assetCustomNameAttr';
+
+		expect(isTrackable(element, ['analyticsCustomName'])).toBeTruthy();
 	});
 });

@@ -1,4 +1,5 @@
 @component-name = "portal-document-library-store"
+@ignore = "true"
 definition {
 
 	property azure.store.enabled = "true";
@@ -32,6 +33,7 @@ definition {
 	@priority = 4
 	test AssertNoErrorMessageAfterExportAndImportSiteLAR {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var containerId = PropsUtil.get("azure.container.id");
 		var companyId = JSONCompany.getCompanyId();
@@ -79,11 +81,21 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.io.IOException");
 	}
 
+	@description = "This is a use case for LPS-127589."
+	@priority = 3
+	test AzureConnectionDoesNotLeakWhenServingFileAsStream {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		CloudStore.VerifyConnectionWhenServingFileAsStream();
+	}
+
 	@description = "Verify a data migration can be executed from the default store to Azure store."
 	@priority = 3
 	test AzureStoreDataMigration {
 		property store.migration.test = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a document is added to the default store") {
 			var containerId = PropsUtil.get("azure.container.id");
@@ -163,6 +175,7 @@ definition {
 	@priority = 5
 	test AzureStoreSmoke {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var containerId = PropsUtil.get("azure.container.id");
 		var companyId = JSONCompany.getCompanyId();

@@ -1,26 +1,33 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.web.internal.exception.FileEntrySizeLimitExceededException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.io.IOException;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,6 +47,37 @@ import org.osgi.service.component.annotations.Reference;
 public class CopyFileEntryMVCRenderCommand
 	extends BaseFileEntryMVCRenderCommand {
 
+	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			_validateCopyToSize(ActionUtil.getFileEntry(renderRequest));
+
+			return super.render(renderRequest, renderResponse);
+		}
+		catch (FileEntrySizeLimitExceededException
+					fileEntrySizeLimitExceededException) {
+
+			HttpServletRequest originalHttpServletRequest =
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(renderRequest));
+
+			SessionErrors.add(
+				originalHttpServletRequest.getSession(),
+				fileEntrySizeLimitExceededException.getClass(),
+				fileEntrySizeLimitExceededException);
+
+			_sendRedirect(renderRequest, renderResponse);
+
+			return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
+		}
+	}
+
 	protected void checkPermissions(
 			PermissionChecker permissionChecker, FileEntry fileEntry)
 		throws PortalException {
@@ -54,10 +92,57 @@ public class CopyFileEntryMVCRenderCommand
 		return "/document_library/copy_file_entry.jsp";
 	}
 
+	private void _sendRedirect(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(renderResponse);
+
+			httpServletResponse.sendRedirect(
+				ParamUtil.getString(renderRequest, "redirect"));
+		}
+		catch (IOException ioException) {
+			throw new PortletException(ioException);
+		}
+	}
+
+	private void _validateCopyToSize(FileEntry fileEntry)
+		throws FileEntrySizeLimitExceededException {
+
+		if (!DLCopyValidationUtil.isCopyToAllowed(
+				_dlSizeLimitConfigurationProvider.getCompanyMaxSizeToCopy(
+					fileEntry.getCompanyId()),
+				_dlSizeLimitConfigurationProvider.getGroupMaxSizeToCopy(
+					fileEntry.getGroupId()),
+				_dlSizeLimitConfigurationProvider.getSystemMaxSizeToCopy(),
+				fileEntry.getSize())) {
+
+			throw new FileEntrySizeLimitExceededException(
+				DLCopyValidationUtil.getCopyToValidationMessage(
+					_dlSizeLimitConfigurationProvider.getCompanyMaxSizeToCopy(
+						fileEntry.getCompanyId()),
+					_dlSizeLimitConfigurationProvider.getGroupMaxSizeToCopy(
+						fileEntry.getGroupId()),
+					_dlSizeLimitConfigurationProvider.getSystemMaxSizeToCopy(),
+					fileEntry.getSize()));
+		}
+	}
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DLSizeLimitConfigurationProvider _dlSizeLimitConfigurationProvider;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
 	private volatile ModelResourcePermission<FileEntry>
 		_fileEntryModelResourcePermission;
+
+	@Reference
+	private Portal _portal;
 
 }

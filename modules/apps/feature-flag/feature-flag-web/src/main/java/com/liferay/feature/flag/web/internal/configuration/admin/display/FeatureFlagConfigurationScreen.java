@@ -1,30 +1,22 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.feature.flag.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.feature.flag.web.internal.configuration.admin.category.FeatureFlagConfigurationCategory;
-import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.feature.flag.web.internal.display.FeatureFlagsDisplayContextFactory;
-import com.liferay.feature.flag.web.internal.model.FeatureFlagType;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -37,13 +29,14 @@ import javax.servlet.http.HttpServletResponse;
 public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 
 	public FeatureFlagConfigurationScreen(
-		FeatureFlagManager featureFlagManager, FeatureFlagType featureFlagType,
+		FeatureFlagType featureFlagType,
 		FeatureFlagsDisplayContextFactory featureFlagsDisplayContextFactory,
-		ServletContext servletContext) {
+		int index, String scope, ServletContext servletContext) {
 
-		_featureFlagManager = featureFlagManager;
 		_featureFlagType = featureFlagType;
 		_featureFlagsDisplayContextFactory = featureFlagsDisplayContextFactory;
+		_index = index;
+		_scope = scope;
 		_servletContext = servletContext;
 	}
 
@@ -54,7 +47,8 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 
 	@Override
 	public String getKey() {
-		return FeatureFlagConstants.getKey(_featureFlagType.toString());
+		return FeatureFlagConstants.getKey(
+			String.valueOf(_index), _featureFlagType.toString(), getScope());
 	}
 
 	@Override
@@ -64,7 +58,7 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 
 	@Override
 	public String getScope() {
-		return "company";
+		return _scope;
 	}
 
 	@Override
@@ -85,7 +79,10 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			_featureFlagsDisplayContextFactory.create(
-				_featureFlagType, httpServletRequest));
+				_featureFlagType, httpServletRequest,
+				Objects.equals(
+					getScope(),
+					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())));
 
 		try {
 			RequestDispatcher requestDispatcher =
@@ -99,10 +96,11 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 		}
 	}
 
-	private final FeatureFlagManager _featureFlagManager;
 	private final FeatureFlagsDisplayContextFactory
 		_featureFlagsDisplayContextFactory;
 	private final FeatureFlagType _featureFlagType;
+	private final int _index;
+	private final String _scope;
 	private final ServletContext _servletContext;
 
 }

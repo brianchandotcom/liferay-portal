@@ -38,5 +38,29 @@
 		"name": "Provisioning Admin",
 		"subtype": "",
 		"type": 1
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Critical Incident Contact",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Data Breach Contact",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Security Incident Contact",
+		"subtype": "",
+		"type": 6
 	}
 ]

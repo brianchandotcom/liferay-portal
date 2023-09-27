@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
@@ -27,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,12 +49,14 @@ public class CommerceInventoryWarehouseFDSDataProvider
 		List<Warehouse> warehouses = new ArrayList<>();
 
 		String sku = ParamUtil.getString(httpServletRequest, "sku");
+		String unitOfMeasureKey = ParamUtil.getString(
+			httpServletRequest, "unitOfMeasureKey");
 
 		List<CommerceInventoryWarehouseItem> commerceInventoryWarehouseItems =
 			_commerceInventoryWarehouseItemService.
-				getCommerceInventoryWarehouseItemsByCompanyIdAndSku(
+				getCommerceInventoryWarehouseItemsByCompanyIdSkuAndUnitOfMeasureKey(
 					_portal.getCompanyId(httpServletRequest), sku,
-					fdsPagination.getStartPosition(),
+					unitOfMeasureKey, fdsPagination.getStartPosition(),
 					fdsPagination.getEndPosition());
 
 		for (CommerceInventoryWarehouseItem commerceInventoryWarehouseItem :
@@ -70,19 +65,46 @@ public class CommerceInventoryWarehouseFDSDataProvider
 			CommerceInventoryWarehouse commerceInventoryWarehouse =
 				commerceInventoryWarehouseItem.getCommerceInventoryWarehouse();
 
+			BigDecimal stockQuantity = BigDecimal.ZERO;
+
+			BigDecimal commerceInventoryWarehouseItemQuantity =
+				commerceInventoryWarehouseItem.getQuantity();
+
+			if (commerceInventoryWarehouseItemQuantity != null) {
+				stockQuantity = commerceInventoryWarehouseItemQuantity;
+			}
+
+			BigDecimal reservedQuantity = BigDecimal.ZERO;
+
+			BigDecimal commerceInventoryWarehouseItemReservedQuantity =
+				commerceInventoryWarehouseItem.getReservedQuantity();
+
+			if (commerceInventoryWarehouseItemReservedQuantity != null) {
+				reservedQuantity =
+					commerceInventoryWarehouseItemReservedQuantity;
+			}
+
+			BigDecimal replenishmentQuantity = BigDecimal.ZERO;
+
+			BigDecimal commerceInventoryReplenishmentItemsCount =
+				_commerceInventoryReplenishmentItemService.
+					getCommerceInventoryReplenishmentItemsCount(
+						commerceInventoryWarehouse.
+							getCommerceInventoryWarehouseId(),
+						sku, unitOfMeasureKey);
+
+			if (commerceInventoryReplenishmentItemsCount != null) {
+				replenishmentQuantity =
+					commerceInventoryReplenishmentItemsCount;
+			}
+
 			warehouses.add(
 				new Warehouse(
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
 					commerceInventoryWarehouse.getName(
 						_portal.getLocale(httpServletRequest)),
-					commerceInventoryWarehouseItem.getQuantity(),
-					commerceInventoryWarehouseItem.getReservedQuantity(),
-					_commerceInventoryReplenishmentItemService.
-						getCommerceInventoryReplenishmentItemsCount(
-							commerceInventoryWarehouse.
-								getCommerceInventoryWarehouseId(),
-							sku)));
+					replenishmentQuantity, reservedQuantity, stockQuantity));
 		}
 
 		return warehouses;
@@ -94,10 +116,13 @@ public class CommerceInventoryWarehouseFDSDataProvider
 		throws PortalException {
 
 		String sku = ParamUtil.getString(httpServletRequest, "sku");
+		String unitOfMeasureKey = ParamUtil.getString(
+			httpServletRequest, "unitOfMeasureKey");
 
 		return _commerceInventoryWarehouseItemService.
 			getCommerceInventoryWarehouseItemsCount(
-				_portal.getCompanyId(httpServletRequest), sku);
+				_portal.getCompanyId(httpServletRequest), sku,
+				unitOfMeasureKey);
 	}
 
 	@Reference

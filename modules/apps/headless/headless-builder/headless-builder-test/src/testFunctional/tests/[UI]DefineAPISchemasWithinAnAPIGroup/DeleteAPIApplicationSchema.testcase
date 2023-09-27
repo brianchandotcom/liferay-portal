@@ -1,0 +1,136 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+
+		task ("Given API Application with Schema created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedSchema = "true",
+				schemaName = "testSchema",
+				status = "published",
+				title = "My-app");
+
+			ApplicationAPI.setUpGlobalAPIApplicationId();
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 3
+	test CanCancelAPISchemaDeletion {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given delete API Schema") {
+			APIBuilderUI.deleteAPISchema(
+				applicationTitle = "My-app",
+				schemaName = "testSchema");
+		}
+
+		task ("When I click cancel button") {
+			Click(locator1 = "Button#CANCEL");
+		}
+
+		task ("Then I can see the API Schema") {
+			AssertElementPresent(
+				key_name = "testSchema",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 3
+	test CanDeleteAPISchema {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given goto dropdown menu and click delete") {
+			APIBuilderUI.deleteAPISchema(
+				applicationTitle = "My-app",
+				schemaName = "testSchema");
+		}
+
+		task ("When I click delete button") {
+			Click(locator1 = "APIBuilder#MODAL_DELETE_BUTTON");
+		}
+
+		task ("Then the API Schema has been deleted in the UI") {
+			AssertElementNotPresent(
+				key_name = "testSchema",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 4
+	test CannotSeeSchemaInAPIExplorerAfterDelete {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given create an API Endpoint in the Application") {
+			EndpointAPI.createAPIEndpoint(
+				apiApplicationId = ${staticApplicationId},
+				name = "myEndpoint",
+				path = "/myEndpoint");
+		}
+
+		task ("When I delete the API Schema") {
+			APIBuilderUI.deleteAPISchema(
+				applicationTitle = "My-app",
+				confirmDeletion = "true",
+				schemaName = "testSchema");
+		}
+
+		task ("Then API Schema is not visible in the created API Application in API Explorer") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getMyEndpointPage",
+				service = "default",
+				value1 = "/myEndpoint");
+
+			AssertElementNotPresent(
+				locator1 = "OpenAPI#SCHEMA_COLLAPSED",
+				schema = "testSchema");
+		}
+	}
+
+	@priority = 4
+	test CanSeeWarningMessageBeforeSchemaIsDeleted {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When delete API Schema") {
+			APIBuilderUI.deleteAPISchema(
+				applicationTitle = "My-app",
+				schemaName = "testSchema");
+		}
+
+		task ("Then I can see the Delete API Schema dialog with message") {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "This action cannot be undone and will erase all schema information. Linked endpoints may change their behaviour.");
+		}
+	}
+
+}

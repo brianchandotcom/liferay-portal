@@ -38,9 +38,21 @@
 	{
 		"active": true,
 		"description": {
-			"en_US": "Designates that the order contains a 30-day solution trial."
+			"en_US": "Designates that the order contains a 7-day solution trial."
 		},
 		"displayOrder": 3,
+		"externalReferenceCode": "SOLUTIONS7",
+		"name": {
+			"en_US": "Solutions - 7 day trial"
+		},
+		"neverExpire": true
+	},
+	{
+		"active": true,
+		"description": {
+			"en_US": "Designates that the order contains a 30-day solution trial."
+		},
+		"displayOrder": 4,
 		"externalReferenceCode": "SOLUTIONS30",
 		"name": {
 			"en_US": "Solutions - 30 day trial"
@@ -52,7 +64,7 @@
 		"description": {
 			"en_US": "Designates that the order contains a 30-day cloud app trial."
 		},
-		"displayOrder": 4,
+		"displayOrder": 5,
 		"externalReferenceCode": "CLOUDAPP30",
 		"name": {
 			"en_US": "Cloud App - 30 day trial"
@@ -64,7 +76,7 @@
 		"description": {
 			"en_US": "Designates that the order contains a 30-day DXP app trial."
 		},
-		"displayOrder": 5,
+		"displayOrder": 6,
 		"externalReferenceCode": "DXPAPP30",
 		"name": {
 			"en_US": "DXP App - 30 day trial"

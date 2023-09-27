@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.app.docker;
@@ -28,6 +19,7 @@ import java.io.File;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -48,6 +40,9 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.provider.Property;
+import org.gradle.api.provider.SetProperty;
+import org.gradle.api.publish.plugins.PublishingPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Sync;
 import org.gradle.api.tasks.bundling.War;
@@ -134,6 +129,21 @@ public class AppDockerPlugin implements Plugin<Project> {
 		ConventionMapping conventionMapping = dslObject.getConventionMapping();
 
 		conventionMapping.map(
+			"images",
+			new Callable<Set<String>>() {
+
+				@Override
+				public Set<String> call() throws Exception {
+					String imageRepository = _getImageRepository(
+						appDockerExtension);
+
+					return new HashSet<>(
+						Collections.singleton(imageRepository));
+				}
+
+			});
+
+		conventionMapping.map(
 			"inputDir",
 			new Callable<File>() {
 
@@ -141,17 +151,6 @@ public class AppDockerPlugin implements Plugin<Project> {
 				public File call() throws Exception {
 					return prepareAppDockerImageInputDirTask.
 						getDestinationDir();
-				}
-
-			});
-
-		conventionMapping.map(
-			"tag",
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return _getImageRepository(appDockerExtension);
 				}
 
 			});
@@ -216,19 +215,23 @@ public class AppDockerPlugin implements Plugin<Project> {
 			Collections.singleton(buildAppDockerImageTask));
 		dockerPushImage.setDescription(
 			"Pushes the Docker image of the app to the registry.");
-		dockerPushImage.setGroup(BasePlugin.UPLOAD_GROUP);
+		dockerPushImage.setGroup(PublishingPlugin.PUBLISH_TASK_GROUP);
 
 		DslObject dslObject = new DslObject(dockerPushImage);
 
 		ConventionMapping conventionMapping = dslObject.getConventionMapping();
 
 		conventionMapping.map(
-			"imageName",
-			new Callable<String>() {
+			"images",
+			new Callable<Set<String>>() {
 
 				@Override
-				public String call() throws Exception {
-					return _getImageRepository(appDockerExtension);
+				public Set<String> call() throws Exception {
+					String imageRepository = _getImageRepository(
+						appDockerExtension);
+
+					return new HashSet<>(
+						Collections.singleton(imageRepository));
 				}
 
 			});
@@ -239,8 +242,11 @@ public class AppDockerPlugin implements Plugin<Project> {
 	private DockerPushImage _addTaskPushAppDockerImage(
 		DockerTagImage dockerTagImage) {
 
+		Property<String> repositoryProperty = dockerTagImage.getRepository();
+		Property<String> tagProperty = dockerTagImage.getTag();
+
 		String imageRepositoryAndTag = _getImageRepositoryAndTag(
-			dockerTagImage.getRepository(), dockerTagImage.getTag());
+			repositoryProperty.get(), tagProperty.get());
 
 		DockerPushImage dockerPushImage = GradleUtil.addTask(
 			dockerTagImage.getProject(),
@@ -252,8 +258,10 @@ public class AppDockerPlugin implements Plugin<Project> {
 		dockerPushImage.setDescription(
 			"Pushes the Docker image \"" + imageRepositoryAndTag +
 				"\" to the registry.");
-		dockerPushImage.setImageName(dockerTagImage.getRepository());
-		dockerPushImage.setTag(dockerTagImage.getTag());
+
+		SetProperty<String> imagesSetProperty = dockerPushImage.getImages();
+
+		imagesSetProperty.add(imageRepositoryAndTag);
 
 		return dockerPushImage;
 	}
@@ -301,15 +309,24 @@ public class AppDockerPlugin implements Plugin<Project> {
 		dockerTagImage.setDescription(
 			"Creates the tag \"" + imageRepositoryAndTag +
 				"\" which refers to the Docker image of the app.");
-		dockerTagImage.setRepository(imageRepository);
-		dockerTagImage.setTag(imageTag);
+
+		Property<String> repositoryProperty = dockerTagImage.getRepository();
+
+		repositoryProperty.set(imageRepository);
+
+		Property<String> tagProperty = dockerTagImage.getTag();
+
+		tagProperty.set(imageTag);
 
 		dockerTagImage.targetImageId(
 			new Closure<String>(project) {
 
 				@SuppressWarnings("unused")
 				public String doCall() {
-					return buildAppDockerImagetask.getImageId();
+					Property<String> imageIdProperty =
+						buildAppDockerImagetask.getImageId();
+
+					return imageIdProperty.get();
 				}
 
 			});

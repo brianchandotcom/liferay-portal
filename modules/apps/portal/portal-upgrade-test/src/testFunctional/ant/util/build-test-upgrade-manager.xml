@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-upgrade-test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="../../../../../../../../build-test.xml" />
+
+	<macrodef name="get-mbean-attributes">
+		<sequential>
+			<beanshell>
+				<![CDATA[
+					import javax.management.*;
+					import javax.management.MBeanServer;
+					import javax.management.ObjectName;
+					import javax.management.remote.JMXConnector;
+					import javax.management.remote.JMXConnectorFactory;
+					import javax.management.remote.JMXServiceURL;
+
+					ObjectName objectName = new ObjectName("com.liferay.portal.upgrade:classification=upgrade,name=UpgradeManager");
+
+					String port = "1234";
+
+					String hostname = "localhost";
+
+					JMXServiceURL jmxServiceURL = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://" + hostname + ":" + port + "/jmxrmi");
+
+					JMXConnector jmxConnector = JMXConnectorFactory.connect(jmxServiceURL);
+
+					MBeanServerConnection mBeanServerConnection = jmxConnector.getMBeanServerConnection();
+
+					if (mBeanServerConnection.isRegistered(objectName)) {
+						String type = (String)mBeanServerConnection.getAttribute(objectName, "Type");
+
+						String result = (String)mBeanServerConnection.getAttribute(objectName, "Result");
+
+						PrintWriter writer = new PrintWriter(new FileWriter("mbean-attributes-output.txt"));
+
+						writer.println("Type: " + type);
+
+						writer.println("Result: " + result);
+
+						writer.close();
+					} else {
+						PrintWriter writer = new PrintWriter(new FileWriter("mbean-attributes-output.txt"));
+
+						writer.println("Not Registered");
+
+						writer.close();
+					}
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
+	<target name="start-app-server-check-mbean-attributes">
+		<get-testcase-property property.name="custom.startup.log.message" />
+
+		<if>
+			<isset property="custom.startup.log.message" />
+			<then>
+				<parallel>
+					<start-app-server />
+
+					<sequential>
+						<wait-for-app-server-log-message log.message="${custom.startup.log.message}" />
+
+						<get-mbean-attributes />
+					</sequential>
+				</parallel>
+			</then>
+			<else>
+				<start-app-server />
+
+				<get-mbean-attributes />
+			</else>
+		</if>
+	</target>
+</project>

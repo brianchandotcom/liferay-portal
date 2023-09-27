@@ -52,6 +52,7 @@ definition {
 	@priority = 4
 	test ClickSubsectionApplicationsRedirectedToApplications {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -68,6 +69,7 @@ definition {
 	@priority = 4
 	test ClickSubsectionPoliciesRedirectedToPolicies {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

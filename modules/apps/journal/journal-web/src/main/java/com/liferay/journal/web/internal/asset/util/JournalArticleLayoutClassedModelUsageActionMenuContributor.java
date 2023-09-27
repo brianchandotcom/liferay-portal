@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.journal.web.internal.asset.util;
@@ -82,7 +73,7 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 						dropdownItem -> {
 							dropdownItem.setHref(
 								_getURL(
-									layoutClassedModelUsage,
+									article, layoutClassedModelUsage,
 									AssetRendererFactory.TYPE_LATEST_APPROVED,
 									InfoItemIdentifier.VERSION_LATEST_APPROVED,
 									httpServletRequest));
@@ -116,7 +107,7 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 								dropdownItem -> {
 									dropdownItem.setHref(
 										_getURL(
-											layoutClassedModelUsage,
+											article, layoutClassedModelUsage,
 											AssetRendererFactory.TYPE_LATEST,
 											InfoItemIdentifier.VERSION_LATEST,
 											httpServletRequest));
@@ -135,6 +126,7 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 	}
 
 	private String _getURL(
+			JournalArticle article,
 			LayoutClassedModelUsage layoutClassedModelUsage, int previewType,
 			String previewVersion, HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -182,8 +174,9 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 			).buildString();
 		}
 
-		String portletURLString = HttpComponentsUtil.setParameter(
-			layoutURL, "p_l_back_url", themeDisplay.getURLCurrent());
+		String portletURLString = HttpComponentsUtil.addParameters(
+			layoutURL, "p_l_back_url", themeDisplay.getURLCurrent(),
+			"p_l_back_url_title", article.getTitle(themeDisplay.getLocale()));
 
 		return portletURLString + "#portlet_" +
 			layoutClassedModelUsage.getContainerKey();

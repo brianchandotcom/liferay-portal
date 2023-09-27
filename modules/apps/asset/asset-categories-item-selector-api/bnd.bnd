@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset Categories Item Selector API
 Bundle-SymbolicName: com.liferay.asset.categories.item.selector.api
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.10
 Export-Package:\
 	com.liferay.asset.categories.item.selector,\
 	com.liferay.asset.categories.item.selector.criterion

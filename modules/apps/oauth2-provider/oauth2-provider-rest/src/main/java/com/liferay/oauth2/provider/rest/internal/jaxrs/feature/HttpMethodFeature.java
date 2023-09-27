@@ -1,20 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 
-import com.liferay.oauth2.provider.rest.internal.scope.logic.HttpMethodScopeLogic;
+import com.liferay.oauth2.provider.rest.internal.scope.util.HttpMethodScopeLogicUtil;
 import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter.BaseScopeCheckerContainerRequestFilter;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
@@ -156,10 +147,6 @@ public class HttpMethodFeature implements Feature {
 		HttpMethodFeature.class);
 
 	private BundleContext _bundleContext;
-
-	@Reference(target = "(oauth2.scope.checker.type=http.method)")
-	private HttpMethodScopeLogic _httpMethodScopeLogic;
-
 	private Function<String, Object> _propertyAccessorFunction;
 
 	@Reference
@@ -176,8 +163,9 @@ public class HttpMethodFeature implements Feature {
 
 			Request request = containerRequestContext.getRequest();
 
-			return _httpMethodScopeLogic.check(
-				_propertyAccessorFunction, request.getMethod(), _scopeChecker);
+			return HttpMethodScopeLogicUtil.check(
+				_bundleContext, _propertyAccessorFunction, _scopeChecker,
+				request.getMethod());
 		}
 
 		@Context

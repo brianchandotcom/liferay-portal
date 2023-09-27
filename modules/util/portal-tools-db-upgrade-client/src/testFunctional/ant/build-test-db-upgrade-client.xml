@@ -79,11 +79,9 @@
 	<target name="bypass-expected-upgrade-error">
 		<get-database-upgrade-client-paths />
 
-		<prepare-database-upgrade-configuration />
+		<prepare-database-upgrade-properties />
 
-		<execute dir="${db.upgrade.client.home}">
-			db_upgrade_client${file.suffix.bat} run
-		</execute>
+		<antcall inheritAll="false" target="run-upgrade-client" />
 
 		<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.not.failed">
 			<resourcecontains
@@ -268,18 +266,42 @@
 		</fail>
 	</target>
 
-	<target name="check-upgrade-client-gogoshell-failed-upgrade">
+	<target name="check-upgrade-client-gogoshell-failed-connection-error">
 		<get-database-upgrade-client-paths />
 
-		<sql classpath="${app.server.shielded-container-lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="output.txt" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
-			<![CDATA[
-				ALTER TABLE JournalArticle DROP type_;
-			]]>
-		</sql>
+		<if>
+			<not>
+				<available file="${selenium.output.dir.name}" type="dir" />
+			</not>
+			<then>
+				<mkdir dir="${selenium.output.dir.name}" />
+			</then>
+		</if>
 
 		<execute dir="${db.upgrade.client.home}">
-			db_upgrade_client${file.suffix.bat} run
+			db_upgrade_client${file.suffix.bat} run > ${selenium.output.dir.name}/gogoshell.failed.connection.output
 		</execute>
+
+		<loadfile
+			property="upgrade.gogoshell.failed.connection.output"
+			srcFile="${selenium.output.dir.name}/gogoshell.failed.connection.output"
+		/>
+
+		<echo>${upgrade.gogoshell.failed.connection.output}</echo>
+
+		<if>
+			<not>
+				<and>
+					<contains string="${upgrade.gogoshell.failed.connection.output}" substring="Connecting to Gogo shell because the upgrade failed or is incomplete" />
+					<contains string="${upgrade.gogoshell.failed.connection.output}" substring="java.net.ConnectException: Connection refused" />
+				</and>
+			</not>
+			<then>
+				<fail message="The upgrade client failed to print out the exception." />
+			</then>
+		</if>
+
+		<echo>The upgrade client printed out the exception successfully.</echo>
 	</target>
 
 	<target name="check-upgrade-client-gogoshell-help-output">
@@ -463,17 +485,6 @@
 		</parallel>
 	</target>
 
-	<target name="check-upgrade-client-upgrade-core-only">
-		<get-database-upgrade-client-paths />
-
-		<echo append="true" file="${db.upgrade.client.home}/portal-upgrade-ext.properties">
-upgrade.database.auto.run=false</echo>
-
-		<execute dir="${db.upgrade.client.home}">
-			db_upgrade_client${file.suffix.bat} run
-		</execute>
-	</target>
-
 	<target name="check-upgrade-client-zip-content">
 		<get-database-upgrade-client-paths />
 
@@ -529,7 +540,7 @@ upgrade.database.auto.run=false</echo>
 	<target name="check-upgrade-properties-app-db-set">
 		<get-database-upgrade-client-paths />
 
-		<prepare-database-upgrade-configuration />
+		<prepare-database-upgrade-properties />
 
 		<delete file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
 
@@ -552,7 +563,7 @@ upgrade.database.auto.run=false</echo>
 	<target name="check-upgrade-properties-app-ext-set">
 		<get-database-upgrade-client-paths />
 
-		<prepare-database-upgrade-configuration />
+		<prepare-database-upgrade-properties />
 
 		<delete file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
 
@@ -575,7 +586,7 @@ upgrade.database.auto.run=false</echo>
 	<target name="check-upgrade-properties-db-ext-set">
 		<get-database-upgrade-client-paths />
 
-		<prepare-database-upgrade-configuration />
+		<prepare-database-upgrade-properties />
 
 		<delete file="${db.upgrade.client.home}/app-server.properties" />
 
@@ -598,7 +609,7 @@ upgrade.database.auto.run=false</echo>
 	<target name="check-upgrade-properties-none-set">
 		<get-database-upgrade-client-paths />
 
-		<prepare-database-upgrade-configuration />
+		<prepare-database-upgrade-properties />
 
 		<delete file="${db.upgrade.client.home}/app-server.properties" />
 
@@ -668,5 +679,13 @@ upgrade.database.auto.run=false</echo>
 			expect.file="execute-all-pending-upgrades-from-gogo-shell.expect"
 			file.suffix.bat="${file.suffix.bat}"
 		/>
+	</target>
+
+	<target name="run-upgrade-client">
+		<get-database-upgrade-client-paths />
+
+		<execute dir="${db.upgrade.client.home}">
+			db_upgrade_client${file.suffix.bat} run
+		</execute>
 	</target>
 </project>

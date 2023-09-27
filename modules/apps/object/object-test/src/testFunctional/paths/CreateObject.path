@@ -26,8 +26,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>PANEL_CATEGORY_KEY</td>
-		<td>//label[contains(.,'Panel Category Key')]/following-sibling::div//span</td>
+		<td>PANEL_LINK</td>
+		<td>//label[contains(.,'Panel Link')]/following-sibling::div//span</td>
 		<td></td>
 	</tr>
 	<tr>

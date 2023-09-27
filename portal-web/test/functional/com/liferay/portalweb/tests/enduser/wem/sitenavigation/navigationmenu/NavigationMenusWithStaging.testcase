@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Navigation";
@@ -1455,7 +1456,7 @@ definition {
 		}
 
 		task ("When the navigation menu creator hovers on the content page item") {
-			MouseOver(
+			MouseOver.javaScriptFocus(
 				key_nodeName = "Test Page Name",
 				locator1 = "Treeview#NODE_ITEM");
 		}

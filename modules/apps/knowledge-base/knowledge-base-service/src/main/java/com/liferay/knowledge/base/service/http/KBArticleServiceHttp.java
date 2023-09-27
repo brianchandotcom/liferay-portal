@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.knowledge.base.service.http;
@@ -55,8 +46,9 @@ public class KBArticleServiceHttp {
 			String portletId, long parentResourceClassNameId,
 			long parentResourcePrimKey, String title, String urlTitle,
 			String content, String description, String[] sections,
-			String sourceURL, java.util.Date expirationDate,
-			java.util.Date reviewDate, String[] selectedFileNames,
+			String sourceURL, java.util.Date displayDate,
+			java.util.Date expirationDate, java.util.Date reviewDate,
+			String[] selectedFileNames,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -69,7 +61,8 @@ public class KBArticleServiceHttp {
 				methodKey, externalReferenceCode, portletId,
 				parentResourceClassNameId, parentResourcePrimKey, title,
 				urlTitle, content, description, sections, sourceURL,
-				expirationDate, reviewDate, selectedFileNames, serviceContext);
+				displayDate, expirationDate, reviewDate, selectedFileNames,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -1695,9 +1688,9 @@ public class KBArticleServiceHttp {
 	public static com.liferay.knowledge.base.model.KBArticle updateKBArticle(
 			HttpPrincipal httpPrincipal, long resourcePrimKey, String title,
 			String content, String description, String[] sections,
-			String sourceURL, java.util.Date expirationDate,
-			java.util.Date reviewDate, String[] selectedFileNames,
-			long[] removeFileEntryIds,
+			String sourceURL, java.util.Date displayDate,
+			java.util.Date expirationDate, java.util.Date reviewDate,
+			String[] selectedFileNames, long[] removeFileEntryIds,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1708,7 +1701,7 @@ public class KBArticleServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, resourcePrimKey, title, content, description,
-				sections, sourceURL, expirationDate, reviewDate,
+				sections, sourceURL, displayDate, expirationDate, reviewDate,
 				selectedFileNames, removeFileEntryIds, serviceContext);
 
 			Object returnObj = null;
@@ -1781,8 +1774,8 @@ public class KBArticleServiceHttp {
 	private static final Class<?>[] _addKBArticleParameterTypes0 = new Class[] {
 		String.class, String.class, long.class, long.class, String.class,
 		String.class, String.class, String.class, String[].class, String.class,
-		java.util.Date.class, java.util.Date.class, String[].class,
-		com.liferay.portal.kernel.service.ServiceContext.class
+		java.util.Date.class, java.util.Date.class, java.util.Date.class,
+		String[].class, com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addKBArticlesMarkdownParameterTypes1 =
 		new Class[] {
@@ -1927,8 +1920,8 @@ public class KBArticleServiceHttp {
 		new Class[] {
 			long.class, String.class, String.class, String.class,
 			String[].class, String.class, java.util.Date.class,
-			java.util.Date.class, String[].class, long[].class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			java.util.Date.class, java.util.Date.class, String[].class,
+			long[].class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_updateKBArticlesPrioritiesParameterTypes43 = new Class[] {

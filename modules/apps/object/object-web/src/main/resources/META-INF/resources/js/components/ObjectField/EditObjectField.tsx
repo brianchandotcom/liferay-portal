@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayTabs from '@clayui/tabs';
@@ -24,7 +15,7 @@ import React, {useEffect, useState} from 'react';
 
 import './EditObjectField.scss';
 import {AdvancedTab} from './Tabs/Advanced/AdvancedTab';
-import {BasicInfo} from './Tabs/BasicInfo/BasicInfo';
+import {BasicInfoTab} from './Tabs/BasicInfo/BasicInfoTab';
 import {useObjectFieldForm} from './useObjectFieldForm';
 
 interface EditObjectFieldProps {
@@ -35,6 +26,7 @@ interface EditObjectFieldProps {
 	forbiddenNames: string[];
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
+	learnResources: object;
 	objectDefinitionExternalReferenceCode: string;
 	objectField: ObjectField;
 	objectFieldId: number;
@@ -76,6 +68,7 @@ export default function EditObjectField({
 	forbiddenNames,
 	isApproved,
 	isDefaultStorageType,
+	learnResources,
 	objectDefinitionExternalReferenceCode,
 	objectFieldId,
 	objectFieldTypes,
@@ -94,10 +87,10 @@ export default function EditObjectField({
 		delete objectField.system;
 
 		try {
-			await API.save(
-				`/o/object-admin/v1.0/object-fields/${id}`,
-				objectField
-			);
+			await API.save({
+				item: objectField,
+				url: `/o/object-admin/v1.0/object-fields/${id}`,
+			});
 
 			saveAndReload();
 			openToast({
@@ -168,7 +161,7 @@ export default function EditObjectField({
 
 					<ClayTabs.Content activeIndex={activeIndex} fade>
 						<ClayTabs.TabPane>
-							<BasicInfo
+							<BasicInfoTab
 								errors={errors}
 								filterOperators={filterOperators}
 								handleChange={handleChange}
@@ -194,6 +187,7 @@ export default function EditObjectField({
 								creationLanguageId={creationLanguageId}
 								errors={errors}
 								isDefaultStorageType={isDefaultStorageType}
+								learnResources={learnResources}
 								readOnlySidebarElements={
 									readOnlySidebarElements
 								}
@@ -205,7 +199,7 @@ export default function EditObjectField({
 					</ClayTabs.Content>
 				</>
 			) : (
-				<BasicInfo
+				<BasicInfoTab
 					errors={errors}
 					filterOperators={filterOperators}
 					handleChange={handleChange}

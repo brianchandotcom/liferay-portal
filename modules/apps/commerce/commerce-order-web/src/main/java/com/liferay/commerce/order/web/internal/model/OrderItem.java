@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.order.web.internal.model;
@@ -28,7 +19,8 @@ public class OrderItem {
 		ImageField image, String name, String options, long orderId,
 		long orderItemId, List<OrderItem> orderItems, long parentOrderItemId,
 		String price, String requestedDeliveryDate, String sku,
-		String subscriptionDuration, String subscriptionPeriod, String total) {
+		String subscriptionDuration, String subscriptionPeriod, String total,
+		String unitOfMeasureKey) {
 
 		_deliveryGroup = deliveryGroup;
 		_discount = discount;
@@ -46,6 +38,7 @@ public class OrderItem {
 		_subscriptionDuration = subscriptionDuration;
 		_subscriptionPeriod = subscriptionPeriod;
 		_total = total;
+		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
 	public String getDeliveryGroup() {
@@ -112,6 +105,10 @@ public class OrderItem {
 		return _total;
 	}
 
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
 	private final String _deliveryGroup;
 	private final String _discount;
 	private final String _formattedQuantity;
@@ -128,5 +125,6 @@ public class OrderItem {
 	private final String _subscriptionDuration;
 	private final String _subscriptionPeriod;
 	private final String _total;
+	private final String _unitOfMeasureKey;
 
 }

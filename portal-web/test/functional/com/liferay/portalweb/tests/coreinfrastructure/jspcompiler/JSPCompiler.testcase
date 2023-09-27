@@ -24,6 +24,7 @@ definition {
 	@priority = 3
 	test OSGIFragmentsAreDetectedAsOutdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an OSGI fragment with custom code is deployed") {
 			var customCode = '''<p style="color: red">changed</p>''';

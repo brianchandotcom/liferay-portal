@@ -1,7 +1,7 @@
 dependencies {
-	testIntegrationCompile project(":apps:calendar:calendar-api")
-	testIntegrationCompile project(":apps:calendar:calendar-test-util")
-	testIntegrationCompile project(":apps:social:social-activity-test-util")
-	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:calendar:calendar-api")
+	testIntegrationImplementation project(":apps:calendar:calendar-test-util")
+	testIntegrationImplementation project(":apps:social:social-activity-test-util")
+	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

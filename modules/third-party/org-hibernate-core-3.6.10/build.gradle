@@ -1,7 +1,6 @@
 import com.liferay.gradle.plugins.patcher.PatchTask
 
 apply plugin: "com.liferay.patcher"
-apply plugin: "nebula.optional-base"
 
 task deployJar(type: Copy)
 task patch(type: PatchTask)
@@ -10,8 +9,9 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compile group: "org.hibernate", name: "hibernate-commons-annotations", version: "3.2.0.Final"
-	compile group: "org.hibernate", name: "hibernate-core", optional, version: "3.6.10.Final"
+	api group: "org.hibernate", name: "hibernate-commons-annotations", version: "3.2.0.Final"
+
+	compileOnly group: "org.hibernate", name: "hibernate-core", version: "3.6.10.Final"
 }
 
 deploy {

@@ -1,0 +1,1908 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "0",
+								"paddingRight": "0"
+							},
+							"id": "tablet"
+						}
+					],
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#F4F6F9",
+								"borderWidth": "0"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
+									"id": "landscapeMobile"
+								}
+							],
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "content-container",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"background": "",
+										"backgroundDarkOrLight": "light",
+										"backgroundImageUrl": "",
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "container",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "5",
+												"paddingRight": "5"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true
+								},
+								"pageElements": [
+									{
+										"definition": {
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "spacer",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"hidden": true,
+														"paddingBottom": "4",
+														"paddingTop": "4"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"paddingBottom": "4",
+														"paddingTop": "4"
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+														},
+														"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"gutters": true,
+													"indexed": true,
+													"modulesPerRow": 2,
+													"numberOfColumns": 2,
+													"reverseOrder": false,
+													"rowViewports": [
+														{
+															"id": "landscapeMobile",
+															"rowViewportDefinition": {
+																"modulesPerRow": 1
+															}
+														},
+														{
+															"id": "portraitMobile",
+															"rowViewportDefinition": {
+															}
+														},
+														{
+															"id": "tablet",
+															"rowViewportDefinition": {
+															}
+														}
+													],
+													"verticalAlignment": "top"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 8
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "flex",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"alignItems": "align-items-start",
+																		"flexDirection": "",
+																		"flexWrap": "",
+																		"items": 3,
+																		"justifyContent": "justify-content-start"
+																	},
+																	"fragmentFields": [
+																	],
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"hidden": false
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"indexed": true
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-image"
+																					},
+																					"fragmentConfig": {
+																						"imageSize": "w-100"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "image-square",
+																							"value": {
+																								"fragmentImage": {
+																									"url": {
+																										"mapping": {
+																											"fieldKey": "FileEntry_previewImage",
+																											"itemReference": {
+																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/electronic-procurement-system/01_eletronic_procurement_system.png#]"
+																											}
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"marginRight": "3",
+																						"marginTop": "0",
+																						"width": "110px"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"definition": {
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-heading-f1",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Electronic Procurement System"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"fontWeight": "fontWeightBolder",
+																						"textColor": "bodyColor"
+																					},
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"width": ""
+																							},
+																							"id": "portraitMobile"
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "flex",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"alignItems": "align-items-start",
+																						"flexDirection": "",
+																						"flexWrap": "",
+																						"items": 2,
+																						"justifyContent": "justify-content-start"
+																					},
+																					"fragmentFields": [
+																					],
+																					"indexed": true
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																						},
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "BASIC_COMPONENT-image"
+																									},
+																									"fragmentConfig": {
+																										"imageSize": "w-100"
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "image-square",
+																											"value": {
+																												"fragmentImage": {
+																													"url": {
+																														"mapping": {
+																															"fieldKey": "FileEntry_previewImage",
+																															"itemReference": {
+																																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/electronic-procurement-system/fansysoft_logo.png#]"
+																															}
+																														}
+																													}
+																												},
+																												"fragmentLink": {
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"width": "120px"
+																									},
+																									"indexed": true
+																								},
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "FragmentDropZone"
+																					},
+																					{
+																						"definition": {
+																						},
+																						"type": "FragmentDropZone"
+																					}
+																				],
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-heading-f1",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": ""
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"fontWeight": "fontWeightBolder",
+																						"textColor": "whiteColor"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"definition": {
+																		},
+																		"type": "FragmentDropZone"
+																	}
+																],
+																"type": "Fragment"
+															}
+														],
+														"type": "Column"
+													},
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 4
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "flex",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"alignItems": "align-items-start",
+																		"flexDirection": "",
+																		"flexWrap": "",
+																		"items": 1,
+																		"justifyContent": "justify-content-center"
+																	},
+																	"fragmentFields": [
+																	],
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"hidden": true
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"indexed": true
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-button"
+																					},
+																					"fragmentConfig": {
+																						"buttonSize": "nm",
+																						"buttonType": "primary",
+																						"type": "link"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "link",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Contact Partner"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"hidden": true
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"fragmentViewportStyle": {
+																								"hidden": true
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"definition": {
+																		},
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"definition": {
+																		},
+																		"type": "FragmentDropZone"
+																	}
+																],
+																"type": "Fragment"
+															}
+														],
+														"type": "Column"
+													}
+												],
+												"type": "Row"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "spacer",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"paddingBottom": "6",
+														"paddingTop": "6"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"hidden": false
+															},
+															"id": "tablet"
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#0B5FFF",
+								"borderWidth": "0"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
+									"id": "landscapeMobile"
+								}
+							],
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"background": "",
+												"backgroundDarkOrLight": "dark",
+												"backgroundImageUrl": "",
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "5",
+														"paddingRight": "5"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 2,
+															"numberOfColumns": 2,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1,
+																		"reverseOrder": true
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {
+																	}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {
+																	}
+																}
+															],
+															"verticalAlignment": "middle"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 7
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "5",
+																				"paddingTop": "5"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-heading-f1",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "The procurement platform that connects the complete data flow of suppliers, bidding, negotiation and orders"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBolder",
+																				"textColor": "whiteColor"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 5
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "5",
+																				"paddingTop": "5"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "image-carousel",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"colorScheme": "dark",
+																				"imageAspectRatio": "aspect-ratio-4-to-3",
+																				"imageCarouselMaxWidth": "517px",
+																				"lazyLoadingImage": true,
+																				"numberOfImages": "2"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "imageCarousel0",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/electronic-procurement-system/02_eletronic_procurement_system_slider_01.png#]"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "imageCarousel1",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/electronic-procurement-system/03_eletronic-procurement-system-slider-02.png#]"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"background": "",
+												"backgroundDarkOrLight": "light",
+												"backgroundImageUrl": "",
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "0"
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "0",
+														"paddingRight": "0"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "5",
+																		"paddingRight": "5"
+																	},
+																	"id": "tablet"
+																}
+															],
+															"indexed": true,
+															"layout": {
+																"borderWidth": 0,
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fixed"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "5",
+																				"paddingTop": "5"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"borderWidth": "0"
+																			},
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Description</h4>\n<br />\nThe&nbsp;<strong>e-Procurement System (ePM)</strong>&nbsp;is a complete system solution for&nbsp;<strong>Supplier Relationship Management</strong>&nbsp;(SRM) which integrates communication and collaboration between buyers and suppliers. The original mail/phone/fax based business process is transferred to the supplier portal for information storage and communication in electronic form. &nbsp;<br />\n<br />\nThis&nbsp;<strong>B2B procurement platform</strong>&nbsp;covers processing from supplier selection to sourcing, and then to electronic order processing, procurement process standardization and transparency, and helps to improve management performance and risk monitoring. It maintains the stability of the supply chain system, and improves the supply of equipment, materials and labor services required. &nbsp;<br />\n<br />\nThe inclusion of the suppliers' cooperation can reduce the processing burden on the procurement personnel, and the first level of inspection on the data surface can be carried out according to the system SOP.<br />\n<br />\n<a href=\"https://www.fansysoft.com/www/fs-srm/home\" target=\"_blank\">Learn More</a>"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Section"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-spacer"
+																	},
+																	"fragmentConfig": {
+																		"height": "py-3"
+																	},
+																	"fragmentFields": [
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 1,
+															"numberOfColumns": 1,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1,
+																		"reverseOrder": true
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {
+																	}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {
+																	}
+																}
+															],
+															"verticalAlignment": "top"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 12
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-spacer"
+																			},
+																			"fragmentConfig": {
+																				"height": "py-3"
+																			},
+																			"fragmentFields": [
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "content-container",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"background": "",
+																				"backgroundDarkOrLight": "light",
+																				"backgroundImageUrl": "",
+																				"backgroundPosition": "center",
+																				"backgroundSize": "cover",
+																				"blockAlignment": "",
+																				"borderRadius": "border-radius-none",
+																				"boxShadow": "",
+																				"containerWidth": "container",
+																				"lazyLoadingImage": true,
+																				"moveIcon": "-75px 0 0 0",
+																				"showIcon": false,
+																				"showIconBoxShadow": false
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"backgroundColor": "gray200Color",
+																				"hidden": true
+																			},
+																			"indexed": true
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragmentStyle": {
+																								"paddingTop": "4"
+																							},
+																							"fragmentViewports": [
+																								{
+																									"fragmentViewportStyle": {
+																										"paddingLeft": "4",
+																										"paddingRight": "4",
+																										"textAlign": "center"
+																									},
+																									"id": "tablet"
+																								}
+																							],
+																							"gutters": true,
+																							"indexed": true,
+																							"modulesPerRow": 2,
+																							"numberOfColumns": 2,
+																							"reverseOrder": false,
+																							"rowViewports": [
+																								{
+																									"id": "landscapeMobile",
+																									"rowViewportDefinition": {
+																										"modulesPerRow": 1
+																									}
+																								},
+																								{
+																									"id": "portraitMobile",
+																									"rowViewportDefinition": {
+																									}
+																								},
+																								{
+																									"id": "tablet",
+																									"rowViewportDefinition": {
+																										"verticalAlignment": "middle"
+																									}
+																								}
+																							],
+																							"verticalAlignment": "top"
+																						},
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"columnViewports": [
+																										{
+																											"columnViewportDefinition": {
+																												"size": 12
+																											},
+																											"id": "landscapeMobile"
+																										},
+																										{
+																											"columnViewportDefinition": {
+																											},
+																											"id": "portraitMobile"
+																										},
+																										{
+																											"columnViewportDefinition": {
+																											},
+																											"id": "tablet"
+																										}
+																									],
+																									"size": 6
+																								},
+																								"pageElements": [
+																									{
+																										"definition": {
+																											"fragmentStyle": {
+																												"borderWidth": "0"
+																											},
+																											"fragmentViewports": [
+																												{
+																													"fragmentViewportStyle": {
+																														"paddingTop": "4"
+																													},
+																													"id": "portraitMobile"
+																												},
+																												{
+																													"fragmentViewportStyle": {
+																														"paddingBottom": "4"
+																													},
+																													"id": "tablet"
+																												}
+																											],
+																											"indexed": true,
+																											"layout": {
+																												"borderWidth": 0,
+																												"marginBottom": 0,
+																												"marginLeft": 0,
+																												"marginRight": 0,
+																												"marginTop": 0,
+																												"opacity": 100,
+																												"paddingBottom": 0,
+																												"paddingLeft": 0,
+																												"paddingRight": 0,
+																												"paddingTop": 0,
+																												"widthType": "Fluid"
+																											}
+																										},
+																										"pageElements": [
+																											{
+																												"definition": {
+																													"fragment": {
+																														"key": "text",
+																														"siteKey": "[$GROUP_KEY$]"
+																													},
+																													"fragmentConfig": {
+																														"fontSize": "font-size-heading-f1",
+																														"smallCaps": false,
+																														"tabletScreenCenter": false
+																													},
+																													"fragmentFields": [
+																														{
+																															"id": "text",
+																															"value": {
+																																"fragmentLink": {
+																																},
+																																"text": {
+																																	"value_i18n": {
+																																		"en_US": "The Enterprise Collaboration tool for your company"
+																																	}
+																																}
+																															}
+																														}
+																													],
+																													"indexed": true
+																												},
+																												"type": "Fragment"
+																											},
+																											{
+																												"definition": {
+																													"fragment": {
+																														"key": "text",
+																														"siteKey": "[$GROUP_KEY$]"
+																													},
+																													"fragmentConfig": {
+																														"fontSize": "font-size-paragraph-base",
+																														"smallCaps": false,
+																														"tabletScreenCenter": false
+																													},
+																													"fragmentFields": [
+																														{
+																															"id": "text",
+																															"value": {
+																																"fragmentLink": {
+																																},
+																																"text": {
+																																	"value_i18n": {
+																																		"en_US": "Open Square Spaces is the solution dedicated to sharing content that allows work teams to collaborate in real time.<br />\n<br />\nCreate shared spaces, Wiki and Forums and improve personal and business productivity.<br />\n<br />\n<a href=\"https://www.smc.it/solutions/open-square-spaces\" target=\"_blank\">Learn More</a>"
+																																	}
+																																}
+																															}
+																														}
+																													],
+																													"fragmentViewports": [
+																														{
+																															"fragmentViewportStyle": {
+																																"paddingBottom": "0"
+																															},
+																															"id": "portraitMobile"
+																														}
+																													],
+																													"indexed": true
+																												},
+																												"type": "Fragment"
+																											}
+																										],
+																										"type": "Section"
+																									}
+																								],
+																								"type": "Column"
+																							},
+																							{
+																								"definition": {
+																									"columnViewports": [
+																										{
+																											"columnViewportDefinition": {
+																												"size": 12
+																											},
+																											"id": "landscapeMobile"
+																										},
+																										{
+																											"columnViewportDefinition": {
+																											},
+																											"id": "portraitMobile"
+																										},
+																										{
+																											"columnViewportDefinition": {
+																											},
+																											"id": "tablet"
+																										}
+																									],
+																									"size": 6
+																								},
+																								"pageElements": [
+																									{
+																										"definition": {
+																											"fragment": {
+																												"key": "BASIC_COMPONENT-external-video"
+																											},
+																											"fragmentConfig": {
+																												"align": "flex-start",
+																												"video": "{\"html\":\"<iframe allow=\\\"autoplay; encrypted-media\\\" allowfullscreen height=\\\"315\\\" frameborder=\\\"0\\\" src=\\\"https://www.youtube.com/embed/bTKgXTUksoo?rel=0\\\" width=\\\"560\\\"><\\/iframe>\",\"title\":\"Video post Open Square Spaces Inglese\",\"type\":\"com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType\"}",
+																												"videoHeight": "",
+																												"videoWidth": ""
+																											},
+																											"fragmentFields": [
+																											],
+																											"fragmentViewports": [
+																												{
+																													"fragmentViewportStyle": {
+																														"paddingTop": "4"
+																													},
+																													"id": "portraitMobile"
+																												}
+																											],
+																											"indexed": true
+																										},
+																										"type": "Fragment"
+																									}
+																								],
+																								"type": "Column"
+																							}
+																						],
+																						"type": "Row"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "BASIC_COMPONENT-spacer"
+																							},
+																							"fragmentConfig": {
+																								"height": "py-3"
+																							},
+																							"fragmentFields": [
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					}
+																				],
+																				"type": "FragmentDropZone"
+																			}
+																		],
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"backgroundColor": "gray100Color",
+																				"borderWidth": "0"
+																			},
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-spacer"
+																					},
+																					"fragmentConfig": {
+																						"height": "py-3"
+																					},
+																					"fragmentFields": [
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragmentStyle": {
+																						"borderWidth": "0"
+																					},
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"paddingLeft": "5",
+																								"paddingRight": "5"
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"indexed": true,
+																					"layout": {
+																						"borderWidth": 0,
+																						"marginBottom": 0,
+																						"marginLeft": 0,
+																						"marginRight": 0,
+																						"marginTop": 0,
+																						"opacity": 100,
+																						"paddingBottom": 0,
+																						"paddingLeft": 0,
+																						"paddingRight": 0,
+																						"paddingTop": 0,
+																						"widthType": "Fixed"
+																					}
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
+																							},
+																							"fragmentConfig": {
+																								"fontSize": "font-size-heading-f1",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "text",
+																									"value": {
+																										"fragmentLink": {
+																										},
+																										"text": {
+																											"value_i18n": {
+																												"en_US": "Feature:"
+																											}
+																										}
+																									}
+																								}
+																							],
+																							"fragmentStyle": {
+																								"fontWeight": "fontWeightBolder"
+																							},
+																							"fragmentViewports": [
+																								{
+																									"fragmentViewportStyle": {
+																										"paddingLeft": "0",
+																										"paddingRight": "0"
+																									},
+																									"id": "portraitMobile"
+																								}
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
+																							},
+																							"fragmentConfig": {
+																								"fontSize": "font-size-paragraph-large",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "text",
+																									"value": {
+																										"fragmentLink": {
+																										},
+																										"text": {
+																											"value_i18n": {
+																												"en_US": " \n<ul>\n\t<li><u><strong>Main procurement functions&nbsp;</strong>&nbsp;</u>\n\t<ul>\n\t\t<li><strong>Supplier life cycle management &nbsp;</strong>(Supplier registration, supplier audit, supplier change application, supplier evaluation and grade, supplier performance management, supplier supply ratio management, supplier elimination)</li>\n\t\t<li><strong>Requisition operation&nbsp;</strong>&nbsp;(Requisition application, requisition dispatch, requisition review, requisition purchase tracking, budget management)</li>\n\t\t<li><strong>Sourcing cooperation&nbsp;&nbsp;</strong>(Procurement compilation and revision filing, procurement case assignment, online bidding, qualification review, bid evaluation, consultation and negotiation, abnormal handling of objections, online bid opening (bid opening hall), ranking of suggestions, bid decision, contract output)</li>\n\t\t<li><strong>Purchase order coordination&nbsp;</strong>(Order entry, order confirmation, delivery plan, supplier delivery notice, receipt and return inquiry, invoice opening notice, accounting status, consignment inventory inquiry, logistics acceptance APP)</li>\n\t\t<li><strong>Material management&nbsp;</strong>(Supplier material management, supplier material cooperation, material quality audit, commodity database)</li>\n\t</ul>\n\t</li>\n\t<li><u><strong>System platform functions</strong></u>\n\t<ul>\n\t\t<li><strong>Query statistical analysis&nbsp;</strong>(Purchase requisition schedule, procurement contractor dashboard, review committee dashboard, buyer performance table, supplier purchase amount ranking, price trend analysis, comprehensive report )</li>\n\t\t<li><strong>File library management</strong>&nbsp;(Announcement documents, requisition documents, tender documents, supplier qualification documents, full text search)</li>\n\t\t<li><strong>System management&nbsp;</strong>(System announcement, organization account management, user authentication, permission group management, user operation record, signing and verification process management)</li>\n\t\t<li><strong>Application collaboration&nbsp;</strong>(Enterprise calendar integration, online notification including email, online discussion area)</li>\n\t</ul>\n\t</li>\n\t<li><strong><u>Bonus expansion functions</u></strong>\n\t<ul>\n\t\t<li><strong>Contract management</strong>&nbsp;(Contract template, contract generation, contract filing, contract tracking)</li>\n\t\t<li><strong>Bottom price operation</strong></li>\n\t\t<li><strong>Decryption of bid documents</strong></li>\n\t\t<li><strong>Other search sources&nbsp;</strong>(Bidding module, competitive negotiation)</li>\n\t\t<li><strong>Electronic kanban</strong></li>\n\t\t<li><strong>Questionnaire management</strong></li>\n\t</ul>\n\t</li>\n</ul>\n"
+																											}
+																										}
+																									}
+																								}
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "BASIC_COMPONENT-spacer"
+																							},
+																							"fragmentConfig": {
+																								"height": "py-3"
+																							},
+																							"fragmentFields": [
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "text",
+																								"siteKey": "$GROUP_KEY$]"
+																							},
+																							"fragmentConfig": {
+																								"fontSize": "font-size-paragraph-large",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "text",
+																									"value": {
+																										"fragmentLink": {
+																										},
+																										"text": {
+																											"value_i18n": {
+																												"en_US": "<h3 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Company Profile<br />\n </h3>\nFansySoft is based on Java technology and adopts a mature Open Source system for system design and module development, system construction, and project program development. Good at using related system architectures such as Java EE . Provide software as a service (SaaS) technical support in the cloud service industry chain.<br />\n<br />\nFansySoft's mission is to become a leading consulting, technology and outsourcing service company in the information industry with the concept of \"local technical services, global R&amp;D support\", and the most competitive software technology, to provide local information technology services, to help improve Taiwan's strength in software.<br />\n<br />\n<strong>Website</strong><br />\n<a href=\"https://www.fansysoft.com/\" target=\"_blank\">https://www.fansysoft.com</a><br />\n<br />\n<strong>Email</strong><br />\n<a href=\"mailto:sales@fansysoft.com\" target=\"_blank\">sales@fansysoft.com</a><br />\n<br />\n<strong>Phone</strong><br />\n+886-7-742-4012"
+																											}
+																										}
+																									}
+																								}
+																							],
+																							"fragmentViewports": [
+																								{
+																									"fragmentViewportStyle": {
+																										"paddingLeft": "0",
+																										"paddingRight": "0"
+																									},
+																									"id": "portraitMobile"
+																								}
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					}
+																				],
+																				"type": "Section"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-spacer"
+																					},
+																					"fragmentConfig": {
+																						"height": "py-5"
+																					},
+																					"fragmentFields": [
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#f7f8f9",
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"background": "",
+												"backgroundDarkOrLight": "light",
+												"backgroundImageUrl": "",
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "container",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"backgroundColor": "gray200Color"
+											},
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-spacer"
+															},
+															"fragmentConfig": {
+																"height": "py-4"
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-heading-f1",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Contact Us"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontWeight": "fontWeightBolder",
+																"textColor": "brandColor4"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "5",
+																		"paddingRight": "5"
+																	},
+																	"id": "tablet"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-paragraph-base",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Find out more about Electronic Procurement System"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "4",
+																		"paddingRight": "4"
+																	},
+																	"id": "portraitMobile"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "spacer",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "2",
+																"paddingTop": "2"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "spacer",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "2",
+																"paddingTop": "9"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "marketplace-master"
+		}
+	},
+	"version": 1.1
+}

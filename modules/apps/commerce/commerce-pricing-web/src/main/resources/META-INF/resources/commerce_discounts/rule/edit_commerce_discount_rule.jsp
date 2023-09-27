@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -29,11 +20,12 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 <liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.get(request, "edit-rule") %>'
 >
-	<aui:form action="<%= editCommerceDiscountRuleActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit();" %>'>
+	<aui:form action="<%= editCommerceDiscountRuleActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceDiscountRule == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceDiscountId" type="hidden" value="<%= commerceDiscountRule.getCommerceDiscountId() %>" />
 		<aui:input name="commerceDiscountRuleId" type="hidden" value="<%= commerceDiscountRule.getCommerceDiscountRuleId() %>" />
+		<aui:input name="commerceDiscountRuleType" type="hidden" value="<%= commerceDiscountRule.getType() %>" />
 
 		<aui:model-context bean="<%= commerceDiscountRule %>" model="<%= CommerceDiscountRule.class %>" />
 
@@ -85,53 +77,3 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 		</aui:button-row>
 	</aui:form>
 </liferay-frontend:side-panel-content>
-
-<aui:script require="commerce-frontend-js/utilities/notifications as NotificationUtils, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-	var CommerceDiscountRuleResource = ServiceProvider.default.AdminPricingAPI(
-		'v2'
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />apiSubmit',
-		() => {
-			var form = document.getElementById('<portlet:namespace />fm');
-			var name = form.querySelector('#<portlet:namespace />name').value;
-
-			var typeSettings = form.querySelector(
-				'#<portlet:namespace />typeSettings'
-			).value;
-
-			var discountRuleData = {
-				name: name,
-				type: '<%= commerceDiscountRule.getType() %>',
-				typeSettings: typeSettings,
-			};
-
-			return CommerceDiscountRuleResource.updateDiscountRule(
-				'<%= commerceDiscountRule.getCommerceDiscountRuleId() %>',
-				discountRuleData
-			)
-				.then(() => {
-					NotificationUtils.showNotification(
-						'<liferay-ui:message key="your-request-completed-successfully" />'
-					);
-
-					window.parent.Liferay.fire(events.FDS_UPDATE_DISPLAY, {
-						id: '<%= CommercePricingFDSNames.DISCOUNT_RULES %>',
-					});
-
-					return;
-				})
-				.catch(() => {
-					Liferay.Util.openAlertModal({
-						message:
-							'<liferay-ui:message key="your-request-failed-to-complete" />',
-					});
-
-					return;
-				});
-		},
-		['liferay-portlet-url']
-	);
-</aui:script>

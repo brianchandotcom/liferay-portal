@@ -1,0 +1,971 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+		},
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "BuildParameter",
+			"label": {
+				"en_US": "Build Parameter"
+			},
+			"name": "BuildParameter",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"label": {
+						"en_US": "Value"
+					},
+					"name": "value",
+					"required": true,
+					"type": "Clob"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "Build Parameters"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "Environment",
+			"label": {
+				"en_US": "Environment"
+			},
+			"name": "Environment",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "App Server"
+					},
+					"name": "appServer",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Batch Name"
+					},
+					"name": "batchName",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Browser"
+					},
+					"name": "browser",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Database"
+					},
+					"name": "database",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Java Version"
+					},
+					"name": "javaVersion",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"label": {
+						"en_US": "Liferay Bundle"
+					},
+					"listTypeDefinitionExternalReferenceCode": "liferayBundle",
+					"name": "liferayBundle",
+					"required": false,
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"label": {
+						"en_US": "Liferay Portal Branch"
+					},
+					"listTypeDefinitionExternalReferenceCode": "liferayPortalBranch",
+					"name": "liferayPortalBranch",
+					"required": false,
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Operating System"
+					},
+					"name": "operatingSystem",
+					"required": false,
+					"type": "String"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "Environments"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "GitBranch",
+			"label": {
+				"en_US": "Git Branch"
+			},
+			"name": "GitBranch",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Branch Name"
+					},
+					"name": "branchName",
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Branch SHA"
+					},
+					"name": "branchSHA",
+					"type": "String"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"label": {
+						"en_US": "Rebased"
+					},
+					"name": "rebased",
+					"type": "Boolean"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Repository Name"
+					},
+					"name": "repositoryName",
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Upstream Branch Name"
+					},
+					"name": "upstreamBranchName",
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Upstream Branch SHA"
+					},
+					"name": "upstreamBranchSHA",
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "URL"
+					},
+					"name": "url",
+					"required": true,
+					"type": "String"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "Git Branches"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "JenkinsNode",
+			"label": {
+				"en_US": "Jenkins Node"
+			},
+			"name": "JenkinsNode",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Primary Label"
+					},
+					"name": "primaryLabel",
+					"type": "String"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"label": {
+						"en_US": "Good Battery"
+					},
+					"name": "goodBattery",
+					"type": "Boolean"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"label": {
+						"en_US": "Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "jenkinsNodeType",
+					"name": "type",
+					"required": true,
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"label": {
+						"en_US": "Node Count"
+					},
+					"name": "nodeCount",
+					"required": true,
+					"type": "Integer"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"label": {
+						"en_US": "Node RAM"
+					},
+					"name": "nodeRAM",
+					"required": true,
+					"type": "Integer"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "URL"
+					},
+					"name": "url",
+					"type": "String"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "Jenkins Nodes"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "JobComparator",
+			"label": {
+				"en_US": "Job Comparator"
+			},
+			"name": "JobComparator",
+			"objectFields": [
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"label": {
+						"en_US": "Position"
+					},
+					"name": "position",
+					"required": true,
+					"type": "Integer"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"label": {
+						"en_US": "Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "jobComparatorType",
+					"name": "type",
+					"required": true,
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Value"
+					},
+					"name": "value",
+					"required": false,
+					"type": "String"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "Job Comparators"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "TaskRun",
+			"label": {
+				"en_US": "Task Run"
+			},
+			"name": "TaskRun",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Duration"
+					},
+					"name": "duration",
+					"required": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"label": {
+						"en_US": "Result"
+					},
+					"listTypeDefinitionExternalReferenceCode": "result",
+					"name": "result",
+					"required": true,
+					"state": false,
+					"type": "String"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "Task Runs"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "TestSuite",
+			"label": {
+				"en_US": "Test Suite"
+			},
+			"name": "TestSuite",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"type": "String"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "Test Suites"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "JenkinsServer",
+			"label": {
+				"en_US": "Jenkins Server"
+			},
+			"name": "JenkinsServer",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Jenkins User Name"
+					},
+					"name": "jenkinsUserName",
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Jenkins User Password"
+					},
+					"name": "jenkinsUserPassword",
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "URL"
+					},
+					"name": "url",
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Jenkins Server to Jenkins Nodes"
+					},
+					"name": "jenkinsServerToJenkinsNodes",
+					"objectDefinitionExternalReferenceCode1": "JenkinsServer",
+					"objectDefinitionExternalReferenceCode2": "JenkinsNode",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Jenkins Servers"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "JobPrioritizer",
+			"label": {
+				"en_US": "Job Prioritizer"
+			},
+			"name": "JobPrioritizer",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Job Prioritizer to Job Comparators"
+					},
+					"name": "jobPrioritizerToJobComparators",
+					"objectDefinitionExternalReferenceCode1": "JobPrioritizer",
+					"objectDefinitionExternalReferenceCode2": "JobComparator",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "Job Prioritizers"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "BuildRun",
+			"label": {
+				"en_US": "Build Run"
+			},
+			"name": "BuildRun",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Duration"
+					},
+					"name": "duration",
+					"required": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Jenkins Build URL"
+					},
+					"name": "jenkinsBuildURL",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"label": {
+						"en_US": "Result"
+					},
+					"listTypeDefinitionExternalReferenceCode": "result",
+					"name": "result",
+					"required": false,
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "opened",
+					"label": {
+						"en_US": "State"
+					},
+					"listTypeDefinitionExternalReferenceCode": "state",
+					"name": "state",
+					"required": true,
+					"state": true,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Build Run to Task Runs"
+					},
+					"name": "buildRunToTaskRuns",
+					"objectDefinitionExternalReferenceCode1": "BuildRun",
+					"objectDefinitionExternalReferenceCode2": "TaskRun",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Build Runs"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "JenkinsCohort",
+			"label": {
+				"en_US": "Jenkins Cohort"
+			},
+			"name": "JenkinsCohort",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Jenkins Cohort to Jenkins Servers"
+					},
+					"name": "jenkinsCohortToJenkinsServers",
+					"objectDefinitionExternalReferenceCode1": "JenkinsCohort",
+					"objectDefinitionExternalReferenceCode2": "JenkinsServer",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Jenkins Cohorts"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "Task",
+			"label": {
+				"en_US": "Task"
+			},
+			"name": "Task",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Task to Environments"
+					},
+					"name": "taskToEnvironments",
+					"objectDefinitionExternalReferenceCode1": "Task",
+					"objectDefinitionExternalReferenceCode2": "Environment",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Task to Task Runs"
+					},
+					"name": "taskToTaskRuns",
+					"objectDefinitionExternalReferenceCode1": "Task",
+					"objectDefinitionExternalReferenceCode2": "TaskRun",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "Tasks"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "Build",
+			"label": {
+				"en_US": "Build"
+			},
+			"name": "Build",
+			"objectFields": [
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"label": {
+						"en_US": "Initial Build"
+					},
+					"name": "initialBuild",
+					"type": "Boolean"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Jenkins Job Name"
+					},
+					"name": "jenkinsJobName",
+					"required": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "opened",
+					"label": {
+						"en_US": "State"
+					},
+					"listTypeDefinitionExternalReferenceCode": "state",
+					"name": "state",
+					"required": true,
+					"state": true,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Build to Build Parameters"
+					},
+					"name": "buildToBuildParameters",
+					"objectDefinitionExternalReferenceCode1": "Build",
+					"objectDefinitionExternalReferenceCode2": "BuildParameter",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Build to Build Runs"
+					},
+					"name": "buildToBuildRuns",
+					"objectDefinitionExternalReferenceCode1": "Build",
+					"objectDefinitionExternalReferenceCode2": "BuildRun",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Build to Environments"
+					},
+					"name": "buildToEnvironments",
+					"objectDefinitionExternalReferenceCode1": "Build",
+					"objectDefinitionExternalReferenceCode2": "Environment",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Build to Tasks"
+					},
+					"name": "buildToTasks",
+					"objectDefinitionExternalReferenceCode1": "Build",
+					"objectDefinitionExternalReferenceCode2": "Task",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Child Builds"
+					},
+					"name": "childBuilds",
+					"objectDefinitionExternalReferenceCode1": "Build",
+					"objectDefinitionExternalReferenceCode2": "Build",
+					"type": "manyToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Builds"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "Job",
+			"label": {
+				"en_US": "Job"
+			},
+			"name": "Job",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"label": {
+						"en_US": "Priority"
+					},
+					"name": "priority",
+					"required": false,
+					"type": "Integer"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Start Date"
+					},
+					"name": "startDate",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "opened",
+					"label": {
+						"en_US": "State"
+					},
+					"listTypeDefinitionExternalReferenceCode": "state",
+					"name": "state",
+					"required": true,
+					"state": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"label": {
+						"en_US": "Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "jobType",
+					"name": "type",
+					"required": true,
+					"state": false,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Job to Builds"
+					},
+					"name": "jobToBuilds",
+					"objectDefinitionExternalReferenceCode1": "Job",
+					"objectDefinitionExternalReferenceCode2": "Build",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Job to Tasks"
+					},
+					"name": "jobToTasks",
+					"objectDefinitionExternalReferenceCode1": "Job",
+					"objectDefinitionExternalReferenceCode2": "Task",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Jobs to Git Branches"
+					},
+					"name": "jobsToGitBranches",
+					"objectDefinitionExternalReferenceCode1": "Job",
+					"objectDefinitionExternalReferenceCode2": "GitBranch",
+					"type": "manyToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Jobs to Jenkins Cohorts"
+					},
+					"name": "jobsToJenkinsCohorts",
+					"objectDefinitionExternalReferenceCode1": "Job",
+					"objectDefinitionExternalReferenceCode2": "JenkinsCohort",
+					"type": "manyToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Jobs to Test Suites"
+					},
+					"name": "jobsToTestSuites",
+					"objectDefinitionExternalReferenceCode1": "Job",
+					"objectDefinitionExternalReferenceCode2": "TestSuite",
+					"type": "manyToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Jobs"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		}
+	]
+}

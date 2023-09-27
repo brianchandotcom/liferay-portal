@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.segments.web.internal.context.test;
@@ -34,7 +25,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
@@ -170,8 +160,7 @@ public class SegmentsDisplayContextTest {
 							SegmentsCompanyConfiguration.class.getName(),
 							HashMapDictionaryBuilder.<String, Object>put(
 								"roleSegmentationEnabled", false
-							).build(),
-							SettingsFactoryUtil.getSettingsFactory())) {
+							).build())) {
 
 				SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 					ServiceContextTestUtil.getServiceContext(
@@ -200,8 +189,7 @@ public class SegmentsDisplayContextTest {
 							SegmentsCompanyConfiguration.class.getName(),
 							HashMapDictionaryBuilder.<String, Object>put(
 								"roleSegmentationEnabled", true
-							).build(),
-							SettingsFactoryUtil.getSettingsFactory())) {
+							).build())) {
 
 				SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 					ServiceContextTestUtil.getServiceContext(
@@ -376,8 +364,7 @@ public class SegmentsDisplayContextTest {
 						AnalyticsConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
 							"liferayAnalyticsURL", RandomTestUtil.randomString()
-						).build(),
-						SettingsFactoryUtil.getSettingsFactory())) {
+						).build())) {
 
 			SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -407,8 +394,7 @@ public class SegmentsDisplayContextTest {
 						AnalyticsConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
 							"liferayAnalyticsURL", RandomTestUtil.randomString()
-						).build(),
-						SettingsFactoryUtil.getSettingsFactory())) {
+						).build())) {
 
 			SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -443,8 +429,7 @@ public class SegmentsDisplayContextTest {
 							SegmentsCompanyConfiguration.class.getName(),
 							HashMapDictionaryBuilder.<String, Object>put(
 								"roleSegmentationEnabled", true
-							).build(),
-							SettingsFactoryUtil.getSettingsFactory())) {
+							).build())) {
 
 				Assert.assertTrue(
 					_isRoleSegmentationEnabled(TestPropsValues.getCompanyId()));
@@ -485,8 +470,7 @@ public class SegmentsDisplayContextTest {
 							SegmentsCompanyConfiguration.class.getName(),
 							HashMapDictionaryBuilder.<String, Object>put(
 								"segmentationEnabled", false
-							).build(),
-							SettingsFactoryUtil.getSettingsFactory())) {
+							).build())) {
 
 				Assert.assertFalse(
 					_isSegmentationEnabled(TestPropsValues.getCompanyId()));
@@ -510,8 +494,7 @@ public class SegmentsDisplayContextTest {
 							SegmentsCompanyConfiguration.class.getName(),
 							HashMapDictionaryBuilder.<String, Object>put(
 								"segmentationEnabled", true
-							).build(),
-							SettingsFactoryUtil.getSettingsFactory())) {
+							).build())) {
 
 				Assert.assertTrue(
 					_isSegmentationEnabled(TestPropsValues.getCompanyId()));

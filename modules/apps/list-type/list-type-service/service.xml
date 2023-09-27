@@ -21,6 +21,7 @@
 		<!-- Other fields -->
 
 		<column localized="true" name="name" type="String" />
+		<column name="system" type="boolean" />
 	</entity>
 	<entity local-service="true" name="ListTypeEntry" remote-service="true" uuid="true">
 
@@ -69,6 +70,7 @@
 		<exception>DuplicateListTypeEntry</exception>
 		<exception>DuplicateListTypeEntryExternalReferenceCode</exception>
 		<exception>ListTypeDefinitionName</exception>
+		<exception>ListTypeDefinitionSystem</exception>
 		<exception>ListTypeEntryKey</exception>
 		<exception>ListTypeEntryName</exception>
 		<exception>RequiredListTypeDefinition</exception>

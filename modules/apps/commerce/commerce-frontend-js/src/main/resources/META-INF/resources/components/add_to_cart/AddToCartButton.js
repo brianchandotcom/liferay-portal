@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
@@ -18,9 +9,10 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import cartAtom from '../../utilities/atoms/cartAtom';
+import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import {ADD_ITEM_TO_CART, OPEN_MODAL} from '../../utilities/eventsDefinitions';
 import {showErrorNotification} from '../../utilities/notifications';
 import {addToCart} from './data';
@@ -48,10 +40,16 @@ function AddToCartButton({
 	showOrderTypeModalURL,
 }) {
 	const [cartAtomState, setCartAtomState] = useLiferayState(cartAtom);
+	const [skuOptionsAtomState] = useLiferayState(skuOptionsAtom);
 	const [isTriggeringCartUpdate, setIsTriggeringCartUpdate] = useState(false);
 	const isMounted = useIsMounted();
 	const [event, setEvent] = useState(null);
 	const randomNamespace = getRandomId();
+
+	const buttonDisabled = useMemo(
+		() => skuOptionsAtomState.errors.length || disabled,
+		[disabled, skuOptionsAtomState.errors]
+	);
 
 	const handleClickAddToCart = useCallback(
 		(event, orderTypeId) => {
@@ -72,7 +70,10 @@ function AddToCartButton({
 				cartId,
 				channel,
 				accountId,
-				orderTypeId
+				orderTypeId,
+				settings.namespace,
+				skuOptionsAtomState.skuOptions,
+				skuOptionsAtomState.namespace
 			)
 				.then(onAdd)
 				.catch((error) => {
@@ -109,6 +110,7 @@ function AddToCartButton({
 					}
 				});
 		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[
 			accountId,
 			cartAtomState.updating,
@@ -120,6 +122,7 @@ function AddToCartButton({
 			onClick,
 			onError,
 			setCartAtomState,
+			skuOptionsAtomState,
 		]
 	);
 
@@ -149,7 +152,7 @@ function AddToCartButton({
 					notAllowed ||
 					(cartAtomState.updating && !isTriggeringCartUpdate),
 			})}
-			disabled={disabled}
+			disabled={buttonDisabled}
 			displayType="primary"
 			monospaced={settings.iconOnly && settings.inline}
 			onClick={async (event) => {

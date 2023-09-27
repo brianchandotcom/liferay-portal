@@ -1,0 +1,122 @@
+definition {
+
+	macro _addCatalog {
+		Variables.assertDefined(parameterList = ${catalogName});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(currencyCode))) {
+			var currencyCode = "USD";
+		}
+
+		if (!(isSet(defaultLanguageId))) {
+			var defaultLanguageId = "en_US";
+		}
+
+		if (${catalogName} == "MKT Catalog") {
+			var externalReferenceCode = "MKT-CATALOG-01";
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/o/headless-commerce-admin-catalog/v1.0/catalogs \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"currencyCode": "${currencyCode}",
+					"defaultLanguageId": "${defaultLanguageId}",
+					"externalReferenceCode": "{externalReferenceCode}",
+					"name": "${catalogName}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post(${curl});
+
+		echo(${response});
+	}
+
+	macro addAccount {
+		Variables.assertDefined(parameterList = ${accountName});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (${accountName} == "QA Development") {
+			var externalReferenceCode = "MKT-ACCOUNT-1";
+			var type = "business";
+		}
+
+		if (${accountName} == "QA Acme") {
+			var externalReferenceCode = "MKT-ACCOUNT-2";
+			var type = "person";
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/accounts \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"name":"${accountName}",
+					"externalReferenceCode":"${externalReferenceCode}",
+					"type":"${type}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post(${curl});
+
+		echo(${response});
+	}
+
+	macro updateAccount {
+		Variables.assertDefined(parameterList = "${accountName},${catalogName}");
+
+		if (${accountName} == "QA Development") {
+			var externalReferenceCode = "MKT-ACCOUNT-1";
+			var type = "business";
+		}
+
+		if (${accountName} == "QA Acme") {
+			var externalReferenceCode = "MKT-ACCOUNT-2";
+			var type = "person";
+		}
+
+		if (!(isSet(catalogName))) {
+			var catalogName = "MKT Catalog";
+		}
+
+		JSONMP2.addCatalog();
+
+		var accountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountName});
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
+		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/accounts/${accountId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"name":"${accountName}",
+					"customFields":[
+						{
+							"customValue":{
+								"data":"${catalogId}"
+							},
+							"dataType":"Text",
+							"name":"CatalogId"
+						}
+					]
+				}'
+		''';
+
+		var response = JSONCurlUtil.patch(${curl});
+
+		echo(${response});
+	}
+
+}

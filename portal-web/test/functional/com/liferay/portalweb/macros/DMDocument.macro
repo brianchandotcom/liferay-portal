@@ -1295,7 +1295,9 @@ definition {
 			menuItem = "Copy To",
 			rowEntry = ${dmDocumentTitle});
 
-		Alert.viewWarningSpecific(warningMessage = "The copying process may take some time. Note that categories, ratings, tags, and custom document types will not be copied.");
+		if (isSet(viewInfo)) {
+			Alert.viewWarningSpecific(warningMessage = "The copying process may take some time. Only categories, tags, ratings, and document types in the global scope or asset libraries connected to both sites will be copied. Document type fields will be displayed empty.");
+		}
 
 		AssertElementPresent(
 			key_fieldLabel = "Copy From",
@@ -1357,6 +1359,15 @@ definition {
 		if (isSet(copyDuplicatedDocument)) {
 			Alert.viewErrorMessage(errorMessage = "A file entry already exists with title ${dmDocumentTitle}");
 		}
+		else if (isSet(copyToUnconnectedSite)) {
+			Alert.viewErrorMessage(errorMessage = "The item is not copied because the site and asset library are not connected.");
+		}
+		else if (isSet(copyToStagingSite)) {
+			Alert.viewErrorMessage(errorMessage = "Cannot copy file entries to the live version of a site. Make your changes in staging and publish them to Live afterwards to make them public.");
+		}
+		else if (isSet(copyWithRequiredField)) {
+			Alert.viewErrorMessage(errorMessage = "No value defined for field name");
+		}
 		else {
 			Alert.viewSuccessMessage();
 		}
@@ -1413,7 +1424,7 @@ definition {
 			key_rowEntry = ${mgDocumentTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
-		Click.waitForMenuToggleJSClick(
+		Click.waitForPersonalMenuJSClick(
 			key_rowEntry = ${mgDocumentTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
@@ -2681,6 +2692,8 @@ definition {
 			locator1 = "TextInput#REVIEW_DATE",
 			value1 = ${reviewDate});
 
+		var reviewDateTime = StringUtil.removeSpaces(${reviewDateTime});
+
 		Type.sendKeys(
 			locator1 = "TextInput#REVIEW_DATE_TIME",
 			value1 = ${reviewDateTime});
@@ -2989,6 +3002,13 @@ definition {
 			DMNavigator.openToConfigInSystemSettings(portlet = "Documents and Media Size Limits");
 		}
 
+		if (isSet(checkPortletTitle)) {
+			AssertTextEquals(
+				key_portletTitle = "File Upload Limits",
+				locator1 = "DocumentsAndMedia#PORTLET_TITLE",
+				value1 = "File Upload Limits");
+		}
+
 		if (${indexNumber} == 2) {
 			Click(locator1 = "Button#DUPLICATE");
 
@@ -3070,7 +3090,7 @@ definition {
 
 	macro viewActionDetailsInKebabMenu {
 		for (var menuItem : list ${menuItem}) {
-			MenuItem.verifyPresent(menuItem = ${menuItem});
+			MenuItem.verifyVisible(menuItem = ${menuItem});
 		}
 	}
 
@@ -3660,6 +3680,32 @@ definition {
 		}
 	}
 
+	macro viewDocumentVersionInfoFromVersionsPage {
+		AssertVisible(
+			index = ${orderIndex},
+			key_tableEntry = ${dmDocumentTitle},
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
+
+		var list1 = ListUtil.newListFromString("id,title,version,status,modified-date,author");
+		var list2 = ListUtil.newListFromString(${dmDocumentVersionInfo});
+		var size = ListUtil.size(${list1});
+		var i = 0;
+
+		while (${i} != ${size}) {
+			var tableTitle = ListUtil.get(${list1}, ${i});
+			var dmDocumentVersionInfo = ListUtil.get(${list2}, ${i});
+
+			AssertVisible(
+				key_columnName = ${tableTitle},
+				key_tableEntry = ${dmDocumentVersionInfo},
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO");
+
+			var i = ${i} + 1;
+
+			var i = StringUtil.valueOf(${i});
+		}
+	}
+
 	macro viewDocumentVersionNumberCmdPG {
 		DMDocument.expandInfo();
 
@@ -3779,6 +3825,10 @@ definition {
 			}
 		}
 		else {
+			while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED")) {
+				Click(locator1 = "Treeview#NODE_COLLAPSED");
+			}
+
 			for (var category : list ${category}) {
 				AssertTextEquals(
 					key_nodeName = ${category},

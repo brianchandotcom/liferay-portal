@@ -6,7 +6,109 @@ definition {
 	property database.types = "mysql";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
 	property testray.main.component.name = "Database Upgrade Framework";
+
+	@priority = 4
+	test CompareLatest7413PartitionedUpgradedAndFreshDBSchemas {
+		property database.bare.enabled = "true";
+		property database.partition.enabled = "true";
+		property skip.start.app.server = "true";
+		property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
+
+		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
+		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
+
+		task ("Given the user is using the latest 7413 portal version") {
+			AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
+
+			Portlet.startServer(keepOsGiState = "true");
+
+			AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
+
+			Navigator.openSpecificURL(url = "http://localhost:8080");
+		}
+
+		task ("And a partitioned is present") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			var upgradedCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+		}
+
+		task ("And the server is upgraded to a new version") {
+			Portlet.shutdownServer();
+
+			AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
+
+			Portlet.startServer(deleteLiferayHome = "false");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			Portlet.shutdownServer();
+		}
+
+		task ("And the database is captured") {
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded -Ddatabase.schema.name=lportal");
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded -Ddatabase.schema.name=lpartition_${upgradedCompanyId}");
+		}
+
+		task ("When the server is started again with a fresh database") {
+			AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+
+			TestCase.updatePortalProperties(
+				newProperty = "upgrade.database.auto.run=false",
+				oldProperty = "upgrade.database.auto.run=true");
+
+			SQL.executeMySQLStatement(mysqlStatement = "DROP DATABASE lpartition_${upgradedCompanyId};");
+
+			Portlet.startServer();
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com",
+				virtualHostsURL = "http://localhost:8080");
+		}
+
+		task ("And a new partition is created to emulate the same enviroment as before") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.baker.com",
+				portalInstanceId = "www.baker.com",
+				virtualHost = "www.baker.com");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.baker.com",
+				virtualHostsURL = "http://www.baker.com:8080");
+		}
+
+		task ("And the database is captured again") {
+			var freshCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.baker.com");
+
+			Portlet.shutdownServer();
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lportal");
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lpartition_${freshCompanyId}");
+		}
+
+		task ("Then the schemas structure is the same between upgraded and fresh databases") {
+			UpgradeSchema.validateSchemas(
+				freshDBSchemaName = "lpartition_${freshCompanyId}",
+				upgradedDBSchemaName = "lpartition_${upgradedCompanyId}");
+
+			UpgradeSchema.validateSchemas(
+				freshDBSchemaName = "lportal",
+				upgradedDBSchemaName = "lportal");
+		}
+	}
 
 	@ignore = "true"
 	@priority = 4
@@ -88,7 +190,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test CompareUpgradedAndFreshDatabaseSchemas6130 {
 		property custom.properties = "feature.flag.LPS-157670=true";
@@ -112,7 +213,6 @@ definition {
 			upgradedDBSchemaName = "lportal");
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test CompareUpgradedAndFreshDatabaseSchemas7210 {
 		property data.archive.type = "data-archive-portal";
@@ -179,7 +279,6 @@ definition {
 			upgradedDBSchemaName = "lportal");
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test CompareUpgradedAndFreshDatabaseSchemas70106 {
 		property data.archive.type = "data-archive-portal";
@@ -202,7 +301,6 @@ definition {
 			upgradedDBSchemaName = "lportal");
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test CompareUpgradedAndFreshDatabaseSchemas71103 {
 		property data.archive.type = "data-archive-portal";
@@ -225,7 +323,6 @@ definition {
 			upgradedDBSchemaName = "lportal");
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test CompareUpgradedAndFreshDatabaseSchemas621021 {
 		property data.archive.type = "data-archive-portal";

@@ -1,37 +1,20 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.site.welcome.site.initializer.internal.instance.lifecycle;
 
-import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.store.Store;
-import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.InitialRequestPortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -48,6 +31,8 @@ import com.liferay.site.initializer.SiteInitializer;
 
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -56,12 +41,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PortalInstanceLifecycleListener.class)
 public class AddDefaultLayoutPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener {
+	extends InitialRequestPortalInstanceLifecycleListener {
+
+	@Activate
+	@Override
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
+	}
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
+	protected void doPortalInstanceRegistered(long companyId) throws Exception {
 		Group group = _groupLocalService.getGroup(
-			company.getCompanyId(), GroupConstants.GUEST);
+			companyId, GroupConstants.GUEST);
 
 		String friendlyURL = _friendlyURLNormalizer.normalizeWithEncoding(
 			PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_FRIENDLY_URL);
@@ -81,7 +72,7 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 					PermissionThreadLocal.getPermissionChecker();
 
 				try {
-					User user = _getUser(company.getCompanyId());
+					User user = _getUser(companyId);
 
 					PrincipalThreadLocal.setName(user.getUserId());
 
@@ -126,30 +117,14 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
 
-	@Reference(target = "(fragment.collection.key=BASIC_COMPONENT)")
-	private FragmentCollectionContributor _fragmentCollectionContributor;
-
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
-	)
-	private Indexer<DLFileEntry> _indexer;
-
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference(
-		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN + ")"
-	)
-	private Portlet _portlet;
 
 	@Reference
 	private RoleLocalService _roleLocalService;
@@ -158,9 +133,6 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 		target = "(site.initializer.key=com.liferay.site.initializer.welcome)"
 	)
 	private SiteInitializer _siteInitializer;
-
-	@Reference(target = "(default=true)")
-	private Store _store;
 
 	@Reference
 	private UserLocalService _userLocalService;

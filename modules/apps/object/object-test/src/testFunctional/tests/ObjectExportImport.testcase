@@ -280,7 +280,7 @@ definition {
 
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
-		MenuItem.click(menuItem = "Import");
+		MenuItem.click(menuItem = "Import Object Definition");
 
 		var filePath = TestCase.getDependenciesDirPath(fileName = "ImportedSimpleObject.json");
 
@@ -304,7 +304,7 @@ definition {
 
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
-		MenuItem.click(menuItem = "Import");
+		MenuItem.click(menuItem = "Import Object Definition");
 
 		var filePath = TestCase.getDependenciesDirPath(fileName = "ImportedSimpleObject.json");
 
@@ -441,6 +441,18 @@ definition {
 			AssertElementPresent(
 				key_labelName = "Imported Object With State",
 				locator1 = "CreateObject#OBJECT_NAME");
+		}
+
+		task ("Then the state is present on the object") {
+			ObjectPortlet.selectCustomObject(label = "Imported Object With State");
+
+			ObjectAdmin.goToStateManagerTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Field Picklist");
+
+			AssertElementPresent(
+				key_stateName = "PicklistItemTest",
+				locator1 = "ObjectAdmin#VIEW_STATE_NAME");
 		}
 
 		task ("Then the imported object with state can be exported") {
@@ -582,7 +594,7 @@ definition {
 			value1 = "Company");
 
 		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+			locator1 = "CreateObject#PANEL_LINK",
 			value1 = "Control Panel > Object");
 	}
 

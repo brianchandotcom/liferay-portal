@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.service;
@@ -74,13 +65,13 @@ public interface RoleLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.RoleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the role local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RoleLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public void addGroupRole(long groupId, long roleId);
+	public boolean addGroupRole(long groupId, long roleId);
 
-	public void addGroupRole(long groupId, Role role);
+	public boolean addGroupRole(long groupId, Role role);
 
-	public void addGroupRoles(long groupId, List<Role> roles);
+	public boolean addGroupRoles(long groupId, List<Role> roles);
 
-	public void addGroupRoles(long groupId, long[] roleIds);
+	public boolean addGroupRoles(long groupId, long[] roleIds);
 
 	/**
 	 * Adds a role with additional parameters. The user is reindexed after role
@@ -125,23 +116,23 @@ public interface RoleLocalService
 	/**
 	 * @throws PortalException
 	 */
-	public void addUserRole(long userId, long roleId) throws PortalException;
+	public boolean addUserRole(long userId, long roleId) throws PortalException;
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addUserRole(long userId, Role role) throws PortalException;
+	public boolean addUserRole(long userId, Role role) throws PortalException;
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addUserRoles(long userId, List<Role> roles)
+	public boolean addUserRoles(long userId, List<Role> roles)
 		throws PortalException;
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addUserRoles(long userId, long[] roleIds)
+	public boolean addUserRoles(long userId, long[] roleIds)
 		throws PortalException;
 
 	/**

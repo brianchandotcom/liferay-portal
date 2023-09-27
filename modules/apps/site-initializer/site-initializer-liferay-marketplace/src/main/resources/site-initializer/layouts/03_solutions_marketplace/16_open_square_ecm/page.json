@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/smc-open-square-ecm",
+	"hidden": true,
+	"name": "Open Square ECM",
+	"name_i18n": {
+		"en_US": "Open Square ECM"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

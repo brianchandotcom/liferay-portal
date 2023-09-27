@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.web.internal.display.context;
@@ -29,12 +20,11 @@ import com.liferay.document.library.web.internal.settings.DLPortletInstanceSetti
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.form.renderer.constants.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.kernel.DDMForm;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -63,7 +53,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Iván Zaera
@@ -72,26 +61,25 @@ public class DefaultDLEditFileEntryDisplayContext
 	implements DLEditFileEntryDisplayContext {
 
 	public DefaultDLEditFileEntryDisplayContext(
-		DDMBeanTranslator ddmBeanTranslator,
 		DDMFormValuesFactory ddmFormValuesFactory,
+		DDMStorageEngineManager ddmStorageEngineManager,
 		DLFileEntryType dlFileEntryType, DLValidator dlValidator,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, StorageEngine storageEngine) {
+		HttpServletRequest httpServletRequest) {
 
 		this(
 			httpServletRequest, dlFileEntryType, dlValidator, null,
-			storageEngine, ddmBeanTranslator, ddmFormValuesFactory);
+			ddmFormValuesFactory, ddmStorageEngineManager);
 	}
 
 	public DefaultDLEditFileEntryDisplayContext(
-		DDMBeanTranslator ddmBeanTranslator,
-		DDMFormValuesFactory ddmFormValuesFactory, DLValidator dlValidator,
-		FileEntry fileEntry, HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, StorageEngine storageEngine) {
+		DDMFormValuesFactory ddmFormValuesFactory,
+		DDMStorageEngineManager ddmStorageEngineManager,
+		DLValidator dlValidator, FileEntry fileEntry,
+		HttpServletRequest httpServletRequest) {
 
 		this(
 			httpServletRequest, (DLFileEntryType)null, dlValidator, fileEntry,
-			storageEngine, ddmBeanTranslator, ddmFormValuesFactory);
+			ddmFormValuesFactory, ddmStorageEngineManager);
 	}
 
 	@Override
@@ -129,7 +117,12 @@ public class DefaultDLEditFileEntryDisplayContext
 	public DDMFormValues getDDMFormValues(long classPK)
 		throws StorageException {
 
-		return _storageEngine.getDDMFormValues(classPK);
+		try {
+			return _ddmStorageEngineManager.getDDMFormValues(classPK);
+		}
+		catch (PortalException portalException) {
+			throw new StorageException(portalException);
+		}
 	}
 
 	@Override
@@ -256,11 +249,9 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public boolean isDDMStructureVisible(DDMStructure ddmStructure) {
-		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
-			ddmStructure.getDDMForm();
+		DDMForm ddmForm = ddmStructure.getDDMForm();
 
-		List<com.liferay.dynamic.data.mapping.model.DDMFormField>
-			ddmFormFields = ddmForm.getDDMFormFields();
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		return !ddmFormFields.isEmpty();
 	}
@@ -364,16 +355,15 @@ public class DefaultDLEditFileEntryDisplayContext
 	private DefaultDLEditFileEntryDisplayContext(
 		HttpServletRequest httpServletRequest, DLFileEntryType dlFileEntryType,
 		DLValidator dlValidator, FileEntry fileEntry,
-		StorageEngine storageEngine, DDMBeanTranslator ddmBeanTranslator,
-		DDMFormValuesFactory ddmFormValuesFactory) {
+		DDMFormValuesFactory ddmFormValuesFactory,
+		DDMStorageEngineManager ddmStorageEngineManager) {
 
 		try {
 			_httpServletRequest = httpServletRequest;
 			_dlValidator = dlValidator;
 			_fileEntry = fileEntry;
-			_storageEngine = storageEngine;
-			_ddmBeanTranslator = ddmBeanTranslator;
 			_ddmFormValuesFactory = ddmFormValuesFactory;
+			_ddmStorageEngineManager = ddmStorageEngineManager;
 
 			_dlRequestHelper = new DLRequestHelper(httpServletRequest);
 
@@ -495,8 +485,8 @@ public class DefaultDLEditFileEntryDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"63326141-02F6-42B5-AE38-ABC73FA72BB5");
 
-	private final DDMBeanTranslator _ddmBeanTranslator;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
+	private final DDMStorageEngineManager _ddmStorageEngineManager;
 	private final DLFileEntryType _dlFileEntryType;
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLValidator _dlValidator;
@@ -509,6 +499,5 @@ public class DefaultDLEditFileEntryDisplayContext
 	private Boolean _neverExpire;
 	private Boolean _neverReview;
 	private final boolean _showSelectFolder;
-	private final StorageEngine _storageEngine;
 
 }

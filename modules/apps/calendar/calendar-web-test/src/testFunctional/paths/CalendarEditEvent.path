@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>FORM_CONTENT</td>
-	<td>//div[@id='Content']</td>
+	<td>//div[contains(@class,'form-content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -477,7 +477,7 @@
 
 <tr>
 	<td>RELATED_ASSETS_PANEL_COLLAPSED</td>
-	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarBookingAssetLinksPanel')]</td>
+	<td>//button[@aria-expanded='false']//*[contains(@class,'panel-title') and contains(.,'Related Assets')]</td>
 	<td></td>
 </tr>
 <tr>

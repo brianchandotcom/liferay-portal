@@ -1,0 +1,21 @@
+{
+	"description": "Videos",
+	"externalReferenceCode": "PRMC057",
+	"name": "Videos",
+	"name_i18n": {
+		"ar_SA": "Videos",
+		"ca_ES": "Videos",
+		"de_DE": "Videos",
+		"en_US": "Videos",
+		"es_ES": "Videos",
+		"fi_FI": "Videos",
+		"fr_FR": "Videos",
+		"hu_HU": "Videos",
+		"ja_JP": "Videos",
+		"nl_NL": "Videos",
+		"pt_BR": "Videos",
+		"sv_SE": "Videos",
+		"zh_CN": "Videos"
+	},
+	"viewableBy": "Anyone"
+}

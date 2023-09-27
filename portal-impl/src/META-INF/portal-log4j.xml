@@ -59,8 +59,9 @@
 		<Logger level="FATAL" name="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper" />
 		<Logger level="WARN" name="com.liferay.portal.db.index.IndexUpdaterUtil" />
 		<Logger level="INFO" name="com.liferay.portal.deploy" />
-		<Logger level="INFO" name="com.liferay.portal.deploy.hot.HookHotDeployListener" />
+		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.HookHotDeployListener" />
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.PluginPackageHotDeployListener" />
+		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.ThemeHotDeployListener" />
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.ThemeLoaderHotDeployListener" />
 		<Logger level="ERROR" name="com.liferay.portal.editor" />
 		<Logger level="ERROR" name="com.liferay.portal.events.EventsProcessor" />
@@ -82,6 +83,7 @@
 		<Logger level="ERROR" name="com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.cluster" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.dao.orm.QueryUtil" />
+		<Logger level="INFO" name="com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.deploy" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.lar" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" />
@@ -110,7 +112,6 @@
 		<Logger level="WARN" name="com.liferay.portal.language.LanguageResources" />
 		<Logger level="INFO" name="com.liferay.portal.license" />
 		<Logger level="ERROR" name="com.liferay.portal.model.DefaultModelHintsImpl" />
-		<Logger level="WARN" name="com.liferay.portal.patcher.PatcherImpl" />
 		<Logger level="INFO" name="com.liferay.portal.plugin.PluginPackageUtil" />
 		<Logger level="ERROR" name="com.liferay.portal.pop" />
 		<Logger level="WARN" name="com.liferay.portal.security" />
@@ -224,6 +225,7 @@
 		<Logger level="ERROR" name="org.hibernate.util.JDBCExceptionReporter" />
 		<Logger level="ERROR" name="org.jabsorb" />
 		<Logger level="ERROR" name="org.jgroups" />
+		<Logger level="ERROR" name="org.mariadb.jdbc.message.server.ErrorPacket" />
 		<Logger level="ERROR" name="org.openid4java" />
 		<Logger level="INFO" name="org.pdfbox" />
 		<Logger level="INFO" name="org.portletbridge" />

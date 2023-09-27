@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 export {default as AutoComplete} from './components/AutoComplete/index';
@@ -26,13 +17,13 @@ export {
 export {CodeEditorLocalized} from './components/CodeEditor/CodeEditorLocalized';
 export {DatePicker} from './components/DatePicker';
 export * from './components/ExpressionBuilder';
-export {FieldBase} from './components/FieldBase';
 export {Input} from './components/Input';
-export {InputLocalized} from './components/InputLocalized';
 export {ManagementToolbar} from './components/ManagementToolbar/index';
 export {ManagementToolbarSearch} from './components/ManagementToolbar/ManagementToolbarSearch';
 export {ModalEditExternalReferenceCode} from './components/ManagementToolbar/ModalEditExternalReferenceCode';
-export {PicklistEntryBaseField} from './components/BaseEntryFields/PicklistEntryBaseField';
+export {CustomVerticalBar} from './components/VerticalBar/CustomVerticalBar';
+export {ListTypeEntryBaseField} from './components/BaseEntryFields/ListTypeEntryBaseField';
+export {RadioField} from './components/RadioField/RadioField';
 export {RichTextLocalized} from './components/RichTextLocalized';
 export {Select} from './components/Select';
 export {CustomItem} from './components/Select/BaseSelect';

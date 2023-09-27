@@ -1,10 +1,9 @@
 @component-name = "portal-wcm"
 definition {
 
-	property custom.properties = "feature.flag.LPS-179483=true";
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "AI-Creator";
 
 	static var randomSiteName = StringUtil.randomString(8);
@@ -12,6 +11,10 @@ definition {
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
@@ -94,6 +97,7 @@ definition {
 	@priority = 3
 	test CannotEnableOpenAIFromSiteSettingsAfterDisableItFromInstanceSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a site administrater disable the OpenAI from Instance Settings") {
 			HeadlessSite.addSite(siteName = ${randomSiteName});
@@ -131,6 +135,7 @@ definition {
 	@priority = 4
 	test ConfigureAPIKey {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator enables the OpenAI client") {
 			GogoShell.openGogoShellAdmin();
@@ -164,6 +169,7 @@ definition {
 	@priority = 4
 	test GenerateContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator configures the API key") {
 			GogoShell.openGogoShellAdmin();
@@ -262,6 +268,7 @@ definition {
 	@priority = 3
 	test ViewErrorMessageWhenGenericErrorsHappenOnConfiguringAPIKey {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator accesses to the OpenAI configuration page") {
 			GogoShell.openGogoShellAdmin();
@@ -297,6 +304,7 @@ definition {
 	@priority = 3
 	test ViewErrorMessageWhenGenericErrorsHappenOnGeneratingContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator configures the API key") {
 			GogoShell.openGogoShellAdmin();
@@ -344,6 +352,7 @@ definition {
 	@priority = 3
 	test ViewErrorMessageWhenOpenAIServerErrorsHappenOnGeneratingContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator configures the API key") {
 			GogoShell.openGogoShellAdmin();
@@ -430,6 +439,7 @@ definition {
 	@priority = 3
 	test ViewGeneratedContentAppendedToExistingContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator configures the API key") {
 			GogoShell.openGogoShellAdmin();

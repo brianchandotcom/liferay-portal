@@ -1,38 +1,31 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.price.list.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil;
-import com.liferay.commerce.price.list.test.util.CommercePriceEntryTestUtil;
-import com.liferay.commerce.price.list.test.util.CommercePriceListTestUtil;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.test.util.price.list.CommercePriceEntryTestUtil;
+import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -52,6 +45,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Crescenzo Rega
  */
+@FeatureFlags("COMMERCE-11287")
 @RunWith(Arquillian.class)
 public class CPInstanceUnitOfMeasureModelListenerTest {
 
@@ -66,8 +60,122 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_group.getCompanyId());
+		_commercePriceList = CommercePriceListTestUtil.addCommercePriceList(
+			_group.getGroupId(), true,
+			CommercePriceListConstants.TYPE_PRICE_LIST,
+			RandomTestUtil.nextDouble());
+		_cpInstance = CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
+			_group.getGroupId());
+	}
+
+	@Test
+	public void testAddCPInstanceUnitOfMeasure() throws Exception {
+		frutillaRule.scenario(
+			"Add multiple CPInstance Unit Of Measure"
+		).given(
+			"A Price List"
+		).and(
+			"A (SKU) CpInstance in a random CpDefinition"
+		).and(
+			"The SKU of the new entry"
+		).and(
+			"The unit of measure key of the entry"
+		).when(
+			"The CPInstance Unit Of Measure is added"
+		).then(
+			"The price entries related to the sk are added"
+		);
+
+		CommercePriceEntryTestUtil.addOrUpdateCommercePriceEntry(
+			null, 0, _cpInstance.getCPInstanceId(),
+			_commercePriceList.getCommercePriceListId(), null,
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
+			StringPool.BLANK);
+
+		Assert.assertEquals(
+			1,
+			CommercePriceEntryLocalServiceUtil.getCommercePriceEntriesCount(
+				_commercePriceList.getCommercePriceListId()));
+
+		CPTestUtil.addCPInstanceUnitOfMeasure(
+			_group.getGroupId(), _cpInstance.getCPInstanceId(),
+			RandomTestUtil.randomString(), BigDecimal.ONE,
+			_cpInstance.getSku());
+
+		Assert.assertEquals(
+			1,
+			CommercePriceEntryLocalServiceUtil.getCommercePriceEntriesCount(
+				_commercePriceList.getCommercePriceListId()));
+
+		BigDecimal quantity = BigDecimal.TEN;
+		String unitOfMeasureKey = RandomTestUtil.randomString();
+
+		CPTestUtil.addCPInstanceUnitOfMeasure(
+			_group.getGroupId(), _cpInstance.getCPInstanceId(),
+			unitOfMeasureKey, quantity, _cpInstance.getSku());
+
+		Assert.assertEquals(
+			2,
+			CommercePriceEntryLocalServiceUtil.getCommercePriceEntriesCount(
+				_commercePriceList.getCommercePriceListId()));
+
+		List<CommercePriceEntry> commercePriceEntries =
+			CommercePriceEntryLocalServiceUtil.getCommercePriceEntries(
+				_cpInstance.getCPInstanceUuid(), quantity, unitOfMeasureKey);
+
+		Assert.assertFalse(commercePriceEntries.isEmpty());
+	}
+
+	@Test
+	public void testAddFirstCPInstanceUnitOfMeasure() throws PortalException {
+		frutillaRule.scenario(
+			"Add the first CPInstance Unit Of Measure"
+		).given(
+			"A Price List"
+		).and(
+			"A (SKU) CpInstance in a random CpDefinition"
+		).and(
+			"The SKU of the new entry"
+		).and(
+			"The unit of measure key of the entry"
+		).when(
+			"The CPInstance Unit Of Measure is added"
+		).then(
+			"Update key and quantity of the entry"
+		);
+
+		CommercePriceEntry commercePriceEntry =
+			CommercePriceEntryTestUtil.addOrUpdateCommercePriceEntry(
+				null, 0, _cpInstance.getCPInstanceId(),
+				_commercePriceList.getCommercePriceListId(), null,
+				RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
+				StringPool.BLANK);
+
+		Assert.assertEquals(
+			1,
+			CommercePriceEntryLocalServiceUtil.getCommercePriceEntriesCount(
+				_commercePriceList.getCommercePriceListId()));
+
+		BigDecimal quantity = BigDecimal.TEN;
+		String unitOfMeasureKey = RandomTestUtil.randomString();
+
+		CPTestUtil.addCPInstanceUnitOfMeasure(
+			_group.getGroupId(), _cpInstance.getCPInstanceId(),
+			unitOfMeasureKey, quantity, _cpInstance.getSku());
+
+		Assert.assertEquals(
+			1,
+			CommercePriceEntryLocalServiceUtil.getCommercePriceEntriesCount(
+				_commercePriceList.getCommercePriceListId()));
+
+		commercePriceEntry =
+			CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(
+				commercePriceEntry.getCommercePriceEntryId());
+
+		Assert.assertTrue(
+			BigDecimalUtil.eq(quantity, commercePriceEntry.getQuantity()));
+		Assert.assertEquals(
+			unitOfMeasureKey, commercePriceEntry.getUnitOfMeasureKey());
 	}
 
 	@Test
@@ -94,56 +202,39 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			"Also the corresponding price entry"
 		);
 
-		CPInstance cpInstance =
-			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
-				_group.getGroupId());
-
-		CommercePriceList commercePriceList =
-			CommercePriceListTestUtil.addCommercePriceList(
-				null, _group.getGroupId(), _commerceCurrency.getCode(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				true, null, null);
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure1 =
-			CPTestUtil.addCPInstanceUnitOfMeasure(
-				_group.getGroupId(), cpInstance.getCPInstanceId(),
-				RandomTestUtil.randomString(),
-				BigDecimal.valueOf(RandomTestUtil.randomDouble()),
-				cpInstance.getSku());
-
 		CommercePriceEntryTestUtil.addOrUpdateCommercePriceEntry(
-			null, 0, cpInstance.getCPInstanceId(),
-			commercePriceList.getCommercePriceListId(), null,
+			null, 0, _cpInstance.getCPInstanceId(),
+			_commercePriceList.getCommercePriceListId(), null,
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
-			cpInstanceUnitOfMeasure1.getKey());
+			StringPool.BLANK);
 
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure2 =
+		CPTestUtil.addCPInstanceUnitOfMeasure(
+			_group.getGroupId(), _cpInstance.getCPInstanceId(),
+			RandomTestUtil.randomString(),
+			BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)),
+			_cpInstance.getSku());
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
 			CPTestUtil.addCPInstanceUnitOfMeasure(
-				_group.getGroupId(), cpInstance.getCPInstanceId(),
+				_group.getGroupId(), _cpInstance.getCPInstanceId(),
 				RandomTestUtil.randomString(),
-				BigDecimal.valueOf(RandomTestUtil.randomDouble()),
-				cpInstance.getSku());
-
-		CommercePriceEntryTestUtil.addOrUpdateCommercePriceEntry(
-			null, 0, cpInstance.getCPInstanceId(),
-			commercePriceList.getCommercePriceListId(), null,
-			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
-			cpInstanceUnitOfMeasure2.getKey());
+				BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)),
+				_cpInstance.getSku());
 
 		List<CommercePriceEntry> commercePriceEntries =
 			CommercePriceEntryLocalServiceUtil.getCommercePriceEntries(
-				commercePriceList.getCommercePriceListId(), QueryUtil.ALL_POS,
+				_commercePriceList.getCommercePriceListId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
 			commercePriceEntries.toString(), 2, commercePriceEntries.size());
 
 		CPInstanceUnitOfMeasureLocalServiceUtil.deleteCPInstanceUnitOfMeasure(
-			cpInstanceUnitOfMeasure2);
+			cpInstanceUnitOfMeasure);
 
 		commercePriceEntries =
 			CommercePriceEntryLocalServiceUtil.getCommercePriceEntries(
-				commercePriceList.getCommercePriceListId(), QueryUtil.ALL_POS,
+				_commercePriceList.getCommercePriceListId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
@@ -151,7 +242,7 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 	}
 
 	@Test
-	public void testDeleteLastCPInstanceUnitOfMeasure() throws PortalException {
+	public void testDeleteLastCPInstanceUnitOfMeasure() throws Exception {
 		frutillaRule.scenario(
 			"Delete a CPInstance Unit Of Measure"
 		).given(
@@ -174,27 +265,17 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			"Set key = null and quantity = 1 on commercePriceEntry"
 		);
 
-		CPInstance cpInstance =
-			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
-				_group.getGroupId());
-
-		CommercePriceList commercePriceList =
-			CommercePriceListTestUtil.addCommercePriceList(
-				null, _group.getGroupId(), _commerceCurrency.getCode(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				true, null, null);
-
 		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
 			CPTestUtil.addCPInstanceUnitOfMeasure(
-				_group.getGroupId(), cpInstance.getCPInstanceId(),
+				_group.getGroupId(), _cpInstance.getCPInstanceId(),
 				RandomTestUtil.randomString(),
-				BigDecimal.valueOf(RandomTestUtil.randomDouble()),
-				cpInstance.getSku());
+				BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)),
+				_cpInstance.getSku());
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addOrUpdateCommercePriceEntry(
-				null, 0, cpInstance.getCPInstanceId(),
-				commercePriceList.getCommercePriceListId(), null,
+				null, 0, _cpInstance.getCPInstanceId(),
+				_commercePriceList.getCommercePriceListId(), null,
 				RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
 				cpInstanceUnitOfMeasure.getKey());
 
@@ -205,13 +286,13 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(
 				commercePriceEntry.getCommercePriceEntryId());
 
-		Assert.assertEquals(BigDecimal.ONE, commercePriceEntry.getQuantity());
+		Assert.assertNull(commercePriceEntry.getQuantity());
 		Assert.assertEquals(
 			StringPool.BLANK, commercePriceEntry.getUnitOfMeasureKey());
 	}
 
 	@Test
-	public void testUpdateCPInstanceUnitOfMeasure() throws PortalException {
+	public void testUpdateCPInstanceUnitOfMeasure() throws Exception {
 		frutillaRule.scenario(
 			"Update a CPInstance Unit Of Measure"
 		).given(
@@ -232,27 +313,17 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			"Update key and quantity"
 		);
 
-		CPInstance cpInstance =
-			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
-				_group.getGroupId());
-
-		CommercePriceList commercePriceList =
-			CommercePriceListTestUtil.addCommercePriceList(
-				null, _group.getGroupId(), _commerceCurrency.getCode(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				true, null, null);
-
 		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
 			CPTestUtil.addCPInstanceUnitOfMeasure(
-				_group.getGroupId(), cpInstance.getCPInstanceId(),
+				_group.getGroupId(), _cpInstance.getCPInstanceId(),
 				RandomTestUtil.randomString(),
-				BigDecimal.valueOf(RandomTestUtil.randomDouble()),
-				cpInstance.getSku());
+				BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)),
+				_cpInstance.getSku());
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addOrUpdateCommercePriceEntry(
-				null, 0, cpInstance.getCPInstanceId(),
-				commercePriceList.getCommercePriceListId(), null,
+				null, 0, _cpInstance.getCPInstanceId(),
+				_commercePriceList.getCommercePriceListId(), null,
 				RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
 				cpInstanceUnitOfMeasure.getKey());
 
@@ -271,7 +342,8 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(
 				commercePriceEntry.getCommercePriceEntryId());
 
-		Assert.assertEquals(quantity, commercePriceEntry.getQuantity());
+		Assert.assertTrue(
+			BigDecimalUtil.eq(quantity, commercePriceEntry.getQuantity()));
 		Assert.assertEquals(
 			unitOfMeasureKey, commercePriceEntry.getUnitOfMeasureKey());
 	}
@@ -279,7 +351,13 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private CommerceCurrency _commerceCurrency;
+	@DeleteAfterTestRun
+	private CommercePriceList _commercePriceList;
+
+	@DeleteAfterTestRun
+	private CPInstance _cpInstance;
+
+	@DeleteAfterTestRun
 	private Group _group;
 
 }

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Store Azure
 Bundle-SymbolicName: com.liferay.portal.store.azure
-Bundle-Version: 5.0.6
+Bundle-Version: 5.0.8
 Import-Package:\
 	!com.aayushatharva.brotli4j.*,\
 	\
@@ -41,7 +41,7 @@ Import-Package:\
 	\
 	!net.shibboleth.utilities.java.support.xml,\
 	\
-	!org.apache.logging.log4j.*,\
+	!org.apache.log4j.*,\
 	\
 	!org.bouncycastle.*,\
 	\

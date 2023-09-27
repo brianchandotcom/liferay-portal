@@ -43,12 +43,12 @@
 
 <tr>
 	<td>PREVIEW_TITLE</td>
-	<td>//h3[@class='task-content-title']</td>
+	<td>//*[contains(@class, 'task-content-title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_CONTENT</td>
-	<td>//h3[@class='task-content-title']/../div[2] | //h3[@class='task-content-title']/../../div</td>
+	<td>//*[contains(@class, 'web-content') or contains(@class, 'dynamic') or contains(@class, 'blogs') or contains(@class, 'kaleo-process') or contains(@class, 'comments')]/../../../following-sibling::div | //*[contains(@class, 'documents-and-media')]/../following-sibling::span[contains(@class, 'taglib-text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -84,7 +84,7 @@
 
 <tr>
 	<td>COMMENTS</td>
-	<td>//div[contains(@class,'panel-title') and contains(.,'Comments')]/a</td>
+	<td>//button//*[contains(@class,'panel-title') and contains(.,'Comments')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -29,6 +29,7 @@ definition {
 	@priority = 4
 	test AddedTranslationsAreDisplayedOnLanguageSelector {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -70,10 +71,56 @@ definition {
 			translationStatus = "warning");
 	}
 
+	@description = "Verify that no notification is sent when admin role is removed from Single Approver"
+	@priority = 5
+	test AssertReceiveNotificationAfterEditSingleApprover {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given that the Single Approver is assigned to the Blogs Entry") {
+			Workflow.openWorkflowListView();
+
+			Navigator.gotoNavItem(navItem = "Configuration");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Blogs Entry");
+		}
+
+		task ("When the admin role is removed from the Single Approver task review") {
+			Navigator.gotoNavItem(navItem = "Workflows");
+
+			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+			ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "review");
+
+			ProcessBuilderKaleoDesignerReact.deleteAssignment(roleName = "Administrator");
+
+			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+			Button.click(button = "Update");
+
+			Alert.viewSuccessMessageText(successMessage = "Workflow updated successfully.");
+		}
+
+		task ("And when a blog entry is added") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Then the asset creator does not receive notifications") {
+			UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+			Notifications.viewNoNotificationEntry();
+		}
+	}
+
 	@description = "Verify that Action can be added"
 	@priority = 4
 	test CanAddAction {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -100,10 +147,197 @@ definition {
 			propertyValue = "Liferay Actions");
 	}
 
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Condition"
+	@priority = 5
+	test CanAddAndEditConditionNode {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Condition",
+			nodePosition = "0,-200");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Condition Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Condition Node",
+			nodeType = "condition");
+	}
+
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: End"
+	@priority = 5
+	test CanAddAndEditEndNode {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "End",
+			nodePosition = "90,-300");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "End Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "End Node",
+			nodeType = "end");
+	}
+
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Fork"
+	@priority = 5
+	test CanAddAndEditForkNode {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Fork",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Fork Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Fork Node",
+			nodeType = "fork");
+	}
+
+	@description = "Verify that the user can add and Edit Nodes into diagram by drag&drop: Join"
+	@priority = 5
+	test CanAddAndEditJoinNode {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Join",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Join Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Join Node",
+			nodeType = "join");
+	}
+
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Join XOR"
+	@priority = 5
+	test CanAddAndEditJoinXorNode {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Join XOR",
+			nodePosition = "-40,-200");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Join XOR Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Join XOR Node",
+			nodeType = "join-xor");
+	}
+
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Start"
+	@priority = 5
+	test CanAddAndEditStartNode {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Start",
+			nodePosition = "70,-200");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Start Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Start Node",
+			nodeType = "start");
+	}
+
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: State"
+	@priority = 5
+	test CanAddAndEditStateNode {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "State",
+			nodePosition = "50,-420");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "State Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "State Node",
+			nodeType = "state");
+	}
+
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Task"
+	@priority = 5
+	test CanAddAndEditTaskNode {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Task Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Task Node",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "task");
+	}
+
 	@description = "Verify that Assignment can be added"
 	@priority = 4
 	test CanAddAssignment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -122,90 +356,11 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Resource Actions: Test");
 	}
 
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: Condition"
-	@priority = 5
-	test CanAddConditionNode {
-		property test.liferay.virtual.instance = "false";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Condition",
-			nodePosition = "0,-200");
-
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "condition");
-	}
-
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: End"
-	@priority = 5
-	test CanAddEndNode {
-		property test.liferay.virtual.instance = "false";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "End",
-			nodePosition = "90,-300");
-
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "end");
-	}
-
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: Fork"
-	@priority = 5
-	test CanAddForkNode {
-		property test.liferay.virtual.instance = "false";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Fork",
-			nodePosition = "-20,-40");
-
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "fork");
-	}
-
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join"
-	@priority = 5
-	test CanAddJoinNode {
-		property test.liferay.virtual.instance = "false";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Join",
-			nodePosition = "-20,-40");
-
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "join");
-	}
-
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join XOR"
-	@priority = 5
-	test CanAddJoinXorNode {
-		property test.liferay.virtual.instance = "false";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Join XOR",
-			nodePosition = "-40,-200");
-
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "join-xor");
-	}
-
 	@description = "Verify that the user can add Multiple Actions to the same node"
 	@priority = 4
 	test CanAddMultipleActions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -238,6 +393,7 @@ definition {
 	test CanAddMultipleNotifications {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -262,6 +418,7 @@ definition {
 	@priority = 4
 	test CanAddMultipleTimers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -309,6 +466,7 @@ definition {
 	@priority = 3
 	test CanAddNewLanguages {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -331,6 +489,7 @@ definition {
 	@priority = 4
 	test CanAddNotification {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -358,6 +517,7 @@ definition {
 	@priority = 3
 	test CanAddScriptToDefineAction {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -386,58 +546,11 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewActionsInfo(actionsTemplateValue = "Action Script Template");
 	}
 
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: Start"
-	@priority = 5
-	test CanAddStartNode {
-		property test.liferay.virtual.instance = "false";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Start",
-			nodePosition = "70,-200");
-
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "start");
-	}
-
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: State"
-	@priority = 5
-	test CanAddStateNode {
-		property test.liferay.virtual.instance = "false";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "State",
-			nodePosition = "50,-420");
-
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "state");
-	}
-
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: Task"
-	@priority = 5
-	test CanAddTaskNode {
-		property test.liferay.virtual.instance = "false";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task",
-			nodePosition = "-20,-40");
-
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "task");
-	}
-
 	@description = "Verify that Timers can be added"
 	@priority = 4
 	test CanAddTimers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -465,6 +578,7 @@ definition {
 	@priority = 4
 	test CanAddTranslations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -506,6 +620,7 @@ definition {
 	@priority = 5
 	test CanAssignAccountRole {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -527,6 +642,7 @@ definition {
 	@priority = 4
 	test CanAssignMultipleRoleTypesToTaskNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -595,6 +711,7 @@ definition {
 	@priority = 3
 	test CanAssignSingleRoleTypeToTaskNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -616,6 +733,7 @@ definition {
 	@priority = 4
 	test CanAssignTaskNodeToAssetCreator {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -634,6 +752,7 @@ definition {
 	@priority = 3
 	test CanAssignTaskNodeToResourceActions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -654,6 +773,7 @@ definition {
 	@priority = 4
 	test CanAssignTaskNodeToRole {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -670,19 +790,11 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Role: Asset Library Member");
 	}
 
-	@description = "Verify that the user is able to assign the task node to a Scripted Assignment"
-	@ignore = "Test Stub"
-	@priority = 3
-	test CanAssignTaskNodeToScriptedAssignments {
-
-		// TODO CanAssignTaskNodeToScriptedAssignments pending implementation
-
-	}
-
 	@description = "Verify that the user is able to assign the task node to a specific User"
 	@priority = 4
 	test CanAssignTaskNodeToSpecificUser {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -700,9 +812,11 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "User: Test");
 	}
 
-	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the Cancel button"
+	@description = "LRQA-72980 - Verify that the user can cancel the deletion of a node by clicking on the Cancel button"
+	@priority = 3
 	test CanCancelDelete {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -718,10 +832,56 @@ definition {
 			title = "Delete Task Node");
 	}
 
+	@description = "LPS-178499 - Verify it's possible change the recipient field to Asset Creator"
+	@priority = 4
+	test CanChangeRecipientFieldToAssetCreator {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given the single approver workflow") {
+			Workflow.openWorkflowListView();
+
+			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+		}
+
+		task ("When creating the recipient for Asset Creator") {
+			KaleoDesigner.selectNode(nodeNodeLabel = "created");
+
+			ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+				name = "Asset Creator",
+				newNotification = "true",
+				notificationTemplateValue = "Notification Template",
+				notificationTypeOption = "User Notification",
+				recipientTypeOption = "Asset Creator",
+				singleAction = "true");
+
+			Button.clickUpdate();
+
+			Alert.viewSuccessMessageText(successMessage = "Workflow updated successfully.");
+		}
+
+		task ("and When entering and exiting the created node") {
+			Workflow.openWorkflowListView();
+
+			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+		}
+
+		task ("and When the created node is selected") {
+			KaleoDesigner.selectNode(nodeNodeLabel = "created");
+		}
+
+		task ("Then the created node is assigned to the Asset Creator") {
+			ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Asset Creator");
+
+			ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationRecipientType = "Asset Creator");
+		}
+	}
+
 	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the X button"
 	@priority = 3
 	test CanCloseDeleteModal {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -741,6 +901,7 @@ definition {
 	@priority = 3
 	test CanCloseManageTranslationsWindowOnXClick {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -758,18 +919,105 @@ definition {
 	}
 
 	@description = "Verify that the user is able to complete the task through different types of users assigned at My Workflow Task"
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanCompleteTaskThroughDifferentUsersAssignments {
+		property test.liferay.virtual.instance = "false";
 
-		// TODO CanCompleteTaskThroughDifferentUsersAssignments pending implementation
+		task ("Given two users with admin role") {
+			for (var accountUser : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "userea${accountUser}@liferay.com",
+					userFirstName = "userfn${accountUser}",
+					userLastName = "userln${accountUser}",
+					userScreenName = "usersn${accountUser}");
 
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "userea${accountUser}@liferay.com");
+
+				JSONRole.assignRoleToUser(
+					roleTitle = "Administrator",
+					userEmailAddress = "userea${accountUser}@liferay.com");
+			}
+		}
+
+		task ("And given a workflow definition with node task assigned to the admin role") {
+			Workflow.openWorkflowListView();
+
+			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+			ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+				nodeLabel = "Task",
+				nodePosition = "-20,-40");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "task",
+				connectorLabel = "Start-Task Connector",
+				connectorOut = "start",
+				key_direction = "right");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "end",
+				connectorLabel = "Complete Task",
+				connectorOut = "task",
+				key_direction = "right");
+
+			ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
+
+			ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+				assignmentType = "Role",
+				roleName = "Administrator");
+
+			PortletEntry.publish();
+		}
+
+		task ("And given that the workflow definition is assigned to the Blogs Entry") {
+			Navigator.gotoBack();
+
+			Navigator.gotoNavItem(navItem = "Configuration");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "New Workflow Definition",
+				workflowResourceValue = "Blogs Entry");
+		}
+
+		task ("When two blog entries are added") {
+			for (var blogNumber : list "1,2") {
+				JSONBlog.addEntry(
+					entryContent = "Blogs Entry ${blogNumber} Content",
+					entryTitle = "Blogs Entry Title ${blogNumber}");
+			}
+		}
+
+		task ("Then the task can be completed by each user") {
+			for (var i : list "1,2") {
+				User.logoutAndLoginPG(
+					freeLogin = "true",
+					userLoginEmailAddress = "userea${i}@liferay.com",
+					userLoginFullName = "userfn${i} userln${i}");
+
+				UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+				Workflow.assignToMeTaskByActions(
+					workflowAssetTitle = "Blogs Entry Title ${i}",
+					workflowAssetType = "Blogs Entry",
+					workflowTask = "Task");
+
+				Workflow.approveTaskByActions(
+					workflowAssetTitle = "Blogs Entry Title ${i}",
+					workflowAssetType = "Blogs Entry",
+					workflowDefinitionTask = "Complete Task",
+					workflowTask = "Task");
+			}
+		}
 	}
 
 	@description = "Verify that the user can select and define an Action to be conducted once the timer expires"
 	@priority = 3
 	test CanConfigureActionAtTimers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -803,6 +1051,7 @@ definition {
 	@priority = 3
 	test CanConfigureMultipleActionsAtTimers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -852,6 +1101,7 @@ definition {
 	@priority = 3
 	test CanConfigureReassignmentAtTimers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -885,6 +1135,7 @@ definition {
 	@priority = 4
 	test CanCreateNotificationTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -936,6 +1187,7 @@ definition {
 	@priority = 4
 	test CanCreateOnlyOneTransitionInSameDirection {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -963,6 +1215,7 @@ definition {
 	@priority = 5
 	test CanCreateTransition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -985,6 +1238,7 @@ definition {
 	@priority = 4
 	test CanDefineAssignmentWithGroovyScript {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1003,6 +1257,7 @@ definition {
 	@priority = 3
 	test CanDefineResourceAction {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1021,6 +1276,7 @@ definition {
 	@priority = 4
 	test CanDeleteAction {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1055,6 +1311,7 @@ definition {
 	@priority = 3
 	test CanDeleteActionsAtTimers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1110,6 +1367,7 @@ definition {
 	@priority = 3
 	test CanDeleteAllActionsAtOnce {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1143,6 +1401,7 @@ definition {
 	@priority = 3
 	test CanDeleteAllTimers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1188,6 +1447,7 @@ definition {
 	@priority = 4
 	test CanDeleteConditionNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1209,6 +1469,7 @@ definition {
 	@priority = 4
 	test CanDeleteEndNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1228,6 +1489,7 @@ definition {
 	@priority = 4
 	test CanDeleteForkNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1249,6 +1511,7 @@ definition {
 	@priority = 4
 	test CanDeleteJoinNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1270,6 +1533,7 @@ definition {
 	@priority = 4
 	test CanDeleteJoinXORNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1291,6 +1555,7 @@ definition {
 	@priority = 4
 	test CanDeleteMultipleNotifications {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1331,6 +1596,7 @@ definition {
 	@priority = 4
 	test CanDeleteNodeViaDeleteKey {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1350,6 +1616,7 @@ definition {
 	@priority = 4
 	test CanDeleteNodeViaSidebar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1371,6 +1638,7 @@ definition {
 	@priority = 3
 	test CanDeleteNotificationRoleTypes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1418,6 +1686,7 @@ definition {
 	@priority = 5
 	test CanDeleteSpecificNotification {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1458,6 +1727,7 @@ definition {
 	@priority = 4
 	test CanDeleteStartNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1477,6 +1747,7 @@ definition {
 	@priority = 4
 	test CanDeleteStateNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1498,6 +1769,7 @@ definition {
 	@priority = 4
 	test CanDeleteTaskNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1519,6 +1791,7 @@ definition {
 	@priority = 4
 	test CanDeleteTimers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1549,6 +1822,7 @@ definition {
 	@priority = 3
 	test CanDeleteTimersBySidebarCard {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1579,6 +1853,7 @@ definition {
 	@priority = 3
 	test CanDeleteTranslations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1611,6 +1886,7 @@ definition {
 	@priority = 3
 	test CanDeleteWorkflowDefinitionDraft {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1633,6 +1909,7 @@ definition {
 	@priority = 3
 	test CanDesignateRoleTypeRoleName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1654,6 +1931,7 @@ definition {
 	@priority = 4
 	test CanEditActionFields {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1715,6 +1993,7 @@ definition {
 	@priority = 4
 	test CanEditNotificationDescription {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1749,6 +2028,7 @@ definition {
 	@priority = 4
 	test CanEditNotificationName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1782,6 +2062,7 @@ definition {
 	@priority = 4
 	test CanEditNotificationTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1818,6 +2099,7 @@ definition {
 	@priority = 4
 	test CanEditStepLabel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1844,6 +2126,7 @@ definition {
 	@priority = 4
 	test CanEditStepName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1870,6 +2153,7 @@ definition {
 	@priority = 4
 	test CanEditTemplateLanguageToFreeMarker {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1896,6 +2180,7 @@ definition {
 	@priority = 4
 	test CanEditTemplateLanguageToText {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1922,6 +2207,7 @@ definition {
 	@priority = 4
 	test CanEditTemplateLanguageToVelocity {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1948,6 +2234,7 @@ definition {
 	@priority = 3
 	test CanEditTimerDescription {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -1984,6 +2271,7 @@ definition {
 	@priority = 4
 	test CanEditTimerDuration {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2025,6 +2313,7 @@ definition {
 	@priority = 4
 	test CanEditTimerName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2061,6 +2350,7 @@ definition {
 	@priority = 3
 	test CanEditTimerRecurrenceFields {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2101,6 +2391,7 @@ definition {
 	@priority = 4
 	test CanEditTransitionName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2127,6 +2418,7 @@ definition {
 	@priority = 2
 	test CanHideShowInformationArea {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2157,6 +2449,7 @@ definition {
 	@priority = 4
 	test CanLocalizeStepLabelWhenTranslated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given adding a new workflow definition") {
 			Workflow.openWorkflowListView();
@@ -2209,6 +2502,7 @@ definition {
 	@priority = 3
 	test CanLocalizeTransitionLabel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2227,6 +2521,7 @@ definition {
 	@priority = 4
 	test CanManageTranslations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2241,6 +2536,7 @@ definition {
 	@priority = 4
 	test CanMoveNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2272,6 +2568,7 @@ definition {
 	@priority = 4
 	test CanNotDeleteAssignmentByTrashIcon {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2279,7 +2576,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.deleteAssignment();
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_ASSIGNMENTS_VALUE");
+
+		AssertNotEditable(
+			key_text = "trash",
+			locator1 = "Icon#ANY_DISABLED");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.viewPropertyPresentOnSideBar(
 			propertyName = "Assignment",
@@ -2290,6 +2593,7 @@ definition {
 	@priority = 4
 	test CanNotHaveMultipleStartNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2318,24 +2622,55 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that the collision detection between nodes are working after moving nodes on canvas"
-	@ignore = "Test Stub"
 	@priority = 3
 	test CanNotPlaceNodeOverAnother {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
-		// TODO LRQA-73005 CanNotPlaceNodeOverAnother pending implementation
+		task ("Given a workflow definition") {
+			Workflow.openWorkflowListView();
 
+			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+		}
+
+		task ("When trying to drag the start node to the end node") {
+			ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+			ProcessBuilderKaleoDesignerReact.viewNodePosition(
+				nodeLabel = "Start",
+				nodeType = "start",
+				nodeXPosition = 300,
+				nodeYPosition = 100);
+
+			ProcessBuilderKaleoDesignerReact.dragAndDropDiagramNode(
+				nodeLabel = "Start",
+				nodePosition = "5,300");
+		}
+
+		task ("Then the start node goes back to the same place") {
+			ProcessBuilderKaleoDesignerReact.viewNodePosition(
+				nodeLabel = "Start",
+				nodeType = "start",
+				nodeXPosition = 300,
+				nodeYPosition = 100);
+		}
 	}
 
 	@description = "Verify that the user can't Publish a workflow without transitions"
 	@priority = 4
 	test CanNotPublishWorkflowWithoutTransitions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
 		Button.clickPublish();
+
+		WaitForElementPresent(
+			errorMessage = "The Start node must have an outgoing transition",
+			locator1 = "Message#ERROR");
 
 		Alert.viewErrorMessage(errorMessage = "The Start node must have an outgoing transition");
 
@@ -2348,6 +2683,7 @@ definition {
 	@priority = 4
 	test CanNotSaveProcessWithDuplicatedNodeName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2374,6 +2710,7 @@ definition {
 	@priority = 4
 	test CanNotSaveProcessWithEmptyNodeName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2396,6 +2733,7 @@ definition {
 	@priority = 3
 	test CanOnlyViewAssignmentsAtTaskNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2423,18 +2761,93 @@ definition {
 	}
 
 	@description = "LPS-139388 - Verify that, when all the parallel reviews are complete, the Join node will allow the instance to progress to the next step"
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanProgressToNextStepWhenParallelTasksCompleted {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
-		// TODO LRQA-72985 CanProgressToNextStepWhenParallelTasksCompleted pending implementation
+		task ("Given that a multi task process workflow definition is imported and published") {
+			Workflow.openWorkflowListView();
 
+			Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
+
+			ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "multi-task-workflow-definition.xml");
+
+			ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+			Button.clickPublish();
+		}
+
+		task ("And given that the multi task process process workflow is assigned to the Blogs Entry") {
+			Workflow.openWorkflowListView();
+
+			Navigator.gotoNavItem(navItem = "Configuration");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Multi Task Process",
+				workflowResourceValue = "Blogs Entry");
+		}
+
+		task ("And given a blog entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("When all parallel reviews are complete") {
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			for (var i : list "task1,task2") {
+				Workflow.assignToMeTaskByActions(
+					workflowAssetTitle = "Blogs Entry Title",
+					workflowAssetType = "Blogs Entry",
+					workflowTask = ${i});
+
+				Workflow.approveTaskByActions(
+					workflowAssetTitle = "Blogs Entry Title",
+					workflowAssetType = "Blogs Entry",
+					workflowDefinitionTask = "join",
+					workflowTask = ${i});
+			}
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Blogs Entry Title",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "task3");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Blogs Entry Title",
+				workflowAssetType = "Blogs Entry",
+				workflowDefinitionTask = "connector31266",
+				workflowTask = "task3");
+		}
+
+		task ("Then the Join node allows the instance to proceed to the next step") {
+			WorkflowMetrics.goToWorkflowAllItemsByStatus(
+				completedItemStatus = "Total Completed",
+				workflowProcessName = "Multi Task Process");
+
+			WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+			var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+			WorkflowMetricsAllItemsList.viewDetailsModal();
+
+			WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
+
+			for (var i : list "task1,task2,task3,join") {
+				WorkflowMetrics.viewCurrentNodeDoneIcon(currentNode = ${i});
+			}
+		}
 	}
 
 	@description = "Verify that the user can publish a definition with Condition node"
 	@priority = 5
 	test CanPublishWithConditionNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2455,6 +2868,7 @@ definition {
 	@priority = 5
 	test CanPublishWithForkNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2541,6 +2955,7 @@ definition {
 	@priority = 5
 	test CanPublishWithJoinNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2565,6 +2980,7 @@ definition {
 	@priority = 5
 	test CanPublishWithJoinXORNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2655,6 +3071,7 @@ definition {
 	@priority = 5
 	test CanPublishWithStateNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2691,6 +3108,7 @@ definition {
 	@priority = 5
 	test CanPublishWithTaskNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2725,6 +3143,7 @@ definition {
 	@priority = 5
 	test CanPublishWorkflow {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2749,6 +3168,7 @@ definition {
 	@priority = 5
 	test CanPublishWorkflowWithTimerConfigured {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2796,6 +3216,7 @@ definition {
 	@priority = 5
 	test CanRestorePreviousVersionAtRevisionHistoryTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2832,10 +3253,11 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewConnectorNotPresent(connectorLabel = "TASK-END CONNECTOR");
 	}
 
-	@description = "Verify that user can Save workflow as Draft"
+	@description = "Verify that user can save a workflow not published"
 	@priority = 5
-	test CanSaveAsDraft {
+	test CanSaveDefinitionNotPublished {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2850,11 +3272,42 @@ definition {
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Title");
 	}
 
+	@description = "Verify that the user can save an invalid workflow definition not published"
+	@priority = 3
+	test CanSaveInvalidWorkflowDefinitionNotPublished {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected end node?",
+			nodeType = "end",
+			title = "Delete End Node");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected start node?",
+			nodeType = "start",
+			title = "Delete Start Node");
+
+		Workflow.saveDefinition();
+
+		Workflow.openWorkflowListView();
+
+		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Title");
+	}
+
 	@description = "Verify that the user can search languages"
-	@ignore = "Test Stub"
 	@priority = 3
 	test CanSearchLanguages {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2873,6 +3326,7 @@ definition {
 	@priority = 4
 	test CanSeeStartAndEndNodesByDefault {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2887,6 +3341,7 @@ definition {
 	@priority = 5
 	test CanSelectAssetCreatorAsNotificationRecipientType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2913,6 +3368,7 @@ definition {
 	@priority = 5
 	test CanSelectEmailAsNotificationType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2938,6 +3394,7 @@ definition {
 	@priority = 4
 	test CanSelectNodeOnDiagram {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2962,6 +3419,7 @@ definition {
 	@priority = 4
 	test CanSelectOnAssignmentAsExecutionTypeAtActions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -2995,6 +3453,7 @@ definition {
 	@priority = 4
 	test CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3023,6 +3482,7 @@ definition {
 	@priority = 4
 	test CanSelectOnEntryAsExecutionTypeAtNodeNotifications {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3049,6 +3509,7 @@ definition {
 	@priority = 4
 	test CanSelectOnEntryExecutionTypeAtActions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3082,6 +3543,7 @@ definition {
 	@priority = 4
 	test CanSelectOnExitAsExecutionTypeAtActions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3115,6 +3577,7 @@ definition {
 	@priority = 4
 	test CanSelectOnExitAsExecutionTypeAtNodeNotifications {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3141,6 +3604,7 @@ definition {
 	@priority = 5
 	test CanSelectRoleAsNotificationRecipientType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3168,6 +3632,7 @@ definition {
 	@priority = 5
 	test CanSelectScriptedRecipientAsNotificationRecipientType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3195,6 +3660,7 @@ definition {
 	@priority = 5
 	test CanSelectTaskAssigneesAsNotificationRecipientTypeAtTaskNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3223,6 +3689,7 @@ definition {
 	@priority = 5
 	test CanSelectUserNotificationAndEmailAsNotificationType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3254,6 +3721,7 @@ definition {
 	@priority = 5
 	test CanSelectUserNotificationAsNotificationType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3279,6 +3747,7 @@ definition {
 	@priority = 3
 	test CanSetActionsPriority {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3311,6 +3780,7 @@ definition {
 	@priority = 4
 	test CanSetDefaultTransition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3343,6 +3813,7 @@ definition {
 	@priority = 4
 	test CanSwitchBetweenDetailsRevisionTabs {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3365,6 +3836,7 @@ definition {
 	@priority = 4
 	test CanTurnOnTimerRecurrenceMode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3390,10 +3862,10 @@ definition {
 	}
 
 	@description = "Verify that the Revision History tab display the definition current version"
-	@ignore = "Test Stub"
 	@priority = 3
 	test CanViewCurrentVersionAtRevisionHistoryTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3408,6 +3880,8 @@ definition {
 		PortletEntry.publish();
 
 		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "START-END CONNECTOR");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Transition");
 
@@ -3442,6 +3916,7 @@ definition {
 	@priority = 3
 	test CanViewDefaultSingleApproverAssignments {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3523,6 +3998,7 @@ definition {
 	@priority = 3
 	test CanViewDefinitionTitleAtInfoHeader {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3547,6 +4023,7 @@ definition {
 	@priority = 4
 	test CanViewDiagramEditor {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3567,6 +4044,7 @@ definition {
 	@priority = 3
 	test CanViewFieldsAtDetailsTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given publishing a new workflow with a transition from Start node to End node") {
 			Workflow.openWorkflowListView();
@@ -3594,10 +4072,10 @@ definition {
 	}
 
 	@description = "Verify that the Revision History tab displays a list of the previous definition versions in descending order (3,2,1)"
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanViewPreviousVersionsListInOrderAtRevisionHistoryTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3612,6 +4090,8 @@ definition {
 		PortletEntry.publish();
 
 		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "START-END CONNECTOR");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Transition");
 
@@ -3652,6 +4132,7 @@ definition {
 	@priority = 2
 	test CanViewResourceActionsTooltip {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3680,6 +4161,7 @@ definition {
 	@priority = 3
 	test CanViewRestoreVersionSuccessAlert {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3732,6 +4214,7 @@ definition {
 	@priority = 4
 	test CanViewSourceEditor {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3746,6 +4229,7 @@ definition {
 	@priority = 2
 	test CanViewTimerRecurrenceFieldTooltip {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3764,6 +4248,7 @@ definition {
 	@priority = 3
 	test CanViewTimersRequiredFields {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3801,6 +4286,7 @@ definition {
 	@priority = 3
 	test CanViewTotalModificationsAtDetailsTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3839,6 +4325,7 @@ definition {
 	@priority = 5
 	test ChangesOnDiagramAreReflectedOnXML {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3876,6 +4363,7 @@ definition {
 	@priority = 4
 	test ConditionHasNoTimersProperty {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3894,6 +4382,7 @@ definition {
 	@priority = 4
 	test ConditionMustHaveMoreThanOneTransition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3916,6 +4405,7 @@ definition {
 	@priority = 4
 	test ConnectorCanBeDeleted {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3938,6 +4428,7 @@ definition {
 	@priority = 4
 	test ConnectorsLabelCanBeEdited {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3970,6 +4461,7 @@ definition {
 	@priority = 4
 	test DefaultLabelAndIDAreProvided {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3987,6 +4479,7 @@ definition {
 	@priority = 4
 	test DefaultLabelsAreProvided {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4017,6 +4510,7 @@ definition {
 	@priority = 4
 	test DefaultSettingsChangesReflectsOnDiagram {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4048,6 +4542,7 @@ definition {
 	@priority = 4
 	test DefinitionRequiresEndNodeToPublish {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4066,6 +4561,7 @@ definition {
 	@priority = 4
 	test DefinitionRequiresStartNodeToPublish {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4088,6 +4584,7 @@ definition {
 	@priority = 4
 	test DeletedTranslationsAreNotDisplayedOnLanguageSelector {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4115,6 +4612,7 @@ definition {
 	@priority = 2
 	test DiagramViewToolTipIsDisplayed {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4129,6 +4627,7 @@ definition {
 	@priority = 4
 	test ForkNodeMustHaveMoreThanOneTransition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4151,6 +4650,7 @@ definition {
 	@priority = 4
 	test ForkNodeRequiresJoinNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4185,6 +4685,7 @@ definition {
 	@priority = 4
 	test HasActionsProperty {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4287,6 +4788,7 @@ definition {
 	@priority = 4
 	test HasDescriptionProperty {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4325,6 +4827,7 @@ definition {
 	@priority = 4
 	test HasNotificationsProperty {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4367,6 +4870,7 @@ definition {
 	@priority = 4
 	test ImportedProcessIsShownOnDiagram {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4387,6 +4891,7 @@ definition {
 	@priority = 3
 	test NodeCoordinatedAreUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4421,6 +4926,7 @@ definition {
 	@priority = 4
 	test NodeInfoIsDisplayedWhenNodeIsSelected {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4443,6 +4949,7 @@ definition {
 	@priority = 2
 	test NodeIsHighlightedWhenActive {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4461,6 +4968,7 @@ definition {
 	@priority = 3
 	test NodeNameIsReadyOnly {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4485,6 +4993,7 @@ definition {
 	@priority = 3
 	test PublishButtonTurnsUnavailableAfterPublish {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4501,11 +5010,61 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewPublishButtonNotPresent();
 	}
 
+	@description = "Verify that a role name containing multi-byte characters can be used in the workflow"
+	@priority = 4
+	test RoleNameContainingMultibyteCharactersCanBeUsedInWorkflow {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a regular role with multi-byte characters in the title") {
+			JSONRole.addRegularRole(
+				roleKey = "テスト",
+				roleTitle = "test");
+		}
+
+		task ("and Given a workflow definition with node task") {
+			Workflow.openWorkflowListView();
+
+			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+			ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+				nodeLabel = "Task",
+				nodePosition = "-20,-40");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "task",
+				connectorLabel = "Start-Task Connector",
+				connectorOut = "start",
+				key_direction = "right");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "end",
+				connectorLabel = "Complete Task",
+				connectorOut = "task",
+				key_direction = "right");
+		}
+
+		task ("When publishing workflow definition with node task assigned to regular role with multibyte characters in title") {
+			ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
+
+			ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+				assignmentType = "Role Type",
+				roleTypeName = "Regular",
+				roleTypeRoleName = "テスト");
+
+			PortletEntry.publish();
+		}
+
+		task ("Then the workflow can be published successfully") {
+			Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+		}
+	}
+
 	@description = "Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
-	@ignore = "Test Stub"
 	@priority = 4
 	test SingleApproverComesWithAccountMemberAndAdmRoleName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4526,6 +5085,7 @@ definition {
 	@priority = 5
 	test SingleApproverComesWithAccountRole {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4547,6 +5107,7 @@ definition {
 	@priority = 2
 	test SourceViewToolTipIsDisplayed {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4559,6 +5120,7 @@ definition {
 	@priority = 4
 	test StartNodeCanNotHaveIncomingTransition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4593,6 +5155,7 @@ definition {
 	@priority = 4
 	test StartNodeMustHaveOutgoingTransition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4625,6 +5188,7 @@ definition {
 	@priority = 5
 	test StepIDIsUnique {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4647,6 +5211,7 @@ definition {
 	@priority = 3
 	test StepLabelIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4669,6 +5234,7 @@ definition {
 	@priority = 3
 	test StepNameIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4691,6 +5257,7 @@ definition {
 	@priority = 3
 	test TaskNodeComesWithAssetCreatorAssignmentAsDefault {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4707,6 +5274,7 @@ definition {
 	@priority = 4
 	test TaskNodeHasTimersProperty {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4725,6 +5293,7 @@ definition {
 	@priority = 5
 	test TransitionDoNotLoseReferenceOnTaskIDChange {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4765,6 +5334,7 @@ definition {
 	@priority = 5
 	test TransitionIsDeletedWhenNodeIsDeleted {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4805,6 +5375,7 @@ definition {
 	@priority = 2
 	test TranslationDropdownClosesAfterSelection {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4819,19 +5390,11 @@ definition {
 		AssertElementNotPresent(locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_DROPDOWN");
 	}
 
-	@description = "Verify that the date and time format in Details tab is following the system language (Example: Apr 07, 2022, 1:34 PM for en_US and 07 Abr, 2022, 13:34 for pt)"
-	@ignore = "Test Stub"
-	@priority = 2
-	test ViewDateAndTimeFormatAtDetailsTab {
-
-		// TODO ViewDateAndTimeFormatAtDetailsTab pending implementation
-
-	}
-
 	@description = "Publish workflow definition with Invalid Join Node And View Error Message"
 	@priority = 3
 	test ViewErrorMessageAfterPublishInvalidJoinDefinition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4854,6 +5417,7 @@ definition {
 	@priority = 3
 	test ViewErrorMessageAfterPublishInvalidJoinXORDefinition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4876,6 +5440,7 @@ definition {
 	@priority = 3
 	test ViewWorkflowDefinitionButtons {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4888,6 +5453,7 @@ definition {
 	@priority = 3
 	test ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4937,6 +5503,7 @@ definition {
 	@priority = 3
 	test WarningIsDisplayedWhenNewTransitionDefault {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4967,6 +5534,7 @@ definition {
 	@priority = 3
 	test WarningIsNotDisplayedWhenNewTransitionNotDefault {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 

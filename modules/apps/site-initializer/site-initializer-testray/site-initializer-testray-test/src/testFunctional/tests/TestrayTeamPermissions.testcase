@@ -38,6 +38,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -50,8 +52,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -60,8 +60,6 @@ definition {
 	@description = "Story ID: LPS-178273 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the team"
 	@priority = 3
 	test AnalystRoleCanNotCreateEditAndDeleteTeam {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -71,21 +69,15 @@ definition {
 		}
 
 		task ("When the user go to the team page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			RightClick.rightClick(
-				key_projectName = ${projectName},
-				locator1 = "Testray#ITEM_NAME");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Teams",
+				tableEntry = ${projectName});
 		}
 
 		task ("Then can see the team in the table") {
-			AssertElementPresent(
-				key_projectName = ${teamName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${teamName});
 		}
 
 		task ("And can not see add button") {
@@ -94,26 +86,20 @@ definition {
 
 		task ("When right click in team") {
 			RightClick.rightClick(
-				key_projectName = ${teamName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${teamName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then can not see the 'Edit, Delete' options in right click") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 	}
 
 	@description = "Story ID: LPS-178273 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create/edit/delete the team"
 	@priority = 3
 	test LeadRoleCanNotCreateEditAndDeleteTeam {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -123,21 +109,15 @@ definition {
 		}
 
 		task ("When the user go to the team page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			RightClick.rightClick(
-				key_projectName = ${projectName},
-				locator1 = "Testray#ITEM_NAME");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Teams",
+				tableEntry = ${projectName});
 		}
 
 		task ("Then can see the team in the table") {
-			AssertElementPresent(
-				key_projectName = ${teamName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${teamName});
 		}
 
 		task ("And can not see add button") {
@@ -146,26 +126,20 @@ definition {
 
 		task ("When right click in team") {
 			RightClick.rightClick(
-				key_projectName = ${teamName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${teamName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then can not see the 'Edit, Delete' options in right click") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 	}
 
 	@description = "Story ID: LPS-178273 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the team"
 	@priority = 2
 	test UserRoleCanNotCreateEditAndDeleteTeam {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
@@ -175,21 +149,15 @@ definition {
 		}
 
 		task ("When the user go to the team page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			RightClick.rightClick(
-				key_projectName = ${projectName},
-				locator1 = "Testray#ITEM_NAME");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Teams",
+				tableEntry = ${projectName});
 		}
 
 		task ("Then can see the team in the table") {
-			AssertElementPresent(
-				key_projectName = ${teamName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${teamName});
 		}
 
 		task ("And can not see add button") {
@@ -198,18 +166,14 @@ definition {
 
 		task ("When right click in team") {
 			RightClick.rightClick(
-				key_projectName = ${teamName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${teamName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then can not see the 'Edit, Delete' options in right click") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 	}
 

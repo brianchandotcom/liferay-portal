@@ -14,12 +14,12 @@
 									"en_US": "Thanks",
 									"es_ES": "Gracias"
 								}
-							}
+							},
+							"messageType": "Embedded"
 						}
 					},
 					"indexed": true,
 					"layout": {
-						"widthType": "Fluid"
 					}
 				},
 				"type": "Form"

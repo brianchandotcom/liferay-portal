@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Sites Administration";
@@ -38,7 +39,6 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		task ("Add an organization") {
@@ -183,6 +183,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Sites Administration,Training,Users and Organizations";
 
 		task ("Enable Show Inactive Request Message in system settings") {
@@ -336,10 +337,6 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Sites Administration,User Groups";
 
-		task ("Get site name") {
-			var siteName = TestCase.getSiteName(siteName = ${siteName});
-		}
-
 		task ("Add a site role") {
 			JSONRole.addSiteRole(
 				roleKey = "Roles Siterole Name",
@@ -347,15 +344,13 @@ definition {
 		}
 
 		task ("Add a user group") {
-			UserGroup.openUserGroupsAdmin();
-
-			UserGroup.addCP(userGroupName = "UG UserGroup Name");
+			JSONUserGroup.addUserGroup(userGroupName = "UG UserGroup Name");
 		}
 
 		task ("Assign the user group to default site") {
-			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
-
-			Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
+			JSONGroup.assignUserGroupToGroup(
+				groupName = "Guest",
+				userGroupName = "UG UserGroup Name");
 		}
 
 		task ("Add a regular role") {
@@ -365,22 +360,10 @@ definition {
 		}
 
 		task ("Add assign member permission to the regular role") {
-			for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.portal.kernel.model.Group",
-					roleTitle = "Roles Regrole Name");
-			}
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = 90,
-				roleTitle = "Roles Regrole Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ASSIGN_MEMBERS",
-				resourceName = "com.liferay.portal.kernel.model.Role",
-				roleTitle = "Roles Regrole Name");
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.portal.kernel.model.Group,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION:90,VIEW_CONTROL_PANEL:com.liferay.portal.kernel.model.Role,ASSIGN_MEMBERS",
+				roleTitle = "Roles Regrole Name",
+				roleType = "regular");
 		}
 
 		task ("Add a user") {
@@ -397,11 +380,9 @@ definition {
 		}
 
 		task ("Assign current site to the user") {
-			User.openUsersAdmin();
-
-			User.editUserSiteCP(
-				siteName = ${siteName},
-				userScreenName = "usersn");
+			JSONUser.addUserToSite(
+				groupName = "Guest",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Assign regular role to the user") {
@@ -520,8 +501,9 @@ definition {
 	@description = "Assert user can't assign user group with regular role with assign members."
 	@priority = 3
 	test ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured {
-		property custom.properties = "layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true";
+		property custom.properties = "layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.power.user.required=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		task ("Add a site and a public page in it") {
@@ -704,21 +686,13 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a user group") {
-			UserGroup.openUserGroupsAdmin();
-
-			UserGroup.addCP(userGroupName = "User Group Name");
+			JSONUserGroup.addUserGroup(userGroupName = "User Group Name");
 		}
 
-		UserGroup.openUserGroupsAdmin();
-
 		task ("Add a public page in user group") {
-			UserGroup.gotoAddPageCP(userGroupName = "User Group Name");
-
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.addPage(pageName = "site Page Name");
+			JSONUserGroup.addLayout(
+				layoutName = "Site Page Name",
+				userGroupName = "User Group Name");
 		}
 
 		task ("Add a user ") {
@@ -735,11 +709,9 @@ definition {
 		}
 
 		task ("Assign user to user group") {
-			UserGroup.openUserGroupsAdmin();
-
-			UserGroup.assignMemberCP(
-				userGroupName = "User Group Name",
-				userScreenName = "usersn");
+			JSONUser.addUserToUserGroup(
+				userEmailAddress = "userea@liferay.com",
+				userGroupName = "User Group Name");
 		}
 
 		task ("Log in as created user") {
@@ -790,6 +762,7 @@ definition {
 	test SitesDeactivated {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Sites Administration";
 
 		task ("Enable Show Inactive Request Message in system settings") {
@@ -841,6 +814,10 @@ definition {
 		}
 
 		task ("Assign site to the user") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			User.openUsersAdmin();
 
 			User.editUserSiteCP(
@@ -898,13 +875,12 @@ definition {
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property portal.release = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Sites Administration,Page Administration";
 
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a new site") {
-			HeadlessSite.addSite(siteName = "World Cup - Russia 2018");
+			var groupId = HeadlessSite.addSite(siteName = "World Cup - Russia 2018");
 
 			Site.openSiteSettingsAdmin(siteURLKey = "world-cup-russia-2018");
 
@@ -920,7 +896,7 @@ definition {
 		task ("Add tags to the new site") {
 			for (var tagName : list "World Cup,Russia,2018") {
 				JSONAssettag.addTag(
-					groupName = "World Cup - Russia 2018",
+					groupId = ${groupId},
 					tagName = ${tagName});
 			}
 		}
@@ -944,7 +920,7 @@ definition {
 		task ("Add 2 public pages to the new site") {
 			for (var publicPageName : list "Home,Arenas") {
 				JSONLayout.addPublicLayout(
-					groupName = "World Cup - Russia 2018",
+					groupId = ${groupId},
 					layoutName = ${publicPageName});
 			}
 		}
@@ -952,7 +928,7 @@ definition {
 		task ("Add 4 pages to the child page Arenas") {
 			for (var childPageName : list "Arena Baltika,Zenit Arena,Kazan Arena") {
 				JSONLayout.addPublicLayout(
-					groupName = "World Cup - Russia 2018",
+					groupId = ${groupId},
 					layoutName = ${childPageName},
 					parentLayoutName = "Arenas");
 			}
@@ -961,7 +937,7 @@ definition {
 		task ("Add 2 private pages to the new site") {
 			for (var privatePageName : list "Accomodations,Maps") {
 				JSONLayout.addPrivateLayout(
-					groupName = "World Cup - Russia 2018",
+					groupId = ${groupId},
 					layoutName = ${privatePageName});
 			}
 		}
@@ -1047,13 +1023,13 @@ definition {
 
 		task ("Assign created site to the user") {
 			JSONUser.addUserToSite(
-				groupName = "World Cup - Russia 2018",
+				groupId = ${groupId},
 				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Assign site administrator to the user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = "World Cup - Russia 2018",
+				groupId = ${groupId},
 				roleTitle = "Site Administrator",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -1109,11 +1085,11 @@ definition {
 		}
 
 		task ("Add a site and import the site lar file") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			var groupId = HeadlessSite.addSite(siteName = "Site Name");
 
 			for (var layoutUtilityPageName : list "404 Error,500 Error") {
 				JSONLayoututilitypage.deleteLayoutUtilityPage(
-					groupName = "Site Name",
+					groupId = ${groupId},
 					layoutUtilityPageName = ${layoutUtilityPageName});
 			}
 

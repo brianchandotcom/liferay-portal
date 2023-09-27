@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import '@testing-library/jest-dom/extend-expect';
@@ -58,6 +49,9 @@ jest.mock(
 			})
 		),
 		getCollectionVariations: jest.fn(() => Promise.resolve([])),
+		getCollectionWarningMessage: jest.fn(() =>
+			Promise.resolve({warningMessage: null})
+		),
 	})
 );
 
@@ -275,20 +269,22 @@ describe('CollectionGeneralPanel', () => {
 		});
 	});
 
-	it('shows a message saying that enabling Display All Collection Items could affect performance', async () => {
-		await act(async () => {
-			renderComponent({
-				itemConfig: {
-					displayAllItems: true,
-					paginationType: 'none',
+	it('shows a warning message from backend when collection has some problematic configuration', async () => {
+		CollectionService.getCollectionWarningMessage.mockImplementation(() =>
+			Promise.resolve({
+				warningMessage: {
+					description: 'page-performance-warning-and-stuff',
+					title: '',
 				},
-			});
+			})
+		);
+
+		await act(async () => {
+			renderComponent();
 		});
 
 		expect(
-			await screen.findByText(
-				'this-setting-can-affect-page-performance-severely-if-the-number-of-collection-items-is-above-x.-we-strongly-recommend-using-pagination-instead'
-			)
+			await screen.findByText('page-performance-warning-and-stuff')
 		).toBeInTheDocument();
 	});
 
@@ -402,16 +398,6 @@ describe('CollectionGeneralPanel', () => {
 
 			expect(
 				await screen.findByText('this-collection-has-32-items')
-			).toBeInTheDocument();
-		});
-
-		it('shows a message saying that exceeding the default max value could affect performance', async () => {
-			renderComponent({itemConfig: {paginationType: 'none'}});
-
-			expect(
-				await screen.findByText(
-					'setting-a-value-above-50-can-affect-page-performance-severely'
-				)
 			).toBeInTheDocument();
 		});
 	});

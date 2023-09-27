@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.service.persistence;
@@ -2055,9 +2046,10 @@ public class UserGroupUtil {
 	 *
 	 * @param pk the primary key of the user group
 	 * @param groupPK the primary key of the group
+	 * @return <code>true</code> if an association between the user group and the group was added; <code>false</code> if they were already associated
 	 */
-	public static void addGroup(long pk, long groupPK) {
-		getPersistence().addGroup(pk, groupPK);
+	public static boolean addGroup(long pk, long groupPK) {
+		return getPersistence().addGroup(pk, groupPK);
 	}
 
 	/**
@@ -2065,11 +2057,12 @@ public class UserGroupUtil {
 	 *
 	 * @param pk the primary key of the user group
 	 * @param group the group
+	 * @return <code>true</code> if an association between the user group and the group was added; <code>false</code> if they were already associated
 	 */
-	public static void addGroup(
+	public static boolean addGroup(
 		long pk, com.liferay.portal.kernel.model.Group group) {
 
-		getPersistence().addGroup(pk, group);
+		return getPersistence().addGroup(pk, group);
 	}
 
 	/**
@@ -2077,9 +2070,10 @@ public class UserGroupUtil {
 	 *
 	 * @param pk the primary key of the user group
 	 * @param groupPKs the primary keys of the groups
+	 * @return <code>true</code> if at least one association between the user group and the groups was added; <code>false</code> if they were all already associated
 	 */
-	public static void addGroups(long pk, long[] groupPKs) {
-		getPersistence().addGroups(pk, groupPKs);
+	public static boolean addGroups(long pk, long[] groupPKs) {
+		return getPersistence().addGroups(pk, groupPKs);
 	}
 
 	/**
@@ -2087,11 +2081,12 @@ public class UserGroupUtil {
 	 *
 	 * @param pk the primary key of the user group
 	 * @param groups the groups
+	 * @return <code>true</code> if at least one association between the user group and the groups was added; <code>false</code> if they were all already associated
 	 */
-	public static void addGroups(
+	public static boolean addGroups(
 		long pk, List<com.liferay.portal.kernel.model.Group> groups) {
 
-		getPersistence().addGroups(pk, groups);
+		return getPersistence().addGroups(pk, groups);
 	}
 
 	/**
@@ -2264,9 +2259,10 @@ public class UserGroupUtil {
 	 *
 	 * @param pk the primary key of the user group
 	 * @param teamPK the primary key of the team
+	 * @return <code>true</code> if an association between the user group and the team was added; <code>false</code> if they were already associated
 	 */
-	public static void addTeam(long pk, long teamPK) {
-		getPersistence().addTeam(pk, teamPK);
+	public static boolean addTeam(long pk, long teamPK) {
+		return getPersistence().addTeam(pk, teamPK);
 	}
 
 	/**
@@ -2274,11 +2270,12 @@ public class UserGroupUtil {
 	 *
 	 * @param pk the primary key of the user group
 	 * @param team the team
+	 * @return <code>true</code> if an association between the user group and the team was added; <code>false</code> if they were already associated
 	 */
-	public static void addTeam(
+	public static boolean addTeam(
 		long pk, com.liferay.portal.kernel.model.Team team) {
 
-		getPersistence().addTeam(pk, team);
+		return getPersistence().addTeam(pk, team);
 	}
 
 	/**
@@ -2286,9 +2283,10 @@ public class UserGroupUtil {
 	 *
 	 * @param pk the primary key of the user group
 	 * @param teamPKs the primary keys of the teams
+	 * @return <code>true</code> if at least one association between the user group and the teams was added; <code>false</code> if they were all already associated
 	 */
-	public static void addTeams(long pk, long[] teamPKs) {
-		getPersistence().addTeams(pk, teamPKs);
+	public static boolean addTeams(long pk, long[] teamPKs) {
+		return getPersistence().addTeams(pk, teamPKs);
 	}
 
 	/**
@@ -2296,11 +2294,12 @@ public class UserGroupUtil {
 	 *
 	 * @param pk the primary key of the user group
 	 * @param teams the teams
+	 * @return <code>true</code> if at least one association between the user group and the teams was added; <code>false</code> if they were all already associated
 	 */
-	public static void addTeams(
+	public static boolean addTeams(
 		long pk, List<com.liferay.portal.kernel.model.Team> teams) {
 
-		getPersistence().addTeams(pk, teams);
+		return getPersistence().addTeams(pk, teams);
 	}
 
 	/**
@@ -2473,9 +2472,10 @@ public class UserGroupUtil {
 	 *
 	 * @param pk the primary key of the user group
 	 * @param userPK the primary key of the user
+	 * @return <code>true</code> if an association between the user group and the user was added; <code>false</code> if they were already associated
 	 */
-	public static void addUser(long pk, long userPK) {
-		getPersistence().addUser(pk, userPK);
+	public static boolean addUser(long pk, long userPK) {
+		return getPersistence().addUser(pk, userPK);
 	}
 
 	/**
@@ -2483,11 +2483,12 @@ public class UserGroupUtil {
 	 *
 	 * @param pk the primary key of the user group
 	 * @param user the user
+	 * @return <code>true</code> if an association between the user group and the user was added; <code>false</code> if they were already associated
 	 */
-	public static void addUser(
+	public static boolean addUser(
 		long pk, com.liferay.portal.kernel.model.User user) {
 
-		getPersistence().addUser(pk, user);
+		return getPersistence().addUser(pk, user);
 	}
 
 	/**
@@ -2495,9 +2496,10 @@ public class UserGroupUtil {
 	 *
 	 * @param pk the primary key of the user group
 	 * @param userPKs the primary keys of the users
+	 * @return <code>true</code> if at least one association between the user group and the users was added; <code>false</code> if they were all already associated
 	 */
-	public static void addUsers(long pk, long[] userPKs) {
-		getPersistence().addUsers(pk, userPKs);
+	public static boolean addUsers(long pk, long[] userPKs) {
+		return getPersistence().addUsers(pk, userPKs);
 	}
 
 	/**
@@ -2505,11 +2507,12 @@ public class UserGroupUtil {
 	 *
 	 * @param pk the primary key of the user group
 	 * @param users the users
+	 * @return <code>true</code> if at least one association between the user group and the users was added; <code>false</code> if they were all already associated
 	 */
-	public static void addUsers(
+	public static boolean addUsers(
 		long pk, List<com.liferay.portal.kernel.model.User> users) {
 
-		getPersistence().addUsers(pk, users);
+		return getPersistence().addUsers(pk, users);
 	}
 
 	/**

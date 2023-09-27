@@ -160,6 +160,11 @@ components:
                 externalReferenceCode:
                     example: AB-34098-789-N
                     type: string
+                fileEntryId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
                 id:
                     example: 30130
                     format: int64
@@ -1100,8 +1105,8 @@ components:
                         - 30
                         - 40
                     items:
-                        format: int32
-                        type: integer
+                        format: bigdecimal
+                        type: number
                     type: array
                 displayAvailability:
                     example: true
@@ -1118,17 +1123,21 @@ components:
                         The low stock action that will be performed when a product is out of stock
                     type: string
                 maxOrderQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 minOrderQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 minStockQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 multipleOrderQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
             type: object
         ProductGroup:
             properties:
@@ -1647,8 +1656,28 @@ components:
                     type: array
                 skuSubscriptionConfiguration:
                     $ref: "#/components/schemas/SkuSubscriptionConfiguration"
+                skuUnitOfMeasures:
+                    items:
+                        $ref: "#/components/schemas/SkuUnitOfMeasure"
+                    type: array
                 skuVirtualSettings:
                     $ref: "#/components/schemas/SkuVirtualSettings"
+                unitOfMeasureKey:
+                    example: pl
+                    readOnly: true
+                    type: string
+                unitOfMeasureName:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Pallet
+                        hr_HR: Pallet HR
+                        hu_HU: Pallet HU
+                    readOnly: true
+                    type: object
+                unitOfMeasureSkuId:
+                    readOnly: true
+                    type: string
                 unspsc:
                     example: "1234567890"
                     type: string
@@ -1739,6 +1768,76 @@ components:
                         monthDay: "1"
                         monthlyMode: "0"
                     type: object
+            type: object
+        SkuUnitOfMeasure:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                active:
+                    example: true
+                    type: boolean
+                basePrice:
+                    example: 10.0
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                incrementalOrderQuantity:
+                    example: 1.5
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                key:
+                    example: pl
+                    type: string
+                name:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Pallet
+                        hr_HR: Pallet HR
+                        hu_HU: Pallet HU
+                    type: object
+                precision:
+                    example: 3
+                    type: integer
+                primary:
+                    example: true
+                    type: boolean
+                priority:
+                    example: 1.1
+                    format: double
+                    minimum: 0
+                    type: number
+                promoPrice:
+                    example: 10.0
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                rate:
+                    example: 1.5
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                sku:
+                    readOnly: true
+                    type: string
+                skuId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
             type: object
         SkuVirtualSettings:
             properties:
@@ -1886,7 +1985,7 @@ info:
         name: Commerce Team
     description:
         "Liferay Commerce Admin Catalog API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.admin.catalog.client', and version '4.0.42'."
+        artifact ID 'com.liferay.headless.commerce.admin.catalog.client', and version '4.0.46'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -1894,6 +1993,81 @@ info:
     version: v1.0
 openapi: 3.0.0
 paths:
+    "/attachment/by-externalReferenceCode/{externalReferenceCode}":
+        delete:
+            operationId: deleteAttachmentByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Deletes a attachment by external reference code.
+            tags: ["Attachment"]
+    "/attachment/{id}":
+        delete:
+            operationId: deleteAttachment
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Deletes a attachment by ID.
+            tags: ["Attachment"]
     "/catalog/by-externalReferenceCode/{externalReferenceCode}":
         delete:
             operationId: deleteCatalogByExternalReferenceCode
@@ -5395,6 +5569,185 @@ paths:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a product related to a product group.
             tags: ["ProductGroupProduct"]
+    "/product-option-values/{id}":
+        delete:
+            operationId: deleteProductOptionValue
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                "204":
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Deletes a product option value by ID.
+            tags:
+                - ProductOptionValue
+        get:
+            operationId: getProductOptionValue
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductOptionValue"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductOptionValue"
+                    description:
+                        Successful operation
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                "404":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                "500":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets the value related to a product option value.
+            tags:
+                - ProductOptionValue
+        patch:
+            operationId: patchProductOptionValue
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ProductOptionValue"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ProductOptionValue"
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductOptionValue"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductOptionValue"
+                    description:
+                        Updated
+                "400":
+                    description:
+                        Invalid input
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                "404":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                "500":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Updates an product option value by ID.
+            tags:
+                - ProductOptionValue
     "/productOptions/{id}":
         delete:
             operationId: deleteProductOption
@@ -12973,6 +13326,188 @@ paths:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a related product by ID.
             tags: ["RelatedProduct"]
+    "/sku-unit-of-measures/{id}":
+        delete:
+            operationId: deleteSkuUnitOfMeasure
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Deletes a sku unit of measure by ID.
+            tags: ["SkuUnitOfMeasure"]
+        get:
+            operationId: getSkuUnitOfMeasure
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SkuUnitOfMeasure"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SkuUnitOfMeasure"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets a sku unit of measure by ID.
+            tags: ["SkuUnitOfMeasure"]
+        patch:
+            operationId: patchSkuUnitOfMeasure
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SkuUnitOfMeasure"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SkuUnitOfMeasure"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SkuUnitOfMeasure"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SkuUnitOfMeasure"
+                    description:
+                        Updated
+                202:
+                    description:
+                        Async
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Updates a sku unit of measure by ID.
+            tags: ["SkuUnitOfMeasure"]
     "/skus":
         get:
             operationId: getSkusPage
@@ -13235,6 +13770,170 @@ paths:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a sku by external reference code.
             tags: ["Sku"]
+    "/skus/by-externalReferenceCode/{externalReferenceCode}/sku-unit-of-measures":
+        get:
+            operationId: getSkuByExternalReferenceCodeSkuUnitOfMeasuresPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+                - in: query
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SkuUnitOfMeasure"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SkuUnitOfMeasure"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets unit of measures of a sku by external reference code.
+            tags: ["SkuUnitOfMeasure"]
+        post:
+            operationId: postSkuByExternalReferenceCodeSkuUnitOfMeasure
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SkuUnitOfMeasure"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SkuUnitOfMeasure"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SkuUnitOfMeasure"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SkuUnitOfMeasure"
+                    description:
+                        Created
+                202:
+                    description:
+                        Accepted - Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Creates or updates a unit of measure related to a sku by external reference code.
+            tags: ["SkuUnitOfMeasure"]
     "/skus/by-externalReferenceCode/{externalReferenceCode}/sku-virtual-settings":
         get:
             operationId: getSkuByExternalReferenceCodeSkuVirtualSettings
@@ -13548,6 +14247,172 @@ paths:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a sku by ID.
             tags: ["Sku"]
+    "/skus/{id}/sku-unit-of-measures":
+        get:
+            operationId: getSkuIdSkuUnitOfMeasuresPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SkuUnitOfMeasure"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SkuUnitOfMeasure"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets unit of measures of a sku.
+            tags: ["SkuUnitOfMeasure"]
+        post:
+            operationId: postSkuIdSkuUnitOfMeasure
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SkuUnitOfMeasure"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SkuUnitOfMeasure"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SkuUnitOfMeasure"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SkuUnitOfMeasure"
+                    description:
+                        Created
+                202:
+                    description:
+                        Accepted - Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Creates or updates a unit of measure related to a sku.
+            tags: ["SkuUnitOfMeasure"]
     "/skus/{id}/sku-virtual-settings":
         get:
             operationId: getSkuIdSkuVirtualSettings
@@ -14004,6 +14869,90 @@ paths:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a specification by ID.
             tags: ["Specification"]
+    "/unit-of-measure-skus":
+        get:
+            operationId: getUnitOfMeasureSkusPage
+            parameters:
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Sku"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Sku"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets a list of skus with unit of measure.
+            tags: ["Sku"]
 servers:
     - description:
           SwaggerHub API Auto Mocking

@@ -1,16 +1,19 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {useMutation} from '@apollo/client';
 import SearchBuilder from '~/common/core/SearchBuilder';
+import {
+	actLiferayContact,
+	actRaysourceContact,
+	associateContactRoleLiferay,
+	associateContactRoleRaysource,
+	removeContactRoleLiferay,
+	removeContactRoleRaysource,
+} from '~/routes/customer-portal/utils/getHighPriorityContacts';
+import {useOnboarding} from '~/routes/onboarding/context';
 import NotificationQueueService from '../../../../../../../../../../../../../src/common/services/actions/notificationAction';
 import {useAppPropertiesContext} from '../../../../../../../../../../../../common/contexts/AppPropertiesContext';
 import {
@@ -21,18 +24,30 @@ import {
 	getLiferayExperienceCloudEnvironments,
 	updateAccountSubscriptionGroups,
 } from '../../../../../../../../../../../../common/services/liferay/graphql/queries';
+import {useCustomerPortal} from '../../../../../../../../../../../../routes/customer-portal/context';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../../../../../../../utils/constants';
 
 export default function useSubmitLXCEnvironment(
 	handleChangeForm,
 	project,
 	setFormAlreadySubmitted,
+	addHighPriorityContactList,
+	removeHighPriorityContactList,
 	subscriptionGroupLxcId,
+	handleLoadingSubmitButton,
 	values
 ) {
 	const {client} = useAppPropertiesContext();
 
-	const {featureFlags} = useAppPropertiesContext();
+	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
+
+	const customerPortalContext = useCustomerPortal();
+
+	const onboardingContext = useOnboarding();
+
+	const sessionId =
+		customerPortalContext?.[0].sessionId ||
+		onboardingContext?.[0].sessionId;
 
 	const [
 		createLiferayExperienceCloudEnvironment,
@@ -72,90 +87,129 @@ export default function useSubmitLXCEnvironment(
 		}
 
 		if (!alreadySubmitted) {
-			const {data} = await createLiferayExperienceCloudEnvironment({
-				variables: {
-					LiferayExperienceCloudEnvironment: {
-						accountKey: project.accountKey,
-						incidentManagementEmailAddress:
-							lxcActivationFields.incidentManagementEmail,
-						incidentManagementFullName:
-							lxcActivationFields.incidentManagementFullName,
-						primaryRegion: lxcActivationFields.primaryRegion,
-						projectId: lxcActivationFields.projectId,
-					},
-				},
-			});
+			try {
+				handleLoadingSubmitButton(true);
 
-			if (data) {
-				const liferayExperienceCloudEnvironmentId =
-					data.createLiferayExperienceCloudEnvironment?.id;
-
-				await updateAccountSubscriptionGroupsInfo({
-					context: {
-						displaySuccess: false,
-						type: 'liferay-rest',
-					},
+				if (featureFlags.includes('LPS-159127')) {
+					await actRaysourceContact(
+						removeContactRoleRaysource,
+						removeHighPriorityContactList,
+						project,
+						sessionId,
+						provisioningServerAPI
+					);
+					await actRaysourceContact(
+						associateContactRoleRaysource,
+						addHighPriorityContactList,
+						project,
+						sessionId,
+						provisioningServerAPI
+					);
+					await actLiferayContact(
+						addHighPriorityContactList,
+						associateContactRoleLiferay,
+						project,
+						client
+					);
+					await actLiferayContact(
+						removeHighPriorityContactList,
+						removeContactRoleLiferay,
+						project,
+						client
+					);
+				}
+				const {data} = await createLiferayExperienceCloudEnvironment({
 					variables: {
-						accountSubscriptionGroup: {
+						LiferayExperienceCloudEnvironment: {
 							accountKey: project.accountKey,
-							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
-							r_accountEntryToAccountSubscriptionGroup_accountEntryId:
-								project.id,
+							incidentManagementEmailAddress:
+								lxcActivationFields.incidentManagementEmail,
+							incidentManagementFullName:
+								lxcActivationFields.incidentManagementFullName,
+							primaryRegion: lxcActivationFields.primaryRegion,
+							projectId: lxcActivationFields.projectId,
 						},
-						id: subscriptionGroupLxcId,
 					},
 				});
 
-				await Promise.all(
-					lxcActivationFields?.admins?.map(({email, fullName}) => {
-						return createAdminLiferayExperienceCloud({
-							variables: {
-								AdminLiferayExperienceCloud: {
-									emailAddress: email,
-									fullName,
-									githubUsername: '...',
-									liferayExperienceCloudEnvironmentId,
-								},
-							},
-						});
-					})
-				);
+				if (data) {
+					const liferayExperienceCloudEnvironmentId =
+						data.createLiferayExperienceCloudEnvironment?.id;
 
-				if (featureFlags.includes('LPS-181031')) {
-					const adminInfo = lxcActivationFields?.admins?.map(
-						({email, fullName}) => {
-							const [firstName, ...lastNames] = fullName.split(
-								' '
-							);
-							const lastName = lastNames.join(' ');
-							const projectAdminEmailBody = `
+					await updateAccountSubscriptionGroupsInfo({
+						context: {
+							displaySuccess: false,
+							type: 'liferay-rest',
+						},
+						variables: {
+							accountSubscriptionGroup: {
+								accountKey: project.accountKey,
+								activationStatus:
+									STATUS_TAG_TYPE_NAMES.inProgress,
+								r_accountEntryToAccountSubscriptionGroup_accountEntryId:
+									project.id,
+							},
+							id: subscriptionGroupLxcId,
+						},
+					});
+
+					await Promise.all(
+						lxcActivationFields?.admins?.map(
+							({email, fullName}) => {
+								return createAdminLiferayExperienceCloud({
+									variables: {
+										AdminLiferayExperienceCloud: {
+											emailAddress: email,
+											fullName,
+											githubUsername: '...',
+											liferayExperienceCloudEnvironmentId,
+										},
+									},
+								});
+							}
+						)
+					);
+
+					if (featureFlags.includes('LPS-181031')) {
+						const adminInfo = lxcActivationFields?.admins?.map(
+							({email, fullName}) => {
+								const [
+									firstName,
+									...lastNames
+								] = fullName.split(' ');
+								const lastName = lastNames.join(' ');
+								const projectAdminEmailBody = `
 							<strong>First Name -</strong> ${firstName}<br>
 							<strong>Last Name - </strong>${lastName}<br>
 							<strong>Email Address - </strong>${email}
 							<br><br>`;
 
-							return projectAdminEmailBody;
-						}
-					);
-					const notificationTemplateService = new NotificationQueueService(
-						client
-					);
+								return projectAdminEmailBody;
+							}
+						);
+						const notificationTemplateService = new NotificationQueueService(
+							client
+						);
 
-					await notificationTemplateService.send(
-						'SETUP-LXC-ENVIRONMENT-NOTIFICATION-TEMPLATE',
-						{
-							'[%DATE_AND_TIME_SUBMITTED%]': new Date().toUTCString(),
-							'[%PROJECT_ADMIN%]': adminInfo.join(''),
-							'[%PROJECT_CODE%]': project.code,
-							'[%PROJECT_DATA_CENTER_REGION%]':
-								lxcActivationFields.primaryRegion,
-							'[%PROJECT_ID%]': lxcActivationFields.projectId,
-						}
-					);
+						await notificationTemplateService.send(
+							'SETUP-LXC-ENVIRONMENT-NOTIFICATION-TEMPLATE',
+							{
+								'[%DATE_AND_TIME_SUBMITTED%]': new Date().toUTCString(),
+								'[%PROJECT_ADMIN%]': adminInfo.join(''),
+								'[%PROJECT_CODE%]': project.code,
+								'[%PROJECT_DATA_CENTER_REGION%]':
+									lxcActivationFields.primaryRegion,
+								'[%PROJECT_ID%]': lxcActivationFields.projectId,
+							}
+						);
+					}
 				}
+				handleLoadingSubmitButton(false);
+				handleChangeForm(true);
 			}
-
-			handleChangeForm(true);
+			catch {
+				handleLoadingSubmitButton(false);
+			}
 		}
 	};
 

@@ -123,15 +123,9 @@ definition {
 		}
 
 		task ("When the Web Content admin makes a copy of new structure") {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Copy",
-				rowEntry = "WC Structure Name");
-
-			PortletEntry.inputName(name = "WC Structure Name Copy");
-
-			AssertClick(
-				locator1 = "Button#COPY",
-				value1 = "Copy");
+			WebContentStructures.copyCP(
+				structureCopyName = "WC Structure Name Copy",
+				structureName = "WC Structure Name");
 		}
 
 		task ("Then the Web Content admin should see both structures") {
@@ -296,6 +290,7 @@ definition {
 	test EditStructureKey {
 		property custom.properties = "feature.flag.LPS-184255=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a user has a structure with a structurekey") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -373,6 +368,7 @@ definition {
 	test OverrideStructureKeyAfterImportStructure {
 		property custom.properties = "feature.flag.LPS-184255=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a user exports a structure with a structurekey") {
 			SystemSettings.openSystemSettingsAdmin();

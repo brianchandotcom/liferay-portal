@@ -25,7 +25,7 @@ definition {
 
 		if (${changeType} == "Added") {
 			AssertElementPresent(
-				key_displayItem = "Publication (New)",
+				key_displayItem = "${publicationName} (New)",
 				locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
 
 			var key_columnValueInPublication = ${columnValueInPublication};
@@ -92,7 +92,7 @@ definition {
 					value1 = ${columnValueInProduction});
 			}
 
-			PublicationsChangeDetails.changeDisplayItem(displayItem = "Version: 1.1 (Publication)");
+			PublicationsChangeDetails.changeDisplayItem(displayItem = "Version: 1.1 (${publicationName})");
 
 			if (isSet(columnValueInPublication)) {
 				var key_columnValueInPublication = ${columnValueInPublication};
@@ -107,7 +107,7 @@ definition {
 	macro viewChangeDetailsInDisplay {
 		if (${changeType} == "Added") {
 			AssertElementPresent(
-				key_displayItem = "Publication (New)",
+				key_displayItem = "${publicationName} (New)",
 				locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
 
 			var key_contentValueInPublication = ${contentValueInPublication};
@@ -176,7 +176,7 @@ definition {
 					value1 = ${contentValueInProduction});
 			}
 
-			PublicationsChangeDetails.changeDisplayItem(displayItem = "Version: 1.1 (Publication)");
+			PublicationsChangeDetails.changeDisplayItem(displayItem = "Version: 1.1 (${publicationName})");
 
 			if (isSet(contentValueInPublication)) {
 				var key_contentValueInPublication = ${contentValueInPublication};
@@ -279,7 +279,7 @@ definition {
 					value1 = ${columnValueInProduction});
 			}
 
-			PublicationsChangeDetails.changeDisplayItem(displayItem = "Publication");
+			PublicationsChangeDetails.changeDisplayItem(displayItem = ${publicationName});
 
 			if (isSet(columnValueInPublication)) {
 				var key_columnValueInPublication = ${columnValueInPublication};
@@ -322,7 +322,7 @@ definition {
 					value1 = ${fieldValueInProduction});
 			}
 
-			PublicationsChangeDetails.changeDisplayItem(displayItem = "Publication");
+			PublicationsChangeDetails.changeDisplayItem(displayItem = ${publicationName});
 
 			AssertTextEquals.assertPartialText(
 				key_displayItem = "Publication",
@@ -347,7 +347,7 @@ definition {
 
 			if (${changeType} == "Added") {
 				AssertElementPresent(
-					key_displayItem = "Publication (New)",
+					key_displayItem = "${publicationName} (New)",
 					locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM");
 			}
 

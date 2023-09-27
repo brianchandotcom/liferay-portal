@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.option;
@@ -48,7 +39,10 @@ public class CommerceOptionValueTest {
 		builder.price(price);
 
 		builder.priceType("test-price-type");
-		builder.quantity(1977);
+
+		BigDecimal quantity = BigDecimal.valueOf(1977);
+
+		builder.quantity(quantity);
 
 		CommerceOptionValue commerceOptionValue = builder.build();
 
@@ -60,7 +54,7 @@ public class CommerceOptionValueTest {
 		Assert.assertEquals(price, commerceOptionValue.getPrice());
 		Assert.assertEquals(
 			"test-price-type", commerceOptionValue.getPriceType());
-		Assert.assertEquals(1977, commerceOptionValue.getQuantity());
+		Assert.assertEquals(quantity, commerceOptionValue.getQuantity());
 	}
 
 	private void _assertEmptyCommerceOptionValue(
@@ -71,7 +65,7 @@ public class CommerceOptionValueTest {
 		Assert.assertNull(commerceOptionValue.getOptionValueKey());
 		Assert.assertNull(commerceOptionValue.getPrice());
 		Assert.assertNull(commerceOptionValue.getPriceType());
-		Assert.assertEquals(0, commerceOptionValue.getQuantity());
+		Assert.assertEquals(BigDecimal.ZERO, commerceOptionValue.getQuantity());
 	}
 
 }

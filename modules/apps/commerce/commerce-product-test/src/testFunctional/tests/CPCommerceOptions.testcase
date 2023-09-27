@@ -18,6 +18,8 @@ definition {
 	@priority = 3
 	test CanCustomFieldsBeReturnedFromOptionValueAPI {
 		property portal.acceptance = "false";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a custom input field is created by the admin for commerce product option value") {
 			ApplicationsMenu.gotoPortlet(
@@ -74,8 +76,10 @@ definition {
 		}
 	}
 
+	@description = "This is a test for creating an option"
+	@priority = 5
 	test CreateAnOption {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

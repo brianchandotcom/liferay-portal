@@ -1,19 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {Text} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
+import Layout from '@clayui/layout';
 import ClayTooltip from '@clayui/tooltip';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
 import {
@@ -21,6 +14,7 @@ import {
 	isValidStyleValue,
 } from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
@@ -28,7 +22,6 @@ import {useGlobalContext} from '../../app/contexts/GlobalContext';
 import {useSelector} from '../../app/contexts/StoreContext';
 import {getResetLabelByViewport} from '../../app/utils/getResetLabelByViewport';
 import {useStyleBook} from '../../plugins/page_design_options/hooks/useStyleBook';
-import {useId} from '../hooks/useId';
 
 /**
  * These elements must be sorted from the most outer circle to the most inner
@@ -336,7 +329,11 @@ function SpacingSelectorButton({
 									Liferay.Language.get('set-x-to-x'),
 									[field.label, option.label]
 								)}
-								className="d-flex"
+								className={classNames({
+									active:
+										value === option.value ||
+										(!value && option.value === '0'),
+								})}
 								data-value={option.value}
 								key={option.value}
 								onClick={() => {
@@ -345,19 +342,33 @@ function SpacingSelectorButton({
 									triggerElement?.focus();
 								}}
 							>
-								<span className="text-truncate w-50">
-									{tokenValues[`spacer${option.value}`]
-										?.label || option.label}
-								</span>
+								<Layout.ContentRow>
+									<Layout.ContentCol expand>
+										<Text size={3} truncate>
+											{tokenValues[
+												`spacer${option.value}`
+											]?.label || option.label}
+										</Text>
+									</Layout.ContentCol>
 
-								<strong className="flex-grow-1 pl-2 text-right text-truncate">
-									<SpacingOptionValue
-										position={position}
-										tokenValues={tokenValues}
-										type={type}
-										value={option.value}
-									/>
-								</strong>
+									<Layout.ContentCol
+										className="text-right"
+										expand
+									>
+										<Text
+											size={3}
+											truncate
+											weight="semi-bold"
+										>
+											<SpacingOptionValue
+												position={position}
+												tokenValues={tokenValues}
+												type={type}
+												value={option.value}
+											/>
+										</Text>
+									</Layout.ContentCol>
+								</Layout.ContentRow>
 							</ClayDropDown.Item>
 						))}
 					</ClayDropDown.Group>

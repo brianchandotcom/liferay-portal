@@ -114,36 +114,36 @@ definition {
 		}
 
 		task ("And then the user is able to create entries") {
-			ObjectPortlet.addSingleFieldEntryViaUI(entry = "New Entry");
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "New Entry LPS-162131");
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "New Entry",
+				key_entry = "New Entry LPS-162131",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to update entries") {
-			ObjectPortlet.viewEntryDetails(entry = "New Entry");
+			ObjectPortlet.viewEntryDetails(entry = "New Entry LPS-162131");
 
 			Type(
 				locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
-				value1 = "Entry Updated");
+				value1 = "Entry Updated LPS-162131");
 
 			PortletEntry.save();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry Updated LPS-162131",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to delete entries") {
-			ObjectPortlet.deleteEntry(entry = "Entry Updated");
+			ObjectPortlet.deleteEntry(entry = "Entry Updated LPS-162131");
 
 			AssertElementNotPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry Updated LPS-162131",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 	}
@@ -153,21 +153,21 @@ definition {
 	test AssertCRUDWithCreatedStandardObject {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Feature Flags",
-			configurationName = "Beta",
-			configurationScope = "Virtual Instance Scope");
-
-		Check.checkToggleSwitch(
-			key_featureFlag = "LPS-135430",
-			locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
-
 		task ("Given portal configured with Salesforce") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
+
+			Check.checkToggleSwitch(
+				key_featureFlag = "LPS-135430",
+				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
+
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -297,38 +297,131 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Last Name",
-				text = "New Entry");
+				text = "New Entry LPS-185429");
 
 			CreateObject.saveObject();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "New Entry",
+				key_entry = "New Entry LPS-185429",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to update entries") {
-			ObjectPortlet.viewEntryDetails(entry = "New Entry");
+			ObjectPortlet.viewEntryDetails(entry = "New Entry LPS-185429");
 
 			PortletEntry.inputText(
 				fieldLabel = "Last Name",
-				text = "Entry Updated");
+				text = "Entry Updated LPS-185429");
 
 			CreateObject.saveObject();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry 185429 Updated",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to delete entries") {
-			ObjectPortlet.deleteEntry(entry = "Entry Updated");
+			ObjectPortlet.deleteEntry(entry = "Entry Updated LPS-185429");
 
 			AssertElementNotPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry Updated LPS-185429",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+	}
+
+	@description = "LPS-165252 - Verify CRUD functionality with an imported custom object that is mapped to a form container"
+	@priority = 5
+	test AssertCRUDWithFormContainer {
+		property portal.acceptance = "true";
+
+		task ("Given portal configured with Salesforce") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
+
+			Check.checkToggleSwitch(
+				key_featureFlag = "LPS-135430",
+				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Third Party",
+				configurationName = "Salesforce Integration",
+				configurationScope = "Site Scope");
+
+			ObjectSalesforce.configureSalesforce();
+		}
+
+		task ("And given an imported custom object with the storage type as Salesforce") {
+			ObjectExportImport.importObject(
+				objectFileName = "ImportedCustomObjectWithSalesforceStorageType",
+				objectName = "PoshiTest");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PoshiTest");
+		}
+
+		task ("And given a page with a form container fragment mapped with the custom object") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Poshi Test",
+				panel = "General");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user navigates to the page and creates an entry via the form container") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			InputField.editText(
+				fieldLabel = "Title",
+				text = "Entry added on form container");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the entry is created") {
+			ObjectAdmin.goToCustomObject(objectName = "PoshiTest");
+
+			ObjectPortlet.viewEntry(entry = "Entry added on form container");
+		}
+
+		task ("and When the user deletes the entry") {
+			ObjectPortlet.deleteEntry(entry = "Entry added on form container");
+		}
+
+		task ("Then the entry is deleted") {
+			AssertElementNotPresent(
+				key_entry = "Entry added on form container",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 	}
@@ -393,36 +486,36 @@ definition {
 		}
 
 		task ("And then the user is able to create entries") {
-			ObjectPortlet.addSingleFieldEntryViaUI(entry = "New Entry");
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "New Entry LPS-185427");
 
 			ObjectAdmin.goToCustomObject(objectName = "PoshiTest");
 
 			AssertElementPresent(
-				key_entry = "New Entry",
+				key_entry = "New Entry LPS-185427",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to update entries") {
-			ObjectPortlet.viewEntryDetails(entry = "New Entry");
+			ObjectPortlet.viewEntryDetails(entry = "New Entry LPS-185427");
 
 			Type(
 				locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
-				value1 = "Entry Updated");
+				value1 = "Entry Updated LPS-185427");
 
 			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "PoshiTest");
 
 			AssertElementPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry Updated LPS-185427",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to delete entries") {
-			ObjectPortlet.deleteEntry(entry = "Entry Updated");
+			ObjectPortlet.deleteEntry(entry = "Entry Updated LPS-185427");
 
 			AssertElementNotPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry Updated LPS-185427",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 	}
@@ -495,38 +588,38 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Last Name",
-				text = "New Entry");
+				text = "New Entry LPS-185428");
 
 			CreateObject.saveObject();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "New Entry",
+				key_entry = "New Entry LPS-185428",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to update entries") {
-			ObjectPortlet.viewEntryDetails(entry = "New Entry");
+			ObjectPortlet.viewEntryDetails(entry = "New Entry LPS-185428");
 
 			PortletEntry.inputText(
 				fieldLabel = "Last Name",
-				text = "Entry Updated");
+				text = "Entry Updated LPS-185428");
 
 			CreateObject.saveObject();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry Updated LPS-185428",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to delete entries") {
-			ObjectPortlet.deleteEntry(entry = "Entry Updated");
+			ObjectPortlet.deleteEntry(entry = "Entry Updated LPS-185428");
 
 			AssertElementNotPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry Updated LPS-185428",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 	}

@@ -88,6 +88,22 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro configureCommentSubscribe {
+		if (${commentSubscribe} == "true") {
+			FormFields.enableCheckbox(fieldName = "Subscribe");
+		}
+		else if (${commentSubscribe} == "false") {
+			FormFields.disableCheckbox(fieldName = "Subscribe");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
+
 	macro delete {
 		var key_entryComment = ${entryComment};
 
@@ -159,6 +175,8 @@ definition {
 
 			Alert.viewSuccessMessage();
 
+			WorkflowComment._openComments();
+
 			AssertTextEquals(
 				locator1 = "Comments#COMMENT_BODY_SPECIFIC",
 				value1 = ${entryCommentEdit});
@@ -173,6 +191,19 @@ definition {
 		echo("commentId: ${commentId}");
 
 		return ${commentId};
+	}
+
+	macro openToCommentsConfiguration {
+		var baseURL = PropsUtil.get("portal.url");
+
+		if (${configurationScope} == "Instance Settings") {
+			var portlet = "InstanceSettingsPortlet";
+		}
+		else {
+			var portlet = "SystemSettingsPortlet";
+		}
+
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.comment.configuration.CommentGroupServiceConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.comment.configuration.CommentGroupServiceConfiguration");
 	}
 
 	macro replyToComment {

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.admin.rest.resource.v1_0.test;
@@ -28,6 +19,7 @@ import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectActionSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -401,7 +393,7 @@ public abstract class BaseObjectActionResourceTestCase {
 		Page<ObjectAction> page =
 			objectActionResource.
 				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
-					externalReferenceCode, null, Pagination.of(1, 10));
+					externalReferenceCode, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -415,7 +407,7 @@ public abstract class BaseObjectActionResourceTestCase {
 				objectActionResource.
 					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
 						irrelevantExternalReferenceCode, null,
-						Pagination.of(1, 2));
+						Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -439,7 +431,7 @@ public abstract class BaseObjectActionResourceTestCase {
 		page =
 			objectActionResource.
 				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
-					externalReferenceCode, null, Pagination.of(1, 10));
+					externalReferenceCode, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -488,7 +480,7 @@ public abstract class BaseObjectActionResourceTestCase {
 		Page<ObjectAction> page1 =
 			objectActionResource.
 				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
-					externalReferenceCode, null, Pagination.of(1, 2));
+					externalReferenceCode, null, Pagination.of(1, 2), null);
 
 		List<ObjectAction> objectActions1 =
 			(List<ObjectAction>)page1.getItems();
@@ -499,7 +491,7 @@ public abstract class BaseObjectActionResourceTestCase {
 		Page<ObjectAction> page2 =
 			objectActionResource.
 				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
-					externalReferenceCode, null, Pagination.of(2, 2));
+					externalReferenceCode, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -512,11 +504,160 @@ public abstract class BaseObjectActionResourceTestCase {
 		Page<ObjectAction> page3 =
 			objectActionResource.
 				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
-					externalReferenceCode, null, Pagination.of(1, 3));
+					externalReferenceCode, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(objectAction1, objectAction2, objectAction3),
 			(List<ObjectAction>)page3.getItems());
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectActionsPageWithSortDateTime()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectActionsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, objectAction1, objectAction2) -> {
+				BeanTestUtil.setProperty(
+					objectAction1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectActionsPageWithSortDouble()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectActionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, objectAction1, objectAction2) -> {
+				BeanTestUtil.setProperty(
+					objectAction1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					objectAction2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectActionsPageWithSortInteger()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectActionsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, objectAction1, objectAction2) -> {
+				BeanTestUtil.setProperty(
+					objectAction1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					objectAction2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectActionsPageWithSortString()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectActionsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, objectAction1, objectAction2) -> {
+				Class<?> clazz = objectAction1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						objectAction1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						objectAction2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						objectAction1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						objectAction2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						objectAction1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						objectAction2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPageWithSort(
+				EntityField.Type type,
+				UnsafeTriConsumer
+					<EntityField, ObjectAction, ObjectAction, Exception>
+						unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_getExternalReferenceCode();
+
+		ObjectAction objectAction1 = randomObjectAction();
+		ObjectAction objectAction2 = randomObjectAction();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, objectAction1, objectAction2);
+		}
+
+		objectAction1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(
+				externalReferenceCode, objectAction1);
+
+		objectAction2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(
+				externalReferenceCode, objectAction2);
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectAction> ascPage =
+				objectActionResource.
+					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+						externalReferenceCode, null, Pagination.of(1, 2),
+						entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(objectAction1, objectAction2),
+				(List<ObjectAction>)ascPage.getItems());
+
+			Page<ObjectAction> descPage =
+				objectActionResource.
+					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+						externalReferenceCode, null, Pagination.of(1, 2),
+						entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(objectAction2, objectAction1),
+				(List<ObjectAction>)descPage.getItems());
+		}
 	}
 
 	protected ObjectAction
@@ -575,7 +716,7 @@ public abstract class BaseObjectActionResourceTestCase {
 
 		Page<ObjectAction> page =
 			objectActionResource.getObjectDefinitionObjectActionsPage(
-				objectDefinitionId, null, Pagination.of(1, 10));
+				objectDefinitionId, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -586,7 +727,7 @@ public abstract class BaseObjectActionResourceTestCase {
 					randomIrrelevantObjectAction());
 
 			page = objectActionResource.getObjectDefinitionObjectActionsPage(
-				irrelevantObjectDefinitionId, null, Pagination.of(1, 2));
+				irrelevantObjectDefinitionId, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -608,7 +749,7 @@ public abstract class BaseObjectActionResourceTestCase {
 				objectDefinitionId, randomObjectAction());
 
 		page = objectActionResource.getObjectDefinitionObjectActionsPage(
-			objectDefinitionId, null, Pagination.of(1, 10));
+			objectDefinitionId, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -667,7 +808,7 @@ public abstract class BaseObjectActionResourceTestCase {
 
 		Page<ObjectAction> page1 =
 			objectActionResource.getObjectDefinitionObjectActionsPage(
-				objectDefinitionId, null, Pagination.of(1, 2));
+				objectDefinitionId, null, Pagination.of(1, 2), null);
 
 		List<ObjectAction> objectActions1 =
 			(List<ObjectAction>)page1.getItems();
@@ -677,7 +818,7 @@ public abstract class BaseObjectActionResourceTestCase {
 
 		Page<ObjectAction> page2 =
 			objectActionResource.getObjectDefinitionObjectActionsPage(
-				objectDefinitionId, null, Pagination.of(2, 2));
+				objectDefinitionId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -689,11 +830,157 @@ public abstract class BaseObjectActionResourceTestCase {
 
 		Page<ObjectAction> page3 =
 			objectActionResource.getObjectDefinitionObjectActionsPage(
-				objectDefinitionId, null, Pagination.of(1, 3));
+				objectDefinitionId, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(objectAction1, objectAction2, objectAction3),
 			(List<ObjectAction>)page3.getItems());
+	}
+
+	@Test
+	public void testGetObjectDefinitionObjectActionsPageWithSortDateTime()
+		throws Exception {
+
+		testGetObjectDefinitionObjectActionsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, objectAction1, objectAction2) -> {
+				BeanTestUtil.setProperty(
+					objectAction1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionObjectActionsPageWithSortDouble()
+		throws Exception {
+
+		testGetObjectDefinitionObjectActionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, objectAction1, objectAction2) -> {
+				BeanTestUtil.setProperty(
+					objectAction1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					objectAction2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionObjectActionsPageWithSortInteger()
+		throws Exception {
+
+		testGetObjectDefinitionObjectActionsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, objectAction1, objectAction2) -> {
+				BeanTestUtil.setProperty(
+					objectAction1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					objectAction2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionObjectActionsPageWithSortString()
+		throws Exception {
+
+		testGetObjectDefinitionObjectActionsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, objectAction1, objectAction2) -> {
+				Class<?> clazz = objectAction1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						objectAction1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						objectAction2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						objectAction1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						objectAction2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						objectAction1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						objectAction2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetObjectDefinitionObjectActionsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, ObjectAction, ObjectAction, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long objectDefinitionId =
+			testGetObjectDefinitionObjectActionsPage_getObjectDefinitionId();
+
+		ObjectAction objectAction1 = randomObjectAction();
+		ObjectAction objectAction2 = randomObjectAction();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, objectAction1, objectAction2);
+		}
+
+		objectAction1 =
+			testGetObjectDefinitionObjectActionsPage_addObjectAction(
+				objectDefinitionId, objectAction1);
+
+		objectAction2 =
+			testGetObjectDefinitionObjectActionsPage_addObjectAction(
+				objectDefinitionId, objectAction2);
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectAction> ascPage =
+				objectActionResource.getObjectDefinitionObjectActionsPage(
+					objectDefinitionId, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(objectAction1, objectAction2),
+				(List<ObjectAction>)ascPage.getItems());
+
+			Page<ObjectAction> descPage =
+				objectActionResource.getObjectDefinitionObjectActionsPage(
+					objectDefinitionId, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(objectAction2, objectAction1),
+				(List<ObjectAction>)descPage.getItems());
+		}
 	}
 
 	protected ObjectAction

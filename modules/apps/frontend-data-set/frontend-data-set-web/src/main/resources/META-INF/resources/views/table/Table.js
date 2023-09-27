@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayEmptyState from '@clayui/empty-state';
@@ -20,7 +11,7 @@ import React, {useContext, useRef, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
-import {getValueDetailsFromItem} from '../../utils/index';
+import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import ViewsContext from '../ViewsContext';
 import TableCell from './TableCell';
 import TableHead from './TableHead';
@@ -37,27 +28,20 @@ function getItemFields(
 	return fields.map((field) => {
 		const {actionDropdownItems} = item;
 		const {rootPropertyName, value, valuePath} = field.fieldName
-			? getValueDetailsFromItem(item, field.fieldName)
+			? getLocalizedValue(item, field.fieldName)
 			: {};
 
 		return (
 			<TableCell
 				actions={itemsActions || actionDropdownItems}
-				inlineEditSettings={field.inlineEditSettings}
+				field={field}
 				itemData={item}
 				itemId={itemId}
 				itemInlineChanges={itemInlineChanges}
 				key={valuePath ? valuePath.join('_') : field.label}
-				options={field}
 				rootPropertyName={rootPropertyName}
 				value={value}
 				valuePath={valuePath}
-				view={{
-					contentRenderer: field.contentRenderer,
-					contentRendererClientExtension:
-						field.contentRendererClientExtension,
-					contentRendererModuleURL: field.contentRendererModuleURL,
-				}}
 			/>
 		);
 	});
@@ -285,7 +269,11 @@ const RowWithActions = ({
 				itemsChanges[itemId]
 			)}
 
-			<DndTable.Cell className="item-actions" columnName="item-actions">
+			<DndTable.Cell
+				className="item-actions"
+				columnName="item-actions"
+				defaultWidth="44px"
+			>
 				{(itemsActions?.length > 0 ||
 					item.actionDropdownItems?.length > 0) && (
 					<Actions

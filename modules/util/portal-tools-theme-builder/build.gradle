@@ -1,12 +1,10 @@
-import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer
-
 apply plugin: "com.liferay.maven.plugin.builder"
 
 task writeParentThemeDependencies
 task writeTestThemeDependencies
 
 buildPluginDescriptor {
-	configurationScopeMapping "mavenCompile", Conf2ScopeMappingContainer.COMPILE
+	configurationScopeMapping "mavenCompile", "compile"
 
 	ext {
 		autoClean = false
@@ -19,7 +17,7 @@ buildPluginDescriptor {
 
 configurations {
 	mavenCompile {
-		extendsFrom compile
+		extendsFrom api
 	}
 
 	mavenDistribution
@@ -45,9 +43,9 @@ dependencies {
 	parentThemes project(":apps:frontend-theme:frontend-theme-styled")
 	parentThemes project(":apps:frontend-theme:frontend-theme-unstyled")
 
-	testCompile group: "com.googlecode.json-simple", name: "json-simple", version: "1.1"
-	testCompile group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.2"
-	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
+	testImplementation group: "com.googlecode.json-simple", name: "json-simple", version: "1.1"
+	testImplementation group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.2"
+	testImplementation group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
 
 	testThemes project(":apps:frontend-theme:frontend-theme-admin")
 	testThemes project(":apps:frontend-theme:frontend-theme-classic")
@@ -62,7 +60,7 @@ liferayOSGi {
 }
 
 test {
-	dependsOn install
+	dependsOn publishToMavenLocal
 	dependsOn writeParentThemeDependencies
 	dependsOn writeTestThemeDependencies
 

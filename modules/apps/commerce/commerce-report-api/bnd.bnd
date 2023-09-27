@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Commerce Report API
 Bundle-SymbolicName: com.liferay.commerce.report.api
-Bundle-Version: 2.1.3
+Bundle-Version: 2.1.4
 Export-Package: com.liferay.commerce.report.exporter

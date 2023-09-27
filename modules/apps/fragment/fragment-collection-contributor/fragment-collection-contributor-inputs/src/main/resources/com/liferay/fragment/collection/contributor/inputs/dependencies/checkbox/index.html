@@ -1,11 +1,23 @@
 <div class="forms-checkbox">
-	<div class="custom-checkbox custom-control mb-0">
-		<input aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text" class="custom-control-input" id="${fragmentEntryLinkNamespace}-checkbox" name="${input.name}" ${input.required?then('required', '')} type="checkbox" [#if input.value?? && input.value == 'true']checked[/#if] />
+	<div class="custom-checkbox custom-control [#if input.errorMessage?has_content]has-error[/#if] mb-0">
+		<input aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-checkbox-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-checkbox-error-message[/#if]" class="custom-control-input" id="${fragmentEntryLinkNamespace}-checkbox" name="${input.name}" ${input.required?then('required', '')} type="checkbox" [#if input.value?? && input.value == 'true']checked[/#if] />
 
-		<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox">
+		<label class="custom-control-label" id="${fragmentEntryLinkNamespace}-checkbox-label">
 			<span class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]custom-control-label-text">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</span>
 		</label>
 	</div>
+
+	[#if input.errorMessage?has_content]
+		<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentEntryLinkNamespace}-checkbox-error-message">
+			<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+				<use xlink:href="${siteSpritemap}#info-circle" />
+			</svg>
+
+			<span>
+				${input.errorMessage}
+			</span>
+		</p>
+	[/#if]
 
 	[#if input.showHelpText && input.helpText?has_content]
 		<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-checkbox-help-text">${htmlUtil.escape(input.helpText)}</p>

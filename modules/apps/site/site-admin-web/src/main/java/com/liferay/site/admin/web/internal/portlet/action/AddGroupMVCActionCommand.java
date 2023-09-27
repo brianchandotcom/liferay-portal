@@ -1,30 +1,33 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.site.admin.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.exception.AssetCategoryException;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
+import com.liferay.portal.kernel.exception.DataLimitExceededException;
+import com.liferay.portal.kernel.exception.DuplicateGroupException;
+import com.liferay.portal.kernel.exception.GroupInheritContentException;
+import com.liferay.portal.kernel.exception.GroupKeyException;
+import com.liferay.portal.kernel.exception.GroupParentException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.SiteConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -61,7 +64,6 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.ratings.kernel.RatingsType;
 import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
-import com.liferay.site.admin.web.internal.handler.GroupExceptionRequestHandler;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.sites.kernel.util.Sites;
@@ -152,8 +154,7 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 			hideDefaultErrorMessage(actionRequest);
 			hideDefaultSuccessMessage(actionRequest);
 
-			_groupExceptionRequestHandler.handlePortalException(
-				actionRequest, actionResponse, exception);
+			_handlePortalException(actionRequest, actionResponse, exception);
 		}
 		catch (Throwable throwable) {
 			throw new Exception(throwable);
@@ -173,6 +174,131 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		return _portal.getControlPanelPortletURL(
 			actionRequest, group, portletId, 0, 0, PortletRequest.RENDER_PHASE);
+	}
+
+	private String _handleGroupKeyException(ActionRequest actionRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(
+			_language.format(
+				themeDisplay.getRequest(),
+				"the-x-cannot-be-x-or-a-reserved-word-such-as-x",
+				new String[] {
+					SiteConstants.NAME_LABEL,
+					SiteConstants.getNameGeneralRestrictions(
+						themeDisplay.getLocale()),
+					SiteConstants.NAME_RESERVED_WORDS
+				}));
+
+		sb.append(StringPool.SPACE);
+
+		sb.append(
+			_language.format(
+				themeDisplay.getRequest(),
+				"the-x-cannot-contain-the-following-invalid-characters-x",
+				new String[] {
+					SiteConstants.NAME_LABEL,
+					SiteConstants.NAME_INVALID_CHARACTERS
+				}));
+
+		sb.append(StringPool.SPACE);
+
+		int groupKeyMaxLength = ModelHintsUtil.getMaxLength(
+			Group.class.getName(), "groupKey");
+
+		sb.append(
+			_language.format(
+				themeDisplay.getRequest(),
+				"the-x-cannot-contain-more-than-x-characters",
+				new String[] {
+					SiteConstants.NAME_LABEL, String.valueOf(groupKeyMaxLength)
+				}));
+
+		return sb.toString();
+	}
+
+	private void _handlePortalException(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			Exception exception)
+		throws Exception {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(exception);
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String errorMessage = null;
+
+		if (exception instanceof AssetCategoryException) {
+			AssetCategoryException assetCategoryException =
+				(AssetCategoryException)exception;
+
+			AssetVocabulary assetVocabulary =
+				assetCategoryException.getVocabulary();
+
+			String assetVocabularyTitle = StringPool.BLANK;
+
+			if (assetVocabulary != null) {
+				assetVocabularyTitle = assetVocabulary.getTitle(
+					themeDisplay.getLocale());
+			}
+
+			if (assetCategoryException.getType() ==
+					AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
+
+				errorMessage = _language.format(
+					themeDisplay.getRequest(),
+					"please-select-at-least-one-category-for-x",
+					assetVocabularyTitle);
+			}
+			else if (assetCategoryException.getType() ==
+						AssetCategoryException.TOO_MANY_CATEGORIES) {
+
+				errorMessage = _language.format(
+					themeDisplay.getRequest(),
+					"you-cannot-select-more-than-one-category-for-x",
+					assetVocabularyTitle);
+			}
+		}
+		else if (exception instanceof DataLimitExceededException) {
+			errorMessage = _language.get(
+				themeDisplay.getRequest(),
+				"unable-to-exceed-maximum-number-of-allowed-sites");
+		}
+		else if (exception instanceof DuplicateGroupException) {
+			errorMessage = _language.get(
+				themeDisplay.getRequest(), "please-enter-a-unique-name");
+		}
+		else if (exception instanceof GroupInheritContentException) {
+			errorMessage = _language.get(
+				themeDisplay.getRequest(),
+				"this-site-cannot-inherit-content-from-its-parent-site");
+		}
+		else if (exception instanceof GroupKeyException) {
+			errorMessage = _handleGroupKeyException(actionRequest);
+		}
+		else if (exception instanceof GroupParentException.MustNotBeOwnParent) {
+			errorMessage = _language.get(
+				themeDisplay.getRequest(),
+				"this-site-cannot-inherit-content-from-its-parent-site");
+		}
+
+		if (Validator.isNull(errorMessage)) {
+			errorMessage = _language.get(
+				themeDisplay.getRequest(), "an-unexpected-error-occurred");
+
+			_log.error(exception);
+		}
+
+		JSONObject jsonObject = JSONUtil.put("error", errorMessage);
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
 
 	private Group _updateGroup(ActionRequest actionRequest) throws Exception {
@@ -215,7 +341,7 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 		String friendlyURL = ParamUtil.getString(
 			actionRequest, "groupFriendlyURL");
 		boolean manualMembership = ParamUtil.getBoolean(
-			actionRequest, "manualMembership", true);
+			actionRequest, "manualMembership");
 		boolean inheritContent = ParamUtil.getBoolean(
 			actionRequest, "inheritContent");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
@@ -525,7 +651,7 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, Group group)
 		throws Exception {
 
-		ActionUtil.updateLayoutSetPrototypesLinks(actionRequest, group);
+		ActionUtil.updateLayoutSetPrototypesLinks(actionRequest, group, _sites);
 
 		long layoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "layoutSetPrototypeId");
@@ -551,12 +677,12 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AddGroupMVCActionCommand.class);
+
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-	@Reference
-	private GroupExceptionRequestHandler _groupExceptionRequestHandler;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
@@ -584,6 +710,9 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Reference
+	private Sites _sites;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

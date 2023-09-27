@@ -1,0 +1,199 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+
+		task ("Given a new virtual instance is created") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "liferay.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@liferay.com");
+		}
+	}
+
+	tearDown {
+		HeadlessPortalInstanceAPI.cleanAllPortalInstances();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanCreateAPIApplicationWithUIOnVirtualInstance {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I create a new API application through Control Panel > Object > API Builder") {
+			APIBuilderUI.createAPIApplication(title = "test");
+		}
+
+		task ("Then the new API application is created successfully") {
+			Alert.viewSuccessMessageText(successMessage = "New API Application was created.");
+
+			AssertTextEquals(
+				locator1 = "APIBuilder#ENTER_TITLE",
+				value1 = "test");
+		}
+	}
+
+	@priority = 4
+	test CanCreatePublishedAPIApplicationWithAPIOnVirtualInstance {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When with postAPIApplication to create a published API application") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "test",
+				status = "unpublished",
+				title = "test",
+				virtualHost = "www.able.com");
+		}
+
+		task ("Then the API application is created successfully") {
+			var title = JSONUtil.getWithJSONPath(${response}, "$..title");
+
+			TestUtils.assertEquals(
+				actual = ${title},
+				expected = "test");
+		}
+
+		task ("And Then I can see the newly created API in API Builder") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+
+			AssertElementPresent(
+				key_name = "test",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 5
+	test CanLoadHeadlessBuilderAPIsOnVirtualInstance {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I navigate to /o/api in the virtual instance") {
+			APIExplorer.navigateToOpenAPI(virtualHost = "www.able.com");
+		}
+
+		task ("Then the headless-builder/applications, headless-builder/endpoints, headless-build/filters, headless-builder/properties, headless-builder/schemas, headless-builder/shemas and headless-builder/sorts are loaded without errors") {
+			for (var applicationName : list "applications,endpoints,filters,properties,schemas,sorts") {
+				APIExplorer.navigateToOpenAPI(
+					api = "headless-builder",
+					version = ${applicationName},
+					virtualHost = "www.able.com");
+
+				AssertTextEquals(
+					locator1 = "Select#HEADLESS_SERVERS",
+					value1 = "http://www.able.com:8080/o/headless-builder/${applicationName}/");
+
+				AssertConsoleTextNotPresent(value1 = "Failed to load API definition");
+			}
+		}
+	}
+
+	@description = "Ignored due to LPS-190834"
+	@ignore = "true"
+	@priority = 5
+	test CannotCreateSchemaWithAPIIdOfOtherInstance {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given create an API application on default instance") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "test",
+				status = "published",
+				title = "test");
+		}
+
+		task ("When with postAPISchema and id of API application on default instance to create schema on virtual instance") {
+			var applicationId = JSONUtil.getWithJSONPath(${response}, "$.id");
+
+			var response = SchemaAPI.createAPISchema(
+				apiApplicationId = ${applicationId},
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "mySchema",
+				virtualHost = "www.able.com");
+		}
+
+		task ("Then I can receive error message") {
+			TestUtils.assertEquals(
+				actual = ${response},
+				expected = "An API schema must be related to an API application.");
+		}
+
+		task ("And Then the schema is not being created") {
+			var response = SchemaAPI.getAPISchemas(virtualHost = "www.able.com");
+
+			var totalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${totalCount},
+				expected = 0);
+		}
+	}
+
+	@priority = 4
+	test CanPublishAPIApplicationWithUIOnVirtualInstance {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I create a new API application through Control Panel > Object > API Builder") {
+			APIBuilderUI.createAPIApplication(title = "test");
+		}
+
+		task ("When I click Change Publication Status to publish the API application") {
+			APIBuilderUI.changePublicationStatus(key_title = "test");
+		}
+
+		task ("Then the new API applicatin is published successfully without internal server error") {
+			Alert.viewSuccessMessageText(successMessage = "API Application was published.");
+
+			AssertConsoleTextNotPresent(value1 = "Internal Server Error");
+		}
+	}
+
+	@priority = 5
+	test CanSeeAPIObjectDefinitionsOnVirtualInstance {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I navigate to Control Panel > Objects") {
+			ObjectAdmin.openObjectAdmin(baseURL = "http://www.able.com:8080");
+		}
+
+		task ("Then API Application, API Endpoint, API Filter, API Property, API Schema and API Sort are present") {
+			for (var objectName : list "API Application,API Endpoint,API Filter,API Property,API Schema,API Sort") {
+				AssertElementPresent(
+					key_labelName = ${objectName},
+					locator1 = "CreateObject#OBJECT_NAME");
+			}
+		}
+	}
+
+}

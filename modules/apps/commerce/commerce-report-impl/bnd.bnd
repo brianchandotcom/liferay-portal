@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Report Implementation
 Bundle-SymbolicName: com.liferay.commerce.report.impl
-Bundle-Version: 1.0.21
+Bundle-Version: 1.0.24
 DynamicImport-Package: *
 Import-Package:\
 	!antlr.*,\
@@ -21,8 +21,6 @@ Import-Package:\
 	!com.graphbuilder.geom.*,\
 	\
 	!com.keypoint.*,\
-	\
-	!com.lowagie.toolbox.*,\
 	\
 	!com.thoughtworks.*,\
 	\

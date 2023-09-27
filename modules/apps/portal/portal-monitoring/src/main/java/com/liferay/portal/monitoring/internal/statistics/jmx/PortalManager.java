@@ -1,24 +1,15 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.monitoring.internal.statistics.jmx;
 
 import com.liferay.portal.kernel.monitoring.MonitoringException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.monitoring.internal.statistics.SummaryStatistics;
 import com.liferay.portal.monitoring.internal.statistics.portal.CompanyStatistics;
-import com.liferay.portal.monitoring.internal.statistics.portal.ServerStatistics;
-import com.liferay.portal.monitoring.internal.statistics.portal.ServerSummaryStatistics;
+import com.liferay.portal.monitoring.internal.statistics.portal.ServerStatisticsHelper;
 
 import java.util.Set;
 
@@ -48,7 +39,7 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 	}
 
 	@Override
-	public long getAverageTime() {
+	public long getAverageTime() throws MonitoringException {
 		return _serverSummaryStatistics.getAverageTime();
 	}
 
@@ -68,13 +59,13 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 
 	@Override
 	public long[] getCompanyIds() {
-		Set<Long> companyIds = _serverStatistics.getCompanyIds();
+		Set<Long> companyIds = _serverStatisticsHelper.getCompanyIds();
 
 		return ArrayUtil.toArray(companyIds.toArray(new Long[0]));
 	}
 
 	@Override
-	public long getErrorCount() {
+	public long getErrorCount() throws MonitoringException {
 		return _serverSummaryStatistics.getErrorCount();
 	}
 
@@ -93,7 +84,7 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 	}
 
 	@Override
-	public long getMaxTime() {
+	public long getMaxTime() throws MonitoringException {
 		return _serverSummaryStatistics.getMaxTime();
 	}
 
@@ -108,7 +99,7 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 	}
 
 	@Override
-	public long getMinTime() {
+	public long getMinTime() throws MonitoringException {
 		return _serverSummaryStatistics.getMinTime();
 	}
 
@@ -123,7 +114,7 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 	}
 
 	@Override
-	public long getRequestCount() {
+	public long getRequestCount() throws MonitoringException {
 		return _serverSummaryStatistics.getRequestCount();
 	}
 
@@ -143,20 +134,20 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 
 	public long getStartTime(long companyId) throws MonitoringException {
 		CompanyStatistics companyStatistics =
-			_serverStatistics.getCompanyStatistics(companyId);
+			_serverStatisticsHelper.getCompanyStatistics(companyId);
 
 		return companyStatistics.getStartTime();
 	}
 
 	public long getStartTime(String webId) throws MonitoringException {
 		CompanyStatistics companyStatistics =
-			_serverStatistics.getCompanyStatistics(webId);
+			_serverStatisticsHelper.getCompanyStatistics(webId);
 
 		return companyStatistics.getStartTime();
 	}
 
 	@Override
-	public long getSuccessCount() {
+	public long getSuccessCount() throws MonitoringException {
 		return _serverSummaryStatistics.getSuccessCount();
 	}
 
@@ -175,7 +166,7 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 	}
 
 	@Override
-	public long getTimeoutCount() {
+	public long getTimeoutCount() throws MonitoringException {
 		return _serverSummaryStatistics.getTimeoutCount();
 	}
 
@@ -196,7 +187,7 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 	@Override
 	public long getUptime(long companyId) throws MonitoringException {
 		CompanyStatistics companyStatistics =
-			_serverStatistics.getCompanyStatistics(companyId);
+			_serverStatisticsHelper.getCompanyStatistics(companyId);
 
 		return companyStatistics.getUptime();
 	}
@@ -204,37 +195,39 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 	@Override
 	public long getUptime(String webId) throws MonitoringException {
 		CompanyStatistics companyStatistics =
-			_serverStatistics.getCompanyStatistics(webId);
+			_serverStatisticsHelper.getCompanyStatistics(webId);
 
 		return companyStatistics.getUptime();
 	}
 
 	@Override
 	public String[] getWebIds() {
-		Set<String> webIds = _serverStatistics.getWebIds();
+		Set<String> webIds = _serverStatisticsHelper.getWebIds();
 
 		return webIds.toArray(new String[0]);
 	}
 
 	@Override
 	public void reset() {
-		_serverStatistics.reset();
+		_serverStatisticsHelper.reset();
 	}
 
 	@Override
 	public void reset(long companyId) {
-		_serverStatistics.reset(companyId);
+		_serverStatisticsHelper.reset(companyId);
 	}
 
 	@Override
 	public void reset(String webId) {
-		_serverStatistics.reset(webId);
+		_serverStatisticsHelper.reset(webId);
 	}
 
 	@Reference
-	private ServerStatistics _serverStatistics;
+	private ServerStatisticsHelper _serverStatisticsHelper;
 
-	@Reference
-	private ServerSummaryStatistics _serverSummaryStatistics;
+	@Reference(
+		target = "(component.name=com.liferay.portal.monitoring.internal.statistics.portal.ServerSummaryStatistics)"
+	)
+	private SummaryStatistics _serverSummaryStatistics;
 
 }

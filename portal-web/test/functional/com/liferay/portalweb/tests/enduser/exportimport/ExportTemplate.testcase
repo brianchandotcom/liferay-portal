@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "Verify is possible search an export template."
-	@priority = 4
+	@priority = 3
 	test SearchExportTemplate {
 		task ("Given: An export template is created") {
 			LAR.addExportTemplateCP(

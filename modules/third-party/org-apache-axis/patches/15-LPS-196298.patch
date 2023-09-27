@@ -1,0 +1,46 @@
+diff --git a/org/apache/axis/client/ServiceFactory.java b/org/apache/axis/client/ServiceFactory.java
+index 33054a5..ee0aa18 100644
+--- a/org/apache/axis/client/ServiceFactory.java
++++ b/org/apache/axis/client/ServiceFactory.java
+@@ -106,9 +106,24 @@ public class ServiceFactory extends javax.xml.rpc.ServiceFactory
+         
+         if (context != null) {
+             String name = (String)environment.get("jndiName");
+-            if (name == null) {
+-                name = "axisServiceName";
+-            }
++
++			if (name == null) {
++				name = "axisServiceName";
++			}
++			else {
++				String nameUpperCase = name.toUpperCase();
++
++				if ((nameUpperCase.indexOf("LDAP") != -1) ||
++					(nameUpperCase.indexOf("RMI") != -1) ||
++					(nameUpperCase.indexOf("JMS") != -1) ||
++					(nameUpperCase.indexOf("JMX") != -1) ||
++					(nameUpperCase.indexOf("JRMP") != -1) ||
++					(nameUpperCase.indexOf("JAVA") != -1) ||
++					(nameUpperCase.indexOf("DNS") != -1)) {
++
++					return null;
++				}
++			}
+ 
+             // We've got JNDI, so try to find an AxisClient at the
+             // specified name.
+@@ -120,6 +135,7 @@ public class ServiceFactory extends javax.xml.rpc.ServiceFactory
+                     context.bind(name, service);
+                 } catch (NamingException e1) {
+                     // !!! Couldn't do it, what should we do here?
++                    return null;
+                 }
+             }
+         } else {
+@@ -323,3 +339,4 @@ public class ServiceFactory extends javax.xml.rpc.ServiceFactory
+         
+     }
+ }
++/* @generated */
+\ No newline at end of file

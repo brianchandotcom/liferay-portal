@@ -43,6 +43,7 @@ definition {
 	@refactordone
 	test CanViewNewSiteMember {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 

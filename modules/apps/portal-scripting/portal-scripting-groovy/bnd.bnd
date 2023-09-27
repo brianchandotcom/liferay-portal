@@ -1,14 +1,25 @@
 Bundle-Name: Liferay Portal Scripting Groovy
 Bundle-SymbolicName: com.liferay.portal.scripting.groovy
-Bundle-Version: 6.0.12
+Bundle-Version: 6.0.13
 Import-Package:\
+	!com.thoughtworks.qdox.*,\
 	!com.thoughtworks.xstream.*,\
+	\
+	!groovyjarjarasm.asm.tree.analysis.*,\
 	\
 	!javax.swing.*,\
 	\
+	!jline.*,\
+	\
+	!junit.*,\
+	\
+	!org.apache.bsf.*,\
 	!org.apache.commons.cli.*,\
 	!org.apache.ivy.*,\
+	!org.apache.tools.*,\
 	\
 	!org.fusesource.jansi.*,\
+	\
+	!org.junit.*,\
 	\
 	*

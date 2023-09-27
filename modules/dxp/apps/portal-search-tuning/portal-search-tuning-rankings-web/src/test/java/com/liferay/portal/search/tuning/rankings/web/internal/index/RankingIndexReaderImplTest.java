@@ -1,25 +1,18 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -63,13 +56,19 @@ public class RankingIndexReaderImplTest extends BaseRankingsIndexTestCase {
 		Assert.assertEquals(
 			_setUpDocumentToRankingTranslator(),
 			_rankingIndexReaderImpl.fetch(
-				Mockito.mock(RankingIndexName.class), "id"));
+				"id", Mockito.mock(RankingIndexName.class)));
 	}
 
 	@Test
-	public void testFetchByQueryString() {
-		_setUpDocumentToRankingTranslator();
+	public void testFetchBlankQueryString() {
+		Assert.assertNull(
+			_rankingIndexReaderImpl.fetch(
+				null, StringPool.BLANK, Mockito.mock(RankingIndexName.class),
+				null));
+	}
 
+	@Test
+	public void testFetchQueryString() {
 		setUpQueries();
 		setUpSearchEngineAdapter(
 			setUpGetDocumentResponseGetDocument(
@@ -78,17 +77,12 @@ public class RankingIndexReaderImplTest extends BaseRankingsIndexTestCase {
 		setUpSearchEngineAdapter(
 			setUpSearchHits(Arrays.asList("queryStrings")));
 
-		Assert.assertEquals(
-			_setUpDocumentToRankingTranslator(),
-			_rankingIndexReaderImpl.fetchByQueryString(
-				Mockito.mock(RankingIndexName.class), "queryString"));
-	}
+		Ranking ranking = _setUpDocumentToRankingTranslator();
 
-	@Test
-	public void testFetchByQueryStringBlankQueryString() {
-		Assert.assertNull(
-			_rankingIndexReaderImpl.fetchByQueryString(
-				Mockito.mock(RankingIndexName.class), ""));
+		List<Ranking> rankings = _rankingIndexReaderImpl.fetch(
+			null, "queryString", Mockito.mock(RankingIndexName.class), null);
+
+		Assert.assertEquals(ranking, rankings.get(0));
 	}
 
 	@Test

@@ -1,0 +1,723 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
+
+	setUp {
+		var portalURL = PropsUtil.get("portal.url");
+
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		HeadlessSite.addSite(siteName = "Test Site Name");
+
+		task ("Given a page created. ") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Data Set Test Page");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			DataSetAdmin.deleteAllDataSetEntries();
+		}
+	}
+
+	@description = "LPS-172403. Smoke test to check if it is possible to add a view to the fragment"
+	@priority = 5
+	test CanAddDataSetView {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given creating a Data Set entry, view and fields") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Countries",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Full countries View",
+				key_fieldList = "id,name,number",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("When the user accesses the edit page And add a dataset fragment") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Data Set Test Page",
+				siteName = "test-site-name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And Select Full countries View and Publish page") {
+			DataSetFragment.addDataSetView(dataSetViewName = "Full countries View");
+
+			SelectFrameTop();
+
+			Button.clickPublish();
+		}
+
+		task ("Then Confirm the names of the columns are the same for the fields.") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+
+			DataSetFragment.viewColumnTitle(key_colunmTitleList = "id,name,number");
+		}
+	}
+
+	@description = "LPS-172403. Assert if 'Data Set' can be categorized as 'Data Set'"
+	@priority = 3
+	test CanBeCategorizedInAddWidgetList {
+		task ("And When on Content Page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Data Set Test Page",
+				siteName = "test-site-name");
+		}
+
+		task ("And When access add widget list") {
+			Type(
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
+				value1 = "Data Set");
+		}
+
+		task ("Then Data Set is available under category 'Content Display'") {
+			AssertTextEquals(
+				key_collectionName = "Content Display",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL",
+				value1 = "Content Display");
+
+			AssertTextEquals(
+				key_fragmentName = "Data Set",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_RESULTS",
+				value1 = "Data Set");
+		}
+	}
+
+	@description = "LPS-172403. Smoke test to check if it is possible cancel change the view "
+	@priority = 4
+	test CanCancelChangeDataSetView {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given creating a Data Set entry, view and fields") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Countries",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Full countries View",
+				key_fieldList = "id,name,number",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("Create a second view with diferents fields") {
+			DataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Countries");
+
+			DataSetAdmin.createDataSetView(
+				description = "Abbreviations view Description",
+				key_name = "Abbreviations view");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Countries",
+				key_viewName = "Abbreviations view");
+
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			DataSetAdmin.addFields(key_fieldList = "name,a3,a2");
+		}
+
+		task ("When the user accesses the edit page And add a dataset fragment") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Data Set Test Page",
+				siteName = "test-site-name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And Select Full countries View and Publish page") {
+			DataSetFragment.addDataSetView(dataSetViewName = "Full countries View");
+
+			SelectFrameTop();
+
+			Button.clickPublish();
+		}
+
+		task ("And accesses the edit page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Data Set Test Page",
+				siteName = "test-site-name");
+		}
+
+		task ("And Change de View for Dataset view Test") {
+			PageEditor.gotoConfiguration(fragmentName = "Data Set");
+
+			Click.javaScriptClick(locator1 = "DataSet#SELECT_DATA_SET_VIEW");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "Abbreviations view",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+
+		task ("And clicking back button on the top of the page") {
+			Button.clickCancel();
+		}
+
+		task ("And Publish page") {
+			SelectFrameTop();
+
+			Button.clickPublish();
+		}
+
+		task ("Then Confirm that the column data matches the fields of the Full countries View") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+
+			DataSetFragment.viewColumnTitle(key_colunmTitleList = "id,name,number");
+		}
+	}
+
+	@description = "LPS-172403. Smoke test to check if it is possible to change the view "
+	@priority = 5
+	test CanChangeDataSetView {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given creating a Data Set entry, view and fields") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Countries",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Full countries View",
+				key_fieldList = "id,name,number",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("Create a second view with diferents fields") {
+			DataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Countries");
+
+			DataSetAdmin.createDataSetView(
+				description = "Abbreviations view Description",
+				key_name = "Abbreviations view");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Countries",
+				key_viewName = "Abbreviations view");
+
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			DataSetAdmin.addFields(key_fieldList = "name,a3,a2");
+		}
+
+		task ("When the user accesses the edit page And add a dataset fragment") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Data Set Test Page",
+				siteName = "test-site-name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And Select Full countries View and Publish page") {
+			DataSetFragment.addDataSetView(dataSetViewName = "Full countries View");
+
+			SelectFrameTop();
+
+			Button.clickPublish();
+		}
+
+		task ("And accesses the edit page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Data Set Test Page",
+				siteName = "test-site-name");
+		}
+
+		task ("And Change de View for Abbreviations view And Publish page") {
+			DataSetFragment.addDataSetView(dataSetViewName = "Abbreviations view");
+
+			SelectFrameTop();
+
+			Button.clickPublish();
+		}
+
+		task ("Then Confirm that the column data matches the fields of the Abbreviations view") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+
+			DataSetFragment.viewColumnTitle(key_colunmTitleList = "name,a3,a2");
+		}
+	}
+
+	@description = "LPS-172403. Smoke test to verify Data Set Fragment can be removed"
+	@priority = 5
+	test CanRemoveFragment {
+		task ("Given a portlet on public page") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And the Dataset fragment is added to the page created") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("When delete Data Set Fragment on Test Page") {
+			PageEditor.removeFragment(fragmentName = "Data Set");
+		}
+
+		task ("Then Data Set Fragment is not present on page") {
+			PageEditor.viewFragmentNotPresent(fragmentName = "Data Set");
+		}
+	}
+
+	@description = "LPS-190724. Confirm that the is possible to interact Web Content and Data Set fragment using StructuredContent schema"
+	@priority = 5
+	test CanUseStructuredContentSchema {
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given a datasets entries") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Web contents",
+				restApplication = "/headless-delivery/v1.0",
+				restEndpoint = "/v1.0/sites/{siteId}/structured-contents",
+				restSchema = "StructuredContent");
+
+			Refresh();
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.goToViews(dataSetName = "Web contents");
+
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "View Test");
+		}
+
+		task ("And the user adds fields to the view") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Web contents",
+				key_viewName = "View Test");
+
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			DataSetAdmin.addFields(key_fieldList = "title,siteId");
+		}
+
+		task ("When the user creates a new web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("And add a title in Portuguese") {
+			PortletEntry.changeLocale(locale = "pt-BR");
+
+			WebContent.addCP(webContentTitle = "Web Content Title pt-BR");
+		}
+
+		task ("And Publish it") {
+			PortletEntry.publish();
+		}
+
+		task ("When go to new content page created") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+		}
+
+		task ("And adds the data set fragment portlet") {
+			Click(locator1 = "ClientExtension#PENCIL_ICON_IN_CONFIG_ICON_POSITION");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And adds the View Test view to the data set fragment portlet") {
+			DataSetFragment.addDataSetView(dataSetViewName = "View Test");
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then confirm the title of the web content created in the fragment") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+
+			AssertElementPresent(
+				key_color = "Web Content Title",
+				key_field = "title",
+				locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
+		}
+
+		task ("When the page language is changed") {
+			Navigator.ensureLocaleURL(locale = "pt");
+		}
+
+		task ("Then confirm that the web content title shown has been translated") {
+			AssertElementPresent(
+				key_color = "Web Content Title pt-BR",
+				key_field = "title",
+				locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
+		}
+	}
+
+	@description = "LPS-190724. Confirm that the is possible to interact Roles and Data Set fragment using StructuredContent user schema"
+	@priority = 5
+	test CanUseStructuredContentUserSchema {
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given a datasets entries") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Roles",
+				restApplication = "/headless-admin-user/v1.0",
+				restEndpoint = "/v1.0/roles",
+				restSchema = "Role");
+
+			Refresh();
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.goToViews(dataSetName = "Roles");
+
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "View Test");
+		}
+
+		task ("And the user adds fields to the view") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Roles",
+				key_viewName = "View Test");
+
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			DataSetAdmin.addFields(key_fieldList = "name,id");
+		}
+
+		task ("When the user creates a new Role and add a title in Portuguese") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			LexiconEntry.gotoAdd();
+
+			AssertTextEquals(
+				locator1 = "Portlet#HEADER",
+				value1 = "New Role");
+
+			PortletEntry.inputTitle(title = "Role Title");
+
+			PortletEntry.changeLocale(
+				fieldName = "Title",
+				locale = "pt-BR");
+
+			PortletEntry.inputTitle(title = "Role Title pt-BR");
+
+			AssertClick(
+				locator1 = "Button#SUBMIT",
+				value1 = "Save");
+		}
+
+		task ("When go to new content page created") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+		}
+
+		task ("And adds the data set fragment portlet") {
+			Click(locator1 = "ClientExtension#PENCIL_ICON_IN_CONFIG_ICON_POSITION");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And adds the View Test view to the data set fragment portlet") {
+			DataSetFragment.addDataSetView(dataSetViewName = "View Test");
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then confirm the title of the Role created in the fragment") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+
+			AssertElementPresent(
+				key_color = "Role Title",
+				key_field = "name",
+				locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
+		}
+
+		task ("When the page language is changed") {
+			Navigator.ensureLocaleURL(locale = "pt");
+		}
+
+		task ("Then confirm that the Role title shown has been translated") {
+			AssertElementPresent(
+				key_color = "Role Title pt-BR",
+				key_field = "name",
+				locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
+		}
+	}
+
+	@description = "LPS-190724. Confirm that the is possible to interact Vocabulary and Data Set fragment using TaxonomyVocabulary schema"
+	@priority = 5
+	test CanUseTaxonomyCategorySchema {
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given a datasets entries") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Vocabulary",
+				restApplication = "/headless-admin-taxonomy/v1.0",
+				restEndpoint = "/v1.0/sites/{siteId}/taxonomy-vocabularies",
+				restSchema = "TaxonomyVocabulary");
+
+			Refresh();
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.goToViews(dataSetName = "Vocabulary");
+
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "View Test");
+		}
+
+		task ("And the user adds fields to the view") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Vocabulary",
+				key_viewName = "View Test");
+
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			DataSetAdmin.addFields(key_fieldList = "name,siteId");
+		}
+
+		task ("When the user creates a new vocabulary and add a title in Portuguese") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addCP(
+				locale2 = "pt-BR",
+				localization2Name = "Vocabulary Title pt-BR",
+				vocabularyName = "Vocabulary Title");
+		}
+
+		task ("When go to new content page created") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+		}
+
+		task ("And adds the data set fragment portlet") {
+			Click(locator1 = "ClientExtension#PENCIL_ICON_IN_CONFIG_ICON_POSITION");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And adds the View Test view to the data set fragment portlet") {
+			DataSetFragment.addDataSetView(dataSetViewName = "View Test");
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then confirm the title of the vocabulary created in the fragment") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+
+			AssertElementPresent(
+				key_color = "Vocabulary Title",
+				key_field = "name",
+				locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
+		}
+
+		task ("When the page language is changed") {
+			Navigator.ensureLocaleURL(locale = "pt");
+		}
+
+		task ("Then confirm that the vocabulary title shown has been translated") {
+			AssertElementPresent(
+				key_color = "Vocabulary Title pt-BR",
+				key_field = "name",
+				locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
+		}
+	}
+
+	@description = "LPS-172403. Confirm empty message when no view was created"
+	@priority = 4
+	test EmptyMessageDisplayedWhenNoViewCreated {
+		task ("When add a dataset fragment") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("Then Confirm that the portlet shows the message: Select a dataset view.") {
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Data Set",
+				messageInfo = "Select a data set view.");
+		}
+
+		task ("When clicking on Select Data Set View") {
+			PageEditor.gotoConfiguration(fragmentName = "Data Set");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+		}
+
+		task ("Then confirm that the Dataset view modal is opened") {
+			AssertTextEquals(
+				locator1 = "DataEngineModal#MODAL_TITLE",
+				value1 = "Select");
+		}
+
+		task ("And confirm that there is no created views") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
+	}
+
+	@description = "LPS-172403. Confirm that the select view button changes to the name of the selected view"
+	@priority = 4
+	test NameOfViewIsDisplayedOnButton {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given creating a Data Set entry, view and fields") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Countries",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Full countries View",
+				key_fieldList = "id,name,number",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("When the user accesses the edit page And add a dataset fragment") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Data Set Test Page",
+				siteName = "test-site-name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And Select Full countries View ") {
+			DataSetFragment.addDataSetView(dataSetViewName = "Full countries View");
+		}
+
+		task ("Then Confirm that the select view button changes to the name of the selected view") {
+			SelectFrameTop();
+
+			AssertAttributeValue(
+				attribute1 = "title",
+				locator1 = "DataSet#SELECT_DATA_SET_VIEW",
+				value1 = "Full countries View");
+		}
+	}
+
+	@description = "LPS-172403. Smoke test to verify options relates to Data Set Fragment"
+	@priority = 5
+	test ViewInfoFields {
+		task ("When viewing the configuration menu of the portlet") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("Then configuration model is present") {
+			PageEditor.gotoConfiguration(fragmentName = "Data Set");
+		}
+
+		task ("And assert that General, Styles and Advanced tabs are present.") {
+			Navigator.viewNavTab(navTab = "General");
+
+			Navigator.viewNavTab(navTab = "Styles");
+
+			Navigator.viewNavTab(navTab = "Advanced");
+		}
+
+		task ("And Confirm the button Select Data Set View is displayed") {
+			AssertElementPresent(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			AssertElementPresent(locator1 = "Button#PLUS");
+		}
+	}
+
+}

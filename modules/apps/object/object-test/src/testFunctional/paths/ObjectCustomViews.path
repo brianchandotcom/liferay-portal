@@ -217,7 +217,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_DROPDOWN_MENU_ON_MODAL_DEFAULT_SORT</td>
-		<td>//div[contains(@class,'dropdown-menu show')]</td>
+		<td>//div[@class='dropdown-menu autocomplete-expand show']</td>
 		<td></td>
 	</tr>
 	<tr>

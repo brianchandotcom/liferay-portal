@@ -1,22 +1,16 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -29,10 +23,14 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -69,14 +67,34 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _checkDestinationRepository(long repositoryId)
+	private void _checkDestinationGroup(
+			Group group, long[] groupIds, long sourceGroupId)
 		throws PortalException {
 
-		Group group = _groupLocalService.fetchGroup(repositoryId);
-
-		if ((group != null) && group.isStaged() && !group.isStagingGroup()) {
+		if (group.isStaged() && !group.isStagingGroup()) {
 			throw new PortalException(
 				"cannot-copy-folders-to-the-live-version-of-a-group");
+		}
+
+		Group sourceGroup = _groupLocalService.getGroup(sourceGroupId);
+
+		if (group.isDepot() ^ sourceGroup.isDepot()) {
+			long[] connectedGroupIds = groupIds;
+
+			if (group.isDepot()) {
+				connectedGroupIds =
+					_siteConnectedGroupGroupProvider.
+						getCurrentAndAncestorSiteAndDepotGroupIds(
+							sourceGroup.getGroupId());
+			}
+
+			if (ArrayUtil.isEmpty(connectedGroupIds) ||
+				!ArrayUtil.contains(connectedGroupIds, sourceGroupId)) {
+
+				throw new PortalException(
+					"the-item-is-not-copied-because-the-site-and-asset-" +
+						"library-are-not-connected");
+			}
 		}
 	}
 
@@ -97,11 +115,20 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "destinationParentFolderId");
 
 		try {
-			_checkDestinationRepository(destinationRepositoryId);
+			Group group = _groupLocalService.getGroup(destinationRepositoryId);
+
+			long[] groupIds =
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						group.getGroupId());
+
+			_checkDestinationGroup(group, groupIds, sourceRepositoryId);
 
 			_dlAppService.copyFolder(
 				sourceRepositoryId, sourceFolderId, destinationRepositoryId,
 				destinationParentFolderId,
+				_getFileEntryTypeIds(group.getGroupId(), sourceFolderId),
+				groupIds,
 				ServiceContextFactory.getInstance(
 					DLFolder.class.getName(), actionRequest));
 
@@ -120,6 +147,23 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private Map<Long, Long> _getFileEntryTypeIds(long groupId, long folderId)
+		throws PortalException {
+
+		long[] groupIds =
+			_siteConnectedGroupGroupProvider.
+				getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return new HashMap<>();
+		}
+
+		DLFolder folder = _dlFolderService.getFolder(folderId);
+
+		return _dlFileEntryLocalService.getFileEntryTypeIds(
+			folder.getCompanyId(), groupIds, folder.getTreePath());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CopyFolderMVCActionCommand.class);
 
@@ -127,9 +171,18 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 	private DLAppService _dlAppService;
 
 	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DLFolderService _dlFolderService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 }

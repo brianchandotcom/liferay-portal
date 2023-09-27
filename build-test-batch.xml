@@ -7,6 +7,14 @@
 		<isset property="env.AXIS_VARIABLE" />
 	</condition>
 
+	<math
+		datatype="int"
+		operand1="${test.class.timeout.minutes}"
+		operand2="60"
+		operation="*"
+		result="test.class.timeout.seconds"
+	/>
+
 	<macrodef name="check-jenkins-console">
 		<sequential>
 			<if>
@@ -725,6 +733,98 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-test-project-information">
+		<attribute default="" name="test.class" />
+
+		<sequential>
+			<var name="test.name" unset="true" />
+			<var name="test.project.name" unset="true" />
+			<var name="test.project.results.dir" unset="true" />
+
+			<local name="test.class.file" />
+			<local name="test.class.file.path" />
+			<local name="test.class.java" />
+
+			<propertyregex
+				casesensitive="true"
+				input="@{test.class}"
+				property="test.class.java"
+				regexp="\.class"
+				replace="\.java"
+			/>
+
+			<first id="test.class.file">
+				<fileset
+					dir="modules"
+					excludes="**/node_modules/**"
+					includes="**/${test.class.java}"
+				/>
+			</first>
+
+			<property name="test.class.file.path" value="${toString:test.class.file}" />
+
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+					import java.util.Properties;
+					import java.util.regex.Matcher;
+					import java.util.regex.Pattern;
+
+					public static String getTestName(String testClassFilePath) {
+						Pattern pattern = Pattern.compile("/([^/]+)\\.java");
+
+						Matcher matcher = pattern.matcher(testClassFilePath);
+
+						if (matcher.find()) {
+							return matcher.group(1);
+						}
+
+						return null;
+					}
+
+					public static String getTestProjectName(String testClassFilePath) {
+						String projectDir = project.getProperty("project.dir");
+
+						String regex = projectDir + "/modules(\\/+.+)/src/test";
+
+						Pattern pattern = Pattern.compile(regex);
+
+						Matcher matcher = pattern.matcher(testClassFilePath);
+
+						if (matcher.find()) {
+							String testProjectName = matcher.group(1);
+
+							return testProjectName.replaceAll("/", ":");
+						}
+
+						return null;
+					}
+
+					public static String getTestProjectResultsDir(String testClassFilePath) {
+						String testProjectName = getTestProjectName(testClassFilePath);
+
+						File testProjectResultsDir = new File(project.getProperty("project.dir") + "/modules/" + testProjectName.replaceAll(":", "/") + "/test-results/");
+
+						return JenkinsResultsParserUtil.getCanonicalPath(testProjectResultsDir);
+					}
+
+					String testClassFilePath = project.getProperty("test.class.file.path");
+
+					String testProjectName = getTestProjectName(testClassFilePath);
+
+					if (testProjectName == null) {
+						throw new Exception("Unable to find corresponding project name for " + testClassFilePath + ".");
+					}
+
+					project.setProperty("test.name", getTestName(testClassFilePath));
+					project.setProperty("test.project.name", testProjectName);
+					project.setProperty("test.project.results.dir", getTestProjectResultsDir(testClassFilePath));
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="merge-test-results">
 		<sequential>
 			<antcall target="merge-test-results" />
@@ -1251,20 +1351,27 @@ app.server.type=@{app.server.type}]]></echo>
 								<echo file="${app.server.classes.portal.dir}/system-ext.properties">log.sanitizer.enabled=false</echo>
 							</sequential>
 
-							<if>
-								<resourcecount count="0" when="gt">
+							<sequential>
+								<for param="lfrbuild.file">
 									<fileset
 										dir="${project.dir}/modules"
 										includes="**/.lfrbuild-portal-deprecated"
 									/>
-								</resourcecount>
-								<then>
-									<gradle-execute dir="${project.dir}/modules" task="deploy">
-										<arg value="--parallel" />
-										<arg value="-Ddeploy.only.profile=portal-deprecated" />
-									</gradle-execute>
-								</then>
-							</if>
+									<sequential>
+										<local name="lfrbuild.dir" />
+
+										<antelope:stringutil property="lfrbuild.dir" string="@{lfrbuild.file}">
+											<antelope:replace regex="\\" replacement="/" />
+										</antelope:stringutil>
+
+										<antelope:stringutil property="lfrbuild.dir" string="${lfrbuild.dir}">
+											<antelope:replace regex="(.+)\/\.lfrbuild-portal-deprecated" replacement="$1" />
+										</antelope:stringutil>
+
+										<gradle-execute dir="${lfrbuild.dir}" task="deploy" />
+									</sequential>
+								</for>
+							</sequential>
 
 							<trycatch>
 								<try>
@@ -1308,20 +1415,27 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
-							<if>
-								<resourcecount count="0" when="gt">
+							<sequential>
+								<for param="lfrbuild.file">
 									<fileset
 										dir="${project.dir}/modules"
 										includes="**/.lfrbuild-portal-deprecated"
 									/>
-								</resourcecount>
-								<then>
-									<gradle-execute dir="${project.dir}/modules" task="deploy">
-										<arg value="--parallel" />
-										<arg value="-Ddeploy.only.profile=portal-deprecated" />
-									</gradle-execute>
-								</then>
-							</if>
+									<sequential>
+										<local name="lfrbuild.dir" />
+
+										<antelope:stringutil property="lfrbuild.dir" string="@{lfrbuild.file}">
+											<antelope:replace regex="\\" replacement="/" />
+										</antelope:stringutil>
+
+										<antelope:stringutil property="lfrbuild.dir" string="${lfrbuild.dir}">
+											<antelope:replace regex="(.+)\/\.lfrbuild-portal-deprecated" replacement="$1" />
+										</antelope:stringutil>
+
+										<gradle-execute dir="${lfrbuild.dir}" task="deploy" />
+									</sequential>
+								</for>
+							</sequential>
 
 							<for param="app.dir">
 								<path>
@@ -2395,11 +2509,15 @@ log.sanitizer.enabled=false</echo>
 
 							<lstopwatch action="start" name="test.execution.duration" />
 
-							<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="testIntegration">
-								<arg value="--continue" />
-								<arg value="-Dbuild.exclude.ant.plugin=true" />
-								<arg value="-Dtest.class.group.index=${axis.variable}" />
-							</gradle-execute>
+							<for list="${test.class.group}" param="test.class">
+								<sequential>
+									<run-modules-junit-test test.class="@{test.class}" test.task="testIntegration">
+										<arg value="--continue" />
+										<arg value="-Dbuild.exclude.ant.plugin=true" />
+										<arg value="-Dtest.class.group.index=${axis.variable}" />
+									</run-modules-junit-test>
+								</sequential>
+							</for>
 
 							<lstopwatch action="total" name="test.execution.duration" />
 
@@ -2570,6 +2688,86 @@ log.sanitizer.enabled=false</echo>
 					<stop-suite-search-engine />
 				</test-tear-down>
 			</run-batch-test>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-modules-junit-test">
+		<attribute name="test.class" />
+		<attribute name="test.task" />
+
+		<element implicit="true" name="args" optional="true" />
+
+		<sequential>
+			<var name="test.timeout" unset="true" />
+
+			<trycatch property="test.failure.message">
+				<try>
+					<get-test-project-information test.class="@{test.class}" />
+
+					<limit failonerror="true" maxwait="${test.class.timeout.seconds}" property="test.timeout" value="FAILURE: ${test.project.name}:@{test.task} --tests ${test.name} failed to complete in ${test.class.timeout.minutes} minutes">
+						<gradle-execute dir="modules" task="${test.project.name}:@{test.task}" test.name="${test.name}">
+							<args />
+						</gradle-execute>
+					</limit>
+
+					<move
+						flatten="true"
+						todir="modules/test-results"
+					>
+						<fileset
+							dir="${test.project.results.dir}"
+							includes="**/TEST-*.xml"
+						/>
+					</move>
+				</try>
+				<catch>
+					<var name="junit.failure.message" value="" />
+
+					<if>
+						<isset property="test.timeout" />
+						<then>
+							<var name="junit.failure.message" value="${test.timeout}${line.separator}" />
+						</then>
+					</if>
+
+					<var name="junit.failure.message" value="${junit.failure.message}${test.failure.message}" />
+
+					<echo>${junit.failure.message}</echo>
+
+					<var name="junit.failure.message.element" unset="true" />
+
+					<property name="junit.failure.message" value="${test.failure.message}${test.timeout}" />
+
+					<get-junit-failure-message-element />
+
+					<local name="test.class.name" />
+
+					<propertyregex
+						input="@{test.class}"
+						override="true"
+						property="test.class.name"
+						regexp="(.*)\.class"
+						replace="\1"
+					/>
+
+					<propertyregex
+						global="true"
+						input="${test.class.name}"
+						override="true"
+						property="test.class.name"
+						regexp="/"
+						replace="."
+					/>
+
+					<generate-backend-batch-junit-report
+						junit.failure.count="1"
+						junit.failure.message.element="${junit.failure.message.element}"
+						test.class.name="${test.class.name}"
+						test.command.name="testCompile"
+						test.results.dir="modules/test-results"
+					/>
+				</catch>
+			</trycatch>
 		</sequential>
 	</macrodef>
 
@@ -3300,7 +3498,7 @@ information. Make sure to commit in all build-lib-versions results.
 			<test-set-up>
 				<setup-test-environment />
 
-				<prepare-database-upgrade-configuration />
+				<prepare-database-upgrade-properties />
 			</test-set-up>
 		</run-batch-test>
 	</target>
@@ -5720,7 +5918,7 @@ information. Make sure to commit in all format-javadoc results.
 						<dirset
 							dir="modules/sdk"
 							excludes="${gradle.plugins.test.excludes}"
-							includes="gradle-plugins*"
+							includes="${gradle.plugins.test.includes}"
 						/>
 					</path>
 					<sequential>
@@ -5755,11 +5953,18 @@ information. Make sure to commit in all format-javadoc results.
 			<test-tear-down>
 				<tar destfile="${project.dir}/tmp/gradle_plugins.tar">
 					<tarfileset
-						dir="${project.dir}/modules/sdk/gradle-plugins-target-platform/build/reports"
+						dir="${project.dir}/modules/sdk/gradle-plugins-maven-plugin-builder"
+						includes="build/reports/**"
+						prefix="gradle-plugins-maven-plugin-builder"
+					/>
+					<tarfileset
+						dir="${project.dir}/modules/sdk/gradle-plugins-target-platform"
+						includes="build/reports/**"
 						prefix="gradle-plugins-target-platform"
 					/>
 					<tarfileset
-						dir="${project.dir}/modules/sdk/gradle-plugins-workspace/build/reports"
+						dir="${project.dir}/modules/sdk/gradle-plugins-workspace"
+						includes="build/reports/**"
 						prefix="gradle-plugins-workspace"
 					/>
 				</tar>
@@ -6820,7 +7025,7 @@ information. Make sure to commit in all format-javadoc results.
 				<if>
 					<equals arg1="${project.templates.test}" arg2="true" />
 					<then>
-						<gradle-execute dir="modules/sdk/project-templates" task="install">
+						<gradle-execute dir="modules/sdk/project-templates" task="publishToMavenLocal">
 							<arg value="--continue" />
 							<arg value="-Dbuild.exclude.ant.plugin=true" />
 							<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
@@ -6828,14 +7033,18 @@ information. Make sure to commit in all format-javadoc results.
 					</then>
 				</if>
 
-				<gradle-execute dir="modules" task="test">
-					<arg value="--continue" />
-					<arg value="-Dbuild.exclude.ant.plugin=true" />
-					<arg if:true="${run.solr.unit.tests}" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true" />
-					<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
-					<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
-					<arg value="-Dtest.class.group.index=${axis.variable}" />
-				</gradle-execute>
+				<for list="${test.class.group}" param="test.class">
+					<sequential>
+						<run-modules-junit-test test.class="@{test.class}" test.task="test">
+							<arg value="--continue" />
+							<arg value="-Dbuild.exclude.ant.plugin=true" />
+							<arg if:true="${run.solr.unit.tests}" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true" />
+							<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
+							<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
+							<arg value="-Dtest.class.group.index=${axis.variable}" />
+						</run-modules-junit-test>
+					</sequential>
+				</for>
 
 				<lstopwatch action="total" name="test.execution.duration" />
 			</test-action>
@@ -7606,7 +7815,7 @@ ${output.content}</echo>
 
 								<gradle-execute dir="modules" forcedcacheenabled="false" task="@{modules.build.rest.task}">
 									<arg value="-DbuildREST.forceClientVersionDescription=false" />
-									<arg value="-DbuildREST.skipReadOnly=${build.rest.skip.read.only}" />
+									<arg value="-Dskip.read.only=${build.rest.skip.read.only}" />
 									<arg value="-Pcom.liferay.portal.tools.rest.builder.ignore.local=false" />
 								</gradle-execute>
 							</sequential>
@@ -7617,7 +7826,7 @@ ${output.content}</echo>
 
 						<gradle-execute dir="modules" forcedcacheenabled="false" task="buildREST">
 							<arg value="-DbuildREST.forceClientVersionDescription=false" />
-							<arg value="-DbuildREST.skipReadOnly=${build.rest.skip.read.only}" />
+							<arg value="-Dskip.read.only=${build.rest.skip.read.only}" />
 							<arg value="-Pcom.liferay.portal.tools.rest.builder.ignore.local=false" />
 						</gradle-execute>
 					</else>
@@ -7868,7 +8077,7 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 										<echo>Executing Gradle tasks: @{modules.build.service.task}</echo>
 
 										<gradle-execute dir="modules" forcedcacheenabled="false" task="@{modules.build.service.task}">
-											<arg value="-DbuildService.skipReadOnly=${build.services.skip.read.only}" />
+											<arg value="-Dskip.read.only=${build.services.skip.read.only}" />
 											<arg value="-Pcom.liferay.portal.tools.service.builder.ignore.local=false" />
 										</gradle-execute>
 									</sequential>

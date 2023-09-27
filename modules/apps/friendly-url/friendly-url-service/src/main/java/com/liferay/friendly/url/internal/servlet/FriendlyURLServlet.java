@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.friendly.url.internal.servlet;
@@ -72,6 +63,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.AsyncPortletServletRequest;
+import com.liferay.portlet.documentlibrary.constants.DLFriendlyURLConstants;
 import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.redirect.tracker.RedirectNotFoundTracker;
 import com.liferay.site.model.SiteFriendlyURL;
@@ -120,9 +112,11 @@ public class FriendlyURLServlet extends HttpServlet {
 		if (pos != -1) {
 			String friendlyURL = path.substring(pos);
 
-			if (friendlyURL.startsWith(_PATH_DOCUMENTS)) {
+			if (friendlyURL.startsWith(
+					DLFriendlyURLConstants.PATH_PREFIX_DOCUMENT)) {
+
 				String fileEntryFriendlyURL = friendlyURL.substring(
-					_PATH_DOCUMENTS.length() - 1);
+					DLFriendlyURLConstants.PATH_PREFIX_DOCUMENT.length() - 1);
 
 				groupFriendlyURL = fileEntryFriendlyURL.substring(
 					0, fileEntryFriendlyURL.indexOf(CharPool.SLASH, 1));
@@ -1014,8 +1008,6 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		return groupLocale;
 	}
-
-	private static final String _PATH_DOCUMENTS = "/documents/d/";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);

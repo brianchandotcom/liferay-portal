@@ -1,22 +1,10 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {render} from '@liferay/frontend-js-react-web';
 import {openModal} from 'frontend-js-web';
-import {unmountComponentAtNode} from 'react-dom';
 
-import ImportModal from './ImportModal';
 import openDeleteFragmentCollectionModal from './openDeleteFragmentCollectionModal';
 
 const ACTIONS = {
@@ -27,49 +15,25 @@ const ACTIONS = {
 			},
 		});
 	},
-	openImportCollectionView({importURL, portletNamespace, viewImportURL}) {
-		if (Liferay.FeatureFlags['LPS-174939']) {
-			const modalContainer = document.createElement('div');
-			modalContainer.classList.add('cadmin');
-			document.body.appendChild(modalContainer);
-
-			const disposeModal = () => {
-				if (modalContainer) {
-					unmountComponentAtNode(modalContainer);
-					document.body.removeChild(modalContainer);
-				}
-			};
-
-			render(
-				ImportModal,
+	openImportCollectionView({viewImportURL}) {
+		openModal({
+			buttons: [
 				{
-					disposeModal,
-					importURL,
-					portletNamespace,
+					displayType: 'secondary',
+					label: Liferay.Language.get('cancel'),
+					type: 'cancel',
 				},
-				modalContainer
-			);
-		}
-		else {
-			openModal({
-				buttons: [
-					{
-						displayType: 'secondary',
-						label: Liferay.Language.get('cancel'),
-						type: 'cancel',
-					},
-					{
-						label: Liferay.Language.get('import'),
-						type: 'submit',
-					},
-				],
-				onClose: () => {
-					window.location.reload();
+				{
+					label: Liferay.Language.get('import'),
+					type: 'submit',
 				},
-				title: Liferay.Language.get('import'),
-				url: viewImportURL,
-			});
-		}
+			],
+			onClose: () => {
+				window.location.reload();
+			},
+			title: Liferay.Language.get('import'),
+			url: viewImportURL,
+		});
 	},
 };
 

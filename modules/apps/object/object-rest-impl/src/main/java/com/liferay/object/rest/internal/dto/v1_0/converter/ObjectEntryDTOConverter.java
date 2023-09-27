@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.rest.internal.dto.v1_0.converter;
@@ -235,6 +226,14 @@ public class ObjectEntryDTOConverter
 										objectDefinition.
 											getTitleObjectFieldId());
 
+								if (objectField == null) {
+									objectField =
+										_objectFieldLocalService.getObjectField(
+											objectDefinition.
+												getObjectDefinitionId(),
+											"id");
+								}
+
 								values.put(
 									objectField.getName(),
 									ObjectEntryValuesUtil.getTitleFieldValue(
@@ -341,12 +340,8 @@ public class ObjectEntryDTOConverter
 							nestedFieldName);
 
 				if ((objectRelationship == null) ||
-					(!Objects.equals(
-						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
-					 !Objects.equals(
-						 objectRelationship.getType(),
-						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY))) {
+					!objectRelationship.isAllowedObjectRelationshipType(
+						objectRelationship.getType())) {
 
 					return null;
 				}
@@ -541,15 +536,6 @@ public class ObjectEntryDTOConverter
 				dateModified = objectEntry.getModifiedDate();
 				externalReferenceCode = objectEntry.getExternalReferenceCode();
 				id = objectEntry.getObjectEntryId();
-
-				if (objectDefinition.isEnableCategorization()) {
-					keywords = ListUtil.toArray(
-						_assetTagLocalService.getTags(
-							objectDefinition.getClassName(),
-							objectEntry.getObjectEntryId()),
-						AssetTag.NAME_ACCESSOR);
-				}
-
 				properties = _toProperties(
 					dtoConverterContext, objectDefinition, objectEntry);
 				scopeKey = _getScopeKey(objectDefinition, objectEntry);
@@ -566,6 +552,18 @@ public class ObjectEntryDTOConverter
 					}
 				};
 
+				setKeywords(
+					() -> {
+						if (!objectDefinition.isEnableCategorization()) {
+							return null;
+						}
+
+						return ListUtil.toArray(
+							_assetTagLocalService.getTags(
+								objectDefinition.getClassName(),
+								objectEntry.getObjectEntryId()),
+							AssetTag.NAME_ACCESSOR);
+					});
 				setTaxonomyCategoryBriefs(
 					() -> {
 						if (!objectDefinition.isEnableCategorization()) {
@@ -629,9 +627,13 @@ public class ObjectEntryDTOConverter
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId(), false);
+				objectDefinition.getObjectDefinitionId());
 
 		for (ObjectField objectField : objectFields) {
+			if (objectField.isMetadata()) {
+				continue;
+			}
+
 			if (FeatureFlagManagerUtil.isEnabled("LPS-172017") &&
 				objectField.isLocalized()) {
 

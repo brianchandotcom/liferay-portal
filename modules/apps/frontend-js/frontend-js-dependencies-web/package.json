@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@liferay/js-api": "0.3.0-pre.0",
+		"@liferay/js-api": "0.4.0-pre.0",
 		"axe-core": "4.2.0",
 		"clipboard": "2.0.4",
 		"cropperjs": "1.5.11",
@@ -40,5 +40,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "1.0.8"
+	"version": "1.0.10"
 }

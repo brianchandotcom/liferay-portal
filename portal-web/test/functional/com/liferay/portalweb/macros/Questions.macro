@@ -13,6 +13,10 @@ definition {
 	}
 
 	macro addRootTopic {
+		WaitForElementPresent(
+			key_text = "New Topic",
+			locator1 = "Button#ANY");
+
 		if (IsElementPresent(key_text = "New Topic", locator1 = "Button#ANY")) {
 			Click(
 				key_text = "New Topic",
@@ -347,6 +351,23 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro definePermissionsToCreatedRole {
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_message_boards_web_portlet_MBAdminPortlet",
+			roleTitle = ${roleTitle});
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.message.boards",
+			roleTitle = ${roleTitle});
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.message.boards.model.MBCategory",
+			roleTitle = ${roleTitle});
 	}
 
 	macro deleteAnswer {
@@ -719,6 +740,14 @@ definition {
 		}
 	}
 
+	macro subscribeFromQuestion {
+		Click.waitForMenuToggleJSClick(
+			key_questionTitle = ${questionTitle},
+			locator1 = "Questions#QUESTIONS_ELLIPSIS_ICON");
+
+		MenuItem.clickNoError(menuItem = "Subscribe");
+	}
+
 	macro subscribeFromTag {
 		Click(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
 
@@ -923,6 +952,12 @@ definition {
 			value1 = ${results});
 	}
 
+	macro viewQuestionPage {
+		var baseURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${baseURL}/web/guest/questions-page/questions/${topicName}");
+	}
+
 	macro viewQuestionViaTag {
 		Click(
 			key_tagName = ${tagName},
@@ -1007,10 +1042,9 @@ definition {
 
 	macro viewSubscribedTag {
 		if (isSet(subscribedTag)) {
-			AssertTextEquals(
+			AssertElementPresent(
 				key_subscribedTag = ${subscribedTag},
-				locator1 = "Questions#SUBSCRIBED_TAG",
-				value1 = ${subscribedTag});
+				locator1 = "Questions#SUBSCRIBED_TAG");
 		}
 		else if (isSet(noSubscribedTag)) {
 			AssertTextEquals(

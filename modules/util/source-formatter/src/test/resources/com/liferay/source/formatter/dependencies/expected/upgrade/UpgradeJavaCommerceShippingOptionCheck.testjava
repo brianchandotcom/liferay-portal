@@ -1,0 +1,35 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceShippingOption;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
+import com.liferay.commerce.util.CommerceShippingHelper;
+
+import java.math.BigDecimal;
+
+/**
+ * @author Michael Cavalcanti
+ */
+public class UpgradeJavaCommerceShippingOptionCheck {
+
+	private CommerceShippingOption _getCommerceShippingOption(
+		CommerceOrder commerceOrder,
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
+
+		if (_commerceShippingHelper.isFreeShipping(commerceOrder)) {
+			return new CommerceShippingOption(BigDecimal.ZERO, "", "name", "name", 0);
+		}
+
+		BigDecimal amount = commerceShippingFixedOptionRel.getFixedPrice();
+
+		return new CommerceShippingOption(amount, "", "name", "name", 0);
+	}
+
+	private CommerceShippingHelper _commerceShippingHelper;
+
+}

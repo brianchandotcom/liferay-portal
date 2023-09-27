@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.workspace.task;
@@ -25,6 +16,7 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
 
@@ -64,7 +56,7 @@ public class CreateTokenTask extends DefaultTask {
 		return GradleUtil.toFile(getProject(), _passwordFile);
 	}
 
-	@Input
+	@InputFiles
 	public File getTokenFile() {
 		return GradleUtil.toFile(getProject(), _tokenFile);
 	}
@@ -74,6 +66,7 @@ public class CreateTokenTask extends DefaultTask {
 		return GradleUtil.toURL(_tokenUrl);
 	}
 
+	@Input
 	public boolean isForce() {
 		return GradleUtil.toBoolean(_force);
 	}
@@ -90,12 +83,10 @@ public class CreateTokenTask extends DefaultTask {
 		_password = password;
 	}
 
-	@Input
 	public void setPasswordFile(Object passwordFile) {
 		_passwordFile = passwordFile;
 	}
 
-	@Input
 	public void setTokenFile(Object tokenFile) {
 		_tokenFile = tokenFile;
 	}

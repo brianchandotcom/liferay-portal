@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.site.navigation.menu.web.internal.display.context;
@@ -17,6 +8,10 @@ package com.liferay.site.navigation.menu.web.internal.display.context;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -36,6 +31,7 @@ import com.liferay.site.navigation.menu.web.internal.configuration.SiteNavigatio
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
+import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuMode;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,15 +46,51 @@ public class SiteNavigationMenuDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 
+		_siteNavigationMenuPortletInstanceConfiguration =
+			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				SiteNavigationMenuPortletInstanceConfiguration.class,
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY));
+	}
+
+	public String getAlertKey() {
+		if (_alertKey != null) {
+			return _alertKey;
+		}
+
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
+			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		_siteNavigationMenuPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				SiteNavigationMenuPortletInstanceConfiguration.class);
+		if (!scopeGroup.isPrivateLayoutsEnabled() ||
+			!_hasLayoutPageTemplateEntry(themeDisplay.getLayout())) {
+
+			_alertKey = StringPool.BLANK;
+
+			return _alertKey;
+		}
+
+		if (getSelectSiteNavigationMenuType() ==
+				SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) {
+
+			_alertKey =
+				"the-navigation-being-displayed-here-is-the-private-pages-" +
+					"hierarchy";
+		}
+		else if (getSelectSiteNavigationMenuType() ==
+					SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) {
+
+			_alertKey =
+				"the-navigation-being-displayed-here-is-the-public-pages-" +
+					"hierarchy";
+		}
+		else {
+			_alertKey = StringPool.BLANK;
+		}
+
+		return _alertKey;
 	}
 
 	public String getDDMTemplateKey() {
@@ -137,6 +169,30 @@ public class SiteNavigationMenuDisplayContext {
 			_httpServletRequest, "expandedLevels", defaultExpandedLevels);
 
 		return _expandedLevels;
+	}
+
+	public NavigationMenuMode getNavigationMenuMode() {
+		if (_navigationMenuMode != null) {
+			return _navigationMenuMode;
+		}
+
+		int selectSiteNavigationMenuType = getSelectSiteNavigationMenuType();
+
+		if (selectSiteNavigationMenuType ==
+				SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) {
+
+			_navigationMenuMode = NavigationMenuMode.PRIVATE_PAGES;
+		}
+		else if (selectSiteNavigationMenuType ==
+					SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) {
+
+			_navigationMenuMode = NavigationMenuMode.PUBLIC_PAGES;
+		}
+		else {
+			_navigationMenuMode = NavigationMenuMode.DEFAULT;
+		}
+
+		return _navigationMenuMode;
 	}
 
 	public String getRootMenuItemEventName() {
@@ -465,6 +521,17 @@ public class SiteNavigationMenuDisplayContext {
 		Layout layout = themeDisplay.getLayout();
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
+		if (_hasLayoutPageTemplateEntry(layout)) {
+			if (scopeGroup.hasPublicLayouts()) {
+				return SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY;
+			}
+			else if (scopeGroup.hasPrivateLayouts()) {
+				return SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY;
+			}
+
+			return SiteNavigationConstants.TYPE_PRIMARY;
+		}
+
 		if (layout.isPrivateLayout() && scopeGroup.hasPrivateLayouts()) {
 			return SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY;
 		}
@@ -489,12 +556,32 @@ public class SiteNavigationMenuDisplayContext {
 		return _siteNavigationMenuName;
 	}
 
+	private boolean _hasLayoutPageTemplateEntry(Layout layout) {
+		long plid = layout.getPlid();
+
+		if (layout.isDraftLayout()) {
+			plid = layout.getClassPK();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(plid);
+
+		if (layoutPageTemplateEntry != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _alertKey;
 	private String _ddmTemplateKey;
 	private int _displayDepth = -1;
 	private String _displayStyle;
 	private long _displayStyleGroupId;
 	private String _expandedLevels;
 	private final HttpServletRequest _httpServletRequest;
+	private NavigationMenuMode _navigationMenuMode;
 	private Integer _navigationMenuType;
 	private Boolean _preview;
 	private String _rootMenuItemId;

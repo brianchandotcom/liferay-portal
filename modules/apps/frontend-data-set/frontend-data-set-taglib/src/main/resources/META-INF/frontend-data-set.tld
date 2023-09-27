@@ -54,6 +54,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description></description>
+			<name>emptyState</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>fdsSortItemList</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -187,6 +193,12 @@
 		</attribute>
 		<attribute>
 			<name>customViewsEnabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>emptyState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

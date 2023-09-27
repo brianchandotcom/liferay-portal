@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Service Component Actor Sync
+Bundle-SymbolicName: com.liferay.portal.service.component.actor.sync
+Bundle-Version: 3.0.1

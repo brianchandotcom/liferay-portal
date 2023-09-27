@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.accessibility.menu.web.internal.util;
@@ -17,11 +8,11 @@ package com.liferay.accessibility.menu.web.internal.util;
 import com.liferay.accessibility.menu.web.internal.configuration.AccessibilityMenuConfiguration;
 import com.liferay.accessibility.menu.web.internal.constants.AccessibilitySettingConstants;
 import com.liferay.accessibility.menu.web.internal.model.AccessibilitySetting;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -44,6 +35,8 @@ public class AccessibilitySettingsUtil {
 		return ListUtil.fromArray(
 			new AccessibilitySetting(
 				"c-prefers-link-underline", false,
+				LanguageUtil.get(
+					httpServletRequest, "underlined-links-description"),
 				AccessibilitySettingConstants.
 					ACCESSIBILITY_SETTING_UNDERLINED_LINKS,
 				LanguageUtil.get(httpServletRequest, "underlined-links"),
@@ -53,6 +46,8 @@ public class AccessibilitySettingsUtil {
 						ACCESSIBILITY_SETTING_UNDERLINED_LINKS)),
 			new AccessibilitySetting(
 				"c-prefers-letter-spacing-1", false,
+				LanguageUtil.get(
+					httpServletRequest, "increased-text-spacing-description"),
 				AccessibilitySettingConstants.
 					ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING,
 				LanguageUtil.get(httpServletRequest, "increased-text-spacing"),
@@ -62,6 +57,8 @@ public class AccessibilitySettingsUtil {
 						ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING)),
 			new AccessibilitySetting(
 				"c-prefers-expanded-text", false,
+				LanguageUtil.get(
+					httpServletRequest, "expanded-text-description"),
 				AccessibilitySettingConstants.
 					ACCESSIBILITY_SETTING_EXPANDED_TEXT,
 				LanguageUtil.get(httpServletRequest, "expanded-text"),
@@ -71,6 +68,8 @@ public class AccessibilitySettingsUtil {
 						ACCESSIBILITY_SETTING_EXPANDED_TEXT)),
 			new AccessibilitySetting(
 				"c-prefers-reduced-motion", false,
+				LanguageUtil.get(
+					httpServletRequest, "reduced-motion-description"),
 				AccessibilitySettingConstants.
 					ACCESSIBILITY_SETTING_REDUCED_MOTION,
 				LanguageUtil.get(httpServletRequest, "reduced-motion"),

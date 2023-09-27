@@ -1,0 +1,26 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.portal.kernel.service.CountryService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Nícolas Moura
+ */
+@Component(service = UpgradeJavaCommerceCountryServiceCheck.class)
+public class UpgradeJavaCommerceCountryServiceCheck {
+
+	public void method(long companyId) {
+		_countryService.fetchCommerceCountry(companyId, "BR");
+	}
+
+	@Reference
+	private CountryService _countryService;
+
+}

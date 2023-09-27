@@ -127,14 +127,12 @@ definition {
 		}
 
 		if (!(isSet(expirationDate)) || !(isSet(reviewDate))) {
-			var displayDateYear = DateUtil.getCurrentYear();
+			var reviewDate = "2099-01-01T01:01:00Z";
+			var expirationDate = "2099-01-01T01:01:00Z";
+		}
 
-			var displayDateYear = ${displayDateYear} + 1;
-
-			var reviewDate = "${displayDateYear}-01-01T01:01:00Z";
-			var displayDateYear = ${displayDateYear} + 1;
-
-			var expirationDate = "${displayDateYear}-01-01T01:01:00Z";
+		if (!(isSet(displayDate))) {
+			var displayDate = "2020-01-01T01:01:00Z";
 		}
 
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBFolder");
@@ -153,6 +151,7 @@ definition {
 				-d description=${kbDescription} \
 				-d sections= \
 				-d sourceURL= \
+				-d displayDate=${displayDate} \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate} \
 				-d selectedFileNames= \
@@ -185,14 +184,12 @@ definition {
 		}
 
 		if (!(isSet(expirationDate)) || !(isSet(reviewDate))) {
-			var displayDateYear = DateUtil.getCurrentYear();
+			var reviewDate = "2099-01-01T01:01:00Z";
+			var expirationDate = "2099-01-01T01:01:00Z";
+		}
 
-			var displayDateYear = ${displayDateYear} + 1;
-
-			var reviewDate = "${displayDateYear}-01-01T01:01:00Z";
-			var displayDateYear = ${displayDateYear} + 1;
-
-			var expirationDate = "${displayDateYear}-01-01T01:01:00Z";
+		if (!(isSet(displayDate))) {
+			var displayDate = "2020-01-01T01:01:00Z";
 		}
 
 		var userLoginInfo = JSONUtil2.formatJSONUser();
@@ -210,6 +207,7 @@ definition {
 				-d description= \
 				-d sections= \
 				-d sourceURL= \
+				-d displayDate=${displayDate} \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate}
 				-d selectedFileNames= \
@@ -290,14 +288,12 @@ definition {
 		}
 
 		if (!(isSet(expirationDate)) || !(isSet(reviewDate))) {
-			var displayDateYear = DateUtil.getCurrentYear();
+			var reviewDate = "2099-01-01T01:01:00Z";
+			var expirationDate = "2099-01-01T01:01:00Z";
+		}
 
-			var displayDateYear = ${displayDateYear} + 1;
-
-			var reviewDate = "${displayDateYear}-01-01T01:01:00Z";
-			var displayDateYear = ${displayDateYear} + 1;
-
-			var expirationDate = "${displayDateYear}-01-01T01:01:00Z";
+		if (!(isSet(displayDate))) {
+			var displayDate = "2020-01-01T01:01:00Z";
 		}
 
 		var userLoginInfo = JSONUtil2.formatJSONUser();
@@ -315,6 +311,7 @@ definition {
 				-d description= \
 				-d sections= \
 				-d sourceURL= \
+				-d displayDate=${displayDate} \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate}
 				-d selectedFileNames= \
@@ -384,6 +381,31 @@ definition {
 		}
 	}
 
+	macro removeKBArticle {
+		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		if (isSet(folderName)) {
+			var resourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+				folderName = ${folderName},
+				groupName = ${groupName},
+				kbArticleTitle = ${kbArticleTitle});
+		}
+		else {
+			var resourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+				groupName = ${groupName},
+				kbArticleTitle = ${kbArticleTitle});
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/kb.kbarticle/delete-kb-article \
+				-u ${userLoginInfo} \
+				-d resourcePrimKey=${resourcePrimKey}
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	macro updateKBArticle {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -408,14 +430,12 @@ definition {
 		}
 
 		if (!(isSet(expirationDate)) || !(isSet(reviewDate))) {
-			var displayDateYear = DateUtil.getCurrentYear();
+			var reviewDate = "2099-01-01T01:01:00Z";
+			var expirationDate = "2099-01-01T01:01:00Z";
+		}
 
-			var displayDateYear = ${displayDateYear} + 1;
-
-			var reviewDate = "${displayDateYear}-01-01T01:01:00Z";
-			var displayDateYear = ${displayDateYear} + 1;
-
-			var expirationDate = "${displayDateYear}-01-01T01:01:00Z";
+		if (!(isSet(displayDate))) {
+			var displayDate = "2020-01-01T01:01:00Z";
 		}
 
 		var userLoginInfo = JSONUtil2.formatJSONUser();
@@ -429,6 +449,7 @@ definition {
 				-d description= \
 				-d sections= \
 				-d sourceURL= \
+				-d displayDate=${displayDate} \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate} \
 				-d selectedFileNames= \

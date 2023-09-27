@@ -1,18 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
+import ClayPanel from '@clayui/panel';
+import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
@@ -29,8 +22,6 @@ import updateRowColumns from '../../../../../../app/thunks/updateRowColumns';
 import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
 import {getResponsiveColumnSize} from '../../../../../../app/utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
-import Collapse from '../../../../../../common/components/Collapse';
-import {useId} from '../../../../../../common/hooks/useId';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop_types/index';
 import {CommonStyles} from './CommonStyles';
 
@@ -198,90 +189,106 @@ export function RowGeneralPanel({item}) {
 
 	return (
 		<>
-			<div className="mb-3">
-				<Collapse label={Liferay.Language.get('grid-options')} open>
-					{selectedViewportSize === VIEWPORT_SIZES.desktop && (
-						<>
-							<Select
-								configurationKey="numberOfColumns"
-								handleChange={handleConfigurationValueChanged}
-								label={Liferay.Language.get(
-									'number-of-modules'
+			<div className="mb-3 panel-group-sm">
+				<ClayPanel
+					collapsable
+					defaultExpanded
+					displayTitle={Liferay.Language.get('grid-options')}
+					displayType="unstyled"
+					showCollapseIcon
+				>
+					<ClayPanel.Body>
+						{selectedViewportSize === VIEWPORT_SIZES.desktop && (
+							<>
+								<Select
+									configurationKey="numberOfColumns"
+									handleChange={
+										handleConfigurationValueChanged
+									}
+									label={Liferay.Language.get(
+										'number-of-modules'
+									)}
+									options={NUMBER_OF_COLUMNS_OPTIONS.map(
+										(option) => ({
+											label: option,
+										})
+									)}
+									value={rowConfig.numberOfColumns}
+								/>
+
+								{rowConfig.numberOfColumns > 1 && (
+									<>
+										<ClayCheckbox
+											checked={rowConfig.gutters}
+											label={Liferay.Language.get(
+												'show-gutter'
+											)}
+											onChange={({target: {checked}}) =>
+												handleConfigurationValueChanged(
+													'gutters',
+													checked
+												)
+											}
+										/>
+									</>
 								)}
-								options={NUMBER_OF_COLUMNS_OPTIONS.map(
-									(option) => ({
-										label: option,
-									})
-								)}
-								value={rowConfig.numberOfColumns}
-							/>
-
-							{rowConfig.numberOfColumns > 1 && (
-								<>
-									<ClayCheckbox
-										checked={rowConfig.gutters}
-										label={Liferay.Language.get(
-											'show-gutter'
-										)}
-										onChange={({target: {checked}}) =>
-											handleConfigurationValueChanged(
-												'gutters',
-												checked
-											)
-										}
-									/>
-								</>
-							)}
-						</>
-					)}
-
-					<Select
-						configurationKey="modulesPerRow"
-						handleChange={onCustomStylesValueSelect}
-						label={Liferay.Language.get('layout')}
-						options={modulesPerRowOptions[
-							NUMBER_OF_COLUMNS_OPTIONS.indexOf(
-								rowConfig.numberOfColumns
-							)
-						].map((option) => ({
-							disabled: option === CUSTOM_ROW,
-							label:
-								option === CUSTOM_ROW
-									? Liferay.Language.get('custom')
-									: sub(
-											getModulesPerRowOptionLabel(option),
-											option
-									  ),
-							value: option,
-						}))}
-						value={
-							isCustomRow ? CUSTOM_ROW : rowConfig.modulesPerRow
-						}
-					/>
-
-					{rowConfig.numberOfColumns === 2 &&
-						rowConfig.modulesPerRow === 1 &&
-						!isCustomRow && (
-							<ClayCheckbox
-								checked={rowConfig.reverseOrder}
-								label={Liferay.Language.get('inverse-order')}
-								onChange={({target: {checked}}) =>
-									onCustomStylesValueSelect(
-										'reverseOrder',
-										checked
-									)
-								}
-							/>
+							</>
 						)}
 
-					<Select
-						configurationKey="verticalAlignment"
-						handleChange={onCustomStylesValueSelect}
-						label={Liferay.Language.get('vertical-alignment')}
-						options={VERTICAL_ALIGNMENT_OPTIONS}
-						value={rowConfig.verticalAlignment || ''}
-					/>
-				</Collapse>
+						<Select
+							configurationKey="modulesPerRow"
+							handleChange={onCustomStylesValueSelect}
+							label={Liferay.Language.get('layout')}
+							options={modulesPerRowOptions[
+								NUMBER_OF_COLUMNS_OPTIONS.indexOf(
+									rowConfig.numberOfColumns
+								)
+							].map((option) => ({
+								disabled: option === CUSTOM_ROW,
+								label:
+									option === CUSTOM_ROW
+										? Liferay.Language.get('custom')
+										: sub(
+												getModulesPerRowOptionLabel(
+													option
+												),
+												option
+										  ),
+								value: option,
+							}))}
+							value={
+								isCustomRow
+									? CUSTOM_ROW
+									: rowConfig.modulesPerRow
+							}
+						/>
+
+						{rowConfig.numberOfColumns === 2 &&
+							rowConfig.modulesPerRow === 1 &&
+							!isCustomRow && (
+								<ClayCheckbox
+									checked={rowConfig.reverseOrder}
+									label={Liferay.Language.get(
+										'inverse-order'
+									)}
+									onChange={({target: {checked}}) =>
+										onCustomStylesValueSelect(
+											'reverseOrder',
+											checked
+										)
+									}
+								/>
+							)}
+
+						<Select
+							configurationKey="verticalAlignment"
+							handleChange={onCustomStylesValueSelect}
+							label={Liferay.Language.get('vertical-alignment')}
+							options={VERTICAL_ALIGNMENT_OPTIONS}
+							value={rowConfig.verticalAlignment || ''}
+						/>
+					</ClayPanel.Body>
+				</ClayPanel>
 			</div>
 
 			<CommonStyles

@@ -4,7 +4,7 @@ definition {
 	// Stop running on release until ISIT-32385 fixed
 
 	property cmis.repository.type = "sharepoint2013";
-	property custom.properties = "session.store.password=true${line.separator}company.security.auth.type=screenName${line.separator}default.layout.template.id=1_column${line.separator}dl.actions.visible=true";
+	property custom.properties = "company.security.auth.type=screenName${line.separator}default.layout.template.id=1_column${line.separator}dl.actions.visible=true${line.separator}session.store.password=true";
 	property osgi.modules.includes = "sharepoint-soap";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -68,7 +68,6 @@ definition {
 
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryName = "Documents",
-			dmRepositoryLibraryPath = "Shared Documents",
 			dmRepositoryName = "Sharepoint",
 			dmRepositorySiteURL = "http://${sharepointVmHostName}",
 			dmServerVersion = 2013);
@@ -118,6 +117,7 @@ definition {
 	@refactorneeded
 	test ViewDocumentAsGuest {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

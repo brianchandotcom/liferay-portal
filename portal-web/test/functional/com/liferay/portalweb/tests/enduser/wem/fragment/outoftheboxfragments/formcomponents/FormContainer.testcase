@@ -173,16 +173,9 @@ definition {
 	@description = "This is a test for LPS-190586. Even with the option to be redirected to a DPT, if there are validation errors on the object entry the page creator will remain on the same page and get a validation error message."
 	@priority = 4
 	test CannotRedirectToAssociatedDisplayPageTemplateWhenValidationFailed {
-		property custom.properties = "feature.flag.LPS-183498=true${line.separator}feature.flag.LPS-183727=true";
-		property test.liferay.virtual.instance = "false";
+		property custom.properties = "feature.flag.LPS-183727=true${line.separator}feature.flag.LPS-195205=true";
 
 		task ("Given a page creator has a Form Container with redirection option to a DPT") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.asset.display.page.internal.portlet.CustomAssetDisplayPageFriendlyURLResolver");
-
-			GogoShell.viewOutput(outputContent = "true");
-
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",
 				fieldLabelName = "Age",
@@ -213,7 +206,19 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "The Age should be an integer.");
 
-			PortletEntry.save();
+			Button.clickSave();
+
+			WaitForElementNotPresent(locator1 = "ObjectAdmin#SIDE_PANEL");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Purchase Order",
+				displayPageName = "Display Page Name");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -232,7 +237,7 @@ definition {
 				contentType = "Purchase Order",
 				displayPageName = "Default",
 				panel = "General",
-				successMessage = "Entry Display Page");
+				successMessage = "Go to Entry Display Page");
 
 			PageEditor.publish();
 		}
@@ -470,6 +475,68 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-188036. When the checkbox is active, success notification input and preview success notification appear, and disappear when it is unchecked."
+	@priority = 3
+	test PreviewSuccessNotification {
+		task ("Given a page creator has a mapped Form Container on a content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+		}
+
+		task ("When the page creator accesses to the General panel of Form Container") {
+			PageEditor.gotoConfiguration(fragmentName = "Form Container");
+		}
+
+		task ("Then the page creator cannot see the Success Notification Text and Preview Success Notification fields") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "Show Notification when Form Is Submitted",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			AssertElementNotPresent(
+				key_text = "Success Notification Text",
+				locator1 = "TextInput#ANY");
+
+			AssertElementNotPresent(
+				checkboxName = "Preview Success Notification",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("When the page creator enables the Show Notification when Form Is Submitted") {
+			PageEditor.editFormContainer(
+				panel = "General",
+				showNotificationWhenFormIsSubmitted = "true",
+				successNotificationText = "Your form was successfully submitted.");
+		}
+
+		task ("Then the page creator could preview the success notification") {
+			PageEditor.previewSuccessNotification();
+
+			Alert.viewSuccessMessageText(successMessage = "Your form was successfully submitted.");
+		}
+	}
+
 	@description = "This is a test for LPS-157739. The page creator could remove automatically added input fragments and change mapping fields."
 	@priority = 4
 	test RemoveAutomaticallyAddedInputFragmentsThenChangeMappingField {
@@ -602,17 +669,17 @@ definition {
 			PageEditor.gotoConfiguration(fragmentName = "Form Container");
 
 			AssertSelectedLabel(
-				key_fieldLabel = "Success Message",
+				key_fieldLabel = "Success Interaction",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Embedded");
+				value1 = "Show Embedded Message");
 
 			AssertTextEquals(
-				key_text = "Success Text",
+				key_text = "Embedded Message",
 				locator1 = "TextInput#ANY",
 				value1 = "Thank you. Your information was successfully received.");
 
 			AssertNotChecked.assertNotCheckedNotVisible(
-				key_toggleSwitchLabel = "Preview Success State",
+				key_toggleSwitchLabel = "Preview Embedded Message",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 			AssertVisible(
@@ -623,10 +690,7 @@ definition {
 		}
 
 		task ("When the page designer previews success state") {
-			PageEditor.editFormContainer(
-				panel = "General",
-				previewSuccessState = "true",
-				successMessage = "Embedded");
+			PageEditor.previewEmbeddedMessage();
 		}
 
 		task ("Then the page designer can see sucess text under Form Container") {
@@ -672,12 +736,13 @@ definition {
 
 			PageEditor.editFormContainer(
 				panel = "General",
-				previewSuccessState = "true",
-				successMessage = "Embedded",
+				successMessage = "Show Embedded Message",
 				successText = "We are glad to receive your Form!");
 		}
 
 		task ("Then the page designer can see custom sucess text under Form Container") {
+			PageEditor.previewEmbeddedMessage();
+
 			AssertTextPresent(value1 = "We are glad to receive your Form!");
 		}
 
@@ -701,7 +766,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-155529. The page designer can submit a Form Container with External URL success message."
+	@description = "This is a test for LPS-155529 and LPS-188036. The page designer can submit a Form Container with External URL success message."
 	@priority = 4
 	test SubmitFormContainerWithExternalURLSuccessMessage {
 		task ("Given a page designer has mapped Form Container with URL as success message") {
@@ -736,8 +801,12 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General",
-					successMessage = "External URL",
+					successMessage = "Go to External URL",
 					url = "https://www.liferay.com");
+
+				AssertElementNotPresent(
+					checkboxName = "Show Notification when Form Is Submitted",
+					locator1 = "Checkbox#ANY_CHECKBOX");
 
 				PageEditor.publish();
 			}
@@ -809,7 +878,7 @@ definition {
 					contentType = "Purchase Order",
 					pageName = "Thank you page",
 					panel = "General",
-					successMessage = "Page");
+					successMessage = "Go to Page");
 
 				PageEditor.viewItemSelectorText(
 					fieldLabel = "Page",
@@ -877,7 +946,7 @@ definition {
 				pageName = "Home",
 				panel = "General",
 				siteName = ${siteName},
-				successMessage = "Page");
+				successMessage = "Go to Page");
 
 			PageEditor.viewItemSelectorText(
 				fieldLabel = "Page",
@@ -960,7 +1029,7 @@ definition {
 
 			PageEditor.editFormContainer(
 				panel = "General",
-				successMessage = "Embedded",
+				successMessage = "Show Embedded Message",
 				successText = "Estamos muy agradecidos de recibir su formulario.");
 
 			PageEditor.changeLocale(
@@ -969,15 +1038,12 @@ definition {
 
 			PageEditor.editFormContainer(
 				panel = "General",
-				successMessage = "Embedded",
+				successMessage = "Show Embedded Message",
 				successText = "Obrigado por nos enviar seu formulario!");
 		}
 
 		task ("Then the page designer can see Portuguese translation on preview success state") {
-			PageEditor.editFormContainer(
-				panel = "General",
-				previewSuccessState = "true",
-				successMessage = "Embedded");
+			PageEditor.previewEmbeddedMessage();
 
 			AssertTextPresent(value1 = "Obrigado por nos enviar seu formulario!");
 		}
@@ -1326,7 +1392,7 @@ definition {
 
 			UploadDependencyFile.uploadFile(fileName = "Document_1.jpg");
 
-			Click(locator1 = "xpath=(//label[contains(.,'Select File')])[2]");
+			Click(locator1 = "xpath=(//button[contains(.,'Select File')])[2]");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1961,6 +2027,263 @@ definition {
 
 		task ("Then the page creator sees the following success message") {
 			Alert.viewSuccessMessageText(successMessage = "Your form has been successfully loaded.");
+		}
+	}
+
+	@description = "This is a test for LPS-188036. Success notification with toast message must be compatible with Go to Entry Display Page redirect option."
+	@priority = 4
+	test ViewSuccessNotificationOfGoToEntryDisplayPage {
+		property custom.properties = "feature.flag.LPS-183727=true${line.separator}feature.flag.LPS-195205=true";
+
+		task ("Given a page creator has a mapped Form Container on a content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Purchase Order",
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order (Default)");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+		}
+
+		task ("When the page creator defines the success notification of Go to Entry Display Page") {
+			PageEditor.editFormContainer(
+				displayPageName = "Default",
+				panel = "General",
+				showNotificationWhenFormIsSubmitted = "true",
+				successMessage = "Go to Entry Display Page",
+				successNotificationText = "Your form was successfully submitted.");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page creator could see success notification on content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			InputField.editText(
+				fieldLabel = "Name",
+				text = "Jack");
+
+			Button.clickSubmitButton();
+
+			Alert.viewSuccessMessageText(successMessage = "Your form was successfully submitted.");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Jack");
+
+			InputField.viewText(
+				fieldLabel = "Name",
+				text = "Jack");
+		}
+	}
+
+	@description = "This is a test for LPS-188036. Success notification with toast message must be compatible with Go to Page redirect option."
+	@priority = 4
+	test ViewSuccessNotificationOfGoToPage {
+		task ("Given a page creator has a mapped Form Container on a content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Thank you page");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+		}
+
+		task ("When the page creator defines the success notification of Go to Page") {
+			PageEditor.editFormContainer(
+				pageName = "Thank you page",
+				panel = "General",
+				showNotificationWhenFormIsSubmitted = "true",
+				successMessage = "Go to Page",
+				successNotificationText = "Your form was successfully submitted.");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page creator could see success notification on redirection page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			InputField.editText(
+				fieldLabel = "Name",
+				text = "Jack");
+
+			Button.clickSubmitButton();
+
+			Alert.viewSuccessMessageText(successMessage = "Your form was successfully submitted.");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Thank you page");
+		}
+	}
+
+	@description = "This is a test for LPS-188036. Success notification with toast message must be compatible with Show Embedded Message redirect option.."
+	@priority = 4
+	test ViewSuccessNotificationOfShowEmbeddedMessage {
+		task ("Given a page creator has a mapped Form Container on a content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+		}
+
+		task ("When the page creator defines the success notification of Show Embedded Message") {
+			PageEditor.editFormContainer(
+				panel = "General",
+				showNotificationWhenFormIsSubmitted = "true",
+				successNotificationText = "Your form was successfully submitted.");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page creator could see success notification on redirection page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			InputField.editText(
+				fieldLabel = "Name",
+				text = "Jack");
+
+			Button.clickSubmitButton();
+
+			Alert.viewSuccessMessageText(successMessage = "Your form was successfully submitted.");
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+		}
+	}
+
+	@description = "This is a test for LPS-188036. Success notification with toast message must be compatible with Stay in page redirect option."
+	@priority = 4
+	test ViewSuccessNotificationOfStayInPage {
+		task ("Given a page creator has a mapped Form Container on a content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+		}
+
+		task ("When the page creator defines the success notification of Stay in Page") {
+			PageEditor.editFormContainer(
+				panel = "General",
+				showNotificationWhenFormIsSubmitted = "true",
+				successMessage = "Stay in Page",
+				successNotificationText = "Your form was successfully submitted.");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page creator could see success notification on content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			InputField.editText(
+				fieldLabel = "Name",
+				text = "Jack");
+
+			Button.clickSubmitButton();
+
+			Alert.viewSuccessMessageText(successMessage = "Your form was successfully submitted.");
+
+			AssertVisible(
+				key_text = "Name",
+				locator1 = "TextInput#ANY");
 		}
 	}
 

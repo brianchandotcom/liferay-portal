@@ -1,3 +1,22 @@
 @import 'components';
 @import 'containers';
 @import 'variables';
+
+.okta-status-icon {
+	border-radius: 50%;
+	height: 12px;
+	width: 12px;
+}
+
+.okta-status {
+	button {
+		align-items: center;
+		color: white;
+		display: flex;
+		gap: 4px;
+	}
+
+	button:hover {
+		color: white;
+	}
+}

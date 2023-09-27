@@ -3,7 +3,7 @@
 The REST Builder Gradle plugin lets you generate a REST layer defined in the
 REST Builder `rest-config.yaml` and `rest-openapi.yaml` files.
 
-The plugin has been successfully tested with Gradle 6.9.2.
+The plugin has been successfully tested with Gradle 7.3.3.
 
 ## Usage
 
@@ -12,7 +12,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.rest.builder", version: "1.1.191"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.rest.builder", version: "1.1.196"
 	}
 
 	repositories {
@@ -90,6 +90,6 @@ a dependency to the latest released version of Liferay REST Builder.
 
 ```gradle
 dependencies {
-	restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.314"
+	restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.318"
 }
 ```

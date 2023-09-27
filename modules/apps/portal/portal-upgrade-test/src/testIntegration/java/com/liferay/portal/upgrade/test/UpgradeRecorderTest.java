@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.upgrade.test;
@@ -18,8 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -29,6 +19,10 @@ import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +35,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -90,26 +83,22 @@ public class UpgradeRecorderTest {
 	}
 
 	@Test
-	public void testFailureByPendingUpgrade() {
-		List<Release> releases = _releaseLocalService.getReleases(0, 1);
+	public void testFailureByPendingUpgrade() throws SQLException {
+		try (Connection connection = DataAccess.getConnection()) {
+			Version version = PortalUpgradeProcess.getCurrentSchemaVersion(
+				connection);
 
-		Release release = releases.get(0);
+			PortalUpgradeProcess.updateSchemaVersion(
+				connection, new Version(0, 0, 0));
 
-		String schemaVersion = release.getSchemaVersion();
+			try {
+				StartupHelperUtil.setUpgrading(true);
 
-		try {
-			release.setSchemaVersion("0.0.0");
-
-			release = _releaseLocalService.updateRelease(release);
-
-			StartupHelperUtil.setUpgrading(true);
-
-			StartupHelperUtil.setUpgrading(false);
-		}
-		finally {
-			release.setSchemaVersion(schemaVersion);
-
-			_releaseLocalService.updateRelease(release);
+				StartupHelperUtil.setUpgrading(false);
+			}
+			finally {
+				PortalUpgradeProcess.updateSchemaVersion(connection, version);
+			}
 		}
 
 		Assert.assertEquals("unresolved", _getResult());
@@ -156,7 +145,6 @@ public class UpgradeRecorderTest {
 		Assert.assertEquals("no upgrade", _getType());
 	}
 
-	@Ignore
 	@Test
 	public void testWarning() throws Exception {
 		StartupHelperUtil.setUpgrading(true);
@@ -284,14 +272,15 @@ public class UpgradeRecorderTest {
 	private class WarningUpgradeProcess extends UpgradeProcess {
 
 		@Override
-		protected void doUpgrade() throws Exception {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Warn on upgrade");
-			}
-		}
+		protected void doUpgrade() {
+			Map<String, Map<String, Integer>> warningMessages =
+				ReflectionTestUtil.getFieldValue(
+					_upgradeRecorder, "_warningMessages");
 
-		private final Log _log = LogFactoryUtil.getLog(
-			WarningUpgradeProcess.class);
+			warningMessages.put(
+				"WarningUpgradeProcess",
+				Collections.singletonMap("Warn on upgrade", 0));
+		}
 
 	}
 

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.service;
@@ -45,20 +36,20 @@ public class RoleLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.RoleLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void addGroupRole(long groupId, long roleId) {
-		getService().addGroupRole(groupId, roleId);
+	public static boolean addGroupRole(long groupId, long roleId) {
+		return getService().addGroupRole(groupId, roleId);
 	}
 
-	public static void addGroupRole(long groupId, Role role) {
-		getService().addGroupRole(groupId, role);
+	public static boolean addGroupRole(long groupId, Role role) {
+		return getService().addGroupRole(groupId, role);
 	}
 
-	public static void addGroupRoles(long groupId, List<Role> roles) {
-		getService().addGroupRoles(groupId, roles);
+	public static boolean addGroupRoles(long groupId, List<Role> roles) {
+		return getService().addGroupRoles(groupId, roles);
 	}
 
-	public static void addGroupRoles(long groupId, long[] roleIds) {
-		getService().addGroupRoles(groupId, roleIds);
+	public static boolean addGroupRoles(long groupId, long[] roleIds) {
+		return getService().addGroupRoles(groupId, roleIds);
 	}
 
 	/**
@@ -111,37 +102,37 @@ public class RoleLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static void addUserRole(long userId, long roleId)
+	public static boolean addUserRole(long userId, long roleId)
 		throws PortalException {
 
-		getService().addUserRole(userId, roleId);
+		return getService().addUserRole(userId, roleId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static void addUserRole(long userId, Role role)
+	public static boolean addUserRole(long userId, Role role)
 		throws PortalException {
 
-		getService().addUserRole(userId, role);
+		return getService().addUserRole(userId, role);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static void addUserRoles(long userId, List<Role> roles)
+	public static boolean addUserRoles(long userId, List<Role> roles)
 		throws PortalException {
 
-		getService().addUserRoles(userId, roles);
+		return getService().addUserRoles(userId, roles);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static void addUserRoles(long userId, long[] roleIds)
+	public static boolean addUserRoles(long userId, long[] roleIds)
 		throws PortalException {
 
-		getService().addUserRoles(userId, roleIds);
+		return getService().addUserRoles(userId, roleIds);
 	}
 
 	/**

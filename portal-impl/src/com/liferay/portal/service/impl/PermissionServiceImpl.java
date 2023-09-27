@@ -1,24 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.service.impl;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -31,10 +19,8 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -52,9 +38,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.base.PermissionServiceBaseImpl;
 
 import java.util.List;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Provides the remote service for checking permissions.
@@ -96,7 +79,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 		checkPermission(getPermissionChecker(), groupId, name, primKey);
 	}
 
-	protected boolean checkBaseModelPermission(
+	protected boolean checkModelResourcePermission(
 			PermissionChecker permissionChecker, long groupId, String className,
 			long classPK)
 		throws PortalException {
@@ -117,35 +100,24 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				className);
 
-		if (modelResourcePermission != null) {
-			PortletResourcePermission portletResourcePermission =
-				modelResourcePermission.getPortletResourcePermission();
+		if (modelResourcePermission == null) {
+			return false;
+		}
 
-			if (portletResourcePermission == null) {
-				modelResourcePermission.check(
-					permissionChecker, classPK, actionId);
+		PortletResourcePermission portletResourcePermission =
+			modelResourcePermission.getPortletResourcePermission();
 
-				return true;
-			}
-
-			ModelResourcePermissionUtil.check(
-				modelResourcePermission, permissionChecker, groupId, classPK,
-				actionId);
+		if (portletResourcePermission == null) {
+			modelResourcePermission.check(permissionChecker, classPK, actionId);
 
 			return true;
 		}
 
-		BaseModelPermissionChecker baseModelPermissionChecker =
-			_baseModelPermissionCheckers.getService(className);
+		ModelResourcePermissionUtil.check(
+			modelResourcePermission, permissionChecker, groupId, classPK,
+			actionId);
 
-		if (baseModelPermissionChecker != null) {
-			baseModelPermissionChecker.checkBaseModel(
-				permissionChecker, groupId, classPK, actionId);
-
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	protected void checkPermission(
@@ -153,7 +125,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 			String primKey)
 		throws PortalException {
 
-		if (checkBaseModelPermission(
+		if (checkModelResourcePermission(
 				permissionChecker, groupId, name,
 				GetterUtil.getLong(primKey))) {
 
@@ -244,46 +216,6 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionServiceImpl.class);
-
-	private static final ServiceTrackerMap<String, BaseModelPermissionChecker>
-		_baseModelPermissionCheckers =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				SystemBundleUtil.getBundleContext(),
-				BaseModelPermissionChecker.class, "model.class.name",
-				new EagerServiceTrackerCustomizer
-					<BaseModelPermissionChecker, BaseModelPermissionChecker>() {
-
-					@Override
-					public BaseModelPermissionChecker addingService(
-						ServiceReference<BaseModelPermissionChecker>
-							serviceReference) {
-
-						BundleContext bundleContext =
-							SystemBundleUtil.getBundleContext();
-
-						return bundleContext.getService(serviceReference);
-					}
-
-					@Override
-					public void modifiedService(
-						ServiceReference<BaseModelPermissionChecker>
-							serviceReference,
-						BaseModelPermissionChecker baseModelPermissionChecker) {
-					}
-
-					@Override
-					public void removedService(
-						ServiceReference<BaseModelPermissionChecker>
-							serviceReference,
-						BaseModelPermissionChecker baseModelPermissionChecker) {
-
-						BundleContext bundleContext =
-							SystemBundleUtil.getBundleContext();
-
-						bundleContext.ungetService(serviceReference);
-					}
-
-				});
 
 	@BeanReference(type = ResourcePermissionLocalService.class)
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

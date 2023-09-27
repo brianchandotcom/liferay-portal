@@ -635,6 +635,7 @@ definition {
 	@refactorneeded
 	test CannotDeleteEntryWhenOrgRoleHasNoPermissions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Permissions.setUpOrgRoleLoginUserPG(
 			orgName = "Organization Name",
@@ -1111,6 +1112,7 @@ definition {
 	@refactorneeded
 	test CannotEditEntryWhenOwnerHasNoPermissions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
@@ -1426,6 +1428,7 @@ definition {
 	test CannotSubscribeToEntryWhenRegRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Regrole Name",
@@ -1701,6 +1704,7 @@ definition {
 	@refactordone
 	test CannotViewEntryAsGuestWhenPermissionsAreRemoved {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

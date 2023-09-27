@@ -67,6 +67,8 @@ definition {
 
 		DataEngine.duplicate(fieldFieldLabel = "Text");
 
+		Click(locator1 = "Sidebar#BACK");
+
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
@@ -84,6 +86,7 @@ definition {
 	@priority = 3
 	test CanBeSingleOrMultipleLine {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		NavItem.gotoStructures();
 
@@ -390,6 +393,7 @@ definition {
 	@priority = 3
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -424,6 +428,7 @@ definition {
 	@priority = 3
 	test CanSetDefaultSearchablePropertyToKeyword {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

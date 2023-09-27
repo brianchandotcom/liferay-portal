@@ -4,7 +4,7 @@ definition {
 	// Stop running on release until ISIT-32385 fixed
 
 	property cmis.repository.type = "sharepoint2013";
-	property custom.properties = "session.store.password=true${line.separator}company.security.auth.type=screenName";
+	property custom.properties = "company.security.auth.type=screenName${line.separator}session.store.password=true";
 	property osgi.modules.includes = "sharepoint-soap";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -55,7 +55,6 @@ definition {
 
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryName = "Documents",
-			dmRepositoryLibraryPath = "Shared Documents",
 			dmRepositoryName = "Sharepoint",
 			dmRepositorySiteURL = "http://${sharepointVmHostName}",
 			dmServerVersion = 2013);
@@ -101,6 +100,7 @@ definition {
 	@refactorneeded
 	test CheckinDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -151,6 +151,7 @@ definition {
 	@refactorneeded
 	test DeleteDocumentInSubfolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -209,6 +210,7 @@ definition {
 	@refactorneeded
 	test DeleteSubfolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -235,6 +237,7 @@ definition {
 	@refactorneeded
 	test EditDocumentFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -287,6 +290,7 @@ definition {
 	@refactorneeded
 	test EditRepository {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -354,6 +358,7 @@ definition {
 	@refactorneeded
 	test MoveCheckedoutDocumentToFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -425,6 +430,7 @@ definition {
 	@refactorneeded
 	test MoveDocumentToHome {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -461,6 +467,7 @@ definition {
 	@refactorneeded
 	test SearchDocumentViaHome {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -485,6 +492,7 @@ definition {
 	@refactorneeded
 	test ViewEditedCheckedoutDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -535,6 +543,7 @@ definition {
 	@refactorneeded
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -573,6 +582,7 @@ definition {
 	@refactorneeded
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 

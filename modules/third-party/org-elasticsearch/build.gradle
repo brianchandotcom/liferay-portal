@@ -1,12 +1,11 @@
 import com.liferay.gradle.plugins.patcher.PatchTask
 
 apply plugin: "com.liferay.patcher"
-apply plugin: "nebula.optional-base"
 
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "org.elasticsearch", name: "elasticsearch", optional, transitive: false, version: "2.4.0"
+	compileOnly group: "org.elasticsearch", name: "elasticsearch", transitive: false, version: "2.4.0"
 }
 
 patch {

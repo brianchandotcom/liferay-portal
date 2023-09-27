@@ -41,6 +41,7 @@ dependencies {
 	compileOnly project(":apps:journal:journal-article-dynamic-data-mapping-form-field-type-api")
 	compileOnly project(":apps:layout:layout-dynamic-data-mapping-form-field-type-api")
 	compileOnly project(":apps:object:object-api")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-search:portal-search-api")
 	compileOnly project(":apps:portal-search:portal-search-spi")
 	compileOnly project(":apps:portal-template:portal-template-engine-api")
@@ -65,7 +66,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-spi")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "org.json", name: "json", version: "20230227"
-	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
-	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testImplementation group: "org.json", name: "json", version: "20230227"
+	testImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
+	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }

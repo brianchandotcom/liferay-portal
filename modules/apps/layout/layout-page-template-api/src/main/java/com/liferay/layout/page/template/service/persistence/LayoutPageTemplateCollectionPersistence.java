@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.page.template.service.persistence;
@@ -603,334 +594,590 @@ public interface LayoutPageTemplateCollectionPersistence
 	public int filterCountByGroupId(long groupId);
 
 	/**
-	 * Returns the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; or throws a <code>NoSuchPageTemplateCollectionException</code> if it could not be found.
+	 * Returns all the layout page template collections where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionKey the layout page template collection key
-	 * @return the matching layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
-	 */
-	public LayoutPageTemplateCollection findByG_LPTCK(
-			long groupId, String layoutPageTemplateCollectionKey)
-		throws NoSuchPageTemplateCollectionException;
-
-	/**
-	 * Returns the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionKey the layout page template collection key
-	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	public LayoutPageTemplateCollection fetchByG_LPTCK(
-		long groupId, String layoutPageTemplateCollectionKey);
-
-	/**
-	 * Returns the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionKey the layout page template collection key
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	public LayoutPageTemplateCollection fetchByG_LPTCK(
-		long groupId, String layoutPageTemplateCollectionKey,
-		boolean useFinderCache);
-
-	/**
-	 * Removes the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionKey the layout page template collection key
-	 * @return the layout page template collection that was removed
-	 */
-	public LayoutPageTemplateCollection removeByG_LPTCK(
-			long groupId, String layoutPageTemplateCollectionKey)
-		throws NoSuchPageTemplateCollectionException;
-
-	/**
-	 * Returns the number of layout page template collections where groupId = &#63; and layoutPageTemplateCollectionKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionKey the layout page template collection key
-	 * @return the number of matching layout page template collections
-	 */
-	public int countByG_LPTCK(
-		long groupId, String layoutPageTemplateCollectionKey);
-
-	/**
-	 * Returns the layout page template collection where groupId = &#63; and name = &#63; or throws a <code>NoSuchPageTemplateCollectionException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
-	 */
-	public LayoutPageTemplateCollection findByG_N(long groupId, String name)
-		throws NoSuchPageTemplateCollectionException;
-
-	/**
-	 * Returns the layout page template collection where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	public LayoutPageTemplateCollection fetchByG_N(long groupId, String name);
-
-	/**
-	 * Returns the layout page template collection where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	public LayoutPageTemplateCollection fetchByG_N(
-		long groupId, String name, boolean useFinderCache);
-
-	/**
-	 * Removes the layout page template collection where groupId = &#63; and name = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the layout page template collection that was removed
-	 */
-	public LayoutPageTemplateCollection removeByG_N(long groupId, String name)
-		throws NoSuchPageTemplateCollectionException;
-
-	/**
-	 * Returns the number of layout page template collections where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the number of matching layout page template collections
-	 */
-	public int countByG_N(long groupId, String name);
-
-	/**
-	 * Returns all the layout page template collections where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @return the matching layout page template collections
 	 */
-	public java.util.List<LayoutPageTemplateCollection> findByG_LikeN(
-		long groupId, String name);
+	public java.util.List<LayoutPageTemplateCollection> findByG_T(
+		long groupId, int type);
 
 	/**
-	 * Returns a range of all the layout page template collections where groupId = &#63; and name LIKE &#63;.
+	 * Returns a range of all the layout page template collections where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @param start the lower bound of the range of layout page template collections
 	 * @param end the upper bound of the range of layout page template collections (not inclusive)
 	 * @return the range of matching layout page template collections
 	 */
-	public java.util.List<LayoutPageTemplateCollection> findByG_LikeN(
-		long groupId, String name, int start, int end);
+	public java.util.List<LayoutPageTemplateCollection> findByG_T(
+		long groupId, int type, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and name LIKE &#63;.
+	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @param start the lower bound of the range of layout page template collections
 	 * @param end the upper bound of the range of layout page template collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layout page template collections
 	 */
-	public java.util.List<LayoutPageTemplateCollection> findByG_LikeN(
-		long groupId, String name, int start, int end,
+	public java.util.List<LayoutPageTemplateCollection> findByG_T(
+		long groupId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and name LIKE &#63;.
+	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @param start the lower bound of the range of layout page template collections
 	 * @param end the upper bound of the range of layout page template collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template collections
 	 */
-	public java.util.List<LayoutPageTemplateCollection> findByG_LikeN(
-		long groupId, String name, int start, int end,
+	public java.util.List<LayoutPageTemplateCollection> findByG_T(
+		long groupId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateCollection> orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Returns the first layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63;.
+	 * Returns the first layout page template collection in the ordered set where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout page template collection
 	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
 	 */
-	public LayoutPageTemplateCollection findByG_LikeN_First(
-			long groupId, String name,
+	public LayoutPageTemplateCollection findByG_T_First(
+			long groupId, int type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutPageTemplateCollection> orderByComparator)
 		throws NoSuchPageTemplateCollectionException;
 
 	/**
-	 * Returns the first layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63;.
+	 * Returns the first layout page template collection in the ordered set where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	 */
-	public LayoutPageTemplateCollection fetchByG_LikeN_First(
-		long groupId, String name,
+	public LayoutPageTemplateCollection fetchByG_T_First(
+		long groupId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63;.
+	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout page template collection
 	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
 	 */
-	public LayoutPageTemplateCollection findByG_LikeN_Last(
-			long groupId, String name,
+	public LayoutPageTemplateCollection findByG_T_Last(
+			long groupId, int type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutPageTemplateCollection> orderByComparator)
 		throws NoSuchPageTemplateCollectionException;
 
 	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63;.
+	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	 */
-	public LayoutPageTemplateCollection fetchByG_LikeN_Last(
-		long groupId, String name,
+	public LayoutPageTemplateCollection fetchByG_T_Last(
+		long groupId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63;.
+	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set where groupId = &#63; and type = &#63;.
 	 *
 	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout page template collection
 	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
 	 */
-	public LayoutPageTemplateCollection[] findByG_LikeN_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId, String name,
+	public LayoutPageTemplateCollection[] findByG_T_PrevAndNext(
+			long layoutPageTemplateCollectionId, long groupId, int type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutPageTemplateCollection> orderByComparator)
 		throws NoSuchPageTemplateCollectionException;
 
 	/**
-	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and name LIKE &#63;.
+	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @return the matching layout page template collections that the user has permission to view
 	 */
-	public java.util.List<LayoutPageTemplateCollection> filterFindByG_LikeN(
-		long groupId, String name);
+	public java.util.List<LayoutPageTemplateCollection> filterFindByG_T(
+		long groupId, int type);
 
 	/**
-	 * Returns a range of all the layout page template collections that the user has permission to view where groupId = &#63; and name LIKE &#63;.
+	 * Returns a range of all the layout page template collections that the user has permission to view where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @param start the lower bound of the range of layout page template collections
 	 * @param end the upper bound of the range of layout page template collections (not inclusive)
 	 * @return the range of matching layout page template collections that the user has permission to view
 	 */
-	public java.util.List<LayoutPageTemplateCollection> filterFindByG_LikeN(
-		long groupId, String name, int start, int end);
+	public java.util.List<LayoutPageTemplateCollection> filterFindByG_T(
+		long groupId, int type, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the layout page template collections that the user has permissions to view where groupId = &#63; and name LIKE &#63;.
+	 * Returns an ordered range of all the layout page template collections that the user has permissions to view where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @param start the lower bound of the range of layout page template collections
 	 * @param end the upper bound of the range of layout page template collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layout page template collections that the user has permission to view
 	 */
-	public java.util.List<LayoutPageTemplateCollection> filterFindByG_LikeN(
-		long groupId, String name, int start, int end,
+	public java.util.List<LayoutPageTemplateCollection> filterFindByG_T(
+		long groupId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set of layout page template collections that the user has permission to view where groupId = &#63; and name LIKE &#63;.
+	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set of layout page template collections that the user has permission to view where groupId = &#63; and type = &#63;.
 	 *
 	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout page template collection
 	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
 	 */
-	public LayoutPageTemplateCollection[] filterFindByG_LikeN_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId, String name,
+	public LayoutPageTemplateCollection[] filterFindByG_T_PrevAndNext(
+			long layoutPageTemplateCollectionId, long groupId, int type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutPageTemplateCollection> orderByComparator)
 		throws NoSuchPageTemplateCollectionException;
 
 	/**
-	 * Removes all the layout page template collections where groupId = &#63; and name LIKE &#63; from the database.
+	 * Removes all the layout page template collections where groupId = &#63; and type = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 */
-	public void removeByG_LikeN(long groupId, String name);
+	public void removeByG_T(long groupId, int type);
 
 	/**
-	 * Returns the number of layout page template collections where groupId = &#63; and name LIKE &#63;.
+	 * Returns the number of layout page template collections where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param type the type
 	 * @return the number of matching layout page template collections
 	 */
-	public int countByG_LikeN(long groupId, String name);
+	public int countByG_T(long groupId, int type);
 
 	/**
-	 * Returns the number of layout page template collections that the user has permission to view where groupId = &#63; and name LIKE &#63;.
+	 * Returns the number of layout page template collections that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @return the number of matching layout page template collections that the user has permission to view
+	 */
+	public int filterCountByG_T(long groupId, int type);
+
+	/**
+	 * Returns the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; and type = &#63; or throws a <code>NoSuchPageTemplateCollectionException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionKey the layout page template collection key
+	 * @param type the type
+	 * @return the matching layout page template collection
+	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
+	 */
+	public LayoutPageTemplateCollection findByG_LPTCK_T(
+			long groupId, String layoutPageTemplateCollectionKey, int type)
+		throws NoSuchPageTemplateCollectionException;
+
+	/**
+	 * Returns the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionKey the layout page template collection key
+	 * @param type the type
+	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
+	 */
+	public LayoutPageTemplateCollection fetchByG_LPTCK_T(
+		long groupId, String layoutPageTemplateCollectionKey, int type);
+
+	/**
+	 * Returns the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionKey the layout page template collection key
+	 * @param type the type
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
+	 */
+	public LayoutPageTemplateCollection fetchByG_LPTCK_T(
+		long groupId, String layoutPageTemplateCollectionKey, int type,
+		boolean useFinderCache);
+
+	/**
+	 * Removes the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; and type = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionKey the layout page template collection key
+	 * @param type the type
+	 * @return the layout page template collection that was removed
+	 */
+	public LayoutPageTemplateCollection removeByG_LPTCK_T(
+			long groupId, String layoutPageTemplateCollectionKey, int type)
+		throws NoSuchPageTemplateCollectionException;
+
+	/**
+	 * Returns the number of layout page template collections where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionKey the layout page template collection key
+	 * @param type the type
+	 * @return the number of matching layout page template collections
+	 */
+	public int countByG_LPTCK_T(
+		long groupId, String layoutPageTemplateCollectionKey, int type);
+
+	/**
+	 * Returns the layout page template collection where groupId = &#63; and name = &#63; and type = &#63; or throws a <code>NoSuchPageTemplateCollectionException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
+	 * @param type the type
+	 * @return the matching layout page template collection
+	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
+	 */
+	public LayoutPageTemplateCollection findByG_N_T(
+			long groupId, String name, int type)
+		throws NoSuchPageTemplateCollectionException;
+
+	/**
+	 * Returns the layout page template collection where groupId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
+	 */
+	public LayoutPageTemplateCollection fetchByG_N_T(
+		long groupId, String name, int type);
+
+	/**
+	 * Returns the layout page template collection where groupId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
+	 */
+	public LayoutPageTemplateCollection fetchByG_N_T(
+		long groupId, String name, int type, boolean useFinderCache);
+
+	/**
+	 * Removes the layout page template collection where groupId = &#63; and name = &#63; and type = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @return the layout page template collection that was removed
+	 */
+	public LayoutPageTemplateCollection removeByG_N_T(
+			long groupId, String name, int type)
+		throws NoSuchPageTemplateCollectionException;
+
+	/**
+	 * Returns the number of layout page template collections where groupId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @return the number of matching layout page template collections
+	 */
+	public int countByG_N_T(long groupId, String name, int type);
+
+	/**
+	 * Returns all the layout page template collections where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @return the matching layout page template collections
+	 */
+	public java.util.List<LayoutPageTemplateCollection> findByG_LikeN_T(
+		long groupId, String name, int type);
+
+	/**
+	 * Returns a range of all the layout page template collections where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param start the lower bound of the range of layout page template collections
+	 * @param end the upper bound of the range of layout page template collections (not inclusive)
+	 * @return the range of matching layout page template collections
+	 */
+	public java.util.List<LayoutPageTemplateCollection> findByG_LikeN_T(
+		long groupId, String name, int type, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param start the lower bound of the range of layout page template collections
+	 * @param end the upper bound of the range of layout page template collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template collections
+	 */
+	public java.util.List<LayoutPageTemplateCollection> findByG_LikeN_T(
+		long groupId, String name, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateCollection> orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param start the lower bound of the range of layout page template collections
+	 * @param end the upper bound of the range of layout page template collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching layout page template collections
+	 */
+	public java.util.List<LayoutPageTemplateCollection> findByG_LikeN_T(
+		long groupId, String name, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateCollection> orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template collection
+	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
+	 */
+	public LayoutPageTemplateCollection findByG_LikeN_T_First(
+			long groupId, String name, int type,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateCollection> orderByComparator)
+		throws NoSuchPageTemplateCollectionException;
+
+	/**
+	 * Returns the first layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
+	 */
+	public LayoutPageTemplateCollection fetchByG_LikeN_T_First(
+		long groupId, String name, int type,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateCollection> orderByComparator);
+
+	/**
+	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template collection
+	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
+	 */
+	public LayoutPageTemplateCollection findByG_LikeN_T_Last(
+			long groupId, String name, int type,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateCollection> orderByComparator)
+		throws NoSuchPageTemplateCollectionException;
+
+	/**
+	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
+	 */
+	public LayoutPageTemplateCollection fetchByG_LikeN_T_Last(
+		long groupId, String name, int type,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateCollection> orderByComparator);
+
+	/**
+	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template collection
+	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
+	 */
+	public LayoutPageTemplateCollection[] findByG_LikeN_T_PrevAndNext(
+			long layoutPageTemplateCollectionId, long groupId, String name,
+			int type,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateCollection> orderByComparator)
+		throws NoSuchPageTemplateCollectionException;
+
+	/**
+	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @return the matching layout page template collections that the user has permission to view
+	 */
+	public java.util.List<LayoutPageTemplateCollection> filterFindByG_LikeN_T(
+		long groupId, String name, int type);
+
+	/**
+	 * Returns a range of all the layout page template collections that the user has permission to view where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param start the lower bound of the range of layout page template collections
+	 * @param end the upper bound of the range of layout page template collections (not inclusive)
+	 * @return the range of matching layout page template collections that the user has permission to view
+	 */
+	public java.util.List<LayoutPageTemplateCollection> filterFindByG_LikeN_T(
+		long groupId, String name, int type, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the layout page template collections that the user has permissions to view where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param start the lower bound of the range of layout page template collections
+	 * @param end the upper bound of the range of layout page template collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template collections that the user has permission to view
+	 */
+	public java.util.List<LayoutPageTemplateCollection> filterFindByG_LikeN_T(
+		long groupId, String name, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateCollection> orderByComparator);
+
+	/**
+	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set of layout page template collections that the user has permission to view where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template collection
+	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
+	 */
+	public LayoutPageTemplateCollection[] filterFindByG_LikeN_T_PrevAndNext(
+			long layoutPageTemplateCollectionId, long groupId, String name,
+			int type,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateCollection> orderByComparator)
+		throws NoSuchPageTemplateCollectionException;
+
+	/**
+	 * Removes all the layout page template collections where groupId = &#63; and name LIKE &#63; and type = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 */
+	public void removeByG_LikeN_T(long groupId, String name, int type);
+
+	/**
+	 * Returns the number of layout page template collections where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @return the number of matching layout page template collections
+	 */
+	public int countByG_LikeN_T(long groupId, String name, int type);
+
+	/**
+	 * Returns the number of layout page template collections that the user has permission to view where groupId = &#63; and name LIKE &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
 	 * @return the number of matching layout page template collections that the user has permission to view
 	 */
-	public int filterCountByG_LikeN(long groupId, String name);
+	public int filterCountByG_LikeN_T(long groupId, String name, int type);
 
 	/**
 	 * Caches the layout page template collection in the entity cache if it is enabled.

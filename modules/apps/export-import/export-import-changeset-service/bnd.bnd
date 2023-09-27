@@ -1,4 +1,4 @@
 Bundle-Activator: com.liferay.exportimport.changeset.internal.activator.ChangesetServiceBundleActivator
 Bundle-Name: Liferay Export Import Changeset Service
 Bundle-SymbolicName: com.liferay.exportimport.changeset.service
-Bundle-Version: 4.0.8
+Bundle-Version: 4.0.9

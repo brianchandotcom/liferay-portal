@@ -1,0 +1,58 @@
+.lfr-object__object-view-modal-object-definitions {
+	.container-list {
+		max-height: 350px;
+		overflow-y: auto;
+		padding: 3px;
+	}
+	.custom-checkbox {
+		margin-bottom: 0;
+		margin-left: 3.3px;
+	}
+
+	&-list-item {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+
+		&.active {
+			background: #f0f5ff;
+		}
+		> div:first-child {
+			align-items: center;
+			display: flex;
+			gap: 20px;
+
+			> svg {
+				background: #fff;
+				border-radius: 5px;
+				height: 32px;
+				padding: 8px;
+				width: 32px;
+			}
+
+			.custom-control {
+				margin-bottom: 0;
+			}
+
+			.lexicon-icon {
+				margin-top: 0;
+			}
+
+			.rejected {
+				align-items: center;
+				display: flex;
+				gap: 5px;
+			}
+		}
+
+		.loading-animation {
+			margin: 0;
+		}
+	}
+
+	&-select-all-checkbox {
+		align-items: center;
+		display: flex;
+		gap: 10px;
+	}
+}

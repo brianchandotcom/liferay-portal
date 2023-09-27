@@ -1,0 +1,68 @@
+.lfr-objects__model-builder-header {
+	background-color: #fff;
+	border-bottom: 1px solid #f1f2f5;
+	display: flex;
+	justify-content: center;
+	padding: 1rem 0;
+
+	&-buttons-container {
+		align-items: center;
+		display: flex;
+		gap: 1rem;
+	}
+
+	&-changes-saved {
+		align-items: center;
+		color: #287d3c;
+		display: flex;
+		font-size: 14px;
+		font-weight: 600;
+		gap: 0.5rem;
+	}
+
+	&-container {
+		display: flex;
+		justify-content: space-between;
+		max-width: 78rem;
+		padding: 0 1.3rem;
+		width: 100%;
+	}
+
+	&-object-folder-info {
+		align-items: center;
+		display: flex;
+		gap: 0.5rem;
+
+		&-erc-content {
+			max-width: 28rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+
+			&-changes-saved {
+				max-width: 10rem;
+			}
+		}
+
+		&-erc-title {
+			color: #6b6c7e;
+		}
+
+		&-name {
+			border-right: solid 1px #cdced9;
+			color: #272833;
+			font-size: 18px;
+			font-weight: 600;
+			line-height: 150%;
+			max-width: 12.5rem;
+			overflow: hidden;
+			padding-right: 0.5rem;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+
+			&-changes-saved {
+				max-width: 10rem;
+			}
+		}
+	}
+}

@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -108,10 +99,26 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 
 						<aui:input checked="<%= (cpDefinitionInventory == null) ? false : cpDefinitionInventory.isDisplayStockQuantity() %>" inlineField="<%= true %>" name="displayStockQuantity" type="toggle-switch" />
 
-						<aui:input name="minOrderQuantity" value="<%= (cpDefinitionInventory == null) ? String.valueOf(CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY) : String.valueOf(cpDefinitionInventory.getMinOrderQuantity()) %>">
-							<aui:validator name="digits" />
+						<%
+						BigDecimal minOrderQuantity = CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
+
+						if (cpDefinitionInventory != null) {
+							minOrderQuantity = cpDefinitionInventory.getMinOrderQuantity();
+						}
+						%>
+
+						<aui:input ignoreRequestValue="<%= true %>" name="minOrderQuantity" type="text" value="<%= minOrderQuantity %>">
 							<aui:validator name="required" />
-							<aui:validator name="min">1</aui:validator>
+
+							<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-x", 0) %>' name="custom">
+								function(val) {
+									if (Number(val) > 0) {
+										return true;
+									}
+
+									return false;
+								}
+							</aui:validator>
 						</aui:input>
 
 						<aui:input helpMessage="separate-values-with-a-comma-period-or-space" name="allowedOrderQuantities" />
@@ -136,22 +143,69 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 
 						<liferay-ui:error exception="<%= NumberFormatException.class %>" message="there-was-an-error-processing-one-or-more-of-the-quantities-entered" />
 
-						<aui:input label="low-stock-threshold" name="minStockQuantity">
-							<aui:validator name="digits" />
+						<%
+						BigDecimal minStockQuantity = BigDecimal.ZERO;
+
+						if (cpDefinitionInventory != null) {
+							minStockQuantity = cpDefinitionInventory.getMinStockQuantity();
+						}
+						%>
+
+						<aui:input ignoreRequestValue="<%= true %>" label="low-stock-threshold" name="minStockQuantity" type="text" value="<%= minStockQuantity %>">
+							<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-or-equal-to-x", 0) %>' name="custom">
+								function(val) {
+									if (Number(val) >= 0) {
+										return true;
+									}
+									return false;
+								}
+							</aui:validator>
 						</aui:input>
 
 						<aui:input checked="<%= (cpDefinitionInventory == null) ? false : cpDefinitionInventory.getBackOrders() %>" label="allow-back-orders" name="backOrders" type="toggle-switch" />
 
-						<aui:input name="maxOrderQuantity" value="<%= (cpDefinitionInventory == null) ? String.valueOf(CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY) : String.valueOf(cpDefinitionInventory.getMaxOrderQuantity()) %>">
-							<aui:validator name="digits" />
+						<%
+						BigDecimal maxOrderQuantity = CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY;
+
+						if (cpDefinitionInventory != null) {
+							maxOrderQuantity = cpDefinitionInventory.getMaxOrderQuantity();
+						}
+						%>
+
+						<aui:input ignoreRequestValue="<%= true %>" name="maxOrderQuantity" type="text" value="<%= maxOrderQuantity %>">
 							<aui:validator name="required" />
-							<aui:validator name="min">1</aui:validator>
+
+							<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-x", 0) %>' name="custom">
+								function(val) {
+									if (Number(val) > 0) {
+										return true;
+									}
+
+									return false;
+								}
+							</aui:validator>
 						</aui:input>
 
-						<aui:input name="multipleOrderQuantity" value="<%= (cpDefinitionInventory == null) ? String.valueOf(CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY) : String.valueOf(cpDefinitionInventory.getMultipleOrderQuantity()) %>">
-							<aui:validator name="digits" />
+						<%
+						BigDecimal multipleOrderQuantity = CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY;
+
+						if (cpDefinitionInventory != null) {
+							multipleOrderQuantity = cpDefinitionInventory.getMultipleOrderQuantity();
+						}
+						%>
+
+						<aui:input ignoreRequestValue="<%= true %>" name="multipleOrderQuantity" type="text" value="<%= multipleOrderQuantity %>">
 							<aui:validator name="required" />
-							<aui:validator name="min">1</aui:validator>
+
+							<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-x", 0) %>' name="custom">
+								function(val) {
+									if (Number(val) > 0) {
+										return true;
+									}
+
+									return false;
+								}
+							</aui:validator>
 						</aui:input>
 					</div>
 				</div>

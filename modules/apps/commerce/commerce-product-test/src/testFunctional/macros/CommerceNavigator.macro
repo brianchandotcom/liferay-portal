@@ -148,6 +148,10 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro goToPriceListAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet");
+	}
+
 	macro gotoProductDetails {
 		var productName = CommerceUtilities.convertStringToKey(string = ${productName});
 
@@ -157,7 +161,7 @@ definition {
 	}
 
 	macro goToProductOptionsAdminViaURL {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=20121");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet");
 	}
 
 	macro goToSpecificationsAdmin {
@@ -187,9 +191,14 @@ definition {
 	}
 
 	macro gotoTableListEntry {
+		if (!(isSet(index))) {
+			var index = 1;
+		}
+
 		Click(
+			index = ${index},
 			key_entryName = ${entryName},
-			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE_AND_POSITION");
 	}
 
 	macro goToTaxCategoriesAdmin {
@@ -202,6 +211,14 @@ definition {
 
 	macro goToWishLists {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
+	}
+
+	macro openCommerceCatalogueAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet");
+	}
+
+	macro openCommerceCountriesAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_address_web_internal_portlet_CommerceCountryPortlet");
 	}
 
 	macro searchCatalog {

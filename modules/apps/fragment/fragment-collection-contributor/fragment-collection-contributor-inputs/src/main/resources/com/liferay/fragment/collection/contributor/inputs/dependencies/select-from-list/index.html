@@ -1,14 +1,14 @@
 <div class="select-from-list">
-	<div class="form-group mb-0">
+	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0">
 		<div class="align-items-end input-group">
 			<div class="input-group-item input-group-prepend">
-				<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-select-from-list-input">
+				<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-select-from-list-input-label">
 					${htmlUtil.escape(input.label)}
 
 					[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 				</label>
 
-				<input aria-autocomplete="list" aria-controls="${fragmentEntryLinkNamespace}-listbox" aria-expanded="false" class="form-control" id="${fragmentEntryLinkNamespace}-select-from-list-input" name="" placeholder="${languageUtil.get(locale, "choose-an-option")}" role="combobox" type="text" ${input.required?then('required', '')} [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
+				<input aria-autocomplete="list" aria-controls="${fragmentEntryLinkNamespace}-listbox" aria-expanded="false" aria-labelledby="${fragmentEntryLinkNamespace}-select-from-list-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-select-from-list-input-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-select-from-list-input" name="" placeholder="${languageUtil.get(locale, "choose-an-option")}" role="combobox" type="text" ${input.required?then('required', '')} [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
 
 				<input id="${fragmentEntryLinkNamespace}-value-input" name="${input.name}" type="hidden" [#if input.attributes.selectedOptionValue??]value="${input.value}"[/#if] />
 				<input id="${fragmentEntryLinkNamespace}-label-input" name="${input.name}-label" type="hidden" [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
@@ -42,11 +42,14 @@
 							[#break]
 						[/#if]
 
+						[#assign selectedOption=false]
+
 						[#if input.value?? && option.value == input.value]
+							[#assign selectedOption=true]
 							[#assign selectedValueFoundInOptions=true]
 						[/#if]
 
-						<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
+						<li [#if selectedOption]aria-selected="true"[/#if] class="[#if selectedOption]active[/#if] dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
 							${htmlUtil.escape(option.label)}
 						</li>
 					[/#list]
@@ -59,6 +62,18 @@
 				</ul>
 			</div>
 		</div>
+
+		[#if input.errorMessage?has_content]
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentEntryLinkNamespace}-select-from-list-input-error-message">
+				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+					<use xlink:href="${siteSpritemap}#info-circle" />
+				</svg>
+
+				<span>
+					${input.errorMessage}
+				</span>
+			</p>
+		[/#if]
 
 		[#if input.showHelpText && input.helpText?has_content]
 			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-help-text">

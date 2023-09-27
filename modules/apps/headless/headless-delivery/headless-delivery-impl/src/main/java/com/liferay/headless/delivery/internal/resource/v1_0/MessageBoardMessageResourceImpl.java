@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
@@ -19,7 +10,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
@@ -43,6 +34,7 @@ import com.liferay.message.boards.util.comparator.MessageSubjectComparator;
 import com.liferay.message.boards.util.comparator.MessageURLSubjectComparator;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -75,8 +67,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
-
-import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Map;
@@ -354,6 +344,29 @@ public class MessageBoardMessageResourceImpl
 			sorts);
 	}
 
+	public Page<MessageBoardMessage>
+			getSiteUserMessageBoardMessagesActivityPage(
+				Long siteId, Long userId, Pagination pagination)
+		throws Exception {
+
+		int start = QueryUtil.ALL_POS;
+		int end = QueryUtil.ALL_POS;
+
+		if (pagination != null) {
+			start = pagination.getStartPosition();
+			end = pagination.getEndPosition();
+		}
+
+		return Page.of(
+			transform(
+				_mbMessageService.getGroupUserMessageBoardMessagesActivity(
+					siteId, userId, start, end),
+				this::_toMessageBoardMessage),
+			pagination,
+			_mbMessageService.getGroupUserMessageBoardMessagesActivityCount(
+				siteId, userId));
+	}
+
 	@Override
 	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
 			Long parentMessageBoardMessageId,
@@ -509,11 +522,15 @@ public class MessageBoardMessageResourceImpl
 	private ServiceContext _createServiceContext(
 		long groupId, MessageBoardMessage messageBoardMessage) {
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				_getExpandoBridgeAttributes(messageBoardMessage), groupId,
-				contextHttpServletRequest,
-				messageBoardMessage.getViewableByAsString());
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest,
+			messageBoardMessage.getViewableByAsString()
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				MBMessage.class.getName(), contextCompany.getCompanyId(),
+				messageBoardMessage.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 
 		String link = contextHttpServletRequest.getHeader("Link");
 
@@ -537,15 +554,6 @@ public class MessageBoardMessageResourceImpl
 		}
 
 		return serviceContext;
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		MessageBoardMessage messageBoardMessage) {
-
-		return CustomFieldsUtil.toMap(
-			MBMessage.class.getName(), contextCompany.getCompanyId(),
-			messageBoardMessage.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private OrderByComparator<MBMessage> _getMBMessageOrderByComparator(

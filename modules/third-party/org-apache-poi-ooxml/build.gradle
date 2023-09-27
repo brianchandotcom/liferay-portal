@@ -1,0 +1,9 @@
+dependencies {
+	compileInclude group: "org.apache.logging.log4j", name: "log4j-api", version: "2.17.2"
+	compileInclude group: "org.apache.logging.log4j", name: "log4j-core", version: "2.17.2"
+	compileInclude group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
+}
+
+liferayOSGi {
+	expandCompileInclude = true
+}

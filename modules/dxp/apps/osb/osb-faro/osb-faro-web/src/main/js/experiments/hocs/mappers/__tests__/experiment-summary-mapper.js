@@ -10,7 +10,7 @@ const DXP_VARIANTS_MOCK = [
 		control: true,
 		dxpVariantId: 'DEFAULT',
 		dxpVariantName: 'Control',
-		trafficSplit: 34,
+		trafficSplit: 50,
 		uniqueVisitors: 1
 	},
 	{
@@ -18,15 +18,7 @@ const DXP_VARIANTS_MOCK = [
 		control: false,
 		dxpVariantId: '4203992243',
 		dxpVariantName: 'Variant 01',
-		trafficSplit: 33,
-		uniqueVisitors: 1
-	},
-	{
-		changes: 0,
-		control: false,
-		dxpVariantId: '2365555171',
-		dxpVariantName: 'Variant 02',
-		trafficSplit: 33,
+		trafficSplit: 50,
 		uniqueVisitors: 1
 	}
 ];
@@ -43,13 +35,6 @@ const VARIANT_METRICS_MOCK = [
 		confidenceInterval: [0.3, 0.4],
 		dxpVariantId: '4203992243',
 		improvement: 1,
-		median: 0.5,
-		probabilityToWin: 0.2
-	},
-	{
-		confidenceInterval: [0.3, 0.4],
-		dxpVariantId: '2365555171',
-		improvement: 5,
 		median: 0.5,
 		probabilityToWin: 0.2
 	}
@@ -84,10 +69,10 @@ const DATA_MOCK = {
 		},
 		pageURL: 'http://localhost/web/guest/content-page',
 		progress: 100,
-		publishedDXPVariantId: '2365555171',
+		publishedDXPVariantId: '4203992243',
 		sessions: 3000,
 		startedDate: '2019-08-05T20:26:59.063Z',
-		winnerDXPVariantId: '2365555171'
+		winnerDXPVariantId: '4203992243'
 	}
 };
 
@@ -178,8 +163,6 @@ describe('Summary Mapper for status in RUNNING', () => {
 	});
 
 	it('should return formatted header', () => {
-		expect(mapper.header.modals.length).toBe(1);
-		expect(mapper.header.modals[0].title).toEqual('Terminate Test');
 		expect(mapper.header.Description()).toEqual('Started: Aug 5, 2019');
 		expect(mapper.header.title).toEqual('Test Is Running');
 	});
@@ -223,7 +206,7 @@ describe('Summary Mapper for status in RUNNING', () => {
 				'.analytics-summary-section-variant-status-up'
 			)
 		).toBeTruthy();
-		expect(getByText('5% lift'));
+		expect(getByText('1% lift'));
 	});
 });
 
@@ -250,9 +233,6 @@ describe('Summary Mapper for status in FINISHED_WINNER and winner no declared', 
 	});
 
 	it('should return formatted header', () => {
-		expect(mapper.header.modals.length).toBe(2);
-		expect(mapper.header.modals[0].title).toEqual('Complete Test');
-		expect(mapper.header.modals[1].title).toEqual('Publish Variant');
 		expect(mapper.header.Description()).toEqual('Started: Aug 5, 2019');
 		expect(mapper.header.title).toEqual('No Clear Winner');
 	});
@@ -295,7 +275,7 @@ describe('Summary Mapper for status in FINISHED_WINNER and winner no declared', 
 				'.analytics-summary-section-variant-status-up'
 			)
 		).toBeTruthy();
-		expect(getByText('5% lift'));
+		expect(getByText('1% lift'));
 	});
 });
 
@@ -322,26 +302,13 @@ describe('Summary Mapper for status FINISHED_WINNER and winner declared', () => 
 		expect(mapper).toMatchSnapshot();
 	});
 
-	it('should return formatted modals', () => {
-		expect(mapper.header.modals.length).toBe(3);
-		expect(mapper.header.modals[0].title).toEqual('Publish Winner');
-		expect(mapper.header.modals[1].title).toEqual('Publish Other Variant');
-		expect(mapper.header.modals[2].title).toEqual('Complete Test');
-	});
-
-	it('should return formatted modals with Control winner', () => {
-		expect(mapperControlWinner.header.modals.length).toBe(2);
-		expect(mapper.header.modals[0].title).toEqual('Publish Winner');
-		expect(mapper.header.modals[1].title).toEqual('Publish Other Variant');
-	});
-
 	it('should return formatted alert', () => {
 		expect(mapper.alert.description).toEqual(
 			'We recommend that you publish the winning variant.'
 		);
 		expect(mapper.alert.symbol).toEqual('check-circle');
 		expect(mapper.alert.title).toEqual(
-			'Variant 02 has outperformed control by at least 5%'
+			'Variant 01 has outperformed control by at least 1%.'
 		);
 	});
 
@@ -351,7 +318,7 @@ describe('Summary Mapper for status FINISHED_WINNER and winner declared', () => 
 		);
 		expect(mapperControlWinner.alert.symbol).toEqual('check-circle');
 		expect(mapperControlWinner.alert.title).toEqual(
-			'Control has outperformed all variants by at least 1%'
+			'Control has outperformed Variant 01 by at least 1%.'
 		);
 	});
 
@@ -398,7 +365,7 @@ describe('Summary Mapper for status FINISHED_WINNER and winner declared', () => 
 				'.analytics-summary-section-variant-status-up'
 			)
 		).toBeTruthy();
-		expect(getByText('5% lift'));
+		expect(getByText('1% lift'));
 	});
 });
 
@@ -416,7 +383,7 @@ describe('Summary Mapper for status in COMPLETED', () => {
 		...DATA_MOCK,
 		experiment: {
 			...DATA_MOCK.experiment,
-			publishedDXPVariantId: '2365555171',
+			publishedDXPVariantId: '4203992243',
 			status: 'COMPLETED'
 		}
 	});
@@ -433,7 +400,7 @@ describe('Summary Mapper for status in COMPLETED', () => {
 		);
 		expect(mapperWithWinnerVariant.alert.symbol).toEqual('check-circle');
 		expect(mapperWithWinnerVariant.alert.title).toEqual(
-			'Variant 02 has been published.'
+			'Variant 01 has been published.'
 		);
 
 		expect(mapperWithWinnerVariant).toMatchSnapshot();
@@ -447,11 +414,6 @@ describe('Summary Mapper for status in COMPLETED', () => {
 		expect(mapper.alert.title).toEqual(
 			'Control has been kept as the experience.'
 		);
-	});
-
-	it('should return formatted cardModals', () => {
-		expect(mapper.header.cardModals.length).toBe(1);
-		expect(mapper.header.cardModals[0].title).toEqual('Delete Test');
 	});
 
 	it('should return formatted header', () => {
@@ -517,12 +479,7 @@ describe('Summary Mapper for status in COMPLETED and a variant published', () =>
 			'Your new experience was successfully published and no more data will be collected for this test.'
 		);
 		expect(mapper.alert.symbol).toEqual('check-circle');
-		expect(mapper.alert.title).toEqual('Variant 02 has been published.');
-	});
-
-	it('should return formatted cardModals', () => {
-		expect(mapper.header.cardModals.length).toBe(1);
-		expect(mapper.header.cardModals[0].title).toEqual('Delete Test');
+		expect(mapper.alert.title).toEqual('Variant 01 has been published.');
 	});
 
 	it('should return formatted header', () => {
@@ -570,6 +527,7 @@ describe('Summary Mapper for status in COMPLETED and a variant published', () =>
 });
 
 describe('Summary Mapper for status in TERMINATED', () => {
+	// Note: this mapper is using "Click" metric and "Variant" as a winner
 	const mapper = getSummaryMapper({
 		...DATA_MOCK,
 		experiment: {
@@ -579,17 +537,17 @@ describe('Summary Mapper for status in TERMINATED', () => {
 		}
 	});
 
-	const mapperNoWinnerClickMetric = getSummaryMapper({
+	const mapperBounceMetricControlWinner = getSummaryMapper({
 		...DATA_MOCK,
 		experiment: {
 			...DATA_MOCK.experiment,
-			goal: {metric: 'CLICK_RATE'},
+			goal: {metric: 'BOUNCE_RATE'},
 			status: 'TERMINATED',
-			winnerDXPVariantId: null
+			winnerDXPVariantId: 'DEFAULT'
 		}
 	});
 
-	const mapperBounceMetric = getSummaryMapper({
+	const mapperBounceMetricVariantWinner = getSummaryMapper({
 		...DATA_MOCK,
 		experiment: {
 			...DATA_MOCK.experiment,
@@ -598,11 +556,31 @@ describe('Summary Mapper for status in TERMINATED', () => {
 		}
 	});
 
+	const mapperClickMetricControlWinner = getSummaryMapper({
+		...DATA_MOCK,
+		experiment: {
+			...DATA_MOCK.experiment,
+			goal: {metric: 'CLICK_RATE'},
+			status: 'TERMINATED',
+			winnerDXPVariantId: 'DEFAULT'
+		}
+	});
+
 	const mapperNoWinnerBounceMetric = getSummaryMapper({
 		...DATA_MOCK,
 		experiment: {
 			...DATA_MOCK.experiment,
 			goal: {metric: 'BOUNCE_RATE'},
+			status: 'TERMINATED',
+			winnerDXPVariantId: null
+		}
+	});
+
+	const mapperNoWinnerClickMetric = getSummaryMapper({
+		...DATA_MOCK,
+		experiment: {
+			...DATA_MOCK.experiment,
+			goal: {metric: 'CLICK_RATE'},
 			status: 'TERMINATED',
 			winnerDXPVariantId: null
 		}
@@ -619,7 +597,7 @@ describe('Summary Mapper for status in TERMINATED', () => {
 		expect(mapper.status).toEqual('terminated');
 
 		expect(mapper.alert.title).toEqual(
-			'Variant 02 has outperformed Variant 01 at least 5%.'
+			'Variant 01 has outperformed Control by at least 1.00%.'
 		);
 
 		expect(getByText('Test Metric'));
@@ -640,16 +618,48 @@ describe('Summary Mapper for status in TERMINATED', () => {
 	});
 
 	it('should return status TERMINATED with a WINNER and using BOUNCE metric', () => {
-		const {getByText} = render(mapperBounceMetric.sections[3].Body());
+		const {getByText} = render(
+			mapperBounceMetricVariantWinner.sections[3].Body()
+		);
 
-		expect(mapperBounceMetric.status).toEqual('terminated');
+		expect(mapperBounceMetricVariantWinner.status).toEqual('terminated');
 
-		expect(mapperBounceMetric.alert.title).toEqual(
-			'Variant 02 has outperformed Variant 01 at least 5%.'
+		expect(mapperBounceMetricVariantWinner.alert.title).toEqual(
+			'Variant 01 has outperformed Control by at least 1.00%.'
 		);
 
 		expect(getByText('Test Metric'));
 		expect(getByText('Bounce Rate'));
+	});
+
+	it('should return status TERMINATED with CONTROL as WINNER and using BOUNCE metric', () => {
+		const {getByText} = render(
+			mapperBounceMetricControlWinner.sections[3].Body()
+		);
+
+		expect(mapperBounceMetricControlWinner.status).toEqual('terminated');
+
+		expect(mapperBounceMetricControlWinner.alert.title).toEqual(
+			'Control has outperformed Variant 01 by at least 1.00%.'
+		);
+
+		expect(getByText('Test Metric'));
+		expect(getByText('Bounce Rate'));
+	});
+
+	it('should return status TERMINATED with CONTROL as WINNER and using CLICK metric', () => {
+		const {getByText} = render(
+			mapperClickMetricControlWinner.sections[3].Body()
+		);
+
+		expect(mapperClickMetricControlWinner.status).toEqual('terminated');
+
+		expect(mapperClickMetricControlWinner.alert.title).toEqual(
+			'Control has outperformed Variant 01 by at least 1.00%.'
+		);
+
+		expect(getByText('Test Metric'));
+		expect(getByText('Click-Through Rate'));
 	});
 
 	it('should return status TERMINATED with a NO WINNER and using BOUNCE metric', () => {
@@ -665,11 +675,6 @@ describe('Summary Mapper for status in TERMINATED', () => {
 
 		expect(getByText('Test Metric'));
 		expect(getByText('Bounce Rate'));
-	});
-
-	it('should return formatted cardModals', () => {
-		expect(mapper.header.cardModals.length).toBe(1);
-		expect(mapper.header.cardModals[0].title).toEqual('Delete Test');
 	});
 
 	it('should return formatted header', () => {
@@ -718,6 +723,6 @@ describe('Summary Mapper for status in TERMINATED', () => {
 				'.analytics-summary-section-variant-status-up'
 			)
 		).toBeTruthy();
-		expect(getByText('5% lift'));
+		expect(getByText('1% lift'));
 	});
 });

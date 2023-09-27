@@ -33,6 +33,7 @@ definition {
 	test AddAndDeleteBlogEntriesOnSeparateNodes {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -158,11 +159,9 @@ definition {
 	@priority = 3
 	test CanAccessGogoShellOnAnyClusteredNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "lb | grep Liferay");
 
@@ -175,14 +174,62 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin(baseURL = "http://localhost:9080");
 
 		GogoShell.executeCommand(commandName = "lb | grep Liferay");
 
 		GogoShell.viewOutput(outputContent = "Liferay Portal");
+	}
+
+	@description = "This is a usecase for LPS-151178. Verify a category can be added to a document on a slave node."
+	@priority = 3
+	test CanAddCategoryToDocumentOnSlaveNode {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a category") {
+			JSONCategory.addVocabulary(
+				groupName = "Guest",
+				title = "Vocabulary Name 1");
+
+			JSONCategory.addCategory(
+				groupName = "Guest",
+				title = "Category Name 1",
+				vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("And given a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Guest",
+				mimeType = "application/docx",
+				sourceFileName = "Document_1.docx");
+		}
+
+		task ("When the user clicks on the document from the slave node") {
+			User.loginPG(
+				nodePort = 9080,
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			DMNavigator.openDocumentsAndMediaAdmin(
+				baseURL = "http://localhost:9080",
+				siteURLKey = "guest");
+		}
+
+		task ("And adds the category to the document") {
+			LexiconCard.checkCardCheckbox(card = "DM Document Title");
+
+			DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Edit Categories");
+
+			DMDocument.editCategoryTags(categoryNameList = "Category Name 1");
+		}
+
+		task ("Then the category is saved on the document") {
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+			DMDocument.viewCategoriesInfo(categoryNameList = "Category Name 1");
+		}
 	}
 
 	@description = "This is a use case for LPS-170924."
@@ -192,6 +239,7 @@ definition {
 		property database.partition.enabled = "true";
 		property liferay.online.properties = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -238,6 +286,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -254,6 +303,8 @@ definition {
 			mailDomain = "www.able.com",
 			virtualHost = "www.able.com",
 			webId = "www.able.com");
+
+		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -283,6 +334,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -332,6 +384,7 @@ definition {
 	@priority = 4
 	test CanInvokeMethods {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Result of invoke-method-portal: 9080",
@@ -393,6 +446,7 @@ definition {
 	@priority = 4
 	test CanUpdateLogLevelsForAllNodesFromMaster {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -423,6 +477,7 @@ definition {
 	test CanUpdateLogLevelsForAllNodesFromSlave {
 		property app.server.bundles.size = "2";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.logoutPG(
 			password = "test",
@@ -433,10 +488,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
+		ServerAdministration.openServerAdmin(baseURL = "http://localhost:9080");
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryLevel = "DEBUG",
@@ -465,6 +517,7 @@ definition {
 		property portal.release = "true";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -590,10 +643,217 @@ definition {
 		Portlet.viewPG(portletName = "Documents and Media");
 	}
 
+	@priority = 3
+	test EnableAndDisableFeatureFlagOnMasterNode {
+		property custom.properties = "feature.flag.ui.visible[dev]=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a feature is disabled on both nodes") {
+			for (var nodePort : list "9080,8080") {
+				WaitForElementPresent(locator1 = "ApplicationsMenu#TOGGLE");
+
+				ApplicationsMenuHelper.openApplicationsMenu();
+
+				AssertElementNotPresent(
+					key_category = "Import / Export",
+					key_portlet = "Import/Export Center",
+					locator1 = "ApplicationsMenu#PORTLET");
+
+				User.loginPG(
+					nodePort = ${nodePort},
+					password = "test",
+					userEmailAddress = "test@liferay.com");
+			}
+		}
+
+		task ("When the feature flag toggle is enabled via UI on the master node") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Developer",
+				configurationScope = "Virtual Instance Scope");
+
+			FeatureFlag.enableFeatureFlag(
+				featureFlag = "COMMERCE-8087",
+				scope = "Developer");
+		}
+
+		task ("Then the feature is enabled on both nodes") {
+			for (var nodePort : list "9080,8080") {
+				ApplicationsMenu.gotoPortlet(
+					category = "Import / Export",
+					panel = "Applications",
+					portlet = "Import/Export Center");
+
+				ImportExport.gotoImport();
+
+				User.loginPG(
+					nodePort = ${nodePort},
+					password = "test",
+					userEmailAddress = "test@liferay.com");
+			}
+		}
+
+		task ("When the feature flag toggle is disabled via UI on the master node") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Developer",
+				configurationScope = "Virtual Instance Scope");
+
+			FeatureFlag.disableFeatureFlag(
+				featureFlag = "COMMERCE-8087",
+				scope = "Developer");
+		}
+
+		task ("Then the feature is disabled on both nodes") {
+			for (var nodePort : list "9080,8080") {
+				WaitForElementPresent(locator1 = "ApplicationsMenu#TOGGLE");
+
+				ApplicationsMenuHelper.openApplicationsMenu();
+
+				AssertElementNotPresent(
+					key_category = "Import / Export",
+					key_portlet = "Import/Export Center",
+					locator1 = "ApplicationsMenu#PORTLET");
+
+				if (${nodePort} == 9080) {
+					User.loginPG(
+						nodePort = ${nodePort},
+						password = "test",
+						userEmailAddress = "test@liferay.com");
+				}
+			}
+		}
+	}
+
+	@priority = 3
+	test EnableAndDisableFeatureFlagOnSlaveNode {
+		property custom.properties = "feature.flag.ui.visible[dev]=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a feature is disabled on both nodes") {
+			for (var nodePort : list "9080,8080") {
+				WaitForElementPresent(locator1 = "ApplicationsMenu#TOGGLE");
+
+				ApplicationsMenuHelper.openApplicationsMenu();
+
+				AssertElementNotPresent(
+					key_category = "Import / Export",
+					key_portlet = "Import/Export Center",
+					locator1 = "ApplicationsMenu#PORTLET");
+
+				if (${nodePort} == 9080) {
+					User.loginPG(
+						nodePort = ${nodePort},
+						password = "test",
+						userEmailAddress = "test@liferay.com");
+				}
+			}
+		}
+
+		task ("When the feature flag toggle is enabled via UI on the slave node") {
+			PortalSettings.gotoConfiguration(
+				baseURL = "http://localhost:9080",
+				configurationCategory = "Feature Flags",
+				configurationName = "Developer",
+				configurationScope = "Virtual Instance Scope");
+
+			FeatureFlag.enableFeatureFlag(
+				featureFlag = "COMMERCE-8087",
+				scope = "Developer");
+		}
+
+		task ("Then the feature is enabled on both nodes") {
+			for (var nodePort : list "8080,9080") {
+				ApplicationsMenu.gotoPortlet(
+					category = "Import / Export",
+					panel = "Applications",
+					portlet = "Import/Export Center");
+
+				ImportExport.gotoImport();
+
+				User.loginPG(
+					nodePort = ${nodePort},
+					password = "test",
+					userEmailAddress = "test@liferay.com");
+			}
+		}
+
+		task ("When the feature flag toggle is disabled via UI on the slave node") {
+			PortalSettings.gotoConfiguration(
+				baseURL = "http://localhost:9080",
+				configurationCategory = "Feature Flags",
+				configurationName = "Developer",
+				configurationScope = "Virtual Instance Scope");
+
+			FeatureFlag.disableFeatureFlag(
+				featureFlag = "COMMERCE-8087",
+				scope = "Developer");
+		}
+
+		task ("Then the feature is disabled on both nodes") {
+			for (var nodePort : list "8080,9080") {
+				WaitForElementPresent(locator1 = "ApplicationsMenu#TOGGLE");
+
+				ApplicationsMenuHelper.openApplicationsMenu();
+
+				AssertElementNotPresent(
+					key_category = "Import / Export",
+					key_portlet = "Import/Export Center",
+					locator1 = "ApplicationsMenu#PORTLET");
+
+				if (${nodePort} == 8080) {
+					User.loginPG(
+						nodePort = ${nodePort},
+						password = "test",
+						userEmailAddress = "test@liferay.com");
+				}
+			}
+		}
+	}
+
+	@description = "This is a usecase for LPS-185988. Verify language overrides sync between cluster nodes."
+	@priority = 3
+	test LanguageOverrideSyncsBetweenNodes {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a language override is added to one node") {
+			LanguageOverride.openLanguageOverridePortlet();
+
+			LanguageOverride.addLanguageKey(
+				languageKey = "text-contains-error",
+				translationOverrideList = "en-US,fr-FR,pt-BR,es-ES",
+				translationOverrideValueList = "Text contains error,Le texte contient une erreur,O texto contÃƒÂ©m erro,El texto contiene error");
+		}
+
+		task ("Then the language override is added to all nodes") {
+			for (var nodePort : list "8080,9080") {
+				if (${nodePort} == 9080) {
+					User.loginPG(
+						nodePort = ${nodePort},
+						password = "test",
+						userEmailAddress = "test@liferay.com");
+				}
+
+				LanguageOverride.openLanguageOverridePortlet(baseURL = "http://localhost:${nodePort}");
+
+				Search.searchCP(searchTerm = "text-contains-error");
+
+				LanguageOverride.assertSelectedLanguageInListView(
+					currentTranslationOverride = "Text contains error",
+					languageKey = "text-contains-error",
+					languagesWithOverride = "en_US, es_ES, fr_FR, pt_BR",
+					selectedLanguage = "en_US");
+			}
+		}
+	}
+
 	@priority = 5
 	test ShutdownAndStartupNodes {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -656,6 +916,7 @@ definition {
 	@priority = 4
 	test SlaveNodeCanBecomeMasterNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is master node",
@@ -696,6 +957,7 @@ definition {
 	test TCPControlChannelProperties {
 		property custom.properties = "cluster.link.channel.properties.control=tcp.xml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewTextPresentOnSpecificNode(
@@ -717,6 +979,7 @@ definition {
 	test UDPControlChannelProperties {
 		property custom.properties = "cluster.link.channel.properties.control=udp.xml${line.separator}cluster.link.channel.properties.transport.0=udp.xml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewTextPresentOnSpecificNode(
@@ -737,6 +1000,7 @@ definition {
 	@priority = 4
 	test ValidateDocumentOnSeparateNodes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -793,6 +1057,7 @@ definition {
 	test ValidateLiveUsers {
 		property custom.properties = "live.users.enabled=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -846,6 +1111,7 @@ definition {
 	@priority = 4
 	test ValidatePublishOnTwoNodes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -944,6 +1210,7 @@ definition {
 	@priority = 4
 	test ValidateSchedulerOnSeparateNodes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName();
 

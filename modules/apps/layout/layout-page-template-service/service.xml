@@ -23,9 +23,11 @@
 
 		<!-- Other fields -->
 
+		<column db-name="parentLPTCollectionId" name="parentLayoutPageTemplateCollectionId" type="long" />
 		<column db-name="lptCollectionKey" name="layoutPageTemplateCollectionKey" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
@@ -39,17 +41,24 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="G_LPTCK" return-type="LayoutPageTemplateCollection" unique="true">
+		<finder name="G_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="G_LPTCK_T" return-type="LayoutPageTemplateCollection" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateCollectionKey" />
+			<finder-column name="type" />
 		</finder>
-		<finder name="G_N" return-type="LayoutPageTemplateCollection" unique="true">
+		<finder name="G_N_T" return-type="LayoutPageTemplateCollection" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="name" />
+			<finder-column name="type" />
 		</finder>
-		<finder name="G_LikeN" return-type="Collection">
+		<finder name="G_LikeN_T" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
+			<finder-column name="type" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="LayoutPageTemplateEntry" remote-service="true" uuid="true">

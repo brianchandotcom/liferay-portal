@@ -38,6 +38,7 @@ definition {
 	@priority = 4
 	test CanAutoTagDocumentInDepot {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -64,6 +65,7 @@ definition {
 	@priority = 4
 	test CanAutoTagImageInDepot {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToImageConfiguration();
 
@@ -88,6 +90,7 @@ definition {
 	@priority = 4
 	test CanAutoTagWebContentInDepot {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -113,6 +116,7 @@ definition {
 	@priority = 4
 	test CanOnlyViewBlogManualTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -151,6 +155,7 @@ definition {
 	@priority = 4
 	test CanOnlyViewDocumentManualTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -181,6 +186,7 @@ definition {
 	@priority = 4
 	test CanOnlyViewImageManualTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToImageConfiguration();
 
@@ -207,6 +213,7 @@ definition {
 	@priority = 4
 	test CanOnlyViewWebContentManualTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -241,6 +248,7 @@ definition {
 	@priority = 5
 	test CanRemoveBlogTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -285,6 +293,7 @@ definition {
 	@priority = 5
 	test CanRemoveDocumentTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -326,6 +335,7 @@ definition {
 	@priority = 5
 	test CanRemoveImageTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToImageConfiguration();
 
@@ -364,6 +374,7 @@ definition {
 	@priority = 5
 	test CanRemoveWebContentTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -405,6 +416,7 @@ definition {
 	@priority = 4
 	test CanViewBlogAutoTagsAfterPublishing {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -449,6 +461,7 @@ definition {
 	@priority = 4
 	test CanViewDocumentAutoTagsAfterPublishing {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -485,6 +498,7 @@ definition {
 	@priority = 4
 	test CanViewImageAutoTagsAfterPublishing {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToImageConfiguration();
 
@@ -520,6 +534,7 @@ definition {
 	@priority = 4
 	test CanViewWebContentAutoTagsAfterPublishing {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 

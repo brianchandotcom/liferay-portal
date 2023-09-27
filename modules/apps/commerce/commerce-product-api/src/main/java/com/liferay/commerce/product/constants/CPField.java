@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.constants;
@@ -21,6 +12,8 @@ public class CPField {
 
 	public static final String ACCOUNT_GROUP_FILTER_ENABLED =
 		"accountGroupFilterEnabled";
+
+	public static final String ASSET_CATEGORY_NAMES = "assetCategoryNames";
 
 	public static final String BASE_PRICE = "basePrice";
 
@@ -46,6 +39,9 @@ public class CPField {
 	public static final String COMMERCE_CHANNEL_GROUP_IDS =
 		"commerceChannelGroupIds";
 
+	public static final String COMMERCE_OPTION_TYPE_KEY =
+		"commerceOptionTypeKey";
+
 	public static final String CP_DEFINITION_ID = "CPDefinitionId";
 
 	public static final String CP_DEFINITION_OPTION_REL_ID =
@@ -59,9 +55,6 @@ public class CPField {
 		"cpOptionCategoryTitle";
 
 	public static final String CP_OPTION_ID = "CPOptionId";
-
-	public static final String DDM_FORM_FIELD_TYPE_NAME =
-		"DDMFormFieldTypeName";
 
 	public static final String DEFAULT_IMAGE_FILE_ENTRY_ID =
 		"defaultImageFileEntryId";

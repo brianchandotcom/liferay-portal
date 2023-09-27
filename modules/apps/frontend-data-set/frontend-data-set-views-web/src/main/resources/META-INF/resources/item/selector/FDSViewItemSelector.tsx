@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
@@ -20,6 +11,11 @@ import React, {useState} from 'react';
 import {API_URL, FDS_DEFAULT_PROPS} from '../../js/Constants';
 
 import './FDSViewItemSelector.scss';
+
+interface ISelectedItem {
+	externalReferenceCode: string;
+	id: string;
+}
 
 const views = [
 	{
@@ -42,7 +38,7 @@ const FDSViewItemSelector = ({
 	classNameId: String;
 	namespace: String;
 }) => {
-	const [selectedId, setSelectedId] = useState<String>();
+	const [selectedItem, setSelectedItem] = useState<ISelectedItem>();
 
 	return (
 		<div className="fds-view-item-selector">
@@ -54,9 +50,13 @@ const FDSViewItemSelector = ({
 					onSelect={({
 						selectedItems,
 					}: {
-						selectedItems: Array<{id: string}>;
+						selectedItems: Array<ISelectedItem>;
 					}) => {
-						setSelectedId(selectedItems[0].id);
+						setSelectedItem({
+							externalReferenceCode:
+								selectedItems[0].externalReferenceCode,
+							id: selectedItems[0].id,
+						});
 					}}
 					selectedItemsKey="id"
 					selectionType="single"
@@ -76,7 +76,11 @@ const FDSViewItemSelector = ({
 
 						<ClayButton
 							className="item-preview selector-button"
-							data-value={`{"classPK": "${selectedId}", "className": "${className}",  "classNameId": "${classNameId}"}`}
+							data-value={`{
+								"className": "${className}", 
+								"classNameId": "${classNameId}", 
+								"classPK": "${selectedItem?.id}", 
+								"externalReferenceCode": "${selectedItem?.externalReferenceCode}"}`}
 						>
 							{Liferay.Language.get('save')}
 						</ClayButton>

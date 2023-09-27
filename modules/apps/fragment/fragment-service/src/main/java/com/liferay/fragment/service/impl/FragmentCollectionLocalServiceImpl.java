@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.fragment.service.impl;
@@ -253,6 +244,32 @@ public class FragmentCollectionLocalServiceImpl
 		throws PortalException {
 
 		return TempFileEntryUtil.getTempFileNames(groupId, userId, folderName);
+	}
+
+	@Override
+	public String getUniqueFragmentCollectionName(long groupId, String name) {
+		FragmentCollection fragmentCollection =
+			fragmentCollectionPersistence.fetchByG_LikeN_First(
+				groupId, name, null);
+
+		if (fragmentCollection == null) {
+			return name;
+		}
+
+		int count = 1;
+
+		while (true) {
+			String newName = StringUtil.appendParentheticalSuffix(
+				name, count++);
+
+			fragmentCollection =
+				fragmentCollectionPersistence.fetchByG_LikeN_First(
+					groupId, newName, null);
+
+			if (fragmentCollection == null) {
+				return newName;
+			}
+		}
 	}
 
 	@Override

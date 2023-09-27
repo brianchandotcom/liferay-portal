@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 AUI.add(
@@ -27,8 +18,6 @@ AUI.add(
 		const sub = Lang.sub;
 
 		const CSS_ACTIVE_AREA = 'active-area';
-
-		const CSS_APP_VIEW_ENTRY = 'app-view-entry-taglib';
 
 		const CSS_DISPLAY_DESCRIPTIVE = 'display-descriptive';
 
@@ -97,8 +86,6 @@ AUI.add(
 
 		const STR_SIZE = 'size';
 
-		const STR_SPACE = ' ';
-
 		const STR_ICON_DEFAULT = 'document-default';
 
 		const STR_ICON_PDF = 'document-vector';
@@ -111,22 +98,13 @@ AUI.add(
 
 		const TPL_ENTRIES_CONTAINER = '<dl class="{cssClass}"></dl>';
 
-		const TPL_ENTRY_ROW_TITLE = `<div class="autofit-row ${
-			CSS_APP_VIEW_ENTRY + STR_SPACE + CSS_ENTRY_DISPLAY_STYLE
-		}">
-			<div class="autofit-col">
-				<span class="sticker sticker-rounded sticker-document sticker-secondary file-icon-color-0">
-					<span class="sticker-overlay">
-						${Liferay.Util.getLexiconIconTpl(STR_ICON_DEFAULT)}
-					</span>
+		const TPL_ENTRY_ROW_TITLE = `<div class="table-title">
+			<span class="sticker sticker-rounded sticker-document sticker-secondary file-icon-color-0">
+				<span class="sticker-overlay">
+					${Liferay.Util.getLexiconIconTpl(STR_ICON_DEFAULT)}
 				</span>
-			</div>
-
-			<div class="autofit-col autofit-col-expand">
-				<div class="table-title">
-					<a>{0}</a>
-				</div>
-			</div>
+			</span>
+			<a>{0}</a>
 		</div>`;
 
 		const TPL_ENTRY_WRAPPER =
@@ -1063,11 +1041,25 @@ AUI.add(
 					}
 
 					if (validFilesLength) {
+						let messageText = null;
+
+						if (validFilesLength === 1) {
+							messageText = Liferay.Util.sub(
+								instance._strings.singleFileUploaded,
+								currentUploadData.fileList[0].name,
+								instance._strings.pageRefreshNeeded
+							);
+						}
+						else {
+							messageText = Liferay.Util.sub(
+								instance._strings.multipleFilesUploaded,
+								validFilesLength,
+								instance._strings.pageRefreshNeeded
+							);
+						}
+
 						const openToastSuccessProps = {
-							message: Liferay.Util.sub(
-								instance._strings.xValidFilesUploaded,
-								validFilesLength
-							),
+							message: messageText,
 							toastProps: {
 								className: 'alert-full',
 							},
@@ -1623,12 +1615,18 @@ AUI.add(
 						invalidFileSize: Liferay.Language.get(
 							'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 						),
+						multipleFilesUploaded: Liferay.Language.get(
+							'x-files-were-uploaded'
+						),
+						pageRefreshNeeded: Liferay.Language.get(
+							'page-refresh-needed'
+						),
 						reloadButton: Liferay.Language.get('reload'),
+						singleFileUploaded: Liferay.Language.get(
+							'x-was-uploaded'
+						),
 						xInvalidFilesUploaded: Liferay.Language.get(
 							'x-files-could-not-be-uploaded'
-						),
-						xValidFilesUploaded: Liferay.Language.get(
-							'x-files-were-uploaded'
 						),
 						zeroByteFile: Liferay.Language.get(
 							'the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader'

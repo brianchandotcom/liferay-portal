@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.kernel.service;
@@ -41,34 +32,34 @@ public class DLFolderLocalServiceWrapper
 	}
 
 	@Override
-	public void addDLFileEntryTypeDLFolder(
+	public boolean addDLFileEntryTypeDLFolder(
 		long fileEntryTypeId, DLFolder dlFolder) {
 
-		_dlFolderLocalService.addDLFileEntryTypeDLFolder(
+		return _dlFolderLocalService.addDLFileEntryTypeDLFolder(
 			fileEntryTypeId, dlFolder);
 	}
 
 	@Override
-	public void addDLFileEntryTypeDLFolder(
+	public boolean addDLFileEntryTypeDLFolder(
 		long fileEntryTypeId, long folderId) {
 
-		_dlFolderLocalService.addDLFileEntryTypeDLFolder(
+		return _dlFolderLocalService.addDLFileEntryTypeDLFolder(
 			fileEntryTypeId, folderId);
 	}
 
 	@Override
-	public void addDLFileEntryTypeDLFolders(
+	public boolean addDLFileEntryTypeDLFolders(
 		long fileEntryTypeId, java.util.List<DLFolder> dlFolders) {
 
-		_dlFolderLocalService.addDLFileEntryTypeDLFolders(
+		return _dlFolderLocalService.addDLFileEntryTypeDLFolders(
 			fileEntryTypeId, dlFolders);
 	}
 
 	@Override
-	public void addDLFileEntryTypeDLFolders(
+	public boolean addDLFileEntryTypeDLFolders(
 		long fileEntryTypeId, long[] folderIds) {
 
-		_dlFolderLocalService.addDLFileEntryTypeDLFolders(
+		return _dlFolderLocalService.addDLFileEntryTypeDLFolders(
 			fileEntryTypeId, folderIds);
 	}
 
@@ -730,6 +721,12 @@ public class DLFolderLocalServiceWrapper
 
 		return _dlFolderLocalService.getFoldersCount(
 			groupId, parentFolderId, status, includeMountfolders);
+	}
+
+	@Override
+	public long getFolderSize(long companyId, long groupId, String treePath) {
+		return _dlFolderLocalService.getFolderSize(
+			companyId, groupId, treePath);
 	}
 
 	@Override

@@ -2,7 +2,7 @@
 	"friendlyURL": "/sales/deal-registrations",
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Deals"
+		"en_US": "Deal Registrations"
 	},
 	"permissions": [
 		{

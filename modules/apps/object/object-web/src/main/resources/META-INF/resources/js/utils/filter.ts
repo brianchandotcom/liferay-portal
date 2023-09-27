@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 export function getCheckedWorkflowStatusItems(
@@ -37,15 +28,15 @@ export function getCheckedWorkflowStatusItems(
 	return newItemsValues;
 }
 
-export function getCheckedPickListItems(
-	itemValues: PickListItem[],
+export function getCheckedListTypeEntries(
+	itemValues: ListTypeEntry[],
 	setEditingFilterType: () => number[] | string[] | null
 ): IItem[] {
 	let newItemsValues: IItem[] = [];
 
 	const valuesArray = setEditingFilterType() as string[];
 
-	newItemsValues = (itemValues as PickListItem[]).map((itemValue) => {
+	newItemsValues = (itemValues as ListTypeEntry[]).map((itemValue) => {
 		const item = {
 			checked: false,
 			label: itemValue.name,
@@ -62,7 +53,7 @@ export function getCheckedPickListItems(
 	return newItemsValues;
 }
 
-export function getSystemFieldLabelFromEntry(
+export function getSystemObjectFieldLabelFromObjectEntry(
 	titleFieldName: string,
 	entry: ObjectEntry,
 	itemObject: LabelValueObject
@@ -105,7 +96,7 @@ export function getSystemFieldLabelFromEntry(
 	};
 }
 
-export function getCheckedRelationshipItems(
+export function getCheckedObjectRelationshipItems(
 	relatedEntries: ObjectEntry[],
 	titleFieldName: string,
 	systemField: boolean,
@@ -125,7 +116,7 @@ export function getCheckedRelationshipItems(
 		} as IItem;
 
 		if (systemField) {
-			item = getSystemFieldLabelFromEntry(
+			item = getSystemObjectFieldLabelFromObjectEntry(
 				titleFieldName,
 				entry,
 				item

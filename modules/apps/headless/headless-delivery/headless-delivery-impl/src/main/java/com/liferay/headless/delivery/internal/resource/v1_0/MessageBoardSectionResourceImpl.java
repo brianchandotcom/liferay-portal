@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
@@ -18,7 +9,7 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
@@ -39,6 +30,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -57,8 +49,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
-
-import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -145,6 +135,14 @@ public class MessageBoardSectionResourceImpl
 			sorts);
 	}
 
+	public MessageBoardSection getSiteMessageBoardSectionByFriendlyUrlPath(
+			Long siteId, String friendlyUrlPath)
+		throws Exception {
+
+		return _toMessageBoardSection(
+			_mbCategoryService.getMBCategory(siteId, friendlyUrlPath));
+	}
+
 	@Override
 	public Page<MessageBoardSection> getSiteMessageBoardSectionsPage(
 			Long siteId, Boolean flatten, String search,
@@ -229,9 +227,8 @@ public class MessageBoardSectionResourceImpl
 				messageBoardSection.getDescription(),
 				mbCategory.getDisplayStyle(), "", "", "", 0, false, "", "", 0,
 				"", false, "", 0, false, "", "", false, false, false,
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(messageBoardSection),
-					mbCategory.getGroupId(), contextHttpServletRequest, null)));
+				_createServiceContext(
+					mbCategory.getGroupId(), messageBoardSection, null)));
 	}
 
 	@Override
@@ -283,19 +280,23 @@ public class MessageBoardSectionResourceImpl
 				contextUser.getUserId(), parentMessageBoardSectionId,
 				messageBoardSection.getTitle(),
 				messageBoardSection.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(messageBoardSection), siteId,
-					contextHttpServletRequest,
+				_createServiceContext(
+					siteId, messageBoardSection,
 					messageBoardSection.getViewableByAsString())));
 	}
 
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		MessageBoardSection messageBoardSection) {
+	private ServiceContext _createServiceContext(
+		long groupId, MessageBoardSection messageBoardSection,
+		String viewableBy) {
 
-		return CustomFieldsUtil.toMap(
-			MBCategory.class.getName(), contextCompany.getCompanyId(),
-			messageBoardSection.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, viewableBy
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				MBCategory.class.getName(), contextCompany.getCompanyId(),
+				messageBoardSection.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	private Page<MessageBoardSection> _getMessageBoardSectionsPage(

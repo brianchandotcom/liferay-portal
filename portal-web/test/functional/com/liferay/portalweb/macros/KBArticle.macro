@@ -208,26 +208,7 @@ definition {
 			}
 
 			if (isSet(extendedMinutes)) {
-				if (isSet(getExpirationDateByPortal)) {
-					var expirationDateHour = selenium.getAttribute("//input[contains(@id,'expirationDateHour')]@value");
-					var expirationDateAmpmValue = selenium.getAttribute("//input[contains(@id,'expirationDateAmPm')]@value");
-					var expirationDateMinute = selenium.getAttribute("//input[contains(@id,'expirationDateMinute')]@value");
-
-					if (${expirationDateAmpmValue} == 0) {
-						var expirationDateAmpm = "AM";
-					}
-
-					if (${expirationDateAmpmValue} == 1) {
-						var expirationDateAmpm = "PM";
-					}
-
-					var expirationDateMinuteFuture = ${expirationDateMinute} + ${extendedMinutes};
-
-					var expirationDateTime = "${expirationDateHour}:${expirationDateMinuteFuture} ${expirationDateAmpm}";
-				}
-				else {
-					var expirationDateTime = DateUtil.getDateOffsetByMinutes(${extendedMinutes}, "hh:mm a");
-				}
+				var expirationDateTime = DateUtil.getDateOffsetByMinutes(${extendedMinutes}, "hh:mm a");
 
 				echo("## * expirationDateTime: ${expirationDateTime}");
 
@@ -820,51 +801,27 @@ definition {
 	}
 
 	macro moveArticleCP {
+		var key_rowEntry = ${kbArticleTitle};
+		var key_nodeName = ${destinationItem};
+
 		if (isSet(navigationPane)) {
 			KBArticle.gotoMenuItemViaNavigationPane(
 				kbArticleTitle = ${kbArticleTitle},
 				menuItem = "Move");
 		}
 		else {
-			var key_rowEntry = ${kbArticleTitle};
-
-			if (IsElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
-				Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
-			}
-			else {
-				Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
-			}
+			Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Move");
 		}
 
-		AssertTextEquals(
-			locator1 = "Portlet#HEADER",
-			value1 = ${kbArticleTitle});
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_LABEL",
-			value1 = "Current Parent");
+		Click(locator1 = "Treeview#NODE_ITEM");
 
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_FIELD",
-			value1 = ${kbArticleCurrentParent});
+		SelectFrameTop();
 
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_CURRENT_PARENT_PRIORITY_LABEL",
-			value1 = "Priority");
-
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_TITLE_LABEL",
-			value1 = "New Parent");
-
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_PRIORITY_LABEL",
-			value1 = "Priority");
-
-		AssertClick(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
+		Button.clickSave();
 	}
 
 	macro openPageTreePanel {
@@ -986,6 +943,20 @@ definition {
 			locator1 = "KnowledgeBaseArticle#ATTACHMENTS_REMOVE");
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+	}
+
+	macro searchArticleInMoveModal {
+		var key_rowEntry = ${kbArticleTitle};
+
+		Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Move");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			locator1 = "KnowledgeBase#MOVE_MODAL_SEARCH_BAR",
+			value1 = ${searchItem});
 	}
 
 	macro searchForKB {
@@ -1111,25 +1082,6 @@ definition {
 				key_itemName = ${kbFolderName},
 				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
 		}
-	}
-
-	macro selectParentArticleCP {
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Click(
-			key_kbArticleTitle = ${kbArticleTitle},
-			locator1 = "KnowledgeBaseSelectParent#SELECT_BUTTON",
-			value1 = "Select");
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD",
-			value1 = ${kbArticleTitle});
-
-		Click(locator1 = "Button#MOVE");
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro setReviewDate {
@@ -1474,7 +1426,7 @@ definition {
 			if (isSet(kbDescription)) {
 				AssertTextEquals(
 					key_title = "Description",
-					locator1 = "Header#H3_TITLE",
+					locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION_HEADER",
 					value1 = "Description");
 
 				AssertTextEquals(
@@ -1840,14 +1792,14 @@ definition {
 			if (${description} == "Disabled") {
 				AssertElementNotPresent(
 					key_title = "Description",
-					locator1 = "Header#H3_TITLE");
+					locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION_HEADER");
 
 				AssertElementNotPresent(locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION");
 			}
 			else {
 				AssertTextEquals(
 					key_title = "Description",
-					locator1 = "Header#H3_TITLE",
+					locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION_HEADER",
 					value1 = "Description");
 
 				AssertTextEquals(

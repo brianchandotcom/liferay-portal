@@ -150,6 +150,10 @@ definition {
 				value1 = "Staging");
 		}
 
+		if (IsElementPresent(key_text = "Back to Menu", locator1 = "Button#ANY")) {
+			Button.click(button = "Back to Menu");
+		}
+
 		AssertVisible(locator1 = "ProductMenu#STAGING_SELECTED");
 	}
 

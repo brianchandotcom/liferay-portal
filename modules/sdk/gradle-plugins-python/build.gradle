@@ -1,12 +1,12 @@
-String gradleVersion = "6.9.2"
+String gradleVersion = "7.3.3"
 
 tasks.eclipse {
 	ext.gradleVersion = gradleVersion
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.47"
-	compile group: "com.pswidersk", name: "python-gradle-plugin", version: "1.2.2"
+	api group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.48"
+	api group: "com.pswidersk", name: "python-gradle-plugin", version: "2.4.0"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 }

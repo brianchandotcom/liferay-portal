@@ -1,0 +1,16 @@
+@default = "assertTextMatches"
+definition {
+
+	function assertTextMatches {
+		WaitForSPARefresh();
+
+		selenium.waitForVisible();
+
+		selenium.assertTextMatches();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
+}

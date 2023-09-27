@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import bodyParser from 'body-parser';
@@ -23,6 +14,18 @@ import {
 } from './util/liferay-oauth2-resource-server.js';
 import log from './util/log.js';
 
+import 'dotenv/config.js';
+
+const trialTypes = {
+	CLOUDAPP: 0,
+	CLOUDAPP30: 30,
+	DXPAPP: 0,
+	DXPAPP30: 30,
+	PROJECT60: 60,
+	SOLUTIONS7: 7,
+	SOLUTIONS30: 30,
+};
+
 const SSA_BASE_URL =
 	process.env.LIFERAY_MARKETPLACE_ETC_NODE_SSA_BASE_URL ||
 	'https://dev-business.liferay.cloud';
@@ -34,6 +37,9 @@ const SSA_CLIENT_ID =
 const SSA_CLIENT_SECRET =
 	process.env.LIFERAY_MARKETPLACE_ETC_NODE_SSA_CLIENT_SECRET || '';
 
+const lxcDXPServerProtocol = config['com.liferay.lxc.dxp.server.protocol'];
+const lxcDXPMainDomain = config['com.liferay.lxc.dxp.mainDomain'];
+
 const app = express();
 
 let _ssaBearer;
@@ -44,7 +50,7 @@ const getSSABearer = async function () {
 		return _ssaBearer;
 	}
 
-	await fetch(SSA_BASE_URL + '/o/oauth2/token', {
+	return fetch(SSA_BASE_URL + '/o/oauth2/token', {
 		body: new URLSearchParams({
 			client_id: SSA_CLIENT_ID,
 			client_secret: SSA_CLIENT_SECRET,
@@ -80,7 +86,6 @@ app.post('/marketplace/test', async (req, res) => {
 	const {body, jwt} = req;
 
 	log.info(`post /marketplace/test: ${JSON.stringify(body, null, '\t')}`);
-
 	log.info('User %s is authorized', jwt.username);
 	log.info('User scope %s', jwt.scope);
 
@@ -184,64 +189,86 @@ app.get('/marketplace/trials/count', async (req, res) => {
 });
 
 app.post('/marketplace/trial', async (req, res) => {
-	const {body, jwt} = req;
-
+	const {body} = req;
+	const bearerToken = req.headers.authorization;
 	const data = {};
+	const token = await getSSABearer();
 	const uri = SSA_BASE_URL + '/o/provisioning/trial';
 
-	const userAccountResponse = await fetch(
-		SSA_BASE_URL +
-			'/o/headless-admin-user/v1.0/user-accounts/' +
-			body.userId,
-		{
-			headers: {
-				Authorization: `Bearer ${jwt}`,
-			},
+	setTimeout(async () => {
+		const getUserInfo = await fetch(
+			`${lxcDXPServerProtocol}://${lxcDXPMainDomain}/o/headless-admin-user/v1.0/user-accounts/${body.userId}`,
+			{
+				headers: {
+					Authorization: bearerToken,
+				},
+			}
+		);
+
+		const getCustomFields = await fetch(
+			`${lxcDXPServerProtocol}://${lxcDXPMainDomain}/o/headless-commerce-admin-order/v1.0/orders/${body.modelDTOOrder.id}?fields=customFields`,
+			{
+				headers: {
+					Authorization: bearerToken,
+				},
+			}
+		);
+
+		const userInformation = await getUserInfo.json();
+		const {customFields} = await getCustomFields.json();
+		const accountId = body.modelDTOOrder.accountId;
+		const projectName = customFields['Project Name'];
+		const siteInitializer = customFields['Site Initializer'];
+
+		if (getUserInfo.ok) {
+			data.emailAddress = userInformation.emailAddress;
+			data.firstName = userInformation.familyName;
+			data.lastName = userInformation.alternateName;
 		}
-	);
 
-	if (userAccountResponse.ok) {
-		const userAccountJSON = await userAccountResponse.json();
+		if (accountId !== '') {
+			data.accountId = Number(accountId);
+		}
 
-		data.emailAddress = userAccountJSON.emailAddress;
-		data.firstName = userAccountJSON.firstName;
-		data.lastName = userAccountJSON.lastName;
-	}
+		if (projectName !== '') {
+			data.projectName = projectName;
+		}
 
-	const accountId = body.commerceOrder.accountId;
-	const projectName = body.commerceOrder.customFields.projectName;
-	const siteInitializer = body.commerceOrder.customFields.siteInitializer;
+		if (siteInitializer !== '') {
+			data.siteInitializer = siteInitializer;
+		}
 
-	if (accountId !== '') {
-		data.accountId = accountId;
-	}
+		data.devEnabled = false;
+		data.drEnabled = false;
+		data.duration =
+			trialTypes[body.modelDTOOrder.orderTypeExternalReferenceCode] ||
+			Number(SSA_DURATION);
+		data.sendEmailForTrial = true;
+		data.userId = Number(SSA_SERVICE_USER_ID) || body.userId;
 
-	data.duration = SSA_DURATION;
 
-	if (projectName !== '') {
-		data.projectName = projectName;
-	}
 
-	data.sendEmailForTrial = true;
 
-	if (siteInitializer !== '') {
-		data.siteInitializer = siteInitializer;
-	}
+		fetch(uri, {
+			body: JSON.stringify(data),
+			headers: {
+				'Authorization': `Bearer ${token.access_token}`,
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+		})
+			.then((response) => {
+				return log.info(
+					'Trail request sent for order: ',
+					response.commerceOrderId
+				);
+			})
+			.catch((error) => {
+				log.error(error);
 
-	data.userId = SSA_SERVICE_USER_ID;
-
-	fetch(uri, {
-		body: JSON.stringify(data),
-		headers: {
-			'Authorization': `Bearer ${getSSABearer()}`,
-			'Content-Type': 'application/json',
-		},
-		method: 'POST',
-	})
-		.then((response) =>
-			log.info('Trail request sent for order: ', response.commerceOrderId)
-		)
-		.catch((error) => log.error(error));
+				return log.info('Trail request sent for order: ', error);
+			});
+	}, 100);
 
 	res.status(200).send(body);
 });

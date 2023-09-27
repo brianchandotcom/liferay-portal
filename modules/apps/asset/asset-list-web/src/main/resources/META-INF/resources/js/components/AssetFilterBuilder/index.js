@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
@@ -253,6 +244,7 @@ function Rule({
 					aria-label={Liferay.Language.get('delete-condition')}
 					className="container-trash p-2"
 					data-index={index}
+					displayType="secondary"
 					monospaced
 					onClick={onDeleteRule}
 					size="sm"
@@ -324,16 +316,8 @@ function AssetFilterBuilder({
 			/>
 
 			<ul className="timeline">
-				<li className="timeline-item">
-					<div className="d-flex flex-wrap panel-body">
-						<div className="timeline-increment">
-							<span className="timeline-icon"></span>
-						</div>
-					</div>
-				</li>
-
 				{currentRules.map((rule, index) => (
-					<li className="pt-3 timeline-item" key={index}>
+					<li className="timeline-item" key={index}>
 						<Rule
 							categorySelectorURL={categorySelectorURL}
 							disabled={disabled}
@@ -348,22 +332,26 @@ function AssetFilterBuilder({
 						/>
 					</li>
 				))}
-			</ul>
 
-			{!disabled && (
-				<div className="position-relative">
-					<ClayButton
-						aria-label={Liferay.Language.get('add-condition')}
-						className="p-0 rounded-circle timeline-increment-icon"
-						monospaced
-						onClick={handleAddRule}
-						size="sm"
-						title={Liferay.Language.get('add-condition')}
-					>
-						<ClayIcon symbol="plus" />
-					</ClayButton>
-				</div>
-			)}
+				{!disabled && (
+					<li className="timeline-item">
+						<div className="bg-white d-inline-block position-relative timeline-increment">
+							<ClayButton
+								aria-label={Liferay.Language.get(
+									'add-condition'
+								)}
+								className="rounded-circle"
+								monospaced
+								onClick={handleAddRule}
+								size="sm"
+								title={Liferay.Language.get('add-condition')}
+							>
+								<ClayIcon symbol="plus" />
+							</ClayButton>
+						</div>
+					</li>
+				)}
+			</ul>
 		</>
 	);
 }

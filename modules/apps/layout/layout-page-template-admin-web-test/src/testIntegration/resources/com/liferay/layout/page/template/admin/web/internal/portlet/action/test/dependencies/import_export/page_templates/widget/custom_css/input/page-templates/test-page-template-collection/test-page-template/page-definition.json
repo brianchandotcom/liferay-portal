@@ -1,32 +1,5 @@
 {
 	"pageElement": {
-		"pageElements": [
-			{
-				"definition": {
-					"customCSS": ".[$FRAGMENT_CLASS$] {\n color: red;\n}",
-					"customCSSViewports": [
-						{
-							"customCSS": ".[$FRAGMENT_CLASS$] { color: red; }",
-							"id": "landscapeMobile"
-						},
-						{
-							"customCSS": ".[$FRAGMENT_CLASS$] { color: pink; }",
-							"id": "portraitMobile"
-						},
-						{
-							"customCSS": ".[$FRAGMENT_CLASS$] { color: aquamarine; }",
-							"id": "tablet"
-						}
-					],
-					"widgetInstance": {
-						"widgetConfig": {
-						},
-						"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
-					}
-				},
-				"type": "Widget"
-			}
-		],
 		"type": "Root"
 	},
 	"settings": {

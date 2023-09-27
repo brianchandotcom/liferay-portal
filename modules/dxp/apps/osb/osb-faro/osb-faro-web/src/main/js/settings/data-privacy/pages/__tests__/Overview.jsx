@@ -37,7 +37,7 @@ describe('Data Privacy Overview', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it.skip('should render with disabled buttons in the Suppressed Users section if the user is not an AC admin', () => {
+	it('should render with disabled buttons in the Suppressed Users section if the user is not an AC admin', () => {
 		const {getByTestId} = render(
 			<ApolloProvider client={client}>
 				<Provider store={mockStore()}>

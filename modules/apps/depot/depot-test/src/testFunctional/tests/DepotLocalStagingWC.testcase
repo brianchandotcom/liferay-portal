@@ -154,6 +154,7 @@ definition {
 	@refactordone
 	test CanEditFriendlyURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
 
@@ -358,6 +359,7 @@ definition {
 	@refactordone
 	test CanPublishDeletedWCCustomization {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotAdmin();
 
@@ -441,6 +443,7 @@ definition {
 	@refactordone
 	test CanPublishEditedWCCustomization {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotAdmin();
 
@@ -535,6 +538,7 @@ definition {
 	@refactordone
 	test CanPublishWCFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
 
@@ -629,6 +633,7 @@ definition {
 	@refactordone
 	test CanPublishWCWithCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotCategoriesAdminStaging(depotName = "Test Depot Name");
 
@@ -691,6 +696,7 @@ definition {
 	@refactordone
 	test CanPublishWCWithEmbeddedVideo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

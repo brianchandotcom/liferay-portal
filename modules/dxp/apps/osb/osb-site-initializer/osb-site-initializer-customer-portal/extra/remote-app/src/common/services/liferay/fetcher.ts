@@ -1,13 +1,10 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
+import i18n from '~/common/I18n';
+import FetcherError from './FetchError';
 
 export async function fetcher<T = any>(
 	url: string | URL,
@@ -25,11 +22,15 @@ export async function fetcher<T = any>(
 	});
 
 	if (!response.ok) {
-		const cause = await response.text();
+		const error = new FetcherError(
+			i18n.translate('an-unexpected-error-occurred')
+		);
 
-		console.error(cause, JSON.stringify({options, url}, null, 2));
+		error.info = await response.json();
+		error.status = response.status;
+		console.error(error.info, JSON.stringify({options, url}, null, 2));
 
-		throw new Error(cause);
+		throw error;
 	}
 
 	if (response.status !== 204) {

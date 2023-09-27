@@ -1,6 +1,6 @@
 Bundle-Description: The CSS Builder Gradle plugin lets you run the Liferay CSS Builder tool to compile Sass files in your project.
 Bundle-Name: Liferay Gradle Plugins CSS Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.css.builder
-Bundle-Version: 5.0.8
+Bundle-Version: 5.0.11
 Export-Package: com.liferay.gradle.plugins.css.builder
 -includeresource: @com.liferay.css.builder-*.jar!/com/liferay/css/builder/CSSBuilderArgs.class

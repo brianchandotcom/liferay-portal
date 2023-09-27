@@ -17,7 +17,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_OBJECT</td>
-		<td>//span[contains(text(),'${key_pluralLabelName}')]</td>
+		<td>//div[contains(@class,'menubar-collapse')]//a[contains(.,'${key_pluralLabelName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -32,7 +32,7 @@
 	</tr>
 	<tr>
 		<td>ADD_PLUS_BUTTON</td>
-		<td>//*[@title='Add']</td>
+		<td>//*[@title='Display Page Template']</td>
 		<td></td>
 	</tr>
 	<tr>

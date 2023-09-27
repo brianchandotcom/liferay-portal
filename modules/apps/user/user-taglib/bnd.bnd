@@ -1,0 +1,10 @@
+Bundle-Name: Liferay User Taglib
+Bundle-SymbolicName: com.liferay.user.taglib
+Bundle-Version: 1.0.2
+Export-Package: com.liferay.user.taglib.servlet.taglib
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/user";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /user-taglib

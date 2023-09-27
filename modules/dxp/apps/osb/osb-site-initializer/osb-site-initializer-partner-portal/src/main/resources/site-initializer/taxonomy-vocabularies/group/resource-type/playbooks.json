@@ -1,0 +1,21 @@
+{
+	"description": "Playbooks",
+	"externalReferenceCode": "PRMC053",
+	"name": "Playbooks",
+	"name_i18n": {
+		"ar_SA": "Playbooks",
+		"ca_ES": "Playbooks",
+		"de_DE": "Playbooks",
+		"en_US": "Playbooks",
+		"es_ES": "Playbooks",
+		"fi_FI": "Playbooks",
+		"fr_FR": "Playbooks",
+		"hu_HU": "Playbooks",
+		"ja_JP": "Playbooks",
+		"nl_NL": "Playbooks",
+		"pt_BR": "Playbooks",
+		"sv_SE": "Playbooks",
+		"zh_CN": "Playbooks"
+	},
+	"viewableBy": "Anyone"
+}

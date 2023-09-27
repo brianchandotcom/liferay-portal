@@ -303,6 +303,7 @@ definition {
 	test CanDeleteDMImage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -378,6 +379,7 @@ definition {
 	@refactordone
 	test CanDeleteDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -461,6 +463,7 @@ definition {
 	@refactordone
 	test CanDeleteDocumentWithCustomField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -718,6 +721,8 @@ definition {
 
 		Staging.publishToLive();
 
+		Refresh();
+
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
@@ -837,6 +842,7 @@ definition {
 	@refactordone
 	test CanEditBlogCoverImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1110,6 +1116,7 @@ definition {
 	@refactordone
 	test CanEditDMImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1193,6 +1200,7 @@ definition {
 	test CanEditDocument {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1275,6 +1283,7 @@ definition {
 	@refactordone
 	test CanEditDocumentWithCustomField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1368,6 +1377,7 @@ definition {
 	@refactordone
 	test CanEditInternalVideo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 
@@ -1554,6 +1564,7 @@ definition {
 	@refactordone
 	test CanEditWCImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -2197,6 +2208,7 @@ definition {
 	@refactordone
 	test CanPublishDMWithDocumentType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -2275,6 +2287,7 @@ definition {
 	@refactordone
 	test CanPublishDocumentFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2453,6 +2466,7 @@ definition {
 	@priority = 4
 	test CanPublishEditedDocumentFromFolderViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2537,6 +2551,7 @@ definition {
 	@priority = 4
 	test CanPublishEditedDocumentViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Description",
@@ -2610,6 +2625,7 @@ definition {
 	@priority = 4
 	test CanPublishEditedImageFromFolderViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2765,6 +2781,7 @@ definition {
 	@priority = 4
 	test CanPublishImageAfterChangingDepot {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -3044,6 +3061,7 @@ definition {
 	@refactordone
 	test CanPublishImageWithCustomField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -3107,6 +3125,7 @@ definition {
 	@refactordone
 	test CanPublishImageWithLatestVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -3261,6 +3280,7 @@ definition {
 	@refactordone
 	test CanPublishVideoShortcutThumbnail {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -3661,6 +3681,8 @@ definition {
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
 
 		Staging.publishToLive();
+
+		Refresh();
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",

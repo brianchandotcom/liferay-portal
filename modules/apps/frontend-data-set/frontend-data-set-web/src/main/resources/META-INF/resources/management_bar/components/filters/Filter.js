@@ -1,21 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {ClientExtension} from 'frontend-js-components-web';
 import React, {useContext, useEffect, useState} from 'react';
 
-import ClientExtensionRenderer from '../../../components/ClientExtensionRenderer';
 import {getComponentByModuleURL} from '../../../utils/modules';
 import ViewsContext from '../../../views/ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
@@ -55,22 +46,6 @@ const getOdataFilterString = (filter) => {
 	}
 };
 
-/**
- * @typedef {Object} Props
- * @prop {import("@liferay/js-api/data-set").FDSFilterArgs} args
- * @prop {import("@liferay/js-api/data-set").FDSFilter} renderer
- */
-
-/**
- * @param {Props} props
- */
-const ClientExtensionRendererWrapper = (props) => {
-
-	// This wrapper exists so that we can keep TS consistent
-
-	return <ClientExtensionRenderer {...props} />;
-};
-
 const Filter = ({moduleURL, type, ...otherProps}) => {
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
@@ -91,7 +66,7 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 
 	useEffect(() => {
 		if (moduleURL) {
-			if (type === 'client-extension') {
+			if (type === 'clientExtension') {
 				const getModule = async () => {
 					const cetModule = await import(
 						/* webpackIgnore: true */ moduleURL
@@ -122,8 +97,8 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 
 	return Component ? (
 		<div className="data-set-filter">
-			{type === 'client-extension' ? (
-				<ClientExtensionRendererWrapper
+			{type === 'clientExtension' ? (
+				<ClientExtension
 					args={{
 						filter: otherProps,
 						setFilter: (filter) =>
@@ -133,7 +108,7 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 								...filter,
 							}),
 					}}
-					renderer={Component}
+					htmlElementBuilder={Component}
 				/>
 			) : (
 				<Component setFilter={setFilter} {...otherProps} />

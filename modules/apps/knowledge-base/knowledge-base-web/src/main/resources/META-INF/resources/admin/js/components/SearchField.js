@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
@@ -18,12 +9,13 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
+import classnames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 const ITEM_TYPES_SYMBOL = {
-	article: 'document-text',
-	folder: 'folder',
+	KBArticle: 'document-text',
+	KBFolder: 'folder',
 };
 
 const SEARCH_DELTA = 2;
@@ -44,16 +36,31 @@ const highlithKeywordInText = (text, keyword) => {
 	);
 };
 
-const SearchResult = ({filteredItems, keyword}) => {
+const SearchResult = ({filteredItems, handleOnclickItem, keyword}) => {
+	const [selectedResultId, setSelectedResultId] = useState();
+
 	return filteredItems.length ? (
 		<ClayList role="list">
 			{filteredItems.map((item) => {
 				return (
-					<ClayList.ItemField expand key={item.id}>
+					<ClayList.ItemField
+						className={classnames({
+							'knowledge-base-navigation-item-active':
+								item.id === selectedResultId,
+						})}
+						expand
+						key={item.id}
+					>
 						<ClayLink
 							className="p-1"
 							displayType="secondary"
-							href={item.href}
+							href={handleOnclickItem ? '#' : item.href}
+							onClick={() => {
+								setSelectedResultId(item.id);
+								if (handleOnclickItem) {
+									handleOnclickItem(item);
+								}
+							}}
 						>
 							<ClayIcon
 								className="mr-2"
@@ -81,7 +88,11 @@ const SearchResult = ({filteredItems, keyword}) => {
 	);
 };
 
-export default function SearchField({handleSearchChange, items}) {
+export default function SearchField({
+	handleOnclickItem,
+	handleSearchChange,
+	items,
+}) {
 	const initialSearchInfo = {
 		filteredItems: [],
 		query: '',
@@ -154,6 +165,7 @@ export default function SearchField({handleSearchChange, items}) {
 			{searchActive && (
 				<SearchResult
 					filteredItems={searchInfo.filteredItems}
+					handleOnclickItem={handleOnclickItem}
 					keyword={searchInfo.query}
 				/>
 			)}

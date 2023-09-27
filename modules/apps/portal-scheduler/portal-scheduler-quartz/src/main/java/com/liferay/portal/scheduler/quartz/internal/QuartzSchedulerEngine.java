@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.scheduler.quartz.internal;
@@ -58,7 +49,6 @@ import org.quartz.Calendar;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.JobPersistenceException;
 import org.quartz.ListenerManager;
@@ -71,7 +61,7 @@ import org.quartz.TriggerUtils;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.jdbcjobstore.UpdateLockRowSemaphore;
 import org.quartz.impl.matchers.GroupMatcher;
-import org.quartz.listeners.TriggerListenerSupport;
+import org.quartz.listeners.SchedulerListenerSupport;
 import org.quartz.spi.OperableTrigger;
 
 /**
@@ -394,38 +384,11 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		try {
 			_persistedScheduler.start();
 
-			initJobState();
-
 			_memoryScheduler.start();
 		}
 		catch (Exception exception) {
 			throw new SchedulerException(
 				"Unable to start scheduler", exception);
-		}
-	}
-
-	@Override
-	public void unschedule(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		try {
-			Scheduler scheduler = _getScheduler(storageType);
-
-			jobName = _fixMaxLength(jobName, _jobNameMaxLength, storageType);
-			groupName = _fixMaxLength(
-				groupName, _groupNameMaxLength, storageType);
-
-			JobKey jobKey = new JobKey(jobName, groupName);
-
-			unschedule(scheduler, jobKey);
-		}
-		catch (Exception exception) {
-			throw new SchedulerException(
-				StringBundler.concat(
-					"Unable to unschedule job {jobName=", jobName,
-					", groupName=", groupName, "}"),
-				exception);
 		}
 	}
 
@@ -531,6 +494,24 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			return null;
 		}
 
+		String jobName = jobKey.getName();
+		String groupName = jobKey.getGroup();
+
+		Trigger trigger = scheduler.getTrigger(
+			new TriggerKey(jobName, groupName));
+
+		if (trigger == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to find trigger for job (" + jobKey +
+						"), will delete it");
+			}
+
+			scheduler.deleteJob(jobKey);
+
+			return null;
+		}
+
 		SchedulerResponse schedulerResponse = new SchedulerResponse();
 
 		JobDataMap jobDataMap = jobDetail.getJobDataMap();
@@ -549,20 +530,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		schedulerResponse.setStorageType(
 			StorageType.valueOf(
 				jobDataMap.getString(SchedulerEngine.STORAGE_TYPE)));
-
-		String jobName = jobKey.getName();
-		String groupName = jobKey.getGroup();
-
-		TriggerKey triggerKey = new TriggerKey(jobName, groupName);
-
-		Trigger trigger = scheduler.getTrigger(triggerKey);
-
-		if (trigger == null) {
-			schedulerResponse.setGroupName(groupName);
-			schedulerResponse.setJobName(jobName);
-
-			return schedulerResponse;
-		}
 
 		message.put(SchedulerEngine.END_TIME, trigger.getEndTime());
 		message.put(
@@ -601,35 +568,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 
 		return schedulerResponses;
-	}
-
-	protected void initJobState() throws Exception {
-		List<String> groupNames = _persistedScheduler.getJobGroupNames();
-
-		for (String groupName : groupNames) {
-			Set<JobKey> jobKeys = _persistedScheduler.getJobKeys(
-				GroupMatcher.jobGroupEquals(groupName));
-
-			for (JobKey jobKey : jobKeys) {
-				Trigger trigger = _persistedScheduler.getTrigger(
-					new TriggerKey(jobKey.getName(), jobKey.getGroup()));
-
-				if (trigger != null) {
-					continue;
-				}
-
-				SchedulerEngineHelper schedulerEngineHelper =
-					_getSchedulerEngineHelper();
-
-				JobDetail jobDetail = _persistedScheduler.getJobDetail(jobKey);
-
-				schedulerEngineHelper.auditSchedulerJobs(
-					getMessage(jobDetail.getJobDataMap()),
-					TriggerState.EXPIRED);
-
-				_persistedScheduler.deleteJob(jobKey);
-			}
-		}
 	}
 
 	protected void schedule(
@@ -680,47 +618,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 					objectAlreadyExistsException);
 			}
 		}
-	}
-
-	protected void unschedule(Scheduler scheduler, JobKey jobKey)
-		throws Exception {
-
-		JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-
-		if (jobDetail == null) {
-			return;
-		}
-
-		TriggerKey triggerKey = new TriggerKey(
-			jobKey.getName(), jobKey.getGroup());
-
-		Trigger trigger = scheduler.getTrigger(triggerKey);
-
-		if (trigger == null) {
-			return;
-		}
-
-		JobDataMap jobDataMap = jobDetail.getJobDataMap();
-
-		JobState jobState = _getJobState(jobDataMap);
-
-		jobState.setTriggerDate(SchedulerEngine.END_TIME, new Date());
-		jobState.setTriggerDate(
-			SchedulerEngine.FINAL_FIRE_TIME, trigger.getPreviousFireTime());
-		jobState.setTriggerDate(SchedulerEngine.NEXT_FIRE_TIME, null);
-		jobState.setTriggerDate(
-			SchedulerEngine.PREVIOUS_FIRE_TIME, trigger.getPreviousFireTime());
-		jobState.setTriggerDate(
-			SchedulerEngine.START_TIME, trigger.getStartTime());
-		jobState.setTriggerState(TriggerState.UNSCHEDULED);
-
-		jobDataMap.put(
-			SchedulerEngine.JOB_STATE,
-			JobStateSerializeUtil.serialize(jobState));
-
-		scheduler.unscheduleJob(triggerKey);
-
-		scheduler.addJob(jobDetail, true);
 	}
 
 	protected void update(
@@ -787,17 +684,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		return _memoryScheduler;
 	}
 
-	private SchedulerEngineHelper _getSchedulerEngineHelper() {
-		SchedulerEngineHelper schedulerEngineHelper =
-			_schedulerEngineHelperSnapshot.get();
-
-		if (schedulerEngineHelper == null) {
-			throw new IllegalStateException("Scheduler engine helper is null");
-		}
-
-		return schedulerEngineHelper;
-	}
-
 	private Scheduler _initializeScheduler(
 			String propertiesPrefix, boolean useQuartzCluster)
 		throws Exception {
@@ -847,7 +733,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		ListenerManager listenerManager = scheduler.getListenerManager();
 
-		listenerManager.addTriggerListener(new TriggerListenerSupportImpl());
+		listenerManager.addSchedulerListener(
+			new SchedulerListenerImpl(scheduler));
 
 		return scheduler;
 	}
@@ -909,70 +796,74 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 	private volatile boolean _schedulerEngineEnabled;
 
-	private class TriggerListenerSupportImpl extends TriggerListenerSupport {
+	private class SchedulerListenerImpl extends SchedulerListenerSupport {
 
-		@Override
-		public String getName() {
-			return TriggerListenerSupportImpl.class.getName();
+		public void jobPaused(JobKey jobKey) {
+			_audit(jobKey, TriggerState.PAUSED);
 		}
 
-		@Override
-		public void triggerComplete(
-			Trigger trigger, JobExecutionContext jobExecutionContext,
-			Trigger.CompletedExecutionInstruction
-				completedExecutionInstruction) {
+		public void jobResumed(JobKey jobKey) {
+			_audit(jobKey, TriggerState.NORMAL);
+		}
 
-			if (jobExecutionContext.getNextFireTime() != null) {
-				return;
-			}
+		public void jobScheduled(Trigger trigger) {
+			_audit(trigger.getJobKey(), TriggerState.NORMAL);
+		}
 
-			TriggerKey triggerKey = trigger.getKey();
+		public void triggerFinalized(Trigger trigger) {
+			JobKey jobKey = trigger.getJobKey();
 
-			JobDetail jobDetail = jobExecutionContext.getJobDetail();
-
-			JobDataMap jobDataMap = jobDetail.getJobDataMap();
+			_audit(jobKey, TriggerState.COMPLETE);
 
 			try {
+				JobDetail jobDetail = _scheduler.getJobDetail(jobKey);
+
+				JobDataMap jobDataMap = jobDetail.getJobDataMap();
+
 				SchedulerEngineHelper schedulerEngineHelper =
-					_getSchedulerEngineHelper();
+					_schedulerEngineHelperSnapshot.get();
 
 				schedulerEngineHelper.delete(
-					triggerKey.getName(), triggerKey.getGroup(),
+					jobKey.getName(), jobKey.getGroup(),
 					StorageType.valueOf(
 						jobDataMap.getString(SchedulerEngine.STORAGE_TYPE)));
 			}
-			catch (SchedulerException schedulerException) {
-				_log.error(
-					"Unable to delete job " + triggerKey, schedulerException);
+			catch (Exception exception) {
+				_log.error("Unable to delete job " + jobKey, exception);
 			}
 		}
 
-		@Override
-		public void triggerFired(
-			Trigger trigger, JobExecutionContext jobExecutionContext) {
+		private SchedulerListenerImpl(Scheduler scheduler) {
+			_scheduler = scheduler;
+		}
 
-			JobDetail jobDetail = jobExecutionContext.getJobDetail();
+		private void _audit(JobKey jobKey, TriggerState triggerState) {
+			SchedulerEngineHelper schedulerEngineHelper =
+				_schedulerEngineHelperSnapshot.get();
 
-			JobDataMap jobDataMap = jobDetail.getJobDataMap();
-
-			Message message = new Message();
-
-			message.setValues(new HashMap<>(jobDataMap.getWrappedMap()));
+			if (schedulerEngineHelper == null) {
+				return;
+			}
 
 			try {
-				SchedulerEngineHelper schedulerEngineHelper =
-					_getSchedulerEngineHelper();
+				JobDetail jobDetail = _scheduler.getJobDetail(jobKey);
 
-				schedulerEngineHelper.auditSchedulerJobs(
-					message, TriggerState.NORMAL);
+				JobDataMap jobDataMap = jobDetail.getJobDataMap();
+
+				Message message = new Message();
+
+				message.setValues(new HashMap<>(jobDataMap.getWrappedMap()));
+
+				schedulerEngineHelper.auditSchedulerJobs(message, triggerState);
 			}
-			catch (SchedulerException schedulerException) {
+			catch (Exception exception) {
 				_log.error(
-					"Unable to send audit message for scheduler job " +
-						trigger.getKey(),
-					schedulerException);
+					"Unable to send audit message for scheduler job " + jobKey,
+					exception);
 			}
 		}
+
+		private final Scheduler _scheduler;
 
 	}
 

@@ -19,6 +19,7 @@ definition {
 	test AddEditAndDeleteDiscountEntry {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// TODO Review
 
@@ -230,7 +231,7 @@ definition {
 	@description = "COMMERCE-11821 | Discount is applied correctly when a tax category is enabled"
 	@priority = 4
 	test CanApplyDiscountWithTaxCategoryEnabled {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site is created") {
@@ -353,7 +354,7 @@ definition {
 	@description = "COMMERCE-9787 | Apply a discount with eligibility only to account groups that are eligible"
 	@priority = 5
 	test CanApplySpecificAccountGroupCouponCodeDiscount {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site") {
@@ -534,10 +535,161 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12099 | As a Discount Manager, I want the field Last Modified in the Discounts table to be localized"
+	@priority = 3
+	test CanAssertDiscountEntryModifiedDateFieldIsLocalized {
+		property portal.acceptance = "false";
+
+		task ("Given a discount is created") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 10,
+				target = "products",
+				title = "Test Discount",
+				usePercentage = "true");
+
+			CommerceNavigator.goToDiscountAdmin();
+
+			var modifiedDate = CommerceJSONDiscountsAPI.getCommerceDiscountsFieldValuesList(jsonPath = "$..['modifiedDate']");
+
+			var modifiedDate = CommerceUtilities.getLocaleDate(date = ${modifiedDate});
+
+			var modifiedDate = DateUtil.format(${modifiedDate}, "M/d/yyyy, h:mm:ss a", "MMM d, yyyy, h:mm:ss a");
+
+			CommerceEntry.assertTableRowSpecificColumnValue(
+				column = 6,
+				entryName = "Test Discount",
+				row = 1,
+				value = ${modifiedDate});
+		}
+
+		task ("When the user changes the language selected") {
+			MyAccount.configureDisplaySettingsLanguage(languageName = "español (España)");
+		}
+
+		task ("Then the Last Modified field is localized") {
+			CommerceNavigator.goToDiscountAdmin();
+
+			var localizedDate = CommerceUtilities.getLocaleDateLocalized(
+				date = ${modifiedDate},
+				lang = "es-ES",
+				options = '''{"dateStyle": "medium", "timeStyle": "medium"}''');
+
+			CommerceEntry.assertTableRowSpecificColumnValue(
+				column = 6,
+				entryName = "Test Discount",
+				row = 1,
+				value = ${localizedDate});
+
+			UserBar.gotoDropdownItem(dropdownItem = "Mi cuenta");
+
+			Select(
+				locator1 = "MyAccount#LANGUAGE_SELECT",
+				value1 = "English (United States)");
+
+			AssertClick(
+				key_saveButton = "Guardar",
+				locator1 = "Button#SAVE_LOCALIZED",
+				value1 = "Guardar");
+
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
+		}
+	}
+
+	@description = "COMMERCE-12099 | As a Discount Manager, I want the discounts table to be sorted by Last Modified Date/Time"
+	@priority = 5
+	test CanAssertDiscountsAreSortedByModifiedDate {
+		property portal.acceptance = "true";
+
+		task ("Given discount entries are created") {
+			for (var num : list "1,2,3") {
+				CommerceJSONDiscountsAPI._addDiscount(
+					active = "true",
+					level = "L1",
+					percentageLevel1 = 10,
+					target = "products",
+					title = "TestDiscount${num}",
+					usePercentage = "true");
+			}
+		}
+
+		task ("When the user navigates to Discounts admin page") {
+			CommerceNavigator.goToDiscountAdmin();
+		}
+
+		task ("Then discounts table is sorted by Last Modified Date/Time") {
+			var modifiedDateList = CommerceJSONDiscountsAPI.getCommerceDiscountsFieldValuesList(jsonPath = "$..['modifiedDate']");
+			var discountCount = 1;
+			var rowCount = 3;
+
+			for (var modifiedDate : list ${modifiedDateList}) {
+				var modifiedDate = CommerceUtilities.getLocaleDate(date = ${modifiedDate});
+
+				var modifiedDate = DateUtil.format(${modifiedDate}, "M/d/yyyy, h:mm:ss a", "MMM d, yyyy, h:mm:ss a");
+
+				CommerceEntry.assertTableRowSpecificColumnValue(
+					column = 6,
+					entryName = "TestDiscount${discountCount}",
+					row = ${rowCount},
+					value = ${modifiedDate});
+
+				var discountCount = ${discountCount} + 1;
+				var rowCount = ${rowCount} - 1;
+			}
+		}
+
+		task ("When one of the discount entries is modified") {
+			CommerceNavigator.gotoEntry(entryName = "TestDiscount2");
+
+			Button.clickPublish();
+		}
+
+		task ("Then the sorting of the entries is changed based on the latest discounts entry modified") {
+			CommerceNavigator.goToDiscountAdmin();
+
+			var modifiedDateList = "";
+
+			for (var discount : list "1,3,2") {
+				var modifiedDate = CommerceJSONDiscountsAPI.getCommerceDiscountFieldById(
+					discountTitle = "TestDiscount${discount}",
+					jsonPath = "$..['modifiedDate']");
+
+				var modifiedDateList = "${modifiedDateList}${modifiedDate},";
+			}
+
+			echo("Values: ${modifiedDateList}");
+
+			var discountCount = 1;
+			var rowCount = 3;
+
+			for (var modifiedDate : list ${modifiedDateList}) {
+				var modifiedDate = CommerceUtilities.getLocaleDate(date = ${modifiedDate});
+
+				var modifiedDate = DateUtil.format(${modifiedDate}, "M/d/yyyy, h:mm:ss a", "MMM d, yyyy, h:mm:ss a");
+
+				CommerceEntry.assertTableRowSpecificColumnValue(
+					column = 6,
+					entryName = "TestDiscount${discountCount}",
+					row = ${rowCount},
+					value = ${modifiedDate});
+
+				if (${discountCount} == 1) {
+					var discountCount = 3;
+				}
+				else if (${discountCount} == 3) {
+					var discountCount = 2;
+				}
+
+				var rowCount = ${rowCount} - 1;
+			}
+		}
+	}
+
 	@description = "COMMERCE-9789 | Apply coupon code discount to not eligible account group and assert the coupon is not applicable"
 	@priority = 5
 	test CanAssertNotEligibleAccountGroupCouponCodeDiscountNotApplied {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site") {
@@ -629,7 +781,7 @@ definition {
 	@description = "This is a test case for COMMERCE-10819. User with Discount Manager role can access Discounts from Control Panel"
 	@priority = 3
 	test CanDiscountManagerAccessDiscountsPanel {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site") {
@@ -924,10 +1076,86 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12062 and COMMERCE-12091, Verify that is not possible to use the comma and that the Minimum Amount must be filled with a number"
+	@priority = 5
+	test CanUserReciveAnErrorForEmptyOrDecimalCommaNumberForMinimumAmountField {
+		property portal.acceptance = "true";
+
+		task ("Given a Discount is created") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 10,
+				target = "products",
+				title = "Discount 1 10% off",
+				usePercentage = "true");
+
+			CommerceNavigator.goToDiscountAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 1 10% off");
+		}
+
+		task ("And a new rule is added") {
+			CommerceDiscounts.addNewDiscountsRule(
+				name = "Rule",
+				type = "Cart Total");
+
+			AssertElementPresent(
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "Cart total minimum amount cannot be empty and must be a decimal number.");
+		}
+
+		task ("And the user leaves the Minimum Amount empty") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Rule");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertTextEquals(
+				key_fieldLabel = "Cart Total Minimum Amount",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "");
+		}
+
+		task ("Then the user will receive an error") {
+			Button.clickSave();
+
+			AssertElementPresent(
+				key_field = "The Cart Total Minimum Amount field is required.",
+				locator1 = "RaylifeAP#FIELD_REQUIRED_MESSAGE");
+		}
+
+		task ("And if the user add a number with the comma into the field") {
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Rule");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type.sendKeys(
+				key_fieldLabel = "Cart Total Minimum Amount",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "1000,00");
+
+			Button.clickSave();
+		}
+
+		task ("Then the user will receive an error") {
+			AssertElementPresent(
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "Cart total minimum amount cannot be empty and must be a decimal number.");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9592."
 	@priority = 5
 	test CanViewErrorNotificationWhenApplyingCouponCodeToWrongProduct {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
@@ -1072,8 +1300,10 @@ definition {
 		}
 	}
 
+	@description = "This is a test for creating a new discount"
+	@priority = 5
 	test CreateNewDiscount {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(
@@ -1442,6 +1672,7 @@ definition {
 	test ViewExpiredDiscountEntry {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// TODO Review
 

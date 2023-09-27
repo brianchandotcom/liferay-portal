@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_SPECIFIC_RESTRICTIONS_CHOOSE_STRUCTURE_BUTTON</td>
-	<td>//button[contains(@id,'selectDDMStructure')]/span[contains(.,'Choose Structure')]</td>
+	<td>//button[contains(@id,'selectDDMStructure') and contains(.,'Choose Structure')]</td>
 	<td></td>
 </tr>
 <tr>

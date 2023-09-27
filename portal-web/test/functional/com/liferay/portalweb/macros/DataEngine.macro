@@ -1236,6 +1236,21 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro editFieldRequiredWithoutBack {
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = ${fieldFieldLabel},
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = ${fieldFieldLabel});
+
+		Check.checkToggleSwitch(
+			checkboxName = "Required Field",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		AssertVisible(
+			key_text = "Save",
+			locator1 = "Button#ANY_ENABLED");
+	}
+
 	macro editFieldSearchable {
 		if (${fieldFieldLabel} == "Boolean") {
 			Click(
@@ -1963,7 +1978,7 @@ definition {
 	}
 
 	macro waitForAutoSave {
-		if (IsElementPresent(locator1 = "Button#PUBLISH")) {
+		if (IsElementPresent(key_text = "Publish", locator1 = "Button#ANY")) {
 			Button.clickPublish();
 		}
 		else if (IsElementPresent(locator1 = "Button#SAVE")) {

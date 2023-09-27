@@ -1,0 +1,176 @@
+@component-name = "portal-document-management-ee"
+definition {
+
+	property custom.properties = "dl.actions.visible=true";
+	property osgi.modules.includes = "sharepoint-rest";
+	property portal.release = "true";
+	property portal.ssl.enabled = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Sharepoint";
+
+	var authorizationGrantEndpoint = PropsUtil.get("sharepoint.oauth.authorization.grant.endpoint");
+	var authorizationTokenEndpoint = PropsUtil.get("sharepoint.oauth.authorization.token.endpoint");
+	var clientId = PropsUtil.get("sharepoint.oauth.client.id");
+	var clientSecret = PropsUtil.get("sharepoint.oauth.client.secret");
+	var configurationName = PropsUtil.get("sharepoint.oauth.configuration.name");
+	var configurationResource = PropsUtil.get("sharepoint.oauth.configuration.resource");
+	var configurationScope = PropsUtil.get("sharepoint.oauth.configuration.scope");
+	var siteDomain = PropsUtil.get("sharepoint.oauth.site.domain");
+	var tenantId = PropsUtil.get("sharepoint.oauth.tenant.id");
+	var userName = PropsUtil.get("sharepoint.oauth.user.name");
+	var userPassword = PropsUtil.get("sharepoint.oauth.user.password");
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "Sharepoint OAuth2",
+			configurationScope = "Virtual Instance Scope");
+
+		Button.clickAdd();
+
+		Type(
+			key_text = "name",
+			locator1 = "TextArea#ANY",
+			value1 = ${configurationName});
+
+		Type(
+			key_text = "authorizationGrantEndpoint",
+			locator1 = "TextArea#ANY",
+			value1 = ${authorizationGrantEndpoint});
+
+		Type(
+			key_text = "authorizationTokenEndpoint",
+			locator1 = "TextArea#ANY",
+			value1 = ${authorizationTokenEndpoint});
+
+		Type(
+			key_text = "clientId",
+			locator1 = "TextArea#ANY",
+			value1 = ${clientId});
+
+		Type(
+			key_text = "clientSecret",
+			locator1 = "TextArea#ANY",
+			value1 = ${clientSecret});
+
+		Type(
+			key_text = "scope",
+			locator1 = "TextArea#ANY",
+			value1 = ${configurationScope});
+
+		Type(
+			key_text = "tenantId",
+			locator1 = "TextArea#ANY",
+			value1 = ${tenantId});
+
+		Type(
+			key_text = "siteDomain",
+			locator1 = "TextArea#ANY",
+			value1 = ${siteDomain});
+
+		Type(
+			key_text = "resource",
+			locator1 = "TextArea#ANY",
+			value1 = ${configurationResource});
+
+		PortletEntry.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoAddRepositoryCP();
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Collaboration Test Application");
+
+		DMRepository.addSharepoint(
+			dmRepositoryLibraryPath = "Documentos compartidos",
+			dmRepositoryName = "Sharepoint (${configurationName})",
+			dmRepositorySiteAbsoluteURL = "https://liferaycolab.sharepoint.com",
+			permissionDefinitionKey = "ACCESS",
+			roleTitle = "Guest");
+
+		PortletEntry.save();
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertClick(
+			key_dmRepositoryName = "Collaboration Test Application",
+			locator1 = "DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW",
+			value1 = "Collaboration Test Application");
+
+		MicrosoftLogin.accountSignIn(
+			userEmail = ${userName},
+			userPassword = ${userPassword});
+
+		MicrosoftLogin.confirmSharepointApp(dmRepositoryName = "Collaboration Test Application");
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This test ensures that the REST Sharepoint can be added correctly when using the Sharepoint OAuth2 of the instance."
+	@priority = 5
+	test CanAddDocumentToRepository {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Commerce_Black.jpg");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Black.jpg",
+			dmDocumentTitle = "Commerce_Black.jpg");
+
+		LexiconEntry.viewEntryName(rowEntry = "Commerce_Black.jpg");
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Commerce_Black.jpg");
+	}
+
+	@description = "This test ensures that the added SharePoint OAuth2 in one instance can not be applied for other instance."
+	@priority = 5
+	test InstanceLevelSharepointConfigurationIndependentFromOneAnother {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(
+			baseURL = "http://www.able.com:8080",
+			siteURLKey = "guest");
+
+		DMNavigator.gotoAddRepositoryCP();
+
+		Panel.expandPanel(panel = "Repository Configuration");
+
+		AssertElementNotPresent(
+			key_fieldLabel = "Repository Type",
+			key_value = "Sharepoint (${configurationName})",
+			locator1 = "Select#GENERIC_SELECT_VALUE");
+	}
+
+}

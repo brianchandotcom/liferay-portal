@@ -1,25 +1,18 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {SIZES, Size} from '../constants/sizes';
 import Preview from './Preview';
 import SizeSelector from './SizeSelector';
 
 import '../../css/main.scss';
+import {CustomSizeContextProvider} from '../contexts/CustomSizeContext';
 
 interface IProps {
 	portletNamespace: string;
@@ -27,20 +20,82 @@ interface IProps {
 
 export default function App({portletNamespace: namespace}: IProps) {
 	const [activeSize, setActiveSize] = useState<Size>(SIZES.desktop);
+	const [open, setOpen] = useState<boolean>(false);
 
 	const previewRef = useRef<HTMLDivElement>(null);
 
+	const simulationPanel = useMemo(
+		() => document.getElementById(`${namespace}simulationPanelId`),
+		[namespace]
+	);
+
+	useEffect(() => {
+		const wrapper = document.getElementById('wrapper');
+
+		const simulationToggle = document.getElementById(
+			`${namespace}simulationToggleId`
+		);
+
+		// @ts-ignore
+
+		const sidenavInstance = Liferay.SideNavigation.initialize(
+			simulationToggle
+		);
+
+		sidenavInstance.on('closed.lexicon.sidenav', () => {
+			setOpen(false);
+
+			if (wrapper) {
+				wrapper.removeAttribute('inert');
+			}
+		});
+
+		sidenavInstance.on('open.lexicon.sidenav', () => {
+			setOpen(true);
+
+			if (wrapper) {
+				wrapper.setAttribute('inert', '');
+			}
+		});
+
+		if (sidenavInstance && sidenavInstance.visible()) {
+			setOpen(true);
+
+			if (wrapper) {
+				wrapper.setAttribute('inert', '');
+			}
+		}
+
+		return () => {
+
+			// @ts-ignores
+
+			Liferay.SideNavigation.destroy(simulationToggle);
+		};
+	}, [namespace]);
+
+	if (!simulationPanel) {
+		return null;
+	}
+
 	return (
-		<>
+		<CustomSizeContextProvider>
 			<SizeSelector
 				activeSize={activeSize}
 				namespace={namespace}
+				open={open}
 				previewRef={previewRef}
 				setActiveSize={setActiveSize}
 			/>
 
-			<Preview activeSize={activeSize} previewRef={previewRef} />
-		</>
+			<ReactPortal container={simulationPanel}>
+				<Preview
+					activeSize={activeSize}
+					open={open}
+					previewRef={previewRef}
+				/>
+			</ReactPortal>
+		</CustomSizeContextProvider>
 	);
 }
 

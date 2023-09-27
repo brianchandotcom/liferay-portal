@@ -37,12 +37,12 @@ Use a method reference to simpilfy a lambda expression when possible, we can do 
 
 ```java
 NoticeableFuture<User> userNoticeableFuture =
-	_noticeableExecutorService.submit(() -> UserTestUtil.addUser());
+	_noticeableExecutorService.submit((Callable<User>)UserTestUtil::addUser);
 ```
 
 Instead of
 
 ```java
 NoticeableFuture<User> userNoticeableFuture =
-	_noticeableExecutorService.submit((Callable<User>)UserTestUtil::addUser);
+	_noticeableExecutorService.submit(() -> UserTestUtil.addUser());
 ```

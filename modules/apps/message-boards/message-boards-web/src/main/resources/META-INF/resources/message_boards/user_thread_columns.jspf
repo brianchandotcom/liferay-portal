@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -24,11 +15,21 @@
 	%>
 
 	<c:if test="<%= (threadPriority != null) && (thread.getPriority() > 0) %>">
-		<span class="text-default <%= threadPriority[1] %>" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>"></span>
+		<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>">
+			<clay:icon
+				aria-label="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>"
+				symbol="<%= threadPriority[1] %>"
+			/>
+		</span>
 	</c:if>
 
 	<c:if test="<%= thread.isLocked() %>">
-		<i class="icon-lock" title="<liferay-ui:message key="thread-locked" />"></i>
+		<clay:icon
+			aria-label="<%= LanguageUtil.get(request, "thread-locked") %>"
+			symbol="lock"
+		/>
+
+		<liferay-ui:message key="thread-locked" />
 	</c:if>
 
 	<c:if test="<%= message != null %>">

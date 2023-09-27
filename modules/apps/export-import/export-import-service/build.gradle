@@ -11,19 +11,23 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:asset:asset-link-api")
 	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:changeset:changeset-api")
 	compileOnly project(":apps:changeset:changeset-service")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	compileOnly project(":apps:expando:expando-api")
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:export-import:export-import-changeset-api")
 	compileOnly project(":apps:fragment:fragment-api")
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-set-prototype-api")
 	compileOnly project(":apps:portal-background-task:portal-background-task-api")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-search:portal-search-api")
 	compileOnly project(":apps:portal-search:portal-search-spi")
+	compileOnly project(":apps:portal-workflow:portal-workflow-api")
 	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:staging:staging-api")

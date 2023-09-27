@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetTermDisplayContext",
+	"ddmTemplateKey": "MARKETPLACE-PRICE-MODEL",
+	"name": "Marketplace Price Model",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

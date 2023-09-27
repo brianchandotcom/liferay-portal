@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.internal.security.permission.resource;
@@ -27,7 +18,6 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
@@ -35,10 +25,11 @@ import com.liferay.portal.kernel.security.permission.resource.DynamicInheritance
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
+import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
@@ -127,10 +118,9 @@ public class DLFileEntryModelResourcePermissionWrapper
 						}
 
 						Boolean hasBaseModelPermission =
-							BaseModelPermissionCheckerUtil.
-								containsBaseModelPermission(
-									permissionChecker, fileEntry.getGroupId(),
-									className, classPK, relatedModelActionId);
+							ModelResourcePermissionUtil.contains(
+								permissionChecker, fileEntry.getGroupId(),
+								className, classPK, relatedModelActionId);
 
 						if ((hasBaseModelPermission != null) &&
 							!hasBaseModelPermission) {
@@ -201,9 +191,6 @@ public class DLFileEntryModelResourcePermissionWrapper
 	@Reference
 	private StagingPermission _stagingPermission;
 
-	@Reference
-	private WorkflowPermission _workflowPermission;
-
 	private class DLFileEntryWorkflowedModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<DLFileEntry> {
 
@@ -224,7 +211,7 @@ public class DLFileEntryModelResourcePermissionWrapper
 				}
 			}
 			else if (fileVersion.isPending()) {
-				Boolean hasPermission = _workflowPermission.hasPermission(
+				Boolean hasPermission = WorkflowPermissionUtil.hasPermission(
 					permissionChecker, fileVersion.getGroupId(), name,
 					fileVersion.getFileVersionId(), actionId);
 

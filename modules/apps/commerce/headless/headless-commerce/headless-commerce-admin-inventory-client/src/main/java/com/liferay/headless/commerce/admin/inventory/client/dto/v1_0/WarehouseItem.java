@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.inventory.client.dto.v1_0;
@@ -18,6 +9,8 @@ import com.liferay.headless.commerce.admin.inventory.client.function.UnsafeSuppl
 import com.liferay.headless.commerce.admin.inventory.client.serdes.v1_0.WarehouseItemSerDes;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.Objects;
@@ -96,16 +89,16 @@ public class WarehouseItem implements Cloneable, Serializable {
 
 	protected Date modifiedDate;
 
-	public Integer getQuantity() {
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity = quantity;
 	}
 
 	public void setQuantity(
-		UnsafeSupplier<Integer, Exception> quantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> quantityUnsafeSupplier) {
 
 		try {
 			quantity = quantityUnsafeSupplier.get();
@@ -115,18 +108,18 @@ public class WarehouseItem implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer quantity;
+	protected BigDecimal quantity;
 
-	public Integer getReservedQuantity() {
+	public BigDecimal getReservedQuantity() {
 		return reservedQuantity;
 	}
 
-	public void setReservedQuantity(Integer reservedQuantity) {
+	public void setReservedQuantity(BigDecimal reservedQuantity) {
 		this.reservedQuantity = reservedQuantity;
 	}
 
 	public void setReservedQuantity(
-		UnsafeSupplier<Integer, Exception> reservedQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> reservedQuantityUnsafeSupplier) {
 
 		try {
 			reservedQuantity = reservedQuantityUnsafeSupplier.get();
@@ -136,7 +129,7 @@ public class WarehouseItem implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer reservedQuantity;
+	protected BigDecimal reservedQuantity;
 
 	public String getSku() {
 		return sku;
@@ -156,6 +149,27 @@ public class WarehouseItem implements Cloneable, Serializable {
 	}
 
 	protected String sku;
+
+	public String getUnitOfMeasureKey() {
+		return unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		this.unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(
+		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
+
+		try {
+			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String unitOfMeasureKey;
 
 	public String getWarehouseExternalReferenceCode() {
 		return warehouseExternalReferenceCode;

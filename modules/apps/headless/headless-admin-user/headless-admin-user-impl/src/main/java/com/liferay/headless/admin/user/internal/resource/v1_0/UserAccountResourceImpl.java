@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
@@ -40,7 +31,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderWebs
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.UserAccountEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -96,7 +87,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -128,11 +118,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/user-account.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, UserAccountResource.class}
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
+	service = UserAccountResource.class
 )
-public class UserAccountResourceImpl
-	extends BaseUserAccountResourceImpl implements NestedFieldSupport {
+public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	@Override
 	public void
@@ -511,14 +500,7 @@ public class UserAccountResourceImpl
 				_getBirthdayYear(userAccount), sms, facebook, jabber, skype,
 				twitter, user.getJobTitle(), user.getGroupIds(),
 				user.getOrganizationIds(), user.getRoleIds(), null,
-				user.getUserGroupIds(),
-				ServiceContextRequestUtil.createServiceContext(
-					CustomFieldsUtil.toMap(
-						User.class.getName(), contextCompany.getCompanyId(),
-						userAccount.getCustomFields(),
-						contextAcceptLanguage.getPreferredLocale()),
-					contextCompany.getGroupId(), contextHttpServletRequest,
-					null)));
+				user.getUserGroupIds(), _createServiceContext(userAccount)));
 	}
 
 	@Override
@@ -788,13 +770,7 @@ public class UserAccountResourceImpl
 				_getWebsites(userAccount),
 				_announcementsDeliveryLocalService.getUserDeliveries(
 					userAccountId),
-				ServiceContextRequestUtil.createServiceContext(
-					CustomFieldsUtil.toMap(
-						User.class.getName(), contextCompany.getCompanyId(),
-						userAccount.getCustomFields(),
-						contextAcceptLanguage.getPreferredLocale()),
-					contextCompany.getGroupId(), contextHttpServletRequest,
-					null)));
+				_createServiceContext(userAccount)));
 	}
 
 	@Override
@@ -827,13 +803,7 @@ public class UserAccountResourceImpl
 			userAccount.getJobTitle(), _getAddresses(userAccount),
 			_getServiceBuilderEmailAddresses(userAccount),
 			_getServiceBuilderPhones(userAccount), _getWebsites(userAccount),
-			false,
-			ServiceContextRequestUtil.createServiceContext(
-				CustomFieldsUtil.toMap(
-					User.class.getName(), contextCompany.getCompanyId(),
-					userAccount.getCustomFields(),
-					contextAcceptLanguage.getPreferredLocale()),
-				contextCompany.getGroupId(), contextHttpServletRequest, null));
+			false, _createServiceContext(userAccount));
 
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
@@ -974,6 +944,19 @@ public class UserAccountResourceImpl
 			throw new UserPasswordException.MustMatchCurrentPassword(
 				user.getUserId());
 		}
+	}
+
+	private ServiceContext _createServiceContext(UserAccount userAccount)
+		throws Exception {
+
+		return ServiceContextBuilder.create(
+			contextCompany.getGroupId(), contextHttpServletRequest, null
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				User.class.getName(), contextCompany.getCompanyId(),
+				userAccount.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	private String _formatActionMapKey(String methodName) {

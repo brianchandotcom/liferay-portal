@@ -14,10 +14,7 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given access to the Data Sets admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Data Sets");
+			DataSetAdmin.goToDataSetAdminPage();
 		}
 	}
 
@@ -28,6 +25,498 @@ definition {
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-178858 Confirm the empty message on the Data Set administration page"
+	@priority = 5
+	test AssertEmptyMessageInDSAdmin {
+		task ("And the text “No Datasets Created. Start creating one to show your data.” is present on the page") {
+			AssertTextPresent(
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT",
+				value1 = "No Data Sets Created");
+
+			AssertTextPresent(
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT",
+				value1 = "Start creating one to show your data.");
+		}
+
+		task ("And “New Dataset” button is present on the page") {
+			CustomerPortal.assertButtonIsVisible(text = "New Data Set");
+		}
+	}
+
+	@description = "LPS-178858 Confirm that the new Data Set Modal is displayed by clicking on the add button"
+	@priority = 5
+	test AssertNewDataSetModal {
+		task ("When the user clicks on “Create Dataset” button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the New Dataset modal is displayed") {
+			AssertElementPresent(
+				key_modal_title = "New Data Set",
+				locator1 = "AccessibilityMenu#MODAL_TITLE");
+		}
+	}
+
+	@description = "LPS-188818 Test to check and cover bug in pagination administration page"
+	@priority = 3
+	test AssertNewPaginationValues {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/data-set-manager/entries");
+
+			Refresh();
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToViews(dataSetName = "Data Set Test");
+		}
+
+		task ("And adding a dataset view") {
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("And the user accesses the Details tab, edit the description to "description 2" and save.") {
+			DataSetAdmin.goToTab(tabName = "Details");
+
+			Type(
+				labelTitle = "Description",
+				locator1 = "Masterclass#SIGN_IN_FORM",
+				value1 = "Description 2");
+
+			Button.clickSave();
+		}
+
+		task ("And go to the Pagination tab, edit the value of the “items per page list” to (4, 8, 20, 40, 50), and the “default items per page”, and save.") {
+			DataSetAdmin.goToTab(tabName = "Pagination");
+
+			Type(
+				key_label = "List of Items per Page",
+				locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
+				value1 = "4, 8, 20, 40, 50");
+
+			Type(
+				key_type = "Default Items per Page",
+				locator1 = "DataSet#EDIT_DATA_SET_VIEW",
+				value1 = 4);
+
+			Button.clickSave();
+		}
+
+		task ("And the user accesses the Details tab, edit the description to "description 23" and save.") {
+			DataSetAdmin.goToTab(tabName = "Details");
+
+			Type(
+				labelTitle = "Description",
+				locator1 = "Masterclass#SIGN_IN_FORM",
+				value1 = "Description 23");
+
+			Button.clickSave();
+		}
+
+		task ("Then go to the Pagination and Details tab are in accordance with your change") {
+			DataSetAdmin.goToTab(tabName = "Pagination");
+
+			AssertElementPresent(
+				key_label = "4, 8, 20, 40, 50",
+				locator1 = "TextArea#ANY_LABELED");
+		}
+	}
+
+	@description = "LPS-181546 Confirm that the data set information is created and displayed correctly"
+	@priority = 5
+	test AssertTheInformationsInDataSet {
+		task ("When the user creates a new data entry") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Blog Posts Posts",
+				restApplication = "/headless-delivery/v1.0",
+				restEndpoint = "/v1.0/sites/{siteId}/blog-postings",
+				restSchema = "BlogPosting");
+
+			Refresh();
+		}
+
+		task ("Then confirm that the Data Set has been created and the information is shown correctly.") {
+			AssertElementPresent(
+				key_text = "Blog Posts Posts",
+				locator1 = "CP2Utils#ANY_TEXT");
+
+			AssertElementPresent(
+				key_text = "/headless-delivery/v1.0",
+				locator1 = "CP2Utils#ANY_TEXT");
+
+			AssertElementPresent(
+				key_text = "/v1.0/sites/{siteId}/blog-postings",
+				locator1 = "CP2Utils#ANY_TEXT");
+		}
+	}
+
+	@description = "LPS-181546 Confirm that the new data set information is created and displayed correctly in the page content"
+	@priority = 5
+	test AssertTheValueInFieldsName {
+		task ("And create a user creates a new data Set entry") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Blog Posts Posts",
+				restApplication = "/headless-delivery/v1.0",
+				restEndpoint = "/v1.0/sites/{siteId}/blog-postings",
+				restSchema = "BlogPosting");
+
+			Refresh();
+		}
+
+		task ("And Add a view //Name: Blogs posting view") {
+			DataSetAdmin.goToViews(dataSetName = "Blog Posts Posts");
+
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "Blog Posting View");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Blog Posts Posts",
+				key_viewName = "Blog Posting View");
+		}
+
+		task ("When goes to Fields Tab.") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("And Add some fields //Add headline, id and Siteid") {
+			DataSetAdmin.addFields(key_fieldList = "headline,id,siteId");
+		}
+
+		task ("And change the fields names /headline to Title /id to Blog Id /Siteid to Site Id") {
+			Click(
+				key_fieldName = "headline",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "Title");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+
+			Click(
+				key_fieldName = "id",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "Blog Id");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+
+			Click(
+				key_fieldName = "siteId",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "Site Id");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("And add a new content page and Add a data set fragment to content page created") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Test Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And selected Blogs posting view") {
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "Blog Posting View",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("And Add a new blog /Title: New Blog /Description: Description test") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				panel = "Site Administration",
+				portlet = "Blogs");
+
+			Blogs.addEntry(
+				entryContent = "Description test",
+				entryTitle = "New Blogs");
+		}
+
+		task ("Then confirm that the information of the blog created and the site ID is displayed") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Test Page Name");
+
+			AssertElementPresent(
+				key_sortFieldName = "Blog Id",
+				locator1 = "CommerceNavigation#SORT_FIELD");
+
+			AssertElementPresent(
+				key_sortFieldName = "Site Id",
+				locator1 = "CommerceNavigation#SORT_FIELD");
+		}
+	}
+
+	@description = "LPS-178858 Confirm that the modal data set view is displayed"
+	@priority = 5
+	test CanAsserTheDataSetViewCanBeCreate {
+		task ("Given the creation of a new dataset") {
+			DataSetAdmin.createDataSet(
+				key_name = "DataSet Test",
+				key_type = "/data-set-manager/fields");
+		}
+
+		task ("When the user goes to the Views admin page of the new dataset") {
+			DataSetAdmin.goToViews(dataSetName = "DataSet Test");
+		}
+
+		task ("And clicks on the “New Dataset View” button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the “New Dataset View” modal is displayed") {
+			AssertElementPresent(
+				key_modal_title = "New Data Set View",
+				locator1 = "AccessibilityMenu#MODAL_TITLE");
+		}
+	}
+
+	@description = "LPS-178858 Confirm the empty message in the Data Set View admin page"
+	@priority = 5
+	test CanAssertTheEmptyMessageInDataSetView {
+		task ("Given the creation of a new dataset") {
+			DataSetAdmin.createDataSet(
+				key_name = "DataSet Test",
+				key_type = "/data-set-manager/fields");
+		}
+
+		task ("When the user goes to the Views admin page of the new dataset") {
+			DataSetAdmin.goToViews(dataSetName = "DataSet Test");
+		}
+
+		task ("And the text “No Views Created. Start creating one view to show your data” is present on the page") {
+			AssertTextPresent(
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT",
+				value1 = "No Views Created");
+
+			AssertTextPresent(
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT",
+				value1 = "Start creating one to show your data.");
+		}
+
+		task ("And “New Dataset View” button is present on the page") {
+			CustomerPortal.assertButtonIsVisible(text = "New Data Set View");
+		}
+	}
+
+	@description = "LPS-181546 Confirm that the rest app /scopes/{scopeKey} is displayed in the data set, and the other information"
+	@priority = 5
+	test CanAssertTheEndpointObjectInDataSetCreated {
+		task ("Given an object definition 'Student' with name field and Scope: Site created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Student",
+				objectName = "Student",
+				pluralLabelName = "Student");
+
+			Refresh();
+
+			Click(
+				key_termsAndConditionsName = "Student",
+				locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME");
+
+			Click(
+				key_sorting = "Company",
+				locator1 = "ObjectCustomViews#EDIT_SORTING");
+
+			Click(
+				key_menuItem = "Site",
+				locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
+
+			Button.clickSave();
+
+			ObjectAdmin.goToFieldsTab();
+
+			Refresh();
+
+			SelectFrameTop();
+
+			Click(locator1 = "Button#PLUS");
+
+			Type(
+				locator1 = "ObjectField#LABEL_INPUT",
+				value1 = "SiteCreated");
+
+			ObjectField.selectType(fieldType = "Precision Decimal");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+
+			ObjectCustomValidation.gotoTab(tabName = "Details");
+
+			Button.clickPublish();
+		}
+
+		task ("And the Data Set admin page and fill in the fields Name, REST App and REST Schema//Name: Students//REST App: /c/Student//REST Schema: Student") {
+			Navigator.openURL();
+
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Students",
+				restApplication = "/c/Student",
+				restEndpoint = "/scopes/{scopeKey}",
+				restSchema = "Student");
+
+			Refresh();
+		}
+
+		task ("Then confirm that the option /scopes/{scopeKey} is displayed") {
+			AssertElementPresent(
+				key_text = "/scopes/{scopeKey}",
+				locator1 = "CP2Utils#ANY_TEXT");
+		}
+	}
+
+	@description = "LPS-181546 Confirm that the rest endpoint /scopes/{scopeKey} is displayed in the data set"
+	@priority = 4
+	test CanAssertTheEndpointObjectInDataSetModal {
+		task ("Given an object definition 'Student' with name field and Scope: Site created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Student",
+				objectName = "Student",
+				pluralLabelName = "Student");
+
+			Refresh();
+
+			Click(
+				key_termsAndConditionsName = "Student",
+				locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME");
+
+			Click(
+				key_sorting = "Company",
+				locator1 = "ObjectCustomViews#EDIT_SORTING");
+
+			Click(
+				key_menuItem = "Site",
+				locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
+
+			Button.clickSave();
+
+			ObjectAdmin.goToFieldsTab();
+
+			Refresh();
+
+			SelectFrameTop();
+
+			Click(locator1 = "Button#PLUS");
+
+			Type(
+				locator1 = "ObjectField#LABEL_INPUT",
+				value1 = "SiteCreated");
+
+			ObjectField.selectType(fieldType = "Precision Decimal");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+
+			ObjectCustomValidation.gotoTab(tabName = "Details");
+
+			Button.clickPublish();
+		}
+
+		task ("And the Data Set admin page and fill in the fields Name, REST App and REST Schema//Name: Students//REST App: /c/Student//REST Schema: Student") {
+			Navigator.openURL();
+
+			DataSetAdmin.goToDataSetAdminPage();
+
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "Data Set Test");
+
+			DataSetAdmin.selectProvider(key_type = "/c/students");
+		}
+
+		task ("Then confirm that the option /scopes/{scopeKey} is displayed") {
+			AssertElementPresent(
+				dropdownLabel = "/scopes/{scopeKey}",
+				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+		}
+	}
+
+	@description = "LPS-181546 Confirm that the /v1.0/sites/{siteId}/blog-postings endpoint is displayed correctly when creating the data set"
+	@priority = 5
+	test CanAssertTheRestEndpointIsCorrect {
+		task ("When the user creates a new data entry") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/headless-delivery/v1.0",
+				restEndpoint = "/v1.0/sites/{siteId}/blog-postings",
+				restSchema = "BlogPosting");
+
+			Refresh();
+		}
+
+		task ("Then confirm that the option /v1.0/sites/{siteid}/blog-postings is displayed") {
+			AssertElementPresent(
+				key_text = "/v1.0/sites/{siteId}/blog-postings",
+				locator1 = "CP2Utils#ANY_TEXT");
 		}
 	}
 
@@ -108,6 +597,7 @@ definition {
 	@priority = 5
 	test CanDisplayHeadlessDeliveryAPIResources {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When go to add data sets") {
 			LexiconEntry.gotoAdd();
@@ -166,6 +656,7 @@ definition {
 	@priority = 3
 	test CanReturnAMatchedResult {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When go to add data sets") {
 			LexiconEntry.gotoAdd();
@@ -197,6 +688,244 @@ definition {
 
 		task ("Then suggested list contains 0 results") {
 			AssertElementNotPresent(locator1 = "FrontendDataSet#DROPDOWN_LIST");
+		}
+	}
+
+	@description = "LPS-183502. Confirm that the user can sort Data Set entries by Date"
+	@priority = 5
+	test CanSortByDate {
+		task ("Given two datasets entries via API:") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "FDSEntry",
+				restApplication = "/data-set-manager/entries",
+				restEndpoint = "/",
+				restSchema = "FDSEntry");
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "FDSField",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+		}
+
+		task ("And Create a Dataset Entry via UI") {
+			DataSetAdmin.createDataSet(
+				key_name = "FDSSort",
+				key_type = "/data-set-manager/sorts");
+		}
+
+		task ("Then Confirm that the last entry is at the top of the list") {
+			AssertElementPresent(
+				key_labelName = "FDSSort",
+				key_rowPosition = 1,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+		}
+
+		task ("When ordered in descending order by Date") {
+			while (IsElementNotPresent(key_labelName = "FDSSort", key_rowPosition = 3, locator1 = "DataSet#VIEW_LABEL_POSITION")) {
+				Click(
+					key_labelName = "Date",
+					locator1 = "DataSet#SORT_ICON");
+			}
+		}
+
+		task ("Then confirm that the list is in descending order") {
+			AssertElementPresent(
+				key_labelName = "FDSSort",
+				key_rowPosition = 3,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+		}
+	}
+
+	@description = "LPS-183502. Confirm that the user can sort Data Set entries by Name"
+	@priority = 4
+	test CanSortByName {
+		task ("Given three datasets entries via API") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Sku",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/skus",
+				restSchema = "Sku");
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Product",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/products",
+				restSchema = "Product");
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Catalog",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/catalogs",
+				restSchema = "Catalog");
+
+			Refresh();
+		}
+
+		task ("And sort the list by name in ascending order") {
+			AssertElementPresent(
+				key_labelName = "Catalog",
+				key_rowPosition = 1,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+		}
+
+		task ("When ordered in descending order by Name") {
+			while (IsElementNotPresent(key_labelName = "Catalog", key_rowPosition = 3, locator1 = "DataSet#VIEW_LABEL_POSITION")) {
+				Click(
+					key_labelName = "Name",
+					locator1 = "DataSet#SORT_ICON");
+			}
+		}
+
+		task ("Then confirm that the list is in descending order") {
+			AssertElementPresent(
+				key_labelName = "Catalog",
+				key_rowPosition = 3,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+		}
+	}
+
+	@description = "LPS-183502. Confirm that the user can sort Data Set entries by REST Application"
+	@priority = 4
+	test CanSortByRESTApplication {
+		task ("Given three datasets entries via API") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Sku",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/skus",
+				restSchema = "Sku");
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Product",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/products",
+				restSchema = "Product");
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Catalog",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/catalogs",
+				restSchema = "Catalog");
+
+			Refresh();
+		}
+
+		task ("Then confirm that the list is ordered increasing") {
+			AssertElementPresent(
+				key_labelName = "Sku",
+				key_rowPosition = 3,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+		}
+
+		task ("When ordered in descending order by REST Application") {
+			while (IsElementNotPresent(key_labelName = "Sku", key_rowPosition = 1, locator1 = "DataSet#VIEW_LABEL_POSITION")) {
+				Click(
+					key_labelName = "REST Application",
+					locator1 = "DataSet#SORT_ICON");
+			}
+		}
+
+		task ("Then confirm that the list is in descending order") {
+			AssertElementPresent(
+				key_labelName = "Sku",
+				key_rowPosition = 1,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+		}
+	}
+
+	@description = "LPS-183502. Confirm that the user can sort Data Set entries by REST Endpoint"
+	@priority = 4
+	test CanSortByRESTEndpoint {
+		task ("Given three datasets entries via API") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Sku",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/skus",
+				restSchema = "Sku");
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Product",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/products",
+				restSchema = "Product");
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Catalog",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/catalogs",
+				restSchema = "Catalog");
+		}
+
+		task ("Then confirm that the list is ordered increasing") {
+			Refresh();
+
+			AssertElementPresent(
+				key_labelName = "Catalog",
+				key_rowPosition = 1,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+		}
+
+		task ("When ordered in descending order by REST Endpoint") {
+			while (IsElementNotPresent(key_labelName = "Catalog", key_rowPosition = 3, locator1 = "DataSet#VIEW_LABEL_POSITION")) {
+				Click(
+					key_labelName = "REST Endpoint",
+					locator1 = "DataSet#SORT_ICON");
+			}
+		}
+
+		task ("Then confirm that the list is in descending order") {
+			AssertElementPresent(
+				key_labelName = "Catalog",
+				key_rowPosition = 3,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+		}
+	}
+
+	@description = "LPS-183502. Confirm that the user can sort Data Set entries by REST Schema"
+	@priority = 4
+	test CanSortByRESTSchema {
+		task ("Given three datasets entries via API") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Sku",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/skus",
+				restSchema = "Sku");
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Product",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/products",
+				restSchema = "Product");
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Catalog",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/catalogs",
+				restSchema = "Catalog");
+
+			Refresh();
+		}
+
+		task ("Then confirm that the list is ordered increasing") {
+			AssertElementPresent(
+				key_labelName = "Catalog",
+				key_rowPosition = 1,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+		}
+
+		task ("When ordered in descending order by REST Schema") {
+			while (IsElementNotPresent(key_labelName = "Catalog", key_rowPosition = 3, locator1 = "DataSet#VIEW_LABEL_POSITION")) {
+				Click(
+					key_labelName = "REST Schema",
+					locator1 = "DataSet#SORT_ICON");
+			}
+		}
+
+		task ("Then confirm that the list is in descending order") {
+			AssertElementPresent(
+				key_labelName = "Catalog",
+				key_rowPosition = 3,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
 		}
 	}
 

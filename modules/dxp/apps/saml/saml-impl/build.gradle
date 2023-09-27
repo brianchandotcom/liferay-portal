@@ -14,11 +14,12 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:saml:saml-api")
+	compileOnly project(":dxp:apps:saml:saml-opensaml-integration")
 	compileOnly project(":dxp:apps:saml:saml-persistence-api")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
-	testCompile project(":core:petra:petra-concurrent")
-	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:petra:petra-memory")
+	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
+	testImplementation project(":core:petra:petra-concurrent")
+	testImplementation project(":core:petra:petra-lang")
+	testImplementation project(":core:petra:petra-memory")
 }

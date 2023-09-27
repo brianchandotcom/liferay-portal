@@ -20,13 +20,28 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-195389"
+	@priority = 3
+	test AssertHighlightedSearchResultsWhenAdvancedSearchSyntaxIsEnabled {
+		SearchPortlets.configureEmbeddedSearchBar(useAdvancedSearchSyntax = "true");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertCssValue(
+			key_searchAssetTitle = "Test",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_HIGHLIGHT",
+			locator2 = "background-color",
+			value1 = "rgba(252, 248, 227, 1)");
+	}
+
 	@description = "This is a use case for LPS-130227."
 	@priority = 4
 	test AssertPaginationURLforHTTPS {
-		property custom.properties = "web.server.host=localhost${line.separator}redirect.url.security.mode=domain${line.separator}redirect.url.domains.allowed=${line.separator}web.server.https.port=8443${line.separator}web.server.protocol=https";
+		property custom.properties = "redirect.url.domains.allowed=${line.separator}redirect.url.security.mode=domain${line.separator}web.server.host=localhost${line.separator}web.server.https.port=8443${line.separator}web.server.protocol=https";
 		property portal.ssl.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -165,10 +180,11 @@ definition {
 	@description = "This is a use case for LPS-95670."
 	@priority = 4
 	test AssertSuggestionsCannotOfferInvalidWordsAsSuggestion {
-		property custom.properties = "locales.enabled=de_DE,en_US${line.separator}locales=de_DE,en_US${line.separator}index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE";
+		property custom.properties = "index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE${line.separator}locales=de_DE,en_US${line.separator}locales.enabled=de_DE,en_US";
 		property index.search.spell.checker.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addBasicWebContentLocalized(
 			contentMap = "en_US:WC Content,de_DE:ächten angreifen anmarschieren",
@@ -191,7 +207,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchAdministration.executeReindex(action = "Reindex spell-check dictionaries.");
+		SearchAdministration.executeReindex(action = "Reindex Spell-Check Dictionaries");
 
 		AssertConsoleTextPresent(value1 = "Finished indexing dictionary spellchecker/dictionary_de_DE.txt");
 
@@ -266,6 +282,8 @@ definition {
 
 			Button.click(button = "Download");
 
+			DownloadTempFile();
+
 			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.docx");
 
 			Click(locator1 = "SearchResults#PREVIEW_BACK_BUTTON");
@@ -277,6 +295,8 @@ definition {
 			Button.viewPresent(button = "Download");
 
 			Button.click(button = "Download");
+
+			DownloadTempFile();
 
 			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.pdf");
 		}
@@ -370,6 +390,7 @@ definition {
 		property custom.properties = "enterprise.product.notification.enabled=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
+		property test.run.type = "single";
 
 		SelectFrame(value1 = "relative=top");
 
@@ -408,7 +429,7 @@ definition {
 
 		Click(locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_REQUEST_COPY_BUTTON");
 
-		SearchPortlets.viewCopiedContent(text = "explain");
+		SearchPortlets.viewCopiedContent(text = "\"explain\": true, \"highlight\":");
 
 		Search.openSearchPage();
 
@@ -416,7 +437,7 @@ definition {
 
 		Click(locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_COPY_BUTTON");
 
-		SearchPortlets.viewCopiedContent(text = "_shards");
+		SearchPortlets.viewCopiedContent(text = "\"_shards\": { \"total\":");
 	}
 
 	@priority = 4
@@ -426,6 +447,7 @@ definition {
 		property portal.upstream = "false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
+		property test.run.type = "single";
 
 		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.DefaultKeywordQueryConfiguration");
 
@@ -785,6 +807,7 @@ definition {
 	@priority = 3
 	test IsLocalizedInSearchAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.openUsersAdmin();
 
@@ -1069,7 +1092,7 @@ definition {
 
 		SearchPortlets.searchWidget(searchTerm = "Potato");
 
-		SearchFacetPortlet.checkFacet(facetValueName = "Blogs Entry");
+		SearchFacetPortlet.checkFacet(facetTerm = "Blogs Entry");
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1578,7 +1601,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchFacetPortlet.checkFacet(facetValueName = "Custom Object 500");
+		SearchFacetPortlet.checkFacet(facetTerm = "Custom Object 500");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = ${objectEntryId},
@@ -1613,7 +1636,7 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Site Name");
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPortlets.searchWidget(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
@@ -1853,7 +1876,7 @@ definition {
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 
-		SearchFacetPortlet.checkFacet(facetValueName = "moon rocks");
+		SearchFacetPortlet.checkFacet(facetTerm = "moon rocks");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
@@ -1935,6 +1958,7 @@ definition {
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SearchAdministration.openSearchAdmin();
 
@@ -2006,7 +2030,7 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.checkFacet(facetValueName = "userfn userln");
+		SearchFacetPortlet.checkFacet(facetTerm = "userfn userln");
 
 		var currentURL = selenium.getLocation();
 
@@ -2254,6 +2278,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-152937."
+	@priority = 3
 	test SortAccentedWords {
 		var digit = 1;
 
@@ -2684,11 +2709,102 @@ definition {
 			searchAssetType = "Custom Object");
 	}
 
+	@description = "This is a use case for LPS-193198."
+	@priority = 3
+	test ViewSearchBarVisibility {
+		task ("Configure the embedded search bar to be invisible") {
+			Search.openSearchPage();
+
+			SearchPortlets.configureEmbeddedSearchBar(invisible = "true");
+		}
+
+		task ("Assert that the search bar is visible on the search page") {
+			AssertVisible(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+		}
+
+		task ("Assert that the search bar is not present on the view mode of a content page") {
+			Navigator.openURL();
+
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+		}
+
+		task ("Assert that the search bar is visible in the edit mode of a content page") {
+			Click(locator1 = "Icon#CUSTOM_EDIT");
+
+			AssertVisible(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+		}
+
+		task ("Sign out and assert that the search bar is not present on the home page as a guest") {
+			SignOut.signOut();
+
+			Navigator.openURL();
+
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+		}
+
+		task ("Assert that the search bar is not present on the search page as a guest") {
+			Search.openSearchPage();
+
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+		}
+
+		task ("Sign in and configure the search bar to be visible with the destination page set as '/nowhere'") {
+			SignIn.signIn();
+
+			Search.openSearchPage();
+
+			SearchPortlets.configureEmbeddedSearchBar(
+				destinationPage = "/nowhere",
+				invisible = "false");
+		}
+
+		task ("Assert that the search bar is replaced with an alert message on the search page") {
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+
+			AssertVisible(
+				key_infoMessage = "This search bar is not visible to users yet.",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("Assert that both the search bar and the alert message are not present on the home page") {
+			Navigator.openURL();
+
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+
+			AssertElementNotPresent(
+				key_infoMessage = "This search bar is not visible to users yet.",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("Assert that the search bar is replaced with an alert message on the edit mode of a content page") {
+			Click(locator1 = "Icon#CUSTOM_EDIT");
+
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+
+			AssertVisible(
+				key_infoMessage = "This search bar is not visible to users yet.",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("Sign out and assert that both the search bar and alert message are not present on the search page as a guest") {
+			SignOut.signOut();
+
+			Search.openSearchPage();
+
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+
+			AssertElementNotPresent(
+				key_infoMessage = "This search bar is not visible to users yet.",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+	}
+
 	@priority = 5
 	test ViewSearchResultDetails {
 		property app.server.types = "tomcat";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SearchPortlets.searchEmbedded(searchTerm = "Test Test");
 

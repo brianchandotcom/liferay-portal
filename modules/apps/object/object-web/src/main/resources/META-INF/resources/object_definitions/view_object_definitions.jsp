@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -27,21 +18,23 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 		module="js/components/ViewObjectDefinitions/ViewObjectDefinitions"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"apiURL", viewObjectDefinitionsDisplayContext.getAPIURL()
-			).put(
 				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
-				"creationMenu", viewObjectDefinitionsDisplayContext.getCreationMenu()
+				"editObjectDefinitionURL", viewObjectDefinitionsDisplayContext.getEditObjectDefinitionURL()
 			).put(
-				"id", ObjectDefinitionsFDSNames.OBJECT_DEFINITIONS
+				"modelBuilderURL", viewObjectDefinitionsDisplayContext.getModelBuilderURL()
 			).put(
-				"items", viewObjectDefinitionsDisplayContext.getFDSActionDropdownItems()
+				"objectDefinitionsAPIURL", viewObjectDefinitionsDisplayContext.getAPIURL()
 			).put(
-				"sorting", viewObjectDefinitionsDisplayContext.getFDSSortItemList()
+				"objectDefinitionsCreationMenu", viewObjectDefinitionsDisplayContext.getCreationMenu()
 			).put(
-				"storages", viewObjectDefinitionsDisplayContext.getStoragesJSONArray()
+				"objectDefinitionsFDSActionDropdownItems", viewObjectDefinitionsDisplayContext.getFDSActionDropdownItems()
 			).put(
-				"url", viewObjectDefinitionsDisplayContext.getEditObjectDefinitionURL()
+				"objectDefinitionsFDSName", ObjectDefinitionsFDSNames.OBJECT_DEFINITIONS
+			).put(
+				"objectDefinitionsStorageTypes", viewObjectDefinitionsDisplayContext.getStorageTypesJSONArray()
+			).put(
+				"objectFolderPermissionsURL", viewObjectDefinitionsDisplayContext.getPermissionsURL(ObjectFolder.class.getName())
 			).build()
 		%>'
 	/>

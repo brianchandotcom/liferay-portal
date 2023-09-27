@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ACTIVE_NAV_LINK_IN_STACK</td>
-	<td>//nav[contains(@class,'menubar')]//ul[contains(@class,'nav-stacked')][./*[normalize-space(text())='${key_stackName}']]//li[contains(@class,'nav-item')]//a[contains(@class,'active')][.//*[normalize-space(text())='${key_menuBar}']]</td>
+	<td>//*[contains(@class,'text-truncate') and contains(text(),'${key_stackName}')]/following-sibling::div[1]//a[contains(.,'${key_menuBar}')][contains(@class,'active')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -31,13 +31,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_BAR_VERTICAL</td>
+	<td>//nav[contains(@class,'menubar-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAV_LINK</td>
 	<td>//nav[contains(@class,'menubar')]//li[contains(@class,'nav-item')]//a[normalize-space()='${key_menuBar}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAV_LINK_IN_STACK</td>
-	<td>//nav[contains(@class,'menubar')]//ul[contains(@class,'nav-stacked')][./*[normalize-space(text())='${key_stackName}']]//li[contains(@class,'nav-item')]//a[.//*[normalize-space(text())='${key_menuBar}']]</td>
+	<td>//*[contains(@class,'text-truncate') and contains(text(),'${key_stackName}')]/following-sibling::div[1]//a[contains(.,'${key_menuBar}')]</td>
 	<td></td>
 </tr>
 </tbody>

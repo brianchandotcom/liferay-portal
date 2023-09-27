@@ -87,6 +87,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -107,8 +109,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -117,8 +117,6 @@ definition {
 	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to delete the case result"
 	@priority = 3
 	test AssertAnalystRoleCanDeleteCaseResult {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -128,37 +126,27 @@ definition {
 		}
 
 		task ("And the user go to case result page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user delete the case result") {
-			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+			Testray.deleteItem(itemName = ${caseName});
 		}
 
 		task ("Then the Case Results should not be displayed anymore") {
-			AssertElementNotPresent(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = ${caseName});
 		}
 	}
 
 	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to edit the case result"
 	@priority = 3
 	test AssertAnalystRoleCanEditCaseResult {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -168,30 +156,25 @@ definition {
 		}
 
 		task ("And the user go to case result page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 
 			Button.click(button = "Assign to Me");
-
-			Button.click(button = "Complete Test");
 		}
 
 		task ("When the user edit the case result") {
 			TestrayTestflow.editStatus(
+				button = "Complete Test",
 				comment = "button does not work",
 				issues = "LPS-111111",
 				selectStatus = "Test Fix");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the user can see Case Results edited with test fix") {
@@ -204,8 +187,6 @@ definition {
 	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the case result"
 	@priority = 3
 	test AssertLeadRoleCanDeleteCaseResult {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -215,37 +196,27 @@ definition {
 		}
 
 		task ("And the user go to case result page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user delete the case result") {
-			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+			Testray.deleteItem(itemName = ${caseName});
 		}
 
 		task ("Then the Case Results should not be displayed anymore") {
-			AssertElementNotPresent(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = ${caseName});
 		}
 	}
 
 	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to edit the case result"
 	@priority = 3
 	test AssertLeadRoleCanEditCaseResult {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -255,34 +226,25 @@ definition {
 		}
 
 		task ("And the user go to case result page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 
 			Button.click(button = "Assign to Me");
-
-			WaitForElementPresent(
-				key_text = "Complete Test",
-				locator1 = "Button#ANY");
-
-			Button.click(button = "Complete Test");
 		}
 
 		task ("When the user edit the case result") {
 			TestrayTestflow.editStatus(
+				button = "Complete Test",
 				comment = "button does not work",
 				issues = "LPS-111111",
 				selectStatus = "Test Fix");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the user can see Case Results edited with test fix") {
@@ -295,8 +257,6 @@ definition {
 	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray User' role should not be able to delete the case result"
 	@priority = 2
 	test AssertUserRoleCanNotDeleteCaseResult {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
@@ -306,35 +266,29 @@ definition {
 		}
 
 		task ("And the user go to case result page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user right click in case result") {
 			RightClick.rightClick(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${caseName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then the user can not delete the case result") {
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 	}
 
 	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the case result"
 	@priority = 2
 	test AssertUserRoleCanNotEditCaseResult {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
@@ -344,27 +298,23 @@ definition {
 		}
 
 		task ("And the user go to case result page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user right click in case result") {
 			RightClick.rightClick(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${caseName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then the user can not edit the case result") {
-			AssertElementNotPresent(
-				item = "Assign to Me",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Assign to Me");
 		}
 	}
 

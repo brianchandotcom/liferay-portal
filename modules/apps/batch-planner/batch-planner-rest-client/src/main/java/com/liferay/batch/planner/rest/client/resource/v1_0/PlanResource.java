@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.batch.planner.rest.client.resource.v1_0;
@@ -52,10 +43,10 @@ public interface PlanResource {
 	public HttpInvoker.HttpResponse postPlanHttpResponse(Plan plan)
 		throws Exception;
 
-	public void getPlanTemplate(String internalClassName) throws Exception;
+	public void getPlanTemplate(String internalClassNameKey) throws Exception;
 
 	public HttpInvoker.HttpResponse getPlanTemplateHttpResponse(
-			String internalClassName)
+			String internalClassNameKey)
 		throws Exception;
 
 	public void deletePlan(Long planId) throws Exception;
@@ -383,9 +374,11 @@ public interface PlanResource {
 			return httpInvoker.invoke();
 		}
 
-		public void getPlanTemplate(String internalClassName) throws Exception {
+		public void getPlanTemplate(String internalClassNameKey)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse = getPlanTemplateHttpResponse(
-				internalClassName);
+				internalClassNameKey);
 
 			String content = httpResponse.getContent();
 
@@ -436,7 +429,7 @@ public interface PlanResource {
 		}
 
 		public HttpInvoker.HttpResponse getPlanTemplateHttpResponse(
-				String internalClassName)
+				String internalClassNameKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -463,9 +456,9 @@ public interface PlanResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/batch-planner/v1.0/plans/{internalClassName}/template");
+						"/o/batch-planner/v1.0/plans/{internalClassNameKey}/template");
 
-			httpInvoker.path("internalClassName", internalClassName);
+			httpInvoker.path("internalClassNameKey", internalClassNameKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

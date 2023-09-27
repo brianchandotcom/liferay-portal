@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.service;
@@ -89,23 +80,16 @@ public interface CommerceOrderItemLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem addCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
-			int quantity, long replacedCPInstanceId, int shippedQuantity,
-			String unitOfMeasureKey, CommerceContext commerceContext,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommerceOrderItem addOrUpdateCommerceOrderItem(
-			long userId, long commerceOrderId, long cpInstanceId, int quantity,
-			long replacedCPInstanceId, int shippedQuantity,
-			String unitOfMeasureKey, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			BigDecimal quantity, long replacedCPInstanceId,
+			BigDecimal shippedQuantity, String unitOfMeasureKey,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
-			int quantity, long replacedCPInstanceId, int shippedQuantity,
-			String unitOfMeasureKey, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			BigDecimal quantity, long replacedCPInstanceId,
+			BigDecimal shippedQuantity, String unitOfMeasureKey,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
 	public int countSubscriptionCommerceOrderItems(long commerceOrderId);
@@ -268,8 +252,9 @@ public interface CommerceOrderItemLocalService
 	public CommerceOrderItem fetchCommerceOrderItem(long commerceOrderItemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrderItem fetchCommerceOrderItemByBookedQuantityId(
-		long bookedQuantityId);
+	public CommerceOrderItem
+		fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
+			long commerceInventoryBookedQuantityId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderItem fetchCommerceOrderItemByExternalReferenceCode(
@@ -298,7 +283,7 @@ public interface CommerceOrderItemLocalService
 		long parentCommerceOrderItemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceInventoryWarehouseItemQuantity(
+	public BigDecimal getCommerceInventoryWarehouseItemQuantity(
 			long commerceOrderItemId, long commerceInventoryWarehouseId)
 		throws PortalException;
 
@@ -353,6 +338,11 @@ public interface CommerceOrderItemLocalService
 	public List<CommerceOrderItem> getCommerceOrderItems(
 		long commerceOrderId, int start, int end,
 		OrderByComparator<CommerceOrderItem> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderItem> getCommerceOrderItems(
+		long cpInstanceId, int[] orderStatuses, String unitOfMeasureKey,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrderItem> getCommerceOrderItems(
@@ -414,7 +404,7 @@ public interface CommerceOrderItemLocalService
 		long groupId, long commerceAccountId, int[] orderStatuses);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceOrderItemsQuantity(long commerceOrderId);
+	public BigDecimal getCommerceOrderItemsQuantity(long commerceOrderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Long> getCustomerCommerceOrderIds(long commerceOrderId);
@@ -462,13 +452,14 @@ public interface CommerceOrderItemLocalService
 	public CommerceOrderItem importCommerceOrderItem(
 			long userId, String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
-			String cpMeasurementUnitKey, BigDecimal decimalQuantity,
-			int quantity, int shippedQuantity, String unitOfMeasureKey,
-			ServiceContext serviceContext)
+			String cpMeasurementUnitKey, BigDecimal quantity,
+			BigDecimal shippedQuantity,
+			BigDecimal unitOfMeasureIncrementalOrderQuantity,
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem incrementShippedQuantity(
-			long commerceOrderItemId, int shippedQuantity)
+			long commerceOrderItemId, BigDecimal shippedQuantity)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -504,35 +495,36 @@ public interface CommerceOrderItemLocalService
 		CommerceOrderItem commerceOrderItem);
 
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, long bookedQuantityId)
+			long commerceOrderItemId, long commerceInventoryBookedQuantityId)
 		throws NoSuchOrderItemException;
 
 	public CommerceOrderItem updateCommerceOrderItem(
-			long userId, long commerceOrderItemId, int quantity,
+			long userId, long commerceOrderItemId, BigDecimal quantity,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem updateCommerceOrderItem(
 			long userId, long commerceOrderItemId, long cpMeasurementUnitId,
-			int quantity, CommerceContext commerceContext,
+			BigDecimal quantity, CommerceContext commerceContext,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem updateCommerceOrderItem(
 			long userId, long commerceOrderItemId, long cpMeasurementUnitId,
-			int quantity, ServiceContext serviceContext)
+			BigDecimal quantity, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem updateCommerceOrderItem(
-			long userId, long commerceOrderItemId, String json, int quantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceOrderItem updateCommerceOrderItem(
-			long userId, long commerceOrderItemId, String json, int quantity,
+			long userId, long commerceOrderItemId, String json,
+			BigDecimal quantity, CommerceContext commerceContext,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrderItem updateCommerceOrderItem(
+			long userId, long commerceOrderItemId, String json,
+			BigDecimal quantity, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -607,12 +599,7 @@ public interface CommerceOrderItemLocalService
 		throws PortalException;
 
 	public CommerceOrderItem updateCommerceOrderItemUnitPrice(
-			long userId, long commerceOrderItemId, BigDecimal decimalQuantity,
-			BigDecimal unitPrice)
-		throws PortalException;
-
-	public CommerceOrderItem updateCommerceOrderItemUnitPrice(
-			long userId, long commerceOrderItemId, int quantity,
+			long userId, long commerceOrderItemId, BigDecimal quantity,
 			BigDecimal unitPrice)
 		throws PortalException;
 

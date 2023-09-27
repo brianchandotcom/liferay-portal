@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dynamic.data.mapping.form.web.internal.upload;
@@ -19,10 +10,8 @@ import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -38,6 +27,7 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Carolina Barbosa
@@ -61,6 +51,10 @@ public class DDMFormUploadValidatorTest {
 
 	@AfterClass
 	public static void tearDownClass() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+
 		_frameworkUtilMockedStatic.close();
 	}
 
@@ -99,9 +93,8 @@ public class DDMFormUploadValidatorTest {
 			Mockito.any(Class.class), Mockito.anyLong()
 		);
 
-		ReflectionTestUtil.setFieldValue(
-			ConfigurationProviderUtil.class, "_configurationProvider",
-			_configurationProvider);
+		_serviceRegistration = _bundleContext.registerService(
+			ConfigurationProvider.class, _configurationProvider, null);
 	}
 
 	private File _mockFile(long length) {
@@ -124,5 +117,7 @@ public class DDMFormUploadValidatorTest {
 		Mockito.mock(ConfigurationProvider.class);
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
+	private static ServiceRegistration<ConfigurationProvider>
+		_serviceRegistration;
 
 }

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.web.internal.display.context;
@@ -45,8 +36,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileExtensionItemSelectorCriterion;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -58,9 +51,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -163,6 +153,17 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
+			() ->
+				stagedActions && !user.isGuestUser() &&
+				FeatureFlagManagerUtil.isEnabled("LPS-182512"),
+			dropdownItem -> {
+				dropdownItem.putData("action", "copy");
+				dropdownItem.setIcon("copy");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "copy-to"));
+				dropdownItem.setQuickAction(false);
+			}
+		).add(
 			() -> stagedActions && !user.isGuestUser(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "move");
@@ -238,6 +239,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setIcon("password-policies");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "permissions"));
+				dropdownItem.setMultipleTypesBulkActionDisabled(true);
 				dropdownItem.setQuickAction(false);
 			}
 		).build();
@@ -311,17 +313,13 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
-		if (_isSearch() && !FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			return null;
-		}
-
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					_getFilterNavigationDropdownItems());
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						_httpServletRequest, "filter-by-navigation"));
+					LanguageUtil.get(_httpServletRequest, "filter-by") +
+						StringPool.TRIPLE_PERIOD);
 			}
 		).addGroup(
 			() ->
@@ -351,9 +349,7 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getOrderDropdownItems() {
-		if ((_isSearch() && !FeatureFlagManagerUtil.isEnabled("LPS-84424")) ||
-			!FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
-
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
 			return null;
 		}
 
@@ -374,19 +370,11 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getSortingOrder() {
-		if (_isSearch() && !FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			return null;
-		}
-
 		return _dlAdminDisplayContext.getOrderByType();
 	}
 
 	@Override
 	public String getSortingURL() {
-		if (_isSearch() && !FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			return null;
-		}
-
 		return PortletURLBuilder.create(
 			_getCurrentRenderURL()
 		).setParameter(
@@ -403,10 +391,6 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<ViewTypeItem> getViewTypeItems() {
-		if (_isSearch() && !FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			return null;
-		}
-
 		PortletURL renderURL = _getCurrentRenderURL();
 
 		int curEntry = ParamUtil.getInteger(_httpServletRequest, "curEntry");
@@ -572,20 +556,31 @@ public class DLAdminManagementToolbarDisplayContext
 	}
 
 	private String _getAssetCategorySelectorURL() throws PortalException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);
+
+		InfoItemItemSelectorCriterion itemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoItemItemSelectorReturnType());
+		itemSelectorCriterion.setItemType(AssetCategory.class.getName());
+		itemSelectorCriterion.setMultiSelection(true);
+
 		return PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				_liferayPortletRequest, AssetCategory.class.getName(),
-				PortletProvider.Action.BROWSE)
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, themeDisplay.getScopeGroup(),
+				themeDisplay.getScopeGroupId(),
+				_liferayPortletResponse.getNamespace() +
+					"selectedAssetCategory",
+				itemSelectorCriterion)
 		).setParameter(
-			"eventName",
-			_liferayPortletResponse.getNamespace() + "selectedAssetCategory"
-		).setParameter(
-			"selectedCategories",
+			"selectedCategoryIds",
 			StringUtil.merge(_getAssetCategoryIds(), StringPool.COMMA)
-		).setParameter(
-			"showSelectedCounter", true
-		).setParameter(
-			"singleSelect", false
 		).setParameter(
 			"vocabularyIds",
 			StringUtil.merge(
@@ -596,8 +591,6 @@ public class DLAdminManagementToolbarDisplayContext
 				assetVocabulary -> String.valueOf(
 					assetVocabulary.getVocabularyId()),
 				StringPool.COMMA)
-		).setWindowState(
-			LiferayWindowState.POP_UP
 		).buildString();
 	}
 
@@ -835,7 +828,6 @@ public class DLAdminManagementToolbarDisplayContext
 					LanguageUtil.get(_httpServletRequest, "mine"));
 			}
 		).add(
-			() -> FeatureFlagManagerUtil.isEnabled("LPS-84424"),
 			dropdownItem -> {
 				dropdownItem.putData("action", "openCategoriesSelector");
 				dropdownItem.putData(
@@ -877,7 +869,6 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setLabel(label);
 			}
 		).add(
-			() -> FeatureFlagManagerUtil.isEnabled("LPS-84424"),
 			dropdownItem -> {
 				dropdownItem.putData("action", "openExtensionSelector");
 				dropdownItem.putData(
@@ -888,7 +879,6 @@ public class DLAdminManagementToolbarDisplayContext
 						StringPool.TRIPLE_PERIOD);
 			}
 		).add(
-			() -> FeatureFlagManagerUtil.isEnabled("LPS-84424"),
 			dropdownItem -> {
 				dropdownItem.putData("action", "openTagsSelector");
 				dropdownItem.putData(

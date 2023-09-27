@@ -176,6 +176,54 @@ definition {
 			value1 = "Error:At least one field must be added.");
 	}
 
+	@description = "This ensures that a document can not be copied to a staging site."
+	@priority = 4
+	test CannotCopyDocumentToStagedSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copy(
+			copyToStagingSite = "true",
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		LexiconEntry.viewNoEntry(rowEntry = "DM Document Title");
+	}
+
+	@description = "This ensures that a folder can not be copied to a staging site."
+	@priority = 4
+	test CannotCopyFolderToStagedSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.copy(
+			copyToStagingSite = "true",
+			dmFolderName = "DM Folder Name",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		LexiconEntry.viewNoEntry(rowEntry = "DM Folder Name");
+	}
+
 	@description = "This is a test for LPS-95290. It asserts that an unauthorized user can not download the file through the document URL of the staged site."
 	@priority = 5
 	test CannotDownloadFileThroughDocumentURLOfStagedSiteWithoutPermissions {
@@ -973,6 +1021,7 @@ definition {
 	test CanPublishSubfolderWithDocumentsViaSAP {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -1199,7 +1248,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanShareDocumentOnLiveSite {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
+		property custom.properties = "dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = 1,
@@ -1324,6 +1373,8 @@ definition {
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
 
 		Staging.publishToLive();
+
+		Refresh();
 
 		DepotNavigator.openToEditDMEntryInDepot(
 			depotName = "Test Depot Name",
@@ -1477,6 +1528,7 @@ definition {
 	@priority = 4
 	test CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

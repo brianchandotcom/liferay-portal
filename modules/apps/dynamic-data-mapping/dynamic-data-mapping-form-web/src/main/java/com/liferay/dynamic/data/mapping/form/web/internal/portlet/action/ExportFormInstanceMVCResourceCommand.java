@@ -1,22 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
-import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporter;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterRequest;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterResponse;
@@ -26,6 +16,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceRecordIdComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceRecordModifiedDateComparator;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -40,16 +31,21 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Map;
+
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
  */
 @Component(
+	configurationPid = "com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration",
 	property = {
 		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 		"mvc.command.name=/dynamic_data_mapping_form/export_form_instance"
@@ -59,6 +55,13 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportFormInstanceMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ddmFormWebConfiguration = ConfigurableUtil.createConfigurable(
+			DDMFormWebConfiguration.class, properties);
+	}
+
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -67,12 +70,9 @@ public class ExportFormInstanceMVCResourceCommand
 		String fileExtension = ParamUtil.getString(
 			resourceRequest, "fileExtension");
 
-		DDMFormWebConfiguration ddmFormWebConfiguration =
-			_ddmFormWebConfigurationActivator.getDDMFormWebConfiguration();
-
 		if (StringUtil.equals(fileExtension, "csv") &&
 			StringUtil.equals(
-				ddmFormWebConfiguration.csvExport(), "disabled")) {
+				_ddmFormWebConfiguration.csvExport(), "disabled")) {
 
 			return;
 		}
@@ -157,7 +157,6 @@ public class ExportFormInstanceMVCResourceCommand
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
 
-	@Reference
-	private DDMFormWebConfigurationActivator _ddmFormWebConfigurationActivator;
+	private volatile DDMFormWebConfiguration _ddmFormWebConfiguration;
 
 }

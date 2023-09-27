@@ -268,7 +268,11 @@ definition {
 
 			Button.clickSave();
 
-			Alert.viewErrorMessage(errorMessage = "Please select a valid layout.");
+			WaitForElementPresent(locator1 = "Message#ERROR");
+
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Close Error:Please select a valid layout.");
 		}
 
 		task ("And given the user can not override the default product display page by selecting only a page") {
@@ -280,7 +284,9 @@ definition {
 
 			Button.clickSave();
 
-			Alert.viewErrorMessage(errorMessage = "Please select a valid product.");
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Close Error:Please select a valid product.");
 		}
 
 		task ("And given the Test Public Widget Page is set as Override Default Product Display Page for Torque Converters") {

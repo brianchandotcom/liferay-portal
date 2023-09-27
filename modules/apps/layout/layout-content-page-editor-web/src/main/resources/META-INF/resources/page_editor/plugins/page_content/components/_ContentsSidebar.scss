@@ -15,6 +15,10 @@ html#{$cadmin-selector} .cadmin #{$selector} {
 		font-size: 12px;
 		padding-left: 12px;
 
+		.editable-hovered {
+			cursor: pointer;
+		}
+
 		&:focus-within,
 		&--mapped-item-hovered {
 			background-color: $cadmin-gray-100;

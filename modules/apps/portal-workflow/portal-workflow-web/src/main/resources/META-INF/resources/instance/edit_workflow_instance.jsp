@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -18,15 +9,6 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-
-WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = null;
-
-if (portletName.equals(WorkflowPortletKeys.USER_WORKFLOW)) {
-	workflowInstanceEditDisplayContext = new MyWorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse);
-}
-else {
-	workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse);
-}
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -38,57 +20,54 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 	<clay:col
 		cssClass="lfr-asset-column lfr-asset-column-details"
 	>
-		<div class="sheet">
-			<div class="panel-group panel-group-flush">
-				<aui:fieldset>
+		<clay:sheet
+			size="full"
+		>
+			<clay:sheet-section>
 
-					<%
-					request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-					%>
+				<%
+				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+				%>
 
-					<liferay-util:include page="/instance/workflow_instance_action.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/instance/workflow_instance_action.jsp" servletContext="<%= application %>" />
 
-					<clay:col
-						md="7"
-					>
-						<aui:field-wrapper label="status">
-							<aui:fieldset>
-								<%= workflowInstanceEditDisplayContext.getStatus() %>
-							</aui:fieldset>
-						</aui:field-wrapper>
-					</clay:col>
-
-					<clay:col
-						md="4"
-					>
-						<aui:field-wrapper label="end-date">
-							<aui:fieldset>
-								<%= workflowInstanceEditDisplayContext.getWorkflowInstanceEndDate() %>
-							</aui:fieldset>
-						</aui:field-wrapper>
-					</clay:col>
-				</aui:fieldset>
-
-				<liferay-ui:panel-container
-					cssClass="task-panel-container"
-					extended="<%= false %>"
-					id="preview"
+				<clay:col
+					md="7"
 				>
+					<aui:field-wrapper label="status">
+						<aui:fieldset>
+							<%= workflowInstanceEditDisplayContext.getStatus() %>
+						</aui:fieldset>
+					</aui:field-wrapper>
+				</clay:col>
 
-					<%
-					AssetRenderer<?> assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
+				<clay:col
+					md="4"
+				>
+					<aui:field-wrapper label="end-date">
+						<aui:fieldset>
+							<%= workflowInstanceEditDisplayContext.getWorkflowInstanceEndDate() %>
+						</aui:fieldset>
+					</aui:field-wrapper>
+				</clay:col>
+			</clay:sheet-section>
 
-					AssetEntry assetEntry = workflowInstanceEditDisplayContext.getAssetEntry();
+			<clay:panel-group>
 
-					WorkflowHandler<?> workflowHandler = workflowInstanceEditDisplayContext.getWorkflowHandler();
-					%>
+				<%
+				AssetRenderer<?> assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
 
-					<c:if test="<%= assetRenderer != null %>">
-						<liferay-ui:panel
-							extended="<%= true %>"
-							markupView="lexicon"
-							title="<%= workflowInstanceEditDisplayContext.getPanelTitle() %>"
-						>
+				AssetEntry assetEntry = workflowInstanceEditDisplayContext.getAssetEntry();
+
+				WorkflowHandler<?> workflowHandler = workflowInstanceEditDisplayContext.getWorkflowHandler();
+				%>
+
+				<c:if test="<%= assetRenderer != null %>">
+					<clay:panel
+						displayTitle="<%= workflowInstanceEditDisplayContext.getPanelTitle() %>"
+						expanded="<%= true %>"
+					>
+						<div class="panel-body">
 							<div class="task-content-actions">
 								<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
 									<portlet:renderURL var="viewFullContentURL">
@@ -142,20 +121,21 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 									metadataFields='<%= new String[] {"author", "categories", "tags"} %>'
 								/>
 							</c:if>
-						</liferay-ui:panel>
+						</div>
+					</clay:panel>
 
-						<c:if test="<%= workflowHandler.isCommentable() %>">
+					<c:if test="<%= workflowHandler.isCommentable() %>">
 
-							<%
-							WorkflowInstance workflowInstance = (WorkflowInstance)renderRequest.getAttribute(WebKeys.WORKFLOW_INSTANCE);
+						<%
+						WorkflowInstance workflowInstance = (WorkflowInstance)renderRequest.getAttribute(WebKeys.WORKFLOW_INSTANCE);
 
-							long discussionClassPK = workflowHandler.getDiscussionClassPK(workflowInstance.getWorkflowContext());
-							%>
+						long discussionClassPK = workflowHandler.getDiscussionClassPK(workflowInstance.getWorkflowContext());
+						%>
 
-							<liferay-ui:panel
-								markupView="lexicon"
-								title="comments"
-							>
+						<clay:panel
+							displayTitle="comments"
+						>
+							<div class="panel-body">
 								<liferay-comment:discussion
 									className="<%= assetRenderer.getClassName() %>"
 									classPK="<%= discussionClassPK %>"
@@ -164,16 +144,17 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 									redirect="<%= currentURL %>"
 									userId="<%= user.getUserId() %>"
 								/>
-							</liferay-ui:panel>
-						</c:if>
+							</div>
+						</clay:panel>
 					</c:if>
+				</c:if>
 
-					<c:if test="<%= !workflowInstanceEditDisplayContext.isWorkflowTasksEmpty() %>">
-						<liferay-ui:panel
-							extended="<%= false %>"
-							markupView="lexicon"
-							title="tasks"
-						>
+				<c:if test="<%= !workflowInstanceEditDisplayContext.isWorkflowTasksEmpty() %>">
+					<clay:panel
+						displayTitle='<%= LanguageUtil.get(request, "tasks") %>'
+						expanded="<%= false %>"
+					>
+						<div class="panel-body">
 							<liferay-ui:search-container
 								emptyResultsMessage="there-are-no-tasks"
 								iteratorURL="<%= renderResponse.createRenderURL() %>"
@@ -216,17 +197,18 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 									markupView="lexicon"
 								/>
 							</liferay-ui:search-container>
-						</liferay-ui:panel>
-					</c:if>
+						</div>
+					</clay:panel>
+				</c:if>
 
-					<liferay-ui:panel
-						markupView="lexicon"
-						title="activities"
-					>
+				<clay:panel
+					displayTitle='<%= LanguageUtil.get(request, "activities") %>'
+				>
+					<div class="panel-body">
 						<%@ include file="/instance/workflow_logs.jspf" %>
-					</liferay-ui:panel>
-				</liferay-ui:panel-container>
-			</div>
-		</div>
+					</div>
+				</clay:panel>
+			</clay:panel-group>
+		</clay:sheet>
 	</clay:col>
 </clay:container-fluid>

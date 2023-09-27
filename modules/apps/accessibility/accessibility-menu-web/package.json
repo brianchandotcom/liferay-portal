@@ -2,11 +2,8 @@
 	"dependencies": {
 		"@clayui/alert": "3.93.0",
 		"@clayui/button": "3.100.0",
-		"@clayui/form": "3.100.0",
-		"@clayui/icon": "3.56.0",
-		"@clayui/layout": "3.93.0",
-		"@clayui/modal": "3.100.0",
-		"@clayui/progress-bar": "3.65.0",
+		"@clayui/form": "3.104.0",
+		"@clayui/modal": "3.104.0",
 		"@liferay/accessibility-settings-state-web": "*",
 		"@liferay/cookies-banner-web": "*",
 		"@liferay/frontend-js-state-web": "*",
@@ -21,5 +18,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "1.0.3"
+	"version": "1.0.8"
 }

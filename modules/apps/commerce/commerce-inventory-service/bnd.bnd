@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Inventory Service
 Bundle-SymbolicName: com.liferay.commerce.inventory.service
-Bundle-Version: 4.0.61
-Liferay-Require-SchemaVersion: 2.7.0
+Bundle-Version: 4.0.66
+Liferay-Require-SchemaVersion: 2.11.1
 Liferay-Service: true
 -dsannotations-options: inherit

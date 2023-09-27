@@ -62,7 +62,7 @@
 		<field name="storageId" type="long" />
 		<field name="structureVersionId" type="long" />
 		<field name="fieldName" type="String">
-			<hint-collection name="CLOB" />
+			<hint name="max-length">255</hint>
 		</field>
 		<field name="fieldType" type="String">
 			<hint name="max-length">255</hint>

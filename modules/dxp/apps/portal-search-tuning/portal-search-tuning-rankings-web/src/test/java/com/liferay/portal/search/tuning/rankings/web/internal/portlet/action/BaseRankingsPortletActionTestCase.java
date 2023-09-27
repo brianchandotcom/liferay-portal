@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
@@ -47,6 +38,14 @@ public abstract class BaseRankingsPortletActionTestCase
 			builder
 		).when(
 			builder
+		).groupExternalReferenceCode(
+			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			builder
+		).when(
+			builder
 		).index(
 			Mockito.anyString()
 		);
@@ -65,6 +64,14 @@ public abstract class BaseRankingsPortletActionTestCase
 			builder
 		).rankingIndexName(
 			Mockito.any()
+		);
+
+		Mockito.doReturn(
+			builder
+		).when(
+			builder
+		).sxpBlueprintExternalReferenceCode(
+			Mockito.anyString()
 		);
 
 		Mockito.doReturn(
@@ -125,31 +132,25 @@ public abstract class BaseRankingsPortletActionTestCase
 		ReflectionTestUtil.setFieldValue(
 			ranking, "_aliases", Arrays.asList("aliases"));
 		ReflectionTestUtil.setFieldValue(
+			ranking, "_groupExternalReferenceCode",
+			"groupExternalReferenceCode");
+		ReflectionTestUtil.setFieldValue(
 			ranking, "_hiddenDocumentIds",
 			new LinkedHashSet<String>(Arrays.asList("hiddenDocumentIds")));
 		ReflectionTestUtil.setFieldValue(
 			ranking, "_pins",
 			new ArrayList<Ranking.Pin>(
 				Arrays.asList(new Ranking.Pin(0, "id"))));
-
-		Mockito.doReturn(
-			Arrays.asList("hiddenDocumentIds")
-		).when(
-			ranking
-		).getHiddenDocumentIds();
-
-		Mockito.doReturn(
-			Arrays.asList("aliases")
-		).when(
-			ranking
-		).getAliases();
+		ReflectionTestUtil.setFieldValue(
+			ranking, "_sxpBlueprintExternalReferenceCode",
+			"sxpBlueprintExternalReferenceCode");
 
 		Mockito.doReturn(
 			ranking
 		).when(
 			rankingIndexReader
 		).fetch(
-			Mockito.any(), Mockito.anyString()
+			Mockito.anyString(), Mockito.any()
 		);
 	}
 

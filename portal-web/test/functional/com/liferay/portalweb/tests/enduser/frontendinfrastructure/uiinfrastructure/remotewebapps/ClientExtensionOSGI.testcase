@@ -33,6 +33,7 @@ definition {
 	test FieldsAreNotEditableWhenAccessed {
 		property custom.element.client.extension.created = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When access the osgi deployed custom element") {
 			Click(
@@ -68,6 +69,7 @@ definition {
 	test HasViewAction {
 		property custom.element.client.extension.created = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Then View action is an available option") {
 			AssertElementPresent(
@@ -87,6 +89,7 @@ definition {
 	test OsgiClientExtensionWorkspaceLabelIsPresent {
 		property custom.element.client.extension.created = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Then Modified Date column is present") {
 			FrontendDataSetCustomView.assertColumnPresent(key_field = "Modified Date");
@@ -102,6 +105,7 @@ definition {
 	test ViewActionCanDisplayFieldsAsNotEditable {
 		property custom.element.client.extension.created = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When select view action") {
 			Click(locator1 = "ClientExtension#REMOTE_TABLE_ELLIPSIS");

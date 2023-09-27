@@ -1,6 +1,6 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 6.0.10
+Bundle-Version: 6.0.11
 Export-Package: com.liferay.util.slf4j
 Import-Package:\
 	com.liferay.*,\

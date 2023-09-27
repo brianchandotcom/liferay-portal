@@ -1,10 +1,10 @@
 apply plugin: "com.liferay.target.platform"
-apply plugin: "java"
+apply plugin: "java-library"
 
 task runGradleTest
 
 dependencies {
-	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	api group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 }
 
 runGradleTest {
@@ -12,7 +12,7 @@ runGradleTest {
 		Exception expectedException = null
 
 		try {
-			configurations.compile.resolvedConfiguration.resolvedArtifacts.files
+			configurations.compileClasspath.resolvedConfiguration.resolvedArtifacts.files
 		}
 		catch (Exception e) {
 			expectedException = e.cause

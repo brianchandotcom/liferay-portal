@@ -1,0 +1,21 @@
+{
+	"description": "Checklists",
+	"externalReferenceCode": "PRMC047",
+	"name": "Checklists",
+	"name_i18n": {
+		"ar_SA": "Checklists",
+		"ca_ES": "Checklists",
+		"de_DE": "Checklists",
+		"en_US": "Checklists",
+		"es_ES": "Checklists",
+		"fi_FI": "Checklists",
+		"fr_FR": "Checklists",
+		"hu_HU": "Checklists",
+		"ja_JP": "Checklists",
+		"nl_NL": "Checklists",
+		"pt_BR": "Checklists",
+		"sv_SE": "Checklists",
+		"zh_CN": "Checklists"
+	},
+	"viewableBy": "Anyone"
+}

@@ -62,16 +62,12 @@ public class ${className}SimulationPanelApp extends BaseJSPPanelApp {
 	}
 
 	@Override
-	@Reference(
-		target = "(javax.portlet.name=" + ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
+#if (${newTemplate.equals("true")})
+	public Portlet getPortlet() {
+		return _portlet;
 	}
 
 	@Override
-#if (${newTemplate.equals("true")})
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}
@@ -80,7 +76,20 @@ public class ${className}SimulationPanelApp extends BaseJSPPanelApp {
 		target = "(osgi.web.symbolicname=${artifactId})"
 	)
 	private ServletContext _servletContext;
+
+	@Reference(
+		target = "(javax.portlet.name=" + ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION + ")"
+	)
+	private Portlet _portlet;
 #else
+	@Reference(
+		target = "(javax.portlet.name=" + ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION + ")",
+		unbind = "-"
+	)
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=${artifactId})",
 		unbind = "-"
@@ -89,5 +98,4 @@ public class ${className}SimulationPanelApp extends BaseJSPPanelApp {
 		super.setServletContext(servletContext);
 	}
 #end
-
 }

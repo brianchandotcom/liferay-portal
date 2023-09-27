@@ -28,6 +28,7 @@ buildAlloyUITheme {
 		delete alloyThemeDestinationDir
 	}
 
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
 	eachFile new StripPathSegmentsAction(5)
 
 	filesMatching "**/build/aui-*/assets/skins/sam/", new StripPathSegmentsAction(5)

@@ -37,7 +37,12 @@
 </tr>
 <tr>
 	<td>DROPDOWN_TOGGLE_BUTTON_WITH_LABEL</td>
-	<td>//label[normalize-space()='${key_fieldLabel}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//label[normalize-space()='${key_fieldLabel}']//following-sibling::div//button[contains(@class,'dropdown-toggle')] | //label[normalize-space()='${key_fieldLabel}']//following-sibling::button[contains(@class,'select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//input[contains(@placeholder,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -91,6 +96,11 @@
 <tr>
 	<td>FILTER_AND_ORDER</td>
 	<td>//button[contains(.,'Filter and Order') or contains(@class,'Filter and Order')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER</td>
+	<td>//span[contains(text(), 'Filter')]</td>
 	<td></td>
 </tr>
 </tbody>

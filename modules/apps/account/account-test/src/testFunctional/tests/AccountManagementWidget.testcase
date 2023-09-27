@@ -1,4 +1,4 @@
-@component-name = "portal-security"
+@component-name = "portal-user-management"
 definition {
 
 	property portal.release = "true";
@@ -48,8 +48,12 @@ definition {
 	}
 
 	@description = "This test asserts that a newly created site will have default account type settings even after changing settings on original site."
-	@priority = 5
+	@priority = 4
 	test AllowedAccountTypeIsSiteWide {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property test.liferay.virtual.instance = "false";
+
 		task ("Given that the allowed account type is set to Person") {
 			Account.setAllowedAccountTypeInSiteSettings(allowedType = "Person");
 		}
@@ -125,7 +129,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-155553. This test asserts that Account Modals can be custom styled."
-	@priority = 3
+	@priority = 4
 	test CanCustomizeStylingForAccountModals {
 		task ("Given the new account is created") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -162,7 +166,7 @@ definition {
 	}
 
 	@description = "This test asserts that only business accounts can be added when the allowed account type is business"
-	@priority = 5
+	@priority = 4
 	test CanOnlyAddBusinessAccountsWhenAllowedAccountTypeIsBusiness {
 		property portal.acceptance = "true";
 
@@ -205,7 +209,7 @@ definition {
 	}
 
 	@description = "This test asserts that only person accounts can be added when the allowed account type is person"
-	@priority = 5
+	@priority = 4
 	test CanOnlyAddPersonAccountsWhenAllowedAccountTypeIsPerson {
 		property portal.acceptance = "true";
 
@@ -251,6 +255,7 @@ definition {
 	@priority = 4
 	test CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given there is a Business account and a Person account the non admin user is a member of") {
 			JSONAccountEntry.addAccountEntry(

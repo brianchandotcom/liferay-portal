@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.adaptive.media.image.internal.configuration;
@@ -26,13 +17,12 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -469,7 +459,7 @@ public class AMImageConfigurationHelperImpl
 				(ArrayList<AMImageConfigurationEntry>)
 					TransformUtil.transformToList(
 						_getImageVariants(
-							SettingsFactoryUtil.getSettings(
+							FallbackKeysSettingsUtil.getSettings(
 								new CompanyServiceSettingsLocator(
 									companyId,
 									AMImageCompanyConfiguration.class.
@@ -536,7 +526,7 @@ public class AMImageConfigurationHelperImpl
 		throws IOException {
 
 		try {
-			Settings settings = SettingsFactoryUtil.getSettings(
+			Settings settings = FallbackKeysSettingsUtil.getSettings(
 				new CompanyServiceSettingsLocator(
 					companyId, AMImageCompanyConfiguration.class.getName()));
 
@@ -577,9 +567,6 @@ public class AMImageConfigurationHelperImpl
 
 	@Reference
 	private JournalContent _journalContent;
-
-	@Reference
-	private MessageBus _messageBus;
 
 	@Reference
 	private MultiVMPool _multiVMPool;

@@ -94,6 +94,7 @@ definition {
 	@priority = 5
 	test CanBeDuplicated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -107,7 +108,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormViewBuilder.setFieldPredefinedDate(fieldValue = "ff0d0d");
+		FormViewBuilder.setFieldPredefinedDate(fieldValue = "FF0D0D");
 
 		FormViewBuilder.clickActionMenuFieldset();
 
@@ -119,11 +120,11 @@ definition {
 
 		FormFields.viewColorValue(
 			fieldName = "Color",
-			fieldValue = "ff0d0d");
+			fieldValue = "FF0D0D");
 
 		FormFields.viewColorValue(
 			fieldName = "Field",
-			fieldValue = "ff0d0d");
+			fieldValue = "FF0D0D");
 
 		FormFields.viewFieldHelpText(
 			fieldHelpText = "Help Text Test",
@@ -244,7 +245,7 @@ definition {
 			rowNumber = 2);
 
 		FormFields.editColorField(
-			colorValue = "ff0d0d",
+			colorValue = "FF0D0D",
 			fieldLabel = "Color",
 			fieldName = "Color",
 			rowNumber = 1);
@@ -267,7 +268,7 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Color",
-			fieldValue = "ff0d0d, FF0D0D");
+			fieldValue = "FF0D0D, FF0D0D");
 	}
 
 	@description = "Verify that a Form can be submitted with the Color Field"
@@ -421,6 +422,7 @@ definition {
 	test PredefinedValueCanBeAdded {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -430,13 +432,13 @@ definition {
 			fieldPositionNumber = 0,
 			fieldType = "Color");
 
-		FormFields.editPredefinedValueInput(fieldValue = "7f26ff");
+		FormFields.editPredefinedValueInput(fieldValue = "7F26FF");
 
 		Form.save();
 
 		FormFields.viewColorValue(
 			fieldName = "Color",
-			fieldValue = "7f26ff");
+			fieldValue = "7F26FF");
 
 		Form.publishForm();
 
@@ -444,7 +446,7 @@ definition {
 
 		FormFields.viewColorValue(
 			fieldName = "Color",
-			fieldValue = "7f26ff");
+			fieldValue = "7F26FF");
 
 		FormPortlet.submitSuccessfully();
 

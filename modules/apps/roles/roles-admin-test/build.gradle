@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile project(":apps:export-import:export-import-test-util")
-	testIntegrationCompile project(":apps:roles:roles-admin-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
+	testIntegrationImplementation project(":apps:roles:roles-admin-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

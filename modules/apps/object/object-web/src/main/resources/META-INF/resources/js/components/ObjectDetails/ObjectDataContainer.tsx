@@ -1,24 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayPanel from '@clayui/panel';
-import {
-	FormError,
-	Input,
-	InputLocalized,
-	Toggle,
-} from '@liferay/object-js-components-web';
+import {FormError, Input, Toggle} from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {ChangeEventHandler, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
@@ -29,6 +16,7 @@ interface ObjectDataContainerProps {
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
+	isLinkedObjectDefinition?: boolean;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
@@ -39,6 +27,7 @@ export function ObjectDataContainer({
 	handleChange,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
+	isLinkedObjectDefinition,
 	setValues,
 	values,
 }: ObjectDataContainerProps) {
@@ -50,69 +39,60 @@ export function ObjectDataContainer({
 		? !values.modifiable && values.system
 		: values.system;
 
+	const noPermissionOrLinked =
+		!hasUpdateObjectDefinitionPermission || isLinkedObjectDefinition;
+
 	return (
-		<ClayPanel
-			displayTitle={Liferay.Language.get('object-definition-data')}
-			displayType="unstyled"
-		>
-			<ClayPanel.Body>
-				<Input
-					disabled={
-						isApproved || !hasUpdateObjectDefinitionPermission
-					}
-					error={errors.name}
-					label={Liferay.Language.get('name')}
-					name="name"
-					onChange={handleChange}
-					required
-					value={values.name}
-				/>
+		<>
+			<Input
+				disabled={isApproved || noPermissionOrLinked}
+				error={errors.name}
+				label={Liferay.Language.get('name')}
+				name="name"
+				onChange={handleChange}
+				required
+				value={values.name}
+			/>
 
-				<InputLocalized
-					disabled={
-						isReadOnly || !hasUpdateObjectDefinitionPermission
-					}
-					error={errors.label}
-					label={Liferay.Language.get('label')}
-					onChange={(label) => setValues({label})}
-					onSelectedLocaleChange={setSelectedLocale}
-					required
-					selectedLocale={selectedLocale}
-					translations={values.label as LocalizedValue<string>}
-				/>
+			<InputLocalized
+				disabled={isReadOnly || noPermissionOrLinked}
+				error={errors.label}
+				label={Liferay.Language.get('label')}
+				onChange={(label) => setValues({label})}
+				onSelectedLocaleChange={setSelectedLocale}
+				required
+				selectedLocale={selectedLocale}
+				translations={values.label as LocalizedValue<string>}
+			/>
 
-				<InputLocalized
-					disabled={
-						isReadOnly || !hasUpdateObjectDefinitionPermission
-					}
-					error={errors.pluralLabel}
-					label={Liferay.Language.get('plural-label')}
-					onChange={(pluralLabel) => setValues({pluralLabel})}
-					onSelectedLocaleChange={setSelectedLocale}
-					required
-					selectedLocale={selectedLocale}
-					translations={values.pluralLabel as LocalizedValue<string>}
-				/>
+			<InputLocalized
+				disabled={isReadOnly || noPermissionOrLinked}
+				error={errors.pluralLabel}
+				label={Liferay.Language.get('plural-label')}
+				onChange={(pluralLabel) => setValues({pluralLabel})}
+				onSelectedLocaleChange={setSelectedLocale}
+				required
+				selectedLocale={selectedLocale}
+				translations={values.pluralLabel as LocalizedValue<string>}
+			/>
 
-				<Input
-					disabled
-					label={Liferay.Language.get('object-definition-table-name')}
-					name="name"
-					value={dbTableName}
-				/>
+			<Input
+				disabled
+				label={Liferay.Language.get('object-definition-table-name')}
+				name="name"
+				value={dbTableName}
+			/>
 
-				<Toggle
-					disabled={
-						!isApproved ||
-						isReadOnly ||
-						!hasUpdateObjectDefinitionPermission
-					}
-					label={Liferay.Language.get('active')}
-					name="active"
-					onToggle={() => setValues({active: !values.active})}
-					toggled={values.active}
-				/>
-			</ClayPanel.Body>
-		</ClayPanel>
+			<Toggle
+				disabled={!isApproved || isReadOnly || noPermissionOrLinked}
+				label={sub(
+					Liferay.Language.get('activate-x'),
+					Liferay.Language.get('object')
+				)}
+				name="active"
+				onToggle={() => setValues({active: !values.active})}
+				toggled={values.active}
+			/>
+		</>
 	);
 }

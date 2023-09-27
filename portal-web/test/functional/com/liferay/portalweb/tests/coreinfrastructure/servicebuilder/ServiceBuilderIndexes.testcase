@@ -10,6 +10,7 @@ definition {
 	@priority = 4
 	test RemoveRedundantIndex {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a redundant index to indexes.sql") {
 			var content = '''create unique index IX_32712A55 on RedundantIndexEntry (name[\$COLUMN_LENGTH:75\$], companyId);''';

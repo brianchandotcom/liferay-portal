@@ -103,6 +103,37 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
+	macro _addPriceModifierCategory {
+		Variables.assertDefined(parameterList = "${priceListName},${priceModifierTitle},${productName}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var categoryId = CommerceJSONProductsAPI.getProductField(
+			jsonPath = "$.categories[*].id",
+			productName = ${productName});
+		var priceModifierId = CommerceJSONPriceListsAndPromotionsAPI._getPriceModifierIdByTitle(
+			priceListName = ${priceListName},
+			priceModifierTitle = ${priceModifierTitle});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-modifiers/${priceModifierId}/price-modifier-categories \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"categoryId": ${categoryId},
+					"priceModifierId": ${priceModifierId}
+				}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
+	}
+
 	macro _addPriceModifierProduct {
 		Variables.assertDefined(parameterList = "${priceListName},${priceModifierTitle},${productName}");
 

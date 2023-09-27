@@ -1,6 +1,11 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*"
+		"@clayui/alert": "3.93.0",
+		"@clayui/button": "3.100.0",
+		"@clayui/form": "3.104.0",
+		"@clayui/modal": "3.104.0",
+		"frontend-js-web": "*",
+		"react": "16.12.0"
 	},
 	"name": "@liferay/client-extension-web",
 	"private": true,
@@ -10,5 +15,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "1.0.43"
+	"version": "1.0.46"
 }

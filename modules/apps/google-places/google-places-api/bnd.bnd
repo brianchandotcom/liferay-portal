@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Google Places API
 Bundle-SymbolicName: com.liferay.google.places.api
-Bundle-Version: 1.0.6
+Bundle-Version: 1.0.7
 Export-Package:\
 	com.liferay.google.places.constants,\
 	com.liferay.google.places.util

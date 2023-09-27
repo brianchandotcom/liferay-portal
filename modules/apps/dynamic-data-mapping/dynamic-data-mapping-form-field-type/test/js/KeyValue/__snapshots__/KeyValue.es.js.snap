@@ -6,13 +6,11 @@ exports[`KeyValue has a helptext 1`] = `
     aria-labelledby="keyValue_fieldDetails"
     class="form-group hide"
     data-field-name="keyValue"
-    tabindex="0"
   >
     <div
       aria-labelledby="keyValueLabelkeyValue_fieldDetails"
       class="form-group hide"
       data-field-name="keyValueLabelkeyValue"
-      tabindex="0"
     >
       <div
         data-tooltip-align="top"
@@ -90,7 +88,6 @@ exports[`KeyValue has a label 1`] = `
       aria-labelledby="keyValueLabelkeyValue_fieldDetails"
       class="form-group hide"
       data-field-name="keyValueLabelkeyValue"
-      tabindex="0"
     >
       <div
         data-tooltip-align="top"
@@ -147,13 +144,11 @@ exports[`KeyValue has a predefined Value 1`] = `
     aria-labelledby="keyValue_fieldDetails"
     class="form-group hide"
     data-field-name="keyValue"
-    tabindex="0"
   >
     <div
       aria-labelledby="keyValueLabelkeyValue_fieldDetails"
       class="form-group hide"
       data-field-name="keyValueLabelkeyValue"
-      tabindex="0"
     >
       <div
         data-tooltip-align="top"
@@ -206,13 +201,11 @@ exports[`KeyValue has a value 1`] = `
     aria-labelledby="keyValue_fieldDetails"
     class="form-group hide"
     data-field-name="keyValue"
-    tabindex="0"
   >
     <div
       aria-labelledby="keyValueLabelkeyValue_fieldDetails"
       class="form-group hide"
       data-field-name="keyValueLabelkeyValue"
-      tabindex="0"
     >
       <div
         data-tooltip-align="top"
@@ -264,13 +257,11 @@ exports[`KeyValue has an id 1`] = `
     aria-labelledby="Id_fieldDetails"
     class="form-group hide"
     data-field-name="keyValue"
-    tabindex="0"
   >
     <div
       aria-labelledby="keyValueLabelkeyValue_fieldDetails"
       class="form-group hide"
       data-field-name="keyValueLabelkeyValue"
-      tabindex="0"
     >
       <div
         data-tooltip-align="top"
@@ -321,13 +312,11 @@ exports[`KeyValue is not editable 1`] = `
     aria-labelledby="keyValue_fieldDetails"
     class="form-group hide"
     data-field-name="keyValue"
-    tabindex="0"
   >
     <div
       aria-labelledby="keyValueLabelkeyValue_fieldDetails"
       class="form-group hide"
       data-field-name="keyValueLabelkeyValue"
-      tabindex="0"
     >
       <div
         data-tooltip-align="top"
@@ -379,13 +368,11 @@ exports[`KeyValue is not required 1`] = `
     aria-labelledby="keyValue_fieldDetails"
     class="form-group hide"
     data-field-name="keyValue"
-    tabindex="0"
   >
     <div
       aria-labelledby="keyValueLabelkeyValue_fieldDetails"
       class="form-group hide"
       data-field-name="keyValueLabelkeyValue"
-      tabindex="0"
     >
       <div
         data-tooltip-align="top"
@@ -448,7 +435,6 @@ exports[`KeyValue renders Label if showLabel is true 1`] = `
       aria-labelledby="keyValueLabelkeyValue_fieldDetails"
       class="form-group hide"
       data-field-name="keyValueLabelkeyValue"
-      tabindex="0"
     >
       <div
         data-tooltip-align="top"
@@ -505,13 +491,11 @@ exports[`KeyValue renders component with a key 1`] = `
     aria-labelledby="keyValue_fieldDetails"
     class="form-group hide"
     data-field-name="keyValue"
-    tabindex="0"
   >
     <div
       aria-labelledby="keyValueLabelkeyValue_fieldDetails"
       class="form-group hide"
       data-field-name="keyValueLabelkeyValue"
-      tabindex="0"
     >
       <div
         data-tooltip-align="top"

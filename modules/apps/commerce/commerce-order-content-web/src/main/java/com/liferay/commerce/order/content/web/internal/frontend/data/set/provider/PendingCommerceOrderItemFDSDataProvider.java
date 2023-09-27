@@ -1,39 +1,29 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.order.content.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.constants.CommercePriceConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.content.web.internal.model.OrderItem;
+import com.liferay.commerce.order.content.web.internal.util.CommerceOrderItemUtil;
 import com.liferay.commerce.price.CommerceOrderItemPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
@@ -49,7 +39,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -62,7 +51,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.StringJoiner;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -114,66 +102,6 @@ public class PendingCommerceOrderItemFDSDataProvider
 		return baseModelSearchResult.getLength();
 	}
 
-	private String _formatDiscountAmount(
-			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws Exception {
-
-		if (commerceOrderItemPrice.isPriceOnApplication()) {
-			return StringPool.DASH;
-		}
-
-		if (commerceOrderItemPrice.getDiscountAmount() == null) {
-			return StringPool.BLANK;
-		}
-
-		CommerceMoney discountAmountCommerceMoney =
-			commerceOrderItemPrice.getDiscountAmount();
-
-		return discountAmountCommerceMoney.format(locale);
-	}
-
-	private String _formatFinalPrice(
-			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws Exception {
-
-		if (commerceOrderItemPrice.isPriceOnApplication()) {
-			return StringPool.DASH;
-		}
-
-		if (commerceOrderItemPrice.getFinalPrice() == null) {
-			return StringPool.BLANK;
-		}
-
-		CommerceMoney finalPriceCommerceMoney =
-			commerceOrderItemPrice.getFinalPrice();
-
-		return finalPriceCommerceMoney.format(locale);
-	}
-
-	private String _formatPromoPrice(
-			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws Exception {
-
-		if (commerceOrderItemPrice.isPriceOnApplication()) {
-			return StringPool.DASH;
-		}
-
-		CommerceMoney promoPriceCommerceMoney =
-			commerceOrderItemPrice.getPromoPrice();
-
-		if (promoPriceCommerceMoney == null) {
-			return StringPool.BLANK;
-		}
-
-		BigDecimal price = promoPriceCommerceMoney.getPrice();
-
-		if (price.compareTo(BigDecimal.ZERO) <= 0) {
-			return StringPool.BLANK;
-		}
-
-		return promoPriceCommerceMoney.format(locale);
-	}
-
 	private String _formatSubscriptionPeriod(
 			CommerceOrderItem commerceOrderItem, Locale locale)
 		throws Exception {
@@ -212,40 +140,6 @@ public class PendingCommerceOrderItemFDSDataProvider
 			new Object[] {cpSubscriptionInfo.getSubscriptionLength(), period});
 	}
 
-	private String _formatUnitPrice(
-			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws Exception {
-
-		if (commerceOrderItemPrice.isPriceOnApplication()) {
-			return _language.get(
-				locale,
-				CommercePriceConstants.PRICE_VALUE_PRICE_ON_APPLICATION);
-		}
-
-		CommerceMoney unitPriceCommerceMoney =
-			commerceOrderItemPrice.getUnitPrice();
-
-		if (unitPriceCommerceMoney == null) {
-			return StringPool.BLANK;
-		}
-
-		CommerceMoney promoPriceCommerceMoney =
-			commerceOrderItemPrice.getPromoPrice();
-
-		if (CommerceBigDecimalUtil.eq(
-				unitPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
-			(promoPriceCommerceMoney != null) &&
-			CommerceBigDecimalUtil.gt(
-				promoPriceCommerceMoney.getPrice(), BigDecimal.ZERO)) {
-
-			return _language.get(
-				locale,
-				CommercePriceConstants.PRICE_VALUE_PRICE_ON_APPLICATION);
-		}
-
-		return unitPriceCommerceMoney.format(locale);
-	}
-
 	private BaseModelSearchResult<CommerceOrderItem> _getBaseModelSearchResult(
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
@@ -277,16 +171,6 @@ public class PendingCommerceOrderItemFDSDataProvider
 			httpServletRequest);
 	}
 
-	private long _getCommerceOptionValueCPDefinitionId(
-		CommerceOrderItem commerceOrderItem) {
-
-		if (!commerceOrderItem.hasParentCommerceOrderItem()) {
-			return commerceOrderItem.getCPDefinitionId();
-		}
-
-		return commerceOrderItem.getParentCommerceOrderItemCPDefinitionId();
-	}
-
 	private String[] _getCommerceOrderErrorMessages(
 		CommerceOrderItem commerceOrderItem,
 		Map<Long, List<CommerceOrderValidatorResult>>
@@ -306,25 +190,6 @@ public class PendingCommerceOrderItemFDSDataProvider
 		}
 
 		return ArrayUtil.toStringArray(errorMessages);
-	}
-
-	private String _getCommerceOrderOptions(
-			CommerceOrderItem commerceOrderItem, Locale locale)
-		throws Exception {
-
-		StringJoiner stringJoiner = new StringJoiner(
-			StringPool.COMMA_AND_SPACE);
-
-		List<KeyValuePair> commerceOptionValueKeyValuePairs =
-			_cpInstanceHelper.getKeyValuePairs(
-				_getCommerceOptionValueCPDefinitionId(commerceOrderItem),
-				commerceOrderItem.getJson(), locale);
-
-		for (KeyValuePair keyValuePair : commerceOptionValueKeyValuePairs) {
-			stringJoiner.add(keyValuePair.getValue());
-		}
-
-		return stringJoiner.toString();
 	}
 
 	private Map<Long, List<CommerceOrderValidatorResult>>
@@ -372,27 +237,38 @@ public class PendingCommerceOrderItemFDSDataProvider
 
 				return new OrderItem(
 					commerceOrderItem.getCPInstanceId(),
-					_formatDiscountAmount(commerceOrderItemPrice, locale),
+					CommerceOrderItemUtil.formatDiscountAmount(
+						commerceOrderItemPrice, locale),
 					_getCommerceOrderErrorMessages(
 						commerceOrderItem, commerceOrderValidatorResultsMap),
 					_commerceOrderItemQuantityFormatter.format(
-						commerceOrderItem, locale),
+						commerceOrderItem,
+						_cpInstanceUnitOfMeasureLocalService.
+							fetchCPInstanceUnitOfMeasure(
+								commerceOrderItem.getCPInstanceId(),
+								commerceOrderItem.getUnitOfMeasureKey()),
+						locale),
 					_formatSubscriptionPeriod(commerceOrderItem, locale),
 					commerceOrderItem.getName(locale),
-					_getCommerceOrderOptions(commerceOrderItem, locale),
+					CommerceOrderItemUtil.getOptions(
+						commerceOrderItem, _cpInstanceHelper, locale),
 					commerceOrderItem.getCommerceOrderId(),
 					commerceOrderItem.getCommerceOrderItemId(),
 					_getChildOrderItems(commerceOrderItem, httpServletRequest),
 					commerceOrderItem.getParentCommerceOrderItemId(),
-					_formatUnitPrice(commerceOrderItemPrice, locale),
-					_formatPromoPrice(commerceOrderItemPrice, locale), 0,
-					commerceOrderItem.getSku(),
+					CommerceOrderItemUtil.formatUnitPrice(
+						commerceOrderItemPrice, _language, locale),
+					CommerceOrderItemUtil.formatPromoPrice(
+						commerceOrderItemPrice, locale),
+					BigDecimal.ZERO, commerceOrderItem.getSku(),
 					_cpInstanceHelper.getCPInstanceThumbnailSrc(
 						CommerceUtil.getCommerceAccountId(
 							(CommerceContext)httpServletRequest.getAttribute(
 								CommerceWebKeys.COMMERCE_CONTEXT)),
 						commerceOrderItem.getCPInstanceId()),
-					_formatFinalPrice(commerceOrderItemPrice, locale));
+					CommerceOrderItemUtil.formatTotalPrice(
+						commerceOrderItemPrice, locale),
+					commerceOrderItem.getUnitOfMeasureKey());
 			});
 	}
 
@@ -417,6 +293,10 @@ public class PendingCommerceOrderItemFDSDataProvider
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;

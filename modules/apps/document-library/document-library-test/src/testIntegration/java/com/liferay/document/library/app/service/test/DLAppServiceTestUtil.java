@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.app.service.test;
@@ -21,11 +12,6 @@ import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -45,7 +31,6 @@ import com.liferay.portal.security.permission.DoAsUserThread;
 
 import java.util.Date;
 import java.util.Dictionary;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 
@@ -101,31 +86,6 @@ public class DLAppServiceTestUtil {
 		return new ConfigurationTemporarySwapper(
 			"com.liferay.document.library.configuration.DLConfiguration",
 			dictionary);
-	}
-
-	protected static AtomicInteger registerDLSyncEventProcessorMessageListener(
-		final String targetEvent) {
-
-		final AtomicInteger counter = new AtomicInteger();
-
-		Destination destination = MessageBusUtil.getDestination(
-			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
-
-		destination.register(
-			new MessageListener() {
-
-				@Override
-				public void receive(Message message) {
-					Object event = message.get("event");
-
-					if (targetEvent.equals(event)) {
-						counter.incrementAndGet();
-					}
-				}
-
-			});
-
-		return counter;
 	}
 
 	protected static int runUserThreads(DoAsUserThread[] doAsUserThreads)

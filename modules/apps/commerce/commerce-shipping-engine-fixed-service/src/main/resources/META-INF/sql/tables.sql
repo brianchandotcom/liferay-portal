@@ -28,8 +28,8 @@ create table CShippingFixedOptionRel (
 	zip VARCHAR(75) null,
 	weightFrom DOUBLE,
 	weightTo DOUBLE,
-	fixedPrice DECIMAL(30, 16) null,
-	rateUnitWeightPrice DECIMAL(30, 16) null,
+	fixedPrice BIGDECIMAL null,
+	rateUnitWeightPrice BIGDECIMAL null,
 	ratePercentage DOUBLE
 );
 
@@ -43,7 +43,7 @@ create table CommerceShippingFixedOption (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commerceShippingMethodId LONG,
-	amount DECIMAL(30, 16) null,
+	amount BIGDECIMAL null,
 	description STRING null,
 	key_ VARCHAR(75) null,
 	name STRING null,

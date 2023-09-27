@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {fetch} from 'frontend-js-web';
@@ -90,55 +81,6 @@ export function getValueFromItem(item, fieldName) {
 	}
 
 	return item[fieldName];
-}
-
-export function getValueDetailsFromItem(item, fieldName) {
-	if (!fieldName) {
-		return null;
-	}
-
-	let rootPropertyName = fieldName;
-	const valuePath = [];
-	let navigatedValue = item;
-
-	if (Array.isArray(fieldName)) {
-		rootPropertyName = fieldName[0];
-
-		fieldName.forEach((property) => {
-			let formattedProperty = property;
-
-			if (property === 'LANG') {
-				const languageId = Liferay.ThemeDisplay.getLanguageId();
-				const BCP47LanguageId = Liferay.ThemeDisplay.getBCP47LanguageId();
-
-				if (navigatedValue[languageId]) {
-					formattedProperty = languageId;
-				}
-				else if (navigatedValue[BCP47LanguageId]) {
-					formattedProperty = BCP47LanguageId;
-				}
-				else {
-					formattedProperty = Liferay.ThemeDisplay.getDefaultLanguageId();
-				}
-			}
-
-			valuePath.push(formattedProperty);
-
-			if (navigatedValue) {
-				navigatedValue = navigatedValue[formattedProperty];
-			}
-		});
-	}
-	else {
-		valuePath.push(fieldName);
-		navigatedValue = navigatedValue[fieldName];
-	}
-
-	return {
-		rootPropertyName,
-		value: navigatedValue,
-		valuePath,
-	};
 }
 
 export function formatItemChanges(itemChanges) {
@@ -224,7 +166,7 @@ export async function loadData(
 	searchParam,
 	delta,
 	page = 1,
-	sorting = []
+	sorts = []
 ) {
 	const fullUrl = apiURL.startsWith('/')
 		? themeDisplay.getPortalURL() + themeDisplay.getPathContext() + apiURL
@@ -258,10 +200,10 @@ export async function loadData(
 		url.searchParams.append('search', searchParam);
 	}
 
-	if (sorting.length) {
+	if (sorts.length) {
 		url.searchParams.append(
 			'sort',
-			sorting.map((item) => `${item.key}:${item.direction}`).join(',')
+			sorts.map((item) => `${item.key}:${item.direction}`).join(',')
 		);
 	}
 

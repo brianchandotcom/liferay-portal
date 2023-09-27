@@ -1,23 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -44,10 +34,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class SaveVariantSegmentsExperienceMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseContentPageEditorMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected void doCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -58,8 +48,6 @@ public class SaveVariantSegmentsExperienceMVCActionCommand
 			themeDisplay.getPlid());
 
 		if (!draftLayout.isDraftLayout()) {
-			sendRedirect(actionRequest, actionResponse);
-
 			return;
 		}
 
@@ -80,8 +68,6 @@ public class SaveVariantSegmentsExperienceMVCActionCommand
 		hideDefaultSuccessMessage(actionRequest);
 
 		MultiSessionMessages.add(actionRequest, "variantSaved");
-
-		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

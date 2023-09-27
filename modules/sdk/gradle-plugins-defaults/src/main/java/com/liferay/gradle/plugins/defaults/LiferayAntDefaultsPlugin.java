@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.defaults;
@@ -29,12 +20,13 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.plugins.BasePlugin;
-import org.gradle.api.plugins.MavenPlugin;
+import org.gradle.api.publish.PublicationContainer;
+import org.gradle.api.publish.PublishingExtension;
+import org.gradle.api.publish.maven.MavenPublication;
+import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
+import org.gradle.api.publish.maven.tasks.PublishToMavenRepository;
+import org.gradle.api.publish.plugins.PublishingPlugin;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.Upload;
 import org.gradle.api.tasks.ant.AntTarget;
 
 /**
@@ -66,10 +58,6 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 
 		_applyPlugins(project);
 
-		// GRADLE-2427
-
-		_addTaskInstall(project);
-
 		_applyConfigScripts(project);
 
 		final ReplaceRegexTask updateVersionTask = _addTaskUpdateVersion(
@@ -79,22 +67,26 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 
 		GradleUtil.excludeTasksWithProperty(
 			project, LiferayOSGiDefaultsPlugin.SNAPSHOT_IF_STALE_PROPERTY_NAME,
-			true, MavenPlugin.INSTALL_TASK_NAME,
-			BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+			true, MavenPublishPlugin.PUBLISH_LOCAL_LIFECYCLE_TASK_NAME,
+			PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
+					_configureExtensionPublishing(project);
+
 					GradlePluginsDefaultsUtil.setProjectSnapshotVersion(
 						project);
 
 					// setProjectSnapshotVersion must be called before
-					// configureTaskUploadArchives, because the latter one needs
+					// configureTaskPublish, because the latter one needs
 					// to know if we are publishing a snapshot or not.
 
-					_configureTaskUploadArchives(project, updateVersionTask);
+					_configureTaskPublish(project, updateVersionTask);
+
+					_configurePublishing(project);
 				}
 
 			});
@@ -140,21 +132,6 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 		return copyIvyDependenciesTask;
 	}
 
-	private Upload _addTaskInstall(Project project) {
-		Upload upload = GradleUtil.addTask(
-			project, MavenPlugin.INSTALL_TASK_NAME, Upload.class);
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, Dependency.ARCHIVES_CONFIGURATION);
-
-		upload.setConfiguration(configuration);
-		upload.setDescription(
-			"Installs the '" + configuration.getName() +
-				"' artifacts into the local Maven repository.");
-
-		return upload;
-	}
-
 	@SuppressWarnings("serial")
 	private ReplaceRegexTask _addTaskUpdateVersion(Project project) {
 		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
@@ -188,31 +165,84 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyScript(
 			project,
 			"com/liferay/gradle/plugins/defaults/dependencies" +
-				"/config-maven.gradle",
+				"/config-maven-publish.gradle",
 			project);
 	}
 
 	private void _applyPlugins(Project project) {
-		GradleUtil.applyPlugin(project, MavenPlugin.class);
+		GradleUtil.applyPlugin(project, MavenPublishPlugin.class);
+	}
+
+	private void _configureExtensionPublishing(final Project project) {
+		PublishingExtension publishingExtension = GradleUtil.getExtension(
+			project, PublishingExtension.class);
+
+		publishingExtension.publications(
+			new Action<PublicationContainer>() {
+
+				@Override
+				public void execute(PublicationContainer publicationContainer) {
+					MavenPublication mavenPublication =
+						publicationContainer.maybeCreate(
+							"maven", MavenPublication.class);
+
+					mavenPublication.setArtifactId(
+						GradleUtil.getArchivesBaseName(project));
+					mavenPublication.setGroupId(
+						String.valueOf(project.getGroup()));
+
+					mavenPublication.artifact(_getWarFile(project));
+				}
+
+			});
 	}
 
 	private void _configureProject(Project project) {
 		project.setGroup(GradleUtil.getProjectGroup(project, _GROUP));
 	}
 
-	private void _configureTaskUploadArchives(
+	private void _configurePublishing(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			PublishToMavenRepository.class,
+			new Action<PublishToMavenRepository>() {
+
+				@Override
+				public void execute(
+					PublishToMavenRepository publishToMavenRepository) {
+
+					publishToMavenRepository.dependsOn(_WAR_TASK_NAME);
+				}
+
+			});
+	}
+
+	private void _configureTaskPublish(
 		Project project, Task updatePluginVersionTask) {
 
 		if (GradlePluginsDefaultsUtil.isSnapshot(project)) {
 			return;
 		}
 
-		Task uploadArchivesTask = GradleUtil.getTask(
-			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+		Task publishTask = GradleUtil.getTask(
+			project, PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
 
-		uploadArchivesTask.finalizedBy(updatePluginVersionTask);
+		publishTask.finalizedBy(updatePluginVersionTask);
+	}
+
+	private File _getWarFile(Project project) {
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+
+		return new File(
+			new File(portalRootDir, "tools/sdk/dist"),
+			GradleUtil.getArchivesBaseName(project) + "-" +
+				project.getVersion() + ".war");
 	}
 
 	private static final String _GROUP = "com.liferay.plugins";
+
+	private static final String _WAR_TASK_NAME = "war";
 
 }

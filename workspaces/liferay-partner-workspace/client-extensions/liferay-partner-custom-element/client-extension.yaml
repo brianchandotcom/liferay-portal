@@ -1,0 +1,15 @@
+assemble:
+    - from: build/vite
+      into: static
+liferay-partner-custom-element:
+    cssURLs:
+        - "**/*.css"
+    friendlyURLMapping: liferay-partner-custom-element
+    htmlElementName: liferay-partner-custom-element
+    instanceable: true
+    name: Liferay Partner Custom Element
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - "*.js"
+    useESM: true

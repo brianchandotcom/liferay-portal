@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.partner;
@@ -29,6 +20,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
@@ -143,13 +135,14 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 				JSONArray mdfClaimActivitiesJSONArray =
 					itemJSONObject.getJSONArray("actToMDFClmActs");
 
-				JSONArray claimedMdfClaimActivityJSONArray = new JSONArray();
-
 				if (mdfClaimActivitiesJSONArray.length() == 0) {
 					_sendNotification(
 						activityId, zonedActivityExpirationDate, zonedDateTime);
 				}
 				else {
+					JSONArray claimedMdfClaimActivityJSONArray =
+						new JSONArray();
+
 					for (int j = 0; j < mdfClaimActivitiesJSONArray.length();
 						 j++) {
 
@@ -189,11 +182,12 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 							}
 						}
 					}
-				}
 
-				if (claimedMdfClaimActivityJSONArray.length() == 0) {
-					_sendNotification(
-						activityId, zonedActivityExpirationDate, zonedDateTime);
+					if (claimedMdfClaimActivityJSONArray.length() == 0) {
+						_sendNotification(
+							activityId, zonedActivityExpirationDate,
+							zonedDateTime);
+					}
 				}
 			}
 		}
@@ -209,7 +203,8 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 			).accept(
 				MediaType.APPLICATION_JSON
 			).header(
-				"Authorization", "Bearer " + _oAuth2AccessToken.getTokenValue()
+				HttpHeaders.AUTHORIZATION,
+				"Bearer " + _oAuth2AccessToken.getTokenValue()
 			).retrieve(
 			).bodyToMono(
 				String.class
@@ -229,7 +224,8 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 		).contentType(
 			MediaType.APPLICATION_JSON
 		).header(
-			"Authorization", "Bearer " + _oAuth2AccessToken.getTokenValue()
+			HttpHeaders.AUTHORIZATION,
+			"Bearer " + _oAuth2AccessToken.getTokenValue()
 		).bodyValue(
 			bodyValue
 		).retrieve(

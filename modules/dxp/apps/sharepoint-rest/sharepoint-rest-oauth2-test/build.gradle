@@ -1,4 +1,4 @@
 dependencies {
-	testIntegrationCompile project(":dxp:apps:sharepoint-rest:sharepoint-rest-oauth2-api");
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":dxp:apps:sharepoint-rest:sharepoint-rest-oauth2-api");
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

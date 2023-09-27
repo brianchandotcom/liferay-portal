@@ -20,6 +20,7 @@ definition {
 	@priority = 5
 	test VerifyFunctionalCookiesForFirstVisitInSiteLevelDisableImplicitMode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Site Administrator disabled the cookie preference handling in site level and the implicit cookie consent mode.") {
 			Site.openSiteSettingsAdmin(siteURLKey = "guest");
@@ -67,6 +68,7 @@ definition {
 	@priority = 5
 	test VerifyFunctionalCookiesForFirstVisitInSiteLevelImplicitMode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Site Administrator enabled the cookie preference handling in site level and the implicit cookie consent mode.") {
 			Site.openSiteSettingsAdmin(siteURLKey = "guest");
@@ -115,6 +117,7 @@ definition {
 	test VerifyFunctionalCookiesForNotFirstVisitInSiteLevelDisableImplicitMode {
 		property custom.system.properties = "cookie.http.only.names.excludes=GUEST_LANGUAGE_ID";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Site Administrator enabled agreed on the cookie usage,then disable the cookie preference handling in site level.") {
 			Site.openSiteSettingsAdmin(siteURLKey = "guest");
@@ -185,6 +188,7 @@ definition {
 	@priority = 5
 	test VerifyInstanceCookieSettingDontOverwiteSiteLevelWhenBothActive {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Enabled the cookie preference handling with explicit mode in site and instance level.") {
 			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithCookieConsentInSiteSettings(
@@ -262,6 +266,7 @@ definition {
 	@priority = 5
 	test VerifyMultipleSiteURLsForSameSiteCookiesConfigurationRelated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Site Administrator enabled the cookie preference handling in site1 with explicit cookie consent mode.") {
 			JSONUser.addUser(
@@ -342,6 +347,7 @@ definition {
 	@priority = 5
 	test VerifyNoCookiesForFirstVisitInSiteLevelExplicitMode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Site Administrator enabled the cookie preference handling in site level and the explicit cookie consent mode.") {
 			Site.openSiteSettingsAdmin(siteURLKey = "guest");
@@ -388,6 +394,7 @@ definition {
 	test VerifySite1CookiesDontAppearWhenVisitingSite2 {
 		property custom.system.properties = "cookie.http.only.names.excludes=GUEST_LANGUAGE_ID";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Site Administrator enabled the cookie preference handling in site1 with explicit cookie consent mode.") {
 			JSONUser.addUser(

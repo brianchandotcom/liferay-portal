@@ -116,6 +116,7 @@ definition {
 	@uitest
 	test DisplayVideoFromURLInExternalVideo {
 		property portal.acceptance = "true";
+		property timeout.explicit.wait = "30";
 
 		task ("Add an External Video fragment to page") {
 			ContentPagesNavigator.openEditContentPage(

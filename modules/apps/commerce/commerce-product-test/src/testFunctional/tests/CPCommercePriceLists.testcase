@@ -612,7 +612,7 @@ definition {
 	@description = "This is a test for COMMERCE-8568. Verify multiple Price Entries can be set on the same Price List for the same SKU"
 	@priority = 5
 	test AllowMultiplePriceEntriesInTheSamePriceList {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommercePriceEntryConfiguration.config";
 		property osgi.module.configurations = "checkInterval=\"1\"";
 		property portal.acceptance = "true";
@@ -741,6 +741,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test AssertPriceEntriesAreProductsInTheSameCatalogAsPriceList {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
@@ -904,6 +905,7 @@ definition {
 		Button.clickPublish();
 	}
 
+	@priority = 3
 	test AssertPriceListCannotBeMovedToADifferentCatalog {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
@@ -951,6 +953,7 @@ definition {
 			locator1 = "Select#ANY_DISABLED");
 	}
 
+	@priority = 3
 	test AssertPriceListHaveRequiredNameAndCurrency {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
@@ -1621,6 +1624,67 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12301 | Verify that is possible to see the created UOMs in the item finder for Price List"
+	@priority = 4
+	test CanItemFinderShowsUOMPriceList {
+		property custom.properties = "feature.flag.COMMERCE-11287=true";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with 2 UOMs is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 10,
+				productSKU = "MIN93015",
+				uomKey = "Liter",
+				uomName = "Liter");
+
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 20,
+				productSKU = "MIN93015",
+				uomKey = "Gallon",
+				uomName = "Gallon");
+		}
+
+		task ("And the admin uses the item search for the Price List") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			Type(
+				key_title = "Add SKUs",
+				locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+				value1 = "MIN93015");
+
+			while ((IsElementNotPresent(key_entryName = "MIN93015", key_title = "Add SKUs", locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT")) && (maxIterations = "5")) {
+				echo("The element is not present, retrying...");
+
+				Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
+
+				Type(
+					key_title = "Add SKUs",
+					locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+					value1 = "MIN93015");
+			}
+		}
+
+		task ("Then is possible to see all the created UOMs for a particular SKU") {
+			for (var rowList : list "Liter:1,Gallon:2") {
+				var entry = StringUtil.extractFirst(${rowList}, ":");
+				var row = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entry = ${entry},
+					key_rowNumber = ${row},
+					locator1 = "CommerceEntry#ENTRY_CONTENT_ROW_NUMBER_DATASET");
+
+				echo("The UOM ${entry} at the ${row} is present");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9767. Verify that a Tier Price entry cannot be saved with 0 quantity and an alert is shown"
 	@priority = 3
 	test CannotCreateTierPriceWithZeroQuantity {
@@ -1658,7 +1722,7 @@ definition {
 		}
 
 		task ("Then an alert message is shown under the quantity field") {
-			AssertTextEquals(
+			AssertTextEquals.assertText(
 				key_alertMessage = "Please enter a value greater than or equal to 1.",
 				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
 				value1 = "Please enter a value greater than or equal to 1.");
@@ -1820,6 +1884,69 @@ definition {
 
 		task ("Then an error message shows up") {
 			Alert.viewErrorMessage(errorMessage = "The order type relation already exists.");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12371. Can view Sort By Price is working properly "
+	@priority = 5
+	test CanViewSortByPrice {
+		property portal.acceptance = "true";
+
+		task ("Given a minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a new price list is created") {
+			CommerceNavigator.goToPriceListAdmin();
+
+			Click(locator1 = "Button#PLUS");
+
+			CommerceEntry.addNewPriceListsEntry(
+				priceListCatalog = "Minium",
+				priceListCurrency = "USD",
+				priceListName = "pricelist1");
+
+			AssertClickNoError(
+				locator1 = "Button#SUBMIT",
+				value1 = "Submit");
+		}
+
+		task ("When a new entry is added to the new price list") {
+			SelectFrameTop();
+
+			CommerceNavigator.gotoEntry(entryName = "pricelist1");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "MIN00674",
+				title = "Add SKUs");
+
+			SelectFrameTop();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN00674");
+
+			CommercePriceLists.editPriceListEntryPrice(priceListEntryPrice = "150.00");
+
+			SelectFrameTop();
+		}
+
+		task ("Then the Sorty By is going to show the products in order based on the Base Price") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Price High to Low");
+
+			AssertTextEquals(
+				key_index = 1,
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+				value1 = "Cams");
+
+			AssertTextEquals.assertPartialText(
+				key_productName = "Cams",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "150.00");
 		}
 	}
 
@@ -2001,9 +2128,9 @@ definition {
 			priceListName = "Test Price List");
 	}
 
+	@priority = 3
 	test PriceListExistsOnlyInOneCatalog {
 		property portal.acceptance = "false";
-		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -2086,6 +2213,7 @@ definition {
 	test ViewExpiredPL {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// TODO Review
 
@@ -2215,6 +2343,7 @@ definition {
 	test ViewExpiredPriceEntry {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// TODO Review
 
@@ -2376,7 +2505,7 @@ definition {
 	@description = "This is a test for COMMERCE-6223. Tier Price Entry expiration management"
 	@priority = 3
 	test ViewExpiredTierPriceEntry {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommerceTierPriceEntryConfiguration.config";
 		property osgi.module.configurations = "checkInterval=\"1\"";
 		property portal.acceptance = "false";
@@ -2562,6 +2691,7 @@ definition {
 	test ViewPriceNotAffectedByExpiredPriceEntities {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// TODO Review
 

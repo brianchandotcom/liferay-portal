@@ -1,27 +1,18 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.poshi.runner;
 
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.PoshiGetterUtil;
+import com.liferay.poshi.core.PoshiProperties;
 import com.liferay.poshi.core.PoshiStackTrace;
 import com.liferay.poshi.core.PoshiVariablesContext;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.selenium.LiferaySeleniumMethod;
 import com.liferay.poshi.core.util.GetterUtil;
-import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.logger.PoshiLogger;
@@ -876,11 +867,11 @@ public class PoshiRunnerExecutor {
 					returnElement.attributeValue("name"), returnValue);
 			}
 
-			_poshiLogger.logExternalMethodCommand(
+			_poshiLogger.startExternalMethodCommand(
 				executeElement, args, returnValue);
 		}
 		catch (Throwable throwable) {
-			_poshiLogger.startCommand(executeElement);
+			_poshiLogger.startExternalMethodCommand(executeElement, args, null);
 
 			_summaryLogger.startSummary(executeElement);
 
@@ -888,14 +879,16 @@ public class PoshiRunnerExecutor {
 				executeElement, throwable.getMessage(),
 				_poshiLogger.getDetailsLinkId());
 
-			_poshiLogger.failCommand(executeElement);
-
 			_poshiLogger.updateStatus(executeElement, "fail");
+
+			_poshiLogger.failCommand(executeElement);
 
 			throw throwable;
 		}
 
 		_poshiLogger.updateStatus(executeElement, "pass");
+
+		_poshiLogger.passCommand(executeElement);
 	}
 
 	public void runReturnElement(Element returnElement) throws Exception {

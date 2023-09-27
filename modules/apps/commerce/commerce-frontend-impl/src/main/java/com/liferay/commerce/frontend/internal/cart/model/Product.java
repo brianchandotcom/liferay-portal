@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.frontend.internal.cart.model;
@@ -26,20 +17,22 @@ import java.util.List;
 public class Product {
 
 	public Product(
-		long id, long parentProductId, String name, String sku, int quantity,
-		String thumbnail, PriceModel prices, ProductSettingsModel settings,
-		String[] errorMessages, long cpInstanceId) {
+		long id, long parentProductId, long cpInstanceId, String name,
+		PriceModel priceModel, ProductSettingsModel productSettingsModel,
+		int quantity, String sku, String thumbnail, String unitOfMeasureKey,
+		String[] errorMessages) {
 
 		_id = id;
 		_parentProductId = parentProductId;
-		_name = name;
-		_sku = sku;
-		_quantity = quantity;
-		_thumbnail = thumbnail;
-		_prices = prices;
-		_settings = settings;
-		_errorMessages = errorMessages;
 		_cpInstanceId = cpInstanceId;
+		_name = name;
+		_priceModel = priceModel;
+		_productSettingsModel = productSettingsModel;
+		_quantity = quantity;
+		_sku = sku;
+		_thumbnail = thumbnail;
+		_unitOfMeasureKey = unitOfMeasureKey;
+		_errorMessages = errorMessages;
 	}
 
 	public List<Product> getChildItems() {
@@ -70,16 +63,16 @@ public class Product {
 		return _parentProductId;
 	}
 
-	public PriceModel getPrices() {
-		return _prices;
+	public PriceModel getPriceModel() {
+		return _priceModel;
+	}
+
+	public ProductSettingsModel getProductSettingsModel() {
+		return _productSettingsModel;
 	}
 
 	public int getQuantity() {
 		return _quantity;
-	}
-
-	public ProductSettingsModel getSettings() {
-		return _settings;
 	}
 
 	public String getSku() {
@@ -88,6 +81,10 @@ public class Product {
 
 	public String getThumbnail() {
 		return _thumbnail;
+	}
+
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
 	}
 
 	public void setChildItems(List<Product> childItems) {
@@ -118,16 +115,18 @@ public class Product {
 		_parentProductId = parentProductId;
 	}
 
-	public void setPrices(PriceModel prices) {
-		_prices = prices;
+	public void setPriceModel(PriceModel priceModel) {
+		_priceModel = priceModel;
+	}
+
+	public void setProductSettingsModel(
+		ProductSettingsModel productSettingsModel) {
+
+		_productSettingsModel = productSettingsModel;
 	}
 
 	public void setQuantity(int quantity) {
 		_quantity = quantity;
-	}
-
-	public void setSettings(ProductSettingsModel settings) {
-		_settings = settings;
 	}
 
 	public void setSku(String sku) {
@@ -138,6 +137,10 @@ public class Product {
 		_thumbnail = thumbnail;
 	}
 
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		_unitOfMeasureKey = unitOfMeasureKey;
+	}
+
 	private List<Product> _childItems;
 	private long _cpInstanceId;
 	private String[] _errorMessages;
@@ -145,10 +148,11 @@ public class Product {
 	private String _name;
 	private List<KeyValuePair> _options;
 	private long _parentProductId;
-	private PriceModel _prices;
+	private PriceModel _priceModel;
+	private ProductSettingsModel _productSettingsModel;
 	private int _quantity;
-	private ProductSettingsModel _settings;
 	private String _sku;
 	private String _thumbnail;
+	private String _unitOfMeasureKey;
 
 }

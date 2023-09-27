@@ -76,7 +76,9 @@
 		<field localized="true" name="name" type="String" />
 		<field name="recipientType" type="String" />
 		<field localized="true" name="subject" type="String" />
-		<field name="type" type="String" />
+		<field name="type" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 	</model>
 	<model name="com.liferay.notification.model.NotificationTemplateAttachment">
 		<field name="mvccVersion" type="long" />

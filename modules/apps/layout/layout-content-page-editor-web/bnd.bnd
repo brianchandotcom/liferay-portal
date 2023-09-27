@@ -1,4 +1,5 @@
 Bundle-Name: Liferay Layout Content Page Editor Web
 Bundle-SymbolicName: com.liferay.layout.content.page.editor.web
-Bundle-Version: 3.0.173
+Bundle-Version: 3.0.182
 Web-ContextPath: /layout-content-page-editor-web
+-dsannotations-options: inherit

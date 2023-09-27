@@ -1,5 +1,9 @@
 {
 	"dependencies": {
+		"@clayui/core": "3.104.0",
+		"@clayui/form": "3.104.0",
+		"@clayui/icon": "3.56.0",
+		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},
 	"name": "@liferay/layout-type-controller-panel",
@@ -8,5 +12,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "2.0.26"
+	"version": "2.0.28"
 }

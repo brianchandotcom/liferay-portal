@@ -1,0 +1,48 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
+		classpath group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.7.11"
+	}
+
+	repositories {
+		maven {
+			url new File(rootProject.projectDir, "../../.m2-tmp")
+		}
+
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.source.formatter"
+apply plugin: "java-library"
+apply plugin: "org.springframework.boot"
+
+bootRun {
+	String liferayVirtualInstanceId = project.hasProperty("liferay.virtual.instance.id") ? project.getProperty("liferay.virtual.instance.id") : "default"
+
+	environment "LIFERAY_ROUTES_CLIENT_EXTENSION", "${gradle.liferayWorkspace.homeDir}/routes/${liferayVirtualInstanceId}/${project.name}"
+	environment "LIFERAY_ROUTES_DXP", "${gradle.liferayWorkspace.homeDir}/routes/${liferayVirtualInstanceId}/dxp"
+}
+
+dependencies {
+	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "latest.release"
+	implementation group: "com.liferay", name: "com.liferay.headless.admin.user.client", version: "latest.release"
+	implementation group: "com.liferay", name: "com.liferay.headless.delivery.client", version: "latest.release"
+	implementation group: "commons-logging", name: "commons-logging", version: "1.2"
+	implementation group: "org.json", name: "json", version: "20220320"
+	implementation group: "org.springframework.boot", name: "spring-boot", version: "2.7.11"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-client", version: "2.7.11"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.11"
+}
+
+repositories {
+	maven {
+		url new File(rootProject.projectDir, "../../.m2-tmp")
+	}
+
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}

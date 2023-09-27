@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -94,7 +85,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 				<c:choose>
 					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "descriptive") %>'>
 						<liferay-ui:search-container-column-text>
-							<liferay-ui:user-portrait
+							<liferay-user:user-portrait
 								userId="<%= curArticle.getStatusByUserId() %>"
 							/>
 						</liferay-ui:search-container-column-text>
@@ -466,26 +457,23 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 	/>
 </liferay-ui:search-container>
 
-<aui:script use="liferay-journal-navigation">
-	var journalNavigation = new Liferay.Portlet.JournalNavigation({
-		editEntryUrl: '<portlet:actionURL />',
-		form: {
-			method: 'POST',
-			node: A.one(document.<portlet:namespace />fm),
-		},
-		moveEntryUrl:
-			'<portlet:renderURL><portlet:param name="mvcPath" value="/move_articles_and_folders.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
-		namespace: '<portlet:namespace />',
-		searchContainerId: 'articles',
-	});
+<portlet:renderURL var="moveEntryURL">
+	<portlet:param name="mvcPath" value="/move_articles_and_folders.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:renderURL>
 
-	var clearJournalNavigationHandles = function (event) {
-		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-			journalNavigation.destroy();
+<portlet:actionURL var="editEntryURL" />
 
-			Liferay.detach('destroyPortlet', clearJournalNavigationHandles);
-		}
-	};
-
-	Liferay.on('destroyPortlet', clearJournalNavigationHandles);
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"editEntryURL", editEntryURL
+		).put(
+			"moveEntryURL", moveEntryURL
+		).put(
+			"searchContainerId", "articles"
+		).build()
+	%>'
+	module="js/Navigation"
+	servletContext="<%= application %>"
+/>

@@ -1,20 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
+import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -23,6 +15,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPOptionService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentBase64;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentUrl;
@@ -34,6 +27,7 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -41,7 +35,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.upload.UniqueFileNameProvider;
@@ -63,12 +56,43 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/attachment.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {AttachmentResource.class, NestedFieldSupport.class}
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
+	service = AttachmentResource.class
 )
 @CTAware
-public class AttachmentResourceImpl
-	extends BaseAttachmentResourceImpl implements NestedFieldSupport {
+public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
+
+	@Override
+	public void deleteAttachment(Long id) throws Exception {
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			_cpAttachmentFileEntryService.fetchCPAttachmentFileEntry(id);
+
+		if (cpAttachmentFileEntry == null) {
+			throw new NoSuchCPAttachmentFileEntryException(
+				"Unable to find attachment " + id);
+		}
+
+		_cpAttachmentFileEntryService.deleteCPAttachmentFileEntry(id);
+	}
+
+	@Override
+	public void deleteAttachmentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			_cpAttachmentFileEntryService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (cpAttachmentFileEntry == null) {
+			throw new NoSuchCPAttachmentFileEntryException(
+				"Unable to find attachment with external reference code " +
+					externalReferenceCode);
+		}
+
+		_cpAttachmentFileEntryService.deleteCPAttachmentFileEntry(
+			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+	}
 
 	@Override
 	public Page<Attachment> getProductByExternalReferenceCodeAttachmentsPage(
@@ -375,7 +399,10 @@ public class AttachmentResourceImpl
 			cpDefinition.getGroupId());
 
 		Map<String, Serializable> expandoBridgeAttributes =
-			_getExpandoBridgeAttributes(attachment);
+			CustomFieldsUtil.toMap(
+				CPAttachmentFileEntry.class.getName(),
+				contextCompany.getCompanyId(), attachment.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
 
 		if (expandoBridgeAttributes != null) {
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
@@ -386,7 +413,8 @@ public class AttachmentResourceImpl
 				cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 				_cpDefinitionOptionRelService,
 				_cpDefinitionOptionValueRelService, _cpOptionService,
-				_uniqueFileNameProvider, attachment,
+				_dlFileEntryModelResourcePermission, _uniqueFileNameProvider,
+				attachment,
 				_classNameLocalService.getClassNameId(
 					cpDefinition.getModelClassName()),
 				cpDefinition.getCPDefinitionId(), type, serviceContext);
@@ -404,7 +432,11 @@ public class AttachmentResourceImpl
 			cpDefinition.getGroupId());
 
 		Map<String, Serializable> expandoBridgeAttributes =
-			_getExpandoBridgeAttributes(attachmentBase64);
+			CustomFieldsUtil.toMap(
+				CPAttachmentFileEntry.class.getName(),
+				contextCompany.getCompanyId(),
+				attachmentBase64.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
 
 		if (expandoBridgeAttributes != null) {
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
@@ -431,7 +463,10 @@ public class AttachmentResourceImpl
 			cpDefinition.getGroupId());
 
 		Map<String, Serializable> expandoBridgeAttributes =
-			_getExpandoBridgeAttributes(attachmentUrl);
+			CustomFieldsUtil.toMap(
+				CPAttachmentFileEntry.class.getName(),
+				contextCompany.getCompanyId(), attachmentUrl.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
 
 		if (expandoBridgeAttributes != null) {
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
@@ -527,33 +562,6 @@ public class AttachmentResourceImpl
 			_toAttachments(cpAttachmentFileEntries), pagination, totalItems);
 	}
 
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		Attachment attachment) {
-
-		return CustomFieldsUtil.toMap(
-			CPAttachmentFileEntry.class.getName(),
-			contextCompany.getCompanyId(), attachment.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		AttachmentBase64 attachmentBase64) {
-
-		return CustomFieldsUtil.toMap(
-			CPAttachmentFileEntry.class.getName(),
-			contextCompany.getCompanyId(), attachmentBase64.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		AttachmentUrl attachmentUrl) {
-
-		return CustomFieldsUtil.toMap(
-			CPAttachmentFileEntry.class.getName(),
-			contextCompany.getCompanyId(), attachmentUrl.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-	}
-
 	private Attachment _toAttachment(Long cpAttachmentFileEntryId)
 		throws Exception {
 
@@ -604,6 +612,12 @@ public class AttachmentResourceImpl
 
 	@Reference
 	private CPOptionService _cpOptionService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
+	)
+	private ModelResourcePermission<DLFileEntry>
+		_dlFileEntryModelResourcePermission;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

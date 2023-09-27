@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.order.web.internal.display.context;
@@ -59,11 +50,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
@@ -108,6 +101,7 @@ public class CommerceOrderEditDisplayContext {
 			CommerceShipmentService commerceShipmentService,
 			CommerceTermEntryLocalService commerceTermEntryLocalService,
 			CPMeasurementUnitService cpMeasurementUnitService,
+			ModelResourcePermission<CommerceOrder> modelResourcePermission,
 			RenderRequest renderRequest)
 		throws PortalException {
 
@@ -129,6 +123,7 @@ public class CommerceOrderEditDisplayContext {
 		_commerceShipmentService = commerceShipmentService;
 		_commerceTermEntryLocalService = commerceTermEntryLocalService;
 		_cpMeasurementUnitService = cpMeasurementUnitService;
+		_modelResourcePermission = modelResourcePermission;
 
 		long commerceOrderId = ParamUtil.getLong(
 			renderRequest, "commerceOrderId");
@@ -458,22 +453,6 @@ public class CommerceOrderEditDisplayContext {
 			QueryUtil.ALL_POS, null);
 	}
 
-	public BigDecimal getDecimalQuantity(CommerceOrderItem commerceOrderItem) {
-		BigDecimal decimalQuantity = commerceOrderItem.getDecimalQuantity();
-
-		if ((decimalQuantity == null) ||
-			decimalQuantity.equals(BigDecimal.ZERO)) {
-
-			decimalQuantity = BigDecimal.valueOf(
-				commerceOrderItem.getQuantity());
-		}
-
-		return decimalQuantity.setScale(
-			_commerceOrderItemDecimalQuantityConfiguration.
-				maximumFractionDigits(),
-			_commerceOrderItemDecimalQuantityConfiguration.roundingMode());
-	}
-
 	public List<CommerceTermEntry> getDeliveryTermsEntries() {
 		return _commerceTermEntryLocalService.getCommerceTermEntries(
 			_commerceOrder.getCompanyId(),
@@ -483,14 +462,14 @@ public class CommerceOrderEditDisplayContext {
 	public String getDescriptiveAddress(CommerceAddress commerceAddress) {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(commerceAddress.getCity());
+		sb.append(HtmlUtil.escape(commerceAddress.getCity()));
 		sb.append(StringPool.COMMA_AND_SPACE);
 
 		try {
 			Region region = commerceAddress.getRegion();
 
 			if (region != null) {
-				sb.append(region.getName());
+				sb.append(HtmlUtil.escape(region.getName()));
 				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 		}
@@ -500,7 +479,7 @@ public class CommerceOrderEditDisplayContext {
 			}
 		}
 
-		sb.append(commerceAddress.getZip());
+		sb.append(HtmlUtil.escape(commerceAddress.getZip()));
 
 		return sb.toString();
 	}
@@ -508,7 +487,7 @@ public class CommerceOrderEditDisplayContext {
 	public String getDescriptiveStreetAddress(CommerceAddress commerceAddress) {
 		StringBundler sb = new StringBundler(6);
 
-		sb.append(commerceAddress.getStreet1());
+		sb.append(HtmlUtil.escape(commerceAddress.getStreet1()));
 		sb.append(StringPool.COMMA_AND_SPACE);
 
 		if (!Validator.isBlank(commerceAddress.getStreet2())) {
@@ -719,6 +698,15 @@ public class CommerceOrderEditDisplayContext {
 			CommerceTermEntryConstants.TYPE_PAYMENT_TERMS);
 	}
 
+	public BigDecimal getQuantity(CommerceOrderItem commerceOrderItem) {
+		BigDecimal quantity = commerceOrderItem.getQuantity();
+
+		return quantity.setScale(
+			_commerceOrderItemDecimalQuantityConfiguration.
+				maximumFractionDigits(),
+			_commerceOrderItemDecimalQuantityConfiguration.roundingMode());
+	}
+
 	public PortletURL getTransitionOrderPortletURL() {
 		return PortletURLBuilder.createActionURL(
 			_commerceOrderRequestHelper.getLiferayPortletResponse()
@@ -751,6 +739,15 @@ public class CommerceOrderEditDisplayContext {
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_METHODS);
 	}
 
+	public boolean hasManageCommerceOrderPaymentStatusesPermission() {
+		ThemeDisplay themeDisplay =
+			_commerceOrderRequestHelper.getThemeDisplay();
+
+		return _commerceOrderPortletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null,
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES);
+	}
+
 	public boolean hasManageCommerceOrderPaymentTermsPermission() {
 		ThemeDisplay themeDisplay =
 			_commerceOrderRequestHelper.getThemeDisplay();
@@ -758,6 +755,26 @@ public class CommerceOrderEditDisplayContext {
 		return _commerceOrderPortletResourcePermission.contains(
 			themeDisplay.getPermissionChecker(), null,
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS);
+	}
+
+	public boolean hasManageCommerceOrderPricesPermission() {
+		ThemeDisplay themeDisplay =
+			_commerceOrderRequestHelper.getThemeDisplay();
+
+		return _commerceOrderPortletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null,
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PRICES);
+	}
+
+	public boolean hasModelPermission(
+			CommerceOrder commerceOrder, String actionId)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			_commerceOrderRequestHelper.getThemeDisplay();
+
+		return _modelResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), commerceOrder, actionId);
 	}
 
 	private List<StepModel> _getWorkflowSteps() {
@@ -822,5 +839,7 @@ public class CommerceOrderEditDisplayContext {
 	private final CommerceShipmentService _commerceShipmentService;
 	private final CommerceTermEntryLocalService _commerceTermEntryLocalService;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
+	private final ModelResourcePermission<CommerceOrder>
+		_modelResourcePermission;
 
 }

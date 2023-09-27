@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.odata.internal.filter.expression;
@@ -24,6 +15,7 @@ import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.NavigationPropertyExpression;
 import com.liferay.portal.odata.filter.expression.PropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
+import com.liferay.portal.odata.filter.expression.factory.ExpressionFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -63,6 +55,10 @@ import org.apache.olingo.server.api.uri.queryoption.expression.UnaryOperatorKind
  * @author Cristina González
  */
 public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
+
+	public ExpressionVisitorImpl(ExpressionFactory expressionFactory) {
+		_expressionFactory = expressionFactory;
+	}
 
 	@Override
 	public Expression visitAlias(String alias) {
@@ -106,7 +102,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 				"Binary operator: " + binaryOperatorKind);
 		}
 
-		return new BinaryExpressionImpl(
+		return _expressionFactory.createBinaryExpression(
 			leftBinaryOperationExpression, binaryExpressionOperation,
 			rightBinaryOperationExpression);
 	}
@@ -118,10 +114,9 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		List<Expression> rightListOperationExpressions) {
 
 		if (binaryOperatorKind == BinaryOperatorKind.IN) {
-			return new ListExpressionImpl(
+			return _expressionFactory.createListExpression(
 				leftListOperationExpression, ListExpression.Operation.IN,
-				rightListOperationExpressions) {
-			};
+				rightListOperationExpressions);
 		}
 
 		throw new UnsupportedOperationException(
@@ -145,7 +140,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 				StringUtil.toUpperCase(lambdaFunction),
 				LambdaFunctionExpression.Type.ANY.name())) {
 
-			return new LambdaFunctionExpressionImpl(
+			return _expressionFactory.createLambdaFunctionExpression(
 				LambdaFunctionExpression.Type.ANY, lambdaVariable,
 				expression.accept(this));
 		}
@@ -165,32 +160,32 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		EdmType edmType = literal.getType();
 
 		if (edmType instanceof EdmBoolean) {
-			return new LiteralExpressionImpl(
+			return _expressionFactory.createLiteralExpression(
 				literal.getText(), LiteralExpression.Type.BOOLEAN);
 		}
 		else if (edmType instanceof EdmByte || edmType instanceof EdmInt16 ||
 				 edmType instanceof EdmInt32 || edmType instanceof EdmInt64 ||
 				 edmType instanceof EdmSByte) {
 
-			return new LiteralExpressionImpl(
+			return _expressionFactory.createLiteralExpression(
 				literal.getText(), LiteralExpression.Type.INTEGER);
 		}
 		else if (edmType instanceof EdmDate) {
-			return new LiteralExpressionImpl(
+			return _expressionFactory.createLiteralExpression(
 				literal.getText(), LiteralExpression.Type.DATE);
 		}
 		else if (edmType instanceof EdmDateTimeOffset) {
-			return new LiteralExpressionImpl(
+			return _expressionFactory.createLiteralExpression(
 				literal.getText(), LiteralExpression.Type.DATE_TIME);
 		}
 		else if (edmType instanceof EdmDecimal ||
 				 edmType instanceof EdmDouble) {
 
-			return new LiteralExpressionImpl(
+			return _expressionFactory.createLiteralExpression(
 				literal.getText(), LiteralExpression.Type.DOUBLE);
 		}
 		else if (edmType instanceof EdmString) {
-			return new LiteralExpressionImpl(
+			return _expressionFactory.createLiteralExpression(
 				literal.getText(), LiteralExpression.Type.STRING);
 		}
 		else if ((edmType == null) ||
@@ -209,7 +204,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 
 		UriInfoResource uriInfoResource = member.getResourcePath();
 
-		return new MemberExpressionImpl(
+		return _expressionFactory.createMemberExpression(
 			_getExpression(uriInfoResource.getUriResourceParts()));
 	}
 
@@ -218,15 +213,15 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		MethodKind methodKind, List<Expression> expressions) {
 
 		if (methodKind == MethodKind.CONTAINS) {
-			return new MethodExpressionImpl(
+			return _expressionFactory.createMethodExpression(
 				expressions, MethodExpression.Type.CONTAINS);
 		}
 		else if (methodKind == MethodKind.NOW) {
-			return new MethodExpressionImpl(
+			return _expressionFactory.createMethodExpression(
 				expressions, MethodExpression.Type.NOW);
 		}
 		else if (methodKind == MethodKind.STARTSWITH) {
-			return new MethodExpressionImpl(
+			return _expressionFactory.createMethodExpression(
 				expressions, MethodExpression.Type.STARTS_WITH);
 		}
 
@@ -244,7 +239,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		UnaryOperatorKind unaryOperatorKind, Expression expression) {
 
 		if (unaryOperatorKind == UnaryOperatorKind.NOT) {
-			return new UnaryExpressionImpl(
+			return _expressionFactory.createUnaryExpression(
 				expression, UnaryExpression.Operation.NOT);
 		}
 
@@ -260,13 +255,13 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		if ((uriResources.size() == 1) &&
 			(uriResource instanceof UriResourcePrimitiveProperty)) {
 
-			return new PrimitivePropertyExpressionImpl(
+			return _expressionFactory.createPrimitivePropertyExpression(
 				uriResource.getSegmentValue());
 		}
 		else if ((uriResources.size() > 1) &&
 				 (uriResource instanceof UriResourceComplexProperty)) {
 
-			return new ComplexPropertyExpressionImpl(
+			return _expressionFactory.createComplexPropertyExpression(
 				uriResource.getSegmentValue(),
 				(PropertyExpression)_getExpression(
 					uriResources.subList(1, uriResources.size())));
@@ -274,7 +269,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 		else if ((uriResources.size() > 1) &&
 				 (uriResource instanceof UriResourceNavigation)) {
 
-			return new NavigationPropertyExpressionImpl(
+			return _expressionFactory.createNavigationPropertyExpression(
 				uriResource.getSegmentValue(), _getType(uriResources.get(1)));
 		}
 		else if ((uriResources.size() > 1) &&
@@ -288,13 +283,15 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 					(UriResourceLambdaAny)lambdaUriResource;
 
 				try {
-					return new CollectionPropertyExpressionImpl(
-						(PropertyExpression)_getExpression(
-							uriResources.subList(0, uriResources.size() - 1)),
-						(LambdaFunctionExpression)visitLambdaExpression(
-							LambdaFunctionExpression.Type.ANY.name(),
-							uriResourceLambdaAny.getLambdaVariable(),
-							uriResourceLambdaAny.getExpression()));
+					return _expressionFactory.
+						createCollectionPropertyExpression(
+							(LambdaFunctionExpression)visitLambdaExpression(
+								LambdaFunctionExpression.Type.ANY.name(),
+								uriResourceLambdaAny.getLambdaVariable(),
+								uriResourceLambdaAny.getExpression()),
+							(PropertyExpression)_getExpression(
+								uriResources.subList(
+									0, uriResources.size() - 1)));
 				}
 				catch (ODataApplicationException oDataApplicationException) {
 					throw new ExpressionVisitException(
@@ -310,7 +307,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 					uriResourcePartTyped.getKind(),
 					UriResourceKind.lambdaVariable)) {
 
-				return new LambdaVariableExpressionImpl(
+				return _expressionFactory.createLambdaVariableExpression(
 					uriResource.getSegmentValue());
 			}
 		}
@@ -329,5 +326,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 
 		return NavigationPropertyExpression.Type.SIMPLE;
 	}
+
+	private final ExpressionFactory _expressionFactory;
 
 }

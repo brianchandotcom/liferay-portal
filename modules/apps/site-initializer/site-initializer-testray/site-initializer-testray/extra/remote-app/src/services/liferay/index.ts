@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {CONSENT_TYPE} from '~/util/enum';
@@ -41,7 +32,27 @@ interface LiferayUtil {
 	}) => void;
 }
 
+type FetchType = (
+	input: RequestInfo | URL,
+	init?: RequestInit
+) => Promise<Response>;
+
+interface OAuth2Client {
+	FromUserAgentApplication: (
+		_userAgent: string
+	) => {
+		authorizeURL: string;
+		clientId: string;
+		encodedRedirectURL: string;
+		fetch: FetchType;
+		homePageURL: string;
+		redirectURIs: string[];
+		tokenURL: string;
+	};
+}
+
 interface ILiferay {
+	OAuth2Client: OAuth2Client;
 	ThemeDisplay: IThemeDisplay;
 	Util: LiferayUtil;
 	authToken: string;
@@ -54,6 +65,16 @@ declare global {
 }
 
 export const Liferay = window.Liferay || {
+	OAuth2Client: {
+		FromUserAgentApplication: (_userAgent: string) => ({
+			authorizeURL: '',
+			clientId: '',
+			encodedRedirectURL: '',
+			homePageURL: '',
+			redirectURIs: [''],
+			tokenURL: '',
+		}),
+	},
 	ThemeDisplay: {
 		getBCP47LanguageId: () => 'en-US',
 		getCompanyGroupId: () => 0,

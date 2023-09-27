@@ -1,12 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 export function reducer(state, action) {
@@ -29,10 +23,6 @@ export function reducer(state, action) {
 				...state,
 				errors: {},
 				experiment: null,
-				experimentHistory: [
-					{...state.experiment, status: action.payload.status},
-					...state.experimentHistory,
-				],
 				variants: [],
 				viewExperimentDetailsURL: undefined,
 			};
@@ -48,17 +38,26 @@ export function reducer(state, action) {
 		case 'CREATE_EXPERIMENT_START':
 			return _createExperimentStart(state, action.payload);
 
-		case 'DELETE_ARCHIVED_EXPERIMENT':
+		case 'DELETE_EXPERIMENT':
 			return {
 				...state,
-				experimentHistory: state.experimentHistory.filter(
-					(experiment) => {
-						return (
-							experiment.segmentsExperimentId !==
-							action.payload.experimentId
-						);
-					}
-				),
+				deleteExperimentModal: {
+					active: action.payload.active,
+				},
+			};
+
+		case 'PUBLISH_EXPERIMENT':
+			return {
+				...state,
+				publishExperimentModal: action.payload,
+			};
+
+		case 'TERMINATE_EXPERIMENT':
+			return {
+				...state,
+				terminateExperimentModal: {
+					active: action.payload.active,
+				},
 			};
 
 		case 'EDIT_EXPERIMENT':
@@ -278,6 +277,5 @@ function _updateExperimentStatus(state, updatedValues) {
 		...state,
 		errors: {},
 		experiment: {...state.experiment, ...updatedValues},
-		variants: [],
 	};
 }

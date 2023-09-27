@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.opener.onedrive.web.internal.display.context;
@@ -172,20 +163,6 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 
 	private DropdownItem _createEditInOffice365DropdownItem(String cmd)
 		throws PortalException {
-
-		if (Objects.equals(
-				request.getParameter("mvcRenderCommandName"),
-				"/document_library/view_file_entry")) {
-
-			return DropdownItemBuilder.putData(
-				"senna-off", "true"
-			).setHref(
-				_getEditURL(
-					cmd, "/document_library/edit_in_one_drive_and_redirect")
-			).setLabel(
-				LanguageUtil.get(_resourceBundle, _getLabelKey())
-			).build();
-		}
 
 		return DropdownItemBuilder.putData(
 			"action", "editOfficeDocument"

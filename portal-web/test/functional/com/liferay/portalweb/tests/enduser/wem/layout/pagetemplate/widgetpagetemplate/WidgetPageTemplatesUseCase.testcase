@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Widget Page Templates";
@@ -31,6 +32,7 @@ definition {
 	@priority = 4
 	test ResetFailureCountAndReenablePropagation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a site designer has a widget page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -51,14 +53,23 @@ definition {
 				layoutPageTemplateEntryName = "Page Template Name",
 				layoutPageTemplateType = "Widget Page Template");
 
-			var script = '''
-	import com.liferay.portal.kernel.model.LayoutPrototype;
-	import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
-	import com.liferay.sites.kernel.util.SitesUtil;
+			var script = '''import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 
-	LayoutPrototype layoutPrototype = LayoutPrototypeLocalServiceUtil.getLayoutPrototype(${layoutPrototypeId});
-	SitesUtil.setMergeFailCount(layoutPrototype, 4);
-			''';
+import org.osgi.framework.BundleContext;
+import org.osgi.util.tracker.ServiceTracker;
+
+ServiceTracker<LayoutSetPrototypeHelper, LayoutSetPrototypeHelper> serviceTracker = new ServiceTracker<>(SystemBundleUtil.getBundleContext(), LayoutSetPrototypeHelper.class, null);
+
+serviceTracker.open();
+
+Object layoutSetPrototypeHelper = serviceTracker.getService();
+
+layoutSetPrototypeHelper.setMergeFailCount(LayoutPrototypeLocalServiceUtil.getLayoutPrototype(${layoutPrototypeId}), 4);
+
+serviceTracker.close();''';
 
 			ServerAdministration.openServerAdmin();
 
@@ -89,8 +100,6 @@ definition {
 	@description = "Assert could not add page via page template action."
 	@priority = 3
 	test ViewNoAddPageTabViaPageTemplatesCP {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Get site name and go to page template in global site") {
 			var siteName = TestCase.getSiteName(siteName = ${siteName});
 

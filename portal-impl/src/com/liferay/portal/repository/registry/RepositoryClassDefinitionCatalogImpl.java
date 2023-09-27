@@ -1,36 +1,23 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.repository.external.LegacyExternalRepositoryDefiner;
-import com.liferay.portal.repository.util.ExternalRepositoryFactory;
-import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
-import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
-import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -50,17 +37,6 @@ public class RepositoryClassDefinitionCatalogImpl
 			new RepositoryDefinerServiceTrackerCustomizer());
 
 		_serviceTracker.open();
-
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		for (String className : PropsValues.DL_REPOSITORY_IMPL) {
-			ExternalRepositoryFactory externalRepositoryFactory =
-				new ExternalRepositoryFactoryImpl(className, classLoader);
-
-			registerLegacyExternalRepositoryFactory(
-				className, externalRepositoryFactory,
-				LanguageUtil.getResourceBundleLoader());
-		}
 	}
 
 	public void destroy() {
@@ -69,14 +45,39 @@ public class RepositoryClassDefinitionCatalogImpl
 
 	@Override
 	public Iterable<RepositoryClassDefinition>
-		getExternalRepositoryClassDefinitions() {
+		getExternalRepositoryClassDefinitions(long companyId) {
 
-		return _externalRepositoryClassDefinitions.values();
+		Collection<RepositoryClassDefinition>
+			externalRepositoryClassDefinitions =
+				_getSystemExternalRepositoryData(Map::values);
+
+		Map<String, RepositoryClassDefinition>
+			companyRepositoryClassDefinitions =
+				_externalRepositoryClassDefinitions.get(companyId);
+
+		if (companyRepositoryClassDefinitions != null) {
+			externalRepositoryClassDefinitions.addAll(
+				companyRepositoryClassDefinitions.values());
+		}
+
+		return externalRepositoryClassDefinitions;
 	}
 
 	@Override
-	public Collection<String> getExternalRepositoryClassNames() {
-		return _externalRepositoryClassDefinitions.keySet();
+	public Collection<String> getExternalRepositoryClassNames(long companyId) {
+		Collection<String> externalRepositoryClassNames =
+			_getSystemExternalRepositoryData(Map::keySet);
+
+		Map<String, RepositoryClassDefinition>
+			companyRepositoryClassDefinitions =
+				_externalRepositoryClassDefinitions.get(companyId);
+
+		if (companyRepositoryClassDefinitions != null) {
+			externalRepositoryClassNames.addAll(
+				companyRepositoryClassDefinitions.keySet());
+		}
+
+		return externalRepositoryClassNames;
 	}
 
 	@Override
@@ -88,80 +89,77 @@ public class RepositoryClassDefinitionCatalogImpl
 
 	@Override
 	public RepositoryClassDefinition getRepositoryClassDefinition(
-		String className) {
+		long companyId, String className) {
 
-		return _repositoryClassDefinitions.get(className);
+		Map<String, RepositoryClassDefinition>
+			companyRepositoryClassDefinitions = _repositoryClassDefinitions.get(
+				companyId);
+
+		if (companyRepositoryClassDefinitions == null) {
+			return _getSystemRepositoryClassDefinition(className);
+		}
+
+		RepositoryClassDefinition repositoryClassDefinition =
+			companyRepositoryClassDefinitions.get(className);
+
+		if (repositoryClassDefinition == null) {
+			return _getSystemRepositoryClassDefinition(className);
+		}
+
+		return repositoryClassDefinition;
 	}
 
 	@Override
 	public void invalidate() {
-		for (RepositoryClassDefinition repositoryClassDefinition :
-				_repositoryClassDefinitions.values()) {
+		for (Map<String, RepositoryClassDefinition>
+				companyRepositoryClassDefinitions :
+					_repositoryClassDefinitions.values()) {
 
-			repositoryClassDefinition.invalidateCache();
+			for (RepositoryClassDefinition repositoryClassDefinition :
+					companyRepositoryClassDefinitions.values()) {
+
+				repositoryClassDefinition.invalidateCache();
+			}
 		}
 	}
 
-	@Override
-	public void registerLegacyExternalRepositoryFactory(
-		String className, ExternalRepositoryFactory externalRepositoryFactory,
-		ResourceBundleLoader resourceBundleLoader) {
+	private <T> Collection<T> _getSystemExternalRepositoryData(
+		Function<Map<String, RepositoryClassDefinition>, Collection<T>>
+			function) {
 
-		ExternalRepositoryFactoryUtil.registerExternalRepositoryFactory(
-			className, externalRepositoryFactory);
+		Map<String, RepositoryClassDefinition>
+			systemRepositoryClassDefinitions =
+				_externalRepositoryClassDefinitions.get(
+					CompanyConstants.SYSTEM);
 
-		RepositoryDefiner repositoryDefiner =
-			new LegacyExternalRepositoryDefiner(
-				className, _legacyExternalRepositoryFactory,
-				resourceBundleLoader);
+		if (systemRepositoryClassDefinitions == null) {
+			return new ArrayList<>();
+		}
 
-		ServiceRegistration<RepositoryDefiner> serviceRegistration =
-			registerRepositoryDefiner(repositoryDefiner);
-
-		_serviceRegistrations.put(className, serviceRegistration);
+		return new ArrayList<>(
+			function.apply(systemRepositoryClassDefinitions));
 	}
 
-	public void setLegacyExternalRepositoryFactory(
-		RepositoryFactory legacyExternalRepositoryFactory) {
+	private RepositoryClassDefinition _getSystemRepositoryClassDefinition(
+		String className) {
 
-		_legacyExternalRepositoryFactory = legacyExternalRepositoryFactory;
-	}
+		Map<String, RepositoryClassDefinition>
+			systemRepositoryClassDefinitions = _repositoryClassDefinitions.get(
+				CompanyConstants.SYSTEM);
 
-	@Override
-	public void unregisterLegacyExternalRepositoryFactory(String className) {
-		ExternalRepositoryFactoryUtil.unregisterExternalRepositoryFactory(
-			className);
+		if (systemRepositoryClassDefinitions == null) {
+			return null;
+		}
 
-		ServiceRegistration<?> serviceRegistration =
-			_serviceRegistrations.remove(className);
-
-		serviceRegistration.unregister();
-
-		unregisterRepositoryDefiner(className);
-	}
-
-	protected ServiceRegistration<RepositoryDefiner> registerRepositoryDefiner(
-		RepositoryDefiner repositoryDefiner) {
-
-		return _bundleContext.registerService(
-			RepositoryDefiner.class, repositoryDefiner, null);
-	}
-
-	protected void unregisterRepositoryDefiner(String className) {
-		_externalRepositoryClassDefinitions.remove(className);
-
-		_repositoryClassDefinitions.remove(className);
+		return systemRepositoryClassDefinitions.get(className);
 	}
 
 	private final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-	private final Map<String, RepositoryClassDefinition>
+	private final Map<Long, Map<String, RepositoryClassDefinition>>
 		_externalRepositoryClassDefinitions = new ConcurrentHashMap<>();
-	private RepositoryFactory _legacyExternalRepositoryFactory;
-	private final Map<String, RepositoryClassDefinition>
+	private final Map<Long, Map<String, RepositoryClassDefinition>>
 		_repositoryClassDefinitions = new ConcurrentHashMap<>();
-	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
-		new ConcurrentHashMap<>();
 	private ServiceTracker
 		<RepositoryDefiner, ServiceRegistration<RepositoryFactory>>
 			_serviceTracker;
@@ -174,6 +172,9 @@ public class RepositoryClassDefinitionCatalogImpl
 		public ServiceRegistration<RepositoryFactory> addingService(
 			ServiceReference<RepositoryDefiner> serviceReference) {
 
+			long companyId = GetterUtil.getLong(
+				serviceReference.getProperty("companyId"));
+
 			RepositoryDefiner repositoryDefiner = _bundleContext.getService(
 				serviceReference);
 
@@ -183,11 +184,21 @@ public class RepositoryClassDefinitionCatalogImpl
 					repositoryDefiner);
 
 			if (repositoryDefiner.isExternalRepository()) {
-				_externalRepositoryClassDefinitions.put(
+				Map<String, RepositoryClassDefinition>
+					companyRepositoryClassDefinitions =
+						_externalRepositoryClassDefinitions.computeIfAbsent(
+							companyId, key -> new ConcurrentHashMap<>());
+
+				companyRepositoryClassDefinitions.put(
 					className, repositoryClassDefinition);
 			}
 
-			_repositoryClassDefinitions.put(
+			Map<String, RepositoryClassDefinition>
+				companyRepositoryClassDefinitions =
+					_repositoryClassDefinitions.computeIfAbsent(
+						companyId, key -> new ConcurrentHashMap<>());
+
+			companyRepositoryClassDefinitions.put(
 				className, repositoryClassDefinition);
 
 			return _bundleContext.registerService(
@@ -212,11 +223,23 @@ public class RepositoryClassDefinitionCatalogImpl
 				repositoryFactoryServiceReference =
 					serviceRegistration.getReference();
 
+			long companyId = GetterUtil.getLong(
+				repositoryFactoryServiceReference.getProperty("companyId"));
 			String className =
 				(String)repositoryFactoryServiceReference.getProperty(
 					"class.name");
 
-			unregisterRepositoryDefiner(className);
+			Map<String, RepositoryClassDefinition>
+				companyExternalRepositoryClassDefinitions =
+					_externalRepositoryClassDefinitions.get(companyId);
+
+			companyExternalRepositoryClassDefinitions.remove(className);
+
+			Map<String, RepositoryClassDefinition>
+				companyRepositoryClassDefinitions =
+					_repositoryClassDefinitions.get(companyId);
+
+			companyRepositoryClassDefinitions.remove(className);
 
 			serviceRegistration.unregister();
 		}

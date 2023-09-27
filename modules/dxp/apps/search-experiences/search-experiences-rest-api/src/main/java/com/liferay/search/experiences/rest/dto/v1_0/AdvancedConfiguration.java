@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.search.experiences.rest.dto.v1_0;
@@ -88,6 +79,34 @@ public class AdvancedConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Source source;
 
+	@Schema
+	public String[] getStored_fields() {
+		return stored_fields;
+	}
+
+	public void setStored_fields(String[] stored_fields) {
+		this.stored_fields = stored_fields;
+	}
+
+	@JsonIgnore
+	public void setStored_fields(
+		UnsafeSupplier<String[], Exception> stored_fieldsUnsafeSupplier) {
+
+		try {
+			stored_fields = stored_fieldsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] stored_fields;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -124,6 +143,30 @@ public class AdvancedConfiguration implements Serializable {
 			sb.append("\"source\": ");
 
 			sb.append(String.valueOf(source));
+		}
+
+		if (stored_fields != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"stored_fields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < stored_fields.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(stored_fields[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < stored_fields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");

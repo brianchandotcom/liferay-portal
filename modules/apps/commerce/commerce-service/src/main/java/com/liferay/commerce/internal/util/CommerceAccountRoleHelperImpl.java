@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.internal.util;
@@ -29,6 +20,7 @@ import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.util.CommerceAccountRoleHelper;
+import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -127,8 +119,14 @@ public class CommerceAccountRoleHelperImpl
 		throws PortalException {
 
 		for (Map.Entry<String, String[]> entry : resourceActionIds.entrySet()) {
-			_resourceActionLocalService.checkResourceActions(
-				entry.getKey(), Arrays.asList(entry.getValue()));
+			try {
+				DBPartitionUtil.forEachCompanyId(
+					company -> _resourceActionLocalService.checkResourceActions(
+						entry.getKey(), Arrays.asList(entry.getValue())));
+			}
+			catch (Exception exception) {
+				throw new PortalException(exception);
+			}
 
 			for (String actionId : entry.getValue()) {
 				_resourcePermissionLocalService.addResourcePermission(
@@ -169,6 +167,7 @@ public class CommerceAccountRoleHelperImpl
 					"CHECKOUT_OPEN_COMMERCE_ORDERS", "DELETE_COMMERCE_ORDERS",
 					"MANAGE_COMMERCE_ORDER_DELIVERY_TERMS",
 					"MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
+					"MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES",
 					"MANAGE_COMMERCE_ORDER_PAYMENT_TERMS",
 					"MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS",
 					"MANAGE_COMMERCE_ORDERS", "VIEW_BILLING_ADDRESS",
@@ -212,6 +211,7 @@ public class CommerceAccountRoleHelperImpl
 					"CHECKOUT_OPEN_COMMERCE_ORDERS", "DELETE_COMMERCE_ORDERS",
 					"MANAGE_COMMERCE_ORDER_DELIVERY_TERMS",
 					"MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
+					"MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES",
 					"MANAGE_COMMERCE_ORDER_PAYMENT_TERMS",
 					"MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS",
 					"MANAGE_COMMERCE_ORDERS", "VIEW_BILLING_ADDRESS",
@@ -248,6 +248,7 @@ public class CommerceAccountRoleHelperImpl
 					"MANAGE_COMMERCE_ORDER_DELIVERY_TERMS",
 					"MANAGE_COMMERCE_ORDER_NOTES",
 					"MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
+					"MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES",
 					"MANAGE_COMMERCE_ORDER_PAYMENT_TERMS",
 					"MANAGE_COMMERCE_ORDER_PRICES",
 					"MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES",

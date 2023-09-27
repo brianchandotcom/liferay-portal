@@ -1,10 +1,10 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Roles";
 	property testray.main.component.name = "Sites Administration";
 
@@ -16,6 +16,10 @@ definition {
 	static var randomRoleKey = StringUtil.randomString(8);
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
@@ -359,8 +363,6 @@ definition {
 	@description = "Assert could manage pages with Manage Pages	regular role and could not after removing."
 	@priority = 4
 	test ViewSiteManagePagesRegRole {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Get site name") {
 			Navigator.openURL();
 

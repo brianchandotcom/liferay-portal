@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.registry;
@@ -58,6 +49,7 @@ import com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_5.DDMTemplateVersi
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_0.DDMFacetTemplateUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_1.WorkflowDefinitionLinkUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_2.DLFileEntryDDMFormInstanceRecordUpgradeProcess;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v5_3_3.BrowserSnifferTemplateUpgradeProcess;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
@@ -528,6 +520,19 @@ public class DDMServiceUpgradeStepRegistrator
 				DDMStructureUpgradeProcess(
 					_jsonDDMFormDeserializer, _jsonDDMFormSerializer,
 					_language));
+
+		registry.register(
+			"5.3.1", "5.3.2",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_3_2.
+				DDMFormInstanceSettingsUpgradeProcess(_jsonFactory));
+
+		registry.register(
+			"5.3.2", "5.3.3", new BrowserSnifferTemplateUpgradeProcess());
+
+		registry.register(
+			"5.3.3", "5.4.0",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_0.
+				DDMFieldUpgradeProcess());
 	}
 
 	@Activate

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.defaults;
@@ -20,24 +11,20 @@ import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerResourcesExtension;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerResourcesPlugin;
 
-import groovy.lang.Closure;
-
-import java.io.File;
-
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.PublishArtifactSet;
-import org.gradle.api.artifacts.dsl.RepositoryHandler;
-import org.gradle.api.artifacts.maven.MavenDeployer;
-import org.gradle.api.artifacts.maven.MavenPom;
 import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
-import org.gradle.api.plugins.MavenPlugin;
-import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
+import org.gradle.api.publish.PublicationContainer;
+import org.gradle.api.publish.PublishingExtension;
+import org.gradle.api.publish.maven.MavenPublication;
+import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
+import org.gradle.api.publish.maven.tasks.PublishToMavenRepository;
 import org.gradle.api.specs.Spec;
-import org.gradle.api.tasks.Upload;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 
 /**
@@ -55,19 +42,19 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradlePluginsDefaultsUtil.configureRepositories(project, null);
 
-		GradleUtil.applyPlugin(project, MavenPlugin.class);
+		GradleUtil.applyPlugin(project, MavenPublishPlugin.class);
 		GradleUtil.applyPlugin(project, PoshiRunnerResourcesPlugin.class);
 
 		_applyConfigScripts(project);
 		_configurePoshiRunnerResources(project);
-		_configureTaskUploadPoshiRunnerResources(project);
+		_configurePublishing(project);
 	}
 
 	private void _applyConfigScripts(Project project) {
 		GradleUtil.applyScript(
 			project,
 			"com/liferay/gradle/plugins/defaults/dependencies" +
-				"/config-maven.gradle",
+				"/config-maven-publish.gradle",
 			project);
 	}
 
@@ -91,37 +78,41 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskUploadPoshiRunnerResources(
-		final Project project) {
+	private void _configurePublishing(final Project project) {
+		TaskContainer taskContainer = project.getTasks();
 
-		Upload upload = (Upload)GradleUtil.getTask(
-			project,
-			PoshiRunnerResourcesPlugin.UPLOAD_POSHI_RUNNER_RESOURCES_TASK_NAME);
-
-		upload.onlyIf(
-			new Spec<Task>() {
+		taskContainer.withType(
+			PublishToMavenRepository.class,
+			new Action<PublishToMavenRepository>() {
 
 				@Override
-				public boolean isSatisfiedBy(Task task) {
-					GitRepo gitRepo = GitRepo.getGitRepo(
-						project.getProjectDir());
+				public void execute(
+					PublishToMavenRepository publishToMavenRepository) {
 
-					if ((gitRepo != null) && gitRepo.readOnly) {
-						return false;
-					}
+					publishToMavenRepository.onlyIf(
+						new Spec<Task>() {
 
-					return true;
+							@Override
+							public boolean isSatisfiedBy(Task task) {
+								GitRepo gitRepo = GitRepo.getGitRepo(
+									project.getProjectDir());
+
+								if ((gitRepo != null) && gitRepo.readOnly) {
+									return false;
+								}
+
+								return true;
+							}
+
+						});
 				}
 
 			});
 
-		RepositoryHandler repositoryHandler = upload.getRepositories();
-
-		final MavenDeployer mavenDeployer =
-			(MavenDeployer)repositoryHandler.getAt(
-				MavenRepositoryHandlerConvention.DEFAULT_MAVEN_DEPLOYER_NAME);
-
-		Configuration configuration = upload.getConfiguration();
+		Configuration configuration = GradleUtil.getConfiguration(
+			project,
+			PoshiRunnerResourcesPlugin.
+				POSHI_RUNNER_RESOURCES_CONFIGURATION_NAME);
 
 		PublishArtifactSet publishArtifactSet = configuration.getAllArtifacts();
 
@@ -130,34 +121,35 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 			new Action<ArchivePublishArtifact>() {
 
 				@Override
-				@SuppressWarnings("serial")
 				public void execute(
 					ArchivePublishArtifact archivePublishArtifact) {
 
 					AbstractArchiveTask abstractArchiveTask =
 						archivePublishArtifact.getArchiveTask();
 
-					final String name = abstractArchiveTask.getArchiveName();
+					PublishingExtension publishingExtension =
+						GradleUtil.getExtension(
+							project, PublishingExtension.class);
 
-					mavenDeployer.addFilter(
-						name,
-						new Closure<Boolean>(project) {
+					publishingExtension.publications(
+						new Action<PublicationContainer>() {
 
-							@SuppressWarnings("unused")
-							public Boolean doCall(Object artifact, File file) {
-								if (name.equals(file.getName())) {
-									return true;
-								}
+							@Override
+							public void execute(
+								PublicationContainer publicationContainer) {
 
-								return false;
+								MavenPublication mavenPublication =
+									publicationContainer.maybeCreate(
+										"maven", MavenPublication.class);
+
+								mavenPublication.artifact(abstractArchiveTask);
+
+								mavenPublication.setGroupId(_GROUP_ID);
+								mavenPublication.setVersion(
+									abstractArchiveTask.getVersion());
 							}
 
 						});
-
-					MavenPom mavenPom = mavenDeployer.pom(name);
-
-					mavenPom.setGroupId(_GROUP_ID);
-					mavenPom.setVersion(abstractArchiveTask.getVersion());
 				}
 
 			});

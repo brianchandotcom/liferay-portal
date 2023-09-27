@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.web.internal.display.context;
@@ -47,7 +38,6 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -373,10 +363,6 @@ public class DLAdminDisplayContext {
 	}
 
 	public String getSearchDisplayStyle() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			return "descriptive";
-		}
-
 		return _getDisplayStyle("descriptive");
 	}
 
@@ -389,9 +375,7 @@ public class DLAdminDisplayContext {
 			"folderId", ParamUtil.getLong(_httpServletRequest, "folderId")
 		).buildPortletURL();
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			_setFilterParameters(renderURL);
-		}
+		_setFilterParameters(renderURL);
 
 		_setSearchParameters(renderURL);
 
@@ -882,9 +866,7 @@ public class DLAdminDisplayContext {
 		SearchContext searchContext = _getSearchContext(
 			searchContainer, "regular");
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			_initializeFilterSearchContext(searchContext);
-		}
+		_initializeFilterSearchContext(searchContext);
 
 		long searchRepositoryId = _getSearchRepositoryId();
 
@@ -996,13 +978,10 @@ public class DLAdminDisplayContext {
 
 		searchContext.setAttribute("paginationType", paginationType);
 		searchContext.setEnd(searchContainer.getEnd());
-
-		if (!isSearch() || FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			searchContext.setSorts(
-				_getSort(
-					searchContainer.getOrderByCol(),
-					searchContainer.getOrderByType()));
-		}
+		searchContext.setSorts(
+			_getSort(
+				searchContainer.getOrderByCol(),
+				searchContainer.getOrderByType()));
 
 		searchContext.setStart(searchContainer.getStart());
 

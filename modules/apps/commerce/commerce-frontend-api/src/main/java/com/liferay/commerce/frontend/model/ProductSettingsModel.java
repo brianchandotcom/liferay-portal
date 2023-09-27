@@ -1,41 +1,34 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.frontend.model;
+
+import java.math.BigDecimal;
 
 /**
  * @author Marco Leo
  */
 public class ProductSettingsModel {
 
-	public int[] getAllowedQuantities() {
+	public BigDecimal[] getAllowedQuantities() {
 		return _allowedQuantities;
 	}
 
-	public int getLowStockQuantity() {
+	public BigDecimal getLowStockQuantity() {
 		return _lowStockQuantity;
 	}
 
-	public int getMaxQuantity() {
+	public BigDecimal getMaxQuantity() {
 		return _maxQuantity;
 	}
 
-	public int getMinQuantity() {
+	public BigDecimal getMinQuantity() {
 		return _minQuantity;
 	}
 
-	public int getMultipleQuantity() {
+	public BigDecimal getMultipleQuantity() {
 		return _multipleQuantity;
 	}
 
@@ -47,7 +40,7 @@ public class ProductSettingsModel {
 		return _showAvailabilityDot;
 	}
 
-	public void setAllowedQuantities(int[] allowedQuantities) {
+	public void setAllowedQuantities(BigDecimal[] allowedQuantities) {
 		_allowedQuantities = allowedQuantities;
 	}
 
@@ -55,19 +48,19 @@ public class ProductSettingsModel {
 		_backOrders = backOrders;
 	}
 
-	public void setLowStockQuantity(int lowStockQuantity) {
+	public void setLowStockQuantity(BigDecimal lowStockQuantity) {
 		_lowStockQuantity = lowStockQuantity;
 	}
 
-	public void setMaxQuantity(int maxQuantity) {
+	public void setMaxQuantity(BigDecimal maxQuantity) {
 		_maxQuantity = maxQuantity;
 	}
 
-	public void setMinQuantity(int minQuantity) {
+	public void setMinQuantity(BigDecimal minQuantity) {
 		_minQuantity = minQuantity;
 	}
 
-	public void setMultipleQuantity(int multipleQuantity) {
+	public void setMultipleQuantity(BigDecimal multipleQuantity) {
 		_multipleQuantity = multipleQuantity;
 	}
 
@@ -75,12 +68,12 @@ public class ProductSettingsModel {
 		_showAvailabilityDot = showAvailabilityDot;
 	}
 
-	private int[] _allowedQuantities;
+	private BigDecimal[] _allowedQuantities;
 	private boolean _backOrders;
-	private int _lowStockQuantity;
-	private int _maxQuantity;
-	private int _minQuantity;
-	private int _multipleQuantity;
+	private BigDecimal _lowStockQuantity;
+	private BigDecimal _maxQuantity;
+	private BigDecimal _minQuantity;
+	private BigDecimal _multipleQuantity;
 	private boolean _showAvailabilityDot;
 
 }

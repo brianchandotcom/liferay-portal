@@ -6,6 +6,8 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.assert.warning.exceptions = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
 	property testray.component.names = "Auto Tagging";
 	property testray.main.component.name = "Upgrades Lima";
 
@@ -26,7 +28,7 @@ definition {
 		property portal.version = "7.2.10.1";
 
 		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedBlogsEntry(
-			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial...",
+			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
 			entryTitle = "Digital Transformation or Digital Experience?",
 			entryTitleKey = "digital-transformation-or-digital-experience-?",
 			tagName = "dxp");
@@ -55,7 +57,7 @@ definition {
 		property portal.version = "7.3.10.1";
 
 		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedBlogsEntry(
-			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial...",
+			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
 			entryTitle = "Digital Transformation or Digital Experience?",
 			entryTitleKey = "digital-transformation-or-digital-experience-?",
 			tagName = "dxp");

@@ -1,3 +1,16 @@
+# Unignores
+
+!images/icon.png
+!node_modules/@vscode/ripgrep/
+
+# Ignores
+
 .gitignore
-.vscode-test/**
+.gradle/**
 .vscode/**
+*.iml
+images/**
+node_modules/**
+scripts/**
+src/**
+tsconfig.json

@@ -196,6 +196,7 @@ definition {
 	test CanBeEditedAfterTranslation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 

@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "feature.flag.COMMERCE-10890=true${line.separator}feature.flag.COMMERCE-11026=true${line.separator}jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-10890=true${line.separator}feature.flag.COMMERCE-11026=true${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Order Management";
@@ -148,9 +148,139 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "100.00",
 				productName = "Simple Product",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "100.00");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11947. When the admin changes the tracking URL of an order shipment from a split supplier order, the changes are reflected in the order item of the customer order via headless API"
+	@priority = 3
+	test CanAssertCustomerOrderReflectsSupplierOrderShipmentTrackingURLChanges {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a product with 'Master' catalog, with price and inventory created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				price = 25,
+				productName = "Simple Product",
+				productType = "simple",
+				sku = "TESTSKU");
+
+			CommerceJSONWarehousesAndInventoriesAPI._addWarehouseItem(
+				warehouseItemQuantity = 100,
+				warehouseItemSku = "TESTSKU",
+				warehouseName = "Italy");
+		}
+
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
+			CommerceNavigator.goToHealthCheckAdmin();
+
+			Click(
+				key_buttonRowName = "Order Split by Catalog Action",
+				key_buttonStatus = "",
+				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
+
+			WaitForElementPresent(
+				key_value = "Order Split by Catalog Action",
+				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
+		}
+
+		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var productName : list "Simple Product,U-Joint") {
+				FrontStore.addInitializerProductToCart(
+					productName = ${productName},
+					productQuantity = 1);
+			}
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("And the customer order is splitted") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the admin creates 1 quantity of the shipment in a supplier order with 'Simple Product' and edits the tracking URL for the shipment") {
+			CommerceOrders.openOrdersAdmin();
+
+			var customerOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 64.00')]//..//div[(@class='dnd-td')][1]");
+			var supplierOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 25.00')]//..//div[(@class='dnd-td')][1]");
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 25.00");
+
+			CommerceOrders.checkoutFullWorkflow(
+				orderId = ${supplierOrderId},
+				sku = "TESTSKU",
+				warehouse = "Italy");
+
+			CommerceOrders.editOrderShipmentDetails(
+				carrierBaseTrackingURL = "www.flatratecarriersite.com/",
+				carrierName = "Test Carrier");
+
+			CommerceOrders.viewOrderShipmentDetails(
+				carrierBaseTrackingURL = "www.flatratecarriersite.com/",
+				carrierName = "Test Carrier");
+		}
+
+		task ("Then the tracking URL of the supplier order item is reflected in the item of the customer order via headless API") {
+			var customerOrderItemId = CommerceJSONOrdersAPI.getCommerceOrderItemFieldByJSONPath(jsonPath = "$..items[?(@['orderId'] == ${customerOrderId} && @['sku'] == 'TESTSKU')].id");
+
+			var response = CommerceJSONDeliveryOrderAPI._getCommerceOrderItemShipments(placedOrderItemId = ${customerOrderItemId});
+
+			var customerOrderItemTrackingURL = JSONUtil.getWithJSONPath(${response}, "$..trackingURL");
+
+			TestUtils.assertEquals(
+				actual = ${customerOrderItemTrackingURL},
+				expected = "www.flatratecarriersite.com/");
 		}
 	}
 
@@ -1126,14 +1256,14 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "5.00");
 		}
@@ -1146,7 +1276,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 
@@ -1304,9 +1434,7 @@ definition {
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
-			Click(
-				key_productName = "ABS Sensor",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
 
 			FrontStore.addToCartFromProductDetails(
 				productName = "ABS Sensor",
@@ -1379,21 +1507,21 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "49.00",
 				productName = "ABS Sensor",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "VALUE1VALUE2",
 				productTotalPrice = "147.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "MIN55861",
 				productTotalPrice = "72.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "15.00");
 
@@ -1404,7 +1532,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "15.00");
 
@@ -1415,14 +1543,14 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "20.00",
 				productName = "ABS Sensor",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "VALUE1VALUE2",
 				productTotalPrice = "60.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "MIN55861",
 				productTotalPrice = "72.00");
 		}
@@ -2933,14 +3061,14 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "5.00");
 
@@ -2951,7 +3079,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "5.00");
 
@@ -2962,7 +3090,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}

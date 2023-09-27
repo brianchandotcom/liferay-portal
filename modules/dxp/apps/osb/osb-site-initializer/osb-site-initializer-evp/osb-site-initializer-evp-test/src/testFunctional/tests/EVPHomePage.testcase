@@ -65,6 +65,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-172661 - Verify clicking on News title will open a modal to display content."
+	@priority = 3
+	test CanSeeWholeNews {
+		task ("Given an Employee user navigates to the EVP home page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
+		}
+
+		task ("When the user clicks into a News title") {
+			EVPNavigator.selectNewsTitle(title = "New Business Webinar");
+		}
+
+		task ("Then a modal will appear with the News content") {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+		}
+	}
+
 	@description = "LPS-172660 - Verify that 'Data on EVP' are showing dates according to dates in objects"
 	@priority = 4
 	test ReflectInEVPDataAfterEditObject {

@@ -1,6 +1,6 @@
 dependencies {
-	testIntegrationCompile project(":apps:document-library-opener:document-library-opener-api")
-	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-api")
-	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-test-util")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:document-library-opener:document-library-opener-api")
+	testIntegrationImplementation project(":apps:user-associated-data:user-associated-data-api")
+	testIntegrationImplementation project(":apps:user-associated-data:user-associated-data-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

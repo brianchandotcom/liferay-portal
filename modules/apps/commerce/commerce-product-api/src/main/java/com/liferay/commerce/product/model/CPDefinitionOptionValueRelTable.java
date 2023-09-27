@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.model;
@@ -74,22 +65,26 @@ public class CPDefinitionOptionValueRelTable
 	public final Column<CPDefinitionOptionValueRelTable, Long> CProductId =
 		createColumn(
 			"CProductId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionOptionValueRelTable, String> name =
-		createColumn("name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionOptionValueRelTable, Double> priority =
-		createColumn(
-			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionValueRelTable, String> key =
 		createColumn("key_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionOptionValueRelTable, Integer> quantity =
-		createColumn(
-			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionValueRelTable, String> name =
+		createColumn("name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionValueRelTable, Boolean> preselected =
 		createColumn(
 			"preselected", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionValueRelTable, BigDecimal> price =
 		createColumn(
 			"price", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionValueRelTable, Double> priority =
+		createColumn(
+			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionValueRelTable, BigDecimal> quantity =
+		createColumn(
+			"quantity", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionValueRelTable, String>
+		unitOfMeasureKey = createColumn(
+			"unitOfMeasureKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private CPDefinitionOptionValueRelTable() {
 		super(

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.frontend.internal.cart;
@@ -222,23 +213,27 @@ public class CommerceCartResourceUtil {
 			commerceOrder.getCommerceOrderItems();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			PriceModel prices = _getCommerceOrderItemPriceModel(
+			PriceModel priceModel = _getCommerceOrderItemPriceModel(
 				commerceOrderItem, commerceContext, locale);
 
-			ProductSettingsModel settings =
+			ProductSettingsModel productSettingsModel =
 				_productHelper.getProductSettingsModel(
 					commerceOrderItem.getCPDefinitionId());
+
+			BigDecimal quantity = commerceOrderItem.getQuantity();
 
 			Product product = new Product(
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceOrderItem.getParentCommerceOrderItemId(),
-				commerceOrderItem.getName(locale), commerceOrderItem.getSku(),
-				commerceOrderItem.getQuantity(),
+				commerceOrderItem.getCPInstanceId(),
+				commerceOrderItem.getName(locale), priceModel,
+				productSettingsModel, quantity.intValue(),
+				commerceOrderItem.getSku(),
 				_cpInstanceHelper.getCPInstanceThumbnailSrc(
 					CommerceUtil.getCommerceAccountId(commerceContext),
 					commerceOrderItem.getCPInstanceId()),
-				prices, settings, _getErrorMessages(locale, commerceOrderItem),
-				commerceOrderItem.getCPInstanceId());
+				commerceOrderItem.getUnitOfMeasureKey(),
+				_getErrorMessages(locale, commerceOrderItem));
 
 			long commerceOptionValueCPDefinitionId =
 				commerceOrderItem.getCPDefinitionId();
@@ -276,7 +271,7 @@ public class CommerceCartResourceUtil {
 		CommerceMoney subtotalCommerceMoney = commerceOrderPrice.getSubtotal();
 		CommerceMoney totalCommerceMoney = commerceOrderPrice.getTotal();
 
-		int itemsQuantity =
+		BigDecimal itemsQuantity =
 			_commerceOrderItemService.getCommerceOrderItemsQuantity(
 				commerceOrder.getCommerceOrderId());
 
@@ -301,7 +296,7 @@ public class CommerceCartResourceUtil {
 
 		Summary summary = new Summary(
 			subtotalCommerceMoney.format(locale),
-			totalCommerceMoney.format(locale), itemsQuantity);
+			totalCommerceMoney.format(locale), itemsQuantity.intValue());
 
 		if (totalCommerceDiscountValue != null) {
 			CommerceMoney discountAmountCommerceMoney =

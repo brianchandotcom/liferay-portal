@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
@@ -18,9 +9,11 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.uuid.PortalUUIDImpl;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
+import com.liferay.saml.opensaml.integration.internal.helper.RelayStateHelperImpl;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
@@ -123,6 +116,9 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_portalUUID", new PortalUUIDImpl());
+
 		_samlSpAuthRequestLocalService = getMockPortletService(
 			SamlSpAuthRequestLocalServiceUtil.class,
 			SamlSpAuthRequestLocalService.class);
@@ -136,6 +132,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "metadataManager", metadataManagerImpl);
 		ReflectionTestUtil.setFieldValue(_webSsoProfileImpl, "portal", portal);
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "_relayStateHelper", _relayStateHelperImpl);
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "samlBindingProvider", samlBindingProvider);
 		ReflectionTestUtil.setFieldValue(
@@ -157,6 +155,9 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			getMockPortletService(
 				SamlSpIdpConnectionLocalServiceUtil.class,
 				SamlSpIdpConnectionLocalService.class));
+
+		ReflectionTestUtil.invoke(
+			_relayStateHelperImpl, "activate", new Class<?>[0]);
 
 		_webSsoProfileImpl.activate(new HashMap<String, Object>());
 
@@ -479,7 +480,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
 			SAMLBindingContext.class);
 
-		Assert.assertEquals(RELAY_STATE, samlBindingContext.getRelayState());
+		Assert.assertEquals(
+			RELAY_STATE,
+			_relayStateHelperImpl.getRedirectFromRelayStateToken(
+				samlBindingContext.getRelayState()));
 
 		Assert.assertNull(
 			mockHttpSession.getAttribute(SamlWebKeys.SAML_SSO_REQUEST_CONTEXT));
@@ -569,7 +573,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
 			SAMLBindingContext.class);
 
-		Assert.assertEquals(RELAY_STATE, samlBindingContext.getRelayState());
+		Assert.assertEquals(
+			RELAY_STATE,
+			_relayStateHelperImpl.getRedirectFromRelayStateToken(
+				samlBindingContext.getRelayState()));
 
 		InOutOperationContext<?, ?> inOutOperationContext =
 			messageContext.getSubcontext(InOutOperationContext.class);
@@ -1262,6 +1269,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			metadataManagerImpl.getSignatureTrustEngine());
 	}
 
+	private final RelayStateHelperImpl _relayStateHelperImpl =
+		new RelayStateHelperImpl();
 	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
 	private SamlSpSessionLocalService _samlSpSessionLocalService;
 	private final WebSsoProfileImpl _webSsoProfileImpl =

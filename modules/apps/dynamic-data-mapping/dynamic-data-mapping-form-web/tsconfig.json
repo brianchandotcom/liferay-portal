@@ -1,5 +1,5 @@
 {
-	"@generated": "1b459bc9bb5ff55ca55008d1ad5ef1bfb9e96a7f",
+	"@generated": "527bf223d205584947527a41a6cf2c3edeb46c0e",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -24,6 +24,9 @@
 			],
 			"data-engine-taglib": [
 				"../../data-engine/data-engine-taglib/src/main/resources/META-INF/resources/data_layout_builder/js/index.d.ts"
+			],
+			"dynamic-data-mapping-form-field-type": [
+				"../dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/index.ts"
 			],
 			"frontend-js-web": [
 				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
@@ -58,6 +61,9 @@
 		},
 		{
 			"path": "../../data-engine/data-engine-taglib"
+		},
+		{
+			"path": "../dynamic-data-mapping-form-field-type"
 		},
 		{
 			"path": "../../frontend-js/frontend-js-web"

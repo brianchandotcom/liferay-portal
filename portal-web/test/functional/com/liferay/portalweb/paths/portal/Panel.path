@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>PANEL_TITLE</td>
-	<td>//div[contains(@class,'panel-page-category')]//span[contains(.,'${key_componentName}')]</td>
+	<td>//span[contains(@class,'panel-title')][normalize-space()='${key_componentName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,13 +36,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PANEL_HELP_TEXT</td>
+	<td>//div[contains(@class,'panel')][.//*[normalize-space()='${key_panel}'][contains(@class,'collapse')][not(contains(@data-qa-id,'app'))]]//p</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PANEL_BY_INDEX</td>
 	<td>xpath=(//*[contains(@class,'panel')]//*[contains(@class,'collapse')][@aria-expanded][not(contains(@data-qa-id,'app'))])[${index}]//*[normalize-space()='${key_panel}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TAB_PANEL_BY_INDEX</td>
-	<td>xpath=(//div[contains(@class,'active')][@role='tabpanel']//*[contains(@class,'panel')])[${index}]//*[contains(@class,'collapse-icon')]//*[normalize-space(text())='${key_panel}']</td>
+	<td>xpath=(//div[contains(@class,'active')][@role='tabpanel']//li[contains(@class,'panel')])[${index}]//*[contains(@class,'collapse-icon')]//*[normalize-space(text())='${key_panel}']</td>
 	<td></td>
 </tr>
 <tr>

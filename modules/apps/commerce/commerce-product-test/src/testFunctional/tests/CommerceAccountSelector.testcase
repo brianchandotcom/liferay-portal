@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -484,7 +484,7 @@ definition {
 
 		task ("WHEN the user searches for a specific account, the search results shows the right one and it is selectable as current account") {
 			Type(
-				locator1 = "AppBuilder#INPUT_OBJECT_RENAME",
+				locator1 = "Dropdown#SEARCH_FIELD",
 				value1 = "First");
 
 			AssertElementPresent(
@@ -671,7 +671,7 @@ definition {
 		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_BACK_BUTTON");
 
 		Type(
-			locator1 = "AppBuilder#INPUT_OBJECT_RENAME",
+			locator1 = "Dropdown#SEARCH_FIELD",
 			value1 = "Second");
 
 		AssertElementPresent(

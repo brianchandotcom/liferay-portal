@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.internal.test;
@@ -28,7 +19,6 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -40,25 +30,28 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
@@ -102,8 +95,8 @@ public class LargeDatasetCTTest {
 	@Before
 	public void setUp() throws Exception {
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			LargeDatasetCTTest.class.getName(), null);
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, LargeDatasetCTTest.class.getName(), null);
 
 		_group = GroupTestUtil.addGroup();
 
@@ -117,7 +110,11 @@ public class LargeDatasetCTTest {
 
 		_dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
-		try (SafeCloseable safeCloseable1 =
+		for (int i = 0; i < _COUNT_ORGANIZATIONS; i++) {
+			OrganizationTestUtil.addOrganization();
+		}
+
+		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
@@ -157,11 +154,42 @@ public class LargeDatasetCTTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
+	@Test
+	public void testAssignOrganizations() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long[] organizationIds = ListUtil.toLongArray(
+				_organizationLocalService.getOrganizations(
+					0, _COUNT_ORGANIZATIONS / 2),
+				Organization.ORGANIZATION_ID_ACCESSOR);
+
+			System.out.println(organizationIds.length);
+
+			_organizationLocalService.addUserOrganizations(
+				TestPropsValues.getUserId(), organizationIds);
+		}
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			long[] organizationIds = ListUtil.toLongArray(
+				_organizationLocalService.getOrganizations(
+					_COUNT_ORGANIZATIONS / 2, _COUNT_ORGANIZATIONS),
+				Organization.ORGANIZATION_ID_ACCESSOR);
+
+			System.out.println(organizationIds.length);
+
+			_organizationLocalService.addUserOrganizations(
+				TestPropsValues.getUserId(), organizationIds);
+		}
+	}
+
 	@Ignore
 	@Test
 	public void testBuildSiteMap() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable1 =
+			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
@@ -197,7 +225,7 @@ public class LargeDatasetCTTest {
 	@Test
 	public void testGetDiscardCTEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_ctCollectionLocalService.getDiscardCTEntries(
+			_ctCollectionLocalService.getRelatedCTEntriesMap(
 				_ctCollection.getCtCollectionId(),
 				_portal.getClassNameId(Layout.class.getName()),
 				_layoutContent.getPrimaryKey());
@@ -208,7 +236,7 @@ public class LargeDatasetCTTest {
 	@Test
 	public void testIncludeLayoutContent() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable1 =
+			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
@@ -410,6 +438,8 @@ public class LargeDatasetCTTest {
 
 	private static final int _COUNT_LAYOUT_PORTLET = 1;
 
+	private static final int _COUNT_ORGANIZATIONS = 1;
+
 	private static final boolean _SITE_INITIALIZER = false;
 
 	@Inject
@@ -452,12 +482,7 @@ public class LargeDatasetCTTest {
 	private Layout _layoutContent;
 
 	@Inject
-	private LayoutCopyHelper _layoutCopyHelper;
-
-	@Inject(
-		filter = "mvc.command.name=/fragment/propagate_group_fragment_entry_changes"
-	)
-	private MVCActionCommand _mvcActionCommand;
+	private OrganizationLocalService _organizationLocalService;
 
 	@Inject
 	private Portal _portal;

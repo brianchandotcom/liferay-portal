@@ -26,6 +26,7 @@
 		<suppress checks="BNDBundleInformationCheck" files="project-templates/project-templates-npm-vuejs-portlet/bnd\.bnd" />
 		<suppress checks="BNDExportsCheck" files="gradle-plugins-workspace/bnd.bnd" />
 		<suppress checks="BNDWebContextPathCheck" files="gradle-plugins-workspace/src/gradleTest/targetPlatformDefault/modules/foo-rule/bnd.bnd" />
+		<suppress checks="CopyrightCheck" files=".*/GreetingBuilder\.java" />
 		<suppress checks="CopyrightCheck" files="ant-bnd/src/main/java/com/liferay/ant/bnd/metatype/MetatypePlugin\.java" />
 		<suppress checks="GradleBlockOrderCheck" files="gradle-plugins-workspace/src/gradleTest/product.*/settings.gradle" />
 		<suppress checks="GradleDependencyArtifactsCheck" files="gradle-plugins-dependency-local-copy/src/gradleTest/smoke/build\.gradle" />

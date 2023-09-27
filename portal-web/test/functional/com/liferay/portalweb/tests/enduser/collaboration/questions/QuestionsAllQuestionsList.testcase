@@ -43,7 +43,7 @@ definition {
 	@description = "Story ID: LPS-153187 | Test Summary: Verify if the user can access all questions by dropdown."
 	@priority = 5
 	test CanAccessAllQuestionsOnDropdown {
-		task ("Given that add two categories and questions") {
+		task ("Given that the user adds two categories and questions") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "Description",
 				categoryName = "Questions Test Topic",
@@ -67,13 +67,13 @@ definition {
 				titleField = "Question2");
 		}
 
-		task ("And go to Questions Test Topic") {
+		task ("And goes to Questions Test Topic") {
 			Navigator.gotoPage(pageName = "Questions Page");
 
 			LexiconCard.clickCard(card = "Questions Test Topic");
 		}
 
-		task ("When select all questions on dropdown") {
+		task ("When the user select all questions on dropdown") {
 			Click(
 				key_topicName = "Questions Test Topic",
 				locator1 = "Questions#QUESTIONS_BREADCRUMB_PARENT_TOPIC_BUTTON");
@@ -83,7 +83,7 @@ definition {
 				locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_OPTION");
 		}
 
-		task ("Then can see all questions") {
+		task ("Then he can see all questions on a list") {
 			for (var questionsList : list "Question1,Question2") {
 				AssertElementPresent(
 					key_questionTitle = ${questionsList},
@@ -95,32 +95,20 @@ definition {
 	@description = "Story ID: LPS-153187 | Test Summary: Verify if the user can create a new Topic."
 	@priority = 5
 	test CanCreateATopic {
-		task ("Given that go to Questions Page") {
+		task ("Given that the user goes to Questions Page") {
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "Questions Page");
+			Navigator.gotoPage(pageName = "Questions Page");
 		}
 
-		task ("When add a new topic") {
-			ScrollWebElementIntoView(
-				key_text = "New Topic",
-				locator1 = "Button#ANY");
-
-			Button.click(button = "New Topic");
-
+		task ("When he adds a new topic") {
 			Questions.addRootTopic(
 				rootTopicDescription = "Topic Description",
-				rootTopicName = "Topic Name");
+				rootTopicName = "Topic Name2");
 		}
 
-		task ("Then can see the topic card created") {
-			LexiconCard.viewCardPresent(card = "Topic Name");
+		task ("Then he can see the topic created card on the question page") {
+			LexiconCard.viewCardPresent(card = "Topic Name2");
 		}
 	}
 

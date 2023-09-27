@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/fansysoft-enterprise-information-portal",
+	"hidden": true,
+	"name": "Enterprise Information Portal",
+	"name_i18n": {
+		"en_US": "Enterprise Information Portal"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

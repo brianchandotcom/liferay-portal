@@ -78,7 +78,7 @@ definition {
 		var fieldNameList = "Date,Image,Rich Text,Upload,Color,Date and Time";
 
 		task ("Edit the form to add more fields") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 
@@ -252,7 +252,7 @@ definition {
 		}
 
 		task ("Get published form URL") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 
@@ -578,7 +578,7 @@ definition {
 		}
 
 		task ("Get published form URL") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 
@@ -755,7 +755,7 @@ definition {
 		}
 
 		task ("Get published form URL") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 
@@ -840,7 +840,7 @@ definition {
 		}
 
 		task ("Get published form URL") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 

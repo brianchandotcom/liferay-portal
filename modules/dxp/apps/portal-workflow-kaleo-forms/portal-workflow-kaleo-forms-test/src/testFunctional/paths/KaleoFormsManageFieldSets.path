@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>DETAILS_PANEL_HEADER</td>
-	<td>//span[@id='structureDetailsSectionPanelHeader']</td>
+	<td>//button//*[contains(@class,'panel-title') and contains(.,'Details')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_PANEL_HEADER_COLLAPSED</td>
-	<td>//div[@id='structureDetailsSectionPanel']//a[@aria-expanded='false']</td>
+	<td>//button[@aria-expanded='false']//*[contains(@class,'panel-title') and contains(.,'Details')]</td>
 	<td></td>
 </tr>
 <tr>

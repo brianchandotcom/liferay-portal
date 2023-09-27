@@ -1,33 +1,77 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {NetworkStatus} from '@apollo/client';
+import {useEffect, useMemo, useState} from 'react';
 import SearchBuilder from '../core/SearchBuilder';
 import {useGetKoroneikiAccounts} from '../services/liferay/graphql/koroneiki-accounts';
 import useSearchTerm from './useSearchTerm';
 
-export default function useKoroneikiAccounts() {
+type UseKoroneikiAccountsProps = {
+	selectedFilterCategory: {
+		filter: any;
+		key: string;
+		label: string;
+		pageSize: number;
+	};
+};
+
+export default function useKoroneikiAccounts({
+	selectedFilterCategory,
+}: UseKoroneikiAccountsProps) {
+	const [
+		firstKoroneikiAccountsTotal,
+		setFirstKoroneikiAccountsTotal,
+	] = useState<any>({[selectedFilterCategory.key]: null});
+
 	const {data, fetchMore, networkStatus, refetch} = useGetKoroneikiAccounts({
 		notifyOnNetworkStatusChange: true,
+		onComplete: (response) => {
+			if (!firstKoroneikiAccountsTotal[selectedFilterCategory.key]) {
+				setFirstKoroneikiAccountsTotal((prevValue: any) => ({
+					...prevValue,
+					[selectedFilterCategory.key]:
+						response?.c?.koroneikiAccounts?.totalCount,
+				}));
+			}
+		},
+		pageSize: selectedFilterCategory.pageSize ?? 20,
 	});
 
-	const search = useSearchTerm((searchTerm: string) =>
+	const getFilter = useMemo(
+		() =>
+			selectedFilterCategory?.filter ??
+			function () {
+				return new SearchBuilder();
+			},
+		[selectedFilterCategory?.filter]
+	);
+
+	const filter = useMemo(() => getFilter(new SearchBuilder()).build(), [
+		getFilter,
+	]);
+
+	useEffect(() => {
+		refetch({
+			filter,
+		});
+	}, [filter, refetch]);
+
+	const [search, onSearch] = useSearchTerm((searchTerm: string) =>
 		refetch({
 			filter: searchTerm
-				? new SearchBuilder()
-						.contains('name', searchTerm)
-						.or()
-						.contains('code', searchTerm)
-						.build()
-				: undefined,
+				? getFilter(
+						new SearchBuilder()
+							.group('OPEN')
+							.contains('name', searchTerm)
+							.or()
+							.contains('code', searchTerm)
+							.group('CLOSE')
+							.and()
+				  ).build()
+				: filter,
 			page: 1,
 		})
 	);
@@ -36,8 +80,10 @@ export default function useKoroneikiAccounts() {
 		data,
 		fetchMore,
 		fetching: networkStatus === NetworkStatus.fetchMore,
+		firstKoroneikiAccountsTotal,
 		loading: networkStatus === NetworkStatus.loading,
 		networkStatus,
+		onSearch,
 		refetch,
 		search,
 		searching: networkStatus === NetworkStatus.setVariables,

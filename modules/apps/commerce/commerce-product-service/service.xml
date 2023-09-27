@@ -506,13 +506,16 @@
 		<column name="CPOptionId" type="long" />
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
-		<column name="DDMFormFieldTypeName" type="String" />
+		<column name="commerceOptionTypeKey" type="String" />
+		<column name="infoItemServiceKey" type="String" />
 		<column name="priority" type="double" />
+		<column name="definedExternally" type="boolean" />
 		<column name="facetable" type="boolean" />
 		<column name="required" type="boolean" />
 		<column name="skuContributor" type="boolean" />
 		<column name="key" type="String" />
 		<column name="priceType" type="String" />
+		<column name="typeSettings" type="String" />
 
 		<!-- Order -->
 
@@ -571,17 +574,19 @@
 		<column name="CPDefinitionOptionRelId" type="long" />
 		<column name="CPInstanceUuid" type="String" />
 		<column name="CProductId" type="long" />
-		<column localized="true" name="name" type="String" />
-		<column name="priority" type="double" />
 		<column name="key" type="String" />
-		<column name="quantity" type="int" />
+		<column localized="true" name="name" type="String" />
 		<column name="preselected" type="boolean" />
 		<column name="price" type="BigDecimal" />
+		<column name="priority" type="double" />
+		<column name="quantity" type="BigDecimal" />
+		<column name="unitOfMeasureKey" type="String" />
 
 		<!-- Order -->
 
 		<order by="asc">
 			<order-column name="priority" />
+			<order-column name="createDate" />
 		</order>
 
 		<!-- Finder methods -->
@@ -921,6 +926,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="sku" />
 		</finder>
+		<finder name="C_A" return-type="Collection">
+			<finder-column name="CPInstanceId" />
+			<finder-column name="active" />
+		</finder>
 		<finder name="C_K" return-type="CPInstanceUnitOfMeasure" unique="true">
 			<finder-column name="CPInstanceId" />
 			<finder-column name="key" />
@@ -1006,7 +1015,7 @@
 
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
-		<column name="DDMFormFieldTypeName" type="String" />
+		<column name="commerceOptionTypeKey" type="String" />
 		<column name="facetable" type="boolean" />
 		<column name="required" type="boolean" />
 		<column name="skuContributor" type="boolean" />
@@ -1262,6 +1271,7 @@
 		<exception>CPInstanceSubscriptionLength</exception>
 		<exception>CPInstanceUnitOfMeasureIncrementalOrderQuantity</exception>
 		<exception>CPInstanceUnitOfMeasureKey</exception>
+		<exception>CPInstanceUnitOfMeasureName</exception>
 		<exception>CPInstanceUnitOfMeasureRate</exception>
 		<exception>CPInstanceUnitOfMeasureSku</exception>
 		<exception>CPMeasurementUnitType</exception>
@@ -1279,6 +1289,7 @@
 		<exception>DuplicateCommerceChannelRel</exception>
 		<exception>DuplicateCPAttachmentFileEntry</exception>
 		<exception>DuplicateCPDefinitionOptionRelKey</exception>
+		<exception>DuplicateCPDefinitionOptionValueRelKey</exception>
 		<exception>DuplicateCPInstance</exception>
 		<exception>DuplicateCPInstanceUnitOfMeasureKey</exception>
 		<exception>DuplicateCPMeasurementUnitExternalReferenceCode</exception>

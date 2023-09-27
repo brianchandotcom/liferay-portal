@@ -620,7 +620,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150012 | Test Summary: Verify that after the user clicks Edit a Save button is available"
-	@priority
+	@priority = 3
 	test CanViewSaveButton {
 		property portal.upstream = "quarantine";
 

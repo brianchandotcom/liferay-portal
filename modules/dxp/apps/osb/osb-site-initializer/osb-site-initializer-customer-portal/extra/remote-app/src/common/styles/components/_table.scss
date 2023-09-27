@@ -17,3 +17,7 @@
 .cp-hide-pagination-activation-keys ul.pagination {
 	display: none;
 }
+
+.page-item.active .page-link {
+	z-index: 0;
+}

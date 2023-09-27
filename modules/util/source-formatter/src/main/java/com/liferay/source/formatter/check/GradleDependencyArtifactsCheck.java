@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.source.formatter.check;
@@ -46,7 +37,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = _renameDependencyNames(absolutePath, content);
+		content = _renameDependencyNames(fileName, absolutePath, content);
 
 		List<String> enforceVersionArtifacts = getAttributeValues(
 			_ENFORCE_VERSION_ARTIFACTS_KEY, absolutePath);
@@ -252,6 +243,28 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		return _projectNamesMap;
 	}
 
+	private boolean _isAllowedArtifactFile(
+		String fileName, String oldArtifact,
+		List<String> allowedArtifactsFileNames) {
+
+		for (String allowedArtifactsFileName : allowedArtifactsFileNames) {
+			String[] allowedArtifactArray = StringUtil.split(
+				allowedArtifactsFileName, "->");
+
+			if ((allowedArtifactArray.length != 2) ||
+				!StringUtil.equals(oldArtifact, allowedArtifactArray[0])) {
+
+				continue;
+			}
+
+			if (fileName.endsWith(allowedArtifactArray[1])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isMasterOnlyFile(String absolutePath) {
 		int x = absolutePath.length();
 
@@ -285,7 +298,11 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		return true;
 	}
 
-	private String _renameDependencyNames(String absolutePath, String content) {
+	private String _renameDependencyNames(
+		String fileName, String absolutePath, String content) {
+
+		List<String> allowedArtifactsFileNames = getAttributeValues(
+			_ALLOWED_ARTIFACTS_FILE_NAMES_KEY, absolutePath);
 		List<String> renameArtifacts = getAttributeValues(
 			_RENAME_ARTIFACTS_KEY, absolutePath);
 
@@ -302,7 +319,11 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			String oldArtifactString = _getArtifactString(
 				renameArtifactArray[0]);
 
-			if ((newArtifactString != null) && (oldArtifactString != null)) {
+			if ((newArtifactString != null) && (oldArtifactString != null) &&
+				!_isAllowedArtifactFile(
+					fileName, renameArtifactArray[0],
+					allowedArtifactsFileNames)) {
+
 				content = StringUtil.replace(
 					content, oldArtifactString, newArtifactString);
 			}
@@ -310,6 +331,9 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _ALLOWED_ARTIFACTS_FILE_NAMES_KEY =
+		"allowedArtifactsFileNames";
 
 	private static final String _ENFORCE_VERSION_ARTIFACTS_KEY =
 		"enforceVersionArtifacts";

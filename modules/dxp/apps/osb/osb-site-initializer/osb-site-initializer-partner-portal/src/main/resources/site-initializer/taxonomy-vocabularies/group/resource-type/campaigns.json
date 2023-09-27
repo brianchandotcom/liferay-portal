@@ -1,0 +1,21 @@
+{
+	"description": "Campaigns",
+	"externalReferenceCode": "PRMC045",
+	"name": "Campaigns",
+	"name_i18n": {
+		"ar_SA": "Campaigns",
+		"ca_ES": "Campaigns",
+		"de_DE": "Campaigns",
+		"en_US": "Campaigns",
+		"es_ES": "Campaigns",
+		"fi_FI": "Campaigns",
+		"fr_FR": "Campaigns",
+		"hu_HU": "Campaigns",
+		"ja_JP": "Campaigns",
+		"nl_NL": "Campaigns",
+		"pt_BR": "Campaigns",
+		"sv_SE": "Campaigns",
+		"zh_CN": "Campaigns"
+	},
+	"viewableBy": "Anyone"
+}

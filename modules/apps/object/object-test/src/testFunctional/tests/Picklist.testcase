@@ -264,6 +264,8 @@ definition {
 
 			ObjectAdmin.goToFieldsDetails(label = "Field Picklist");
 
+			Form.gotoAdvancedTab();
+
 			Click(locator1 = "ObjectAdmin#DROPDOWN_DEFAULT_VALUE");
 
 			Click(
@@ -713,6 +715,7 @@ definition {
 	@priority = 3
 	test ViewTranslatedPicklistItemNameOnForms {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Custom Picklist and a Item (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
@@ -780,9 +783,7 @@ definition {
 		}
 
 		task ("Go to Forms and add") {
-			PopulateObjectFormsConfiguration.openForm();
-
-			FormsAdminNavigator.gotoAddForm();
+			FormsAdmin.addForm();
 
 			Form.editName(formName = "Form 1");
 		}
@@ -966,6 +967,7 @@ definition {
 	@priority = 3
 	test ViewTranslatedPicklistNameOnObjectAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Custom Picklist (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");

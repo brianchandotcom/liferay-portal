@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Style Books";
@@ -1513,6 +1514,7 @@ definition {
 	test ViewEmptyStateWhenSiteIsEmpty {
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Deactivate the Default fragment sets") {
 			ApplicationsMenu.gotoPortlet(

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.blogs.web.internal.portlet.action;
@@ -46,10 +37,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -88,7 +78,6 @@ import java.util.concurrent.Callable;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -111,6 +100,27 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
+
+	@Override
+	protected void addSuccessMessage(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+		int workflowAction = ParamUtil.getInteger(
+			actionRequest, "workflowAction",
+			WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		if (Validator.isNotNull(portletResource) &&
+			(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
+			MultiSessionMessages.add(
+				actionRequest, portletResource + "requestProcessed");
+		}
+		else {
+			super.addSuccessMessage(actionRequest, actionResponse);
+		}
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -189,20 +199,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				return;
 			}
 
-			String portletResource = ParamUtil.getString(
-				actionRequest, "portletResource");
 			int workflowAction = ParamUtil.getInteger(
 				actionRequest, "workflowAction",
 				WorkflowConstants.ACTION_SAVE_DRAFT);
-
-			if (Validator.isNotNull(portletResource) &&
-				(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-				hideDefaultSuccessMessage(actionRequest);
-
-				MultiSessionMessages.add(
-					actionRequest, portletResource + "requestProcessed");
-			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -211,8 +210,11 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				_sendDraftRedirect(actionRequest, actionResponse, entry);
 			}
-			else if (Validator.isNotNull(redirect) &&
-					 cmd.equals(Constants.UPDATE)) {
+			else if ((Validator.isNotNull(redirect) &&
+					  cmd.equals(Constants.UPDATE)) ||
+					 ((entry == null) &&
+					  (workflowAction ==
+						  WorkflowConstants.ACTION_SAVE_DRAFT))) {
 
 				_sendUpdateRedirect(actionRequest, actionResponse);
 			}
@@ -321,26 +323,30 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getSaveAndContinueRedirect(
-			ActionRequest actionRequest, BlogsEntry entry, String redirect)
-		throws Exception {
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		BlogsEntry entry, String redirect, String portletResource) {
 
 		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, portletConfig.getPortletName(),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
-		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
-		portletURL.setParameter("redirect", redirect, false);
-		portletURL.setParameter(
-			"groupId", String.valueOf(entry.getGroupId()), false);
-		portletURL.setParameter(
-			"entryId", String.valueOf(entry.getEntryId()), false);
-		portletURL.setWindowState(actionRequest.getWindowState());
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_portal.getLiferayPortletResponse(actionResponse),
+			portletConfig.getPortletName()
+		).setMVCRenderCommandName(
+			"/blogs/edit_entry"
+		).setCMD(
+			Constants.UPDATE
+		).setRedirect(
+			redirect
+		).setPortletResource(
+			portletResource
+		).setParameter(
+			"groupId", String.valueOf(entry.getGroupId()), false
+		).setParameter(
+			"entryId", String.valueOf(entry.getEntryId()), false
+		).setWindowState(
+			actionRequest.getWindowState()
+		).buildString();
 	}
 
 	private void _restoreTrashEntries(ActionRequest actionRequest)
@@ -382,26 +388,25 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			BlogsEntry entry)
 		throws Exception {
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 		sendRedirect(
 			actionRequest, actionResponse,
-			_getSaveAndContinueRedirect(actionRequest, entry, redirect));
+			_getSaveAndContinueRedirect(
+				actionRequest, actionResponse, entry,
+				ParamUtil.getString(actionRequest, "redirect"),
+				ParamUtil.getString(actionRequest, "portletResource")));
 	}
 
 	private void _sendUpdateRedirect(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		String namespace = actionResponse.getNamespace();
-
-		redirect = HttpComponentsUtil.setParameter(
-			redirect, namespace + "redirectToLastFriendlyURL", false);
-
 		sendRedirect(
-			actionRequest, actionResponse, _portal.escapeRedirect(redirect));
+			actionRequest, actionResponse,
+			_portal.escapeRedirect(
+				HttpComponentsUtil.setParameter(
+					ParamUtil.getString(actionRequest, "redirect"),
+					actionResponse.getNamespace() + "redirectToLastFriendlyURL",
+					false)));
 	}
 
 	private void _subscribe(ActionRequest actionRequest) throws Exception {
@@ -605,14 +610,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		_assetDisplayPageEntryFormProcessor.process(
 			BlogsEntry.class.getName(), entry.getEntryId(), actionRequest);
-
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
-		if (Validator.isNotNull(portletResource)) {
-			MultiSessionMessages.add(
-				actionRequest, portletResource + "requestProcessed");
-		}
 
 		return entry;
 	}

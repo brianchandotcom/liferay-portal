@@ -1,21 +1,9 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jenkins.plugin.events;
-
-import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisher;
-import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisherUtil;
 
 import hudson.Extension;
 
@@ -29,7 +17,6 @@ import javax.servlet.ServletException;
 
 import jenkins.model.Jenkins;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.kohsuke.stapler.StaplerRequest;
@@ -51,46 +38,38 @@ public class JenkinsEventsManagementLink extends ManagementLink {
 			StaplerRequest staplerRequest, StaplerResponse staplerResponse)
 		throws IOException, ServletException {
 
-		jenkinsEventsDescriptor.jenkinsPublishers.clear();
-
 		JSONObject jsonObject = new JSONObject(
 			staplerRequest.getParameter("json"));
 
-		Object jenkinsPublishersObject = jsonObject.opt("jenkinsPublishers");
+		jenkinsEventsDescriptor.setInboundQueueName(
+			jsonObject.getString("inboundQueueName"));
+		jenkinsEventsDescriptor.setOutboundQueueName(
+			jsonObject.getString("outboundQueueName"));
+		jenkinsEventsDescriptor.setUrl(jsonObject.getString("url"));
+		jenkinsEventsDescriptor.setUserName(jsonObject.getString("userName"));
+		jenkinsEventsDescriptor.setUserPassword(
+			jsonObject.getString("userPassword"));
 
-		if (jenkinsPublishersObject instanceof JSONArray) {
-			JSONArray jenkinsPublishersJSONArray =
-				(JSONArray)jenkinsPublishersObject;
+		jenkinsEventsDescriptor.clearEventTriggers();
 
-			for (int i = 0; i < jenkinsPublishersJSONArray.length(); i++) {
-				JSONObject jenkinsPublisherJSONObject =
-					jenkinsPublishersJSONArray.optJSONObject(i);
+		for (JenkinsEventsDescriptor.EventTrigger eventTrigger :
+				JenkinsEventsDescriptor.EventTrigger.values()) {
 
-				if (jenkinsPublisherJSONObject == null) {
-					continue;
-				}
-
-				jenkinsEventsDescriptor.jenkinsPublishers.add(
-					new JenkinsPublisher(jenkinsPublisherJSONObject));
+			if (jsonObject.optBoolean(eventTrigger.toString())) {
+				jenkinsEventsDescriptor.addEventTrigger(eventTrigger);
 			}
-		}
-		else if (jenkinsPublishersObject instanceof JSONObject) {
-			jenkinsEventsDescriptor.jenkinsPublishers.add(
-				new JenkinsPublisher((JSONObject)jenkinsPublishersObject));
-		}
-		else {
-			jenkinsEventsDescriptor.jenkinsPublishers.clear();
 		}
 
 		jenkinsEventsDescriptor.save();
 
-		JenkinsPublisherUtil.setJenkinsEventsDescriptor(
-			jenkinsEventsDescriptor);
+		JenkinsEventsUtil.setJenkinsEventsDescriptor(jenkinsEventsDescriptor);
+
+		jenkinsEventsDescriptor.subscribe();
 
 		Jenkins jenkins = Jenkins.getInstanceOrNull();
 
 		if (jenkins != null) {
-			staplerResponse.sendRedirect(jenkins.getRootUrl() + "/manage");
+			staplerResponse.sendRedirect(jenkins.getRootUrl());
 		}
 	}
 

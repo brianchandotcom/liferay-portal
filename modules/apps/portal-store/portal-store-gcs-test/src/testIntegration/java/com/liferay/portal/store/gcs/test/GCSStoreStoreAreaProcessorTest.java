@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.store.gcs.test;
@@ -22,10 +13,13 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -80,6 +74,8 @@ public class GCSStoreStoreAreaProcessorTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
 		_configuration = _configurationAdmin.getConfiguration(
 			"com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration",
 			StringPool.QUESTION);
@@ -113,12 +109,14 @@ public class GCSStoreStoreAreaProcessorTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
+
 		ConfigurationTestUtil.deleteConfiguration(_configuration);
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group = GroupTestUtil.addGroupToCompany(_company.getCompanyId());
 	}
 
 	@Test
@@ -129,25 +127,25 @@ public class GCSStoreStoreAreaProcessorTest {
 				String fileName = StringUtil.randomString();
 
 				_store.addFile(
-					_group.getCompanyId(), _group.getGroupId(), fileName,
+					_company.getCompanyId(), _group.getGroupId(), fileName,
 					Store.VERSION_DEFAULT,
 					new UnsyncByteArrayInputStream(new byte[0]));
 
 				Assert.assertTrue(
 					_store.hasFile(
-						_group.getCompanyId(), _group.getGroupId(), fileName,
+						_company.getCompanyId(), _group.getGroupId(), fileName,
 						Store.VERSION_DEFAULT));
 
 				StoreAreaProcessor storeAreaProcessor =
 					(StoreAreaProcessor)_store;
 
 				storeAreaProcessor.cleanUpDeletedStoreArea(
-					_group.getCompanyId(), 1, name -> true, StringPool.BLANK,
+					_company.getCompanyId(), 1, name -> true, StringPool.BLANK,
 					Duration.ofDays(1));
 
 				Assert.assertTrue(
 					_store.hasFile(
-						_group.getCompanyId(), _group.getGroupId(), fileName,
+						_company.getCompanyId(), _group.getGroupId(), fileName,
 						Store.VERSION_DEFAULT));
 			});
 	}
@@ -161,7 +159,7 @@ public class GCSStoreStoreAreaProcessorTest {
 			() -> {
 				for (String fileName : RandomTestUtil.randomStrings(4)) {
 					_store.addFile(
-						_group.getCompanyId(), _group.getGroupId(), fileName,
+						_company.getCompanyId(), _group.getGroupId(), fileName,
 						Store.VERSION_DEFAULT,
 						new UnsyncByteArrayInputStream(new byte[0]));
 				}
@@ -175,7 +173,7 @@ public class GCSStoreStoreAreaProcessorTest {
 
 				do {
 					startOffset = storeAreaProcessor.cleanUpDeletedStoreArea(
-						_group.getCompanyId(), 1, name -> true, startOffset,
+						_company.getCompanyId(), 1, name -> true, startOffset,
 						Duration.ofDays(-1));
 
 					runCount++;
@@ -185,7 +183,7 @@ public class GCSStoreStoreAreaProcessorTest {
 				Assert.assertTrue(runCount > 1);
 
 				String[] fileNames = _store.getFileNames(
-					_group.getCompanyId(), _group.getGroupId(),
+					_company.getCompanyId(), _group.getGroupId(),
 					StringPool.BLANK);
 
 				Assert.assertEquals(
@@ -201,25 +199,25 @@ public class GCSStoreStoreAreaProcessorTest {
 				String fileName = StringUtil.randomString();
 
 				_store.addFile(
-					_group.getCompanyId(), _group.getGroupId(), fileName,
+					_company.getCompanyId(), _group.getGroupId(), fileName,
 					Store.VERSION_DEFAULT,
 					new UnsyncByteArrayInputStream(new byte[0]));
 
 				Assert.assertTrue(
 					_store.hasFile(
-						_group.getCompanyId(), _group.getGroupId(), fileName,
+						_company.getCompanyId(), _group.getGroupId(), fileName,
 						Store.VERSION_DEFAULT));
 
 				StoreAreaProcessor storeAreaProcessor =
 					(StoreAreaProcessor)_store;
 
 				storeAreaProcessor.cleanUpDeletedStoreArea(
-					_group.getCompanyId(), 1, name -> true, StringPool.BLANK,
+					_company.getCompanyId(), 1, name -> true, StringPool.BLANK,
 					Duration.ofDays(-1));
 
 				Assert.assertFalse(
 					_store.hasFile(
-						_group.getCompanyId(), _group.getGroupId(), fileName,
+						_company.getCompanyId(), _group.getGroupId(), fileName,
 						Store.VERSION_DEFAULT));
 			});
 	}
@@ -232,25 +230,25 @@ public class GCSStoreStoreAreaProcessorTest {
 				String fileName = StringUtil.randomString();
 
 				_store.addFile(
-					_group.getCompanyId(), _group.getGroupId(), fileName,
+					_company.getCompanyId(), _group.getGroupId(), fileName,
 					Store.VERSION_DEFAULT,
 					new UnsyncByteArrayInputStream(new byte[0]));
 
 				Assert.assertTrue(
 					_store.hasFile(
-						_group.getCompanyId(), _group.getGroupId(), fileName,
+						_company.getCompanyId(), _group.getGroupId(), fileName,
 						Store.VERSION_DEFAULT));
 
 				StoreAreaProcessor storeAreaProcessor =
 					(StoreAreaProcessor)_store;
 
 				storeAreaProcessor.cleanUpNewStoreArea(
-					_group.getCompanyId(), 1, name -> false, StringPool.BLANK,
+					_company.getCompanyId(), 1, name -> false, StringPool.BLANK,
 					Duration.ofDays(1));
 
 				Assert.assertTrue(
 					_store.hasFile(
-						_group.getCompanyId(), _group.getGroupId(), fileName,
+						_company.getCompanyId(), _group.getGroupId(), fileName,
 						Store.VERSION_DEFAULT));
 			});
 	}
@@ -264,7 +262,7 @@ public class GCSStoreStoreAreaProcessorTest {
 			() -> {
 				for (String fileName : RandomTestUtil.randomStrings(4)) {
 					_store.addFile(
-						_group.getCompanyId(), _group.getGroupId(), fileName,
+						_company.getCompanyId(), _group.getGroupId(), fileName,
 						Store.VERSION_DEFAULT,
 						new UnsyncByteArrayInputStream(new byte[0]));
 				}
@@ -278,7 +276,7 @@ public class GCSStoreStoreAreaProcessorTest {
 
 				do {
 					startOffset = storeAreaProcessor.cleanUpNewStoreArea(
-						_group.getCompanyId(), 1, name -> false, startOffset,
+						_company.getCompanyId(), 1, name -> false, startOffset,
 						Duration.ofDays(-1));
 
 					runCount++;
@@ -288,7 +286,7 @@ public class GCSStoreStoreAreaProcessorTest {
 				Assert.assertTrue(runCount > 1);
 
 				String[] fileNames = _store.getFileNames(
-					_group.getCompanyId(), _group.getGroupId(),
+					_company.getCompanyId(), _group.getGroupId(),
 					StringPool.BLANK);
 
 				Assert.assertEquals(
@@ -299,7 +297,7 @@ public class GCSStoreStoreAreaProcessorTest {
 			StoreArea.LIVE,
 			() -> {
 				String[] fileNames = _store.getFileNames(
-					_group.getCompanyId(), _group.getGroupId(),
+					_company.getCompanyId(), _group.getGroupId(),
 					StringPool.BLANK);
 
 				Assert.assertEquals(
@@ -315,25 +313,25 @@ public class GCSStoreStoreAreaProcessorTest {
 			StoreArea.NEW,
 			() -> {
 				_store.addFile(
-					_group.getCompanyId(), _group.getGroupId(), fileName,
+					_company.getCompanyId(), _group.getGroupId(), fileName,
 					Store.VERSION_DEFAULT,
 					new UnsyncByteArrayInputStream(new byte[0]));
 
 				Assert.assertTrue(
 					_store.hasFile(
-						_group.getCompanyId(), _group.getGroupId(), fileName,
+						_company.getCompanyId(), _group.getGroupId(), fileName,
 						Store.VERSION_DEFAULT));
 
 				StoreAreaProcessor storeAreaProcessor =
 					(StoreAreaProcessor)_store;
 
 				storeAreaProcessor.cleanUpNewStoreArea(
-					_group.getCompanyId(), 1, name -> false, StringPool.BLANK,
+					_company.getCompanyId(), 1, name -> false, StringPool.BLANK,
 					Duration.ofDays(-1));
 
 				Assert.assertFalse(
 					_store.hasFile(
-						_group.getCompanyId(), _group.getGroupId(), fileName,
+						_company.getCompanyId(), _group.getGroupId(), fileName,
 						Store.VERSION_DEFAULT));
 			});
 
@@ -341,7 +339,7 @@ public class GCSStoreStoreAreaProcessorTest {
 			StoreArea.LIVE,
 			() -> Assert.assertTrue(
 				_store.hasFile(
-					_group.getCompanyId(), _group.getGroupId(), fileName,
+					_company.getCompanyId(), _group.getGroupId(), fileName,
 					Store.VERSION_DEFAULT)));
 	}
 
@@ -350,31 +348,31 @@ public class GCSStoreStoreAreaProcessorTest {
 		String fileName = StringUtil.randomString();
 
 		_store.addFile(
-			_group.getCompanyId(), _group.getGroupId(), fileName,
+			_company.getCompanyId(), _group.getGroupId(), fileName,
 			Store.VERSION_DEFAULT, new UnsyncByteArrayInputStream(new byte[0]));
 
 		StoreArea.withStoreArea(
 			StoreArea.LIVE,
 			() -> Assert.assertTrue(
 				_store.hasFile(
-					_group.getCompanyId(), _group.getGroupId(), fileName,
+					_company.getCompanyId(), _group.getGroupId(), fileName,
 					Store.VERSION_DEFAULT)));
 
 		StoreArea.withStoreArea(
 			StoreArea.DELETED,
 			() -> Assert.assertFalse(
 				_store.hasFile(
-					_group.getCompanyId(), _group.getGroupId(), fileName,
+					_company.getCompanyId(), _group.getGroupId(), fileName,
 					Store.VERSION_DEFAULT)));
 
 		StoreAreaProcessor storeAreaProcessor = (StoreAreaProcessor)_store;
 
 		boolean copied = storeAreaProcessor.copy(
 			StoreArea.LIVE.getPath(
-				_group.getCompanyId(), _group.getGroupId(), fileName,
+				_company.getCompanyId(), _group.getGroupId(), fileName,
 				Store.VERSION_DEFAULT),
 			StoreArea.DELETED.getPath(
-				_group.getCompanyId(), _group.getGroupId(), fileName,
+				_company.getCompanyId(), _group.getGroupId(), fileName,
 				Store.VERSION_DEFAULT));
 
 		Assert.assertTrue(copied);
@@ -383,7 +381,7 @@ public class GCSStoreStoreAreaProcessorTest {
 			StoreArea.DELETED,
 			() -> Assert.assertTrue(
 				_store.hasFile(
-					_group.getCompanyId(), _group.getGroupId(), fileName,
+					_company.getCompanyId(), _group.getGroupId(), fileName,
 					Store.VERSION_DEFAULT)));
 	}
 
@@ -394,12 +392,17 @@ public class GCSStoreStoreAreaProcessorTest {
 		Assert.assertFalse(
 			storeAreaProcessor.copy(
 				StoreArea.LIVE.getPath(
-					_group.getCompanyId(), _group.getGroupId(),
+					_company.getCompanyId(), _group.getGroupId(),
 					StringUtil.randomString(), Store.VERSION_DEFAULT),
 				StoreArea.LIVE.getPath(
-					_group.getCompanyId(), _group.getGroupId(),
+					_company.getCompanyId(), _group.getGroupId(),
 					StringUtil.randomString(), Store.VERSION_DEFAULT)));
 	}
+
+	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	private static Configuration _configuration;
 

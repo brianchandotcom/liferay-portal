@@ -32,6 +32,7 @@ definition {
 	@priority = 3
 	test ClickMasterclassLogoGoesHomePage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Assert the Virtual Instance created by Json is present") {
 			ApplicationsMenu.gotoPortlet(
@@ -72,6 +73,7 @@ definition {
 	@priority = 4
 	test CreateVirtualInstanceUsingInitializerWithSuccess {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to the Virtual Instance created") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
@@ -94,6 +96,7 @@ definition {
 	@priority = 4
 	test DeleteVirtualInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Virtual Instances") {
 			ApplicationsMenu.gotoPortlet(
@@ -119,6 +122,7 @@ definition {
 	@priority = 3
 	test FriendlyErrorAppearsWhenTheUserCantCreateVirtualHost {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Virtual Instances") {
 			ApplicationsMenu.gotoPortlet(
@@ -160,6 +164,7 @@ definition {
 	@priority = 4
 	test UserCanCreateVirtualInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Assert the Virtual Instance created by Json is present") {
 			ApplicationsMenu.gotoPortlet(

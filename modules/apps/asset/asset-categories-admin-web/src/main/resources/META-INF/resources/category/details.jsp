@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -120,9 +111,10 @@ renderResponse.setTitle(title);
 											</div>
 
 											<div class="input-group-item input-group-item-shrink">
-												<button class="btn btn-secondary" type="button">
-													<liferay-ui:message key="select" />
-												</button>
+												<clay:button
+													displayType="secondary"
+													label="select"
+												/>
 											</div>
 										</div>
 									</div>
@@ -202,11 +194,32 @@ renderResponse.setTitle(title);
 	<c:choose>
 		<c:when test="<%= !assetCategoriesDisplayContext.isItemSelector() %>">
 			<liferay-frontend:edit-form-footer>
-				<aui:button disabled="<%= assetCategoriesDisplayContext.isSaveButtonDisabled() %>" type="submit" />
+				<clay:button
+					disabled="<%= assetCategoriesDisplayContext.isSaveButtonDisabled() %>"
+					label="save"
+					type="submit"
+				/>
 
-				<aui:button disabled="<%= assetCategoriesDisplayContext.isSaveAndAddNewButtonDisabled() %>" onClick='<%= liferayPortletResponse.getNamespace() + "saveAndAddNew();" %>' value="save-and-add-a-new-one" />
+				<clay:button
+					additionalProps='<%=
+						HashMapBuilder.<String, Object>put(
+							"redirect", assetCategoriesDisplayContext.getAddCategoryRedirect()
+						).build()
+					%>'
+					className="mr-3"
+					disabled="<%= assetCategoriesDisplayContext.isSaveAndAddNewButtonDisabled() %>"
+					displayType="secondary"
+					label="save-and-add-a-new-one"
+					propsTransformer="js/SaveAndAddNewPropsTransformer"
+				/>
 
-				<aui:button href="<%= redirect %>" type="cancel" />
+				<clay:link
+					borderless="<%= false %>"
+					displayType="secondary"
+					href="<%= redirect %>"
+					label="cancel"
+					type="button"
+				/>
 			</liferay-frontend:edit-form-footer>
 		</c:when>
 		<c:otherwise>
@@ -224,12 +237,3 @@ renderResponse.setTitle(title);
 		</c:otherwise>
 	</c:choose>
 </liferay-frontend:edit-form>
-
-<aui:script>
-	function <portlet:namespace />saveAndAddNew() {
-		document.querySelector('#<portlet:namespace />redirect').value =
-			'<%= assetCategoriesDisplayContext.getAddCategoryRedirect() %>';
-
-		submitForm(document.querySelector('#<portlet:namespace />fm'));
-	}
-</aui:script>

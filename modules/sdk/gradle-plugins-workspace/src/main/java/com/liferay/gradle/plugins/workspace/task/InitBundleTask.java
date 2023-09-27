@@ -1,74 +1,44 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.workspace.task;
 
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.util.FileUtil;
+import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
 
 import java.io.File;
 
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
-
-import java.nio.file.Path;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
+import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
-import org.gradle.api.tasks.JavaExec;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
+import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author David Truong
+ * @author Drew Brokke
  */
-public class InitBundleTask extends JavaExec {
-
-	public InitBundleTask() {
-		setMain("com.liferay.portal.tools.bundle.support.BundleSupport");
-	}
-
-	@Override
-	public void exec() {
-		try {
-			setArgs(_getCompleteArgs());
-
-			super.exec();
-		}
-		catch (Exception exception) {
-			throw new GradleException(
-				"Unable to initialize bundle base on " + getFile() +
-					". Please remove this file and try again.",
-				exception);
-		}
-	}
+public class InitBundleTask extends DefaultTask {
 
 	@Input
 	public String getConfigEnvironment() {
 		return GradleUtil.toString(_configEnvironment);
 	}
 
-	@Optional
+	@InputFiles
 	public File getConfigsDir() {
 		return GradleUtil.toFile(getProject(), _configsDir);
 	}
@@ -83,16 +53,61 @@ public class InitBundleTask extends JavaExec {
 		return GradleUtil.toFile(getProject(), _file);
 	}
 
-	@Input
+	@InputFiles
 	@Optional
 	public FileCollection getProvidedModules() {
 		return _providedModules;
 	}
 
 	@Input
-	@Optional
 	public int getStripComponents() {
 		return GradleUtil.toInteger(_stripComponents);
+	}
+
+	@TaskAction
+	public void initBundle() {
+		InitBundleCommand initBundleCommand = new InitBundleCommand();
+
+		File configsDir = getConfigsDir();
+
+		if (configsDir != null) {
+			initBundleCommand.setConfigsDir(configsDir);
+		}
+
+		initBundleCommand.setEnvironment(getConfigEnvironment());
+		initBundleCommand.setLiferayHomeDir(getDestinationDir());
+
+		FileCollection providedModules = getProvidedModules();
+
+		if (!providedModules.isEmpty()) {
+			initBundleCommand.setProvidedModules(
+				new ArrayList<>(providedModules.getFiles()));
+		}
+
+		initBundleCommand.setStripComponents(getStripComponents());
+
+		try {
+			File file = getFile();
+
+			URI uri = file.toURI();
+
+			initBundleCommand.setUrl(uri.toURL());
+		}
+		catch (MalformedURLException malformedURLException) {
+			Logger logger = getLogger();
+
+			logger.error("Unable to construct URL for {}", getFile());
+		}
+
+		try {
+			initBundleCommand.execute();
+		}
+		catch (Exception exception) {
+			throw new GradleException(
+				"Unable to initialize bundle base on " + getFile() +
+					". Please remove this file and try again.",
+				exception);
+		}
 	}
 
 	public void setConfigEnvironment(Object configEnvironment) {
@@ -117,73 +132,6 @@ public class InitBundleTask extends JavaExec {
 
 	public void setStripComponents(Object stripComponents) {
 		_stripComponents = stripComponents;
-	}
-
-	private List<String> _getCompleteArgs() {
-		List<String> args = new ArrayList<>(getArgs());
-
-		args.add("initBundle");
-
-		File configsDir = getConfigsDir();
-
-		if (configsDir != null) {
-			args.add("--configs");
-			args.add(FileUtil.getAbsolutePath(configsDir));
-		}
-
-		args.add("--environment");
-		args.add(getConfigEnvironment());
-
-		args.add("--liferay");
-		args.add(FileUtil.getAbsolutePath(getDestinationDir()));
-
-		FileCollection providedModules = getProvidedModules();
-
-		if (!providedModules.isEmpty()) {
-			StringBuilder sb = new StringBuilder();
-
-			Iterator<File> iterator = providedModules.iterator();
-
-			while (iterator.hasNext()) {
-				File file = iterator.next();
-
-				Path path = file.toPath();
-
-				path = path.toAbsolutePath();
-
-				path = path.normalize();
-
-				sb.append(path.toString());
-
-				if (iterator.hasNext()) {
-					sb.append(',');
-				}
-			}
-
-			args.add("--provided-modules");
-			args.add(sb.toString());
-		}
-
-		args.add("--strip-components");
-		args.add(String.valueOf(getStripComponents()));
-
-		try {
-			File file = getFile();
-
-			URI uri = file.toURI();
-
-			URL url = uri.toURL();
-
-			args.add("--url");
-			args.add(url.toString());
-		}
-		catch (MalformedURLException malformedURLException) {
-			Logger logger = getLogger();
-
-			logger.error("Unable to construct URL for {}", getFile());
-		}
-
-		return args;
 	}
 
 	private Object _configEnvironment =

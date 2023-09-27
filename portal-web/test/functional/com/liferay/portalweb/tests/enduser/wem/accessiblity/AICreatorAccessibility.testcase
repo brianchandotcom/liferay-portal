@@ -1,10 +1,9 @@
 @component-name = "portal-wcm"
 definition {
 
-	property custom.properties = "feature.flag.LPS-179483=true";
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Echo Accessibility";
 	property testray.main.component.name = "AI-Creator";
 
@@ -13,6 +12,10 @@ definition {
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
@@ -55,6 +58,7 @@ definition {
 	@priority = 3
 	test ViewAccessibilityOfAICreatorModal {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator configures the API key") {
 			GogoShell.openGogoShellAdmin();
@@ -116,6 +120,7 @@ definition {
 	@priority = 3
 	test ViewFocusOnModalWhenAICreatorModalIsOpen {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator configures the API key") {
 			GogoShell.openGogoShellAdmin();

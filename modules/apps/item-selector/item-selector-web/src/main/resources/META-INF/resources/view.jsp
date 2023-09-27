@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -51,11 +42,6 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 						<liferay-util:include page="/view_item_selector.jsp" servletContext="<%= application %>" />
 					</c:when>
 					<c:otherwise>
-
-						<%
-						NavigationItem activeNavigationItem = null;
-						%>
-
 						<clay:container-fluid
 							cssClass="container-view"
 						>
@@ -63,28 +49,9 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 								<clay:col
 									lg="3"
 								>
-									<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
-										<ul class="mb-2 nav nav-stacked">
-
-											<%
-											for (NavigationItem navigationItem : navigationItems) {
-												if (GetterUtil.getBoolean(navigationItem.get("active"))) {
-													activeNavigationItem = navigationItem;
-												}
-											%>
-
-												<li class="nav-item">
-													<a class="d-flex nav-link <%= GetterUtil.getBoolean(navigationItem.get("active")) ? "active" : StringPool.BLANK %>" href="<%= GetterUtil.getString(navigationItem.get("href")) %>">
-														<span class="text-truncate"><%= GetterUtil.getString(navigationItem.get("label")) %></span>
-													</a>
-												</li>
-
-											<%
-											}
-											%>
-
-										</ul>
-									</nav>
+									<clay:vertical-nav
+										verticalNavItems="<%= localizedItemSelectorRendering.getVerticalNavItemList() %>"
+									/>
 								</clay:col>
 
 								<clay:col
@@ -93,6 +60,11 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 									<clay:sheet
 										size="full"
 									>
+
+										<%
+										NavigationItem activeNavigationItem = localizedItemSelectorRendering.getActiveNavigationItem();
+										%>
+
 										<c:if test="<%= activeNavigationItem != null %>">
 											<h2 class="sheet-title">
 												<clay:content-row

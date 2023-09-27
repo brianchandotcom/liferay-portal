@@ -1,17 +1,16 @@
 import BaseModal from 'experiments/components/modals/BaseModal';
-import BasePage from 'shared/components/base-page';
-import React, {useContext} from 'react';
-import WithHistory from 'shared/hoc/WithHistory';
+import React from 'react';
+import {addAlert} from 'shared/actions/alerts';
+import {Alert} from 'shared/types';
+import {connect} from 'react-redux';
 import {EXPERIMENT_DELETE_MUTATION} from 'experiments/queries/ExperimentMutation';
 import {Routes, toRoute} from 'shared/util/router';
+import {useHistory, useParams} from 'react-router-dom';
 import {useMutation} from '@apollo/react-hooks';
 
-const DeleteExperimentModal = ({experimentId, history, observer, onClose}) => {
-	const {
-		router: {
-			params: {channelId, groupId}
-		}
-	} = useContext(BasePage.Context);
+const DeleteExperimentModal = ({addAlert, experimentId, observer, onClose}) => {
+	const {channelId, groupId} = useParams();
+	const history = useHistory();
 	const [mutate] = useMutation(EXPERIMENT_DELETE_MUTATION);
 
 	const onSubmit = () =>
@@ -22,6 +21,11 @@ const DeleteExperimentModal = ({experimentId, history, observer, onClose}) => {
 		});
 
 	const onSuccess = () => {
+		addAlert({
+			alertType: Alert.Types.Success,
+			message: Liferay.Language.get('the-test-has-been-deleted')
+		});
+
 		history.push(toRoute(Routes.TESTS, {channelId, groupId}));
 	};
 
@@ -35,13 +39,13 @@ const DeleteExperimentModal = ({experimentId, history, observer, onClose}) => {
 			submitMessage={Liferay.Language.get('delete')}
 			title={Liferay.Language.get('deleting-test')}
 		>
-			<div className='mb-2 text-secondary'>
+			<p className='font-weight-bold text-secondary'>
 				{Liferay.Language.get(
 					'are-you-sure-you-want-to-delete-this-test'
 				)}
-			</div>
+			</p>
 
-			<strong>
+			<p className='text-secondary'>
 				{Liferay.Language.get(
 					'you-will-permanently-lose-all-test-data-and-results-collected-from-this-test'
 				)}{' '}
@@ -49,9 +53,9 @@ const DeleteExperimentModal = ({experimentId, history, observer, onClose}) => {
 				{Liferay.Language.get(
 					'you-will-not-be-able-to-undo-this-operation'
 				)}
-			</strong>
+			</p>
 		</BaseModal>
 	);
 };
 
-export default WithHistory(DeleteExperimentModal);
+export default connect(null, {addAlert})(DeleteExperimentModal);

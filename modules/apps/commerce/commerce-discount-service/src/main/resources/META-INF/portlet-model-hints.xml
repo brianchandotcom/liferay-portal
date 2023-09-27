@@ -88,6 +88,9 @@
 		<field name="commerceDiscountId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.commerce.discount.model.CommerceDiscountRule">
 		<field name="mvccVersion" type="long" />

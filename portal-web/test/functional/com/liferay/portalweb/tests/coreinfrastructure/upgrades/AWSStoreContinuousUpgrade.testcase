@@ -1,0 +1,93 @@
+@component-name = "portal-database-upgrade-framework"
+definition {
+
+	property app.server.types = "tomcat";
+	property aws.store.enabled = "true";
+	property database.bare.enabled = "true";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+	property minimum.slave.ram = "24";
+	property portal.release = "true";
+	property portal.smoke.upgrades = "false";
+	property portal.upstream = "true";
+	property skip.start.app.server = "true";
+	property test.assert.warning.exceptions = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
+	property testray.main.component.name = "Database Upgrade Framework";
+
+	@priority = 4
+	test AutoUpgradeFromLatest7413Update {
+		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
+		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
+
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
+
+		Portlet.startServer(keepOsGiState = "true");
+
+		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
+
+		HeadlessSite.addSite(
+			portalURL = "http://localhost:8080",
+			siteName = "Site Name");
+
+		var bucketId = PropsUtil.get("s3.bucket.id");
+		var companyId = JSONCompany.getCompanyId();
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Site Name",
+			site = "true");
+
+		AntCommands.runCommand("build-test-s3-store.xml", "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "Document1");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Image1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Portlet.shutdownServer();
+
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
+
+		AntCommands.runCommand("build-test-s3-store.xml", "assert-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Document1");
+
+		LexiconEntry.viewEntryName(rowEntry = "Image1");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document1");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Image1");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+		RecycleBin.emptyCP();
+
+		AntCommands.runCommand("build-test-s3-store.xml", "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
+	}
+
+}

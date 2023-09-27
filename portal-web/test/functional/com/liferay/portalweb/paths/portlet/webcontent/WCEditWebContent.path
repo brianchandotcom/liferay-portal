@@ -110,12 +110,12 @@
 </tr>
 <tr>
 	<td>SELECT_FEATURED_IMAGE_TYPE</td>
-	<td>//div[contains(@class,'input-select-wrapper')]/select[contains(@id,'smallImageSource')]</td>
+	<td>//select[contains(@id,'smallImageSource')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FEATURED_IMAGE_INPUT</td>
-	<td>//div[contains(@id,'smallFileContainer')]//input[contains(@id,'smallFile')]</td>
+	<td>//div[contains(@id,'smallFileContainer')]//input[contains(@id,'smallFile')] | //input[contains(@id,'smallImageId')][contains(@type,'text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -235,6 +235,14 @@
 <tr>
 	<td>REPEATED_FIELD_BY_INDEX</td>
 	<td>xpath=//div[contains(@class,'ddm-field') and contains(@data-field-name,'${key_fieldReference}')][${key_index}]</td>
+	<td></td>
+</tr>
+
+<!--CHECKBOX_WEB_CONTENT_ENTRY-->
+
+<tr>
+	<td>SELECT_CHECKBOX_WC</td>
+	<td>//dd[contains(@class,'list-group-item list-group-item-flex') and contains(.,'${key_title}')]//div[@class="checkbox"]</td>
 	<td></td>
 </tr>
 </tbody>

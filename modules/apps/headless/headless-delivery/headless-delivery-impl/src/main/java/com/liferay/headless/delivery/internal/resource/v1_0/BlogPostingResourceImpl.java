@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
@@ -23,7 +14,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Image;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
@@ -63,11 +54,7 @@ import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
-import java.io.Serializable;
-
 import java.time.LocalDateTime;
-
-import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -345,10 +332,19 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	private ServiceContext _createServiceContext(
 		BlogPosting blogPosting, long groupId) {
 
-		return ServiceContextRequestUtil.createServiceContext(
-			blogPosting.getTaxonomyCategoryIds(), blogPosting.getKeywords(),
-			_getExpandoBridgeAttributes(blogPosting), groupId,
-			contextHttpServletRequest, blogPosting.getViewableByAsString());
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest,
+			blogPosting.getViewableByAsString()
+		).assetCategoryIds(
+			blogPosting.getTaxonomyCategoryIds()
+		).assetTagNames(
+			blogPosting.getKeywords()
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				BlogsEntry.class.getName(), contextCompany.getCompanyId(),
+				blogPosting.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	private String _getCaption(Image image) {
@@ -357,15 +353,6 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		}
 
 		return image.getCaption();
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		BlogPosting blogPosting) {
-
-		return CustomFieldsUtil.toMap(
-			BlogsEntry.class.getName(), contextCompany.getCompanyId(),
-			blogPosting.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private ImageSelector _getImageSelector(Image image) {

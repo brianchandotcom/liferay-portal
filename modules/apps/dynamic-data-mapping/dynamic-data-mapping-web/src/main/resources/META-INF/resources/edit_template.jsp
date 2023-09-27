@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -206,20 +197,9 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 						<aui:input name="name" />
 
-						<liferay-ui:panel-container
-							cssClass="lfr-structure-entry-details-container"
-							extended="<%= false %>"
-							id="templateDetailsPanelContainer"
-							persistState="<%= true %>"
-						>
-							<liferay-ui:panel
-								collapsible="<%= true %>"
-								defaultState="closed"
-								extended="<%= false %>"
-								id="templateDetailsSectionPanel"
-								markupView="lexicon"
-								persistState="<%= true %>"
-								title="details"
+						<clay:panel-group>
+							<clay:panel
+								displayTitle='<%= LanguageUtil.get(request, "details") %>'
 							>
 								<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
 									<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
@@ -312,8 +292,8 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 										</div>
 									</c:otherwise>
 								</c:choose>
-							</liferay-ui:panel>
-						</liferay-ui:panel-container>
+							</clay:panel>
+						</clay:panel-group>
 
 						<c:choose>
 							<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.segments.asah.connector.internal.model.listener;
@@ -28,6 +19,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
 import com.liferay.segments.asah.connector.internal.processor.AsahSegmentsExperimentProcessor;
 import com.liferay.segments.asah.connector.internal.util.AsahUtil;
+import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -55,7 +47,13 @@ public class SegmentsExperimentModelListener
 			if (AsahUtil.isSkipAsahEvent(
 					_analyticsSettingsManager,
 					segmentsExperiment.getCompanyId(),
-					segmentsExperiment.getGroupId())) {
+					segmentsExperiment.getGroupId()) ||
+				((originalSegmentsExperiment.getStatus() !=
+					segmentsExperiment.getStatus()) &&
+				 (segmentsExperiment.getStatus() ==
+					 SegmentsExperimentConstants.STATUS_FINISHED_NO_WINNER)) ||
+				(segmentsExperiment.getStatus() ==
+					SegmentsExperimentConstants.STATUS_FINISHED_WINNER)) {
 
 				return;
 			}
@@ -103,7 +101,9 @@ public class SegmentsExperimentModelListener
 			if (AsahUtil.isSkipAsahEvent(
 					_analyticsSettingsManager,
 					segmentsExperiment.getCompanyId(),
-					segmentsExperiment.getGroupId())) {
+					segmentsExperiment.getGroupId()) ||
+				(segmentsExperiment.getStatus() ==
+					SegmentsExperimentConstants.STATUS_DELETED_ON_DXP_ONLY)) {
 
 				return;
 			}

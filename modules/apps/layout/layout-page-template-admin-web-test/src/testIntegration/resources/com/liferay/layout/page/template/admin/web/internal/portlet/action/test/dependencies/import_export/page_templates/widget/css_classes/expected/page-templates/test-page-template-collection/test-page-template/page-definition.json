@@ -1,21 +1,5 @@
 {
 	"pageElement": {
-		"pageElements": [
-			{
-				"definition": {
-					"cssClasses": [
-						"customClass1",
-						"customClass2"
-					],
-					"widgetInstance": {
-						"widgetConfig": {
-						},
-						"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
-					}
-				},
-				"type": "Widget"
-			}
-		],
 		"type": "Root"
 	},
 	"settings": {

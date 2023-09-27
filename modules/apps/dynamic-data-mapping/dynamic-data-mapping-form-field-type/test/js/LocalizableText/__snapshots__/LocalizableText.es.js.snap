@@ -6,7 +6,6 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
     aria-labelledby="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
     class="form-group hide"
     data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
-    tabindex="0"
   >
     <div
       class="input-group"
@@ -728,7 +727,6 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
     aria-labelledby="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
     class="form-group hide"
     data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
-    tabindex="0"
   >
     <div
       class="input-group"
@@ -1448,7 +1446,6 @@ exports[`Field LocalizableText fills with the default language value when the se
     aria-labelledby="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
     class="form-group hide"
     data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
-    tabindex="0"
   >
     <div
       class="input-group"
@@ -2170,7 +2167,6 @@ exports[`Field LocalizableText fills with the selected language value when the s
     aria-labelledby="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
     class="form-group hide"
     data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
-    tabindex="0"
   >
     <div
       class="input-group"
@@ -3623,7 +3619,6 @@ exports[`Field LocalizableText has a placeholder 1`] = `
     aria-labelledby="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
     class="form-group hide"
     data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
-    tabindex="0"
   >
     <div
       class="input-group"
@@ -4343,7 +4338,6 @@ exports[`Field LocalizableText is not readOnly 1`] = `
     aria-labelledby="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
     class="form-group hide"
     data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
-    tabindex="0"
   >
     <div
       class="input-group"
@@ -5063,7 +5057,6 @@ exports[`Field LocalizableText is not required 1`] = `
     aria-labelledby="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
     class="form-group hide"
     data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
-    tabindex="0"
   >
     <div
       class="input-group"
@@ -5783,7 +5776,6 @@ exports[`Field LocalizableText removes the translation of an item already transl
     aria-labelledby="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
     class="form-group hide"
     data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
-    tabindex="0"
   >
     <div
       class="input-group"
@@ -6505,7 +6497,6 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
     aria-labelledby="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
     class="form-group hide"
     data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
-    tabindex="0"
   >
     <div
       class="input-group"
@@ -7225,7 +7216,6 @@ exports[`Field LocalizableText renders values 1`] = `
     aria-labelledby="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
     class="form-group hide"
     data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
-    tabindex="0"
   >
     <div
       class="input-group"
@@ -7945,7 +7935,6 @@ exports[`Field LocalizableText shows default language value when no other langua
     aria-labelledby="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
     class="form-group hide"
     data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
-    tabindex="0"
   >
     <div
       class="input-group"

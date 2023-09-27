@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Sites Administration";
@@ -17,25 +18,11 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			Navigator.openURL();
-
-			Site.tearDownCP();
-		}
-	}
-
 	@description = "This is a use case for LPS-143743. Assert that can import global scoped WC that comment on another site with no error."
 	@priority = 3
 	test CanImportGlobalScopedWCThatCommentOnAnotherSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add a WC on Global site and an assert publisher widget to a page on "Test Site Name" site") {
 			JSONWebcontent.addWebContent(
@@ -140,6 +127,8 @@ definition {
 				autocompleteField = "lfr-widget-web-content",
 				fragmentHtml = ${fragmentHtml},
 				htmlSnippet = ${htmlSnippet});
+
+			FragmentsEditor.waitForAutoSave();
 
 			PortletEntry.publish();
 		}
@@ -446,7 +435,7 @@ definition {
 
 			AssertVisible(
 				id = "image-square",
-				key_image = "Document_1.jpg",
+				key_image = "document_1-jpg",
 				key_imageDescription = "",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}

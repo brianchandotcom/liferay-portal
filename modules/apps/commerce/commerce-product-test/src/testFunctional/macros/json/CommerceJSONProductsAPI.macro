@@ -468,6 +468,41 @@ definition {
 		return ${responseBody};
 	}
 
+	macro _addCommerceProductSpecifications {
+		Variables.assertDefined(parameterList = "${productName},${specificationKey},${value}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(priority))) {
+			var priority = 0;
+		}
+
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
+
+		var productId = ${productId} - 1;
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productSpecifications \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"priority": ${priority},
+					"specificationKey": "${specificationKey}",
+					"value": {
+						"en_US": "${value}"
+					}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	macro _addDiagramPin {
 		Variables.assertDefined(parameterList = "${pinType},${position},${positionX},${positionY},${quantity},${diagram}");
 
@@ -560,6 +595,32 @@ definition {
 		else {
 			echo("No Commerce Products to be deleted");
 		}
+	}
+
+	macro _deleteCommerceProductAttachment {
+		Variables.assertDefined(parameterList = "${attachmentName},${productName},${type}");
+
+		var baseURL = PropsUtil.get("portal.url");
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var attachmentId = CommerceJSONProductsAPI.getCommerceProductMediaFieldValues(
+			jsonPath = "$.items[?(@['title']['en_US'] == '${attachmentName}')].['id']",
+			productName = ${productName},
+			type = ${type});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/attachment/${attachmentId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		JSONCurlUtil.delete(${curl});
+
+		echo("Deleting Commerce Product Attachment with id: ${attachmentId}");
 	}
 
 	macro _getCommerceFieldValue {
@@ -1003,6 +1064,55 @@ definition {
 		echo("The SKU ID is: ${skuId}");
 
 		return ${skuId};
+	}
+
+	macro _patchCommerceProductAttachmentUsingERC {
+		Variables.assertDefined(parameterList = ${productERC});
+
+		var baseURL = PropsUtil.get("portal.url");
+
+		if (!(isSet(attachment))) {
+			var attachment = "";
+		}
+
+		if (!(isSet(attachmentTitle))) {
+			var attachmentTitle = "Simple Attachment Title API";
+		}
+
+		if (isSet(customFieldName)) {
+			var customFields = '''
+				{
+					"customValue": {
+						"data": "${customFieldContent}"
+					},
+					"dataType": "${customFieldType}",
+					"name": "${customFieldName}"
+				}
+			''';
+		}
+		else {
+			var customFields = "";
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${productERC}/attachments \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"attachment": "${attachment}",
+					"customFields": [${customFields}],
+					"title": {
+						"en_US": "${attachmentTitle}"
+					}
+				}'
+		''';
+
+		var responseBody = JSONCurlUtil.post(${curl});
+
+		return ${responseBody};
 	}
 
 	macro _patchCommerceProductConfiguration {

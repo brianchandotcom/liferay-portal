@@ -1,31 +1,33 @@
 definition {
 
-	macro assertTheDropdownDisabled {
-		AssertElementNotPresent(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
-	}
-
-	macro assertTitleBreadcrumbs {
+	macro assertBreadcrumbTitle {
 		AssertElementPresent(
-			key_projectName = ${key_projectName},
-			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
+			key_text = ${text},
+			locator1 = "Testray#BREADCRUMB_ENTRY");
 	}
 
-	macro clickOnTheDropdown {
-		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
+	macro goToResultSidebar {
+		Click(
+			key_button = "Results",
+			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");
+	}
+
+	macro selectOptionSidebar {
+		Click(
+			key_button = ${buttonOption},
+			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");
+
+		Click(
+			key_menuItem = ${menuItem},
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
 	macro selectProjectDirectory {
 		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT_DIRECTORY");
 
 		Click(
-			key_project = ${project},
-			locator1 = "TestrayDropdown#SELECT_PROJECT_DIRECTORY");
-	}
-
-	macro selectTheProjectFromDropdown {
-		Click(
-			key_itemvalue = ${key_value},
-			locator1 = "TestrayDropdown#OPTIONS_SIDEBAR");
+			key_project = ${projectName},
+			locator1 = "TestrayDropdown#PROJECT_DIRECTORY");
 	}
 
 }

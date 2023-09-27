@@ -242,12 +242,16 @@
 			<validator name="required" />
 		</field>
 		<field localized="true" name="description" type="String" />
-		<field name="DDMFormFieldTypeName" type="String">
+		<field name="commerceOptionTypeKey" type="String">
 			<validator name="required" />
+		</field>
+		<field name="infoItemServiceKey" type="String">
+			<hint name="max-length">255</hint>
 		</field>
 		<field name="priority" type="double">
 			<validator name="number" />
 		</field>
+		<field name="definedExternally" type="boolean" />
 		<field name="facetable" type="boolean" />
 		<field name="required" type="boolean" />
 		<field name="skuContributor" type="boolean" />
@@ -255,6 +259,9 @@
 			<validator name="required" />
 		</field>
 		<field name="priceType" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionOptionValueRel">
 		<field name="mvccVersion" type="long" />
@@ -270,18 +277,19 @@
 		<field name="CPDefinitionOptionRelId" type="long" />
 		<field name="CPInstanceUuid" type="String" />
 		<field name="CProductId" type="long" />
-		<field localized="true" name="name" type="String">
-			<validator name="required" />
-		</field>
-		<field name="priority" type="double">
-			<validator name="number" />
-		</field>
 		<field name="key" type="String">
 			<validator name="required" />
 		</field>
-		<field name="quantity" type="int" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field name="preselected" type="boolean" />
 		<field name="price" type="BigDecimal" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
+		<field name="quantity" type="BigDecimal" />
+		<field name="unitOfMeasureKey" type="String" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue">
 		<field name="mvccVersion" type="long" />
@@ -484,7 +492,7 @@
 		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="DDMFormFieldTypeName" type="String">
+		<field name="commerceOptionTypeKey" type="String">
 			<validator name="required" />
 		</field>
 		<field name="facetable" type="boolean" />

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.configuration.cluster.internal.portal.profile;
@@ -17,7 +8,9 @@ package com.liferay.portal.configuration.cluster.internal.portal.profile;
 import com.liferay.portal.configuration.cluster.internal.ConfigurationSynchronousConfigurationListener;
 import com.liferay.portal.configuration.cluster.internal.messaging.ConfigurationClusterConfigurator;
 import com.liferay.portal.configuration.cluster.internal.messaging.ConfigurationMessageListener;
-import com.liferay.portal.kernel.cluster.ClusterLink;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
 
@@ -40,7 +33,7 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 	protected void activate(ComponentContext componentContext) {
 		List<String> supportedPortalProfileNames = null;
 
-		if (_clusterLink.isEnabled()) {
+		if (GetterUtil.getBoolean(_props.get(PropsKeys.CLUSTER_LINK_ENABLED))) {
 			supportedPortalProfileNames = new ArrayList<>();
 
 			supportedPortalProfileNames.add(
@@ -60,6 +53,6 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 	}
 
 	@Reference
-	private ClusterLink _clusterLink;
+	private Props _props;
 
 }

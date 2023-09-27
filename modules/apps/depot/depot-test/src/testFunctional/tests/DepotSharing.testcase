@@ -87,6 +87,7 @@ definition {
 	@refactordone
 	test CanDisableDepotSharingAtInstanceScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openToConfigSharingInInstanceSettings();
 
@@ -104,6 +105,7 @@ definition {
 	@refactordone
 	test CanDisableDepotSharingAtSystemScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openToConfigSharingInSystemSettings();
 

@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -20,6 +20,7 @@ definition {
 	test ActivateOfflinePaymentMethodsAndAddDescription {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a Channel") {
 			CommerceJSONChannelsAPI._addChannel(
@@ -62,6 +63,7 @@ definition {
 	test AddEditAndDeleteOfflinePaymentMethod {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the System Integrator navigates to the Offline Payment Method Keys configuration under the Payment category in System Settings") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -126,6 +128,7 @@ definition {
 	test AnOfflinePaymentMethodCanBeUsedForAnOrder {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -189,6 +192,7 @@ definition {
 	test AssertAndEditNewPaymentMethodInOrdersPage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -264,7 +268,7 @@ definition {
 				paymentMethod = "Test Offline Payment Method",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -285,6 +289,7 @@ definition {
 	test CreateOrderWithMultipleActivePaymentMethods {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

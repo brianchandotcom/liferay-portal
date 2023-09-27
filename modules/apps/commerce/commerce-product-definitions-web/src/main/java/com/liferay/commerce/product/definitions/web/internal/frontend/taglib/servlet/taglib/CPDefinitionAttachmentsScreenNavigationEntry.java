@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.definitions.web.internal.frontend.taglib.servlet.taglib;
@@ -17,9 +8,9 @@ package com.liferay.commerce.product.definitions.web.internal.frontend.taglib.se
 import com.liferay.commerce.product.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPConstants;
-import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.option.CommerceOptionTypeRegistry;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
@@ -101,9 +92,9 @@ public class CPDefinitionAttachmentsScreenNavigationEntry
 			cpAttachmentFileEntriesDisplayContext =
 				new CPAttachmentFileEntriesDisplayContext(
 					_actionHelper, _attachmentsConfiguration,
-					_cpAttachmentFileEntryService,
+					_commerceOptionTypeRegistry, _cpAttachmentFileEntryService,
 					_cpDefinitionOptionRelService, _cpInstanceHelper,
-					_ddmHelper, _dlMimeTypeDisplayContext, httpServletRequest,
+					_dlMimeTypeDisplayContext, httpServletRequest,
 					_itemSelector);
 
 		httpServletRequest.setAttribute(
@@ -127,6 +118,9 @@ public class CPDefinitionAttachmentsScreenNavigationEntry
 	private volatile AttachmentsConfiguration _attachmentsConfiguration;
 
 	@Reference
+	private CommerceOptionTypeRegistry _commerceOptionTypeRegistry;
+
+	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 
 	@Reference
@@ -137,9 +131,6 @@ public class CPDefinitionAttachmentsScreenNavigationEntry
 
 	@Reference
 	private CPTypeRegistry _cpTypeRegistry;
-
-	@Reference
-	private DDMHelper _ddmHelper;
 
 	@Reference
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;

@@ -1,5 +1,5 @@
 Bundle-Description: The WSDL Builder Gradle plugin lets you generate Apache Axis client stubs from Web Service Description (WSDL) files.
 Bundle-Name: Liferay Gradle Plugins WSDL Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.wsdl.builder
-Bundle-Version: 3.0.3
+Bundle-Version: 3.0.4
 Export-Package: com.liferay.gradle.plugins.wsdl.builder

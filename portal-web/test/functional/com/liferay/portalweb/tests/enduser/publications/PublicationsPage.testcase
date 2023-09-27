@@ -28,6 +28,9 @@ definition {
 	@description = "Assert that is possible to add a Information Template to a Publication"
 	@priority = 3
 	test CanAddInformationTemplateAndApplyItWithinPublications {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
 		task ("Add a new publications, select it and crete a new site") {
 			JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -116,9 +119,7 @@ definition {
 		}
 
 		task ("Publish the publication and assert that it was published successfully") {
-			Publications.publishPublication(
-				publicationName = "Publication Name",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Publication Name");
 		}
 	}
 
@@ -189,9 +190,7 @@ definition {
 				showAllItems = "true");
 		}
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 	@description = "Add style book and apply it within Publications"
@@ -256,6 +255,7 @@ definition {
 	}
 
 	@description = "Assert that it's possible to add and apply widget template within publications"
+	@priority = 3
 	test CanAddWidgetTemplateAndApplyItWithinPublications {
 		task ("Add new Publication and select it for use") {
 			JSONPublications.addPublication(publicationName = "Publication Name");
@@ -327,9 +327,7 @@ definition {
 		}
 
 		task ("Publish the Publication and assert that it was published successfully") {
-			Publications.publishPublication(
-				publicationName = "Publication Name",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Publication Name");
 		}
 	}
 
@@ -561,6 +559,231 @@ definition {
 			PublicationsChangeDetails.viewFragmentChangePreviewInDisplay(
 				fragmentPreviewInProduction = "previewCTCollectionId=0",
 				fragmentPreviewInPublication = "previewCTCollectionId=${ctCollectionId}");
+		}
+	}
+
+	@description = "This is a use case for LPS-190511 - Publish Page with Content and Web Content Display"
+	@priority = 4
+	test CanPublishPageWithContentAndWebContentDisplay {
+		task ("Create 2 Web Contents and a new Publication") {
+			for (var count : list "1,2") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${count}",
+					groupName = "Guest",
+					title = "WC${count}");
+			}
+
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Create new Content Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add Web Content Display Widget to the page and configure it to display WC1") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Guest");
+
+			PageEditor.addWidget(
+				collectionName = "Content Management",
+				portletName = "Web Content Display");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC1");
+
+			IFrame.closeFrame();
+
+			PageEditor.publish();
+		}
+
+		task ("Add Content Display Fragment to the page and configure it to display WC2") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display",
+				targetFragmentName = "Web Content Display");
+
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentTitle = "WC2");
+
+			PageEditor.publish();
+		}
+
+		task ("Assert that the page displays properly and publish Publication") {
+			Navigator.gotoPage(pageName = "Test Page Name");
+
+			WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content 1");
+
+			WebContentDisplayPortlet.viewContent(
+				index = 2,
+				webContentContent = "WC WebContent Content 2");
+
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+		}
+	}
+
+	@description = "Assert that is possible to publish Publication with Asset Publisher configurations"
+	@priority = 3
+	test CanPublishWithAssetPublisherConfigurations {
+		task ("Create two widget pages and add to each page an Asset Publisher") {
+			for (var pageNumber : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Guest",
+					layoutName = "Widget Page Name ${pageNumber}");
+
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Guest",
+					layoutName = "Widget Page Name ${pageNumber}",
+					widgetName = "Asset Publisher");
+			}
+		}
+
+		task ("Add two Documents") {
+			for (var count : list "1,2") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "Document_${count}.jpg",
+					groupName = "Guest",
+					mimeType = "image/jpeg",
+					sourceFileName = "Document_${count}.jpg");
+			}
+		}
+
+		task ("Add new Publication and use it") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			Publications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Go to Widget Page Name 1 and configure Asset Publisher") {
+			Navigator.gotoPage(pageName = "Widget Page Name 1");
+
+			AssetPublisherPortlet.configureManualAssetSelectionPG(
+				assetTitle = "Document_1.jpg",
+				assetType = "Basic Document");
+		}
+
+		task ("Go to Widget Page Name 2 and configure Asset Publisher") {
+			Navigator.gotoPage(pageName = "Widget Page Name 2");
+
+			AssetPublisherPortlet.configureManualAssetSelectionPG(
+				assetTitle = "Document_2.jpg",
+				assetType = "Basic Document");
+		}
+
+		task ("Assert that the changes were made") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Page",
+				changeSite = "Guest",
+				changeTitle = "Widget Page Name 1",
+				changeType = "Modified",
+				changeUser = "Test Test");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Page",
+				changeOrder = 2,
+				changeSite = "Guest",
+				changeTitle = "Widget Page Name 2",
+				changeType = "Modified",
+				changeUser = "Test Test");
+		}
+
+		task ("Publish the publication and assert that it was published successfully") {
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+		}
+
+		task ("Go to Widget Page Name 1 and assert that Asset Publisher kept the changes") {
+			Navigator.gotoPage(pageName = "Widget Page Name 1");
+
+			DMDocument.viewPGViaAP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_1.jpg");
+		}
+
+		task ("Go to Widget Page Name 2 and assert that Asset Publisher kept the changes") {
+			Navigator.gotoPage(pageName = "Widget Page Name 2");
+
+			DMDocument.viewPGViaAP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_2.jpg");
+		}
+	}
+
+	@description = "Assert that is possible to revert tag added to page"
+	@priority = 3
+	test CanRevertTagAddedToPage {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add and use new Publications") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Add new tag") {
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "tag name");
+		}
+
+		task ("Go to content page and add a tag to it") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			AssetCategorization.addTag(tagName = "tag name");
+
+			Button.clickSave();
+		}
+
+		task ("Publish the publication and assert that it was published successfully") {
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+		}
+
+		task ("Revert Publications") {
+			PublicationsNavigator.openPublicationsHistory();
+
+			Publications.revertPublication(
+				publicationName = "Publication Name",
+				publishNow = "true");
+
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Revert \"Publication Name\"");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Tag",
+				changeSite = "Guest",
+				changeTitle = "tag name",
+				changeType = "Deleted",
+				changeUser = "Test Test");
 		}
 	}
 
@@ -813,9 +1036,7 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.openSiteURL(siteName = "site-name");
 

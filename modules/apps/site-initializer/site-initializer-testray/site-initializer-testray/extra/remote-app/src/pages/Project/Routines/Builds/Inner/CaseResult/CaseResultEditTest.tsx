@@ -1,19 +1,12 @@
+/* eslint-disable @liferay/portal/no-global-fetch */
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
 import {yupResolver} from '@hookform/resolvers/yup';
+import {useContext} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
@@ -22,6 +15,7 @@ import Form from '~/components/Form';
 import Footer from '~/components/Form/Footer';
 import {splitIssueName} from '~/components/JiraLink';
 import Container from '~/components/Layout/Container';
+import {TestrayContext} from '~/context/TestrayContext';
 import {withPagePermission} from '~/hoc/withPagePermission';
 import useFormActions from '~/hooks/useFormActions';
 import i18n from '~/i18n';
@@ -47,7 +41,10 @@ const CaseResultEditTest = () => {
 	const {
 		form: {onClose, onError, onSave, onSubmit, submitting},
 	} = useFormActions();
+
 	const {caseResultId} = useParams();
+
+	const [{myUserAccount}] = useContext(TestrayContext);
 
 	const {
 		caseResult,
@@ -89,7 +86,7 @@ const CaseResultEditTest = () => {
 	}: CaseResultForm) => {
 		const _issues = issues
 			.split(',')
-			.map((name) => name.trim())
+			.map((name) => name.trim().toUpperCase())
 			.filter(Boolean);
 
 		try {
@@ -115,7 +112,10 @@ const CaseResultEditTest = () => {
 				issues: _issues.map(
 					(issue) =>
 						(({
-							issue: {id: issue, name: `${issue}_${response.id}`},
+							issue: {
+								id: issue,
+								name: `${issue}_${response.id}`,
+							},
 						} as unknown) as TestrayCaseResultIssue)
 				),
 			});
@@ -135,6 +135,14 @@ const CaseResultEditTest = () => {
 
 	return (
 		<Container>
+			{!myUserAccount?.jiraAuthorization && (
+				<ClayAlert displayType="danger">
+					{i18n.translate(
+						'this-user-does-not-have-authentication-with-jira'
+					)}
+				</ClayAlert>
+			)}
+
 			<ClayAlert displayType="info">
 				{i18n.translate(
 					'clicking-save-will-assign-you-to-this-case-result'

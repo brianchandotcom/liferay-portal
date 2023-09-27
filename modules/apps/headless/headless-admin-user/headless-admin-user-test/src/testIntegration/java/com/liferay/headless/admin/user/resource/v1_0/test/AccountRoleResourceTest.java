@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.user.resource.v1_0.test;
@@ -877,9 +868,9 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	private EmailAddress _randomEmailAddress() throws Exception {
 		return new EmailAddress() {
 			{
-				setEmailAddress(RandomTestUtil.randomString() + "@liferay.com");
-				setPrimary(true);
-				setType("email-address");
+				emailAddress = RandomTestUtil.randomString() + "@liferay.com";
+				primary = true;
+				type = "email-address";
 			}
 		};
 	}
@@ -887,10 +878,10 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	private Phone _randomPhone() throws Exception {
 		return new Phone() {
 			{
-				setExtension(String.valueOf(RandomTestUtil.randomInt()));
-				setPhoneNumber(String.valueOf(RandomTestUtil.randomInt()));
-				setPhoneType("personal");
-				setPrimary(true);
+				extension = String.valueOf(RandomTestUtil.randomInt());
+				phoneNumber = String.valueOf(RandomTestUtil.randomInt());
+				phoneType = "personal";
+				primary = true;
 			}
 		};
 	}
@@ -898,15 +889,15 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	private PostalAddress _randomPostalAddress() throws Exception {
 		return new PostalAddress() {
 			{
-				setAddressCountry("united-states");
-				setAddressLocality("Diamond Bar");
-				setAddressRegion("California");
-				setAddressType("personal");
-				setPostalCode("91765");
-				setPrimary(true);
-				setStreetAddressLine1(RandomTestUtil.randomString());
-				setStreetAddressLine2(RandomTestUtil.randomString());
-				setStreetAddressLine3(RandomTestUtil.randomString());
+				addressCountry = "united-states";
+				addressLocality = "Diamond Bar";
+				addressRegion = "California";
+				addressType = "personal";
+				postalCode = "91765";
+				primary = true;
+				streetAddressLine1 = RandomTestUtil.randomString();
+				streetAddressLine2 = RandomTestUtil.randomString();
+				streetAddressLine3 = RandomTestUtil.randomString();
 			}
 		};
 	}
@@ -943,6 +934,8 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				profileURL = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				userAccountContactInformation =
+					_randomUserAccountContactInformation();
 
 				setBirthDate(
 					() -> {
@@ -956,8 +949,6 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 
 						return calendar.getTime();
 					});
-				setUserAccountContactInformation(
-					_randomUserAccountContactInformation());
 			}
 		};
 	}
@@ -967,16 +958,15 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 
 		return new UserAccountContactInformation() {
 			{
-				setEmailAddresses(new EmailAddress[] {_randomEmailAddress()});
-				setFacebook(RandomTestUtil.randomString());
-				setJabber(RandomTestUtil.randomString());
-				setPostalAddresses(
-					new PostalAddress[] {_randomPostalAddress()});
-				setSkype(RandomTestUtil.randomString());
-				setSms(RandomTestUtil.randomString() + "@liferay.com");
-				setTelephones(new Phone[] {_randomPhone()});
-				setTwitter(RandomTestUtil.randomString());
-				setWebUrls(new WebUrl[] {_randomWebUrl()});
+				emailAddresses = new EmailAddress[] {_randomEmailAddress()};
+				facebook = RandomTestUtil.randomString();
+				jabber = RandomTestUtil.randomString();
+				postalAddresses = new PostalAddress[] {_randomPostalAddress()};
+				skype = RandomTestUtil.randomString();
+				sms = RandomTestUtil.randomString() + "@liferay.com";
+				telephones = new Phone[] {_randomPhone()};
+				twitter = RandomTestUtil.randomString();
+				webUrls = new WebUrl[] {_randomWebUrl()};
 			}
 		};
 	}
@@ -984,9 +974,9 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	private WebUrl _randomWebUrl() throws Exception {
 		return new WebUrl() {
 			{
-				setPrimary(true);
-				setUrl("https://" + RandomTestUtil.randomString() + ".com");
-				setUrlType("personal");
+				primary = true;
+				url = "https://" + RandomTestUtil.randomString() + ".com";
+				urlType = "personal";
 			}
 		};
 	}

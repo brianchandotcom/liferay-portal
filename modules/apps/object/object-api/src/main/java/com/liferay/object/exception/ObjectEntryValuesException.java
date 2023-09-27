@@ -1,21 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.exception;
 
 import com.liferay.object.model.ObjectState;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;
@@ -210,7 +200,7 @@ public class ObjectEntryValuesException extends PortalException {
 	public static class InvalidObjectField extends ObjectEntryValuesException {
 
 		public InvalidObjectField(
-			String message, String messageKey, List<Object> arguments) {
+			List<Object> arguments, String message, String messageKey) {
 
 			super(arguments, message, messageKey);
 		}
@@ -247,6 +237,25 @@ public class ObjectEntryValuesException extends PortalException {
 
 		private final ObjectState _sourceObjectState;
 		private final ObjectState _targetObjectState;
+
+	}
+
+	public static class InvalidValue extends ObjectEntryValuesException {
+
+		public InvalidValue(String objectFieldName) {
+			super(
+				String.format(
+					"The value is invalid for object field \"%s\"",
+					objectFieldName));
+
+			_objectFieldName = objectFieldName;
+		}
+
+		public String getObjectFieldName() {
+			return _objectFieldName;
+		}
+
+		private final String _objectFieldName;
 
 	}
 
@@ -324,19 +333,6 @@ public class ObjectEntryValuesException extends PortalException {
 					"Unique value constraint violation for %s.%s with value %s",
 					tableName, columnName, columnValue),
 				"the-x-is-already-in-use-please-enter-a-unique-x", throwable);
-		}
-
-	}
-
-	public static class UnmodifiableAccountEntryObjectField
-		extends ObjectEntryValuesException {
-
-		public UnmodifiableAccountEntryObjectField(String objectFieldName) {
-			super(
-				StringBundler.concat(
-					"The object field ", objectFieldName,
-					" is unmodifiable because it is the account entry ",
-					"restrictor"));
 		}
 
 	}

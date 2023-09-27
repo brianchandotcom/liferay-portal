@@ -87,8 +87,8 @@ definition {
 			entryTitle = "Unique Title");
 
 		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Text",
-			entryTitle = "Blogs Entry Title");
+			entryContent = "Some Text",
+			entryTitle = "Some Title");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

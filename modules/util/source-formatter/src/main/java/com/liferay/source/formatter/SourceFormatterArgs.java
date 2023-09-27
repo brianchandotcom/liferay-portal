@@ -1,20 +1,19 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.source.formatter;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+
+import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,6 +23,7 @@ import java.util.Set;
 
 /**
  * @author Raymond Augé
+ * @author Drew Brokke
  */
 public class SourceFormatterArgs {
 
@@ -73,15 +73,28 @@ public class SourceFormatterArgs {
 	public static final boolean VALIDATE_COMMIT_MESSAGES = false;
 
 	public void addRecentChangesFileNames(
-		Collection<String> fileNames, String baseDirName) {
+			Collection<String> fileNames, String baseDirName)
+		throws IOException {
 
 		for (String fileName : fileNames) {
+			Path path = null;
+
 			if (baseDirName != null) {
-				_recentChangesFileNames.add(_baseDirName.concat(fileName));
+				path = Paths.get(baseDirName, fileName);
 			}
 			else {
-				_recentChangesFileNames.add(fileName);
+				path = Paths.get(fileName);
 			}
+
+			File file = path.toFile();
+
+			File canonicalFile = file.getCanonicalFile();
+
+			String canonicalPath = canonicalFile.getPath();
+
+			_recentChangesFileNames.add(
+				StringUtil.replace(
+					canonicalPath, CharPool.BACK_SLASH, CharPool.SLASH));
 		}
 	}
 

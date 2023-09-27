@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.message.boards.internal.upgrade.registry;
@@ -28,6 +19,7 @@ import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBThreadTable;
 import com.liferay.message.boards.internal.upgrade.v3_0_0.MBMessageTreePathUpgradeProcess;
 import com.liferay.message.boards.internal.upgrade.v3_1_0.UrlSubjectUpgradeProcess;
 import com.liferay.message.boards.internal.upgrade.v6_3_0.util.MBSuspiciousActivityTable;
+import com.liferay.message.boards.internal.upgrade.v6_5_0.FriendlyURLUpgradeProcess;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -150,6 +142,8 @@ public class MBServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			"6.4.0", "6.4.1",
 			UpgradeProcessFactory.alterColumnType(
 				"MBSuspiciousActivity", "reason", "VARCHAR(255) null"));
+
+		registry.register("6.4.1", "6.5.0", new FriendlyURLUpgradeProcess());
 	}
 
 	@Reference

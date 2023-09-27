@@ -1,12 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 import i18n from '../../common/I18n';
 
@@ -122,6 +116,42 @@ const validate = (validations, value) => {
 	return error;
 };
 
+const validateEmailsArray = (emailArray, emailsAvailable) => {
+	const seenEmails = new Set();
+	const invalidEmails = [];
+	const repeatedEmails = [];
+	const errorMessages = [];
+
+	for (const email of emailArray) {
+		if (!emailsAvailable.find((item) => item.email === email)) {
+			invalidEmails.push(email);
+		}
+		else if (seenEmails.has(email)) {
+			repeatedEmails.push(email);
+		}
+		else {
+			seenEmails.add(email);
+		}
+	}
+
+	if (invalidEmails.length) {
+		errorMessages.push(
+			`${i18n.translate(
+				'please-insert-a-valid-email'
+			)} ${invalidEmails.join(', ')}`
+		);
+	}
+	if (repeatedEmails.length) {
+		errorMessages.push(
+			`${i18n.translate(
+				'please-remove-duplicate-emails'
+			)} ${repeatedEmails.join(', ')}`
+		);
+	}
+
+	return errorMessages.join(' | ') || undefined;
+};
+
 export {
 	isLowercaseAndNumbers,
 	isValidEmail,
@@ -133,4 +163,5 @@ export {
 	isValidHost,
 	isValidIp,
 	isValidMac,
+	validateEmailsArray,
 };

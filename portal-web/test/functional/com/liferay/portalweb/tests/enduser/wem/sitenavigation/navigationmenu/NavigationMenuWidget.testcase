@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Navigation";
@@ -156,6 +157,35 @@ definition {
 			AssertElementNotPresent(
 				key_pageName = "Liferay",
 				locator1 = "Home#PAGE");
+		}
+	}
+
+	@description = "This is a test for LPS-188364. The user is able to configure header menu display on content page."
+	@priority = 4
+	test ConfigureDefaultMenuDisplayWidgetOnContentPage {
+		task ("Given a user has a content page") {
+			var siteName = StringUtil.randomString(8);
+
+			HeadlessSite.addSite(
+				siteName = ${siteName},
+				templateName = "Welcome",
+				templateType = "Site Initializer");
+		}
+
+		task ("When the user accesses to the content page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = ${siteName});
+		}
+
+		task ("Then the user could configure the default Menu Display widget") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.selectNavigation(menuType = "Secondary Navigation");
+
+			Portlet.saveAndCloseConfig();
+
+			Alert.viewWarningSpecific(warningMessage = "There is no Secondary Navigation available for the current site.");
 		}
 	}
 
@@ -386,6 +416,116 @@ definition {
 			NavigationMenusWidget.chooseMenu(menuName = "Global Navigation Menu Name (Global)");
 
 			Portlet.saveAndCloseConfig();
+		}
+	}
+
+	@description = "This is a test for LPS-189309. The site administrater could display navigation menu of grandparent site."
+	@priority = 4
+	test SelectNavigationMenuFromGrandparentSite {
+		task ("Given a site administrater has a navigation menu from grandparent site") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				siteNavigationMenuItemName = "Liferay",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "url",
+				url = "https://www.liferay.com",
+				useNewTab = "false");
+
+			HeadlessSite.addSite(
+				parentSiteName = "Test Site Name",
+				siteName = "Child Site Name");
+
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Child Site Name",
+				parentGroupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Child Site Name",
+				parentGroupName = "Test Site Name",
+				siteNavigationMenuItemName = "Google",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "url",
+				url = "https://www.google.com",
+				useNewTab = "false");
+
+			HeadlessSite.addSite(
+				grandParentSiteName = "Test Site Name",
+				parentSiteName = "Child Site Name",
+				siteName = "Grandchild Site Name");
+
+			JSONLayout.addPublicLayout(
+				grandParentGroupName = "Test Site Name",
+				groupName = "Grandchild Site Name",
+				layoutName = "Test Page Name",
+				parentGroupName = "Child Site Name");
+		}
+
+		task ("When the site administrater configures the Menu Display in current site") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Grandchild Site Name");
+
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+		}
+
+		task ("Then the site administrater could display navigation menu of grandparent site") {
+			NavigationMenusWidget.chooseMenu(menuName = "Navigation Menu Name (Test Site Name)");
+
+			Portlet.saveAndCloseConfig();
+
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
+		}
+	}
+
+	@description = "This is a test for LPS-189309. The site administrater could display navigation menu of parent site."
+	@priority = 4
+	test SelectNavigationMenuFromParentSite {
+		task ("Given a site administrater has a navigation menu from parent site") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				siteNavigationMenuItemName = "Liferay",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "url",
+				url = "https://www.liferay.com",
+				useNewTab = "false");
+
+			HeadlessSite.addSite(
+				parentSiteName = "Test Site Name",
+				siteName = "Child Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Child Site Name",
+				layoutName = "Test Page Name",
+				parentGroupName = "Test Site Name");
+		}
+
+		task ("When the site administrater configures the Menu Display in current site") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Child Site Name");
+
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+		}
+
+		task ("Then the site administrater could display navigation menu of parent site") {
+			NavigationMenusWidget.chooseMenu(menuName = "Navigation Menu Name (Test Site Name)");
+
+			Portlet.saveAndCloseConfig();
+
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
 		}
 	}
 

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.index;
@@ -21,6 +12,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
@@ -43,76 +35,88 @@ import org.osgi.service.component.annotations.Reference;
 public class SynonymSetIndexReindexer implements IndexReindexer {
 
 	@Override
-	public void reindex(long[] companyIds) throws Exception {
-		reindex(companyIds, null);
+	public void reindex(long companyId) throws Exception {
+		reindex(companyId, null);
 	}
 
 	@Override
-	public void reindex(long[] companyIds, String executionMode)
-		throws Exception {
-
+	public void reindex(long companyId, String executionMode) throws Exception {
 		if (!searchCapabilities.isSynonymsSupported()) {
 			return;
 		}
 
-		for (long companyId : companyIds) {
-			List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
-				companyId,
-				classNameLocalService.getClassNameId(SynonymSet.class),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
+			companyId, classNameLocalService.getClassNameId(SynonymSet.class),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			SynonymSetIndexName synonymSetIndexName =
-				synonymSetIndexNameBuilder.getSynonymSetIndexName(companyId);
+		SynonymSetIndexName synonymSetIndexName =
+			synonymSetIndexNameBuilder.getSynonymSetIndexName(companyId);
 
-			if (ListUtil.isEmpty(classPKs)) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Not reindexing ",
-							synonymSetIndexName.getIndexName(),
-							" because the database has no synonym set ",
-							"entries"));
-				}
-
-				continue;
+		if (ListUtil.isEmpty(classPKs)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Not reindexing ", synonymSetIndexName.getIndexName(),
+						" because the database has no synonym set ",
+						"entries"));
 			}
 
-			Date date = null;
+			return;
+		}
 
-			if (_isExecuteSyncReindex(executionMode)) {
-				date = new Date();
+		Date date = null;
 
-				Thread.sleep(1000);
-			}
-			else {
-				try {
-					synonymSetIndexCreator.delete(synonymSetIndexName);
-				}
-				catch (RuntimeException runtimeException) {
-					_log.error(
-						"Unable to delete index " +
-							synonymSetIndexName.getIndexName(),
-						runtimeException);
-				}
+		if (_isExecuteSyncReindex(executionMode)) {
+			date = new Date();
+
+			Thread.sleep(1000);
+		}
+		else {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Deleting index " + synonymSetIndexName.getIndexName());
 			}
 
-			if (!_isExecuteSyncReindex(executionMode)) {
-				synonymSetIndexCreator.create(synonymSetIndexName);
+			try {
+				synonymSetIndexCreator.delete(synonymSetIndexName);
+			}
+			catch (RuntimeException runtimeException) {
+				_log.error(
+					"Unable to delete index " +
+						synonymSetIndexName.getIndexName(),
+					runtimeException);
+			}
+		}
+
+		if (!_isExecuteSyncReindex(executionMode)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Creating index " + synonymSetIndexName.getIndexName());
 			}
 
-			for (long classPK : classPKs) {
-				synonymSetIndexWriter.create(
-					synonymSetIndexName, _buildSynonymSet(classPK));
-			}
+			synonymSetIndexCreator.create(synonymSetIndexName);
+		}
 
-			if (_isExecuteSyncReindex(executionMode)) {
-				SyncReindexManager syncReindexManager =
-					_syncReindexManagerSnapshot.get();
+		int sendStatusInterval = Math.max(100, classPKs.size() / 20);
 
-				syncReindexManager.deleteStaleDocuments(
-					synonymSetIndexName.getIndexName(), date,
-					Collections.emptySet());
+		for (int i = 0; i < classPKs.size(); i++) {
+			synonymSetIndexWriter.create(
+				synonymSetIndexName, _buildSynonymSet(classPKs.get(i)));
+
+			if ((i % sendStatusInterval) == 0) {
+				ReindexStatusMessageSenderUtil.sendStatusMessage(
+					SynonymSetIndexReindexer.class.getName(), i + 1,
+					classPKs.size());
 			}
+		}
+
+		if (_isExecuteSyncReindex(executionMode)) {
+			SyncReindexManager syncReindexManager =
+				_syncReindexManagerSnapshot.get();
+
+			syncReindexManager.deleteStaleDocuments(
+				synonymSetIndexName.getIndexName(), date,
+				Collections.emptySet());
 		}
 	}
 

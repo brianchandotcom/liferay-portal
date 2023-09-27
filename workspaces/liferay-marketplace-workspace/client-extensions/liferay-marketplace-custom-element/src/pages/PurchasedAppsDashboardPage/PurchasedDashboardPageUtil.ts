@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import solutionsIcon from '../../assets/icons/analytics_icon.svg';
@@ -52,11 +43,11 @@ export const initialAppState: AppProps = {
 	version: '',
 };
 
-export const customerPermissionDescriptions: PermissionDescription[] = [
+export const customerAppPermissionDescriptions: PermissionDescription[] = [
 	{
 		permissionName: 'Purchase apps and solutions',
 		permissionTooltip: 'Purchase new apps and versions',
-		permittedRoles: ['Account Buyer'],
+		permittedRoles: ['Account Administrator', 'Account Buyer'],
 	},
 	{
 		permissionName: 'Provision and download apps and solutions',
@@ -72,11 +63,40 @@ export const customerPermissionDescriptions: PermissionDescription[] = [
 	{
 		permissionName: 'View purchased apps and solutions',
 		permissionTooltip: 'View Cloud and DXP apps purchased by the customer.',
-		permittedRoles: [
-			'Account Administrator',
-			'Account Buyer',
-			'Account Member',
-		],
+		permittedRoles: ['Account Administrator', 'Account Buyer'],
+	},
+	{
+		permissionName: 'Create licenses for a DXP application',
+		permissionTooltip: 'Create a license for a DXP application',
+		permittedRoles: ['Account Administrator', 'Account Buyer'],
+	},
+];
+
+export const customerDashboardPermissionDescriptions: PermissionDescription[] = [
+	{
+		permissionName: 'Manage my own member profile',
+		permissionTooltip: 'Manage my own profile information (via Okta)',
+		permittedRoles: ['Account Administrator', 'Account Buyer'],
+	},
+	{
+		permissionName: 'Manage customer account',
+		permissionTooltip: 'Manage all attributes of account',
+		permittedRoles: ['Account Administrator'],
+	},
+	{
+		permissionName: 'View account members',
+		permissionTooltip: 'View all members and roles in account',
+		permittedRoles: ['Account Administrator', 'Account Buyer'],
+	},
+	{
+		permissionName: 'Manage members and roles',
+		permissionTooltip: 'Manage roles of the members - invite & remove',
+		permittedRoles: ['Account Administrator'],
+	},
+	{
+		permissionName: 'View all invoice information',
+		permissionTooltip: 'View invoices of past purchases in the Marketplace',
+		permittedRoles: ['Account Administrator', 'Account Buyer'],
 	},
 ];
 

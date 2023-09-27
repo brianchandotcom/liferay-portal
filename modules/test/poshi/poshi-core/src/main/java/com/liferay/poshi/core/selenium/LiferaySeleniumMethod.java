@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.poshi.core.selenium;
@@ -71,23 +62,49 @@ public class LiferaySeleniumMethod {
 		new HashMap<String, String[]>() {
 			{
 				put(
+					"assertAttributeValue",
+					new String[] {"locator1", "value1", "value2"});
+				put(
 					"assertCSSValue",
 					new String[] {"locator1", "locator2", "value1"});
+				put("assertEmailBody", new String[] {"value1", "value2"});
+				put("assertEmailSubject", new String[] {"value1", "value2"});
+				put(
+					"assertNotSelectedLabel",
+					new String[] {"value1", "value2"});
+				put("assertPrompt", new String[] {"value1", "value2"});
+				put("connectToEmailAccount", new String[] {"value1", "value2"});
+				put(
+					"dragAndDropToObject",
+					new String[] {"locator1", "locator2"});
+				put(
+					"dragAtAndDrop",
+					new String[] {"locator1", "value1", "value2"});
 				put("executeCDPCommand", new String[] {"value1", "value2"});
 				put(
 					"ocularAssertElementImage",
 					new String[] {"locator1", "value1", "value2"});
+				put("openWindow", new String[] {"value1", "value2"});
+				put("replyToEmail", new String[] {"value1", "value2"});
+				put("sendEmail", new String[] {"value1", "value2", "value3"});
+				put("waitForPopUp", new String[] {"value1", "value2"});
 			}
 		};
 	private static final List<String> _singleValueMethodNames = Arrays.asList(
-		"assertAlertText", "assertConfirmation", "assertConsoleTextNotPresent",
-		"assertConsoleTextPresent", "assertHTMLSourceTextNotPresent",
-		"assertHTMLSourceTextPresent", "assertLocation", "assertNotLocation",
-		"assertPartialConfirmation", "assertPartialLocation",
-		"assertTextNotPresent", "assertTextPresent", "isConsoleTextNotPresent",
-		"isConsoleTextPresent", "scrollBy", "typeAlert", "waitForConfirmation",
-		"waitForConsoleTextNotPresent", "waitForConsoleTextPresent",
-		"waitForTextNotPresent", "waitForTextPresent");
+		"assertAlert", "assertAlertText", "assertConfirmation",
+		"assertConsoleTextNotPresent", "assertConsoleTextPresent",
+		"assertHTMLSourceTextNotPresent", "assertHTMLSourceTextPresent",
+		"assertJavaScriptErrors", "assertNotAlert", "assertLocation",
+		"assertNotLocation", "assertPartialConfirmation",
+		"assertPartialLocation", "assertTextNotPresent", "assertTextPresent",
+		"getConfirmation", "getEmailBody", "getEmailSubject", "getEval",
+		"isConsoleTextNotPresent", "isConsoleTextPresent",
+		"isHTMLSourceTextPresent", "isTestName", "isTextNotPresent",
+		"isTextPresent", "open", "pause", "runScript", "scrollBy",
+		"setWindowSize", "selectPopUp", "selectWindow", "typeAlert",
+		"typeScreen", "waitForConfirmation", "waitForConsoleTextNotPresent",
+		"waitForConsoleTextPresent", "waitForTextNotPresent",
+		"waitForTextPresent");
 
 	static {
 		for (String methodName : _javaScriptMethodNames) {

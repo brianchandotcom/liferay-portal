@@ -1,13 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {isObject} from '../util/utils';
@@ -95,6 +88,7 @@ function getLocationValue(field, context) {
 							if (item.children.length) {
 								let childNodesAttributes = [];
 								let grandChildren = [];
+								let grandGrandChildren = [];
 								let currentTagName;
 
 								for (const itemChild of item.children) {
@@ -147,7 +141,8 @@ function getLocationValue(field, context) {
 
 										break;
 									}
-									else if (itemChild.children.length) {
+
+									if (itemChild.children.length) {
 										if (!currentTagName) {
 											currentTagName = itemChild.tagName;
 										}
@@ -163,21 +158,55 @@ function getLocationValue(field, context) {
 											if (
 												itemGrandChild.children.length
 											) {
+												grandGrandChildren = [];
+
 												for (const grandGrand of itemGrandChild.children) {
 													const grandGrandContent = {};
 
-													grandGrandContent[
-														grandGrand.tagName
-													] = grandGrand.textContent;
-													grandChildren.push(
+													if (
+														grandGrand.children
+															.length
+													) {
+														grandGrandContent[
+															grandGrand.tagName
+														] = {};
+
+														for (const grandGrandChild of grandGrand.children) {
+															grandGrandContent[
+																grandGrand.tagName
+															][
+																grandGrandChild.tagName
+															] =
+																grandGrandChild.textContent;
+														}
+													}
+													else {
+														grandGrandContent[
+															grandGrand.tagName
+														] =
+															grandGrand.textContent;
+													}
+
+													grandGrandChildren.push(
 														grandGrandContent
 													);
 												}
+
+												subItemContent[
+													itemGrandChild.tagName
+												] = grandGrandChildren;
 											}
 											else {
 												subItemContent[
 													itemGrandChild.tagName
 												] = itemGrandChild.textContent;
+											}
+
+											for (const itemGrandChildAttribute of itemGrandChild.attributes) {
+												subItemContent[
+													itemGrandChildAttribute.name
+												] =
+													itemGrandChildAttribute.value;
 											}
 										}
 										grandChildren.push(subItemContent);

@@ -11,17 +11,12 @@
 
 <tbody>
 <tr>
-	<td>ASSIGN_INFORMATIONS</td>
-	<td>//td[normalize-space()='${key_userName}']//following::td[normalize-space()='${key_email}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BREADCRUMB_EDIT</td>
+	<td>BREADCRUMB_INPUT_NAME</td>
 	<td>//input[@name='breadcrumbInputEdit']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>BREADCRUMB_SELECT_OPTIONS</td>
+	<td>BREADCRUMB_MENU_ITEM</td>
 	<td>//div[@class='dropdown-menu autocomplete-dropdown-menu show']//button[@role='menuitem']</td>
 	<td></td>
 </tr>
@@ -31,33 +26,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INPUT_COMMENT</td>
-	<td>//textarea[@id='comment']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INPUT_ISSUES</td>
-	<td>//input[contains(@name,'issue')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_STATUS_CASE_RESULTS</td>
-	<td>//select[@id='dueStatus']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TESTFLOW_SIDEBAR</td>
-	<td>//div[contains(@class, 'tr-sidebar')]//span[normalize-space()='TestFlow']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TESTFLOW_STATUS</td>
-	<td>//h5[normalize-space()='${key_label}']//following::*[contains (text(), '${key_status}')]</td>
+	<td>//div[normalize-space()='${key_label}']//following::*[contains (text(), '${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_AVATAR_IMAGE</td>
-	<td>//h5[normalize-space()='${label}']//following::span[@class='sticker-overlay']</td>
+	<td>//*[normalize-space()='Assignee']/following::span[@class='sticker-overlay']</td>
 	<td></td>
 </tr>
 </tbody>

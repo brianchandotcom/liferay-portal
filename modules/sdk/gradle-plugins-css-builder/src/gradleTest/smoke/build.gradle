@@ -2,7 +2,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 apply plugin: "com.liferay.css.builder"
-apply plugin: "java"
+apply plugin: "java-library"
 
 task runGradleTest
 

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.service.persistence.impl;
@@ -26,6 +17,8 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.math.BigDecimal;
 
 import java.util.Iterator;
 import java.util.List;
@@ -173,7 +166,7 @@ public class CommerceOrderItemFinderImpl
 	}
 
 	@Override
-	public int getCommerceOrderItemsQuantity(long commerceOrderId) {
+	public BigDecimal getCommerceOrderItemsQuantity(long commerceOrderId) {
 		Session session = null;
 
 		try {
@@ -184,23 +177,23 @@ public class CommerceOrderItemFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			sqlQuery.addScalar(SUM_VALUE, Type.LONG);
+			sqlQuery.addScalar(SUM_VALUE, Type.BIG_DECIMAL);
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			queryPos.add(commerceOrderId);
 
-			Iterator<Long> iterator = sqlQuery.iterate();
+			Iterator<BigDecimal> iterator = sqlQuery.iterate();
 
 			if (iterator.hasNext()) {
-				Long sum = iterator.next();
+				BigDecimal sum = iterator.next();
 
 				if (sum != null) {
-					return sum.intValue();
+					return sum;
 				}
 			}
 
-			return 0;
+			return BigDecimal.ZERO;
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

@@ -1,0 +1,59 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.portal.kernel.util.Portal;
+
+/**
+ * @author Michael Cavalcanti
+ */
+public class UpgradeJavaGetLayoutDisplayPageObjectProviderCheck {
+
+	public long getDefaultLayoutPageTemplateEntryId(
+			String className, long classPK, JournalArticle journalArticle)
+		throws PortalException {
+
+		LayoutDisplayPageProvider layoutDisplayPageProvider =
+			_layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(className);
+
+		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider =
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				classPK);
+
+		LayoutPageTemplateEntry defaultAssetDisplayPage =
+			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
+				journalArticle.getGroupId(), _portal.getClassNameId(className),
+				layoutDisplayPageObjectProvider.getClassTypeId());
+
+		return defaultAssetDisplayPage.getLayoutPageTemplateEntryId();
+	}
+
+	public long getDefaultLayoutPageTemplateEntryId2(
+			String className, long classPK, JournalArticle journalArticle)
+		throws PortalException {
+
+		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider =
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				classPK);
+
+		LayoutPageTemplateEntry defaultAssetDisplayPage =
+			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
+				journalArticle.getGroupId(), _portal.getClassNameId(className),
+				layoutDisplayPageObjectProvider.getClassTypeId());
+
+		return defaultAssetDisplayPage.getLayoutPageTemplateEntryId();
+	}
+
+	private final LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
+	private final Portal _portal;
+
+}

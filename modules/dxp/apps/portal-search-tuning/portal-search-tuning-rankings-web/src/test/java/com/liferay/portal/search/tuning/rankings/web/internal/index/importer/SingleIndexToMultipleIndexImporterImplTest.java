@@ -1,27 +1,20 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index.importer;
 
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
+import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
@@ -38,7 +31,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 /**
- * @author Wade Cao
+ * @author Wade Cao, Joshua Cords
  */
 public class SingleIndexToMultipleIndexImporterImplTest
 	extends BaseRankingsWebTestCase {
@@ -54,16 +47,13 @@ public class SingleIndexToMultipleIndexImporterImplTest
 			new SingleIndexToMultipleIndexImporterImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			_singleIndexToMultipleIndexImporterImpl, "_companyService",
-			_companyService);
+			_singleIndexToMultipleIndexImporterImpl, "_indexNameBuilder",
+			_indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
 			_singleIndexToMultipleIndexImporterImpl, "_queries", queries);
 		ReflectionTestUtil.setFieldValue(
 			_singleIndexToMultipleIndexImporterImpl, "_rankingIndexCreator",
 			_rankingIndexCreator);
-		ReflectionTestUtil.setFieldValue(
-			_singleIndexToMultipleIndexImporterImpl, "_rankingIndexNameBuilder",
-			rankingIndexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
 			_singleIndexToMultipleIndexImporterImpl, "_rankingIndexReader",
 			_rankingIndexReader);
@@ -74,22 +64,34 @@ public class SingleIndexToMultipleIndexImporterImplTest
 
 	@Test
 	public void testImportRankings() throws Exception {
-		Company company = Mockito.mock(Company.class);
+		long companyId = RandomTestUtil.randomLong();
 
 		Mockito.doReturn(
-			111L
+			RandomTestUtil.randomString()
 		).when(
-			company
-		).getCompanyId();
+			_indexNameBuilder
+		).getIndexName(
+			companyId
+		);
 
-		Mockito.doReturn(
-			Arrays.asList(company)
-		).when(
-			_companyService
-		).getCompanies();
+		setUpSearchEngineAdapter(_setupSearchHits());
 
-		setUpRankingIndexNameBuilder();
+		_singleIndexToMultipleIndexImporterImpl.importRankings(companyId);
 
+		Mockito.verify(
+			searchEngineAdapter, Mockito.times(1)
+		).execute(
+			(BulkDocumentRequest)Mockito.any()
+		);
+		Mockito.verify(
+			_rankingIndexCreator, Mockito.times(1)
+		).delete(
+			Mockito.any()
+		);
+	}
+
+	@Test
+	public void testNeedImport() throws Exception {
 		Mockito.doReturn(
 			true
 		).when(
@@ -98,13 +100,40 @@ public class SingleIndexToMultipleIndexImporterImplTest
 			Mockito.any()
 		);
 
-		Mockito.doNothing(
+		Assert.assertTrue(_singleIndexToMultipleIndexImporterImpl.needImport());
+	}
+
+	@Override
+	protected SearchHits setUpSearchEngineAdapter(SearchHits searchHits) {
+		SearchSearchResponse searchSearchResponse = setUpSearchSearchResponse();
+
+		Mockito.doReturn(
+			searchHits
 		).when(
-			_rankingIndexCreator
-		).create(
-			Mockito.any()
+			searchSearchResponse
+		).getSearchHits();
+
+		CountSearchResponse countSearchResponse = Mockito.mock(
+			CountSearchResponse.class);
+
+		Mockito.doReturn(
+			0L
+		).when(
+			countSearchResponse
+		).getCount();
+
+		Mockito.doReturn(
+			searchSearchResponse, countSearchResponse
+		).when(
+			searchEngineAdapter
+		).execute(
+			(SearchSearchRequest)Mockito.any()
 		);
 
+		return searchHits;
+	}
+
+	private SearchHits _setupSearchHits() {
 		SearchHit searchHit = Mockito.mock(SearchHit.class);
 
 		Document document = Mockito.mock(Document.class);
@@ -131,70 +160,11 @@ public class SingleIndexToMultipleIndexImporterImplTest
 			searchHits
 		).getSearchHits();
 
-		setUpSearchEngineAdapter(searchHits);
-
-		BulkDocumentResponse bulkDocumentResponse = Mockito.mock(
-			BulkDocumentResponse.class);
-
-		Mockito.doReturn(
-			false
-		).when(
-			bulkDocumentResponse
-		).hasErrors();
-
-		Mockito.doReturn(
-			bulkDocumentResponse
-		).when(
-			searchEngineAdapter
-		).execute(
-			(BulkDocumentRequest)Mockito.any()
-		);
-
-		_singleIndexToMultipleIndexImporterImpl.importRankings();
-
-		Mockito.verify(
-			searchEngineAdapter, Mockito.times(1)
-		).execute(
-			(BulkDocumentRequest)Mockito.any()
-		);
-		Mockito.verify(
-			_rankingIndexCreator, Mockito.times(1)
-		).delete(
-			Mockito.any()
-		);
+		return searchHits;
 	}
 
-	@Test
-	public void testNeedImport() throws Exception {
-		Company company = Mockito.mock(Company.class);
-
-		Mockito.doReturn(
-			111L
-		).when(
-			company
-		).getCompanyId();
-
-		Mockito.doReturn(
-			Arrays.asList(company)
-		).when(
-			_companyService
-		).getCompanies();
-
-		setUpRankingIndexNameBuilder();
-
-		Mockito.doReturn(
-			true
-		).when(
-			_rankingIndexReader
-		).isExists(
-			Mockito.any()
-		);
-
-		Assert.assertTrue(_singleIndexToMultipleIndexImporterImpl.needImport());
-	}
-
-	private final CompanyService _companyService = Mockito.mock(
-		CompanyService.class);
+	private final IndexNameBuilder _indexNameBuilder = Mockito.mock(
+		IndexNameBuilder.class);
 	private final RankingIndexCreator _rankingIndexCreator = Mockito.mock(
 		RankingIndexCreator.class);
 	private final RankingIndexReader _rankingIndexReader = Mockito.mock(

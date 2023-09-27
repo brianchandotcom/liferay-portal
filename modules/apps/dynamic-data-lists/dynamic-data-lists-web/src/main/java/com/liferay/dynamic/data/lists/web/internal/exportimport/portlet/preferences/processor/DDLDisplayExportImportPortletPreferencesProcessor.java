@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dynamic.data.lists.web.internal.exportimport.portlet.preferences.processor;
@@ -21,6 +12,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -29,15 +21,20 @@ import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Map;
@@ -98,50 +95,119 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 
 		String portletId = portletDataContext.getPortletId();
 
-		long recordSetId = GetterUtil.getLong(
-			portletPreferences.getValue("recordSetId", null));
+		String recordSetId = portletPreferences.getValue("recordSetId", null);
 
-		if (recordSetId == 0) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Record set ID is not set for preferences of portlet " +
+		if (recordSetId == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No record set ID found in preferences of portlet " +
 						portletId);
 			}
 
 			return portletPreferences;
 		}
 
-		DDLRecordSet recordSet = _ddlRecordSetLocalService.fetchRecordSet(
-			recordSetId);
+		long groupId = GetterUtil.getLong(
+			portletPreferences.getValue("groupId", StringPool.BLANK));
 
-		if (recordSet != null) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portletId, recordSet);
-
-			ActionableDynamicQuery recordActionableDynamicQuery =
-				_getRecordActionableDynamicQuery(
-					portletDataContext, recordSet, portletId);
-
-			try {
-				recordActionableDynamicQuery.performActions();
+		if (groupId == 0) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No group ID found in preferences of portlet " + portletId);
 			}
-			catch (PortalException portalException) {
-				throw new PortletDataException(
-					"Unable to export referenced records", portalException);
-			}
+
+			return portletPreferences;
 		}
 
-		long displayDDMTemplateId = GetterUtil.getLong(
-			portletPreferences.getValue("displayDDMTemplateId", null));
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No group found with group ID " + groupId);
+			}
+
+			return portletPreferences;
+		}
+
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			!group.isStagedPortlet(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Dynamic data lists are not staged in group " +
+						group.getName());
+			}
+
+			return portletPreferences;
+		}
+
+		long scopeGroupId = portletDataContext.getScopeGroupId();
+
+		if (groupId != scopeGroupId) {
+			portletDataContext.setScopeGroupId(groupId);
+		}
+
+		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.fetchRecordSet(
+			groupId, portletPreferences.getValue("recordSetKey", null));
+
+		if (ddlRecordSet == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Portlet ", portletId,
+						" references invalid record set ID ", recordSetId));
+			}
+
+			portletDataContext.setScopeGroupId(scopeGroupId);
+
+			return portletPreferences;
+		}
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, portletId, ddlRecordSet);
+
+		try {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_ddlRecordStagedModelRepository.getExportActionableDynamicQuery(
+					portletDataContext);
+
+			ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+				actionableDynamicQuery.getAddCriteriaMethod();
+
+			actionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> {
+					addCriteriaMethod.addCriteria(dynamicQuery);
+
+					Property property = PropertyFactoryUtil.forName(
+						"recordSetId");
+
+					dynamicQuery.add(
+						property.eq(ddlRecordSet.getRecordSetId()));
+				});
+
+			actionableDynamicQuery.setGroupId(ddlRecordSet.getGroupId());
+			actionableDynamicQuery.setPerformActionMethod(
+				(DDLRecord ddlRecord) ->
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, portletId, ddlRecord));
+
+			actionableDynamicQuery.performActions();
+		}
+		catch (PortalException portalException) {
+			throw new PortletDataException(
+				"Unable to export referenced records", portalException);
+		}
 
 		_exportReferenceDDMTemplate(
-			portletDataContext, portletId, displayDDMTemplateId);
-
-		long formDDMTemplateId = GetterUtil.getLong(
-			portletPreferences.getValue("formDDMTemplateId", null));
-
+			portletDataContext, portletId,
+			GetterUtil.getLong(
+				portletPreferences.getValue("displayDDMTemplateId", null)));
 		_exportReferenceDDMTemplate(
-			portletDataContext, portletId, formDDMTemplateId);
+			portletDataContext, portletId,
+			GetterUtil.getLong(
+				portletPreferences.getValue("formDDMTemplateId", null)));
+
+		portletDataContext.setScopeGroupId(scopeGroupId);
 
 		return portletPreferences;
 	}
@@ -161,46 +227,93 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 				"Unable to export portlet permissions", portalException);
 		}
 
-		long importedRecordSetId = GetterUtil.getLong(
-			portletPreferences.getValue("recordSetId", null));
+		long groupId = GetterUtil.getLong(
+			portletPreferences.getValue("groupId", null));
 
-		Map<Long, Long> recordSetIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDLRecordSet.class);
+		if ((groupId == portletDataContext.getCompanyGroupId()) &&
+			MergeLayoutPrototypesThreadLocal.isInProgress()) {
 
-		long recordSetId = MapUtil.getLong(
-			recordSetIds, importedRecordSetId, importedRecordSetId);
+			portletDataContext.setScopeType("company");
+		}
 
-		Map<Long, Long> templateIds =
+		String recordSetId = portletPreferences.getValue("recordSetId", null);
+
+		groupId = MapUtil.getLong(
+			(Map<String, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDLRecordSet.class + ".groupId"),
+			recordSetId,
+			MapUtil.getLong(
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Group.class),
+				groupId, groupId));
+
+		long scopeGroupId = portletDataContext.getScopeGroupId();
+
+		portletDataContext.setScopeGroupId(groupId);
+
+		if (Validator.isNotNull(recordSetId) && (groupId > 0)) {
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if (group == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("No group found with group ID " + groupId);
+				}
+
+				return portletPreferences;
+			}
+
+			if (!ExportImportThreadLocal.isStagingInProcess() ||
+				group.isStagedPortlet(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
+
+				try {
+					portletPreferences.setValue(
+						"groupId", String.valueOf(groupId));
+					portletPreferences.setValue(
+						"recordSetId",
+						String.valueOf(
+							MapUtil.getLong(
+								(Map<Long, Long>)
+									portletDataContext.getNewPrimaryKeysMap(
+										DDLRecordSet.class),
+								GetterUtil.getLong(recordSetId))));
+				}
+				catch (ReadOnlyException readOnlyException) {
+					throw new PortletDataException(
+						"Unable to update portlet preferences during import",
+						readOnlyException);
+				}
+			}
+		}
+
+		Map<Long, Long> ddmTemplateIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDMTemplate.class);
 
-		long importedDisplayDDMTemplateId = GetterUtil.getLong(
+		long displayDDMTemplateId = GetterUtil.getLong(
 			portletPreferences.getValue("displayDDMTemplateId", null));
-
-		long displayDDMTemplateId = MapUtil.getLong(
-			templateIds, importedDisplayDDMTemplateId,
-			importedDisplayDDMTemplateId);
-
-		long importedFormDDMTemplateId = GetterUtil.getLong(
+		long formDDMTemplateId = GetterUtil.getLong(
 			portletPreferences.getValue("formDDMTemplateId", null));
-
-		long formDDMTemplateId = MapUtil.getLong(
-			templateIds, importedFormDDMTemplateId, importedFormDDMTemplateId);
 
 		try {
 			portletPreferences.setValue(
-				"recordSetId", String.valueOf(recordSetId));
+				"displayDDMTemplateId",
+				String.valueOf(
+					MapUtil.getLong(
+						ddmTemplateIds, displayDDMTemplateId,
+						displayDDMTemplateId)));
 			portletPreferences.setValue(
-				"displayDDMTemplateId", String.valueOf(displayDDMTemplateId));
-			portletPreferences.setValue(
-				"formDDMTemplateId", String.valueOf(formDDMTemplateId));
+				"formDDMTemplateId",
+				String.valueOf(
+					MapUtil.getLong(
+						ddmTemplateIds, formDDMTemplateId, formDDMTemplateId)));
 		}
 		catch (ReadOnlyException readOnlyException) {
 			throw new PortletDataException(
 				"Unable to update portlet preferences during import",
 				readOnlyException);
 		}
+
+		portletDataContext.setScopeGroupId(scopeGroupId);
 
 		return portletPreferences;
 	}
@@ -230,35 +343,6 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			portletDataContext, portletId, ddmTemplate);
 	}
 
-	private ActionableDynamicQuery _getRecordActionableDynamicQuery(
-		PortletDataContext portletDataContext, DDLRecordSet recordSet,
-		String portletId) {
-
-		ActionableDynamicQuery recordActionableDynamicQuery =
-			_ddlRecordStagedModelRepository.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			recordActionableDynamicQuery.getAddCriteriaMethod();
-
-		recordActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				addCriteriaMethod.addCriteria(dynamicQuery);
-
-				Property property = PropertyFactoryUtil.forName("recordSetId");
-
-				dynamicQuery.add(property.eq(recordSet.getRecordSetId()));
-			});
-
-		recordActionableDynamicQuery.setGroupId(recordSet.getGroupId());
-		recordActionableDynamicQuery.setPerformActionMethod(
-			(DDLRecord record) ->
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, portletId, record));
-
-		return recordActionableDynamicQuery;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLDisplayExportImportPortletPreferencesProcessor.class);
 
@@ -275,5 +359,8 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

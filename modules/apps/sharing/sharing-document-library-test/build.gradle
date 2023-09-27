@@ -1,6 +1,6 @@
 dependencies {
-	testIntegrationCompile project(":apps:portal-security:portal-security-permission-api")
-	testIntegrationCompile project(":apps:sharing:sharing-api")
-	testIntegrationCompile project(":apps:sharing:sharing-test-util")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:portal-security:portal-security-permission-api")
+	testIntegrationImplementation project(":apps:sharing:sharing-api")
+	testIntegrationImplementation project(":apps:sharing:sharing-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

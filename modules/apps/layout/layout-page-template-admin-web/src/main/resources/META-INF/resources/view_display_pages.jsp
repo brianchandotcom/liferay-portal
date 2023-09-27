@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -45,34 +36,81 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 	<liferay-ui:success key="displayPageTemplateDeleted" message='<%= GetterUtil.getString(MultiSessionMessages.get(renderRequest, "displayPageTemplateDeleted")) %>' />
 
+	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-189856") %>'>
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= displayPageDisplayContext.getLayoutPageTemplateBreadcrumbEntries() %>"
+		/>
+	</c:if>
+
 	<liferay-ui:search-container
 		id="displayPages"
 		searchContainer="<%= displayPageDisplayContext.getDisplayPagesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.layout.page.template.model.LayoutPageTemplateEntry"
-			keyProperty="layoutPageTemplateEntryId"
-			modelVar="layoutPageTemplateEntry"
+			className="Object"
+			modelVar="object"
 		>
 
 			<%
-			row.setData(
-				HashMapBuilder.<String, Object>put(
-					"actions", displayPageManagementToolbarDisplayContext.getAvailableActions(layoutPageTemplateEntry)
-				).build());
+			LayoutPageTemplateCollection curLayoutPageTemplateCollection = null;
+			LayoutPageTemplateEntry curLayoutPageTemplateEntry = null;
+
+			Object result = row.getObject();
+
+			if (result instanceof LayoutPageTemplateEntry) {
+				curLayoutPageTemplateEntry = (LayoutPageTemplateEntry)result;
+			}
+			else {
+				curLayoutPageTemplateCollection = (LayoutPageTemplateCollection)result;
+			}
 			%>
 
-			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
-					propsTransformer="js/propsTransformers/DisplayPageDropdownPropsTransformer"
-					verticalCard="<%= new DisplayPageVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-				/>
-			</liferay-ui:search-container-column-text>
+			<c:choose>
+				<c:when test="<%= curLayoutPageTemplateCollection != null %>">
+
+					<%
+					row.setCssClass("card-page-item card-page-item-directory " + row.getCssClass());
+					%>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<clay:horizontal-card
+							horizontalCard="<%= new DisplayPageTemplateCollectionHorizontalCard (curLayoutPageTemplateCollection, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+							propsTransformer="js/propsTransformers/LayoutPageTemplateCollectionPropsTransformer"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test="<%= curLayoutPageTemplateEntry != null %>">
+
+					<%
+					row.setData(
+						HashMapBuilder.<String, Object>put(
+							"actions", displayPageManagementToolbarDisplayContext.getAvailableActions(curLayoutPageTemplateEntry)
+						).build());
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<clay:vertical-card
+							additionalProps='<%=
+								HashMapBuilder.<String, Object>put(
+									"changeContentTypeURL", displayPageDisplayContext.getChangeContentTypeURL(curLayoutPageTemplateEntry)
+								).put(
+									"mappingTypes", displayPageDisplayContext.getMappingTypesJSONArray()
+								).build()
+							%>'
+							propsTransformer="js/propsTransformers/DisplayPageDropdownPropsTransformer"
+							verticalCard="<%= new DisplayPageVerticalCard(curLayoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
 			displayStyle="icon"
 			markupView="lexicon"
+			resultRowSplitter="<%= displayPageDisplayContext.isSearch() ? null : new LayoutPageTemplateResultRowSplitter() %>"
 		/>
 	</liferay-ui:search-container>
 </aui:form>

@@ -1,0 +1,15 @@
+{
+	"cpu": 0.2,
+	"env": {
+		"LIFERAY_BATCH_OAUTH_APP_ERC": "liferay-sample-batch-oauth-application-headless-server"
+	},
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "liferaysamplebatch0",
+	"kind": "Job",
+	"memory": 300,
+	"scale": 1
+}

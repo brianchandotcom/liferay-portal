@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.security.ldap.internal.exportimport;
@@ -17,7 +8,7 @@ package com.liferay.portal.security.ldap.internal.exportimport;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.expando.kernel.util.ExpandoConverterUtil;
+import com.liferay.expando.util.ExpandoConverterUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanProperties;
@@ -209,11 +200,17 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			return null;
 		}
 
+		String fullUserDN = StringPool.BLANK;
+
 		User user = _importUser(
-			ldapImportContext, StringPool.BLANK, userLdapAttributes, password,
+			ldapImportContext, fullUserDN, userLdapAttributes, password,
 			ldapUser);
 
-		_importGroups(ldapImportContext, attributes, user);
+		if ((user != null) &&
+			ldapImportContext.containsImportedUser(fullUserDN)) {
+
+			_importGroups(ldapImportContext, attributes, user);
+		}
 
 		return user;
 	}
@@ -927,20 +924,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			role.getRoleId(), new long[] {group.getGroupId()});
 	}
 
-	private void _addUserGroupsNotAddedByLDAPImport(
-			long userId, Set<Long> userGroupIds)
-		throws Exception {
-
-		List<UserGroup> userGroups = _userGroupLocalService.getUserUserGroups(
-			userId);
-
-		for (UserGroup userGroup : userGroups) {
-			if (!userGroup.isAddedByLDAPImport()) {
-				userGroupIds.add(userGroup.getUserGroupId());
-			}
-		}
-	}
-
 	private LDAPImportContext _getLDAPImportContext(
 		long companyId, Properties contactExpandoMappings,
 		Properties contactMappings, Properties groupMappings,
@@ -1325,23 +1308,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
-		_addUserGroupsNotAddedByLDAPImport(user.getUserId(), newUserGroupIds);
-
-		Set<Long> oldUserGroupIds = new LinkedHashSet<>();
-
-		List<UserGroup> oldUserGroups =
-			_userGroupLocalService.getUserUserGroups(user.getUserId());
-
-		for (UserGroup oldUserGroup : oldUserGroups) {
-			oldUserGroupIds.add(oldUserGroup.getUserGroupId());
-		}
-
-		if (!oldUserGroupIds.equals(newUserGroupIds)) {
-			long[] userGroupIds = ArrayUtil.toLongArray(newUserGroupIds);
-
-			_userGroupLocalService.setUserUserGroups(
-				user.getUserId(), userGroupIds);
-		}
+		_updateUserUserGroups(user.getUserId(), newUserGroupIds);
 	}
 
 	private User _importUser(
@@ -1363,6 +1330,46 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			serviceContext.setAttribute(
 				"ldapServerId", ldapImportContext.getLdapServerId());
 
+			String modifyTimestamp = LDAPUtil.getAttributeString(
+				userLdapAttributes, "modifyTimestamp");
+
+			Date modifiedDate = null;
+
+			try {
+				modifiedDate = LDAPUtil.parseDate(modifyTimestamp);
+			}
+			catch (ParseException parseException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to parse LDAP modify timestamp " +
+							modifyTimestamp,
+						parseException);
+				}
+			}
+
+			if (modifiedDate != null) {
+				LDAPServerConfiguration ldapServerConfiguration =
+					_ldapServerConfigurationProvider.getConfiguration(
+						ldapImportContext.getCompanyId(),
+						ldapImportContext.getLdapServerId());
+
+				Date expireDate = new Date(
+					System.currentTimeMillis() +
+						ldapServerConfiguration.clockSkew());
+
+				if (modifiedDate.compareTo(expireDate) > 0) {
+					_log.error(
+						StringBundler.concat(
+							"User import failed because modified date is in ",
+							"the future. Increase clock skew value in LDAP ",
+							"server configuration to synchronize mismatched ",
+							"server times. Current date: ", new Date(),
+							" Modified date: ", modifiedDate));
+
+					return user;
+				}
+			}
+
 			boolean isNew = false;
 
 			if (user == null) {
@@ -1371,9 +1378,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 				isNew = true;
 			}
-
-			String modifyTimestamp = LDAPUtil.getAttributeString(
-				userLdapAttributes, "modifyTimestamp");
 
 			try {
 				user = _updateUser(
@@ -1737,6 +1741,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
+		if ((modifiedDate != null) &&
+			(modifiedDate.compareTo(new Date()) > 0)) {
+
+			modifiedDate = new Date();
+		}
+
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
@@ -1770,8 +1780,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			return user;
 		}
 		else if ((modifiedDate == null) && !isNew) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
+			if (_log.isDebugEnabled()) {
+				_log.debug(
 					"Skipping user " + user.getEmailAddress() +
 						" because the LDAP entry was never modified");
 			}
@@ -1937,6 +1947,37 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		}
 
 		return password;
+	}
+
+	private void _updateUserUserGroups(long userId, Set<Long> userGroupIds)
+		throws Exception {
+
+		List<Long> deleteUserGroupIds = new ArrayList<>();
+
+		for (UserGroup userGroup :
+				_userGroupLocalService.getUserUserGroups(userId)) {
+
+			if (userGroup.isAddedByLDAPImport()) {
+				long userGroupId = userGroup.getUserGroupId();
+
+				if (userGroupIds.contains(userGroupId)) {
+					userGroupIds.remove(userGroupId);
+				}
+				else {
+					deleteUserGroupIds.add(userGroupId);
+				}
+			}
+		}
+
+		if (!deleteUserGroupIds.isEmpty()) {
+			_userGroupLocalService.deleteUserUserGroups(
+				userId, ArrayUtil.toLongArray(deleteUserGroupIds));
+		}
+
+		if (!userGroupIds.isEmpty()) {
+			_userGroupLocalService.addUserUserGroups(
+				userId, ArrayUtil.toLongArray(userGroupIds));
+		}
 	}
 
 	private static final String[] _CONTACT_PROPERTY_NAMES = {

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.admin.rest.resource.v1_0.test;
@@ -20,12 +11,16 @@ import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.dto.v1_0.Status;
 import com.liferay.object.admin.rest.client.pagination.Page;
+import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.problem.Problem;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectDefinitionSerDes;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
+import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -34,6 +29,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -42,6 +38,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -52,6 +49,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,10 +57,31 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
-@FeatureFlags({"LPS-167253", "LPS-170122", "LPS-172017"})
+@FeatureFlags(
+	{
+		"LPS-148856", "LPS-167253", "LPS-170122", "LPS-172017", "LPS-181663",
+		"LPS-187142"
+	}
+)
 @RunWith(Arquillian.class)
 public class ObjectDefinitionResourceTest
 	extends BaseObjectDefinitionResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_objectFolder1 = _objectFolderLocalService.addObjectFolder(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString());
+
+		_objectFolder2 = _objectFolderLocalService.addObjectFolder(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString());
+	}
 
 	@After
 	@Override
@@ -331,7 +350,7 @@ public class ObjectDefinitionResourceTest
 
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
-		return new String[] {"dateCreated", "dateModified", "userId"};
+		return new String[] {"dateCreated", "dateModified", "label", "userId"};
 	}
 
 	@Override
@@ -345,12 +364,10 @@ public class ObjectDefinitionResourceTest
 			Collections.singletonMap(
 				"en_US", "O" + objectDefinition.getName()));
 		objectDefinition.setEnableLocalization(true);
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
-			objectDefinition.setModifiable((Boolean)null);
-		}
-
+		objectDefinition.setModifiable(true);
 		objectDefinition.setName("O" + objectDefinition.getName());
+		objectDefinition.setObjectFolderExternalReferenceCode(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED);
 		objectDefinition.setPluralLabel(
 			Collections.singletonMap(
 				"en_US", "O" + objectDefinition.getName()));
@@ -385,6 +402,7 @@ public class ObjectDefinitionResourceTest
 							WorkflowConstants.STATUS_DRAFT));
 				}
 			});
+		objectDefinition.setSystem(false);
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
 			objectDefinition.setStorageType(StringPool.BLANK);
@@ -424,6 +442,51 @@ public class ObjectDefinitionResourceTest
 	}
 
 	@Override
+	protected void testGetObjectDefinitionsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		ObjectDefinition objectDefinition1 = randomObjectDefinition();
+
+		objectDefinition1.setObjectFolderExternalReferenceCode(
+			_objectFolder1.getExternalReferenceCode());
+
+		objectDefinition1 = testGetObjectDefinitionsPage_addObjectDefinition(
+			objectDefinition1);
+
+		ObjectDefinition objectDefinition2 = randomObjectDefinition();
+
+		objectDefinition2.setObjectFolderExternalReferenceCode(
+			_objectFolder2.getExternalReferenceCode());
+
+		testGetObjectDefinitionsPage_addObjectDefinition(objectDefinition2);
+
+		for (EntityField entityField : entityFields) {
+			_assertGetObjectDefinitionsPageWithFilter(
+				Collections.singletonList(objectDefinition1),
+				getFilterString(entityField, operator, objectDefinition1));
+
+			_objectFolder1 = _objectFolderLocalService.updateObjectFolder(
+				RandomTestUtil.randomString(),
+				_objectFolder1.getObjectFolderId(),
+				_objectFolder1.getLabelMap(), Collections.emptyList());
+
+			objectDefinition1 = objectDefinitionResource.getObjectDefinition(
+				objectDefinition1.getId());
+
+			_assertGetObjectDefinitionsPageWithFilter(
+				Collections.singletonList(objectDefinition1),
+				getFilterString(entityField, operator, objectDefinition1));
+		}
+	}
+
+	@Override
 	protected ObjectDefinition testGraphQLObjectDefinition_addObjectDefinition()
 		throws Exception {
 
@@ -447,10 +510,11 @@ public class ObjectDefinitionResourceTest
 
 	@Override
 	protected ObjectDefinition
-			testPostObjectDefinitionPublish_addObjectDefinition()
+			testPostObjectDefinitionPublish_addObjectDefinition(
+				ObjectDefinition objectDefinition)
 		throws Exception {
 
-		return _addObjectDefinition(randomObjectDefinition());
+		return _addObjectDefinition(objectDefinition);
 	}
 
 	@Override
@@ -478,6 +542,19 @@ public class ObjectDefinitionResourceTest
 		return _objectDefinition;
 	}
 
+	private void _assertGetObjectDefinitionsPageWithFilter(
+			List<ObjectDefinition> expectedObjectDefinitions,
+			String filterString)
+		throws Exception {
+
+		Page<ObjectDefinition> page =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				null, null, filterString, Pagination.of(1, 2), null);
+
+		assertEquals(
+			expectedObjectDefinitions, (List<ObjectDefinition>)page.getItems());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionResourceTest.class);
 
@@ -488,6 +565,15 @@ public class ObjectDefinitionResourceTest
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@DeleteAfterTestRun
+	private ObjectFolder _objectFolder1;
+
+	@DeleteAfterTestRun
+	private ObjectFolder _objectFolder2;
+
+	@Inject
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

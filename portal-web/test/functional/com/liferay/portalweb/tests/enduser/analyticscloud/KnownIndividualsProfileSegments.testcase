@@ -69,7 +69,7 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
@@ -134,7 +134,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8993 | Test Summary: Selecting a Segment in Individuals"
 	@priority = 3
 	test AssertIndividualsSegmentSelected {
-		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
@@ -199,7 +199,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8991 | Test Summary: Order an Individual's Associated Segments List"
 	@priority = 3
 	test OrderIndividualsAssociatedSegments {
-		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
@@ -344,7 +344,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9003 | Test Summary: Individuals Segment list has pagination"
 	@priority = 3
 	test PaginateIndividualsSegmentList {
-		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("View the page as the new user") {
 			User.logoutAndLoginPG(
@@ -441,7 +441,7 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 

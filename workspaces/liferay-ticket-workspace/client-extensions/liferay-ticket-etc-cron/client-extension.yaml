@@ -1,0 +1,9 @@
+assemble:
+    - fromTask: bootJar
+liferay-ticket-etc-cron-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Ticket Etc Cron Oauth Application Headless Server
+    scopes:
+        - C_J3Y7Ticket.everything
+    type: oAuthApplicationHeadlessServer

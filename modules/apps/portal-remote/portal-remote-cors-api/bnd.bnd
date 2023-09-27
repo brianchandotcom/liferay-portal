@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Remote CORS API
 Bundle-SymbolicName: com.liferay.portal.remote.cors.api
-Bundle-Version: 3.0.14
+Bundle-Version: 3.0.15
 Export-Package:\
 	com.liferay.portal.remote.cors.annotation,\
 	com.liferay.portal.remote.cors.configuration

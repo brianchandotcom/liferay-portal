@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.asset.link.model.AssetLink">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="linkId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="entryId1" type="long" />
+		<field name="entryId2" type="long" />
+		<field name="type" type="int" />
+		<field name="weight" type="int" />
+	</model>
+</model-hints>

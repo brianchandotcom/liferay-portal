@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.list.type.model.impl;
@@ -78,7 +69,7 @@ public class ListTypeDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,6 +91,8 @@ public class ListTypeDefinitionCacheModel
 		sb.append(modifiedDate);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", system=");
+		sb.append(system);
 		sb.append("}");
 
 		return sb.toString();
@@ -159,6 +152,8 @@ public class ListTypeDefinitionCacheModel
 			listTypeDefinitionImpl.setName(name);
 		}
 
+		listTypeDefinitionImpl.setSystem(system);
+
 		listTypeDefinitionImpl.resetOriginalValues();
 
 		return listTypeDefinitionImpl;
@@ -179,6 +174,8 @@ public class ListTypeDefinitionCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
+
+		system = objectInput.readBoolean();
 	}
 
 	@Override
@@ -221,6 +218,8 @@ public class ListTypeDefinitionCacheModel
 		else {
 			objectOutput.writeUTF(name);
 		}
+
+		objectOutput.writeBoolean(system);
 	}
 
 	public long mvccVersion;
@@ -233,5 +232,6 @@ public class ListTypeDefinitionCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public String name;
+	public boolean system;
 
 }

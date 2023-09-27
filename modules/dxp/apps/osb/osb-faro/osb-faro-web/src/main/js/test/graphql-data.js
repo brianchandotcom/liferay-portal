@@ -37,6 +37,7 @@ import {
 import {EventTypes} from 'event-analysis/utils/types';
 import {
 	EXPERIMENT_QUERY,
+	EXPERIMENT_ROOT_QUERY,
 	EXPERIMENT_SESSION_HISTOGRAM_QUERY,
 	EXPERIMENT_SESSION_VARIANTS_HISTOGRAM_QUERY,
 	EXPERIMENT_VARIANTS_HISTOGRAM_QUERY
@@ -186,7 +187,7 @@ export function mockExperimentVariantsHistogramReq() {
 	};
 }
 
-export function mockExperimentReq() {
+export function mockExperimentReq({publishedDXPVariantId = null} = {}) {
 	return {
 		request: {
 			query: EXPERIMENT_QUERY,
@@ -251,12 +252,37 @@ export function mockExperimentReq() {
 					modifiedDate: '2020-09-30T17:55:45.417Z',
 					name: 'Timezone',
 					pageURL: 'http://localhost:8089/web/guest/home',
-					publishedDXPVariantId: null,
+					publishedDXPVariantId,
 					sessions: 800,
 					startedDate: '2020-09-30T12:00:00.000Z',
 					status: 'RUNNING',
 					type: 'AB',
 					winnerDXPVariantId: null
+				}
+			}
+		}
+	};
+}
+
+export function mockExperimentRootReq({publishable = false, status}) {
+	return {
+		request: {
+			fetchPolicy: 'network-only',
+			query: EXPERIMENT_ROOT_QUERY,
+			variables: {
+				experimentId: '123'
+			}
+		},
+		result: {
+			data: {
+				experiment: {
+					__typename: 'Experiment',
+					channelId: '2000',
+					id: '123',
+					name: 'Experiment Test',
+					pageURL: 'https://www.beryl.com/experiment-test',
+					publishable,
+					status
 				}
 			}
 		}

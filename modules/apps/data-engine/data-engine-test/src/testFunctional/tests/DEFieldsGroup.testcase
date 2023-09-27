@@ -189,6 +189,8 @@ definition {
 			fieldLabel = "Numeric",
 			targetFieldLabel = "Text");
 
+		Click(locator1 = "Sidebar#BACK");
+
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
@@ -306,7 +308,9 @@ definition {
 			fieldLabel = "Numeric",
 			targetFieldLabel = "Text");
 
-		WebContentStructures.saveCP();
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 
 		NavItem.gotoWebContent();
 
@@ -494,6 +498,8 @@ definition {
 			targetFieldLabel = "Text");
 
 		DataEngine.duplicate(fieldFieldLabel = "Text");
+
+		Click(locator1 = "Sidebar#BACK");
 
 		WebContentStructures.saveCP();
 

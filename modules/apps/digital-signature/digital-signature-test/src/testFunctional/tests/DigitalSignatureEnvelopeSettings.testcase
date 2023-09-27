@@ -10,17 +10,21 @@ definition {
 
 		User.firstLoginUI();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		task ("Configure digital signature with credentials") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Digital Signature",
-			configurationName = "Digital Signature Configuration",
-			configurationScope = "Virtual Instance Scope");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Digital Signature",
+				configurationName = "Digital Signature Configuration",
+				configurationScope = "Virtual Instance Scope");
 
-		FormFields.enableCheckbox(fieldName = "enabled");
+			FormFields.enableCheckbox(fieldName = "enabled");
+
+			DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+		}
 	}
 
 	tearDown {
@@ -34,89 +38,81 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-133105. Verify if its possible add more than 1 valid documents in a new Envelope"
+	@description = "LPS-133105. Verify if its possible add more than 1 valid documents in a new Envelope"
 	@priority = 5
 	test CanAddMoreThan1Document {
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+		task ("When a digital envelope is created with more than 1 valid document") {
+			DigitalSignature.createEnvelopeWithTwoDocuments(
+				addEmail = "test@liferay.com",
+				addFullName = "Recipient Full Name",
+				addMessage = "Email Message",
+				addName = "Poshi Test CanAddMoreThan1Document",
+				addSubject = "Email Subject");
 
-		DigitalSignature.createEnvelopeWithTwoDocuments(
-			emailMessage = "Email Message",
-			emailSubject = "Email Subject",
-			envelopeName = "Poshi Test CanAddMoreThan1Document",
-			recipientEmail = "test@liferay.com",
-			recipientFullName = "Recipient Full Name");
-
-		Button.click(button = "Send");
-
-		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
-
-		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test CanAddMoreThan1Document");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.deleteCP(dmDocumentTitle = "Document_2");
-
-		DMDocument.deleteCP(dmDocumentTitle = "Document_3");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.emptyCP();
-	}
-
-	@description = "This is a test for LPS-131425. Verify if its possible only maximum of 10 recipients can be added"
-	@priority = 4
-	test CanAddOnly10Recipients {
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Digital Signature");
-
-		LexiconEntry.gotoAdd();
-
-		for (var i : list "1,2,3,4,5,6,7,8,9") {
-			AssertClick(
-				key_text = "Add Recipient",
-				locator1 = "Button#ANY_WITH_SPAN",
-				value1 = "Add Recipient");
+			Button.click(button = "Send");
 		}
 
-		AssertElementNotPresent(
-			key_text = "Add Recipient",
-			locator1 = "Button#ANY_WITH_SPAN");
+		task ("Then a message appears that the envelope was successfully created") {
+			Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
+
+			DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test CanAddMoreThan1Document");
+
+			DigitalSignature.deleteCreatedDM();
+
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+			RecycleBin.emptyCP();
+		}
 	}
 
-	@description = "This is a test for LPS-131425. Verify if its possible delete any additional recipients"
+	@description = "LPS-131425. Verify if its possible only maximum of 10 recipients can be added"
+	@priority = 4
+	test CanAddOnly10Recipients {
+		task ("Given the user goes to digital signature") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Digital Signature");
+
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("When user test Add 10 Recipients") {
+			DigitalSignature.addRecipient(addList = "1,2,3,4,5,6,7,8,9");
+		}
+
+		task ("Then user test is unable to add more Recipient") {
+			DigitalSignature.canNotViewAddRecipient();
+		}
+	}
+
+	@description = "LPS-131425. Verify if its possible delete any additional recipients"
 	@priority = 4
 	test CanDeleteRecipients {
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+		task ("Given that user Test goes to digital signature") {
+			Navigator.openURL();
 
-		Navigator.openURL();
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Digital Signature");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Digital Signature");
+			LexiconEntry.gotoAdd();
+		}
 
-		LexiconEntry.gotoAdd();
+		task ("When the user Add Recipient") {
+			DigitalSignature.addRecipient();
+		}
 
-		AssertClick(
-			key_text = "Add Recipient",
-			locator1 = "Button#ANY_WITH_SPAN",
-			value1 = "Add Recipient");
-
-		Click(locator1 = "Button#REMOVE_IMAGE_LAST");
-
-		AssertElementPresent(locator1 = "Button#TRASH_DISABLED");
+		task ("Then the user remove Recipient") {
+			DigitalSignature.removeRecipient();
+		}
 	}
 
-	@description = "This is a test for LPS-133105. Verify if adding more than 1 valid and 1 invalid documents will prevent collecting the digital signature"
+	@description = "LPS-133105. Verify if adding more than 1 valid and 1 invalid documents will prevent collecting the digital signature"
 	@priority = 5
 	test CannotCollectDSWithUnsupportedFileExtensions {
 		task ("Given that Digital Signature is enabled with credentials and multiple files are added--one of which is unsupported by Digital Envelopes") {
-			DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
-
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 			DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.png,Document_3.odt");
@@ -125,166 +121,96 @@ definition {
 		task ("When all the files are selected for collecting Digital Signature for a Digital Envelope") {
 			PortletEntry.selectAll();
 
-			Click.javaScriptClick(
-				key_fieldName = "_com_liferay_document_library_web_portlet_DLAdminPortlet_rowIdsFolder",
-				locator1 = "Checkbox#CHECKBOX_NAME");
+			DigitalSignature.selectDMFolder(checkboxDM = "_com_liferay_document_library_web_portlet_DLAdminPortlet_rowIdsFolder");
 
-			Click.javaScriptClick(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
+			DigitalSignature.goToDigitalSignature();
 		}
 
 		task ("Then the admin is notified that a document has an invalid file extension and the invalid file is not included in the new envelope") {
-			SelectFrame(locator1 = "Modal#MODAL");
+			DigitalSignature.viewNotSupportedExtensionsError(
+				documentTitle = "Document_3",
+				modalLabel = "File Extensions Not Supported");
 
-			AssertElementPresent(
-				locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_MODAL_TITLE",
-				modalTitle = "File Extensions Not Supported");
-
-			AssertElementPresent(
-				fileTitle = "Document_3",
-				locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_MODAL_UNSUPPORTED_FILE");
-
-			Click(locator1 = "Button#CONTINUE");
-
-			SelectFrameTop();
-
-			AssertElementNotPresent(
-				fileTitle = "Document_3",
-				locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_ENVELOPE_ADDED_FILE");
+			DigitalSignature.canNotSeeUnsupportedFiles(fileName = "Document_3");
 		}
 	}
 
-	@description = "This is a test for LPS-131425. Verify if unsuportted files Error message appear"
+	@description = "LPS-131425. Verify if unsuportted files Error message appear"
 	@priority = 5
 	test CannotCreateEnvelopeWithUnsupportedFiles {
 		property solutions.acceptance = "true";
-
-		task ("Given that Digital Signature is enabled with proper credentials") {
-			DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
-		}
 
 		task ("When a Digital Envelope is created with an unsupported file type attached") {
 			Navigator.openURL();
 
 			DigitalSignature.createEnvelope(
-				dmDocumentFile = "Document_2.mp4",
-				emailMessage = "Email Message",
-				emailSubject = "Email Subject",
-				envelopeName = "Poshi Test CannotCreateEnvelopeWithUnsupportedFiles",
-				recipientEmail = "test@liferay.com",
-				recipientFullName = "Recipient Full Name");
+				addEmail = "test@liferay.com",
+				addFullName = "Recipient Full Name",
+				addMessage = "Email Message",
+				addName = "Poshi Test CannotCreateEnvelopeWithUnsupportedFiles",
+				addSubject = "Email Subject",
+				dmDocumentFile = "Document_2.mp4");
 		}
 
 		task ("Then the Envelope cannot be sent and an error should display indicating the file type is unsupported") {
-			AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPPORTED_FILE");
+			DigitalSignature.verifyUnsupportedFileError(disabledButton = "Send");
 
-			AssertElementPresent(
-				key_value = "Send",
-				locator1 = "DigitalSignatureEnvelopeSettings#ANY_DISABLED_BUTTON");
+			DigitalSignature.deleteCreatedDM();
+
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+			RecycleBin.emptyCP();
 		}
 	}
 
-	@description = "This is a test for LPS-131425. Verify if Success Message appear"
+	@description = "LPS-131425. verify if all required fields are been displayed"
+	@priority = 4
+	test CanSeeAllRequiredFields {
+		task ("When a User Test Goes to Digital Signature") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Digital Signature");
+
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then All required fields are being displayed") {
+			DigitalSignature.canViewRequiredFields(fieldList = "Email Subject,Envelope Name,Recipient Full Name,Recipient Email");
+		}
+	}
+
+	@description = "LPS-131425. Verify if Success Message appear"
 	@priority = 5
 	test CanViewSuccessMessage {
 		property solutions.acceptance = "true";
 
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+		task ("When a digital envelope is created") {
+			DigitalSignature.createEnvelope(
+				addEmail = "test@liferay.com",
+				addFullName = "Recipient Full Name",
+				addMessage = "Email Message",
+				addName = "Poshi Test CanViewSuccessMessage",
+				addSubject = "Email Subject",
+				dmDocumentFile = "Alice's Adventures in Wonderland.pdf");
 
-		DigitalSignature.createEnvelope(
-			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			emailMessage = "Email Message",
-			emailSubject = "Email Subject",
-			envelopeName = "Poshi Test CanViewSuccessMessage",
-			recipientEmail = "test@liferay.com",
-			recipientFullName = "Recipient Full Name");
+			Button.click(button = "Send");
+		}
 
-		Button.click(button = "Send");
+		task ("Then a message appears that the envelope was successfully created") {
+			Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
 
-		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
+			Refresh();
 
-		Refresh();
+			DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test CanViewSuccessMessage");
 
-		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test CanViewSuccessMessage");
+			DigitalSignature.deleteCreatedDM();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.emptyCP();
-	}
-
-	@description = "This is a test for LPS-131425. Verify if Email Subject field is required"
-	@priority = 4
-	test EmailSubjectIsRequired {
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Digital Signature");
-
-		LexiconEntry.gotoAdd();
-
-		AssertElementPresent(
-			fieldLabel = "Email Subject",
-			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
-	}
-
-	@description = "This is a test for LPS-131425. Verify if Envelope Name field is required"
-	@priority = 4
-	test EnvelopeNameIsRequired {
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Digital Signature");
-
-		LexiconEntry.gotoAdd();
-
-		AssertElementPresent(
-			fieldLabel = "Envelope Name",
-			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
-	}
-
-	@description = "This is a test for LPS-131425. Verify if Recipient Email field is required"
-	@priority = 4
-	test RecipentEmailIsRequired {
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Digital Signature");
-
-		LexiconEntry.gotoAdd();
-
-		AssertElementPresent(
-			fieldLabel = "Recipient Email",
-			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
-	}
-
-	@description = "This is a test for LPS-131425. Verify if Recipient Full Name field is required"
-	@priority = 4
-	test RecipentNameIsRequired {
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Digital Signature");
-
-		LexiconEntry.gotoAdd();
-
-		AssertElementPresent(
-			fieldLabel = "Recipient Full Name",
-			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
+			RecycleBin.emptyCP();
+		}
 	}
 
 }

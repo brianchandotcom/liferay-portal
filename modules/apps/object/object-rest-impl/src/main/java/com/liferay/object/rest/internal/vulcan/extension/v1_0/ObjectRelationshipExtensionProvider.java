@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.rest.internal.vulcan.extension.v1_0;
@@ -18,7 +9,9 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.internal.util.ServiceContextUtil;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -30,9 +23,12 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
@@ -79,18 +75,14 @@ public class ObjectRelationshipExtensionProvider
 							nestedFieldName);
 
 				if ((objectRelationship == null) ||
-					(!Objects.equals(
-						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
-					 !Objects.equals(
-						 objectRelationship.getType(),
-						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY))) {
+					!objectRelationship.isAllowedObjectRelationshipType(
+						objectRelationship.getType())) {
 
 					return null;
 				}
 
 				ObjectDefinition relatedObjectDefinition =
-					_getRelatedObjectDefinition(
+					ObjectRelationshipUtil.getRelatedObjectDefinition(
 						objectDefinition, objectRelationship);
 
 				if (!relatedObjectDefinition.isActive() ||
@@ -113,7 +105,7 @@ public class ObjectRelationshipExtensionProvider
 					return defaultObjectEntryManager.
 						fetchRelatedManyToOneObjectEntry(
 							_getDefaultDTOConverterContext(
-								objectDefinition, primaryKey, null),
+								objectDefinition, primaryKey, null, null),
 							objectDefinition, primaryKey,
 							objectRelationship.getName());
 				}
@@ -127,7 +119,7 @@ public class ObjectRelationshipExtensionProvider
 					defaultObjectEntryManager.
 						getObjectEntryRelatedObjectEntries(
 							_getDefaultDTOConverterContext(
-								objectDefinition, primaryKey, null),
+								objectDefinition, primaryKey, null, null),
 							objectDefinition, primaryKey,
 							objectRelationship.getName(),
 							Pagination.of(
@@ -152,18 +144,14 @@ public class ObjectRelationshipExtensionProvider
 				_objectRelationshipLocalService.getAllObjectRelationships(
 					objectDefinition.getObjectDefinitionId())) {
 
-			if (!Objects.equals(
-					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
-				!Objects.equals(
-					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+			if (!objectRelationship.isAllowedObjectRelationshipType(
+					objectRelationship.getType())) {
 
 				continue;
 			}
 
 			ObjectDefinition relatedObjectDefinition =
-				_getRelatedObjectDefinition(
+				ObjectRelationshipUtil.getRelatedObjectDefinition(
 					objectDefinition, objectRelationship);
 
 			if (!relatedObjectDefinition.isActive() ||
@@ -216,7 +204,7 @@ public class ObjectRelationshipExtensionProvider
 						entry.getKey());
 
 			ObjectDefinition relatedObjectDefinition =
-				_getRelatedObjectDefinition(
+				ObjectRelationshipUtil.getRelatedObjectDefinition(
 					objectDefinition, objectRelationship);
 
 			ObjectEntryManager objectEntryManager =
@@ -241,7 +229,7 @@ public class ObjectRelationshipExtensionProvider
 
 			defaultObjectEntryManager.disassociateRelatedModels(
 				_getDefaultDTOConverterContext(
-					objectDefinition, primaryKey, null),
+					objectDefinition, primaryKey, null, userId),
 				objectDefinition, objectRelationship, primaryKey,
 				relatedObjectDefinition, userId);
 
@@ -249,14 +237,16 @@ public class ObjectRelationshipExtensionProvider
 				nestedObjectEntry = objectEntryManager.updateObjectEntry(
 					objectDefinition.getCompanyId(),
 					_getDefaultDTOConverterContext(
-						objectDefinition, primaryKey, null),
+						objectDefinition, primaryKey, null, userId),
 					nestedObjectEntry.getExternalReferenceCode(),
 					relatedObjectDefinition, nestedObjectEntry,
 					relatedObjectDefinition.getScope());
 
 				_relateNestedObjectEntry(
 					objectDefinition, objectRelationship, primaryKey,
-					nestedObjectEntry.getId());
+					nestedObjectEntry.getId(),
+					ServiceContextUtil.createServiceContext(
+						nestedObjectEntry, userId));
 			}
 
 			NestedFieldsSupplier.addFieldName(entry.getKey());
@@ -264,15 +254,22 @@ public class ObjectRelationshipExtensionProvider
 	}
 
 	private DefaultDTOConverterContext _getDefaultDTOConverterContext(
-		ObjectDefinition objectDefinition, Long objectEntryId,
-		UriInfo uriInfo) {
+			ObjectDefinition objectDefinition, Long objectEntryId,
+			UriInfo uriInfo, Long userId)
+		throws Exception {
+
+		User user = null;
+
+		if (Validator.isNotNull(userId)) {
+			user = _userLocalService.getUser(userId);
+		}
 
 		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(
 				false, null, _dtoConverterRegistry, objectEntryId,
 				LocaleUtil.fromLanguageId(
 					objectDefinition.getDefaultLanguageId(), true, false),
-				uriInfo, null);
+				uriInfo, user);
 
 		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
 
@@ -293,25 +290,6 @@ public class ObjectRelationshipExtensionProvider
 		}
 
 		return PropertyDefinition.PropertyType.MULTIPLE_ELEMENT;
-	}
-
-	private ObjectDefinition _getRelatedObjectDefinition(
-			ObjectDefinition objectDefinition,
-			ObjectRelationship objectRelationship)
-		throws Exception {
-
-		long relatedObjectDefinitionId =
-			objectRelationship.getObjectDefinitionId1();
-
-		if (objectDefinition.getObjectDefinitionId() ==
-				objectRelationship.getObjectDefinitionId1()) {
-
-			relatedObjectDefinitionId =
-				objectRelationship.getObjectDefinitionId2();
-		}
-
-		return _objectDefinitionLocalService.getObjectDefinition(
-			relatedObjectDefinitionId);
 	}
 
 	private boolean _isManyToOneObjectRelationship(
@@ -336,7 +314,7 @@ public class ObjectRelationshipExtensionProvider
 	private void _relateNestedObjectEntry(
 			ObjectDefinition objectDefinition,
 			ObjectRelationship objectRelationship, long primaryKey,
-			long relatedPrimaryKey)
+			long relatedPrimaryKey, ServiceContext serviceContext)
 		throws Exception {
 
 		long primaryKey1 = relatedPrimaryKey;
@@ -351,7 +329,7 @@ public class ObjectRelationshipExtensionProvider
 
 		_objectRelationshipService.addObjectRelationshipMappingTableValues(
 			objectRelationship.getObjectRelationshipId(), primaryKey1,
-			primaryKey2, new ServiceContext());
+			primaryKey2, serviceContext);
 	}
 
 	@Reference
@@ -376,5 +354,8 @@ public class ObjectRelationshipExtensionProvider
 
 	@Reference
 	private ObjectRelationshipService _objectRelationshipService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

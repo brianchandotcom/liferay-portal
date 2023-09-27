@@ -34,6 +34,7 @@ definition {
 	@priority = 4
 	test AnnualPayrollForEmployeesIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -70,6 +71,7 @@ definition {
 	@priority = 4
 	test AnnualPayrollForOwnerIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -106,6 +108,7 @@ definition {
 	@priority = 4
 	test CanContinueOnEmployeeInfoWithAllFilled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -136,6 +139,7 @@ definition {
 	@priority = 3
 	test CanDismissFEINInfoPanel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -174,6 +178,7 @@ definition {
 	@priority = 3
 	test CanDismissPartTimeEmployeesInfoPanel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -208,6 +213,7 @@ definition {
 	@priority = 5
 	test CanGoBackOnEmployeeInfoKeepingAllData {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -240,6 +246,7 @@ definition {
 	@priority = 3
 	test CanViewFEINInfoPanel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -276,6 +283,7 @@ definition {
 	@priority = 3
 	test CanViewPartTimeEmployeesInfoPanel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -308,6 +316,7 @@ definition {
 	@priority = 4
 	test DoesFEINInputFieldShowsUp {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -340,6 +349,7 @@ definition {
 	@priority = 4
 	test EstimatedAnnualGrossRevenueIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -376,6 +386,7 @@ definition {
 	@priority = 4
 	test FEINIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -416,6 +427,7 @@ definition {
 	@priority = 4
 	test FEINIsValid {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -452,6 +464,7 @@ definition {
 	@priority = 4
 	test PartTimeEmployeeIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -488,6 +501,7 @@ definition {
 	@priority = 4
 	test PartTimeEmployeeNotBelowOne {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -520,6 +534,7 @@ definition {
 	@priority = 4
 	test StartBusinessYearIsNotFuture {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -552,6 +567,7 @@ definition {
 	@priority = 4
 	test StartBusinessYearIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.admin.rest.resource.v1_0.test;
@@ -190,9 +181,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		objectDefinition.setDefaultLanguageId(regex);
 		objectDefinition.setExternalReferenceCode(regex);
 		objectDefinition.setName(regex);
+		objectDefinition.setObjectFolderExternalReferenceCode(regex);
 		objectDefinition.setPanelAppOrder(regex);
 		objectDefinition.setPanelCategoryKey(regex);
 		objectDefinition.setRestContextPath(regex);
+		objectDefinition.setRootObjectDefinitionExternalReferenceCode(regex);
 		objectDefinition.setScope(regex);
 		objectDefinition.setStorageType(regex);
 		objectDefinition.setTitleObjectFieldName(regex);
@@ -208,9 +201,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		Assert.assertEquals(regex, objectDefinition.getDefaultLanguageId());
 		Assert.assertEquals(regex, objectDefinition.getExternalReferenceCode());
 		Assert.assertEquals(regex, objectDefinition.getName());
+		Assert.assertEquals(
+			regex, objectDefinition.getObjectFolderExternalReferenceCode());
 		Assert.assertEquals(regex, objectDefinition.getPanelAppOrder());
 		Assert.assertEquals(regex, objectDefinition.getPanelCategoryKey());
 		Assert.assertEquals(regex, objectDefinition.getRestContextPath());
+		Assert.assertEquals(
+			regex,
+			objectDefinition.getRootObjectDefinitionExternalReferenceCode());
 		Assert.assertEquals(regex, objectDefinition.getScope());
 		Assert.assertEquals(regex, objectDefinition.getStorageType());
 		Assert.assertEquals(regex, objectDefinition.getTitleObjectFieldName());
@@ -970,23 +968,19 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 	@Test
 	public void testPostObjectDefinitionPublish() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectDefinition objectDefinition =
-			testPostObjectDefinitionPublish_addObjectDefinition();
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
 
-		assertHttpResponseStatusCode(
-			204,
-			objectDefinitionResource.postObjectDefinitionPublishHttpResponse(
-				objectDefinition.getId()));
+		ObjectDefinition postObjectDefinition =
+			testPostObjectDefinitionPublish_addObjectDefinition(
+				randomObjectDefinition);
 
-		assertHttpResponseStatusCode(
-			404,
-			objectDefinitionResource.postObjectDefinitionPublishHttpResponse(
-				0L));
+		assertEquals(randomObjectDefinition, postObjectDefinition);
+		assertValid(postObjectDefinition);
 	}
 
 	protected ObjectDefinition
-			testPostObjectDefinitionPublish_addObjectDefinition()
+			testPostObjectDefinitionPublish_addObjectDefinition(
+				ObjectDefinition objectDefinition)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1176,6 +1170,16 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"enableObjectEntryDraft", additionalAssertFieldName)) {
+
+				if (objectDefinition.getEnableObjectEntryDraft() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"enableObjectEntryHistory", additionalAssertFieldName)) {
 
 				if (objectDefinition.getEnableObjectEntryHistory() == null) {
@@ -1229,6 +1233,19 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 			if (Objects.equals("objectFields", additionalAssertFieldName)) {
 				if (objectDefinition.getObjectFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectFolderExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (objectDefinition.getObjectFolderExternalReferenceCode() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -1315,6 +1332,20 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 			if (Objects.equals("restContextPath", additionalAssertFieldName)) {
 				if (objectDefinition.getRestContextPath() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"rootObjectDefinitionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (objectDefinition.
+						getRootObjectDefinitionExternalReferenceCode() ==
+							null) {
+
 					valid = false;
 				}
 
@@ -1608,6 +1639,19 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"enableObjectEntryDraft", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.getEnableObjectEntryDraft(),
+						objectDefinition2.getEnableObjectEntryDraft())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"enableObjectEntryHistory", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
@@ -1691,6 +1735,22 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getObjectFields(),
 						objectDefinition2.getObjectFields())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectFolderExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.
+							getObjectFolderExternalReferenceCode(),
+						objectDefinition2.
+							getObjectFolderExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1807,6 +1867,22 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getRestContextPath(),
 						objectDefinition2.getRestContextPath())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"rootObjectDefinitionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.
+							getRootObjectDefinitionExternalReferenceCode(),
+						objectDefinition2.
+							getRootObjectDefinitionExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2166,6 +2242,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("enableObjectEntryDraft")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("enableObjectEntryHistory")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2286,6 +2367,53 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		if (entityFieldName.equals("objectFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("objectFolderExternalReferenceCode")) {
+			Object object =
+				objectDefinition.getObjectFolderExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("objectLayouts")) {
@@ -2417,6 +2545,55 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		if (entityFieldName.equals("restContextPath")) {
 			Object object = objectDefinition.getRestContextPath();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals(
+				"rootObjectDefinitionExternalReferenceCode")) {
+
+			Object object =
+				objectDefinition.getRootObjectDefinitionExternalReferenceCode();
 
 			String value = String.valueOf(object);
 
@@ -2664,12 +2841,15 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				enableCategorization = RandomTestUtil.randomBoolean();
 				enableComments = RandomTestUtil.randomBoolean();
 				enableLocalization = RandomTestUtil.randomBoolean();
+				enableObjectEntryDraft = RandomTestUtil.randomBoolean();
 				enableObjectEntryHistory = RandomTestUtil.randomBoolean();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				modifiable = RandomTestUtil.randomBoolean();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				objectFolderExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				panelAppOrder = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				panelCategoryKey = StringUtil.toLowerCase(
@@ -2678,6 +2858,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				portlet = RandomTestUtil.randomBoolean();
 				restContextPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				rootObjectDefinitionExternalReferenceCode =
+					StringUtil.toLowerCase(RandomTestUtil.randomString());
 				scope = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				storageType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

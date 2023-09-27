@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.pricing.client.serdes.v2_0;
@@ -405,6 +396,21 @@ public class DiscountSerDes {
 			sb.append(discount.getMaximumDiscountAmount());
 		}
 
+		if (discount.getModifiedDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modifiedDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(discount.getModifiedDate()));
+
+			sb.append("\"");
+		}
+
 		if (discount.getNeverExpire() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -726,6 +732,15 @@ public class DiscountSerDes {
 			map.put(
 				"maximumDiscountAmount",
 				String.valueOf(discount.getMaximumDiscountAmount()));
+		}
+
+		if (discount.getModifiedDate() == null) {
+			map.put("modifiedDate", null);
+		}
+		else {
+			map.put(
+				"modifiedDate",
+				liferayToJSONDateFormat.format(discount.getModifiedDate()));
 		}
 
 		if (discount.getNeverExpire() == null) {
@@ -1067,6 +1082,12 @@ public class DiscountSerDes {
 				if (jsonParserFieldValue != null) {
 					discount.setMaximumDiscountAmount(
 						new BigDecimal((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
+				if (jsonParserFieldValue != null) {
+					discount.setModifiedDate(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "neverExpire")) {

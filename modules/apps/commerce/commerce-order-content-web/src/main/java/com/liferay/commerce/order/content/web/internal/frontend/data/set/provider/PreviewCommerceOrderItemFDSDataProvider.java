@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.order.content.web.internal.frontend.data.set.provider;
@@ -30,16 +21,17 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -135,12 +127,16 @@ public class PreviewCommerceOrderItemFDSDataProvider
 				CommerceOrderItemPrice commerceOrderItemPrice =
 					commerceOrderImporterItem.getCommerceOrderItemPrice();
 
+				BigDecimal quantity = _commerceQuantityFormatter.format(
+					commerceOrderImporterItem.getCPInstanceId(),
+					commerceOrderImporterItem.getQuantity(),
+					commerceOrderImporterItem.getUnitOfMeasureKey());
+
 				return new PreviewOrderItem(
 					externalReferenceCode,
 					_getImportStatus(commerceOrderImporterItem, locale),
 					_getCommerceOrderOptions(commerceOrderImporterItem, locale),
-					commerceOrderImporterItem.getName(locale),
-					commerceOrderImporterItem.getQuantity(),
+					commerceOrderImporterItem.getName(locale), quantity,
 					commerceOrderImporterItem.getReplacingSKU(),
 					_formatImportDate(
 						commerceOrderImporterItem.
@@ -150,9 +146,8 @@ public class PreviewCommerceOrderItemFDSDataProvider
 						themeDisplay.getLocale()),
 					integerWrapper.increment(),
 					commerceOrderImporterItem.getSKU(),
-					_formatFinalPrice(
-						commerceOrderItemPrice,
-						commerceOrderImporterItem.getQuantity(), locale),
+					_formatFinalPrice(commerceOrderItemPrice, quantity, locale),
+					commerceOrderImporterItem.getUnitOfMeasureKey(),
 					_formatUnitPrice(commerceOrderItemPrice, locale));
 			});
 	}
@@ -191,7 +186,7 @@ public class PreviewCommerceOrderItemFDSDataProvider
 	}
 
 	private String _formatFinalPrice(
-		CommerceOrderItemPrice commerceOrderItemPrice, int quantity,
+		CommerceOrderItemPrice commerceOrderItemPrice, BigDecimal quantity,
 		Locale locale) {
 
 		if ((commerceOrderItemPrice == null) ||
@@ -209,8 +204,7 @@ public class PreviewCommerceOrderItemFDSDataProvider
 
 		BigDecimal unitPrice = unitPriceCommerceMoney.getPrice();
 
-		BigDecimal finalPrice = unitPrice.multiply(
-			BigDecimal.valueOf(quantity));
+		BigDecimal finalPrice = unitPrice.multiply(quantity);
 
 		try {
 			return _commercePriceFormatter.format(
@@ -371,6 +365,9 @@ public class PreviewCommerceOrderItemFDSDataProvider
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

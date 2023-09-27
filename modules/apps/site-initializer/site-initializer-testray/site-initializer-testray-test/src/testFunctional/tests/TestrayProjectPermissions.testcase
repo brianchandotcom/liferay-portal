@@ -33,6 +33,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -45,8 +47,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -55,8 +55,6 @@ definition {
 	@description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the project but can view"
 	@priority = 3
 	test AnalystRoleCanNotCreateEditAndDeleteProject {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -66,15 +64,11 @@ definition {
 		}
 
 		task ("When go to the project page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 
 		task ("Then can see the project in the table") {
-			AssertElementPresent(
-				key_projectName = ${projectName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${projectName});
 		}
 
 		task ("And can not see add button") {
@@ -83,22 +77,18 @@ definition {
 
 		task ("When right click in project") {
 			RightClick.rightClick(
-				key_projectName = ${projectName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${projectName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then can not see the 'Edit, Delete' options in right click") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 
 		task ("And when click kebab in project") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 		}
@@ -117,8 +107,6 @@ definition {
 	@description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create/edit/delete the project but can view"
 	@priority = 3
 	test LeadRoleCanNotCreateEditAndDeleteProject {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -128,15 +116,11 @@ definition {
 		}
 
 		task ("When go to the project page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 
 		task ("Then can see the project in the table") {
-			AssertElementPresent(
-				key_projectName = ${projectName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${projectName});
 		}
 
 		task ("And can not see add button") {
@@ -145,22 +129,18 @@ definition {
 
 		task ("When right click in project") {
 			RightClick.rightClick(
-				key_projectName = ${projectName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${projectName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then can not see the 'Edit, Delete' options in right click") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 
 		task ("And when click kebab in project") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 		}
@@ -179,8 +159,6 @@ definition {
 	@description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the project but can view"
 	@priority = 3
 	test UserRoleCanNotCreateEditAndDeleteProject {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
@@ -190,15 +168,11 @@ definition {
 		}
 
 		task ("When go to the project page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 
 		task ("Then can see the project in the table") {
-			AssertElementPresent(
-				key_projectName = ${projectName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${projectName});
 		}
 
 		task ("And can not see add button") {
@@ -207,22 +181,18 @@ definition {
 
 		task ("When right click in project") {
 			RightClick.rightClick(
-				key_projectName = ${projectName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${projectName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then can not see the 'Edit, Delete' options in right click") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 
 		task ("And when click kebab in project") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 		}

@@ -1,6 +1,9 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*"
+		"@clayui/form": "3.104.0",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
+		"react": "16.12.0"
 	},
 	"name": "portlet-configuration-web",
 	"scripts": {
@@ -8,5 +11,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "5.0.57"
+	"version": "5.0.63"
 }

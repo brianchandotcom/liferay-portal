@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Frontend CSS Cadmin Sample Web
 Bundle-SymbolicName: com.liferay.frontend.css.cadmin.sample.web
-Bundle-Version: 1.0.18
+Bundle-Version: 1.0.20
 Web-ContextPath: /frontend-css-cadmin-sample-web

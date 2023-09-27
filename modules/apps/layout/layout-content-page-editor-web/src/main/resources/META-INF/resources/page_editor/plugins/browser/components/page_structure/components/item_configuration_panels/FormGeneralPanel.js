@@ -1,25 +1,21 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
-import {useControlledState} from '@liferay/layout-js-components-web';
+import ClayPanel from '@clayui/panel';
+import {useId} from 'frontend-js-components-web';
+import {openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {addMappingFields} from '../../../../../../app/actions/index';
 import updateItemLocalConfig from '../../../../../../app/actions/updateItemLocalConfig';
+import {CheckboxField} from '../../../../../../app/components/fragment_configuration_fields/CheckboxField';
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
+import {TextField} from '../../../../../../app/components/fragment_configuration_fields/TextField';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {
 	useDispatch,
@@ -33,11 +29,10 @@ import {formIsRestricted} from '../../../../../../app/utils/formIsRestricted';
 import {formIsUnavailable} from '../../../../../../app/utils/formIsUnavailable';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import getMappingFieldsKey from '../../../../../../app/utils/getMappingFieldsKey';
-import Collapse from '../../../../../../common/components/Collapse';
+import {setIn} from '../../../../../../app/utils/setIn';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
 import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
-import {useId} from '../../../../../../common/hooks/useId';
 import {CommonStyles} from './CommonStyles';
 import ContainerDisplayOptions from './ContainerDisplayOptions';
 import FormMappingOptions from './FormMappingOptions';
@@ -46,11 +41,12 @@ export function FormGeneralPanel({item}) {
 	const dispatch = useDispatch();
 
 	const onValueSelect = useCallback(
-		(nextConfig) =>
+		(nextConfig, overridePreviousConfig = true) =>
 			dispatch(
 				updateFormItemConfig({
 					itemConfig: nextConfig,
 					itemId: item.itemId,
+					overridePreviousConfig,
 				})
 			),
 		[dispatch, item.itemId]
@@ -95,94 +91,90 @@ export function FormGeneralPanel({item}) {
 
 function FormOptions({item, onValueSelect}) {
 	return (
-		<div className="mb-3">
-			<Collapse
-				label={Liferay.Language.get('form-container-options')}
-				open
+		<div className="mb-3 panel-group-sm">
+			<ClayPanel
+				collapsable
+				defaultExpanded
+				displayTitle={Liferay.Language.get('form-container-options')}
+				displayType="unstyled"
+				showCollapseIcon
 			>
-				<FormMappingOptions item={item} onValueSelect={onValueSelect} />
+				<ClayPanel.Body>
+					<FormMappingOptions
+						item={item}
+						onValueSelect={onValueSelect}
+					/>
 
-				{formIsMapped(item) && (
-					<>
-						<SuccessMessageOptions
-							item={item}
-							onValueSelect={onValueSelect}
-						/>
+					{formIsMapped(item) && (
+						<>
+							<SuccessInteractionOptions
+								item={item}
+								onValueSelect={onValueSelect}
+							/>
 
-						<ContainerDisplayOptions item={item} />
-					</>
-				)}
-			</Collapse>
+							<ContainerDisplayOptions item={item} />
+						</>
+					)}
+				</ClayPanel.Body>
+			</ClayPanel>
 		</div>
 	);
 }
 
 const EMBEDDED_OPTION = 'embedded';
-const LAYOUT_OPTION = 'fromLayout';
+const LAYOUT_OPTION = 'page';
 const URL_OPTION = 'url';
 const DISPLAY_PAGE_OPTION = 'displayPage';
+const STAY_OPTION = 'none';
 
 const SUCCESS_MESSAGE_OPTIONS = [
 	{
-		label: Liferay.Language.get('embedded'),
+		label: Liferay.Language.get('stay-in-page'),
+		value: STAY_OPTION,
+	},
+	{
+		label: Liferay.Language.get('show-embedded-message'),
 		value: EMBEDDED_OPTION,
 	},
 	{
-		label: Liferay.Language.get('page'),
+		label: Liferay.Language.get('go-to-page'),
 		value: LAYOUT_OPTION,
 	},
 	{
-		label: Liferay.Language.get('external-url'),
+		label: Liferay.Language.get('go-to-external-url'),
 		value: URL_OPTION,
 	},
-	...(Liferay.FeatureFlags['LPS-183498']
-		? [
-				{
-					label: Liferay.Language.get('entry-display-page'),
-					value: DISPLAY_PAGE_OPTION,
-				},
-		  ]
-		: []),
+	{
+		label: Liferay.Language.get('go-to-entry-display-page'),
+		value: DISPLAY_PAGE_OPTION,
+	},
 ];
 
-function SuccessMessageOptions({item, onValueSelect}) {
-	const {successMessage: successMessageConfig = {}} = item.config;
+function SuccessInteractionOptions({item, onValueSelect}) {
+	const {successMessage: interactionConfig = {}} = item.config;
 
-	const languageId = useSelector(selectLanguageId);
+	const {
+		displayPage,
+		layout,
+		message,
+		notificationText,
+		showNotification,
+		type,
+		url,
+	} = interactionConfig || {};
+
 	const dispatch = useDispatch();
 
+	const languageId = useSelector(selectLanguageId);
+
 	const helpTextId = useId();
+	const previewId = useId();
 
-	const [selectedSource, setSelectedSource] = useState(
-		getSelectedOption(successMessageConfig)
+	const localizedNotificationText = getEditableLocalizedValue(
+		notificationText,
+		languageId,
+		Liferay.Language.get('your-information-was-successfully-received')
 	);
-	const [successMessage, setSuccessMessage] = useControlledState(
-		getEditableLocalizedValue(
-			successMessageConfig.message,
-			languageId,
-			Liferay.Language.get(
-				'thank-you.-your-information-was-successfully-received'
-			)
-		)
-	);
-
-	useEffect(() => {
-		if (Object.keys(successMessageConfig).length) {
-			const nextSelectedSource = getSelectedOption(successMessageConfig);
-
-			setSelectedSource(nextSelectedSource);
-		}
-	}, [successMessageConfig]);
-
-	const [url, setUrl] = useControlledState(
-		getEditableLocalizedValue(successMessageConfig.url, languageId)
-	);
-	const [showMessagePreview, setShowMessagePreview] = useControlledState(
-		Boolean(item.config.showMessagePreview)
-	);
-
-	const urlId = useId();
-	const successTextId = useId();
 
 	useEffect(() => {
 		return () => {
@@ -198,77 +190,95 @@ function SuccessMessageOptions({item, onValueSelect}) {
 		};
 	}, [item.itemId, dispatch]);
 
+	const onConfigChange = useCallback(
+		(config, override = false) => {
+			const nextConfig = override
+				? config
+				: {
+						...interactionConfig,
+						...config,
+				  };
+
+			onValueSelect({successMessage: nextConfig}, false);
+		},
+		[interactionConfig, onValueSelect]
+	);
+
+	const [showNotificationPreview, setShowNotificationPreview] = useState(
+		item.config.showNotificationPreview
+	);
+
+	const onPreviewNotification = (checked) => {
+		setShowNotificationPreview(checked);
+
+		dispatch(
+			updateItemLocalConfig({
+				disableUndo: true,
+				itemConfig: {
+					showNotificationPreview: checked,
+				},
+				itemId: item.itemId,
+			})
+		);
+	};
+
+	const hidePreview = () => {
+		const previewElement = document.getElementById(previewId);
+
+		previewElement?.remove();
+	};
+
 	return (
 		<>
 			<SelectField
 				field={{
-					label: Liferay.Language.get('success-message'),
+					label: Liferay.Language.get('success-interaction'),
 					name: 'source',
 					typeOptions: {
 						validValues: SUCCESS_MESSAGE_OPTIONS,
 					},
 				}}
-				onValueSelect={(_name, type) => {
-					setSelectedSource(type);
-
-					onValueSelect({
-						successMessage: {},
-					});
-				}}
-				value={selectedSource}
+				onValueSelect={(_name, type) => onConfigChange({type}, true)}
+				value={type || EMBEDDED_OPTION}
 			/>
 
-			{selectedSource === LAYOUT_OPTION && (
+			{type === LAYOUT_OPTION && (
 				<LayoutSelector
-					mappedLayout={successMessageConfig?.layout}
-					onLayoutSelect={(layout) =>
-						onValueSelect({
-							successMessage: {layout},
-						})
+					mappedLayout={layout}
+					onLayoutSelect={(selectedLayout) =>
+						onConfigChange({layout: selectedLayout})
 					}
 				/>
 			)}
 
-			{selectedSource === EMBEDDED_OPTION && (
+			{(!type || type === EMBEDDED_OPTION) && (
 				<>
 					<ClayForm.Group small>
-						<label htmlFor={successTextId}>
-							{Liferay.Language.get('success-text')}
-						</label>
-
-						<ClayInput.Group small>
+						<ClayInput.Group className="align-items-end" small>
 							<ClayInput.GroupItem>
-								<ClayInput
-									id={successTextId}
-									onBlur={() =>
-										onValueSelect({
-											successMessage: {
-												message: {
-													...(successMessageConfig?.message ||
-														{}),
-													[languageId]: successMessage,
-												},
-											},
+								<TextField
+									field={{
+										label: Liferay.Language.get(
+											'embedded-message'
+										),
+									}}
+									onValueSelect={(_, value) =>
+										onConfigChange({
+											message: setIn(
+												message || {},
+												languageId,
+												value
+											),
+											type: EMBEDDED_OPTION,
 										})
 									}
-									onChange={(event) =>
-										setSuccessMessage(event.target.value)
-									}
-									onKeyDown={(event) => {
-										if (event.key === 'Enter') {
-											onValueSelect({
-												successMessage: {
-													message: {
-														...(successMessageConfig?.message ||
-															{}),
-														[languageId]: successMessage,
-													},
-												},
-											});
-										}
-									}}
-									type="text"
-									value={successMessage || ''}
+									value={getEditableLocalizedValue(
+										message,
+										languageId,
+										Liferay.Language.get(
+											'thank-you.-your-information-was-successfully-received'
+										)
+									)}
 								/>
 							</ClayInput.GroupItem>
 
@@ -277,52 +287,53 @@ function SuccessMessageOptions({item, onValueSelect}) {
 							</ClayInput.GroupItem>
 						</ClayInput.Group>
 					</ClayForm.Group>
-
-					<ClayToggle
-						label={Liferay.Language.get('preview-success-state')}
-						onToggle={(checked) => {
-							setShowMessagePreview(checked);
-
-							dispatch(
-								updateItemLocalConfig({
-									disableUndo: true,
-									itemConfig: {
-										showMessagePreview: checked,
-									},
-									itemId: item.itemId,
-								})
-							);
-						}}
-						toggled={showMessagePreview}
-					/>
+					<ClayForm.Group small>
+						<ClayToggle
+							label={Liferay.Language.get(
+								'preview-embedded-message'
+							)}
+							onToggle={(checked) => {
+								dispatch(
+									updateItemLocalConfig({
+										disableUndo: true,
+										itemConfig: {
+											showMessagePreview: checked,
+										},
+										itemId: item.itemId,
+									})
+								);
+							}}
+							toggled={Boolean(item.config.showMessagePreview)}
+						/>
+					</ClayForm.Group>
 				</>
 			)}
 
-			{selectedSource === URL_OPTION && (
+			{type === URL_OPTION && (
 				<ClayForm.Group small>
-					<label htmlFor={urlId}>
-						{Liferay.Language.get('external-url')}
-					</label>
-
-					<ClayInput.Group small>
+					<ClayInput.Group className="align-items-end" small>
 						<ClayInput.GroupItem>
-							<ClayInput
-								id={urlId}
-								onBlur={() =>
-									onValueSelect({
-										successMessage: {
-											url: {
-												...(successMessageConfig?.url ||
-													{}),
-												[languageId]: url,
-											},
-										},
+							<TextField
+								aria-describedby={helpTextId}
+								field={{
+									label: Liferay.Language.get('external-url'),
+									typeOptions: {
+										placeholder: 'https://url.com',
+									},
+								}}
+								onValueSelect={(_, value) =>
+									onConfigChange({
+										url: setIn(
+											url || {},
+											languageId,
+											value
+										),
 									})
 								}
-								onChange={(event) => setUrl(event.target.value)}
-								placeholder="https://url.com"
-								type="text"
-								value={url || ''}
+								value={getEditableLocalizedValue(
+									url,
+									languageId
+								)}
 							/>
 						</ClayInput.GroupItem>
 
@@ -342,24 +353,99 @@ function SuccessMessageOptions({item, onValueSelect}) {
 				</ClayForm.Group>
 			)}
 
-			{selectedSource === DISPLAY_PAGE_OPTION && (
+			{type === DISPLAY_PAGE_OPTION && (
 				<DisplayPageSelector
 					item={item}
-					onValueSelect={onValueSelect}
-					selectedSource={selectedSource}
-					selectedValue={successMessageConfig?.displayPage}
+					onConfigChange={onConfigChange}
+					selectedValue={displayPage}
+					type={type}
 				/>
+			)}
+
+			{type !== URL_OPTION && (
+				<>
+					<ClayForm.Group small>
+						<CheckboxField
+							field={{
+								label: Liferay.Language.get(
+									'show-notification-when-form-is-submitted'
+								),
+								name: 'showNotification',
+							}}
+							onValueSelect={(name, value) => {
+								onConfigChange({[name]: value});
+							}}
+							value={showNotification}
+						/>
+					</ClayForm.Group>
+
+					{showNotification && (
+						<>
+							<ClayForm.Group small>
+								<ClayInput.Group
+									className="align-items-end c-mb-2"
+									small
+								>
+									<ClayInput.GroupItem>
+										<TextField
+											field={{
+												label: Liferay.Language.get(
+													'success-notification-text'
+												),
+											}}
+											onValueSelect={(_, value) => {
+												if (showNotificationPreview) {
+													onPreviewNotification(
+														false
+													);
+													hidePreview();
+												}
+												onConfigChange({
+													notificationText: setIn(
+														notificationText || {},
+														languageId,
+														value
+													),
+												});
+											}}
+											value={localizedNotificationText}
+										/>
+									</ClayInput.GroupItem>
+
+									<ClayInput.GroupItem shrink>
+										<CurrentLanguageFlag />
+									</ClayInput.GroupItem>
+								</ClayInput.Group>
+
+								<ClayButton
+									aria-label={Liferay.Language.get(
+										'preview-success-notification'
+									)}
+									displayType="secondary"
+									onClick={() => {
+										onPreviewNotification(true);
+										openToast({
+											message: localizedNotificationText,
+											onClose: () =>
+												onPreviewNotification(false),
+											toastProps: {
+												id: previewId,
+											},
+										});
+									}}
+								>
+									{Liferay.Language.get('preview')}
+								</ClayButton>
+							</ClayForm.Group>
+						</>
+					)}
+				</>
 			)}
 		</>
 	);
 }
 
-function DisplayPageSelector({
-	item,
-	onValueSelect,
-	selectedSource,
-	selectedValue,
-}) {
+function DisplayPageSelector({item, onConfigChange, selectedValue, type}) {
 	const dispatch = useDispatch();
 
 	const mappingFields = useSelector((state) => state.mappingFields);
@@ -367,7 +453,7 @@ function DisplayPageSelector({
 	const [displayPageFields, setDisplayPageFields] = useState(null);
 
 	useEffect(() => {
-		if (selectedSource !== DISPLAY_PAGE_OPTION) {
+		if (type !== DISPLAY_PAGE_OPTION) {
 			return;
 		}
 
@@ -375,10 +461,10 @@ function DisplayPageSelector({
 
 		const key = getMappingFieldsKey({classNameId, classTypeId});
 
-		const fields = mappingFields[key];
+		const fieldSets = mappingFields[key];
 
-		if (fields) {
-			setDisplayPageFields(filterFields(fields));
+		if (fieldSets) {
+			setDisplayPageFields(filterFields(fieldSets));
 		}
 		else {
 			InfoItemService.getAvailableStructureMappingFields({
@@ -389,7 +475,7 @@ function DisplayPageSelector({
 				dispatch(addMappingFields({fields: newFields, key}));
 			});
 		}
-	}, [dispatch, item, mappingFields, selectedSource]);
+	}, [dispatch, item, mappingFields, type]);
 
 	return (
 		<MappingFieldSelector
@@ -398,13 +484,11 @@ function DisplayPageSelector({
 			fields={displayPageFields}
 			label={Liferay.Language.get('display-page')}
 			onValueSelect={(event) =>
-				onValueSelect({
-					successMessage: {
-						displayPage:
-							event.target.value === 'unmapped'
-								? null
-								: event.target.value,
-					},
+				onConfigChange({
+					displayPage:
+						event.target.value === 'unmapped'
+							? null
+							: event.target.value,
 				})
 			}
 			value={selectedValue}
@@ -412,8 +496,8 @@ function DisplayPageSelector({
 	);
 }
 
-function filterFields(fields) {
-	return fields.reduce((acc, fieldSet) => {
+function filterFields(fieldSets) {
+	return fieldSets.reduce((acc, fieldSet) => {
 		const newFields = fieldSet.fields.filter(
 			(field) => field.type === 'display-page'
 		);
@@ -430,24 +514,4 @@ function filterFields(fields) {
 
 		return acc;
 	}, []);
-}
-
-function getSelectedOption(successMessageConfig) {
-	if (successMessageConfig.url) {
-		return URL_OPTION;
-	}
-
-	if (successMessageConfig.message) {
-		return EMBEDDED_OPTION;
-	}
-
-	if (successMessageConfig.layout?.layoutUuid) {
-		return LAYOUT_OPTION;
-	}
-
-	if (successMessageConfig.displayPage) {
-		return DISPLAY_PAGE_OPTION;
-	}
-
-	return EMBEDDED_OPTION;
 }

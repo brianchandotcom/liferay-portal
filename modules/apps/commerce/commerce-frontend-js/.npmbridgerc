@@ -4,7 +4,7 @@
 			"from": "(.*)\\.js$",
 			"to": "bridge/commerce-frontend-js/$1"
 		},
-		"file-globs": "**/*.js,**/*.soy.js",
+		"file-globs": "**/*.js,**/*.soy.js,!**/bridge,!bridge/commerce-frontend-js,!node_modules",
 		"input": "build/node/packageRunBuild/resources",
 		"output": "build/node/packageRunBuild/resources/bridge/commerce-frontend-js",
 		"src-mod-name-mapper": {

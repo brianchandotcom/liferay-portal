@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.price;
@@ -17,7 +8,10 @@ package com.liferay.commerce.price;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.math.BigDecimal;
 
 /**
  * @author Marco Leo
@@ -26,11 +20,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface CommerceProductPriceCalculation {
 
 	public CommerceMoney getBasePrice(
-			long cpInstanceId, CommerceCurrency commerceCurrency)
+			long cpInstanceId, CommerceCurrency commerceCurrency,
+			String unitOfMeasureKey)
 		throws PortalException;
 
 	public CommerceMoney getBasePromoPrice(
-			long cpInstanceId, CommerceCurrency commerceCurrency)
+			long cpInstanceId, CommerceCurrency commerceCurrency,
+			String unitOfMeasureKey)
 		throws PortalException;
 
 	public CommerceProductPrice getCommerceProductPrice(
@@ -38,12 +34,13 @@ public interface CommerceProductPriceCalculation {
 		throws PortalException;
 
 	public CommerceProductPrice getCommerceProductPrice(
-			long cpInstanceId, int quantity, boolean secure,
-			CommerceContext commerceContext)
+			long cpInstanceId, BigDecimal quantity, boolean secure,
+			String unitOfMeasureKey, CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceProductPrice getCommerceProductPrice(
-			long cpInstanceId, int quantity, CommerceContext commerceContext)
+			long cpInstanceId, BigDecimal quantity, String unitOfMeasureKey,
+			CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceMoney getCPDefinitionMinimumPrice(
@@ -56,40 +53,50 @@ public interface CommerceProductPriceCalculation {
 		throws PortalException;
 
 	public CommerceMoney getFinalPrice(
-			long cpInstanceId, int quantity, boolean secure,
-			CommerceContext commerceContext)
+			long cpInstanceId, BigDecimal quantity, boolean secure,
+			String unitOfMeasureKey, CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceMoney getFinalPrice(
-			long cpInstanceId, int quantity, CommerceContext commerceContext)
+			long cpInstanceId, BigDecimal quantity, String unitOfMeasureKey,
+			CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceMoney getPromoPrice(
-			long cpInstanceId, int quantity, CommerceCurrency commerceCurrency,
-			boolean secure, CommerceContext commerceContext)
+			long cpInstanceId, BigDecimal quantity,
+			CommerceCurrency commerceCurrency, boolean secure,
+			String unitOfMeasureKey, CommerceContext commerceContext)
+		throws PortalException;
+
+	public CommercePriceEntry getUnitCommercePriceEntry(
+			CommerceContext commerceContext, long cpInstanceId,
+			String unitOfMeasureKey)
 		throws PortalException;
 
 	public CommerceMoney getUnitMaxPrice(
-			long cpDefinitionId, int quantity, boolean secure,
-			CommerceContext commerceContext)
+			long cpDefinitionId, BigDecimal quantity, boolean secure,
+			String unitOfMeasureKey, CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceMoney getUnitMaxPrice(
-			long cpDefinitionId, int quantity, CommerceContext commerceContext)
-		throws PortalException;
-
-	public CommerceMoney getUnitMinPrice(
-			long cpDefinitionId, int quantity, boolean secure,
+			long cpDefinitionId, BigDecimal quantity, String unitOfMeasureKey,
 			CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceMoney getUnitMinPrice(
-			long cpDefinitionId, int quantity, CommerceContext commerceContext)
+			long cpDefinitionId, BigDecimal quantity, boolean secure,
+			CommerceContext commerceContext)
+		throws PortalException;
+
+	public CommerceMoney getUnitMinPrice(
+			long cpDefinitionId, BigDecimal quantity,
+			CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceMoney getUnitPrice(
-			long cpInstanceId, int quantity, CommerceCurrency commerceCurrency,
-			boolean secure, CommerceContext commerceContext)
+			long cpInstanceId, BigDecimal quantity,
+			CommerceCurrency commerceCurrency, boolean secure,
+			String unitOfMeasureKey, CommerceContext commerceContext)
 		throws PortalException;
 
 }

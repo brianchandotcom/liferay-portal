@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.service.test;
@@ -25,6 +16,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectValidationRuleService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -66,7 +58,7 @@ public class ObjectValidationRuleServiceTest {
 	public void setUp() throws Exception {
 		_guestUser = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			false, _objectDefinitionLocalService,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
@@ -179,12 +171,13 @@ public class ObjectValidationRuleServiceTest {
 		throws Exception {
 
 		return _objectValidationRuleLocalService.addObjectValidationRule(
-			user.getUserId(), _objectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, user.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true,
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-			"isEmailAddress(textField)", Collections.emptyList());
+			"isEmailAddress(textField)", false, Collections.emptyList());
 	}
 
 	private void _setUser(User user) {
@@ -205,14 +198,15 @@ public class ObjectValidationRuleServiceTest {
 
 			objectValidationRule =
 				_objectValidationRuleService.addObjectValidationRule(
-					objectDefinitionId, true,
+					StringPool.BLANK, objectDefinitionId, true,
 					ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-					"isEmailAddress(textField)", Collections.emptyList());
+					"isEmailAddress(textField)", false,
+					Collections.emptyList());
 		}
 		finally {
 			if (objectValidationRule != null) {
@@ -272,6 +266,7 @@ public class ObjectValidationRuleServiceTest {
 
 			objectValidationRule =
 				_objectValidationRuleService.updateObjectValidationRule(
+					StringPool.BLANK,
 					objectValidationRule.getObjectValidationRuleId(), false,
 					ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 					LocalizedMapUtil.getLocalizedMap(

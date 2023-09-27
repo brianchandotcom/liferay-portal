@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+		"frontend-js-web": "*"
+	},
+	"name": "@liferay/layout-utility-page-terms-of-use",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.14"
+}

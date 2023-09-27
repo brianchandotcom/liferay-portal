@@ -56,7 +56,15 @@ export type MetricHistogram = {
 	variantMetrics: Array<VariantMetric>;
 };
 
-export type GetLinkFn = (pageURL: string, id: string) => string;
+export type GetLinkFn = ({
+	action,
+	id,
+	pageURL
+}: {
+	action?: string;
+	id: string;
+	pageURL: string;
+}) => string;
 
 export type GetFormattedVariantHistogramFn = (
 	histogram: Array<VariantHistogram>
@@ -76,12 +84,13 @@ export type GetShortIntervals = (intervals: Array<Date>) => Array<Date>;
 
 export type GetTicksFn = (maxValue: number) => Array<number>;
 
-export type GetVariantLabel = (
-	status: Status,
-	bestVariant: Variant,
-	winnerVariantId: string,
-	variantId: string
-) => string | undefined;
+export type GetVariantLabels = (experiment: {
+	bestVariant?: Variant;
+	dxpVariantId: string;
+	publishedDXPVariantId?: string;
+	status: Status;
+	winnerDXPVariantId?: string;
+}) => Array<{status: string; value: string}>;
 
 export type Histogram = {
 	key: string;
@@ -131,16 +140,6 @@ export type ModalCompleteFn = (
 		nextStatus: Status;
 		submitMessage: string;
 		title: string;
-	};
-	title: string;
-};
-
-export type ModalDeleteFn = (
-	experimentId: string
-) => {
-	Component: React.ReactNode;
-	props: {
-		experimentId: string;
 	};
 	title: string;
 };
@@ -203,8 +202,6 @@ export type StepInputs = {
 	disabled?: boolean;
 	Description: React.FC<React.HTMLAttributes<HTMLElement>>;
 	modal?: Modal;
-	label: string;
-	link?: string;
 	showIcon?: boolean;
 	title: string;
 	tooltip?: string;

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.petra.sql.dsl.spi.expression;
@@ -35,7 +26,7 @@ public class DefaultPredicate
 		Expression<?> leftExpression, Operand operand,
 		Expression<?> rightExpression) {
 
-		this(leftExpression, operand, rightExpression, false);
+		this(leftExpression, operand, rightExpression, false, false);
 	}
 
 	@Override
@@ -59,17 +50,22 @@ public class DefaultPredicate
 		return _rightExpression;
 	}
 
+	public boolean isNot() {
+		return _not;
+	}
+
 	public boolean isWrapParentheses() {
 		return _wrapParentheses;
 	}
 
 	@Override
-	public Predicate not(Expression<Boolean> expression) {
-		if (expression == null) {
+	public Predicate not() {
+		if (_not) {
 			return this;
 		}
 
-		return new DefaultPredicate(this, Operand.NOT, expression);
+		return new DefaultPredicate(
+			_leftExpression, _operand, _rightExpression, true, true);
 	}
 
 	@Override
@@ -95,7 +91,7 @@ public class DefaultPredicate
 		}
 
 		return new DefaultPredicate(
-			_leftExpression, _operand, _rightExpression, true);
+			_leftExpression, _operand, _rightExpression, true, _not);
 	}
 
 	@Override
@@ -131,6 +127,10 @@ public class DefaultPredicate
 				if (defaultPredicate.isWrapParentheses()) {
 					deque.push(new ASTNodeAdapter("("));
 				}
+
+				if (defaultPredicate.isNot()) {
+					deque.push(new ASTNodeAdapter("not "));
+				}
 			}
 			else {
 				astNode.toSQL(consumer, astNodeListener);
@@ -140,15 +140,17 @@ public class DefaultPredicate
 
 	private DefaultPredicate(
 		Expression<?> leftExpression, Operand operand,
-		Expression<?> rightExpression, boolean wrapParentheses) {
+		Expression<?> rightExpression, boolean wrapParentheses, boolean not) {
 
 		_leftExpression = Objects.requireNonNull(leftExpression);
 		_operand = Objects.requireNonNull(operand);
 		_rightExpression = Objects.requireNonNull(rightExpression);
 		_wrapParentheses = wrapParentheses;
+		_not = not;
 	}
 
 	private final Expression<?> _leftExpression;
+	private final boolean _not;
 	private final Operand _operand;
 	private final Expression<?> _rightExpression;
 	private final boolean _wrapParentheses;

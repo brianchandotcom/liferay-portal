@@ -446,6 +446,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -547,6 +548,33 @@ definition {
 			value1 = "Knowledge Base Article Title");
 	}
 
+	@description = "This test ensures that a user can move the kb entry from the Move Modal."
+	@priority = 4
+	test CanMoveArticleFromMoveModal {
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderName = "KB Folder");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.moveArticleCP(
+			destinationItem = "KB Folder",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Alert.reloadPageAfterSuccessMessage(successMessage = "Your request completed successfully.");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
 	@description = "This test ensures that a user can move the kb entry from the navigation pane."
 	@priority = 5
 	test CanMoveArticleFromNavigationPane {
@@ -566,13 +594,11 @@ definition {
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
 
 		KBArticle.moveArticleCP(
-			kbArticleCurrentParent = "Home",
+			destinationItem = "KB Folder",
 			kbArticleTitle = "Knowledge Base Article Title",
 			navigationPane = "true");
 
-		KBFolder.selectParentCP(kbFolderName = "KB Folder");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		Alert.reloadPageAfterSuccessMessage(successMessage = "Your request completed successfully.");
 
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
 
@@ -617,6 +643,7 @@ definition {
 	@refactorneeded
 	test CannotAddArticleWithInvalidAttachmentSize {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -875,6 +902,7 @@ definition {
 	test CanRepublishAnExpiredArticle {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
@@ -930,6 +958,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
@@ -976,6 +1005,7 @@ definition {
 	test CanReviewArticleWhenReviewDateIsUpdated {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
@@ -1044,6 +1074,76 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content Edit",
 			kbArticleTitle = "Knowledge Base Article Title Edit",
 			kbStatus = "Draft");
+	}
+
+	@description = "This test ensures that a user can search the kb entry from the Move Modal."
+	@priority = 4
+	test CanSearchArticleInMoveModal {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content2",
+			kbArticleTitle = "Knowledge Base Article Title2");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title2",
+			kbChildArticleContent = "Child Knowledge Base Article Content",
+			kbChildArticleTitle = "apple");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.searchArticleInMoveModal(
+			kbArticleTitle = "Knowledge Base Article Title",
+			searchItem = "apple");
+
+		AssertTextEquals(
+			key_itemName = "apple",
+			locator1 = "KnowledgeBase#MOVE_MODAL_SEARCH_RESULT",
+			value1 = "apple");
+	}
+
+	@description = "This test covers LPS-128095. It validates that the articles can be sorted."
+	@priority = 3
+	test CanSortArticles {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Apple",
+			kbArticleTitle = "Apple");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Bag",
+			kbArticleTitle = "Bag");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Cat",
+			kbArticleTitle = "Cat");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryTitleLinkSpecific(
+			listEntry = "Apple",
+			position = 1);
+
+		LexiconList.viewListEntryTitleLinkSpecific(
+			listEntry = "Cat",
+			position = 3);
+
+		ManagementBar.sortAssets(sortDirection = "Descending");
+
+		LexiconList.viewListEntryTitleLinkSpecific(
+			listEntry = "Apple",
+			position = 3);
+
+		LexiconList.viewListEntryTitleLinkSpecific(
+			listEntry = "Cat",
+			position = 1);
 	}
 
 	@description = "This test ensures that users can subscribe to a kb article by clicking the ellipsis on the kb entry."
@@ -1194,6 +1294,7 @@ definition {
 	test CanViewExpiredArticle {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
@@ -1248,6 +1349,70 @@ definition {
 			key_kbArticleStatus = "Expired",
 			key_kbArticleTitle = "Knowledge Base Article Title",
 			locator1 = "WorkflowKnowledgeBaseArticle#ARTICLE_TABLE_ARTICLE_STATUS");
+	}
+
+	@description = "This test covers LPS-184220. It checks that the article can not be expired before approving and it can be expired after approving."
+	@priority = 4
+	test CanViewExpiredArticleWithWorkflowEnabled {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Knowledge Base Article");
+
+		KBArticle.updateCheckInterval(fieldValue = 1);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			enableExpirationDate = "true",
+			extendedMinutes = 1,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowAction = "Submit for Workflow",
+			notificationDate = 0);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Pending");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Knowledge Base Article Title",
+			workflowAssetType = "Knowledge Base Article",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Knowledge Base Article Title",
+			workflowAssetType = "Knowledge Base Article",
+			workflowTask = "Review");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Approved");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Expiring Soon");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the article is expired. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
+
+		Pause(locator1 = 60000);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Expired");
 	}
 
 	@description = "This ensures that an image in the KB content field can be rendered correctly after moving it to a folder."
@@ -1475,6 +1640,7 @@ definition {
 	@refactorneeded
 	test ViewKBArticleGitHubSourceURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

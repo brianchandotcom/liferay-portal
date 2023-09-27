@@ -85,11 +85,11 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Document Title Edit 2",
-			warningMessage = "Modification Conflict: The conflict cannot be automatically resolved.");
+			warningMessage = "Entity Recently Updated");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Document Title Edit 2",
-			warningMessage = "Duplicate Document Version: The document version was updated to latest.");
+			warningMessage = "Duplicate Document Version");
 	}
 
 	@description = "Assert the conflict changes disply when modifying and deleting the same document in two Publications"
@@ -145,15 +145,15 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Asset",
-			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
+			warningMessage = "Entity Updated Before Deletion");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Document Version",
-			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
+			warningMessage = "Entity Updated Before Deletion");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Document",
-			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
+			warningMessage = "Entity Updated Before Deletion");
 	}
 
 	@description = "This is a use case for LPS-172496. Deleting a portlet with a modified configuration from a Publication incorrectly leads to a Deletion Modification Conflict"
@@ -195,10 +195,72 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-187009 - Can not publish a publication when there is a duplicate mapping conflict in a mapping table."
+	@priority = 3
+	test CanPublishWithDuplicateMappingConflictInMappingTable {
+		task ("Create a Web Content and a Tag in Production mode") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content content",
+				groupName = "Guest",
+				title = "Web Content Title");
+
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "test tag");
+		}
+
+		task ("Create new Publication and edit web content adding the Tag created") {
+			JSONPublications.addPublication(publicationName = "Test Publication");
+
+			JSONPublications.selectPublication(publicationName = "Test Publication");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			Panel.expandPanel(panel = "Categorization");
+
+			AssetCategorization.addTag(tagName = "test tag");
+
+			PortletEntry.publish();
+		}
+
+		task ("Switch to Production and edit web content adding the Tag created") {
+			Publications.workOnProduction();
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			Panel.expandPanel(panel = "Categorization");
+
+			AssetCategorization.addTag(tagName = "test tag");
+
+			PortletEntry.publish();
+		}
+
+		task ("Publish Publication and assert that the Tag show up in production") {
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
+
+			Publications.publishPublication(publicationName = "Test Publication");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			Panel.expandPanel(panel = "Categorization");
+
+			AssertElementPresent(
+				key_tagName = "test tag",
+				locator1 = "AssetCategorization#TAG");
+		}
+	}
+
 	@description = "This is a use case for LPS-175305. As a publication admin, I would like to know log the conflicts that happened."
 	@priority = 4
 	test CanSeeConflictsInTheLog {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add Log level and Web Content") {
 			ServerAdministration.openServerAdmin();
@@ -353,8 +415,8 @@ definition {
 			changeUser = "Test Test");
 
 		Publications.publishPublication(
-			publicationName = "Publication 1 Name",
-			reviewChangesPage = "true");
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 1 Name");
 
 		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",
@@ -373,7 +435,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "WC Folder Name",
-			warningMessage = "Duplicate Folder Name: Rename the folder in the publication.");
+			warningMessage = "Duplicate Folder Name");
 	}
 
 	@description = "Assert explanation of missing requirements conflict displays"
@@ -424,7 +486,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "WC SubFolder Name",
-			warningMessage = "Missing Requirement Conflict: Cannot be added because a required Web Content Folder has been deleted.");
+			warningMessage = "Missing Requirement Conflict");
 	}
 
 	@description = "Assert the conflict changes disply when modifying and deleting the same document in two Publications and discard the changes"
@@ -472,8 +534,8 @@ definition {
 			changeUser = "Test Test");
 
 		Publications.publishPublication(
-			publicationName = "Publication 1 Name",
-			reviewChangesPage = "true");
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 1 Name");
 
 		Navigator.gotoNavTab(navTab = "History");
 
@@ -509,7 +571,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "WC WebContent Title 2 Edit",
-			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
+			warningMessage = "Missing Entity");
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "WC WebContent Title 2 Edit");
 
@@ -526,12 +588,6 @@ definition {
 			changeTitle = "WC WebContent Title 2 Edit",
 			conflictingChanges = "true",
 			entryTitle = "WC WebContent Title 2 Edit");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title 2 Edit");
-
-		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title");
 
 		Publications.publishPublication(publicationName = "Publication 2 Name");
 
@@ -592,7 +648,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Folder Name",
-			warningMessage = "Duplicate Folder Name: Rename the folder in the publication.");
+			warningMessage = "Duplicate Folder Name");
 
 		PublicationsChanges.gotoEditChanges(
 			changeCategory = "Documents Folder",

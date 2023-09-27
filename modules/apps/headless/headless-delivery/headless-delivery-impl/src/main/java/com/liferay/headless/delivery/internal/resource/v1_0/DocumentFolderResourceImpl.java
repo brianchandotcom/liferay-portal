@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
@@ -24,7 +15,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
@@ -44,6 +35,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -404,13 +396,22 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 			_dlAppService.addFolder(
 				externalReferenceCode, groupId, parentFolderId,
 				documentFolder.getName(), documentFolder.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					CustomFieldsUtil.toMap(
-						DLFolder.class.getName(), contextCompany.getCompanyId(),
-						documentFolder.getCustomFields(),
-						contextAcceptLanguage.getPreferredLocale()),
-					groupId, contextHttpServletRequest,
+				_createServiceContext(
+					groupId, documentFolder,
 					documentFolder.getViewableByAsString())));
+	}
+
+	private ServiceContext _createServiceContext(
+		long groupId, DocumentFolder documentFolder, String viewableBy) {
+
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, viewableBy
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				DLFolder.class.getName(), contextCompany.getCompanyId(),
+				documentFolder.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	private Page<DocumentFolder> _getDocumentFoldersPage(
@@ -585,12 +586,7 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 			_dlAppService.updateFolder(
 				folder.getFolderId(), documentFolder.getName(),
 				documentFolder.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					CustomFieldsUtil.toMap(
-						DLFolder.class.getName(), contextCompany.getCompanyId(),
-						documentFolder.getCustomFields(),
-						contextAcceptLanguage.getPreferredLocale()),
-					0, contextHttpServletRequest, null)));
+				_createServiceContext(0, documentFolder, null)));
 	}
 
 	@Reference

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Trash Service
 Bundle-SymbolicName: com.liferay.trash.service
-Bundle-Version: 5.0.38
+Bundle-Version: 5.0.39
 Import-Package:\
 	com.liferay.trash.util.comparator,\
 	\

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.users.admin.internal.search.spi.model.index.contributor;
@@ -27,7 +18,6 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.search.Document;
@@ -39,6 +29,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.TeamLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -73,6 +64,7 @@ public class UserModelDocumentContributor
 				user.getUserId());
 
 			document.addKeyword(Field.COMPANY_ID, user.getCompanyId());
+			document.addDate(Field.CREATE_DATE, user.getCreateDate());
 			document.addKeyword(Field.GROUP_ID, activeTransitiveGroupIds);
 			document.addDate(Field.MODIFIED_DATE, user.getModifiedDate());
 			document.addKeyword(Field.SCOPE_GROUP_ID, activeTransitiveGroupIds);
@@ -208,15 +200,15 @@ public class UserModelDocumentContributor
 			return user.getTeamIds();
 		}
 
-		List<Team> teams = new ArrayList<>();
+		long[] teamIds = user.getTeamIds();
 
 		for (long userGroupId : user.getUserGroupIds()) {
-			teams.addAll(_teamLocalService.getUserGroupTeams(userGroupId));
+			teamIds = ArrayUtil.append(
+				teamIds,
+				_userGroupLocalService.getTeamPrimaryKeys(userGroupId));
 		}
 
-		return ArrayUtil.append(
-			ListUtil.toLongArray(teams, Team.TEAM_ID_ACCESSOR),
-			user.getTeamIds());
+		return teamIds;
 	}
 
 	private long[] _getUserGroupRoleIds(long userId) {
@@ -304,5 +296,8 @@ public class UserModelDocumentContributor
 
 	@Reference
 	private TeamLocalService _teamLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 }

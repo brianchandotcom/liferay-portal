@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
@@ -19,7 +10,7 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsRequest;
+import org.elasticsearch.client.indices.GetFieldMappingsRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -53,8 +44,7 @@ public class GetFieldMappingIndexRequestExecutorTest {
 	public void testIndexRequestTranslation() {
 		GetFieldMappingIndexRequest getFieldMappingIndexRequest =
 			new GetFieldMappingIndexRequest(
-				new String[] {_INDEX_NAME}, _MAPPING_NAME,
-				new String[] {_FIELD_NAME});
+				new String[] {_INDEX_NAME}, new String[] {_FIELD_NAME});
 
 		GetFieldMappingIndexRequestExecutorImpl
 			getFieldMappingIndexRequestExecutorImpl =
@@ -71,16 +61,12 @@ public class GetFieldMappingIndexRequestExecutorTest {
 		Assert.assertArrayEquals(
 			new String[] {_INDEX_NAME}, getFieldMappingsRequest.indices());
 		Assert.assertArrayEquals(
-			new String[] {_MAPPING_NAME}, getFieldMappingsRequest.types());
-		Assert.assertArrayEquals(
 			new String[] {_FIELD_NAME}, getFieldMappingsRequest.fields());
 	}
 
 	private static final String _FIELD_NAME = "testField";
 
 	private static final String _INDEX_NAME = "test_request_index";
-
-	private static final String _MAPPING_NAME = "testMapping";
 
 	private ElasticsearchFixture _elasticsearchFixture;
 

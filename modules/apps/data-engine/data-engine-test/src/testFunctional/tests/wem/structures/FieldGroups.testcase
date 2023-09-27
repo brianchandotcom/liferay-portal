@@ -32,6 +32,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-161853. Verify if all field groups are present after realigning."
+	@priority = 4
+	test CheckFieldGroupsAfterResize {
+		task ("Given a Web Structure form with a field group") {
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			DataEngine.addFieldNested(
+				fieldFieldLabel = "Date",
+				fieldName = "Date",
+				targetFieldLabel = "Text");
+		}
+
+		task ("When the fields in the field group is resized and realigned") {
+			FormFields.viewFieldSize(
+				fieldName = "Text",
+				size = 12);
+
+			FormFields.resizeField(
+				fieldName = "Text",
+				moveForce = "-400");
+
+			FormFields.moveFieldToPosition(
+				fieldColumnNumber = 1,
+				fieldLabel = "Date");
+
+			Click(locator1 = "Sidebar#BACK");
+		}
+
+		task ("and when another resized field is added to the field group") {
+			DataEngine.addFieldToFieldsGroup(
+				fieldFieldLabel = "Numeric",
+				fieldName = "Numeric",
+				fieldsGroupLabel = "Fields Group");
+
+			FormFields.viewFieldSize(
+				fieldName = "Numeric",
+				size = 12);
+
+			SelectFrame.selectFrameNoLoading(
+				fieldLabel = "Numeric",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+
+			FormFields.resizeFieldGroup(
+				fieldName = "Numeric",
+				moveForce = "-300");
+		}
+
+		task ("Then all fields in the field group are present") {
+			FormFields.assertFieldsVisibleInFieldGroup(
+				fieldGroupLabel = "Fields Group",
+				fieldGroupLabelList = "Text,Date,Numeric");
+		}
+	}
+
 	@description = "This is a test for LPS-98077. Make sure data inserted on a Group Field persists"
 	@priority = 3
 	test CheckIfFieldGroupDataPersists {

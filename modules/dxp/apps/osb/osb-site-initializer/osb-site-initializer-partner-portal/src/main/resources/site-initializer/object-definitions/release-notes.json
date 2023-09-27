@@ -1,0 +1,29 @@
+{
+	"enableComments": true,
+	"externalReferenceCode": "20fb39e0-bcc0-525f-d42d-a874391806c2",
+	"label": {
+		"en_US": "Release Notes"
+	},
+	"name": "ReleaseNotes",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "2576989b-232c-46f2-93c2-8b11c43b24ab",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Summary"
+			},
+			"name": "summary",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Release Notes"
+	},
+	"portlet": true,
+	"scope": "company"
+}

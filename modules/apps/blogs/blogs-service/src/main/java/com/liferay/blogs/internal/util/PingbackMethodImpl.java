@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.blogs.internal.util;
@@ -42,8 +33,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.kernel.xmlrpc.Response;
-import com.liferay.portal.kernel.xmlrpc.XmlRpc;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcConstants;
+import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.net.InetAddress;
@@ -93,10 +84,10 @@ public class PingbackMethodImpl implements Method {
 				return response;
 			}
 
-			return _xmlRpc.createSuccess("Pingback accepted");
+			return XmlRpcUtil.createSuccess("Pingback accepted");
 		}
 		catch (DuplicateCommentException duplicateCommentException) {
-			return _xmlRpc.createFault(
+			return XmlRpcUtil.createFault(
 				PINGBACK_ALREADY_REGISTERED,
 				"Pingback is already registered: " +
 					duplicateCommentException.getMessage());
@@ -106,7 +97,7 @@ public class PingbackMethodImpl implements Method {
 				_log.debug(exception);
 			}
 
-			return _xmlRpc.createFault(
+			return XmlRpcUtil.createFault(
 				TARGET_URI_INVALID, "Unable to parse target URI");
 		}
 	}
@@ -173,7 +164,7 @@ public class PingbackMethodImpl implements Method {
 
 	private Response _addPingback(long companyId) throws Exception {
 		if (!_isPingbackEnabled()) {
-			return _xmlRpc.createFault(
+			return XmlRpcUtil.createFault(
 				XmlRpcConstants.REQUESTED_METHOD_NOT_FOUND,
 				"Pingbacks are disabled");
 		}
@@ -183,7 +174,7 @@ public class PingbackMethodImpl implements Method {
 		if (!entry.isAllowPingbacks() ||
 			Validator.isNull(entry.getUrlTitle())) {
 
-			return _xmlRpc.createFault(
+			return XmlRpcUtil.createFault(
 				XmlRpcConstants.REQUESTED_METHOD_NOT_FOUND,
 				"Pingbacks are disabled");
 		}
@@ -419,7 +410,7 @@ public class PingbackMethodImpl implements Method {
 
 	private Response _validateSource() throws Exception {
 		if (_isSourceURILocalNetwork()) {
-			return _xmlRpc.createFault(ACCESS_DENIED, "Access Denied");
+			return XmlRpcUtil.createFault(ACCESS_DENIED, "Access Denied");
 		}
 
 		Source source = null;
@@ -434,7 +425,7 @@ public class PingbackMethodImpl implements Method {
 				_log.debug(exception);
 			}
 
-			return _xmlRpc.createFault(
+			return XmlRpcUtil.createFault(
 				SOURCE_URI_DOES_NOT_EXIST, "Error accessing source URI");
 		}
 
@@ -449,7 +440,7 @@ public class PingbackMethodImpl implements Method {
 			}
 		}
 
-		return _xmlRpc.createFault(
+		return XmlRpcUtil.createFault(
 			SOURCE_URI_INVALID, "Unable to find target URI in source");
 	}
 
@@ -485,8 +476,5 @@ public class PingbackMethodImpl implements Method {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private XmlRpc _xmlRpc;
 
 }

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.configuration.admin.web.internal.util;
@@ -20,10 +11,13 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -47,12 +41,13 @@ public class ConfigurationVisibilityUtil {
 			return false;
 		}
 
-		ConfigurationVisibilityController configurationVisibilityController =
-			_serviceTrackerMap.getService(
-				configurationModel.getVisibilityControllerKey());
+		if (!isVisibleByFeatureFlagKey(
+				configurationModel.getFeatureFlagKey(), scope, scopePK) ||
+			!isVisibleByVisibilityControllerKey(
+				configurationModel.getVisibilityControllerKey(), scope,
+				scopePK)) {
 
-		if (configurationVisibilityController != null) {
-			return configurationVisibilityController.isVisible(scope, scopePK);
+			return false;
 		}
 
 		return true;
@@ -62,21 +57,42 @@ public class ConfigurationVisibilityUtil {
 		String pid, ExtendedObjectClassDefinition.Scope scope,
 		Serializable scopePK) {
 
-		ConfigurationVisibilityController configurationVisibilityController =
-			_serviceTrackerMap.getService(pid);
+		Class<?> clazz = _getClass(pid);
 
-		if (configurationVisibilityController != null) {
-			return configurationVisibilityController.isVisible(scope, scopePK);
-		}
+		if (!isVisibleByFeatureFlagKey(
+				_getFeatureFlagKey(clazz), scope, scopePK) ||
+			!isVisibleByVisibilityControllerKey(
+				_getVisibilityControllerKey(clazz, pid), scope, scopePK)) {
 
-		configurationVisibilityController = _serviceTrackerMap.getService(
-			_getVisibilityControllerKey(pid));
-
-		if (configurationVisibilityController != null) {
-			return configurationVisibilityController.isVisible(scope, scopePK);
+			return false;
 		}
 
 		return true;
+	}
+
+	public static boolean isVisibleByFeatureFlagKey(
+		String featureFlagKey, ExtendedObjectClassDefinition.Scope scope,
+		Serializable scopePK) {
+
+		if (Validator.isBlank(featureFlagKey)) {
+			return true;
+		}
+
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY)) {
+			return FeatureFlagManagerUtil.isEnabled(
+				(long)scopePK, featureFlagKey);
+		}
+
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
+			Group group = GroupLocalServiceUtil.fetchGroup((long)scopePK);
+
+			if (group != null) {
+				return FeatureFlagManagerUtil.isEnabled(
+					group.getCompanyId(), featureFlagKey);
+			}
+		}
+
+		return FeatureFlagManagerUtil.isEnabled(featureFlagKey);
 	}
 
 	public static boolean isVisibleByVisibilityControllerKey(
@@ -131,44 +147,76 @@ public class ConfigurationVisibilityUtil {
 			}
 		}
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("No class found for PID " + pid);
+		}
+
 		return null;
 	}
 
-	private static String _getVisibilityControllerKey(String pid) {
-		Class<?> clazz = _getClass(pid);
-
+	private static String _getFeatureFlagKey(Class<?> clazz) {
 		if (clazz == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("No class found for pid " + pid);
-			}
-
-			return pid;
+			return StringPool.BLANK;
 		}
 
-		ExtendedObjectClassDefinition annotation = clazz.getAnnotation(
-			ExtendedObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition =
+			clazz.getAnnotation(ExtendedObjectClassDefinition.class);
 
-		if (annotation == null) {
+		if (extendedObjectClassDefinition == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					StringBundler.concat(
-						"No ExtendedObjectClassDefinition annotation found on ",
-						"class ", pid));
+					"Class " + clazz.getName() +
+						" is missing ExtendedObjectClassDefinition");
 			}
 
-			return pid;
+			return StringPool.BLANK;
 		}
 
-		String visibilityControllerKey = annotation.visibilityControllerKey();
+		String featureFlagKey = extendedObjectClassDefinition.featureFlagKey();
+
+		if (Validator.isBlank(featureFlagKey)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Class " + clazz.getName() + " is missing featureFlagKey");
+			}
+
+			return StringPool.BLANK;
+		}
+
+		return featureFlagKey;
+	}
+
+	private static String _getVisibilityControllerKey(
+		Class<?> clazz, String defaultValue) {
+
+		if (clazz == null) {
+			return defaultValue;
+		}
+
+		ExtendedObjectClassDefinition extendedObjectClassDefinition =
+			clazz.getAnnotation(ExtendedObjectClassDefinition.class);
+
+		if (extendedObjectClassDefinition == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Class " + clazz.getName() +
+						" is missing ExtendedObjectClassDefinition");
+			}
+
+			return defaultValue;
+		}
+
+		String visibilityControllerKey =
+			extendedObjectClassDefinition.visibilityControllerKey();
 
 		if (Validator.isBlank(visibilityControllerKey)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No visibilityControllerKey attribute found on class " +
-						pid);
+					"Class " + clazz.getName() +
+						" is missing visibilityControllerKey");
 			}
 
-			return pid;
+			return defaultValue;
 		}
 
 		return visibilityControllerKey;

@@ -1,12 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
@@ -36,7 +30,12 @@ function truncateString(value) {
 		: value;
 }
 
-const SelectSXPBlueprintModal = ({observer, onClose, onSubmit, selectedId}) => {
+const SelectSXPBlueprintModal = ({
+	observer,
+	onClose,
+	onSubmit,
+	selectedExternalReferenceCode = '',
+}) => {
 	const [activePage, setActivePage] = useState(1);
 	const [delta, setDelta] = useState(20);
 	const [search, setSearch] = useState('');
@@ -98,8 +97,8 @@ const SelectSXPBlueprintModal = ({observer, onClose, onSubmit, selectedId}) => {
 		setSearch(value);
 	};
 
-	const _handleSubmit = (id, title) => {
-		onSubmit(id, title);
+	const _handleSubmit = (externalReferenceCode, title) => {
+		onSubmit(externalReferenceCode, title);
 
 		onClose();
 	};
@@ -170,7 +169,7 @@ const SelectSXPBlueprintModal = ({observer, onClose, onSubmit, selectedId}) => {
 
 						<ClayTable.Body>
 							{resource?.items?.map((item) => (
-								<ClayTable.Row key={item.id}>
+								<ClayTable.Row key={item.externalReferenceCode}>
 									<ClayTable.Cell headingTitle>
 										{item.title}
 									</ClayTable.Cell>
@@ -194,19 +193,19 @@ const SelectSXPBlueprintModal = ({observer, onClose, onSubmit, selectedId}) => {
 									<ClayTable.Cell align="right">
 										<ClayButton
 											disabled={
-												item.id?.toString() ===
-												selectedId?.toString()
+												item.externalReferenceCode ===
+												selectedExternalReferenceCode
 											}
 											displayType="secondary"
 											onClick={() =>
 												_handleSubmit(
-													item.id,
+													item.externalReferenceCode,
 													item.title
 												)
 											}
 										>
-											{item.id?.toString() ===
-											selectedId?.toString()
+											{item.externalReferenceCode ===
+											selectedExternalReferenceCode
 												? Liferay.Language.get(
 														'selected'
 												  )

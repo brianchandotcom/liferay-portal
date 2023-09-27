@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import fetchMock from 'fetch-mock';
@@ -17,6 +8,26 @@ import fetchMock from 'fetch-mock';
 import AnalyticsClient from '../../src/analytics';
 
 const applicationId = 'Form';
+
+const createDynamicFormElement = async (attrs) => {
+	const element = document.createElement('div');
+
+	for (let index = 0; index < Object.keys(attrs).length; index++) {
+		element.dataset[Object.keys(attrs)[index]] = attrs[index];
+	}
+
+	document.body.appendChild(element);
+
+	element.addEventListener('submit', (event) => event.preventDefault());
+
+	const event = new Event('submit', {
+		cancelable: true,
+	});
+
+	await element.dispatchEvent(event);
+
+	return element;
+};
 
 describe('Forms Plugin', () => {
 	let Analytics;
@@ -65,56 +76,13 @@ describe('Forms Plugin', () => {
 
 	describe('formViewed event', () => {
 		it('is fired for every form on the page', async () => {
-			const formWithAssetId = document.createElement('form');
+			const formElement = document.createElement('form');
 
-			formWithAssetId.dataset.analyticsAssetId = 'assetId';
-			formWithAssetId.dataset.analyticsAssetTitle = 'Form Title 1';
+			formElement.dataset.analyticsAssetId = 'assetId';
+			formElement.dataset.analyticsAssetTitle = 'Form Title 1';
+			formElement.dataset.analyticsAssetType = 'form';
 
-			document.body.appendChild(formWithAssetId);
-
-			const formWithFormId = document.createElement('form');
-
-			formWithFormId.dataset.analyticsFormId = 'formId';
-			formWithFormId.dataset.analyticsAssetTitle = 'Form Title 2';
-
-			document.body.appendChild(formWithFormId);
-
-			const domContentLoaded = new Event('DOMContentLoaded');
-
-			await document.dispatchEvent(domContentLoaded);
-
-			const events = Analytics.getEvents().filter(
-				({eventId}) => eventId === 'formViewed'
-			);
-
-			expect(events).toEqual([
-				expect.objectContaining({
-					applicationId,
-					eventId: 'formViewed',
-					properties: expect.objectContaining({
-						formId: 'assetId',
-					}),
-				}),
-				expect.objectContaining({
-					applicationId,
-					eventId: 'formViewed',
-					properties: expect.objectContaining({
-						formId: 'formId',
-					}),
-				}),
-			]);
-
-			document.body.removeChild(formWithAssetId);
-			document.body.removeChild(formWithFormId);
-		});
-
-		it('remove spaces between assetTitle and assetId', async () => {
-			const formWithAssetId = document.createElement('form');
-
-			formWithAssetId.dataset.analyticsAssetId = ' assetId ';
-			formWithAssetId.dataset.analyticsAssetTitle = ' Form Title 1 ';
-
-			document.body.appendChild(formWithAssetId);
+			document.body.appendChild(formElement);
 
 			const domContentLoaded = new Event('DOMContentLoaded');
 
@@ -135,7 +103,38 @@ describe('Forms Plugin', () => {
 				}),
 			]);
 
-			document.body.removeChild(formWithAssetId);
+			document.body.removeChild(formElement);
+		});
+
+		it('remove spaces between assetTitle and assetId', async () => {
+			const formElement = document.createElement('form');
+
+			formElement.dataset.analyticsAssetId = ' assetId ';
+			formElement.dataset.analyticsAssetTitle = ' Form Title 1 ';
+			formElement.dataset.analyticsAssetType = 'form';
+
+			document.body.appendChild(formElement);
+
+			const domContentLoaded = new Event('DOMContentLoaded');
+
+			await document.dispatchEvent(domContentLoaded);
+
+			const events = Analytics.getEvents().filter(
+				({eventId}) => eventId === 'formViewed'
+			);
+
+			expect(events).toEqual([
+				expect.objectContaining({
+					applicationId,
+					eventId: 'formViewed',
+					properties: expect.objectContaining({
+						formId: 'assetId',
+						title: 'Form Title 1',
+					}),
+				}),
+			]);
+
+			document.body.removeChild(formElement);
 		});
 	});
 
@@ -145,6 +144,7 @@ describe('Forms Plugin', () => {
 
 			form.dataset.analyticsAssetId = 'formId';
 			form.dataset.analyticsAssetTitle = 'Form Title';
+			form.dataset.analyticsAssetType = 'form';
 
 			document.body.appendChild(form);
 
@@ -179,6 +179,7 @@ describe('Forms Plugin', () => {
 
 			form.dataset.analyticsAssetId = 'formId';
 			form.dataset.analyticsAssetTitle = 'Form Title';
+			form.dataset.analyticsAssetType = 'form';
 
 			document.body.appendChild(form);
 
@@ -215,6 +216,7 @@ describe('Forms Plugin', () => {
 
 			form.dataset.analyticsAssetId = 'formId';
 			form.dataset.analyticsAssetTitle = 'Form Title';
+			form.dataset.analyticsAssetType = 'form';
 
 			document.body.appendChild(form);
 
@@ -254,5 +256,44 @@ describe('Forms Plugin', () => {
 				1500
 			);
 		});
+	});
+
+	describe('formSubmitted required attributes', () => {
+		it.each([
+			[
+				'assetId',
+				{
+					analyticsAssetTitle: 'assetTitle',
+					analyticsAssetType: 'blog',
+				},
+			],
+			[
+				'assetTitle',
+				{
+					analyticsAssetId: 'assetId',
+					analyticsAssetType: 'blog',
+				},
+			],
+			[
+				'assetType',
+				{
+					analyticsAssetId: 'assetId',
+					analyticsAssetType: 'assetTitle',
+				},
+			],
+		])(
+			'is not fired if asset missing %s attribute',
+			async (label, attrs) => {
+				const element = await createDynamicFormElement(attrs);
+
+				const events = Analytics.getEvents().filter(
+					({eventId}) => eventId === 'formSubmitted'
+				);
+
+				expect(events).toEqual([]);
+
+				document.body.removeChild(element);
+			}
+		);
 	});
 });

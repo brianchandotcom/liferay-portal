@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
@@ -6617,17 +6608,18 @@ public class LVEntryPersistenceImpl
 	 *
 	 * @param pk the primary key of the lv entry
 	 * @param bigDecimalEntryPK the primary key of the big decimal entry
+	 * @return <code>true</code> if an association between the lv entry and the big decimal entry was added; <code>false</code> if they were already associated
 	 */
 	@Override
-	public void addBigDecimalEntry(long pk, long bigDecimalEntryPK) {
+	public boolean addBigDecimalEntry(long pk, long bigDecimalEntryPK) {
 		LVEntry lvEntry = fetchByPrimaryKey(pk);
 
 		if (lvEntry == null) {
-			lvEntryToBigDecimalEntryTableMapper.addTableMapping(
+			return lvEntryToBigDecimalEntryTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk, bigDecimalEntryPK);
 		}
 		else {
-			lvEntryToBigDecimalEntryTableMapper.addTableMapping(
+			return lvEntryToBigDecimalEntryTableMapper.addTableMapping(
 				lvEntry.getCompanyId(), pk, bigDecimalEntryPK);
 		}
 	}
@@ -6637,9 +6629,10 @@ public class LVEntryPersistenceImpl
 	 *
 	 * @param pk the primary key of the lv entry
 	 * @param bigDecimalEntry the big decimal entry
+	 * @return <code>true</code> if an association between the lv entry and the big decimal entry was added; <code>false</code> if they were already associated
 	 */
 	@Override
-	public void addBigDecimalEntry(
+	public boolean addBigDecimalEntry(
 		long pk,
 		com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry
 			bigDecimalEntry) {
@@ -6647,12 +6640,12 @@ public class LVEntryPersistenceImpl
 		LVEntry lvEntry = fetchByPrimaryKey(pk);
 
 		if (lvEntry == null) {
-			lvEntryToBigDecimalEntryTableMapper.addTableMapping(
+			return lvEntryToBigDecimalEntryTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk,
 				bigDecimalEntry.getPrimaryKey());
 		}
 		else {
-			lvEntryToBigDecimalEntryTableMapper.addTableMapping(
+			return lvEntryToBigDecimalEntryTableMapper.addTableMapping(
 				lvEntry.getCompanyId(), pk, bigDecimalEntry.getPrimaryKey());
 		}
 	}
@@ -6662,9 +6655,10 @@ public class LVEntryPersistenceImpl
 	 *
 	 * @param pk the primary key of the lv entry
 	 * @param bigDecimalEntryPKs the primary keys of the big decimal entries
+	 * @return <code>true</code> if at least one association between the lv entry and the big decimal entries was added; <code>false</code> if they were all already associated
 	 */
 	@Override
-	public void addBigDecimalEntries(long pk, long[] bigDecimalEntryPKs) {
+	public boolean addBigDecimalEntries(long pk, long[] bigDecimalEntryPKs) {
 		long companyId = 0;
 
 		LVEntry lvEntry = fetchByPrimaryKey(pk);
@@ -6676,8 +6670,14 @@ public class LVEntryPersistenceImpl
 			companyId = lvEntry.getCompanyId();
 		}
 
-		lvEntryToBigDecimalEntryTableMapper.addTableMappings(
+		long[] addedKeys = lvEntryToBigDecimalEntryTableMapper.addTableMappings(
 			companyId, pk, bigDecimalEntryPKs);
+
+		if (addedKeys.length > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -6685,15 +6685,16 @@ public class LVEntryPersistenceImpl
 	 *
 	 * @param pk the primary key of the lv entry
 	 * @param bigDecimalEntries the big decimal entries
+	 * @return <code>true</code> if at least one association between the lv entry and the big decimal entries was added; <code>false</code> if they were all already associated
 	 */
 	@Override
-	public void addBigDecimalEntries(
+	public boolean addBigDecimalEntries(
 		long pk,
 		List
 			<com.liferay.portal.tools.service.builder.test.model.
 				BigDecimalEntry> bigDecimalEntries) {
 
-		addBigDecimalEntries(
+		return addBigDecimalEntries(
 			pk,
 			ListUtil.toLongArray(
 				bigDecimalEntries,

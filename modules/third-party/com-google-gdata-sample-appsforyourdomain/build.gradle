@@ -16,7 +16,7 @@ compileJava {
 }
 
 dependencies {
-	compile fileTree(dir: "lib", include: "*.jar")
+	api fileTree(dir: "lib", include: "*.jar")
 }
 
 downloadSrc {

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.source.formatter.check.util;
@@ -70,11 +61,30 @@ public class JavaSourceUtil extends SourceUtil {
 		for (String missingImport : missingImports) {
 			sb.append("import ");
 			sb.append(missingImport);
-			sb.append(StringPool.SEMICOLON);
+			sb.append(";\n");
 		}
 
-		return StringUtil.replace(
-			content, packageName + StringPool.SEMICOLON, sb.toString());
+		return StringUtil.replace(content, packageName + ";\n", sb.toString());
+	}
+
+	public static String addMethodNewParameters(
+		String indent, int[] indexNewParameters, String methodStart,
+		String[] newParameters, List<String> parameterList) {
+
+		for (int i = 0; i < indexNewParameters.length; i++) {
+			parameterList.add(indexNewParameters[i], newParameters[i]);
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(methodStart);
+		sb.append(StringPool.NEW_LINE);
+		sb.append(indent);
+		sb.append(StringPool.TAB);
+		sb.append(StringUtil.merge(parameterList, StringPool.COMMA_AND_SPACE));
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
 	}
 
 	public static String getClassName(String fileName) {

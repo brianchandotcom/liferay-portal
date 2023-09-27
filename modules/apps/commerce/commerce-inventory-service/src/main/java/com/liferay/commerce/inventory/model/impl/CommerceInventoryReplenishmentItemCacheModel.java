@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.inventory.model.impl;
@@ -24,6 +15,8 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
+import java.math.BigDecimal;
 
 import java.util.Date;
 
@@ -203,7 +196,9 @@ public class CommerceInventoryReplenishmentItemCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
@@ -219,8 +214,7 @@ public class CommerceInventoryReplenishmentItemCacheModel
 
 		commerceInventoryWarehouseId = objectInput.readLong();
 		availabilityDate = objectInput.readLong();
-
-		quantity = objectInput.readInt();
+		quantity = (BigDecimal)objectInput.readObject();
 		sku = objectInput.readUTF();
 		unitOfMeasureKey = objectInput.readUTF();
 	}
@@ -261,8 +255,7 @@ public class CommerceInventoryReplenishmentItemCacheModel
 
 		objectOutput.writeLong(commerceInventoryWarehouseId);
 		objectOutput.writeLong(availabilityDate);
-
-		objectOutput.writeInt(quantity);
+		objectOutput.writeObject(quantity);
 
 		if (sku == null) {
 			objectOutput.writeUTF("");
@@ -290,7 +283,7 @@ public class CommerceInventoryReplenishmentItemCacheModel
 	public long modifiedDate;
 	public long commerceInventoryWarehouseId;
 	public long availabilityDate;
-	public int quantity;
+	public BigDecimal quantity;
 	public String sku;
 	public String unitOfMeasureKey;
 

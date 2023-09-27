@@ -18,9 +18,9 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 
-	testIntegrationCompile group: "org.apache.cxf", name: "cxf-rt-rs-client", version: "3.4.10"
-	testIntegrationCompile group: "org.mockito", name: "mockito-core", version: "1.10.8"
-	testIntegrationCompile project(":apps:document-library:document-library-api")
-	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "org.apache.cxf", name: "cxf-rt-rs-client", version: "3.4.10"
+	testIntegrationImplementation group: "org.mockito", name: "mockito-core", version: "1.10.8"
+	testIntegrationImplementation project(":apps:document-library:document-library-api")
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

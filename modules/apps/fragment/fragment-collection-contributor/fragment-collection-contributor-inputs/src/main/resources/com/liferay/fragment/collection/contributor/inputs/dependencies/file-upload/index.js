@@ -1,22 +1,18 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 const wrapper = fragmentElement;
 
 const fileInput = document.getElementById(`${fragmentNamespace}-file-upload`);
 const fileName = wrapper.querySelector('.forms-file-upload-file-name');
-const removeButton = wrapper.querySelector("[type='button']");
+const hiddenFileInput = document.getElementById(
+	`${fragmentNamespace}-file-upload-hidden`
+);
+const removeButton = document.getElementById(
+	`${fragmentNamespace}-file-upload-remove-button`
+);
 const selectButton = wrapper.querySelector('.btn-secondary');
 
 function showRemoveButton() {
@@ -26,6 +22,10 @@ function showRemoveButton() {
 
 function onInputChange() {
 	fileName.innerText = fileInput.files[0].name;
+	fileInput.setAttribute('name', input.name);
+
+	hiddenFileInput.setAttribute('name', '');
+	hiddenFileInput.value = '';
 
 	showRemoveButton();
 }
@@ -33,6 +33,8 @@ function onInputChange() {
 function onRemoveFile() {
 	fileInput.value = '';
 	fileName.innerText = '';
+
+	hiddenFileInput.value = '';
 
 	removeButton.classList.add('d-none');
 	removeButton.removeEventListener('click', onRemoveFile);
@@ -63,5 +65,14 @@ else {
 
 	if (input.attributes.selectFromDocumentLibrary) {
 		selectButton.addEventListener('click', onSelectFile);
+	}
+	else {
+		selectButton.addEventListener('click', () => {
+			fileInput.click();
+		});
+	}
+
+	if (fileName.innerText !== '') {
+		showRemoveButton();
 	}
 }

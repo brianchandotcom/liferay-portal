@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
@@ -24,13 +15,13 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.List;
 
@@ -142,7 +133,7 @@ public class WorkflowInstanceManagerImplTest
 						TestPropsValues.getUserId(), null, StringPool.BLANK,
 						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 						StringPool.BLANK, null, true, 0, 1,
-						WorkflowComparatorFactoryUtil.
+						_workflowComparatorFactory.
 							getInstanceCompletedComparator(false));
 
 			List<WorkflowInstance> workflowInstances =
@@ -173,7 +164,7 @@ public class WorkflowInstanceManagerImplTest
 						TestPropsValues.getUserId(), true, StringPool.BLANK,
 						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 						StringPool.BLANK, null, true, 0, 1,
-						WorkflowComparatorFactoryUtil.
+						_workflowComparatorFactory.
 							getInstanceCompletedComparator(false));
 
 			List<WorkflowInstance> workflowInstances =
@@ -193,8 +184,8 @@ public class WorkflowInstanceManagerImplTest
 					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 					true, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 					StringPool.BLANK, StringPool.BLANK, null, true, 0, 1,
-					WorkflowComparatorFactoryUtil.
-						getInstanceCompletedComparator(false));
+					_workflowComparatorFactory.getInstanceCompletedComparator(
+						false));
 
 			workflowInstances = workflowModelSearchResult.getWorkflowModels();
 
@@ -206,8 +197,8 @@ public class WorkflowInstanceManagerImplTest
 					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 					null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 					StringPool.BLANK, StringPool.BLANK, null, true, 0, 1,
-					WorkflowComparatorFactoryUtil.
-						getInstanceCompletedComparator(false));
+					_workflowComparatorFactory.getInstanceCompletedComparator(
+						false));
 
 			workflowInstances = workflowModelSearchResult.getWorkflowModels();
 
@@ -236,7 +227,7 @@ public class WorkflowInstanceManagerImplTest
 						TestPropsValues.getUserId(), null, StringPool.BLANK,
 						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 						StringPool.BLANK, null, true, 0, 1,
-						WorkflowComparatorFactoryUtil.
+						_workflowComparatorFactory.
 							getInstanceCompletedComparator(false));
 
 			List<WorkflowInstance> workflowInstances =
@@ -251,7 +242,7 @@ public class WorkflowInstanceManagerImplTest
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, null, true, 0, 1,
-				WorkflowComparatorFactoryUtil.getInstanceCompletedComparator(
+				_workflowComparatorFactory.getInstanceCompletedComparator(
 					false));
 
 		List<WorkflowInstance> workflowInstances =
@@ -286,7 +277,7 @@ public class WorkflowInstanceManagerImplTest
 						TestPropsValues.getCompanyId(), user.getUserId(), null,
 						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 						StringPool.BLANK, StringPool.BLANK, null, true, 0, 2,
-						WorkflowComparatorFactoryUtil.
+						_workflowComparatorFactory.
 							getInstanceCompletedComparator(false));
 
 			List<WorkflowInstance> workflowInstances =
@@ -329,6 +320,9 @@ public class WorkflowInstanceManagerImplTest
 
 	@Inject
 	private KaleoInstanceLocalService _kaleoInstanceLocalService;
+
+	@Inject
+	private WorkflowComparatorFactory _workflowComparatorFactory;
 
 	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;

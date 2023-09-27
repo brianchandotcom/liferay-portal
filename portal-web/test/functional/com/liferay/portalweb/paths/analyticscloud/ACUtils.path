@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>DELETE_BUTTON</td>
-	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@alt,'Delete')]</td>
+	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@title,'Delete')]</td>
 	<td></td>
 </tr>
 
@@ -83,12 +83,12 @@
 
 <tr>
 	<td>ORDER_ARROW_BUTTON_ASC</td>
-	<td>//a[contains(@class, 'nav-link-monospaced btn-outline-borderless')][*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-ascending')]]</td>
+	<td>//*[contains(@class,'lexicon-icon-order-arrow-up')]//ancestor::a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_ARROW_BUTTON_DES</td>
-	<td>//a[contains(@class, 'nav-link-monospaced btn-outline-borderless')][*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-descending')]]</td>
+	<td>//*[contains(@class,'lexicon-icon-order-arrow-down')]//ancestor::a</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,0 +1,37 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "BASIC_COMPONENT-heading"
+					},
+					"fragmentConfig": {
+						"bottomSpacing": "3",
+						"headingLevel": "h1",
+						"textAlign": "left",
+						"textColor": ""
+					},
+					"fragmentFields": [
+						{
+							"id": "element-text",
+							"value": {
+								"text": {
+									"value_i18n": {
+										"en_US": "This is a page template"
+									}
+								}
+							}
+						}
+					]
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	}
+}

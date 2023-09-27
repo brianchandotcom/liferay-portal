@@ -24,8 +24,9 @@ definition {
 		var key_ddlDataDefinitionName = ${structureName};
 
 		Click(
-			buttonId = "selectDDMStructure",
-			locator1 = "Button#BUTTON_ID");
+			fieldLabel = "Structure",
+			locator1 = "Button#BUTTON_LABEL",
+			text = "Select");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.poshi.runner.selenium;
@@ -20,12 +11,12 @@ import com.deque.html.axecore.selenium.AxeBuilder;
 import com.deque.html.axecore.selenium.AxeReporter;
 
 import com.liferay.poshi.core.PoshiGetterUtil;
+import com.liferay.poshi.core.PoshiProperties;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.util.CharPool;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.OSDetector;
-import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.StringPool;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
@@ -221,8 +212,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void assertAccessible() throws Exception {
-		assertElementAccessible(null);
+	public void assertAccessible(List<String> ignorableImpacts)
+		throws Exception {
+
+		assertElementAccessible(null, ignorableImpacts);
 	}
 
 	@Override
@@ -253,7 +246,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void assertAttributeNotPresent(String attribute, String locator)
+	public void assertAttributeNotPresent(String locator, String attribute)
 		throws Exception {
 
 		if (isAttributePresent(attribute, locator)) {
@@ -263,7 +256,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void assertAttributePresent(String attribute, String locator)
+	public void assertAttributePresent(String locator, String attribute)
 		throws Exception {
 
 		if (!isAttributePresent(attribute, locator)) {
@@ -274,7 +267,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void assertAttributeValue(
-			String attribute, String locator, String pattern)
+			String locator, String attribute, String pattern)
 		throws Exception {
 
 		WebElement webElement = getWebElement(locator);
@@ -350,7 +343,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void assertElementAccessible(String locator) throws Exception {
+	public void assertElementAccessible(
+			String locator, List<String> ignorableImpacts)
+		throws Exception {
+
 		AxeBuilder axeBuilder = new AxeBuilder();
 
 		axeBuilder.withTags(
@@ -368,11 +364,30 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		List<Rule> violations = results.getViolations();
 
-		if (!violations.isEmpty()) {
-			AxeReporter.getReadableAxeResults("analyze", this, violations);
+		if (violations.isEmpty()) {
+			System.out.println("No accessiblity violations were found");
 
-			throw new Exception(AxeReporter.getAxeResultString());
+			return;
 		}
+
+		List<Rule> rules = new ArrayList<>();
+
+		if (ignorableImpacts == null) {
+			rules.addAll(violations);
+		}
+		else {
+			for (Rule violation : violations) {
+				if (ignorableImpacts.contains(violation.getImpact())) {
+					continue;
+				}
+
+				rules.add(violation);
+			}
+		}
+
+		AxeReporter.getReadableAxeResults("analyze", this, rules);
+
+		throw new Exception(AxeReporter.getAxeResultString());
 	}
 
 	@Override
@@ -815,6 +830,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Condition valueCondition = getValueCondition(locator, pattern);
 
 		valueCondition.assertTrue();
+	}
+
+	@Override
+	public void assertValueMatches(String locator, String regex)
+		throws Exception {
+
+		assertElementPresent(locator);
+
+		Condition valueMatchCondition = getValueMatchCondition(locator, regex);
+
+		valueMatchCondition.assertTrue();
 	}
 
 	@Override
@@ -1560,12 +1586,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public boolean isAttributeNotPresent(String attribute, String locator) {
+	public boolean isAttributeNotPresent(String locator, String attribute) {
 		return !isAttributePresent(attribute, locator);
 	}
 
 	@Override
-	public boolean isAttributePresent(String attribute, String locator) {
+	public boolean isAttributePresent(String locator, String attribute) {
 		WebElement webElement = getWebElement(locator);
 
 		JavascriptExecutor javascriptExecutor =
@@ -4316,6 +4342,30 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			@Override
 			public boolean evaluate() throws Exception {
 				return value.equals(getElementValue(locator));
+			}
+
+		};
+	}
+
+	protected Condition getValueMatchCondition(String locator, String regex) {
+		return new Condition() {
+
+			@Override
+			public void assertTrue() throws Exception {
+				if (!evaluate()) {
+					String message = StringUtil.combine(
+						"Actual value \"", getElementValue(locator), "\" at \"",
+						locator, "\"", "\" does not match pattern\"", regex);
+
+					throw new Exception(message);
+				}
+			}
+
+			@Override
+			public boolean evaluate() throws Exception {
+				String value = getElementValue(locator);
+
+				return value.matches(regex);
 			}
 
 		};

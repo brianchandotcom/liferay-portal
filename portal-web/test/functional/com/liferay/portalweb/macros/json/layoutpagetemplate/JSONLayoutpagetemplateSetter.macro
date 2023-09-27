@@ -84,9 +84,17 @@ definition {
 	macro setLayoutPageTemplateCollectionId {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionName}");
 
+		if (${layoutPageTemplateType} == "Display Page Template") {
+			var type = 1;
+		}
+		else {
+			var type = 0;
+		}
+
 		var layoutPageTemplateCollectionId = JSONLayoutpagetemplateAPI._getLayoutPageTemplateCollectionIdByName(
 			groupId = ${groupId},
-			layoutPageTemplateCollectionName = ${layoutPageTemplateCollectionName});
+			layoutPageTemplateCollectionName = ${layoutPageTemplateCollectionName},
+			type = ${type});
 
 		return ${layoutPageTemplateCollectionId};
 	}

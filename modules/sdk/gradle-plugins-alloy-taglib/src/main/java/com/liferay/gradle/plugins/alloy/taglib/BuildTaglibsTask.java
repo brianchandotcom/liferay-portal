@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.alloy.taglib;
@@ -29,8 +20,10 @@ import java.util.Map;
 
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
@@ -45,7 +38,9 @@ import org.gradle.api.tasks.SkipWhenEmpty;
 public class BuildTaglibsTask extends JavaExec {
 
 	public BuildTaglibsTask() {
-		setMain("com.liferay.alloy.tools.tagbuilder.TagBuilder");
+		Property<String> mainClass = getMainClass();
+
+		mainClass.set("com.liferay.alloy.tools.tagbuilder.TagBuilder");
 	}
 
 	public BuildTaglibsTask componentsXmlFiles(Iterable<?> componentsXmlFiles) {
@@ -79,10 +74,16 @@ public class BuildTaglibsTask extends JavaExec {
 		return GradleUtil.toString(_copyrightYear);
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getJavaDir() {
-		return GradleUtil.toFile(getProject(), _javaDir);
+		File file = GradleUtil.toFile(getProject(), _javaDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
 	@Input
@@ -100,10 +101,16 @@ public class BuildTaglibsTask extends JavaExec {
 		return GradleUtil.toString(_jspDirName);
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getJspParentDir() {
-		return GradleUtil.toFile(getProject(), _jspParentDir);
+		File file = GradleUtil.toFile(getProject(), _jspParentDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
 	@Input
@@ -117,10 +124,16 @@ public class BuildTaglibsTask extends JavaExec {
 		return GradleUtil.toString(_templatesDirName);
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getTldDir() {
-		return GradleUtil.toFile(getProject(), _tldDir);
+		File file = GradleUtil.toFile(getProject(), _tldDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
 	public void setComponentsXmlFiles(Iterable<?> componentsXmlFiles) {

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dynamic.data.lists.service.test;
@@ -23,11 +14,9 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
-import com.liferay.dynamic.data.mapping.test.util.storage.FailStorageAdapter;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -45,21 +34,13 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Rafael Praxedes
@@ -72,26 +53,8 @@ public class DDLRecordSetServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() {
-		Bundle bundle = FrameworkUtil.getBundle(DDLRecordSetServiceTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_serviceRegistration = bundleContext.registerService(
-			StorageAdapter.class, new FailStorageAdapter(), null);
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceRegistration.unregister();
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_availableLocales = DDMFormTestUtil.createAvailableLocales(
-			LocaleUtil.US);
-
 		_group = GroupTestUtil.addGroup();
 
 		_ddmStructureTestHelper = new DDMStructureTestHelper(
@@ -123,12 +86,12 @@ public class DDLRecordSetServiceTest {
 		DDMForm ddmStructureDDMForm = DDMFormTestUtil.createDDMForm("Field");
 
 		DDLRecordSet ddlRecordSet = addRecordSet(
-			ddmStructureDDMForm, FailStorageAdapter.STORAGE_TYPE);
+			ddmStructureDDMForm, StorageType.DEFAULT.toString());
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
 		Assert.assertEquals(
-			ddmStructure.getStorageType(), FailStorageAdapter.STORAGE_TYPE);
+			ddmStructure.getStorageType(), StorageType.DEFAULT.toString());
 	}
 
 	@Test
@@ -322,7 +285,7 @@ public class DDLRecordSetServiceTest {
 		DDMForm ddmStructureDDMForm = DDMFormTestUtil.createDDMForm("Field");
 
 		DDLRecordSet ddlRecordSet = addRecordSet(
-			ddmStructureDDMForm, FailStorageAdapter.STORAGE_TYPE);
+			ddmStructureDDMForm, StorageType.DEFAULT.toString());
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
@@ -360,9 +323,6 @@ public class DDLRecordSetServiceTest {
 			ddlRecordSet.getRecordSetId(), ddmStructure);
 	}
 
-	private static ServiceRegistration<StorageAdapter> _serviceRegistration;
-
-	private Set<Locale> _availableLocales;
 	private DDLRecordSetTestHelper _ddlRecordSetTestHelper;
 	private DDMStructureTestHelper _ddmStructureTestHelper;
 

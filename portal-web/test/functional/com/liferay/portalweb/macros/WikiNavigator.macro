@@ -90,7 +90,7 @@ definition {
 
 		Click(locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS");
 
-		MenuItem.click(menuItem = "Copy");
+		MenuItem.click(menuItem = "Make a Copy");
 	}
 
 	macro gotoEntryEditViaPGTable {

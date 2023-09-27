@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -60,22 +51,15 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 			boolean userSessionAlive = false;
 			%>
 
-			<div class="sheet">
-				<div class="panel-group panel-group-flush">
-					<liferay-ui:panel-container
-						extended="<%= true %>"
-						id="monitoringSessionHistoryPanelContainer"
-						markupView="lexicon"
-						persistState="<%= true %>"
+			<clay:sheet
+				size="full"
+			>
+				<clay:panel-group>
+					<clay:panel
+						displayTitle='<%= LanguageUtil.get(request, "session") %>'
+						expanded="<%= true %>"
 					>
-						<liferay-ui:panel
-							collapsible="<%= true %>"
-							extended="<%= true %>"
-							id="monitoringSessionPanel"
-							markupView="lexicon"
-							persistState="<%= false %>"
-							title="session"
-						>
+						<div class="panel-body">
 							<dl>
 								<dt class="h4">
 									<liferay-ui:message key="session-id" />
@@ -126,16 +110,13 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 									<%= userTracker.getRemoteAddr() %> / <%= userTracker.getRemoteHost() %>
 								</dd>
 							</dl>
-						</liferay-ui:panel>
+						</div>
+					</clay:panel>
 
-						<liferay-ui:panel
-							collapsible="<%= true %>"
-							extended="<%= false %>"
-							id="sessionAccessedURLsPanels"
-							markupView="lexicon"
-							persistState="<%= true %>"
-							title="accessed-urls"
-						>
+					<clay:panel
+						displayTitle='<%= LanguageUtil.get(request, "accessed-urls") %>'
+					>
+						<div class="panel-body">
 							<dl>
 
 								<%
@@ -155,16 +136,13 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 								%>
 
 							</dl>
-						</liferay-ui:panel>
+						</div>
+					</clay:panel>
 
-						<liferay-ui:panel
-							collapsible="<%= true %>"
-							extended="<%= false %>"
-							id="monitoringSessionAttributesPanel"
-							markupView="lexicon"
-							persistState="<%= true %>"
-							title="session-attributes"
-						>
+					<clay:panel
+						displayTitle='<%= LanguageUtil.get(request, "session-attributes") %>'
+					>
+						<div class="panel-body">
 							<dl>
 
 								<%
@@ -206,10 +184,10 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 
 								</c:if>
 							</dl>
-						</liferay-ui:panel>
-					</liferay-ui:panel-container>
-				</div>
-			</div>
+						</div>
+					</clay:panel>
+				</clay:panel-group>
+			</clay:sheet>
 
 			<aui:button-row>
 				<c:if test="<%= userSessionAlive && !Objects.equals(session.getId(), sessionId) %>">

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.source.formatter.check;
@@ -24,49 +15,46 @@ import java.util.regex.Pattern;
 /**
  * @author Nícolas Moura
  */
-public class UpgradeJavaExtractTextMethodCheck extends BaseFileCheck {
+public class UpgradeJavaExtractTextMethodCheck
+	extends BaseUpgradeMatcherReplacementCheck {
 
 	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String afterFormat(
+		String fileName, String absolutePath, String content,
+		String newContent) {
 
-		if (!fileName.endsWith(".java")) {
-			return content;
-		}
+		newContent = addNewImports(newContent);
 
-		String newContent = content;
-
-		boolean replaced = false;
-
-		Matcher extractTextMatcher = _extractTextPattern.matcher(content);
-
-		while (extractTextMatcher.find()) {
-			String methodCall = JavaSourceUtil.getMethodCall(
-				content, extractTextMatcher.start());
-
-			newContent = StringUtil.replace(
-				newContent, methodCall,
-				StringUtil.replace(
-					methodCall, "HtmlUtil.extractText(",
-					"_htmlParser.extractText("));
-
-			replaced = true;
-		}
-
-		if (replaced) {
-			newContent = JavaSourceUtil.addImports(
-				newContent, "com.liferay.portal.kernel.util.HtmlParser",
-				"org.osgi.service.component.annotations.Reference");
-			newContent = StringUtil.replaceLast(
-				newContent, CharPool.CLOSE_CURLY_BRACE,
-				"\n\t@Reference\n\tprivate HtmlParser _htmlParser;\n}");
-		}
-
-		return newContent;
+		return StringUtil.replaceLast(
+			newContent, CharPool.CLOSE_CURLY_BRACE,
+			"\n\t@Reference\n\tprivate HtmlParser _htmlParser;\n}");
 	}
 
-	private static final Pattern _extractTextPattern = Pattern.compile(
-		"HtmlUtil\\.extractText\\(");
+	@Override
+	protected String formatMatcherIteration(
+		String content, String newContent, Matcher matcher) {
+
+		String methodCall = JavaSourceUtil.getMethodCall(
+			content, matcher.start());
+
+		return StringUtil.replace(
+			newContent, methodCall,
+			StringUtil.replace(
+				methodCall, "HtmlUtil.extractText(",
+				"_htmlParser.extractText("));
+	}
+
+	@Override
+	protected String[] getNewImports() {
+		return new String[] {
+			"com.liferay.portal.kernel.util.HtmlParser",
+			"org.osgi.service.component.annotations.Reference"
+		};
+	}
+
+	@Override
+	protected Pattern getPattern() {
+		return Pattern.compile("HtmlUtil\\.extractText\\(");
+	}
 
 }

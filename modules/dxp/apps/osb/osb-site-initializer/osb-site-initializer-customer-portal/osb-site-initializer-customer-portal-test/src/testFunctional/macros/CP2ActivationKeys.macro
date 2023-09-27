@@ -522,14 +522,21 @@ definition {
 			value1 = ${key_option});
 	}
 
+	macro selectComplimentarySubscriptionTerm {
+		Click(locator1 = "CP2ActivationKeys#COMPLIMENTARY_KEY");
+	}
+
 	macro selectFistActiveSubscriptionInput {
-		var key_index = 1;
-
 		if (isSet(index)) {
-			var key_index = ${index};
-		}
+			var key_position = ${index};
 
-		Click(locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_AVAILABLE");
+			Click(locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE");
+		}
+		else {
+			var key_index = 1;
+
+			Click(locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE");
+		}
 	}
 
 	macro selectGenerateActivationKeyOptionByField {

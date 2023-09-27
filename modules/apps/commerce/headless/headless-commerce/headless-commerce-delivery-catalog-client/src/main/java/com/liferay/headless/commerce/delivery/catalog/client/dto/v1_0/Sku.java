@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0;
@@ -18,6 +9,8 @@ import com.liferay.headless.commerce.delivery.catalog.client.function.UnsafeSupp
 import com.liferay.headless.commerce.delivery.catalog.client.serdes.v1_0.SkuSerDes;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.Objects;
@@ -98,6 +91,27 @@ public class Sku implements Cloneable, Serializable {
 	}
 
 	protected Availability availability;
+
+	public Boolean getBackOrderAllowed() {
+		return backOrderAllowed;
+	}
+
+	public void setBackOrderAllowed(Boolean backOrderAllowed) {
+		this.backOrderAllowed = backOrderAllowed;
+	}
+
+	public void setBackOrderAllowed(
+		UnsafeSupplier<Boolean, Exception> backOrderAllowedUnsafeSupplier) {
+
+		try {
+			backOrderAllowed = backOrderAllowedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean backOrderAllowed;
 
 	public Double getDepth() {
 		return depth;
@@ -328,16 +342,16 @@ public class Sku implements Cloneable, Serializable {
 
 	protected String manufacturerPartNumber;
 
-	public Integer getMaxOrderQuantity() {
+	public BigDecimal getMaxOrderQuantity() {
 		return maxOrderQuantity;
 	}
 
-	public void setMaxOrderQuantity(Integer maxOrderQuantity) {
+	public void setMaxOrderQuantity(BigDecimal maxOrderQuantity) {
 		this.maxOrderQuantity = maxOrderQuantity;
 	}
 
 	public void setMaxOrderQuantity(
-		UnsafeSupplier<Integer, Exception> maxOrderQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> maxOrderQuantityUnsafeSupplier) {
 
 		try {
 			maxOrderQuantity = maxOrderQuantityUnsafeSupplier.get();
@@ -347,18 +361,18 @@ public class Sku implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer maxOrderQuantity;
+	protected BigDecimal maxOrderQuantity;
 
-	public Integer getMinOrderQuantity() {
+	public BigDecimal getMinOrderQuantity() {
 		return minOrderQuantity;
 	}
 
-	public void setMinOrderQuantity(Integer minOrderQuantity) {
+	public void setMinOrderQuantity(BigDecimal minOrderQuantity) {
 		this.minOrderQuantity = minOrderQuantity;
 	}
 
 	public void setMinOrderQuantity(
-		UnsafeSupplier<Integer, Exception> minOrderQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> minOrderQuantityUnsafeSupplier) {
 
 		try {
 			minOrderQuantity = minOrderQuantityUnsafeSupplier.get();
@@ -368,7 +382,7 @@ public class Sku implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer minOrderQuantity;
+	protected BigDecimal minOrderQuantity;
 
 	public Boolean getNeverExpire() {
 		return neverExpire;
@@ -409,6 +423,27 @@ public class Sku implements Cloneable, Serializable {
 	}
 
 	protected Price price;
+
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
+	public void setProductId(
+		UnsafeSupplier<Long, Exception> productIdUnsafeSupplier) {
+
+		try {
+			productId = productIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long productId;
 
 	public Boolean getPublished() {
 		return published;
@@ -451,6 +486,28 @@ public class Sku implements Cloneable, Serializable {
 	}
 
 	protected Boolean purchasable;
+
+	public ReplacementSku getReplacementSku() {
+		return replacementSku;
+	}
+
+	public void setReplacementSku(ReplacementSku replacementSku) {
+		this.replacementSku = replacementSku;
+	}
+
+	public void setReplacementSku(
+		UnsafeSupplier<ReplacementSku, Exception>
+			replacementSkuUnsafeSupplier) {
+
+		try {
+			replacementSku = replacementSkuUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ReplacementSku replacementSku;
 
 	public String getReplacementSkuExternalReferenceCode() {
 		return replacementSkuExternalReferenceCode;
@@ -538,6 +595,49 @@ public class Sku implements Cloneable, Serializable {
 	}
 
 	protected SkuOption[] skuOptions;
+
+	public SkuUnitOfMeasure[] getSkuUnitOfMeasures() {
+		return skuUnitOfMeasures;
+	}
+
+	public void setSkuUnitOfMeasures(SkuUnitOfMeasure[] skuUnitOfMeasures) {
+		this.skuUnitOfMeasures = skuUnitOfMeasures;
+	}
+
+	public void setSkuUnitOfMeasures(
+		UnsafeSupplier<SkuUnitOfMeasure[], Exception>
+			skuUnitOfMeasuresUnsafeSupplier) {
+
+		try {
+			skuUnitOfMeasures = skuUnitOfMeasuresUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SkuUnitOfMeasure[] skuUnitOfMeasures;
+
+	public TierPrice[] getTierPrices() {
+		return tierPrices;
+	}
+
+	public void setTierPrices(TierPrice[] tierPrices) {
+		this.tierPrices = tierPrices;
+	}
+
+	public void setTierPrices(
+		UnsafeSupplier<TierPrice[], Exception> tierPricesUnsafeSupplier) {
+
+		try {
+			tierPrices = tierPricesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected TierPrice[] tierPrices;
 
 	public Double getWeight() {
 		return weight;

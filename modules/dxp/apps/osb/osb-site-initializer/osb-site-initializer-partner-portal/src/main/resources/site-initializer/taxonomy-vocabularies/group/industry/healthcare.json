@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC032",
+	"name": "Healthcare",
+	"name_i18n": {
+		"ar_SA": "Healthcare",
+		"ca_ES": "Healthcare",
+		"de_DE": "Healthcare",
+		"en_US": "Healthcare",
+		"es_ES": "Healthcare",
+		"fi_FI": "Healthcare",
+		"fr_FR": "Healthcare",
+		"hu_HU": "Healthcare",
+		"ja_JP": "Healthcare",
+		"nl_NL": "Healthcare",
+		"pt_BR": "Healthcare",
+		"sv_SE": "Healthcare",
+		"zh_CN": "Healthcare"
+	},
+	"viewableBy": "Anyone"
+}

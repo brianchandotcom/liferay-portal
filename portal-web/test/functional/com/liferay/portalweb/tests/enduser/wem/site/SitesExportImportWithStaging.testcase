@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Sites Administration";
@@ -218,7 +219,6 @@ definition {
 	@priority = 5
 	test ImportLiveSiteToStagingSite {
 		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
 		property timeout.explicit.wait = "30";
 
 		task ("Export the first site") {

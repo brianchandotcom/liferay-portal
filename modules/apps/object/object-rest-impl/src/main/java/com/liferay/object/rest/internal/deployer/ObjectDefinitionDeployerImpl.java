@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.rest.internal.deployer;
@@ -22,7 +13,9 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.graphql.dto.v1_0.ObjectDefinitionGraphQLDTOContributor;
 import com.liferay.object.rest.internal.jaxrs.application.ObjectEntryApplication;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
+import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectAssetCategoryExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryManagerHttpExceptionMapper;
+import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryStatusExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryValuesExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectRelationshipDeletionTypeExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectValidationRuleEngineExceptionMapper;
@@ -39,9 +32,9 @@ import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceFactory
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParser;
+import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
-import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
@@ -144,7 +137,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				objectDefinition.getRESTContextPath(), objectDefinitions);
 		}
 
-		_excludeScopedMethods(objectDefinition, objectScopeProvider);
+		_excludeMethods(objectDefinition, objectScopeProvider);
 
 		_initCustomObjectDefinition(objectDefinition);
 
@@ -155,7 +148,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				GraphQLDTOContributor.class,
 				ObjectDefinitionGraphQLDTOContributor.of(
-					_extensionProviderRegistry, _filterPredicateFactory,
+					_entityModelProvider, _extensionProviderRegistry,
 					objectDefinition, _objectDefinitionLocalService,
 					_objectEntryManagerRegistry.getObjectEntryManager(
 						objectDefinition.getStorageType()),
@@ -204,10 +197,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	private ObjectEntryResourceImpl _createObjectEntryResourceImpl() {
 		return new ObjectEntryResourceImpl(
-			_dtoConverterRegistry, _objectDefinitionLocalService,
-			_objectEntryLocalService, _objectEntryManagerRegistry,
-			_objectFieldLocalService, _objectRelationshipService,
-			_objectScopeProviderRegistry,
+			_dtoConverterRegistry, _entityModelProvider,
+			_objectDefinitionLocalService, _objectEntryLocalService,
+			_objectEntryManagerRegistry, _objectFieldLocalService,
+			_objectRelationshipService, _objectScopeProviderRegistry,
 			_systemObjectDefinitionManagerRegistry);
 	}
 
@@ -222,7 +215,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 	}
 
-	private void _excludeScopedMethods(
+	private void _excludeMethods(
 		ObjectDefinition objectDefinition,
 		ObjectScopeProvider objectScopeProvider) {
 
@@ -253,7 +246,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 				if ((!groupAware && hasScope) ||
 					(groupAware && !hasScope &&
-					 !value.startsWith("/{objectEntryId}"))) {
+					 !value.startsWith("/{objectEntryId}")) ||
+					(objectDefinition.isRootDescendantNode() &&
+					 value.endsWith("/permissions"))) {
 
 					excludedOperationIds.add(method.getName());
 				}
@@ -444,159 +439,84 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		_serviceRegistrationsMap.computeIfAbsent(
 			restContextPath,
-			key -> Arrays.asList(
-				_bundleContext.registerService(
-					ContextProvider.class,
-					new ObjectDefinitionContextProvider(this, _portal),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", "false"
-					).put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getOSGiJaxRsName(
-							"ObjectDefinitionContextProvider")
-					).build()),
-				_bundleContext.registerService(
-					ExceptionMapper.class,
-					new ObjectEntryManagerHttpExceptionMapper(),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getOSGiJaxRsName(
-							"ObjectEntryManagerHttpExceptionMapper")
-					).build()),
-				_bundleContext.registerService(
-					ExceptionMapper.class,
-					new ObjectEntryValuesExceptionMapper(_language),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getOSGiJaxRsName(
-							"ObjectEntryValuesExceptionMapper")
-					).build()),
-				_bundleContext.registerService(
-					ExceptionMapper.class,
-					new ObjectRelationshipDeletionTypeExceptionMapper(),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getOSGiJaxRsName(
-							"ObjectRelationshipDeletionTypeExceptionMapper")
-					).build()),
-				_bundleContext.registerService(
-					ExceptionMapper.class,
-					new ObjectValidationRuleEngineExceptionMapper(
-						_jsonFactory, _language),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getOSGiJaxRsName(
-							"ObjectValidationRuleEngineExceptionMapper")
-					).build()),
-				_bundleContext.registerService(
-					ExceptionMapper.class,
-					new RequiredObjectRelationshipExceptionMapper(),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getOSGiJaxRsName(
-							"RequiredObjectRelationshipExceptionMapper")
-					).build()),
-				_bundleContext.registerService(
-					ExceptionMapper.class,
-					new UnsupportedOperationExceptionMapper(),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getOSGiJaxRsName(
-							"UnsupportedOperationExceptionMapper")
-					).build()),
-				_bundleContext.registerService(
-					ObjectEntryRelatedObjectsResourceImpl.class,
-					new PrototypeServiceFactory
-						<ObjectEntryRelatedObjectsResourceImpl>() {
+			key -> ListUtil.concat(
+				Arrays.asList(
+					_bundleContext.registerService(
+						ContextProvider.class,
+						new ObjectDefinitionContextProvider(this, _portal),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", "false"
+						).put(
+							"osgi.jaxrs.application.select",
+							"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
+						).put(
+							"osgi.jaxrs.extension", "true"
+						).put(
+							"osgi.jaxrs.name",
+							objectDefinition.getOSGiJaxRsName(
+								"ObjectDefinitionContextProvider")
+						).build()),
+					_bundleContext.registerService(
+						ObjectEntryRelatedObjectsResourceImpl.class,
+						new PrototypeServiceFactory
+							<ObjectEntryRelatedObjectsResourceImpl>() {
 
-						@Override
-						public ObjectEntryRelatedObjectsResourceImpl getService(
-							Bundle bundle,
-							ServiceRegistration
-								<ObjectEntryRelatedObjectsResourceImpl>
-									serviceRegistration) {
+							@Override
+							public ObjectEntryRelatedObjectsResourceImpl
+								getService(
+									Bundle bundle,
+									ServiceRegistration
+										<ObjectEntryRelatedObjectsResourceImpl>
+											serviceRegistration) {
 
-							return new ObjectEntryRelatedObjectsResourceImpl(
-								_objectDefinitionLocalService,
-								_objectEntryManagerRegistry,
-								_objectRelatedModelsProviderRegistry,
-								_objectRelationshipLocalService,
-								_persistedModelLocalServiceRegistry);
-						}
+								return new ObjectEntryRelatedObjectsResourceImpl(
+									_objectDefinitionLocalService,
+									_objectEntryManagerRegistry,
+									_objectRelatedModelsProviderRegistry,
+									_objectRelationshipLocalService,
+									_persistedModelLocalServiceRegistry);
+							}
 
-						@Override
-						public void ungetService(
-							Bundle bundle,
-							ServiceRegistration
-								<ObjectEntryRelatedObjectsResourceImpl>
-									serviceRegistration,
-							ObjectEntryRelatedObjectsResourceImpl
-								objectEntryRelatedObjectsResourceImpl) {
-						}
+							@Override
+							public void ungetService(
+								Bundle bundle,
+								ServiceRegistration
+									<ObjectEntryRelatedObjectsResourceImpl>
+										serviceRegistration,
+								ObjectEntryRelatedObjectsResourceImpl
+									objectEntryRelatedObjectsResourceImpl) {
+							}
 
-					},
-					HashMapDictionaryBuilder.<String, Object>put(
-						"api.version", "v1.0"
-					).put(
-						"entity.class.name",
-						ObjectEntry.class.getName() + "#" +
-							objectDefinition.getName()
-					).put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
-					).put(
-						"osgi.jaxrs.resource", "true"
-					).build()),
-				_bundleContext.registerService(
-					ObjectEntryResource.Factory.class,
-					new ObjectEntryResourceFactoryImpl(
-						_companyLocalService, _defaultPermissionCheckerFactory,
-						_expressionConvert, _filterParserProvider,
-						_groupLocalService, objectDefinition,
-						this::_createObjectEntryResourceImpl,
-						_resourceActionLocalService,
-						_resourcePermissionLocalService, _roleLocalService,
-						_sortParserProvider, _userLocalService),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"resource.locator.key",
-						objectDefinition.getRESTContextPath() + "/" +
-							objectDefinition.getShortName()
-					).build())));
+						},
+						HashMapDictionaryBuilder.<String, Object>put(
+							"api.version", "v1.0"
+						).put(
+							"entity.class.name",
+							ObjectEntry.class.getName() + "#" +
+								objectDefinition.getName()
+						).put(
+							"osgi.jaxrs.application.select",
+							"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
+						).put(
+							"osgi.jaxrs.resource", "true"
+						).build()),
+					_bundleContext.registerService(
+						ObjectEntryResource.Factory.class,
+						new ObjectEntryResourceFactoryImpl(
+							_companyLocalService,
+							_defaultPermissionCheckerFactory,
+							_expressionConvert, _filterParserProvider,
+							_groupLocalService, objectDefinition,
+							this::_createObjectEntryResourceImpl,
+							_resourceActionLocalService,
+							_resourcePermissionLocalService, _roleLocalService,
+							_sortParserProvider, _userLocalService),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"resource.locator.key",
+							objectDefinition.getRESTContextPath() + "/" +
+								objectDefinition.getShortName()
+						).build())),
+				_registerExceptionMappers(osgiJaxRsName, objectDefinition)));
 	}
 
 	private void _initSystemObjectDefinition(
@@ -655,6 +575,122 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 				return serviceRegistrationsMap;
 			});
+
+		_serviceRegistrationsMap.computeIfAbsent(
+			jaxRsApplicationDescriptor.getRESTContextPath(),
+			key -> _registerExceptionMappers(
+				jaxRsApplicationDescriptor.getApplicationName(),
+				objectDefinition));
+	}
+
+	private List<ServiceRegistration<?>> _registerExceptionMappers(
+		String jaxRsApplicationName, ObjectDefinition objectDefinition) {
+
+		return Arrays.asList(
+			_bundleContext.registerService(
+				ExceptionMapper.class, new ObjectAssetCategoryExceptionMapper(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select",
+					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+				).put(
+					"osgi.jaxrs.extension", "true"
+				).put(
+					"osgi.jaxrs.name",
+					objectDefinition.getOSGiJaxRsName(
+						"ObjectAssetCategoryExceptionMapper")
+				).build()),
+			_bundleContext.registerService(
+				ExceptionMapper.class,
+				new ObjectEntryManagerHttpExceptionMapper(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select",
+					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+				).put(
+					"osgi.jaxrs.extension", "true"
+				).put(
+					"osgi.jaxrs.name",
+					objectDefinition.getOSGiJaxRsName(
+						"ObjectEntryManagerHttpExceptionMapper")
+				).build()),
+			_bundleContext.registerService(
+				ExceptionMapper.class,
+				new ObjectEntryStatusExceptionMapper(_language),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select",
+					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+				).put(
+					"osgi.jaxrs.extension", "true"
+				).put(
+					"osgi.jaxrs.name",
+					objectDefinition.getOSGiJaxRsName(
+						"ObjectEntryStatusExceptionMapper")
+				).build()),
+			_bundleContext.registerService(
+				ExceptionMapper.class,
+				new ObjectEntryValuesExceptionMapper(_language),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select",
+					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+				).put(
+					"osgi.jaxrs.extension", "true"
+				).put(
+					"osgi.jaxrs.name",
+					objectDefinition.getOSGiJaxRsName(
+						"ObjectEntryValuesExceptionMapper")
+				).build()),
+			_bundleContext.registerService(
+				ExceptionMapper.class,
+				new ObjectRelationshipDeletionTypeExceptionMapper(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select",
+					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+				).put(
+					"osgi.jaxrs.extension", "true"
+				).put(
+					"osgi.jaxrs.name",
+					objectDefinition.getOSGiJaxRsName(
+						"ObjectRelationshipDeletionTypeExceptionMapper")
+				).build()),
+			_bundleContext.registerService(
+				ExceptionMapper.class,
+				new ObjectValidationRuleEngineExceptionMapper(
+					_jsonFactory, _language),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select",
+					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+				).put(
+					"osgi.jaxrs.extension", "true"
+				).put(
+					"osgi.jaxrs.name",
+					objectDefinition.getOSGiJaxRsName(
+						"ObjectValidationRuleEngineExceptionMapper")
+				).build()),
+			_bundleContext.registerService(
+				ExceptionMapper.class,
+				new RequiredObjectRelationshipExceptionMapper(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select",
+					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+				).put(
+					"osgi.jaxrs.extension", "true"
+				).put(
+					"osgi.jaxrs.name",
+					objectDefinition.getOSGiJaxRsName(
+						"RequiredObjectRelationshipExceptionMapper")
+				).build()),
+			_bundleContext.registerService(
+				ExceptionMapper.class,
+				new UnsupportedOperationExceptionMapper(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select",
+					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+				).put(
+					"osgi.jaxrs.extension", "true"
+				).put(
+					"osgi.jaxrs.name",
+					objectDefinition.getOSGiJaxRsName(
+						"UnsupportedOperationExceptionMapper")
+				).build()));
 	}
 
 	private boolean _shouldUnregisterApplication(String restContextPath) {
@@ -770,6 +806,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		_undeployScopedServiceRegistrationsMap(
 			objectDefinition.getCompanyId(), restContextPath);
+
+		if (_shouldUnregisterApplication(restContextPath)) {
+			_unregisterApplication(restContextPath);
+		}
 	}
 
 	private void _unregisterApplication(String restContextPath) {
@@ -833,6 +873,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
+	@Reference
+	private EntityModelProvider _entityModelProvider;
+
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
 	)
@@ -843,9 +886,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private FilterParserProvider _filterParserProvider;
-
-	@Reference
-	private FilterPredicateFactory _filterPredicateFactory;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

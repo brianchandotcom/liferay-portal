@@ -29,6 +29,7 @@ definition {
 	@refactordone
 	test AbstractDescriptionPersistsWhenTypingInContentField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
@@ -595,6 +596,7 @@ definition {
 	test CanChangeAScheduledEntryToThePresentAndPublish {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -800,6 +802,7 @@ definition {
 	@refactorneeded
 	test CanEditCustomAbstract {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -892,6 +895,7 @@ definition {
 	test CanImportEntryWithImageAfterCleaningDB {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 		var imageId = JSONBlog.uploadBlogImage(
@@ -998,6 +1002,7 @@ definition {
 	test CanImportEntryWithSmallImageAfterCleaningDB {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -1378,6 +1383,7 @@ definition {
 	test CannotInjectBBCodeIntoCommentUsingPingback {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1478,6 +1484,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanSchedulePost {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -1585,6 +1593,7 @@ definition {
 	@refactorneeded
 	test CanViewDefaultAbstract {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -1606,12 +1615,12 @@ definition {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsEntry.viewAbstractDisplay(
-			entryAbstractDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares...",
+			entryAbstractDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent...",
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
 		BlogsNavigator.gotoEntryWithAbstractPG(
-			entryAbstractDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares...",
+			entryAbstractDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent...",
 			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntryPG(

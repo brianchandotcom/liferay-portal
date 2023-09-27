@@ -423,7 +423,9 @@ definition {
 			keyName = "Test 2",
 			keyReferenceCode = "Test Reference");
 
-		Alert.viewErrorMessage(errorMessage = "Please enter a unique external reference code.");
+		AssertTextEquals.assertText(
+			locator1 = "Message#ERROR",
+			value1 = "Close Error:Please enter a unique external reference code.");
 
 		Click(locator1 = "Icon#BACK");
 

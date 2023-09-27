@@ -47,7 +47,7 @@ definition {
 	}
 
 	macro assertDisabledAllFields {
-		for (var fieldsDisabled : list "Name,Label,Scope,Panel Category Key") {
+		for (var fieldsDisabled : list "Name,Label,Scope,Panel Link") {
 			AssertElementPresent(
 				key_nameDisabled = ${fieldsDisabled},
 				locator1 = "CreateObject#VIEW_OBJECT_DATA_DISABLED");
@@ -139,7 +139,7 @@ definition {
 			value1 = ${valueScope});
 
 		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+			locator1 = "CreateObject#PANEL_LINK",
 			value1 = ${valuePanelCategory});
 	}
 
@@ -253,7 +253,7 @@ definition {
 	}
 
 	macro selectPanelCategoryKey {
-		Click(locator1 = "CreateObject#PANEL_CATEGORY_KEY");
+		Click(locator1 = "CreateObject#PANEL_LINK");
 
 		Click(
 			key_menuItem = ${panelCategoryKey},

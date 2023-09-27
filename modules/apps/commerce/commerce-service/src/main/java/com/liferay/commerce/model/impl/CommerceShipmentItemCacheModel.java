@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.model.impl;
@@ -24,6 +15,8 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
+import java.math.BigDecimal;
 
 import java.util.Date;
 
@@ -78,7 +71,7 @@ public class CommerceShipmentItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -108,6 +101,8 @@ public class CommerceShipmentItemCacheModel
 		sb.append(commerceInventoryWarehouseId);
 		sb.append(", quantity=");
 		sb.append(quantity);
+		sb.append(", unitOfMeasureKey=");
+		sb.append(unitOfMeasureKey);
 		sb.append("}");
 
 		return sb.toString();
@@ -168,13 +163,22 @@ public class CommerceShipmentItemCacheModel
 			commerceInventoryWarehouseId);
 		commerceShipmentItemImpl.setQuantity(quantity);
 
+		if (unitOfMeasureKey == null) {
+			commerceShipmentItemImpl.setUnitOfMeasureKey("");
+		}
+		else {
+			commerceShipmentItemImpl.setUnitOfMeasureKey(unitOfMeasureKey);
+		}
+
 		commerceShipmentItemImpl.resetOriginalValues();
 
 		return commerceShipmentItemImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
@@ -195,8 +199,8 @@ public class CommerceShipmentItemCacheModel
 		commerceOrderItemId = objectInput.readLong();
 
 		commerceInventoryWarehouseId = objectInput.readLong();
-
-		quantity = objectInput.readInt();
+		quantity = (BigDecimal)objectInput.readObject();
+		unitOfMeasureKey = objectInput.readUTF();
 	}
 
 	@Override
@@ -240,8 +244,14 @@ public class CommerceShipmentItemCacheModel
 		objectOutput.writeLong(commerceOrderItemId);
 
 		objectOutput.writeLong(commerceInventoryWarehouseId);
+		objectOutput.writeObject(quantity);
 
-		objectOutput.writeInt(quantity);
+		if (unitOfMeasureKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(unitOfMeasureKey);
+		}
 	}
 
 	public long mvccVersion;
@@ -257,6 +267,7 @@ public class CommerceShipmentItemCacheModel
 	public long commerceShipmentId;
 	public long commerceOrderItemId;
 	public long commerceInventoryWarehouseId;
-	public int quantity;
+	public BigDecimal quantity;
+	public String unitOfMeasureKey;
 
 }

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
@@ -36,11 +27,14 @@ const getInfoFields = (infoFieldSetEntries = []) => {
 	const targetFields = {};
 
 	infoFieldSetEntries.forEach(({fields}) => {
-		fields.forEach(({id: idSet, sourceContent, targetContent}) => {
+		fields.forEach(({html, id: idSet, sourceContent, targetContent}) => {
 			sourceContent.forEach((content, index) => {
 				const id = `${idSet}${index}`;
 
-				sourceFields[id] = content;
+				sourceFields[id] = {
+					content,
+					html,
+				};
 				targetFields[id] = {
 					content: targetContent[index],
 					message: '',
@@ -163,7 +157,12 @@ const Translate = ({
 	const fetchAutoTranslation = ({fields}) =>
 		fetch(getAutoTranslateURL, {
 			body: JSON.stringify({
-				fields,
+				fields: Object.fromEntries(
+					Object.entries(fields).map((a) => [a[0], a[1].content])
+				),
+				html: Object.fromEntries(
+					Object.entries(fields).map((a) => [a[0], a[1].html])
+				),
 				sourceLanguageId,
 				targetLanguageId,
 			}),
@@ -179,7 +178,7 @@ const Translate = ({
 		});
 
 		fetchAutoTranslation({fields: sourceFields})
-			.then(({error, fields}) => {
+			.then(({error, fields, html}) => {
 				if (error) {
 					throw error;
 				}
@@ -188,8 +187,18 @@ const Translate = ({
 					dispatch({
 						payload: Object.entries(fields).reduce(
 							(acc, [id, content]) => {
+								let contentData;
+								if (
+									html &&
+									sourceFields[id].html === html[id]
+								) {
+									contentData = content;
+								}
+								else {
+									contentData = unescapeHTML(content);
+								}
 								acc[id] = {
-									content: unescapeHTML(content),
+									content: contentData,
 								};
 
 								return acc;
@@ -238,16 +247,25 @@ const Translate = ({
 		fetchAutoTranslation({
 			fields: {[fieldId]: sourceFields[fieldId]},
 		})
-			.then(({error, fields}) => {
+			.then(({error, fields, html}) => {
 				if (error) {
 					throw error;
+				}
+
+				let contentData;
+
+				if (html && sourceFields[fieldId].html === html[fieldId]) {
+					contentData = fields[fieldId];
+				}
+				else {
+					contentData = unescapeHTML(fields[fieldId]);
 				}
 
 				if (isMounted()) {
 					dispatch({
 						payload: {
 							field: {
-								content: unescapeHTML(fields[fieldId]),
+								content: contentData,
 								message: Liferay.Language.get(
 									'field-translated'
 								),

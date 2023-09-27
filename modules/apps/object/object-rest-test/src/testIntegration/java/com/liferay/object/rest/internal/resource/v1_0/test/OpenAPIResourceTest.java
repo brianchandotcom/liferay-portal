@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.rest.internal.resource.v1_0.test;
@@ -23,15 +14,15 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.rest.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -43,11 +34,10 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.WebAppPool;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
@@ -59,6 +49,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -78,9 +69,7 @@ public class OpenAPIResourceTest {
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		WebAppPool.put(
-			_company.getCompanyId(), WebKeys.PORTLET_CATEGORY,
-			new PortletCategory());
+		PortalInstances.initCompany(_company);
 	}
 
 	@Before
@@ -142,6 +131,24 @@ public class OpenAPIResourceTest {
 	}
 
 	@Test
+	public void testGetObjectRelationshipEndpoints() throws Exception {
+
+		// Active
+
+		_testGetObjectRelationshipEndpoints(
+			true, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_testGetObjectRelationshipEndpoints(
+			true, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		// Inactive
+
+		_testGetObjectRelationshipEndpoints(
+			false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_testGetObjectRelationshipEndpoints(
+			false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+	}
+
+	@Test
 	public void testGetOpenAPI() throws Exception {
 		_user = UserTestUtil.addUser(_company);
 
@@ -152,54 +159,22 @@ public class OpenAPIResourceTest {
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)),
 			ObjectDefinitionConstants.SCOPE_COMPANY, _user.getUserId());
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, "/openapi", Http.Method.GET);
+		_testGetOpenAPI(_objectDefinition1, _objectDefinition2);
 
-		JSONArray jsonArray = jsonObject.getJSONArray(
-			_objectDefinition1.getRESTContextPath());
+		_siteScopedObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						"Text", "String", true, true, null,
+						RandomTestUtil.randomString(), _OBJECT_FIELD_NAME,
+						false)),
+				ObjectDefinitionConstants.SCOPE_SITE,
+				TestPropsValues.getUserId());
 
-		Assert.assertEquals(1, jsonArray.length());
-		Assert.assertEquals(
-			"http://localhost:8080/o" +
-				_objectDefinition1.getRESTContextPath() + "/openapi.yaml",
-			jsonArray.get(0));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
-			Http.Method.GET);
-
-		Assert.assertNotNull(jsonObject.getString("openapi"));
-		Assert.assertNull(
-			jsonObject.getJSONArray(_objectDefinition2.getRESTContextPath()));
-
-		JSONObject schemasJSONObject = jsonObject.getJSONObject(
-			"components"
-		).getJSONObject(
-			"schemas"
-		);
-
-		Assert.assertNotNull(
-			schemasJSONObject.getJSONObject("TaxonomyCategoryBrief"));
-
-		JSONObject propertiesJSONObject = schemasJSONObject.getJSONObject(
-			_objectDefinition1.getShortName()
-		).getJSONObject(
-			"properties"
-		);
-
-		Assert.assertNotNull(propertiesJSONObject.getJSONObject("keywords"));
-		Assert.assertNotNull(
-			propertiesJSONObject.getJSONObject("taxonomyCategoryBriefs"));
-		Assert.assertNotNull(
-			propertiesJSONObject.getJSONObject("taxonomyCategoryIds"));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, _objectDefinition2.getRESTContextPath() + "/openapi.json",
-			Http.Method.GET);
-
-		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+		_testGetOpenAPI(_siteScopedObjectDefinition, _objectDefinition2);
 	}
 
+	@Ignore
 	@Test
 	public void testGetOpenAPIWithCategorizationDisabled() throws Exception {
 		_objectDefinition1.setEnableCategorization(false);
@@ -245,8 +220,53 @@ public class OpenAPIResourceTest {
 		}
 	}
 
+	private void _assertObjectRelationshipEndpoints(
+		boolean active, JSONObject jsonObject,
+		ObjectRelationship objectRelationship) {
+
+		if (active) {
+			Assert.assertNotNull(
+				jsonObject.getJSONObject(
+					StringBundler.concat(
+						"/{",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition1.getShortName()),
+						"Id}/", objectRelationship.getName())));
+			Assert.assertNotNull(
+				jsonObject.getJSONObject(
+					StringBundler.concat(
+						"/{",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition1.getShortName()),
+						"Id}/", objectRelationship.getName(), "/{",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition2.getShortName()),
+						"Id}")));
+		}
+		else {
+			Assert.assertNull(
+				jsonObject.getJSONObject(
+					StringBundler.concat(
+						"/{",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition1.getShortName()),
+						"Id}/", objectRelationship.getName())));
+			Assert.assertNull(
+				jsonObject.getJSONObject(
+					StringBundler.concat(
+						"/{",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition1.getShortName()),
+						"Id}/", objectRelationship.getName(), "/{",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition2.getShortName()),
+						"Id}")));
+		}
+	}
+
 	private String _getNestedEntitySchema(
-		JSONObject jsonObject, ObjectRelationship objectRelationship,
+		boolean active, JSONObject jsonObject,
+		ObjectRelationship objectRelationship,
 		ObjectDefinition objectDefinition) {
 
 		String nestedEntitySchema;
@@ -262,6 +282,10 @@ public class OpenAPIResourceTest {
 		).getJSONObject(
 			objectRelationship.getName()
 		);
+
+		if (!active && (nestedEntitySchemaJSONObject == null)) {
+			return null;
+		}
 
 		if (Objects.equals(
 				objectRelationship.getType(),
@@ -336,7 +360,7 @@ public class OpenAPIResourceTest {
 
 		Assert.assertEquals(
 			_getNestedEntitySchema(
-				jsonObject, objectRelationship, _objectDefinition1),
+				true, jsonObject, objectRelationship, _objectDefinition1),
 			_objectDefinition2.getShortName());
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -347,8 +371,114 @@ public class OpenAPIResourceTest {
 
 		Assert.assertEquals(
 			_getNestedEntitySchema(
-				jsonObject, objectRelationship, _objectDefinition2),
+				true, jsonObject, objectRelationship, _objectDefinition2),
 			_objectDefinition1.getShortName());
+	}
+
+	private void _testGetObjectRelationshipEndpoints(
+			boolean active, String objectRelationshipType)
+		throws Exception {
+
+		if (active) {
+			_objectDefinition2 =
+				ObjectDefinitionTestUtil.publishObjectDefinition(
+					Collections.singletonList(
+						ObjectFieldUtil.createObjectField(
+							"Text", "String", true, true, null,
+							RandomTestUtil.randomString(), _OBJECT_FIELD_NAME,
+							false)));
+		}
+		else {
+			_objectDefinition2 =
+				ObjectDefinitionTestUtil.addCustomObjectDefinition(
+					Collections.singletonList(
+						ObjectFieldUtil.createObjectField(
+							"Text", "String", true, true, null,
+							RandomTestUtil.randomString(), _OBJECT_FIELD_NAME,
+							false)));
+		}
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition1, _objectDefinition2,
+				TestPropsValues.getUserId(), objectRelationshipType);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
+			Http.Method.GET);
+
+		Assert.assertNotNull(jsonObject.getString("openapi"));
+
+		if (active) {
+			Assert.assertEquals(
+				_getNestedEntitySchema(
+					active, jsonObject, objectRelationship, _objectDefinition1),
+				_objectDefinition2.getShortName());
+		}
+		else {
+			Assert.assertNull(
+				_getNestedEntitySchema(
+					active, jsonObject, objectRelationship,
+					_objectDefinition1));
+		}
+
+		_assertObjectRelationshipEndpoints(
+			active, jsonObject.getJSONObject("paths"), objectRelationship);
+	}
+
+	private void _testGetOpenAPI(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, "/openapi", Http.Method.GET);
+
+		JSONArray jsonArray = jsonObject.getJSONArray(
+			objectDefinition1.getRESTContextPath());
+
+		Assert.assertEquals(1, jsonArray.length());
+		Assert.assertEquals(
+			"http://localhost:8080/o" + objectDefinition1.getRESTContextPath() +
+				"/openapi.yaml",
+			jsonArray.get(0));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, objectDefinition1.getRESTContextPath() + "/openapi.json",
+			Http.Method.GET);
+
+		Assert.assertNotNull(jsonObject.getString("openapi"));
+		Assert.assertNull(
+			jsonObject.getJSONArray(objectDefinition2.getRESTContextPath()));
+
+		JSONObject schemasJSONObject = jsonObject.getJSONObject(
+			"components"
+		).getJSONObject(
+			"schemas"
+		);
+
+		Assert.assertNotNull(
+			schemasJSONObject.getJSONObject("TaxonomyCategoryBrief"));
+
+		JSONObject propertiesJSONObject = schemasJSONObject.getJSONObject(
+			objectDefinition1.getShortName()
+		).getJSONObject(
+			"properties"
+		);
+
+		Assert.assertNull(propertiesJSONObject.getJSONObject("createDate"));
+		Assert.assertNotNull(propertiesJSONObject.getJSONObject("keywords"));
+		Assert.assertNull(propertiesJSONObject.getJSONObject("modifiedDate"));
+		Assert.assertNotNull(
+			propertiesJSONObject.getJSONObject("taxonomyCategoryBriefs"));
+		Assert.assertNotNull(
+			propertiesJSONObject.getJSONObject("taxonomyCategoryIds"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, objectDefinition2.getRESTContextPath() + "/openapi.json",
+			Http.Method.GET);
+
+		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 	}
 
 	private static final String _OBJECT_FIELD_NAME =
@@ -367,6 +497,9 @@ public class OpenAPIResourceTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _siteScopedObjectDefinition;
 
 	@DeleteAfterTestRun
 	private User _user;

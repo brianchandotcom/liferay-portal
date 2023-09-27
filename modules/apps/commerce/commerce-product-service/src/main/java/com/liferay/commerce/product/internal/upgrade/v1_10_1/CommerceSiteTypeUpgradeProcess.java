@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.internal.upgrade.v1_10_1;
@@ -17,14 +8,14 @@ package com.liferay.commerce.product.internal.upgrade.v1_10_1;
 import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.ResultSet;
@@ -39,13 +30,11 @@ public class CommerceSiteTypeUpgradeProcess extends UpgradeProcess {
 	public CommerceSiteTypeUpgradeProcess(
 		ClassNameLocalService classNameLocalService,
 		GroupLocalService groupLocalService,
-		ConfigurationProvider configurationProvider,
-		SettingsFactory settingsFactory) {
+		ConfigurationProvider configurationProvider) {
 
 		_classNameLocalService = classNameLocalService;
 		_groupLocalService = groupLocalService;
 		_configurationProvider = configurationProvider;
-		_settingsFactory = settingsFactory;
 	}
 
 	@Override
@@ -57,7 +46,7 @@ public class CommerceSiteTypeUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				long groupId = resultSet.getLong("siteGroupId");
 
-				Settings settings = _settingsFactory.getSettings(
+				Settings settings = FallbackKeysSettingsUtil.getSettings(
 					new GroupServiceSettingsLocator(
 						_getCommerceChannelGroupIdBySiteGroupId(groupId),
 						CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT));
@@ -121,6 +110,5 @@ public class CommerceSiteTypeUpgradeProcess extends UpgradeProcess {
 	private final ClassNameLocalService _classNameLocalService;
 	private final ConfigurationProvider _configurationProvider;
 	private final GroupLocalService _groupLocalService;
-	private final SettingsFactory _settingsFactory;
 
 }

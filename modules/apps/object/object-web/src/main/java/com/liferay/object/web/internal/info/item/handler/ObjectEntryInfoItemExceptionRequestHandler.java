@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.web.internal.info.item.handler;
@@ -27,10 +18,14 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
+import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.List;
 
 /**
  * @author Eudaldo Alonso
@@ -50,8 +45,36 @@ public class ObjectEntryInfoItemExceptionRequestHandler {
 			Throwable throwable = modelListenerException.getCause();
 
 			if (throwable instanceof ObjectValidationRuleEngineException) {
-				throw new InfoFormValidationException.CustomValidation(
-					throwable.getLocalizedMessage());
+				ObjectValidationRuleEngineException
+					objectValidationRuleEngineException =
+						(ObjectValidationRuleEngineException)throwable;
+
+				List<ObjectValidationRuleResult> objectValidationRuleResults =
+					objectValidationRuleEngineException.
+						getObjectValidationRuleResults();
+
+				if (ListUtil.isEmpty(objectValidationRuleResults)) {
+					throw new InfoFormException();
+				}
+
+				InfoFormValidationException.RuleValidation
+					infoFormValidationExceptionRuleValidation =
+						new InfoFormValidationException.RuleValidation(
+							throwable.getLocalizedMessage());
+
+				for (ObjectValidationRuleResult objectValidationRuleResult :
+						objectValidationRuleResults) {
+
+					infoFormValidationExceptionRuleValidation.
+						addCustomValidation(
+							_getInfoFieldUniqueId(
+								groupId, infoItemFormProvider, objectDefinition,
+								objectValidationRuleResult.
+									getObjectFieldName()),
+							objectValidationRuleResult.getErrorMessage());
+				}
+
+				throw infoFormValidationExceptionRuleValidation;
 			}
 
 			throw new InfoFormException();

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {fetch} from 'frontend-js-web';
@@ -32,42 +23,64 @@ export async function fetchJSON<T>({
 	return (await result.json()) as T;
 }
 
+export async function getAllItems<T>({url}: {url: string}) {
+	let allItems: T[] = [];
+	let currentPage = 1;
+	let lastPage;
+
+	do {
+		const {items, lastPage: lastPageFromAPI, page} = await fetchJSON<{
+			items: T[];
+			lastPage: number;
+			page: number;
+		}>({input: url + `?page=${currentPage}`});
+
+		allItems = [...allItems, ...items];
+		currentPage = page + 1;
+		lastPage = lastPageFromAPI;
+	} while (currentPage <= lastPage);
+
+	return allItems;
+}
+
 export async function getItems<T>({url}: {url: string}) {
 	const {items} = await fetchJSON<{items: T[]}>({input: url});
 
 	return items;
 }
 
-export async function updateData({
+export async function updateData<T>({
 	dataToUpdate,
+	method,
 	onError,
 	onSuccess,
 	url,
 }: {
-	dataToUpdate: Partial<APIApplicationItem>;
+	dataToUpdate: Partial<T>;
+	method: 'PATCH' | 'PUT';
 	onError: (error: string) => void;
-	onSuccess: voidReturn;
+	onSuccess: (responseJSON: T) => void;
 	url: string;
 }) {
 	fetch(url, {
 		body: JSON.stringify(dataToUpdate),
 		headers,
-		method: 'PATCH',
+		method,
 	})
 		.then((response) => {
 			if (response.ok) {
-				onSuccess();
-			}
-			else {
 				return response.json();
 			}
-		})
-		.then((errorResponse) => {
-			if (errorResponse) {
-				throw new Error(errorResponse.title);
+			else {
+				throw response.json();
 			}
 		})
+		.then((responseJSON) => {
+			onSuccess(responseJSON);
+		})
 		.catch((error) => {
-			onError(error);
+			error.then((response: {message: string; title: string}) => {
+				onError(response.title ?? response.message);
+			});
 		});
 }

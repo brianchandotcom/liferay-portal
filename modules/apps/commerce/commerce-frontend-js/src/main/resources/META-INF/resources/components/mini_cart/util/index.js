@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {openToast, sub} from 'frontend-js-web';
@@ -25,26 +16,26 @@ import {
 	PRODUCT_QUANTITY_NOT_VALID_ERROR,
 } from './constants';
 
-export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
+export function getCorrectedQuantity(
+	productConfiguration,
+	sku,
+	cartItems,
+	precision = 0
+) {
 	const {
 		allowedOrderQuantities,
 		maxOrderQuantity,
 		minOrderQuantity,
 		multipleOrderQuantity,
-	} = parentProduct
-		? parentProduct.productConfiguration
-		: product.productConfiguration;
+	} = productConfiguration;
 
 	let quantity;
 
-	if (parentProduct || !allowedOrderQuantities.length) {
+	if (!allowedOrderQuantities.length) {
 		quantity = minOrderQuantity;
 	}
 
-	const existingItem = cartItems.find(
-		(item) =>
-			item.productId === product.productId || item.sku === product.sku
-	);
+	const existingItem = cartItems.find((item) => item.sku === sku);
 
 	const lastAllowedQuantity =
 		allowedOrderQuantities[allowedOrderQuantities.length - 1];
@@ -166,6 +157,10 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 		}
 	}
 
+	if (minOrderQuantity > maxOrderQuantity) {
+		quantity = 0;
+	}
+
 	if (multipleOrderQuantity > 1 && quantity % multipleOrderQuantity !== 0) {
 		openToast({
 			message: sub(
@@ -189,7 +184,7 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 		});
 	}
 
-	return quantity;
+	return Number(quantity.toFixed(precision));
 }
 
 export function generateProductPageURL(

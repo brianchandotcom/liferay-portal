@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.model.impl;
@@ -24,6 +15,8 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
+import java.math.BigDecimal;
 
 import java.util.Date;
 
@@ -210,7 +203,9 @@ public class CPDefinitionInventoryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
@@ -234,17 +229,13 @@ public class CPDefinitionInventoryCacheModel
 		displayAvailability = objectInput.readBoolean();
 
 		displayStockQuantity = objectInput.readBoolean();
-
-		minStockQuantity = objectInput.readInt();
+		minStockQuantity = (BigDecimal)objectInput.readObject();
 
 		backOrders = objectInput.readBoolean();
-
-		minOrderQuantity = objectInput.readInt();
-
-		maxOrderQuantity = objectInput.readInt();
+		minOrderQuantity = (BigDecimal)objectInput.readObject();
+		maxOrderQuantity = (BigDecimal)objectInput.readObject();
 		allowedOrderQuantities = objectInput.readUTF();
-
-		multipleOrderQuantity = objectInput.readInt();
+		multipleOrderQuantity = (BigDecimal)objectInput.readObject();
 	}
 
 	@Override
@@ -297,14 +288,11 @@ public class CPDefinitionInventoryCacheModel
 		objectOutput.writeBoolean(displayAvailability);
 
 		objectOutput.writeBoolean(displayStockQuantity);
-
-		objectOutput.writeInt(minStockQuantity);
+		objectOutput.writeObject(minStockQuantity);
 
 		objectOutput.writeBoolean(backOrders);
-
-		objectOutput.writeInt(minOrderQuantity);
-
-		objectOutput.writeInt(maxOrderQuantity);
+		objectOutput.writeObject(minOrderQuantity);
+		objectOutput.writeObject(maxOrderQuantity);
 
 		if (allowedOrderQuantities == null) {
 			objectOutput.writeUTF("");
@@ -313,7 +301,7 @@ public class CPDefinitionInventoryCacheModel
 			objectOutput.writeUTF(allowedOrderQuantities);
 		}
 
-		objectOutput.writeInt(multipleOrderQuantity);
+		objectOutput.writeObject(multipleOrderQuantity);
 	}
 
 	public long mvccVersion;
@@ -331,11 +319,11 @@ public class CPDefinitionInventoryCacheModel
 	public String lowStockActivity;
 	public boolean displayAvailability;
 	public boolean displayStockQuantity;
-	public int minStockQuantity;
+	public BigDecimal minStockQuantity;
 	public boolean backOrders;
-	public int minOrderQuantity;
-	public int maxOrderQuantity;
+	public BigDecimal minOrderQuantity;
+	public BigDecimal maxOrderQuantity;
 	public String allowedOrderQuantities;
-	public int multipleOrderQuantity;
+	public BigDecimal multipleOrderQuantity;
 
 }

@@ -1,0 +1,73 @@
+@import 'atlas-variables';
+
+.lfr__object-web-view-object-definitions {
+	display: flex;
+	justify-content: center;
+
+	&-card {
+		min-width: 900px;
+	}
+
+	&-card-header {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+	}
+
+	&-object-folder-list {
+		&-container {
+			margin: 1.5rem;
+			width: 256px;
+		}
+
+		&-header {
+			align-items: center;
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 1rem;
+		}
+
+		&-item {
+			background-color: $gray-200;
+			border: none;
+			margin-bottom: 5px;
+			padding: 0.5rem;
+		}
+
+		&-item-label {
+			padding-left: 8px;
+		}
+
+		&-title {
+			font-weight: 700;
+		}
+	}
+
+	&-title {
+		font-size: 1.2rem;
+		font-weight: 700;
+	}
+
+	&-title-kebab {
+		align-items: center;
+		margin-bottom: 16px;
+	}
+
+	&-view-in-model-builder-button {
+		align-items: center;
+		display: flex;
+		max-height: 40px;
+	}
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.dropdown-menu {
+	width: auto;
+}
+
+.treeview-light .treeview-link.active {
+	background-color: #f0f5ff;
+}

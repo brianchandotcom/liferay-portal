@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
@@ -34,11 +25,13 @@ public class RankingEntryDisplayContextBuilder {
 			new RankingEntryDisplayContext();
 
 		_setAliases(rankingEntryDisplayContext);
+		_setGroupExternalReferenceCode(rankingEntryDisplayContext);
 		_setHiddenResultsCount(rankingEntryDisplayContext);
 		_setInactive(rankingEntryDisplayContext);
 		_setIndex(rankingEntryDisplayContext);
 		_setNameForDisplay(rankingEntryDisplayContext);
 		_setPinnedResultsCount(rankingEntryDisplayContext);
+		_setSXPBlueprintExternalReferenceCode(rankingEntryDisplayContext);
 		_setUid(rankingEntryDisplayContext);
 
 		return rankingEntryDisplayContext;
@@ -54,6 +47,13 @@ public class RankingEntryDisplayContextBuilder {
 		rankingEntryDisplayContext.setAliases(
 			StringUtil.merge(
 				_ranking.getAliases(), StringPool.COMMA_AND_SPACE));
+	}
+
+	private void _setGroupExternalReferenceCode(
+		RankingEntryDisplayContext rankingEntryDisplayContext) {
+
+		rankingEntryDisplayContext.setGroupExternalReferenceCode(
+			_ranking.getGroupExternalReferenceCode());
 	}
 
 	private void _setHiddenResultsCount(
@@ -86,6 +86,13 @@ public class RankingEntryDisplayContextBuilder {
 
 		rankingEntryDisplayContext.setPinnedResultsCount(
 			_getSizeString(_ranking.getPins()));
+	}
+
+	private void _setSXPBlueprintExternalReferenceCode(
+		RankingEntryDisplayContext rankingEntryDisplayContext) {
+
+		rankingEntryDisplayContext.setSXPBlueprintExternalReferenceCode(
+			_ranking.getSXPBlueprintExternalReferenceCode());
 	}
 
 	private void _setUid(

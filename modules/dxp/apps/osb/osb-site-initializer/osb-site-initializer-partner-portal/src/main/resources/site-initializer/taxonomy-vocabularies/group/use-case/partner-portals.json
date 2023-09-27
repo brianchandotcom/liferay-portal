@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC067",
+	"name": "Partner Portals",
+	"name_i18n": {
+		"ar_SA": "Partner Portals",
+		"ca_ES": "Partner Portals",
+		"de_DE": "Partner Portals",
+		"en_US": "Partner Portals",
+		"es_ES": "Partner Portals",
+		"fi_FI": "Partner Portals",
+		"fr_FR": "Partner Portals",
+		"hu_HU": "Partner Portals",
+		"ja_JP": "Partner Portals",
+		"nl_NL": "Partner Portals",
+		"pt_BR": "Partner Portals",
+		"sv_SE": "Partner Portals",
+		"zh_CN": "Partner Portals"
+	},
+	"viewableBy": "Anyone"
+}

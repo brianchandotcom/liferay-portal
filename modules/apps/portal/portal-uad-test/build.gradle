@@ -1,8 +1,8 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
-	testIntegrationCompile project(":apps:portal:portal-uad")
-	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-api")
-	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-test-util")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	testIntegrationImplementation project(":apps:portal:portal-uad")
+	testIntegrationImplementation project(":apps:user-associated-data:user-associated-data-api")
+	testIntegrationImplementation project(":apps:user-associated-data:user-associated-data-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

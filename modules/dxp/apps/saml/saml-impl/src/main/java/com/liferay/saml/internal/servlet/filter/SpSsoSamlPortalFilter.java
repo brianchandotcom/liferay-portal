@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.saml.internal.servlet.filter;
@@ -29,11 +20,11 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
+import com.liferay.saml.helper.SamlHttpRequestHelper;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.servlet.profile.SingleLogoutProfile;
 import com.liferay.saml.runtime.servlet.profile.WebSsoProfile;
-import com.liferay.saml.util.SamlHttpRequestUtil;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -100,7 +91,7 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		String requestPath = _samlHttpRequestUtil.getRequestPath(
+		String requestPath = _samlHttpRequestHelper.getRequestPath(
 			httpServletRequest);
 
 		if (requestPath.equals("/c/portal/login")) {
@@ -239,7 +230,7 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 	private Props _props;
 
 	@Reference
-	private SamlHttpRequestUtil _samlHttpRequestUtil;
+	private SamlHttpRequestHelper _samlHttpRequestHelper;
 
 	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;

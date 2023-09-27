@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<Configuration strict="true">
-	<Loggers>
-		<Logger level="WARN" name="com.liferay.portal.dependency.manager.component.executor.factory.internal.DependencyManagerSyncImpl" />
-	</Loggers>
-</Configuration>

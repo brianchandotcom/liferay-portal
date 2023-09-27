@@ -1,19 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
+import com.liferay.commerce.discount.exception.CommerceDiscountRuleTypeSettingsException;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
@@ -62,10 +54,23 @@ public class EditCommerceDiscountRuleMVCActionCommand
 				_deleteCommerceDiscountCPDefinition(actionRequest);
 			}
 		}
-		catch (Exception exception) {
-			SessionErrors.add(actionRequest, exception.getClass());
+		catch (Throwable throwable) {
+			if (throwable instanceof
+					CommerceDiscountRuleTypeSettingsException) {
 
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+				SessionErrors.add(
+					actionRequest, throwable.getClass(), throwable);
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else {
+				SessionErrors.add(actionRequest, throwable.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
 		}
 	}
 
@@ -99,7 +104,9 @@ public class EditCommerceDiscountRuleMVCActionCommand
 	private void _updateCommerceDiscountRule(ActionRequest actionRequest)
 		throws Exception {
 
-		String type = ParamUtil.getString(actionRequest, "type");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String commerceDiscountRuleType = ParamUtil.getString(
+			actionRequest, "commerceDiscountRuleType");
 		String typeSettings = ParamUtil.getString(
 			actionRequest, "typeSettings");
 
@@ -108,7 +115,8 @@ public class EditCommerceDiscountRuleMVCActionCommand
 
 		if (commerceDiscountRuleId > 0) {
 			_commerceDiscountRuleService.updateCommerceDiscountRule(
-				commerceDiscountRuleId, type, typeSettings);
+				commerceDiscountRuleId, name, commerceDiscountRuleType,
+				typeSettings);
 		}
 		else {
 			long commerceDiscountId = ParamUtil.getLong(
@@ -118,7 +126,8 @@ public class EditCommerceDiscountRuleMVCActionCommand
 				CommerceDiscountRule.class.getName(), actionRequest);
 
 			_commerceDiscountRuleService.addCommerceDiscountRule(
-				commerceDiscountId, type, typeSettings, serviceContext);
+				commerceDiscountId, name, commerceDiscountRuleType,
+				typeSettings, serviceContext);
 		}
 	}
 

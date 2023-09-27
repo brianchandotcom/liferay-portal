@@ -1,5 +1,6 @@
 lib/development/com.liferay.ant.get.file.set.jar
 lib/development/com.liferay.ant.manifest.helper.jar
+lib/development/com.liferay.ant.secure.property.jar
 lib/development/com.liferay.bnd.invoker.jar
 tmp/lib-pre/com.liferay.osgi.service.tracker.collections.jar
 tmp/lib-pre/com.liferay.petra.concurrent.jar

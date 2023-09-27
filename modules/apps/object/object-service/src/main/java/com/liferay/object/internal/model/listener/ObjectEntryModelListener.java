@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.internal.model.listener;
@@ -21,11 +12,17 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.definition.tree.Edge;
+import com.liferay.object.definition.tree.Node;
+import com.liferay.object.definition.tree.Tree;
+import com.liferay.object.definition.tree.TreeFactory;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.internal.entry.util.ObjectEntryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldTable;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectRelationshipTable;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.object.model.ObjectViewFilterColumnTable;
@@ -33,6 +30,7 @@ import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectViewFilterColumnLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -46,6 +44,7 @@ import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -54,9 +53,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.event.generators.util.Attribute;
@@ -207,20 +208,86 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				userId = objectEntry.getUserId();
 			}
 
-			_objectActionEngine.executeObjectActions(
-				objectEntry.getModelClassName(), objectEntry.getCompanyId(),
-				objectActionTriggerKey,
-				ObjectEntryUtil.getPayloadJSONObject(
-					_dtoConverterRegistry, _jsonFactory, objectActionTriggerKey,
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectEntry.getObjectDefinitionId()),
-					objectEntry, originalObjectEntry,
-					_userLocalService.getUser(userId)),
-				userId);
+			User user = _userLocalService.getUser(userId);
+
+			_executeObjectActions(
+				objectActionTriggerKey, originalObjectEntry, objectEntry, user);
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+				return;
+			}
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectEntry.getObjectDefinitionId());
+
+			if (!objectDefinition.isRootDescendantNode() &&
+				(!objectDefinition.isRootNode() ||
+				 StringUtil.equals(
+					 objectActionTriggerKey,
+					 ObjectActionTriggerConstants.KEY_ON_AFTER_ADD))) {
+
+				return;
+			}
+
+			Tree tree = _treeFactory.create(
+				objectDefinition.getRootObjectDefinitionId());
+
+			Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
+
+			while (!node.isRoot()) {
+				Edge edge = node.getEdge();
+
+				ObjectRelationship objectRelationship =
+					_objectRelationshipLocalService.fetchObjectRelationship(
+						edge.getObjectRelationshipId());
+
+				if (objectRelationship == null) {
+					return;
+				}
+
+				ObjectField objectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectRelationship.getObjectFieldId2());
+
+				if (objectField == null) {
+					return;
+				}
+
+				objectEntry = _objectEntryLocalService.fetchObjectEntry(
+					MapUtil.getLong(
+						objectEntry.getValues(), objectField.getName()));
+
+				if (objectEntry == null) {
+					return;
+				}
+
+				node = tree.getNode(objectEntry.getObjectDefinitionId());
+			}
+
+			_executeObjectActions(
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE, null,
+				objectEntry, user);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
 		}
+	}
+
+	private void _executeObjectActions(
+			String objectActionTriggerKey, ObjectEntry originalObjectEntry,
+			ObjectEntry objectEntry, User user)
+		throws PortalException {
+
+		_objectActionEngine.executeObjectActions(
+			objectEntry.getModelClassName(), objectEntry.getCompanyId(),
+			objectActionTriggerKey,
+			ObjectEntryUtil.getPayloadJSONObject(
+				_dtoConverterRegistry, _jsonFactory, objectActionTriggerKey,
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectEntry.getObjectDefinitionId()),
+				objectEntry, originalObjectEntry, user),
+			user.getUserId());
 	}
 
 	private AuditMessage _getAuditMessage(
@@ -427,19 +494,21 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 			JSONArray newValueJSONArray = new JSONArrayImpl();
 
-			for (int i = 0; i < valueJSONArray.length(); i++) {
-				if (StringUtil.equals(
-						(String)valueJSONArray.get(i),
-						objectEntry.getExternalReferenceCode())) {
+			if (valueJSONArray != null) {
+				for (int i = 0; i < valueJSONArray.length(); i++) {
+					if (StringUtil.equals(
+							(String)valueJSONArray.get(i),
+							objectEntry.getExternalReferenceCode())) {
 
-					if (!StringUtil.equals(
-							externalReferenceCode, StringPool.BLANK)) {
+						if (!StringUtil.equals(
+								externalReferenceCode, StringPool.BLANK)) {
 
-						newValueJSONArray.put(externalReferenceCode);
+							newValueJSONArray.put(externalReferenceCode);
+						}
 					}
-				}
-				else {
-					newValueJSONArray.put((String)valueJSONArray.get(i));
+					else {
+						newValueJSONArray.put((String)valueJSONArray.get(i));
+					}
 				}
 			}
 
@@ -464,6 +533,10 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
+		if (ObjectEntryThreadLocal.isSkipObjectValidationRules()) {
+			return;
+		}
+
 		try {
 			long userId = PrincipalThreadLocal.getUserId();
 
@@ -471,15 +544,21 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				userId = objectEntry.getUserId();
 			}
 
-			_objectValidationRuleLocalService.validate(
-				objectEntry, objectEntry.getObjectDefinitionId(),
-				ObjectEntryUtil.getPayloadJSONObject(
-					_dtoConverterRegistry, _jsonFactory, null,
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectEntry.getObjectDefinitionId()),
-					objectEntry, originalObjectEntry,
-					_userLocalService.getUser(userId)),
-				userId);
+			int count =
+				_objectValidationRuleLocalService.getObjectValidationRulesCount(
+					objectEntry.getObjectDefinitionId(), true);
+
+			if (count > 0) {
+				_objectValidationRuleLocalService.validate(
+					objectEntry, objectEntry.getObjectDefinitionId(),
+					ObjectEntryUtil.getPayloadJSONObject(
+						_dtoConverterRegistry, _jsonFactory, null,
+						_objectDefinitionLocalService.getObjectDefinition(
+							objectEntry.getObjectDefinitionId()),
+						objectEntry, originalObjectEntry,
+						_userLocalService.getUser(userId)),
+					userId);
+			}
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -517,6 +596,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 	@Reference
@@ -525,6 +607,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 	private ServiceTrackerList<RelevantObjectEntryModelListener>
 		_relevantObjectEntryModelListeners;
+
+	@Reference
+	private TreeFactory _treeFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

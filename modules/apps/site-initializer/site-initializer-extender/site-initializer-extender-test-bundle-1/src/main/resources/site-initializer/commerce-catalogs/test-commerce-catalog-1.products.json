@@ -5,22 +5,6 @@
 		"categories": [
 			"Test Asset Category 1"
 		],
-		"customFields": [
-			{
-				"customValue": {
-					"data": 0.1
-				},
-				"dataType": "Decimal",
-				"name": "Test Expando Column 1"
-			},
-			{
-				"customValue": {
-					"data": "Test Expando Column Value 2"
-				},
-				"dataType": "Text",
-				"name": "Test Expando Column 2"
-			}
-		],
 		"description": "This is the description for Test Commerce Product.",
 		"displayAvailability": true,
 		"displayStockQuantity": true,

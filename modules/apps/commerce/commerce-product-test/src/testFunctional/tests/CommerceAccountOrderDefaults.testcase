@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -104,7 +104,7 @@ definition {
 				deliveryTerm = "Delivery Term 2",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -240,7 +240,7 @@ definition {
 				paymentTerm = "Payment Term 2",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -693,6 +693,10 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			Account.addAddress(
@@ -767,9 +771,9 @@ definition {
 		task ("Then an error message appears on the modal") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertTextEquals.assertPartialText(
+			AssertTextEquals.assertText(
 				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "There is already an address defined for the selected channel.");
+				value1 = "Close Error:There is already an address defined for the selected channel.");
 		}
 	}
 
@@ -796,6 +800,10 @@ definition {
 					userRole = "Buyer",
 					userScreenName = "buyeruser${num}",
 					userSiteMembership = "Minium ${num}");
+
+				Account.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "Test Account ${num}");
 
 				Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -1035,7 +1043,7 @@ definition {
 				deliveryTerm = "Delivery Term 1",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -1137,7 +1145,7 @@ definition {
 				paymentTerm = "Payment Term 1",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -1149,6 +1157,10 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
@@ -1466,6 +1478,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
@@ -1616,6 +1632,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
@@ -1686,6 +1706,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given 2 Minium sites and a buyer user is associated with both sites, and 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
@@ -1889,6 +1913,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
@@ -2210,6 +2238,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
@@ -2683,7 +2715,7 @@ definition {
 				deliveryTerm = "Delivery Term 2",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -3173,7 +3205,7 @@ definition {
 				deliveryTerm = "Payment Term 2",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -3481,7 +3513,7 @@ definition {
 				deliveryTerm = "Delivery Term 2",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -3602,7 +3634,7 @@ definition {
 				paymentTerm = "Payment Term 2",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}

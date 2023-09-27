@@ -101,13 +101,13 @@
 				/>
 				<replace
 					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
-					token="${translation.content.target.original}"
-					value="${translation.content.target}"
+					token="${translation.description.target.original}"
+					value="${translation.description.target}"
 				/>
 				<replace
 					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
-					token="${translation.description.target.original}"
-					value="${translation.description.target}"
+					token="${translation.content.target.original}"
+					value="${translation.content.target}"
 				/>
 			</else>
 		</if>

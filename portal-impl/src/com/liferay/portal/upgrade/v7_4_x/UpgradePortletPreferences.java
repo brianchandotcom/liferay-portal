@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.upgrade.v7_4_x;
@@ -27,7 +18,10 @@ import com.liferay.portlet.Preference;
 
 import java.sql.PreparedStatement;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Preston Crary
@@ -102,11 +96,12 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		}
 
 		for (Preference preference : preferenceMap.values()) {
-			String[] values = preference.getValues();
+			int index = 0;
 
-			for (int i = 0; i < values.length; i++) {
-				String value = values[i];
+			Set<String> valuesSet = new LinkedHashSet<>(
+				Arrays.asList(preference.getValues()));
 
+			for (String value : valuesSet) {
 				String largeValue = null;
 				String smallValue = null;
 
@@ -124,13 +119,15 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 					2, increment(PortletPreferenceValue.class.getName()));
 				preparedStatement.setLong(3, companyId);
 				preparedStatement.setLong(4, portletPreferencesId);
-				preparedStatement.setInt(5, i);
+				preparedStatement.setInt(5, index);
 				preparedStatement.setString(6, largeValue);
 				preparedStatement.setString(7, preference.getName());
 				preparedStatement.setBoolean(8, preference.isReadOnly());
 				preparedStatement.setString(9, smallValue);
 
 				preparedStatement.addBatch();
+
+				index++;
 			}
 		}
 	}

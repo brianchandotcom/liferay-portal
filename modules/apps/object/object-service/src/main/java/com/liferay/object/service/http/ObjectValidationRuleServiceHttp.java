@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.service.http;
@@ -52,11 +43,11 @@ public class ObjectValidationRuleServiceHttp {
 
 	public static com.liferay.object.model.ObjectValidationRule
 			addObjectValidationRule(
-				HttpPrincipal httpPrincipal, long objectDefinitionId,
-				boolean active, String engine,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long objectDefinitionId, boolean active, String engine,
 				java.util.Map<java.util.Locale, String> errorLabelMap,
 				java.util.Map<java.util.Locale, String> nameMap,
-				String outputType, String script,
+				String outputType, String script, boolean system,
 				java.util.List
 					<com.liferay.object.model.ObjectValidationRuleSetting>
 						objectValidationRuleSettings)
@@ -69,8 +60,9 @@ public class ObjectValidationRuleServiceHttp {
 				_addObjectValidationRuleParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectDefinitionId, active, engine, errorLabelMap,
-				nameMap, outputType, script, objectValidationRuleSettings);
+				methodKey, externalReferenceCode, objectDefinitionId, active,
+				engine, errorLabelMap, nameMap, outputType, script, system,
+				objectValidationRuleSettings);
 
 			Object returnObj = null;
 
@@ -186,8 +178,8 @@ public class ObjectValidationRuleServiceHttp {
 
 	public static com.liferay.object.model.ObjectValidationRule
 			updateObjectValidationRule(
-				HttpPrincipal httpPrincipal, long objectValidationRuleId,
-				boolean active, String engine,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long objectValidationRuleId, boolean active, String engine,
 				java.util.Map<java.util.Locale, String> errorLabelMap,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String outputType, String script,
@@ -203,8 +195,8 @@ public class ObjectValidationRuleServiceHttp {
 				_updateObjectValidationRuleParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectValidationRuleId, active, engine,
-				errorLabelMap, nameMap, outputType, script,
+				methodKey, externalReferenceCode, objectValidationRuleId,
+				active, engine, errorLabelMap, nameMap, outputType, script,
 				objectValidationRuleSettings);
 
 			Object returnObj = null;
@@ -240,9 +232,9 @@ public class ObjectValidationRuleServiceHttp {
 
 	private static final Class<?>[] _addObjectValidationRuleParameterTypes0 =
 		new Class[] {
-			long.class, boolean.class, String.class, java.util.Map.class,
-			java.util.Map.class, String.class, String.class,
-			java.util.List.class
+			String.class, long.class, boolean.class, String.class,
+			java.util.Map.class, java.util.Map.class, String.class,
+			String.class, boolean.class, java.util.List.class
 		};
 	private static final Class<?>[] _deleteObjectValidationRuleParameterTypes1 =
 		new Class[] {long.class};
@@ -250,9 +242,9 @@ public class ObjectValidationRuleServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _updateObjectValidationRuleParameterTypes3 =
 		new Class[] {
-			long.class, boolean.class, String.class, java.util.Map.class,
-			java.util.Map.class, String.class, String.class,
-			java.util.List.class
+			String.class, long.class, boolean.class, String.class,
+			java.util.Map.class, java.util.Map.class, String.class,
+			String.class, java.util.List.class
 		};
 
 }

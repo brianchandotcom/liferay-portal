@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -529,6 +529,7 @@ definition {
 	test CanCreateNewRelationTypeWithXSS {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a product relation with XSS type is configured") {
 			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration");
@@ -562,6 +563,67 @@ definition {
 				key_productName = "Hoses",
 				key_value = "<script>alert(1);</script>",
 				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12048. CanViewProductDetailsRelationsWithApproveWorkflow"
+	@priority = 5
+	test CanViewProductDetailsRelationsWithApproveWorkflow {
+		property portal.acceptance = "true";
+
+		task ("When the category manager opens a product") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "category.manager@liferay.com",
+				userLoginFullName = "Category Manager");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+		}
+
+		task ("And one product relation is created") {
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "Hoses",
+				key_relation = "Up-Sell");
+
+			AssertElementPresent(
+				key_productName = "Hoses",
+				key_value = "Up-Sell",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("Then the status for the relation is 'Pending'") {
+			AssertElementPresent(
+				key_productName = "Hoses",
+				key_productRelation = "Up-Sell",
+				key_productStatus = "Pending",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_STATUS");
+		}
+
+		task ("When the admin logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Then the Admin can see the details of the requested") {
+			Notifications.gotoNotifications();
+
+			Notifications.goToFilterValues(filterValues = "Unread");
+
+			AssertClick(
+				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+				value1 = "Category Manager sent you a Commerce Product Link for review in the workflow.");
+
+			AssertElementPresent(
+				key_scopeName = "Hoses",
+				locator1 = "AssetLists#ASSET_LIST_SCOPE_NAME");
+
+			AssertElementPresent(
+				key_status = "Pending",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
 		}
 	}
 

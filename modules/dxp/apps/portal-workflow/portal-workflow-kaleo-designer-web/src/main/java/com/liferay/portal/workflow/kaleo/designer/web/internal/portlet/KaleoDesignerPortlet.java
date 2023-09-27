@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet;
@@ -37,8 +28,8 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.RolePermission;
-import com.liferay.portal.kernel.service.permission.UserPermission;
+import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -347,7 +338,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (Role role : roles) {
-			if (!_rolePermission.contains(
+			if (!RolePermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), role.getRoleId(),
 					ActionKeys.VIEW)) {
 
@@ -421,7 +412,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (User user : users) {
-			if (!_userPermission.contains(
+			if (!UserPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), user.getUserId(),
 					ActionKeys.VIEW)) {
 
@@ -517,12 +508,6 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 	private RoleLocalService _roleLocalService;
 
 	@Reference
-	private RolePermission _rolePermission;
-
-	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserPermission _userPermission;
 
 }

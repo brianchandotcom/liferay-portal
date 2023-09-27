@@ -75,6 +75,15 @@
 	},
 	{
 		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.model.CommerceOrderType",
+		"roleName": "Account Administrator (Regular)",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"UPDATE",
 			"VIEW"
 		],
@@ -89,6 +98,24 @@
 			"VIEW"
 		],
 		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.model.CommerceOrderType",
+		"roleName": "Account Administrator (Regular)",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.model.CommerceOrder",
 		"roleName": "User",
 		"scope": "1"
 	}

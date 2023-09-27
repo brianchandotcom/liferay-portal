@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.batch.planner.rest.client.serdes.v1_0;
@@ -123,6 +114,20 @@ public class PlanSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(plan.getInternalClassName()));
+
+			sb.append("\"");
+		}
+
+		if (plan.getInternalClassNameKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"internalClassNameKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(plan.getInternalClassNameKey()));
 
 			sb.append("\"");
 		}
@@ -297,6 +302,15 @@ public class PlanSerDes {
 				String.valueOf(plan.getInternalClassName()));
 		}
 
+		if (plan.getInternalClassNameKey() == null) {
+			map.put("internalClassNameKey", null);
+		}
+		else {
+			map.put(
+				"internalClassNameKey",
+				String.valueOf(plan.getInternalClassNameKey()));
+		}
+
 		if (plan.getMappings() == null) {
 			map.put("mappings", null);
 		}
@@ -403,6 +417,13 @@ public class PlanSerDes {
 			else if (Objects.equals(jsonParserFieldName, "internalClassName")) {
 				if (jsonParserFieldValue != null) {
 					plan.setInternalClassName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "internalClassNameKey")) {
+
+				if (jsonParserFieldValue != null) {
+					plan.setInternalClassNameKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "mappings")) {

@@ -37,6 +37,7 @@ definition {
 	test ALTakesEffectOverInstanceLimit {
 		property custom.properties = "feature.flag.LPS-114786=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
 
@@ -67,6 +68,7 @@ definition {
 	test CanLimitMultipleMimeTypesSize {
 		property custom.properties = "feature.flag.LPS-114786=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			depotName = "Test Depot Name",
@@ -102,6 +104,7 @@ definition {
 	test CanLimitSizeOnlyInCurrentDepot {
 		property custom.properties = "feature.flag.LPS-114786=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -148,6 +151,7 @@ definition {
 	test SystemTakesEffectOverALLimit {
 		property custom.properties = "feature.flag.LPS-114786=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = 10240,

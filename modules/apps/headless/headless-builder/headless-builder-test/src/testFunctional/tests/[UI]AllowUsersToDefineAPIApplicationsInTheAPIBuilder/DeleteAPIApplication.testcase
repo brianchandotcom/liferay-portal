@@ -1,0 +1,226 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+
+		task ("Given create an API application") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "test",
+				status = "unpublished",
+				title = "test");
+
+			ApplicationAPI.setUpGlobalAPIApplicationId();
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanDeleteAPIFromApiBuilderAndApi {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("And Given from dropdown menu I click Delete option") {
+			APIBuilderUI.deleteAPIApplication(key_title = "test");
+		}
+
+		task ("When I confirm deletion by typing the API title") {
+			Type(
+				locator1 = "APIBuilder#TYPE_TITLE_IN_DELETE_MODAL",
+				value1 = "test");
+
+			Click(locator1 = "APIBuilder#MODAL_DELETE_BUTTON");
+		}
+
+		task ("Then the API is not present in API Builder") {
+			AssertElementNotPresent(
+				key_name = "test",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+
+		task ("And Then the API is removed from API") {
+			var response = ApplicationAPI.getAPIApplications();
+
+			var totalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${totalCount},
+				expected = 0);
+		}
+	}
+
+	@priority = 4
+	test CanDeletePublishedApiAndAssociatedEntities {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given publish an API application in API Builder") {
+			APIBuilderUI.publishApplication(key_title = "test");
+		}
+
+		task ("And Given with postAPISchema to create a Schema associate to the API application") {
+			SchemaAPI.createAPISchema(
+				apiApplicationId = ${staticApplicationId},
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "mySchema");
+		}
+
+		task ("And Given with postAPIEndpoint to create an Endpoint associate to API application and Schema") {
+			EndpointAPI.createAPIEndpoint(
+				apiApplicationId = ${staticApplicationId},
+				name = "myEndpoint",
+				path = "/myEndpoint");
+		}
+
+		task ("When I delete the API application") {
+			APIBuilderUI.deleteAPIApplication(key_title = "test");
+
+			Type(
+				locator1 = "APIBuilder#TYPE_TITLE_IN_DELETE_MODAL",
+				value1 = "test");
+
+			Click(locator1 = "APIBuilder#MODAL_DELETE_BUTTON");
+		}
+
+		task ("Then the API is not present in API Builder") {
+			AssertElementNotPresent(
+				key_name = "test",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+
+		task ("And Then the associated Endpoint and Schema are deleted") {
+			var responseInSchemas = SchemaAPI.getAPISchemas();
+
+			var totalCountInSchemas = JSONUtil.getWithJSONPath(${responseInSchemas}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${totalCountInSchemas},
+				expected = 0);
+
+			var responseInEndpoints = EndpointAPI.getAPIEndpoints();
+
+			var totalCountInEndpoints = JSONUtil.getWithJSONPath(${responseInEndpoints}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${totalCountInEndpoints},
+				expected = 0);
+		}
+	}
+
+	@priority = 4
+	test CanDeleteUnpublishedApiAndAssociatedEntities {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("And Given with postAPISchema to create a Schema associate to the API application") {
+			SchemaAPI.createAPISchema(
+				apiApplicationId = ${staticApplicationId},
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "mySchema");
+		}
+
+		task ("And Given with postAPIEndpoint to create an Endpoint associate to API application and Schema") {
+			EndpointAPI.createAPIEndpoint(
+				apiApplicationId = ${staticApplicationId},
+				name = "myEndpoint",
+				path = "/myEndpoint");
+		}
+
+		task ("When I delete the API application") {
+			APIBuilderUI.deleteAPIApplication(key_title = "test");
+
+			Type(
+				locator1 = "APIBuilder#TYPE_TITLE_IN_DELETE_MODAL",
+				value1 = "test");
+
+			Click(locator1 = "APIBuilder#MODAL_DELETE_BUTTON");
+		}
+
+		task ("Then the API is not present in API Builder") {
+			AssertElementNotPresent(
+				key_name = "test",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+
+		task ("And Then the associated Endpoint and Schema are deleted") {
+			var responseInSchemas = SchemaAPI.getAPISchemas();
+
+			var totalCountInSchemas = JSONUtil.getWithJSONPath(${responseInSchemas}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${totalCountInSchemas},
+				expected = 0);
+
+			var responseInEndpoints = EndpointAPI.getAPIEndpoints();
+
+			var totalCountInEndpoints = JSONUtil.getWithJSONPath(${responseInEndpoints}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${totalCountInEndpoints},
+				expected = 0);
+		}
+	}
+
+	@priority = 4
+	test CannotDeleteApiWithIncorrectTitleValue {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("And Given from dropdown menu I click Delete option") {
+			APIBuilderUI.deleteAPIApplication(key_title = "test");
+		}
+
+		task ("When I enter 'Test' as the API title") {
+			Type(
+				locator1 = "APIBuilder#TYPE_TITLE_IN_DELETE_MODAL",
+				value1 = "Test");
+		}
+
+		task ("Then I can see message about type the API title") {
+			AssertTextEquals.assertPartialText(
+				key_text = "Please type the API title mentioned above.",
+				locator1 = "APIBuilder#WARNING_MESSAGE_IN_DIALOG",
+				value1 = "Please type the API title mentioned above.");
+		}
+
+		task ("And Then Delete button is disabled") {
+			AssertElementPresent(
+				key_text = "modalDeleteButton",
+				locator1 = "Button#ANY_DISABLED");
+		}
+	}
+
+	@priority = 4
+	test CanSeeDeleteApiApplicationDialog {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When from dropdown menu I click Delete option") {
+			APIBuilderUI.deleteAPIApplication(key_title = "test");
+		}
+
+		task ("Then I can see the prompt message in the Delete API Application dialog") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#BODY",
+				value1 = "This action cannot be undone and will delete all the related schemas and endpoints within this API.");
+		}
+	}
+
+}

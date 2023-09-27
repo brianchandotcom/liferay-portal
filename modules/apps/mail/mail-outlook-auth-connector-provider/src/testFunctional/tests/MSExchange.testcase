@@ -45,6 +45,7 @@ definition {
 		property custom.properties = "admin.email.from.address=qa-exchange-pop-test@liferay.onmicrosoft.com${line.separator}jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=noreply@liferay.com,test@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a gmail user with permission to add and post on message boards") {
 			JSONUser.addUserWithRole(

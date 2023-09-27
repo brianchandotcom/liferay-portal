@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Site Localization";
@@ -249,7 +250,9 @@ definition {
 		}
 
 		task ("Sign out and sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(
+				signOutLocalizationName = "Salir",
+				userLoginEmailAddress = "userea@liferay.com");
 		}
 
 		task ("View localized country organization is shown") {
@@ -334,7 +337,9 @@ definition {
 		}
 
 		task ("Sign in as Test Test") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+			User.logoutAndLoginPG(
+				signOutLocalizationName = "Salir",
+				userLoginEmailAddress = "test@liferay.com");
 		}
 
 		task ("View locale is shown in URL when it doesn't match with user's preferred locale") {

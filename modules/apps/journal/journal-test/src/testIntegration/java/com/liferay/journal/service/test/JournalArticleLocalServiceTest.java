@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.journal.service.test;
@@ -48,7 +39,11 @@ import com.liferay.journal.exception.DuplicateArticleExternalReferenceCodeExcept
 import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -56,6 +51,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -111,6 +107,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -119,6 +116,8 @@ import java.io.InputStream;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -151,7 +150,8 @@ public class JournalArticleLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
+		_journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
 		_themeDisplay = _getThemeDisplay();
 	}
 
@@ -263,6 +263,75 @@ public class JournalArticleLocalServiceTest {
 			Collections.emptyMap());
 
 		_updateJournalArticle(Collections.emptyMap(), journalArticle);
+	}
+
+	@Test
+	public void testArticleSmallImageDocumentLibraryValidation()
+		throws Exception {
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent();
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0, StringPool.BLANK,
+			true, JournalArticleConstants.VERSION_DEFAULT,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), content,
+			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(), null,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, true,
+			fileEntry.getFileEntryId(),
+			JournalArticleConstants.SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA,
+			null, null, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(), journalArticle.getSmallImageId());
+		Assert.assertFalse(
+			Validator.isNotNull(journalArticle.getSmallImageURL()));
+	}
+
+	@Test(expected = NoSuchImageException.class)
+	public void testArticleSmallImageSourceDocumentsAndMediaValidation()
+		throws Exception {
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent();
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
+
+		_journalArticleLocalService.addArticle(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0, StringPool.BLANK,
+			true, JournalArticleConstants.VERSION_DEFAULT,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), content,
+			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(), null,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, true,
+			0, JournalArticleConstants.SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA,
+			null, null, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@Test
@@ -658,8 +727,8 @@ public class JournalArticleLocalServiceTest {
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			TemplateConstants.LANG_TYPE_FTL, "<p>Web Content Render</p>",
-			LocaleUtil.US);
+			TemplateConstants.LANG_TYPE_FTL,
+			_readFileToString("complex_template.ftl"), LocaleUtil.US);
 
 		JournalArticleDisplay journalArticleDisplay = null;
 
@@ -672,6 +741,61 @@ public class JournalArticleLocalServiceTest {
 
 		String content = journalArticleDisplay.getContent();
 
+		Assert.assertEquals(100, StringUtil.count(content, "<img alt="));
+		Assert.assertTrue(content.contains("Web Content Render"));
+	}
+
+	@Test
+	public void testGetArticleDisplayWithComplexDataAndTranslations()
+		throws Exception {
+
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+				_readFileToString("complex_data_definition.json"),
+				TestPropsValues.getUser());
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+				StringUtil.replace(
+					_readFileToString(
+						"complex_with_translations_journal_content.xml"),
+					"[$DOCUMENT_JSON$]", _toJSON(fileEntry)),
+				dataDefinition.getDataDefinitionKey(), null, LocaleUtil.SPAIN);
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			_group.getGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			dataDefinition.getDataDefinitionKey());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_FTL,
+			_readFileToString("complex_template.ftl"), LocaleUtil.US);
+
+		JournalArticleDisplay journalArticleDisplay = null;
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			journalArticleDisplay =
+				_journalArticleLocalService.getArticleDisplay(
+					journalArticle.getGroupId(), journalArticle.getArticleId(),
+					ddmTemplate.getTemplateKey(), null, null, _themeDisplay);
+		}
+
+		String content = journalArticleDisplay.getContent();
+
+		Assert.assertEquals(100, StringUtil.count(content, "<img alt="));
 		Assert.assertTrue(content.contains("Web Content Render"));
 	}
 
@@ -689,6 +813,37 @@ public class JournalArticleLocalServiceTest {
 		String content = journalArticleDisplay.getContent();
 
 		Assert.assertFalse(content.contains("Web Content Render"));
+	}
+
+	@Test
+	public void testGetArticlesByReviewDate() throws Exception {
+		JournalFolder folder = JournalTestUtil.addFolder(
+			_group.getGroupId(), RandomTestUtil.randomString());
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(), folder.getFolderId());
+
+		article.setUserId(RandomTestUtil.randomLong());
+
+		Calendar calendar = new GregorianCalendar();
+
+		calendar.add(Calendar.DATE, -1);
+
+		article.setExpirationDate(calendar.getTime());
+		article.setReviewDate(calendar.getTime());
+
+		article = JournalArticleLocalServiceUtil.updateJournalArticle(article);
+
+		JournalTestUtil.addArticle(_group.getGroupId(), folder.getFolderId());
+
+		calendar.add(Calendar.DATE, -1);
+
+		List<JournalArticle> articles =
+			_journalArticleLocalService.getArticlesByReviewDate(
+				calendar.getTime(), new Date());
+
+		Assert.assertEquals(articles.toString(), 1, articles.size());
+		Assert.assertEquals(article, articles.get(0));
 	}
 
 	@Test
@@ -753,6 +908,33 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testGetNotInTrashArticlesCount() throws Exception {
+		JournalFolder journalFolder = _journalFolderFixture.addFolder(
+			_group.getGroupId(), RandomTestUtil.randomString());
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(), journalFolder.getFolderId(),
+			Collections.emptyMap());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), journalFolder.getFolderId(),
+			Collections.emptyMap());
+
+		Assert.assertEquals(
+			2,
+			_journalArticleLocalService.getNotInTrashArticlesCount(
+				_group.getGroupId(), journalFolder.getFolderId()));
+
+		_journalArticleLocalService.moveArticleToTrash(
+			TestPropsValues.getUserId(), journalArticle);
+
+		Assert.assertEquals(
+			1,
+			_journalArticleLocalService.getNotInTrashArticlesCount(
+				_group.getGroupId(), journalFolder.getFolderId()));
+	}
+
+	@Test
 	public void testRemoveArticleLocale() throws Exception {
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
@@ -794,8 +976,8 @@ public class JournalArticleLocalServiceTest {
 				_readFileToString("journal_content_with_different_locales.xml"),
 				"[$DOCUMENT_JSON$]", _toJSON(fileEntry)),
 			ddmStructure.getStructureId(), null, null, 1, 1, 1965, 0, 0, 0, 0,
-			0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
-			null,
+			0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
+			null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -867,8 +1049,8 @@ public class JournalArticleLocalServiceTest {
 					"journal_content_nested_fields_with_different_locales.xml"),
 				"[$DOCUMENT_JSON$]", _toJSON(fileEntry)),
 			ddmStructure.getStructureId(), null, null, 1, 1, 1965, 0, 0, 0, 0,
-			0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
-			null,
+			0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
+			null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -1144,7 +1326,7 @@ public class JournalArticleLocalServiceTest {
 				).build(),
 				null, content, ddmStructure.getStructureId(),
 				ddmTemplate.getTemplateKey(), null, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-				0, true, 0, 0, 0, 0, 0, true, true, false, null, null,
+				0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
 				serviceContext);
 
 		return new Tuple(article, ddmStructure);
@@ -1246,8 +1428,8 @@ public class JournalArticleLocalServiceTest {
 			journalArticle.getContent(), journalArticle.getDDMTemplateKey(),
 			journalArticle.getLayoutUuid(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute, 0, 0, 0, 0, 0,
-			true, 0, 0, 0, 0, 0, true, journalArticle.isIndexable(), false,
-			null, null, null, null,
+			true, 0, 0, 0, 0, 0, true, journalArticle.isIndexable(), false, 0,
+			0, null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				journalArticle.getGroupId(), TestPropsValues.getUserId()));
 	}
@@ -1361,6 +1543,11 @@ public class JournalArticleLocalServiceTest {
 
 	@Inject
 	private JournalConverter _journalConverter;
+
+	private JournalFolderFixture _journalFolderFixture;
+
+	@Inject
+	private JournalFolderLocalService _journalFolderLocalService;
 
 	@Inject
 	private JSONFactory _jsonFactory;

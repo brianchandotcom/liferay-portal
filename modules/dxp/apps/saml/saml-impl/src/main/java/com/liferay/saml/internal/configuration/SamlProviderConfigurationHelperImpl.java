@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.saml.internal.configuration;
@@ -22,6 +13,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlProviderConfigurationKeys;
@@ -34,50 +26,24 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  */
-@Component(
-	property = Constants.SERVICE_PID + "=" + SamlProviderConfigurationHelperImpl.FACTORY_PID,
-	service = {
-		ManagedServiceFactory.class, SamlProviderConfigurationHelper.class
-	}
-)
+@Component(service = SamlProviderConfigurationHelper.class)
 public class SamlProviderConfigurationHelperImpl
-	implements ManagedServiceFactory, SamlProviderConfigurationHelper {
-
-	@Override
-	public void deleted(String pid) {
-		ConfigurationHolder configurationHolder =
-			_configurationHolderByPid.remove(pid);
-
-		if (configurationHolder == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to delete missing configuration " + pid);
-			}
-
-			return;
-		}
-
-		SamlProviderConfiguration samlProviderConfiguration =
-			configurationHolder.getSamlProviderConfiguration();
-
-		_configurationHolderByCompanyId.remove(
-			samlProviderConfiguration.companyId());
-	}
-
-	@Override
-	public String getName() {
-		return "SAML Provider Configuration Factory";
-	}
+	implements SamlProviderConfigurationHelper {
 
 	@Override
 	public SamlProviderConfiguration getSamlProviderConfiguration() {
@@ -146,35 +112,6 @@ public class SamlProviderConfigurationHelperImpl
 	}
 
 	@Override
-	public void updated(String pid, Dictionary<String, ?> properties)
-		throws ConfigurationException {
-
-		Long companyId = GetterUtil.getLong(properties.get("companyId"));
-
-		SamlProviderConfiguration samlProviderConfiguration =
-			ConfigurableUtil.createConfigurable(
-				SamlProviderConfiguration.class, properties);
-
-		ConfigurationHolder configurationHolder = new ConfigurationHolder(
-			samlProviderConfiguration, pid);
-
-		_configurationHolderByCompanyId.put(companyId, configurationHolder);
-
-		ConfigurationHolder oldConfigurationHolder =
-			_configurationHolderByPid.put(pid, configurationHolder);
-
-		if (oldConfigurationHolder != null) {
-			SamlProviderConfiguration oldSamlProviderConfiguration =
-				oldConfigurationHolder.getSamlProviderConfiguration();
-
-			if (oldSamlProviderConfiguration.companyId() != companyId) {
-				_configurationHolderByCompanyId.remove(
-					oldSamlProviderConfiguration.companyId());
-			}
-		}
-	}
-
-	@Override
 	public void updateProperties(UnicodeProperties unicodeProperties)
 		throws Exception {
 
@@ -221,7 +158,24 @@ public class SamlProviderConfigurationHelperImpl
 
 		configuration.update(configurationProperties);
 
-		updated(configuration.getPid(), configuration.getProperties());
+		_updateConfiguration(
+			configuration.getPid(), configuration.getProperties());
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceRegistration = bundleContext.registerService(
+			ManagedServiceFactory.class,
+			new SamlProviderConfigurationServiceFactory(),
+			HashMapDictionaryBuilder.put(
+				Constants.SERVICE_PID,
+				SamlProviderConfigurationHelperImpl.FACTORY_PID
+			).build());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
 	}
 
 	protected static final String FACTORY_PID =
@@ -241,6 +195,35 @@ public class SamlProviderConfigurationHelperImpl
 		return configuration.getProperties();
 	}
 
+	private void _updateConfiguration(
+			String pid, Dictionary<String, ?> properties)
+		throws ConfigurationException {
+
+		Long companyId = GetterUtil.getLong(properties.get("companyId"));
+
+		SamlProviderConfiguration samlProviderConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SamlProviderConfiguration.class, properties);
+
+		ConfigurationHolder configurationHolder = new ConfigurationHolder(
+			samlProviderConfiguration, pid);
+
+		_configurationHolderByCompanyId.put(companyId, configurationHolder);
+
+		ConfigurationHolder oldConfigurationHolder =
+			_configurationHolderByPid.put(pid, configurationHolder);
+
+		if (oldConfigurationHolder != null) {
+			SamlProviderConfiguration oldSamlProviderConfiguration =
+				oldConfigurationHolder.getSamlProviderConfiguration();
+
+			if (oldSamlProviderConfiguration.companyId() != companyId) {
+				_configurationHolderByCompanyId.remove(
+					oldSamlProviderConfiguration.companyId());
+			}
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlProviderConfigurationHelperImpl.class);
 
@@ -254,6 +237,7 @@ public class SamlProviderConfigurationHelperImpl
 	private final SamlProviderConfiguration _defaultSamlProviderConfiguration =
 		ConfigurableUtil.createConfigurable(
 			SamlProviderConfiguration.class, Collections.emptyMap());
+	private ServiceRegistration<ManagedServiceFactory> _serviceRegistration;
 
 	private class ConfigurationHolder {
 
@@ -274,6 +258,43 @@ public class SamlProviderConfigurationHelperImpl
 
 		private final String _pid;
 		private final SamlProviderConfiguration _samlProviderConfiguration;
+
+	}
+
+	private class SamlProviderConfigurationServiceFactory
+		implements ManagedServiceFactory {
+
+		@Override
+		public void deleted(String pid) {
+			ConfigurationHolder configurationHolder =
+				_configurationHolderByPid.remove(pid);
+
+			if (configurationHolder == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to delete missing configuration " + pid);
+				}
+
+				return;
+			}
+
+			SamlProviderConfiguration samlProviderConfiguration =
+				configurationHolder.getSamlProviderConfiguration();
+
+			_configurationHolderByCompanyId.remove(
+				samlProviderConfiguration.companyId());
+		}
+
+		@Override
+		public String getName() {
+			return "SAML Provider Configuration Factory";
+		}
+
+		@Override
+		public void updated(String pid, Dictionary<String, ?> properties)
+			throws ConfigurationException {
+
+			_updateConfiguration(pid, properties);
+		}
 
 	}
 

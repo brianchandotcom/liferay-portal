@@ -1,19 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.batch.planner.rest.internal.resource.v1_0;
 
+import com.liferay.batch.planner.batch.engine.task.TaskItemUtil;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.model.BatchPlannerPolicy;
@@ -74,12 +66,14 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 	}
 
 	@Override
-	public Response getPlanTemplate(String internalClassName) throws Exception {
+	public Response getPlanTemplate(String internalClassNameKey)
+		throws Exception {
+
 		return _getResponse(
-			internalClassName.substring(
-				internalClassName.lastIndexOf(StringPool.PERIOD) + 1),
+			TaskItemUtil.getSimpleClassName(internalClassNameKey),
 			_fieldProvider.getFields(
-				contextCompany.getCompanyId(), internalClassName));
+				contextCompany.getCompanyId(), internalClassNameKey,
+				contextUriInfo));
 	}
 
 	@Override
@@ -208,6 +202,9 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 				externalURL = batchPlannerPlan.getExternalURL();
 				id = batchPlannerPlan.getBatchPlannerPlanId();
 				internalClassName = batchPlannerPlan.getInternalClassName();
+				internalClassNameKey = TaskItemUtil.getInternalClassNameKey(
+					batchPlannerPlan.getInternalClassName(),
+					batchPlannerPlan.getTaskItemDelegateName());
 				mappings = transformToArray(
 					_batchPlannerMappingService.getBatchPlannerMappings(
 						batchPlannerPlan.getBatchPlannerPlanId()),

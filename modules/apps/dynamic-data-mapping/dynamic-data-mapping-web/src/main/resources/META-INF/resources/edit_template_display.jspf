@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -24,19 +15,10 @@ if (Validator.isNotNull(scriptContent)) {
 
 <aui:input name="scriptContent" type="hidden" value="<%= script %>" />
 
-<liferay-ui:panel-container
-	extended="<%= true %>"
-	id="templateScriptContainer"
-	markupView="lexicon"
-	persistState="<%= true %>"
->
-	<liferay-ui:panel
-		collapsible="<%= true %>"
-		extended="<%= true %>"
-		id="templateScriptSectionPanel"
-		markupView="lexicon"
-		persistState="<%= true %>"
-		title="script"
+<clay:panel-group>
+	<clay:panel
+		displayTitle='<%= LanguageUtil.get(request, "script") %>'
+		expanded="<%= true %>"
 	>
 		<div class="form-group lfr-template-editor-container">
 			<c:if test="<%= ddmDisplayContext.isAutocompleteEnabled(language) %>">
@@ -77,12 +59,8 @@ if (Validator.isNotNull(scriptContent)) {
 								}
 							%>
 
-								<liferay-ui:panel
-									collapsible="<%= true %>"
-									cssClass="palette-section"
-									extended="<%= false %>"
-									id="<%= HtmlUtil.getAUICompatibleId(templateVariableGroup.getLabel()) %>"
-									title="<%= LanguageUtil.get(request, templateHandlerResourceBundle, HtmlUtil.escape(templateVariableGroup.getLabel())) %>"
+								<clay:panel
+									displayTitle="<%= LanguageUtil.get(request, templateHandlerResourceBundle, HtmlUtil.escape(templateVariableGroup.getLabel())) %>"
 								>
 									<ul class="palette-item-content">
 
@@ -103,7 +81,7 @@ if (Validator.isNotNull(scriptContent)) {
 										%>
 
 									</ul>
-								</liferay-ui:panel>
+								</clay:panel>
 
 							<%
 							}
@@ -128,8 +106,8 @@ if (Validator.isNotNull(scriptContent)) {
 		</div>
 
 		<aui:input inlineLabel="left" label="script-file" name="script" type="file" />
-	</liferay-ui:panel>
-</liferay-ui:panel-container>
+	</clay:panel>
+</clay:panel-group>
 
 <aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-tooltip,autocomplete-base,autocomplete-filters,event-mouseenter,event-outside,liferay-util-window,resize,transition">
 	var ACPlugin = A.Plugin.AceAutoComplete;

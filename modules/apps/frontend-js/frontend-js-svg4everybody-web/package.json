@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"webpack": "5.70.0"
+	},
 	"main": "index.js",
 	"name": "frontend-js-svg4everybody-web",
 	"private": true,
@@ -7,5 +10,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "2.0.15"
+	"version": "2.0.17"
 }

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.frontend.internal.util;
@@ -91,19 +82,21 @@ public class ProductHelperImpl implements ProductHelper {
 
 	@Override
 	public PriceModel getPriceModel(
-			long cpInstanceId, int quantity, CommerceContext commerceContext,
-			String commerceOptionValuesJSON, Locale locale)
+			long cpInstanceId, String commerceOptionValuesJSON,
+			BigDecimal quantity, String unitOfMeasureKey,
+			CommerceContext commerceContext, Locale locale)
 		throws PortalException {
 
 		CommerceProductPriceRequest commerceProductPriceRequest =
 			new CommerceProductPriceRequest();
 
-		commerceProductPriceRequest.setCpInstanceId(cpInstanceId);
-		commerceProductPriceRequest.setQuantity(quantity);
 		commerceProductPriceRequest.setCommerceContext(commerceContext);
 		commerceProductPriceRequest.setCommerceOptionValues(
 			_getCommerceOptionValues(cpInstanceId, commerceOptionValuesJSON));
+		commerceProductPriceRequest.setCpInstanceId(cpInstanceId);
+		commerceProductPriceRequest.setQuantity(quantity);
 		commerceProductPriceRequest.setSecure(true);
+		commerceProductPriceRequest.setUnitOfMeasureKey(unitOfMeasureKey);
 
 		boolean taxIncludedInPrice = _isTaxIncludedInPrice(
 			commerceContext.getCommerceChannelId());
@@ -139,11 +132,11 @@ public class ProductHelperImpl implements ProductHelper {
 
 		ProductSettingsModel productSettingsModel = new ProductSettingsModel();
 
-		int minOrderQuantity =
+		BigDecimal minOrderQuantity =
 			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
-		int maxOrderQuantity =
+		BigDecimal maxOrderQuantity =
 			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY;
-		int multipleQuantity =
+		BigDecimal multipleQuantity =
 			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY;
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -155,7 +148,7 @@ public class ProductHelperImpl implements ProductHelper {
 			maxOrderQuantity = cpDefinitionInventory.getMaxOrderQuantity();
 			multipleQuantity = cpDefinitionInventory.getMultipleOrderQuantity();
 
-			int[] allowedOrderQuantitiesArray =
+			BigDecimal[] allowedOrderQuantitiesArray =
 				cpDefinitionInventory.getAllowedOrderQuantitiesArray();
 
 			if ((allowedOrderQuantitiesArray != null) &&
@@ -181,10 +174,10 @@ public class ProductHelperImpl implements ProductHelper {
 	}
 
 	private List<CommerceOptionValue> _getCommerceOptionValues(
-			long cpInstanceId, String ddmFormValues)
+			long cpInstanceId, String formFieldValues)
 		throws PortalException {
 
-		if (Validator.isNull(ddmFormValues)) {
+		if (Validator.isNull(formFieldValues)) {
 			return Collections.emptyList();
 		}
 
@@ -192,7 +185,7 @@ public class ProductHelperImpl implements ProductHelper {
 			cpInstanceId);
 
 		return _commerceOptionValueHelper.getCPDefinitionCommerceOptionValues(
-			cpInstance.getCPDefinitionId(), ddmFormValues);
+			cpInstance.getCPDefinitionId(), formFieldValues);
 	}
 
 	private String[] _getFormattedDiscountPercentages(

@@ -1,22 +1,18 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.server.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
+import com.liferay.document.library.kernel.util.AudioProcessor;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
+import com.liferay.document.library.kernel.util.VideoProcessor;
+import com.liferay.image.Ghostscript;
+import com.liferay.image.ImageMagick;
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.string.CharPool;
@@ -35,8 +31,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.image.Ghostscript;
-import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -82,7 +76,7 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.servlet.DirectServletRegistry;
+import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -213,8 +207,33 @@ public class EditServerMVCActionCommand
 		else if (cmd.equals("dlDeletePreviews")) {
 			DLPreviewableProcessor.deleteFiles();
 		}
-		else if (cmd.equals("dlGeneratePreviews")) {
+		else if (cmd.equals("dlGenerateAudioPreviews")) {
+			_audioProcessor.generatePreviews();
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			SessionMessages.add(actionRequest, "dlGenerateAudioPreviews");
+		}
+		else if (cmd.equals("dlGenerateOpenOfficePreviews")) {
+			_documentConversion.generatePreviews();
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			SessionMessages.add(actionRequest, "dlGenerateOpenOfficePreviews");
+		}
+		else if (cmd.equals("dlGeneratePDFPreviews")) {
 			_pdfProcessor.generatePreviews();
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			SessionMessages.add(actionRequest, "dlGeneratePDFPreviews");
+		}
+		else if (cmd.equals("dlGenerateVideoPreviews")) {
+			_videoProcessor.generatePreviews();
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			SessionMessages.add(actionRequest, "dlGenerateVideoPreviews");
 		}
 		else if (cmd.equals("gc")) {
 			_gc();
@@ -286,7 +305,7 @@ public class EditServerMVCActionCommand
 	}
 
 	private void _cacheServlet() throws Exception {
-		_directServletRegistry.clearServlets();
+		DirectServletRegistryUtil.clearServlets();
 	}
 
 	private void _cacheSingle() throws Exception {
@@ -665,7 +684,7 @@ public class EditServerMVCActionCommand
 		portletPreferences.store();
 
 		_ghostscript.reset();
-		ImageMagickUtil.reset();
+		_imageMagick.reset();
 	}
 
 	private void _updateLogLevels(ActionRequest actionRequest) {
@@ -877,19 +896,25 @@ public class EditServerMVCActionCommand
 		String.class);
 
 	@Reference
+	private AudioProcessor _audioProcessor;
+
+	@Reference
 	private ClusterExecutor _clusterExecutor;
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
-	private DirectServletRegistry _directServletRegistry;
+	private DocumentConversion _documentConversion;
 
 	@Reference
 	private Ghostscript _ghostscript;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private ImageMagick _imageMagick;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
@@ -942,5 +967,8 @@ public class EditServerMVCActionCommand
 
 	@Reference
 	private UserGroupMembershipPolicyFactory _userGroupMembershipPolicyFactory;
+
+	@Reference
+	private VideoProcessor _videoProcessor;
 
 }

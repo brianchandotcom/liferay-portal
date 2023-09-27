@@ -129,17 +129,17 @@ definition {
 			PageEditor.gotoConfiguration(fragmentName = "Form Container");
 
 			AssertSelectedLabel(
-				key_fieldLabel = "Success Message",
+				key_fieldLabel = "Success Interaction",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Embedded");
+				value1 = "Show Embedded Message");
 
 			AssertTextEquals(
-				key_text = "Success Text",
+				key_text = "Embedded Message",
 				locator1 = "TextInput#ANY",
 				value1 = "Thank you. Your information was successfully received.");
 
 			AssertNotChecked.assertNotCheckedNotVisible(
-				key_toggleSwitchLabel = "Preview Success State",
+				key_toggleSwitchLabel = "Preview Embedded Message",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 			AssertVisible(
@@ -150,10 +150,7 @@ definition {
 		}
 
 		task ("When the page designer checks preview success state toggle") {
-			PageEditor.editFormContainer(
-				panel = "General",
-				previewSuccessState = "true",
-				successMessage = "Embedded");
+			PageEditor.previewEmbeddedMessage();
 		}
 
 		task ("Then the page designer can see sucess text under Form Container") {

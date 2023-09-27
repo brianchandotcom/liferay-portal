@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.inventory.service.impl;
@@ -27,7 +18,6 @@ import com.liferay.commerce.model.CommerceOrderItemTable;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,9 +35,12 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,8 +63,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommerceInventoryBookedQuantity addCommerceBookedQuantity(
-			long userId, Date expirationDate, int quantity, String sku,
+	public CommerceInventoryBookedQuantity addCommerceInventoryBookedQuantity(
+			long userId, Date expirationDate, BigDecimal quantity, String sku,
 			String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException {
 
@@ -99,7 +92,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context), quantity, sku,
-			StringPool.BLANK);
+			unitOfMeasureKey);
 
 		return commerceInventoryBookedQuantityPersistence.update(
 			commerceInventoryBookedQuantity);
@@ -112,17 +105,27 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	}
 
 	@Override
-	public CommerceInventoryBookedQuantity consumeCommerceBookedQuantity(
-			long commerceBookedQuantityId, int quantity)
+	public CommerceInventoryBookedQuantity
+			consumeCommerceInventoryBookedQuantity(
+				long commerceInventoryBookedQuantityId, BigDecimal quantity)
 		throws NoSuchInventoryBookedQuantityException {
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 			commerceInventoryBookedQuantityPersistence.findByPrimaryKey(
-				commerceBookedQuantityId);
+				commerceInventoryBookedQuantityId);
 
-		if (quantity < commerceInventoryBookedQuantity.getQuantity()) {
-			int newQuantity =
-				commerceInventoryBookedQuantity.getQuantity() - quantity;
+		if (quantity == null) {
+			quantity = BigDecimal.ZERO;
+		}
+
+		BigDecimal commerceInventoryWarehouseItemQuantity =
+			commerceInventoryBookedQuantity.getQuantity();
+
+		if (BigDecimalUtil.lt(
+				quantity, commerceInventoryWarehouseItemQuantity)) {
+
+			BigDecimal newQuantity =
+				commerceInventoryWarehouseItemQuantity.subtract(quantity);
 
 			commerceInventoryBookedQuantity.setQuantity(newQuantity);
 
@@ -131,14 +134,64 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 		}
 
 		return commerceInventoryBookedQuantityPersistence.remove(
-			commerceBookedQuantityId);
+			commerceInventoryBookedQuantityId);
 	}
 
 	@Override
-	public int getCommerceBookedQuantity(
-		long companyId, long commerceChannelGroupId, String sku) {
+	public List<CommerceInventoryBookedQuantity>
+		getCommerceInventoryBookedQuantities(
+			long companyId, String sku, String unitOfMeasureKey, int start,
+			int end) {
 
-		List<Integer> result = dslQuery(
+		return commerceInventoryBookedQuantityPersistence.findByC_S_U(
+			companyId, sku, unitOfMeasureKey, start, end);
+	}
+
+	@Override
+	public List<CommerceInventoryBookedQuantity>
+			getCommerceInventoryBookedQuantities(
+				long companyId, String keywords, String sku,
+				String unitOfMeasureKey, int start, int end)
+		throws PortalException {
+
+		SearchContext searchContext = _buildSearchContext(
+			companyId, keywords, sku, unitOfMeasureKey, start, end);
+
+		BaseModelSearchResult<CommerceInventoryBookedQuantity>
+			baseModelSearchResult =
+				commerceInventoryBookedQuantityLocalService.
+					searchCommerceInventoryBookedQuantities(searchContext);
+
+		return baseModelSearchResult.getBaseModels();
+	}
+
+	@Override
+	public int getCommerceInventoryBookedQuantitiesCount(
+		long companyId, String sku, String unitOfMeasureKey) {
+
+		return commerceInventoryBookedQuantityPersistence.countByC_S_U(
+			companyId, sku, unitOfMeasureKey);
+	}
+
+	public int getCommerceInventoryBookedQuantitiesCount(
+			long companyId, String keywords, String sku,
+			String unitOfMeasureKey)
+		throws PortalException {
+
+		SearchContext searchContext = _buildSearchContext(
+			companyId, keywords, sku, unitOfMeasureKey, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		return commerceInventoryBookedQuantityLocalService.
+			searchCommerceInventoryBookedQuantitiesCount(searchContext);
+	}
+
+	@Override
+	public BigDecimal getCommerceInventoryBookedQuantity(
+		long companyId, long commerceChannelGroupId, String sku,
+		String unitOfMeasureKey) {
+
+		List<BigDecimal> result = dslQuery(
 			DSLQueryFactoryUtil.select(
 				DSLFunctionFactoryUtil.sum(
 					CommerceInventoryBookedQuantityTable.INSTANCE.quantity
@@ -151,7 +204,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 				CommerceOrderItemTable.INSTANCE,
 				CommerceInventoryBookedQuantityTable.INSTANCE.
 					commerceInventoryBookedQuantityId.eq(
-						CommerceOrderItemTable.INSTANCE.bookedQuantityId)
+						CommerceOrderItemTable.INSTANCE.
+							commerceInventoryBookedQuantityId)
 			).innerJoinON(
 				GroupTable.INSTANCE,
 				CommerceOrderItemTable.INSTANCE.groupId.eq(
@@ -166,20 +220,31 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 				).and(
 					CommerceInventoryBookedQuantityTable.INSTANCE.sku.eq(sku)
 				).and(
+					() -> {
+						if (Validator.isNull(unitOfMeasureKey)) {
+							return null;
+						}
+
+						return CommerceInventoryBookedQuantityTable.INSTANCE.
+							unitOfMeasureKey.eq(unitOfMeasureKey);
+					}
+				).and(
 					GroupTable.INSTANCE.groupId.eq(commerceChannelGroupId)
 				)
 			));
 
 		if (result.get(0) == null) {
-			return 0;
+			return BigDecimal.ZERO;
 		}
 
 		return result.get(0);
 	}
 
 	@Override
-	public int getCommerceBookedQuantity(long companyId, String sku) {
-		List<Integer> result = dslQuery(
+	public BigDecimal getCommerceInventoryBookedQuantity(
+		long companyId, String sku, String unitOfMeasureKey) {
+
+		List<BigDecimal> result = dslQuery(
 			DSLQueryFactoryUtil.select(
 				DSLFunctionFactoryUtil.sum(
 					CommerceInventoryBookedQuantityTable.INSTANCE.quantity
@@ -193,93 +258,61 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 					companyId
 				).and(
 					CommerceInventoryBookedQuantityTable.INSTANCE.sku.eq(sku)
+				).and(
+					() -> {
+						if (Validator.isNull(unitOfMeasureKey)) {
+							return null;
+						}
+
+						return CommerceInventoryBookedQuantityTable.INSTANCE.
+							unitOfMeasureKey.eq(unitOfMeasureKey);
+					}
 				)
 			));
 
 		if (result.get(0) == null) {
-			return 0;
+			return BigDecimal.ZERO;
 		}
 
 		return result.get(0);
 	}
 
 	@Override
-	public List<CommerceInventoryBookedQuantity>
-		getCommerceInventoryBookedQuantities(
-			long companyId, String sku, int start, int end) {
-
-		return commerceInventoryBookedQuantityPersistence.findByC_S(
-			companyId, sku, start, end);
-	}
-
-	@Override
-	public List<CommerceInventoryBookedQuantity>
-			getCommerceInventoryBookedQuantities(
-				long companyId, String keywords, String sku, int start, int end)
+	public CommerceInventoryBookedQuantity resetCommerceInventoryBookedQuantity(
+			long commerceInventoryBookedQuantityId, long userId,
+			Date expirationDate, BigDecimal quantity, String sku,
+			String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException {
 
-		SearchContext searchContext = _buildSearchContext(
-			companyId, keywords, sku, start, end);
-
-		BaseModelSearchResult<CommerceInventoryBookedQuantity>
-			baseModelSearchResult =
-				commerceInventoryBookedQuantityLocalService.
-					searchCommerceInventoryBookedQuantities(searchContext);
-
-		return baseModelSearchResult.getBaseModels();
-	}
-
-	@Override
-	public int getCommerceInventoryBookedQuantitiesCount(
-		long companyId, String sku) {
-
-		return commerceInventoryBookedQuantityPersistence.countByC_S(
-			companyId, sku);
-	}
-
-	public int getCommerceInventoryBookedQuantitiesCount(
-			long companyId, String keywords, String sku)
-		throws PortalException {
-
-		SearchContext searchContext = _buildSearchContext(
-			companyId, keywords, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		return commerceInventoryBookedQuantityLocalService.
-			searchCommerceInventoryBookedQuantitiesCount(searchContext);
-	}
-
-	@Override
-	public CommerceInventoryBookedQuantity resetCommerceBookedQuantity(
-			long commerceBookedQuantityId, long userId, Date expirationDate,
-			int quantity, String sku, Map<String, String> context)
-		throws PortalException {
-
-		CommerceInventoryBookedQuantity commerceBookedQuantity =
+		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 			commerceInventoryBookedQuantityPersistence.fetchByPrimaryKey(
-				commerceBookedQuantityId);
+				commerceInventoryBookedQuantityId);
 
-		if (commerceBookedQuantity == null) {
+		if (commerceInventoryBookedQuantity == null) {
 			User user = _userLocalService.getUser(userId);
 
-			commerceBookedQuantity =
+			commerceInventoryBookedQuantity =
 				commerceInventoryBookedQuantityPersistence.create(
-					commerceBookedQuantityId);
+					commerceInventoryBookedQuantityId);
 
-			commerceBookedQuantity.setCompanyId(user.getCompanyId());
-			commerceBookedQuantity.setUserId(userId);
-			commerceBookedQuantity.setUserName(user.getFullName());
-			commerceBookedQuantity.setSku(sku);
-			commerceBookedQuantity.setExpirationDate(expirationDate);
+			commerceInventoryBookedQuantity.setCompanyId(user.getCompanyId());
+			commerceInventoryBookedQuantity.setUserId(userId);
+			commerceInventoryBookedQuantity.setUserName(user.getFullName());
+			commerceInventoryBookedQuantity.setExpirationDate(expirationDate);
+			commerceInventoryBookedQuantity.setSku(sku);
+			commerceInventoryBookedQuantity.setUnitOfMeasureKey(
+				unitOfMeasureKey);
 		}
 		else {
-			quantity = commerceBookedQuantity.getQuantity() + quantity;
+			quantity = quantity.add(
+				commerceInventoryBookedQuantity.getQuantity());
 
-			if (quantity < 0) {
-				quantity = 0;
+			if (BigDecimalUtil.lt(quantity, BigDecimal.ZERO)) {
+				quantity = BigDecimal.ZERO;
 			}
 		}
 
-		commerceBookedQuantity.setQuantity(quantity);
+		commerceInventoryBookedQuantity.setQuantity(quantity);
 
 		CommerceInventoryAuditType commerceInventoryAuditType =
 			_commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
@@ -288,10 +321,10 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context), quantity, sku,
-			StringPool.BLANK);
+			unitOfMeasureKey);
 
 		return commerceInventoryBookedQuantityPersistence.update(
-			commerceBookedQuantity);
+			commerceInventoryBookedQuantity);
 	}
 
 	@Override
@@ -313,7 +346,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			userId, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context),
 			commerceInventoryBookedQuantity.getQuantity(),
-			commerceInventoryBookedQuantity.getSku(), StringPool.BLANK);
+			commerceInventoryBookedQuantity.getSku(),
+			commerceInventoryBookedQuantity.getUnitOfMeasureKey());
 
 		return commerceInventoryBookedQuantity;
 	}
@@ -360,7 +394,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	public CommerceInventoryBookedQuantity
 			updateCommerceInventoryBookedQuantity(
 				long userId, long commerceInventoryBookedQuantityId,
-				int quantity, Map<String, String> context, long mvccVersion)
+				BigDecimal quantity, Map<String, String> context,
+				long mvccVersion)
 		throws PortalException {
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
@@ -390,7 +425,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	}
 
 	private SearchContext _buildSearchContext(
-		long companyId, String keywords, String sku, int start, int end) {
+		long companyId, String keywords, String sku, String unitOfMeasureKey,
+		int start, int end) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -400,6 +436,10 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 		if (Validator.isNotNull(sku)) {
 			searchContext.setAttribute("sku", sku);
+		}
+
+		if (Validator.isNotNull(unitOfMeasureKey)) {
+			searchContext.setAttribute("unitOfMeasureKey", unitOfMeasureKey);
 		}
 
 		searchContext.setStart(start);

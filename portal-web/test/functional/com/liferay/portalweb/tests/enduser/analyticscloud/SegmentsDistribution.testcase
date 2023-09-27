@@ -106,7 +106,7 @@ definition {
 		task ("Filter Attribute") {
 			ACNavigation.switchTab(tabName = "Distribution");
 
-			ACSegments.selectDistributionByAttribute(attribute = "createDate");
+			ACSegments.selectDistributionByAttribute(attribute = "modifiedDate");
 		}
 
 		task ("Get current date") {

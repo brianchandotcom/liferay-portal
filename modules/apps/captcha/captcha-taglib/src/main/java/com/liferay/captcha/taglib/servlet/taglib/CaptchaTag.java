@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.captcha.taglib.servlet.taglib;
@@ -30,8 +21,16 @@ import javax.servlet.jsp.PageContext;
  */
 public class CaptchaTag extends IncludeTag {
 
+	public String getErrorMessage() {
+		return _errorMessage;
+	}
+
 	public String getUrl() {
 		return _url;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		_errorMessage = errorMessage;
 	}
 
 	@Override
@@ -49,6 +48,7 @@ public class CaptchaTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_errorMessage = null;
 		_url = null;
 	}
 
@@ -59,6 +59,8 @@ public class CaptchaTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-captcha:captcha:errorMessage", _errorMessage);
 		httpServletRequest.setAttribute(
 			"liferay-captcha:captcha:url", _getURL(httpServletRequest));
 	}
@@ -90,6 +92,7 @@ public class CaptchaTag extends IncludeTag {
 			CaptchaTag.class, ServletContext.class,
 			"(osgi.web.symbolicname=com.liferay.captcha.taglib)");
 
+	private String _errorMessage;
 	private String _url;
 
 }

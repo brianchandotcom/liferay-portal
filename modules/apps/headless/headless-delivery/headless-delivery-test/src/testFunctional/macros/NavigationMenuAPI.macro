@@ -10,9 +10,7 @@ definition {
 			var actual = JSONUtil.getWithJSONPath(${responseToParse}, "$.navigationMenuItems..${element}");
 		}
 
-		TestUtils.assertEquals(
-			actual = ${actual},
-			expected = ${expectedElement});
+		StringUtil.assertEquals(${expectedElement}, ${actual});
 	}
 
 	macro assertResponseHasCorrectInformations {

@@ -1,5 +1,5 @@
 Bundle-Description: The Change Log Builder Gradle plugin lets you generate and maintain a change log file based on the Git commits in your project.
 Bundle-Name: Liferay Gradle Plugins Change Log Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.change.log.builder
-Bundle-Version: 1.1.6
+Bundle-Version: 1.1.8
 Export-Package: com.liferay.gradle.plugins.change.log.builder

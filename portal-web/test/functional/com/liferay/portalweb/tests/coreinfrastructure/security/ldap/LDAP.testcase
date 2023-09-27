@@ -26,11 +26,12 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-143257. LDAP credentials should not expose in URL."
-	@priority = 5
+	@priority = 3
 	test AssertLDAPCredentialsDoesNotExposeInURL {
 		property apacheds.multiple.users.enabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add LDAP server and test connection") {
 			LDAP.addLDAPServerAndTestConnection(ldapServerName = "ApacheDS Server");
@@ -47,8 +48,78 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-188257. Verify user is able to edit user info after enabling Use LDAP Password Policy."
+	@priority = 3
+	test CanEditUserAfterEnablingUseLDAPPasswordPolicy {
+		property apacheds.enabled = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Go to enable Use LDAP Password Policy") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "LDAP",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.enableCheckbox(fieldName = "InstanceSettingsPortlet_passwordPolicyEnabled");
+
+			PortletEntry.save();
+		}
+
+		task ("And: Add LDAP server and configure settings") {
+			var enableSettingList = "enabled,ldapImportEnabled,ldapExportEnabled";
+
+			LDAP.addLDAPServerAndTestConnection();
+
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
+		}
+
+		task ("When: Add a new user and edit user info") {
+			JSONUser.addUser(
+				userEmailAddress = "usera@liferay.com",
+				userFirstName = "firstName",
+				userLastName = "lastName",
+				userScreenName = "usera");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "usera@liferay.com");
+
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "usera");
+
+			User.editUserInformation(
+				userEmailAddressEdit = "testadmin@liferay.com",
+				userFirstNameEdit = "testfirstName",
+				userLastNameEdit = "testlastName",
+				userScreenNameEdit = "testscreen");
+
+			User.viewUserInformation(
+				userEmailAddress = "testadmin@liferay.com",
+				userFirstName = "testfirstName",
+				userLastName = "testlastName",
+				userScreenName = "testscreen");
+
+			User.logoutAndLoginPG();
+		}
+
+		task ("Then: Assert that user info changed successfully") {
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "testscreen");
+
+			User.viewUserInformation(
+				userEmailAddress = "testadmin@liferay.com",
+				userFirstName = "testfirstName",
+				userLastName = "testlastName",
+				userScreenName = "testscreen");
+		}
+	}
+
 	@description = "This is a use case for LPS-65498. LDAP user can be imported with blank password."
-	@priority = 5
+	@priority = 3
 	test CanImportLDAPUserWithBlankPassword {
 		property apacheds.blank.user.password.enabled = "true";
 		property app.server.types = "tomcat";
@@ -56,6 +127,7 @@ definition {
 		property environment.acceptance = "false";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add LDAP server and test connection") {
 			PortalSettings.addLDAPServer(ldapServerName = "ApacheDS Server");
@@ -98,7 +170,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-182493 TC-7. Verify user could log in via LDAP when password creation is disabled."
+	@description = "This is a use case for LPS-179688 TC-7. Verify user could log in via LDAP when password creation is disabled."
 	@priority = 3
 	test CanLoginViaLDAPWithPasswordCreation {
 		property apacheds.blank.user.password.enabled = "true";
@@ -106,23 +178,10 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given Disable Allow Custom Password At Account Creation in Users add LDAP server and test connection configure LDAP settings") {
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Users",
-				configurationName = "Fields",
-				configurationScope = "Virtual Instance Scope");
-
-			FormFields.disableCheckbox(fieldName = "login.create.account.allow.custom.password");
-
-			PortletEntry.save();
+			User.configureCustomPasswordField();
 
 			PortalSettings.addLDAPServer(ldapServerName = "ApacheDS Server");
 
@@ -169,6 +228,7 @@ definition {
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User enable DEBUG log level for LDAP related loggers") {
 			LDAP.enableLDAPDebugLogs();
@@ -212,6 +272,7 @@ definition {
 	test DeactivatedUserStayDeactivatedAfterLDAPImport {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User enable DEBUG log level for LDAP related loggers") {
 			LDAP.enableLDAPDebugLogs();
@@ -270,11 +331,12 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-30529. User fields are not reset to default when signing in with imported LDAP user."
-	@priority = 4
+	@priority = 3
 	test FieldValuesNotResetForImportedLDAPUser {
 		property apacheds.enabled = "true";
 		property custom.properties = "field.enable.com.liferay.portal.kernel.model.Contact.male=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add LDAP server and test connection") {
 			PortalSettings.addLDAPServer();
@@ -370,10 +432,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-78606 and LPS-64800. Users who have SHA-384 encrypted password and are imported from LDAP are able to log in."
-	@priority = 5
+	@priority = 3
 	test LDAPAuthenticationWorksWithDifferentPasswordAlgorithm {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User enable DEBUG log level for LDAP related loggers") {
 			LDAP.enableLDAPDebugLogs();
@@ -409,6 +472,7 @@ definition {
 	test LDAPImportIntervalCanBeSetManually {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User enable DEBUG log level for LDAP related loggers") {
 			LDAP.enableLDAPDebugLogs();
@@ -445,6 +509,7 @@ definition {
 	@priority = 3
 	test LDAPInstanceSettingsDoNotAffectSystemSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable LDAP Authentication") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -472,9 +537,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-73381. LDAP security credentials are obscured when entered."
-	@priority = 4
+	@priority = 3
 	test LDAPSecurityCredentialsAreHidden {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add Server and edit security credential") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -490,11 +556,54 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-179689. TC-7: Verify if users cannot edit their password on the My Account page if the change password option is disabled by default policy and LDAP is enabled."
+	@priority = 3
+	test LDAPUsersCannotChangePasswordAfterDisablingPasswordChangeable {
+		property apacheds.enabled = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Go to edit default password policy to disable password changeable") {
+			PasswordPolicies.openPasswordPoliciesAdmin();
+
+			PasswordPolicies.disableChangeable(
+				passwordPolicyName = "Default Password Policy",
+				passwordPolicyPanel = "Password Changes");
+		}
+
+		task ("And: Add LDAP server and configure settings") {
+			var enableSettingList = "enabled,ldapImportEnabled,ldapExportEnabled";
+
+			LDAP.addLDAPServerAndTestConnection();
+
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
+
+			LDAP.installLDAPCommandUtil();
+
+			LDAP.importLDIFOnLDAPAndTriggerSync(ldifName = "addUser");
+		}
+
+		task ("When: Login as LDAP user and navigate to Account Settings") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "testUser2@liferay.com");
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			UserNavigator.gotoGeneral();
+		}
+
+		task ("Then: Assert there is no Password menu item at the General tab") {
+			AssertElementNotPresent(
+				key_navNested = "Password",
+				locator1 = "NavNested#NAV_NESTED_LINK");
+		}
+	}
+
 	@description = "This is a use case for LRQA-42764. Changes in the User informations will be exported into the LDAP database."
 	@priority = 3
 	test UserChangesCanBeExportedToLDAP {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds LDAP server and configure settings with group import method") {
 			var enableSettingList = "enabled,ldapImportEnabled,ldapExportEnabled";
@@ -534,6 +643,7 @@ definition {
 	test UsersCanBeImportedFromLDAPByGroups {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds LDAP server and configure settings with group import method") {
 			var enableSettingList = "enabled,ldapImportEnabled";
@@ -557,6 +667,60 @@ definition {
 			User.firstLoginUI(
 				password = "test",
 				userEmailAddress = "testUser2@liferay.com");
+		}
+	}
+
+	@description = "This is a use case for LRQA-78055. Liferay Admin user, for the virtual instance, should also be able to login after the 'Required' box in LDAP configurations is turned on, just like the main instance."
+	@priority = 3
+	test VerifyVirtualInstanceLoginWorksWithRequiredBoxTurnedOn {
+		property apacheds.enabled = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: The main instance and a virtual instance is connected to the same LDAP Server") {
+			var enableSettingList = "enabled,required";
+
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			LDAP.addLDAPServerAndTestConnection(ldapServerName = "ApacheDS Server");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			LDAP.addLDAPServerAndTestConnection(
+				baseURL = "http://www.able.com:8080",
+				ldapServerName = "ApacheDS Server");
+		}
+
+		task ("When: 'Enabled' and 'Required' settings are turned on in LDAP settings for both main and virtual instances") {
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
+
+			LDAP.enableLDAPSettings(
+				baseURL = "http://www.able.com:8080",
+				enableSettingList = ${enableSettingList});
+		}
+
+		task ("Then: The User can still sign in to the main instance, as well as to the virtual instance") {
+			User.logoutPG();
+
+			User.loginPG();
+
+			User.logoutPG(specificURL = "http://www.able.com:8080");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
 		}
 	}
 

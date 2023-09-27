@@ -1,20 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {useCallback, useContext, useEffect, useMemo} from 'react';
 import {useForm} from 'react-hook-form';
@@ -31,6 +23,7 @@ import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 import {Liferay} from '../../../services/liferay';
 import {
+	JiraClientExtensionRestImpl,
 	UserAccount,
 	UserActions,
 	liferayUserAccountsImpl,
@@ -158,11 +151,21 @@ const UserForm = () => {
 
 		setValue('roles', rolesFiltered);
 	};
+
+	const onClickJiraAuthorize = async () => {
+		await JiraClientExtensionRestImpl.preauthorize();
+
+		window.open(
+			`${JiraClientExtensionRestImpl.oAuth2Client.homePageURL}/jira/authorize/${myUserAccount?.id}`
+		);
+	};
+
 	const inputProps = {
 		errors,
 		register,
 		required: true,
 	};
+
 	const hasDeletePermission =
 		myUserAccount?.id !== Number(userAccount?.id) &&
 		userAccount?.actions['delete-user-account'];
@@ -321,6 +324,42 @@ const UserForm = () => {
 							</ClayForm.Group>
 						</ClayLayout.Col>
 					</ClayLayout.Row>
+				)}
+
+				{myUserAccount && (
+					<>
+						<ClayLayout.Row justify="start">
+							<ClayLayout.Col size={3} sm={12} xl={3}>
+								<h5 className="font-weight-normal">
+									{i18n.translate('jira-authorization')}
+								</h5>
+							</ClayLayout.Col>
+
+							<ClayLayout.Col size={3} sm={12} xl={3}>
+								<ClayForm.Group className="align-items-center d-flex form-group-sm">
+									<ClayButton
+										className="align-items-center d-flex mr-4"
+										disabled={
+											myUserAccount?.jiraAuthorization
+										}
+										onClick={onClickJiraAuthorize}
+									>
+										{i18n.translate('jira-authorization')}
+									</ClayButton>
+
+									{myUserAccount.jiraAuthorization && (
+										<ClayIcon
+											className="mr-1"
+											color="green"
+											symbol="check-circle-full"
+										/>
+									)}
+								</ClayForm.Group>
+							</ClayLayout.Col>
+						</ClayLayout.Row>
+
+						<Form.Divider />
+					</>
 				)}
 
 				<Form.Footer

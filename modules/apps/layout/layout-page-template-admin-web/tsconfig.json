@@ -1,0 +1,54 @@
+{
+	"@generated": "288ccbf1f3555379c43d8bd839a760f8b5010578",
+	"@overrides": {
+	},
+	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
+	"@see": "https://git.io/JY2EA",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"composite": true,
+		"jsx": "react",
+		"module": "es6",
+		"moduleResolution": "node",
+		"outDir": "./types",
+		"paths": {
+			"@liferay/frontend-icons-web": [
+				"../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/layout-js-components-web": [
+				"../layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"frontend-js-web": [
+				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
+			]
+		},
+		"sourceMap": false,
+		"strict": true,
+		"target": "es6",
+		"tsBuildInfoFile": "tmp/tsconfig.tsbuildinfo",
+		"typeRoots": [
+			"../../../node_modules/@types",
+			"./node_modules/@types"
+		]
+	},
+	"exclude": [
+		"test/**/*",
+		"**/__tests__/**"
+	],
+	"include": [
+		"src/**/*",
+		"../../../global.d.ts"
+	],
+	"references": [
+		{
+			"path": "../../frontend-icons/frontend-icons-web"
+		},
+		{
+			"path": "../layout-js-components-web"
+		},
+		{
+			"path": "../../frontend-js/frontend-js-web"
+		}
+	]
+}

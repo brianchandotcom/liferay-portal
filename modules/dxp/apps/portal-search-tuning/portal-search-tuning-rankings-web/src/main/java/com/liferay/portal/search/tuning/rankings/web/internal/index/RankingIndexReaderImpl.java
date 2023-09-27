@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
@@ -30,6 +21,7 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,12 +29,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
+ * @author Petteri Karttunen
  */
 @Component(service = RankingIndexReader.class)
 public class RankingIndexReaderImpl implements RankingIndexReader {
 
 	@Override
-	public Ranking fetch(RankingIndexName rankingIndexName, String id) {
+	public Ranking fetch(String id, RankingIndexName rankingIndexName) {
 		Document document = _getDocument(rankingIndexName, id);
 
 		if (document == null) {
@@ -53,8 +46,10 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 	}
 
 	@Override
-	public Ranking fetchByQueryString(
-		RankingIndexName rankingIndexName, String queryString) {
+	public List<Ranking> fetch(
+		String groupExternalReferenceCode, String queryString,
+		RankingIndexName rankingIndexName,
+		String sxpBlueprintExternalReferenceCode) {
 
 		if (Validator.isBlank(queryString)) {
 			return null;
@@ -63,13 +58,15 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(rankingIndexName.getIndexName());
-		searchSearchRequest.setQuery(_getQueryStringQuery(queryString));
+		searchSearchRequest.setQuery(
+			_getQuery(
+				groupExternalReferenceCode, queryString,
+				sxpBlueprintExternalReferenceCode));
 		searchSearchRequest.setSize(1);
 
-		SearchSearchResponse searchSearchResponse =
-			_searchEngineAdapter.execute(searchSearchRequest);
-
-		return _getFirstRanking(rankingIndexName, searchSearchResponse);
+		return _getRankings(
+			rankingIndexName,
+			_searchEngineAdapter.execute(searchSearchRequest));
 	}
 
 	@Override
@@ -107,7 +104,74 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		return null;
 	}
 
-	private Ranking _getFirstRanking(
+	private BooleanQuery _getEmptyScopeBooleanQuery() {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		BooleanQuery groupBooleanQuery1 = _queries.booleanQuery();
+
+		groupBooleanQuery1.addMustNotQueryClauses(
+			_queries.exists(RankingFields.GROUP_EXTERNAL_REFERENCE_CODE));
+
+		BooleanQuery groupBooleanQuery2 = _queries.booleanQuery();
+
+		groupBooleanQuery2.addShouldQueryClauses(
+			groupBooleanQuery1,
+			_queries.term(
+				RankingFields.GROUP_EXTERNAL_REFERENCE_CODE, StringPool.BLANK));
+
+		BooleanQuery sxpBlueprintBooleanQuery1 = _queries.booleanQuery();
+
+		sxpBlueprintBooleanQuery1.addMustNotQueryClauses(
+			_queries.exists(
+				RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE));
+
+		BooleanQuery sxpBlueprintBooleanQuery2 = _queries.booleanQuery();
+
+		sxpBlueprintBooleanQuery2.addShouldQueryClauses(
+			sxpBlueprintBooleanQuery1,
+			_queries.term(
+				RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
+				StringPool.BLANK));
+
+		booleanQuery.addMustQueryClauses(
+			groupBooleanQuery2, sxpBlueprintBooleanQuery2);
+
+		return booleanQuery;
+	}
+
+	private BooleanQuery _getQuery(
+		String groupExternalReferenceCode, String queryString,
+		String sxpBlueprintExternalReferenceCode) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		BooleanQuery scopeBooleanQuery = _queries.booleanQuery();
+
+		scopeBooleanQuery.addShouldQueryClauses(_getEmptyScopeBooleanQuery());
+
+		if (!Validator.isBlank(sxpBlueprintExternalReferenceCode)) {
+			scopeBooleanQuery.addShouldQueryClauses(
+				_queries.term(
+					RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
+					sxpBlueprintExternalReferenceCode));
+		}
+		else if (!Validator.isBlank(groupExternalReferenceCode)) {
+			scopeBooleanQuery.addShouldQueryClauses(
+				_queries.term(
+					RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
+					groupExternalReferenceCode));
+		}
+
+		booleanQuery.addFilterQueryClauses(scopeBooleanQuery);
+		booleanQuery.addFilterQueryClauses(
+			_queries.term(RankingFields.QUERY_STRINGS_KEYWORD, queryString));
+		booleanQuery.addMustNotQueryClauses(
+			_queries.term(RankingFields.INACTIVE, true));
+
+		return booleanQuery;
+	}
+
+	private List<Ranking> _getRankings(
 		RankingIndexName rankingIndexName,
 		SearchSearchResponse searchSearchResponse) {
 
@@ -115,30 +179,27 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 			return null;
 		}
 
-		SearchHit searchHit = _getFirstSearchHit(searchSearchResponse);
-
-		return fetch(rankingIndexName, searchHit.getId());
-	}
-
-	private SearchHit _getFirstSearchHit(
-		SearchSearchResponse searchSearchResponse) {
+		List<Ranking> rankings = new ArrayList<>();
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
 		List<SearchHit> searchHitsList = searchHits.getSearchHits();
 
-		return searchHitsList.get(0);
-	}
+		for (SearchHit searchHit : searchHitsList) {
+			Ranking ranking = fetch(searchHit.getId(), rankingIndexName);
 
-	private BooleanQuery _getQueryStringQuery(String queryString) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+			if (Validator.isBlank(ranking.getGroupExternalReferenceCode()) &&
+				Validator.isBlank(
+					ranking.getSXPBlueprintExternalReferenceCode())) {
 
-		booleanQuery.addFilterQueryClauses(
-			_queries.term(RankingFields.QUERY_STRINGS_KEYWORD, queryString));
-		booleanQuery.addMustNotQueryClauses(
-			_queries.term(RankingFields.INACTIVE, true));
+				rankings.add(0, ranking);
+			}
+			else {
+				rankings.add(ranking);
+			}
+		}
 
-		return booleanQuery;
+		return rankings;
 	}
 
 	@Reference

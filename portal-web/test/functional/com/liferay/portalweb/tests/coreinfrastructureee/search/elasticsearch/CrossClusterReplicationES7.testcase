@@ -29,6 +29,7 @@ definition {
 	@priority = 4
 	test AssertReplicationAfterReindex {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Description",
@@ -64,6 +65,7 @@ definition {
 	@priority = 3
 	test AssertReplicationWithSynonyms {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -96,6 +98,7 @@ definition {
 	@priority = 3
 	test BreakWorkflowSLA {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -165,9 +168,10 @@ definition {
 
 	@priority = 4
 	test CanReindexWithConcurrentExecutionMode {
-		property custom.properties = "feature.flag.LPS-177664=true";
+		property custom.properties = "feature.flag.LPS-183661=true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -176,7 +180,7 @@ definition {
 			groupName = "Guest",
 			title = "WC Title");
 
-		SearchAdministration.executeReindex(concurrentReindex = "true");
+		SearchAdministration.executeReindex(reindexMode = "Concurrent");
 
 		task ("Assert that the web content shows up after the concurrent reindex completes") {
 			Navigator.openURL();
@@ -194,6 +198,7 @@ definition {
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsInstances {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -220,6 +225,7 @@ definition {
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsNodes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -255,6 +261,7 @@ definition {
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsProcesses {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -278,6 +285,7 @@ definition {
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsSLAInstanceResults {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -301,6 +309,7 @@ definition {
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsSLATaskResults {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -327,6 +336,7 @@ definition {
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsTasks {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -370,6 +380,7 @@ definition {
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsTransitions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -417,6 +428,7 @@ definition {
 	test CreateBlogsEntryWithNewWorkflow {
 		property portal.upstream = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -454,16 +466,23 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
+		// Workaround for LPS-180801
+
+		var workflowTask = Workflow._matchTaskCase(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowDefinitionTask = "approve",
+			workflowTask = "review");
+
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "review");
+			workflowTask = ${workflowTask});
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowDefinitionTask = "approve",
-			workflowTask = "review");
+			workflowDefinitionTask = ${workflowDefinitionTask},
+			workflowTask = ${workflowTask});
 
 		Navigator.openURL();
 
@@ -478,6 +497,7 @@ definition {
 	@priority = 3
 	test SearchWithResultRankings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -520,6 +540,7 @@ definition {
 	@priority = 3
 	test SearchWithVirtualInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Description",
@@ -572,6 +593,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=\"com.liferay.portal.search.tuning.rankings.web\"";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Description",

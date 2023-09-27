@@ -1,0 +1,4 @@
+<container-tag>
+	<repeatable-tag>First</repeatable-tag>
+	<repeatable-tag>Second</repeatable-tag>
+</container-tag>

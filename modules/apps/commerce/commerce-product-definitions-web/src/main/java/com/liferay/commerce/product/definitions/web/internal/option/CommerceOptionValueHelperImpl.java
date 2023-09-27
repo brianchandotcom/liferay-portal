@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.definitions.web.internal.option;
@@ -21,19 +12,23 @@ import com.liferay.commerce.product.option.CommerceOptionValue;
 import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
+import com.liferay.commerce.product.util.CPCollectionProviderHelper;
 import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,17 +45,28 @@ public class CommerceOptionValueHelperImpl
 			long cpDefinitionId, String json)
 		throws PortalException {
 
+		List<CommerceOptionValue> commerceOptionValues = new ArrayList<>();
+
+		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			cpDefinitionOptionValueRelMap = _getCPDefinitionOptionValueRelMap(
+				cpDefinitionId);
+
+		if (!cpDefinitionOptionValueRelMap.isEmpty()) {
+			_filterCPDefinitionOptionValueRelMap(
+				cpDefinitionOptionValueRelMap, commerceOptionValues, json);
+		}
+
 		Map<Long, List<Long>>
 			cpDefinitionOptionRelCPDefinitionOptionValueRelIds =
 				_cpDefinitionOptionRelLocalService.
 					getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 						cpDefinitionId, json);
 
-		if (cpDefinitionOptionRelCPDefinitionOptionValueRelIds.isEmpty()) {
+		if (cpDefinitionOptionRelCPDefinitionOptionValueRelIds.isEmpty() &&
+			commerceOptionValues.isEmpty()) {
+
 			return Collections.emptyList();
 		}
-
-		List<CommerceOptionValue> commerceOptionValues = new ArrayList<>();
 
 		for (Map.Entry<Long, List<Long>> entry :
 				cpDefinitionOptionRelCPDefinitionOptionValueRelIds.entrySet()) {
@@ -106,6 +112,7 @@ public class CommerceOptionValueHelperImpl
 
 				commerceOptionValueBuilder.price(
 					cpDefinitionOptionValueRel.getPrice());
+
 				commerceOptionValueBuilder.quantity(
 					cpDefinitionOptionValueRel.getQuantity());
 
@@ -169,6 +176,120 @@ public class CommerceOptionValueHelperImpl
 		return commerceOptionValues;
 	}
 
+	private void _filterCPDefinitionOptionValueRelMap(
+			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+				cpDefinitionOptionValueRelMap,
+			List<CommerceOptionValue> commerceOptionValues, String json)
+		throws JSONException {
+
+		if (CPJSONUtil.isEmpty(json)) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		if (JSONUtil.isJSONArray(json)) {
+			jsonArray = _jsonFactory.createJSONArray(json);
+		}
+		else {
+			jsonArray.put(_jsonFactory.createJSONObject(json));
+		}
+
+		CommerceOptionValue.Builder commerceOptionValueBuilder =
+			new CommerceOptionValue.Builder();
+
+		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+				entry : cpDefinitionOptionValueRelMap.entrySet()) {
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				CPDefinitionOptionRel cpDefinitionOptionRel = entry.getKey();
+
+				if (!Objects.equals(
+						cpDefinitionOptionRel.getKey(),
+						jsonObject.getString("key"))) {
+
+					continue;
+				}
+
+				JSONArray valueJSONArray = CPJSONUtil.getJSONArray(
+					jsonObject, "value");
+
+				for (int j = 0; j < valueJSONArray.length(); j++) {
+					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+							entry.getValue()) {
+
+						if (!Objects.equals(
+								cpDefinitionOptionValueRel.getKey(),
+								valueJSONArray.getString(j))) {
+
+							continue;
+						}
+
+						commerceOptionValueBuilder.optionKey(
+							cpDefinitionOptionRel.getKey());
+						commerceOptionValueBuilder.optionValueKey(
+							cpDefinitionOptionValueRel.getKey());
+
+						commerceOptionValueBuilder.priceType(
+							cpDefinitionOptionRel.getPriceType());
+
+						commerceOptionValueBuilder.price(
+							cpDefinitionOptionValueRel.getPrice());
+						commerceOptionValueBuilder.quantity(
+							cpDefinitionOptionValueRel.getQuantity());
+
+						CPInstance cpDefinitionOptionValueRelCPInstance =
+							cpDefinitionOptionValueRel.fetchCPInstance();
+
+						if (cpDefinitionOptionValueRelCPInstance == null) {
+							continue;
+						}
+
+						commerceOptionValueBuilder.cpInstanceId(
+							cpDefinitionOptionValueRelCPInstance.
+								getCPInstanceId());
+
+						if (!cpDefinitionOptionRel.isPriceTypeDynamic()) {
+							continue;
+						}
+
+						commerceOptionValueBuilder.price(
+							cpDefinitionOptionValueRelCPInstance.getPrice());
+					}
+				}
+			}
+		}
+
+		commerceOptionValues.add(commerceOptionValueBuilder.build());
+	}
+
+	private Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+		_getCPDefinitionOptionValueRelMap(long cpDefinitionId) {
+
+		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			cpDefinitionOptionRelsMap = new HashMap<>();
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+				cpDefinitionId);
+
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
+
+			if (!cpDefinitionOptionRel.isDefinedExternally()) {
+				continue;
+			}
+
+			cpDefinitionOptionRelsMap.put(
+				cpDefinitionOptionRel,
+				_cpCollectionProviderHelper.getCPDefinitionOptionValueRels(
+					cpDefinitionOptionRel, null, null));
+		}
+
+		return cpDefinitionOptionRelsMap;
+	}
+
 	private CommerceOptionValue _toCommerceOptionValue(JSONObject jsonObject) {
 		CommerceOptionValue.Builder commerceOptionValueBuilder =
 			new CommerceOptionValue.Builder();
@@ -193,7 +314,8 @@ public class CommerceOptionValueHelperImpl
 		}
 
 		if (jsonObject.has("quantity")) {
-			commerceOptionValueBuilder.quantity(jsonObject.getInt("quantity"));
+			commerceOptionValueBuilder.quantity(
+				BigDecimal.valueOf(jsonObject.getInt("quantity")));
 		}
 
 		if (jsonObject.has("cpInstanceId")) {
@@ -203,6 +325,9 @@ public class CommerceOptionValueHelperImpl
 
 		return commerceOptionValueBuilder.build();
 	}
+
+	@Reference
+	private CPCollectionProviderHelper _cpCollectionProviderHelper;
 
 	@Reference
 	private CPDefinitionOptionRelLocalService

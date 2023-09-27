@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.order.client.dto.v1_0;
@@ -672,16 +663,16 @@ public class OrderItem implements Cloneable, Serializable {
 
 	protected BigDecimal promoPriceWithTaxAmount;
 
-	public Integer getQuantity() {
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity = quantity;
 	}
 
 	public void setQuantity(
-		UnsafeSupplier<Integer, Exception> quantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> quantityUnsafeSupplier) {
 
 		try {
 			quantity = quantityUnsafeSupplier.get();
@@ -691,7 +682,7 @@ public class OrderItem implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer quantity;
+	protected BigDecimal quantity;
 
 	public String getReplacedSku() {
 		return replacedSku;
@@ -756,16 +747,16 @@ public class OrderItem implements Cloneable, Serializable {
 
 	protected Date requestedDeliveryDate;
 
-	public Integer getShippedQuantity() {
+	public BigDecimal getShippedQuantity() {
 		return shippedQuantity;
 	}
 
-	public void setShippedQuantity(Integer shippedQuantity) {
+	public void setShippedQuantity(BigDecimal shippedQuantity) {
 		this.shippedQuantity = shippedQuantity;
 	}
 
 	public void setShippedQuantity(
-		UnsafeSupplier<Integer, Exception> shippedQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> shippedQuantityUnsafeSupplier) {
 
 		try {
 			shippedQuantity = shippedQuantityUnsafeSupplier.get();
@@ -775,7 +766,7 @@ public class OrderItem implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer shippedQuantity;
+	protected BigDecimal shippedQuantity;
 
 	public ShippingAddress getShippingAddress() {
 		return shippingAddress;
@@ -922,6 +913,27 @@ public class OrderItem implements Cloneable, Serializable {
 	}
 
 	protected String unitOfMeasure;
+
+	public String getUnitOfMeasureKey() {
+		return unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		this.unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(
+		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
+
+		try {
+			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String unitOfMeasureKey;
 
 	public BigDecimal getUnitPrice() {
 		return unitPrice;

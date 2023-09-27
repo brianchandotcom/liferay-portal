@@ -8,4 +8,4 @@ com/liferay/saml/util/NameIdTypeValues.getTransient()Ljava/lang/String;:SAFE
 com/liferay/saml/util/NameIdTypeValues.getUnspecified()Ljava/lang/String;:SAFE
 com/liferay/saml/util/NameIdTypeValues.getWinDomainQualified()Ljava/lang/String;:SAFE
 com/liferay/saml/util/NameIdTypeValues.getX509Subject()Ljava/lang/String;:SAFE
-com/liferay/saml/util/SamlHttpRequestUtil.getEntityDescriptorString(UNKNOWN):SAFE@com/liferay/saml/web/internal/portlet/action/MetadataAction
+com/liferay/saml/util/SamlHttpRequest.getEntityDescriptorString(UNKNOWN):SAFE@com/liferay/saml/web/internal/portlet/action/MetadataAction

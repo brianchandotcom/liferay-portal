@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -63,75 +54,58 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 			/>
 		</p>
 
-		<liferay-ui:panel-container
-			cssClass="panel-group-flush "
-			extended="<%= true %>"
-			id="clientExtensionOptions"
-			persistState="<%= true %>"
-		>
-			<liferay-ui:panel
-				collapsible="<%= true %>"
-				cssClass="panel-unstyled text-secondary"
-				defaultState="opened"
-				extended="<%= true %>"
-				id="clientExtensionOptionIdentiy"
-				markupView="lexicon"
-				persistState="<%= true %>"
-				title="identity"
+		<clay:panel-group>
+			<clay:panel
+				displayTitle='<%= LanguageUtil.get(request, "identity") %>'
+				expanded="<%= true %>"
 			>
-				<aui:field-wrapper label="name" name="name" required="<%= true %>">
-					<liferay-ui:input-localized
-						name="name"
-						xml="<%= editClientExtensionEntryDisplayContext.getName() %>"
+				<div class="panel-body">
+					<aui:field-wrapper label="name" name="name" required="<%= true %>">
+						<liferay-ui:input-localized
+							name="name"
+							xml="<%= editClientExtensionEntryDisplayContext.getName() %>"
+						/>
+					</aui:field-wrapper>
+
+					<liferay-editor:editor
+						contents="<%= editClientExtensionEntryDisplayContext.getDescription() %>"
+						editorName="contentEditor"
+						name="description"
+						placeholder="description"
 					/>
-				</aui:field-wrapper>
+				</div>
+			</clay:panel>
 
-				<liferay-editor:editor
-					contents="<%= editClientExtensionEntryDisplayContext.getDescription() %>"
-					editorName="contentEditor"
-					name="description"
-					placeholder="description"
-				/>
-			</liferay-ui:panel>
-
-			<liferay-ui:panel
-				collapsible="<%= true %>"
-				cssClass="panel-unstyled text-secondary"
-				defaultState="opened"
-				extended="<%= true %>"
-				id="clientExtensionOptionContent"
-				markupView="lexicon"
-				persistState="<%= true %>"
-				title="content"
+			<clay:panel
+				displayTitle='<%= LanguageUtil.get(request, "content") %>'
+				expanded="<%= true %>"
 			>
-				<liferay-util:include page="<%= editClientExtensionEntryDisplayContext.getEditJSP() %>" servletContext="<%= application %>" />
-			</liferay-ui:panel>
+				<div class="panel-body">
+					<liferay-util:include page="<%= editClientExtensionEntryDisplayContext.getEditJSP() %>" servletContext="<%= application %>" />
+				</div>
+			</clay:panel>
 
-			<liferay-ui:panel
-				collapsible="<%= true %>"
-				cssClass="panel-unstyled text-secondary"
-				defaultState="opened"
-				extended="<%= true %>"
-				id="clientExtensionOptionTools"
-				markupView="lexicon"
-				persistState="<%= true %>"
-				title="additional-resources"
+			<clay:panel
+				displayTitle='<%= LanguageUtil.get(request, "additional-resources") %>'
+				expanded="<%= true %>"
 			>
-				<aui:field-wrapper cssClass="form-group">
-					<aui:input label="source-code-url" name="sourceCodeURL" type="text" value="<%= editClientExtensionEntryDisplayContext.getSourceCodeURL() %>" />
+				<div class="panel-body">
+					<aui:field-wrapper cssClass="form-group">
+						<aui:input label="source-code-url" name="sourceCodeURL" type="text" value="<%= editClientExtensionEntryDisplayContext.getSourceCodeURL() %>" />
 
-					<div class="form-text">
-						<liferay-ui:message key="specify-the-source-code-repository-url-for-the-client-extension" />
-					</div>
-				</aui:field-wrapper>
+						<div class="form-text">
+							<liferay-ui:message key="specify-the-source-code-repository-url-for-the-client-extension" />
+						</div>
+					</aui:field-wrapper>
 
-				<aui:input name="type" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getType() %>" />
+					<aui:input name="type" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getType() %>" />
 
-				<c:if test="<%= editClientExtensionEntryDisplayContext.isPropertiesVisible() %>">
-					<aui:input label="properties" name="properties" placeholder="define-the-default-properties-that-are-included-in-all-instances-of-the-client-extension-these-properties-are-passed-to-the-application-as-additional-url-attributes-so-they-can-be-accessed-programmatically" type="textarea" value="<%= editClientExtensionEntryDisplayContext.getProperties() %>" />
-				</c:if>
-			</liferay-ui:panel>
-		</liferay-ui:panel-container>
+					<c:if test="<%= editClientExtensionEntryDisplayContext.isPropertiesVisible() %>">
+						<aui:input label="properties" name="properties" placeholder="define-the-default-properties-that-are-included-in-all-instances-of-the-client-extension-these-properties-are-passed-to-the-application-as-additional-url-attributes-so-they-can-be-accessed-programmatically" type="textarea" value="<%= editClientExtensionEntryDisplayContext.getProperties() %>" />
+					</c:if>
+				</div>
+			</clay:panel>
+		</clay:panel-group>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

@@ -5,6 +5,8 @@ definition {
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
 	property testray.main.component.name = "Upgrades Staging";
 
 	setUp {
@@ -14,12 +16,11 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Relaunch export process for default site."
-	@priority = 5
+	@priority = 4
 	test DefaultSiteCanBeExportedAfterUpgrade71103 {
 		property data.archive.type = "data-archive-default-site-export";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Navigate to Export portlet") {
 			LAR.openExportAdmin(siteScopeName = "guest");
@@ -31,12 +32,11 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Relaunch export process for default site."
-	@priority = 5
+	@priority = 3
 	test DefaultSiteCanBeExportedAfterUpgrade72101 {
 		property data.archive.type = "data-archive-default-site-export";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Navigate to Export portlet") {
 			LAR.openExportAdmin(siteScopeName = "guest");
@@ -48,12 +48,11 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Relaunch export process for default site."
-	@priority = 5
+	@priority = 3
 	test DefaultSiteCanBeExportedAfterUpgrade73101 {
 		property data.archive.type = "data-archive-default-site-export";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Navigate to Export portlet") {
 			LAR.openExportAdmin(siteScopeName = "guest");
@@ -65,12 +64,11 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Relaunch export process for default site. Blocked by LRQA-73610."
-	@priority = 5
+	@priority = 3
 	test DefaultSiteCanBeExportedAfterUpgrade701016 {
 		property data.archive.type = "data-archive-default-site-export";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.16";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Navigate to Export portlet") {
 			LAR.openExportAdmin(siteScopeName = "guest");
@@ -82,12 +80,11 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Modify contents of export template after upgrading."
-	@priority = 5
+	@priority = 3
 	test ExportTemplateCanBeEditedAfterUpgrade71103 {
 		property data.archive.type = "data-archive-edit-export-template";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Add Blog and Web Content entry") {
 			JSONBlog.addEntry(
@@ -153,12 +150,11 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Modify contents of export template after upgrading."
-	@priority = 5
+	@priority = 3
 	test ExportTemplateCanBeEditedAfterUpgrade72101 {
 		property data.archive.type = "data-archive-edit-export-template";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Add Blog and Web Content entry") {
 			JSONBlog.addEntry(
@@ -224,12 +220,11 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Modify contents of export template after upgrading."
-	@priority = 5
+	@priority = 3
 	test ExportTemplateCanBeEditedAfterUpgrade73101 {
 		property data.archive.type = "data-archive-edit-export-template";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Add Blog and Web Content entry") {
 			JSONBlog.addEntry(
@@ -295,12 +290,11 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Modify contents of export template after upgrading."
-	@priority = 5
+	@priority = 3
 	test ExportTemplateCanBeEditedAfterUpgrade701016 {
 		property data.archive.type = "data-archive-edit-export-template";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.16";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Add Blog and Web Content entry") {
 			JSONBlog.addEntry(
@@ -366,12 +360,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-184978. TC-11: URL Pattern configuration works well after upgrading from 7.3 SP1."
-	@priority = 5
+	@priority = 3
 	test URLPatternShouldWorkAfterUpgrade73101 {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property data.archive.type = "data-archive-web-content-with-custom-url";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("When: Not set URL pattern and edit web content") {
 			StagingNavigator.openToConfigInInstanceSettings(portlet = "Export/Import, Staging");

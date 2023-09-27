@@ -1,5 +1,5 @@
 apply plugin: "com.liferay.target.platform.ide"
-apply plugin: "java"
+apply plugin: "java-library"
 
 dependencies {
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"

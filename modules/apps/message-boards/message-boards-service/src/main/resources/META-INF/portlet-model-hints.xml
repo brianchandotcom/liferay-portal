@@ -34,6 +34,9 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="displayStyle" type="String" />
+		<field name="friendlyURL" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

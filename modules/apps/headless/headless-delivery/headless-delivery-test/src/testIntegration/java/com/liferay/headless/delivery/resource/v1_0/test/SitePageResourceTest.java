@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.delivery.resource.v1_0.test;
@@ -140,6 +131,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -158,6 +150,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 		SitePageResource.Builder builder = SitePageResource.builder();
 
 		sitePageResource = builder.authentication(
@@ -167,6 +163,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Override
@@ -690,16 +694,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					settings = new Settings() {
 						{
-							setGlobalJSClientExtensions(
-								new ClientExtension[] {
-									new ClientExtension() {
-										{
-											externalReferenceCode =
-												globalCSSClientExtensionEntry.
-													getExternalReferenceCode();
-										}
+							globalJSClientExtensions = new ClientExtension[] {
+								new ClientExtension() {
+									{
+										externalReferenceCode =
+											globalCSSClientExtensionEntry.
+												getExternalReferenceCode();
 									}
-								});
+								}
+							};
 						}
 					};
 				}
@@ -1007,26 +1010,24 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					settings = new Settings() {
 						{
-							setGlobalCSSClientExtensions(
-								new ClientExtension[] {
-									new ClientExtension() {
-										{
-											externalReferenceCode =
-												globalCSSClientExtensionEntry.
-													getExternalReferenceCode();
-										}
+							globalCSSClientExtensions = new ClientExtension[] {
+								new ClientExtension() {
+									{
+										externalReferenceCode =
+											globalCSSClientExtensionEntry.
+												getExternalReferenceCode();
 									}
-								});
-							setGlobalJSClientExtensions(
-								new ClientExtension[] {
-									new ClientExtension() {
-										{
-											externalReferenceCode =
-												globalJSClientExtensionEntry.
-													getExternalReferenceCode();
-										}
+								}
+							};
+							globalJSClientExtensions = new ClientExtension[] {
+								new ClientExtension() {
+									{
+										externalReferenceCode =
+											globalJSClientExtensionEntry.
+												getExternalReferenceCode();
 									}
-								});
+								}
+							};
 						}
 					};
 				}
@@ -1076,11 +1077,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					settings = new Settings() {
 						{
-							setFavIcon(
-								JSONUtil.put(
-									"externalReferenceCode",
-									clientExtensionEntry.
-										getExternalReferenceCode()));
+							favIcon = JSONUtil.put(
+								"externalReferenceCode",
+								clientExtensionEntry.
+									getExternalReferenceCode());
 						}
 					};
 				}
@@ -1121,12 +1121,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					settings = new Settings() {
 						{
-							setFavIcon(
-								JSONUtil.put(
-									"contentType", "Document"
-								).put(
-									"id", dlFileEntry.getFileEntryId()
-								));
+							favIcon = JSONUtil.put(
+								"contentType", "Document"
+							).put(
+								"id", dlFileEntry.getFileEntryId()
+							);
 						}
 					};
 				}
@@ -1621,7 +1620,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		randomSitePage.setParentSitePage(
 			new ParentSitePage() {
 				{
-					setFriendlyUrlPath(parentPostSitePage.getFriendlyUrlPath());
+					friendlyUrlPath = parentPostSitePage.getFriendlyUrlPath();
 				}
 			});
 
@@ -1654,9 +1653,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		randomSitePage.setParentSitePage(
 			new ParentSitePage() {
 				{
-					setFriendlyUrlPath(
+					friendlyUrlPath =
 						StringPool.FORWARD_SLASH +
-							RandomTestUtil.randomString());
+							RandomTestUtil.randomString();
 				}
 			});
 
@@ -1992,6 +1991,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 		}
 	};
+	private String _originalName;
 
 	@Inject
 	private Portal _portal;

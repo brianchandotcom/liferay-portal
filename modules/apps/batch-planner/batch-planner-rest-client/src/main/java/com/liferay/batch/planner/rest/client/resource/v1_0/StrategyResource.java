@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.batch.planner.rest.client.resource.v1_0;
@@ -40,13 +31,13 @@ public interface StrategyResource {
 		return new Builder();
 	}
 
-	public Page<Strategy> getPlanInternalClassNameStrategiesPage(
-			String internalClassName)
+	public Page<Strategy> getPlanInternalClassNameKeyStrategiesPage(
+			String internalClassNameKey)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getPlanInternalClassNameStrategiesPageHttpResponse(
-				String internalClassName)
+			getPlanInternalClassNameKeyStrategiesPageHttpResponse(
+				String internalClassNameKey)
 		throws Exception;
 
 	public static class Builder {
@@ -153,13 +144,13 @@ public interface StrategyResource {
 
 	public static class StrategyResourceImpl implements StrategyResource {
 
-		public Page<Strategy> getPlanInternalClassNameStrategiesPage(
-				String internalClassName)
+		public Page<Strategy> getPlanInternalClassNameKeyStrategiesPage(
+				String internalClassNameKey)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getPlanInternalClassNameStrategiesPageHttpResponse(
-					internalClassName);
+				getPlanInternalClassNameKeyStrategiesPageHttpResponse(
+					internalClassNameKey);
 
 			String content = httpResponse.getContent();
 
@@ -221,8 +212,8 @@ public interface StrategyResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getPlanInternalClassNameStrategiesPageHttpResponse(
-					String internalClassName)
+				getPlanInternalClassNameKeyStrategiesPageHttpResponse(
+					String internalClassNameKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -249,9 +240,9 @@ public interface StrategyResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/batch-planner/v1.0/plans/{internalClassName}/strategies");
+						"/o/batch-planner/v1.0/plans/{internalClassNameKey}/strategies");
 
-			httpInvoker.path("internalClassName", internalClassName);
+			httpInvoker.path("internalClassNameKey", internalClassNameKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

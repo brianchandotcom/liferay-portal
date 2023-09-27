@@ -45,7 +45,14 @@ definition {
 	}
 
 	macro setDescriptionMap {
-		if (isSet(description)) {
+		if (isSet(description) && isSet(descriptionMap)) {
+			fail("Please only set 'description' or 'descriptionMap' but not both.");
+		}
+
+		if (isSet(descriptionMap)) {
+			var descriptionMap = JSONUtil2._convertLocalizedListToMap(listMap = ${descriptionMap});
+		}
+		else if (isSet(description)) {
 			var descriptionMap = '''{"en_US":"%3Cp%3E${description}%3C%2Fp%3E"}''';
 		}
 		else {

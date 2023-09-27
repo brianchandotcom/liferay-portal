@@ -198,6 +198,7 @@ definition {
 	@priority = 5
 	test CanMoveVideoToRecycleBin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.web.internal.layout.display.page;
@@ -23,8 +14,10 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
@@ -42,11 +35,13 @@ public class ObjectEntryLayoutDisplayPageProvider
 
 	public ObjectEntryLayoutDisplayPageProvider(
 		ObjectDefinition objectDefinition,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManager objectEntryManager,
 		UserLocalService userLocalService) {
 
 		_objectDefinition = objectDefinition;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManager = objectEntryManager;
 		_userLocalService = userLocalService;
@@ -78,12 +73,19 @@ public class ObjectEntryLayoutDisplayPageProvider
 			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 				classPKInfoItemIdentifier.getClassPK());
 
-			if ((objectEntry == null) || objectEntry.isDraft()) {
+			if ((objectEntry == null) ||
+				(objectEntry.isDraft() &&
+				 !FeatureFlagManagerUtil.isEnabled("LPS-195205"))) {
+
 				return null;
 			}
 
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectEntry.getObjectDefinitionId());
+
 			return new ObjectEntryLayoutDisplayPageObjectProvider(
-				_objectDefinition, objectEntry);
+				objectDefinition, objectEntry);
 		}
 
 		ERCInfoItemIdentifier ercInfoItemIdentifier =
@@ -151,6 +153,7 @@ public class ObjectEntryLayoutDisplayPageProvider
 		ObjectEntryLayoutDisplayPageProvider.class);
 
 	private final ObjectDefinition _objectDefinition;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManager _objectEntryManager;
 	private final UserLocalService _userLocalService;

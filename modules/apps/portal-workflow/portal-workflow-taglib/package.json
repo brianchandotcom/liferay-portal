@@ -1,6 +1,11 @@
 {
 	"dependencies": {
-		"react-flow-renderer": "9.7.0"
+		"@clayui/label": "3.88.0",
+		"@clayui/link": "3.88.0",
+		"@clayui/modal": "3.104.0",
+		"@clayui/tooltip": "3.104.0",
+		"@liferay/portal-workflow-instance-tracker-web": "*",
+		"react": "16.12.0"
 	},
 	"jest": {
 		"collectCoverageFrom": [
@@ -16,5 +21,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "2.0.12"
+	"version": "2.0.14"
 }

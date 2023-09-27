@@ -85,3 +85,17 @@ liferay-marketplace-custom-element-purchased-apps:
     urls:
         - "*.js"
     useESM: true
+liferay-marketplace-custom-element-purchased-solutions:
+    cssURLs:
+        - "**/*.css"
+    friendlyURLMapping: liferay-marketplace-custom-element-purchased-solutions
+    htmlElementName: liferay-marketplace-custom-element
+    instanceable: false
+    name: Liferay Marketplace Purchased Solutions
+    portletCategoryName: category.client-extensions
+    properties:
+        route: purchased-solutions
+    type: customElement
+    urls:
+        - "*.js"
+    useESM: true

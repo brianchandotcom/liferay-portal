@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>DEACTIVATE_KEY_PAGE</td>
-	<td>//*[contains(.,'cp-project')]//p[contains(text(),'Select the activation key you wish to deactivate.')]</td>
+	<td>//p[contains(text(),'Select the activation key you want to deactivate.')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -88,6 +88,11 @@
 <tr>
 	<td>LICENSE_TAB_BUTTON</td>
 	<td>//*[contains(@type, 'button') and @value='${key_licenseTab}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_CHECKBOX</td>
+	<td>//label//input[@id="expiration-checkbox" and @type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -195,7 +200,7 @@
 </tr>
 <tr>
 	<td>SUBSCRIPTION_CHOICE</td>
-	<td>//div[contains(@class, 'cp-radio-card')][${key_position}]</td>
+	<td>xpath=(//div[contains(@class, 'cp-radio-card')])[${key_position}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -206,6 +211,21 @@
 <tr>
 	<td>SUBSCRIPTION_KEY_DISABLED</td>
 	<td>//div[contains(@class, 'cp-radio-card') and @disabled]//*[contains(@class,'text-danger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPLIMENTARY_KEY</td>
+	<td>//div[contains(@class, 'card-outline')]//label//p[contains(.,'Complimentary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOGGLE_SWITCH_ON</td>
+	<td>//div[contains(@aria-labelledby,'clay-modal-label')]//label//span//input[@checked]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOGGLE_SWITCH_OFF</td>
+	<td>//div[contains(@aria-labelledby,'clay-modal-label')]//label//span//input[@value]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,0 +1,80 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Blogs";
+	property testray.main.component.name = "Lima Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+
+		task ("Given an OAuth application is created") {
+			OAuth2.openOAuth2Admin();
+
+			OAuth2ForObject.addOAuth2Application();
+		}
+	}
+
+	tearDown {
+		OAuth2.openOAuth2Admin();
+
+		OAuth2.deleteApplication(applicationName = "OAuth Application");
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanCreateBlogPostingThroughGraphQLWithAccessToken {
+		property portal.acceptance = "true";
+
+		task ("When I use graphql with access token to create a blog") {
+			var accessToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
+				resourceCheckList = "Liferay.Headless.Delivery.everything",
+				resourcePanels = "Liferay.Headless.Delivery");
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			var response = HeadlessUtil.executeGraphQLQuery(
+				query = "query {\n blogPostings(siteKey: \\"${siteId}\\")\n {\n items {\n articleBody\n headline\n }\n page,\n totalCount\n }\n}\n\",\"variables\":\"{}",
+				token = ${accessToken});
+		}
+
+		task ("Then I use graphql with access token to create a blog") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$..data..blogPostings..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = 0);
+		}
+	}
+
+	@priority = 4
+	test CanGetExistingBlogWithAccessToken {
+		property portal.acceptance = "true";
+
+		task ("When with curl and acess token I request getSiteBlogPostingsPage with siteId") {
+			var accessToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
+				resourceCheckList = "Liferay.Headless.Delivery.everything",
+				resourcePanels = "Liferay.Headless.Delivery");
+
+			var response = BlogPostingAPI.getBlogPostings(token = ${accessToken});
+		}
+
+		task ("Then I can see the totalCount in response") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = 0);
+		}
+	}
+
+}

@@ -21,6 +21,12 @@
 				}
 			},
 			"type": "object"
+		},
+		"stored_fields": {
+			"items": {
+				"type": "string"
+			},
+			"type": "array"
 		}
 	},
 	"type": "object"

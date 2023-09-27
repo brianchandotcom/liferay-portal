@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset Vocabulary Item Selector API
 Bundle-SymbolicName: com.liferay.asset.vocabulary.item.selector.api
-Bundle-Version: 1.0.5
+Bundle-Version: 1.0.6
 Export-Package:\
 	com.liferay.asset.vocabulary.item.selector,\
 	com.liferay.asset.vocabulary.item.selector.criterion

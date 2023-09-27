@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.accessibility.menu.web.internal.model;
@@ -20,11 +11,12 @@ package com.liferay.accessibility.menu.web.internal.model;
 public class AccessibilitySetting {
 
 	public AccessibilitySetting(
-		String cssClass, boolean defaultValue, String key, String label,
-		Boolean sessionClicksValue) {
+		String cssClass, boolean defaultValue, String description, String key,
+		String label, Boolean sessionClicksValue) {
 
 		_cssClass = cssClass;
 		_defaultValue = defaultValue;
+		_description = description;
 		_key = key;
 		_label = label;
 		_sessionClicksValue = sessionClicksValue;
@@ -36,6 +28,10 @@ public class AccessibilitySetting {
 
 	public boolean getDefaultValue() {
 		return _defaultValue;
+	}
+
+	public String getDescription() {
+		return _description;
 	}
 
 	public String getKey() {
@@ -66,6 +62,10 @@ public class AccessibilitySetting {
 		_defaultValue = defaultValue;
 	}
 
+	public void setDescription(String description) {
+		_description = description;
+	}
+
 	public void setKey(String key) {
 		_key = key;
 	}
@@ -80,6 +80,7 @@ public class AccessibilitySetting {
 
 	private String _cssClass;
 	private boolean _defaultValue;
+	private String _description;
 	private String _key;
 	private String _label;
 	private Boolean _sessionClicksValue;

@@ -1,39 +1,82 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {
+	AutoComplete,
 	Card,
 	Input,
-	InputLocalized,
+	RadioField,
 	Toggle,
+	filterArrayByQuery,
+	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
-import React from 'react';
+import {InputLocalized} from 'frontend-js-components-web';
+import React, {useMemo, useState} from 'react';
 
+import {NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE} from '../../utils/constants';
 import {TriggerEventContainer} from './TriggerEventContainer';
 import {TabProps} from './useObjectValidationForm';
 
 interface BasicInfoProps extends TabProps {
 	componentLabel: string;
+	creationLanguageId: Liferay.Language.Locale;
+	objectFields: ObjectField[];
 }
+
+const outputValidationTypeArray = [
+	{
+		label: Liferay.Language.get('full-validation-form-summary'),
+		value: 'fullValidation',
+	},
+	{
+		label: Liferay.Language.get('partial-validation-inline-field'),
+		value: 'partialValidation',
+	},
+];
 
 export function BasicInfo({
 	componentLabel,
+	creationLanguageId,
 	disabled,
 	errors,
+	objectFields,
 	setValues,
 	values,
 }: BasicInfoProps) {
+	const [query, setQuery] = useState<string>('');
+
+	const filteredObjectFields = useMemo(() => {
+		if (objectFields) {
+			return filterArrayByQuery({
+				array: objectFields,
+				query,
+				str: 'label',
+			});
+		}
+	}, [objectFields, query]);
+	const getSelectedPartialValidationField = () => {
+		if (values.objectValidationRuleSettings?.length) {
+			const [
+				partialValidationField,
+			] = values.objectValidationRuleSettings;
+
+			const objectField = objectFields.find(
+				(field) =>
+					field.externalReferenceCode === partialValidationField.value
+			);
+
+			return getLocalizableLabel(
+				creationLanguageId,
+				objectField?.label,
+				objectField?.name
+			);
+		}
+
+		return '';
+	};
+
 	return (
 		<>
 			<Card title={componentLabel}>
@@ -65,6 +108,93 @@ export function BasicInfo({
 				disabled={disabled}
 				eventTypes={[{label: Liferay.Language.get('on-submission')}]}
 			/>
+
+			{values.engine?.startsWith('function#') && (
+				<Card title={Liferay.Language.get('error-message')}>
+					<InputLocalized
+						disabled={disabled}
+						error={errors.errorLabel}
+						label={Liferay.Language.get('message')}
+						onChange={(errorLabel) => setValues({errorLabel})}
+						placeholder={Liferay.Language.get(
+							'add-an-error-message'
+						)}
+						required
+						translations={values.errorLabel!}
+					/>
+
+					<>
+						<RadioField
+							defaultValue={values.outputType}
+							inline={false}
+							label={Liferay.Language.get(
+								'output-validation-type'
+							)}
+							onChange={(value) => {
+								if (value === 'fullValidation') {
+									setValues({
+										objectValidationRuleSettings: [],
+										outputType: value as string,
+									});
+
+									return;
+								}
+
+								setValues({
+									outputType: value as string,
+								});
+							}}
+							options={outputValidationTypeArray}
+							popover={{
+								alignPosition: 'top',
+								content: Liferay.Language.get(
+									'map-the-error-message-to-be-displayed-next-to-the-validated-field'
+								),
+								header: Liferay.Language.get(
+									'message-location'
+								),
+							}}
+						/>
+
+						{values.outputType === 'partialValidation' && (
+							<AutoComplete<ObjectField>
+								emptyStateMessage={Liferay.Language.get(
+									'no-fields-were-found'
+								)}
+								error={errors.outputType}
+								items={filteredObjectFields ?? []}
+								label={Liferay.Language.get('fields')}
+								onChangeQuery={setQuery}
+								onSelectItem={(item) => {
+									setValues({
+										objectValidationRuleSettings: [
+											{
+												name: NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE,
+												value: item.externalReferenceCode as string,
+											},
+										],
+									});
+								}}
+								query={query}
+								required
+								value={getSelectedPartialValidationField()}
+							>
+								{({label, name}) => (
+									<div className="d-flex justify-content-between">
+										<div>
+											{getLocalizableLabel(
+												creationLanguageId,
+												label,
+												name
+											)}
+										</div>
+									</div>
+								)}
+							</AutoComplete>
+						)}
+					</>
+				</Card>
+			)}
 		</>
 	);
 }

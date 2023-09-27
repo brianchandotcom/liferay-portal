@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.adaptive.media.image.internal.finder;
@@ -22,7 +13,7 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder;
 import com.liferay.adaptive.media.image.internal.util.comparator.AMAttributeDistanceComparator;
 import com.liferay.adaptive.media.image.internal.util.comparator.AMPropertyDistanceComparator;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -41,12 +32,12 @@ public class AMImageQueryBuilderImpl
 			   AMImageQueryBuilder.InitialStep,
 			   AMImageQueryBuilder.StrictSortStep {
 
-	public static final AMQuery<FileVersion, AMImageProcessor> AM_QUERY =
-		new AMQuery<FileVersion, AMImageProcessor>() {
+	public static final AMQuery<FileVersion, AMProcessor<FileVersion>>
+		AM_QUERY = new AMQuery<FileVersion, AMProcessor<FileVersion>>() {
 		};
 
 	@Override
-	public AMQuery<FileVersion, AMImageProcessor> done() {
+	public AMQuery<FileVersion, AMProcessor<FileVersion>> done() {
 		return AM_QUERY;
 	}
 
@@ -85,11 +76,13 @@ public class AMImageQueryBuilderImpl
 		return this;
 	}
 
-	public Map<AMAttribute<AMImageProcessor, ?>, Object> getAMAttributes() {
+	public Map<AMAttribute<AMProcessor<FileVersion>, ?>, Object>
+		getAMAttributes() {
+
 		return _amAttributes;
 	}
 
-	public AMDistanceComparator<AdaptiveMedia<AMImageProcessor>>
+	public AMDistanceComparator<AdaptiveMedia<AMProcessor<FileVersion>>>
 		getAMDistanceComparator() {
 
 		if (!_sortCriteria.isEmpty()) {
@@ -148,7 +141,7 @@ public class AMImageQueryBuilderImpl
 
 	@Override
 	public <V> AMImageQueryBuilder.StrictSortStep orderBy(
-		AMAttribute<AMImageProcessor, V> amAttribute,
+		AMAttribute<AMProcessor<FileVersion>, V> amAttribute,
 		AMImageQueryBuilder.SortOrder sortOrder) {
 
 		if (amAttribute == null) {
@@ -163,7 +156,7 @@ public class AMImageQueryBuilderImpl
 
 	@Override
 	public <V> AMImageQueryBuilder.FuzzySortStep with(
-		AMAttribute<AMImageProcessor, V> amAttribute, V value) {
+		AMAttribute<AMProcessor<FileVersion>, V> amAttribute, V value) {
 
 		if (value == null) {
 			throw new IllegalArgumentException(
@@ -196,13 +189,13 @@ public class AMImageQueryBuilderImpl
 		return false;
 	}
 
-	private final Map<AMAttribute<AMImageProcessor, ?>, Object> _amAttributes =
-		new LinkedHashMap<>();
+	private final Map<AMAttribute<AMProcessor<FileVersion>, ?>, Object>
+		_amAttributes = new LinkedHashMap<>();
 	private ConfigurationStatus _configurationStatus;
 	private String _configurationUuid;
 	private FileEntry _fileEntry;
 	private FileVersion _fileVersion;
-	private final Map<AMAttribute<AMImageProcessor, ?>, SortOrder>
+	private final Map<AMAttribute<AMProcessor<FileVersion>, ?>, SortOrder>
 		_sortCriteria = new LinkedHashMap<>();
 
 }

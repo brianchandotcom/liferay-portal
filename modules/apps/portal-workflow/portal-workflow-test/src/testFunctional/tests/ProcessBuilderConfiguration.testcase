@@ -189,6 +189,7 @@ definition {
 	@priority = 3
 	test CanOrderByWorkflow {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -211,8 +212,6 @@ definition {
 		Workflow.configureWorkflow(
 			workflowDefinition = "CSingle Approver",
 			workflowResourceValue = "User");
-
-		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
 
 		ProcessBuilderConfiguration.chooseSortOption(key_menuItem = "Workflow");
 
@@ -300,6 +299,7 @@ definition {
 	test CanSearchNonAsciiChar {
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
+		property test.run.type = "single";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "単一承認者");
 

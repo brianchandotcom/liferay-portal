@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.source.formatter.check;
@@ -17,11 +8,15 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
@@ -42,8 +37,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 			return content;
 		}
 
-		List<String> allowedSingleWordLanguageKeys = getAttributeValues(
-			_ALLOWED_SINGLE_WORD_LANGUAGE_KEYS_KEY, absolutePath);
+		List<String> allowedSingleWordLanguageKeys =
+			_getAllowedSingleWordLanguageKeys();
 
 		int contextDepth = GetterUtil.getInteger(
 			getAttributeValue(_CONTEXT_DEPTH_KEY, absolutePath));
@@ -118,8 +113,31 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String _ALLOWED_SINGLE_WORD_LANGUAGE_KEYS_KEY =
-		"allowedSingleWordLanguageKeys";
+	private synchronized List<String> _getAllowedSingleWordLanguageKeys()
+		throws IOException {
+
+		if (_allowedSingleWordLanguageKeys != null) {
+			return _allowedSingleWordLanguageKeys;
+		}
+
+		_allowedSingleWordLanguageKeys = new ArrayList<>();
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"dependencies/allowed-single-word-language-keys.txt");
+
+		if (inputStream == null) {
+			return Collections.emptyList();
+		}
+
+		_allowedSingleWordLanguageKeys = ListUtil.fromString(
+			StringUtil.read(inputStream));
+
+		return _allowedSingleWordLanguageKeys;
+	}
 
 	private static final String _CONTEXT_DEPTH_KEY = "contextDepth";
 
@@ -128,5 +146,7 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 
 	private static final Pattern _languageKeyPattern = Pattern.compile(
 		"([\\s\\S]+)\\[([\\s\\S]*)\\]");
+
+	private List<String> _allowedSingleWordLanguageKeys;
 
 }

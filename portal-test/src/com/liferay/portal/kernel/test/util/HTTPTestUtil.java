@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.test.util;
@@ -31,6 +22,10 @@ import java.nio.charset.StandardCharsets;
  * @author Alberto Javier Moreno Lage
  */
 public class HTTPTestUtil {
+
+	public static HTTPTestUtilCustomizer customize() {
+		return new HTTPTestUtilCustomizer();
+	}
 
 	public static int invokeToHttpCode(
 			String body, String endpoint, Http.Method httpMethod)
@@ -54,21 +49,46 @@ public class HTTPTestUtil {
 		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
 	}
 
-	public static <T extends Throwable> void withCredentials(
-			String emailAddress, String password,
-			UnsafeRunnable<T> unsafeRunnable)
-		throws T {
+	public static class HTTPTestUtilCustomizer {
 
-		String credentials = _credentials;
+		public <T extends Throwable> void apply(
+				UnsafeRunnable<T> unsafeRunnable)
+			throws T {
 
-		_credentials = emailAddress + StringPool.COLON + password;
+			String defaultBaseURL = _baseURL;
 
-		try {
-			unsafeRunnable.run();
+			_baseURL = _newBaseURL;
+
+			String defaultCredentials = _credentials;
+
+			_credentials = _newCredentials;
+
+			try {
+				unsafeRunnable.run();
+			}
+			finally {
+				_baseURL = defaultBaseURL;
+				_credentials = defaultCredentials;
+			}
 		}
-		finally {
-			_credentials = credentials;
+
+		public HTTPTestUtilCustomizer withBaseURL(String baseURL) {
+			_newBaseURL = baseURL;
+
+			return this;
 		}
+
+		public HTTPTestUtilCustomizer withCredentials(
+			String emailAddress, String password) {
+
+			_newCredentials = emailAddress + StringPool.COLON + password;
+
+			return this;
+		}
+
+		private String _newBaseURL = _baseURL;
+		private String _newCredentials = _credentials;
+
 	}
 
 	private static Http.Options _getHttpOptions(
@@ -80,7 +100,7 @@ public class HTTPTestUtil {
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 		options.addHeader(
 			"Authorization", "Basic " + Base64.encode(_credentials.getBytes()));
-		options.setLocation("http://localhost:8080/o/" + endpoint);
+		options.setLocation(_baseURL + "/o/" + endpoint);
 		options.setMethod(httpMethod);
 
 		if (body != null) {
@@ -92,6 +112,7 @@ public class HTTPTestUtil {
 		return options;
 	}
 
+	private static String _baseURL = "http://localhost:8080";
 	private static String _credentials = "test@liferay.com:test";
 
 }

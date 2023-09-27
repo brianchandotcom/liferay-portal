@@ -1,18 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.frontend.model;
+
+import java.math.BigDecimal;
 
 /**
  * @author Alec Sloan
@@ -20,8 +13,9 @@ package com.liferay.commerce.frontend.model;
 public class OrderItem {
 
 	public OrderItem(
-		int available, Icon icon, long orderId, long orderItemId, int quantity,
-		String shippingMethodAndOptionName, String sku) {
+		BigDecimal available, Icon icon, long orderId, long orderItemId,
+		BigDecimal quantity, String shippingMethodAndOptionName, String sku,
+		String unitOfMeasureKey) {
 
 		_available = available;
 		_icon = icon;
@@ -30,9 +24,10 @@ public class OrderItem {
 		_quantity = quantity;
 		_shippingMethodAndOptionName = shippingMethodAndOptionName;
 		_sku = sku;
+		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
-	public int getAvailable() {
+	public BigDecimal getAvailable() {
 		return _available;
 	}
 
@@ -48,7 +43,7 @@ public class OrderItem {
 		return _orderItemId;
 	}
 
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
 	}
 
@@ -60,12 +55,17 @@ public class OrderItem {
 		return _sku;
 	}
 
-	private final int _available;
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
+	private final BigDecimal _available;
 	private final Icon _icon;
 	private final long _orderId;
 	private final long _orderItemId;
-	private final int _quantity;
+	private final BigDecimal _quantity;
 	private final String _shippingMethodAndOptionName;
 	private final String _sku;
+	private final String _unitOfMeasureKey;
 
 }

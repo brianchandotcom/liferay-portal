@@ -1,0 +1,25 @@
+task runGradleTest
+
+Object error = ""
+
+gradle.liferayWorkspace {
+	product = "portal"
+}
+
+gradle.taskGraph.afterTask {
+	Task task, TaskState taskState ->
+
+	if (task.name.equals("verifyProduct")) {
+		error = taskState.failure.cause.message
+
+		taskState.failure = null
+	}
+}
+
+runGradleTest {
+	dependsOn verifyProduct
+
+	doLast {
+		assert error == "Unable to get product info for product 'portal'"
+	}
+}

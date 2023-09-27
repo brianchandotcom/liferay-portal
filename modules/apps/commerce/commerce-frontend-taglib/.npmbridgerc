@@ -4,7 +4,7 @@
 			"from": "(.*)\\.js$",
 			"to": "bridge/commerce-frontend-taglib/$1"
 		},
-		"file-globs": "**/*.es.js,**/*.soy.js",
+		"file-globs": "**/*.es.js,**/*.soy.js,!**/bridge",
 		"input": "build/node/packageRunBuild/resources",
 		"output": "build/node/packageRunBuild/resources/bridge/commerce-frontend-taglib",
 		"src-mod-name-mapper": {

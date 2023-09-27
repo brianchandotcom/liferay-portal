@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile classifier: "jdk8", group: "org.hsqldb", name: "hsqldb", version: "2.7.1"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay", name: "org.hsqldb", version: "2.7.1.LIFERAY-PATCHED-1"
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

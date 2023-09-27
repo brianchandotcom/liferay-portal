@@ -1,0 +1,14 @@
+@import 'atlas-variables';
+
+.beta-rounded-circle {
+	border-radius: 5000px !important;
+}
+
+html:not(#__):not(#___) .cadmin .beta-rounded-circle {
+	background-color: $gray-100 !important;
+	color: $info-d2 !important;
+
+	.lexicon-icon {
+		font-size: 0.75rem;
+	}
+}

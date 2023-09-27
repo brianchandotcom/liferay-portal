@@ -25,12 +25,12 @@ create table CommerceDiscount (
 	useCouponCode BOOLEAN,
 	couponCode VARCHAR(75) null,
 	usePercentage BOOLEAN,
-	maximumDiscountAmount DECIMAL(30, 16) null,
+	maximumDiscountAmount BIGDECIMAL null,
 	levelType VARCHAR(75) null,
-	level1 DECIMAL(30, 16) null,
-	level2 DECIMAL(30, 16) null,
-	level3 DECIMAL(30, 16) null,
-	level4 DECIMAL(30, 16) null,
+	level1 BIGDECIMAL null,
+	level2 BIGDECIMAL null,
+	level3 BIGDECIMAL null,
+	level4 BIGDECIMAL null,
 	limitationType VARCHAR(75) null,
 	limitationTimes INTEGER,
 	limitationTimesPerAccount INTEGER,
@@ -86,7 +86,8 @@ create table CommerceDiscountRel (
 	modifiedDate DATE null,
 	commerceDiscountId LONG,
 	classNameId LONG,
-	classPK LONG
+	classPK LONG,
+	typeSettings TEXT null
 );
 
 create table CommerceDiscountRule (

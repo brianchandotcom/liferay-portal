@@ -1,0 +1,3 @@
+liferay {
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.copyright.formatter/lib"
+}

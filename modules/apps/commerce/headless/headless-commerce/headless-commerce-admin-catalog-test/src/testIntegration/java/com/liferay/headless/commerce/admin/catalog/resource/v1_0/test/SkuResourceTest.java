@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.catalog.resource.v1_0.test;
@@ -41,6 +32,8 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +104,20 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGetUnitOfMeasureSkusPage() throws Exception {
+		super.testGetUnitOfMeasureSkusPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetUnitOfMeasureSkusPageWithPagination() throws Exception {
+		super.testGetUnitOfMeasureSkusPageWithPagination();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLDeleteSku() throws Exception {
 		super.testGraphQLDeleteSku();
 	}
@@ -121,6 +128,8 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		super.testPatchSku();
 
 		_testPatchSkuExternalReferenceCode();
+		_testPatchSkuWithPricing();
+		_testPatchSkuWithShipping();
 	}
 
 	@Override
@@ -303,6 +312,49 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		Assert.assertEquals(
 			patchSku.getExternalReferenceCode(),
 			randomSku.getExternalReferenceCode());
+		assertValid(patchSku);
+	}
+
+	private void _testPatchSkuWithPricing() throws Exception {
+		Sku sku = testPatchSku_addSku();
+
+		Sku randomSku = new Sku() {
+			{
+				cost = BigDecimal.valueOf(RandomTestUtil.randomDouble());
+				price = BigDecimal.valueOf(RandomTestUtil.randomDouble());
+				promoPrice = BigDecimal.valueOf(RandomTestUtil.randomDouble());
+			}
+		};
+
+		Sku patchSku = skuResource.patchSku(sku.getId(), randomSku);
+
+		Assert.assertEquals(patchSku.getCost(), randomSku.getCost());
+		Assert.assertEquals(patchSku.getPrice(), randomSku.getPrice());
+		Assert.assertEquals(
+			patchSku.getPromoPrice(), randomSku.getPromoPrice());
+
+		assertValid(patchSku);
+	}
+
+	private void _testPatchSkuWithShipping() throws Exception {
+		Sku sku = testPatchSku_addSku();
+
+		Sku randomSku = new Sku() {
+			{
+				depth = RandomTestUtil.randomDouble();
+				height = RandomTestUtil.randomDouble();
+				weight = RandomTestUtil.randomDouble();
+				width = RandomTestUtil.randomDouble();
+			}
+		};
+
+		Sku patchSku = skuResource.patchSku(sku.getId(), randomSku);
+
+		Assert.assertEquals(patchSku.getDepth(), randomSku.getDepth());
+		Assert.assertEquals(patchSku.getHeight(), randomSku.getHeight());
+		Assert.assertEquals(patchSku.getWeight(), randomSku.getWeight());
+		Assert.assertEquals(patchSku.getWidth(), randomSku.getWidth());
+
 		assertValid(patchSku);
 	}
 

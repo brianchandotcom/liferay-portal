@@ -11,15 +11,16 @@
 .form-input-captcha .taglib-captcha {
 	display: flex;
 	flex-wrap: wrap;
-	max-width: 190px;
 	padding-top: 8px;
 }
 
 .form-input-captcha .taglib-captcha .captcha {
 	flex-grow: 1;
+	max-width: 190px;
 }
 
 .form-input-captcha .taglib-captcha .input-text-wrapper {
+	margin-bottom: 0;
 	margin-top: 8px;
 	position: inherit;
 	width: calc(100% - 40px);

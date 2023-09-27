@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/veriday-intranet-in-a-box",
+	"hidden": true,
+	"name": "Intranet in a Box",
+	"name_i18n": {
+		"en_US": "Intranet in a Box"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

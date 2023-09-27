@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
@@ -34,13 +25,14 @@ import React, {
 } from 'react';
 
 import {
-	getCheckedPickListItems,
-	getCheckedRelationshipItems,
+	getCheckedListTypeEntries,
+	getCheckedObjectRelationshipItems,
 	getCheckedWorkflowStatusItems,
-	getSystemFieldLabelFromEntry,
+	getSystemObjectFieldLabelFromObjectEntry,
 } from '../utils/filter';
 
 import './ModalAddFilter.scss';
+
 interface IProps {
 	aggregationFilter?: boolean;
 	creationLanguageId?: Liferay.Language.Locale;
@@ -201,13 +193,13 @@ export function ModalAddFilter({
 			) {
 				const makeFetch = async () => {
 					if (objectField.listTypeDefinitionId) {
-						const items = await API.getPickListItems(
+						const items = await API.getListTypeDefinitionListTypeEntries(
 							objectField.listTypeDefinitionId
 						);
 
 						if (editingFilter) {
 							setItems(
-								getCheckedPickListItems(
+								getCheckedListTypeEntries(
 									items,
 									setEditingFilterType
 								)
@@ -265,16 +257,16 @@ export function ModalAddFilter({
 						`filter=name eq '${value}'`
 					);
 
-					const titleField = objectFields.find(
+					const titleObjectField = objectFields.find(
 						(objectField) =>
 							objectField.name === titleObjectFieldName
 					) as ObjectField;
 
-					const relatedEntries = await API.getList<ObjectEntry>(
+					const relatedObjectEntries = await API.getList<ObjectEntry>(
 						`${restContextPath}`
 					);
 
-					if (!relatedEntries) {
+					if (!relatedObjectEntries) {
 						setItems([]);
 
 						return;
@@ -282,44 +274,51 @@ export function ModalAddFilter({
 
 					if (editingFilter) {
 						setItems(
-							getCheckedRelationshipItems(
-								relatedEntries,
-								titleField.name,
-								titleField.system as boolean,
+							getCheckedObjectRelationshipItems(
+								relatedObjectEntries,
+								titleObjectField.name,
+								titleObjectField.system as boolean,
 								system,
 								setEditingFilterType
 							)
 						);
 					}
 					else {
-						const newItems = relatedEntries.map((entry) => {
-							const newItemsObject = {
-								value: system
-									? String(entry.id)
-									: entry.externalReferenceCode,
-							} as LabelValueObject;
+						const newItems = relatedObjectEntries.map(
+							(objectEntry) => {
+								const newItemsObject = {
+									value: system
+										? String(objectEntry.id)
+										: objectEntry.externalReferenceCode,
+								} as LabelValueObject;
 
-							if (titleField.system) {
-								return getSystemFieldLabelFromEntry(
-									titleField.name,
-									entry,
-									newItemsObject
-								) as LabelValueObject;
+								if (titleObjectField.system) {
+									return getSystemObjectFieldLabelFromObjectEntry(
+										titleObjectField.name,
+										objectEntry,
+										newItemsObject
+									) as LabelValueObject;
+								}
+
+								let label = objectEntry[
+									titleObjectField?.name
+								] as string;
+
+								if (
+									titleObjectField.businessType ===
+									'Attachment'
+								) {
+									label = (objectEntry as {
+										[key: string]: AttachmentEntry;
+									})[titleObjectField.name].name;
+								}
+
+								return {
+									...newItemsObject,
+									label,
+								};
 							}
-
-							let label = entry[titleField?.name] as string;
-
-							if (titleField.businessType === 'Attachment') {
-								label = (entry as {
-									[key: string]: AttachmentEntry;
-								})[titleField.name].name;
-							}
-
-							return {
-								...newItemsObject,
-								label,
-							};
-						});
+						);
 
 						setItems(newItems);
 					}

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.web.internal.facet.display.context;
@@ -19,21 +10,16 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
-import com.liferay.portal.search.web.internal.category.facet.configuration.CategoryFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoryPermissionChecker;
 
@@ -389,18 +375,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 
 	protected abstract String getFacetFieldName();
 
-	protected ThemeDisplay getThemeDisplay() {
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.doReturn(
-			Mockito.mock(PortletDisplay.class)
-		).when(
-			themeDisplay
-		).getPortletDisplay();
-
-		return themeDisplay;
-	}
-
 	@Override
 	protected void setUpAsset(String assetCategoryId) throws Exception {
 		_groupId = RandomTestUtil.randomLong();
@@ -435,17 +409,12 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 			_categoryFacetFieldConfiguration
 		).categoryFacetField();
 
-		Mockito.doReturn(
+		configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getSystemConfiguration(
+				Mockito.any(Class.class))
+		).thenReturn(
 			_categoryFacetFieldConfiguration
-		).when(
-			_configurationProvider
-		).getSystemConfiguration(
-			Mockito.any(Class.class)
 		);
-
-		ReflectionTestUtil.setFieldValue(
-			ConfigurationProviderUtil.class, "_configurationProvider",
-			_configurationProvider);
 	}
 
 	protected void setUpFacet() throws Exception {
@@ -507,8 +476,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.doReturn(
-			getHttpServletRequest(
-				CategoryFacetPortletInstanceConfiguration.class)
+			getHttpServletRequest()
 		).when(
 			portal
 		).getHttpServletRequest(
@@ -614,8 +582,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 	private final CategoryFacetFieldConfiguration
 		_categoryFacetFieldConfiguration = Mockito.mock(
 			CategoryFacetFieldConfiguration.class);
-	private final ConfigurationProvider _configurationProvider = Mockito.mock(
-		ConfigurationProvider.class);
 	private long _excludedGroupId;
 	private long _groupId;
 

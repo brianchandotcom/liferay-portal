@@ -1,23 +1,17 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import express from 'express';
 import fetch from 'node-fetch';
 
-import config from './util/configTreePath';
-import {corsWithReady, liferayJWT} from './util/liferay-oauth2-resource-server';
-import {logger} from './util/logger';
+import config from './util/configTreePath.js';
+import {
+	corsWithReady,
+	liferayJWT,
+} from './util/liferay-oauth2-resource-server.js';
+import {logger} from './util/logger.js';
 
 const serverPort = config['server.port'];
 const app = express();

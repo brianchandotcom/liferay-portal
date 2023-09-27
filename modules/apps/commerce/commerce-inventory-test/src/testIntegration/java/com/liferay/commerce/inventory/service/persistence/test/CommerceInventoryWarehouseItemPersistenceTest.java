@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.inventory.service.persistence.test;
@@ -41,6 +32,8 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -157,10 +150,11 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 		newCommerceInventoryWarehouseItem.setCommerceInventoryWarehouseId(
 			RandomTestUtil.nextLong());
 
-		newCommerceInventoryWarehouseItem.setQuantity(RandomTestUtil.nextInt());
+		newCommerceInventoryWarehouseItem.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCommerceInventoryWarehouseItem.setReservedQuantity(
-			RandomTestUtil.nextInt());
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCommerceInventoryWarehouseItem.setSku(RandomTestUtil.randomString());
 
@@ -286,21 +280,21 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId_Sku() throws Exception {
-		_persistence.countByCompanyId_Sku(RandomTestUtil.nextLong(), "");
+	public void testCountByC_S_U() throws Exception {
+		_persistence.countByC_S_U(RandomTestUtil.nextLong(), "", "");
 
-		_persistence.countByCompanyId_Sku(0L, "null");
+		_persistence.countByC_S_U(0L, "null", "null");
 
-		_persistence.countByCompanyId_Sku(0L, (String)null);
+		_persistence.countByC_S_U(0L, (String)null, (String)null);
 	}
 
 	@Test
-	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(RandomTestUtil.nextLong(), "");
+	public void testCountByCIWI_S_U() throws Exception {
+		_persistence.countByCIWI_S_U(RandomTestUtil.nextLong(), "", "");
 
-		_persistence.countByC_S(0L, "null");
+		_persistence.countByCIWI_S_U(0L, "null", "null");
 
-		_persistence.countByC_S(0L, (String)null);
+		_persistence.countByCIWI_S_U(0L, (String)null, (String)null);
 	}
 
 	@Test
@@ -670,6 +664,11 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 			ReflectionTestUtil.invoke(
 				commerceInventoryWarehouseItem, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "sku"));
+		Assert.assertEquals(
+			commerceInventoryWarehouseItem.getUnitOfMeasureKey(),
+			ReflectionTestUtil.invoke(
+				commerceInventoryWarehouseItem, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "unitOfMeasureKey"));
 
 		Assert.assertEquals(
 			commerceInventoryWarehouseItem.getExternalReferenceCode(),
@@ -714,10 +713,11 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 		commerceInventoryWarehouseItem.setCommerceInventoryWarehouseId(
 			RandomTestUtil.nextLong());
 
-		commerceInventoryWarehouseItem.setQuantity(RandomTestUtil.nextInt());
+		commerceInventoryWarehouseItem.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceInventoryWarehouseItem.setReservedQuantity(
-			RandomTestUtil.nextInt());
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceInventoryWarehouseItem.setSku(RandomTestUtil.randomString());
 

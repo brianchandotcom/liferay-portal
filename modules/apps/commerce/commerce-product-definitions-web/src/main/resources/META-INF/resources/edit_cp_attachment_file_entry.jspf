@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -96,54 +87,36 @@
 	</aui:form>
 </liferay-frontend:side-panel-content>
 
-<%
-String fieldValues = "[]";
-
-if (cpAttachmentFileEntry != null) {
-	fieldValues = cpAttachmentFileEntry.getJson();
-}
-%>
-
-<aui:script require="commerce-frontend-js/utilities/forms/formsHelper as FormsHelper">
-	var fieldValues = [];
-
-	try {
-		fieldValues = JSON.parse('<%= fieldValues %>');
-	}
-	catch (_ignore) {}
-
-	Liferay.componentReady('ProductOptions<%= cpDefinitionId %>').then(
-		(ddmForm) => {
-			if (!fieldValues.length) {
-				var ddmFormJSONShape = ddmForm.reactComponentRef.current.toJSON();
-				fieldValues = FormsHelper.getDefaultFieldsShape(ddmFormJSONShape);
-			}
-			ddmForm.unstable_onEvent((event) => {
-				var eventName = event.type;
-				if (eventName === 'field_change') {
-					fieldValues = FormsHelper.updateFields(
-						fieldValues,
-						event.payload
-					);
-					var form = document['<portlet:namespace />fm'];
-					form[
-						'<portlet:namespace />ddmFormValues'
-					].value = JSON.stringify(fieldValues);
-				}
-			});
-		}
-	);
-
+<aui:script>
 	Liferay.provide(window, '<portlet:namespace />saveAttachmentFileEntry', () => {
 		var form = window.document['<portlet:namespace />fm'];
+		var optionsContainer = window.document.getElementById(
+			'<portlet:namespace />optionsContainer'
+		);
 
-		var ddmForm = Liferay.component('ProductOptions<%= cpDefinitionId %>');
-
-		if (ddmForm) {
-			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
-				fieldValues
-			);
+		if (!optionsContainer) {
+			return submitForm(form);
 		}
+
+		var skuContributorInputs = optionsContainer.querySelectorAll(
+			'[data-sku-contributor=true]'
+		);
+
+		form['<portlet:namespace />cpInstanceOptions'].value = JSON.stringify(
+			Array.from(skuContributorInputs).map((skuContributorInput) => {
+				var name =
+					skuContributorInput.name ||
+					skuContributorInput.querySelector('input:checked').name;
+
+				var value = skuContributorInput.value
+					? skuContributorInput.value.split('[$SEPARATOR$]')[1]
+					: skuContributorInput
+							.querySelector('input:checked')
+							.value.split('[$SEPARATOR$]')[1];
+
+				return {key: name, value: [value]};
+			})
+		);
 
 		submitForm(form);
 	});

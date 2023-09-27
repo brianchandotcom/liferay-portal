@@ -59,12 +59,13 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-42712. Verify guest users cannot configure public pages."
-	@priority = 4
+	@priority = 5
 	test CannotConfigurePublicPageAsGuest {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property test.assert.javascript.errors = "false";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var url1 = "http://localhost:8080/testxxx/?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&p_p_lifecycle=0&p_p_state=maximized&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_users_admin_web_portlet_UsersAdminPortlet";
 		var url2 = "http://localhost:8080/testxxx/?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet&p_p_state=maximized";

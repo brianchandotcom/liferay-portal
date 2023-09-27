@@ -168,6 +168,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete subtask, task, routine, case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "subtasks",
@@ -208,8 +210,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -218,185 +218,114 @@ definition {
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by assignee"
 	@priority = 3
 	test AdminCanFilterTasksByAssignee {
-		property test.liferay.virtual.instance = "false";
+		task ("Given that task 1 is assigned as 'User'") {
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
-		task ("Add a user") {
-			JSONUser.addUser(
-				userEmailAddress = "user@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+			Testray.selectUsers(userNameList = "User User");
 		}
 
-		task ("Given that task 1 is assigned to user userfn userln") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
-			Testray.selectUsers(listUserName = "userfn userln");
-		}
-
-		task ("And that task 2 is assigned to user Test") {
+		task ("And that task 2 is assigned as 'Test'") {
 			TestrayTestflow.goToTestflow();
 
-			TestrayTestflow.goToTask(taskName = "Task_2");
+			Testray.clickTableEntry(tableEntry = "Task_2");
 
-			Testray.selectUsers(listUserName = "Test Test");
+			Testray.selectUsers(userNameList = "Test Test");
 
 			TestrayTestflow.goToTestflow();
 		}
 
-		task ("When the user select the user userfn userln in the filter") {
-			TestrayFilter.clickFilter();
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+		task ("When the user select 'User' in the filter") {
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Assignee",
-				value1 = "userfn");
-
-			Button.click(button = "Apply");
-
-			WaitForPageLoad();
+				selectValue = "User");
 		}
 
-		task ("Then can see only task 1 with user userfn userln in the table") {
-			AssertElementPresent(
-				key_projectName = "Task_1",
-				locator1 = "Testray#ITEM_NAME");
+		task ("Then can see only task 1 with 'User' in the table") {
+			Testray.viewTableEntryList(listEntry = "Task_1");
 		}
 
-		task ("And do not see the task 2 with user Test in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Task_2",
-				locator1 = "Testray#ITEM_NAME");
-		}
-
-		task ("Delete user created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
+		task ("And do not see the task 2 with 'Test' in the table") {
+			Testray.viewTableEntryListNotPresent(listEntry = "Task_2");
 		}
 	}
 
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by build name"
 	@priority = 3
 	test AdminCanFilterTasksByBuildName {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two build different in the table") {
-			AssertElementPresent(
-				key_projectName = "Build 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Build 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Build 1,Build 2");
 		}
 
 		task ("When the user select the build 2 in the filter by name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Build Name",
-				value = "Build 2");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Build Name",
+				inputValue = "Build 2");
 		}
 
 		task ("Then the user see only build 2 in the table") {
-			AssertElementPresent(
-				key_projectName = "Build 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Build 2");
 		}
 
 		task ("And do not see the build 1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Build 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Build 1");
 		}
 	}
 
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by project name"
 	@priority = 4
 	test AdminCanFilterTasksByProjectName {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two project different in the table") {
-			AssertElementPresent(
-				key_projectName = "Project 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Project 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Project 1,Project 2");
 		}
 
 		task ("When the user select the project 2 in the filter") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-				header = "Project Name",
-				label = "Project Name",
-				listMultiSelect = "Project 2");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Project Name",
+				multiSelectValue = "Project 2");
 		}
 
 		task ("Then the user see only project 2 in the table") {
-			AssertElementPresent(
-				key_projectName = "Project 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Project 2");
 		}
 
 		task ("And do not see the project 1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Project 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Project 1");
 		}
 	}
 
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by routine name"
 	@priority = 3
 	test AdminCanFilterTasksByRoutineName {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two routine different in the table") {
-			AssertElementPresent(
-				key_projectName = "Routine 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Routine 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Routine 1,Routine 2");
 		}
 
 		task ("When the user select the routine 2 in the filter") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-				header = "Routine Name",
-				label = "Routine Name",
-				listMultiSelect = "Routine 2");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Routine Name",
+				multiSelectValue = "Routine 2");
 		}
 
 		task ("Then the user see only routine 2 in the table") {
-			AssertElementPresent(
-				key_projectName = "Routine 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Routine 2");
 		}
 
 		task ("And do not see the routine 1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Routine 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Routine 1");
 		}
 	}
 
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by status"
 	@priority = 4
 	test AdminCanFilterTasksByStatus {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that task 1 is assigned to user Test Test") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
-			Testray.selectUsers(listUserName = "Test Test");
+			Testray.selectUsers(userNameList = "Test Test");
 		}
 
 		task ("And that task 1 is abandoned") {
@@ -406,14 +335,10 @@ definition {
 		}
 
 		task ("When the user filter task by status in the filter") {
-			TestrayFilter.clickFilter();
-
-			Click.clickAtNotVisible(
-				key_label = "Status",
-				key_status = "Abandoned",
-				locator1 = "TestrayFilter#STATUS_IN_FILTER");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				checkboxFieldLabel = "Status",
+				checkboxValue = "Abandoned",
+				fieldType = "checkbox");
 		}
 
 		task ("Then can see only abandoned status in the table") {
@@ -423,73 +348,48 @@ definition {
 		}
 
 		task ("And do not see the complete status in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Complete",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Complete");
 		}
 	}
 
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by task name"
 	@priority = 3
 	test AdminCanFilterTasksByTaskName {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two tasks different in the table") {
-			AssertElementPresent(
-				key_projectName = "Task_1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Task_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Task_1,Task_2");
 		}
 
 		task ("When the user filter task by task name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Task Name",
-				value = "Task_2");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Task Name",
+				inputValue = "Task_2");
 		}
 
 		task ("Then can see the Task_2 in the table") {
-			AssertElementPresent(
-				key_projectName = "Task_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Task_2");
 		}
 
 		task ("And do not see the Task_1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Task_1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Task_1");
 		}
 	}
 
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter task using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterTaskWithMultipleOptions {
-		property test.liferay.virtual.instance = "false";
+		task ("Given that task 1 is assigned as 'User'") {
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
-		task ("Add a user") {
-			JSONUser.addUser(
-				userEmailAddress = "user@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+			Testray.selectUsers(userNameList = "User User");
 		}
 
-		task ("Given that task 1 is assigned to user userfn userln") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
-			Testray.selectUsers(listUserName = "userfn userln");
-		}
-
-		task ("And that task 2 is assigned to user Test") {
+		task ("And that task 2 is assigned as 'Test'") {
 			TestrayTestflow.goToTestflow();
 
-			TestrayTestflow.goToTask(taskName = "Task_2");
+			Testray.clickTableEntry(tableEntry = "Task_2");
 
-			Testray.selectUsers(listUserName = "Test Test");
+			Testray.selectUsers(userNameList = "Test Test");
 		}
 
 		task ("And that task 2 is completed") {
@@ -499,27 +399,16 @@ definition {
 		}
 
 		task ("When the user filter multiple options by: task name, build name and status in the filter") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Build Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Build 2");
-
-			Click.clickAtNotVisible(
-				key_label = "Status",
-				key_status = "Complete",
-				locator1 = "TestrayFilter#STATUS_IN_FILTER");
-
-			TestrayFilter.typeFilter(
-				label = "Task Name",
-				value = "Task_2");
+			TestrayFilter.filterResults(
+				checkboxFieldLabel = "Status",
+				checkboxValue = "Complete",
+				fieldType = "checkbox,input",
+				inputFieldLabel = "Task Name",
+				inputValue = "Task_2");
 		}
 
 		task ("Then can see only build 2 and complete status in the table") {
-			AssertElementPresent(
-				key_projectName = "Build 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Build 2");
 
 			TestrayTestflow.assertStatus(
 				label = "Tasks",
@@ -527,59 +416,36 @@ definition {
 		}
 
 		task ("And do not see the Task_1 and build 1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Build 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementNotPresent(
-				key_projectName = "Task_1",
-				locator1 = "Testray#ITEM_NAME");
-		}
-
-		task ("Delete user created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
+			Testray.viewTableEntryListNotPresent(listEntry = "Build 1,Task_1");
 		}
 	}
 
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should not see task that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanNotFilterForNonExistentTask {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two tasks that existent in the table") {
-			AssertElementPresent(
-				key_projectName = "Task_1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Task_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Task_1,Task_2");
 		}
 
 		task ("When filtering a task by his non-existent name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Task Name",
-				value = "Task_3");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Task Name",
+				inputValue = "Task_3");
 		}
 
 		task ("Then the user is not present in the task table") {
-			AssertElementNotPresent(
-				key_projectName = "Task_3",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Task_3");
 		}
 	}
 
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an User I should be able to search by a filter"
 	@priority = 2
 	test CanSearchByFilter {
-		property test.liferay.virtual.instance = "false";
-
 		task ("When the user searches for a field called Assignee") {
 			TestrayFilter.clickFilter();
 
-			TestrayFilter.searchFilter(value = "Assignee");
+			TestrayFilter.searchFilter(filterName = "Assignee");
 		}
 
 		task ("Then the user can see the field label called Assignee") {
@@ -589,7 +455,7 @@ definition {
 		}
 
 		task ("When the user searches for a field that does not exist") {
-			TestrayFilter.searchFilter(value = "Assignee 2");
+			TestrayFilter.searchFilter(filterName = "Assignee 2");
 		}
 
 		task ("Then the user can no more see the label called Assignee in the filter") {

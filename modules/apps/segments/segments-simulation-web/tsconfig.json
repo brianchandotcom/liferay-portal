@@ -1,5 +1,5 @@
 {
-	"@generated": "45e40a8544aeb6d79f28e33c41eb1caed24afe07",
+	"@generated": "bb23a55768604868e3cf6e2091559ab5fecd5c5a",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -13,8 +13,11 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
-			"@liferay/frontend-js-react-web": [
-				"../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
+			"@liferay/layout-js-components-web": [
+				"../../layout/layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"frontend-js-components-web": [
+				"../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"frontend-js-web": [
 				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
@@ -39,7 +42,10 @@
 	],
 	"references": [
 		{
-			"path": "../../frontend-js/frontend-js-react-web"
+			"path": "../../layout/layout-js-components-web"
+		},
+		{
+			"path": "../../frontend-js/frontend-js-components-web"
 		},
 		{
 			"path": "../../frontend-js/frontend-js-web"

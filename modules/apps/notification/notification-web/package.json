@@ -1,13 +1,19 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.100.0",
-		"@clayui/form": "3.100.0",
-		"@clayui/label": "3.88.0",
-		"@clayui/management-toolbar": "3.93.0",
-		"@clayui/panel": "3.100.0",
+		"@clayui/core": "3.104.0",
+		"@clayui/form": "3.104.0",
+		"@clayui/icon": "3.56.0",
+		"@clayui/loading-indicator": "3.60.0",
+		"@clayui/multi-select": "3.105.0",
+		"@clayui/panel": "3.104.0",
+		"@clayui/popover": "3.104.0",
+		"@clayui/tooltip": "3.104.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/object-js-components-web": "*",
-		"frontend-js-web": "*"
+		"classnames": "2.3.1",
+		"frontend-js-components-web": "*",
+		"frontend-js-web": "*",
+		"react": "16.12.0"
 	},
 	"name": "@liferay/notification-web",
 	"private": true,
@@ -16,5 +22,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "1.0.58"
+	"version": "1.0.63"
 }

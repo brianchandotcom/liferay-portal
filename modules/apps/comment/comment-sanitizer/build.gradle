@@ -1,12 +1,7 @@
 dependencies {
-	compileInclude group: "com.google.errorprone", name: "error_prone_annotations", version: "2.2.0"
-	compileInclude group: "com.google.guava", name: "failureaccess", version: "1.0.1"
-	compileInclude group: "com.google.guava", name: "guava", version: "30.1.1-jre"
-	compileInclude group: "com.google.guava", name: "listenablefuture", version: "9999.0-empty-to-avoid-conflict-with-guava"
-	compileInclude group: "com.google.j2objc", name: "j2objc-annotations", version: "1.3"
 	compileInclude group: "com.googlecode.owasp-java-html-sanitizer", name: "owasp-java-html-sanitizer", version: "20211018.2"
-	compileInclude group: "org.checkerframework", name: "checker-qual", version: "3.11.0"
 
+	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.codehaus.mojo", name: "animal-sniffer-annotations", version: "1.17"

@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Blogs Demo Data Creator API
 Bundle-SymbolicName: com.liferay.blogs.demo.data.creator.api
-Bundle-Version: 5.0.5
+Bundle-Version: 5.0.6
 Export-Package: com.liferay.blogs.demo.data.creator

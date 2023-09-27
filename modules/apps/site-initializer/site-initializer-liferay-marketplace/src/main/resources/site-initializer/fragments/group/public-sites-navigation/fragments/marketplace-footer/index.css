@@ -1,0 +1,48 @@
+.public-footer {
+	background-color: #072252;
+}
+
+.public-footer a {
+	color: white;
+}
+
+.public-footer .footer-bottom {
+	border-bottom: 1px solid var(--color-neutral-3);
+	flex: 1;
+}
+
+.public-footer .section-title {
+	min-width: 195px;
+}
+
+.public-footer .contact-container {
+	font-size: 14px;
+	min-width: 200px;
+}
+
+.public-footer  .max-nav {
+	font-size: 14px;
+	max-width: 1240px;
+}
+
+.public-footer .footer-navigation {
+	flex: 5;
+}
+
+.public-footer .footer-navigation .globe-icon {
+	font-size: 25px;
+}
+
+.public-footer .contact-list {
+	line-height: 24px;
+	list-style: none;
+	text-align: right;
+}
+
+.public-footer-opacity--50 {
+	opacity: 0.5;
+}
+
+.public-footer-opacity--70 {
+	opacity: 0.7;
+}

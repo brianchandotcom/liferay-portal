@@ -20,7 +20,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-159730."
+	@description = "This is a use case for LPS-182927 and LPS-164852."
 	@priority = 4
 	test AssertURLforSuggestionsResults {
 		JSONWebcontent.addWebContent(
@@ -33,27 +33,31 @@ definition {
 			groupName = "Guest",
 			layoutName = "New Search Page");
 
-		// Workaround for LPS-164852
+		Navigator.gotoPage(pageName = "New Search Page");
 
-		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "/new-search-page");
-
-		Type(
-			locator1 = "Search#EMBEDDED_SEARCH_BAR",
-			value1 = "Apple");
-
-		SearchBarSuggestions.viewSuggestions(
-			searchAssetDescription = "WC WebContent Description",
+		SearchBarSuggestions.viewSuggestionResultDetailsURL(
+			expectedURL = "/new-search-page",
 			searchAssetTitle = "Apple");
 
-		SearchBarSuggestions.gotoSuggestionResultDetails(searchAssetTitle = "Apple");
-
-		SearchBarSuggestions.viewSuggestionResultDetails(searchAssetTitle = "Apple");
+		Navigator.gotoBack();
 
 		var currentURL = selenium.getCurrentUrl();
 
 		if (!(contains(${currentURL}, "/new-search-page"))) {
-			fail("URL should contain /new-search-page");
+			fail("Clicking the in-page back button should take the user to the page they came from");
 		}
+
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "New Search Page");
+
+		SearchBarSuggestions.viewSuggestionResultDetailsURL(
+			expectedURL = "/new-search-page",
+			searchAssetTitle = "Apple");
+
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "");
+
+		SearchBarSuggestions.viewSuggestionResultDetailsURL(
+			expectedURL = "/new-search-page",
+			searchAssetTitle = "Apple");
 	}
 
 	@priority = 4
@@ -301,6 +305,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-164683."
+	@ignore = "true"
 	@priority = 4
 	test ConfigureSearchBarToShowTopAndTrendingSearchesUsingDataFromAnalyticsCloud {
 		property custom.properties = "feature.flag.LPS-159643=true";
@@ -393,6 +398,66 @@ definition {
 			SearchBarSuggestions.viewSuggestions(
 				searchAssetTitle = "apple strudel",
 				suggestionContributorDisplayGroupName = "Trending Searches");
+		}
+	}
+
+	@description = "This is a use case for LPS-188710 - Configure Site Activities suggestions to display results from the user's locale."
+	@ignore = "true"
+	@priority = 3
+	test ConfigureSuggestionsToDisplayResultsFromUsersLocale {
+		property custom.properties = "feature.flag.LPS-159643=true";
+		property property.group = "analytics.cloud.profile";
+
+		task ("Configure Analytics Cloud") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Guest");
+		}
+
+		task ("Create Apple Pie and Apple Strudel Web Contents and translate Apple Strudel") {
+			JSONWebcontent.addWebContent(
+				content = "Apple Pie content",
+				groupName = "Guest",
+				title = "Apple Pie");
+
+			JSONWebcontent.addBasicWebContentLocalized(
+				contentMap = "en_US:Apple Strudel content,pt_BR:Conteúdo de Strudel de Maçã",
+				groupName = "Guest",
+				titleMap = "en_US:Apple Strudel,pt_BR:Strudel de Maçã");
+		}
+
+		task ("Configure Embedded Search Bar Suggestions to show the trending searches") {
+			SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(
+				addContributor = "true",
+				characterThreshold = 0,
+				suggestionContributor = "Site Activities",
+				suggestionContributorActivity = "Trending Searches",
+				suggestionContributorOrder = 2,
+				suggestionContributorSize = 3);
+		}
+
+		task ("Click on Embedded Search Bar and assert Apple Pie and Apple Strudel results") {
+			Click(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+
+			SearchBarSuggestions.viewSuggestions(searchAssetTitle = "Apple Pie");
+
+			SearchBarSuggestions.viewSuggestions(searchAssetTitle = "Apple Strudel");
+		}
+
+		task ("Set language to match translation language and assert Apple Strudel translated result") {
+			Search.openSearchPage(locale = "pt-BR");
+
+			Navigator.openURL();
+
+			Click(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+
+			SearchBarSuggestions.viewSuggestions(searchAssetTitle = "Strudel de Maçã");
 		}
 	}
 
@@ -525,6 +590,7 @@ definition {
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content",
@@ -739,6 +805,49 @@ definition {
 			searchAssetTitle = "Apple Site Name");
 
 		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Pie Site Name");
+	}
+
+	@description = "This is a use case for LPS-190910."
+	@priority = 3
+	test ViewSuggestionsLocalizedDescription {
+		JSONWebcontent.addBasicWebContentLocalized(
+			contentMap = "en_US:content,es_ES:contenido,de_DE:inhalt",
+			descriptionMap = "en_US:description,es_ES:descripción",
+			groupName = "Guest",
+			titleMap = "en_US:Title,es_ES:Título,de_DE:Titel");
+
+		Search.openSearchPage(locale = "es-ES");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Title");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "descripción",
+			searchAssetTitle = "Título",
+			suggestionContributorDisplayGroupName = "Sugerencias");
+
+		AssertElementNotPresent(
+			key_searchAssetDescription = "description",
+			key_searchAssetTitle = "Título",
+			key_suggestionContributorDisplayGroupName = "Sugerencias",
+			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_DESCRIPTION");
+
+		Search.openSearchPage(locale = "de-DE");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Title");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetTitle = "Titel",
+			suggestionContributorDisplayGroupName = "Vorschläge");
+
+		AssertElementNotPresent(
+			key_searchAssetDescription = "description",
+			key_searchAssetTitle = "Titel",
+			key_suggestionContributorDisplayGroupName = "Vorschläge",
+			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_DESCRIPTION");
 	}
 
 	@description = "This is a use case for LPS-162509."

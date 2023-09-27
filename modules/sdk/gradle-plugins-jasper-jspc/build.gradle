@@ -3,20 +3,22 @@ apply plugin: "org.ysb33r.gradletest"
 
 task copyGradleTestDependencies(type: Copy)
 
-String gradleVersion = "6.9.2"
+String gradleVersion = "7.3.3"
 
 tasks.eclipse {
 	ext.gradleVersion = gradleVersion
 }
 
 copyGradleTestDependencies {
-	from configurations.compile
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+	from configurations.compileClasspath
 	into jar.destinationDir
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.47"
-	compile(group: "com.liferay", name: "com.liferay.portal.servlet.jsp.compiler", version: "1.0.5") {
+	api group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.48"
+	api(group: "com.liferay", name: "com.liferay.portal.servlet.jsp.compiler", version: "1.0.5") {
 		exclude group: "com.liferay.portal"
 		exclude group: "javax.servlet"
 		exclude group: "javax.servlet.jsp", module: "jsp-api"
@@ -29,7 +31,7 @@ gradleTest {
 	dependsOn copyGradleTestDependencies
 	dependsOn jar
 
-	versions "5.6.4", gradleVersion
+	versions gradleVersion
 }
 
 pluginBundle {

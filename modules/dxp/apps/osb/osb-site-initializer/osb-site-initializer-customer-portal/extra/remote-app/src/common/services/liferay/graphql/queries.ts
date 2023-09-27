@@ -1,12 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {gql} from '@apollo/client';
@@ -257,6 +251,37 @@ export const addIncidentReportAnalyticsCloud = gql`
 			) {
 			emailAddress
 			analyticsCloudWorkspaceId
+		}
+	}
+`;
+
+export const addHighPriorityContact = gql`
+	mutation addHighPriorityContact(
+		$HighPriorityContacts: InputC_HighPriorityContacts!
+	) {
+		createHighPriorityContacts(input: $HighPriorityContacts)
+			@rest(
+				method: "POST"
+				type: "C_HighPriorityContactsPage"
+				path: "/c/highprioritycontactses/"
+			) {
+			contactsCategory
+			r_userToHighPriorityContacts_userId
+		}
+	}
+`;
+
+export const deleteHighPriorityContacts = gql`
+	mutation deleteHighPriorityContacts($highPriorityContactsId: Long!) {
+		deleteHighPriorityContacts(
+			highPriorityContactsId: $highPriorityContactsId
+		)
+			@rest(
+				type: "Boolean"
+				path: "/c/highprioritycontactses/{args.highPriorityContactsId}"
+				method: "DELETE"
+			) {
+			NoResponse
 		}
 	}
 `;
@@ -569,9 +594,56 @@ export const getAccountUserAccountsByExternalReferenceCode = gql`
 	}
 `;
 
+export const getOrganizations = gql`
+	query getOrganizations($filter: String) {
+		organizations(filter: $filter) {
+			items {
+				name
+				id
+				accounts {
+					totalCount
+					items {
+						id
+						name
+						externalReferenceCode
+					}
+				}
+			}
+		}
+	}
+`;
+
 export const getUserAccount = gql`
 	query getUserAccount($id: Long!) {
 		userAccount(userAccountId: $id) {
+			accountBriefs {
+				externalReferenceCode
+				id
+				name
+				roleBriefs {
+					id
+					name
+				}
+			}
+			externalReferenceCode
+			id
+			image
+			name
+			roleBriefs {
+				id
+				name
+			}
+			organizationBriefs {
+				id
+				name
+			}
+		}
+	}
+`;
+
+export const getMyUserAccount = gql`
+	query getMyUserAccount {
+		myUserAccount {
 			accountBriefs {
 				externalReferenceCode
 				id
@@ -631,6 +703,36 @@ export const deleteAccountUserRoles = gql`
 			emailAddress: $emailAddress
 			externalReferenceCode: $accountKey
 		)
+	}
+`;
+
+export const createAccountUserRoles = gql`
+	mutation createAccountUserRoles(
+		$accountRoleId: Long!
+		$emailAddress: String!
+		$externalReferenceCode: String!
+	) {
+		createAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+			accountRoleId: $accountRoleId
+			emailAddress: $emailAddress
+			externalReferenceCode: $externalReferenceCode
+		)
+	}
+`;
+
+export const getAccountAccountRolesByExternalReferenceCode = gql`
+	query getAccountAccountRolesByExternalReferenceCode(
+		$externalReferenceCode: String
+	) {
+		accountAccountRolesByExternalReferenceCode(
+			externalReferenceCode: $externalReferenceCode
+		) {
+			items {
+				id
+				displayName
+				roleId
+			}
+		}
 	}
 `;
 

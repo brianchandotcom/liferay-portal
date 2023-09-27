@@ -1,0 +1,5 @@
+dependencies {
+	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
+}

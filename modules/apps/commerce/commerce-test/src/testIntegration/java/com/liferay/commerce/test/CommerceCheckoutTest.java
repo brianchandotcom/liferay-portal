@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.test;
@@ -74,10 +65,10 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -145,7 +136,7 @@ public class CommerceCheckoutTest {
 			RandomTestUtil.randomString(), new long[] {_user.getUserId()}, null,
 			_serviceContext);
 
-		Settings settings = _settingsFactory.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new GroupServiceSettingsLocator(
 				_commerceChannel.getGroupId(),
 				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
@@ -307,7 +298,7 @@ public class CommerceCheckoutTest {
 		);
 
 		try {
-			Settings settings = _settingsFactory.getSettings(
+			Settings settings = FallbackKeysSettingsUtil.getSettings(
 				new GroupServiceSettingsLocator(
 					_commerceChannel.getGroupId(),
 					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
@@ -603,8 +594,8 @@ public class CommerceCheckoutTest {
 			catalog.getGroupId(), price);
 
 		CommerceTestUtil.addCommerceOrderItem(
-			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
-			commerceContext);
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			BigDecimal.ONE, commerceContext);
 
 		boolean activePaymentMethod =
 			_commerceCheckoutStepHttpHelper.
@@ -699,23 +690,23 @@ public class CommerceCheckoutTest {
 		if (cpDefinitionInventory == null) {
 			_cpDefinitionInventoryLocalService.addCPDefinitionInventory(
 				_user.getUserId(), cpDefinition.getCPDefinitionId(), "default",
-				"default", false, false, 1, false,
+				"default", false, false, BigDecimal.ONE, false,
 				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
 				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
-				1);
+				BigDecimal.ONE);
 		}
 		else {
 			_cpDefinitionInventoryLocalService.updateCPDefinitionInventory(
 				cpDefinitionInventory.getCPDefinitionInventoryId(), "default",
-				"default", false, false, 1, false,
+				"default", false, false, BigDecimal.ONE, false,
 				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
 				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
-				1);
+				BigDecimal.ONE);
 		}
 
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
+		BigDecimal stockQuantity = _commerceInventoryEngine.getStockQuantity(
 			_company.getCompanyId(), cpDefinition.getGroupId(),
-			commerceOrderItem.getSku());
+			commerceOrderItem.getSku(), StringPool.BLANK);
 
 		commerceOrderItem.setQuantity(stockQuantity);
 
@@ -782,12 +773,13 @@ public class CommerceCheckoutTest {
 			CommercePriceEntry commercePriceEntry =
 				_commercePriceEntryLocalService.fetchCommercePriceEntry(
 					commercePriceList.getCommercePriceListId(),
-					cpInstance.getCPInstanceUuid());
+					cpInstance.getCPInstanceUuid(),
+					commerceOrderItem.getUnitOfMeasureKey());
 
 			BigDecimal price = commercePriceEntry.getPrice();
 
 			BigDecimal totalItemPrice = price.multiply(
-				BigDecimal.valueOf(commerceOrderItem.getQuantity()));
+				commerceOrderItem.getQuantity());
 
 			expectedSubtotal = expectedSubtotal.add(totalItemPrice);
 		}
@@ -888,8 +880,5 @@ public class CommerceCheckoutTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
-
-	@Inject
-	private SettingsFactory _settingsFactory;
 
 }

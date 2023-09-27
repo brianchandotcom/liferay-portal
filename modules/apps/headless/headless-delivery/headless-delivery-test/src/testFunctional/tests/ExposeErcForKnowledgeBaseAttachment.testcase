@@ -3,6 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testray.component.names = "Knowledge Base";
 	property testray.main.component.name = "Lima Headless";
 
 	setUp {
@@ -182,7 +183,7 @@ definition {
 
 	@disable-webdriver = "true"
 	@priority = 3
-	test CanDeleteAttachementForKnowledgeBaseArticleByExternalReferenceCode {
+	test CanDeleteAttachmentForKnowledgeBaseArticleByExternalReferenceCode {
 		property portal.acceptance = "true";
 
 		task ("When with deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode and siteId and knowledgeBaseExternalReferenceCode and knowledgeBaseAttachmentExternalReferenceCode to delete the knwoledgeBaseAttachment") {

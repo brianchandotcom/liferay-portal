@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.batch.planner.web.internal.helper;
@@ -63,16 +54,19 @@ public class BatchPlannerPlanHelper {
 
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType");
-		String internalClassName = _resolveInternalClassName(
-			ParamUtil.getString(portletRequest, "internalClassName"));
-		String taskItemDelegateName = TaskItemUtil.getDelegateName(
-			ParamUtil.getString(portletRequest, "internalClassName"));
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				true, externalType, StringPool.SLASH, internalClassName, name,
-				0, taskItemDelegateName, template);
+				true, externalType, StringPool.SLASH,
+				TaskItemUtil.getInternalClassName(
+					ParamUtil.getString(
+						portletRequest, "internalClassNameKey")),
+				name, 0,
+				TaskItemUtil.getTaskItemDelegateName(
+					ParamUtil.getString(
+						portletRequest, "internalClassNameKey")),
+				template);
 
 		_addBatchPlannerPolicies(
 			batchPlannerPlan.getBatchPlannerPlanId(),
@@ -99,10 +93,10 @@ public class BatchPlannerPlanHelper {
 
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType", "CSV");
-		String internalClassName = _resolveInternalClassName(
-			ParamUtil.getString(portletRequest, "internalClassName"));
-		String taskItemDelegateName = TaskItemUtil.getDelegateName(
-			ParamUtil.getString(portletRequest, "internalClassName"));
+		String internalClassName = TaskItemUtil.getInternalClassName(
+			ParamUtil.getString(portletRequest, "internalClassNameKey"));
+		String taskItemDelegateName = TaskItemUtil.getTaskItemDelegateName(
+			ParamUtil.getString(portletRequest, "internalClassNameKey"));
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
 		int size = 0;
@@ -340,16 +334,6 @@ public class BatchPlannerPlanHelper {
 		return batchPlannerMappings;
 	}
 
-	private String _resolveInternalClassName(String internalClassName) {
-		int index = internalClassName.indexOf(StringPool.POUND);
-
-		if (index < 0) {
-			return internalClassName;
-		}
-
-		return internalClassName.substring(0, index);
-	}
-
 	private BatchPlannerPlan _updateBatchPlannerPlan(
 			PortletRequest portletRequest,
 			List<BatchPlannerMapping> batchPlannerMappings,
@@ -362,7 +346,7 @@ public class BatchPlannerPlanHelper {
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType");
 		String internalClassName = ParamUtil.getString(
-			portletRequest, "internalClassName");
+			portletRequest, "internalClassNameKey");
 		String name = ParamUtil.getString(portletRequest, "name");
 
 		BatchPlannerPlan batchPlannerPlan =

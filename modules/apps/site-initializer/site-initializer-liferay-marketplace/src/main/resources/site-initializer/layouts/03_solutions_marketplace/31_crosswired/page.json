@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/crosswired",
+	"hidden": true,
+	"name": "Crosswired",
+	"name_i18n": {
+		"en_US": "Crosswired"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

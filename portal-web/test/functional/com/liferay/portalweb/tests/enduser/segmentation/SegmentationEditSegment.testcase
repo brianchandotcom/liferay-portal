@@ -284,4 +284,22 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-149468. The kebab menu next to a segment must have icons next to the menu items."
+	@priority = 3
+	test ViewIconsOfSegmentsActions {
+		task ("When the user opens the dropdown menu of a segment") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.openEntryMenu(rowEntry = "EditSegment Test");
+		}
+
+		task ("Then there should be icons next to the menu items") {
+			for (var icon : list "pencil,users,password-policies,trash") {
+				AssertVisible(
+					key_text = ${icon},
+					locator1 = "Icon#ANY");
+			}
+		}
+	}
+
 }

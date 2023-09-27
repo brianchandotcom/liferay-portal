@@ -1,19 +1,10 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, render, screen} from '@testing-library/react';
+import {act, render, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -133,9 +124,11 @@ describe('Collection', () => {
 			});
 		});
 
-		expect(
-			document.body.querySelector('.page-editor__collection-item')
-		).toBeInTheDocument();
+		waitFor(() =>
+			expect(
+				document.body.querySelector('.page-editor__collection-item')
+			).toBeInTheDocument()
+		);
 	});
 
 	it('renders empty collection items', async () => {
@@ -164,8 +157,10 @@ describe('Collection', () => {
 			});
 		});
 
-		items.forEach((item) =>
-			expect(screen.getByText(item.title)).toBeInTheDocument()
+		waitFor(() =>
+			items.forEach((item) =>
+				expect(screen.getByText(item.title)).toBeInTheDocument()
+			)
 		);
 	});
 
@@ -234,10 +229,12 @@ describe('Collection', () => {
 			});
 		});
 
-		expect(
-			screen.getByText(
-				'in-edit-mode,-the-number-of-elements-displayed-is-limited-to-x-due-to-performance'
-			)
-		).toBeInTheDocument();
+		waitFor(() =>
+			expect(
+				screen.getByText(
+					'in-edit-mode,-the-number-of-elements-displayed-is-limited-to-x-due-to-performance'
+				)
+			).toBeInTheDocument()
+		);
 	});
 });

@@ -1,0 +1,111 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property ci.retries.disabled = "true";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
+	property testray.component.names = "OpenID Connect";
+	property testray.main.component.name = "Upgrades Security";
+
+	setUp {
+		SignIn.signIn();
+
+		SearchAdministration.executeReindex();
+	}
+
+	@description = "This is a use case for LPS-162055 TC-5: Verify that User Information Mapper works well after upgrading from 7.4.13.u45."
+	@priority = 5
+	test ViewClientUserInfoAfterUpgrade7413U45 {
+		property data.archive.type = "data-archive-oauth-client-without-user-mapper";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"";
+		property portal.version = "7.4.13.u45";
+		property test.run.type = "single";
+
+		var jsonFileName = "keycloak.json";
+		var jsonFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies";
+
+		var clientInfo = FileUtil.read("${jsonFileBaseDir}/${jsonFileName}");
+		var userMapperInfo = FileUtil.read("${jsonFileBaseDir}/OAuth2_User_mapping.json");
+
+		task ("Given: User starts Keycloak for test and set debug level") {
+			AntCommands.runCommand("build-test-keycloak.xml", "prepare-selenium-keycloak-server");
+
+			OpenIDConnect.enableOpenIDConnectDebugLogs();
+
+			OpenIDConnect.enableOpenIDConnectCustomParametersDebugLogs();
+		}
+
+		task ("And: Logs in through OIDC to verify user informations") {
+			User.logoutPG();
+
+			User.loginUserWithOpenIDConnectEnabledPG(
+				userEmailAddress = "tester1@liferay.com",
+				userPassword = "test");
+
+			MyAccount.openMyAccountAdmin();
+
+			User.viewUserInformation(
+				userEmailAddress = "tester1@liferay.com",
+				userFirstName = "First1",
+				userLastName = "Last1",
+				userScreenName = "tester1");
+
+			User.logoutPG();
+		}
+
+		task ("When: Edit the OIDC connection") {
+			User.firstLoginPG();
+
+			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+			FormFields.editTextMultiline(
+				fieldName = "OIDCUserInfo",
+				fieldValue = ${userMapperInfo});
+
+			Click(
+				key_text = "Save",
+				locator1 = "Button#ANY");
+		}
+
+		task ("And: Delete the OIDC user") {
+			User.openUsersAdmin();
+
+			User.deactivateCP(userFirstName = "First1");
+
+			User.deleteCP(
+				deactivateType = "Actions",
+				userFirstName = "First1");
+
+			User.logoutPG();
+		}
+
+		task ("Then: OIDC user informations will be imported accordingly to the edited connection") {
+			Navigator.openURL();
+
+			AssertClick(
+				locator1 = "UserBar#USER_SIGN_IN",
+				value1 = "Sign In");
+
+			Click(locator1 = "Icon#OPENID_CONNECT");
+
+			Click(locator1 = "Button#SIGN_IN");
+
+			GoogleLogin.acceptConditions();
+
+			MyAccount.openMyAccountAdmin();
+
+			User.viewUserInformation(
+				userEmailAddress = "tester1@liferay.com",
+				userFirstName = "First1",
+				userLastName = "Last1",
+				userScreenName = "user1");
+		}
+	}
+
+}

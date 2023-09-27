@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.search.test;
@@ -200,8 +191,9 @@ public class LayoutIndexerIndexedFieldsTest {
 
 		indexedFieldsFixture.populateUID(layout, map);
 
-		_populateName(layout, map);
 		_populateDates(layout, map);
+		_populateLocalizedTitle(layout, map);
+		_populateName(layout, map);
 		_populateRoles(layout, map);
 
 		return map;
@@ -212,6 +204,23 @@ public class LayoutIndexerIndexedFieldsTest {
 			Field.MODIFIED_DATE, layout.getModifiedDate(), map);
 		indexedFieldsFixture.populateDate(
 			Field.CREATE_DATE, layout.getCreateDate(), map);
+	}
+
+	private void _populateLocalizedTitle(
+		Layout layout, Map<String, String> map) {
+
+		map.put(
+			"localized_" + Field.TITLE,
+			layout.getName(layout.getDefaultLanguageId()));
+
+		for (Locale locale :
+				LanguageUtil.getAvailableLocales(layout.getGroupId())) {
+
+			String key = LocalizationUtil.getLocalizedName(
+				Field.TITLE, LocaleUtil.toLanguageId(locale));
+
+			map.put("localized_" + key, layout.getName(locale));
+		}
 	}
 
 	private void _populateName(Layout layout, Map<String, String> map) {
@@ -242,6 +251,11 @@ public class LayoutIndexerIndexedFieldsTest {
 			document.remove(
 				LocalizationUtil.getLocalizedName(
 					Field.CONTENT, LocaleUtil.toLanguageId(locale)));
+
+			String key = LocalizationUtil.getLocalizedName(
+				Field.TITLE, LocaleUtil.toLanguageId(locale));
+
+			document.remove("localized_" + key + "_sortable");
 		}
 	}
 

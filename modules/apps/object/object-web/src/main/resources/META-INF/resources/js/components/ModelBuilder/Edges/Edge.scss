@@ -1,0 +1,21 @@
+.lfr-objects__model-builder-self-edge-dropdown-item {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+}
+
+.react-flow__edge {
+	&.selected {
+		marker {
+			fill: #0b5fff !important;
+		}
+	}
+
+	.react-flow__connection {
+		cursor: pointer;
+	}
+
+	marker {
+		fill: #80acff;
+	}
+}

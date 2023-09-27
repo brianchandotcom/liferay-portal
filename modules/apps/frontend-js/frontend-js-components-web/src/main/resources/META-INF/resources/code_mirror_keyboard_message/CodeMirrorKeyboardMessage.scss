@@ -1,0 +1,14 @@
+@import 'cadmin-variables';
+
+html#{$cadmin-selector} {
+	.cadmin .keyboard-message.popover {
+		left: inherit;
+		top: 4px;
+	}
+}
+
+.keyboard-message.popover {
+	left: inherit;
+	right: 4px;
+	top: 4px;
+}

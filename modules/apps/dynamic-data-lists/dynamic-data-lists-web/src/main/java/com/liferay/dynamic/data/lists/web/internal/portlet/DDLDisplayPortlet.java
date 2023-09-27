@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dynamic.data.lists.web.internal.portlet;
@@ -23,13 +14,13 @@ import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.util.DDL;
-import com.liferay.dynamic.data.lists.web.internal.configuration.activator.DDLWebConfigurationActivator;
+import com.liferay.dynamic.data.lists.web.internal.configuration.DDLWebConfiguration;
 import com.liferay.dynamic.data.lists.web.internal.display.context.DDLDisplayContext;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletPreferencesException;
 import com.liferay.portal.kernel.log.Log;
@@ -45,6 +36,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -53,12 +46,14 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
  */
 @Component(
+	configurationPid = "com.liferay.dynamic.data.lists.web.internal.configuration.DDLWebConfiguration",
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-dynamic-data-lists-display",
@@ -100,9 +95,8 @@ public class DDLDisplayPortlet extends MVCPortlet {
 
 			DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(
 				renderRequest, renderResponse, _ddl, _ddlRecordSetLocalService,
-				_ddlWebConfigurationActivator.getDDLWebConfiguration(),
-				_ddmDisplayRegistry, _ddmPermissionSupport,
-				_ddmTemplateLocalService, _storageEngine);
+				_ddlWebConfiguration, _ddmPermissionSupport,
+				_ddmStorageEngineManager, _ddmTemplateLocalService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, ddlDisplayContext);
@@ -126,7 +120,9 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(Map<String, Object> properties) {
+		modified(properties);
+
 		_portletRegistry.registerAlias(
 			_ALIAS, DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY);
 	}
@@ -166,6 +162,12 @@ public class DDLDisplayPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_ddlWebConfiguration = ConfigurableUtil.createConfigurable(
+			DDLWebConfiguration.class, properties);
 	}
 
 	protected void setDDLRecordRequestAttribute(RenderRequest renderRequest)
@@ -216,14 +218,13 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	@Reference
 	private DDLRecordSetService _ddlRecordSetService;
 
-	@Reference
-	private DDLWebConfigurationActivator _ddlWebConfigurationActivator;
-
-	@Reference
-	private DDMDisplayRegistry _ddmDisplayRegistry;
+	private volatile DDLWebConfiguration _ddlWebConfiguration;
 
 	@Reference
 	private DDMPermissionSupport _ddmPermissionSupport;
+
+	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
@@ -238,8 +239,5 @@ public class DDLDisplayPortlet extends MVCPortlet {
 		target = "(&(release.bundle.symbolic.name=com.liferay.dynamic.data.lists.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

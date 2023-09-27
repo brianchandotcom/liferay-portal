@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import '@testing-library/jest-dom/extend-expect';
@@ -25,6 +16,41 @@ jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
 	sub: jest.fn((langKey, arg) => langKey.replace('x', arg)),
 }));
+
+jest.mock(
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	() => jest.fn(() => Promise.resolve({}))
+);
+
+jest.mock(
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
+	() => ({
+		config: {
+			availableLanguages: {
+				en_US: {
+					default: false,
+					displayName: 'English (United States)',
+					languageIcon: 'en-us',
+					languageId: 'en_US',
+					w3cLanguageId: 'en-US',
+				},
+			},
+			selectedMappingTypes: {
+				subtype: {
+					id: 'subtype',
+				},
+				type: {
+					id: 'type',
+				},
+			},
+		},
+	})
+);
+
+const MAPPED_ACTION = {
+	classNameId: 'classNameId',
+	classPK: 'classPK',
+};
 
 function getStateWithConfig(config = {}) {
 	return {
@@ -80,10 +106,56 @@ describe('EditableActionPanel', () => {
 		expect(screen.queryByText('error-interaction')).not.toBeInTheDocument();
 	});
 
+	it('does not render interaction selector after unmapping', () => {
+		renderActionPanel({
+			state: getStateWithConfig({
+				mappedAction: {},
+			}),
+		});
+
+		expect(
+			screen.queryByText('success-interaction')
+		).not.toBeInTheDocument();
+
+		expect(screen.queryByText('error-interaction')).not.toBeInTheDocument();
+	});
+
 	it('renders interaction and reload selectors when an action is selected', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
-				mappedAction: {title: 'action'},
+				mappedAction: {...MAPPED_ACTION, fieldId: 'actionFieldId'},
+			}),
+		});
+
+		expect(screen.getByText('success-interaction')).toBeInTheDocument();
+		expect(
+			screen.getByText('reload-page-after-success')
+		).toBeInTheDocument();
+
+		expect(screen.getByText('error-interaction')).toBeInTheDocument();
+		expect(screen.getByText('reload-page-after-error')).toBeInTheDocument();
+	});
+
+	it('renders interaction and reload selectors when an action is mapped to structure', () => {
+		renderActionPanel({
+			state: getStateWithConfig({
+				mappedAction: {mappedField: 'mappedField'},
+			}),
+		});
+
+		expect(screen.getByText('success-interaction')).toBeInTheDocument();
+		expect(
+			screen.getByText('reload-page-after-success')
+		).toBeInTheDocument();
+
+		expect(screen.getByText('error-interaction')).toBeInTheDocument();
+		expect(screen.getByText('reload-page-after-error')).toBeInTheDocument();
+	});
+
+	it('renders interaction and reload selectors when an action is mapped inside a collection', () => {
+		renderActionPanel({
+			state: getStateWithConfig({
+				mappedAction: {collectionFieldId: 'collectionFieldId'},
 			}),
 		});
 
@@ -99,21 +171,21 @@ describe('EditableActionPanel', () => {
 	it('renders text and preview selectors when selecting notification', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
-				mappedAction: {title: 'action'},
+				mappedAction: {...MAPPED_ACTION, fieldId: 'actionFieldId'},
 				onSuccess: {interaction: 'notification'},
 			}),
 		});
 
 		expect(screen.getByText('success-text')).toBeInTheDocument();
 		expect(
-			screen.getByText('preview-success-notification')
+			screen.getByLabelText('preview-success-notification')
 		).toBeInTheDocument();
 	});
 
 	it('renders layout selector and does not allow to reload when selecting Go to page', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
-				mappedAction: {title: 'action'},
+				mappedAction: {...MAPPED_ACTION, fieldId: 'actionFieldId'},
 				onSuccess: {interaction: 'page'},
 			}),
 		});
@@ -127,7 +199,7 @@ describe('EditableActionPanel', () => {
 	it('renders url input and does not allow to reload when selecting External URL', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
-				mappedAction: {title: 'action'},
+				mappedAction: {...MAPPED_ACTION, fieldId: 'actionFieldId'},
 				onSuccess: {interaction: 'url'},
 			}),
 		});

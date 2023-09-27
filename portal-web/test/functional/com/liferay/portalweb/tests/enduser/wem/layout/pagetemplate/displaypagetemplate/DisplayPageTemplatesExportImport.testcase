@@ -4,7 +4,6 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Display Page Templates";
 
 	static var randomSiteName = StringUtil.randomString(8);
@@ -12,12 +11,42 @@ definition {
 	static var randomSiteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
 			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+	}
+
+	@description = "This is a test case for LPS-173150. Assert new import display page template works when wrong file extension occurs."
+	@priority = 3
+	test CannotImportNonZip {
+		task ("Given a user accesses to the Page Templates import page") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${randomSiteURLKey});
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Import");
+
+			WaitForPageLoad();
+		}
+
+		task ("When the user uploads an non-zip file") {
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "Document_1.doc");
+		}
+
+		task ("Then the user should see the validation error message") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "Only zip files are allowed.");
 		}
 	}
 
@@ -242,8 +271,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page designer should keep mapped standalone action from current object to Button fragment after import the display page template."
 	@priority = 4
 	test ExportImportDisplayPageTemplateWithMappedStandaloneActionFromCurrentObjectToFragment {
-		property custom.properties = "feature.flag.LPS-169992=true";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -378,8 +405,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page designer should keep mapped standalone action from current object to Button fragment inside Collection Display after import the display page template."
 	@priority = 4
 	test ExportImportDisplayPageTemplateWithMappedStandaloneActionFromCurrentObjectToFragmentInsideCollectionDisplay {
-		property custom.properties = "feature.flag.LPS-169992=true";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -523,8 +548,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page designer should keep mapped standalone action from a specific object entry to Button fragment after import the display page template."
 	@priority = 4
 	test ExportImportDisplayPageTemplateWithMappedStandaloneActionFromSpecificObjectEntryToFragment {
-		property custom.properties = "feature.flag.LPS-169992=true";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -590,7 +613,7 @@ definition {
 				value1 = "Specific Content");
 
 			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "${labelName}2 ${objectEntryId}",
+				entryTitle = ${objectEntryId},
 				navItem = "${labelName}2s",
 				rowItem = "//*[@data-qa-id='row'][contains(.,'${objectEntryId}')]");
 

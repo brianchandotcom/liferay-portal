@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/rivet-logic-live-video-and-conferencing-solution",
+	"hidden": true,
+	"name": "Live Video and Conferencing Solution",
+	"name_i18n": {
+		"en_US": "Live Video and Conferencing Solution"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

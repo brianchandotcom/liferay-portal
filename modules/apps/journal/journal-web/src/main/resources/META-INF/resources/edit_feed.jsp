@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -21,6 +12,7 @@ EditJournalFeedDisplayContext editJournalFeedDisplayContext = new EditJournalFee
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(editJournalFeedDisplayContext.getRedirect());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 %>
@@ -34,7 +26,6 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 	enctype="multipart/form-data"
 	method="post"
 	name="fm"
-	onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveFeed();" %>'
 >
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="" />
 	<aui:input name="redirect" type="hidden" value="<%= editJournalFeedDisplayContext.getRedirect() %>" />
@@ -118,9 +109,28 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 
 				<aui:input name="structure" type="resource" value="<%= editJournalFeedDisplayContext.getDDMStructureName() %>" />
 
-				<aui:button name="selectDDMStructureButton" onClick='<%= liferayPortletResponse.getNamespace() + "openDDMStructureSelector();" %>' value="select" />
+				<div class="c-gap-1 d-flex">
+					<clay:button
+						additionalProps='<%=
+							HashMapBuilder.<String, Object>put(
+								"description", JournalFeedConstants.WEB_CONTENT_DESCRIPTION
+							).put(
+								"selectDDMStructurePropsTransformerURL", journalDisplayContext.getSelectDDMStructureURL()
+							).build()
+						%>'
+						displayType="secondary"
+						label="select"
+						propsTransformer="js/SelectDDMStructureButtonPropsTransformer"
+					/>
 
-				<aui:button disabled="<%= editJournalFeedDisplayContext.getDDMStructureId() == 0 %>" name="removeDDMStructureButton" onClick='<%= liferayPortletResponse.getNamespace() + "removeDDMStructure();" %>' value="remove" />
+					<clay:button
+						disabled="<%= editJournalFeedDisplayContext.getDDMStructureId() == 0 %>"
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "removeDDMStructureButton" %>'
+						label="remove"
+						onClick='<%= liferayPortletResponse.getNamespace() + "removeDDMStructure();" %>'
+					/>
+				</div>
 			</div>
 
 			<c:choose>
@@ -149,9 +159,26 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 
 				<aui:input name="assetCategory" type="resource" value="<%= editJournalFeedDisplayContext.getAssetCategoryName() %>" />
 
-				<aui:button name="selectAssetCategoryButton" onClick='<%= liferayPortletResponse.getNamespace() + "openAssetCategorySelector();" %>' value="select" />
+				<div class="c-gap-1 d-flex">
+					<clay:button
+						additionalProps='<%=
+							HashMapBuilder.<String, Object>put(
+								"selectAssetCategoryPropsTransformerURL", editJournalFeedDisplayContext.getAssetCategoriesSelectorURL()
+							).build()
+						%>'
+						displayType="secondary"
+						label="select"
+						propsTransformer="js/SelectAssetCategoryButtonPropsTransformer"
+					/>
 
-				<aui:button disabled="<%= editJournalFeedDisplayContext.getAssetCategoryId() == 0 %>" name="removeAssetCategoryButton" onClick='<%= liferayPortletResponse.getNamespace() + "removeAssetCategory();" %>' value="remove" />
+					<clay:button
+						disabled="<%= editJournalFeedDisplayContext.getAssetCategoryId() == 0 %>"
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "removeAssetCategoryButton" %>'
+						label="remove"
+						onClick='<%= liferayPortletResponse.getNamespace() + "removeAssetCategory();" %>'
+					/>
+				</div>
 			</div>
 		</liferay-frontend:fieldset>
 
@@ -263,66 +290,18 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"isNewJournalFeed", editJournalFeedDisplayContext.getJournalFeed() == null
+		).put(
+			"renderedWebContent", JournalFeedConstants.RENDERED_WEB_CONTENT
+		).build()
+	%>'
+	module="js/EditFeed"
+/>
+
 <aui:script>
-	function <portlet:namespace />openAssetCategorySelector() {
-		Liferay.Util.openSelectionModal({
-			onSelect: function (selectedItems) {
-				const [selectedItem] = Object.values(selectedItems);
-
-				document.<portlet:namespace />fm.<portlet:namespace />assetCategoryIds.value =
-					selectedItem.classPK;
-				document.<portlet:namespace />fm.<portlet:namespace />assetCategory.value =
-					selectedItem.title;
-				document.<portlet:namespace />fm.<portlet:namespace />removeAssetCategoryButton.disabled = false;
-			},
-			selectEventName: '<portlet:namespace />selectAssetCategory',
-			title: '<%= UnicodeLanguageUtil.get(request, "select-category") %>',
-			url:
-				'<%= editJournalFeedDisplayContext.getAssetCategoriesSelectorURL() %>>',
-		});
-	}
-
-	function <portlet:namespace />openDDMStructureSelector() {
-		Liferay.Util.openSelectionModal({
-			onSelect: function (selectedItem) {
-				const itemValue = JSON.parse(selectedItem.value);
-
-				if (
-					document.<portlet:namespace />fm
-						.<portlet:namespace />ddmStructureId.value !=
-					itemValue.ddmstructureid
-				) {
-					Liferay.Util.openConfirmModal({
-						message:
-							'<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-changes-the-available-templates-and-available-feed-item-content") %>',
-						onConfirm: (isConfirmed) => {
-							if (isConfirmed) {
-								document.<portlet:namespace />fm.<portlet:namespace />ddmStructureId.value =
-									itemValue.ddmstructureid;
-								document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value =
-									'';
-								document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value =
-									'';
-								document.<portlet:namespace />fm.<portlet:namespace />contentField.value =
-									'<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
-
-								submitForm(
-									document.<portlet:namespace />fm,
-									null,
-									false,
-									false
-								);
-							}
-						},
-					});
-				}
-			},
-			selectEventName: '<portlet:namespace />selectDDMStructure',
-			title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-			url: '<%= journalDisplayContext.getSelectDDMStructureURL() %>>',
-		});
-	}
-
 	function <portlet:namespace />removeAssetCategory() {
 		document.<portlet:namespace />fm.<portlet:namespace />assetCategoryIds.value =
 			'';
@@ -342,69 +321,5 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 			'<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
 
 		submitForm(document.<portlet:namespace />fm, null, false, false);
-	}
-
-	function <portlet:namespace />saveFeed() {
-		document.<portlet:namespace />fm[
-			'<portlet:namespace />javax-portlet-action'
-		].value =
-			'<%= (editJournalFeedDisplayContext.getJournalFeed() == null) ? "/journal/add_feed" : "/journal/update_feed" %>';
-
-		<c:if test="<%= editJournalFeedDisplayContext.getJournalFeed() == null %>">
-			document.<portlet:namespace />fm.<portlet:namespace />feedId.value =
-				document.<portlet:namespace />fm.<portlet:namespace />newFeedId.value;
-		</c:if>
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	var autoFeedInput = document.getElementById('<portlet:namespace />autoFeedId');
-	var newFeedCheckbox = document.getElementById('<portlet:namespace />newFeedId');
-
-	if (autoFeedInput && newFeedCheckbox) {
-		newFeedCheckbox.disabled = autoFeedInput.checked;
-
-		autoFeedInput.addEventListener('click', () => {
-			Liferay.Util.toggleDisabled(newFeedCheckbox, !newFeedCheckbox.disabled);
-		});
-	}
-</aui:script>
-
-<aui:script sandbox="<%= true %>">
-	var form = document.<portlet:namespace />fm;
-
-	var renderedWebContent = '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>';
-
-	var contentFieldSelector = Liferay.Util.getFormElement(
-		form,
-		'contentFieldSelector'
-	);
-
-	if (contentFieldSelector) {
-		contentFieldSelector.addEventListener('change', () => {
-			var contentFieldValue = '';
-			var ddmRendererTemplateKeyValue = '';
-
-			var selectedFeedItemOption =
-				contentFieldSelector.options[contentFieldSelector.selectedIndex];
-
-			if (selectedFeedItemOption) {
-				contentFieldValue = selectedFeedItemOption.value || '';
-
-				if (
-					selectedFeedItemOption.dataset.contentfield ===
-					renderedWebContent
-				) {
-					ddmRendererTemplateKeyValue = contentFieldValue;
-
-					contentFieldValue = renderedWebContent;
-				}
-			}
-
-			Liferay.Util.setFormValues(form, {
-				contentField: contentFieldValue,
-				ddmRendererTemplateKey: ddmRendererTemplateKeyValue,
-			});
-		});
 	}
 </aui:script>

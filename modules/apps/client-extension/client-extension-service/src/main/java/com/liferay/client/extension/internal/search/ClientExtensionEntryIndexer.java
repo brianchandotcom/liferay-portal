@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.client.extension.internal.search;
@@ -79,7 +70,8 @@ public class ClientExtensionEntryIndexer
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing remote app entry " + clientExtensionEntry);
+			_log.debug(
+				"Indexing client extension entry " + clientExtensionEntry);
 		}
 
 		Document document = getBaseModelDocument(
@@ -107,7 +99,8 @@ public class ClientExtensionEntryIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + clientExtensionEntry + " indexed successfully");
+				"Client extension entry " + clientExtensionEntry +
+					" indexed successfully");
 		}
 
 		return document;
@@ -163,12 +156,9 @@ public class ClientExtensionEntryIndexer
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						long clientExtensionEntryId =
-							clientExtensionEntry.getClientExtensionEntryId();
-
 						_log.warn(
 							"Unable to index client extension entry " +
-								clientExtensionEntryId,
+								clientExtensionEntry,
 							portalException);
 					}
 				}

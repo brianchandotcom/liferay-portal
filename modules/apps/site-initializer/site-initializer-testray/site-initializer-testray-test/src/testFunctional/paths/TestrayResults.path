@@ -11,18 +11,13 @@
 
 <tbody>
 <tr>
-	<td>TOTAL_TEST_CASE_RESULTS</td>
-	<td>//h5[text()='Total test cases']//following::*[@class='bb-chart-arcs-title']</td>
+	<td>TOTAL_TEST</td>
+	<td>//div[contains(@class,'bb')]//*[contains(@class,'arcs-title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ISSUE_WITH_LABEL</td>
-	<td>//h5[normalize-space()='${key_label}']//following::a[normalize-space()='${key_issue}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_CASE_LINK</td>
-	<td>//a[normalize-space()='View Case']</td>
+	<td>//div[normalize-space()='${key_label}']//following::*[text()='${key_issue}']</td>
 	<td></td>
 </tr>
 </tbody>

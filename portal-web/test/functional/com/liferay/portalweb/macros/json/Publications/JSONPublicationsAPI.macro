@@ -11,8 +11,10 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/ct.ctcollection/add-ct-collection \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode= \
 				-d companyId=${companyId} \
 				-d userId=${userId} \
+				-d ctRemoteId=0 \
 				-d name=${publicationName} \
 				-d description=${publicationDescription}
 		''';

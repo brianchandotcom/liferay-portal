@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 AUI.add(
@@ -159,7 +150,7 @@ AUI.add(
 
 					let clonedRow;
 
-					if (inputsLocalized && !paletteIsCloned) {
+					if (!!inputsLocalized._nodes.length && !paletteIsCloned) {
 						const palette = document.querySelector(
 							"[id$='PaletteBoundingBox']"
 						);
@@ -172,7 +163,7 @@ AUI.add(
 
 						trigger.placeAfter(list);
 
-						list.append(palette);
+						list.append(palette.cloneNode(true));
 					}
 
 					if (instance.url) {
@@ -370,6 +361,10 @@ AUI.add(
 					const inputLocalizedNamespaceId = `${inputLocalizedNamespace}${inputLocalizedId}`;
 
 					Liferay.InputLocalized.register(inputLocalizedNamespaceId, {
+						adminMode: inputLocalized.get('adminMode'),
+						availableLocales: inputLocalized.get(
+							'availableLocales'
+						),
 						boundingBox: `#${inputLocalizedNamespaceId}PaletteBoundingBox`,
 						columns: inputLocalized.get('columns'),
 						contentBox: `#${inputLocalizedNamespaceId}PaletteContentBox`,
@@ -380,17 +375,36 @@ AUI.add(
 						fieldPrefixSeparator: inputLocalized.get(
 							'fieldPrefixSeparator'
 						),
+						frontendJsComponentsWebModule: inputLocalized.get(
+							'frontendJsComponentsWebModule'
+						),
+						frontendJsReactWebModule: inputLocalized.get(
+							'frontendJsReactWebModule'
+						),
+						frontendJsStateWebModule: inputLocalized.get(
+							'frontendJsStateWebModule'
+						),
 						helpMessage: inputLocalized.get('helpMessage'),
 						id: inputLocalizedId,
 						inputBox: `#${inputLocalizedNamespaceId}BoundingBox`,
 						inputPlaceholder: '#' + inputLocalizedNamespaceId,
 						items: inputLocalized.get('items'),
 						itemsError: inputLocalized.get('itemsError'),
+						languagesDropdownDirection: inputLocalized.get(
+							'languagesDropdownDirection'
+						),
+						languagesTranslationsAriaLabels: inputLocalized.get(
+							'languagesTranslationsAriaLabels'
+						),
+						lazy: inputLocalized.get('lazy'),
 						name: inputLocalizedId,
 						namespace: inputLocalized.get('namespace'),
 						selected: inputLocalized
 							.get('items')
 							.indexOf(inputLocalized.getSelectedLanguageId()),
+						selectedLanguageId: inputLocalized.get(
+							'selectedLanguageId'
+						),
 						toggleSelection: inputLocalized.get('toggleSelection'),
 						translatedLanguages: inputLocalized.get(
 							'translatedLanguages'

@@ -1,4 +1,4 @@
 dependencies {
-	testIntegrationCompile project(":apps:changeset:changeset-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:changeset:changeset-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

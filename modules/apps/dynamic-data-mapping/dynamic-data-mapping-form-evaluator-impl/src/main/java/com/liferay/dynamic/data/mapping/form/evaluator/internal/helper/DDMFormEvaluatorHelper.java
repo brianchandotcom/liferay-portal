@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.helper;
@@ -40,6 +31,9 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -107,7 +101,8 @@ public class DDMFormEvaluatorHelper {
 				ddmFormEvaluatorEvaluateRequest.getLocale());
 
 		ddmFormEvaluatorExpressionActionHandler =
-			new DDMFormEvaluatorExpressionActionHandler(_pageFlow);
+			new DDMFormEvaluatorExpressionActionHandler(
+				_pageFlow, getDisabledPagesIndexes());
 
 		ddmFormEvaluatorExpressionParameterAccessor =
 			new DDMFormEvaluatorExpressionParameterAccessor(
@@ -462,6 +457,32 @@ public class DDMFormEvaluatorHelper {
 		return getFieldPropertyResponse.getValue();
 	}
 
+	private Set<String> _getNonevaluableDDMFormFieldNames() {
+		if (_ddmFormLayout == null) {
+			return Collections.emptySet();
+		}
+
+		Set<String> nonevaluableFieldNames = new HashSet<>();
+
+		for (Integer disabledPagesIndex : getDisabledPagesIndexes()) {
+			DDMFormLayoutPage ddmFormLayoutPage =
+				_ddmFormLayout.getDDMFormLayoutPage(disabledPagesIndex);
+
+			for (DDMFormLayoutRow ddmFormLayoutRow :
+					ddmFormLayoutPage.getDDMFormLayoutRows()) {
+
+				for (DDMFormLayoutColumn ddmFormLayoutColumn :
+						ddmFormLayoutRow.getDDMFormLayoutColumns()) {
+
+					nonevaluableFieldNames.addAll(
+						ddmFormLayoutColumn.getDDMFormFieldNames());
+				}
+			}
+		}
+
+		return nonevaluableFieldNames;
+	}
+
 	private boolean _isBooleanPropertyValue(
 		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey,
 		String booleanPropertyName, boolean defaultValue) {
@@ -788,20 +809,28 @@ public class DDMFormEvaluatorHelper {
 	}
 
 	private void _validateFields() {
-		_validateFieldsMarkedAsRequired();
-		_validateFieldsWithConfirmationField();
-		_validateFieldsWithDDMFormFieldValidation();
-		_validateNumericFieldsWithInputMask();
+		Set<String> nonevaluableFieldNames =
+			_getNonevaluableDDMFormFieldNames();
+
+		_validateFieldsMarkedAsRequired(nonevaluableFieldNames);
+		_validateFieldsWithConfirmationField(nonevaluableFieldNames);
+		_validateFieldsWithDDMFormFieldValidation(nonevaluableFieldNames);
+		_validateNumericFieldsWithInputMask(nonevaluableFieldNames);
+
 		_validateObjectRelationshipFields();
 	}
 
-	private void _validateFieldsMarkedAsRequired() {
+	private void _validateFieldsMarkedAsRequired(
+		Set<String> nonevaluableFieldNames) {
+
 		for (String key : _ddmFormFieldsMap.keySet()) {
 			for (DDMFormEvaluatorFieldContextKey
 					ddmFormEvaluatorFieldContextKey :
 						_getDDMFormEvaluatorFieldContextKeys(key)) {
 
-				if (!_filterVisibleFieldsMarkedAsRequired(
+				if (nonevaluableFieldNames.contains(
+						ddmFormEvaluatorFieldContextKey.getName()) ||
+					!_filterVisibleFieldsMarkedAsRequired(
 						ddmFormEvaluatorFieldContextKey) ||
 					!_isFieldEmpty(ddmFormEvaluatorFieldContextKey)) {
 
@@ -835,13 +864,17 @@ public class DDMFormEvaluatorHelper {
 		}
 	}
 
-	private void _validateFieldsWithConfirmationField() {
+	private void _validateFieldsWithConfirmationField(
+		Set<String> nonevaluableFieldNames) {
+
 		for (String key : _ddmFormFieldsMap.keySet()) {
 			for (DDMFormEvaluatorFieldContextKey
 					ddmFormEvaluatorFieldContextKey :
 						_getDDMFormEvaluatorFieldContextKeys(key)) {
 
-				if (!_isConfirmationValueInvalid(
+				if (nonevaluableFieldNames.contains(
+						ddmFormEvaluatorFieldContextKey.getName()) ||
+					!_isConfirmationValueInvalid(
 						ddmFormEvaluatorFieldContextKey) ||
 					!_isFieldWithConfirmationFieldAndVisible(
 						ddmFormEvaluatorFieldContextKey)) {
@@ -855,12 +888,16 @@ public class DDMFormEvaluatorHelper {
 		}
 	}
 
-	private void _validateFieldsWithDDMFormFieldValidation() {
+	private void _validateFieldsWithDDMFormFieldValidation(
+		Set<String> nonevaluableFieldNames) {
+
 		Map<DDMFormEvaluatorFieldContextKey, DDMFormFieldValidation>
 			ddmFormFieldValidations = new HashMap<>();
 
 		for (DDMFormField ddmFormField : _ddmFormFieldsMap.values()) {
-			if (!_filterFieldsWithDDMFormFieldValidation(ddmFormField)) {
+			if (nonevaluableFieldNames.contains(ddmFormField.getName()) ||
+				!_filterFieldsWithDDMFormFieldValidation(ddmFormField)) {
+
 				continue;
 			}
 
@@ -997,9 +1034,13 @@ public class DDMFormEvaluatorHelper {
 		ddmFormEvaluatorExpressionObserver.updateFieldProperty(builder.build());
 	}
 
-	private void _validateNumericFieldsWithInputMask() {
+	private void _validateNumericFieldsWithInputMask(
+		Set<String> nonevaluableFieldNames) {
+
 		for (DDMFormField ddmFormField : _ddmFormFieldsMap.values()) {
-			if (!_isIntegerNumericField(ddmFormField)) {
+			if (nonevaluableFieldNames.contains(ddmFormField.getName()) ||
+				!_isIntegerNumericField(ddmFormField)) {
+
 				continue;
 			}
 

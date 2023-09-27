@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.upgrade.log;
@@ -29,7 +20,6 @@ import com.liferay.portal.verify.VerifyProperties;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Luis Ortiz
@@ -37,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UpgradeLogContext implements LogContext {
 
 	public static void clearContext() {
-		_context.clear();
+		_component = "framework";
 	}
 
 	public static LogContext getInstance() {
@@ -45,17 +35,13 @@ public class UpgradeLogContext implements LogContext {
 	}
 
 	public static void setContext(String component) {
-		_context.put("component", component);
+		_component = component;
 	}
 
 	@Override
 	public Map<String, String> getContext(String logName) {
 		if (_isUpgradeClass(logName)) {
-			if (_context.isEmpty()) {
-				return _defaultContext;
-			}
-
-			return _context;
+			return Collections.singletonMap("component", _component);
 		}
 
 		return Collections.emptyMap();
@@ -97,20 +83,16 @@ public class UpgradeLogContext implements LogContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeLogContext.class);
 
-	private static final ConcurrentHashMap<String, String> _context =
-		new ConcurrentHashMap<>();
+	private static volatile String _component = "framework";
 
 	private final Class<?>[] _baseUpgradeClasses = new Class<?>[] {
 		BaseDB.class, BaseDBProcess.class, BaseUpgradeCallable.class,
 		UpgradeStep.class
 	};
-	private final Map<String, String> _defaultContext =
-		Collections.singletonMap("component", "framework");
 	private final Set<String> _upgradeClassNames = SetUtil.fromArray(
 		DBUpgrader.class.getName(), LoggingTimer.class.getName(),
 		VerifyProperties.class.getName(),
-		"com.liferay.portal.upgrade.internal.registry." +
-			"UpgradeStepRegistratorTracker",
+		"com.liferay.portal.upgrade.internal.executor.UpgradeExecutor",
 		"com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl",
 		"com.liferay.portal.upgrade.internal.report.UpgradeReport",
 		"com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder");

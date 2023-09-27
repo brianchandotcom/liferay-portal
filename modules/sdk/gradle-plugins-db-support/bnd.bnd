@@ -1,7 +1,7 @@
 Bundle-Description: The DB Support Gradle plugin lets you run the Liferay DB Support tool to execute certain actions on a local Liferay database.
 Bundle-Name: Liferay Gradle Plugins DB Support
 Bundle-SymbolicName: com.liferay.gradle.plugins.db.support
-Bundle-Version: 1.1.1
+Bundle-Version: 1.1.2
 Export-Package:\
 	com.liferay.gradle.plugins.db.support,\
 	com.liferay.gradle.plugins.db.support.task

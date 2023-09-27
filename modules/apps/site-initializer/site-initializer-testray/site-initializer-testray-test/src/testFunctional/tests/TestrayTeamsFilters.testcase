@@ -115,21 +115,21 @@ definition {
 		task ("Go to the team tab") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			Testray.projectTabNavigator(navTabName = "Teams");
+			Navigator.gotoNavTab(navTab = "Teams");
 		}
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete product version, routine, case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "productversions",
@@ -160,8 +160,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -170,20 +168,10 @@ definition {
 	@description = "Story ID: LPS-173527 | Test Summary: Verify if as an Administrator I should be able to filter team by team name"
 	@priority = 3
 	test AdminCanFilterTeamByTeamName {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two teams different in the table") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			AssertElementPresent(
-				key_projectName = "Team 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Team 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Team 1,Team 2");
 		}
 
 		task ("When the user filter a team by team name") {
@@ -195,32 +183,25 @@ definition {
 				key_numberItems = 20,
 				locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
 
-			TestrayFilter.multiSelect(
-				header = "Team",
-				label = "Team",
-				listMultiSelect = "Team 1");
+			TestrayFilter.multiSelectFilter(
+				fieldLabel = "Team",
+				multiSelectList = "Team 1");
 
 			Button.click(button = "Apply");
 		}
 
 		task ("Then the user see only team 1 in the table") {
-			AssertElementPresent(
-				key_projectName = "Team 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Team 1");
 		}
 
 		task ("And do not see the team 2 with in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Team 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Team 2");
 		}
 	}
 
 	@description = "Story ID: LPS-173527 | Test Summary: Verify if as an User I should be able to search by a filter"
 	@priority = 2
 	test CanSearchByFilter {
-		property test.liferay.virtual.instance = "false";
-
 		task ("When the user searches for a field called priority") {
 			TestrayFilter.clickFilter();
 
@@ -228,7 +209,7 @@ definition {
 				key_numberItems = 20,
 				locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
 
-			TestrayFilter.searchFilter(value = "Priority");
+			TestrayFilter.searchFilter(filterName = "Priority");
 		}
 
 		task ("Then the user can see the field label called team") {

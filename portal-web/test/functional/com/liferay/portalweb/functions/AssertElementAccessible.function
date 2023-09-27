@@ -4,7 +4,14 @@ definition {
 	function assertElementAccessible {
 		WaitForSPARefresh();
 
-		selenium.assertElementAccessible();
+		if (isSet(value1)) {
+			var ignorableImpacts = ListUtil.newListFromString(${value1});
+		}
+		else {
+			var ignorableImpacts = ListUtil.newList();
+		}
+
+		selenium.assertElementAccessible(${locator1}, ${ignorableImpacts});
 
 		selenium.assertJavaScriptErrors();
 

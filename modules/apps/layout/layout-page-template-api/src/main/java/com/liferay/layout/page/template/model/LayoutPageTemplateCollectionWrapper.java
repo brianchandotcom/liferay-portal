@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.page.template.model;
@@ -61,10 +52,14 @@ public class LayoutPageTemplateCollectionWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put(
+			"parentLayoutPageTemplateCollectionId",
+			getParentLayoutPageTemplateCollectionId());
+		attributes.put(
 			"layoutPageTemplateCollectionKey",
 			getLayoutPageTemplateCollectionKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -133,6 +128,14 @@ public class LayoutPageTemplateCollectionWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long parentLayoutPageTemplateCollectionId = (Long)attributes.get(
+			"parentLayoutPageTemplateCollectionId");
+
+		if (parentLayoutPageTemplateCollectionId != null) {
+			setParentLayoutPageTemplateCollectionId(
+				parentLayoutPageTemplateCollectionId);
+		}
+
 		String layoutPageTemplateCollectionKey = (String)attributes.get(
 			"layoutPageTemplateCollectionKey");
 
@@ -152,6 +155,12 @@ public class LayoutPageTemplateCollectionWrapper
 			setDescription(description);
 		}
 
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
+		}
+
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
 
 		if (lastPublishDate != null) {
@@ -162,6 +171,16 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public LayoutPageTemplateCollection cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	@Override
+	public LayoutPageTemplateCollection getAncestor() {
+		return model.getAncestor();
+	}
+
+	@Override
+	public java.util.List<LayoutPageTemplateCollection> getAncestors() {
+		return model.getAncestors();
 	}
 
 	/**
@@ -275,6 +294,16 @@ public class LayoutPageTemplateCollectionWrapper
 	}
 
 	/**
+	 * Returns the parent layout page template collection ID of this layout page template collection.
+	 *
+	 * @return the parent layout page template collection ID of this layout page template collection
+	 */
+	@Override
+	public long getParentLayoutPageTemplateCollectionId() {
+		return model.getParentLayoutPageTemplateCollectionId();
+	}
+
+	/**
 	 * Returns the primary key of this layout page template collection.
 	 *
 	 * @return the primary key of this layout page template collection
@@ -282,6 +311,16 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the type of this layout page template collection.
+	 *
+	 * @return the type of this layout page template collection
+	 */
+	@Override
+	public int getType() {
+		return model.getType();
 	}
 
 	/**
@@ -445,6 +484,19 @@ public class LayoutPageTemplateCollectionWrapper
 	}
 
 	/**
+	 * Sets the parent layout page template collection ID of this layout page template collection.
+	 *
+	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID of this layout page template collection
+	 */
+	@Override
+	public void setParentLayoutPageTemplateCollectionId(
+		long parentLayoutPageTemplateCollectionId) {
+
+		model.setParentLayoutPageTemplateCollectionId(
+			parentLayoutPageTemplateCollectionId);
+	}
+
+	/**
 	 * Sets the primary key of this layout page template collection.
 	 *
 	 * @param primaryKey the primary key of this layout page template collection
@@ -452,6 +504,16 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the type of this layout page template collection.
+	 *
+	 * @param type the type of this layout page template collection
+	 */
+	@Override
+	public void setType(int type) {
+		model.setType(type);
 	}
 
 	/**

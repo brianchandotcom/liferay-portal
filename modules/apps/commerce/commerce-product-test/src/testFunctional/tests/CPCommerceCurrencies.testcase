@@ -63,7 +63,7 @@ definition {
 	@description = "This is a test for COMMERCE-11393. Can update currency format for Indian Rupee"
 	@priority = 3
 	test CanUpdateCurrencyFormatForINR {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a buyer user is created") {
@@ -329,19 +329,6 @@ definition {
 			key_entryName = "US Dollar",
 			locator1 = "CommerceEntry#LAST_CURRENCY_PRIORITY_ELEMENT",
 			value1 = "12.0");
-	}
-
-	test ViewInstanceCurrenciesAvailable {
-		property environment.acceptance = "true";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property portal.acceptance = "false";
-		property portal.upstream = "true";
-
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Currencies");
-
-		CommerceEntry.viewCurrenciesEntry(currenciesList = "US Dollar,Australian Dollar,British Pound,Canadian Dollar,Chinese Yuan Renminbi,Euro,Hong Kong Dollar,Japanese Yen,Indian Rupee,Brazilian Real");
 	}
 
 }

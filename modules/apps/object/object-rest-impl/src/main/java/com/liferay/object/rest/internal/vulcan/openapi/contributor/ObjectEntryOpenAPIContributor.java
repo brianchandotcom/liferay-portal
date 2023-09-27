@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.rest.internal.vulcan.openapi.contributor;
@@ -19,6 +10,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
@@ -103,9 +95,19 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		Map<ObjectRelationship, ObjectDefinition> relatedObjectDefinitionsMap =
 			_getRelatedObjectDefinitionsMap();
 
+		Components components = openAPI.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		Schema objectDefinitionSchema = schemas.get(
+			_objectDefinition.getShortName());
+
+		Map<String, Schema> objectDefinitionSchemaProperties =
+			objectDefinitionSchema.getProperties();
+
 		Paths paths = openAPI.getPaths();
 
-		for (String key : new ArrayList<>(paths.keySet())) {
+		for (String key : ListUtil.fromMapKeys(paths)) {
 			if (!key.contains("objectActionName") &&
 				!key.contains("objectRelationshipName")) {
 
@@ -122,9 +124,13 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				for (Map.Entry<ObjectRelationship, ObjectDefinition> entry :
 						relatedObjectDefinitionsMap.entrySet()) {
 
-					ObjectRelationship objectRelationship = entry.getKey();
-
 					ObjectDefinition relatedObjectDefinition = entry.getValue();
+
+					if (!relatedObjectDefinition.isActive()) {
+						continue;
+					}
+
+					ObjectRelationship objectRelationship = entry.getKey();
 
 					String relatedSchemaName = getSchemaName(
 						relatedObjectDefinition);
@@ -152,26 +158,14 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 						_setSchemaDescription(
 							objectRelationship, openAPI, relatedSchemaName);
 
-						openAPI.getComponents(
-						).getSchemas(
-						).get(
-							_objectDefinition.getShortName()
-						).getProperties(
-						).put(
+						objectDefinitionSchemaProperties.put(
 							objectRelationship.getName(),
-							_getSchema(objectRelationship, relatedSchemaName)
-						);
+							_getSchema(objectRelationship, relatedSchemaName));
 					}
 					else {
-						openAPI.getComponents(
-						).getSchemas(
-						).get(
-							_objectDefinition.getShortName()
-						).getProperties(
-						).put(
+						objectDefinitionSchemaProperties.put(
 							objectRelationship.getName(),
-							_getSchema(objectRelationship, null)
-						);
+							_getSchema(objectRelationship, null));
 					}
 				}
 			}
@@ -180,19 +174,9 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		}
 
 		if (!_objectDefinition.isEnableCategorization()) {
-			Components components = openAPI.getComponents();
-
-			Map<String, Schema> schemas = components.getSchemas();
-
-			Schema objectDefinitionSchema = schemas.get(
-				_objectDefinition.getShortName());
-
-			Map<String, Schema> properties =
-				objectDefinitionSchema.getProperties();
-
-			properties.remove("keywords");
-			properties.remove("taxonomyCategoryBriefs");
-			properties.remove("taxonomyCategoryIds");
+			objectDefinitionSchemaProperties.remove("keywords");
+			objectDefinitionSchemaProperties.remove("taxonomyCategoryBriefs");
+			objectDefinitionSchemaProperties.remove("taxonomyCategoryIds");
 
 			schemas.remove("TaxonomyCategoryBrief");
 		}
@@ -649,20 +633,6 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return parameters;
 	}
 
-	private ObjectDefinition _getRelatedObjectDefinition(
-		ObjectRelationship objectRelationship) {
-
-		if (_objectDefinition.getObjectDefinitionId() ==
-				objectRelationship.getObjectDefinitionId2()) {
-
-			return _objectDefinitionLocalService.fetchObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-		}
-
-		return _objectDefinitionLocalService.fetchObjectDefinition(
-			objectRelationship.getObjectDefinitionId2());
-	}
-
 	private Map<ObjectRelationship, ObjectDefinition>
 			_getRelatedObjectDefinitionsMap()
 		throws Exception {
@@ -677,7 +647,8 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			relatedObjectDefinitionsMap.put(
 				objectRelationship,
-				_getRelatedObjectDefinition(objectRelationship));
+				ObjectRelationshipUtil.getRelatedObjectDefinition(
+					_objectDefinition, objectRelationship));
 		}
 
 		return relatedObjectDefinitionsMap;

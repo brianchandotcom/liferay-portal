@@ -1,24 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.messaging;
 
 import com.liferay.petra.string.StringPool;
-
-import java.util.Collections;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Michael C. Han
@@ -26,13 +13,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  */
 public abstract class BaseDestination implements Destination {
-
-	@Override
-	public boolean addDestinationEventListener(
-		DestinationEventListener destinationEventListener) {
-
-		return _destinationEventListeners.add(destinationEventListener);
-	}
 
 	@Override
 	public void close() {
@@ -44,33 +24,8 @@ public abstract class BaseDestination implements Destination {
 	}
 
 	@Override
-	public void copyDestinationEventListeners(Destination destination) {
-		for (DestinationEventListener destinationEventListener :
-				_destinationEventListeners) {
-
-			destination.addDestinationEventListener(destinationEventListener);
-		}
-	}
-
-	@Override
-	public void copyMessageListeners(Destination destination) {
-		for (MessageListener messageListener : messageListeners) {
-			InvokerMessageListener invokerMessageListener =
-				(InvokerMessageListener)messageListener;
-
-			destination.register(
-				invokerMessageListener.getMessageListener(),
-				invokerMessageListener.getClassLoader());
-		}
-	}
-
-	@Override
 	public void destroy() {
 		close(true);
-
-		removeDestinationEventListeners();
-
-		unregisterMessageListeners();
 	}
 
 	@Override
@@ -84,61 +39,12 @@ public abstract class BaseDestination implements Destination {
 	}
 
 	@Override
-	public int getMessageListenerCount() {
-		return messageListeners.size();
-	}
-
-	@Override
-	public Set<MessageListener> getMessageListeners() {
-		return Collections.unmodifiableSet(messageListeners);
-	}
-
-	@Override
 	public String getName() {
 		return name;
 	}
 
 	@Override
-	public boolean isRegistered() {
-		if (getMessageListenerCount() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public void open() {
-	}
-
-	@Override
-	public boolean register(MessageListener messageListener) {
-		InvokerMessageListener invokerMessageListener =
-			new InvokerMessageListener(messageListener);
-
-		return registerMessageListener(invokerMessageListener);
-	}
-
-	@Override
-	public boolean register(
-		MessageListener messageListener, ClassLoader classLoader) {
-
-		InvokerMessageListener invokerMessageListener =
-			new InvokerMessageListener(messageListener, classLoader);
-
-		return registerMessageListener(invokerMessageListener);
-	}
-
-	@Override
-	public boolean removeDestinationEventListener(
-		DestinationEventListener destinationEventListener) {
-
-		return _destinationEventListeners.remove(destinationEventListener);
-	}
-
-	@Override
-	public void removeDestinationEventListeners() {
-		_destinationEventListeners.clear();
 	}
 
 	@Override
@@ -150,85 +56,19 @@ public abstract class BaseDestination implements Destination {
 		_destinationType = destinationType;
 	}
 
+	public void setMessageListenerRegistry(
+		MessageListenerRegistry messageListenerRegistry) {
+
+		this.messageListenerRegistry = messageListenerRegistry;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	@Override
-	public boolean unregister(MessageListener messageListener) {
-		InvokerMessageListener invokerMessageListener =
-			new InvokerMessageListener(messageListener);
-
-		return unregisterMessageListener(invokerMessageListener);
-	}
-
-	public boolean unregister(
-		MessageListener messageListener, ClassLoader classLoader) {
-
-		InvokerMessageListener invokerMessageListener =
-			new InvokerMessageListener(messageListener, classLoader);
-
-		return unregisterMessageListener(invokerMessageListener);
-	}
-
-	@Override
-	public void unregisterMessageListeners() {
-		for (MessageListener messageListener : messageListeners) {
-			unregisterMessageListener((InvokerMessageListener)messageListener);
-		}
-	}
-
-	protected void fireMessageListenerRegisteredEvent(
-		MessageListener messageListener) {
-
-		for (DestinationEventListener destinationEventListener :
-				_destinationEventListeners) {
-
-			destinationEventListener.messageListenerRegistered(
-				getName(), messageListener);
-		}
-	}
-
-	protected void fireMessageListenerUnregisteredEvent(
-		MessageListener messageListener) {
-
-		for (DestinationEventListener listener : _destinationEventListeners) {
-			listener.messageListenerUnregistered(getName(), messageListener);
-		}
-	}
-
-	protected boolean registerMessageListener(
-		InvokerMessageListener invokerMessageListener) {
-
-		boolean registered = messageListeners.add(invokerMessageListener);
-
-		if (registered) {
-			fireMessageListenerRegisteredEvent(
-				invokerMessageListener.getMessageListener());
-		}
-
-		return registered;
-	}
-
-	protected boolean unregisterMessageListener(
-		InvokerMessageListener invokerMessageListener) {
-
-		boolean unregistered = messageListeners.remove(invokerMessageListener);
-
-		if (unregistered) {
-			fireMessageListenerUnregisteredEvent(
-				invokerMessageListener.getMessageListener());
-		}
-
-		return unregistered;
-	}
-
-	protected Set<MessageListener> messageListeners = Collections.newSetFromMap(
-		new ConcurrentHashMap<>());
+	protected MessageListenerRegistry messageListenerRegistry;
 	protected String name = StringPool.BLANK;
 
-	private final Set<DestinationEventListener> _destinationEventListeners =
-		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private String _destinationType;
 
 }

@@ -1,6 +1,18 @@
 {
 	"availableLanguageIds": [
-		"es_ES"
+		"ar_SA",
+		"ca_ES",
+		"de_DE",
+		"en_US",
+		"es_ES",
+		"fi_FI",
+		"fr_FR",
+		"hu_HU",
+		"ja_JP",
+		"nl_NL",
+		"pt_BR",
+		"sv_SE",
+		"zh_CN"
 	],
 	"contentType": "journal",
 	"dataDefinitionFields": [
@@ -2593,6 +2605,79 @@
 			"showLabel": false,
 			"tip": {
 			}
+		},
+		{
+			"customProperties": {
+				"collapsible": false,
+				"ddmStructureId": "",
+				"ddmStructureLayoutId": "",
+				"fieldReference": "repeatableFieldSet",
+				"labelAtStructureLevel": true,
+				"rows": [
+					{
+						"columns": [
+							{
+								"fields": [
+									"repeatableImage"
+								],
+								"size": 12
+							}
+						]
+					}
+				],
+				"upgradedStructure": false
+			},
+			"defaultValue": {
+			},
+			"fieldType": "fieldset",
+			"indexable": false,
+			"label": {
+				"es_ES": "Fields Group"
+			},
+			"localizable": false,
+			"name": "repeatableFieldSet",
+			"nestedDataDefinitionFields": [
+				{
+					"customProperties": {
+						"dataType": "image",
+						"fieldNamespace": "",
+						"fieldReference": "repeatableImage",
+						"objectFieldName": "",
+						"requiredDescription": true,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": {
+						}
+					},
+					"fieldType": "image",
+					"indexType": "text",
+					"indexable": true,
+					"label": {
+						"en_US": "Image"
+					},
+					"localizable": true,
+					"name": "repeatableImage",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": true,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				}
+			],
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			}
 		}
 	],
 	"defaultDataLayout": {
@@ -2617,6 +2702,16 @@
 								"columnSize": 12,
 								"fieldNames": [
 									"menuFieldSet"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"repeatableFieldSet"
 								]
 							}
 						]

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay SAML OpenSAML Integration
 Bundle-SymbolicName: com.liferay.saml.opensaml.integration
-Bundle-Version: 6.1.9
+Bundle-Version: 6.2.1
 Export-Package:\
 	com.liferay.saml.opensaml.integration.field.expression.handler,\
 	com.liferay.saml.opensaml.integration.field.expression.handler.registry,\
@@ -9,13 +9,13 @@ Export-Package:\
 	com.liferay.saml.opensaml.integration.processor,\
 	com.liferay.saml.opensaml.integration.processor.context,\
 	com.liferay.saml.opensaml.integration.processor.factory,\
-	com.liferay.saml.opensaml.integration.resolver
+	com.liferay.saml.opensaml.integration.resolver,\
+	com.liferay.saml.opensaml.integration.session.util
 Import-Package:\
 	!bsh,\
 	\
 	!com.beust.jcommander.*,\
 	\
-	!com.google.common.*,\
 	!com.google.errorprone.*,\
 	\
 	!com.sun.*,\

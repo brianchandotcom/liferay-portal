@@ -1,0 +1,39 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.commerce.model.CommerceAddress;
+import com.liferay.portal.kernel.model.Country;
+
+/**
+ * @author Nícolas Moura
+ */
+public class UpgradeJavaCommerceCountryCheck {
+
+	public void method(CommerceAddress commerceAddress) {
+		Country country = commerceAddress.getCountry();
+
+		// Replacement cases
+
+		country.getTwoLettersISOCode();
+
+		country.setTwoLettersISOCode();
+
+		country.getThreeLettersISOCode();
+
+		country.setThreeLettersISOCode();
+
+		// Chaining case
+
+		commerceAddress.getCountry().getThreeLettersISOCode();
+
+		// Chaining case with a line break
+
+		commerceAddress.getCountry(
+		).setTwoLettersISOCode();
+	}
+
+}

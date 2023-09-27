@@ -85,12 +85,14 @@ definition {
 				runName = ${runName});
 		}
 
-		task ("Go to Testray 2 and change the pagination") {
+		task ("Go to Testray Site") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete case type, factor categorie and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "casetypes",
@@ -105,8 +107,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -115,16 +115,12 @@ definition {
 	@description = "Story ID: LPS-162255 | Test Summary: Verify that can back from section project through Breadcrumb Finder"
 	@priority = 3
 	test AssertCanBackSectionByBreadcrumb {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to build page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 		}
 
 		task ("And the user access the Breadcrumb") {
@@ -138,17 +134,13 @@ definition {
 		}
 
 		task ("Then the user can back to the routine page") {
-			AssertElementPresent(
-				key_projectName = ${routineName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${routineName});
 		}
 	}
 
 	@description = "Story ID: LPS-162255 | Test Summary: Verify that can go to the case results through Breadcrumb Finder"
 	@priority = 3
 	test AssertCanGoToCaseResultsthroughBreadcrumb {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to the breadcrumb") {
 			Testray.gotoBreadcrumb();
 		}
@@ -163,22 +155,20 @@ definition {
 		}
 
 		task ("Then the user can see the case result in the table") {
-			TestrayHeader.assertBreadcrumbTitle(key_value = ${caseName});
+			TestrayDropdown.assertBreadcrumbTitle(text = ${caseName});
 		}
 	}
 
 	@description = "Story ID: LPS-162255 | Test Summary: Verify that can search for a specific project in the Breadcrumb Finder"
 	@priority = 4
 	test AssertCanSearchProjectByBreadcrumb {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to the breadcrumb") {
 			Testray.gotoBreadcrumb();
 		}
 
 		task ("When the user search a specific project through Breadcrumb") {
 			Type(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = "Project 1");
 		}
 
@@ -187,9 +177,7 @@ definition {
 		}
 
 		task ("Then the user can go to the routine page") {
-			AssertElementPresent(
-				key_projectName = ${routineName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${routineName});
 		}
 	}
 

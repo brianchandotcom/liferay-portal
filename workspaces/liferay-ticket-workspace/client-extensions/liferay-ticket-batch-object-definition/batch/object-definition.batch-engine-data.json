@@ -1,0 +1,539 @@
+{
+	"actions": {
+		"createBatch": {
+			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+			"method": "POST"
+		}
+	},
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"companyId": 0,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": true,
+			"enableObjectEntryHistory": true,
+			"externalReferenceCode": "J3Y7_TICKET",
+			"label": {
+				"en_US": "J3Y7 Ticket"
+			},
+			"name": "J3Y7Ticket",
+			"objectActions": [
+				{
+					"active": false,
+					"conditionExpression": "ticketStatus == 'open'",
+					"description": "",
+					"errorMessage": {
+					},
+					"label": {
+						"en_US": "Liferay Ticket Etc Spring Boot Object Action Ticket"
+					},
+					"name": "LiferayTicketEtcDocumentationReferral",
+					"objectActionExecutorKey": "function#liferay-ticket-etc-spring-boot-object-action-ticket",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					}
+				}
+			],
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"externalReferenceCode": "ATTACHMENT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Attachment"
+					},
+					"name": "attachment",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "jpeg, jpg, pdf, png"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": "100"
+						},
+						{
+							"name": "fileSource",
+							"value": "userComputer"
+						},
+						{
+							"name": "showFilesInDocumentsAndMedia",
+							"value": "true"
+						},
+						{
+							"name": "storageDLFolderPath",
+							"value": "/J3Y7Ticket"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"externalReferenceCode": "DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "description",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "PRIORITY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Priority"
+					},
+					"listTypeDefinitionExternalReferenceCode": "J3Y7_PRIORITIES",
+					"name": "priority",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "REGION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Region"
+					},
+					"listTypeDefinitionExternalReferenceCode": "J3Y7_REGIONS",
+					"name": "region",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "RESOLUTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Resolution"
+					},
+					"listTypeDefinitionExternalReferenceCode": "J3Y7_RESOLUTIONS",
+					"name": "resolution",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "SUBJECT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Subject"
+					},
+					"name": "subject",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "SUGGESTIONS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Suggestions"
+					},
+					"name": "suggestions",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "open",
+					"externalReferenceCode": "TICKET_STATUS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Ticket Status"
+					},
+					"listTypeDefinitionExternalReferenceCode": "J3Y7_STATUSES",
+					"name": "ticketStatus",
+					"objectFieldSettings": [
+						{
+							"name": "stateFlow",
+							"value": {
+								"objectStates": [
+									{
+										"key": "answered",
+										"objectStateTransitions": [
+											{
+												"key": "closed"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "open"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "waiting"
+											}
+										]
+									},
+									{
+										"key": "closed",
+										"objectStateTransitions": [
+											{
+												"key": "answered"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "open"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "waiting"
+											}
+										]
+									},
+									{
+										"key": "escalated",
+										"objectStateTransitions": [
+											{
+												"key": "answered"
+											},
+											{
+												"key": "closed"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "open"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "waiting"
+											}
+										]
+									},
+									{
+										"key": "inProgress",
+										"objectStateTransitions": [
+											{
+												"key": "answered"
+											},
+											{
+												"key": "closed"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "open"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "waiting"
+											}
+										]
+									},
+									{
+										"key": "inReview",
+										"objectStateTransitions": [
+											{
+												"key": "answered"
+											},
+											{
+												"key": "closed"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "open"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "waiting"
+											}
+										]
+									},
+									{
+										"key": "open",
+										"objectStateTransitions": [
+											{
+												"key": "answered"
+											},
+											{
+												"key": "closed"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "waiting"
+											}
+										]
+									},
+									{
+										"key": "queued",
+										"objectStateTransitions": [
+											{
+												"key": "answered"
+											},
+											{
+												"key": "closed"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "open"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "waiting"
+											}
+										]
+									},
+									{
+										"key": "verifying",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "answered"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "waiting"
+											},
+											{
+												"key": "closed"
+											}
+										]
+									},
+									{
+										"key": "waiting",
+										"objectStateTransitions": [
+											{
+												"key": "answered"
+											},
+											{
+												"key": "closed"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "open"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					"required": true,
+					"state": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "J3Y7_TYPES",
+					"name": "type",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectLayouts": [
+			],
+			"objectRelationships": [
+			],
+			"objectValidationRules": [
+			],
+			"objectViews": [
+			],
+			"panelCategoryKey": "control_panel.object",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "J3Y7 Tickets"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/j3y7tickets",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		}
+	]
+}

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.osgi.util.service;
@@ -25,12 +16,13 @@ import java.util.function.Supplier;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Shuyang Zhou
@@ -96,6 +88,18 @@ public class Snapshot<T> {
 				ServiceTracker<T, T> serviceTracker =
 					serviceTrackerDCLSingleton.getSingleton(
 						serviceTrackerSupplier);
+
+				BundleContext bundleContext = serviceTracker.getContext();
+
+				try {
+					bundleContext.getBundle();
+				}
+				catch (IllegalStateException illegalStateException) {
+					serviceTrackerDCLSingleton.destroy(null);
+
+					serviceTracker = serviceTrackerDCLSingleton.getSingleton(
+						serviceTrackerSupplier);
+				}
 
 				return serviceTracker.getService();
 			};
@@ -182,5 +186,28 @@ public class Snapshot<T> {
 	}
 
 	private final Supplier<T> _serivceSupplier;
+
+	private static class ServiceTracker<S, T>
+		extends org.osgi.util.tracker.ServiceTracker<S, T> {
+
+		public BundleContext getContext() {
+			return context;
+		}
+
+		private ServiceTracker(
+			BundleContext bundleContext, Class<S> clazz,
+			ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
+
+			super(bundleContext, clazz, serviceTrackerCustomizer);
+		}
+
+		private ServiceTracker(
+			BundleContext bundleContext, Filter filter,
+			ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
+
+			super(bundleContext, filter, serviceTrackerCustomizer);
+		}
+
+	}
 
 }

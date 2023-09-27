@@ -1,22 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.style.book.service.impl;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -126,11 +116,7 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry sourceStyleBookEntry = getStyleBookEntry(
 			sourceStyleBookEntryId);
 
-		String name = StringBundler.concat(
-			sourceStyleBookEntry.getName(), StringPool.SPACE,
-			StringPool.OPEN_PARENTHESIS,
-			_language.get(LocaleUtil.getMostRelevantLocale(), "copy"),
-			StringPool.CLOSE_PARENTHESIS);
+		String name = _getUniqueCopyName(sourceStyleBookEntry);
 
 		StyleBookEntry targetStyleBookEntry = addStyleBookEntry(
 			userId, groupId, sourceStyleBookEntry.getFrontendTokensValues(),
@@ -497,6 +483,28 @@ public class StyleBookEntryLocalServiceImpl
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private String _getUniqueCopyName(StyleBookEntry styleBookEntry) {
+		String copy = _language.get(LocaleUtil.getMostRelevantLocale(), "copy");
+
+		String name = StringUtil.appendParentheticalSuffix(
+			styleBookEntry.getName(), copy);
+
+		for (int i = 1;; i++) {
+			StyleBookEntry existingStyleBookEntry =
+				styleBookEntryPersistence.fetchByG_LikeN_First(
+					styleBookEntry.getGroupId(), name, null);
+
+			if (existingStyleBookEntry == null) {
+				break;
+			}
+
+			name = StringUtil.appendParentheticalSuffix(
+				styleBookEntry.getName(), copy + StringPool.SPACE + i);
+		}
+
+		return name;
 	}
 
 	private void _validate(String name) throws PortalException {

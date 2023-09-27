@@ -1,20 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -67,7 +60,11 @@ public class EditLayoutPageTemplateCollectionMVCActionCommand
 			layoutPageTemplateCollection =
 				_layoutPageTemplateCollectionService.
 					addLayoutPageTemplateCollection(
-						serviceContext.getScopeGroupId(), name, description,
+						serviceContext.getScopeGroupId(),
+						LayoutPageTemplateConstants.
+							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+						name, description,
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 						serviceContext);
 		}
 		else {
@@ -81,19 +78,19 @@ public class EditLayoutPageTemplateCollectionMVCActionCommand
 		}
 
 		String redirect = getRedirectURL(
-			actionResponse, layoutPageTemplateCollection);
+			actionRequest, actionResponse, layoutPageTemplateCollection);
 
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 	protected String getRedirectURL(
-		ActionResponse actionResponse,
+		ActionRequest actionRequest, ActionResponse actionResponse,
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
 		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setTabs1(
-			"page-templates"
+			ParamUtil.getString(actionRequest, "tabs1")
 		).setParameter(
 			"layoutPageTemplateCollectionId",
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()

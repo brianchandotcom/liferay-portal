@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.inventory.model.impl;
@@ -37,6 +28,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
+
+import java.math.BigDecimal;
 
 import java.sql.Blob;
 import java.sql.Types;
@@ -80,7 +73,7 @@ public class CommerceInventoryWarehouseItemModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"commerceInventoryWarehouseId", Types.BIGINT},
-		{"quantity", Types.INTEGER}, {"reservedQuantity", Types.INTEGER},
+		{"quantity", Types.DECIMAL}, {"reservedQuantity", Types.DECIMAL},
 		{"sku", Types.VARCHAR}, {"unitOfMeasureKey", Types.VARCHAR}
 	};
 
@@ -98,14 +91,14 @@ public class CommerceInventoryWarehouseItemModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceInventoryWarehouseId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("reservedQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("quantity", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("reservedQuantity", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("unitOfMeasureKey", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CIWarehouseItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CIWarehouseItemId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceInventoryWarehouseId LONG,quantity INTEGER,reservedQuantity INTEGER,sku VARCHAR(75) null,unitOfMeasureKey VARCHAR(75) null)";
+		"create table CIWarehouseItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CIWarehouseItemId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceInventoryWarehouseId LONG,quantity BIGDECIMAL null,reservedQuantity BIGDECIMAL null,sku VARCHAR(75) null,unitOfMeasureKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CIWarehouseItem";
 
@@ -149,7 +142,13 @@ public class CommerceInventoryWarehouseItemModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long UNITOFMEASUREKEY_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -157,7 +156,7 @@ public class CommerceInventoryWarehouseItemModelImpl
 	 */
 	@Deprecated
 	public static final long COMMERCEINVENTORYWAREHOUSEITEMID_COLUMN_BITMASK =
-		32L;
+		64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -373,11 +372,11 @@ public class CommerceInventoryWarehouseItemModelImpl
 						setCommerceInventoryWarehouseId);
 			attributeSetterBiConsumers.put(
 				"quantity",
-				(BiConsumer<CommerceInventoryWarehouseItem, Integer>)
+				(BiConsumer<CommerceInventoryWarehouseItem, BigDecimal>)
 					CommerceInventoryWarehouseItem::setQuantity);
 			attributeSetterBiConsumers.put(
 				"reservedQuantity",
-				(BiConsumer<CommerceInventoryWarehouseItem, Integer>)
+				(BiConsumer<CommerceInventoryWarehouseItem, BigDecimal>)
 					CommerceInventoryWarehouseItem::setReservedQuantity);
 			attributeSetterBiConsumers.put(
 				"sku",
@@ -625,12 +624,12 @@ public class CommerceInventoryWarehouseItemModelImpl
 
 	@JSON
 	@Override
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
 	}
 
 	@Override
-	public void setQuantity(int quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -640,12 +639,12 @@ public class CommerceInventoryWarehouseItemModelImpl
 
 	@JSON
 	@Override
-	public int getReservedQuantity() {
+	public BigDecimal getReservedQuantity() {
 		return _reservedQuantity;
 	}
 
 	@Override
-	public void setReservedQuantity(int reservedQuantity) {
+	public void setReservedQuantity(BigDecimal reservedQuantity) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -700,6 +699,15 @@ public class CommerceInventoryWarehouseItemModelImpl
 		}
 
 		_unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUnitOfMeasureKey() {
+		return getColumnOriginalValue("unitOfMeasureKey");
 	}
 
 	@Override
@@ -818,9 +826,9 @@ public class CommerceInventoryWarehouseItemModelImpl
 		commerceInventoryWarehouseItemImpl.setCommerceInventoryWarehouseId(
 			this.<Long>getColumnOriginalValue("commerceInventoryWarehouseId"));
 		commerceInventoryWarehouseItemImpl.setQuantity(
-			this.<Integer>getColumnOriginalValue("quantity"));
+			this.<BigDecimal>getColumnOriginalValue("quantity"));
 		commerceInventoryWarehouseItemImpl.setReservedQuantity(
-			this.<Integer>getColumnOriginalValue("reservedQuantity"));
+			this.<BigDecimal>getColumnOriginalValue("reservedQuantity"));
 		commerceInventoryWarehouseItemImpl.setSku(
 			this.<String>getColumnOriginalValue("sku"));
 		commerceInventoryWarehouseItemImpl.setUnitOfMeasureKey(
@@ -1069,8 +1077,8 @@ public class CommerceInventoryWarehouseItemModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceInventoryWarehouseId;
-	private int _quantity;
-	private int _reservedQuantity;
+	private BigDecimal _quantity;
+	private BigDecimal _reservedQuantity;
 	private String _sku;
 	private String _unitOfMeasureKey;
 

@@ -66,4 +66,24 @@ definition {
 		var userFirstName = JSONCurlUtil.get(${curl}, "$['firstName']");
 	}
 
+	macro getUserIdByFirstName {
+		Variables.assertDefined(parameterList = ${firstName});
+
+		var companyId = JSONCompany.getCompanyId();
+		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/get-company-users \
+				-u ${userLoginInfo} \
+				-d companyId=${companyId} \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA>
+		''';
+
+		var userId = JSONCurlUtil.post(${curl}, "$[?(@['firstName'] == '${firstName}')]['userId']");
+
+		return ${userId};
+	}
+
 }

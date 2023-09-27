@@ -49,6 +49,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete case type and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "casetypes",
@@ -59,8 +61,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -69,8 +69,6 @@ definition {
 	@description = "Story ID: LPS-160751 | Test Summary: Verify if as an Administrator, I should be able to delete Requirements"
 	@priority = 5
 	test AdminCanDeleteRequirements {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that I create a new 'Requirement' via API") {
 			JSONTestray.addRequirement(
 				componentName = ${componentName},
@@ -82,33 +80,25 @@ definition {
 		task ("And I go to the Requirements page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Requirements");
-
-			TestrayContextMenu.clickContextMenuProjects(name = ${requirementName});
+			Navigator.gotoNavTab(navTab = "Requirements");
 		}
 
 		task ("When I delete a requirement") {
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+			Testray.deleteItem(itemName = ${requirementName});
 		}
 
 		task ("Then I assert that Requirement is not shown in the list") {
-			Testray.assertItemNotPresent(itemName = ${requirementName});
+			Testray.viewTableEntryListNotPresent(listEntry = ${requirementName});
 		}
 	}
 
 	@description = "Story ID: LPS-160751 | Test Summary: Verify if as an Administrator, I should be able to edit Requirements"
 	@priority = 5
 	test AdminCanEditRequirements {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that a team, component and requirement are created via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -129,41 +119,33 @@ definition {
 		task ("And I go to the Requirements page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Requirements");
-
-			TestrayContextMenu.clickContextMenuProjects(name = ${requirementName});
+			Navigator.gotoNavTab(navTab = "Requirements");
 		}
 
 		task ("When I edit a requirement") {
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Edit",
+				tableEntry = ${requirementName});
 
 			TestrayRequirements.editRequirement(
 				componentId = "Component Edited",
 				linkTitle = "The page edited",
 				linkURL = "https://reddit.com",
-				requirementName = "Requirement Summary Edited");
+				newName = "Requirement Summary Edited");
 		}
 
 		task ("Then the requirement is displayed with the new infos") {
-			TestrayRequirements.verifyRequirement(
-				linkTitle = "The page edited",
-				requirementComponent = "Component Edited",
-				requirementSummary = "Requirement Summary Edited",
-				requirementTeam = "Team 2");
+			Testray.viewTableEntryList(listEntry = "The page edited,Component Edited,Requirement Summary Edited,Team 2");
 		}
 	}
 
 	@description = "Story ID: LPS-160751 | Test Summary: Verify if as an Administrator, I should be able to link and unlink a Case to a Requirement"
 	@priority = 3
 	test AdminCanLinkAndUnlinkCaseToRequirement {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that a case, case type and requirement are created via API") {
 			JSONTestray.addCases(
 				caseName = ${caseName},
@@ -181,56 +163,47 @@ definition {
 		task ("And I go to the newly created requirement") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Requirements");
+			Navigator.gotoNavTab(navTab = "Requirements");
 
-			TestrayRequirements.goToRequirement(requirementSummary = "Requirement Summary");
+			Testray.clickTableEntry(tableEntry = "Requirement Summary");
 		}
 
-		task ("When I add a case to the requirement") {
-			TestrayRequirements.addRequirementCase(
+		task ("When I link a case to the requirement and assert that it is present") {
+			Testray.selectCheckboxOptions(
 				buttonText = "Select Cases",
-				caseName = ${caseName},
+				checkboxNameList = ${caseName},
 				linkText = "Link Cases");
 
-			TestrayRequirements.verifyRequirementCase(
-				requirementCaseName = ${caseName},
-				requirementComponent = ${componentName},
-				requirementPriority = 3);
+			Testray.viewTableEntryList(listEntry = "3,${caseName},${componentName}");
 		}
 
 		task ("And I go to requirements and unlink the case") {
-			TestrayRequirements.addRequirementCase(
+			Testray.selectCheckboxOptions(
 				buttonText = "Select Cases",
-				caseName = ${caseName},
-				linkText = "Link Cases");
+				linkText = "Link Cases",
+				uncheckboxNameList = ${caseName});
 		}
 
 		task ("Then I assert that the case is not displayed on the Requirements page") {
-			Testray.assertItemNotPresent(itemName = ${caseName});
+			Testray.viewTableEntryListNotPresent(listEntry = "3,${caseName},${componentName}");
 		}
 	}
 
 	@description = "Story ID: LPS-160751 | Test Summary: Verify that the user can not create a requirement if all the required fields are not filled in"
 	@priority = 2
 	test AdminCanViewRequiredField {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that I go to the requirement page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Requirements");
+			Navigator.gotoNavTab(navTab = "Requirements");
 		}
 
 		task ("When I try to create a requirement without filling out the required fields") {

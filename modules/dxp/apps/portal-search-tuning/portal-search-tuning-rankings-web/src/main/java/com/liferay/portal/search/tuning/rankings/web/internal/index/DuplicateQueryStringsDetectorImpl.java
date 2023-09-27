@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
@@ -96,6 +87,11 @@ public class DuplicateQueryStringsDetectorImpl
 	protected static class CriteriaImpl implements Criteria {
 
 		@Override
+		public String getGroupExternalReferenceCode() {
+			return _groupExternalReferenceCode;
+		}
+
+		@Override
 		public String getIndex() {
 			return _index;
 		}
@@ -108,6 +104,11 @@ public class DuplicateQueryStringsDetectorImpl
 		@Override
 		public RankingIndexName getRankingIndexName() {
 			return _rankingIndexName;
+		}
+
+		@Override
+		public String getSXPBlueprintExternalReferenceCode() {
+			return _sxpBlueprintExternalReferenceCode;
 		}
 
 		@Override
@@ -131,6 +132,16 @@ public class DuplicateQueryStringsDetectorImpl
 			@Override
 			public Criteria build() {
 				return new CriteriaImpl(_criteriaImpl);
+			}
+
+			@Override
+			public BuilderImpl groupExternalReferenceCode(
+				String groupExternalReferenceCode) {
+
+				_criteriaImpl._groupExternalReferenceCode =
+					groupExternalReferenceCode;
+
+				return this;
 			}
 
 			@Override
@@ -160,6 +171,16 @@ public class DuplicateQueryStringsDetectorImpl
 			}
 
 			@Override
+			public BuilderImpl sxpBlueprintExternalReferenceCode(
+				String sxpBlueprintExternalReferenceCode) {
+
+				_criteriaImpl._sxpBlueprintExternalReferenceCode =
+					sxpBlueprintExternalReferenceCode;
+
+				return this;
+			}
+
+			@Override
 			public BuilderImpl unlessRankingDocumentId(
 				String unlessRankingDocumentId) {
 
@@ -173,9 +194,11 @@ public class DuplicateQueryStringsDetectorImpl
 
 		}
 
+		private String _groupExternalReferenceCode;
 		private String _index;
 		private Collection<String> _queryStrings = new HashSet<>();
 		private RankingIndexName _rankingIndexName;
+		private String _sxpBlueprintExternalReferenceCode;
 		private String _unlessRankingDocumentId;
 
 	}
@@ -193,7 +216,9 @@ public class DuplicateQueryStringsDetectorImpl
 
 		_addQueryClauses(
 			booleanQuery::addFilterQueryClauses,
-			_getQueryStringsQuery(criteria), _getIndexQuery(criteria));
+			_getGroupExternalReferenceCodeQuery(criteria),
+			_getIndexQuery(criteria), _getQueryStringsQuery(criteria),
+			_getSXPBlueprintExternalReferenceCodeQuery(criteria));
 		_addQueryClauses(
 			booleanQuery::addMustNotQueryClauses,
 			queries.term(RankingFields.INACTIVE, true),
@@ -215,6 +240,16 @@ public class DuplicateQueryStringsDetectorImpl
 		return documentQueryStrings;
 	}
 
+	private Query _getGroupExternalReferenceCodeQuery(Criteria criteria) {
+		if (Validator.isBlank(criteria.getGroupExternalReferenceCode())) {
+			return null;
+		}
+
+		return queries.term(
+			RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
+			criteria.getGroupExternalReferenceCode());
+	}
+
 	private Query _getIndexQuery(Criteria criteria) {
 		if (Validator.isBlank(criteria.getIndex())) {
 			return null;
@@ -232,6 +267,20 @@ public class DuplicateQueryStringsDetectorImpl
 		termsQuery.addValues(queryStrings.toArray());
 
 		return termsQuery;
+	}
+
+	private Query _getSXPBlueprintExternalReferenceCodeQuery(
+		Criteria criteria) {
+
+		if (Validator.isBlank(
+				criteria.getSXPBlueprintExternalReferenceCode())) {
+
+			return null;
+		}
+
+		return queries.term(
+			RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
+			criteria.getSXPBlueprintExternalReferenceCode());
 	}
 
 	private IdsQuery _getUnlessRankingIdQuery(Criteria criteria) {

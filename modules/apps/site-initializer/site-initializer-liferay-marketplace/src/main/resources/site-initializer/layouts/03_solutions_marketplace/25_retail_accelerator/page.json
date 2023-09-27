@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/veriday-retail-accelerator",
+	"hidden": true,
+	"name": "Retail Accelerator",
+	"name_i18n": {
+		"en_US": "Retail Accelerator"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

@@ -1,12 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
@@ -84,7 +78,7 @@ const ContainerMock = ({children}) => {
 describe('The instance list item should', () => {
 	afterEach(cleanup);
 
-	it('Be rendered with "User 1", "Jan 01, 2019, 12:00 AM", and "Review, Update" columns', () => {
+	it('Be rendered with "User 1", "Dec 31, 2018, 4:00 PM", and "Review, Update" columns', () => {
 		const {queryByText} = render(
 			<table>
 				<tbody>
@@ -97,7 +91,7 @@ describe('The instance list item should', () => {
 		);
 
 		const creatorCell = queryByText('User 1');
-		const dateCreatedCell = queryByText('Jan 01, 2019, 12:00 AM');
+		const dateCreatedCell = queryByText('Dec 31, 2018, 4:00 PM');
 		const taskNamesCell = queryByText('Review, Update');
 
 		expect(creatorCell).toBeTruthy();
@@ -221,11 +215,11 @@ describe('The instance list item should', () => {
 
 		expect(slaNamePopoverText).toBeTruthy();
 
-		const slaDateTimeRemaingTime = queryByText(
-			'Apr 16, 2021, 12:44 PM (1d 3h 46min left)'
+		const slaDateTimeRemainingTime = queryByText(
+			'Apr 16, 2021, 5:44 AM (1d 3h 46min left)'
 		);
 
-		expect(slaDateTimeRemaingTime).toBeTruthy();
+		expect(slaDateTimeRemainingTime).toBeTruthy();
 
 		fireEvent.mouseLeave(popoverElement);
 		fireEvent.mouseOut(dateText);
@@ -285,11 +279,11 @@ describe('The instance list item should', () => {
 
 		expect(slaNamePopoverText).toBeTruthy();
 
-		const slaDateTimeRemaingTime = queryByText(
-			'Apr 16, 2021, 12:44 PM (1d 3h 46min overdue)'
+		const slaDateTimeRemainingTime = queryByText(
+			'Apr 16, 2021, 5:44 AM (1d 3h 46min overdue)'
 		);
 
-		expect(slaDateTimeRemaingTime).toBeTruthy();
+		expect(slaDateTimeRemainingTime).toBeTruthy();
 
 		fireEvent.mouseOut(dateText);
 
@@ -362,11 +356,11 @@ describe('The instance list item should', () => {
 
 		expect(popoverElement).toBeTruthy();
 
-		const slaDateTimeRemaingTime = queryByText(
-			'Apr 16, 2021, 12:44 PM (10sec left)'
+		const slaDateTimeRemainingTime = queryByText(
+			'Apr 16, 2021, 5:44 AM (10sec left)'
 		);
 
-		expect(slaDateTimeRemaingTime).toBeTruthy();
+		expect(slaDateTimeRemainingTime).toBeTruthy();
 	});
 
 	it('Be rendered with due date when the slaResults is empty', () => {

@@ -37,7 +37,14 @@ definition {
 	}
 
 	macro openGogoShellAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_gogo_shell_web_internal_portlet_GogoShellPortlet");
+		if (isSet(baseURL)) {
+			Navigator.openWithAppendToBaseURL(
+				baseURL = ${baseURL},
+				urlAppend = "group/control_panel/manage?p_p_id=com_liferay_gogo_shell_web_internal_portlet_GogoShellPortlet");
+		}
+		else {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_gogo_shell_web_internal_portlet_GogoShellPortlet");
+		}
 	}
 
 	macro startModule {

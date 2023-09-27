@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
@@ -17,7 +8,7 @@ import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
-import {useId} from '@liferay/layout-content-page-editor-web';
+import {useId} from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
 import {openItemSelectorModal} from 'item-selector-web';
 import PropTypes from 'prop-types';
@@ -42,6 +33,7 @@ function AssetTagsSelector({
 	showLabel = true,
 	showSubtitle = true,
 	showSelectButton,
+	subtitle = Liferay.Language.get('other-metadata'),
 }) {
 	const selectButtonRef = useRef();
 	const tagsId = useId();
@@ -239,7 +231,7 @@ function AssetTagsSelector({
 						className="border-0 mb-0 sheet-subtitle text-uppercase"
 						id={tagsId}
 					>
-						{Liferay.Language.get('other-metadata')}
+						{subtitle}
 					</div>
 				)}
 

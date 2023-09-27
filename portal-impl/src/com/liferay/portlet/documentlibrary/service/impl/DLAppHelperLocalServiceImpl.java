@@ -1,26 +1,15 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.asset.kernel.manager.AssetLinkManagerUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetLink;
-import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -187,15 +176,10 @@ public class DLAppHelperLocalServiceImpl
 			fileEntry.getTitle(), fileEntry.getDescription(), null, null, null,
 			0, 0, null);
 
-		List<AssetLink> assetLinks = _assetLinkLocalService.getDirectLinks(
-			fileEntryAssetEntry.getEntryId(), false);
-
-		long[] assetLinkIds = ListUtil.toLongArray(
-			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
-
-		_assetLinkLocalService.updateLinks(
-			userId, fileVersionAssetEntry.getEntryId(), assetLinkIds,
-			AssetLinkConstants.TYPE_RELATED);
+		AssetLinkManagerUtil.updateLinks(
+			AssetLinkManagerUtil.getDirectLinksIds(
+				fileEntryAssetEntry.getEntryId()),
+			fileVersionAssetEntry.getEntryId(), userId);
 	}
 
 	@Override
@@ -450,15 +434,12 @@ public class DLAppHelperLocalServiceImpl
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			DLFileEntryConstants.getClassName(), assetClassPK);
 
-		List<AssetLink> assetLinks = null;
+		long[] assetLinkIds = null;
 
 		if (assetEntry != null) {
-			assetLinks = _assetLinkLocalService.getDirectLinks(
-				assetEntry.getEntryId(), false);
+			assetLinkIds = AssetLinkManagerUtil.getDirectLinksIds(
+				assetEntry.getEntryId());
 		}
-
-		long[] assetLinkIds = ListUtil.toLongArray(
-			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -522,14 +503,9 @@ public class DLAppHelperLocalServiceImpl
 						DLFileEntryConstants.getClassName(),
 						fileEntry.getFileEntryId());
 
-				List<AssetLink> assetLinks =
-					_assetLinkLocalService.getDirectLinks(
-						previousAssetEntry.getEntryId(),
-						AssetLinkConstants.TYPE_RELATED, false);
-
 				serviceContext.setAssetLinkEntryIds(
-					ListUtil.toLongArray(
-						assetLinks, AssetLink.ENTRY_ID2_ACCESSOR));
+					AssetLinkManagerUtil.getRelatedDirectLinksIds(
+						previousAssetEntry.getEntryId()));
 			}
 
 			assetEntry = _assetEntryLocalService.updateEntry(
@@ -583,10 +559,9 @@ public class DLAppHelperLocalServiceImpl
 			}
 		}
 
-		_assetLinkLocalService.updateLinks(
-			userId, assetEntry.getEntryId(),
-			serviceContext.getAssetLinkEntryIds(),
-			AssetLinkConstants.TYPE_RELATED);
+		AssetLinkManagerUtil.updateLinks(
+			serviceContext.getAssetLinkEntryIds(), assetEntry.getEntryId(),
+			userId);
 
 		return assetEntry;
 	}
@@ -626,9 +601,8 @@ public class DLAppHelperLocalServiceImpl
 			folder.getName(), folder.getDescription(), null, null, null, 0, 0,
 			null);
 
-		_assetLinkLocalService.updateLinks(
-			userId, assetEntry.getEntryId(), assetLinkEntryIds,
-			AssetLinkConstants.TYPE_RELATED);
+		AssetLinkManagerUtil.updateLinks(
+			assetLinkEntryIds, assetEntry.getEntryId(), userId);
 
 		return assetEntry;
 	}
@@ -729,14 +703,6 @@ public class DLAppHelperLocalServiceImpl
 							draftAssetEntry.getCategoryIds();
 						String[] assetTagNames = draftAssetEntry.getTagNames();
 
-						List<AssetLink> assetLinks =
-							_assetLinkLocalService.getDirectLinks(
-								draftAssetEntry.getEntryId(),
-								AssetLinkConstants.TYPE_RELATED, false);
-
-						long[] assetLinkEntryIds = ListUtil.toLongArray(
-							assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
-
 						AssetEntry assetEntry =
 							_assetEntryLocalService.updateEntry(
 								userId, fileEntry.getGroupId(),
@@ -753,9 +719,10 @@ public class DLAppHelperLocalServiceImpl
 								fileEntry.getDescription(), null, null, null, 0,
 								0, null);
 
-						_assetLinkLocalService.updateLinks(
-							userId, assetEntry.getEntryId(), assetLinkEntryIds,
-							AssetLinkConstants.TYPE_RELATED);
+						AssetLinkManagerUtil.updateLinks(
+							AssetLinkManagerUtil.getRelatedDirectLinksIds(
+								assetEntry.getEntryId()),
+							assetEntry.getEntryId(), userId);
 
 						_assetEntryLocalService.deleteEntry(draftAssetEntry);
 					}
@@ -938,9 +905,6 @@ public class DLAppHelperLocalServiceImpl
 
 	@BeanReference(type = AssetEntryLocalService.class)
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@BeanReference(type = AssetLinkLocalService.class)
-	private AssetLinkLocalService _assetLinkLocalService;
 
 	@BeanReference(type = AssetTagLocalService.class)
 	private AssetTagLocalService _assetTagLocalService;

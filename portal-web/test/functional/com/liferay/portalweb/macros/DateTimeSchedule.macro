@@ -1,0 +1,81 @@
+definition {
+
+	macro getCurrentDisplayDate {
+		var key_field = ${field};
+
+		var displayDate = selenium.getAttribute("//input[contains(@id,'${key_field}Date')]@value");
+
+		echo("Current display date is: ${displayDate}");
+
+		return ${displayDate};
+	}
+
+	macro getCurrentDisplayTime {
+		var key_field = ${field};
+
+		var displayDateHour = selenium.getAttribute("//input[contains(@id,'${key_field}DateHour')]@value");
+
+		var displayDateHourLength = StringUtil.length(${displayDateHour});
+
+		if (${displayDateHourLength} == 1) {
+			var displayDateHour = "0${displayDateHour}";
+		}
+
+		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'${key_field}DateAmPm')]@value");
+
+		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
+
+		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
+		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'${key_field}DateMinute')]@value");
+
+		var displayDateMinuteLength = StringUtil.length(${displayDateMinute});
+
+		if (${displayDateMinuteLength} == 1) {
+			var displayDateMinute = "0${displayDateMinute}";
+		}
+
+		var currentTime = "${displayDateHour}:${displayDateMinute} ${displayDateAmpm}";
+
+		echo("Current display time is: ${currentTime}");
+
+		return ${currentTime};
+	}
+
+	macro increaseDisplayTime {
+		var key_field = ${field};
+
+		var displayDateHour = selenium.getAttribute("//input[contains(@id,'${key_field}DateHour')]@value");
+		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'${key_field}DateAmPm')]@value");
+
+		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
+
+		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
+		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'${key_field}DateMinute')]@value");
+
+		var displayDateMinuteFuture = ${displayDateMinute} + ${minuteIncreaseValue};
+
+		var minuteExceededValidator = MathUtil.isGreaterThanOrEqualTo(${displayDateMinuteFuture}, 60);
+
+		if (${minuteExceededValidator} == "true") {
+			var displayDateHour = ${displayDateHour} + 1;
+			var displayDateMinuteFuture = ${displayDateMinuteFuture} - 60;
+		}
+
+		var displayDateHourLength = StringUtil.length(${displayDateHour});
+
+		if (${displayDateHourLength} == 1) {
+			var displayDateHour = "0${displayDateHour}";
+		}
+
+		var displayDateMinuteFutureLength = StringUtil.length(${displayDateMinuteFuture});
+
+		if (${displayDateMinuteFutureLength} == 1) {
+			var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
+		}
+
+		var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";
+
+		return ${displayTime};
+	}
+
+}

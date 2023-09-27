@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.service;
@@ -71,6 +62,19 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 		throws PortalException {
 
 		return getService().addCPInstanceUnitOfMeasure(
+			userId, cpInstanceId, active, incrementalOrderQuantity, key,
+			nameMap, precision, primary, priority, rate, sku);
+	}
+
+	public static CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
+			long userId, long cpInstanceId, boolean active,
+			java.math.BigDecimal incrementalOrderQuantity, String key,
+			Map<java.util.Locale, String> nameMap, int precision,
+			boolean primary, double priority, java.math.BigDecimal rate,
+			String sku)
+		throws PortalException {
+
+		return getService().addOrUpdateCPInstanceUnitOfMeasure(
 			userId, cpInstanceId, active, incrementalOrderQuantity, key,
 			nameMap, precision, primary, priority, rate, sku);
 	}
@@ -242,6 +246,12 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 		return getService().fetchCPInstanceUnitOfMeasure(cpInstanceId, key);
 	}
 
+	public static CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
+		long companyId, String key, String sku) {
+
+		return getService().fetchCPInstanceUnitOfMeasure(companyId, key, sku);
+	}
+
 	/**
 	 * Returns the cp instance unit of measure with the matching UUID and company.
 	 *
@@ -257,10 +267,29 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	public static CPInstanceUnitOfMeasure fetchPrimaryCPInstanceUnitOfMeasure(
+		long cpInstanceId) {
+
+		return getService().fetchPrimaryCPInstanceUnitOfMeasure(cpInstanceId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static List<CPInstanceUnitOfMeasure>
+		getActiveCPInstanceUnitOfMeasures(long cpInstanceId) {
+
+		return getService().getActiveCPInstanceUnitOfMeasures(cpInstanceId);
+	}
+
+	public static int getActiveCPInstanceUnitOfMeasuresCount(
+		long cpInstanceId) {
+
+		return getService().getActiveCPInstanceUnitOfMeasuresCount(
+			cpInstanceId);
 	}
 
 	/**
@@ -327,6 +356,12 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 			cpInstanceId, start, end, orderByComparator);
 	}
 
+	public static List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures(
+		long companyId, String sku) {
+
+		return getService().getCPInstanceUnitOfMeasures(companyId, sku);
+	}
+
 	/**
 	 * Returns the number of cp instance unit of measures.
 	 *
@@ -338,6 +373,12 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 
 	public static int getCPInstanceUnitOfMeasuresCount(long cpInstanceId) {
 		return getService().getCPInstanceUnitOfMeasuresCount(cpInstanceId);
+	}
+
+	public static int getCPInstanceUnitOfMeasuresCount(
+		long companyId, String sku) {
+
+		return getService().getCPInstanceUnitOfMeasuresCount(companyId, sku);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

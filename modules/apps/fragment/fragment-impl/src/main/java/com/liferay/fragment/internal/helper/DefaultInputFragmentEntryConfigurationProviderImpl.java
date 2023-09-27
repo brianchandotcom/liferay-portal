@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.fragment.internal.helper;
@@ -18,6 +9,7 @@ import com.liferay.fragment.configuration.DefaultInputFragmentEntryConfiguration
 import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvider;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
@@ -26,6 +18,7 @@ import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -34,7 +27,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,14 +62,15 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 			!Objects.equals(companyGroup.getGroupId(), groupId)) {
 
 			defaultInputFragmentEntryKeysJSONObject =
-				_getDefaultInputFragmentEntryKeysJSONObject(group);
+				_getDefaultInputFragmentEntryKeysJSONObject(companyGroup);
 		}
 
 		if (defaultInputFragmentEntryKeysJSONObject != null) {
 			return defaultInputFragmentEntryKeysJSONObject;
 		}
 
-		return _defaultInputFragmentEntryKeysJSONObject;
+		return _jsonFactory.createJSONObject(
+			_defaultInputFragmentEntryKeysJSONObject.toMap());
 	}
 
 	@Override
@@ -134,6 +127,9 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 		).put(
 			DateInfoFieldType.INSTANCE.getName(),
 			JSONUtil.put("key", "INPUTS-date-input")
+		).put(
+			DateTimeInfoFieldType.INSTANCE.getName(),
+			JSONUtil.put("key", "INPUTS-date-time-input")
 		).put(
 			FileInfoFieldType.INSTANCE.getName(),
 			JSONUtil.put("key", "INPUTS-file-upload")

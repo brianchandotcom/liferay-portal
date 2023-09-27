@@ -35,6 +35,7 @@ definition {
 	test CanViewConfirmSuccessfulPayment {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -71,6 +72,7 @@ definition {
 	@priority = 3
 	test CanViewPaymentMethodNotSelected {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -101,6 +103,7 @@ definition {
 	@priority = 3
 	test CheckRaylifeTermsAndConditionsNotSelected {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -133,6 +136,7 @@ definition {
 	@priority = 3
 	test CheckSelectInstallmentPayment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -171,6 +175,7 @@ definition {
 	@priority = 4
 	test IsPayNowButtonEnabled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -205,6 +210,7 @@ definition {
 	@priority = 4
 	test ViewExtendedPaymentSection {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -235,6 +241,7 @@ definition {
 	@priority = 4
 	test ViewPaymentCollectionOptions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

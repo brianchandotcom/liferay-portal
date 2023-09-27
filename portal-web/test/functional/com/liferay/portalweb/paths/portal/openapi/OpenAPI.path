@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEMA_ENTITY</td>
+	<td>//div[@id='model-${schema}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEMA_FIELD</td>
 	<td>//div[@id='model-${schema}']//td[contains(.,'${field}')]</td>
 	<td></td>
@@ -49,6 +54,16 @@
 <tr>
 	<td>API_METHOD</td>
 	<td>//*[@id="operations-${service}-${method}"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_URL</td>
+	<td>//span[@class='url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_WRAPPER</td>
+	<td>//*[@class='errors-wrapper']</td>
 	<td></td>
 </tr>
 <tr>

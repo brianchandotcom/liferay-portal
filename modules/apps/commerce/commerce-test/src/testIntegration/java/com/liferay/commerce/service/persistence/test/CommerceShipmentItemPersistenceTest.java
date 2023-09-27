@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.service.persistence.test;
@@ -41,6 +32,8 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -156,7 +149,11 @@ public class CommerceShipmentItemPersistenceTest {
 		newCommerceShipmentItem.setCommerceInventoryWarehouseId(
 			RandomTestUtil.nextLong());
 
-		newCommerceShipmentItem.setQuantity(RandomTestUtil.nextInt());
+		newCommerceShipmentItem.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		newCommerceShipmentItem.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
 
 		_commerceShipmentItems.add(
 			_persistence.update(newCommerceShipmentItem));
@@ -209,6 +206,9 @@ public class CommerceShipmentItemPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceShipmentItem.getQuantity(),
 			newCommerceShipmentItem.getQuantity());
+		Assert.assertEquals(
+			existingCommerceShipmentItem.getUnitOfMeasureKey(),
+			newCommerceShipmentItem.getUnitOfMeasureKey());
 	}
 
 	@Test(
@@ -342,7 +342,8 @@ public class CommerceShipmentItemPersistenceTest {
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true,
 			"commerceShipmentId", true, "commerceOrderItemId", true,
-			"commerceInventoryWarehouseId", true, "quantity", true);
+			"commerceInventoryWarehouseId", true, "quantity", true,
+			"unitOfMeasureKey", true);
 	}
 
 	@Test
@@ -707,7 +708,10 @@ public class CommerceShipmentItemPersistenceTest {
 		commerceShipmentItem.setCommerceInventoryWarehouseId(
 			RandomTestUtil.nextLong());
 
-		commerceShipmentItem.setQuantity(RandomTestUtil.nextInt());
+		commerceShipmentItem.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		commerceShipmentItem.setUnitOfMeasureKey(RandomTestUtil.randomString());
 
 		_commerceShipmentItems.add(_persistence.update(commerceShipmentItem));
 

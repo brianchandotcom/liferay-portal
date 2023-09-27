@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.configuration.extender.internal;
@@ -28,11 +19,11 @@ public class NamedConfigurationContent {
 
 	public NamedConfigurationContent(
 		String factoryPid, String pid,
-		UnsafeSupplier<Dictionary<?, ?>, IOException> propertySupplier) {
+		UnsafeSupplier<Dictionary<?, ?>, IOException> propertyUnsafeSupplier) {
 
 		_factoryPid = factoryPid;
 		_pid = pid;
-		_propertySupplier = propertySupplier;
+		_propertyUnsafeSupplier = propertyUnsafeSupplier;
 	}
 
 	public String getFactoryPid() {
@@ -45,7 +36,7 @@ public class NamedConfigurationContent {
 
 	@SuppressWarnings("unchecked")
 	public Dictionary<String, Object> getProperties() throws IOException {
-		Dictionary<?, ?> properties = _propertySupplier.get();
+		Dictionary<?, ?> properties = _propertyUnsafeSupplier.get();
 
 		return (Dictionary<String, Object>)properties;
 	}
@@ -59,6 +50,6 @@ public class NamedConfigurationContent {
 	private final String _factoryPid;
 	private final String _pid;
 	private final UnsafeSupplier<Dictionary<?, ?>, IOException>
-		_propertySupplier;
+		_propertyUnsafeSupplier;
 
 }

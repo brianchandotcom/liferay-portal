@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -140,29 +131,45 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 					</c:if>
 
 					<span class="text-default">
+						<c:choose>
+							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188060") && kbArticle.isScheduled() %>'>
 
-						<%
-						String expirationDateString = StringPool.BLANK;
+								<%
+								String displayDateString = StringPool.BLANK;
 
-						if (kbArticle.getExpirationDate() != null) {
-							expirationDateString = dateFormatDateTime.format(kbArticle.getExpirationDate());
-						}
-						%>
+								if (kbArticle.getDisplayDate() != null) {
+									displayDateString = dateFormatDateTime.format(kbArticle.getDisplayDate());
+								}
+								%>
 
-						<aui:workflow-status helpMessage="<%= kbArticle.isExpired() ? expirationDateString : StringPool.BLANK %>" markupView="lexicon" showHelpMessage="<%= kbArticle.isExpired() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+								<aui:workflow-status helpMessage="<%= kbArticle.isScheduled() ? displayDateString : StringPool.BLANK %>" markupView="lexicon" showHelpMessage="<%= kbArticle.isScheduled() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+							</c:when>
+							<c:otherwise>
 
-						<c:if test="<%= kbArticleViewDisplayContext.isExpiringSoon(kbArticle) %>">
-							<span class="label label-warning">
-								<span class="label-item label-item-expand"><liferay-ui:message key="expiring-soon" /></span>
-							</span>
+								<%
+								String expirationDateString = StringPool.BLANK;
 
-							<clay:icon
-								aria-label="<%= expirationDateString %>"
-								cssClass="lfr-portal-tooltip"
-								symbol="question-circle-full"
-								title="<%= expirationDateString %>"
-							/>
-						</c:if>
+								if (kbArticle.getExpirationDate() != null) {
+									expirationDateString = dateFormatDateTime.format(kbArticle.getExpirationDate());
+								}
+								%>
+
+								<aui:workflow-status helpMessage="<%= kbArticle.isExpired() ? expirationDateString : StringPool.BLANK %>" markupView="lexicon" showHelpMessage="<%= kbArticle.isExpired() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+
+								<c:if test="<%= kbArticleViewDisplayContext.isExpiringSoon(kbArticle) %>">
+									<span class="label label-warning">
+										<span class="label-item label-item-expand"><liferay-ui:message key="expiring-soon" /></span>
+									</span>
+
+									<clay:icon
+										aria-label="<%= expirationDateString %>"
+										cssClass="lfr-portal-tooltip"
+										symbol="question-circle-full"
+										title="<%= expirationDateString %>"
+									/>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
 					</span>
 				</liferay-ui:search-container-column-text>
 

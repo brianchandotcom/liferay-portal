@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.message.boards.web.internal.portlet.action;
@@ -41,16 +32,17 @@ import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandler;
-import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandlerProvider;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryUtil;
 import com.liferay.message.boards.web.internal.util.MBRequestUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -96,7 +88,10 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.WindowState;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -113,6 +108,17 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, MBMessageFormatUploadHandler.class, "format");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -552,7 +558,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				}
 
 				MBMessageFormatUploadHandler formatHandler =
-					_formatHandlerProvider.provide(message.getFormat());
+					_serviceTrackerMap.getService(message.getFormat());
 
 				if (formatHandler != null) {
 					List<FileEntry> tempMBAttachmentFileEntries =
@@ -575,7 +581,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				message = _mbMessageService.getMessage(messageId);
 
 				MBMessageFormatUploadHandler formatHandler =
-					_formatHandlerProvider.provide(message.getFormat());
+					_serviceTrackerMap.getService(message.getFormat());
 
 				if (formatHandler != null) {
 					List<FileEntry> tempMBAttachmentFileEntries =
@@ -647,9 +653,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private MBMessageFormatUploadHandlerProvider _formatHandlerProvider;
-
-	@Reference
 	private MBCategoryService _mbCategoryService;
 
 	@Reference
@@ -674,6 +677,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	private ServiceTrackerMap<String, MBMessageFormatUploadHandler>
+		_serviceTrackerMap;
 
 	@Reference
 	private UniqueFileNameProvider _uniqueFileNameProvider;

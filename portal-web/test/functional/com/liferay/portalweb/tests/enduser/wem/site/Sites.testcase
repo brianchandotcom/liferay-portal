@@ -1,9 +1,9 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Sites Administration";
 	property testray.main.component.name = "Sites Administration";
 
@@ -12,13 +12,20 @@ definition {
 	static var randomSiteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
-		User.firstLoginPG();
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
 	}
 
 	@description = "Inactive and reactive site."
 	@priority = 4
 	test ActivateSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable Show Inactive Request Message in system setting") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -311,6 +318,7 @@ definition {
 	test EditSiteFriendlyURLInvalid {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -403,8 +411,6 @@ definition {
 	@description = "This is a test case for LRQA-5853. Disbale Content Sharing in instance level and view child Sites doesn't display content from parent Sites."
 	@priority = 4
 	test ViewContentSharingDisabledAcrossSitesViaAP {
-		property test.liferay.virtual.instance = "false";
-
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var randomChildSiteName = StringUtil.randomString(8);
 
@@ -512,8 +518,6 @@ definition {
 	@description = "This is a test case for LRQA-6014. Enable Content Sharing in instance level and view child Sites display content from parent Sites."
 	@priority = 4
 	test ViewContentSharingEnabledAcrossSitesViaAP {
-		property test.liferay.virtual.instance = "false";
-
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		PortalSettings.gotoConfiguration(

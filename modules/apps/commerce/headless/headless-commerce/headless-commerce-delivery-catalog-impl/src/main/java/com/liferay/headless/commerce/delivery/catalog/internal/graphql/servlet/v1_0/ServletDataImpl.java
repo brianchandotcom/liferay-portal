@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.delivery.catalog.internal.graphql.servlet.v1_0;
@@ -23,6 +14,7 @@ import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.Lin
 import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.MappedProductResourceImpl;
 import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.PinResourceImpl;
 import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductOptionResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductOptionValueResourceImpl;
 import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductResourceImpl;
 import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductSpecificationResourceImpl;
 import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.RelatedProductResourceImpl;
@@ -36,6 +28,7 @@ import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.LinkedProduc
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.PinResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductOptionResource;
+import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductOptionValueResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.RelatedProductResource;
@@ -92,6 +85,8 @@ public class ServletDataImpl implements ServletData {
 			_productResourceComponentServiceObjects);
 		Query.setProductOptionResourceComponentServiceObjects(
 			_productOptionResourceComponentServiceObjects);
+		Query.setProductOptionValueResourceComponentServiceObjects(
+			_productOptionValueResourceComponentServiceObjects);
 		Query.setProductSpecificationResourceComponentServiceObjects(
 			_productSpecificationResourceComponentServiceObjects);
 		Query.setRelatedProductResourceComponentServiceObjects(
@@ -233,6 +228,11 @@ public class ServletDataImpl implements ServletData {
 							ProductOptionResourceImpl.class,
 							"getChannelProductProductOptionsPage"));
 					put(
+						"query#channelProductProductOptionProductOptionValues",
+						new ObjectValuePair<>(
+							ProductOptionValueResourceImpl.class,
+							"getChannelProductProductOptionProductOptionValuesPage"));
+					put(
 						"query#channelProductProductSpecifications",
 						new ObjectValuePair<>(
 							ProductSpecificationResourceImpl.class,
@@ -247,6 +247,10 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SkuResourceImpl.class,
 							"getChannelProductSkusPage"));
+					put(
+						"query#channelProductSku",
+						new ObjectValuePair<>(
+							SkuResourceImpl.class, "getChannelProductSku"));
 					put(
 						"query#channelWishLists",
 						new ObjectValuePair<>(
@@ -317,6 +321,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProductOptionResource>
 		_productOptionResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProductOptionValueResource>
+		_productOptionValueResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProductSpecificationResource>

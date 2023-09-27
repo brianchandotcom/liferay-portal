@@ -1,8 +1,8 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-api")
-	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-content-transformer-api")
-	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-image-api")
-	testIntegrationCompile project(":apps:document-library:document-library-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation project(":apps:adaptive-media:adaptive-media-api")
+	testIntegrationImplementation project(":apps:adaptive-media:adaptive-media-content-transformer-api")
+	testIntegrationImplementation project(":apps:adaptive-media:adaptive-media-image-api")
+	testIntegrationImplementation project(":apps:document-library:document-library-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

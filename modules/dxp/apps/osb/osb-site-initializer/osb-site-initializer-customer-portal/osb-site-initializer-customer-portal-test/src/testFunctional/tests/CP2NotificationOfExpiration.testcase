@@ -1,0 +1,300 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal";
+	var testSiteURL = "customer-portal-site";
+	var testSiteTamplate = "Liferay OSB Site Initializer Customer Portal";
+	var testAccount = "2022 FIFA World Cup Qatar - FAN ID";
+	var testUser = "Test Test";
+	var testUserFirstName = "Test";
+	var testProduct = "DXP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
+		}
+
+		task ("Login on OKTA") {
+			CustomerPortal.loginOktaToUpdateCP();
+		}
+	}
+
+	tearDown {
+		CustomerPortal.customerPortalTearDown();
+	}
+
+	@description = "Story ID: LPS-148345 | Test Summary: Assert when the user deactivates the toggle and close the modal, the toggle stay deactivated in the key details"
+	@ignore = "true"
+	@priority = 3
+	test AssertWhenDeactivatedTheToggleStayDeactivated {
+		task ("Given Koroneiki's 'Allow Self Provisioning' option is active") {
+			JSONCP.activeAllowSelfProvisioning(koroneiki = "KOR-3809080");
+		}
+
+		task ("And the user Role is Changed") {
+			CP2Utils.assigneToRoleViaUsersTab(
+				accountRoleTitle = "Administrator",
+				accountUserName = "Test Test",
+				searchItem = "test",
+				testAccount = "2022 FIFA World Cup Qatar - FAN ID");
+		}
+
+		task ("And the user goes to test account") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+		}
+
+		if (IsElementPresent(key_text = "Start Project Setup", locator1 = "Button#ANY")) {
+			CP2Utils.onboardingFlow();
+		}
+		else {
+			task ("And click on Portal product") {
+				CP2NavigationMenu.goToProductActivation();
+
+				CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+			}
+		}
+
+		task ("And go to generate a new key") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("When finish the first steps to Generate New License") {
+			CP2ActivationKeys.selectComplimentarySubscriptionTerm();
+
+			CustomerPortal.clickAtButton(text = "Next");
+
+			Click.clickAtNotVisible(locator1 = "CP2ActivationKeys#EXPIRATION_CHECKBOX");
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And generate a new key") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Notification Test Poshi",
+				field = "Environment Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "localhost",
+				field = "Host Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "1.1.1.1",
+				field = "IP Address");
+
+			var generateButtom = "Generate ${numberOfActivationKeys} Keys";
+
+			CustomerPortal.clickAtButton(text = "Generate 1 Key");
+
+			CustomerPortal.viewAlert(alertText = "Complimentary Key was generated successfully.");
+		}
+
+		task ("And Assert if the toggle is on") {
+			CP2Utils.searchForKeyInTable(environmentName = "Notification Test Poshi");
+
+			CP2Utils.clickInTableKeyByName(keyName = "Notification Test Poshi");
+
+			AssertElementPresent(locator1 = "CP2ActivationKeys#TOGGLE_SWITCH_ON");
+		}
+
+		task ("And change the toggle to off") {
+			Click.clickNoWaitForVisible(locator1 = "CP2ActivationKeys#TOGGLE_SWITCH_ON");
+
+			CP2Utils.closeModal();
+		}
+
+		task ("Then Assert that the toggle is off") {
+			CP2Utils.clickInTableKeyByName(keyName = "Notification Test Poshi");
+
+			AssertElementPresent(locator1 = "CP2ActivationKeys#TOGGLE_SWITCH_OFF");
+		}
+	}
+
+	@description = "Story ID: LPS-148345 | Test Summary: Assert when the user not activates the expiration notification option that toggle is deactivated in the key details"
+	@ignore = "true"
+	@priority = 3
+	test AssertWhenNotSelectedTheOptionTheToggleIsDeactivated {
+		task ("Given Koroneiki's 'Allow Self Provisioning' option is active") {
+			JSONCP.activeAllowSelfProvisioning(koroneiki = "KOR-3809080");
+		}
+
+		task ("And the user Role is Changed") {
+			CP2Utils.assigneToRoleViaUsersTab(
+				accountRoleTitle = "Administrator",
+				accountUserName = "Test Test",
+				searchItem = "test",
+				testAccount = "2022 FIFA World Cup Qatar - FAN ID");
+		}
+
+		task ("And the user goes to test account") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+		}
+
+		if (IsElementPresent(key_text = "Start Project Setup", locator1 = "Button#ANY")) {
+			CP2Utils.onboardingFlow();
+		}
+		else {
+			task ("And click on Portal product") {
+				CP2NavigationMenu.goToProductActivation();
+
+				CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+			}
+		}
+
+		task ("And go to generate a new key") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("When filling in the first form to Generate New License") {
+			CP2ActivationKeys.selectComplimentarySubscriptionTerm();
+
+			CustomerPortal.clickAtButton(text = "Next");
+
+			Click.clickAtNotVisible(locator1 = "CP2ActivationKeys#EXPIRATION_CHECKBOX");
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And generate a new key") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Notification Test Poshi",
+				field = "Environment Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "localhost",
+				field = "Host Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "1.1.1.1",
+				field = "IP Address");
+
+			Click.clickAtNotVisible(locator1 = "CP2ActivationKeys#EXPIRATION_CHECKBOX");
+
+			var generateButtom = "Generate ${numberOfActivationKeys} Keys";
+
+			CustomerPortal.clickAtButton(text = "Generate 1 Key");
+
+			CustomerPortal.viewAlert(alertText = "Complimentary Key was generated successfully.");
+		}
+
+		task ("And the key appears on table") {
+			CP2Utils.searchForKeyInTable(environmentName = "Notification Test Poshi");
+		}
+
+		task ("Then Assert if the toggle is off") {
+			Click(
+				key_text = "Notification Test Poshi",
+				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+
+			AssertElementPresent(locator1 = "CP2ActivationKeys#TOGGLE_SWITCH_OFF");
+		}
+	}
+
+	@description = "Story ID: LPS-148345 | Test Summary: Assert when the user activates the expiration notification option, that toggle is activated in the key details"
+	@ignore = "true"
+	@priority = 3
+	test AssertWhenSelectedTheOptionTheToggleIsActive {
+		task ("Given Koroneiki's 'Allow Self Provisioning' option is active") {
+			JSONCP.activeAllowSelfProvisioning(koroneiki = "KOR-3809080");
+		}
+
+		task ("And the user Role is Changed") {
+			CP2Utils.assigneToRoleViaUsersTab(
+				accountRoleTitle = "Administrator",
+				accountUserName = "Test Test",
+				searchItem = "test",
+				testAccount = "2022 FIFA World Cup Qatar - FAN ID");
+		}
+
+		task ("And the user goes to test account") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+		}
+
+		if (IsElementPresent(key_text = "Start Project Setup", locator1 = "Button#ANY")) {
+			CP2Utils.onboardingFlow();
+		}
+		else {
+			task ("And click on Portal product") {
+				CP2NavigationMenu.goToProductActivation();
+
+				CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+			}
+		}
+
+		task ("And go to generate a new key") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("When filling in the first form to Generate New License") {
+			CP2ActivationKeys.selectComplimentarySubscriptionTerm();
+
+			CustomerPortal.clickAtButton(text = "Next");
+
+			Click.clickAtNotVisible(locator1 = "CP2ActivationKeys#EXPIRATION_CHECKBOX");
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And generate a new key") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Notification Test Poshi",
+				field = "Environment Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "localhost",
+				field = "Host Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "1.1.1.1",
+				field = "IP Address");
+
+			var generateButtom = "Generate ${numberOfActivationKeys} Keys";
+
+			CustomerPortal.clickAtButton(text = "Generate 1 Key");
+
+			CustomerPortal.viewAlert(alertText = "Complimentary Key was generated successfully.");
+		}
+
+		task ("And the key appears on table") {
+			CP2Utils.searchForKeyInTable(environmentName = "Notification Test Poshi");
+		}
+
+		task ("Then Assert if the toggle if active") {
+			Click(
+				key_text = "Notification Test Poshi",
+				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+
+			AssertElementPresent(locator1 = "CP2ActivationKeys#TOGGLE_SWITCH_ON");
+		}
+	}
+
+}

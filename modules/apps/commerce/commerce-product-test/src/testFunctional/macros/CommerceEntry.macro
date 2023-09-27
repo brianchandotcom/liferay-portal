@@ -62,16 +62,10 @@ definition {
 		}
 
 		if (isSet(userRole)) {
-			ApplicationsMenu.gotoPortlet(
-				category = "Accounts",
-				panel = "Control Panel",
-				portlet = "Accounts");
-
-			LexiconEntry.gotoEntry(rowEntry = ${accountName});
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = ${userRole},
-				accountUserName = ${userEmailAddress});
+			JSONAccountRole.associateUser(
+				accountEntryName = ${accountName},
+				accountRole = ${userRole},
+				userEmailAddress = ${userEmailAddress});
 		}
 	}
 
@@ -220,6 +214,8 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#SUBJECT_TO_VAT_CHECKBOX");
 
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+		Button.clickSave();
 	}
 
 	macro addNewCurrenciesEntry {
@@ -430,6 +426,8 @@ definition {
 			value1 = ${code});
 
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+		Button.clickSave();
 	}
 
 	macro addNewWarehousesEntry {
@@ -505,7 +503,7 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+		CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 		Click(locator1 = "Button#PLUS");
 
@@ -746,6 +744,112 @@ definition {
 		Button.clickSave();
 	}
 
+	macro addUOMEntry {
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			key_fieldLabel = "Unit of Measure",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${unitOfMeasureName});
+
+		Type(
+			locator1 = "CommerceEntry#KEY_FIELD",
+			value1 = ${unitOfMeasureKey});
+
+		if (isSet(conversionRate)) {
+			Type(
+				key_fieldLabel = "Conversion Rate",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${conversionRate});
+		}
+
+		if (isSet(decimalAllowed)) {
+			ScrollWebElementIntoView(
+				key_fieldLabel = "Decimal Allowed",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			DoubleClick(
+				key_fieldLabel = "Decimal Allowed",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			KeyPress(
+				key_fieldLabel = "Decimal Allowed",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "\BACK_SPACE");
+
+			Type(
+				key_fieldLabel = "Decimal Allowed",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${decimalAllowed});
+		}
+
+		if (isSet(baseUnitQuantity)) {
+			DoubleClick(
+				key_fieldLabel = "Base Unit Quantity",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			KeyPress(
+				key_fieldLabel = "Base Unit Quantity",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "\BACK_SPACE");
+
+			Type(
+				key_fieldLabel = "Base Unit Quantity",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${baseUnitQuantity});
+		}
+
+		if (isSet(basePrice)) {
+			ScrollWebElementIntoView(
+				key_text = "Base Price",
+				locator1 = "TextInput#ANY");
+
+			Type(
+				key_text = "Base Price",
+				locator1 = "TextInput#ANY",
+				value1 = ${basePrice});
+		}
+
+		if (isSet(promoPrice)) {
+			Type(
+				key_text = "Promotion Price",
+				locator1 = "TextInput#ANY",
+				value1 = ${promoPrice});
+		}
+
+		if (isSet(priority)) {
+			ScrollWebElementIntoView(
+				key_fieldLabel = "Priority",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			Type(
+				key_fieldLabel = "Priority",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${priority});
+		}
+
+		if (isSet(purchasable) && (${purchasable} == "true")) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Purchasable",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if (isSet(purchasable) && (${purchasable} == "false")) {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Purchasable",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		Button.clickAdd();
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+	}
+
 	macro assertCheckedSpecificToggle {
 		task ("Check if the Toggle is checked") {
 			AssertElementPresent(
@@ -788,6 +892,15 @@ definition {
 			key_entryName = ${entryName},
 			key_layout = ${layout},
 			locator1 = "CommerceEntry#OVERRIDE_DEFAULT_DISPLAY_PAGE");
+	}
+
+	macro assertTableRowSpecificColumnValue {
+		AssertTextEquals(
+			key_column = ${column},
+			key_entryName = ${entryName},
+			key_row = ${row},
+			locator1 = "CommerceEntry#TABLE_ASSERT_SPECIFIC_ROW_ANY_COLUMN_VALUE",
+			value1 = ${value});
 	}
 
 	macro assertUniqueTaxCategoryErc {
@@ -1112,6 +1225,26 @@ definition {
 			value1 = ${newEntryShortDescription});
 	}
 
+	macro editPriceListsFromProductSKU {
+		CommerceNavigator.gotoEntry(entryName = ${skuName});
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+		CommerceNavigator.gotoEntry(entryName = ${priceList});
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "CommerceEntry#PRICE_FIELD",
+			value1 = ${price});
+
+		Button.clickSave();
+
+		Click(locator1 = "Icon#CLOSE");
+	}
+
 	macro editSkuPricingAndInventory {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -1177,6 +1310,95 @@ definition {
 			keyDescription = ${keyDescription},
 			keyName = ${keyName},
 			keyReferenceCode = ${keyReferenceCode});
+	}
+
+	macro editUOMEntry {
+		Click(
+			key_value = ${entryName},
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		ClickNoError(
+			key_selectAction = "Edit",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		if (isSet(unitOfMeasureNewName)) {
+			Type(
+				key_fieldLabel = "Unit of Measure",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${unitOfMeasureNewName});
+		}
+
+		if (isSet(changeLocale)) {
+			PortletEntry.changeLocale(locale = ${locale});
+
+			PortletEntry.inputName(name = ${localizedName});
+		}
+
+		if (isSet(unitOfMeasureKey)) {
+			Type(
+				locator1 = "CommerceEntry#KEY_FIELD",
+				value1 = ${unitOfMeasureKey});
+		}
+
+		if (isSet(conversionRate)) {
+			Type(
+				key_fieldLabel = "Conversion Rate",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${conversionRate});
+		}
+
+		if (isSet(decimalAllowed)) {
+			Type(
+				key_fieldLabel = "Decimal Allowed",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${decimalAllowed});
+		}
+
+		if (isSet(baseUnitQuantity)) {
+			Type(
+				key_fieldLabel = "Base Unit Quantity",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${baseUnitQuantity});
+		}
+
+		if (isSet(priority)) {
+			Type(
+				key_fieldLabel = "Priority",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${priority});
+		}
+
+		if (isSet(purchasable) && (${purchasable} == "true")) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Purchasable",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if (isSet(purchasable) && (${purchasable} == "false")) {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Purchasable",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		if (isSet(setAsPrimaryUOM)) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Set as Primary Unit of Measure",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickNoError(button = "Save");
+
+			AssertConfirm.waitForConfirmation(value1 = "If the actual unit of measure is changed, all conversion rates to primary units of measure already set may become incorrect. Are you sure you want to change the primary unit of measure?");
+		}
+		else {
+			Button.clickSave();
+		}
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 	}
 
 	macro editWarehousesQuantity {
@@ -1297,11 +1519,9 @@ definition {
 		}
 		else {
 			if (${noOption} != "true") {
-				Click(locator1 = "CommerceEntry#OPTION_SELECT");
-
-				Click(
-					key_selectValue = ${optionValue},
-					locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+				Select(
+					locator1 = "Select#SELECT",
+					value1 = ${optionValue});
 			}
 		}
 	}
@@ -1522,7 +1742,7 @@ definition {
 			}
 		}
 
-		if (isSet(shippingOption)) {
+		if (isSet(shippingOption) && !(isSet(unpublish))) {
 			Click(locator1 = "Icon#CLOSE");
 
 			SelectFrame.selectFrameTop();
@@ -2098,6 +2318,18 @@ definition {
 		}
 
 		Click(locator1 = "Icon#BACK");
+	}
+
+	macro viewUOMEntry {
+		for (var rowValues : list ${uomRowList}) {
+			var firstRowValue = StringUtil.extractFirst(${rowValues}, ":");
+			var secondRowValue = StringUtil.extractLast(${rowValues}, ":");
+
+			AssertElementPresent(
+				key_firstRowValue = ${firstRowValue},
+				key_secondRowValue = ${secondRowValue},
+				locator1 = "CommerceEntry#GENERIC_TABLE_ROW_VALUE");
+		}
 	}
 
 }

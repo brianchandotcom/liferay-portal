@@ -1,22 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
-import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
+import ClayModal, {useModal} from '@clayui/modal';
 import React, {useState} from 'react';
 
 import {FormError, useForm} from '../../hooks/useForm';
@@ -28,9 +18,8 @@ import {Entity} from './index';
 
 interface ModalEditExternalReferenceCodeProps {
 	externalReferenceCode: string;
+	handleOnClose: () => void;
 	helpMessage: string;
-	observer: Observer;
-	onClose: () => void;
 	onExternalReferenceCodeChange?: (value: string) => void;
 	onGetEntity: () => Promise<Entity>;
 	saveURL: string;
@@ -43,9 +32,8 @@ type TInitialValues = {
 
 export function ModalEditExternalReferenceCode({
 	externalReferenceCode,
+	handleOnClose,
 	helpMessage,
-	observer,
-	onClose,
 	onExternalReferenceCodeChange,
 	onGetEntity,
 	saveURL,
@@ -56,13 +44,22 @@ export function ModalEditExternalReferenceCode({
 		externalReferenceCode,
 	};
 
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			handleOnClose();
+		},
+	});
+
 	const onSubmit = async ({externalReferenceCode}: TInitialValues) => {
 		try {
 			const entity = await onGetEntity();
 
-			await save(`${saveURL}`, {
-				...entity,
-				externalReferenceCode,
+			await save({
+				item: {
+					...entity,
+					externalReferenceCode,
+				},
+				url: `${saveURL}`,
 			});
 
 			setExternalReferenceCode(externalReferenceCode);

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.users.admin.web.internal.portlet.action;
@@ -30,7 +21,7 @@ import com.liferay.portal.kernel.service.OrgLaborService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.WebsiteService;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -107,16 +98,17 @@ public class UpdateOrganizationOrganizationSiteMVCActionCommand
 			Organization.class.getName(), organizationId);
 
 		organization = _organizationService.updateOrganization(
-			organizationId, organization.getParentOrganizationId(),
-			organization.getName(), organization.getType(),
-			organization.getRegionId(), organization.getCountryId(),
-			organization.getStatusListTypeId(), organization.getComments(),
-			true, null, site, organization.getAddresses(), emailAddresses,
-			orgLabors, phones, websites, null);
+			organization.getExternalReferenceCode(), organizationId,
+			organization.getParentOrganizationId(), organization.getName(),
+			organization.getType(), organization.getRegionId(),
+			organization.getCountryId(), organization.getStatusListTypeId(),
+			organization.getComments(), true, null, site,
+			organization.getAddresses(), emailAddresses, orgLabors, phones,
+			websites, null);
 
 		Group organizationGroup = organization.getGroup();
 
-		if (_groupPermission.contains(
+		if (GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), organizationGroup,
 				ActionKeys.UPDATE)) {
 
@@ -141,9 +133,6 @@ public class UpdateOrganizationOrganizationSiteMVCActionCommand
 
 	@Reference
 	private EmailAddressService _emailAddressService;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private OrganizationService _organizationService;

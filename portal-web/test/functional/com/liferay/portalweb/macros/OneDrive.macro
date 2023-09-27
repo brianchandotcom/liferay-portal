@@ -1,6 +1,8 @@
 definition {
 
 	macro AddDocument {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		Alert.viewInfoMessageSpecific(infoMessage = "The document has been checked out. Please check in the document after edits are made to save the changes into the document library.");
 
 		Type(
@@ -207,9 +209,14 @@ definition {
 	macro gotoEdit {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
-		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+		if (isSet(editInPreviewPage)) {
+			Click(locator1 = "DocumentsAndMediaDocument#DOCUMENT_TOOLBAR_VERTICAL_ELLIPSIS");
+		}
+		else {
+			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+		}
 
-		MenuItem.click(menuItem = "Edit in Office 365");
+		MenuItem.clickNoError(menuItem = "Edit in Office 365");
 	}
 
 	macro goToOneDrive {

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.service;
@@ -67,36 +58,38 @@ public class TeamLocalServiceUtil {
 		return getService().addTeam(team);
 	}
 
-	public static void addUserGroupTeam(long userGroupId, long teamId) {
-		getService().addUserGroupTeam(userGroupId, teamId);
+	public static boolean addUserGroupTeam(long userGroupId, long teamId) {
+		return getService().addUserGroupTeam(userGroupId, teamId);
 	}
 
-	public static void addUserGroupTeam(long userGroupId, Team team) {
-		getService().addUserGroupTeam(userGroupId, team);
+	public static boolean addUserGroupTeam(long userGroupId, Team team) {
+		return getService().addUserGroupTeam(userGroupId, team);
 	}
 
-	public static void addUserGroupTeams(long userGroupId, List<Team> teams) {
-		getService().addUserGroupTeams(userGroupId, teams);
+	public static boolean addUserGroupTeams(
+		long userGroupId, List<Team> teams) {
+
+		return getService().addUserGroupTeams(userGroupId, teams);
 	}
 
-	public static void addUserGroupTeams(long userGroupId, long[] teamIds) {
-		getService().addUserGroupTeams(userGroupId, teamIds);
+	public static boolean addUserGroupTeams(long userGroupId, long[] teamIds) {
+		return getService().addUserGroupTeams(userGroupId, teamIds);
 	}
 
-	public static void addUserTeam(long userId, long teamId) {
-		getService().addUserTeam(userId, teamId);
+	public static boolean addUserTeam(long userId, long teamId) {
+		return getService().addUserTeam(userId, teamId);
 	}
 
-	public static void addUserTeam(long userId, Team team) {
-		getService().addUserTeam(userId, team);
+	public static boolean addUserTeam(long userId, Team team) {
+		return getService().addUserTeam(userId, team);
 	}
 
-	public static void addUserTeams(long userId, List<Team> teams) {
-		getService().addUserTeams(userId, teams);
+	public static boolean addUserTeams(long userId, List<Team> teams) {
+		return getService().addUserTeams(userId, teams);
 	}
 
-	public static void addUserTeams(long userId, long[] teamIds) {
-		getService().addUserTeams(userId, teamIds);
+	public static boolean addUserTeams(long userId, long[] teamIds) {
+		return getService().addUserTeams(userId, teamIds);
 	}
 
 	public static void clearUserGroupTeams(long userGroupId) {

@@ -1,0 +1,1529 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "content-welcome-banner",
+								"siteKey": "Partner Portal"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "first-welcome-banner-title",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Welcome to Partner Tech",
+												"ca_ES": "Welcome to Partner Tech",
+												"de_DE": "Welcome to Partner Tech",
+												"en_US": "Welcome to Partner Tech",
+												"es_ES": "Welcome to Partner Tech",
+												"fi_FI": "Welcome to Partner Tech",
+												"fr_FR": "Welcome to Partner Tech",
+												"hu_HU": "Welcome to Partner Tech",
+												"ja_JP": "Welcome to Partner Tech",
+												"nl_NL": "Welcome to Partner Tech",
+												"pt_BR": "Welcome to Partner Tech",
+												"sv_SE": "Welcome to Partner Tech",
+												"zh_CN": "Welcome to Partner Tech"
+											}
+										}
+									}
+								},
+								{
+									"id": "first-welcome-banner-description",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay.",
+												"ca_ES": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay.",
+												"de_DE": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay.",
+												"en_US": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay.",
+												"es_ES": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay.",
+												"fi_FI": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay.",
+												"fr_FR": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay.",
+												"hu_HU": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay.",
+												"ja_JP": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay.",
+												"nl_NL": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay.",
+												"pt_BR": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay.",
+												"sv_SE": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay.",
+												"zh_CN": "Check out all Liferay’s technical resources designed to provide you with the background and understanding you need to build your story around Liferay."
+											}
+										}
+									}
+								},
+								{
+									"id": "second-welcome-banner-title",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Partner Tech",
+												"ca_ES": "Partner Tech",
+												"de_DE": "Partner Tech",
+												"en_US": "Partner Tech",
+												"es_ES": "Partner Tech",
+												"fi_FI": "Partner Tech",
+												"fr_FR": "Partner Tech",
+												"hu_HU": "Partner Tech",
+												"ja_JP": "Partner Tech",
+												"nl_NL": "Partner Tech",
+												"pt_BR": "Partner Tech",
+												"sv_SE": "Partner Tech",
+												"zh_CN": "Partner Tech"
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"pageElements": [
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "button-welcome-banner"
+											},
+											"fragmentConfig": {
+												"videoButtonLink": "https://www.youtube.com/embed/bZeAh7dpskw"
+											},
+											"fragmentFields": [
+												{
+													"id": "first-banner-primary-button-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Watch a Video Tour",
+																"ca_ES": "Watch a Video Tour",
+																"de_DE": "Watch a Video Tour",
+																"en_US": "Watch a Video Tour",
+																"es_ES": "Watch a Video Tour",
+																"fi_FI": "Watch a Video Tour",
+																"fr_FR": "Watch a Video Tour",
+																"hu_HU": "Watch a Video Tour",
+																"ja_JP": "Watch a Video Tour",
+																"nl_NL": "Watch a Video Tour",
+																"pt_BR": "Watch a Video Tour",
+																"sv_SE": "Watch a Video Tour",
+																"zh_CN": "Watch a Video Tour"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "dialect-dialect-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "",
+												"inverted": false,
+												"style": "primary",
+												"type": "solid",
+												"uppercase": false
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "How to Request a Demo Instance",
+																"ca_ES": "How to Request a Demo Instance",
+																"de_DE": "How to Request a Demo Instance",
+																"en_US": "How to Request a Demo Instance",
+																"es_ES": "How to Request a Demo Instance",
+																"fi_FI": "How to Request a Demo Instance",
+																"fr_FR": "How to Request a Demo Instance",
+																"hu_HU": "How to Request a Demo Instance",
+																"ja_JP": "How to Request a Demo Instance",
+																"nl_NL": "How to Request a Demo Instance",
+																"pt_BR": "How to Request a Demo Instance",
+																"sv_SE": "How to Request a Demo Instance",
+																"zh_CN": "How to Request a Demo Instance"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-image"
+											},
+											"fragmentConfig": {
+												"imageSize": "w-100"
+											},
+											"fragmentFields": [
+												{
+													"id": "image-square",
+													"value": {
+														"fragmentImage": {
+															"description": {
+																"value_i18n": {
+																	"en_US": ""
+																}
+															},
+															"url": {
+																"mapping": {
+																	"fieldKey": "FileEntry_previewImage",
+																	"itemReference": {
+																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/content-welcome-banner-resources/sales-welcome-banner-bg.png#]"
+																	}
+																}
+															}
+														},
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "button-welcome-banner",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"videoButtonLink": "https://www.youtube.com/embed/bZeAh7dpskw"
+											},
+											"fragmentFields": [
+												{
+													"id": "first-banner-primary-button-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Watch a Video Tour",
+																"ca_ES": "Watch a Video Tour",
+																"de_DE": "Watch a Video Tour",
+																"en_US": "Watch a Video Tour",
+																"es_ES": "Watch a Video Tour",
+																"fi_FI": "Watch a Video Tour",
+																"fr_FR": "Watch a Video Tour",
+																"hu_HU": "Watch a Video Tour",
+																"ja_JP": "Watch a Video Tour",
+																"nl_NL": "Watch a Video Tour",
+																"pt_BR": "Watch a Video Tour",
+																"sv_SE": "Watch a Video Tour",
+																"zh_CN": "Watch a Video Tour"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "dialect-dialect-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "",
+												"inverted": false,
+												"style": "primary",
+												"type": "ghost",
+												"uppercase": false
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "How to Request a Demo Instance",
+																"ca_ES": "How to Request a Demo Instance",
+																"de_DE": "How to Request a Demo Instance",
+																"en_US": "How to Request a Demo Instance",
+																"es_ES": "How to Request a Demo Instance",
+																"fi_FI": "How to Request a Demo Instance",
+																"fr_FR": "How to Request a Demo Instance",
+																"hu_HU": "How to Request a Demo Instance",
+																"ja_JP": "How to Request a Demo Instance",
+																"nl_NL": "How to Request a Demo Instance",
+																"pt_BR": "How to Request a Demo Instance",
+																"sv_SE": "How to Request a Demo Instance",
+																"zh_CN": "How to Request a Demo Instance"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginTop": "5"
+							},
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 6
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderColor": "colorNeutral3",
+												"borderRadius": "borderRadiusLg",
+												"borderWidth": "1",
+												"paddingBottom": "4",
+												"paddingRight": "4",
+												"paddingTop": "4",
+												"shadow": "",
+												"textAlign": ""
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"height": "",
+														"marginBottom": "0",
+														"maxHeight": ""
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"fragmentViewportStyle": {
+														"height": "",
+														"marginBottom": "0",
+														"marginLeft": "0",
+														"maxHeight": "",
+														"minHeight": "",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3",
+														"textAlign": "left"
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"fragmentViewportStyle": {
+														"marginBottom": "0",
+														"marginRight": "0",
+														"maxHeight": ""
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true,
+											"layout": {
+												"borderColor": "colorNeutral3",
+												"borderWidth": 1,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 2,
+												"paddingLeft": 0,
+												"paddingRight": 2,
+												"paddingTop": 2,
+												"widthType": "Fluid"
+											},
+											"name": "Quick Links Card"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"gutters": false,
+													"indexed": true,
+													"modulesPerRow": 2,
+													"name": "Card Grid",
+													"numberOfColumns": 2,
+													"reverseOrder": false,
+													"rowViewports": [
+														{
+															"id": "landscapeMobile",
+															"rowViewportDefinition": {
+																"modulesPerRow": 2
+															}
+														},
+														{
+															"id": "portraitMobile",
+															"rowViewportDefinition": {
+																"modulesPerRow": 1
+															}
+														},
+														{
+															"id": "tablet",
+															"rowViewportDefinition": {
+															}
+														}
+													],
+													"verticalAlignment": "middle"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 3
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 3
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0"
+																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"marginBottom": "0"
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"marginBottom": "2"
+																			},
+																			"id": "portraitMobile"
+																		}
+																	],
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexRow",
+																		"justify": "Center",
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	},
+																	"name": "Image Container"
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-image"
+																			},
+																			"fragmentConfig": {
+																				"imageSize": "w-0"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "image-square",
+																					"value": {
+																						"fragmentImage": {
+																							"title": {
+																								"value": "book-green.png"
+																							},
+																							"url": {
+																								"mapping": {
+																									"fieldKey": "FileEntry_previewImage",
+																									"itemReference": {
+																										"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/book-green.png#]"
+																									}
+																								}
+																							}
+																						},
+																						"fragmentLink": {
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"shadow": "",
+																				"textAlign": ""
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginRight": "0"
+																					},
+																					"id": "landscapeMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
+																						"hidden": false,
+																						"marginRight": "3",
+																						"paddingTop": "0",
+																						"textAlign": "left"
+																					},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
+																						"marginRight": "0"
+																					},
+																					"id": "tablet"
+																				}
+																			],
+																			"indexed": true,
+																			"name": "Card Image"
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Column"
+													},
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 9
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 9
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderRadius": "",
+																		"borderWidth": "",
+																		"shadow": "",
+																		"textAlign": ""
+																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingLeft": "0"
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"marginLeft": "0"
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"contentDisplay": "FlexColumn",
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	},
+																	"name": "Card Content Container"
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h4",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "Product Updates",
+																								"ca_ES": "Product Updates",
+																								"de_DE": "Product Updates",
+																								"en_US": "Product Updates",
+																								"es_ES": "Product Updates",
+																								"fi_FI": "Product Updates",
+																								"fr_FR": "Product Updates",
+																								"hu_HU": "Product Updates",
+																								"ja_JP": "Product Updates",
+																								"nl_NL": "Product Updates",
+																								"pt_BR": "Product Updates",
+																								"sv_SE": "Product Updates",
+																								"zh_CN": "Product Updates"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"fontWeight": "fontWeightBold",
+																				"maxHeight": "60px",
+																				"minHeight": "28px",
+																				"shadow": "",
+																				"textAlign": "",
+																				"textColor": "colorNeutral10"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"fontSize": "",
+																						"maxHeight": "60px",
+																						"overflow": ""
+																					},
+																					"id": "landscapeMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
+																						"height": "",
+																						"maxHeight": "",
+																						"minHeight": "",
+																						"textAlign": "left"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true,
+																			"name": "Card Title"
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h6",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"height": "60px",
+																				"overflow": "auto",
+																				"paddingBottom": "2",
+																				"paddingTop": "2",
+																				"shadow": "",
+																				"textAlign": "",
+																				"textColor": "colorNeutral8"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"fontSize": "19px",
+																						"hidden": false,
+																						"overflow": "visible"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true,
+																			"name": "Card Description"
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"borderWidth": "0",
+																				"shadow": "",
+																				"textAlign": ""
+																			},
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"contentDisplay": "FlexRow",
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			},
+																			"name": "Link Container"
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "dialect-dialect-text"
+																					},
+																					"fragmentConfig": {
+																						"textType": "text-paragraph",
+																						"truncateText": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "element-text",
+																							"value": {
+																								"fragmentLink": {
+																									"value": {
+																										"href": {
+																											"mapping": {
+																												"itemReference": {
+																													"className": "com.liferay.portal.kernel.model.Layout",
+																													"fields": [
+																														{
+																															"fieldName": "friendlyURL",
+																															"fieldValue": "/product-updates"
+																														},
+																														{
+																															"fieldName": "privatePage",
+																															"fieldValue": "false"
+																														},
+																														{
+																															"fieldName": "siteKey",
+																															"fieldValue": "[$GROUP_KEY$]"
+																														}
+																													]
+																												}
+																											}
+																										}
+																									}
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"ar_SA": "Learn More",
+																										"ca_ES": "Learn More",
+																										"de_DE": "Learn More",
+																										"en_US": "Learn More",
+																										"es_ES": "Learn More",
+																										"fi_FI": "Learn More",
+																										"fr_FR": "Learn More",
+																										"hu_HU": "Learn More",
+																										"ja_JP": "Learn More",
+																										"nl_NL": "Learn More",
+																										"pt_BR": "Learn More",
+																										"sv_SE": "Learn More",
+																										"zh_CN": "Learn More"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"fontWeight": "fontWeightBold",
+																						"height": "24px",
+																						"paddingRight": "1",
+																						"shadow": "",
+																						"textAlign": "",
+																						"textColor": "colorBrandPrimary"
+																					},
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"marginRight": "0"
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"indexed": true,
+																					"name": "Card Link"
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "clay-icon-link",
+																						"siteKey": "Partner Portal"
+																					},
+																					"fragmentConfig": {
+																						"iconLink": "",
+																						"iconName": "order-arrow-right"
+																					},
+																					"fragmentFields": [
+																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"shadow": "",
+																						"textAlign": "",
+																						"textColor": "colorBrandPrimary"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Column"
+													}
+												],
+												"type": "Row"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 6
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderColor": "colorNeutral3",
+												"borderRadius": "borderRadiusLg",
+												"borderWidth": "1",
+												"paddingBottom": "4",
+												"paddingRight": "4",
+												"paddingTop": "4",
+												"shadow": "",
+												"textAlign": ""
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"height": "",
+														"marginBottom": "0",
+														"maxHeight": ""
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"fragmentViewportStyle": {
+														"height": "",
+														"marginBottom": "0",
+														"marginLeft": "0",
+														"maxHeight": "",
+														"minHeight": "",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3",
+														"textAlign": "left"
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"fragmentViewportStyle": {
+														"marginBottom": "0",
+														"marginRight": "0",
+														"maxHeight": ""
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true,
+											"layout": {
+												"borderColor": "colorNeutral3",
+												"borderWidth": 1,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 2,
+												"paddingLeft": 0,
+												"paddingRight": 2,
+												"paddingTop": 2,
+												"widthType": "Fluid"
+											},
+											"name": "Quick Links Card"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"gutters": false,
+													"indexed": true,
+													"modulesPerRow": 2,
+													"name": "Card Grid",
+													"numberOfColumns": 2,
+													"reverseOrder": false,
+													"rowViewports": [
+														{
+															"id": "landscapeMobile",
+															"rowViewportDefinition": {
+																"modulesPerRow": 2
+															}
+														},
+														{
+															"id": "portraitMobile",
+															"rowViewportDefinition": {
+																"modulesPerRow": 1
+															}
+														},
+														{
+															"id": "tablet",
+															"rowViewportDefinition": {
+															}
+														}
+													],
+													"verticalAlignment": "middle"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 3
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 3
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0"
+																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"marginBottom": "0"
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"marginBottom": "2"
+																			},
+																			"id": "portraitMobile"
+																		}
+																	],
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexRow",
+																		"justify": "Center",
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	},
+																	"name": "Image Container"
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-image"
+																			},
+																			"fragmentConfig": {
+																				"imageSize": "w-0"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "image-square",
+																					"value": {
+																						"fragmentImage": {
+																							"title": {
+																								"value": "video-blue.png"
+																							},
+																							"url": {
+																								"mapping": {
+																									"fieldKey": "FileEntry_previewImage",
+																									"itemReference": {
+																										"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/video-blue.png#]"
+																									}
+																								}
+																							}
+																						},
+																						"fragmentLink": {
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"shadow": "",
+																				"textAlign": ""
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginRight": "0"
+																					},
+																					"id": "landscapeMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
+																						"hidden": false,
+																						"marginRight": "3",
+																						"paddingTop": "0",
+																						"textAlign": "left"
+																					},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
+																						"marginRight": "0"
+																					},
+																					"id": "tablet"
+																				}
+																			],
+																			"indexed": true,
+																			"name": "Card Image"
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Column"
+													},
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 9
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 9
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderRadius": "",
+																		"borderWidth": "",
+																		"shadow": "",
+																		"textAlign": ""
+																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingLeft": "0"
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"marginLeft": "0"
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"contentDisplay": "FlexColumn",
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	},
+																	"name": "Card Content Container"
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h4",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "Request a Demo Instance",
+																								"ca_ES": "Request a Demo Instance",
+																								"de_DE": "Request a Demo Instance",
+																								"en_US": "Request a Demo Instance",
+																								"es_ES": "Request a Demo Instance",
+																								"fi_FI": "Request a Demo Instance",
+																								"fr_FR": "Request a Demo Instance",
+																								"hu_HU": "Request a Demo Instance",
+																								"ja_JP": "Request a Demo Instance",
+																								"nl_NL": "Request a Demo Instance",
+																								"pt_BR": "Request a Demo Instance",
+																								"sv_SE": "Request a Demo Instance",
+																								"zh_CN": "Request a Demo Instance"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"fontWeight": "fontWeightBold",
+																				"maxHeight": "60px",
+																				"minHeight": "28px",
+																				"shadow": "",
+																				"textAlign": "",
+																				"textColor": "colorNeutral10"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"fontSize": "",
+																						"maxHeight": "60px",
+																						"overflow": ""
+																					},
+																					"id": "landscapeMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
+																						"height": "",
+																						"maxHeight": "",
+																						"minHeight": "",
+																						"textAlign": "left"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true,
+																			"name": "Card Title"
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h6",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"height": "60px",
+																				"overflow": "auto",
+																				"paddingBottom": "2",
+																				"paddingTop": "2",
+																				"shadow": "",
+																				"textAlign": "",
+																				"textColor": "colorNeutral8"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"fontSize": "19px",
+																						"hidden": false,
+																						"overflow": "visible"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true,
+																			"name": "Card Description"
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"borderWidth": "0",
+																				"shadow": "",
+																				"textAlign": ""
+																			},
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"contentDisplay": "FlexRow",
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			},
+																			"name": "Link Container"
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "dialect-dialect-text"
+																					},
+																					"fragmentConfig": {
+																						"textType": "text-paragraph",
+																						"truncateText": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "element-text",
+																							"value": {
+																								"fragmentLink": {
+																									"value": {
+																										"href": {
+																											"mapping": {
+																												"itemReference": {
+																													"className": "com.liferay.portal.kernel.model.Layout",
+																													"fields": [
+																														{
+																															"fieldName": "friendlyURL",
+																															"fieldValue": "/demo-request"
+																														},
+																														{
+																															"fieldName": "privatePage",
+																															"fieldValue": "false"
+																														},
+																														{
+																															"fieldName": "siteKey",
+																															"fieldValue": "[$GROUP_KEY$]"
+																														}
+																													]
+																												}
+																											}
+																										}
+																									}
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"ar_SA": "Learn More",
+																										"ca_ES": "Learn More",
+																										"de_DE": "Learn More",
+																										"en_US": "Learn More",
+																										"es_ES": "Learn More",
+																										"fi_FI": "Learn More",
+																										"fr_FR": "Learn More",
+																										"hu_HU": "Learn More",
+																										"ja_JP": "Learn More",
+																										"nl_NL": "Learn More",
+																										"pt_BR": "Learn More",
+																										"sv_SE": "Learn More",
+																										"zh_CN": "Learn More"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"fontWeight": "fontWeightBold",
+																						"height": "24px",
+																						"paddingRight": "1",
+																						"shadow": "",
+																						"textAlign": "",
+																						"textColor": "colorBrandPrimary"
+																					},
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"marginRight": "0"
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"indexed": true,
+																					"name": "Card Link"
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "clay-icon-link",
+																						"siteKey": "Partner Portal"
+																					},
+																					"fragmentConfig": {
+																						"iconLink": "",
+																						"iconName": "order-arrow-right"
+																					},
+																					"fragmentFields": [
+																					],
+																					"fragmentStyle": {
+																						"borderRadius": "",
+																						"shadow": "",
+																						"textAlign": "",
+																						"textColor": "colorBrandPrimary"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Column"
+													}
+												],
+												"type": "Row"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

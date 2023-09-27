@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.password.policies.admin.web.internal.display.context;
@@ -21,6 +12,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.organizations.search.OrganizationSearch;
+import com.liferay.organizations.search.OrganizationSearchTerms;
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.password.policies.admin.web.internal.search.AddOrganizationPasswordPolicyChecker;
 import com.liferay.password.policies.admin.web.internal.search.AddUserPasswordPolicyChecker;
@@ -30,6 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -45,10 +39,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.usersadmin.search.OrganizationSearch;
-import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
-import com.liferay.portlet.usersadmin.search.UserSearch;
-import com.liferay.portlet.usersadmin.search.UserSearchTerms;
+import com.liferay.users.admin.search.UserSearch;
+import com.liferay.users.admin.search.UserSearchTerms;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -118,8 +110,9 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "order-by"));
 			}
@@ -145,6 +138,25 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 		}
 
 		return _orderByCol;
+	}
+
+	public List<DropdownItem> getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				for (String orderColumn : _getOrderColumns()) {
+					add(
+						dropdownItem -> {
+							dropdownItem.setActive(
+								Objects.equals(getOrderByCol(), orderColumn));
+							dropdownItem.setHref(
+								getPortletURL(), "orderByCol", orderColumn);
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, orderColumn));
+						});
+				}
+			}
+		};
 	}
 
 	public String getOrderByType() {
@@ -337,25 +349,6 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 		}
 
 		return "name";
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				for (String orderColumn : _getOrderColumns()) {
-					add(
-						dropdownItem -> {
-							dropdownItem.setActive(
-								Objects.equals(getOrderByCol(), orderColumn));
-							dropdownItem.setHref(
-								getPortletURL(), "orderByCol", orderColumn);
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, orderColumn));
-						});
-				}
-			}
-		};
 	}
 
 	private String[] _getOrderColumns() {

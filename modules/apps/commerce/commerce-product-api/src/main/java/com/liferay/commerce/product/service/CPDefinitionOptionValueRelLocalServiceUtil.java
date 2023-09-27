@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.service;
@@ -74,13 +65,13 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 	}
 
 	public static CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
-			long cpDefinitionOptionRelId, Map<java.util.Locale, String> nameMap,
-			double priority, String key,
+			long cpDefinitionOptionRelId, String key,
+			Map<java.util.Locale, String> nameMap, double priority,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCPDefinitionOptionValueRel(
-			cpDefinitionOptionRelId, nameMap, priority, key, serviceContext);
+			cpDefinitionOptionRelId, key, nameMap, priority, serviceContext);
 	}
 
 	/**
@@ -251,6 +242,13 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 
 		return getService().fetchCPDefinitionOptionValueRel(
 			CPDefinitionOptionValueRelId);
+	}
+
+	public static CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
+		long cpDefinitionOptionRelId, long cpInstanceId) {
+
+		return getService().fetchCPDefinitionOptionValueRel(
+			cpDefinitionOptionRelId, cpInstanceId);
 	}
 
 	public static CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
@@ -511,7 +509,8 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 	}
 
 	public static void resetCPInstanceCPDefinitionOptionValueRels(
-		String cpInstanceUuid) {
+			String cpInstanceUuid)
+		throws PortalException {
 
 		getService().resetCPInstanceCPDefinitionOptionValueRels(cpInstanceUuid);
 	}
@@ -561,16 +560,17 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 	}
 
 	public static CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-			long cpDefinitionOptionValueRelId,
-			Map<java.util.Locale, String> nameMap, double priority, String key,
-			long cpInstanceId, int quantity, boolean preselected,
-			java.math.BigDecimal price,
+			long cpDefinitionOptionValueRelId, long cpInstanceId, String key,
+			Map<java.util.Locale, String> nameMap, boolean preselected,
+			java.math.BigDecimal price, double priority,
+			java.math.BigDecimal quantity, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCPDefinitionOptionValueRel(
-			cpDefinitionOptionValueRelId, nameMap, priority, key, cpInstanceId,
-			quantity, preselected, price, serviceContext);
+			cpDefinitionOptionValueRelId, cpInstanceId, key, nameMap,
+			preselected, price, priority, quantity, unitOfMeasureKey,
+			serviceContext);
 	}
 
 	public static CPDefinitionOptionValueRel

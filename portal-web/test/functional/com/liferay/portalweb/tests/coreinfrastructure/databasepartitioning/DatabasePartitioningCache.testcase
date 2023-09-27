@@ -23,6 +23,7 @@ definition {
 	@priority = 5
 	test CacheIsClearedOnCompanyRemoval {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -69,6 +70,7 @@ definition {
 	@priority = 5
 	test CacheIsOnlyPopulatedToSingleCompany {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -96,6 +98,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -171,6 +174,7 @@ definition {
 	@priority = 4
 	test NullCacheDoesNotBreakSiteFromAnotherPartition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "www.able.com",

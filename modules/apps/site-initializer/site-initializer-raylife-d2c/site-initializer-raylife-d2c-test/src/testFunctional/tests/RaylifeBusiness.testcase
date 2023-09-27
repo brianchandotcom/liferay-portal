@@ -34,6 +34,7 @@ definition {
 	@priority = 4
 	test CanContinueOnBusinessInfoWithAllFilled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -60,6 +61,7 @@ definition {
 	@priority = 3
 	test CanDismissSalesMerchandiseInfoPanel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -90,6 +92,7 @@ definition {
 	@priority = 3
 	test CanDismissYearsOfExperienceInfoPanel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -120,6 +123,7 @@ definition {
 	@priority = 5
 	test CanGoBackOnBusinessInfoKeepingAllData {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -148,6 +152,7 @@ definition {
 	@priority = 3
 	test CanViewSalesMerchandiseInfoPanel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -176,6 +181,7 @@ definition {
 	@priority = 3
 	test CanViewYearsOfExperienceInfoPanel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -204,6 +210,7 @@ definition {
 	@priority = 4
 	test OverallSalesIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -260,6 +267,7 @@ definition {
 	@priority = 4
 	test OverallSalesNotAbove100 {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -312,6 +320,7 @@ definition {
 	@priority = 4
 	test SalesMerchandiseIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -344,6 +353,7 @@ definition {
 	@priority = 4
 	test SalesMerchandiseNotAbove100 {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -388,6 +398,7 @@ definition {
 	@priority = 4
 	test YearsOfExperienceIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -421,6 +432,7 @@ definition {
 	@priority = 4
 	test YearsOfExperienceNotBelowZero {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

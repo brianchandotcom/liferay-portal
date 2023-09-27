@@ -267,9 +267,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -326,9 +324,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -346,6 +342,7 @@ definition {
 	test PublishWithShortcut {
 		property app.server.types = "tomcat";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -392,9 +389,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");*/
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -455,7 +450,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Document Title Edit",
-			warningMessage = "The conflict cannot be automatically resolved.");
+			warningMessage = "Entity Recently Updated");
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "DM Document Title Edit");
 
@@ -507,14 +502,16 @@ definition {
 
 		PublicationsChangeDetails.viewDocumentChangeDetailsInDisplay(
 			changeType = "Added",
-			keyImage = "Document_1.jpg");
+			keyImage = "Document_1.jpg",
+			publicationName = "Publication Name");
 
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Data");
 
 		PublicationsChangeDetails.viewChangeDetailsInData(
 			changeType = "Added",
 			columnName = "Title",
-			columnValueInPublication = "Document_1.jpg");
+			columnValueInPublication = "Document_1.jpg",
+			publicationName = "Publication Name");
 	}
 
 }

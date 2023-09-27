@@ -1,0 +1,204 @@
+definition {
+
+	macro _addCommerceUOM {
+		Variables.assertDefined(parameterList = "${basePrice},${uomName},${uomKey},${productSKU}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(active))) {
+			var active = "true";
+		}
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(incrementalOrderQuantity))) {
+			var incrementalOrderQuantity = 1;
+		}
+
+		if (!(isSet(precision))) {
+			var precision = 1;
+		}
+
+		if (!(isSet(primary))) {
+			var primary = "false";
+		}
+
+		if (!(isSet(promoPrice))) {
+			var promoPrice = 0;
+		}
+
+		if (!(isSet(priority))) {
+			var priority = 0;
+		}
+
+		if (!(isSet(rate))) {
+			var rate = 1;
+		}
+
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId}/sku-unit-of-measures \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"active": ${active},
+					"basePrice": ${basePrice},
+					"incrementalOrderQuantity": ${incrementalOrderQuantity},
+					"key": "${uomKey}",
+					"name": {
+						"en_US": "${uomName}"
+					},
+					"precision": ${precision},
+					"primary": ${primary},
+					"priority": ${priority},
+					"promoPrice": ${promoPrice},
+					"rate": ${rate}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro _deleteAllCommerceUOMs {
+		Variables.assertDefined(parameterList = ${productSKU});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var uomCount = CommerceJSONSKUsAPI._getCommerceUOMCountBySKUId(productSKU = ${productSKU});
+
+		if (${uomCount} != 0) {
+			var uomIds = CommerceJSONSKUsAPI._getCommerceUOMIdBySKUId(productSKU = ${productSKU});
+
+			for (var uomId : list ${uomIds}) {
+				echo("Deleting Commerce UOM with id: ${uomId}");
+
+				var userLoginInfo = JSONUtil2.formatJSONUser();
+
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-catalog/v1.0/sku-unit-of-measures/${uomId} \
+						-u ${userLoginInfo} \
+						-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete(${curl});
+			}
+		}
+		else {
+			echo("No Commerce UOM to be deleted");
+		}
+	}
+
+	macro _deleteCommerceSkuUom {
+		Variables.assertDefined(parameterList = "${productSKU},${uomKey}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var skuUomId = CommerceJSONSKUsAPI._getCommerceSkuUomIdByKey(
+			productSKU = ${productSKU},
+			uomKey = ${uomKey});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/sku-unit-of-measures/${skuUomId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		JSONCurlUtil.delete(${curl});
+	}
+
+	macro _getCommerceSkuUomIdByKey {
+		Variables.assertDefined(parameterList = "${productSKU},${uomKey}");
+
+		var responseBody = CommerceJSONSKUsAPI._getCommerceSkuUomsBySKU(productSKU = ${productSKU});
+
+		var skuUomId = JSONUtil.getWithJSONPath(${responseBody}, "$.items[?(@.key == '${uomKey}')].['id']]");
+
+		return ${skuUomId};
+	}
+
+	macro _getCommerceSkuUomsBySKU {
+		Variables.assertDefined(parameterList = ${productSKU});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId}/sku-unit-of-measures \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
+	}
+
+	macro _getCommerceUOMCountBySKUId {
+		Variables.assertDefined(parameterList = ${productSKU});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId}/sku-unit-of-measures \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var uomCount = JSONCurlUtil.get(${curl}, "$['totalCount']");
+
+		echo("The Commerce uom count for SKU ${productSKU} is: ${uomCount}");
+
+		return ${uomCount};
+	}
+
+	macro _getCommerceUOMIdBySKUId {
+		Variables.assertDefined(parameterList = ${productSKU});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId}/sku-unit-of-measures \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var uomIds = JSONCurlUtil.get(${curl}, "$..['id']");
+
+		return ${uomIds};
+	}
+
+}

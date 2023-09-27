@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.search.experiences.rest.internal.graphql.mutation.v1_0;
@@ -355,6 +346,34 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public SXPBlueprint updateSXPBlueprint(
+			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId,
+			@GraphQLName("sxpBlueprint") SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpBlueprintResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpBlueprintResource -> sxpBlueprintResource.putSXPBlueprint(
+				sxpBlueprintId, sxpBlueprint));
+	}
+
+	@GraphQLField
+	public Response updateSXPBlueprintBatch(
+			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId,
+			@GraphQLName("sxpBlueprint") SXPBlueprint sxpBlueprint,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpBlueprintResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpBlueprintResource -> sxpBlueprintResource.putSXPBlueprintBatch(
+				sxpBlueprintId, sxpBlueprint, callbackURL, object));
+	}
+
+	@GraphQLField
 	public SXPBlueprint createSXPBlueprintCopy(
 			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId)
 		throws Exception {
@@ -490,6 +509,34 @@ public class Mutation {
 			this::_populateResourceContext,
 			sxpElementResource -> sxpElementResource.patchSXPElement(
 				sxpElementId, sxpElement));
+	}
+
+	@GraphQLField
+	public SXPElement updateSXPElement(
+			@GraphQLName("sxpElementId") Long sxpElementId,
+			@GraphQLName("sxpElement") SXPElement sxpElement)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource -> sxpElementResource.putSXPElement(
+				sxpElementId, sxpElement));
+	}
+
+	@GraphQLField
+	public Response updateSXPElementBatch(
+			@GraphQLName("sxpElementId") Long sxpElementId,
+			@GraphQLName("sxpElement") SXPElement sxpElement,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource -> sxpElementResource.putSXPElementBatch(
+				sxpElementId, sxpElement, callbackURL, object));
 	}
 
 	@GraphQLField

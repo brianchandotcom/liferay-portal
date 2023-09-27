@@ -43,6 +43,12 @@ definition {
 		}
 	}
 
+	macro reloadPageAfterSuccessMessage {
+		Alert.viewSuccessMessageText(successMessage = ${successMessage});
+
+		Button.click(button = "Reload");
+	}
+
 	macro viewConversionMessage {
 		AssertVisible(
 			key_alertMessage = ${alertMessage},
@@ -67,6 +73,13 @@ definition {
 			key_alertMessage = "Please enter a valid expiration date.",
 			locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
 			value1 = "Please enter a valid expiration date.");
+	}
+
+	macro viewFieldErrorMessage {
+		AssertTextEquals(
+			fieldLabel = ${fieldLabel},
+			locator1 = "Message#ERROR_FIELD",
+			value1 = ${errorMessage});
 	}
 
 	macro viewInfoMessage {

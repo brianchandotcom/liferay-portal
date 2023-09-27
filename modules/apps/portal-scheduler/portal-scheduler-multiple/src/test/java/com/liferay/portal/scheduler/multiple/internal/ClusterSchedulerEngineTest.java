@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.scheduler.multiple.internal;
@@ -1071,113 +1062,6 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocal.collectThreadLocalContext()));
 	}
 
-	@Test
-	public void testUnscheduleOnMaster() throws SchedulerException {
-
-		// Test 1, MEMORY_CLUSTERED job by jobName and groupName
-
-		_mockClusterMasterExecutor.reset(true, 0, 0);
-
-		_mockSchedulerEngine.resetJobs(4, 4);
-
-		_clusterSchedulerEngine.start();
-
-		SchedulerResponse schedulerResponse =
-			_clusterSchedulerEngine.getScheduledJob(
-				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
-				StorageType.MEMORY_CLUSTERED);
-
-		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
-
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-
-		_clusterSchedulerEngine.unschedule(
-			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
-			StorageType.MEMORY_CLUSTERED);
-
-		schedulerResponse = _clusterSchedulerEngine.getScheduledJob(
-			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
-			StorageType.MEMORY_CLUSTERED);
-
-		_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
-
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-
-		ClusterInvokeThreadLocal.setEnabled(false);
-
-		Assert.assertTrue(
-			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocal.collectThreadLocalContext()));
-
-		// Test 2, PERSISTED job by jobName and groupName
-
-		schedulerResponse = _clusterSchedulerEngine.getScheduledJob(
-			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
-			StorageType.PERSISTED);
-
-		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
-
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-
-		_clusterSchedulerEngine.unschedule(
-			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
-			StorageType.PERSISTED);
-
-		schedulerResponse = _clusterSchedulerEngine.getScheduledJob(
-			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
-			StorageType.PERSISTED);
-
-		_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
-
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-
-		ClusterInvokeThreadLocal.setEnabled(false);
-
-		Assert.assertFalse(
-			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocal.collectThreadLocalContext()));
-	}
-
-	@Test
-	public void testUnscheduleOnSlave() throws SchedulerException {
-
-		// MEMORY_CLUSTERED job by jobName and groupName
-
-		_mockClusterMasterExecutor.reset(false, 4, 0);
-
-		_mockSchedulerEngine.resetJobs(0, 4);
-
-		_clusterSchedulerEngine.start();
-
-		Assert.assertNull(
-			_clusterSchedulerEngine.getScheduledJob(
-				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
-				StorageType.MEMORY_CLUSTERED));
-
-		SchedulerResponse schedulerResponse = _getMemoryClusteredJob(
-			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME);
-
-		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
-
-		_clusterSchedulerEngine.unschedule(
-			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
-			StorageType.MEMORY_CLUSTERED);
-
-		Assert.assertNull(
-			_clusterSchedulerEngine.getScheduledJob(
-				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
-				StorageType.MEMORY_CLUSTERED));
-		Assert.assertNull(
-			_getMemoryClusteredJob(
-				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME));
-
-		ClusterInvokeThreadLocal.setEnabled(false);
-
-		Assert.assertTrue(
-			_clusterInvokeAcceptor.accept(
-				ClusterableContextThreadLocal.collectThreadLocalContext()));
-	}
-
 	protected static Trigger getTrigger(
 		String jobName, String groupName, int interval) {
 
@@ -1633,20 +1517,6 @@ public class ClusterSchedulerEngineTest {
 
 		@Override
 		public void start() {
-		}
-
-		@Override
-		public void unschedule(
-			String jobName, String groupName, StorageType storageType) {
-
-			SchedulerResponse schedulerResponse = getScheduledJob(
-				jobName, groupName, storageType);
-
-			Message message = schedulerResponse.getMessage();
-
-			message.put(
-				SchedulerEngine.JOB_STATE,
-				new JobState(TriggerState.UNSCHEDULED));
 		}
 
 		@Override

@@ -1,21 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.test.util.background.task;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
@@ -41,6 +33,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Adam Brandizzi
@@ -80,6 +75,12 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 		if (_searchEngineFixture != null) {
 			_searchEngineFixture.tearDown();
 		}
+
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+
+			_serviceRegistration = null;
+		}
 	}
 
 	@Test
@@ -106,10 +107,14 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 	protected ReindexSingleIndexerBackgroundTaskExecutor
 		getReindexSingleIndexerBackgroundTaskExecutor() {
 
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			IndexWriterHelper.class, _indexWriterHelper, null);
+
 		return new ReindexSingleIndexerBackgroundTaskExecutor() {
 			{
 				indexerRegistry = _indexerRegistry;
-				indexWriterHelper = _indexWriterHelper;
 				reindexStatusMessageSender = _reindexStatusMessageSender;
 				searchEngineHelper = _searchEngineHelper;
 				systemIndexers = _systemIndexers;
@@ -153,6 +158,7 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 		Mockito.mock(ReindexStatusMessageSender.class);
 	private SearchEngineFixture _searchEngineFixture;
 	private SearchEngineHelper _searchEngineHelper;
+	private ServiceRegistration<IndexWriterHelper> _serviceRegistration;
 	private final ServiceTrackerList<Indexer<?>> _systemIndexers = Mockito.mock(
 		ServiceTrackerList.class);
 

@@ -147,9 +147,7 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
@@ -261,9 +259,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Dynamic Data Lists Display Page",
@@ -424,9 +420,7 @@ definition {
 			fieldValueInPublication = "3/30/21",
 			publicationName = "Publication Name");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
@@ -540,9 +534,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Dynamic Data Lists Display Page",
@@ -642,9 +634,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "site-name");
 
@@ -764,9 +754,7 @@ definition {
 			conflictingChanges = "true",
 			entryTitle = "Dynamic Data Lists Record");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name 1",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name 1");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 

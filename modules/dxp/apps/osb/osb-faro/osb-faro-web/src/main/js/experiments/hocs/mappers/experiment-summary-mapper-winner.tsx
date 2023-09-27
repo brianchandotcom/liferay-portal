@@ -1,13 +1,7 @@
 import React from 'react';
 import SummarySection from 'experiments/components/summary-section';
 import {formatDateToTimeZone} from 'shared/util/date';
-import {
-	getMetricName,
-	mergedVariants,
-	modalComplete,
-	modalPublishOtherVariant,
-	modalPublishVariant
-} from 'experiments/util/experiments';
+import {getMetricName, mergedVariants} from 'experiments/util/experiments';
 import {sub} from 'shared/util/lang';
 import {toRounded} from 'shared/util/numbers';
 import {toThousandsABTesting} from 'experiments/util/experiments';
@@ -20,16 +14,16 @@ type Alert = {
 
 export default ({
 	dxpVariants,
-	experimentId,
 	goal,
 	metrics: {completion, elapsedDays, variantMetrics},
-	pageURL,
 	sessions,
 	startedDate,
 	timeZoneId,
 	winnerDXPVariantId
 }) => {
-	const winnerVariant = mergedVariants(dxpVariants, variantMetrics).find(
+	const variants = mergedVariants(dxpVariants, variantMetrics);
+
+	const winnerVariant = variants.find(
 		({dxpVariantId}) => dxpVariantId === winnerDXPVariantId
 	);
 
@@ -37,16 +31,11 @@ export default ({
 		symbol: 'check-circle'
 	};
 
-	let modals = [];
-
 	if (winnerVariant) {
 		if (winnerVariant.control) {
-			const variants = dxpVariants.filter(({control}) => !control);
-
-			modals = [
-				modalComplete(experimentId, winnerVariant.dxpVariantId),
-				modalPublishOtherVariant(variants, experimentId, pageURL)
-			];
+			const secondPlaceVariant = variants.find(
+				({dxpVariantId}) => dxpVariantId !== winnerDXPVariantId
+			);
 
 			alert = {
 				...alert,
@@ -55,30 +44,18 @@ export default ({
 				),
 				title: sub(
 					Liferay.Language.get(
-						'control-has-outperformed-all-variants-by-at-least-x'
+						'control-has-outperformed-x-by-at-least-x'
 					),
-					[`${toRounded(winnerVariant.improvement, 2)}%`]
+					[
+						secondPlaceVariant.dxpVariantName,
+						`${toRounded(
+							Math.abs(secondPlaceVariant.improvement),
+							2
+						)}%`
+					]
 				)
 			};
 		} else {
-			const control = dxpVariants.find(({control}) => control);
-			const variants = dxpVariants.filter(
-				({control, dxpVariantId}) =>
-					!control && dxpVariantId !== winnerDXPVariantId
-			);
-
-			modals = [
-				modalPublishVariant(
-					winnerVariant.dxpVariantId,
-					winnerVariant.dxpVariantName,
-					experimentId,
-					pageURL
-				),
-				variants.length &&
-					modalPublishOtherVariant(variants, experimentId, pageURL),
-				modalComplete(experimentId, control.dxpVariantId)
-			].filter(Boolean);
-
 			alert = {
 				...alert,
 				description: Liferay.Language.get(
@@ -105,7 +82,6 @@ export default ({
 					formatDateToTimeZone(startedDate, 'll', timeZoneId)
 				]),
 
-			modals,
 			title: Liferay.Language.get('winner-declared')
 		},
 		sections: [

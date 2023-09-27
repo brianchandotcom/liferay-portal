@@ -28,7 +28,7 @@ the range start.
 - If a change log already exists for your project, the start range begins at the
 range end of the last line in the change log.
 
-The plugin has been successfully tested with Gradle 6.9.2.
+The plugin has been successfully tested with Gradle 7.3.3.
 
 ## Usage
 
@@ -37,7 +37,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.change.log.builder", version: "1.1.5"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.change.log.builder", version: "1.1.7"
 	}
 
 	repositories {

@@ -1,26 +1,17 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {useSessionState} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
 import {config} from '../../../app/config/index';
-import {useSessionState} from '../../../common/hooks/useSessionState';
 import useKeyboardNavigation from '../hooks/useKeyboardNavigation';
 import TabItem from './TabItem';
 
@@ -158,7 +149,7 @@ function TabCollectionCollapse({
 
 	return (
 		<li
-			className="page-editor__collapse panel-group panel-group-flush"
+			className="page-editor__collapse panel panel-unstyled"
 			ref={collapseRef}
 			role="none"
 		>
@@ -166,10 +157,7 @@ function TabCollectionCollapse({
 				aria-expanded={isOpen ? 'true' : 'false'}
 				aria-haspopup="menu"
 				className={classNames(
-					'btn',
-					'btn-unstyled',
-					'collapse-icon',
-					'sheet-subtitle',
+					'mb-3 panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled',
 					{
 						collapsed: !isOpen,
 					}
@@ -180,7 +168,10 @@ function TabCollectionCollapse({
 				tabIndex={isTarget ? 0 : -1}
 				type="button"
 			>
-				<span className="c-inner text-truncate" tabIndex={-1}>
+				<span
+					className="c-inner panel-title text-truncate"
+					tabIndex={-1}
+				>
 					{title}
 
 					<span

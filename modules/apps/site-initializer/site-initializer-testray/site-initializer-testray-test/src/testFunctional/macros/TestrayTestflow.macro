@@ -1,7 +1,7 @@
 definition {
 
 	macro addTask {
-		Click(locator1 = "Button#PLUS");
+		LexiconEntry.gotoAdd();
 
 		TestrayTestflow.editBreadcrumb(
 			build = ${selectBuild},
@@ -11,37 +11,51 @@ definition {
 		Button.click(button = "Analyze");
 
 		if (isSet(taskName)) {
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = ${taskName});
+			PortletEntry.inputName(name = ${taskName});
 		}
 
-		if (isSet(checkCaseType)) {
+		if (isSet(caseTypeList)) {
+			for (var caseType : list ${caseTypeList}) {
+				Click.clickAtNotVisible(
+					key_checkboxOption = ${caseType},
+					locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+			}
+		}
+
+		if (${userGroups} == "true") {
+			Testray.selectCheckboxOptions(
+				buttonText = "Select User Groups",
+				checkboxNameList = ${userList},
+				linkText = "Assign User Groups");
+		}
+
+		if (${userGroups} == "false") {
+			Testray.selectCheckboxOptions(
+				buttonText = "Select Users",
+				checkboxNameList = ${userList},
+				linkText = "Assign Users");
+		}
+
+		if (isSet(fieldRequired)) {
+			Button.click(button = "Save");
+		}
+		else {
+			Testray.checkSuccessAlertAppearsAndDisappears();
+
+			Button.click(button = "Save");
+
+			WaitForElementPresent(
+				key_text = "Refresh",
+				locator1 = "Button#ANY");
+
 			Click(
-				key_checkboxOption = ${checkCaseType},
-				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+				key_text = "Refresh",
+				locator1 = "Button#ANY");
+
+			WaitForElementNotPresent(
+				key_text = "Refresh",
+				locator1 = "Button#ANY");
 		}
-
-		Button.click(button = "Assign Users");
-
-		if (isSet(userName)) {
-			Click.clickAtNotVisible(
-				key_checkboxOption = ${userName},
-				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
-		}
-
-		Button.click(button = "Select Users");
-
-		Testray.checkSuccessAlertAppearsAndDisappears();
-
-		Button.click(button = "Save");
-	}
-
-	macro assertAssignTask {
-		AssertElementPresent(
-			key_email = ${email},
-			key_userName = ${userName},
-			locator1 = "TestrayTestflow#ASSIGN_INFORMATIONS");
 	}
 
 	macro assertStatus {
@@ -62,55 +76,92 @@ definition {
 	}
 
 	macro assignUsers {
-		SelectFrame(locator1 = "Testray#MODAL_BODY");
+		if (isSet(assignButton)) {
+			Button.click(button = ${assignButton});
 
-		Testray.goToProjectPage(projectName = ${userName});
+			SelectFrame(locator1 = "Testray#MODAL_BODY");
 
-		Alert.viewSuccessMessage();
+			Testray.clickTableEntry(tableEntry = ${userName});
+
+			Alert.viewSuccessMessage();
+		}
+		else {
+			TestrayManage.selectTableRowOption(
+				rowOption = ${rowOption},
+				tableEntry = ${tableEntry});
+
+			SelectFrame(locator1 = "Testray#MODAL_BODY");
+
+			Testray.clickTableEntry(tableEntry = ${userName});
+
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro editBreadcrumb {
-		Click(locator1 = "TestrayTestflow#BREADCRUMB_EDIT");
+		Click(locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME");
 
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${project});
+		for (var text : list "${project},${routine},${build}") {
+			Type(
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
+				value1 = ${text});
 
-		if (isSet(project)) {
-			Click(locator1 = "TestrayTestflow#BREADCRUMB_SELECT_OPTIONS");
-		}
-
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${routine});
-
-		if (isSet(routine)) {
-			Click(locator1 = "TestrayTestflow#BREADCRUMB_SELECT_OPTIONS");
-		}
-
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${build});
-
-		if (isSet(build)) {
-			Click(locator1 = "TestrayTestflow#BREADCRUMB_SELECT_OPTIONS");
+			Click(locator1 = "TestrayTestflow#BREADCRUMB_MENU_ITEM");
 		}
 	}
 
 	macro editStatus {
+		WaitForElementPresent(
+			key_text = ${button},
+			locator1 = "Button#ANY");
+
+		Button.click(button = ${button});
+
+		WaitForPageLoad();
+
 		Select(
-			locator1 = "TestrayTestflow#SELECT_STATUS_CASE_RESULTS",
+			locator1 = "Select#SELECT_ID",
+			selectFieldId = "dueStatus",
 			value1 = ${selectStatus});
 
 		if (isSet(issues)) {
-			Type(
-				locator1 = "TestrayTestflow#INPUT_ISSUES",
-				value1 = ${issues});
+			PortletEntry.inputText(
+				fieldLabel = "Issues",
+				text = ${issues});
 		}
 
 		if (isSet(comment)) {
 			Type(
-				locator1 = "TestrayTestflow#INPUT_COMMENT",
+				key_fieldId = "comment",
+				locator1 = "TextArea#ANY_ID",
+				value1 = ${comment});
+		}
+
+		Button.click(button = "Save");
+	}
+
+	macro editStatusByRightClick {
+		TestrayManage.selectTableRowOption(
+			rowOption = "Complete",
+			tableEntry = ${tableEntry});
+
+		WaitForPageLoad();
+
+		Select(
+			locator1 = "Select#SELECT_ID",
+			selectFieldId = "dueStatus",
+			value1 = ${selectStatus});
+
+		if (isSet(issues)) {
+			PortletEntry.inputText(
+				fieldLabel = "Issues",
+				text = ${issues});
+		}
+
+		if (isSet(comment)) {
+			Type(
+				key_fieldId = "comment",
+				locator1 = "TextArea#ANY_ID",
 				value1 = ${comment});
 		}
 
@@ -121,56 +172,53 @@ definition {
 		Button.click(button = "Edit Task");
 
 		if (isSet(taskName)) {
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = ${taskName});
+			PortletEntry.inputName(name = ${taskName});
 		}
 
-		if (isSet(userName)) {
-			Button.click(button = "Assign Users");
-
-			Click.clickAtNotVisible(
-				key_checkboxOption = ${userName},
-				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
-
-			Button.click(button = "Select Users");
-
-			Testray.checkSuccessAlertAppearsAndDisappears();
+		if (isSet(userNameList)) {
+			Testray.selectCheckboxOptions(
+				buttonText = "Select Users",
+				checkboxNameList = ${userNameList},
+				linkText = "Assign Users");
 		}
 
 		Button.click(button = "Save");
 	}
 
-	macro goToTask {
-		Click(
-			key_projectName = ${taskName},
-			locator1 = "Testray#ITEM_NAME");
+	macro goToTaskByBuild {
+		TestrayDropdown.goToResultSidebar();
+
+		Testray.changePagination(quantity = 150);
+
+		Testray.clickTableEntry(tableEntry = ${projectName});
+
+		Testray.clickTableEntry(tableEntry = ${routineName});
+
+		Testray.clickTableEntry(tableEntry = ${buildName});
+
+		Button.click(button = "View Task");
 	}
 
 	macro goToTestflow {
-		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		Click(
+			key_button = "TestFlow",
+			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");
+
+		WaitForPageLoad();
 	}
 
-	macro taskOptions {
-		if (isSet(taskName)) {
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = ${taskName});
-		}
+	macro reanalyzeTask {
+		Button.click(button = "Abandon");
 
-		Button.click(button = "Save");
+		Button.click(button = "Reanalyze");
 	}
 
 	macro userAvatarNotPresent {
-		AssertElementNotPresent(
-			label = ${label},
-			locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
+		AssertElementNotPresent(locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
 	}
 
 	macro userAvatarPresent {
-		AssertElementPresent(
-			label = ${label},
-			locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
+		AssertElementPresent(locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
 	}
 
 }

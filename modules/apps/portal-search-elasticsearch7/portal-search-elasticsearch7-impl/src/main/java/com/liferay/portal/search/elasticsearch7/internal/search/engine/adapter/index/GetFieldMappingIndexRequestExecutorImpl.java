@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
@@ -25,11 +16,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsRequest;
-import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsResponse;
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.GetFieldMappingsRequest;
+import org.elasticsearch.client.indices.GetFieldMappingsResponse;
+import org.elasticsearch.client.indices.GetFieldMappingsResponse.FieldMappingMetadata;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,29 +44,18 @@ public class GetFieldMappingIndexRequestExecutorImpl
 			_getGetFieldMappingsResponse(
 				getFieldMappingsRequest, getFieldMappingIndexRequest);
 
-		Map
-			<String,
-			 Map
-				 <String,
-				  Map<String, GetFieldMappingsResponse.FieldMappingMetadata>>>
-					mappings = getFieldMappingsResponse.mappings();
+		Map<String, Map<String, FieldMappingMetadata>> mappings =
+			getFieldMappingsResponse.mappings();
 
 		Map<String, String> fieldMappings = new HashMap<>();
 
 		for (String indexName : getFieldMappingIndexRequest.getIndexNames()) {
-			Map
-				<String,
-				 Map<String, GetFieldMappingsResponse.FieldMappingMetadata>>
-					map1 = mappings.get(indexName);
-
-			Map<String, GetFieldMappingsResponse.FieldMappingMetadata> map2 =
-				map1.get(getFieldMappingIndexRequest.getMappingName());
+			Map<String, FieldMappingMetadata> map = mappings.get(indexName);
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 			for (String fieldName : getFieldMappingIndexRequest.getFields()) {
-				GetFieldMappingsResponse.FieldMappingMetadata
-					fieldMappingMetadata = map2.get(fieldName);
+				FieldMappingMetadata fieldMappingMetadata = map.get(fieldName);
 
 				Map<String, Object> source = fieldMappingMetadata.sourceAsMap();
 
@@ -96,8 +77,6 @@ public class GetFieldMappingIndexRequestExecutorImpl
 		getFieldMappingsRequest.fields(getFieldMappingIndexRequest.getFields());
 		getFieldMappingsRequest.indices(
 			getFieldMappingIndexRequest.getIndexNames());
-		getFieldMappingsRequest.types(
-			getFieldMappingIndexRequest.getMappingName());
 
 		return getFieldMappingsRequest;
 	}

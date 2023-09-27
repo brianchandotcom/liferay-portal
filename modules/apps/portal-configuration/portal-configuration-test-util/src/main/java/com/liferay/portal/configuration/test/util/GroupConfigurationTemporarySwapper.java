@@ -1,23 +1,14 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.configuration.test.util;
 
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -29,15 +20,13 @@ import java.util.Enumeration;
 public class GroupConfigurationTemporarySwapper implements AutoCloseable {
 
 	public GroupConfigurationTemporarySwapper(
-			long groupId, String pid, Dictionary<String, Object> properties,
-			SettingsFactory settingsFactory)
+			long groupId, String pid, Dictionary<String, Object> properties)
 		throws Exception {
 
 		_groupId = groupId;
 		_pid = pid;
-		_settingsFactory = settingsFactory;
 
-		Settings settings = settingsFactory.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new GroupServiceSettingsLocator(_groupId, _pid));
 
 		ModifiableSettings modifiableSettings =
@@ -61,7 +50,7 @@ public class GroupConfigurationTemporarySwapper implements AutoCloseable {
 
 	@Override
 	public void close() throws Exception {
-		Settings settings = _settingsFactory.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new GroupServiceSettingsLocator(_groupId, _pid));
 
 		ModifiableSettings modifiableSettings =
@@ -82,6 +71,5 @@ public class GroupConfigurationTemporarySwapper implements AutoCloseable {
 	private final long _groupId;
 	private final Dictionary<String, Object> _initialProperties;
 	private final String _pid;
-	private final SettingsFactory _settingsFactory;
 
 }

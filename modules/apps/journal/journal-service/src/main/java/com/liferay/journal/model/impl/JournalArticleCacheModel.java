@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.journal.model.impl;
@@ -77,7 +68,7 @@ public class JournalArticleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(71);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -137,6 +128,8 @@ public class JournalArticleCacheModel
 		sb.append(smallImage);
 		sb.append(", smallImageId=");
 		sb.append(smallImageId);
+		sb.append(", smallImageSource=");
+		sb.append(smallImageSource);
 		sb.append(", smallImageURL=");
 		sb.append(smallImageURL);
 		sb.append(", lastPublishDate=");
@@ -276,6 +269,7 @@ public class JournalArticleCacheModel
 		journalArticleImpl.setIndexable(indexable);
 		journalArticleImpl.setSmallImage(smallImage);
 		journalArticleImpl.setSmallImageId(smallImageId);
+		journalArticleImpl.setSmallImageSource(smallImageSource);
 
 		if (smallImageURL == null) {
 			journalArticleImpl.setSmallImageURL("");
@@ -358,6 +352,8 @@ public class JournalArticleCacheModel
 		smallImage = objectInput.readBoolean();
 
 		smallImageId = objectInput.readLong();
+
+		smallImageSource = objectInput.readInt();
 		smallImageURL = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 
@@ -470,6 +466,8 @@ public class JournalArticleCacheModel
 
 		objectOutput.writeLong(smallImageId);
 
+		objectOutput.writeInt(smallImageSource);
+
 		if (smallImageURL == null) {
 			objectOutput.writeUTF("");
 		}
@@ -522,6 +520,7 @@ public class JournalArticleCacheModel
 	public boolean indexable;
 	public boolean smallImage;
 	public long smallImageId;
+	public int smallImageSource;
 	public String smallImageURL;
 	public long lastPublishDate;
 	public int status;

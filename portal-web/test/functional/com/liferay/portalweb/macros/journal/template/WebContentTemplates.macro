@@ -99,7 +99,7 @@ definition {
 			templateName = ${templateName},
 			templateScript = ${templateScript});
 
-		DDLDataDefinition.save(publicationsEnabled = ${publicationsEnabled});
+		PortletEntry.save();
 	}
 
 	macro addNullCP {
@@ -132,7 +132,7 @@ definition {
 
 	macro copyCP {
 		WebContentTemplates.gotoTemplateEllipsisItem(
-			item = "Copy",
+			item = "Make a Copy",
 			templateName = ${templateName});
 
 		if (isSet(templateCopyName)) {
@@ -260,7 +260,7 @@ definition {
 			templateName = ${templateName},
 			templateScript = ${templateScript});
 
-		DDLDataDefinition.save(publicationsEnabled = ${publicationsEnabled});
+		PortletEntry.save();
 	}
 
 	macro openWebContentTemplatesAdmin {
@@ -338,11 +338,13 @@ definition {
 			key_tableEntry = ${templateName},
 			locator1 = "LexiconTable#TABLE_ENTRY");
 
-		AssertTextEquals(
-			key_columnName = "description",
-			key_tableEntry = ${templateName},
-			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-			value1 = ${templateDescription});
+		if (isSet(templateDescription)) {
+			AssertTextEquals(
+				key_columnName = "description",
+				key_tableEntry = ${templateName},
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = ${templateDescription});
+		}
 
 		if (isSet(structureName)) {
 			AssertTextEquals(
@@ -361,9 +363,11 @@ definition {
 
 			Navigator.gotoSidebarTab(tabName = "Properties");
 
-			AssertTextEquals(
-				locator1 = "TextArea#DESCRIPTION",
-				value1 = ${templateDescription});
+			if (isSet(templateDescription)) {
+				AssertTextEquals(
+					locator1 = "TextArea#DESCRIPTION",
+					value1 = ${templateDescription});
+			}
 
 			if (isSet(structureName)) {
 				AssertTextEquals(

@@ -1,27 +1,28 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
 <%@ include file="/captcha/init.jsp" %>
 
 <%
+String errorMessage = (String)request.getAttribute("liferay-captcha:captcha:errorMessage");
 String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 %>
 
 <c:if test="<%= captchaEnabled %>">
-	<div class="my-3 taglib-captcha">
+
+	<%
+	String cssClass = "my-3 taglib-captcha";
+
+	if (Validator.isNotNull(errorMessage)) {
+		cssClass += " has-error";
+	}
+	%>
+
+	<div class="<%= cssClass %>">
 		<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="text-to-identify" />" class="captcha d-inline-block mb-2" id="<portlet:namespace />captcha" src="<%= HtmlUtil.escapeAttribute(HttpComponentsUtil.addParameter(url, "t", String.valueOf(System.currentTimeMillis()))) %>" />
 
 		<liferay-ui:icon
@@ -35,7 +36,25 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 			url="javascript:void(0);"
 		/>
 
-		<aui:input ignoreRequestValue="<%= true %>" label="text-verification" name="captchaText" required="<%= true %>" size="10" type="text" value="" />
+		<div class="form-group input-text-wrapper">
+			<label class="control-label" id="<portlet:namespace />captchaLabel">
+				<liferay-ui:message key="text-verification" />
+			</label>
+
+			<input
+				aria-labelledby="<portlet:namespace />captchaLabel <portlet:namespace />captchaError" class="form-control" name="<portlet:namespace />captchaText" required="<%= true %>" size="10" type="text" value=""
+			/>
+
+			<c:if test="<%= Validator.isNotNull(errorMessage) %>">
+				<p class="font-weight-semi-bold mt-1 text-danger" id="<portlet:namespace />captchaError">
+					<clay:icon
+						symbol="info-circle"
+					/>
+
+					<span><%= errorMessage %></span>
+				</p>
+			</c:if>
+		</div>
 	</div>
 
 	<aui:script>

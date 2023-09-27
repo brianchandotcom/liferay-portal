@@ -430,6 +430,53 @@ definition {
 			ContentConfiguration.uncheckPages();
 		}
 
+		if (${includeThumbnailsAndPreviewsDuringStaging} == "true") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Staging#STAGING_CONTENT_INFO",
+				value1 = "Previews and Thumbnails");
+
+			WaitForElementPresent(
+				key_contentName = ${checkContentNameList},
+				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK");
+
+			AssertClick.assertTextClickNoMouseOver(
+				key_contentName = ${checkContentNameList},
+				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK",
+				value1 = "Change");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_contentName = ${checkContentNameList},
+				key_subContent = "Previews and Thumbnails",
+				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX");
+
+			AssertClick.assertTextClickNoMouseOver(
+				locator1 = "Button#CANCEL",
+				value1 = "Cancel");
+		}
+		else if (${includeThumbnailsAndPreviewsDuringStaging} == "false") {
+			AssertTextNotEquals.assertNotPartialText(
+				locator1 = "Staging#STAGING_CONTENT_INFO",
+				value1 = "Previews and Thumbnails");
+
+			WaitForElementPresent(
+				key_contentName = ${checkContentNameList},
+				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK");
+
+			AssertClick.assertTextClickNoMouseOver(
+				key_contentName = ${checkContentNameList},
+				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK",
+				value1 = "Change");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_contentName = ${checkContentNameList},
+				key_subContent = "Previews and Thumbnails",
+				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX");
+
+			AssertClick.assertTextClickNoMouseOver(
+				locator1 = "Button#CANCEL",
+				value1 = "Cancel");
+		}
+
 		if (isSet(uncheckSubContent)) {
 			Check.checkHiddenToggleSwitch(
 				key_contentName = ${mainContent},
@@ -472,32 +519,11 @@ definition {
 				value1 = ${scheduleTitleName});
 		}
 
-		var displayDateHour = selenium.getAttribute("//input[contains(@id,'schedulerStartDateHour')]@value");
+		var displayDate = DateTimeSchedule.increaseDisplayTime(
+			field = "start",
+			minuteIncreaseValue = 5);
 
-		var displayDateHourLength = StringUtil.length(${displayDateHour});
-
-		if (${displayDateHourLength} == 1) {
-			var displayDateHour = "0${displayDateHour}";
-		}
-
-		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'schedulerStartDateAmPm')]@value");
-
-		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
-
-		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
-		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'schedulerStartDateMinute')]@value");
-
-		var displayDateMinuteFuture = ${displayDateMinute} + 5;
-
-		var displayDateMinuteFutureLength = StringUtil.length(${displayDateMinuteFuture});
-
-		if (${displayDateMinuteFutureLength} == 1) {
-			var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
-		}
-
-		var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";
-
-		Type(
+		Type.sendKeys(
 			locator1 = "StagingPublishToLive#DATE_SCHEDULE_TIME_INPUT",
 			value1 = ${displayDate});
 
@@ -913,6 +939,8 @@ definition {
 			failureExpected = ${failureExpected},
 			scheduleProcess = ${scheduleProcess},
 			validateErrorMessage = ${validateErrorMessage});
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		SelectFrameTop();
 

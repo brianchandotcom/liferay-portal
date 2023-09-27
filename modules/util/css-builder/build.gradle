@@ -6,7 +6,7 @@ task copyPortalCommonCSSJar(type: Copy)
 task unzipPortalCommonCSS(type: Copy)
 
 buildPluginDescriptor {
-	configurationScopeMapping "mavenCompile", Conf2ScopeMappingContainer.COMPILE
+	configurationScopeMapping "mavenCompile", "compile"
 
 	ext {
 		autoClean = false
@@ -19,7 +19,7 @@ buildPluginDescriptor {
 
 configurations {
 	mavenCompile {
-		extendsFrom compile
+		extendsFrom api
 	}
 
 	mavenDistribution
@@ -35,8 +35,8 @@ copyPortalCommonCSSJar {
 }
 
 dependencies {
-	compile group: "org.codehaus.plexus", name: "plexus-utils", transitive: false, version: "3.0.15"
-	compile group: "org.sonatype.plexus", name: "plexus-build-api", transitive: false, version: "0.0.7"
+	api group: "org.codehaus.plexus", name: "plexus-utils", transitive: false, version: "3.0.16"
+	api group: "org.sonatype.plexus", name: "plexus-build-api", transitive: false, version: "0.0.7"
 
 	compileInclude group: "com.beust", name: "jcommander", version: "1.72"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.function", version: "default"
@@ -55,8 +55,8 @@ dependencies {
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
-	testCompile group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.2"
-	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
+	testImplementation group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.2"
+	testImplementation group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
 }
 
 javadoc {
@@ -73,7 +73,7 @@ liferayOSGi {
 
 test {
 	dependsOn copyPortalCommonCSSJar
-	dependsOn install
+	dependsOn publishToMavenLocal
 	dependsOn unzipPortalCommonCSS
 
 	doFirst {

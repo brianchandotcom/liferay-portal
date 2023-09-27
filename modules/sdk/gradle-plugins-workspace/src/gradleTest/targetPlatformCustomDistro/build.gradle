@@ -10,7 +10,6 @@ allprojects {
 		}
 	}
 }
-
 checkApi {
 	dependsOn ":modules:foo-api:resolve"
 

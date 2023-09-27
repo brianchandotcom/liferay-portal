@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.asset.kernel.service;
@@ -59,24 +50,24 @@ public class AssetEntryLocalServiceUtil {
 		return getService().addAssetEntry(assetEntry);
 	}
 
-	public static void addAssetTagAssetEntries(
+	public static boolean addAssetTagAssetEntries(
 		long tagId, List<AssetEntry> assetEntries) {
 
-		getService().addAssetTagAssetEntries(tagId, assetEntries);
+		return getService().addAssetTagAssetEntries(tagId, assetEntries);
 	}
 
-	public static void addAssetTagAssetEntries(long tagId, long[] entryIds) {
-		getService().addAssetTagAssetEntries(tagId, entryIds);
+	public static boolean addAssetTagAssetEntries(long tagId, long[] entryIds) {
+		return getService().addAssetTagAssetEntries(tagId, entryIds);
 	}
 
-	public static void addAssetTagAssetEntry(
+	public static boolean addAssetTagAssetEntry(
 		long tagId, AssetEntry assetEntry) {
 
-		getService().addAssetTagAssetEntry(tagId, assetEntry);
+		return getService().addAssetTagAssetEntry(tagId, assetEntry);
 	}
 
-	public static void addAssetTagAssetEntry(long tagId, long entryId) {
-		getService().addAssetTagAssetEntry(tagId, entryId);
+	public static boolean addAssetTagAssetEntry(long tagId, long entryId) {
+		return getService().addAssetTagAssetEntry(tagId, entryId);
 	}
 
 	public static void clearAssetTagAssetEntries(long tagId) {
@@ -293,12 +284,6 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static List<AssetEntry> getAncestorEntries(long entryId)
-		throws PortalException {
-
-		return getService().getAncestorEntries(entryId);
-	}
-
 	/**
 	 * Returns a range of all the asset entries.
 	 *
@@ -366,12 +351,6 @@ public class AssetEntryLocalServiceUtil {
 	 */
 	public static long[] getAssetTagPrimaryKeys(long entryId) {
 		return getService().getAssetTagPrimaryKeys(entryId);
-	}
-
-	public static List<AssetEntry> getChildEntries(long entryId)
-		throws PortalException {
-
-		return getService().getChildEntries(entryId);
 	}
 
 	public static List<AssetEntry> getCompanyEntries(
@@ -479,10 +458,6 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static AssetEntry getNextEntry(long entryId) throws PortalException {
-		return getService().getNextEntry(entryId);
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -492,12 +467,6 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static AssetEntry getParentEntry(long entryId)
-		throws PortalException {
-
-		return getService().getParentEntry(entryId);
-	}
-
 	/**
 	 * @throws PortalException
 	 */
@@ -505,12 +474,6 @@ public class AssetEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static AssetEntry getPreviousEntry(long entryId)
-		throws PortalException {
-
-		return getService().getPreviousEntry(entryId);
 	}
 
 	public static List<AssetEntry> getTopViewedEntries(

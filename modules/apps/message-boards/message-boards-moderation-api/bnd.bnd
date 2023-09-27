@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Message Boards Moderation API
 Bundle-SymbolicName: com.liferay.message.boards.moderation.api
-Bundle-Version: 2.0.1
+Bundle-Version: 2.0.2
 Export-Package: com.liferay.message.boards.moderation.configuration

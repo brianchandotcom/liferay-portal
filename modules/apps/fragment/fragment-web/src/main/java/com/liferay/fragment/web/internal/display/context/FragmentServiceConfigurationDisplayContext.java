@@ -1,20 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.fragment.web.internal.display.context;
 
-import com.liferay.fragment.web.internal.configuration.admin.service.FragmentServiceManagedServiceFactory;
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.fragment.web.internal.configuration.helper.FragmentServiceConfigurationHelper;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -28,6 +20,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,14 +32,13 @@ public class FragmentServiceConfigurationDisplayContext {
 	public FragmentServiceConfigurationDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		FragmentServiceManagedServiceFactory
-			fragmentServiceManagedServiceFactory,
+		FragmentServiceConfigurationHelper fragmentServiceConfigurationHelper,
 		String scope) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_fragmentServiceManagedServiceFactory =
-			fragmentServiceManagedServiceFactory;
+		_fragmentServiceConfigurationHelper =
+			fragmentServiceConfigurationHelper;
 		_scope = scope;
 	}
 
@@ -78,6 +70,15 @@ public class FragmentServiceConfigurationDisplayContext {
 		).buildString();
 	}
 
+	public String getRedirect() {
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest,
+				ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
+				PortletRequest.RENDER_PHASE)
+		).buildString();
+	}
+
 	public boolean isAlreadyPropagateContributedFragmentChanges() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -94,12 +95,12 @@ public class FragmentServiceConfigurationDisplayContext {
 	}
 
 	public boolean isPropagateChangesEnabled() {
-		return _fragmentServiceManagedServiceFactory.isPropagateChanges(
+		return _fragmentServiceConfigurationHelper.isPropagateChanges(
 			_scope, _getScopePk());
 	}
 
 	public boolean isPropagateContributedFragmentChangesEnabled() {
-		return _fragmentServiceManagedServiceFactory.
+		return _fragmentServiceConfigurationHelper.
 			isPropagateContributedFragmentChanges(_scope, _getScopePk());
 	}
 
@@ -107,7 +108,7 @@ public class FragmentServiceConfigurationDisplayContext {
 		if (!Objects.equals(
 				_scope,
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue()) ||
-			_fragmentServiceManagedServiceFactory.hasScopedConfiguration(
+			_fragmentServiceConfigurationHelper.hasScopedConfiguration(
 				_getScopePk())) {
 
 			return false;
@@ -137,8 +138,8 @@ public class FragmentServiceConfigurationDisplayContext {
 		throw new IllegalArgumentException("Unsupported scope: " + _scope);
 	}
 
-	private final FragmentServiceManagedServiceFactory
-		_fragmentServiceManagedServiceFactory;
+	private final FragmentServiceConfigurationHelper
+		_fragmentServiceConfigurationHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final String _scope;

@@ -1,5 +1,5 @@
 {
-	"@generated": "6f061ee68932bec0e02fabe01216e7009bf50652",
+	"@generated": "0d1613c3538b201f4f06caf5a550a3f4c746d256",
 	"@overrides": {
 		"compilerOptions": {
 			"target": "es2020"
@@ -16,6 +16,9 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
+			"@liferay/frontend-js-react-web": [
+				"../../../../apps/frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
 			"frontend-js-web": [
 				"../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
 			]
@@ -38,6 +41,9 @@
 		"../../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../../../apps/frontend-js/frontend-js-react-web"
+		},
 		{
 			"path": "../../../../apps/frontend-js/frontend-js-web"
 		}

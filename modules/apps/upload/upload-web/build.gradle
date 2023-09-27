@@ -13,6 +13,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	testCompile project(":core:petra:petra-lang")
+	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	testImplementation project(":core:petra:petra-lang")
 }

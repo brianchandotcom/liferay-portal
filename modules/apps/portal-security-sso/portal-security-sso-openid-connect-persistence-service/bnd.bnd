@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Security SSO OpenID Connect Persistence Service
 Bundle-SymbolicName: com.liferay.portal.security.sso.openid.connect.persistence.service
-Bundle-Version: 6.0.24
+Bundle-Version: 6.0.25
 Import-Package:\
 	!com.google.crypto.tink.*,\
 	\

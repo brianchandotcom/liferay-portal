@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dynamic.data.mapping.service.impl;
@@ -26,7 +17,6 @@ import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateElementException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException;
 import com.liferay.dynamic.data.mapping.exception.StructureNameException;
-import com.liferay.dynamic.data.mapping.internal.background.task.DDMStructureIndexerRegistry;
 import com.liferay.dynamic.data.mapping.internal.constants.DDMDestinationNames;
 import com.liferay.dynamic.data.mapping.internal.search.helper.DDMSearchHelper;
 import com.liferay.dynamic.data.mapping.internal.util.DDMFormTemplateSynchonizer;
@@ -65,6 +55,8 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -123,6 +115,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -1611,6 +1605,13 @@ public class DDMStructureLocalServiceImpl
 		return structure;
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DDMStructureIndexer.class,
+			"ddm.structure.indexer.class.name");
+	}
+
 	private void _addDataProviderInstanceLinks(
 		long groupId, long structureId, DDMForm ddmForm) {
 
@@ -1991,9 +1992,8 @@ public class DDMStructureLocalServiceImpl
 			return;
 		}
 
-		DDMStructureIndexer ddmStructureIndexer =
-			_ddmStructureIndexerRegistry.getDDMStructureIndexer(
-				structure.getClassName());
+		DDMStructureIndexer ddmStructureIndexer = _serviceTrackerMap.getService(
+			structure.getClassName());
 
 		if (ddmStructureIndexer == null) {
 			return;
@@ -2003,6 +2003,7 @@ public class DDMStructureLocalServiceImpl
 			() -> {
 				Message message = new Message();
 
+				message.put("ddmStructureIndexer", ddmStructureIndexer);
 				message.put("structureId", structure.getStructureId());
 
 				_messageBus.sendMessage(
@@ -2357,9 +2358,6 @@ public class DDMStructureLocalServiceImpl
 	private DDMSearchHelper _ddmSearchHelper;
 
 	@Reference
-	private DDMStructureIndexerRegistry _ddmStructureIndexerRegistry;
-
-	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 
 	@Reference
@@ -2400,6 +2398,8 @@ public class DDMStructureLocalServiceImpl
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	private ServiceTrackerMap<String, DDMStructureIndexer> _serviceTrackerMap;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

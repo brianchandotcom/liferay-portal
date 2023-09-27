@@ -80,7 +80,7 @@
 			</#if>
 
 			<div class="portlet-header-tools">
-<@liferay_util["dynamic-include"] key="portlet_header_${portlet_display_root_portlet_id}" />
+				<@liferay_util["dynamic-include"] key="portlet_header_${portlet_display_root_portlet_id}" />
 			</div>
 		</div>
 

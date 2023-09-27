@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.site.memberships.web.internal.display.context;
@@ -19,6 +10,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -27,6 +19,7 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -35,10 +28,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.usersadmin.search.UserSearch;
-import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 import com.liferay.site.memberships.web.internal.util.GroupUtil;
+import com.liferay.users.admin.search.UserSearch;
+import com.liferay.users.admin.search.UserSearchTerms;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -223,6 +216,17 @@ public class UsersDisplayContext {
 
 				return null;
 			}
+		).setParameter(
+			"teamId",
+			() -> {
+				Team team = getTeam();
+
+				if (team != null) {
+					return team.getTeamId();
+				}
+
+				return null;
+			}
 		).buildPortletURL();
 	}
 
@@ -238,6 +242,20 @@ public class UsersDisplayContext {
 		}
 
 		return _role;
+	}
+
+	public Team getTeam() {
+		if (_team != null) {
+			return _team;
+		}
+
+		long teamId = ParamUtil.getLong(_httpServletRequest, "teamId");
+
+		if (teamId > 0) {
+			_team = TeamLocalServiceUtil.fetchTeam(teamId);
+		}
+
+		return _team;
 	}
 
 	public SearchContainer<User> getUserSearchContainer()
@@ -286,6 +304,17 @@ public class UsersDisplayContext {
 
 					return null;
 				}
+			).put(
+				"usersTeams",
+				() -> {
+					Team team = getTeam();
+
+					if (team != null) {
+						return Long.valueOf(team.getTeamId());
+					}
+
+					return null;
+				}
 			).build();
 
 		if (GroupPermissionUtil.contains(
@@ -323,6 +352,7 @@ public class UsersDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Role _role;
+	private Team _team;
 	private UserSearch _userSearch;
 
 }

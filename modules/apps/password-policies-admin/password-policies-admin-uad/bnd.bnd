@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Password Policies Admin UAD
 Bundle-SymbolicName: com.liferay.password.policies.admin.uad
-Bundle-Version: 6.0.10
+Bundle-Version: 6.0.11
 -dsannotations-options: inherit

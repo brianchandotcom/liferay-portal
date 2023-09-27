@@ -1,26 +1,22 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.osb.faro.web.internal.controller.main;
 
 import com.liferay.osb.faro.constants.FaroChannelConstants;
 import com.liferay.osb.faro.engine.client.model.Channel;
+import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
+import com.liferay.osb.faro.exception.NoSuchFaroUserException;
 import com.liferay.osb.faro.model.FaroChannel;
+import com.liferay.osb.faro.model.FaroPreferences;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
+import com.liferay.osb.faro.service.FaroPreferencesLocalService;
+import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.web.internal.annotations.PATCH;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.controller.FaroController;
@@ -29,22 +25,29 @@ import com.liferay.osb.faro.web.internal.exception.FaroValidationException;
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.asah.FaroChannelDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.FaroUserDisplay;
+import com.liferay.osb.faro.web.internal.model.preferences.WorkspacePreferences;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.osb.faro.web.internal.util.FaroQueryUtil;
+import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.osb.faro.web.internal.util.comparator.FaroChannelComparator;
 import com.liferay.osb.faro.web.internal.util.comparator.FaroUserComparator;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -91,8 +94,20 @@ public class ChannelController extends BaseFaroController {
 			@FormParam("ids") FaroParam<List<String>> idsFaroParam)
 		throws Exception {
 
+		User user = getUser();
+
+		FaroUser faroUser = _faroUserLocalService.fetchFaroUser(
+			groupId, user.getEmailAddress());
+
+		if (faroUser == null) {
+			throw new NoSuchFaroUserException(
+				StringBundler.concat(
+					"No FaroUser exists with the key {groupId=", groupId,
+					", emailAddress=", user.getEmailAddress(), "}"));
+		}
+
 		contactsEngineClient.clearChannel(
-			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), faroUser,
 			idsFaroParam.getValue());
 	}
 
@@ -131,12 +146,39 @@ public class ChannelController extends BaseFaroController {
 			@FormParam("ids") FaroParam<List<String>> idsFaroParam)
 		throws Exception {
 
+		User user = getUser();
+
+		FaroUser faroUser = _faroUserLocalService.fetchFaroUser(
+			groupId, user.getEmailAddress());
+
+		if (faroUser == null) {
+			throw new NoSuchFaroUserException(
+				StringBundler.concat(
+					"No FaroUser exists with the key {groupId=", groupId,
+					", emailAddress=", user.getEmailAddress(), "}"));
+		}
+
 		contactsEngineClient.deleteChannels(
-			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), faroUser,
 			idsFaroParam.getValue());
 
 		for (String id : idsFaroParam.getValue()) {
 			_faroChannelLocalService.deleteFaroChannel(id, groupId);
+
+			for (FaroPreferences faroPreferences :
+					_faroPreferencesLocalService.getFaroPreferencesByGroupId(
+						groupId)) {
+
+				WorkspacePreferences workspacePreferences = JSONUtil.readValue(
+					faroPreferences.getPreferences(),
+					WorkspacePreferences.class);
+
+				if (workspacePreferences.removeEmailReportPreferences(id)) {
+					_faroPreferencesLocalService.savePreferences(
+						getUserId(), groupId, faroPreferences.getOwnerId(),
+						JSONUtil.writeValueAsString(workspacePreferences));
+				}
+			}
 		}
 	}
 
@@ -285,8 +327,37 @@ public class ChannelController extends BaseFaroController {
 			groupId, query, startAndEnd[0], startAndEnd[1],
 			new FaroChannelComparator(orderByFields));
 
+		if ((cur == -1) && (delta == -1)) {
+			return new FaroResultsDisplay<>(
+				TransformUtil.transform(faroChannels, FaroChannelDisplay::new),
+				_faroChannelLocalService.searchCount(groupId, query));
+		}
+
+		if (faroChannels.isEmpty()) {
+			return new FaroResultsDisplay<>();
+		}
+
+		Map<String, Channel> channelsById = new HashMap<>();
+
+		Results<Channel> channelsResult = contactsEngineClient.getChannels(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), cur,
+			delta, ListUtil.toList(faroChannels, FaroChannel::getChannelId),
+			null);
+
+		for (Channel channel : channelsResult.getItems()) {
+			channelsById.put(channel.getId(), channel);
+		}
+
+		List<FaroChannelDisplay> faroChannelDisplays = new ArrayList<>();
+
+		for (FaroChannel faroChannel : faroChannels) {
+			faroChannelDisplays.add(
+				new FaroChannelDisplay(
+					channelsById.get(faroChannel.getChannelId()), faroChannel));
+		}
+
 		return new FaroResultsDisplay<>(
-			TransformUtil.transform(faroChannels, FaroChannelDisplay::new),
+			faroChannelDisplays,
 			_faroChannelLocalService.searchCount(groupId, query));
 	}
 
@@ -294,5 +365,11 @@ public class ChannelController extends BaseFaroController {
 
 	@Reference
 	private FaroChannelLocalService _faroChannelLocalService;
+
+	@Reference
+	private FaroPreferencesLocalService _faroPreferencesLocalService;
+
+	@Reference
+	private FaroUserLocalService _faroUserLocalService;
 
 }

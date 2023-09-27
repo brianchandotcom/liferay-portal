@@ -1,21 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
@@ -39,6 +29,7 @@ interface ManagementToolbarProps {
 	hasUpdatePermission: boolean;
 	helpMessage: string;
 	isApproved?: boolean;
+	isRootDescendantNode?: boolean;
 	label: string;
 	onExternalReferenceCodeChange?: (value: string) => void;
 	onGetEntity: () => Promise<Entity>;
@@ -61,6 +52,7 @@ export function ManagementToolbar({
 	hasUpdatePermission,
 	helpMessage,
 	isApproved,
+	isRootDescendantNode,
 	label,
 	onExternalReferenceCodeChange,
 	onGetEntity,
@@ -73,10 +65,6 @@ export function ManagementToolbar({
 		initialExternalReferenceCode
 	);
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
-
-	const {observer, onClose} = useModal({
-		onClose: () => setVisibleModal(false),
-	});
 
 	const [disabled, setDisabled] = useState(!hasPublishPermission);
 
@@ -169,7 +157,9 @@ export function ManagementToolbar({
 							<ClayButton
 								disabled={!hasUpdatePermission}
 								displayType={
-									isApproved || isApproved === undefined
+									isApproved ||
+									isApproved === undefined ||
+									isRootDescendantNode
 										? 'primary'
 										: 'secondary'
 								}
@@ -180,16 +170,20 @@ export function ManagementToolbar({
 								{Liferay.Language.get('save')}
 							</ClayButton>
 
-							{isApproved !== undefined && !isApproved && (
-								<ClayButton
-									disabled={!hasUpdatePermission || disabled}
-									id={`${portletNamespace}publish`}
-									name="publish"
-									onClick={() => onPublish()}
-								>
-									{Liferay.Language.get('publish')}
-								</ClayButton>
-							)}
+							{isApproved !== undefined &&
+								!isApproved &&
+								!isRootDescendantNode && (
+									<ClayButton
+										disabled={
+											!hasUpdatePermission || disabled
+										}
+										id={`${portletNamespace}publish`}
+										name="publish"
+										onClick={() => onPublish()}
+									>
+										{Liferay.Language.get('publish')}
+									</ClayButton>
+								)}
 						</ClayButton.Group>
 					</ClayManagementToolbar.ItemList>
 				)}
@@ -198,9 +192,8 @@ export function ManagementToolbar({
 			{visibleModal && (
 				<ModalEditExternalReferenceCode
 					externalReferenceCode={externalReferenceCode}
+					handleOnClose={() => setVisibleModal(false)}
 					helpMessage={helpMessage}
-					observer={observer}
-					onClose={onClose}
 					onExternalReferenceCodeChange={
 						onExternalReferenceCodeChange
 					}

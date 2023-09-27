@@ -17,6 +17,14 @@ definition {
 			locator1 = "PublicationsRemoteServer#REMOTE_SERVER_URL",
 			value1 = ${remoteServerURL});
 
+		Type(
+			locator1 = "PublicationsRemoteServer#REMOTE_SERVER_CLIENT_ID",
+			value1 = ${remoteServerClientId});
+
+		Type(
+			locator1 = "PublicationsRemoteServer#REMOTE_SERVER_CLIENT_SECRET",
+			value1 = ${remoteServerClientSecret});
+
 		AssertClick(
 			locator1 = "Button#SUBMIT",
 			value1 = "Submit");
@@ -59,6 +67,18 @@ definition {
 			Type(
 				locator1 = "PublicationsRemoteServer#REMOTE_SERVER_URL",
 				value1 = ${remoteServerURLEdit});
+		}
+
+		if (isSet(remoteServerClientId)) {
+			Type(
+				locator1 = "PublicationsRemoteServer#REMOTE_SERVER_CLIENT_ID",
+				value1 = ${remoteServerClientId});
+		}
+
+		if (isSet(remoteServerClientSecret)) {
+			Type(
+				locator1 = "PublicationsRemoteServer#REMOTE_SERVER_CLIENT_SECRET",
+				value1 = ${remoteServerClientSecret});
 		}
 
 		AssertClick(

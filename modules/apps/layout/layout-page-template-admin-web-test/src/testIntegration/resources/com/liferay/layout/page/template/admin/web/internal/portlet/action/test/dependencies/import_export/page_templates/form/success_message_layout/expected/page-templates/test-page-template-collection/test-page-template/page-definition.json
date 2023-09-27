@@ -30,7 +30,6 @@
 					},
 					"indexed": true,
 					"layout": {
-						"widthType": "Fluid"
 					}
 				},
 				"type": "Form"

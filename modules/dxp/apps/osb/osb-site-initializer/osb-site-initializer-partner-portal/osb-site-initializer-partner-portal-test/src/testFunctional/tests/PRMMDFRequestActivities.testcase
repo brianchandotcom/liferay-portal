@@ -1,0 +1,523 @@
+@component-name = "OSB Site Initializer Partner Portal"
+definition {
+
+	property custom.properties = "feature.flag.LPS-135430=true";
+	property osgi.modules.includes = "osb-site-initializer-partner-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Partner Portal";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Partner Portal Site and connect with Salesforce") {
+			PRMUtils.addSite();
+
+			PRMUtils.connectWithSalesforce();
+		}
+
+		task ("Update the account with Salesforce fields") {
+			JSONPRM.updateAccount();
+		}
+
+		task ("Assign the users to the account") {
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "pmu@partner.com");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
+		task ("Go to Partner Portal and login with the created user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "pmu@partner.com",
+				userLoginFullName = "Partner Marketing User");
+
+			PRMUtils.gotoPRM();
+		}
+
+		task ("PMU goes to marketing page and add a MDF Request") {
+			PRMNavigator.openSitePage(pageName = "Marketing");
+
+			PRMMarketing.gotoAddNewMDF();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PRMUtils.tearDown();
+		}
+	}
+
+	@description = "This is a test for LPS-192014. Verify that the partner can submit an MDF with an Content Marketing > All activity"
+	@priority = 4
+	test CanSubmitMDFWithContentMarketingActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Content Marketing' as Type of Activity and 'Other' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Content Marketing");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Other",
+				typeOfActivity = "Content Marketing");
+
+			var tacticFieldsList = '''
+				Will this content be gated and have a landing page?: No,
+				Primary theme or message of your content: Primary Theme,
+				Goal of Content: Goal of Content,
+				Are you hiring an outside writer or agency to prepare the content?: No
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
+	@description = "This is test is for LPS-188868. Verify that the partner can submit an MDF with an Digital Marketing > Advertising activity"
+	@priority = 5
+	test CanSubmitMDFWithDigitalMarketingAdvertisingActivity {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
+		task ("Given that the PMU goes to add a new MDF Request with 'Digital Marketing' as Type of Activity and 'Digital Advertising/Banner Ad' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadList = "No",
+				tactic = "Digital Advertising/Banner Ad",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Digital Marketing");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Digital Advertising/Banner Ad",
+				typeOfActivity = "Digital Marketing");
+
+			var tacticFieldsList = '''
+				Overall message, content or CTA: Overall Message,
+				Specific sites to be used: Specific Site,
+				Do you require any assets from Liferay?: No,
+				How will the Liferay brand be used in the campaign?: Liferay Brand
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
+	@description = "This is a test for LPS-188520. Verify that the partner can submit an MDF with an Digital Marketing > Email Campaign activity"
+	@priority = 4
+	test CanSubmitMDFWithDigitalMarketingEmailCampaignActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Digital Marketing' as Type of Activity and 'Email Campaign' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadList = "No",
+				nurtureDripCampaign = "Yes",
+				requireLiferay = "Yes",
+				tactic = "Email Campaign",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Digital Marketing");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Email Campaign",
+				typeOfActivity = "Digital Marketing");
+
+			var tacticFieldsList = '''
+				Overall message, content or CTA: Overall Message,
+				Landing page copy: Landing Page,
+				Nurture or drip campaign?: Yes,
+				How many in series? 200,
+				Are you using any CIAB assets?: Yes,
+				Do you require any assets from Liferay?: Yes,
+				Please describe including specifications and due dates: Require Liferay,
+				How will the Liferay brand be used in the campaign?: Liferay Brand
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
+	@description = "This is a test for LPS-182116. Verify that the partner can submit an MDF with an Event > In-person activity"
+	@priority = 4
+	test CanSubmitMDFWithEventInPersonActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Event' as Type of Activity and 'In-person networking event/seminar/meet-up' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				tactic = "In-person networking event/seminar/meet-up",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Event");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "In-person networking event/seminar/meet-up",
+				typeOfActivity = "Event");
+
+			var tacticFieldsList = '''
+				Activity Description: Activity Description,
+				Venue Name: Venue Name,
+				Liferay Branding: Activity Required,
+				Source and Size of Invitee List: Invite List,
+				Liferay Participation / Requirements: Activity Partipation,
+				Source and Size of Invitee List: Invitee List,
+				Activity Promotion: Activity Promotion
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
+	@description = "This is a test for LPS-188238. Verify that the partner can submit an MDF with an Event > Webinar activity"
+	@priority = 4
+	test CanSubmitMDFWithEventWebinarActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Event' as Type of Activity and 'Webinar' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				tactic = "Webinar",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Event");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Webinar",
+				typeOfActivity = "Event");
+
+			var tacticFieldsList = '''
+				Liferay Branding: Activity Required,
+				Liferay Participation / Requirements: Activity Partipation,
+				Source and Size of Invitee List: Invitee List,
+				Activity Promotion: Activity Promotion
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
+	@description = "This is a test for LPS-192224. Verify that the partner can submit an MDF with an Miscellaneous Marketing > Broadcast Advertising activity"
+	@priority = 4
+	test CanSubmitMDFWithMiscellaneousMarketingBroadcastAdActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Miscellaneous Marketing' as Type of Activity and 'Broadcast Advertising activity' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				ofWeek = 10,
+				tactic = "Broadcast Advertising",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Broadcast Advertising",
+				typeOfActivity = "Miscellaneous Marketing");
+
+			var tacticFieldsList = '''
+				Marketing activity: Activity Description,
+				Broadcast channel: Broadcast channel,
+				CTA: Activity CTA,
+				Guaranteed Impressions: Guaranteed Impressions
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
+	@description = "This is a test for LPS-192225. Verify that the partner can submit an MDF with an Miscellaneous Marketing > Co-branded activity"
+	@priority = 4
+	test CanSubmitMDFWithMiscellaneousMarketingCoBrandedActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Miscellaneous Marketing' as Type of Activity and 'Co-branded Merchandise activity' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Co-branded Merchandise",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Co-branded Merchandise",
+				typeOfActivity = "Miscellaneous Marketing");
+
+			var tacticFieldsList = '''
+				Marketing activity: Activity Description,
+				What type of merchandise?: Type Merchandise,
+				Quantity: 5
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
+	@description = "This is a test for LPS-192226. Verify that the partner can submit an MDF with an Miscellaneous Marketing > Direct Mail activity"
+	@priority = 4
+	test CanSubmitMDFWithMiscellaneousMarketingDirectMailActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Miscellaneous Marketing' as Type of Activity and 'Direct Mail activity' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Direct Mail",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Direct Mail",
+				typeOfActivity = "Miscellaneous Marketing");
+
+			var tacticFieldsList = '''
+				Marketing activity: Activity Description,
+				Target # of sends: 5,
+				CTA: Activity CTA,
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
+	@description = "This is a test for LPS-192227. Verify that the partner can submit an MDF with an Miscellaneous Marketing > Outbound Telemarketing Sales activity"
+	@priority = 4
+	test CanSubmitMDFWithMiscellaneousMarketingOutboundTelemarketingSalesActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Miscellaneous Marketing' as Type of Activity and 'Outbound Telemarketing Sales activity' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Outbound Telemarketing Sales",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Outbound Telemarketing Sales",
+				typeOfActivity = "Miscellaneous Marketing");
+
+			var tacticFieldsList = '''
+				Marketing activity: Activity Description,
+				Audience Target: Audience Target,
+				Source and Size of call List: Call List,
+				Resources necessary from Liferay: Resources Liferay
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
+	@description = "This is a test for LPS-192090. Verify that the partner can submit an MDF with an Miscellaneous Marketing > Print Advertising activity"
+	@priority = 4
+	test CanSubmitMDFWithMiscellaneousMarketingPrintAdActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Miscellaneous Marketing' as Type of Activity and 'Print Advertising activity' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Print Advertising",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Print Advertising",
+				typeOfActivity = "Miscellaneous Marketing");
+
+			var tacticFieldsList = '''
+				Marketing activity: Activity Description,
+				Publication: Publication,
+				CTA: Activity CTA,
+				Expected Impressions: Expected Impressions
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
+}

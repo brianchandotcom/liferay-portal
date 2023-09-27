@@ -1,20 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.project.templates;
 
-import aQute.bnd.main.bnd;
+import aQute.bnd.differ.DiffPluginImpl;
+import aQute.bnd.service.diff.Diff;
+import aQute.bnd.service.diff.Tree;
 
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
@@ -32,14 +25,12 @@ import difflib.DiffUtils;
 import difflib.Patch;
 
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.io.StringWriter;
 
 import java.net.URI;
@@ -56,6 +47,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +76,7 @@ import net.diibadaaba.zipdiff.Differences;
 
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.io.FileUtils;
 
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.BuildTask;
@@ -113,8 +106,9 @@ public interface BaseProjectTemplatesTestCase {
 		Arrays.asList(
 			"*.js.map", "*_jsp.class", "*manifest.json", "*pom.properties",
 			"*pom.xml", "*package.json", "Archiver-Version", "Build-Jdk",
-			" Build-Jdk-Spec", "Built-By", "Javac-Debug", "Javac-Deprecation",
-			"Javac-Encoding"),
+			"Build-Jdk-Spec", "Built-By", "Javac-Debug", "Javac-Deprecation",
+			"Javac-Encoding", "Created-By", "Tool", "Javac-Debug",
+			"Javac-Deprecation", "Javac-Encoding"),
 		',');
 
 	public static final String DEPENDENCY_JAVAX_PORTLET_API =
@@ -155,7 +149,7 @@ public interface BaseProjectTemplatesTestCase {
 		"gradle/wrapper/gradle-wrapper.properties"
 	};
 
-	public static final String GRADLE_WRAPPER_VERSION = "6.9.2";
+	public static final String GRADLE_WRAPPER_VERSION = "7.3.3";
 
 	public static final String MAVEN_GOAL_BUILD_REST = "rest-builder:build";
 
@@ -193,8 +187,8 @@ public interface BaseProjectTemplatesTestCase {
 		Pattern.DOTALL | Pattern.MULTILINE);
 	public static final Pattern portalToolsBundleSupportVersionPattern =
 		Pattern.compile(
-			".*com\\.liferay\\.portal\\.tools\\.bundle\\.support" +
-				":([0-9]+\\.[0-9]+\\.[0-9]+).*",
+			".*com\\.liferay\\.portal\\.tools\\.bundle\\.support-" +
+				"([0-9]+\\.[0-9]+\\.[0-9]+).*",
 			Pattern.DOTALL | Pattern.MULTILINE);
 
 	public static File findParentFile(
@@ -329,6 +323,21 @@ public interface BaseProjectTemplatesTestCase {
 	public default void addNexusRepositoriesElement(
 		Document document, String parentElementName, String elementName) {
 
+		String repositoryUrl =
+			ProjectTemplatesTest.mavenExecutor.getRepositoryUrl();
+
+		if (Validator.isNull(repositoryUrl)) {
+			repositoryUrl = REPOSITORY_CDN_URL;
+		}
+
+		addNexusRepositoriesElement(
+			document, parentElementName, elementName, repositoryUrl);
+	}
+
+	public default void addNexusRepositoriesElement(
+		Document document, String parentElementName, String elementName,
+		String elementValue) {
+
 		Element projectElement = document.getDocumentElement();
 
 		Element repositoriesElement = XMLTestUtil.getChildElement(
@@ -344,22 +353,11 @@ public interface BaseProjectTemplatesTestCase {
 
 		Element idElement = document.createElement("id");
 
-		idElement.appendChild(
-			document.createTextNode(System.currentTimeMillis() + ""));
+		idElement.appendChild(document.createTextNode(System.nanoTime() + ""));
 
 		Element urlElement = document.createElement("url");
 
-		Text urlText = null;
-
-		String repositoryUrl =
-			ProjectTemplatesTest.mavenExecutor.getRepositoryUrl();
-
-		if (Validator.isNotNull(repositoryUrl)) {
-			urlText = document.createTextNode(repositoryUrl);
-		}
-		else {
-			urlText = document.createTextNode(REPOSITORY_CDN_URL);
-		}
+		Text urlText = document.createTextNode(elementValue);
 
 		urlElement.appendChild(urlText);
 
@@ -376,19 +374,6 @@ public interface BaseProjectTemplatesTestCase {
 
 		Files.write(
 			npmrcFile.toPath(), content.getBytes(StandardCharsets.UTF_8));
-	}
-
-	public default File buildMavenWorkspace(
-			TemporaryFolder temporaryFolder, String liferayVersion,
-			MavenExecutor mavenExecutor, String name, String... args)
-		throws Exception {
-
-		File destinationDir = temporaryFolder.newFolder("mavenWorkspace");
-		String groupId = "com.test";
-
-		return buildTemplateWithMaven(
-			destinationDir, destinationDir, "workspace", name, groupId,
-			mavenExecutor, args);
 	}
 
 	public default void buildProjects(
@@ -659,9 +644,13 @@ public interface BaseProjectTemplatesTestCase {
 		File destinationDir = temporaryFolder.newFolder(
 			"gradleWorkspace" + name);
 
-		return buildTemplateWithGradle(
+		File workspaceDir = buildTemplateWithGradle(
 			destinationDir, WorkspaceUtil.WORKSPACE, name, "--liferay-version",
 			liferayVersion);
+
+		writeM2TmpForGradleWorkspace(workspaceDir);
+
+		return workspaceDir;
 	}
 
 	public default File buildWorkspace(
@@ -673,6 +662,8 @@ public interface BaseProjectTemplatesTestCase {
 
 		if (buildType.equals("gradle")) {
 			workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
+
+			writeM2TmpForGradleWorkspace(workspaceDir);
 
 			writeGradlePropertiesInWorkspace(
 				workspaceDir,
@@ -686,6 +677,8 @@ public interface BaseProjectTemplatesTestCase {
 				destinationDir, destinationDir, "workspace", name, groupId,
 				mavenExecutor, "-DliferayVersion=" + liferayVersion,
 				"-Dpackage=com.test");
+
+			writeM2TmpForMavenWorkspace(workspaceDir);
 
 			if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
 				updateMavenPomProperties(
@@ -707,6 +700,29 @@ public interface BaseProjectTemplatesTestCase {
 		}
 
 		return workspaceDir;
+	}
+
+	public default void compareDiff(
+		Diff diff, File bundleFile1, File bundleFile2) {
+
+		Collection<? extends Diff> diffs = diff.getChildren();
+
+		if (diffs.isEmpty()) {
+			Assert.assertEquals(
+				"Bundle " + bundleFile1 + " " +
+					diff.getNewer(
+					).toString() + " and " + bundleFile2 + " " +
+						diff.getOlder(
+						).toString() + " do not match",
+				aQute.bnd.service.diff.Delta.UNCHANGED.toString(),
+				String.valueOf(diff.getDelta()));
+
+			return;
+		}
+
+		for (Diff curDiff : diffs) {
+			compareDiff(curDiff, bundleFile1, bundleFile2);
+		}
 	}
 
 	public default void configureExecutePackageManagerTask(File projectDir)
@@ -890,23 +906,23 @@ public interface BaseProjectTemplatesTestCase {
 			String content = FileUtil.read(buildFilePath);
 
 			if (!content.contains("allprojects")) {
-				String m2tmpPathString = String.valueOf(
+				String m2TmpPathString = String.valueOf(
 					Paths.get(System.getProperty("maven.repo.local") + "-tmp"));
 
 				if (isWindows()) {
-					m2tmpPathString = m2tmpPathString.replaceAll("\\\\", "/");
+					m2TmpPathString = m2TmpPathString.replaceAll("\\\\", "/");
 				}
 
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("allprojects {\n\trepositories {\n\t\tmavenLocal()");
-				sb.append("\n\t\tmaven {\n\t\t\turl file(\"" + m2tmpPathString);
+				sb.append("\n\t\tmaven {\n\t\t\turl file(\"" + m2TmpPathString);
 				sb.append("\").toURI()\n\t\t}\n\t\tmaven {\n\t\t\t");
 				sb.append("credentials {\n\t\t\t\tusername \"");
 				sb.append(System.getProperty("repository.private.username"));
 				sb.append("\"\n\t\t\t\tpassword \"");
 				sb.append(System.getProperty("repository.private.password"));
-				sb.append("\"\n\t\t\t}\n\t\t\turl \"http://repository");
+				sb.append("\"\n\t\t\t}\n\t\t\turl \"https://repository");
 				sb.append(".liferay.com/nexus/content/repositories/xanadu\"");
 				sb.append("\n\t\t}\n\t}\n\tconfigurations.all {\n\t\t");
 				sb.append("resolutionStrategy.force 'javax.servlet:javax");
@@ -945,22 +961,22 @@ public interface BaseProjectTemplatesTestCase {
 							String mavenRepoString = System.getProperty(
 								"maven.repo.local");
 
-							Path m2tmpPath = Paths.get(
+							Path m2TmpPath = Paths.get(
 								mavenRepoString + "-tmp");
 
-							if (Files.exists(m2tmpPath)) {
-								String m2tmpPathString = m2tmpPath.toString();
+							if (Files.exists(m2TmpPath)) {
+								String m2TmpPathString = m2TmpPath.toString();
 
 								if (isWindows()) {
-									m2tmpPathString =
-										m2tmpPathString.replaceAll("\\\\", "/");
+									m2TmpPathString =
+										m2TmpPathString.replaceAll("\\\\", "/");
 								}
 
 								content = content.replace(
 									"repositories {",
 									"repositories {\n\t\tmavenLocal()\n\t\t" +
 										"maven {\n\t\t\turl \"" +
-											m2tmpPathString + "\"\n\t\t}");
+											m2TmpPathString + "\"\n\t\t}");
 							}
 						}
 
@@ -1066,21 +1082,6 @@ public interface BaseProjectTemplatesTestCase {
 			String... args)
 		throws Exception {
 
-		File gettingStartedFile = new File(
-			projectDir, "GETTING_STARTED.markdown");
-		File pomXmlFile = new File(projectDir, "pom.xml");
-
-		if (gettingStartedFile.exists() && pomXmlFile.exists()) {
-			editXml(
-				pomXmlFile,
-				document -> {
-					addNexusRepositoriesElement(
-						document, "repositories", "repository");
-					addNexusRepositoriesElement(
-						document, "pluginRepositories", "pluginRepository");
-				});
-		}
-
 		String[] completeArgs = new String[args.length + 3];
 
 		System.arraycopy(args, 0, completeArgs, 0, args.length);
@@ -1135,7 +1136,7 @@ public interface BaseProjectTemplatesTestCase {
 			return "portal-7.3-ga8";
 		}
 		else if (liferayVersion.startsWith("7.4")) {
-			return "portal-7.4-ga36";
+			return "portal-7.4-ga56";
 		}
 
 		return null;
@@ -1505,7 +1506,7 @@ public interface BaseProjectTemplatesTestCase {
 		else {
 			writeGradlePropertiesInWorkspace(
 				gradleWorkspaceDir,
-				"liferay.workspace.target.platform.version=7.4.3.4");
+				"liferay.workspace.target.platform.version=7.4.3.56");
 		}
 
 		File modulesDir = new File(gradleWorkspaceDir, "modules");
@@ -1702,7 +1703,7 @@ public interface BaseProjectTemplatesTestCase {
 
 			writeGradlePropertiesInWorkspace(
 				workspaceDir,
-				"liferay.workspace.target.platform.version=7.4.3.4");
+				"liferay.workspace.target.platform.version=7.4.3.56");
 		}
 
 		File modulesDir = new File(workspaceDir, "modules");
@@ -1729,41 +1730,14 @@ public interface BaseProjectTemplatesTestCase {
 	public default void testBundlesDiff(File bundleFile1, File bundleFile2)
 		throws Exception {
 
-		PrintStream originalErrorPrintStream = System.err;
-		PrintStream originalOutputPrintStream = System.out;
+		DiffPluginImpl diffPluginImpl = new DiffPluginImpl();
 
-		originalErrorPrintStream.flush();
-		originalOutputPrintStream.flush();
+		diffPluginImpl.setIgnore(BUNDLES_DIFF_IGNORES);
 
-		ByteArrayOutputStream newErrorByteArrayOutputStream =
-			new ByteArrayOutputStream();
-		ByteArrayOutputStream newOutByteArrayOutputStream =
-			new ByteArrayOutputStream();
+		Tree tree1 = diffPluginImpl.tree(bundleFile1);
+		Tree tree2 = diffPluginImpl.tree(bundleFile2);
 
-		System.setErr(new PrintStream(newErrorByteArrayOutputStream, true));
-		System.setOut(new PrintStream(newOutByteArrayOutputStream, true));
-
-		try (bnd bnd = new bnd()) {
-			bnd.start(
-				new String[] {
-					"diff", "--ignore", BUNDLES_DIFF_IGNORES,
-					bundleFile1.getAbsolutePath(), bundleFile2.getAbsolutePath()
-				});
-		}
-		finally {
-			System.setErr(originalErrorPrintStream);
-			System.setOut(originalOutputPrintStream);
-		}
-
-		String output = newErrorByteArrayOutputStream.toString();
-
-		if (Validator.isNull(output)) {
-			output = newOutByteArrayOutputStream.toString();
-		}
-
-		Assert.assertEquals(
-			"Bundle " + bundleFile1 + " and " + bundleFile2 + " do not match",
-			"", output);
+		compareDiff(tree1.diff(tree2), bundleFile1, bundleFile2);
 	}
 
 	public default void testChangePortletModelHintsXml(
@@ -2187,6 +2161,69 @@ public interface BaseProjectTemplatesTestCase {
 			StandardOpenOption.APPEND);
 
 		return gradlePropertiesFile;
+	}
+
+	public default void writeM2TmpForGradleWorkspace(File projectDir)
+		throws Exception {
+
+		File settingsGradleFile = new File(
+			getWorkspaceDir(projectDir), "settings.gradle");
+
+		List<String> settingsGradleContents = FileUtils.readLines(
+			settingsGradleFile, "UTF-8");
+
+		File m2TmpDir = new File("../../../../", ".m2-tmp");
+
+		File m2TmpCanonicalDir = m2TmpDir.getCanonicalFile();
+
+		if (!settingsGradleContents.contains(m2TmpCanonicalDir.toURI())) {
+			for (int i = 0; i < settingsGradleContents.size(); i++) {
+				String content = settingsGradleContents.get(i);
+
+				if (content.contains("mavenLocal()")) {
+					settingsGradleContents.add(i + 1, "\t\tmaven {");
+
+					settingsGradleContents.add(
+						i + 2,
+						"\t\t\turl \"" + m2TmpCanonicalDir.toURI() + "\"");
+					settingsGradleContents.add(i + 3, "\t\t}");
+
+					break;
+				}
+			}
+
+			FileUtils.writeLines(
+				settingsGradleFile, null, settingsGradleContents, null);
+		}
+	}
+
+	public default void writeM2TmpForMavenWorkspace(File projectDir)
+		throws Exception {
+
+		File gettingStartedFile = new File(
+			projectDir, "GETTING_STARTED.markdown");
+		File pomXmlFile = new File(projectDir, "pom.xml");
+
+		if (gettingStartedFile.exists() && pomXmlFile.exists()) {
+			File m2TmpDir = new File("../../../../", ".m2-tmp");
+
+			File m2TmpCanonicalDir = m2TmpDir.getCanonicalFile();
+
+			editXml(
+				pomXmlFile,
+				document -> {
+					addNexusRepositoriesElement(
+						document, "repositories", "repository",
+						String.valueOf(m2TmpCanonicalDir.toURI()));
+					addNexusRepositoriesElement(
+						document, "repositories", "repository");
+					addNexusRepositoriesElement(
+						document, "pluginRepositories", "pluginRepository");
+					addNexusRepositoriesElement(
+						document, "pluginRepositories", "pluginRepository",
+						String.valueOf(m2TmpCanonicalDir.toURI()));
+				});
+		}
 	}
 
 }

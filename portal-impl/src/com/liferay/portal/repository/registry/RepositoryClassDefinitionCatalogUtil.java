@@ -1,21 +1,9 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.repository.registry;
-
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 
 import java.util.Collection;
 
@@ -25,44 +13,24 @@ import java.util.Collection;
 public class RepositoryClassDefinitionCatalogUtil {
 
 	public static Iterable<RepositoryClassDefinition>
-		getExternalRepositoryClassDefinitions() {
+		getExternalRepositoryClassDefinitions(long companyId) {
 
 		return _repositoryClassDefinitionCatalog.
-			getExternalRepositoryClassDefinitions();
+			getExternalRepositoryClassDefinitions(companyId);
 	}
 
-	public static Collection<String> getExternalRepositoryClassNames() {
+	public static Collection<String> getExternalRepositoryClassNames(
+		long companyId) {
+
 		return _repositoryClassDefinitionCatalog.
-			getExternalRepositoryClassNames();
+			getExternalRepositoryClassNames(companyId);
 	}
 
 	public static RepositoryClassDefinition getRepositoryClassDefinition(
-		String repositoryTypeKey) {
+		long companyId, String repositoryTypeKey) {
 
 		return _repositoryClassDefinitionCatalog.getRepositoryClassDefinition(
-			repositoryTypeKey);
-	}
-
-	public static RepositoryClassDefinitionCatalog
-		getRepositoryClassDefinitionCatalog() {
-
-		return _repositoryClassDefinitionCatalog;
-	}
-
-	public static void registerLegacyExternalRepositoryFactory(
-		String className, ExternalRepositoryFactory externalRepositoryFactory,
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_repositoryClassDefinitionCatalog.
-			registerLegacyExternalRepositoryFactory(
-				className, externalRepositoryFactory, resourceBundleLoader);
-	}
-
-	public static void unregisterLegacyExternalRepositoryFactory(
-		String className) {
-
-		_repositoryClassDefinitionCatalog.
-			unregisterLegacyExternalRepositoryFactory(className);
+			companyId, repositoryTypeKey);
 	}
 
 	public void setRepositoryClassDefinitionCatalog(

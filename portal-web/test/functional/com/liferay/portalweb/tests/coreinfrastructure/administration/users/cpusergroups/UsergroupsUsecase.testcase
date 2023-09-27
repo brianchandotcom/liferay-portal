@@ -1,4 +1,4 @@
-@component-name = "portal-security"
+@component-name = "portal-user-management"
 definition {
 
 	property portal.release = "true";
@@ -30,7 +30,7 @@ definition {
 		}
 	}
 
-	@priority = 3
+	@priority = 4
 	test ExportUserGroupMembers {
 		JSONUserGroup.addUserGroup(
 			userGroupDescription = "UG UserGroup Name Description",
@@ -53,7 +53,7 @@ definition {
 		LAR.exportUserGroups(larFileName = "User_Group_Members.lar");
 	}
 
-	@priority = 3
+	@priority = 4
 	test PredefinedPagesCanBeAdded {
 		JSONUserGroup.addUserGroup(
 			userGroupDescription = "UG User Group Description",
@@ -99,6 +99,7 @@ definition {
 	test UserGroupSiteTemplates {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SiteTemplates.addCP(
 			disableChanges = "true",

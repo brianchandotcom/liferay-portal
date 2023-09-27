@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 export default {
@@ -197,6 +188,8 @@ export default {
 	'in-progress': 'In Progress',
 	'issue': 'Issue',
 	'issues': 'Issues',
+	'issues-keys': 'Issues Keys',
+	'jira-authorization': 'Jira Authorization',
 	'jira-components': 'Jira Components',
 	'job-scheduler': 'Job Scheduler',
 	'job-scheduler-x': 'Job Scheduler {0}',
@@ -391,6 +384,7 @@ export default {
 	'testray-user': ' User',
 	'tests': 'Tests',
 	'the-component-name-already-exists': 'The component name already exists.',
+	'the-issue-x-does-not-exists': 'The issue(s) {0} does not exists.',
 	'the-link-url-must-be-a-valid-url': 'The link URL must be a valid URL.',
 	'the-name-already-exists': 'The name already exists.',
 	'the-project-cannot-be-deleted-because-it-has-associated-builds':
@@ -414,6 +408,8 @@ export default {
 	'this-field-is-required': 'This field is required.',
 	'this-role-is-for-general-liferay-employees-and-enables-authenticated-users-to-view-test-results':
 		'This role is for general Liferay employees and enables authenticated users to view test results.',
+	'this-user-does-not-have-authentication-with-jira':
+		'This user does not have authentication with jira',
 	'time-x-total-issues': 'Time {0} Total Issues',
 	'total': 'Total',
 	'total-completed': 'Total Completed',

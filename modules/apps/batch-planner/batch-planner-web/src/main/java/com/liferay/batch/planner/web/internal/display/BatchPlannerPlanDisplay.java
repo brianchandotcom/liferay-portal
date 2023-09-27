@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.batch.planner.web.internal.display;
@@ -39,8 +30,8 @@ public class BatchPlannerPlanDisplay {
 		return _failedItemsCount;
 	}
 
-	public String getInternalClassName() {
-		return _internalClassName;
+	public String getInternalClassNameKey() {
+		return _internalClassNameKey;
 	}
 
 	public Date getModifiedDate() {
@@ -104,7 +95,7 @@ public class BatchPlannerPlanDisplay {
 		public BatchPlannerPlanDisplay build() {
 			return new BatchPlannerPlanDisplay(
 				_action, _batchPlannerPlanId, _createDate, _export,
-				_failedItemsCount, _internalClassName, _modifiedDate,
+				_failedItemsCount, _internalClassNameKey, _modifiedDate,
 				_processedItemsCount, _status, _title, _totalItemsCount,
 				_userId);
 		}
@@ -127,8 +118,8 @@ public class BatchPlannerPlanDisplay {
 			return this;
 		}
 
-		public Builder internalClassName(String internalClassName) {
-			_internalClassName = internalClassName;
+		public Builder internalClassNameKey(String internalClassNameKey) {
+			_internalClassNameKey = internalClassNameKey;
 
 			return this;
 		}
@@ -174,7 +165,7 @@ public class BatchPlannerPlanDisplay {
 		private Date _createDate;
 		private boolean _export;
 		private int _failedItemsCount;
-		private String _internalClassName;
+		private String _internalClassNameKey;
 		private Date _modifiedDate;
 		private int _processedItemsCount;
 		private int _status;
@@ -186,7 +177,7 @@ public class BatchPlannerPlanDisplay {
 
 	private BatchPlannerPlanDisplay(
 		String action, long batchPlannerPlanId, Date createDate, boolean export,
-		int failedItemsCount, String internalClassName, Date modifiedDate,
+		int failedItemsCount, String internalClassNameKey, Date modifiedDate,
 		int processedItemsCount, int status, String title, int totalItemsCount,
 		long userId) {
 
@@ -195,7 +186,7 @@ public class BatchPlannerPlanDisplay {
 		_createDate = createDate;
 		_export = export;
 		_failedItemsCount = failedItemsCount;
-		_internalClassName = internalClassName;
+		_internalClassNameKey = internalClassNameKey;
 		_modifiedDate = modifiedDate;
 		_processedItemsCount = processedItemsCount;
 		_status = status;
@@ -209,7 +200,7 @@ public class BatchPlannerPlanDisplay {
 	private Date _createDate;
 	private boolean _export;
 	private int _failedItemsCount;
-	private String _internalClassName;
+	private String _internalClassNameKey;
 	private Date _modifiedDate;
 	private int _processedItemsCount;
 	private int _status;

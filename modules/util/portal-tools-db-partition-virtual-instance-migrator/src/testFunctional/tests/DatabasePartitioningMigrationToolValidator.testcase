@@ -1,0 +1,257 @@
+@component-name = "portal-database-partitioning"
+definition {
+
+	property app.server.types = "tomcat";
+	property ci.retries.disabled = "true";
+	property database.partition.enabled = "true";
+	property database.types = "mysql";
+	property osgi.modules.includes = "portal-tools-db-partition-virtual-instance-migrator";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Database Partitioning";
+
+	tearDown {
+		DBPartitionMigratorTool.clean();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 5
+	test ValidateBadConnectionWhenNonPartitionedSourceDBHaveMultipleInstancesAdded {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property database.partition.enabled = "false";
+		property ignore.errors = "true";
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And the source and target database are set") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			Portlet.shutdownServer();
+
+			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=true");
+
+			DBPartitionMigratorTool.generateTargetDatabase();
+		}
+
+		task ("When the source database is set from non partitioned environment with multiple companies defined AND the target database is a default partition of a database partitioned environment") {
+			DBPartitionMigratorTool.execute(
+				databaseSchemaSourceName = "lportal",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetName = "lportal_target",
+				databaseSchemaTargetPassword = "");
+		}
+
+		task ("Then the tool stops immediately with a console message as: Source has more than one company info") {
+			DBPartitionMigratorTool.validateOutput(outputMessage = "Source has more than one company info");
+		}
+	}
+
+	@priority = 5
+	test ValidateBadConnectionWhenSameWebIDPresentOnSourceAndTargetDB {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property ignore.errors = "true";
+		property portal.acceptance = "true";
+
+		task ("And the source and target database are set") {
+			Portlet.shutdownServer();
+
+			DBPartitionMigratorTool.prepareTargetSchema();
+
+			Portlet.startServer(keepOsGiState = "true");
+		}
+
+		task ("When the target database is the default partition of a partitioned database enviroment AND web ID from the source database is present in the target database") {
+			DBPartitionMigratorTool.execute(
+				databaseSchemaSourceName = "lportal",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetName = "lportal_target",
+				databaseSchemaTargetPassword = "");
+		}
+
+		task ("Then the tool stops immediately with an error message: Web ID liferay.com already exists in the target database") {
+			DBPartitionMigratorTool.validateOutput(outputMessage = "[ERROR] Web ID liferay.com already exists in the target database");
+		}
+	}
+
+	@priority = 5
+	test ValidateBadConnectionWhenTargetDBIsNotTheDefaultPartition {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property ignore.errors = "true";
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And the source and target database are set") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			var companyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+
+			Portlet.shutdownServer();
+
+			DBPartitionMigratorTool.generateTargetDatabase();
+		}
+
+		task ("When the target database is not the default partition of a partitioned database enviroment") {
+			DBPartitionMigratorTool.execute(
+				databaseSchemaSourceName = "lportal_target",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetName = "lpartition_${companyId}",
+				databaseSchemaTargetPassword = "");
+		}
+
+		task ("Then the tool stops immediately with a console message. Example: Target is not the default partition") {
+			DBPartitionMigratorTool.validateOutput(outputMessage = "Target is not the default partition");
+		}
+	}
+
+	@priority = 3
+	test ValidateMigrationToolReadmeInfo {
+		property database.partition.enabled = "false";
+
+		task ("When access the portal-tools-db-partition-virtual-instance-migrator util") {
+			var projectDir = PropsUtil.get("project.dir");
+
+			var readmeFile = FileUtil.read("${projectDir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/README.markdown");
+		}
+
+		task ("Then a README it's provided with the usage information expected.") {
+			if (!(contains(${readmeFile}, "# DB Partition Virtual Instance Migrator Tool"))) {
+				fail("Content doesn't match with what it's expected: ${readmeFile}");
+			}
+
+			if (!(contains(${readmeFile}, "## Execution example"))) {
+				fail("Content doesn't match with what it's expected: ${readmeFile}");
+			}
+		}
+	}
+
+	@priority = 4
+	test ValidateProvidedParameterErrorMessage {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property ignore.errors = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And the source and target database are set") {
+			Portlet.shutdownServer();
+
+			DBPartitionMigratorTool.generateTargetDatabase();
+		}
+
+		task ("When run the migration tool AND there are errors in the provided parameters for the Source db") {
+			DBPartitionMigratorTool.execute(
+				databaseSchemaSourceName = "lportal",
+				databaseSchemaSourcePassword = "test",
+				databaseSchemaTargetName = "lportal_target",
+				databaseSchemaTargetPassword = "");
+		}
+
+		task ("Then the tool stops immediately with an error code and a console message as: Unable to connect to source with the specified parameters") {
+			DBPartitionMigratorTool.validateOutput(outputMessage = "Unable to connect to source with the specified parameters");
+		}
+
+		task ("When run the migration tool AND there are errors in the provided schema name for the Source db") {
+			DBPartitionMigratorTool.execute(
+				databaseSchemaSourceName = "lportal_test",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetName = "lportal_target",
+				databaseSchemaTargetPassword = "");
+		}
+
+		task ("Then the tool stops immediately with an error code and a console message as: Unknown database 'lportal_test'") {
+			DBPartitionMigratorTool.validateOutput(outputMessage = "java.sql.SQLSyntaxErrorException: Unknown database 'lportal_test'");
+		}
+
+		task ("When run the migration tool AND there are errors in the provided parameters for the Target db") {
+			DBPartitionMigratorTool.execute(
+				databaseSchemaSourceName = "lportal",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetName = "lportal_target",
+				databaseSchemaTargetPassword = "test");
+		}
+
+		task ("Then the tool stops immediately with an error code and a console message as: Unable to connect to target with the specified parameters") {
+			DBPartitionMigratorTool.validateOutput(outputMessage = "Unable to connect to target with the specified parameters");
+		}
+
+		task ("When run the migration tool AND there are errors in the provided schema name for the Target db") {
+			DBPartitionMigratorTool.execute(
+				databaseSchemaSourceName = "lportal",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetName = "lpartition_test",
+				databaseSchemaTargetPassword = "");
+		}
+
+		task ("Then the tool stops immediately with an error code and a console message as: Unknown database 'lportal_test'") {
+			DBPartitionMigratorTool.validateOutput(outputMessage = "java.sql.SQLSyntaxErrorException: Unknown database 'lpartition_test'");
+		}
+	}
+
+	@priority = 5
+	test ValidateSuccessfulConnectionBetweenSourceAndTargetDB {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property portal.acceptance = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And the source and target database are set") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			var companyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+
+			Portlet.shutdownServer();
+
+			DBPartitionMigratorTool.generateTargetDatabase();
+		}
+
+		task ("When run the migration tool AND there are no errors in the provided parameters passed AND the source database is set as a partition from a partitioned enviroment Then the connection between both schemas work") {
+			DBPartitionMigratorTool.execute(
+				databaseSchemaSourceName = "lpartition_${companyId}",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetName = "lportal_target",
+				databaseSchemaTargetPassword = "");
+		}
+	}
+
+	@priority = 4
+	test ValidateSuccessfulConnectionWhenNonPartitionedSourceDBHaveOnlyOneCompanyAdded {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property database.partition.enabled = "false";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And the source and target database are set") {
+			Portlet.shutdownServer();
+
+			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=true");
+
+			DBPartitionMigratorTool.generateTargetDatabase();
+		}
+
+		task ("When run the migration tool AND the source database is set from non partitioned environment with just one company defined Then the tool should run successfully") {
+			DBPartitionMigratorTool.execute(
+				databaseSchemaSourceName = "lportal",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetName = "lportal_target",
+				databaseSchemaTargetPassword = "");
+		}
+	}
+
+}

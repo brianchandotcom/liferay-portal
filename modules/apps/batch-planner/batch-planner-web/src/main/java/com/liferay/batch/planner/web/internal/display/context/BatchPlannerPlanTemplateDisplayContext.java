@@ -1,22 +1,16 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.batch.planner.web.internal.display.context;
 
+import com.liferay.batch.planner.batch.engine.task.TaskItemUtil;
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerPlanServiceUtil;
+import com.liferay.batch.planner.web.internal.display.BatchPlannerPlanTemplateDisplay;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,7 +53,9 @@ public class BatchPlannerPlanTemplateDisplayContext extends BaseDisplayContext {
 		).buildPortletURL();
 	}
 
-	public SearchContainer<BatchPlannerPlan> getSearchContainer() {
+	public SearchContainer<BatchPlannerPlanTemplateDisplay>
+		getSearchContainer() {
+
 		try {
 			return _getSearchContainer();
 		}
@@ -71,6 +67,14 @@ public class BatchPlannerPlanTemplateDisplayContext extends BaseDisplayContext {
 
 		return new SearchContainer<>(
 			renderRequest, getPortletURL(), null, "no-items-were-found");
+	}
+
+	private String _getAction(boolean export) {
+		if (export) {
+			return "export";
+		}
+
+		return "import";
 	}
 
 	private String _getOrderByCol() {
@@ -97,7 +101,8 @@ public class BatchPlannerPlanTemplateDisplayContext extends BaseDisplayContext {
 		return _orderByType;
 	}
 
-	private SearchContainer<BatchPlannerPlan> _getSearchContainer()
+	private SearchContainer<BatchPlannerPlanTemplateDisplay>
+			_getSearchContainer()
 		throws PortalException {
 
 		if (_searchContainer != null) {
@@ -107,7 +112,8 @@ public class BatchPlannerPlanTemplateDisplayContext extends BaseDisplayContext {
 		_searchContainer = new SearchContainer<>(
 			renderRequest, getPortletURL(), null, "no-items-were-found");
 
-		_searchContainer.setId("batchPlannerPlanTemplateSearchContainer");
+		_searchContainer.setId(
+			"batchPlannerPlanTemplateDisplaySearchContainer");
 		_searchContainer.setOrderByCol(_getOrderByCol());
 		_searchContainer.setOrderByType(_getOrderByType());
 
@@ -120,13 +126,16 @@ public class BatchPlannerPlanTemplateDisplayContext extends BaseDisplayContext {
 
 		if (navigation.equals("all")) {
 			_searchContainer.setResultsAndTotal(
-				() -> BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
-					companyId, true, searchByKeyword,
-					_searchContainer.getStart(), _searchContainer.getEnd(),
-					OrderByComparatorFactoryUtil.create(
-						"BatchPlannerPlan", _searchContainer.getOrderByCol(),
-						Objects.equals(
-							_searchContainer.getOrderByType(), "asc"))),
+				() -> TransformUtil.transform(
+					BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
+						companyId, true, searchByKeyword,
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						OrderByComparatorFactoryUtil.create(
+							"BatchPlannerPlan",
+							_searchContainer.getOrderByCol(),
+							Objects.equals(
+								_searchContainer.getOrderByType(), "asc"))),
+					this::_toBatchPlannerPlanTemplateDisplay),
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
 					companyId, true, searchByKeyword));
 		}
@@ -134,13 +143,16 @@ public class BatchPlannerPlanTemplateDisplayContext extends BaseDisplayContext {
 			boolean export = isExport(navigation);
 
 			_searchContainer.setResultsAndTotal(
-				() -> BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
-					companyId, export, true, searchByKeyword,
-					_searchContainer.getStart(), _searchContainer.getEnd(),
-					OrderByComparatorFactoryUtil.create(
-						"BatchPlannerPlan", _searchContainer.getOrderByCol(),
-						Objects.equals(
-							_searchContainer.getOrderByType(), "asc"))),
+				() -> TransformUtil.transform(
+					BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
+						companyId, export, true, searchByKeyword,
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						OrderByComparatorFactoryUtil.create(
+							"BatchPlannerPlan",
+							_searchContainer.getOrderByCol(),
+							Objects.equals(
+								_searchContainer.getOrderByType(), "asc"))),
+					this::_toBatchPlannerPlanTemplateDisplay),
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
 					companyId, export, true, searchByKeyword));
 		}
@@ -151,8 +163,34 @@ public class BatchPlannerPlanTemplateDisplayContext extends BaseDisplayContext {
 		return _searchContainer;
 	}
 
+	private BatchPlannerPlanTemplateDisplay _toBatchPlannerPlanTemplateDisplay(
+			BatchPlannerPlan batchPlannerPlan)
+		throws PortalException {
+
+		return new BatchPlannerPlanTemplateDisplay.Builder(
+		).action(
+			_getAction(batchPlannerPlan.isExport())
+		).batchPlannerPlanId(
+			batchPlannerPlan.getBatchPlannerPlanId()
+		).createDate(
+			batchPlannerPlan.getCreateDate()
+		).export(
+			batchPlannerPlan.isExport()
+		).externalType(
+			batchPlannerPlan.getExternalType()
+		).internalClassNameKey(
+			TaskItemUtil.getInternalClassNameKey(
+				batchPlannerPlan.getInternalClassName(),
+				batchPlannerPlan.getTaskItemDelegateName())
+		).title(
+			batchPlannerPlan.getName()
+		).userName(
+			batchPlannerPlan.getUserName()
+		).build();
+	}
+
 	private String _orderByCol;
 	private String _orderByType;
-	private SearchContainer<BatchPlannerPlan> _searchContainer;
+	private SearchContainer<BatchPlannerPlanTemplateDisplay> _searchContainer;
 
 }

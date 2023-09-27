@@ -197,6 +197,25 @@
 			"title": "The ClassTypeReference Schema",
 			"type": "object"
 		},
+		"ClientExtension": {
+			"additionalProperties": false,
+			"properties": {
+				"clientExtensionConfig": {
+					"title": "The clientExtensionConfig Schema",
+					"type": "object"
+				},
+				"externalReferenceCode": {
+					"title": "The externalReferenceCode Schema",
+					"type": "string"
+				},
+				"name": {
+					"title": "The name Schema",
+					"type": "string"
+				}
+			},
+			"title": "The ContentDocument Schema",
+			"type": "object"
+		},
 		"CollectionViewport": {
 			"additionalProperties": false,
 			"properties": {
@@ -249,6 +268,49 @@
 				"columnViewportDefinition",
 				"id"
 			],
+			"type": "object"
+		},
+		"ContentDocument": {
+			"additionalProperties": false,
+			"properties": {
+				"contentType": {
+					"title": "The contentType Schema",
+					"type": "string"
+				},
+				"contentURL": {
+					"title": "The contentURL Schema",
+					"type": "string"
+				},
+				"contentValue": {
+					"title": "The contentValue Schema",
+					"type": "string"
+				},
+				"description": {
+					"title": "The description Schema",
+					"type": "string"
+				},
+				"encodingFormat": {
+					"title": "The encodingFormat Schema",
+					"type": "string"
+				},
+				"fileExtension": {
+					"title": "The fileExtension Schema",
+					"type": "string"
+				},
+				"id": {
+					"title": "The id Schema",
+					"type": "integer"
+				},
+				"sizeInBytes": {
+					"title": "The sizeInBytes Schema",
+					"type": "integer"
+				},
+				"title": {
+					"title": "The sizeInBytes Schema",
+					"type": "string"
+				}
+			},
+			"title": "The ContentDocument Schema",
 			"type": "object"
 		},
 		"ContextReference": {
@@ -2350,6 +2412,31 @@
 					"title": "The css Schema",
 					"type": "string"
 				},
+				"favIcon": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/ClientExtension"
+						},
+						{
+							"$ref": "#/definitions/ContentDocument"
+						}
+					],
+					"type": "object"
+				},
+				"globalCSSClientExtensions": {
+					"items": {
+						"$ref": "#/definitions/ClientExtension"
+					},
+					"title": "The globalCSSClientExtensions Schema",
+					"type": "array"
+				},
+				"globalJSClientExtensions": {
+					"items": {
+						"$ref": "#/definitions/ClientExtension"
+					},
+					"title": "The globalJSClientExtensions Schema",
+					"type": "array"
+				},
 				"javascript": {
 					"title": "The javascript Schema",
 					"type": "string"
@@ -2388,6 +2475,11 @@
 						"key"
 					],
 					"title": "The styleBook Schema",
+					"type": "object"
+				},
+				"themeCSSClientExtension": {
+					"$ref": "#/definitions/ClientExtension",
+					"title": "The themeCSSClientExtension Schema",
 					"type": "object"
 				},
 				"themeName": {

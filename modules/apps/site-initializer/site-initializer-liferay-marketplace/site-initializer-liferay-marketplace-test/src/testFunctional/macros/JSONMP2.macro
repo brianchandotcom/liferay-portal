@@ -1,0 +1,43 @@
+definition {
+
+	macro addCatalog {
+		if (!(isSet(catalogName))) {
+			var catalogName = "MKT Catalog";
+		}
+
+		CommerceJSONCatalogsAPI._addCatalog(catalogName = ${catalogName});
+	}
+
+	macro updateAccount {
+		if (!(isSet(accountName))) {
+			var accountName = "QA Development";
+		}
+
+		if (!(isSet(catalogName))) {
+			var catalogName = "MKT Catalog";
+		}
+
+		JSONMP2API.updateAccount(
+			accountName = ${accountName},
+			catalogName = ${catalogName});
+
+		// Workaround for LPS-192397
+
+		Account.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = ${accountName});
+
+		Account.assignUsers(
+			accountName = ${accountName},
+			assigneeName = "Dashboard Administrator");
+
+		Account.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Dashboard Administrator");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = StringUtil.toLowerCase("da@administrator.com"));
+	}
+
+}

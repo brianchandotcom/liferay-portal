@@ -91,9 +91,7 @@ definition {
 				changeUser = "Test Test",
 				showAllItems = "true");
 
-			Publications.publishPublication(
-				publicationName = "Publication Name",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Publication Name");
 		}
 	}
 
@@ -150,9 +148,7 @@ definition {
 				changeUser = "Test Test",
 				showAllItems = "true");
 
-			Publications.publishPublication(
-				publicationName = "Publication Name",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Publication Name");
 		}
 	}
 
@@ -190,9 +186,7 @@ definition {
 				changeUser = "Test Test",
 				showAllItems = "true");
 
-			Publications.publishPublication(
-				publicationName = "Publication Name",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Publication Name");
 		}
 
 		task ("Assert that the edited name remains after publishing the Publication") {

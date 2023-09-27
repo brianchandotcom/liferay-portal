@@ -4,7 +4,9 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(
+			grandParentGroupName = ${grandParentGroupName},
 			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
 			site = ${site});
 
 		if (!(isSet(auto))) {
@@ -21,16 +23,22 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuItemName},${siteNavigationMenuName},${type}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(
+			grandParentGroupName = ${grandParentGroupName},
 			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
 			site = ${site});
 		var siteNavigationMenuId = JSONSitenavigationSetter.setSiteNavigationMenuId(
+			grandParentGroupName = ${grandParentGroupName},
 			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
 			site = ${site},
 			siteNavigationMenuName = ${siteNavigationMenuName});
 
 		if (isSet(parentSiteNavigationMenuItem)) {
 			var parentSiteNavigationMenuItemId = JSONSitenavigationSetter.setSiteNavigationMenuItemId(
+				grandParentGroupName = ${grandParentGroupName},
 				groupName = ${groupName},
+				parentGroupName = ${parentGroupName},
 				siteNavigationMenuItemName = ${parentSiteNavigationMenuItem},
 				siteNavigationMenuName = ${siteNavigationMenuName});
 		}

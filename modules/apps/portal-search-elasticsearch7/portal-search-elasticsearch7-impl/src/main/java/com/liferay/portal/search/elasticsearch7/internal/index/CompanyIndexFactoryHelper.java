@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.elasticsearch7.internal.index;
@@ -104,7 +95,7 @@ public class CompanyIndexFactoryHelper {
 
 			SearchLogHelperUtil.logActionResponse(_log, actionResponse);
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-177664") &&
+			if (FeatureFlagManagerUtil.isEnabled("LPS-183661") &&
 				(companyId != CompanyConstants.SYSTEM)) {
 
 				if (resetBothIndexNames) {
@@ -261,7 +252,7 @@ public class CompanyIndexFactoryHelper {
 		Settings.Builder builder = settingsBuilder.getBuilder();
 
 		String defaultIndexSettings = ResourceUtil.getResourceAsString(
-			getClass(), "/META-INF/index-settings-defaults.json");
+			getClass(), "/META-INF/settings/index-settings-defaults.json");
 
 		builder.loadFromSource(defaultIndexSettings, XContentType.JSON);
 	}

@@ -1,19 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.bookmarks.service;
 
+import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -37,7 +29,7 @@ public class BookmarksEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksEntry addEntry(
+	public BookmarksEntry addEntry(
 			long groupId, long folderId, String name, String url,
 			String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -55,19 +47,17 @@ public class BookmarksEntryServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry>
-		getEntries(long groupId, long folderId, int start, int end) {
+	public java.util.List<BookmarksEntry> getEntries(
+		long groupId, long folderId, int start, int end) {
 
 		return _bookmarksEntryService.getEntries(groupId, folderId, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry>
-		getEntries(
-			long groupId, long folderId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.bookmarks.model.BookmarksEntry>
-					orderByComparator) {
+	public java.util.List<BookmarksEntry> getEntries(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
+			orderByComparator) {
 
 		return _bookmarksEntryService.getEntries(
 			groupId, folderId, start, end, orderByComparator);
@@ -85,7 +75,7 @@ public class BookmarksEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksEntry getEntry(long entryId)
+	public BookmarksEntry getEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksEntryService.getEntry(entryId);
@@ -100,16 +90,16 @@ public class BookmarksEntryServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry>
-			getGroupEntries(long groupId, int start, int end)
+	public java.util.List<BookmarksEntry> getGroupEntries(
+			long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksEntryService.getGroupEntries(groupId, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry>
-			getGroupEntries(long groupId, long userId, int start, int end)
+	public java.util.List<BookmarksEntry> getGroupEntries(
+			long groupId, long userId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksEntryService.getGroupEntries(
@@ -117,10 +107,8 @@ public class BookmarksEntryServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry>
-			getGroupEntries(
-				long groupId, long userId, long rootFolderId, int start,
-				int end)
+	public java.util.List<BookmarksEntry> getGroupEntries(
+			long groupId, long userId, long rootFolderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksEntryService.getGroupEntries(
@@ -161,16 +149,14 @@ public class BookmarksEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksEntry moveEntry(
-			long entryId, long parentFolderId)
+	public BookmarksEntry moveEntry(long entryId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksEntryService.moveEntry(entryId, parentFolderId);
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksEntry moveEntryFromTrash(
-			long entryId, long parentFolderId)
+	public BookmarksEntry moveEntryFromTrash(long entryId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksEntryService.moveEntryFromTrash(
@@ -178,23 +164,21 @@ public class BookmarksEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksEntry moveEntryToTrash(
-			long entryId)
+	public BookmarksEntry moveEntryToTrash(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksEntryService.moveEntryToTrash(entryId);
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksEntry openEntry(
-			com.liferay.bookmarks.model.BookmarksEntry entry)
+	public BookmarksEntry openEntry(BookmarksEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksEntryService.openEntry(entry);
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksEntry openEntry(long entryId)
+	public BookmarksEntry openEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksEntryService.openEntry(entryId);
@@ -231,7 +215,7 @@ public class BookmarksEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksEntry updateEntry(
+	public BookmarksEntry updateEntry(
 			long entryId, long groupId, long folderId, String name, String url,
 			String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

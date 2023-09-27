@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.internal.upgrade.registry;
@@ -47,8 +38,10 @@ import com.liferay.commerce.internal.upgrade.v9_3_0.ConfigurationUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v9_4_0.AccountRoleUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v9_6_1.SupplierRoleUpgradeProcess;
 import com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl;
+import com.liferay.commerce.model.impl.CPDefinitionInventoryModelImpl;
 import com.liferay.commerce.model.impl.CommerceAvailabilityEstimateModelImpl;
 import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
+import com.liferay.commerce.model.impl.CommerceShipmentItemModelImpl;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
@@ -244,34 +237,34 @@ public class CommerceServiceUpgradeStepRegistrator
 		registry.register(
 			"4.8.1", "4.9.0",
 			UpgradeProcessFactory.addColumns(
-				"CommerceOrder", "subtotalWithTaxAmount DECIMAL(30,16)",
-				"subtotalDiscountWithTaxAmount DECIMAL(30,16)",
-				"subtotalDiscountPctLev1WithTax DECIMAL(30,16)",
-				"subtotalDiscountPctLev2WithTax DECIMAL(30,16)",
-				"subtotalDiscountPctLev3WithTax DECIMAL(30,16)",
-				"subtotalDiscountPctLev4WithTax DECIMAL(30,16)",
-				"shippingWithTaxAmount DECIMAL(30,16)",
-				"shippingDiscountWithTaxAmount DECIMAL(30,16)",
-				"shippingDiscountPctLev1WithTax DECIMAL(30,16)",
-				"shippingDiscountPctLev2WithTax DECIMAL(30,16)",
-				"shippingDiscountPctLev3WithTax DECIMAL(30,16)",
-				"shippingDiscountPctLev4WithTax DECIMAL(30,16)",
-				"totalWithTaxAmount DECIMAL(30,16)",
-				"totalDiscountWithTaxAmount DECIMAL(30,16)",
-				"totalDiscountPctLev1WithTax DECIMAL(30,16)",
-				"totalDiscountPctLev2WithTax DECIMAL(30,16)",
-				"totalDiscountPctLev3WithTax DECIMAL(30,16)",
-				"totalDiscountPctLev4WithTax DECIMAL(30,16)"),
+				"CommerceOrder", "subtotalWithTaxAmount BIGDECIMAL",
+				"subtotalDiscountWithTaxAmount BIGDECIMAL",
+				"subtotalDiscountPctLev1WithTax BIGDECIMAL",
+				"subtotalDiscountPctLev2WithTax BIGDECIMAL",
+				"subtotalDiscountPctLev3WithTax BIGDECIMAL",
+				"subtotalDiscountPctLev4WithTax BIGDECIMAL",
+				"shippingWithTaxAmount BIGDECIMAL",
+				"shippingDiscountWithTaxAmount BIGDECIMAL",
+				"shippingDiscountPctLev1WithTax BIGDECIMAL",
+				"shippingDiscountPctLev2WithTax BIGDECIMAL",
+				"shippingDiscountPctLev3WithTax BIGDECIMAL",
+				"shippingDiscountPctLev4WithTax BIGDECIMAL",
+				"totalWithTaxAmount BIGDECIMAL",
+				"totalDiscountWithTaxAmount BIGDECIMAL",
+				"totalDiscountPctLev1WithTax BIGDECIMAL",
+				"totalDiscountPctLev2WithTax BIGDECIMAL",
+				"totalDiscountPctLev3WithTax BIGDECIMAL",
+				"totalDiscountPctLev4WithTax BIGDECIMAL"),
 			UpgradeProcessFactory.addColumns(
 				"CommerceOrderItem", "parentCommerceOrderItemId LONG",
-				"unitPriceWithTaxAmount DECIMAL(30,16)",
-				"promoPriceWithTaxAmount DECIMAL(30,16)",
-				"discountWithTaxAmount DECIMAL(30,16)",
-				"finalPriceWithTaxAmount DECIMAL(30,16)",
-				"discountPctLevel1WithTaxAmount DECIMAL(30,16)",
-				"discountPctLevel2WithTaxAmount DECIMAL(30,16)",
-				"discountPctLevel3WithTaxAmount DECIMAL(30,16)",
-				"discountPctLevel4WithTaxAmount DECIMAL(30,16)",
+				"unitPriceWithTaxAmount BIGDECIMAL",
+				"promoPriceWithTaxAmount BIGDECIMAL",
+				"discountWithTaxAmount BIGDECIMAL",
+				"finalPriceWithTaxAmount BIGDECIMAL",
+				"discountPctLevel1WithTaxAmount BIGDECIMAL",
+				"discountPctLevel2WithTaxAmount BIGDECIMAL",
+				"discountPctLevel3WithTaxAmount BIGDECIMAL",
+				"discountPctLevel4WithTaxAmount BIGDECIMAL",
 				"commercePriceListId LONG"));
 
 		registry.register(
@@ -384,7 +377,7 @@ public class CommerceServiceUpgradeStepRegistrator
 			"7.3.0", "8.0.0",
 			UpgradeProcessFactory.addColumns(
 				"CommerceOrderItem", "CPMeasurementUnitId LONG",
-				"decimalQuantity DECIMAL(30, 16) null"));
+				"decimalQuantity BIGDECIMAL null"));
 
 		registry.register("8.0.0", "8.0.1", new DummyUpgradeProcess());
 
@@ -600,6 +593,65 @@ public class CommerceServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				CommerceOrderItemModelImpl.TABLE_NAME,
 				"unitOfMeasureKey VARCHAR(75) null"));
+
+		registry.register("9.7.0", "9.7.1", new DummyUpgradeProcess());
+
+		registry.register(
+			"9.7.1", "9.8.0",
+			UpgradeProcessFactory.addColumns(
+				CommerceShipmentItemModelImpl.TABLE_NAME,
+				"unitOfMeasureKey VARCHAR(75) null"));
+
+		registry.register(
+			"9.8.0", "10.0.0",
+			new com.liferay.commerce.internal.upgrade.v10_0_0.
+				CommerceOrderItemUpgradeProcess());
+
+		registry.register(
+			"10.0.0", "10.0.1",
+			new com.liferay.commerce.internal.upgrade.v10_0_1.
+				CommercePermissionUpgradeProcess(
+					_resourceActionLocalService,
+					_resourcePermissionLocalService, _roleLocalService));
+
+		registry.register(
+			"10.0.1", "10.1.0",
+			UpgradeProcessFactory.alterColumnType(
+				CPDefinitionInventoryModelImpl.TABLE_NAME, "minStockQuantity",
+				"BIGDECIMAL null"),
+			UpgradeProcessFactory.alterColumnType(
+				CPDefinitionInventoryModelImpl.TABLE_NAME, "minOrderQuantity",
+				"BIGDECIMAL null"),
+			UpgradeProcessFactory.alterColumnType(
+				CPDefinitionInventoryModelImpl.TABLE_NAME, "maxOrderQuantity",
+				"BIGDECIMAL null"),
+			UpgradeProcessFactory.alterColumnType(
+				CPDefinitionInventoryModelImpl.TABLE_NAME,
+				"multipleOrderQuantity", "BIGDECIMAL null"));
+
+		registry.register(
+			"10.1.0", "10.2.0",
+			UpgradeProcessFactory.addColumns(
+				CommerceOrderItemModelImpl.TABLE_NAME,
+				"UOMIncrementalOrderQuantity BIGDECIMAL"));
+
+		registry.register(
+			"10.2.0", "11.0.0",
+			UpgradeProcessFactory.alterColumnName(
+				CommerceOrderItemModelImpl.TABLE_NAME, "bookedQuantityId",
+				"CIBookedQuantityId LONG"));
+
+		registry.register(
+			"11.0.0", "11.1.0",
+			UpgradeProcessFactory.alterColumnType(
+				CommerceOrderItemModelImpl.TABLE_NAME, "shippedQuantity",
+				"BIGDECIMAL null"));
+
+		registry.register(
+			"11.1.0", "11.2.0",
+			UpgradeProcessFactory.alterColumnType(
+				CommerceShipmentItemModelImpl.TABLE_NAME, "quantity",
+				"BIGDECIMAL null"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

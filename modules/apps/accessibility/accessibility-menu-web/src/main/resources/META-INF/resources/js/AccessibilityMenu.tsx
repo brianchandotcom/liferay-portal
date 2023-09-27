@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
@@ -38,6 +29,7 @@ type KEYS = keyof typeof CONSTANTS;
 type Setting = {
 	className: string;
 	defaultValue: boolean;
+	description: string;
 	key: KEYS;
 	label: string;
 	sessionClicksValue: boolean;
@@ -45,6 +37,7 @@ type Setting = {
 
 type AccessibilityMenuSetting = {
 	className: string;
+	description: string;
 	key: KEYS;
 	label: string;
 	updating?: boolean;
@@ -75,6 +68,7 @@ const AccessibilityMenu = (props: Props) => {
 					const {
 						className,
 						defaultValue,
+						description,
 						key,
 						label,
 						sessionClicksValue,
@@ -88,7 +82,7 @@ const AccessibilityMenu = (props: Props) => {
 
 					toggleClassName(className, value);
 
-					prev[key] = {className, key, label, value};
+					prev[key] = {className, description, key, label, value};
 
 					return prev;
 				},
@@ -189,7 +183,7 @@ const AccessibilityMenu = (props: Props) => {
 			{open && (
 				<ClayModal observer={observer}>
 					<ClayModal.Header>
-						{Liferay.Language.get('accessibility-help-menu')}
+						{Liferay.Language.get('accessibility-menu')}
 					</ClayModal.Header>
 
 					<ClayModal.Body>
@@ -220,14 +214,11 @@ const AccessibilityMenu = (props: Props) => {
 
 						<ul className="list-unstyled mb-0">
 							{(Object.keys(settings) as Array<KEYS>).map(
-								(key, index, array) => (
+								(key, index) => (
 									<AccessibilitySetting
-										className={
-											index + 1 < array.length
-												? 'mb-3'
-												: ''
-										}
+										description={settings[key].description}
 										disabled={isSettingsDisabled}
+										index={index}
 										key={settings[key].key}
 										label={settings[key].label}
 										onChange={(value) =>

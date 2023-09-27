@@ -22,18 +22,29 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+	@description = "This is a test for LPS-188478. Assert new import page of composition works."
+	@priority = 3
+	test CannotImportInvalidFragmentComposition {
+		task ("Given a user accesses to the Fragments import page") {
+			FragmentsAdminNavigator.gotoImportCollection();
 
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
+			WaitForPageLoad();
 		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-			Navigator.openURL();
+		task ("When the user uploads an invalid fragment composition") {
+			UploadDependencyFile.uploadArchiveFile(fileName = "collections-invalid-composition.zip");
+		}
 
-			Site.tearDownCP();
+		task ("Then the user cannot import the invalid fragment composition") {
+			Button.clickImport();
+
+			Alert.viewInfoMessageSpecific(infoMessage = "No new items were imported.");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "There are no fragments.");
 		}
 	}
 
@@ -48,19 +59,17 @@ definition {
 		}
 
 		task ("Attempt to import a non-zip file") {
-			UploadCommonFile(
+			WaitForPageLoad();
+
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
 				value1 = "Document_1.doc");
 		}
 
 		task ("Assert the form validator displays an error that the file is not a zip file") {
-			WaitForElementPresent(locator1 = "Message#ERROR_FORM_VALIDATION");
-
 			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_VALIDATION",
-				value1 = "Please enter a file with a valid extension (zip).");
-
-			IFrame.closeFrame();
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "Only zip files are allowed.");
 		}
 	}
 
@@ -1508,21 +1517,75 @@ definition {
 		}
 
 		task ("When import fragment collection again with different Fragment resource") {
-			task ("Import fragment collection again with different Fragment resource") {
-				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-				FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragments-plant.zip");
-			}
+			FragmentsAdmin.importCollectionFromDependenciesFolder(
+				collectionZipFile = "fragments-plant.zip",
+				importOption = "Overwrite Existing Items");
 		}
 
 		task ("Then the old frgment resource in content does not change") {
-			task ("View the image in fragment does not change on content page") {
-				ContentPagesNavigator.openViewContentPage(
-					pageName = "Test Page Name",
-					siteName = "Test Site Name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-				AssertVisible(locator1 = "//img[contains(@src,'image-jpg')]");
-			}
+			AssertVisible(locator1 = "//img[contains(@src,'image-jpg')]");
+		}
+	}
+
+	@description = "This is a test for LPS-188478. Assert new import page of fragment works."
+	@priority = 5
+	test UploadAnotherFile {
+		task ("Given a user accesses to the Fragments import page") {
+			FragmentsAdminNavigator.gotoImportCollection();
+
+			WaitForPageLoad();
+		}
+
+		task ("When the user imports a fragment set") {
+			AssertVisible(
+				key_title = "Import File",
+				locator1 = "Header#H2_TITLE");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUBTITLE",
+				value1 = "Select a ZIP file containing one or multiple entries.");
+
+			UploadDependencyFile.uploadArchiveFile(fileName = "fragments-plant.zip");
+
+			AssertVisible(
+				key_text = "Replace File",
+				locator1 = "Button#ANY");
+
+			Button.clickImport();
+		}
+
+		task ("Then the user could upload another file on the import results page") {
+			AssertVisible(locator1 = "Message#SUCCESS_IMPORT");
+
+			Button.click(button = "Upload Another File");
+
+			WaitForPageLoad();
+
+			UploadDependencyFile.uploadArchiveFile(fileName = "fragment-collection.zip");
+
+			AssertVisible(
+				key_text = "Replace File",
+				locator1 = "Button#ANY");
+
+			Button.clickImport();
+
+			AssertVisible(locator1 = "Message#SUCCESS_IMPORT");
+
+			Button.clickDone();
+
+			AssertVisible(
+				key_menuBar = "Sample",
+				locator1 = "MenuBar#NAV_LINK");
+
+			AssertVisible(
+				key_menuBar = "Collection Name",
+				locator1 = "MenuBar#NAV_LINK");
 		}
 	}
 
@@ -1535,21 +1598,21 @@ definition {
 		task ("Import a fragment collection") {
 			FragmentsAdminNavigator.gotoImportCollection();
 
-			UploadDependencyFile.uploadArchiveFile(fileName = "fragment-collection.zip");
+			WaitForPageLoad();
 
-			SelectFrameTop();
+			UploadDependencyFile.uploadArchiveFile(fileName = "fragment-collection.zip");
 
 			Button.clickImport();
 		}
 
 		task ("Assert the zip imported properly") {
-			AssertElementNotPresent(locator1 = "Message#ERROR");
+			AssertVisible(locator1 = "Message#SUCCESS_IMPORT");
 		}
 
 		task ("Assert that all fragments validated") {
-			AssertElementNotPresent(
-				key_infoMessage = "The following fragments have validation issues",
-				locator1 = "Message#INFO_SPECIFIC");
+			AssertElementNotPresent(locator1 = "Message#WARNING_IMPORT");
+
+			AssertElementNotPresent(locator1 = "Message#ERROR_IMPORT");
 		}
 	}
 
@@ -1557,6 +1620,7 @@ definition {
 	@priority = 4
 	test ViewChangesOfFragmentOnContentPagePersistAfterOverwriteTheFragment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable Propagate Fragment Changes Automatically in System Settings") {
 			ApplicationsMenu.gotoPortlet(
@@ -1661,7 +1725,7 @@ definition {
 		}
 
 		task ("Import the fragment collection") {
-			FragmentsAdmin.importCollectionFromTempFolder();
+			FragmentsAdmin.importCollectionFromTempFolder(importOption = "Overwrite Existing Items");
 		}
 
 		task ("Navigate to the content page in edit mode") {

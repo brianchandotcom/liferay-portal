@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.mentions.internal.util;
@@ -21,6 +12,8 @@ import com.liferay.mentions.constants.MentionsPortletKeys;
 import com.liferay.mentions.matcher.MentionsMatcher;
 import com.liferay.mentions.util.MentionsNotifier;
 import com.liferay.mentions.util.MentionsUserFinder;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -48,7 +41,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -56,6 +52,25 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MentionsNotifier.class)
 public class DefaultMentionsNotifier implements MentionsNotifier {
+
+	public MentionsMatcher getMentionsMatcher(String className) {
+		MentionsMatcher mentionsMatcher = _serviceTrackerMap.getService(
+			className);
+
+		if (mentionsMatcher != null) {
+			return mentionsMatcher;
+		}
+
+		MentionsMatcher defaultMentionsMatcher = _serviceTrackerMap.getService(
+			"*");
+
+		if (defaultMentionsMatcher == null) {
+			throw new IllegalStateException(
+				"Unable to get default mentions matcher");
+		}
+
+		return defaultMentionsMatcher;
+	}
 
 	@Override
 	public void notify(
@@ -148,6 +163,17 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, MentionsMatcher.class, "model.class.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	private String _getAssetEntryName(String className, Locale locale) {
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -173,8 +199,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 
 		Set<String> mentionedUsersScreenNames = new HashSet<>();
 
-		MentionsMatcher mentionsMatcher =
-			_mentionsMatcherRegistry.getMentionsMatcher(className);
+		MentionsMatcher mentionsMatcher = getMentionsMatcher(className);
 
 		for (String mentionedUserScreenName : mentionsMatcher.match(content)) {
 			List<User> users = _mentionsUserFinder.getUsers(
@@ -200,9 +225,6 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 	private Localization _localization;
 
 	@Reference
-	private MentionsMatcherRegistry _mentionsMatcherRegistry;
-
-	@Reference
 	private MentionsUserFinder _mentionsUserFinder;
 
 	@Reference
@@ -213,6 +235,8 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 
 	@Reference
 	private PortletPermission _portletPermission;
+
+	private ServiceTrackerMap<String, MentionsMatcher> _serviceTrackerMap;
 
 	@Reference
 	private UserLocalService _userLocalService;

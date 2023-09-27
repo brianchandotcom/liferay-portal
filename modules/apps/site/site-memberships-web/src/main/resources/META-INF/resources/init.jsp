@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -22,12 +13,15 @@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/site" prefix="liferay-site" %><%@
 taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/user" prefix="liferay-user" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
+<%@ page import="com.liferay.petra.function.transform.TransformUtil" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateGroupException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupKeyException" %><%@
 page import="com.liferay.portal.kernel.exception.MembershipRequestCommentsException" %><%@
@@ -45,7 +39,10 @@ page import="com.liferay.portal.kernel.model.OrganizationConstants" %><%@
 page import="com.liferay.portal.kernel.model.Role" %><%@
 page import="com.liferay.portal.kernel.model.Team" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
+page import="com.liferay.portal.kernel.model.UserGroup" %><%@
+page import="com.liferay.portal.kernel.model.UserGroupRole" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
+page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.CompanyLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil" %><%@
@@ -53,8 +50,11 @@ page import="com.liferay.portal.kernel.service.OrganizationLocalServiceUtil" %><
 page import="com.liferay.portal.kernel.service.RoleLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.TeamLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.UserGroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.permission.RolePermissionUtil" %><%@
+page import="com.liferay.portal.kernel.service.permission.TeamPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.LinkedHashMapBuilder" %><%@
@@ -71,6 +71,8 @@ page import="com.liferay.site.memberships.web.internal.display.context.RolesDisp
 page import="com.liferay.site.memberships.web.internal.display.context.RolesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectRolesDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SelectRolesManagementToolbarDisplayContext" %><%@
+page import="com.liferay.site.memberships.web.internal.display.context.SelectTeamsDisplayContext" %><%@
+page import="com.liferay.site.memberships.web.internal.display.context.SelectTeamsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.SiteMembershipsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.UserGroupRolesDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.UserGroupRolesManagementToolbarDisplayContext" %><%@
@@ -85,6 +87,7 @@ page import="com.liferay.site.memberships.web.internal.display.context.ViewMembe
 page import="com.liferay.site.memberships.web.internal.frontend.taglib.clay.servlet.taglib.OrganizationsUserCard" %><%@
 page import="com.liferay.site.memberships.web.internal.frontend.taglib.clay.servlet.taglib.RoleVerticalCard" %><%@
 page import="com.liferay.site.memberships.web.internal.frontend.taglib.clay.servlet.taglib.SelectRoleVerticalCard" %><%@
+page import="com.liferay.site.memberships.web.internal.frontend.taglib.clay.servlet.taglib.SelectTeamVerticalCard" %><%@
 page import="com.liferay.site.memberships.web.internal.frontend.taglib.clay.servlet.taglib.UsersUserCard" %><%@
 page import="com.liferay.site.memberships.web.internal.frontend.taglib.clay.servlet.taglib.ViewMembershipRequestsPendingUserCard" %><%@
 page import="com.liferay.site.memberships.web.internal.frontend.taglib.clay.servlet.taglib.ViewMembershipRequestsUserCard" %><%@
@@ -93,7 +96,6 @@ page import="com.liferay.site.memberships.web.internal.servlet.taglib.util.UserA
 page import="com.liferay.site.memberships.web.internal.servlet.taglib.util.UserGroupActionDropdownItemsProvider" %><%@
 page import="com.liferay.site.memberships.web.internal.util.GroupUtil" %><%@
 page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
-page import="com.liferay.sites.kernel.util.SitesUtil" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %>
 
 <%@ page import="java.util.ArrayList" %><%@

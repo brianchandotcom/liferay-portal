@@ -1,0 +1,326 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+
+		task ("Given navigate to Object > API Builder") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+		}
+
+		task ("And Given click New button to add one API") {
+			Click(locator1 = "Button#PLUS");
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanAutoGenerateUrlBasedOnTitle {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I enter title "M*y Title 123"") {
+			Type(
+				key_fieldLabel = "Title",
+				locator1 = "Modal#INPUT_WITH_LABEL",
+				value1 = "M*y Title 123");
+		}
+
+		task ("Then the automated url is my-title-123") {
+			AssertTextEquals(
+				locator1 = "APIBuilder#AUTOMATED_URL",
+				value1 = "my-title-123");
+		}
+	}
+
+	@priority = 4
+	test CanCreateAPIOnVirtualInstance {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("And Given create an API with title "test"") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "test",
+				status = "unpublished",
+				title = "test");
+		}
+
+		task ("And Given create a new virtual instance") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "liferay.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
+
+		task ("When I create an API with title "test" on the virtual instance") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@liferay.com");
+
+			APIBuilderUI.createAPIApplication(title = "test");
+		}
+
+		task ("Then the test API is created successfully") {
+			Alert.viewSuccessMessageText(successMessage = "New API Application was created.");
+
+			AssertTextEquals(
+				locator1 = "APIBuilder#ENTER_TITLE",
+				value1 = "test");
+		}
+	}
+
+	@priority = 4
+	test CanCreateApiWithValidFieldValues {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I create an API with title "M*y Title 123" and some description") {
+			APIBuilderUI.createAPIApplication(
+				description = "This is an application",
+				title = "M*y Title 123");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+		}
+
+		task ("Then the API is created in API Builder with correct title, url, description and UNPUBLISHED status") {
+			AssertTextEquals(
+				key_name = "M*y Title 123",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE",
+				value1 = "M*y Title 123");
+
+			AssertTextEquals(
+				key_name = "M*y Title 123",
+				key_system = "my-title-123",
+				locator1 = "ObjectAdmin#VIEW_OBJECT",
+				value1 = "/my-title-123/");
+
+			AssertTextEquals(
+				key_text = "This is an application",
+				locator1 = "APIBuilder#DND_TD_WITH_TEXT",
+				value1 = "This is an application");
+
+			AssertTextEquals(
+				key_status = "Unpublished",
+				key_title = "M*y Title 123",
+				locator1 = "APIBuilder#APPLICATION_STATUS",
+				value1 = "Unpublished");
+		}
+	}
+
+	@priority = 4
+	test CanCustomUrlInNewApiForm {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I enter "My url test"") {
+			Type(
+				key_fieldLabel = "URL",
+				locator1 = "Modal#INPUT_WITH_LABEL",
+				value1 = "My url test");
+		}
+
+		task ("When I set title to "My second title"") {
+			Type(
+				key_fieldLabel = "Title",
+				locator1 = "Modal#INPUT_WITH_LABEL",
+				value1 = "My second title");
+		}
+
+		task ("Then the url is still my-url-test") {
+			AssertTextEquals.assertValue(
+				key_fieldLabel = "URL",
+				locator1 = "Modal#INPUT_WITH_LABEL",
+				value1 = "my-url-test");
+		}
+	}
+
+	@priority = 4
+	test CannotCreateApiWithExistingTitle {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I create an API with title "test"") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "test1",
+				status = "unpublished",
+				title = "test");
+		}
+
+		task ("When I create another API with an existing title "test"") {
+			APIBuilderUI.createAPIApplication(
+				addByPlus = "true",
+				baseURL = "test2",
+				title = "test");
+		}
+
+		task ("Then I can see error message") {
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Error:The Title is already in use. Please enter a unique Title.");
+		}
+
+		task ("And Then another API with title "test" is not created") {
+			AssertElementPresent(
+				key_name = "test",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+
+			var response = ApplicationAPI.getAPIApplications();
+
+			var totcalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${totcalCount},
+				expected = 1);
+		}
+	}
+
+	@priority = 3
+	test CannotCreateAPIWithExistingUrl {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I create an API with url "test-url"") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "test-url",
+				status = "unpublished",
+				title = "test1");
+		}
+
+		task ("When I create another API with an existing url "test-url"") {
+			APIBuilderUI.createAPIApplication(
+				addByPlus = "true",
+				baseURL = "test-url",
+				title = "test2");
+		}
+
+		task ("Then I can see error message") {
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Error:The Base URL is already in use. Please enter a unique Base URL.");
+		}
+
+		task ("And Then another API with url "test-url" is not created") {
+			AssertElementPresent(
+				key_name = "test1",
+				key_system = "test-url",
+				locator1 = "ObjectAdmin#VIEW_OBJECT");
+
+			var response = ApplicationAPI.getAPIApplications();
+
+			var totcalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${totcalCount},
+				expected = 1);
+		}
+	}
+
+	@priority = 3
+	test CannotCreateApiWithoutRequiredTitleAndUrlFieldValues {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I click Create button to create an API") {
+			Click(locator1 = "APIBuilder#CREATE_BUTTON");
+		}
+
+		task ("Then I can see prompt message about missing title and url") {
+			AssertElementPresent(
+				key_text = "Please enter an API title to continue.",
+				locator1 = "APIBuilder#WARNING_MESSAGE_IN_DIALOG");
+
+			AssertElementPresent(
+				key_text = "Please enter a title so we can create an URL.",
+				locator1 = "APIBuilder#WARNING_MESSAGE_IN_DIALOG");
+		}
+	}
+
+	@priority = 3
+	test CanShowUrlValidationMessage {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I enter a title and url") {
+			Type(
+				key_fieldLabel = "Title",
+				locator1 = "Modal#INPUT_WITH_LABEL",
+				value1 = "test title");
+
+			Type(
+				key_fieldLabel = "URL",
+				locator1 = "Modal#INPUT_WITH_LABEL",
+				value1 = "test-url");
+		}
+
+		task ("And Given I enter a new title") {
+			Type(
+				key_fieldLabel = "Title",
+				locator1 = "Modal#INPUT_WITH_LABEL",
+				value1 = "new test title");
+		}
+
+		task ("When I delete the url to create the API Application") {
+			Type(
+				key_fieldLabel = "URL",
+				locator1 = "Modal#INPUT_WITH_LABEL",
+				value1 = "");
+
+			Click(locator1 = "APIBuilder#CREATE_BUTTON");
+		}
+
+		task ("Then I can see error message about enter a valid url") {
+			AssertElementPresent(
+				key_text = "Please enter a valid URL.",
+				locator1 = "APIBuilder#WARNING_MESSAGE_IN_DIALOG");
+		}
+	}
+
+	@priority = 3
+	test IncludeDefaultValuesInNewAPIForm {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Then I can see default title, url and description values") {
+			AssertElementPresent(locator1 = "APIBuilder#ENTER_TITLE");
+
+			AssertElementPresent(locator1 = "APIBuilder#AUTOMATED_URL");
+
+			AssertElementPresent(locator1 = "APIBuilder#DESCRIPTION");
+		}
+
+		task ("And Then I can see example url /o/ and note about url can be modified") {
+			AssertElementPresent(locator1 = "APIBuilder#URL_PROMPT_MESSAGE_IN_CREATE_APPLICATION_DIALOG");
+
+			AssertElementPresent(locator1 = "APIBuilder#URL_LABEL");
+		}
+	}
+
+}

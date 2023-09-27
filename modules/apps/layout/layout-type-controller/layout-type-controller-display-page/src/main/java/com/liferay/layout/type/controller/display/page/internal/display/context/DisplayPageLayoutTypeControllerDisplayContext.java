@@ -1,19 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.type.controller.display.page.internal.display.context;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
@@ -30,11 +22,19 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Jürgen Kappler
@@ -42,12 +42,18 @@ import javax.servlet.http.HttpServletRequest;
 public class DisplayPageLayoutTypeControllerDisplayContext {
 
 	public DisplayPageLayoutTypeControllerDisplayContext(
+			AssetDisplayPageFriendlyURLProvider
+				assetDisplayPageFriendlyURLProvider,
 			HttpServletRequest httpServletRequest,
 			InfoItemServiceRegistry infoItemServiceRegistry,
 			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry)
 		throws Exception {
 
+		_assetDisplayPageFriendlyURLProvider =
+			assetDisplayPageFriendlyURLProvider;
+		_httpServletRequest = httpServletRequest;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
+		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 
 		long assetEntryId = ParamUtil.getLong(
 			httpServletRequest, "assetEntryId");
@@ -113,6 +119,70 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			getAssetRendererFactoryByClassName(_infoItemDetails.getClassName());
 	}
 
+	public String getCanonicalURL() {
+		InfoItemDetails infoItemDetails =
+			(InfoItemDetails)_httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
+
+		if (infoItemDetails == null) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						_infoSearchClassMapperRegistry.getSearchClassName(
+							infoItemDetails.getClassName()));
+
+			InfoItemReference infoItemReference =
+				infoItemDetails.getInfoItemReference();
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			if (assetRendererFactory == null) {
+				return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					infoItemReference, themeDisplay);
+			}
+
+			AssetRenderer<?> assetRenderer = null;
+
+			if (infoItemReference.getInfoItemIdentifier() instanceof
+					ClassPKInfoItemIdentifier) {
+
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier)
+						infoItemReference.getInfoItemIdentifier();
+
+				assetRenderer = assetRendererFactory.getAssetRenderer(
+					classPKInfoItemIdentifier.getClassPK());
+			}
+
+			if (assetRenderer == null) {
+				return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					infoItemReference, themeDisplay);
+			}
+
+			String viewInContextURL = assetRenderer.getURLViewInContext(
+				themeDisplay, StringPool.BLANK);
+
+			if (Validator.isNotNull(viewInContextURL)) {
+				return viewInContextURL;
+			}
+
+			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				infoItemReference, themeDisplay);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws Exception {
@@ -157,8 +227,32 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		return true;
 	}
 
+	public boolean isDefaultDisplayPage() {
+		return GetterUtil.getBoolean(
+			_httpServletRequest.getAttribute(
+				LayoutDisplayPageWebKeys.DEFAULT_LAYOUT_DISPLAY),
+			true);
+	}
+
+	public boolean isForbidden(HttpServletResponse httpServletResponse) {
+		if (httpServletResponse.getStatus() ==
+				HttpServletResponse.SC_FORBIDDEN) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DisplayPageLayoutTypeControllerDisplayContext.class);
+
+	private final AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
+	private final HttpServletRequest _httpServletRequest;
 	private final Object _infoItem;
 	private final InfoItemDetails _infoItemDetails;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
+	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 }

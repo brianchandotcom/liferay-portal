@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.inventory.resource.v1_0.test;
@@ -185,6 +176,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		warehouseItem.setExternalReferenceCode(regex);
 		warehouseItem.setSku(regex);
+		warehouseItem.setUnitOfMeasureKey(regex);
 		warehouseItem.setWarehouseExternalReferenceCode(regex);
 
 		String json = WarehouseItemSerDes.toJSON(warehouseItem);
@@ -195,6 +187,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		Assert.assertEquals(regex, warehouseItem.getExternalReferenceCode());
 		Assert.assertEquals(regex, warehouseItem.getSku());
+		Assert.assertEquals(regex, warehouseItem.getUnitOfMeasureKey());
 		Assert.assertEquals(
 			regex, warehouseItem.getWarehouseExternalReferenceCode());
 	}
@@ -1047,6 +1040,14 @@ public abstract class BaseWarehouseItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (warehouseItem.getUnitOfMeasureKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"warehouseExternalReferenceCode",
 					additionalAssertFieldName)) {
@@ -1244,6 +1245,17 @@ public abstract class BaseWarehouseItemResourceTestCase {
 			if (Objects.equals("sku", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						warehouseItem1.getSku(), warehouseItem2.getSku())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						warehouseItem1.getUnitOfMeasureKey(),
+						warehouseItem2.getUnitOfMeasureKey())) {
 
 					return false;
 				}
@@ -1464,19 +1476,63 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		}
 
 		if (entityFieldName.equals("quantity")) {
-			sb.append(String.valueOf(warehouseItem.getQuantity()));
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("reservedQuantity")) {
-			sb.append(String.valueOf(warehouseItem.getReservedQuantity()));
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("sku")) {
 			Object object = warehouseItem.getSku();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("unitOfMeasureKey")) {
+			Object object = warehouseItem.getUnitOfMeasureKey();
 
 			String value = String.valueOf(object);
 
@@ -1620,9 +1676,9 @@ public abstract class BaseWarehouseItemResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
-				quantity = RandomTestUtil.randomInt();
-				reservedQuantity = RandomTestUtil.randomInt();
 				sku = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				unitOfMeasureKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				warehouseExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				warehouseId = RandomTestUtil.randomLong();

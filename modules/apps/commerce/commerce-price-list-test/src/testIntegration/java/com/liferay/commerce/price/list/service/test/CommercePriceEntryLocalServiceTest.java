@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.price.list.service.test;
@@ -22,14 +13,15 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
-import com.liferay.commerce.price.list.test.util.CommercePriceEntryTestUtil;
-import com.liferay.commerce.price.list.test.util.CommercePriceListTestUtil;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.test.util.price.list.CommercePriceEntryTestUtil;
+import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -38,6 +30,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -65,6 +58,7 @@ import org.junit.runner.RunWith;
  * @author Ethan Bustad
  * @author Luca Pellizzon
  */
+@FeatureFlags("COMMERCE-11287")
 @RunWith(Arquillian.class)
 public class CommercePriceEntryLocalServiceTest {
 
@@ -491,16 +485,14 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
 
-		BigDecimal quantity = BigDecimal.valueOf(
-			RandomTestUtil.randomDouble()
-		).setScale(
-			2, RoundingMode.HALF_UP
-		);
+		BigDecimal incrementalOrderQuantity = BigDecimal.TEN.setScale(
+			2, RoundingMode.HALF_UP);
 
 		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
 			CPTestUtil.addCPInstanceUnitOfMeasure(
 				_group.getGroupId(), cpInstance.getCPInstanceId(),
-				RandomTestUtil.randomString(), quantity, cpInstance.getSku());
+				RandomTestUtil.randomString(), incrementalOrderQuantity,
+				cpInstance.getSku());
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
@@ -519,7 +511,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			unitOfMeasureKey, commercePriceEntry.getUnitOfMeasureKey());
-		Assert.assertEquals(quantity, commercePriceEntry.getQuantity());
+		Assert.assertEquals(
+			incrementalOrderQuantity, commercePriceEntry.getQuantity());
 	}
 
 	@Test
@@ -556,22 +549,17 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
 
-		BigDecimal incrementalOrderQuantity1 = BigDecimal.valueOf(
-			RandomTestUtil.randomDouble()
-		).setScale(
-			2, RoundingMode.HALF_UP
-		);
+		BigDecimal incrementalOrderQuantity1 = BigDecimal.ONE.setScale(
+			2, RoundingMode.HALF_UP);
+
 		String unitOfMeasureKey1 = RandomTestUtil.randomString();
 
 		CPTestUtil.addCPInstanceUnitOfMeasure(
 			_group.getGroupId(), cpInstance.getCPInstanceId(),
 			unitOfMeasureKey1, incrementalOrderQuantity1, cpInstance.getSku());
 
-		BigDecimal incrementalOrderQuantity2 = BigDecimal.valueOf(
-			RandomTestUtil.randomDouble()
-		).setScale(
-			2, RoundingMode.HALF_UP
-		);
+		BigDecimal incrementalOrderQuantity2 = BigDecimal.TEN.setScale(
+			2, RoundingMode.HALF_UP);
 		String unitOfMeasureKey2 = RandomTestUtil.randomString();
 
 		CPTestUtil.addCPInstanceUnitOfMeasure(
@@ -592,12 +580,9 @@ public class CommercePriceEntryLocalServiceTest {
 				unitOfMeasureKey1);
 
 		Assert.assertEquals(
-			unitOfMeasureKey1, commercePriceEntry.getUnitOfMeasureKey());
-
-		BigDecimal quantity = commercePriceEntry.getQuantity();
-
+			incrementalOrderQuantity1, commercePriceEntry.getQuantity());
 		Assert.assertEquals(
-			incrementalOrderQuantity1, quantity.stripTrailingZeros());
+			unitOfMeasureKey1, commercePriceEntry.getUnitOfMeasureKey());
 
 		commercePriceEntry =
 			CommercePriceEntryTestUtil.addOrUpdateCommercePriceEntry(
@@ -608,12 +593,9 @@ public class CommercePriceEntryLocalServiceTest {
 				unitOfMeasureKey2);
 
 		Assert.assertEquals(
-			unitOfMeasureKey2, commercePriceEntry.getUnitOfMeasureKey());
-
-		quantity = commercePriceEntry.getQuantity();
-
+			incrementalOrderQuantity2, commercePriceEntry.getQuantity());
 		Assert.assertEquals(
-			incrementalOrderQuantity2, quantity.stripTrailingZeros());
+			unitOfMeasureKey2, commercePriceEntry.getUnitOfMeasureKey());
 	}
 
 	@Test(expected = CommercePriceEntryUnitOfMeasureKeyException.class)
@@ -681,7 +663,7 @@ public class CommercePriceEntryLocalServiceTest {
 			CPTestUtil.addCPInstanceUnitOfMeasure(
 				_group.getGroupId(), cpInstance.getCPInstanceId(),
 				RandomTestUtil.randomString(),
-				BigDecimal.valueOf(RandomTestUtil.randomDouble()),
+				BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)),
 				cpInstance.getSku());
 
 		CommercePriceList commercePriceList =
@@ -751,7 +733,7 @@ public class CommercePriceEntryLocalServiceTest {
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid());
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		Assert.assertThat(
 			commercePriceEntry.getCommercePriceEntryId(),
@@ -787,7 +769,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		Assert.assertNull(
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				commercePriceList.getCommercePriceListId(), cpInstanceUuid));
+				commercePriceList.getCommercePriceListId(), cpInstanceUuid,
+				StringPool.BLANK));
 	}
 
 	@Test
@@ -834,7 +817,7 @@ public class CommercePriceEntryLocalServiceTest {
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				childCommercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid(), true);
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK, true);
 
 		Assert.assertThat(
 			commercePriceEntry.getCommercePriceEntryId(),
@@ -893,7 +876,7 @@ public class CommercePriceEntryLocalServiceTest {
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				childCommercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid(), true);
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK, true);
 
 		Assert.assertThat(
 			childCommercePriceEntry.getCommercePriceEntryId(),
@@ -944,7 +927,7 @@ public class CommercePriceEntryLocalServiceTest {
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				childCommercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid(), false);
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK, false);
 
 		Assert.assertNull(fetchedCommercePriceEntry);
 	}

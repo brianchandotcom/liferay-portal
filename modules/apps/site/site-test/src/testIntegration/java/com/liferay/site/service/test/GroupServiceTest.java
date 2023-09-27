@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.site.service.test;
@@ -724,6 +715,38 @@ public class GroupServiceTest {
 
 			_userLocalService.updateUser(guestUser);
 		}
+	}
+
+	@Test
+	public void testGroupDefaultLanguageIdRemainsWhenChangingNameMap()
+		throws Exception {
+
+		_group = GroupTestUtil.addGroup();
+
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
+			LocaleUtil.SPAIN);
+
+		Assert.assertEquals(
+			LocaleUtil.SPAIN,
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
+
+		_group = _groupService.updateGroup(
+			_group.getGroupId(), _group.getParentGroupId(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), _group.getGroupKey()
+			).put(
+				LocaleUtil.SPAIN, _group.getGroupKey()
+			).build(),
+			_group.getDescriptionMap(), _group.getType(),
+			_group.isManualMembership(), _group.getMembershipRestriction(),
+			_group.getFriendlyURL(), _group.isInheritContent(),
+			_group.isActive(), ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			LocaleUtil.SPAIN,
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
 	}
 
 	@Test

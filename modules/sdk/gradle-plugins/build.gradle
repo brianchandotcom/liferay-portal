@@ -11,7 +11,7 @@ task copyGradleTestDependencies(type: Copy)
 task downloadBundle(type: Download)
 
 String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
-String gradleVersion = "6.9.2"
+String gradleVersion = "7.3.3"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
 	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
@@ -34,33 +34,35 @@ copyBundle {
 }
 
 copyGradleTestDependencies {
-	from configurations.compile
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+	from configurations.compileClasspath
 	into jar.destinationDir
 }
 
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "4.3.0"
-	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.9"
-	compile group: "com.liferay", name: "com.liferay.gogo.shell.client", version: "1.0.0"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "2.0.5"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.7"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.db.support", version: "1.1.0"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "2.0.13"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.javadoc.formatter", version: "1.0.34"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "3.0.33"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "8.0.0"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.python", version: "1.0.1"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.rest.builder", version: "1.1.191"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "4.0.129"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.2.40"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.test.integration", version: "4.0.1"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.14"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tlddoc.builder", version: "2.0.0"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.upgrade.table.builder", version: "3.0.3"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdd.builder", version: "1.0.22"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdl.builder", version: "3.0.2"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xsd.builder", version: "1.0.11"
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.47"
+	api group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "5.3.0"
+	api group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.10"
+	api group: "com.liferay", name: "com.liferay.gogo.shell.client", version: "1.0.0"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "2.0.6"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.10"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.db.support", version: "1.1.1"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "2.0.14"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.javadoc.formatter", version: "2.0.1"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "3.0.35"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "8.0.2"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.python", version: "1.0.3"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.rest.builder", version: "1.1.196"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "4.0.136"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.2.55"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.test.integration", version: "4.0.4"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.15"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.tlddoc.builder", version: "2.0.1"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.upgrade.table.builder", version: "3.0.5"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.wsdd.builder", version: "1.0.23"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.wsdl.builder", version: "3.0.3"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.xsd.builder", version: "1.0.12"
+	api group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.48"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"), excludes: ["lib/plugins/biz.aQute.bndlib-4.0.0.jar"])
 }
@@ -79,5 +81,5 @@ gradleTest {
 
 	gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
 
-	versions "5.6.4", gradleVersion
+	versions gradleVersion
 }

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.account.admin.web.internal.display;
@@ -24,6 +15,7 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -64,7 +56,7 @@ public class AddressDisplay {
 	}
 
 	public String getRegionName() {
-		return _region.getName();
+		return HtmlUtil.escape(_region.getName());
 	}
 
 	public String getStreet() {
@@ -104,13 +96,13 @@ public class AddressDisplay {
 
 	private AddressDisplay(Address address) {
 		_addressId = address.getAddressId();
-		_city = address.getCity();
+		_city = HtmlUtil.escape(address.getCity());
 		_listTypeId = address.getListTypeId();
 		_listTypeName = _getListTypeName(address);
-		_name = address.getName();
+		_name = HtmlUtil.escape(address.getName());
 		_region = address.getRegion();
-		_street = address.getStreet1();
-		_zip = address.getZip();
+		_street = HtmlUtil.escape(address.getStreet1());
+		_zip = HtmlUtil.escape(address.getZip());
 	}
 
 	private String _getListTypeName(Address address) {

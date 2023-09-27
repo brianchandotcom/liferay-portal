@@ -48,7 +48,7 @@ jarMvn {
 		copy {
 			from new File(srcDir, "target")
 			include "MockMock-${project.version}.one-jar.jar"
-			into distsDir
+			into base.distsDirectory
 
 			rename {
 				jar.archiveName

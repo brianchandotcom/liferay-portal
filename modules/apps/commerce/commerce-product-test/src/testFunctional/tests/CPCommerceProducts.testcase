@@ -248,11 +248,10 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "BLACKSKU");
 
-		Click(locator1 = "Dropdown#TRIGGER");
-
-		Click(
-			key_fieldName = "Black",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		Select(
+			key_optionName = "Color",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+			value1 = "Black");
 
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Purchasable",
@@ -531,7 +530,7 @@ definition {
 	@description = "This is a test for COMMERCE-9253. CanCheckTheApprovedStatusForSingleApproverWorkflow"
 	@priority = 5
 	test CanCheckApprovedProductWorkflowStatusWithSingleApproverWorkflow {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -781,7 +780,7 @@ definition {
 	@description = "This is a test for COMMERCE-9182. VerifyDraftProductNotAppearOnMiniumCatalogPage"
 	@priority = 5
 	test CanCheckDraftProductVisibilityOnMiniumCatalogPage {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -827,7 +826,7 @@ definition {
 			userEmailAddress = "buyer@liferay.com");
 
 		Type(
-			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			locator1 = "Search#SEARCH_BAR_WIDGET",
 			value1 = "Simple T-Shirt");
 
 		Button.clickSubmitButton();
@@ -866,7 +865,7 @@ definition {
 			userEmailAddress = "buyer@liferay.com");
 
 		Type(
-			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			locator1 = "Search#SEARCH_BAR_WIDGET",
 			value1 = "Simple T-Shirt");
 
 		Button.clickSubmitButton();
@@ -902,7 +901,7 @@ definition {
 	@description = "This is a test for COMMERCE-9290. CanCheckTheDraftStatusForSingleApproverWorkflow"
 	@priority = 5
 	test CanCheckDraftProductWorkflowStatusWithSingleApproverWorkflow {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1083,7 +1082,7 @@ definition {
 	@description = "This is a test for COMMERCE-9292. CanCheckThePendingReviewStatusForSingleApproverWorkflow"
 	@priority = 5
 	test CanCheckPendingProductWorkflowStatusWithSingleApproverWorkflow {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1306,7 +1305,7 @@ definition {
 	@description = "This is a test for the COMMERCE-10763, to verify that a buyer user can download the virtual product by the URL retrieved using API"
 	@priority = 4
 	test CanDownloadConfiguredVirtualProduct {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		var baseURL = PropsUtil.get("portal.url");
@@ -1454,7 +1453,7 @@ definition {
 	@description = "This is a test for the COMMERCE-10763, to verify that a buyer user can not download the virtual product by the URL retrieved using API without permissions"
 	@priority = 4
 	test CanDownloadConfiguredVirtualProductWithoutPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		var baseURL = PropsUtil.get("portal.url");
@@ -1812,6 +1811,131 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12182 This is a test to verify that Tier Price Settings remain unchanged after an entry is created"
+	@priority = 5
+	test CanTierPriceSettingsDoesNotChangeAfterCreatingATierPriceEntry {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And the Price Lists tab for the product ABS Sensor is open") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+		}
+
+		task ("And the admin goes into Minium Base Price List") {
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+		}
+
+		task ("When the admin creates a new Tier Price Entry with the Bulk Pricing") {
+			CommercePriceLists.createTierPriceEntryDirectlyInsideProductSKU(
+				price = 10,
+				quantity = 1,
+				tierPriceSetting = "Bulk Pricing");
+
+			SelectFrameTop();
+		}
+
+		task ("And goes back into the Details tab") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		task ("Then the Tier Price Settings remain Bulk Pricing") {
+			AssertChecked.assertCheckedNotVisible(
+				key_radioOption = "Bulk Pricing",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_radioOption = "Tiered Pricing",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+
+		task ("When the admin goes into the Price Lists section") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+		}
+
+		task ("And the admin opened MIN93015") {
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		task ("And change the Tier Price Settings in Tiered Pricing") {
+			Click(
+				key_radioOption = "Tiered Pricing",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("Then a new entry is created again inside the product the Tier Price Settings remain Tiered Pricing") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommercePriceLists.createTierPriceEntryDirectlyInsideProductSKU(
+				price = 20,
+				quantity = 2);
+
+			SelectFrameTop();
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_radioOption = "Tiered Pricing",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_radioOption = "Bulk Pricing",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+	}
+
 	@description = "This is a test for bug COMMERCE-9546. Verify a product image converted in base64 can be uploaded via headless API with the extension setted"
 	@priority = 4
 	test CanUploadProductBase64ImageViaAPI {
@@ -1928,8 +2052,9 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			AssertTextEquals(
-				locator1 = "Dropdown#SELECTED_VALUE",
+			AssertSelectedLabel(
+				key_optionName = "Package Quantity",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
 				value1 = 112);
 		}
 	}
@@ -1999,7 +2124,7 @@ definition {
 	@description = "This is a test for bug COMMERCE-9999. Verify a product image can be uploaded via headless API with CDN."
 	@priority = 3
 	test CanUploadProductImageViaAPIUsingCDN {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium Site is created") {
@@ -2556,11 +2681,10 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "BLACKSKU");
 
-		Click(locator1 = "Dropdown#TRIGGER");
-
-		Click(
-			key_fieldName = "Black",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		Select(
+			key_optionName = "Color",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+			value1 = "Black");
 
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Purchasable",
@@ -2753,10 +2877,11 @@ definition {
 		}
 	}
 
+	@priority = 5
 	test ProductPublishing {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -2830,8 +2955,9 @@ definition {
 		CommerceEntry.viewProductSkus(skusList = "6:10.00,12:20.00,24:30.00,48:40.00,112:50.00");
 	}
 
+	@priority = 5
 	test TranslateProductName {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

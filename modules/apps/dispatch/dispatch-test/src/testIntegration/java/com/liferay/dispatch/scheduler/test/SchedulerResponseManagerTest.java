@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dispatch.scheduler.test;
@@ -23,20 +14,27 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Dictionary;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,6 +56,18 @@ public class SchedulerResponseManagerTest {
 	public static final LiferayIntegrationTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PrincipalThreadLocal.setName(_originalName);
+	}
+
 	@Test
 	public void testRun() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -69,16 +79,18 @@ public class SchedulerResponseManagerTest {
 			DestinationConfiguration.createSynchronousDestinationConfiguration(
 				_TEST_DESTINATION_NAME));
 
-		ServiceRegistration<?> serviceRegistration =
+		Dictionary<String, Object> dictionary = MapUtil.singletonDictionary(
+			"destination.name", _TEST_DESTINATION_NAME);
+
+		ServiceRegistration<?> serviceRegistration1 =
 			bundleContext.registerService(
-				Destination.class, destination,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"destination.name", _TEST_DESTINATION_NAME
-				).build());
+				Destination.class, destination, dictionary);
 
 		TestMessageListener testMessageListener = new TestMessageListener();
 
-		destination.register(testMessageListener);
+		ServiceRegistration<?> serviceRegistration2 =
+			bundleContext.registerService(
+				MessageListener.class, testMessageListener, dictionary);
 
 		_schedulerEngineHelper.schedule(
 			_triggerFactory.createTrigger(
@@ -103,7 +115,9 @@ public class SchedulerResponseManagerTest {
 				testMessageListener.getCompanyIdFromMessage());
 		}
 		finally {
-			serviceRegistration.unregister();
+			serviceRegistration2.unregister();
+
+			serviceRegistration1.unregister();
 
 			_schedulerEngineHelper.delete(
 				_TEST_NAME, _TEST_NAME, StorageType.MEMORY_CLUSTERED);
@@ -119,6 +133,7 @@ public class SchedulerResponseManagerTest {
 		SchedulerResponseManagerTest.class.getName();
 
 	private static Company _company;
+	private static String _originalName;
 
 	@Inject
 	private DestinationFactory _destinationFactory;

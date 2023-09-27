@@ -52,7 +52,7 @@ definition {
 		// AC Quarantine Ticket: LRAC-13741
 
 		property proxy.server.enabled = "true";
-		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add widget pages") {
 			for (var layoutName : list "WebContent,Blog,Document,Form") {
@@ -122,7 +122,7 @@ definition {
 		}
 
 		task ("Get published form URL") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 

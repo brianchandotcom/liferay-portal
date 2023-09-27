@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.source.formatter.check;
@@ -18,7 +9,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.util.regex.Matcher;
@@ -27,36 +17,39 @@ import java.util.regex.Pattern;
 /**
  * @author Nícolas Moura
  */
-public class UpgradeJavaAssetEntryAssetCategoriesCheck extends BaseFileCheck {
+public class UpgradeJavaAssetEntryAssetCategoriesCheck
+	extends BaseUpgradeCheck {
 
 	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String afterFormat(
+		String fileName, String absolutePath, String content,
+		String newContent) {
 
-		if (!fileName.endsWith(".java")) {
-			return content;
-		}
+		newContent = addNewImports(newContent);
+
+		return StringUtil.replaceLast(
+			newContent, CharPool.CLOSE_CURLY_BRACE,
+			"\n\t@Reference\n\tprivate " +
+				"AssetEntryAssetCategoryRelLocalService\n\t\t" +
+					"_assetEntryAssetCategoryRelLocalService;\n\n}");
+	}
+
+	@Override
+	protected String format(
+		String fileName, String absolutePath, String content) {
 
 		String newContent = _replaceAddOrDeleteAssetCategories(content);
 
-		newContent = _replaceAddOrDeleteAssetCategory(newContent);
+		return _replaceAddOrDeleteAssetCategory(newContent);
+	}
 
-		if (!content.equals(newContent)) {
-			newContent = JavaSourceUtil.addImports(
-				newContent,
-				"com.liferay.asset.entry.rel.service." +
-					"AssetEntryAssetCategoryRelLocalService",
-				"org.osgi.service.component.annotations.Reference");
-
-			newContent = StringUtil.replaceLast(
-				newContent, CharPool.CLOSE_CURLY_BRACE,
-				"\n\t@Reference\n\tprivate " +
-					"AssetEntryAssetCategoryRelLocalService\n\t\t" +
-						"_assetEntryAssetCategoryRelLocalService;\n\n}");
-		}
-
-		return newContent;
+	@Override
+	protected String[] getNewImports() {
+		return new String[] {
+			"com.liferay.asset.entry.rel.service." +
+				"AssetEntryAssetCategoryRelLocalService",
+			"org.osgi.service.component.annotations.Reference"
+		};
 	}
 
 	private String _replaceAddOrDeleteAssetCategories(String content) {

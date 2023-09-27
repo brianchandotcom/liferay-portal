@@ -1,4 +1,8 @@
 {
+	"dependencies": {
+		"@liferay/content-dashboard-web": "*",
+		"react": "16.12.0"
+	},
 	"name": "@liferay/content-dashboard-document-library-impl",
 	"private": true,
 	"scripts": {
@@ -6,5 +10,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "1.0.36"
+	"version": "1.0.39"
 }

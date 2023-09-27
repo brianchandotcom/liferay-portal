@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.dao.db;
@@ -19,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -26,6 +18,8 @@ import java.io.IOException;
 
 import java.sql.Connection;
 import java.sql.Types;
+
+import java.util.Map;
 
 /**
  * @author Alexander Chow
@@ -46,6 +40,17 @@ public class HypersonicDB extends BaseDB {
 		template = StringUtil.replace(template, "\\'", "''");
 
 		return template;
+	}
+
+	@Override
+	public String getDefaultValue(String columnDef) {
+		String defaultValue = super.getDefaultValue(columnDef);
+
+		if (defaultValue.equals("NULL")) {
+			return null;
+		}
+
+		return defaultValue;
 	}
 
 	@Override
@@ -95,7 +100,8 @@ public class HypersonicDB extends BaseDB {
 			String targetTableName, String triggerName,
 			String[] sourceColumnNames, String[] targetColumnNames,
 			String[] sourcePrimaryKeyColumnNames,
-			String[] targetPrimaryKeyColumnNames)
+			String[] targetPrimaryKeyColumnNames,
+			Map<String, String> defaultValuesMap)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -115,8 +121,20 @@ public class HypersonicDB extends BaseDB {
 				sb.append(", ");
 			}
 
+			String defaultValue = defaultValuesMap.get(targetColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append("COALESCE(");
+			}
+
 			sb.append("new.");
 			sb.append(sourceColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append(", ");
+				sb.append(defaultValue);
+				sb.append(")");
+			}
 		}
 
 		sb.append(")");
@@ -130,7 +148,8 @@ public class HypersonicDB extends BaseDB {
 			String targetTableName, String triggerName,
 			String[] sourceColumnNames, String[] targetColumnNames,
 			String[] sourcePrimaryKeyColumnNames,
-			String[] targetPrimaryKeyColumnNames)
+			String[] targetPrimaryKeyColumnNames,
+			Map<String, String> defaultValuesMap)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -150,8 +169,22 @@ public class HypersonicDB extends BaseDB {
 			}
 
 			sb.append(targetColumnNames[i]);
-			sb.append(" = new.");
+			sb.append(" = ");
+
+			String defaultValue = defaultValuesMap.get(targetColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append("COALESCE(");
+			}
+
+			sb.append("new.");
 			sb.append(sourceColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append(", ");
+				sb.append(defaultValue);
+				sb.append(")");
+			}
 		}
 
 		sb.append(" where ");
@@ -182,13 +215,21 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	@Override
-	protected int[] getSQLVarcharSizes() {
-		return _SQL_VARCHAR_SIZES;
+	protected Map<String, Integer> getSQLVarcharSizes() {
+		return HashMapBuilder.put(
+			"STRING", SQL_VARCHAR_MAX_SIZE
+		).put(
+			"TEXT", SQL_VARCHAR_MAX_SIZE
+		).build();
 	}
 
 	@Override
 	protected String[] getTemplate() {
 		return _HYPERSONIC;
+	}
+
+	protected boolean isSupportsDDLRollback() {
+		return _SUPPORTS_DDL_ROLLBACK;
 	}
 
 	protected boolean isSupportsDuplicatedIndexName() {
@@ -220,6 +261,23 @@ public class HypersonicDB extends BaseDB {
 						"alter table @table@ alter column @old-column@ @type@;",
 						REWORD_TEMPLATE, template);
 
+					String defaultValue = template[template.length - 2];
+
+					if (Validator.isBlank(defaultValue)) {
+						line = line.concat(
+							StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ set default null;",
+								REWORD_TEMPLATE, template));
+					}
+					else {
+						line = line.concat(
+							StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ set default @default@;",
+								REWORD_TEMPLATE, template));
+					}
+
 					String nullable = template[template.length - 1];
 
 					if (!Validator.isBlank(nullable)) {
@@ -227,6 +285,13 @@ public class HypersonicDB extends BaseDB {
 							StringUtil.replace(
 								"alter table @table@ alter column " +
 									"@old-column@ set @nullable@;",
+								REWORD_TEMPLATE, template));
+					}
+					else {
+						line = line.concat(
+							StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ set null;",
 								REWORD_TEMPLATE, template));
 					}
 				}
@@ -254,18 +319,17 @@ public class HypersonicDB extends BaseDB {
 
 	private static final String[] _HYPERSONIC = {
 		"//", "true", "false", "'1970-01-01 00:00:00'", "now()", " blob",
-		" blob", " bit", " timestamp", " double", " int", " bigint",
-		" longvarchar", " longvarchar", " varchar", "", "commit"
+		" blob", " decimal(30, 16)", " bit", " timestamp", " double", " int",
+		" bigint", " longvarchar", " longvarchar", " varchar", "", "commit"
 	};
 
 	private static final int[] _SQL_TYPES = {
-		Types.BLOB, Types.BLOB, Types.BIT, Types.TIMESTAMP, Types.DOUBLE,
-		Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR
+		Types.BLOB, Types.BLOB, Types.DECIMAL, Types.BIT, Types.TIMESTAMP,
+		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.VARCHAR,
+		Types.VARCHAR
 	};
 
-	private static final int[] _SQL_VARCHAR_SIZES = {
-		SQL_VARCHAR_MAX_SIZE, SQL_VARCHAR_MAX_SIZE
-	};
+	private static final boolean _SUPPORTS_DDL_ROLLBACK = false;
 
 	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = false;
 

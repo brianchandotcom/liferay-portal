@@ -34,7 +34,9 @@
 		<field name="script" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="scriptLanguage" type="String" />
+		<field name="scriptLanguage" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="scriptRequiredContexts" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>

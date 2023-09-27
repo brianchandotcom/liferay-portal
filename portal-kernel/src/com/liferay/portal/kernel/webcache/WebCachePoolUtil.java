@@ -1,18 +1,16 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.webcache;
+
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 
 /**
  * @author Brian Wing Shun Chan
@@ -20,25 +18,56 @@ package com.liferay.portal.kernel.webcache;
 public class WebCachePoolUtil {
 
 	public static void clear() {
-		_webCachePool.clear();
+		_portalCache.removeAll();
 	}
 
 	public static Object get(String key, WebCacheItem webCacheItem) {
-		return _webCachePool.get(key, webCacheItem);
-	}
+		Object object = _portalCache.get(key);
 
-	public static WebCachePool getWebCachePool() {
-		return _webCachePool;
+		if (object != null) {
+			return object;
+		}
+
+		try {
+			object = webCacheItem.convert(key);
+
+			if (object == null) {
+				return null;
+			}
+
+			int timeToLive = (int)(webCacheItem.getRefreshTime() / Time.SECOND);
+
+			if (timeToLive > 0) {
+				_portalCache.put(key, object, timeToLive);
+			}
+		}
+		catch (WebCacheException webCacheException) {
+			if (_log.isWarnEnabled()) {
+				Throwable throwable = webCacheException.getCause();
+
+				if (throwable != null) {
+					_log.warn(throwable, throwable);
+				}
+				else {
+					_log.warn(webCacheException);
+				}
+			}
+		}
+
+		return object;
 	}
 
 	public static void remove(String key) {
-		_webCachePool.remove(key);
+		_portalCache.remove(key);
 	}
 
-	public void setWebCachePool(WebCachePool webCachePool) {
-		_webCachePool = webCachePool;
-	}
+	private static final String _CACHE_NAME = WebCachePoolUtil.class.getName();
 
-	private static WebCachePool _webCachePool;
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebCachePoolUtil.class);
+
+	private static final PortalCache<String, Object> _portalCache =
+		PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM, _CACHE_NAME);
 
 }

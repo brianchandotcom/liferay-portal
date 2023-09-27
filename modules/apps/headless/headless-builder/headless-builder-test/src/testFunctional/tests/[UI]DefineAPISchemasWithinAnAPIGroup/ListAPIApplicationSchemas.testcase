@@ -1,0 +1,339 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+
+		task ("Given an API application is created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				status = "unpublished",
+				title = "My-app");
+
+			ApplicationAPI.setUpGlobalAPIApplicationId();
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 5
+	test CanClickAddNewSchemaButtons {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I switch to Schemas in edit API application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+		}
+
+		task ("Then Add New Schema buttons are editable") {
+			AssertElementPresent(locator1 = "Button#PLUS");
+
+			AssertElementPresent(locator1 = "APIBuilder#ADD_NEW_SCHEMA");
+		}
+
+		task ("And Then no error in console") {
+			AssertConsoleTextNotPresent(value1 = "Internal Server Error");
+		}
+	}
+
+	@priority = 4
+	test CanFilterSchemaByCreationDateAsLastUpdated {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I create a schema associate to the API application") {
+			SchemaAPI.createAPISchema(
+				apiApplicationId = ${staticApplicationId},
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "mySchema");
+		}
+
+		task ("When I filter the schemas with Last updated from ${schema_creation_date} to ${schema_creation_date} + 1") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+
+			var fromDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
+			var toDate = DateUtil.getDateOffsetByDays("+1", "MM/dd/yyyy");
+
+			APIBuilderUI.filterByLastUpdated(
+				fromDate = ${fromDate},
+				toDate = ${toDate});
+		}
+
+		task ("Then I can see the created schema is listed") {
+			AssertElementPresent(
+				key_name = "mySchema",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 4
+	test CanFilterSchemaByDateBeforeCreationAsLastUpdated {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I create a schema associate to the API application") {
+			SchemaAPI.createAPISchema(
+				apiApplicationId = ${staticApplicationId},
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "mySchema");
+		}
+
+		task ("When I filter the schemas with Last updated from ${schema_creation_date} - 2 days to ${schema_creation_date} - 2 days") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+
+			var date = DateUtil.getDateOffsetByDays("-2", "MM/dd/yyyy");
+
+			APIBuilderUI.filterByLastUpdated(
+				fromDate = ${date},
+				toDate = ${date});
+		}
+
+		task ("Then I can see No API Schema Found") {
+			AssertElementNotPresent(
+				key_name = "mySchema",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 5
+	test CanListExistingSchemaInEditAPIApplication {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given with postAPISchema to create a schema associate to the API application") {
+			SchemaAPI.createAPISchema(
+				apiApplicationId = ${staticApplicationId},
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "mySchema");
+		}
+
+		task ("When I switch to Schemas in edit API application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+		}
+
+		task ("Then the schema is listed") {
+			AssertElementPresent(
+				key_name = "mySchema",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 4
+	test CanOrderSchemasByLastUpdated {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given with postAPISchema to create two schemas associate to the API application") {
+			SchemaAPI.createNAPISchemas(
+				apiApplicationId = ${staticApplicationId},
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "testSchema",
+				numberOfSchemas = 2);
+		}
+
+		task ("And Given I switch to Schemas in edit API application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+		}
+
+		task ("When I click order button next to Last updated") {
+			Click(
+				locator1 = "APIBuilder#DND_TR_BUTTON",
+				value = "Last updated");
+		}
+
+		task ("Then the schemas are ordered by Last updated") {
+			APIBuilderUI.viewItemsInOrder(itemList = "testSchema1,testSchema2");
+		}
+	}
+
+	@priority = 4
+	test CanOrderSchemasByName {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given with postAPISchema to create two schemas associate to the API application") {
+			SchemaAPI.createNAPISchemas(
+				apiApplicationId = ${staticApplicationId},
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "testSchema",
+				numberOfSchemas = 2);
+		}
+
+		task ("And Given I switch to Schemas in edit API application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+		}
+
+		task ("When I click order button next to Name") {
+			Click(
+				locator1 = "APIBuilder#DND_TR_BUTTON",
+				value = "Name");
+		}
+
+		task ("Then the schemas are ordered by name") {
+			APIBuilderUI.viewItemsInOrder(itemList = "testSchema1,testSchema2");
+		}
+	}
+
+	@priority = 4
+	test CanPaginateAPISchemas {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given with postAPISchema to create 11 schemas associate to the API application") {
+			SchemaAPI.createNAPISchemas(
+				apiApplicationId = ${staticApplicationId},
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "testSchema",
+				numberOfSchemas = 11);
+		}
+
+		task ("And Given I switch to Schemas in edit API application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+		}
+
+		task ("And Given I select 10 Items in pagination combobox") {
+			Pagination.changePagination(itemsPerPage = "10 Items");
+
+			Pagination.viewResults(results = "Showing 1 to 10 of 11 entries.");
+		}
+
+		task ("When I go to the second page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
+
+		task ("Then the 11th schema is present with Showing 11 to 11 of 11 entries message") {
+			AssertElementPresent(
+				key_name = "testSchema11",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+
+			Pagination.viewResults(results = "Showing 11 to 11 of 11 entries.");
+		}
+	}
+
+	@priority = 4
+	test CanSearchAPISchema {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given I create a schema associate to the API application") {
+			SchemaAPI.createAPISchema(
+				apiApplicationId = ${staticApplicationId},
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "testSchema");
+		}
+
+		task ("When I search the schemas by existing name") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+
+			APIBuilderUI.searchItem(value = "testSchema");
+		}
+
+		task ("Then I can see the schema is present") {
+			AssertConsoleTextNotPresent(value1 = "Internal Server Error");
+		}
+	}
+
+	@priority = 5
+	test CanSeeAvailableFieldsAndActions {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I create a schema associate to the API application") {
+			SchemaAPI.createAPISchema(
+				apiApplicationId = ${staticApplicationId},
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "mySchema");
+		}
+
+		task ("Then Name, Descriotion, Last updated, Actions icon are present") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+
+			for (var value : list "Name,Last updated,Actions") {
+				AssertElementPresent(
+					locator1 = "APIBuilder#DND_TR_BUTTON",
+					value = ${value});
+			}
+
+			AssertElementPresent(
+				locator1 = "APIBuilder#DND_TR_WITH_TEXT",
+				text = "Description");
+		}
+
+		task ("And Then available actions are Edit and Delete in Actions icon") {
+			Click(
+				locator1 = "APIBuilder#DND_TR_BUTTON",
+				value = "Actions");
+
+			AssertElementPresent(locator1 = "APIBuilder#DELETE_IN_DROPDOWN_MENU");
+
+			AssertElementPresent(locator1 = "APIBuilder#EDIT_BUTTON");
+		}
+	}
+
+	@priority = 4
+	test CanSeeNoAPISchemaAndAddSchemaButton {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I switch to Schemas in edit API application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+		}
+
+		task ("Then No API Schema Found message and Add New Schema button are visible") {
+			AssertElementPresent(
+				key_entryName = "No API Schema Found",
+				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+
+			AssertElementPresent(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "Add New Schema");
+		}
+	}
+
+}

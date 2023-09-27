@@ -79,6 +79,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -99,8 +101,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -109,8 +109,6 @@ definition {
 	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create the run"
 	@priority = 3
 	test AssertAnalystRoleCanNotCreateRun {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -120,17 +118,15 @@ definition {
 		}
 
 		task ("When the user go to the run page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 		}
 
 		task ("Then the user can not create run") {
@@ -141,8 +137,6 @@ definition {
 	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to delete the run"
 	@priority = 3
 	test AssertAnalystRoleCanNotDeleteRun {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -152,37 +146,31 @@ definition {
 		}
 
 		task ("And the user go to the run page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 		}
 
 		task ("When right click in run") {
 			RightClick.rightClick(
-				key_projectName = ${runName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${runName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then the user can not delete the run") {
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 	}
 
 	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to edit the run"
 	@priority = 3
 	test AssertAnalystRoleCanNotEditRun {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -192,37 +180,31 @@ definition {
 		}
 
 		task ("And the user go to the run page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 		}
 
 		task ("When right click in run") {
 			RightClick.rightClick(
-				key_projectName = ${runName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${runName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then the user can not edit the run") {
-			AssertElementNotPresent(
-				item = "Select Environment Factors",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Select Environment Factors");
 		}
 	}
 
 	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create the run"
 	@priority = 4
 	test AssertLeadRoleCanCreateRun {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -232,17 +214,15 @@ definition {
 		}
 
 		task ("And the user go to the run page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 		}
 
 		task ("When the user add a run") {
@@ -252,17 +232,13 @@ definition {
 		}
 
 		task ("Then can see the run in the table") {
-			AssertElementPresent(
-				key_projectName = ${runName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${runName});
 		}
 	}
 
 	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the run"
 	@priority = 4
 	test AssertLeadRoleCanDeleteRun {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -272,35 +248,29 @@ definition {
 		}
 
 		task ("And the user go to the run page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 		}
 
 		task ("When the user delete the run") {
-			TestrayRun.deleteRun(runName = ${runName});
+			Testray.deleteItem(itemName = ${runName});
 		}
 
 		task ("Then the user can not see the run in the table") {
-			AssertElementNotPresent(
-				key_projectName = ${runName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = ${runName});
 		}
 	}
 
 	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create the run"
 	@priority = 3
 	test AssertUserRoleCanNotCreateRun {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
@@ -310,17 +280,15 @@ definition {
 		}
 
 		task ("When the user go to the run page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 		}
 
 		task ("Then the user can not create run") {
@@ -331,8 +299,6 @@ definition {
 	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray User' role should not be able to delete the run"
 	@priority = 3
 	test AssertUserRoleCanNotDeleteRun {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
@@ -342,37 +308,31 @@ definition {
 		}
 
 		task ("And the user go to the run page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 		}
 
 		task ("When right click in run") {
 			RightClick.rightClick(
-				key_projectName = ${runName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${runName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then the user can not delete the run") {
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 	}
 
 	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the run"
 	@priority = 3
 	test AssertUserRoleCanNotEditRun {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
@@ -382,29 +342,25 @@ definition {
 		}
 
 		task ("And the user go to the run page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 		}
 
 		task ("When right click in run") {
 			RightClick.rightClick(
-				key_projectName = ${runName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${runName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then the user can not edit the run") {
-			AssertElementNotPresent(
-				item = "Select Environment Factors",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Select Environment Factors");
 		}
 	}
 

@@ -1,4 +1,4 @@
-.search-admin-index-actions-container {
+.portlet-search-admin .search-admin-index-actions-container {
 	.index-action-wrapper {
 		justify-content: center;
 	}
@@ -52,6 +52,32 @@
 
 				.label {
 					margin-right: 10px;
+				}
+			}
+		}
+	}
+}
+
+//  Confirmation Modal
+
+html#{$cadmin-selector} {
+	.reindex-actions-confirmation-modal-body {
+		.disk-space-panel {
+			.collapse-button-closed {
+				display: none;
+			}
+
+			.collapse-button-open {
+				display: inline-block;
+			}
+
+			&.collapsed {
+				.collapse-button-closed {
+					display: inline-block;
+				}
+
+				.collapse-button-open {
+					display: none;
 				}
 			}
 		}

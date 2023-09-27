@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.translation.translator.deepl.internal.translator;
@@ -17,6 +8,7 @@ package com.liferay.translation.translator.deepl.internal.translator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -25,7 +17,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
@@ -96,6 +87,7 @@ public class DeepLTranslator implements Translator {
 
 		Map<String, String> translatedFieldsMap = _translate(
 			deepLTranslatorConfiguration, translatorPacket.getFieldsMap(),
+			translatorPacket.getHTMLMap(),
 			_getLanguageCode(translatorPacket.getSourceLanguageId()),
 			targetLanguageCode);
 
@@ -109,6 +101,11 @@ public class DeepLTranslator implements Translator {
 			@Override
 			public Map<String, String> getFieldsMap() {
 				return translatedFieldsMap;
+			}
+
+			@Override
+			public Map<String, Boolean> getHTMLMap() {
+				return translatorPacket.getHTMLMap();
 			}
 
 			@Override
@@ -154,9 +151,6 @@ public class DeepLTranslator implements Translator {
 
 		options.addHeader(
 			HttpHeaders.AUTHORIZATION, "DeepL-Auth-Key " + authKey);
-		options.addHeader(
-			HttpHeaders.CONTENT_TYPE,
-			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
 		options.setLocation(url);
 
 		try {
@@ -180,18 +174,20 @@ public class DeepLTranslator implements Translator {
 
 	private Map<String, String> _translate(
 			DeepLTranslatorConfiguration deepLTranslatorConfiguration,
-			Map<String, String> fieldsMap, String sourceLanguageCode,
-			String targetLanguageCode)
+			Map<String, String> fieldsMap, Map<String, Boolean> htmlMap,
+			String sourceLanguageCode, String targetLanguageCode)
 		throws PortalException {
 
 		Map<String, String> translatedFieldsMap = new HashMap<>();
 
 		for (Map.Entry<String, String> entry : fieldsMap.entrySet()) {
+			Boolean html = htmlMap.get(entry.getKey());
+
 			translatedFieldsMap.put(
 				entry.getKey(),
 				_translate(
 					deepLTranslatorConfiguration, sourceLanguageCode,
-					targetLanguageCode, entry.getValue()));
+					targetLanguageCode, entry.getValue(), html));
 		}
 
 		return translatedFieldsMap;
@@ -199,21 +195,38 @@ public class DeepLTranslator implements Translator {
 
 	private String _translate(
 			DeepLTranslatorConfiguration deepLTranslatorConfiguration,
-			String sourceLanguageCode, String targetLanguageCode, String text)
+			String sourceLanguageCode, String targetLanguageCode, String text,
+			Boolean html)
 		throws PortalException {
 
 		if (Validator.isBlank(text)) {
 			return text;
 		}
 
+		JSONObject requestJSONObject = _jsonFactory.createJSONObject();
+
+		if ((html != null) && html) {
+			requestJSONObject.put("tag_handling", "html");
+		}
+
+		requestJSONObject.put(
+			"source_lang", sourceLanguageCode
+		).put(
+			"target_lang", targetLanguageCode
+		).put(
+			"text", new String[] {text}
+		);
+
+		Http.Body body = new Http.Body(
+			requestJSONObject.toString(), ContentTypes.APPLICATION_JSON,
+			"UTF-8");
+
 		Http.Options options = new Http.Options();
 
 		options.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"DeepL-Auth-Key " + deepLTranslatorConfiguration.authKey());
-		options.addPart("source_lang", sourceLanguageCode);
-		options.addPart("target_lang", targetLanguageCode);
-		options.addPart("text", text);
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+
+		options.setBody(body);
 		options.setMethod(Http.Method.POST);
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(

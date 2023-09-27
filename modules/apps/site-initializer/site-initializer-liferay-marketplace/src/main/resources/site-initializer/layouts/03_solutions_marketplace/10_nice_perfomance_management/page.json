@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/nice-ltd-nice-performance-management",
+	"hidden": true,
+	"name": "NICE Performance Management (NPM)",
+	"name_i18n": {
+		"en_US": "NICE Performance Management (NPM)"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

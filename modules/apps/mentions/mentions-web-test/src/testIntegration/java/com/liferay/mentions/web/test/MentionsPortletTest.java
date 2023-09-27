@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.mentions.web.test;
@@ -20,23 +11,22 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -47,15 +37,10 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.portlet.Portlet;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -76,81 +61,87 @@ public class MentionsPortletTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_companyLocalService.deleteCompany(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		User adminUser = UserTestUtil.getAdminUser(_company.getCompanyId());
+		_group = GroupTestUtil.addGroup();
 
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), adminUser.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		_layout = _addLayout(_group.getGroupId(), adminUser.getUserId());
+		_layout = _addLayout(_group.getGroupId(), TestPropsValues.getUserId());
 	}
 
 	@Test
 	public void testServletResponseWithoutQuery() throws Exception {
-		_addUser("example");
+		User user = _addUser("example");
 
-		JSONArray jsonArray = _getServletResponseJSONArray(null);
+		try {
+			JSONArray jsonArray = _getServletResponseJSONArray(null);
 
-		Assert.assertEquals(1, jsonArray.length());
+			Assert.assertEquals(1, jsonArray.length());
 
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
+			JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-		Assert.assertEquals("example", jsonObject.getString("screenName"));
+			Assert.assertEquals("example", jsonObject.getString("screenName"));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
 	}
 
 	@Test
 	public void testServletResponseWithQueryWithFullScreenName()
 		throws Exception {
 
-		_addUser("example");
+		User user = _addUser("example");
 
-		JSONArray jsonArray = _getServletResponseJSONArray("example");
+		try {
+			JSONArray jsonArray = _getServletResponseJSONArray("example");
 
-		Assert.assertEquals(1, jsonArray.length());
+			Assert.assertEquals(1, jsonArray.length());
 
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
+			JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-		Assert.assertEquals("example", jsonObject.getString("screenName"));
+			Assert.assertEquals("example", jsonObject.getString("screenName"));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
 	}
 
 	@Test
 	public void testServletResponseWithQueryWithPartialScreenName()
 		throws Exception {
 
-		_addUser("example");
+		User user = _addUser("example");
 
-		JSONArray jsonArray = _getServletResponseJSONArray("exa");
+		try {
+			JSONArray jsonArray = _getServletResponseJSONArray("exa");
 
-		Assert.assertEquals(1, jsonArray.length());
+			Assert.assertEquals(1, jsonArray.length());
 
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
+			JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-		Assert.assertEquals("example", jsonObject.getString("screenName"));
+			Assert.assertEquals("example", jsonObject.getString("screenName"));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
 	}
 
 	@Test
 	public void testServletResponseWithQueryWithWildard() throws Exception {
-		_addUser("example");
+		User user = _addUser("example");
 
-		JSONArray jsonArray = _getServletResponseJSONArray("");
+		try {
+			JSONArray jsonArray = _getServletResponseJSONArray("");
 
-		Assert.assertEquals(1, jsonArray.length());
+			Assert.assertEquals(1, jsonArray.length());
 
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
+			JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-		Assert.assertEquals("example", jsonObject.getString("screenName"));
+			Assert.assertEquals("example", jsonObject.getString("screenName"));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
 	}
 
 	@Test
@@ -175,16 +166,13 @@ public class MentionsPortletTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private void _addUser(String screenName) throws Exception {
-		User adminUser = UserTestUtil.getAdminUser(_company.getCompanyId());
-
-		_users.add(
-			UserTestUtil.addUser(
-				_company.getCompanyId(), adminUser.getUserId(), screenName,
-				LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), new long[] {_group.getGroupId()},
-				ServiceContextTestUtil.getServiceContext(
-					_company.getGroupId())));
+	private User _addUser(String screenName) throws Exception {
+		return UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			screenName, LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {_group.getGroupId()},
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()));
 	}
 
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
@@ -234,20 +222,18 @@ public class MentionsPortletTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(_company);
+		themeDisplay.setCompany(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setPpid(MentionsPortletKeys.MENTIONS);
 		themeDisplay.setSiteGroupId(_group.getGroupId());
-		themeDisplay.setUser(
-			UserTestUtil.getAdminUser(_company.getCompanyId()));
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
 	}
 
-	private static Company _company;
-
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -260,7 +246,7 @@ public class MentionsPortletTest {
 	@Inject(filter = "javax.portlet.name=" + MentionsPortletKeys.MENTIONS)
 	private Portlet _portlet;
 
-	@DeleteAfterTestRun
-	private final List<User> _users = new ArrayList<>();
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

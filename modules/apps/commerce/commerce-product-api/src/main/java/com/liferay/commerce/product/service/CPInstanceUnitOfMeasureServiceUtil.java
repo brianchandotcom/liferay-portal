@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.service;
@@ -53,11 +44,69 @@ public class CPInstanceUnitOfMeasureServiceUtil {
 			precision, primary, priority, rate, sku);
 	}
 
+	public static CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
+			long cpInstanceId, boolean active,
+			java.math.BigDecimal incrementalOrderQuantity, String key,
+			Map<java.util.Locale, String> nameMap, int precision,
+			boolean primary, double priority, java.math.BigDecimal rate,
+			String sku)
+		throws PortalException {
+
+		return getService().addOrUpdateCPInstanceUnitOfMeasure(
+			cpInstanceId, active, incrementalOrderQuantity, key, nameMap,
+			precision, primary, priority, rate, sku);
+	}
+
+	public static CPInstanceUnitOfMeasure deleteCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws PortalException {
+
+		return getService().deleteCPInstanceUnitOfMeasure(
+			cpInstanceUnitOfMeasureId);
+	}
+
+	public static CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws PortalException {
+
+		return getService().fetchCPInstanceUnitOfMeasure(
+			cpInstanceUnitOfMeasureId);
+	}
+
 	public static CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
 			long cpInstanceId, String key)
 		throws PortalException {
 
 		return getService().fetchCPInstanceUnitOfMeasure(cpInstanceId, key);
+	}
+
+	public static CPInstanceUnitOfMeasure fetchPrimaryCPInstanceUnitOfMeasure(
+			long cpInstanceId)
+		throws PortalException {
+
+		return getService().fetchPrimaryCPInstanceUnitOfMeasure(cpInstanceId);
+	}
+
+	public static List<CPInstanceUnitOfMeasure>
+			getActiveCPInstanceUnitOfMeasures(long cpInstanceId)
+		throws PortalException {
+
+		return getService().getActiveCPInstanceUnitOfMeasures(cpInstanceId);
+	}
+
+	public static int getActiveCPInstanceUnitOfMeasuresCount(long cpInstanceId)
+		throws PortalException {
+
+		return getService().getActiveCPInstanceUnitOfMeasuresCount(
+			cpInstanceId);
+	}
+
+	public static CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws PortalException {
+
+		return getService().getCPInstanceUnitOfMeasure(
+			cpInstanceUnitOfMeasureId);
 	}
 
 	public static CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
@@ -74,6 +123,12 @@ public class CPInstanceUnitOfMeasureServiceUtil {
 
 		return getService().getCPInstanceUnitOfMeasures(
 			cpInstanceId, start, end, orderByComparator);
+	}
+
+	public static int getCPInstanceUnitOfMeasuresCount(long cpInstanceId)
+		throws PortalException {
+
+		return getService().getCPInstanceUnitOfMeasuresCount(cpInstanceId);
 	}
 
 	/**

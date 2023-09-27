@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.segments.service.persistence.test;
@@ -277,35 +268,12 @@ public class SegmentsExperimentPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P() throws Exception {
-		_persistence.countByG_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-
-		_persistence.countByG_P(0L, 0L);
-	}
-
-	@Test
-	public void testCountByS_P() throws Exception {
-		_persistence.countByS_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-
-		_persistence.countByS_P(0L, 0L);
-	}
-
-	@Test
-	public void testCountByS_P_S() throws Exception {
-		_persistence.countByS_P_S(
+	public void testCountByG_S_P() throws Exception {
+		_persistence.countByG_S_P(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+			RandomTestUtil.nextLong());
 
-		_persistence.countByS_P_S(0L, 0L, 0);
-	}
-
-	@Test
-	public void testCountByS_P_SArrayable() throws Exception {
-		_persistence.countByS_P_S(
-			new long[] {RandomTestUtil.nextLong(), 0L},
-			RandomTestUtil.nextLong(), new int[] {RandomTestUtil.nextInt(), 0});
+		_persistence.countByG_S_P(0L, 0L, 0L);
 	}
 
 	@Test
@@ -645,6 +613,22 @@ public class SegmentsExperimentPersistenceTest {
 			ReflectionTestUtil.invoke(
 				segmentsExperiment, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "segmentsExperimentKey"));
+
+		Assert.assertEquals(
+			Long.valueOf(segmentsExperiment.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				segmentsExperiment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			Long.valueOf(segmentsExperiment.getSegmentsExperienceId()),
+			ReflectionTestUtil.<Long>invoke(
+				segmentsExperiment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "segmentsExperienceId"));
+		Assert.assertEquals(
+			Long.valueOf(segmentsExperiment.getPlid()),
+			ReflectionTestUtil.<Long>invoke(
+				segmentsExperiment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "plid"));
 	}
 
 	protected SegmentsExperiment addSegmentsExperiment() throws Exception {

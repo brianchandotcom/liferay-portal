@@ -1,23 +1,15 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
 <%@ include file="/init.jsp" %>
 <%@ taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %><%@
 taglib uri="http://liferay.com/tld/portal-workflow" prefix="liferay-portal-workflow" %><%@
-taglib uri="http://liferay.com/tld/react" prefix="react" %>
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
+taglib uri="http://liferay.com/tld/user" prefix="liferay-user" %>
 
 <%@ page import="com.liferay.bulk.selection.BulkSelectionRunner" %><%@
 page import="com.liferay.digital.signature.constants.DigitalSignaturePortletKeys" %><%@
@@ -26,7 +18,9 @@ page import="com.liferay.document.library.exception.DLStorageQuotaExceededExcept
 page import="com.liferay.document.library.kernel.antivirus.AntivirusVirusFoundException" %><%@
 page import="com.liferay.document.library.kernel.model.DLFileShortcut" %><%@
 page import="com.liferay.document.library.kernel.model.DLVersionNumberIncrease" %><%@
+page import="com.liferay.document.library.kernel.util.DLProcessorRegistryUtil" %><%@
 page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
+page import="com.liferay.document.library.kernel.util.comparator.FileVersionVersionComparator" %><%@
 page import="com.liferay.document.library.util.DLFileEntryTypeUtil" %><%@
 page import="com.liferay.document.library.web.internal.bulk.selection.BulkSelectionRunnerUtil" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLAccessFromDesktopDisplayContext" %><%@
@@ -59,11 +53,9 @@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemLi
 page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.criteria.FolderItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion" %><%@
-page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
+page import="com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
-page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.lock.Lock" %><%@
-page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.repository.model.RepositoryEntry" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@

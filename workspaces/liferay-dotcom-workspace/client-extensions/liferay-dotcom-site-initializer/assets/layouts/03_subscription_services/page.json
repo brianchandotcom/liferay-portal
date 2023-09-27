@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/subscription-services",
+	"hidden": false,
+	"name": "Subscription Services",
+	"name_i18n": {
+		"en_US": "Subscription Services"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

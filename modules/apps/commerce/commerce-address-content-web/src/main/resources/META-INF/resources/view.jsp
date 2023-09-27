@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -69,25 +60,29 @@ CommerceAddressDisplayContext commerceAddressDisplayContext = (CommerceAddressDi
 							>
 								<liferay-ui:search-container-column-text
 									href="<%= commerceAddressDisplayContext.getEditCommerceAddressURL(commerceAddress.getCommerceAddressId()) %>"
-									property="name"
+									value="<%= Validator.isNotNull(commerceAddress.getName()) ? HtmlUtil.escape(commerceAddress.getName()) : StringPool.BLANK %>"
 								/>
 
 								<liferay-ui:search-container-column-text
 									cssClass="table-cell-expand"
-									property="street1"
+									value="<%= Validator.isNotNull(commerceAddress.getStreet1()) ? HtmlUtil.escape(commerceAddress.getStreet1()) : StringPool.BLANK %>"
 								/>
 
 								<liferay-ui:search-container-column-text
-									property="city"
+									value="<%= Validator.isNotNull(commerceAddress.getCity()) ? HtmlUtil.escape(commerceAddress.getCity()) : StringPool.BLANK %>"
 								/>
 
 								<liferay-ui:search-container-column-text
-									property="zip"
+									value="<%= Validator.isNotNull(commerceAddress.getZip())? HtmlUtil.escape(commerceAddress.getZip()) : StringPool.BLANK %>"
 								/>
+
+								<%
+								Country country = commerceAddress.getCountry();
+								%>
 
 								<liferay-ui:search-container-column-text
 									name="country"
-									property="country.name"
+									value="<%= (country != null) ? HtmlUtil.escape(country.getName()) : StringPool.BLANK %>"
 								/>
 
 								<%

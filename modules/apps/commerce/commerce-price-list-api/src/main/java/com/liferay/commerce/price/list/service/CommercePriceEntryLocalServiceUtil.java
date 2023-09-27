@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.price.list.service;
@@ -170,8 +161,9 @@ public class CommercePriceEntryLocalServiceUtil {
 	}
 
 	public static void deleteCommercePriceEntries(
-		String cpInstanceUuid, java.math.BigDecimal quantity,
-		String unitOfMeasureKey) {
+			String cpInstanceUuid, java.math.BigDecimal quantity,
+			String unitOfMeasureKey)
+		throws PortalException {
 
 		getService().deleteCommercePriceEntries(
 			cpInstanceUuid, quantity, unitOfMeasureKey);
@@ -322,24 +314,27 @@ public class CommercePriceEntryLocalServiceUtil {
 	}
 
 	public static CommercePriceEntry fetchCommercePriceEntry(
-		long commercePriceListId, String cpInstanceUuid) {
+		long commercePriceListId, String cpInstanceUuid, int status,
+		String unitOfMeasureKey) {
 
 		return getService().fetchCommercePriceEntry(
-			commercePriceListId, cpInstanceUuid);
+			commercePriceListId, cpInstanceUuid, status, unitOfMeasureKey);
 	}
 
 	public static CommercePriceEntry fetchCommercePriceEntry(
-		long commercePriceListId, String cpInstanceUuid, boolean useAncestor) {
+		long commercePriceListId, String cpInstanceUuid,
+		String unitOfMeasureKey) {
 
 		return getService().fetchCommercePriceEntry(
-			commercePriceListId, cpInstanceUuid, useAncestor);
+			commercePriceListId, cpInstanceUuid, unitOfMeasureKey);
 	}
 
 	public static CommercePriceEntry fetchCommercePriceEntry(
-		long commercePriceListId, String cpInstanceUuid, int status) {
+		long commercePriceListId, String cpInstanceUuid,
+		String unitOfMeasureKey, boolean useAncestor) {
 
 		return getService().fetchCommercePriceEntry(
-			commercePriceListId, cpInstanceUuid, status);
+			commercePriceListId, cpInstanceUuid, unitOfMeasureKey, useAncestor);
 	}
 
 	public static CommercePriceEntry
@@ -489,10 +484,10 @@ public class CommercePriceEntryLocalServiceUtil {
 	}
 
 	public static CommercePriceEntry getInstanceBaseCommercePriceEntry(
-		String cpInstanceUuid, String priceListType) {
+		String cpInstanceUuid, String priceListType, String unitOfMeasureKey) {
 
 		return getService().getInstanceBaseCommercePriceEntry(
-			cpInstanceUuid, priceListType);
+			cpInstanceUuid, priceListType, unitOfMeasureKey);
 	}
 
 	public static int getInstanceCommercePriceEntriesCount(
@@ -577,18 +572,6 @@ public class CommercePriceEntryLocalServiceUtil {
 	}
 
 	public static CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, java.math.BigDecimal price,
-			boolean priceOnApplication, java.math.BigDecimal promoPrice,
-			String unitOfMeasureKey,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().updateCommercePriceEntry(
-			commercePriceEntryId, price, priceOnApplication, promoPrice,
-			unitOfMeasureKey, serviceContext);
-	}
-
-	public static CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, boolean bulkPricing,
 			boolean discountDiscovery, java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
@@ -620,6 +603,18 @@ public class CommercePriceEntryLocalServiceUtil {
 
 		return getService().updateExternalReferenceCode(
 			externalReferenceCode, commercePriceEntry);
+	}
+
+	public static CommercePriceEntry updatePricingInfo(
+			long commercePriceEntryId, boolean bulkPricing,
+			java.math.BigDecimal price, boolean priceOnApplication,
+			java.math.BigDecimal promoPrice, String unitOfMeasureKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updatePricingInfo(
+			commercePriceEntryId, bulkPricing, price, priceOnApplication,
+			promoPrice, unitOfMeasureKey, serviceContext);
 	}
 
 	public static CommercePriceEntry updateStatus(

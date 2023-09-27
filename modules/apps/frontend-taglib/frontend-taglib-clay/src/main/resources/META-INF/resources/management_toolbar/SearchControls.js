@@ -1,22 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {FocusTrap} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const SearchControls = ({
 	disabled,
@@ -31,6 +22,15 @@ const SearchControls = ({
 	searchValue,
 }) => {
 	const searchInputRef = useRef();
+	const [searchDisabled, setSearchDisabled] = useState(true);
+
+	const onClick = () => {
+		setSearchDisabled(true);
+
+		const form = document.getElementById(`${searchFormName}_search`);
+
+		submitForm(form);
+	};
 
 	useEffect(() => {
 		if (searchMobile) {
@@ -38,10 +38,28 @@ const SearchControls = ({
 		}
 	}, [searchMobile]);
 
+	useEffect(() => {
+		const onPageLoad = () => {
+			setSearchDisabled(false);
+		};
+
+		if (!disabled) {
+			if (document.readyState === 'complete') {
+				onPageLoad();
+			}
+			else {
+				window.addEventListener('load', onPageLoad);
+
+				return () => window.removeEventListener('load', onPageLoad);
+			}
+		}
+	}, [disabled]);
+
 	return (
 		<>
 			<ManagementToolbar.Search
 				action={searchActionURL}
+				id={`${searchFormName}_search`}
 				method={searchFormMethod}
 				name={searchFormName}
 				showMobile={searchMobile}
@@ -72,8 +90,9 @@ const SearchControls = ({
 							<ClayInput.GroupInsetItem after tag="span">
 								<ClayButtonWithIcon
 									aria-label={Liferay.Language.get('search')}
-									disabled={disabled}
+									disabled={searchDisabled}
 									displayType="unstyled"
+									onClick={onClick}
 									symbol="search"
 									title={Liferay.Language.get('search-for')}
 									type="submit"

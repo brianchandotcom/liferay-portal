@@ -1,7 +1,7 @@
 @component-name = "portal-headless"
 definition {
 
-	property custom.properties = "include-and-override=portal-liferay-online.properties${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+	property custom.properties = "include-and-override=portal-liferay-online.properties";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Headless";
@@ -97,6 +97,7 @@ definition {
 	test CanCreateObjectEntryByScopeKey {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I use postScopeScopeKey and scopeKey to create an object entry in default instance") {
 			var defaultInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
@@ -129,6 +130,7 @@ definition {
 	test CanCreateObjectEntryInVirtualInstance {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I use postTest to create an object entry in www.able.com instance") {
 			var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
@@ -162,6 +164,7 @@ definition {
 	test CanIncludeObjectFieldInAPIExplorer {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given navigate to www.able.com:8080/o/c/tests") {
 			APIExplorer.navigateToOpenAPI(
@@ -194,9 +197,10 @@ definition {
 
 	@priority = 4
 	test CanScopeObjectByInstanceInExportTask {
-		property custom.properties = "include-and-override=portal-liferay-online.properties${line.separator}feature.flag.COMMERCE-8087=true";
+		property custom.properties = "feature.flag.COMMERCE-8087=true${line.separator}feature.flag.LPS-186620=true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given an object definition Student with a custom field is created and published on virtual instance") {
 			var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(

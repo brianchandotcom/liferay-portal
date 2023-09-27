@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.web.internal.display.context;
@@ -47,6 +38,9 @@ public class PublicationsConfigurationDisplayContext {
 				themeDisplay.getCompanyId());
 
 		_publicationsEnabled = ctSettingsConfiguration.enabled();
+		_remoteClientId = ctSettingsConfiguration.remoteClientId();
+		_remoteClientSecret = ctSettingsConfiguration.remoteClientSecret();
+		_remoteEnabled = ctSettingsConfiguration.remoteEnabled();
 		_sandboxOnlyEnabled = ctSettingsConfiguration.sandboxEnabled();
 		_unapprovedChangesAllowed =
 			ctSettingsConfiguration.unapprovedChangesAllowed();
@@ -76,8 +70,20 @@ public class PublicationsConfigurationDisplayContext {
 		return _navigation;
 	}
 
+	public String getRemoteClientId() {
+		return _remoteClientId;
+	}
+
+	public String getRemoteClientSecret() {
+		return _remoteClientSecret;
+	}
+
 	public boolean isPublicationsEnabled() {
 		return _publicationsEnabled;
+	}
+
+	public boolean isRemoteEnabled() {
+		return _remoteEnabled;
 	}
 
 	public boolean isSandboxOnlyEnabled() {
@@ -91,6 +97,9 @@ public class PublicationsConfigurationDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private String _navigation;
 	private final boolean _publicationsEnabled;
+	private final String _remoteClientId;
+	private final String _remoteClientSecret;
+	private final boolean _remoteEnabled;
 	private final RenderResponse _renderResponse;
 	private final boolean _sandboxOnlyEnabled;
 	private final boolean _unapprovedChangesAllowed;

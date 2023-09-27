@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.info.collection.provider.item.selector.web.internal.layout.list.retriever;
@@ -30,10 +21,12 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.list.retriever.KeyListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverContext;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
@@ -53,74 +46,7 @@ public class InfoCollectionProviderLayoutListRetriever
 		<InfoListProviderItemSelectorReturnType, KeyListObjectReference> {
 
 	@Override
-	public List<Object> getList(
-		KeyListObjectReference keyListObjectReference,
-		LayoutListRetrieverContext layoutListRetrieverContext) {
-
-		InfoCollectionProvider<Object> infoCollectionProvider =
-			_infoItemServiceRegistry.getInfoItemService(
-				InfoCollectionProvider.class, keyListObjectReference.getKey());
-
-		if (infoCollectionProvider == null) {
-			infoCollectionProvider =
-				_infoItemServiceRegistry.getInfoItemService(
-					RelatedInfoItemCollectionProvider.class,
-					keyListObjectReference.getKey());
-		}
-
-		if (infoCollectionProvider == null) {
-			return Collections.emptyList();
-		}
-
-		CollectionQuery collectionQuery = new CollectionQuery();
-
-		if (infoCollectionProvider instanceof
-				ConfigurableInfoCollectionProvider) {
-
-			collectionQuery.setConfiguration(
-				layoutListRetrieverContext.getConfiguration());
-		}
-
-		if (infoCollectionProvider instanceof
-				RelatedInfoItemCollectionProvider) {
-
-			Object relatedItem = layoutListRetrieverContext.getContextObject();
-
-			if (relatedItem == null) {
-				return Collections.emptyList();
-			}
-
-			RelatedInfoItemCollectionProvider<Object, ?>
-				relatedInfoItemCollectionProvider =
-					(RelatedInfoItemCollectionProvider<Object, ?>)
-						infoCollectionProvider;
-
-			if (Objects.equals(
-					relatedInfoItemCollectionProvider.getSourceItemClass(),
-					AssetEntry.class)) {
-
-				relatedItem = _getAssetEntryOptional(relatedItem);
-			}
-
-			collectionQuery.setRelatedItemObject(relatedItem);
-		}
-
-		collectionQuery.setPagination(
-			layoutListRetrieverContext.getPagination());
-
-		if (infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
-			collectionQuery.setInfoFilters(
-				layoutListRetrieverContext.getInfoFilters());
-		}
-
-		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
-			collectionQuery);
-
-		return (List<Object>)infoPage.getPageItems();
-	}
-
-	@Override
-	public int getListCount(
+	public InfoPage<?> getInfoPage(
 		KeyListObjectReference keyListObjectReference,
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
@@ -136,10 +62,20 @@ public class InfoCollectionProviderLayoutListRetriever
 		}
 
 		if (infoCollectionProvider == null) {
-			return 0;
+			return InfoPage.of(
+				Collections.emptyList(),
+				layoutListRetrieverContext.getPagination(), 0);
 		}
 
 		CollectionQuery collectionQuery = new CollectionQuery();
+
+		Pagination pagination = layoutListRetrieverContext.getPagination();
+
+		if (pagination == null) {
+			pagination = Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
+		collectionQuery.setPagination(pagination);
 
 		if (infoCollectionProvider instanceof
 				ConfigurableInfoCollectionProvider) {
@@ -154,7 +90,9 @@ public class InfoCollectionProviderLayoutListRetriever
 			Object relatedItem = layoutListRetrieverContext.getContextObject();
 
 			if (relatedItem == null) {
-				return 0;
+				return InfoPage.of(
+					Collections.emptyList(),
+					layoutListRetrieverContext.getPagination(), 0);
 			}
 
 			RelatedInfoItemCollectionProvider<Object, ?>
@@ -177,10 +115,7 @@ public class InfoCollectionProviderLayoutListRetriever
 				layoutListRetrieverContext.getInfoFilters());
 		}
 
-		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
-			collectionQuery);
-
-		return infoPage.getTotalCount();
+		return infoCollectionProvider.getCollectionInfoPage(collectionQuery);
 	}
 
 	@Override

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.service.impl;
@@ -130,10 +121,13 @@ public class OrganizationLocalServiceImpl
 	 *
 	 * @param groupId the primary key of the group
 	 * @param organizationId the primary key of the organization
+	 * @return <code>true</code> if the association between the ${groupId} and ${organizationId} is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addGroupOrganization(long groupId, long organizationId) {
-		super.addGroupOrganization(groupId, organizationId);
+	public boolean addGroupOrganization(long groupId, long organizationId) {
+		if (!super.addGroupOrganization(groupId, organizationId)) {
+			return false;
+		}
 
 		try {
 			reindexUsers(organizationId);
@@ -141,6 +135,8 @@ public class OrganizationLocalServiceImpl
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -148,10 +144,15 @@ public class OrganizationLocalServiceImpl
 	 *
 	 * @param groupId the primary key of the group
 	 * @param organization the organization
+	 * @return <code>true</code> if the association between the ${groupId} and ${organization} is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addGroupOrganization(long groupId, Organization organization) {
-		super.addGroupOrganization(groupId, organization);
+	public boolean addGroupOrganization(
+		long groupId, Organization organization) {
+
+		if (!super.addGroupOrganization(groupId, organization)) {
+			return false;
+		}
 
 		try {
 			reindexUsers(organization);
@@ -159,6 +160,8 @@ public class OrganizationLocalServiceImpl
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -166,12 +169,15 @@ public class OrganizationLocalServiceImpl
 	 *
 	 * @param groupId the primary key of the group
 	 * @param organizations the organizations
+	 * @return <code>true</code> if at least an association between the ${groupId} and the ${organizations} is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addGroupOrganizations(
+	public boolean addGroupOrganizations(
 		long groupId, List<Organization> organizations) {
 
-		super.addGroupOrganizations(groupId, organizations);
+		if (!super.addGroupOrganizations(groupId, organizations)) {
+			return false;
+		}
 
 		try {
 			reindexUsers(organizations);
@@ -179,6 +185,8 @@ public class OrganizationLocalServiceImpl
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -186,10 +194,13 @@ public class OrganizationLocalServiceImpl
 	 *
 	 * @param groupId the primary key of the group
 	 * @param organizationIds the primary keys of the organizations
+	 * @return <code>true</code> if at least an association between the ${groupId} and the ${organizationIds} is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addGroupOrganizations(long groupId, long[] organizationIds) {
-		super.addGroupOrganizations(groupId, organizationIds);
+	public boolean addGroupOrganizations(long groupId, long[] organizationIds) {
+		if (!super.addGroupOrganizations(groupId, organizationIds)) {
+			return false;
+		}
 
 		try {
 			reindexUsers(organizationIds);
@@ -197,6 +208,8 @@ public class OrganizationLocalServiceImpl
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -225,7 +238,7 @@ public class OrganizationLocalServiceImpl
 		String[] types = getTypes();
 
 		return addOrganization(
-			userId, parentOrganizationId, name, types[0], 0, 0,
+			null, userId, parentOrganizationId, name, types[0], 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 			site, null);
 	}
@@ -258,9 +271,10 @@ public class OrganizationLocalServiceImpl
 	 */
 	@Override
 	public Organization addOrganization(
-			long userId, long parentOrganizationId, String name, String type,
-			long regionId, long countryId, long statusListTypeId,
-			String comments, boolean site, ServiceContext serviceContext)
+			String externalReferenceCode, long userId,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusListTypeId, String comments,
+			boolean site, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Organization
@@ -283,6 +297,7 @@ public class OrganizationLocalServiceImpl
 			organization.setUuid(serviceContext.getUuid());
 		}
 
+		organization.setExternalReferenceCode(externalReferenceCode);
 		organization.setCompanyId(user.getCompanyId());
 		organization.setUserId(user.getUserId());
 		organization.setUserName(user.getFullName());
@@ -426,10 +441,9 @@ public class OrganizationLocalServiceImpl
 
 		if (organization == null) {
 			organization = addOrganization(
-				userId, parentOrganizationId, name, type, regionId, countryId,
-				statusListTypeId, comments, site, serviceContext);
-
-			organization.setExternalReferenceCode(externalReferenceCode);
+				externalReferenceCode, userId, parentOrganizationId, name, type,
+				regionId, countryId, statusListTypeId, comments, site,
+				serviceContext);
 
 			PortalUtil.updateImageId(
 				organization, hasLogo, logoBytes, "logoId",
@@ -441,10 +455,10 @@ public class OrganizationLocalServiceImpl
 		}
 		else {
 			organization = updateOrganization(
-				user.getCompanyId(), organization.getOrganizationId(),
-				parentOrganizationId, name, type, regionId, countryId,
-				statusListTypeId, comments, hasLogo, logoBytes, site,
-				serviceContext);
+				externalReferenceCode, user.getCompanyId(),
+				organization.getOrganizationId(), parentOrganizationId, name,
+				type, regionId, countryId, statusListTypeId, comments, hasLogo,
+				logoBytes, site, serviceContext);
 		}
 
 		return organization;
@@ -2042,10 +2056,11 @@ public class OrganizationLocalServiceImpl
 	 */
 	@Override
 	public Organization updateOrganization(
-			long companyId, long organizationId, long parentOrganizationId,
-			String name, String type, long regionId, long countryId,
-			long statusListTypeId, String comments, boolean hasLogo,
-			byte[] logoBytes, boolean site, ServiceContext serviceContext)
+			String externalReferenceCode, long companyId, long organizationId,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusListTypeId, String comments,
+			boolean hasLogo, byte[] logoBytes, boolean site,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Organization
@@ -2063,6 +2078,7 @@ public class OrganizationLocalServiceImpl
 		long oldParentOrganizationId = organization.getParentOrganizationId();
 		String oldName = organization.getName();
 
+		organization.setExternalReferenceCode(externalReferenceCode);
 		organization.setParentOrganizationId(parentOrganizationId);
 		organization.setTreePath(organization.buildTreePath());
 		organization.setName(name);

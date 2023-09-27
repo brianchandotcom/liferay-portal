@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.opener.upload.test;
@@ -68,10 +59,10 @@ public class UniqueFileEntryTitleProviderTest {
 	public void testProvideWithExistingFileName() throws PortalException {
 		_dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), "someTitle.jpg", ContentTypes.IMAGE_JPEG,
-			StringUtil.randomString(), StringPool.BLANK,
-			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
-			null, null,
+			_folder.getFolderId(), "someTitle.jpg",
+			ContentTypes.APPLICATION_TEXT, StringUtil.randomString(),
+			StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
+			"test".getBytes(), null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -85,9 +76,9 @@ public class UniqueFileEntryTitleProviderTest {
 	public void testProvideWithExistingName() throws PortalException {
 		_dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), null, ContentTypes.IMAGE_JPEG, "someTitle",
-			StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
-			"test".getBytes(), null, null,
+			_folder.getFolderId(), null, ContentTypes.APPLICATION_TEXT,
+			"someTitle", StringPool.BLANK, StringUtil.randomString(),
+			StringPool.BLANK, "test".getBytes(), null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -118,7 +109,7 @@ public class UniqueFileEntryTitleProviderTest {
 		_dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_folder.getFolderId(), "Untitled" + mimeTypeExtension,
-			ContentTypes.IMAGE_JPEG, StringUtil.randomString(),
+			ContentTypes.APPLICATION_TEXT, StringUtil.randomString(),
 			StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
 			"test".getBytes(), null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -136,9 +127,9 @@ public class UniqueFileEntryTitleProviderTest {
 
 		_dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), null, ContentTypes.IMAGE_JPEG, "Untitled",
-			StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
-			"test".getBytes(), null, null,
+			_folder.getFolderId(), null, ContentTypes.APPLICATION_TEXT,
+			"Untitled", StringPool.BLANK, StringUtil.randomString(),
+			StringPool.BLANK, "test".getBytes(), null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -156,9 +147,10 @@ public class UniqueFileEntryTitleProviderTest {
 
 		_dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), "Untitled.ppt", ContentTypes.IMAGE_JPEG,
-			"Untitled", StringPool.BLANK, StringUtil.randomString(),
-			StringPool.BLANK, "test".getBytes(), null, null,
+			_folder.getFolderId(), "Untitled.ppt",
+			ContentTypes.APPLICATION_TEXT, "Untitled", StringPool.BLANK,
+			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
+			null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -184,7 +176,7 @@ public class UniqueFileEntryTitleProviderTest {
 
 		_dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), "Untitled", ContentTypes.IMAGE_JPEG,
+			_folder.getFolderId(), "Untitled", ContentTypes.APPLICATION_TEXT,
 			StringUtil.randomString(), StringPool.BLANK,
 			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
 			null, null,
@@ -202,9 +194,9 @@ public class UniqueFileEntryTitleProviderTest {
 
 		_dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), null, ContentTypes.IMAGE_JPEG, "Untitled",
-			StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
-			"test".getBytes(), null, null,
+			_folder.getFolderId(), null, ContentTypes.APPLICATION_TEXT,
+			"Untitled", StringPool.BLANK, StringUtil.randomString(),
+			StringPool.BLANK, "test".getBytes(), null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(

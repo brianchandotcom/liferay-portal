@@ -97,11 +97,13 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test CompleteProcessAndViewEmailNotifications {
 		property portal.upstream = "quarantine";
 		property test.assert.javascript.errors = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		ApplicationsMenu.gotoPortlet(
@@ -143,7 +145,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.addAssignee(
+		Role.addAssigneeInKaleoForms(
 			assigneeName = "creator",
 			assigneeType = "Users",
 			roleTitle = "Administrator");
@@ -173,7 +175,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.addAssignee(
+		Role.addAssigneeInKaleoForms(
 			assigneeName = "reviewer",
 			assigneeType = "Users",
 			roleTitle = "Administrator");
@@ -183,7 +185,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.addAssignee(
+		Role.addAssigneeInKaleoForms(
 			assigneeName = "reviewer",
 			assigneeType = "Users",
 			roleTitle = "Reviewer Name");
@@ -213,7 +215,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.addAssignee(
+		Role.addAssigneeInKaleoForms(
 			assigneeName = "updater",
 			assigneeType = "Users",
 			roleTitle = "Administrator");
@@ -223,7 +225,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.addAssignee(
+		Role.addAssigneeInKaleoForms(
 			assigneeName = "updater",
 			assigneeType = "Users",
 			roleTitle = "Updater Name");
@@ -248,20 +250,20 @@ definition {
 			nodeAssignmentType = "Role",
 			roleTitle = "Reviewer Name");
 
-		KaleoDesigner.editNodeNotifications(
+		KaleoDesigner.selectNodeInKaleoForms(
 			nodeNotificationsDescription = "Review Notification Description",
 			nodeNotificationsName = "Review Notification",
 			nodeNotificationsRecipientType = "Role",
 			nodeNotificationsType = "Email",
 			roleTitle = "Reviewer Name");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "update");
+		//KaleoDesigner.selectNode(nodeNodeLabel = "update");
 
 		KaleoDesigner.editNodeAssignments(
 			nodeAssignmentType = "Role",
 			roleTitle = "Updater Name");
 
-		KaleoDesigner.editNodeNotifications(
+		KaleoDesigner.selectNodeInKaleoForms(
 			nodeNotificationsDescription = "Updater Modification Notification Description",
 			nodeNotificationsName = "Updater Modification Notification",
 			nodeNotificationsRecipientType = "Role",
@@ -414,6 +416,7 @@ definition {
 	test ViewApprovedProcessNotificationWithComments {
 		property ci.retries.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

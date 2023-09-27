@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.service;
@@ -53,12 +44,80 @@ public class CPInstanceUnitOfMeasureServiceWrapper
 	}
 
 	@Override
+	public CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
+			long cpInstanceId, boolean active,
+			java.math.BigDecimal incrementalOrderQuantity, String key,
+			java.util.Map<java.util.Locale, String> nameMap, int precision,
+			boolean primary, double priority, java.math.BigDecimal rate,
+			String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureService.
+			addOrUpdateCPInstanceUnitOfMeasure(
+				cpInstanceId, active, incrementalOrderQuantity, key, nameMap,
+				precision, primary, priority, rate, sku);
+	}
+
+	@Override
+	public CPInstanceUnitOfMeasure deleteCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureService.deleteCPInstanceUnitOfMeasure(
+			cpInstanceUnitOfMeasureId);
+	}
+
+	@Override
+	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureService.fetchCPInstanceUnitOfMeasure(
+			cpInstanceUnitOfMeasureId);
+	}
+
+	@Override
 	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
 			long cpInstanceId, String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpInstanceUnitOfMeasureService.fetchCPInstanceUnitOfMeasure(
 			cpInstanceId, key);
+	}
+
+	@Override
+	public CPInstanceUnitOfMeasure fetchPrimaryCPInstanceUnitOfMeasure(
+			long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureService.
+			fetchPrimaryCPInstanceUnitOfMeasure(cpInstanceId);
+	}
+
+	@Override
+	public java.util.List<CPInstanceUnitOfMeasure>
+			getActiveCPInstanceUnitOfMeasures(long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureService.
+			getActiveCPInstanceUnitOfMeasures(cpInstanceId);
+	}
+
+	@Override
+	public int getActiveCPInstanceUnitOfMeasuresCount(long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureService.
+			getActiveCPInstanceUnitOfMeasuresCount(cpInstanceId);
+	}
+
+	@Override
+	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureService.getCPInstanceUnitOfMeasure(
+			cpInstanceUnitOfMeasureId);
 	}
 
 	@Override
@@ -79,6 +138,14 @@ public class CPInstanceUnitOfMeasureServiceWrapper
 
 		return _cpInstanceUnitOfMeasureService.getCPInstanceUnitOfMeasures(
 			cpInstanceId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCPInstanceUnitOfMeasuresCount(long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureService.getCPInstanceUnitOfMeasuresCount(
+			cpInstanceId);
 	}
 
 	/**

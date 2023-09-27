@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.osb.faro.engine.client;
@@ -243,6 +234,18 @@ public abstract class BaseEngineClient {
 		RestTemplate restTemplate = getRestTemplate(faroProject);
 
 		restTemplate.delete(getTemplatedURL(faroProject, type), uriVariables);
+	}
+
+	protected void delete(
+			FaroProject faroProject, String type, Object object,
+			Map<String, Object> uriVariables)
+		throws FaroEngineClientException {
+
+		RestTemplate restTemplate = getRestTemplate(faroProject);
+
+		restTemplate.exchange(
+			getTemplatedURL(faroProject, type), HttpMethod.DELETE,
+			new HttpEntity<>(object), String.class, uriVariables);
 	}
 
 	protected void delete(FaroProject faroProject, String type, String id)
@@ -508,11 +511,28 @@ public abstract class BaseEngineClient {
 		FaroProject faroProject, int cur, int delta,
 		List<OrderByField> orderByFields) {
 
-		return getUriVariables(faroProject, cur, delta, orderByFields, null);
+		return getUriVariables(
+			faroProject, cur, delta, null, orderByFields, null);
 	}
 
 	protected Map<String, Object> getUriVariables(
 		FaroProject faroProject, int cur, int delta,
+		List<OrderByField> orderByFields, String fieldNameContext) {
+
+		return getUriVariables(
+			faroProject, cur, delta, null, orderByFields, fieldNameContext);
+	}
+
+	protected Map<String, Object> getUriVariables(
+		FaroProject faroProject, int cur, int delta, List<String> ids,
+		List<OrderByField> orderByFields) {
+
+		return getUriVariables(
+			faroProject, cur, delta, ids, orderByFields, null);
+	}
+
+	protected Map<String, Object> getUriVariables(
+		FaroProject faroProject, int cur, int delta, List<String> ids,
 		List<OrderByField> orderByFields, String fieldNameContext) {
 
 		Map<String, Object> uriVariables = getUriVariables(faroProject);
@@ -527,27 +547,29 @@ public abstract class BaseEngineClient {
 
 		uriVariables.put("size", delta);
 
-		if (orderByFields == null) {
-			return uriVariables;
+		if (ids != null) {
+			uriVariables.put("ids", ids);
 		}
 
-		uriVariables.put(
-			"sort",
-			TransformUtil.transform(
-				orderByFields,
-				orderByField -> {
-					String fieldName = orderByField.getFieldName();
+		if (orderByFields != null) {
+			uriVariables.put(
+				"sort",
+				TransformUtil.transform(
+					orderByFields,
+					orderByField -> {
+						String fieldName = orderByField.getFieldName();
 
-					if (!orderByField.isSystem() &&
-						(fieldNameContext != null)) {
+						if (!orderByField.isSystem() &&
+							(fieldNameContext != null)) {
 
-						fieldName = StringUtil.replace(
-							fieldNameContext, CharPool.QUESTION, fieldName);
-					}
+							fieldName = StringUtil.replace(
+								fieldNameContext, CharPool.QUESTION, fieldName);
+						}
 
-					return fieldName + StringPool.COMMA +
-						orderByField.getOrderBy();
-				}));
+						return fieldName + StringPool.COMMA +
+							orderByField.getOrderBy();
+					}));
+		}
 
 		return uriVariables;
 	}

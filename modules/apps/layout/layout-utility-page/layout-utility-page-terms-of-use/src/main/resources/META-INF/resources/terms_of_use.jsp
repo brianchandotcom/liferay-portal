@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -53,7 +44,7 @@
 						<liferay-ui:language
 							formAction="<%= updateLanguageFormAction %>"
 							languageId="<%= themeDisplay.getLanguageId() %>"
-							languageIds="<%= LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId())) %>"
+							languageIds="<%= LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales(themeDisplay.getCompanyGroupId())) %>"
 						/>
 					</div>
 				</div>
@@ -90,21 +81,21 @@
 				</c:choose>
 			</div>
 
-			<div class="sheet-footer">
-				<c:if test="<%= !user.isAgreedToTermsOfUse() %>">
-					<aui:button-row>
-						<aui:button type="submit" value="i-agree" />
+			<c:if test="<%= !user.isAgreedToTermsOfUse() %>">
+				<div class="sheet-footer">
+					<clay:button
+						label="i-agree"
+						type="submit"
+					/>
 
-						<%
-						String disagreeMessage = UnicodeLanguageUtil.get(request, "you-must-agree-with-the-terms-of-use-to-continue");
-
-						String taglibOnClick = String.format("Liferay.Util.openAlertModal({message: '%s'})", disagreeMessage, disagreeMessage);
-						%>
-
-						<aui:button onClick="<%= taglibOnClick %>" type="cancel" value="i-disagree" />
-					</aui:button-row>
-				</c:if>
-			</div>
+					<clay:button
+						displayType="secondary"
+						label="i-disagree"
+						propsTransformer="js/DisagreeButtonPropsTransformer"
+						type="button"
+					/>
+				</div>
+			</c:if>
 		</aui:form>
 	</div>
 </liferay-layout:render-layout-utility-page-entry>

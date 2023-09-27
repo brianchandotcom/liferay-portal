@@ -45,6 +45,7 @@ definition {
 	@priority = 5
 	test BannerIsDisplayed {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -83,6 +84,7 @@ definition {
 	@priority = 4
 	test CanDownloadBannerGuide {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -105,6 +107,7 @@ definition {
 	@priority = 4
 	test CanWatchBannerVideo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 

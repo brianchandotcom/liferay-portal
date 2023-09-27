@@ -22,7 +22,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testCompile project(":apps:frontend-js:frontend-js-web")
-	testCompile project(":core:petra:petra-reflect")
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testImplementation project(":apps:frontend-js:frontend-js-web")
+	testImplementation project(":core:petra:petra-reflect")
 }

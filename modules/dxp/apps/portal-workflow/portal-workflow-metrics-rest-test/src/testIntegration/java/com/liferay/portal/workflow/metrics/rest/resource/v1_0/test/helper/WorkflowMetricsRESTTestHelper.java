@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper;
@@ -256,14 +247,14 @@ public class WorkflowMetricsRESTTestHelper {
 
 	public NodeMetric addNodeMetric(
 			Assignee assignee, long companyId,
-			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
-			String status, User user)
+			UnsafeSupplier<Instance, Exception> instanceUnsafeSupplier,
+			long processId, String status, User user)
 		throws Exception {
 
 		String randomString = RandomTestUtil.randomString();
 
 		return addNodeMetric(
-			assignee, companyId, instanceSuplier,
+			assignee, companyId, instanceUnsafeSupplier,
 			new NodeMetric() {
 				{
 					durationAvg =
@@ -285,7 +276,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 	public NodeMetric addNodeMetric(
 			Assignee assignee, long companyId,
-			UnsafeSupplier<Instance, Exception> instanceSuplier,
+			UnsafeSupplier<Instance, Exception> instanceUnsafeSupplier,
 			NodeMetric nodeMetric, long processId, String status, User user,
 			String version)
 		throws Exception {
@@ -297,7 +288,7 @@ public class WorkflowMetricsRESTTestHelper {
 		Long overdueInstanceCount = nodeMetric.getOverdueInstanceCount();
 
 		for (int i = 0; i < nodeMetric.getInstanceCount(); i++) {
-			Instance instance = instanceSuplier.get();
+			Instance instance = instanceUnsafeSupplier.get();
 			Long taskId = RandomTestUtil.nextLong();
 
 			if (onTimeInstanceCount > 0) {

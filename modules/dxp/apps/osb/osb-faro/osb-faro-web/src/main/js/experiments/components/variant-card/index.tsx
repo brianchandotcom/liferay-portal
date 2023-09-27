@@ -11,7 +11,7 @@ const MEDIANS = 'medians';
 const PER_DAY = 'per-day';
 
 interface VariantCardIProps {
-	label: String;
+	label: string;
 }
 
 const VariantCard: React.FC<VariantCardIProps> = ({label}) => {

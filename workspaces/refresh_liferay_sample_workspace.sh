@@ -65,7 +65,7 @@ function refresh_liferay_sample_workspace {
 	mv gradle.properties.tmp gradle.properties
 
 	sed -i 's/name: "biz.aQute.bnd", version: ".*"/name: "biz.aQute.bnd.gradle", version: "5.2.0"/' settings.gradle
-	sed -i 's/name: "com.liferay.gradle.plugins.workspace", version: ".*"/name: "com.liferay.gradle.plugins.workspace", version: "6.1.14"/' settings.gradle
+	sed -i 's/name: "com.liferay.gradle.plugins.workspace", version: ".*"/name: "com.liferay.gradle.plugins.workspace", version: "9.0.2"/' settings.gradle
 
 	echo -en "\ninclude \"poshi\"" >> settings.gradle
 
@@ -119,28 +119,19 @@ EOF
 
 	cat <<EOF > liferay-sample-custom-element-2/src/common/components/Comic.js
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import React from 'react';
 
-import {Liferay} from '../services/liferay/liferay';
+import {Liferay} from '../services/liferay/liferay.js';
 
 let oAuth2Client;
 
 try {
 	oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-		'liferay-sample-node-oauth-application-user-agent'
+		'liferay-sample-etc-node-oauth-application-user-agent'
 	);
 }
 catch (error) {
@@ -180,22 +171,13 @@ EOF
 
 	cat <<EOF > liferay-sample-custom-element-2/src/common/components/DadJoke.js
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import React from 'react';
 
-import {Liferay} from '../services/liferay/liferay';
+import {Liferay} from '../services/liferay/liferay.js';
 
 let oAuth2Client;
 
@@ -234,29 +216,20 @@ EOF
 
 	cat <<EOF > liferay-sample-custom-element-2/src/index.js
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 
-import Comic from './common/components/Comic';
-import DadJoke from './common/components/DadJoke';
-import api from './common/services/liferay/api';
-import {Liferay} from './common/services/liferay/liferay';
-import HelloBar from './routes/hello-bar/pages/HelloBar';
-import HelloFoo from './routes/hello-foo/pages/HelloFoo';
-import HelloWorld from './routes/hello-world/pages/HelloWorld';
+import Comic from './common/components/Comic.js';
+import DadJoke from './common/components/DadJoke.js';
+import api from './common/services/liferay/api.js';
+import {Liferay} from './common/services/liferay/liferay.js';
+import HelloBar from './routes/hello-bar/pages/HelloBar.js';
+import HelloFoo from './routes/hello-foo/pages/HelloFoo.js';
+import HelloWorld from './routes/hello-world/pages/HelloWorld.js';
 
 import './common/styles/index.scss';
 

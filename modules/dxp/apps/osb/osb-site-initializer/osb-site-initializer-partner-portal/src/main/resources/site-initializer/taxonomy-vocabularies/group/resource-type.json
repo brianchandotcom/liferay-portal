@@ -1,0 +1,21 @@
+{
+	"description": "Resource Type",
+	"externalReferenceCode": "PRMC040",
+	"name": "Resource Type",
+	"name_i18n": {
+		"ar_SA": "Resource Type",
+		"ca_ES": "Resource Type",
+		"de_DE": "Resource Type",
+		"en_US": "Resource Type",
+		"es_ES": "Resource Type",
+		"fi_FI": "Resource Type",
+		"fr_FR": "Resource Type",
+		"hu_HU": "Resource Type",
+		"ja_JP": "Resource Type",
+		"nl_NL": "Resource Type",
+		"pt_BR": "Resource Type",
+		"sv_SE": "Resource Type",
+		"zh_CN": "Resource Type"
+	},
+	"viewableBy": "Anyone"
+}

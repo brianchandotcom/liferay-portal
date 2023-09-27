@@ -9,9 +9,11 @@ create table LayoutPageTemplateCollection (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	parentLPTCollectionId LONG,
 	lptCollectionKey VARCHAR(75) null,
 	name VARCHAR(75) null,
 	description STRING null,
+	type_ INTEGER,
 	lastPublishDate DATE null,
 	primary key (layoutPageTemplateCollectionId, ctCollectionId)
 );

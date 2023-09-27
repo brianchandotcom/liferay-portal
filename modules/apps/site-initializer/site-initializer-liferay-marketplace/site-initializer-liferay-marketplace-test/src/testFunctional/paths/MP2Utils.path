@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>MP2Utils</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MP2Utils</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>EMAIL_ADDRESS_FIELD</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_login']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_HTML_BODY_FORMATTED</td>
+	<td>//div[@name='bodyHTML_Formatted']//main//span[@data-userpassword]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_FIELD</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN_BUTTON</td>
+	<td>//button[contains(.,'Sign In')] | //input[@value='Sign In']</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

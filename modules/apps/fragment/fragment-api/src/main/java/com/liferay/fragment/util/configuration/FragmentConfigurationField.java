@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.fragment.util.configuration;
@@ -48,6 +39,7 @@ public class FragmentConfigurationField {
 		_defaultValue = fieldJSONObject.getString("defaultValue");
 		_localizable = fieldJSONObject.getBoolean("localizable");
 		_type = fieldJSONObject.getString("type");
+		_typeOptionsJSONObject = fieldJSONObject.getJSONObject("typeOptions");
 	}
 
 	public FragmentConfigurationField(
@@ -59,6 +51,8 @@ public class FragmentConfigurationField {
 		_defaultValue = defaultValue;
 		_localizable = localizable;
 		_type = type;
+
+		_typeOptionsJSONObject = JSONFactoryUtil.createJSONObject();
 	}
 
 	/**
@@ -75,6 +69,7 @@ public class FragmentConfigurationField {
 		_type = type;
 
 		_localizable = false;
+		_typeOptionsJSONObject = JSONFactoryUtil.createJSONObject();
 	}
 
 	public String getDataType() {
@@ -130,6 +125,10 @@ public class FragmentConfigurationField {
 
 	public String getType() {
 		return _type;
+	}
+
+	public JSONObject getTypeOptionsJSONObject() {
+		return _typeOptionsJSONObject;
 	}
 
 	public boolean isLocalizable() {
@@ -234,5 +233,6 @@ public class FragmentConfigurationField {
 	private final boolean _localizable;
 	private final String _name;
 	private final String _type;
+	private final JSONObject _typeOptionsJSONObject;
 
 }

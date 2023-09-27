@@ -1,0 +1,28 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":exec-client-extension:runScript", ":java-exec-client-extension:runHelloWorld", ":package-run-client-extension:packageRunStart"
+
+	doLast {
+		String homeDir = gradle.liferayWorkspace.homeDir;
+		String virtualInstanceId = "default";
+
+		String expectedLiferayRoutesDXPValue = "${homeDir}/routes/${virtualInstanceId}/dxp";
+
+		[
+			"exec-client-extension",
+			"package-run-client-extension",
+			"java-exec-client-extension"
+		].each {
+			projectName ->
+
+			Project testProject = project(":${projectName}");
+
+			String expectedLiferayRoutesClientExtensionValue = "${homeDir}/routes/${virtualInstanceId}/${testProject.name}";
+
+			assert testProject.file("liferay.routes.client.extension").text == expectedLiferayRoutesClientExtensionValue;
+
+			assert testProject.file("liferay.routes.dxp").text == expectedLiferayRoutesDXPValue;
+		}
+	}
+}

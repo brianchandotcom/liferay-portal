@@ -1,19 +1,10 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, render, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -130,29 +121,45 @@ const renderTranslation = ({state}) => {
 	);
 };
 
+const getElementIndicatorText = (element) => {
+	return element.parentElement.parentElement.nextSibling.textContent;
+};
+
 describe('Translation', () => {
 	afterEach(cleanup);
 
 	it('renders Translation component', () => {
-		const {getByText} = renderTranslation({state: defaultState});
+		const {getByRole, getByText} = renderTranslation({state: defaultState});
+
+		const button = getByRole('combobox');
+		userEvent.click(button);
 
 		expect(getByText('language-4')).toBeInTheDocument();
 	});
 
-	it('dispatches languageId when a language is selected', () => {
-		const {getByText} = renderTranslation({state: defaultState});
-		const button = getByText('language-3').parentElement;
+	it('dispatches languageId when a language is selected', async () => {
+		const {getByRole, getByText} = renderTranslation({state: defaultState});
 
+		const button = getByRole('combobox');
 		userEvent.click(button);
 
-		expect(updateLanguageId).toHaveBeenLastCalledWith({
-			languageId: 'language_3',
+		const option = getByText('language-3').parentElement;
+
+		await waitFor(() => {
+			userEvent.click(option);
+			expect(updateLanguageId).toHaveBeenLastCalledWith({
+				languageId: 'language_3',
+			});
 		});
 	});
 
 	it('sets label "translated" when there is a translated language', () => {
-		const {getByText} = renderTranslation({state: defaultState});
-		const indicator = getByText('language-1').nextSibling.textContent;
+		const {getByRole, getByText} = renderTranslation({state: defaultState});
+
+		const button = getByRole('combobox');
+		userEvent.click(button);
+
+		const indicator = getElementIndicatorText(getByText('language-1'));
 
 		expect(indicator).toBe('translated');
 	});
@@ -165,8 +172,12 @@ describe('Translation', () => {
 				[FRAGMENT_ENTRY_LINK_ID_2]: fragmentEntryLink2,
 			},
 		};
-		const {getByText} = renderTranslation({state: newState});
-		const indicator = getByText('language-1').nextSibling.textContent;
+		const {getByRole, getByText} = renderTranslation({state: newState});
+
+		const button = getByRole('combobox');
+		userEvent.click(button);
+
+		const indicator = getElementIndicatorText(getByText('language-1'));
 
 		expect(indicator).toBe('translating 1/2');
 	});
@@ -185,8 +196,12 @@ describe('Translation', () => {
 				},
 			},
 		};
-		const {getByText} = renderTranslation({state: newState});
-		const indicator = getByText('language-1').nextSibling.textContent;
+		const {getByRole, getByText} = renderTranslation({state: newState});
+
+		const button = getByRole('combobox');
+		userEvent.click(button);
+
+		const indicator = getElementIndicatorText(getByText('language-1'));
 
 		expect(indicator).toBe('translated');
 	});

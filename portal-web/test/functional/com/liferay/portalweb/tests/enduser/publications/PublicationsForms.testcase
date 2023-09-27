@@ -29,6 +29,7 @@ definition {
 	@priority = 4
 	test PublishPublicationWithDataProviderInForm {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -36,17 +37,9 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		Navigator.gotoNavItem(navItem = "Data Providers");
-
-		FormsAdminNavigator.gotoAddDataProvider();
+		FormsAdminNavigator.gotoRESTDataProvider(groupName = "Site Name");
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -63,13 +56,7 @@ definition {
 
 		FormsAdmin.saveDataProvider();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm(groupName = "Site Name");
 
 		Form.editName();
 
@@ -205,13 +192,7 @@ definition {
 			changeType = "Modified",
 			changeUser = "Test Test");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm(groupName = "Site Name");
 
 		Form.editName();
 
@@ -229,13 +210,7 @@ definition {
 	test ResolveConflictingPublicationsByDiscarding {
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm(groupName = "Site Name");
 
 		Form.editName();
 
@@ -303,9 +278,7 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name 2",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name 2");
 
 		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
@@ -329,19 +302,13 @@ definition {
 	@description = "Assert the form with mutiple pages can be submited successfully within publications and the entry can be published to production."
 	@priority = 4
 	test SubmitFormWithMultiplePagesWithinPublications {
+		HeadlessSite.addSite(siteName = "Site Name");
+
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm(groupName = "Site Name");
 
 		Form.editName();
 
@@ -503,9 +470,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
@@ -537,13 +502,7 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm(groupName = "Site Name");
 
 		Form.editName();
 

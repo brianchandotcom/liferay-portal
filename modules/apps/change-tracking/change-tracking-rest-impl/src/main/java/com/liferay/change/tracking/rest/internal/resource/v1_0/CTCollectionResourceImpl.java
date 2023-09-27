@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.rest.internal.resource.v1_0;
@@ -66,10 +57,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/ct-collection.properties",
 	scope = ServiceScope.PROTOTYPE, service = CTCollectionResource.class
 )
-@CTAware
+@CTAware(onProduction = true)
 public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
-	@CTAware(onProduction = true)
 	@Override
 	public void deleteCTCollection(Long ctCollectionId) throws PortalException {
 		com.liferay.change.tracking.model.CTCollection ctCollection =
@@ -81,8 +71,29 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 	}
 
 	@Override
+	public void deleteCTCollectionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		com.liferay.change.tracking.model.CTCollection ctCollection =
+			_ctCollectionLocalService.fetchCTCollectionByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (ctCollection != null) {
+			_ctCollectionService.deleteCTCollection(ctCollection);
+		}
+	}
+
+	@Override
 	public CTCollection getCTCollection(Long ctCollectionId) throws Exception {
 		return _toCTCollection(ctCollectionId);
+	}
+
+	public CTCollection getCTCollectionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		return _toCTCollection(externalReferenceCode);
 	}
 
 	@Override
@@ -116,18 +127,32 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		return _entityModel;
 	}
 
-	@CTAware(onProduction = true)
+	@Override
+	public CTCollection patchCTCollectionByExternalReferenceCode(
+			String externalReferenceCode, CTCollection ctCollection)
+		throws Exception {
+
+		com.liferay.change.tracking.model.CTCollection ctCollectionModel =
+			_ctCollectionLocalService.fetchCTCollectionByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		return _toCTCollection(
+			_ctCollectionService.updateCTCollection(
+				contextUser.getUserId(), ctCollectionModel.getCtCollectionId(),
+				ctCollection.getName(), ctCollection.getDescription()));
+	}
+
 	@Override
 	public CTCollection postCTCollection(CTCollection ctCollection)
 		throws Exception {
 
 		return _toCTCollection(
 			_ctCollectionService.addCTCollection(
-				contextCompany.getCompanyId(), contextUser.getUserId(),
+				ctCollection.getExternalReferenceCode(),
+				contextCompany.getCompanyId(), contextUser.getUserId(), 0,
 				ctCollection.getName(), ctCollection.getDescription()));
 	}
 
-	@CTAware(onProduction = true)
 	@Override
 	public void postCTCollectionCheckout(Long ctCollectionId)
 		throws PortalException {
@@ -137,7 +162,6 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			ctCollectionId);
 	}
 
-	@CTAware(onProduction = true)
 	@Override
 	public void postCTCollectionPublish(Long ctCollectionId)
 		throws PortalException {
@@ -146,7 +170,6 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			contextUser.getUserId(), ctCollectionId);
 	}
 
-	@CTAware(onProduction = true)
 	@Override
 	public void postCTCollectionSchedulePublish(
 			Long ctCollectionId, Date publishDate)
@@ -189,7 +212,6 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		return null;
 	}
 
-	@CTAware(onProduction = true)
 	@Override
 	public CTCollection putCTCollection(
 			Long ctCollectionId, CTCollection ctCollection)
@@ -316,6 +338,17 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 	private CTCollection _toCTCollection(Long ctCollectionId) throws Exception {
 		com.liferay.change.tracking.model.CTCollection ctCollection =
 			_ctCollectionLocalService.getCTCollection(ctCollectionId);
+
+		return _ctCollectionDTOConverter.toDTO(
+			_getDTOConverterContext(ctCollection), ctCollection);
+	}
+
+	private CTCollection _toCTCollection(String externalReferenceCode)
+		throws Exception {
+
+		com.liferay.change.tracking.model.CTCollection ctCollection =
+			_ctCollectionLocalService.getCTCollectionByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		return _ctCollectionDTOConverter.toDTO(
 			_getDTOConverterContext(ctCollection), ctCollection);

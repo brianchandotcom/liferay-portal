@@ -298,6 +298,7 @@ definition {
 	@priority = 4
 	test ViewChangesOfFragmentOnContentPagePersistInStagingAndLiveSiteAfterOverwriteTheFragment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable Propagate Fragment Changes Automatically in System Settings") {
 			ApplicationsMenu.gotoPortlet(
@@ -396,7 +397,7 @@ definition {
 		task ("Import the fragment collection") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
 
-			FragmentsAdmin.importCollectionFromTempFolder();
+			FragmentsAdmin.importCollectionFromTempFolder(importOption = "Overwrite Existing Items");
 		}
 
 		task ("Publish to Live via Staging admin") {

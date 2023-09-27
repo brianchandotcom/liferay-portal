@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
@@ -18,6 +9,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useCallback, useEffect, useState} from 'react';
 
+import appPlaceholder from '../../assets/images/app_placeholder.png';
 import {getCompanyId} from '../../liferay/constants';
 import {Liferay} from '../../liferay/liferay';
 import {
@@ -77,8 +69,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 	const {observer, onClose} = useModal({
 		onClose: handleClose,
 	});
-	const [activeAccounts, setActiveAccounts] =
-		useState<Partial<AccountBrief>[]>();
+	const [activeAccounts, setActiveAccounts] = useState<
+		Partial<AccountBrief>[]
+	>();
 	const [accountPublisher, setAccountPublisher] = useState<Account>();
 	const [accounts, setAccounts] = useState<AccountBrief[]>();
 	const [app, setApp] = useState<App>({
@@ -119,11 +112,13 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		initialBillingAddress
 	);
 
-	const [selectedAccount, setSelectedAccount] =
-		useState<Partial<AccountBrief>>();
+	const [selectedAccount, setSelectedAccount] = useState<
+		Partial<AccountBrief>
+	>();
 
-	const [selectedPaymentMethod, setSelectedPaymentMethod] =
-		useState<PaymentMethodSelector>('pay');
+	const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+		PaymentMethodSelector
+	>('pay');
 
 	const [selectedAddress, setSelectedAddress] = useState('');
 
@@ -297,17 +292,18 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			const orderThumbnail = await (async () => {
 				const promises = productAttachments.map(
 					async (currentAttachment) => {
-						const attachmentsCustomField =
-							await getCustomFieldExpandoValue({
+						const attachmentsCustomField = await getCustomFieldExpandoValue(
+							{
 								className:
 									'com.liferay.commerce.product.model.CPAttachmentFileEntry',
 								classPK: currentAttachment.id,
 								columnName: 'App Icon',
 								companyId: Number(getCompanyId()),
 								tableName: 'CUSTOM_FIELDS',
-							});
+							}
+						);
 
-						if (attachmentsCustomField[0] === 'Yes') {
+						if (attachmentsCustomField[0].toLowerCase() === 'yes') {
 							return currentAttachment;
 						}
 						else {
@@ -486,7 +482,13 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 		return;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [enablePurchaseButton, freeApp, selectedAccount, showSelectAccount]);
+	}, [
+		enablePurchaseButton,
+		freeApp,
+		selectedAccount,
+		showSelectAccount,
+		thumbnail,
+	]);
 
 	const getButtonText = () => {
 		if (!freeApp) {
@@ -572,10 +574,19 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 									<img
 										alt="App Image"
 										className="get-app-modal-body-content-image"
-										src={showAppImage(thumbnail).replace(
-											app.urlImage.split('/o')[0],
-											baseURL
-										)}
+										src={
+											showAppImage(thumbnail) ===
+											appPlaceholder
+												? appPlaceholder
+												: showAppImage(
+														thumbnail
+												  ).replace(
+														app.urlImage.split(
+															'/o'
+														)[0],
+														baseURL
+												  )
+										}
 									/>
 
 									<div className="get-app-modal-body-content-app-info-container">

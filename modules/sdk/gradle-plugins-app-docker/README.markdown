@@ -5,7 +5,7 @@ image for an application that spans different subprojects, each one representing
 a different component of the same application. The Docker image can then be
 pushed to a registry.
 
-The plugin has been successfully tested with Gradle 6.9.2.
+The plugin has been successfully tested with Gradle 7.3.3.
 
 ## Usage
 
@@ -14,7 +14,7 @@ To use the plugin, include it in the build script of the root project:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.app.docker", version: "1.0.12"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.app.docker", version: "1.0.13"
 	}
 
 	repositories {

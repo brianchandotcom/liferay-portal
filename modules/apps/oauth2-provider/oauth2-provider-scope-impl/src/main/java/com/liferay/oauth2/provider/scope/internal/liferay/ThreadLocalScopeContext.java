@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.oauth2.provider.scope.internal.liferay;
@@ -28,20 +19,40 @@ public class ThreadLocalScopeContext implements ScopeContext {
 
 	@Override
 	public void clear() {
-		accessTokenThreadLocal.remove();
-		applicationNameThreadLocal.remove();
-		bundleSymbolicNameThreadLocal.remove();
-		companyIdThreadLocal.remove();
+		_accessTokenThreadLocal.remove();
+		_applicationNameThreadLocal.remove();
+		_bundleSymbolicNameThreadLocal.remove();
+		_companyIdThreadLocal.remove();
+	}
+
+	@Override
+	public String getAccessToken() {
+		return _accessTokenThreadLocal.get();
+	}
+
+	@Override
+	public String getApplicationName() {
+		return _applicationNameThreadLocal.get();
+	}
+
+	@Override
+	public String getBundleSymbolicName() {
+		return _bundleSymbolicNameThreadLocal.get();
+	}
+
+	@Override
+	public Long getCompanyId() {
+		return _companyIdThreadLocal.get();
 	}
 
 	@Override
 	public void setAccessToken(String accessToken) {
-		accessTokenThreadLocal.set(accessToken);
+		_accessTokenThreadLocal.set(accessToken);
 	}
 
 	@Override
 	public void setApplicationName(String applicationName) {
-		applicationNameThreadLocal.set(applicationName);
+		_applicationNameThreadLocal.set(applicationName);
 	}
 
 	@Override
@@ -52,21 +63,21 @@ public class ThreadLocalScopeContext implements ScopeContext {
 			symbolicName = bundle.getSymbolicName();
 		}
 
-		bundleSymbolicNameThreadLocal.set(symbolicName);
+		_bundleSymbolicNameThreadLocal.set(symbolicName);
 	}
 
 	@Override
 	public void setCompanyId(long companyId) {
-		companyIdThreadLocal.set(companyId);
+		_companyIdThreadLocal.set(companyId);
 	}
 
-	protected final ThreadLocal<String> accessTokenThreadLocal =
+	private final ThreadLocal<String> _accessTokenThreadLocal =
 		ThreadLocal.withInitial(() -> StringPool.BLANK);
-	protected final ThreadLocal<String> applicationNameThreadLocal =
+	private final ThreadLocal<String> _applicationNameThreadLocal =
 		ThreadLocal.withInitial(() -> StringPool.BLANK);
-	protected final ThreadLocal<String> bundleSymbolicNameThreadLocal =
+	private final ThreadLocal<String> _bundleSymbolicNameThreadLocal =
 		ThreadLocal.withInitial(() -> StringPool.BLANK);
-	protected final ThreadLocal<Long> companyIdThreadLocal =
+	private final ThreadLocal<Long> _companyIdThreadLocal =
 		ThreadLocal.withInitial(() -> 0L);
 
 }

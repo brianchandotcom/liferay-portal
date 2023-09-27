@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.service;
@@ -41,25 +32,30 @@ public class OrganizationLocalServiceWrapper
 	}
 
 	@Override
-	public void addGroupOrganization(long groupId, long organizationId) {
-		_organizationLocalService.addGroupOrganization(groupId, organizationId);
+	public boolean addGroupOrganization(long groupId, long organizationId) {
+		return _organizationLocalService.addGroupOrganization(
+			groupId, organizationId);
 	}
 
 	@Override
-	public void addGroupOrganization(long groupId, Organization organization) {
-		_organizationLocalService.addGroupOrganization(groupId, organization);
+	public boolean addGroupOrganization(
+		long groupId, Organization organization) {
+
+		return _organizationLocalService.addGroupOrganization(
+			groupId, organization);
 	}
 
 	@Override
-	public void addGroupOrganizations(
+	public boolean addGroupOrganizations(
 		long groupId, java.util.List<Organization> organizations) {
 
-		_organizationLocalService.addGroupOrganizations(groupId, organizations);
+		return _organizationLocalService.addGroupOrganizations(
+			groupId, organizations);
 	}
 
 	@Override
-	public void addGroupOrganizations(long groupId, long[] organizationIds) {
-		_organizationLocalService.addGroupOrganizations(
+	public boolean addGroupOrganizations(long groupId, long[] organizationIds) {
+		return _organizationLocalService.addGroupOrganizations(
 			groupId, organizationIds);
 	}
 
@@ -91,6 +87,21 @@ public class OrganizationLocalServiceWrapper
 	}
 
 	/**
+	 * Adds the organization to the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param organization the organization
+	 * @return the organization that was added
+	 */
+	@Override
+	public Organization addOrganization(Organization organization) {
+		return _organizationLocalService.addOrganization(organization);
+	}
+
+	/**
 	 * Adds an organization.
 	 *
 	 * <p>
@@ -118,29 +129,16 @@ public class OrganizationLocalServiceWrapper
 	 */
 	@Override
 	public Organization addOrganization(
-			long userId, long parentOrganizationId, String name, String type,
-			long regionId, long countryId, long statusListTypeId,
-			String comments, boolean site, ServiceContext serviceContext)
+			String externalReferenceCode, long userId,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusListTypeId, String comments,
+			boolean site, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _organizationLocalService.addOrganization(
-			userId, parentOrganizationId, name, type, regionId, countryId,
-			statusListTypeId, comments, site, serviceContext);
-	}
-
-	/**
-	 * Adds the organization to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param organization the organization
-	 * @return the organization that was added
-	 */
-	@Override
-	public Organization addOrganization(Organization organization) {
-		return _organizationLocalService.addOrganization(organization);
+			externalReferenceCode, userId, parentOrganizationId, name, type,
+			regionId, countryId, statusListTypeId, comments, site,
+			serviceContext);
 	}
 
 	/**
@@ -200,13 +198,15 @@ public class OrganizationLocalServiceWrapper
 	}
 
 	@Override
-	public void addUserOrganization(long userId, long organizationId) {
-		_organizationLocalService.addUserOrganization(userId, organizationId);
+	public boolean addUserOrganization(long userId, long organizationId) {
+		return _organizationLocalService.addUserOrganization(
+			userId, organizationId);
 	}
 
 	@Override
-	public void addUserOrganization(long userId, Organization organization) {
-		_organizationLocalService.addUserOrganization(userId, organization);
+	public boolean addUserOrganization(long userId, Organization organization) {
+		return _organizationLocalService.addUserOrganization(
+			userId, organization);
 	}
 
 	@Override
@@ -219,15 +219,17 @@ public class OrganizationLocalServiceWrapper
 	}
 
 	@Override
-	public void addUserOrganizations(
+	public boolean addUserOrganizations(
 		long userId, java.util.List<Organization> organizations) {
 
-		_organizationLocalService.addUserOrganizations(userId, organizations);
+		return _organizationLocalService.addUserOrganizations(
+			userId, organizations);
 	}
 
 	@Override
-	public void addUserOrganizations(long userId, long[] organizationIds) {
-		_organizationLocalService.addUserOrganizations(userId, organizationIds);
+	public boolean addUserOrganizations(long userId, long[] organizationIds) {
+		return _organizationLocalService.addUserOrganizations(
+			userId, organizationIds);
 	}
 
 	@Override
@@ -1719,6 +1721,21 @@ public class OrganizationLocalServiceWrapper
 	}
 
 	/**
+	 * Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param organization the organization
+	 * @return the organization that was updated
+	 */
+	@Override
+	public Organization updateOrganization(Organization organization) {
+		return _organizationLocalService.updateOrganization(organization);
+	}
+
+	/**
 	 * Updates the organization.
 	 *
 	 * @param companyId the primary key of the organization's company
@@ -1743,31 +1760,18 @@ public class OrganizationLocalServiceWrapper
 	 */
 	@Override
 	public Organization updateOrganization(
-			long companyId, long organizationId, long parentOrganizationId,
-			String name, String type, long regionId, long countryId,
-			long statusListTypeId, String comments, boolean hasLogo,
-			byte[] logoBytes, boolean site, ServiceContext serviceContext)
+			String externalReferenceCode, long companyId, long organizationId,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusListTypeId, String comments,
+			boolean hasLogo, byte[] logoBytes, boolean site,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _organizationLocalService.updateOrganization(
-			companyId, organizationId, parentOrganizationId, name, type,
-			regionId, countryId, statusListTypeId, comments, hasLogo, logoBytes,
-			site, serviceContext);
-	}
-
-	/**
-	 * Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param organization the organization
-	 * @return the organization that was updated
-	 */
-	@Override
-	public Organization updateOrganization(Organization organization) {
-		return _organizationLocalService.updateOrganization(organization);
+			externalReferenceCode, companyId, organizationId,
+			parentOrganizationId, name, type, regionId, countryId,
+			statusListTypeId, comments, hasLogo, logoBytes, site,
+			serviceContext);
 	}
 
 	@Override

@@ -1,0 +1,236 @@
+@component-name = "portal-database-upgrade-framework"
+definition {
+
+	property app.server.types = "tomcat";
+	property database.auto.upgrade.enabled = "true";
+	property database.types = "mysql";
+	property jmxremote.enabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property skip.start.app.server = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
+	property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
+	property testray.main.component.name = "Database Upgrade Framework";
+
+	@priority = 3
+	test CheckMbeanDuringUpgradeIsRunning {
+		property custom.startup.log.message = "Started web bundles";
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.4.13";
+		property skip.upgrade-legacy-database = "true";
+
+		task ("Given the portal is started When the Upgrade Manager mBean attributes are captured while the upgrade is running") {
+			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");
+		}
+
+		task ("When the output file is generated with Type and Result attributes") {
+			var projectDir = PropsUtil.get("project.dir");
+
+			var mBeanAttibutesFile = FileUtil.read("${projectDir}/mbean-attributes-output.txt");
+		}
+
+		task ("Then the result of the upgrade is published as running and the type is published as pending in the JVM via mBean") {
+			if (!(contains(${mBeanAttibutesFile}, "Type: pending"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade type not present in the mBean file");
+			}
+
+			if (!(contains(${mBeanAttibutesFile}, "Result: running"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade result not present in the mBean file");
+			}
+		}
+	}
+
+	@priority = 5
+	test CheckMbeanFailedUpgrade {
+		property custom.mysql.sql.statement = "ALTER TABLE FragmentComposition DROP description;";
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.4.13";
+		property skip.upgrade-legacy-database = "true";
+
+		task ("Given the upgrade have finished When failures were registered during the upgrade") {
+			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");
+		}
+
+		task ("When the output file is generated with Type and Result attributes") {
+			var projectDir = PropsUtil.get("project.dir");
+
+			var mBeanAttibutesFile = FileUtil.read("${projectDir}/mbean-attributes-output.txt");
+		}
+
+		task ("Then the status of the upgrade is published as failure in the JVM via mBean") {
+			if (!(contains(${mBeanAttibutesFile}, "Type: major"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade type not present in the mBean file");
+			}
+
+			if (!(contains(${mBeanAttibutesFile}, "Result: failure"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade result not present in the mBean file");
+			}
+		}
+	}
+
+	@priority = 4
+	test CheckMbeanSuccessfulUpgrade {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.4.13";
+		property skip.upgrade-legacy-database = "true";
+
+		task ("Given the upgrade have finished When the upgrade was executed successfully") {
+			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");
+		}
+
+		task ("When the output file is generated with Type and Result attributes") {
+			var projectDir = PropsUtil.get("project.dir");
+
+			var mBeanAttibutesFile = FileUtil.read("${projectDir}/mbean-attributes-output.txt");
+		}
+
+		task ("Then the status of the upgrade is published as success in the JVM via mBean") {
+			if (!(contains(${mBeanAttibutesFile}, "Type: major"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade type not present in the mBean file");
+			}
+
+			if (!(contains(${mBeanAttibutesFile}, "Result: success"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade result not present in the mBean file");
+			}
+		}
+	}
+
+	@priority = 4
+	test CheckMbeanWarningUpgrade {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.4.13";
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "false";
+
+		task ("Given the indexes.sql file from portal-impl.jar is deleted") {
+			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "delete-indexes-sql");
+		}
+
+		task ("And the upgrade have finished When a warn is registered during upgrade") {
+			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");
+		}
+
+		task ("When the output file is generated with Type and Result attributes") {
+			var projectDir = PropsUtil.get("project.dir");
+
+			var mBeanAttibutesFile = FileUtil.read("${projectDir}/mbean-attributes-output.txt");
+		}
+
+		task ("Then the status of the upgrade is published as warning in the JVM via mBean") {
+			if (!(contains(${mBeanAttibutesFile}, "Type: major"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade type not present in the mBean file");
+			}
+
+			if (!(contains(${mBeanAttibutesFile}, "Result: warning"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade result not present in the mBean file");
+			}
+		}
+	}
+
+	@priority = 4
+	test CheckMbeanWhenAutoUpgradeIsDisabled {
+		property database.auto.upgrade.enabled = "false";
+
+		task ("Given auto.upgrade is disabled When the portal is started") {
+			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");
+		}
+
+		task ("When the output file is generated with Type and Result attributes") {
+			var projectDir = PropsUtil.get("project.dir");
+
+			var mBeanAttibutesFile = FileUtil.read("${projectDir}/mbean-attributes-output.txt");
+		}
+
+		task ("Then the output file returns that the mBean it's not registered") {
+			if (!(contains(${mBeanAttibutesFile}, "Not Registered"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Upgrade Manager MBean is registered");
+			}
+		}
+	}
+
+	@priority = 5
+	test CheckMbeanWhenUpgradeHaveWarnAndError {
+		property custom.mysql.sql.statement = "ALTER TABLE FragmentComposition DROP description;";
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.4.13";
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "false";
+
+		task ("Given the indexes.sql file from portal-impl.jar is deleted") {
+			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "delete-indexes-sql");
+		}
+
+		task ("And the upgrade have finished When a warn and an error were registered during upgrade") {
+			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");
+		}
+
+		task ("When the output file is generated with Type and Result attributes") {
+			var projectDir = PropsUtil.get("project.dir");
+
+			var mBeanAttibutesFile = FileUtil.read("${projectDir}/mbean-attributes-output.txt");
+		}
+
+		task ("Then the status of the upgrade is published as failure in the JVM via mBean") {
+			if (!(contains(${mBeanAttibutesFile}, "Type: major"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade type not present in the mBean file");
+			}
+
+			if (!(contains(${mBeanAttibutesFile}, "Result: failure"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade result not present in the mBean file");
+			}
+		}
+	}
+
+	@priority = 4
+	test CheckMbeanWhenUpgradeItsNotExecuted {
+		task ("Given portal is started When no upgrade processes runned") {
+			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");
+		}
+
+		task ("When the output file is generated with Type and Result attributes") {
+			var projectDir = PropsUtil.get("project.dir");
+
+			var mBeanAttibutesFile = FileUtil.read("${projectDir}/mbean-attributes-output.txt");
+		}
+
+		task ("Then the status of the upgrade is published as 'no upgrade' in the JVM via mBean") {
+			if (!(contains(${mBeanAttibutesFile}, "Type: no upgrade"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade type not present in the mBean file");
+			}
+
+			if (!(contains(${mBeanAttibutesFile}, "Result: success"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade result not present in the mBean file");
+			}
+		}
+	}
+
+}

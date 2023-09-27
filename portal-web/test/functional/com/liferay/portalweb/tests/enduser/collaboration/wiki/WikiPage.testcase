@@ -250,6 +250,7 @@ definition {
 	@refactordone
 	test CanAddPageWithImageViaURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -778,6 +779,7 @@ definition {
 	test CanRemoveRedirectLinkFromPage {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWiki.addWikiPage(
 			groupName = "Guest",
@@ -1021,6 +1023,32 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 
 		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content");
+	}
+
+	@description = "This is a test for LPS-190823. It checks that Javascript will not be executed from the child wiki page content when viewing the parent wiki page."
+	@priority = 4
+	test XSSCannotBeExecutedFromChildWikiPageContent {
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
+
+		JSONWiki.addWikiChildPage(
+			groupName = "Guest",
+			wikiChildPageContent = '''<script>alert(123)</script>''',
+			wikiChildPageName = "Wiki Child Page Title",
+			wikiNodeName = "Main",
+			wikiParentPageName = "Wiki Page Title");
+
+		WikiNavigator.openToWikiNode(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
+
+		WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page Title");
+
+		AssertAlertNotPresent();
 	}
 
 	@description = "This test checks that the javascript in the user name will not be executed when viewing a new wiki page on page."

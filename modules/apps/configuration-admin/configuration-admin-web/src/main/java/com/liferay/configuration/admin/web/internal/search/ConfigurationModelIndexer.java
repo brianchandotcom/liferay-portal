@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.configuration.admin.web.internal.search;
@@ -23,10 +14,17 @@ import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderPro
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -43,6 +41,8 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.index.IndexStatusManager;
@@ -56,14 +56,17 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.AttributeDefinition;
 import org.osgi.service.metatype.ObjectClassDefinition;
@@ -75,9 +78,10 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  */
 @Component(
 	property = {"index.on.startup=false", "system.index=true"},
-	service = {ConfigurationModelIndexer.class, Indexer.class}
+	service = Indexer.class
 )
-public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
+public class ConfigurationModelIndexer
+	extends BaseIndexer<ConfigurationModel> implements IdentifiableOSGiService {
 
 	@Override
 	public String getClassName() {
@@ -109,42 +113,9 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		}
 	}
 
-	public BundleTracker<Collection<ConfigurationModel>> initialize() {
-		Map<String, Collection<ConfigurationModel>> configurationModelsMap =
-			new ConcurrentHashMap<>();
-
-		Bundle[] bundles = _bundleContext.getBundles();
-
-		List<ConfigurationModel> configurationModelsList = new ArrayList<>();
-
-		for (Bundle bundle : bundles) {
-			if (bundle.getState() != Bundle.ACTIVE) {
-				continue;
-			}
-
-			Map<String, ConfigurationModel> configurationModels =
-				_configurationModelRetriever.getConfigurationModels(
-					bundle, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
-
-			configurationModelsList.addAll(configurationModels.values());
-
-			configurationModelsMap.put(
-				bundle.getSymbolicName(), configurationModels.values());
-		}
-
-		reindex(configurationModelsList);
-
-		_commit();
-
-		BundleTracker<Collection<ConfigurationModel>> bundleTracker =
-			new BundleTracker<>(
-				_bundleContext, Bundle.ACTIVE,
-				new ConfigurationModelsBundleTrackerCustomizer(
-					configurationModelsMap));
-
-		bundleTracker.open();
-
-		return bundleTracker;
+	@Override
+	public String getOSGiServiceIdentifier() {
+		return ConfigurationModelIndexer.class.getName();
 	}
 
 	@Override
@@ -180,6 +151,8 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
 		try {
+			_initialize();
+
 			Hits hits = doSearch(searchContext);
 
 			processHits(searchContext, hits);
@@ -210,6 +183,17 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		setStagingAware(false);
 
 		_bundleContext = bundleContext;
+
+		_serviceRegistration = _bundleContext.registerService(
+			IdentifiableOSGiService.class, this, null);
+
+		if (_clusterExecutor.isEnabled()) {
+			_configurationModelsClusterMasterTokenTransitionListener =
+				new ConfigurationModelsClusterMasterTokenTransitionListener();
+
+			_clusterMasterExecutor.addClusterMasterTokenTransitionListener(
+				_configurationModelsClusterMasterTokenTransitionListener);
+		}
 	}
 
 	@Override
@@ -247,6 +231,18 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		fullBooleanQuery.add(searchQuery, BooleanClauseOccur.MUST);
 
 		return fullBooleanQuery;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_configurationModelsClusterMasterTokenTransitionListener != null) {
+			_clusterMasterExecutor.removeClusterMasterTokenTransitionListener(
+				_configurationModelsClusterMasterTokenTransitionListener);
+		}
+
+		_serviceRegistration.unregister();
+
+		_stopBundleTracker();
 	}
 
 	@Override
@@ -380,6 +376,26 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		}
 	}
 
+	private static void _initialize(String osgiServiceIdentifier)
+		throws Exception {
+
+		ConfigurationModelIndexer configurationModelIndexer =
+			(ConfigurationModelIndexer)
+				IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
+					osgiServiceIdentifier);
+
+		configurationModelIndexer._initialize();
+	}
+
+	private static void _reset(String osgiServiceIdentifier) {
+		ConfigurationModelIndexer configurationModelIndexer =
+			(ConfigurationModelIndexer)
+				IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
+					osgiServiceIdentifier);
+
+		configurationModelIndexer._initialized = false;
+	}
+
 	private void _addLocalizedText(
 		Document document, ResourceBundleLoader resourceBundleLoader,
 		List<TranslationHelper> translationHelpers) {
@@ -462,6 +478,73 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			configurationModel.getFactoryPid());
 	}
 
+	private void _initialize() throws PortletException {
+		if (_initialized) {
+			return;
+		}
+
+		synchronized (this) {
+			if (_initialized) {
+				return;
+			}
+
+			if (_clusterMasterExecutor.isMaster()) {
+				Map<String, Collection<ConfigurationModel>>
+					configurationModelsMap = new ConcurrentHashMap<>();
+
+				Bundle[] bundles = _bundleContext.getBundles();
+
+				List<ConfigurationModel> configurationModelsList =
+					new ArrayList<>();
+
+				for (Bundle bundle : bundles) {
+					if (bundle.getState() != Bundle.ACTIVE) {
+						continue;
+					}
+
+					Map<String, ConfigurationModel> configurationModels =
+						_configurationModelRetriever.getConfigurationModels(
+							bundle, ExtendedObjectClassDefinition.Scope.SYSTEM,
+							null);
+
+					configurationModelsList.addAll(
+						configurationModels.values());
+
+					configurationModelsMap.put(
+						bundle.getSymbolicName(), configurationModels.values());
+				}
+
+				reindex(configurationModelsList);
+
+				_commit();
+
+				_bundleTracker = new BundleTracker<>(
+					_bundleContext, Bundle.ACTIVE,
+					new ConfigurationModelsBundleTrackerCustomizer(
+						configurationModelsMap));
+
+				_bundleTracker.open();
+			}
+			else {
+				NoticeableFuture<Void> noticeableFuture =
+					_clusterMasterExecutor.executeOnMaster(
+						new MethodHandler(
+							_initializeMethodKey, getOSGiServiceIdentifier()));
+
+				try {
+					noticeableFuture.get();
+				}
+				catch (Exception exception) {
+					throw new PortletException(
+						"Unable to initialize configuration model index",
+						exception);
+				}
+			}
+
+			_initialized = true;
+		}
+	}
+
 	private void _setUID(
 		Document document, ConfigurationModel configurationModel) {
 
@@ -470,10 +553,30 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			configurationModel.getFactoryPid());
 	}
 
+	private synchronized void _stopBundleTracker() {
+		if (_bundleTracker != null) {
+			_bundleTracker.close();
+
+			_bundleTracker = null;
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationModelIndexer.class);
 
+	private static final MethodKey _initializeMethodKey = new MethodKey(
+		ConfigurationModelIndexer.class, "_initialize", String.class);
+	private static final MethodKey _resetMethodKey = new MethodKey(
+		ConfigurationModelIndexer.class, "_reset", String.class);
+
 	private BundleContext _bundleContext;
+	private BundleTracker<Collection<ConfigurationModel>> _bundleTracker;
+
+	@Reference
+	private ClusterExecutor _clusterExecutor;
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private ConfigurationEntryRetriever _configurationEntryRetriever;
@@ -481,17 +584,24 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 	@Reference(target = "(!(filter.visibility=*))")
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
+	private ConfigurationModelsClusterMasterTokenTransitionListener
+		_configurationModelsClusterMasterTokenTransitionListener;
+
 	@Reference
 	private IndexStatusManager _indexStatusManager;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 
+	private volatile boolean _initialized;
+
 	@Reference
 	private Language _language;
 
 	@Reference
 	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
+
+	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;
 
 	private static class TranslationHelper {
 
@@ -581,6 +691,31 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 
 		private final Map<String, Collection<ConfigurationModel>>
 			_configurationModelsMap;
+
+	}
+
+	private class ConfigurationModelsClusterMasterTokenTransitionListener
+		implements ClusterMasterTokenTransitionListener {
+
+		@Override
+		public void masterTokenAcquired() {
+			_initialized = false;
+
+			ClusterRequest clusterRequest =
+				ClusterRequest.createMulticastRequest(
+					new MethodHandler(
+						_resetMethodKey, getOSGiServiceIdentifier()),
+					true);
+
+			clusterRequest.setFireAndForget(true);
+
+			_clusterExecutor.execute(clusterRequest);
+		}
+
+		@Override
+		public void masterTokenReleased() {
+			_stopBundleTracker();
+		}
 
 	}
 

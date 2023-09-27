@@ -21,6 +21,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test AssertAliasCaseInsensitivity {
 		JSONWebcontent.addWebContent(
 			content = "WC WC",
@@ -54,6 +55,7 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	@description = "This is a use case for LPS-191998."
 	@priority = 3
 	test AssertCannotAddDuplicateQueriesAndAliases {
 		SearchTuning.openResultRankingsAdmin();
@@ -107,6 +109,22 @@ definition {
 		Button.clickSave();
 
 		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases must be unique across all rankings. The following ones already exist: Journal.");
+
+		SearchTuning.openResultRankingsAdmin();
+
+		SearchTuning.addResultRanking(searchQuery = "Third Ranking");
+
+		SearchTuning.configureAliases(addAlias = "Article");
+
+		SearchTuning.configureAliases(addAlias = "Web Content");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Error:Active search queries and aliases must be unique across all rankings. The following ones already exist: Article, Web Content.");
+
+		Refresh();
+
+		ControlMenu.viewHeaderTitle(headerTitle = "Customize Results");
 	}
 
 	@priority = 4
@@ -665,6 +683,7 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "orange");
 	}
 
+	@priority = 3
 	test NavigateToResultRankingsViaUI {
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Tuning",
@@ -674,6 +693,7 @@ definition {
 		ControlMenu.viewHeaderTitle(headerTitle = "Result Rankings");
 	}
 
+	@priority = 3
 	test NavigateToSynonymsViaUI {
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Tuning",
@@ -798,6 +818,7 @@ definition {
 	@priority = 5
 	test ReindexingRestoresResultRankingsIndex {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var title : list "Article,Journal") {
 			JSONWebcontent.addWebContent(
@@ -845,6 +866,7 @@ definition {
 	@priority = 5
 	test ReindexingRestoresSynonymsIndex {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SearchTuning.openSynonymsAdmin();
 
@@ -876,6 +898,197 @@ definition {
 			indexName = "liferay-${companyId}-search-tuning-synonyms",
 			locator1 = "Search#FIELD_MAPPINGS_EDITOR",
 			value1 = "liferay-${companyId}-search-tuning-synonyms");
+	}
+
+	@description = "This is a use case for LPS-177665."
+	@priority = 4
+	test ReindexSearchTuningWithConcurrentExecutionMode {
+		property custom.properties = "feature.flag.LPS-183661=true";
+		property search.environment.suite.exclude = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Create a new result ranking") {
+			SearchTuning.openResultRankingsAdmin();
+
+			SearchTuning.addResultRanking(searchQuery = "Test Ranking");
+		}
+
+		task ("Create a new synonym set") {
+			SearchTuning.openSynonymsAdmin();
+
+			SearchTuning.addSynonymSet(synonyms = "Test Synonym Set");
+		}
+
+		task ("Perform a concurrent reindex") {
+			SearchAdministration.executeReindex(reindexMode = "Concurrent");
+		}
+
+		task ("Assert that the result ranking and synonym set is still available after concurrent reindex") {
+			SearchTuning.openResultRankingsAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "Test Ranking");
+
+			SearchTuning.openSynonymsAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "Test Synonym Set");
+		}
+	}
+
+	@description = "This is a use case for LPS-184999."
+	@priority = 4
+	test ReindexSearchTuningWithSyncExecutionMode {
+		property custom.properties = "feature.flag.LPS-183661=true";
+		property search.environment.suite.exclude = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Create a new result ranking") {
+			SearchTuning.openResultRankingsAdmin();
+
+			SearchTuning.addResultRanking(searchQuery = "Test Ranking");
+		}
+
+		task ("Create a new synonym set") {
+			SearchTuning.openSynonymsAdmin();
+
+			SearchTuning.addSynonymSet(synonyms = "Test Synonym Set");
+		}
+
+		task ("Grab the timestamp values for the result ranking and synonyms set indexed documents before a Sync reindex is executed") {
+			var companyId = JSONCompany.getCompanyId();
+			var port = Elasticsearch.getServerPort();
+			var portalHostname = PropsUtil.get("portal.hostname");
+
+			var rankingsCurl = '''
+				http://${portalHostname}:${port}/liferay-${companyId}-search-tuning-rankings/_search?pretty \
+					-H 'Content-Type: application/json' \
+					-d '{
+						"query":
+						{
+							"match_all":{}
+						}
+					}'
+			''';
+
+			var rankingsPreSyncReindexTimestamp = JSONCurlUtil.get(${rankingsCurl}, "$.hits.hits[0]._source.timestamp");
+			var synonymsCurl = '''
+				http://${portalHostname}:${port}/liferay-${companyId}-search-tuning-synonyms/_search?pretty \
+					-H 'Content-Type: application/json' \
+					-d '{
+						"query":
+						{
+							"match_all":{}
+						}
+					}'
+			''';
+
+			var synonymsPreSyncReindexTimestamp = JSONCurlUtil.get(${synonymsCurl}, "$.hits.hits[0]._source.timestamp");
+		}
+
+		task ("Begin a reindex using sync execution mode") {
+			SearchAdministration.openIndexActions();
+
+			Click(locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN");
+
+			Click(
+				key_reindexMode = "Sync",
+				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
+
+			Click(
+				key_action = "All Search Indexes",
+				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+
+			Click(
+				key_text = "Execute",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("Assert that the result ranking and synonym set is still available in the UI during the reindex") {
+			SearchTuning.openResultRankingsAdmin();
+
+			AssertElementPresent(locator1 = "Search#REINDEX_IN_PROGRESS_INDICATOR");
+
+			LexiconEntry.viewEntryName(rowEntry = "Test Ranking");
+
+			SearchTuning.openSynonymsAdmin();
+
+			AssertElementPresent(locator1 = "Search#REINDEX_IN_PROGRESS_INDICATOR");
+
+			LexiconEntry.viewEntryName(rowEntry = "Test Synonym Set");
+		}
+
+		task ("After the reindex is complete, assert the timestamp values for both the result ranking and the synonym set are updated in the index") {
+			SearchAdministration.openIndexActions();
+
+			WaitForElementNotPresent(locator1 = "Search#REINDEX_IN_PROGRESS_INDICATOR");
+
+			var rankingsPostSyncReindexTimestamp = JSONCurlUtil.get(${rankingsCurl}, "$.hits.hits[0]._source.timestamp");
+
+			if (${rankingsPreSyncReindexTimestamp} != ${rankingsPostSyncReindexTimestamp}) {
+				echo("The timestamp value for the result ranking document has been updated in the index");
+			}
+			else {
+				fail("The timestamp value for the result ranking document has not been updated in the index");
+			}
+
+			var synonymsPostSyncReindexTimestamp = JSONCurlUtil.get(${synonymsCurl}, "$.hits.hits[0]._source.timestamp");
+
+			if (${synonymsPreSyncReindexTimestamp} != ${synonymsPostSyncReindexTimestamp}) {
+				echo("The timestamp value for the synonym set document has been updated in the index");
+			}
+			else {
+				fail("The timestamp value for the synonym set document has not been updated in the index");
+			}
+		}
+
+		task ("Reindex the individual Result Rankings index using sync execution mode") {
+			SearchAdministration.openIndexActions();
+
+			Click(locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN");
+
+			Click(
+				key_reindexMode = "Sync",
+				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
+
+			Click(
+				key_action = "Ranking",
+				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+
+			Click(
+				key_text = "Execute",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("Assert that the Result Rankings is still present within Result Rankings") {
+			SearchTuning.openResultRankingsAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "Test Ranking");
+		}
+
+		task ("Reindex the individual Synonym Set index using sync execution mode") {
+			SearchAdministration.openIndexActions();
+
+			Click(locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN");
+
+			Click(
+				key_reindexMode = "Sync",
+				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
+
+			Click(
+				key_action = "Synonym Set",
+				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+
+			Click(
+				key_text = "Execute",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("Assert the Synonym set is still present within Synonyms admin") {
+			SearchTuning.openSynonymsAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "Test Synonym Set");
+		}
 	}
 
 	@priority = 4

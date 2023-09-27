@@ -6,12 +6,12 @@ definition {
 	property database.types = "mysql";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	@priority = 4
 	test DecrementCoreSchemaMajorVersion {
-		property test.liferay.virtual.instance = "false";
-
 		var script = '''
 			import com.liferay.portal.kernel.model.*;
 			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
@@ -48,8 +48,6 @@ definition {
 
 	@priority = 4
 	test DecrementCoreSchemaMicroVersion {
-		property test.liferay.virtual.instance = "false";
-
 		var script = '''
 			import com.liferay.portal.kernel.model.*;
 			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
@@ -97,8 +95,6 @@ definition {
 
 	@priority = 3
 	test DecrementCoreSchemaMinorVersion {
-		property test.liferay.virtual.instance = "false";
-
 		var script = '''
 			import com.liferay.portal.kernel.model.*;
 			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
@@ -187,15 +183,14 @@ definition {
 	@priority = 4
 	test RemoveModulesWithSchemaVersionChange {
 		property osgi.modules.includes = "revert-schema-version-api,revert-schema-version-service";
-		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.executeCommand(commandName = "dm wtf");
+		GogoShell.executeCommand(commandName = "services \"(&(objectClass=com.liferay.portal.kernel.configuration.Configuration)(origin.bundle.symbolic.name=com.liferay.revert.schema.version.service))\"");
 
-		GogoShell.viewOutput(outputContent = "No unregistered components found");
+		GogoShell.viewOutput(outputContent = "\"Registered by bundle:\" com.liferay.revert.schema");
 
 		// Change schema version from 2.1.1 to 2.1.0.
 
@@ -205,9 +200,9 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.executeCommand(commandName = "dm wtf");
+		GogoShell.executeCommand(commandName = "services \"(&(objectClass=com.liferay.portal.kernel.configuration.Configuration)(origin.bundle.symbolic.name=com.liferay.revert.schema.version.service))\"");
 
-		GogoShell.viewOutput(outputContent = "No unregistered components found");
+		GogoShell.viewOutput(outputContent = "\"Registered by bundle:\" com.liferay.revert.schema");
 
 		// Change schema version from 2.1.0 to 2.0.0.
 
@@ -217,9 +212,9 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.executeCommand(commandName = "dm wtf");
+		GogoShell.executeCommand(commandName = "services \"(&(objectClass=com.liferay.portal.kernel.configuration.Configuration)(origin.bundle.symbolic.name=com.liferay.revert.schema.version.service))\"");
 
-		GogoShell.viewOutput(outputContent = "No unregistered components found");
+		GogoShell.viewOutput(outputContent = "\"Registered by bundle:\" com.liferay.revert.schema");
 
 		// Change schema version from 2.0.0 to 1.0.0.
 
@@ -229,11 +224,9 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.executeCommand(commandName = "dm wtf");
+		GogoShell.executeCommand(commandName = "services \"(&(objectClass=com.liferay.portal.kernel.configuration.Configuration)(origin.bundle.symbolic.name=com.liferay.revert.schema.version.service))\"");
 
-		GogoShell.viewOutput(outputContent = "1 unregistered components found");
-
-		GogoShell.viewOutput(outputContent = "com.liferay.revert.schema");
+		GogoShell.viewOutput(outputContent = "No registered services");
 	}
 
 }

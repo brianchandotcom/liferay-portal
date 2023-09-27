@@ -1,6 +1,14 @@
 {
 	"dependencies": {
-		"image-promise": "^5.0.1"
+		"@clayui/button": "3.100.0",
+		"@clayui/icon": "3.56.0",
+		"@clayui/loading-indicator": "3.60.0",
+		"@liferay/document-library-preview-css": "*",
+		"@liferay/frontend-js-react-web": "*",
+		"frontend-js-web": "*",
+		"image-promise": "^5.0.1",
+		"prop-types": "15.7.2",
+		"react": "16.12.0"
 	},
 	"name": "document-library-preview-document",
 	"private": true,
@@ -10,5 +18,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "3.0.16"
+	"version": "3.0.20"
 }

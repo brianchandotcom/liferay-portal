@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.facet.faceted.searcher.test;
@@ -47,7 +38,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.site.SiteFacetFactory;
 import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
@@ -286,10 +276,9 @@ public class AggregationFilteringTest {
 			groups, group -> String.valueOf(group.getGroupId()), String.class);
 	}
 
-	protected static String[] getUserFullNames(User... users) {
+	protected static String[] getUserIds(User... users) {
 		return TransformUtil.transform(
-			users, user -> StringUtil.toLowerCase(user.getFullName()),
-			String.class);
+			users, user -> String.valueOf(user.getUserId()), String.class);
 	}
 
 	protected static <K, V> Map<K, V> toMap(K key, V value) {
@@ -408,11 +397,11 @@ public class AggregationFilteringTest {
 			User user = entry.getKey();
 
 			userFrequenciesMap.put(
-				StringUtil.toLowerCase(user.getFullName()), entry.getValue());
+				String.valueOf(user.getUserId()), entry.getValue());
 		}
 
 		FacetsAssert.assertFrequencies(
-			Field.USER_NAME, searchContext, hits, userFrequenciesMap);
+			Field.USER_ID, searchContext, hits, userFrequenciesMap);
 	}
 
 	protected Facet createSiteFacet(
@@ -438,7 +427,7 @@ public class AggregationFilteringTest {
 	protected Facet createUserFacet(User[] users, SearchContext searchContext) {
 		Facet facet = userFacetFactory.newInstance(searchContext);
 
-		facet.select(getUserFullNames(users));
+		facet.select(getUserIds(users));
 
 		return facet;
 	}

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.multi.factor.authentication.web.internal.portlet.action;
@@ -33,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -133,7 +123,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 				}
 
 				if (userId > 0) {
-					_redirectToVerify(actionRequest, actionResponse, userId);
+					_redirectToVerify(actionRequest, userId);
 				}
 			}
 			catch (Exception exception) {
@@ -240,38 +230,6 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		};
 	}
 
-	private LiferayPortletURL _getLiferayPortletURL(
-		HttpServletRequest httpServletRequest, String redirectURL,
-		String returnToFullPageURL) {
-
-		httpServletRequest = _portal.getOriginalServletRequest(
-			httpServletRequest);
-
-		long plid = 0;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay != null) {
-			plid = themeDisplay.getPlid();
-		}
-
-		LiferayPortletURL liferayPortletURL = _portletURLFactory.create(
-			httpServletRequest, MFAPortletKeys.MFA_VERIFY, plid,
-			PortletRequest.RENDER_PHASE);
-
-		liferayPortletURL.setParameter(
-			"saveLastPath", Boolean.FALSE.toString());
-		liferayPortletURL.setParameter(
-			"mvcRenderCommandName", "/mfa_verify/view");
-		liferayPortletURL.setParameter("redirect", redirectURL);
-		liferayPortletURL.setParameter(
-			"returnToFullPageURL", returnToFullPageURL);
-
-		return liferayPortletURL;
-	}
-
 	private void _postProcessAuthFailure(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -318,13 +276,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		actionResponse.sendRedirect(portletURL.toString());
 	}
 
-	private void _redirectToVerify(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			long userId)
+	private void _redirectToVerify(ActionRequest actionRequest, long userId)
 		throws Exception {
-
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
 
 		Key key = _encryptor.generateKey();
 
@@ -332,36 +285,42 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			key,
 			_jsonFactory.looseSerializeDeep(
 				HashMapBuilder.<String, Object>put(
-					"requestParameters", actionRequest.getParameterMap()
+					"requestParameters",
+					() -> HashMapBuilder.putAll(
+						actionRequest.getParameterMap()
+					).remove(
+						"redirect"
+					).build()
 				).build()));
 
 		HttpServletRequest httpServletRequest =
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(actionRequest));
 
-		LiferayPortletURL liferayPortletURL = _getLiferayPortletURL(
-			httpServletRequest,
-			PortletURLBuilder.createActionURL(
-				liferayPortletResponse
-			).setActionName(
-				"/login/login"
-			).setParameter(
-				"state", encryptedStateMapJSON
-			).buildString(),
-			PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
-			).setRedirect(
-				() -> {
-					String redirect = ParamUtil.getString(
-						actionRequest, "redirect");
+		httpServletRequest = _portal.getOriginalServletRequest(
+			httpServletRequest);
 
-					if (Validator.isNotNull(redirect)) {
-						return redirect;
-					}
+		long plid = 0;
 
-					return null;
-				}
-			).buildString());
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			plid = themeDisplay.getPlid();
+		}
+
+		LiferayPortletURL liferayPortletURL = _portletURLFactory.create(
+			httpServletRequest, MFAPortletKeys.MFA_VERIFY, plid,
+			PortletRequest.RENDER_PHASE);
+
+		liferayPortletURL.setParameter(
+			"saveLastPath", Boolean.FALSE.toString());
+		liferayPortletURL.setParameter(
+			"mvcRenderCommandName", "/mfa_verify/view");
+		liferayPortletURL.setParameter(
+			"redirect", ParamUtil.getString(actionRequest, "redirect"));
+		liferayPortletURL.setParameter("state", encryptedStateMapJSON);
 
 		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 

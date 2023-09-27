@@ -1,6 +1,6 @@
 Bundle-Name: Liferay On-Demand Admin API
 Bundle-SymbolicName: com.liferay.on.demand.admin.api
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.1
 Export-Package:\
 	com.liferay.on.demand.admin.constants,\
 	com.liferay.on.demand.admin.manager,\

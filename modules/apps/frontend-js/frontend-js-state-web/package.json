@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"react": "16.12.0"
+	},
 	"main": "index.js",
 	"name": "@liferay/frontend-js-state-web",
 	"scripts": {
@@ -7,5 +10,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "1.0.17"
+	"version": "1.0.19"
 }

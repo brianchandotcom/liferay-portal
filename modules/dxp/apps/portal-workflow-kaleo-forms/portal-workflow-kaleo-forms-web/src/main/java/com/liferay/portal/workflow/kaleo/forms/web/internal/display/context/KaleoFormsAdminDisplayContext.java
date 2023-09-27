@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.workflow.kaleo.forms.web.internal.display.context;
@@ -17,9 +8,9 @@ package com.liferay.portal.workflow.kaleo.forms.web.internal.display.context;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
-import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
+import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -49,7 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
@@ -66,6 +56,7 @@ import com.liferay.portal.workflow.kaleo.forms.web.internal.util.filter.KaleoDef
 import com.liferay.portal.workflow.kaleo.forms.web.internal.util.filter.KaleoDefinitionVersionScopePredicate;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -84,21 +75,19 @@ public class KaleoFormsAdminDisplayContext {
 
 	public KaleoFormsAdminDisplayContext(
 		DDLRecordLocalService ddlRecordLocalService,
-		DDMDisplayRegistry ddmDisplayRegistry, HtmlParser htmlParser,
+		DDMStorageEngineManager ddmStorageEngineManager, HtmlParser htmlParser,
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
 		KaleoFormsWebConfiguration kaleoFormsWebConfiguration,
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		StorageEngine storageEngine) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_ddlRecordLocalService = ddlRecordLocalService;
-		_ddmDisplayRegistry = ddmDisplayRegistry;
+		_ddmStorageEngineManager = ddmStorageEngineManager;
 		_htmlParser = htmlParser;
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
 		_kaleoFormsWebConfiguration = kaleoFormsWebConfiguration;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_storageEngine = storageEngine;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_kaleoFormsAdminRequestHelper = new KaleoFormsAdminRequestHelper(
@@ -149,14 +138,19 @@ public class KaleoFormsAdminDisplayContext {
 	}
 
 	public DDMDisplay getDDMDisplay() {
-		return _ddmDisplayRegistry.getDDMDisplay(
+		return DDMDisplayRegistryUtil.getDDMDisplay(
 			_kaleoFormsAdminRequestHelper.getPortletId());
 	}
 
 	public DDMFormValues getDDMFormValues(long ddmStorageId)
 		throws StorageException {
 
-		return _storageEngine.getDDMFormValues(ddmStorageId);
+		try {
+			return _ddmStorageEngineManager.getDDMFormValues(ddmStorageId);
+		}
+		catch (PortalException portalException) {
+			throw new StorageException(portalException);
+		}
 	}
 
 	public String getDisplayStyle() {
@@ -623,7 +617,7 @@ public class KaleoFormsAdminDisplayContext {
 	private static final String[] _DISPLAY_VIEWS = {"list"};
 
 	private final DDLRecordLocalService _ddlRecordLocalService;
-	private final DDMDisplayRegistry _ddmDisplayRegistry;
+	private final DDMStorageEngineManager _ddmStorageEngineManager;
 	private final HtmlParser _htmlParser;
 	private final HttpServletRequest _httpServletRequest;
 	private final KaleoDefinitionVersionLocalService
@@ -638,7 +632,6 @@ public class KaleoFormsAdminDisplayContext {
 	private final RenderResponse _renderResponse;
 	private SearchContainer<?> _searchContainer;
 	private Integer _status;
-	private final StorageEngine _storageEngine;
 	private String _tabs1;
 	private Boolean _tabs1Published;
 	private Boolean _tabs1Unpublished;

@@ -26,6 +26,7 @@ dependencies {
 	compileOnly group: "org.springframework", name: "spring-context", version: "5.2.24.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-core", version: "5.2.24.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-tx", version: "5.2.24.RELEASE"
+	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-reflect")

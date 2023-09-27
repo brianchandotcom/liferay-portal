@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -20,7 +11,7 @@
 long classPK = ParamUtil.getLong(request, "classPK");
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
-SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSearch();
+SearchContainer<DDMStructure> structureSearchContainer = ddmDisplayContext.getDDMStructureSearchContainer();
 %>
 
 <liferay-util:include page="/structure_navigation_bar.jsp" servletContext="<%= application %>" />
@@ -41,7 +32,7 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 
 <aui:form action="<%= ddmDisplayContext.getSelectStructureSearchActionURL() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="selectStructureFm">
 	<liferay-ui:search-container
-		searchContainer="<%= structureSearch %>"
+		searchContainer="<%= structureSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
@@ -74,11 +65,11 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 						%>
 
 						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
-							<%= HtmlUtil.escape(structure.getUnambiguousName(structureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
+							<%= HtmlUtil.escape(structure.getUnambiguousName(structureSearchContainer.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
 						</aui:a>
 					</c:when>
 					<c:otherwise>
-						<%= HtmlUtil.escape(structure.getUnambiguousName(structureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
+						<%= HtmlUtil.escape(structure.getUnambiguousName(structureSearchContainer.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-column-text>

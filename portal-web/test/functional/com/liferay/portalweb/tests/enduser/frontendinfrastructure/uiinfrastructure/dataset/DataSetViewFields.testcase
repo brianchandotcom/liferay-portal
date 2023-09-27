@@ -1,7 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true";
+	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-172017=true";
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -255,12 +255,14 @@ definition {
 
 		task ("And choose another client extension option") {
 			Click(
-				dropdownLabel = "Cell Renderer",
+				dropdownLabel = "Renderer",
 				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
 		}
 
 		task ("And clicks on Cancel button") {
-			Button.click(button = "Cancel");
+			Click(
+				key_text = "Cancel",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Then the Edit field modal is closed") {
@@ -443,7 +445,7 @@ definition {
 
 		task ("Then assert the "Default" is present from the column Cell Renderer") {
 			AssertElementPresent(
-				key_tableColumn = "Cell Renderer",
+				key_tableColumn = "Renderer",
 				key_tableRow = "Default",
 				locator1 = "DataSet#FIELDS_TABLE_AND_ROW");
 		}
@@ -519,7 +521,7 @@ definition {
 		}
 
 		task ("Then Confirm all fields are checked ") {
-			DataSetAdmin.assertFieldsChecked(key_fieldList = "name,creator,externalReferenceCode,id,status,createDate,label,modifiedDate,renderer,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
+			DataSetAdmin.assertFieldsChecked(key_fieldList = "creator,dateCreated,dateModified,externalReferenceCode,id,status,label,name,renderer,rendererType,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
 		}
 
 		task ("When Uncheck all the fields.") {
@@ -527,7 +529,7 @@ definition {
 		}
 
 		task ("Then Confirm that all fields are unchecked ") {
-			DataSetAdmin.assertFieldsNotChecked(key_fieldList = "name,creator,externalReferenceCode,id,status,createDate,label,modifiedDate,renderer,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
+			DataSetAdmin.assertFieldsNotChecked(key_fieldList = "creator,dateCreated,dateModified,externalReferenceCode,id,status,label,name,renderer,rendererType,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
 		}
 	}
 
@@ -641,48 +643,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-177576 - Verifiy if is possible to cancel changes when clicks on cancel button"
-	@priority = 4
-	test CanDiscartChangesOnCancelButton {
-		task ("Given the creation of a new dataset") {
-			DataSetAdmin.createDataSet(
-				key_name = "Dataset Test",
-				key_type = "/c/fdsfields");
-		}
-
-		task ("And the user clicks on the 3 dots button of a dataset entry") {
-			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
-		}
-
-		task ("And the user chooses the Rename option") {
-			Click(
-				key_kebabOption = "Rename",
-				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
-		}
-
-		task ("And the user changes the Name field") {
-			Type(
-				locator1 = "TextInput#NAME",
-				value1 = "Dataset Test 2");
-		}
-
-		task ("And clicks on the Cancel button") {
-			Button.clickCancel();
-		}
-
-		task ("Then the Edit Dataset modal is closed") {
-			AssertElementNotPresent(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "Rename Data Set");
-		}
-
-		task ("And the changes are not applied") {
-			AssertElementNotPresent(
-				key_itemName = "Dataset Test 2",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-	}
-
 	@description = "LPS-178736. Confirm that the user can edit Label field on Edit"
 	@priority = 5
 	test CanEditLabelFieldOnEdit {
@@ -778,50 +738,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-177576 - Verify if is not possible to leave the Name field on the Rename modal"
-	@priority = 5
-	test CannotLeaveNameFieldEmpty {
-		task ("Given the creation of a new dataset") {
-			DataSetAdmin.createDataSet(
-				key_name = "Dataset Test",
-				key_type = "/c/fdsfields");
-		}
-
-		task ("And the user clicks on the 3 dots button of a dataset entry") {
-			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
-		}
-
-		task ("And the user chooses the Rename option") {
-			Click(
-				key_kebabOption = "Rename",
-				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
-		}
-
-		task ("And the user leaves the Name field empty") {
-			Type(
-				locator1 = "TextInput#NAME",
-				value1 = "");
-		}
-
-		task ("And clicks on Save button") {
-			Click(
-				key_text = "Save",
-				locator1 = "Button#ANY");
-		}
-
-		task ("Then an error message is displayed") {
-			AssertElementPresent(
-				locator1 = "Message#WARNING_FEEDBACK",
-				value1 = "This field is required.");
-		}
-
-		task ("And the user can't save the changes") {
-			AssertElementPresent(
-				key_itemName = "Dataset Test",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-	}
-
 	@description = "LPS-185501. Confirm that fields are not updated if proccess is canceled on cancel button."
 	@priority = 4
 	test CannotUpdateFieldsIfCancelOnCancelButton {
@@ -896,52 +812,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-177576 - Verifiy if is possible to save changes when clicks on save button"
-	@priority = 5
-	test CanRenameDataSet {
-		task ("Given the creation of a new dataset") {
-			DataSetAdmin.createDataSet(
-				key_name = "Dataset Test",
-				key_type = "/c/fdsfields");
-		}
-
-		task ("And the user clicks on the 3 dots button of a dataset entry") {
-			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
-		}
-
-		task ("And the user chooses the Rename option") {
-			Click(
-				key_kebabOption = "Rename",
-				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
-		}
-
-		task ("And the user changes the Name field") {
-			Type(
-				locator1 = "TextInput#NAME",
-				value1 = "Dataset Test 2");
-		}
-
-		task ("And clicks on Save button") {
-			Button.clickSave();
-		}
-
-		task ("Then the Edit Dataset modal is closed") {
-			AssertElementNotPresent(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "Rename Data Set");
-		}
-
-		task ("And a successful message is displayed") {
-			Alert.viewSuccessMessage();
-		}
-
-		task ("And the changes are applied") {
-			AssertElementPresent(
-				key_itemName = "Dataset Test 2",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-	}
-
 	@description = "LPS-176051. Confirm that the user can save changes when clicks on Save button"
 	@priority = 5
 	test CanSaveChangesOnSaveButton {
@@ -959,7 +829,7 @@ definition {
 
 		task ("And choose another client extension option") {
 			Click(
-				dropdownLabel = "Cell Renderer",
+				dropdownLabel = "Renderer",
 				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
 
 			MenuItem.click(menuItem = "Date and Time");
@@ -1076,12 +946,12 @@ definition {
 
 		task ("When the user clicks on Cell Renderer field") {
 			Click(
-				dropdownLabel = "Cell Renderer",
+				dropdownLabel = "Renderer",
 				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
 		}
 
 		task ("Then a dropdown is displayed") {
-			AssertVisible(locator1 = "ObjectCustomViews#VIEW_DROPDOWN_MENU_ON_MODAL_DEFAULT_SORT");
+			AssertVisible(locator1 = "WorkflowAllItems#TRANSITION_DROPDOWN_KEBAB");
 		}
 
 		task ("And the options present in the dropdown can be selected") {
@@ -1160,52 +1030,6 @@ definition {
 
 		task ("Then the Edit option appears") {
 			MenuItem.viewVisible(menuItem = "Edit");
-		}
-	}
-
-	@description = "LPS-177576 - Verify if is possible choose the Rename option on dropdown menu and view the Rename modal"
-	@priority = 5
-	test CanViewRenameDataSetModal {
-		task ("Given the creation of a new dataset") {
-			DataSetAdmin.createDataSet(
-				key_name = "Dataset Test",
-				key_type = "/c/fdsfields");
-		}
-
-		task ("And the user clicks on the 3 dots button of a dataset entry") {
-			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
-		}
-
-		task ("When the user chooses the Rename option") {
-			Click(
-				key_kebabOption = "Rename",
-				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
-		}
-
-		task ("Then the Edit Dataset modal is displayed") {
-			AssertElementPresent(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "Rename Data Set");
-		}
-	}
-
-	@description = "LPS-177576 - Verify if is possible to see the Rename option on dropdown menu"
-	@priority = 5
-	test CanViewRenameMenuOption {
-		task ("Given the creation of a new dataset") {
-			DataSetAdmin.createDataSet(
-				key_name = "Dataset Test",
-				key_type = "/c/fdsfields");
-		}
-
-		task ("When the user clicks on the 3 dots button of a dataset entry") {
-			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
-		}
-
-		task ("Then the option Rename is present in the 3 dots menu") {
-			AssertElementPresent(
-				key_kebabOption = "Rename",
-				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 		}
 	}
 

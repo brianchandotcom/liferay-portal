@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.dao.orm;
@@ -244,7 +235,7 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	protected long doPerformActions(long previousPrimaryKey)
 		throws PortalException {
 
-		final DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_modelClass, _classLoader);
 
 		if (_addOrderCriteriaMethod == null) {
@@ -265,58 +256,51 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 
 		addOrderCriteria(dynamicQuery);
 
-		Callable<Long> callable = new Callable<Long>() {
+		Callable<Long> callable = () -> {
+			List<Object> objects = (List<Object>)executeDynamicQuery(
+				_dynamicQueryMethod, dynamicQuery);
 
-			@Override
-			public Long call() throws Exception {
-				List<Object> objects = (List<Object>)executeDynamicQuery(
-					_dynamicQueryMethod, dynamicQuery);
+			_offset += objects.size();
 
-				_offset += objects.size();
-
-				if (objects.isEmpty()) {
-					return -1L;
-				}
-
-				if (_parallel) {
-					List<Future<Void>> futures = new ArrayList<>(
-						objects.size());
-
-					for (final Object object : objects) {
-						futures.add(
-							_executorService.submit(
-								new Callable<Void>() {
-
-									@Override
-									public Void call() throws PortalException {
-										performAction(object);
-
-										return null;
-									}
-
-								}));
-					}
-
-					for (Future<Void> future : futures) {
-						future.get();
-					}
-				}
-				else {
-					for (Object object : objects) {
-						performAction(object);
-					}
-				}
-
-				if (objects.size() < _interval) {
-					return -1L;
-				}
-
-				BaseModel<?> baseModel = (BaseModel<?>)objects.get(
-					objects.size() - 1);
-
-				return (Long)baseModel.getPrimaryKeyObj();
+			if (objects.isEmpty()) {
+				return -1L;
 			}
 
+			ExecutorService executorService =
+				_portalExecutorManager.getPortalExecutor(
+					DefaultActionableDynamicQuery.class.getName());
+
+			if (_parallel && (executorService != null)) {
+				List<Future<Void>> futures = new ArrayList<>(objects.size());
+
+				for (final Object object : objects) {
+					futures.add(
+						executorService.submit(
+							() -> {
+								performAction(object);
+
+								return null;
+							}));
+				}
+
+				for (Future<Void> future : futures) {
+					future.get();
+				}
+			}
+			else {
+				for (Object object : objects) {
+					performAction(object);
+				}
+			}
+
+			if (objects.size() < _interval) {
+				return -1L;
+			}
+
+			BaseModel<?> baseModel = (BaseModel<?>)objects.get(
+				objects.size() - 1);
+
+			return (Long)baseModel.getPrimaryKeyObj();
 		};
 
 		TransactionConfig transactionConfig = getTransactionConfig();
@@ -398,7 +382,7 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	private static volatile PortalExecutorManager _portalExecutorManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortalExecutorManager.class, DefaultActionableDynamicQuery.class,
-			"_portalExecutorManager", true);
+			"_portalExecutorManager", false);
 
 	private AddCriteriaMethod _addCriteriaMethod;
 	private AddOrderCriteriaMethod _addOrderCriteriaMethod;
@@ -407,9 +391,6 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	private long _companyId;
 	private Method _dynamicQueryCountMethod;
 	private Method _dynamicQueryMethod;
-	private final ExecutorService _executorService =
-		_portalExecutorManager.getPortalExecutor(
-			DefaultActionableDynamicQuery.class.getName());
 	private long _groupId;
 	private String _groupIdPropertyName = "groupId";
 	private int _interval = Indexer.DEFAULT_INTERVAL;

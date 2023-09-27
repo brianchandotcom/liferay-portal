@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
@@ -31,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -52,6 +44,7 @@ import java.net.URL;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -138,23 +131,37 @@ public class AddFragmentCompositionMVCActionCommand
 		}
 
 		return JSONUtil.put(
-			"fragmentCollectionId",
-			String.valueOf(fragmentCollection.getFragmentCollectionId())
+			"fragmentComposition",
+			JSONUtil.put(
+				"fragmentCollectionId",
+				String.valueOf(fragmentCollection.getFragmentCollectionId())
+			).put(
+				"fragmentCollectionName", fragmentCollection.getName()
+			).put(
+				"fragmentEntryKey",
+				fragmentComposition.getFragmentCompositionKey()
+			).put(
+				"groupId", fragmentComposition.getGroupId()
+			).put(
+				"icon", "edit-layout"
+			).put(
+				"imagePreviewURL",
+				fragmentComposition.getImagePreviewURL(themeDisplay)
+			).put(
+				"name", fragmentComposition.getName()
+			).put(
+				"type", ContentPageEditorConstants.TYPE_COMPOSITION
+			)
 		).put(
-			"fragmentCollectionName", fragmentCollection.getName()
-		).put(
-			"fragmentEntryKey", fragmentComposition.getFragmentCompositionKey()
-		).put(
-			"groupId", fragmentComposition.getGroupId()
-		).put(
-			"icon", "edit-layout"
-		).put(
-			"imagePreviewURL",
-			fragmentComposition.getImagePreviewURL(themeDisplay)
-		).put(
-			"name", fragmentComposition.getName()
-		).put(
-			"type", ContentPageEditorConstants.TYPE_COMPOSITION
+			"url",
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					_portal.getHttpServletRequest(actionRequest),
+					themeDisplay.getScopeGroup(), FragmentPortletKeys.FRAGMENT,
+					0, 0, PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"fragmentCollectionId", fragmentCollectionId
+			).buildString()
 		);
 	}
 

@@ -37,9 +37,10 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 3
 	test StagingDemoLocalLive1 {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -109,6 +110,10 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
@@ -147,9 +152,10 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@priority = 4
+	@priority = 3
 	test StagingDemoLocalLive2 {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONStaging.enableLocalStaging(
 			branchingPrivate = "true",
@@ -214,9 +220,10 @@ definition {
 		PagesAdmin.viewSelectedLayoutColumn(columnName = "1 Column");
 	}
 
-	@priority = 4
+	@priority = 3
 	test StagingDemoLocalLive3 {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -386,9 +393,10 @@ definition {
 		PagesAdmin.viewPageItemPresent(pageName = "Test Page Name");
 	}
 
-	@priority = 5
+	@priority = 3
 	test StagingDemoLocalLive4 {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(
@@ -472,9 +480,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-82564."
-	@priority = 4
+	@priority = 3
 	test StagingLocalLiveWebContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -590,9 +599,10 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	@priority = 4
+	@priority = 3
 	test StagingLocalLiveWorkflow {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONStaging.enableLocalStaging(
 			branchingPrivate = "true",
@@ -847,9 +857,10 @@ definition {
 			workflowTask = "Review");
 	}
 
-	@priority = 5
+	@priority = 3
 	test StagingPublishPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(
@@ -923,6 +934,7 @@ definition {
 	@priority = 3
 	test UpdateAndDeleteWebContentCommentOnLiveSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 

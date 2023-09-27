@@ -1,0 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+
+
+/**
+ * @author Michael Cavalcanti
+ */
+public class UpgradeJavaCookieKeysCheck {
+
+	public String getCookie(String cookieName) {
+		if (cookieName.equals(CookiesConstants.NAME_ID) ||
+			cookieName.equals(CookiesConstants.NAME_USER_UUID)) {
+
+			return CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST, httpServletRequest);
+		}
+
+		return null;
+	}
+
+}

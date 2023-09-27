@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.order.engine.test;
@@ -207,7 +198,7 @@ public class CommerceOrderEngineTest {
 			null, _commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			commerceOrderItem.getQuantity(), true, _serviceContext);
+			commerceOrderItem.getQuantity(), null, true, _serviceContext);
 
 		_commerceShipment1 = _commerceShipmentLocalService.updateStatus(
 			_commerceShipment1.getCommerceShipmentId(),
@@ -282,11 +273,14 @@ public class CommerceOrderEngineTest {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			commerceInventoryWarehouses.get(0);
 
+		BigDecimal quantity = commerceOrderItem.getQuantity();
+
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, _commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			commerceOrderItem.getQuantity() / 2, true, _serviceContext);
+			quantity.divide(BigDecimal.valueOf(2)), null, true,
+			_serviceContext);
 
 		_commerceShipment1 = _commerceShipmentLocalService.updateStatus(
 			_commerceShipment1.getCommerceShipmentId(),
@@ -351,7 +345,7 @@ public class CommerceOrderEngineTest {
 			null, _commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			commerceOrderItem.getQuantity(), true, _serviceContext);
+			commerceOrderItem.getQuantity(), null, true, _serviceContext);
 
 		_commerceShipment1 = _commerceShipmentLocalService.updateStatus(
 			_commerceShipment1.getCommerceShipmentId(),
@@ -799,11 +793,14 @@ public class CommerceOrderEngineTest {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			commerceInventoryWarehouses.get(0);
 
+		BigDecimal quantity = commerceOrderItem.getQuantity();
+
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, _commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			commerceOrderItem.getQuantity() / 2, true, _serviceContext);
+			quantity.divide(BigDecimal.valueOf(2)), null, true,
+			_serviceContext);
 
 		_commerceShipment1 = _commerceShipmentLocalService.updateStatus(
 			_commerceShipment1.getCommerceShipmentId(),
@@ -816,15 +813,12 @@ public class CommerceOrderEngineTest {
 			CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED,
 			_commerceOrder.getOrderStatus());
 
-		int remainingQuantity =
-			commerceOrderItem.getQuantity() -
-				commerceOrderItem.getShippedQuantity();
-
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, _commerceShipment2.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			remainingQuantity, true, _serviceContext);
+			quantity.subtract(commerceOrderItem.getShippedQuantity()), null,
+			true, _serviceContext);
 
 		_commerceShipment2 = _commerceShipmentLocalService.updateStatus(
 			_commerceShipment2.getCommerceShipmentId(),
@@ -911,11 +905,14 @@ public class CommerceOrderEngineTest {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			commerceInventoryWarehouses.get(0);
 
+		BigDecimal quantity = commerceOrderItem.getQuantity();
+
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, _commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			commerceOrderItem.getQuantity() / 2, true, _serviceContext);
+			quantity.divide(BigDecimal.valueOf(2)), null, true,
+			_serviceContext);
 
 		_commerceShipment1 = _commerceShipmentLocalService.updateStatus(
 			_commerceShipment1.getCommerceShipmentId(),
@@ -928,15 +925,12 @@ public class CommerceOrderEngineTest {
 			CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED,
 			_commerceOrder.getOrderStatus());
 
-		int remainingQuantity =
-			commerceOrderItem.getQuantity() -
-				commerceOrderItem.getShippedQuantity();
-
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, _commerceShipment2.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			remainingQuantity, true, _serviceContext);
+			quantity.subtract(commerceOrderItem.getShippedQuantity()), null,
+			true, _serviceContext);
 
 		_commerceShipment2 = _commerceShipmentLocalService.updateStatus(
 			_commerceShipment2.getCommerceShipmentId(),

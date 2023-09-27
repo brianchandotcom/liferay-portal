@@ -519,7 +519,7 @@ definition {
 	}
 
 	macro viewAssetsTranslatedVersion {
-		Panel.expandPanel(panel = "Details");
+		Panel.expandPanel(panel = "Properties");
 
 		ClickNoError(
 			key_language = ${language},

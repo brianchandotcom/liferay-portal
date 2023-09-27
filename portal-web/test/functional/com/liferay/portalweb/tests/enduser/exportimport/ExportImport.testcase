@@ -33,6 +33,7 @@ definition {
 	@priority = 3
 	test AssertStagingSystemSettingsInfo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When: User open the Web Content configuration in System settings") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -68,9 +69,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-83011. Verify if a user can configure asset links when export."
-	@priority = 4
+	@priority = 3
 	test AssetLinksCanBeConfiguredWhenExport {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a new site with 2 WC") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -109,13 +111,13 @@ definition {
 
 			AntCommands.runCommand("build-test.xml", "unzip-temp-file -DfileName=${larFileName1}");
 
-			var folderExisted1 = LAR.isExistedFolder(folderName = "com.liferay.asset.kernel.model.adapter.StagedAssetLink");
+			var folderExisted1 = LAR.isExistedFolder(folderName = "com.liferay.asset.link.model.adapter.StagedAssetLink");
 
 			if (${folderExisted1} == "false") {
-				echo("The download temp file doesn't contain the com.liferay.asset.kernel.model.adapter.StagedAssetLink folder.");
+				echo("The download temp file doesn't contain the com.liferay.asset.link.model.adapter.StagedAssetLink folder.");
 			}
 			else {
-				fail("The download temp file contains the com.liferay.asset.kernel.model.adapter.StagedAssetLink folder.");
+				fail("The download temp file contains the com.liferay.asset.link.model.adapter.StagedAssetLink folder.");
 			}
 		}
 
@@ -143,13 +145,13 @@ definition {
 
 			AntCommands.runCommand("build-test.xml", "unzip-temp-file -DfileName=${larFileName2}");
 
-			var folderExisted2 = LAR.isExistedFolder(folderName = "com.liferay.asset.kernel.model.adapter.StagedAssetLink");
+			var folderExisted2 = LAR.isExistedFolder(folderName = "com.liferay.asset.link.model.adapter.StagedAssetLink");
 
 			if (${folderExisted2} == "true") {
-				echo("The download temp file contain the com.liferay.asset.kernel.model.adapter.StagedAssetLink folder.");
+				echo("The download temp file contain the com.liferay.asset.link.model.adapter.StagedAssetLink folder.");
 			}
 			else {
-				fail("The download temp file doesn't contain the com.liferay.asset.kernel.model.adapter.StagedAssetLink folder.");
+				fail("The download temp file doesn't contain the com.liferay.asset.link.model.adapter.StagedAssetLink folder.");
 			}
 		}
 	}
@@ -182,7 +184,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-125446. Verify if display style remains even after navigation."
-	@priority = 4
+	@priority = 3
 	test DisplayStyleCanRemainAfterNavigation {
 		task ("Given: User make a successful export") {
 			ProductMenu.gotoPortlet(
@@ -265,6 +267,7 @@ definition {
 	@priority = 4
 	test EditExportTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a new Blog entry and web content") {
 			JSONBlog.addEntry(
@@ -374,7 +377,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-82752. Verify is possible export content and then publish."
-	@priority = 5
+	@priority = 4
 	test ExportContentThenPublish {
 		property portal.acceptance = "true";
 
@@ -410,6 +413,7 @@ definition {
 	test ExportImportGlobalDDMStructureViaInstances {
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site, a page to it then export the Site including WC's but excluding DM's") {
 			LAR.openExportAdmin(siteScopeName = "Global");
@@ -470,6 +474,7 @@ definition {
 	test ExportImportGlobalPagesViaInstances {
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User configure the export on Global Site to include Pages but exclude DM's and WC's then export it") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
@@ -533,6 +538,7 @@ definition {
 	@priority = 3
 	test ExportImportJournalArticleWithLinkToPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Web Content Administration";
 
 		task ("Given: User adds a new site and 3 page to it") {
@@ -674,6 +680,7 @@ definition {
 	@priority = 3
 	test ExportImportLayoutCircularReference {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Page Administration,Web Content Administration";
 
 		task ("Given: User adds a new site and a page to it") {
@@ -808,9 +815,10 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-77950. Verify is possible export/import pages linked circular reference."
-	@priority = 4
+	@priority = 3
 	test ExportImportPagesLinkCircular {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User creates site pages that link to each other/circular references") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -966,7 +974,7 @@ definition {
 	}
 
 	@description = "Verify is possible export/import a Private Page."
-	@priority = 5
+	@priority = 3
 	test ExportImportPrivatePage {
 		property portal.acceptance = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -1211,6 +1219,7 @@ definition {
 	@priority = 3
 	test ExportImportSiteWithNestedUploadField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site and a file to it") {
 			HeadlessSite.addSite(siteName = "Site A");
@@ -1319,10 +1328,13 @@ definition {
 	}
 
 	@description = "Verify is possible export/import a Smoke template."
-	@priority = 5
+	@priority = 4
 	test ExportImportSmoke {
+		property app.server.types = "jboss,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		task ("Given: User exports default site") {
@@ -1356,7 +1368,7 @@ definition {
 	}
 
 	@description = "Verify is possible export/import theme settings."
-	@priority = 4
+	@priority = 3
 	test ExportImportThemeSettings {
 		task ("Given: User adds a new site with a page") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -1438,10 +1450,11 @@ definition {
 	}
 
 	@description = "Verify is possible export/import validation."
-	@priority = 5
+	@priority = 3
 	test ExportImportValidation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		task ("Given: User adds a new file and a blog entry") {
@@ -1502,6 +1515,7 @@ definition {
 	@priority = 3
 	test ExportImportWebContentCircularReference {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -1608,9 +1622,10 @@ definition {
 	}
 
 	@description = "Verify is possible export/import with an export template."
-	@priority = 4
+	@priority = 3
 	test ExportImportWithExportTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new export template") {
 			LAR.openExportAdmin(siteScopeName = "Guest");
@@ -1654,10 +1669,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-88498. Verify if a Guest is able to export files."
-	@priority = 5
+	@priority = 3
 	test ExportViaGuest {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add a new user") {
 			JSONUser.addUser(
@@ -1768,6 +1784,7 @@ definition {
 	@priority = 3
 	test ImportStagedSiteWithCircularReference {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site with 2 pages then activates local staging") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -1933,9 +1950,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-94738. Verify is possible import a WCD after activate staging."
-	@priority = 4
+	@priority = 3
 	test ImportWCDReferenceAfterActivateStaging {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site with a page then a WCD widget to it") {
 			HeadlessSite.addSite(siteName = "Site Name A");
@@ -2012,6 +2030,7 @@ definition {
 	@priority = 3
 	test PublishWebContentWithBrokenLink {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User disable the validation of file entries and layout references") {
 			ApplicationsMenu.gotoPortlet(

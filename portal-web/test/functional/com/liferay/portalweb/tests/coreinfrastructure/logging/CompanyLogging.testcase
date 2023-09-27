@@ -30,6 +30,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var portalInstanceName : list "www.able.com,www.baker.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -50,6 +51,7 @@ definition {
 	test CannotViewDeletedCompanyLog {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a log exists for a company") {
 			CompanyLogging.openServerLogsAdmin();
@@ -128,6 +130,7 @@ definition {
 	test GetAllCompanyLogs {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given two new virtual instances are created") {
 			for (var portalInstanceName : list "www.able.com,www.baker.com") {
@@ -171,6 +174,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a new instance is created") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -232,6 +236,7 @@ definition {
 	test GetCompanyAdminLogsFromDifferentCompany {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a new instance is created") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -292,7 +297,7 @@ definition {
 	@description = "A non-administrative user should get a permissions denied error when trying to access company logging information"
 	@priority = 4
 	test GetCompanyLogsAsGuest {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property test.assert.warning.exceptions = "true";
 
 		task ("Given a non-administrative company user") {
@@ -317,9 +322,11 @@ definition {
 		}
 
 		task ("When the user navigates to the company logs portlet") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+			User.logoutPG();
+
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
 
 			CompanyLogging.openServerLogsAdmin();
 		}

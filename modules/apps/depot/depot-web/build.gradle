@@ -36,6 +36,7 @@ dependencies {
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:site:site-item-selector-api")
 	compileOnly project(":apps:site:site-memberships-api")
+	compileOnly project(":apps:site:site-taglib")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:staging:staging-taglib")
 	compileOnly project(":apps:static:osgi:osgi-util")

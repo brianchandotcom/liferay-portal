@@ -1,22 +1,18 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -28,38 +24,56 @@ public class TeamPermissionUtil {
 			PermissionChecker permissionChecker, long teamId, String actionId)
 		throws PortalException {
 
-		_teamPermission.check(permissionChecker, teamId, actionId);
+		if (!contains(permissionChecker, teamId, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Team.class.getName(), teamId, actionId);
+		}
 	}
 
 	public static void check(
 			PermissionChecker permissionChecker, Team team, String actionId)
 		throws PortalException {
 
-		_teamPermission.check(permissionChecker, team, actionId);
+		if (!contains(permissionChecker, team, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Team.class.getName(), team.getTeamId(),
+				actionId);
+		}
 	}
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long teamId, String actionId)
 		throws PortalException {
 
-		return _teamPermission.contains(permissionChecker, teamId, actionId);
+		return contains(
+			permissionChecker, TeamLocalServiceUtil.getTeam(teamId), actionId);
 	}
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, Team team, String actionId)
 		throws PortalException {
 
-		return _teamPermission.contains(permissionChecker, team, actionId);
-	}
+		Boolean hasPermission = StagingPermissionUtil.hasPermission(
+			permissionChecker, team.getGroupId(), Team.class.getName(),
+			team.getTeamId(), StringPool.BLANK, actionId);
 
-	public static TeamPermission getTeamPermission() {
-		return _teamPermission;
-	}
+		if (hasPermission != null) {
+			return hasPermission.booleanValue();
+		}
 
-	public void setTeamPermission(TeamPermission teamPermission) {
-		_teamPermission = teamPermission;
-	}
+		if (GroupPermissionUtil.contains(
+				permissionChecker, team.getGroupId(),
+				ActionKeys.MANAGE_TEAMS) ||
+			permissionChecker.hasOwnerPermission(
+				team.getCompanyId(), Team.class.getName(), team.getTeamId(),
+				team.getUserId(), actionId)) {
 
-	private static TeamPermission _teamPermission;
+			return true;
+		}
+
+		return permissionChecker.hasPermission(
+			team.getGroupId(), Team.class.getName(), team.getTeamId(),
+			actionId);
+	}
 
 }

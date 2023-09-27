@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.dao.db;
@@ -192,19 +183,33 @@ public class MySQLDB extends BaseDB {
 				else if (line.startsWith(ALTER_COLUMN_NAME)) {
 					String[] template = buildColumnNameTokens(line);
 
-					line = StringUtil.replace(
-						"alter table @table@ change column @old-column@ " +
-							"@new-column@ @type@;",
-						REWORD_TEMPLATE, template);
+					String defaultValue = template[template.length - 2];
+
+					if (!Validator.isBlank(defaultValue)) {
+						line = StringUtil.replace(
+							"alter table @table@ change column @old-column@ " +
+								"@new-column@ @type@ default @default@ " +
+									"@nullable@;",
+							REWORD_TEMPLATE, template);
+					}
+					else {
+						line = StringUtil.replace(
+							"alter table @table@ change column @old-column@ " +
+								"@new-column@ @type@ @nullable@;",
+							REWORD_TEMPLATE, template);
+
+						line = StringUtil.replace(line, " ;", ";");
+					}
 				}
 				else if (line.startsWith(ALTER_COLUMN_TYPE)) {
 					String[] template = buildColumnTypeTokens(line);
 
-					String nullable = template[template.length - 1];
+					String defaultValue = template[template.length - 2];
 
-					if (Validator.isBlank(nullable)) {
+					if (!Validator.isBlank(defaultValue)) {
 						line = StringUtil.replace(
-							"alter table @table@ modify @old-column@ @type@;",
+							"alter table @table@ modify @old-column@ @type@ " +
+								"default @default@ @nullable@;",
 							REWORD_TEMPLATE, template);
 					}
 					else {
@@ -212,6 +217,8 @@ public class MySQLDB extends BaseDB {
 							"alter table @table@ modify @old-column@ @type@ " +
 								"@nullable@;",
 							REWORD_TEMPLATE, template);
+
+						line = StringUtil.replace(line, " ;", ";");
 					}
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
@@ -242,12 +249,13 @@ public class MySQLDB extends BaseDB {
 
 	private static final String[] _MYSQL = {
 		"##", "1", "0", "'1970-01-01'", "now()", " longblob", " longblob",
-		" tinyint", " datetime(6)", " double", " integer", " bigint",
-		" longtext", " longtext", " varchar", "  auto_increment", "commit"
+		" decimal(30, 16)", " tinyint", " datetime(6)", " double", " integer",
+		" bigint", " longtext", " longtext", " varchar", "  auto_increment",
+		"commit"
 	};
 
 	private static final int[] _SQL_TYPES = {
-		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.TINYINT,
+		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.DECIMAL, Types.TINYINT,
 		Types.TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.BIGINT,
 		Types.LONGVARCHAR, Types.LONGVARCHAR, Types.VARCHAR
 	};

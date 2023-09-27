@@ -14,6 +14,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-search:portal-search-api")
 	compileOnly project(":apps:portal-search:portal-search-web-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
@@ -27,6 +28,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:portal-search-similar-results:portal-search-similar-results-web-spi")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 }

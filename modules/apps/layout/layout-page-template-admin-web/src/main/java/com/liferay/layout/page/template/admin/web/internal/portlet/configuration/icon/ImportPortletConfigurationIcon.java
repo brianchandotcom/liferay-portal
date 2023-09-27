@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.configuration.icon;
@@ -17,19 +8,20 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.configuratio
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
-
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
@@ -47,17 +39,8 @@ public class ImportPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
 
 	@Override
-	public Map<String, Object> getContext(PortletRequest portletRequest) {
-		return HashMapBuilder.<String, Object>put(
-			"action", getNamespace(portletRequest) + "import"
-		).put(
-			"globalAction", true
-		).build();
-	}
-
-	@Override
 	public String getIconCssClass() {
-		return "download";
+		return "import";
 	}
 
 	@Override
@@ -68,6 +51,37 @@ public class ImportPortletConfigurationIcon
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(getLocale(portletRequest), "import");
+	}
+
+	@Override
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest,
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/layout_page_template_admin/view_import"
+		).setBackURL(
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest,
+					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+					PortletRequest.RENDER_PHASE)
+			).setTabs1(
+				ParamUtil.getString(portletRequest, "tabs1")
+			).setParameter(
+				"layoutPageTemplateCollectionId",
+				ParamUtil.getString(
+					portletRequest, "layoutPageTemplateCollectionId")
+			).buildString()
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			ParamUtil.getString(
+				portletRequest, "layoutPageTemplateCollectionId")
+		).buildString();
 	}
 
 	@Override
@@ -96,6 +110,9 @@ public class ImportPortletConfigurationIcon
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Language _language;

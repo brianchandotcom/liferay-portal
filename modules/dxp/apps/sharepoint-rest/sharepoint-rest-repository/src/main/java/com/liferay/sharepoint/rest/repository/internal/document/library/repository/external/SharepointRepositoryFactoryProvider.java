@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.sharepoint.rest.repository.internal.document.library.repository.external;
@@ -28,7 +19,6 @@ import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
-import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointSearchConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,11 +30,10 @@ import org.osgi.service.component.annotations.Reference;
 public class SharepointRepositoryFactoryProvider {
 
 	public SharepointRepositoryFactory createForConfiguration(
-		SharepointRepositoryConfiguration sharepointRepositoryConfiguration,
-		SharepointSearchConfiguration sharepointSearchConfiguration) {
+		SharepointRepositoryConfiguration sharepointRepositoryConfiguration) {
 
 		return new SharepointRepositoryFactory(
-			sharepointRepositoryConfiguration, sharepointSearchConfiguration);
+			sharepointRepositoryConfiguration);
 	}
 
 	@Reference
@@ -74,12 +63,11 @@ public class SharepointRepositoryFactoryProvider {
 	private class SharepointRepositoryFactory implements RepositoryFactory {
 
 		public SharepointRepositoryFactory(
-			SharepointRepositoryConfiguration sharepointRepositoryConfiguration,
-			SharepointSearchConfiguration sharepointSearchConfiguration) {
+			SharepointRepositoryConfiguration
+				sharepointRepositoryConfiguration) {
 
 			_sharepointRepositoryConfiguration =
 				sharepointRepositoryConfiguration;
-			_sharepointSearchConfiguration = sharepointSearchConfiguration;
 		}
 
 		@Override
@@ -105,8 +93,7 @@ public class SharepointRepositoryFactoryProvider {
 				new SharepointExtRepositoryAdapter(
 					new SharepointCachingExtRepository(
 						new SharepointExtRepository(
-							_tokenStore, _sharepointRepositoryConfiguration,
-							_sharepointSearchConfiguration)));
+							_tokenStore, _sharepointRepositoryConfiguration)));
 
 			sharepointExtRepositoryAdapter.setAssetEntryLocalService(
 				_assetEntryLocalService);
@@ -140,8 +127,6 @@ public class SharepointRepositoryFactoryProvider {
 
 		private final SharepointRepositoryConfiguration
 			_sharepointRepositoryConfiguration;
-		private final SharepointSearchConfiguration
-			_sharepointSearchConfiguration;
 
 	}
 

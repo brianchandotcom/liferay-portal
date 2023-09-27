@@ -40,12 +40,12 @@ definition {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DigitalSignature.createEnvelope(
-			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			emailMessage = "Email Message",
-			emailSubject = "Email Subject",
-			envelopeName = "Test",
-			recipientEmail = "test@liferay.com",
-			recipientFullName = "Recipient Full Name");
+			addEmail = "test@liferay.com",
+			addFullName = "Recipient Full Name",
+			addMessage = "Email Message",
+			addName = "Test",
+			addSubject = "Email Subject",
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf");
 
 		Button.click(button = "Send");
 
@@ -106,12 +106,12 @@ definition {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DigitalSignature.createEnvelope(
-			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			emailMessage = "Email Message",
-			emailSubject = "Email Subject",
-			envelopeName = "Poshi Test CanViewCorrectDate",
-			recipientEmail = "test@liferay.com",
-			recipientFullName = "Recipient Full Name");
+			addEmail = "test@liferay.com",
+			addFullName = "Recipient Full Name",
+			addMessage = "Email Message",
+			addName = "Poshi Test CanViewCorrectDate",
+			addSubject = "Email Subject",
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf");
 
 		Button.click(button = "Send");
 
@@ -178,12 +178,12 @@ definition {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DigitalSignature.createEnvelope(
-			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			emailMessage = "Email Message",
-			emailSubject = "Email Subject",
-			envelopeName = "Poshi Test HaveMoreRecipientsThanOne",
-			recipientEmail = "test@liferay.com",
-			recipientFullName = "Recipient Full Name");
+			addEmail = "test@liferay.com",
+			addFullName = "Recipient Full Name",
+			addMessage = "Email Message",
+			addName = "Poshi Test HaveMoreRecipientsThanOne",
+			addSubject = "Email Subject",
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf");
 
 		Click(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ADD_RECIPIENT");
 
@@ -198,6 +198,8 @@ definition {
 		Button.click(button = "Send");
 
 		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
+
+		Refresh();
 
 		WaitForElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
 

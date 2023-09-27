@@ -1,27 +1,100 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const getInitialOption = (productOptionValues) => {
-	const selectedOption = productOptionValues.find(
-		(option) => option.selected === true
-	);
+import {isObject} from 'frontend-js-web/index';
 
-	if (selectedOption) {
-		return selectedOption;
+const getInitialProductOptionValue = (productOption) => {
+	if (!productOption.productOptionValues) {
+		return;
 	}
 
-	return productOptionValues.find((option) => option.defaultValue === true);
+	const selectedProductOptionValue = productOption.productOptionValues.find(
+		(productOptionValue) => productOptionValue.preselected === true
+	);
+
+	if (selectedProductOptionValue) {
+		return selectedProductOptionValue;
+	}
+
+	if (!productOption.skuContributor) {
+		return;
+	}
+
+	return productOption.productOptionValues[0];
 };
 
-export {getInitialOption};
+const getName = (
+	key,
+	name,
+	selectedProductOptionValueKey,
+	skuId,
+	relativePriceFormatted
+) => {
+	if (isObject(name)) {
+		name = name[Liferay.ThemeDisplay.getLanguageId()];
+
+		if (!name) {
+			name = name[Liferay.ThemeDisplay.getDefaultLanguageId()];
+		}
+	}
+
+	if (
+		selectedProductOptionValueKey === key ||
+		!skuId ||
+		!relativePriceFormatted
+	) {
+		return name;
+	}
+
+	return name + relativePriceFormatted;
+};
+
+const getProductOptionName = (name) => {
+	if (isObject(name)) {
+		name = name[Liferay.ThemeDisplay.getLanguageId()];
+
+		if (!name) {
+			name = name[Liferay.ThemeDisplay.getDefaultLanguageId()];
+		}
+	}
+
+	return name;
+};
+
+const getSkuOptionsErrors = (hasErrors, productOption, skuOptionsAtomState) =>
+	hasErrors
+		? [
+				...skuOptionsAtomState.errors,
+				{
+					hasErrors: true,
+					id: productOption.id,
+				},
+		  ]
+		: skuOptionsAtomState.errors.filter(
+				(error) => error.id !== productOption.id
+		  );
+
+const initialSkuOptionsAtomState = {
+	errors: [],
+	namespace: '',
+	skuOptions: [],
+	updating: false,
+};
+
+const isRequired = (forceRequired, isAdmin, productOption) =>
+	isAdmin
+		? forceRequired
+		: forceRequired ||
+		  productOption.required ||
+		  productOption.skuContributor;
+
+export {
+	getInitialProductOptionValue,
+	getName,
+	getProductOptionName,
+	getSkuOptionsErrors,
+	initialSkuOptionsAtomState,
+	isRequired,
+};

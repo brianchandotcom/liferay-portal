@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
@@ -17,11 +8,11 @@ import {
 	API,
 	Card,
 	Input,
-	InputLocalized,
 	SidePanelForm,
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import React, {useEffect} from 'react';
 
 import {useListTypeForm} from './ListTypeFormBase';
@@ -32,9 +23,9 @@ export default function EditListTypeDefinition({
 	listTypeDefinitionId,
 	readOnly,
 }: IProps) {
-	const onSubmit = async (values: PickList) => {
+	const onSubmit = async (values: ListTypeDefinition) => {
 		try {
-			await API.updatePickList({
+			await API.putListTypeDefinition({
 				externalReferenceCode: values.externalReferenceCode,
 				id: parseInt(listTypeDefinitionId, 10),
 				listTypeEntries: values.listTypeEntries,
@@ -61,14 +52,18 @@ export default function EditListTypeDefinition({
 	});
 
 	useEffect(() => {
-		API.getPickList(parseInt(listTypeDefinitionId, 10)).then((response) => {
-			response.name_i18n = fixLocaleKeys(response.name_i18n);
-			response.listTypeEntries = response.listTypeEntries.map((item) => ({
-				...item,
-				name_i18n: fixLocaleKeys(item.name_i18n),
-			}));
-			setValues(response);
-		});
+		API.getListTypeDefinition(parseInt(listTypeDefinitionId, 10)).then(
+			(response) => {
+				response.name_i18n = fixLocaleKeys(response.name_i18n);
+				response.listTypeEntries = response.listTypeEntries.map(
+					(item) => ({
+						...item,
+						name_i18n: fixLocaleKeys(item.name_i18n),
+					})
+				);
+				setValues(response);
+			}
+		);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -94,6 +89,7 @@ export default function EditListTypeDefinition({
 
 						<Input
 							autoComplete="off"
+							disabled={values?.system}
 							error={errors.externalReferenceCode}
 							feedbackMessage={Liferay.Language.get(
 								'unique-key-for-referencing-the-picklist-definition'

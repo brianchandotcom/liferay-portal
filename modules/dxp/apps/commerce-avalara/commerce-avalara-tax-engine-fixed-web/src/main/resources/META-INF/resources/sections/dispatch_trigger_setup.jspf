@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -25,30 +16,34 @@ DispatchLog latestDispatchLog = (DispatchLog)GetterUtil.getObject(request.getAtt
 >
 	<c:choose>
 		<c:when test="<%= !jobPreviouslyRun || (latestDispatchLog == null) %>">
-			<aui:alert type="warning">
-				<liferay-ui:message key="sync-avalara-tax-rates-to-finish-connector-setup" />
-			</aui:alert>
+			<clay:alert
+				displayType="warning"
+				message="sync-avalara-tax-rates-to-finish-connector-setup"
+			/>
+
 			<%@ include file="/buttons/sync_tax_rates.jspf" %>
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= latestDispatchLog.getStatus() == DispatchTaskStatus.IN_PROGRESS.getStatus() %>">
-				<aui:alert type="info">
-					<liferay-ui:message key="tax-rates-are-syncing" />
-				</aui:alert>
+				<clay:alert
+					message="tax-rates-are-syncing"
+				/>
 			</c:if>
 
 			<c:if test="<%= latestDispatchLog.getStatus() == DispatchTaskStatus.FAILED.getStatus() %>">
-				<aui:alert type="danger">
-					<liferay-ui:message key="tax-rate-sync-failed" />
-				</aui:alert>
+				<clay:alert
+					displayType="danger"
+					message="tax-rate-sync-failed"
+				/>
 
 				<%@ include file="/buttons/sync_tax_rates.jspf" %>
 			</c:if>
 
 			<c:if test="<%= latestDispatchLog.getStatus() == DispatchTaskStatus.SUCCESSFUL.getStatus() %>">
-				<aui:alert type="success">
-					<liferay-ui:message key="tax-rate-sync-completed-successfully" />
-				</aui:alert>
+				<clay:alert
+					displayType="success"
+					message="tax-rate-sync-completed-successfully"
+				/>
 			</c:if>
 		</c:otherwise>
 	</c:choose>

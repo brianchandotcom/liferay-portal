@@ -4,7 +4,7 @@ apply plugin: "org.ysb33r.gradletest"
 task copyGradleTestDependencies(type: Copy)
 task installGradleTestSmokeSample100(type: GradleBuild)
 
-String gradleVersion = "6.9.2"
+String gradleVersion = "7.3.3"
 File userMavenRepoLocalDir = new File(System.getProperty("user.home"), ".m2/repository")
 
 tasks.eclipse {
@@ -12,13 +12,15 @@ tasks.eclipse {
 }
 
 copyGradleTestDependencies {
-	from configurations.compile
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+	from configurations.compileClasspath
 	into jar.destinationDir
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.9"
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.47"
+	api group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.10"
+	api group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.48"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 }
@@ -30,13 +32,13 @@ gradleTest {
 
 	deprecationMessagesAreFailures = false
 
-	versions "5.6.4", gradleVersion
+	versions gradleVersion
 }
 
 installGradleTestSmokeSample100 {
 	dir = "src/gradleTest/smoke/dependencies/sample-100"
 	startParameter.systemPropertiesArgs = ["maven.repo.local": userMavenRepoLocalDir.absolutePath]
-	tasks = ["install"]
+	tasks = ["publishToMavenLocal"]
 }
 
 pluginBundle {

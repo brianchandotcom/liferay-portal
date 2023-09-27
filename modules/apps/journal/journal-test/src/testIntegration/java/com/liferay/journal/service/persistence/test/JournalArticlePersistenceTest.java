@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.journal.service.persistence.test;
@@ -182,6 +173,8 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setSmallImageId(RandomTestUtil.nextLong());
 
+		newJournalArticle.setSmallImageSource(RandomTestUtil.nextInt());
+
 		newJournalArticle.setSmallImageURL(RandomTestUtil.randomString());
 
 		newJournalArticle.setLastPublishDate(RandomTestUtil.nextDate());
@@ -283,6 +276,9 @@ public class JournalArticlePersistenceTest {
 		Assert.assertEquals(
 			existingJournalArticle.getSmallImageId(),
 			newJournalArticle.getSmallImageId());
+		Assert.assertEquals(
+			existingJournalArticle.getSmallImageSource(),
+			newJournalArticle.getSmallImageSource());
 		Assert.assertEquals(
 			existingJournalArticle.getSmallImageURL(),
 			newJournalArticle.getSmallImageURL());
@@ -732,9 +728,9 @@ public class JournalArticlePersistenceTest {
 			"DDMStructureId", true, "DDMTemplateKey", true, "defaultLanguageId",
 			true, "layoutUuid", true, "displayDate", true, "expirationDate",
 			true, "reviewDate", true, "indexable", true, "smallImage", true,
-			"smallImageId", true, "smallImageURL", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"smallImageId", true, "smallImageSource", true, "smallImageURL",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -1116,6 +1112,8 @@ public class JournalArticlePersistenceTest {
 		journalArticle.setSmallImage(RandomTestUtil.randomBoolean());
 
 		journalArticle.setSmallImageId(RandomTestUtil.nextLong());
+
+		journalArticle.setSmallImageSource(RandomTestUtil.nextInt());
 
 		journalArticle.setSmallImageURL(RandomTestUtil.randomString());
 

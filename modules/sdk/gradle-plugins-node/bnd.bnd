@@ -1,7 +1,7 @@
 Bundle-Description: The Node Gradle plugin lets you run Node.js and NPM as part of your build.
 Bundle-Name: Liferay Gradle Plugins Node
 Bundle-SymbolicName: com.liferay.gradle.plugins.node
-Bundle-Version: 8.0.1
+Bundle-Version: 8.0.3
 Export-Package:\
 	com.liferay.gradle.plugins.node,\
 	com.liferay.gradle.plugins.node.task

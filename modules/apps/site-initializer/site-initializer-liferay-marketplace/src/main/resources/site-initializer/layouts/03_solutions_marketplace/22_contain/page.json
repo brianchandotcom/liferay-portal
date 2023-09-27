@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/wipro-contain",
+	"hidden": true,
+	"name": "Contain",
+	"name_i18n": {
+		"en_US": "Contain"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

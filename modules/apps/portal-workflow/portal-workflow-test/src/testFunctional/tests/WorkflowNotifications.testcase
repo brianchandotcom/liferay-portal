@@ -41,6 +41,7 @@ definition {
 	@priority = 4
 	test AccountUserReceivesNotification {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -56,6 +57,10 @@ definition {
 			userRole = "Buyer",
 			userScreenName = "buyeruser",
 			userSiteMembership = "Minium");
+
+		Account.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
 		Account.addAssigneeToRoleViaRolesTab(
 			accountRoleTitle = "Account Administrator",
@@ -114,6 +119,7 @@ definition {
 	@priority = 3
 	test CanOpenNewUserDetailsByNotifications {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given Workflow is configured to Single Approver for User") {
 			Workflow.openWorkflowListView();
@@ -153,6 +159,7 @@ definition {
 	@priority = 4
 	test NotificationIsNotAvailableWhenOrderIsDeleted {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -168,6 +175,10 @@ definition {
 			userRole = "Buyer",
 			userScreenName = "buyeruser",
 			userSiteMembership = "Minium");
+
+		Account.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
 		Account.addAssigneeToRoleViaRolesTab(
 			accountRoleTitle = "Account Administrator",

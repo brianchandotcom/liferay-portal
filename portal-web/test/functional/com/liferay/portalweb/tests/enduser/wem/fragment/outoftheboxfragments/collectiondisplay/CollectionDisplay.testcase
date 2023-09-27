@@ -296,8 +296,6 @@ definition {
 	@description = "This is a test for LPS-116034. The custom ddmfields of single type collection items are available for mapping in editable field."
 	@priority = 4
 	test MapCustomDDMFieldToFragmentBasedOnSingleTypeCollection {
-		property timeout.explicit.wait = "20";
-
 		task ("Add a custom Web Content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -551,8 +549,6 @@ definition {
 	@description = "This is a use case for LPS-120309. Assert the mapped image to Image fragment in collection display is shown in view mode."
 	@priority = 4
 	test MapImageToImageFragment {
-		property timeout.explicit.wait = "20";
-
 		task ("Add a custom structure with image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -647,7 +643,7 @@ definition {
 			ContentPages.viewFragmentImage(
 				fragmentName = "image",
 				id = "image-square",
-				image = "Document_1.jpg");
+				image = "document_1-jpg");
 		}
 	}
 
@@ -716,20 +712,23 @@ definition {
 	@description = "This is a test for LPS-112093. The Blogs Entries of collection are displayed using Full Content when add a Content Display to Collection Display."
 	@priority = 4
 	test ViewBlogEntryInContentDisplay {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add three blog entries") {
 			for (var i : list "1,2,3") {
 				HeadlessBlog.addBlogEntry(
 					content = "Blogs Entry Content ${i}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "Blogs Entry Title ${i}");
 			}
 		}
 
 		task ("Add a dynamic collection for Blogs Entry") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "Blogs Entry",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "Blogs Entry");
 		}
 
 		task ("Add a Collection Display to a content page") {
@@ -833,14 +832,10 @@ definition {
 		}
 
 		task ("View the collection items shown in Collection Display") {
-			var n = 1;
-
 			for (var i : list "3,2,1") {
-				PageEditor.viewCollectionItem(
-					assetTitle = "Document Title ${i}",
-					row = ${n});
-
-				var n = ${n} + 1;
+				AssertVisible(
+					key_text = "Document Title ${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 		}
 
@@ -852,14 +847,8 @@ definition {
 		}
 
 		task ("View the images shown in Content Display") {
-			var n = 1;
-
 			for (var image : list "Document_3.jpg,Document_2.jpg,Document_1.jpg") {
-				ContentPages.viewFragmentBackgroundImage(
-					image = ${image},
-					position = ${n});
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "//div[contains(@style,'background-image')][contains(@style,'${image}')]");
 			}
 		}
 
@@ -920,14 +909,10 @@ definition {
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				PageEditor.viewCollectionItem(
-					assetTitle = ${title},
-					row = ${n});
-
-				var n = ${n} + 1;
+				AssertVisible(
+					key_entryTitle = ${title},
+					locator1 = "PageEditor#COLLECTION_CELL");
 			}
 		}
 	}
@@ -935,33 +920,29 @@ definition {
 	@description = "This is a use case for LPS-114770. The Collection Display can select a dynamic collection with Select More Than One asset type."
 	@priority = 4
 	test ViewDynamicCollectionWithMoreThanOneAssetType {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add a Web Content Article,a Blogs Entry and a document") {
-			JSONWebcontent.addWebContent(
+			HeadlessWebcontent.addBasicWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Blogs Entry Title");
 
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
+			DocumentAPI.addDocumentWithFileInSite(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
-				mimeType = "image/jpeg",
+				siteId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a dynamic Collection and select Select More Than One... as Asset Entry Type") {
-			JSONAssetlist.addDynamicAssetListEntry(
-				groupName = "Test Site Name",
-				title = "Dynamic Collection");
-
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "Select Types...");
 
@@ -985,14 +966,10 @@ definition {
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				PageEditor.viewCollectionItem(
-					assetTitle = ${title},
-					row = ${n});
-
-				var n = ${n} + 1;
+				AssertVisible(
+					key_entryTitle = ${title},
+					locator1 = "PageEditor#COLLECTION_CELL");
 			}
 		}
 	}

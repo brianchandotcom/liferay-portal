@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/izertis-izertia",
+	"hidden": true,
+	"name": "Izertia",
+	"name_i18n": {
+		"en_US": "Izertia"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

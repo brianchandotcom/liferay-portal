@@ -39,13 +39,13 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 			Testray.testrayApisTearDown();
 		}
-
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -55,66 +55,55 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I am able to add Components"
 	@priority = 5
 	test AdminCanAddComponent {
-		property test.liferay.virtual.instance = "false";
+		task ("Given that I go to Manage Component") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-		task ("Given that I create a new 'Component' via API") {
-			JSONTestray.addComponent(
+			Testray.changePagination(quantity = 150);
+
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Components",
+				tableEntry = ${projectName});
+		}
+
+		task ("When I create a Component") {
+			TestrayManage.createComponent(
 				componentName = ${componentName},
-				projectName = ${projectName},
 				teamName = ${teamName});
 		}
 
-		task ("When I go to Manage Component") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-		}
-
 		task ("Then the component should appear on the list") {
-			Testray.assertItemName(text = ${componentName});
+			Testray.viewTableEntryList(listEntry = ${componentName});
 		}
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to add a component that does not have a team"
 	@priority = 5
 	test AdminCanAddComponentWithoutTeam {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given I go to Manage Component") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Components",
+				tableEntry = ${projectName});
 		}
 
 		task ("When I add a new component without adding a team") {
-			Testray.addNewComponent(componentName = ${componentName});
+			TestrayManage.createComponent(componentName = ${componentName});
 		}
 
 		task ("Then I assert that the component was created without a team") {
-			Testray.assertItemName(text = ${componentName});
+			Testray.viewTableEntryList(listEntry = ${componentName});
 
-			Testray.assertItemNotPresent(text = ${teamName});
+			Testray.viewTableEntryListNotPresent(listEntry = ${teamName});
 		}
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify that as an Administrator I am able to edit Components while connecting a Team"
 	@priority = 5
 	test AdminCanAddTeamToComponent {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that I create a new 'Component' via API") {
+		task ("Given that I create a new Component via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
 				teamName = ${teamName});
@@ -123,37 +112,29 @@ definition {
 		task ("When I add a new Component without a Team") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Components",
+				tableEntry = ${projectName});
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-
-			Testray.addNewComponent(componentName = ${componentName});
-
-			Testray.assertItemName(text = ${componentName});
+			TestrayManage.createComponent(componentName = ${componentName});
 		}
 
 		task ("Then I should be able to edit the component and add a Team") {
-			Testray.editComponent(
-				componentName = ${componentName},
+			TestrayManage.editComponent(
 				newComponentName = "Component 1 Edited",
-				newTeamName = ${teamName});
+				newTeamName = ${teamName},
+				tableEntry = ${componentName});
 
-			Testray.assertItemName(text = "Component 1 Edited");
-
-			Testray.assertItemName(text = ${teamName});
+			Testray.viewTableEntryList(listEntry = "${teamName},Component 1 Edited");
 		}
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an administrator I can change the team assigned to the Component"
 	@priority = 3
 	test AdminCanChangeTeamToComponent {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that I create a new 'Team' and a new 'Component' via API") {
+		task ("Given that I create a new Team and a new Component via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
 				teamName = "Team 2");
@@ -167,66 +148,56 @@ definition {
 		task ("And I go to the Manage Components") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Components",
+				tableEntry = ${projectName});
 		}
 
 		task ("When I change the component team") {
-			Testray.changeTeamToComponent(
-				currentTeam = ${teamName},
-				newTeamName = "Team 2");
+			TestrayManage.changeTeamToComponent(
+				newTeamName = "Team 2",
+				tableEntry = ${teamName});
 		}
 
 		task ("Then I assert that the Team has been changed") {
-			Testray.assertItemName(text = "Team 2");
+			Testray.viewTableEntryList(listEntry = "Team 2");
 		}
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to delete a component that does not have a team"
 	@priority = 3
 	test AdminCanDeleteComponentWithoutTeam {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given I go to Manage Component") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Components",
+				tableEntry = ${projectName});
 		}
 
 		task ("When I add a new component without adding a team") {
-			Testray.addNewComponent(componentName = ${componentName});
+			TestrayManage.createComponent(componentName = ${componentName});
 
-			Testray.assertItemName(text = ${componentName});
-
-			Testray.assertItemNotPresent(text = ${teamName});
+			Testray.viewTableEntryListNotPresent(listEntry = ${teamName});
 		}
 
 		task ("And I should be able to delete the component") {
-			Testray.deleteComponent(itemName = ${componentName});
+			Testray.deleteItem(itemName = ${componentName});
 		}
 
 		task ("Then I assert that the component was deleted") {
-			Testray.assertItemNotPresent(itemName = ${componentName});
+			Testray.viewTableEntryListNotPresent(listEntry = ${componentName});
 		}
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to add a Component that has a Team"
 	@priority = 5
 	test AdminCanDeleteComponentWithTeam {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that I create a new 'Component' via API") {
+		task ("Given that I create a new Component via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
 				projectName = ${projectName},
@@ -236,34 +207,28 @@ definition {
 		task ("When I go to Manage Component") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Components",
+				tableEntry = ${projectName});
 		}
 
 		task ("And I assert that the component was created") {
-			Testray.assertItemName(text = ${componentName});
-
-			Testray.assertItemName(text = ${teamName});
+			Testray.viewTableEntryList(listEntry = ${componentName});
 		}
 
 		task ("Then I delete the created component and I state that it does not appear in the list") {
-			Testray.deleteComponent(itemName = ${componentName});
+			Testray.deleteItem(itemName = ${componentName});
 
-			Testray.assertItemNotPresent(itemName = ${componentName});
+			Testray.viewTableEntryListNotPresent(listEntry = ${componentName});
 		}
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify that as an Administrator I can edit Components"
 	@priority = 4
 	test AdminCanEditComponent {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that I create a new 'Team' and a new 'Component' via API") {
+		task ("Given that I create a new Team and a new Component via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
 				teamName = ${teamName});
@@ -277,38 +242,30 @@ definition {
 		task ("And I go to the created Project") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Components",
+				tableEntry = ${projectName});
 		}
 
 		task ("When I go to Manage Components and edit the Component") {
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+			Testray.viewTableEntryList(listEntry = ${componentName});
 
-			Testray.assertItemName(text = ${componentName});
-
-			SelectFrameTop();
-
-			TestrayContextMenu.clickContextMenuProjects(name = ${componentName});
-
-			Testray.editComponent(
-				componentName = ${componentName},
-				newComponentName = "Component Edited");
+			TestrayManage.editComponent(
+				newComponentName = "Component Edited",
+				tableEntry = ${componentName});
 		}
 
 		task ("Then I assert that the component was edited") {
-			Testray.assertItemName(text = "Component Edited");
+			Testray.viewTableEntryList(listEntry = "Component Edited");
 		}
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate component"
 	@priority = 3
 	test AdminCanNotAddDuplicatedComponent {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that I create a new 'Component' via API") {
+		task ("Given that I create a new Component via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
 				projectName = ${projectName},
@@ -318,17 +275,13 @@ definition {
 		task ("When I go to Manage Component and try to add a component with a duplicate name") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Components",
+				tableEntry = ${projectName});
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-
-			Testray.assertItemName(text = ${componentName});
-
-			Testray.addNewComponent(componentName = ${componentName});
+			TestrayManage.createComponent(componentName = ${componentName});
 		}
 
 		task ("Then an error message is displayed") {
@@ -339,8 +292,6 @@ definition {
 	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Component the system should return that component"
 	@priority = 4
 	test AdminCanSearchComponent {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that two component are created via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -356,43 +307,30 @@ definition {
 		task ("And go to the manage components") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Components",
+				tableEntry = ${projectName});
 		}
 
 		task ("And confirm that there are two components in the table") {
-			AssertElementPresent(
-				key_projectName = ${componentName},
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Component 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "${componentName},Component 2");
 		}
 
 		task ("When the user filter component 1") {
-			TestrayFilter.clickFilter();
-
-			PortletEntry.inputName(name = ${componentName});
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Component Name",
+				inputValue = ${componentName});
 		}
 
 		task ("Then the user see only component 1 in the table") {
-			AssertElementPresent(
-				key_projectName = ${componentName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${componentName});
 		}
 
 		task ("And do not see the component 2 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Component 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Component 2");
 		}
 
 		task ("Delete the component") {
@@ -405,8 +343,6 @@ definition {
 	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Component that does not exist the system should not return that component"
 	@priority = 3
 	test AdminCanSearchComponentNonExistent {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that component are created via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -417,49 +353,40 @@ definition {
 		task ("And go to the manage components") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Components",
+				tableEntry = ${projectName});
 		}
 
 		task ("When the user search component non existent") {
-			TestrayFilter.clickFilter();
-
-			PortletEntry.inputName(name = "Component 3");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Component Name",
+				inputValue = "component 3");
 		}
 
 		task ("Then not see the component 3 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Component 3",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Component 3");
 		}
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
 	@priority = 2
 	test CannotAddComponentWithoutAName {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given I go to the Manage Component page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Components",
+				tableEntry = ${projectName});
 		}
 
 		task ("When I try to add a component without a name") {
-			Testray.addNewComponent(componentName = "");
+			TestrayManage.createComponent();
 		}
 
 		task ("Then I assert that the 'Name' field is required") {

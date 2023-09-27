@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.questions.web.internal.configuration.persistence.listener;
@@ -21,6 +12,7 @@ import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -123,8 +115,8 @@ public class QuestionsConfigurationModelListener
 				_bundleContext.registerService(
 					AssetRendererFactory.class,
 					new MBMessageAssetRendererFactory(
-						_companyLocalService, historyRouterBasePath,
-						_mbMessageLocalService,
+						_companyLocalService, _discussionPermission,
+						historyRouterBasePath, _mbMessageLocalService,
 						_mbMessageModelResourcePermission),
 					assetRendererFactoryProperties));
 		}
@@ -204,6 +196,9 @@ public class QuestionsConfigurationModelListener
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DiscussionPermission _discussionPermission;
 
 	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;

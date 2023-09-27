@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.model.impl;
@@ -30,6 +21,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -91,9 +83,10 @@ public class CPDefinitionOptionValueRelModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"CPDefinitionOptionRelId", Types.BIGINT},
 		{"CPInstanceUuid", Types.VARCHAR}, {"CProductId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"priority", Types.DOUBLE},
-		{"key_", Types.VARCHAR}, {"quantity", Types.INTEGER},
-		{"preselected", Types.BOOLEAN}, {"price", Types.DECIMAL}
+		{"key_", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"preselected", Types.BOOLEAN}, {"price", Types.DECIMAL},
+		{"priority", Types.DOUBLE}, {"quantity", Types.DECIMAL},
+		{"unitOfMeasureKey", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -113,25 +106,26 @@ public class CPDefinitionOptionValueRelModelImpl
 		TABLE_COLUMNS_MAP.put("CPDefinitionOptionRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPInstanceUuid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CProductId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("preselected", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("quantity", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("unitOfMeasureKey", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionOptionValueRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,name STRING null,priority DOUBLE,key_ VARCHAR(75) null,quantity INTEGER,preselected BOOLEAN,price DECIMAL(30, 16) null,primary key (CPDefinitionOptionValueRelId, ctCollectionId))";
+		"create table CPDefinitionOptionValueRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,key_ VARCHAR(75) null,name STRING null,preselected BOOLEAN,price BIGDECIMAL null,priority DOUBLE,quantity BIGDECIMAL null,unitOfMeasureKey VARCHAR(75) null,primary key (CPDefinitionOptionValueRelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionOptionValueRel";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY cpDefinitionOptionValueRel.priority ASC";
+		" ORDER BY cpDefinitionOptionValueRel.priority ASC, cpDefinitionOptionValueRel.createDate ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY CPDefinitionOptionValueRel.priority ASC";
+		" ORDER BY CPDefinitionOptionValueRel.priority ASC, CPDefinitionOptionValueRel.createDate ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -187,6 +181,13 @@ public class CPDefinitionOptionValueRelModelImpl
 	 */
 	@Deprecated
 	public static final long PRIORITY_COLUMN_BITMASK = 128L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -333,17 +334,20 @@ public class CPDefinitionOptionValueRelModelImpl
 			attributeGetterFunctions.put(
 				"CProductId", CPDefinitionOptionValueRel::getCProductId);
 			attributeGetterFunctions.put(
-				"name", CPDefinitionOptionValueRel::getName);
-			attributeGetterFunctions.put(
-				"priority", CPDefinitionOptionValueRel::getPriority);
-			attributeGetterFunctions.put(
 				"key", CPDefinitionOptionValueRel::getKey);
 			attributeGetterFunctions.put(
-				"quantity", CPDefinitionOptionValueRel::getQuantity);
+				"name", CPDefinitionOptionValueRel::getName);
 			attributeGetterFunctions.put(
 				"preselected", CPDefinitionOptionValueRel::getPreselected);
 			attributeGetterFunctions.put(
 				"price", CPDefinitionOptionValueRel::getPrice);
+			attributeGetterFunctions.put(
+				"priority", CPDefinitionOptionValueRel::getPriority);
+			attributeGetterFunctions.put(
+				"quantity", CPDefinitionOptionValueRel::getQuantity);
+			attributeGetterFunctions.put(
+				"unitOfMeasureKey",
+				CPDefinitionOptionValueRel::getUnitOfMeasureKey);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -417,21 +421,13 @@ public class CPDefinitionOptionValueRelModelImpl
 				(BiConsumer<CPDefinitionOptionValueRel, Long>)
 					CPDefinitionOptionValueRel::setCProductId);
 			attributeSetterBiConsumers.put(
-				"name",
-				(BiConsumer<CPDefinitionOptionValueRel, String>)
-					CPDefinitionOptionValueRel::setName);
-			attributeSetterBiConsumers.put(
-				"priority",
-				(BiConsumer<CPDefinitionOptionValueRel, Double>)
-					CPDefinitionOptionValueRel::setPriority);
-			attributeSetterBiConsumers.put(
 				"key",
 				(BiConsumer<CPDefinitionOptionValueRel, String>)
 					CPDefinitionOptionValueRel::setKey);
 			attributeSetterBiConsumers.put(
-				"quantity",
-				(BiConsumer<CPDefinitionOptionValueRel, Integer>)
-					CPDefinitionOptionValueRel::setQuantity);
+				"name",
+				(BiConsumer<CPDefinitionOptionValueRel, String>)
+					CPDefinitionOptionValueRel::setName);
 			attributeSetterBiConsumers.put(
 				"preselected",
 				(BiConsumer<CPDefinitionOptionValueRel, Boolean>)
@@ -440,6 +436,18 @@ public class CPDefinitionOptionValueRelModelImpl
 				"price",
 				(BiConsumer<CPDefinitionOptionValueRel, BigDecimal>)
 					CPDefinitionOptionValueRel::setPrice);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<CPDefinitionOptionValueRel, Double>)
+					CPDefinitionOptionValueRel::setPriority);
+			attributeSetterBiConsumers.put(
+				"quantity",
+				(BiConsumer<CPDefinitionOptionValueRel, BigDecimal>)
+					CPDefinitionOptionValueRel::setQuantity);
+			attributeSetterBiConsumers.put(
+				"unitOfMeasureKey",
+				(BiConsumer<CPDefinitionOptionValueRel, String>)
+					CPDefinitionOptionValueRel::setUnitOfMeasureKey);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -730,6 +738,35 @@ public class CPDefinitionOptionValueRelModelImpl
 
 	@JSON
 	@Override
+	public String getKey() {
+		if (_key == null) {
+			return "";
+		}
+		else {
+			return _key;
+		}
+	}
+
+	@Override
+	public void setKey(String key) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_key = key;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalKey() {
+		return getColumnOriginalValue("key_");
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -837,65 +874,6 @@ public class CPDefinitionOptionValueRelModelImpl
 
 	@JSON
 	@Override
-	public double getPriority() {
-		return _priority;
-	}
-
-	@Override
-	public void setPriority(double priority) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_priority = priority;
-	}
-
-	@JSON
-	@Override
-	public String getKey() {
-		if (_key == null) {
-			return "";
-		}
-		else {
-			return _key;
-		}
-	}
-
-	@Override
-	public void setKey(String key) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_key = key;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalKey() {
-		return getColumnOriginalValue("key_");
-	}
-
-	@JSON
-	@Override
-	public int getQuantity() {
-		return _quantity;
-	}
-
-	@Override
-	public void setQuantity(int quantity) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_quantity = quantity;
-	}
-
-	@JSON
-	@Override
 	public boolean getPreselected() {
 		return _preselected;
 	}
@@ -938,6 +916,56 @@ public class CPDefinitionOptionValueRelModelImpl
 		}
 
 		_price = price;
+	}
+
+	@JSON
+	@Override
+	public double getPriority() {
+		return _priority;
+	}
+
+	@Override
+	public void setPriority(double priority) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_priority = priority;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getQuantity() {
+		return _quantity;
+	}
+
+	@Override
+	public void setQuantity(BigDecimal quantity) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_quantity = quantity;
+	}
+
+	@JSON
+	@Override
+	public String getUnitOfMeasureKey() {
+		if (_unitOfMeasureKey == null) {
+			return "";
+		}
+		else {
+			return _unitOfMeasureKey;
+		}
+	}
+
+	@Override
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
 	@Override
@@ -1086,12 +1114,14 @@ public class CPDefinitionOptionValueRelModelImpl
 			getCPDefinitionOptionRelId());
 		cpDefinitionOptionValueRelImpl.setCPInstanceUuid(getCPInstanceUuid());
 		cpDefinitionOptionValueRelImpl.setCProductId(getCProductId());
-		cpDefinitionOptionValueRelImpl.setName(getName());
-		cpDefinitionOptionValueRelImpl.setPriority(getPriority());
 		cpDefinitionOptionValueRelImpl.setKey(getKey());
-		cpDefinitionOptionValueRelImpl.setQuantity(getQuantity());
+		cpDefinitionOptionValueRelImpl.setName(getName());
 		cpDefinitionOptionValueRelImpl.setPreselected(isPreselected());
 		cpDefinitionOptionValueRelImpl.setPrice(getPrice());
+		cpDefinitionOptionValueRelImpl.setPriority(getPriority());
+		cpDefinitionOptionValueRelImpl.setQuantity(getQuantity());
+		cpDefinitionOptionValueRelImpl.setUnitOfMeasureKey(
+			getUnitOfMeasureKey());
 
 		cpDefinitionOptionValueRelImpl.resetOriginalValues();
 
@@ -1129,18 +1159,20 @@ public class CPDefinitionOptionValueRelModelImpl
 			this.<String>getColumnOriginalValue("CPInstanceUuid"));
 		cpDefinitionOptionValueRelImpl.setCProductId(
 			this.<Long>getColumnOriginalValue("CProductId"));
-		cpDefinitionOptionValueRelImpl.setName(
-			this.<String>getColumnOriginalValue("name"));
-		cpDefinitionOptionValueRelImpl.setPriority(
-			this.<Double>getColumnOriginalValue("priority"));
 		cpDefinitionOptionValueRelImpl.setKey(
 			this.<String>getColumnOriginalValue("key_"));
-		cpDefinitionOptionValueRelImpl.setQuantity(
-			this.<Integer>getColumnOriginalValue("quantity"));
+		cpDefinitionOptionValueRelImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
 		cpDefinitionOptionValueRelImpl.setPreselected(
 			this.<Boolean>getColumnOriginalValue("preselected"));
 		cpDefinitionOptionValueRelImpl.setPrice(
 			this.<BigDecimal>getColumnOriginalValue("price"));
+		cpDefinitionOptionValueRelImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		cpDefinitionOptionValueRelImpl.setQuantity(
+			this.<BigDecimal>getColumnOriginalValue("quantity"));
+		cpDefinitionOptionValueRelImpl.setUnitOfMeasureKey(
+			this.<String>getColumnOriginalValue("unitOfMeasureKey"));
 
 		return cpDefinitionOptionValueRelImpl;
 	}
@@ -1160,6 +1192,13 @@ public class CPDefinitionOptionValueRelModelImpl
 		else {
 			value = 0;
 		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		value = DateUtil.compareTo(
+			getCreateDate(), cpDefinitionOptionValueRel.getCreateDate());
 
 		if (value != 0) {
 			return value;
@@ -1294,16 +1333,6 @@ public class CPDefinitionOptionValueRelModelImpl
 
 		cpDefinitionOptionValueRelCacheModel.CProductId = getCProductId();
 
-		cpDefinitionOptionValueRelCacheModel.name = getName();
-
-		String name = cpDefinitionOptionValueRelCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			cpDefinitionOptionValueRelCacheModel.name = null;
-		}
-
-		cpDefinitionOptionValueRelCacheModel.priority = getPriority();
-
 		cpDefinitionOptionValueRelCacheModel.key = getKey();
 
 		String key = cpDefinitionOptionValueRelCacheModel.key;
@@ -1312,11 +1341,31 @@ public class CPDefinitionOptionValueRelModelImpl
 			cpDefinitionOptionValueRelCacheModel.key = null;
 		}
 
-		cpDefinitionOptionValueRelCacheModel.quantity = getQuantity();
+		cpDefinitionOptionValueRelCacheModel.name = getName();
+
+		String name = cpDefinitionOptionValueRelCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			cpDefinitionOptionValueRelCacheModel.name = null;
+		}
 
 		cpDefinitionOptionValueRelCacheModel.preselected = isPreselected();
 
 		cpDefinitionOptionValueRelCacheModel.price = getPrice();
+
+		cpDefinitionOptionValueRelCacheModel.priority = getPriority();
+
+		cpDefinitionOptionValueRelCacheModel.quantity = getQuantity();
+
+		cpDefinitionOptionValueRelCacheModel.unitOfMeasureKey =
+			getUnitOfMeasureKey();
+
+		String unitOfMeasureKey =
+			cpDefinitionOptionValueRelCacheModel.unitOfMeasureKey;
+
+		if ((unitOfMeasureKey != null) && (unitOfMeasureKey.length() == 0)) {
+			cpDefinitionOptionValueRelCacheModel.unitOfMeasureKey = null;
+		}
 
 		return cpDefinitionOptionValueRelCacheModel;
 	}
@@ -1395,13 +1444,14 @@ public class CPDefinitionOptionValueRelModelImpl
 	private long _CPDefinitionOptionRelId;
 	private String _CPInstanceUuid;
 	private long _CProductId;
+	private String _key;
 	private String _name;
 	private String _nameCurrentLanguageId;
-	private double _priority;
-	private String _key;
-	private int _quantity;
 	private boolean _preselected;
 	private BigDecimal _price;
+	private double _priority;
+	private BigDecimal _quantity;
+	private String _unitOfMeasureKey;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1448,12 +1498,13 @@ public class CPDefinitionOptionValueRelModelImpl
 			"CPDefinitionOptionRelId", _CPDefinitionOptionRelId);
 		_columnOriginalValues.put("CPInstanceUuid", _CPInstanceUuid);
 		_columnOriginalValues.put("CProductId", _CProductId);
-		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("priority", _priority);
 		_columnOriginalValues.put("key_", _key);
-		_columnOriginalValues.put("quantity", _quantity);
+		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("preselected", _preselected);
 		_columnOriginalValues.put("price", _price);
+		_columnOriginalValues.put("priority", _priority);
+		_columnOriginalValues.put("quantity", _quantity);
+		_columnOriginalValues.put("unitOfMeasureKey", _unitOfMeasureKey);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1504,17 +1555,19 @@ public class CPDefinitionOptionValueRelModelImpl
 
 		columnBitmasks.put("CProductId", 4096L);
 
-		columnBitmasks.put("name", 8192L);
+		columnBitmasks.put("key_", 8192L);
 
-		columnBitmasks.put("priority", 16384L);
+		columnBitmasks.put("name", 16384L);
 
-		columnBitmasks.put("key_", 32768L);
+		columnBitmasks.put("preselected", 32768L);
 
-		columnBitmasks.put("quantity", 65536L);
+		columnBitmasks.put("price", 65536L);
 
-		columnBitmasks.put("preselected", 131072L);
+		columnBitmasks.put("priority", 131072L);
 
-		columnBitmasks.put("price", 262144L);
+		columnBitmasks.put("quantity", 262144L);
+
+		columnBitmasks.put("unitOfMeasureKey", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

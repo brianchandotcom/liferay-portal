@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.model.impl;
@@ -102,8 +93,8 @@ public class CPOptionCacheModel
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", DDMFormFieldTypeName=");
-		sb.append(DDMFormFieldTypeName);
+		sb.append(", commerceOptionTypeKey=");
+		sb.append(commerceOptionTypeKey);
 		sb.append(", facetable=");
 		sb.append(facetable);
 		sb.append(", required=");
@@ -179,11 +170,11 @@ public class CPOptionCacheModel
 			cpOptionImpl.setDescription(description);
 		}
 
-		if (DDMFormFieldTypeName == null) {
-			cpOptionImpl.setDDMFormFieldTypeName("");
+		if (commerceOptionTypeKey == null) {
+			cpOptionImpl.setCommerceOptionTypeKey("");
 		}
 		else {
-			cpOptionImpl.setDDMFormFieldTypeName(DDMFormFieldTypeName);
+			cpOptionImpl.setCommerceOptionTypeKey(commerceOptionTypeKey);
 		}
 
 		cpOptionImpl.setFacetable(facetable);
@@ -227,7 +218,7 @@ public class CPOptionCacheModel
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
-		DDMFormFieldTypeName = objectInput.readUTF();
+		commerceOptionTypeKey = objectInput.readUTF();
 
 		facetable = objectInput.readBoolean();
 
@@ -288,11 +279,11 @@ public class CPOptionCacheModel
 			objectOutput.writeUTF(description);
 		}
 
-		if (DDMFormFieldTypeName == null) {
+		if (commerceOptionTypeKey == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(DDMFormFieldTypeName);
+			objectOutput.writeUTF(commerceOptionTypeKey);
 		}
 
 		objectOutput.writeBoolean(facetable);
@@ -323,7 +314,7 @@ public class CPOptionCacheModel
 	public long modifiedDate;
 	public String name;
 	public String description;
-	public String DDMFormFieldTypeName;
+	public String commerceOptionTypeKey;
 	public boolean facetable;
 	public boolean required;
 	public boolean skuContributor;

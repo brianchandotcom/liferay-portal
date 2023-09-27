@@ -311,6 +311,10 @@ definition {
 				-H Content-Type: application/json
 		''';
 
+		if (isSet(token)) {
+			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
+		}
+
 		var curl = JSONCurlUtil.get(${curl});
 
 		return ${curl};

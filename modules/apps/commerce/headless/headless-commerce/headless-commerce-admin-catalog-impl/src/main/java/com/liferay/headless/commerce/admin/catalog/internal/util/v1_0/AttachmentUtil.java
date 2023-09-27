@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
@@ -26,6 +17,7 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPOptionService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
@@ -42,6 +34,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -61,6 +56,7 @@ import java.net.URLConnection;
 
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -274,27 +270,47 @@ public class AttachmentUtil {
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService,
 			CPOptionService cpOptionService,
+			ModelResourcePermission<DLFileEntry>
+				dlFileEntryModelResourcePermission,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			Attachment attachment, long classNameId, long classPK, int type,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		long fileEntryId = 0;
+		ServiceContext dlFileEntryCloneServiceContext =
+			(ServiceContext)serviceContext.clone();
+
+		dlFileEntryCloneServiceContext.setExpandoBridgeAttributes(
+			new LinkedHashMap<>());
+
+		dlFileEntryCloneServiceContext.setWorkflowAction(
+			WorkflowConstants.ACTION_PUBLISH);
+
+		long fileEntryId = GetterUtil.getLong(attachment.getFileEntryId());
+
+		if (fileEntryId == 0) {
+			FileEntry fileEntry = addFileEntry(
+				attachment, uniqueFileNameProvider,
+				dlFileEntryCloneServiceContext);
+
+			if (fileEntry != null) {
+				fileEntryId = fileEntry.getFileEntryId();
+			}
+		}
+		else {
+			dlFileEntryModelResourcePermission.check(
+				PermissionThreadLocal.getPermissionChecker(), fileEntryId,
+				ActionKeys.VIEW);
+		}
 
 		ServiceContext cloneServiceContext =
 			(ServiceContext)serviceContext.clone();
 
+		cloneServiceContext.setTimeZone(serviceContext.getTimeZone());
 		cloneServiceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		FileEntry fileEntry = addFileEntry(
-			attachment, uniqueFileNameProvider, cloneServiceContext);
-
-		if (fileEntry != null) {
-			fileEntryId = fileEntry.getFileEntryId();
-		}
-
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
+			cloneServiceContext.getTimeZone());
 
 		if (attachment.getDisplayDate() != null) {
 			displayCalendar = DateConfigUtil.convertDateToCalendar(
@@ -304,7 +320,7 @@ public class AttachmentUtil {
 		DateConfig displayDateConfig = new DateConfig(displayCalendar);
 
 		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
+			cloneServiceContext.getTimeZone());
 
 		expirationCalendar.add(Calendar.MONTH, 1);
 

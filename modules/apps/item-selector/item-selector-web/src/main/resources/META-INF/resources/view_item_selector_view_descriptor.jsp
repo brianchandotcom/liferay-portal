@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -162,11 +153,11 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 						</c:if>
 
 						<p class="font-weight-bold h5">
-							<%= itemDescriptor.getTitle(locale) %>
+							<%= HtmlUtil.escape(itemDescriptor.getTitle(locale)) %>
 						</p>
 
 						<p class="h6 text-default">
-							<%= itemDescriptor.getSubtitle(locale) %>
+							<%= HtmlUtil.escape(itemDescriptor.getSubtitle(locale)) %>
 						</p>
 
 						<c:if test="<%= itemDescriptor.getStatus() != null %>">
@@ -204,124 +195,13 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 	</liferay-ui:search-container>
 </clay:container-fluid>
 
-<c:choose>
-	<c:when test="<%= itemSelectorViewDescriptorRendererDisplayContext.isMultipleSelection() %>">
-		<aui:script use="liferay-search-container">
-			var searchContainer = Liferay.SearchContainer.get(
-				'<portlet:namespace />entries'
-			);
-
-			searchContainer.on('rowToggled', (event) => {
-				var searchContainerItems = event.elements.allSelectedElements;
-
-				var arr = [];
-
-				searchContainerItems.each(function () {
-					var domElement = this.ancestor('li');
-
-					if (domElement == null) {
-						domElement = this.ancestor('tr');
-					}
-
-					if (domElement == null) {
-						domElement = this.ancestor('dd');
-					}
-
-					if (domElement != null) {
-						var itemValue = domElement.getDOM().dataset.value;
-
-						arr.push(itemValue);
-					}
-				});
-
-				Liferay.Util.getOpener().Liferay.fire(
-					'<%= itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName() %>',
-					{
-						data: {
-							returnType:
-								'<%= itemSelectorViewDescriptorRendererDisplayContext.getReturnType() %>',
-							value: arr,
-						},
-					}
-				);
-			});
-		</aui:script>
-	</c:when>
-	<c:otherwise>
-		<aui:script require="frontend-js-web/index as frontendJsWeb">
-			var {delegate} = frontendJsWeb;
-
-			var selectItem = () => {
-				var activeCards = document.querySelectorAll('.form-check-card.active');
-
-				if (activeCards.length) {
-					activeCards.forEach((card) => {
-						card.classList.remove('active');
-					});
-				}
-
-				var target = event.delegateTarget;
-
-				var newSelectedCard = target.closest('.form-check-card');
-
-				if (newSelectedCard) {
-					newSelectedCard.classList.add('active');
-				}
-
-				var domElement = target.closest('li');
-
-				if (domElement == null) {
-					domElement = target.closest('tr');
-				}
-
-				if (domElement == null) {
-					domElement = target.closest('dd');
-				}
-
-				var itemValue = '';
-
-				if (domElement != null) {
-					itemValue = domElement.dataset.value;
-				}
-
-				Liferay.Util.getOpener().Liferay.fire(
-					'<%= itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName() %>',
-					{
-						data: {
-							returnType:
-								'<%= itemSelectorViewDescriptorRendererDisplayContext.getReturnType() %>',
-							value: itemValue,
-						},
-					}
-				);
-			};
-
-			var onClickHandler = delegate(
-				document.querySelector('#<portlet:namespace />entriesContainer'),
-				'click',
-				'.entry',
-				(event) => {
-					selectItem();
-				}
-			);
-
-			var onKeydownHandler = delegate(
-				document.querySelector('#<portlet:namespace />entriesContainer'),
-				'keydown',
-				'.entry',
-				(event) => {
-					if (event.code === 'Enter') {
-						selectItem();
-					}
-				}
-			);
-
-			Liferay.on('destroyPortlet', function removeListener() {
-				onClickHandler.dispose();
-				onKeydownHandler.dispose();
-
-				Liferay.detach('destroyPortlet', removeListener);
-			});
-		</aui:script>
-	</c:otherwise>
-</c:choose>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"itemSelectorReturnType", itemSelectorViewDescriptorRendererDisplayContext.getReturnType()
+		).put(
+			"itemSelectorSelectedEvent", itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName()
+		).build()
+	%>'
+	module='<%= itemSelectorViewDescriptorRendererDisplayContext.isMultipleSelection() ? "js/ViewItemSelectorViewDescriptorMultiple" : "js/ViewItemSelectorViewDescriptor" %>'
+/>

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.kernel.util;
@@ -61,6 +52,98 @@ public class BigDecimalUtil {
 		return resultBigDecimal.doubleValue();
 	}
 
+	public static boolean eq(BigDecimal value1, BigDecimal value2) {
+		if ((value1 == null) && (value2 == null)) {
+			return true;
+		}
+
+		if ((value1 != null) && (value2 != null) &&
+			(value1.compareTo(value2) == 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static BigDecimal get(Object newValue, BigDecimal defaultValue) {
+		if (newValue != null) {
+			if (newValue instanceof Integer) {
+				return BigDecimal.valueOf((Integer)newValue);
+			}
+
+			if (newValue instanceof Double) {
+				return BigDecimal.valueOf((Double)newValue);
+			}
+
+			if (newValue instanceof BigDecimal) {
+				return (BigDecimal)newValue;
+			}
+		}
+
+		return defaultValue;
+	}
+
+	public static boolean gt(BigDecimal value1, BigDecimal value2) {
+		if ((value1 == null) || (value2 == null)) {
+			return false;
+		}
+
+		if (value1.compareTo(value2) > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean gte(BigDecimal value1, BigDecimal value2) {
+		if ((value1 == null) && (value2 == null)) {
+			return true;
+		}
+
+		if ((value1 != null) && (value2 != null) &&
+			(value1.compareTo(value2) >= 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isZero(BigDecimal value) {
+		if ((value == null) || (value.compareTo(BigDecimal.ZERO) == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean lt(BigDecimal value1, BigDecimal value2) {
+		if ((value1 == null) || (value2 == null)) {
+			return false;
+		}
+
+		if (value1.compareTo(value2) < 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean lte(BigDecimal value1, BigDecimal value2) {
+		if ((value1 == null) && (value2 == null)) {
+			return true;
+		}
+
+		if ((value1 != null) && (value2 != null) &&
+			(value1.compareTo(value2) <= 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static double multiply(Number x, Number y) {
 		if (x == null) {
 			x = 0;
@@ -88,6 +171,20 @@ public class BigDecimalUtil {
 		xBigDecimal = xBigDecimal.setScale(scale, roundingMode);
 
 		return xBigDecimal.doubleValue();
+	}
+
+	public static BigDecimal stripTrailingZeros(BigDecimal x) {
+		if (x == null) {
+			return null;
+		}
+
+		x = x.stripTrailingZeros();
+
+		if (x.scale() < 0) {
+			return x.setScale(0, RoundingMode.HALF_UP);
+		}
+
+		return x;
 	}
 
 	public static double subtract(Number x, Number y) {

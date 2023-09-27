@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.delivery.resource.v1_0.test;
@@ -2337,6 +2328,183 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetSiteUserMessageBoardMessagesActivityPage()
+		throws Exception {
+
+		Long siteId =
+			testGetSiteUserMessageBoardMessagesActivityPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteUserMessageBoardMessagesActivityPage_getIrrelevantSiteId();
+		Long userId =
+			testGetSiteUserMessageBoardMessagesActivityPage_getUserId();
+		Long irrelevantUserId =
+			testGetSiteUserMessageBoardMessagesActivityPage_getIrrelevantUserId();
+
+		Page<MessageBoardMessage> page =
+			messageBoardMessageResource.
+				getSiteUserMessageBoardMessagesActivityPage(
+					siteId, userId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if ((irrelevantSiteId != null) && (irrelevantUserId != null)) {
+			MessageBoardMessage irrelevantMessageBoardMessage =
+				testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+					irrelevantSiteId, irrelevantUserId,
+					randomIrrelevantMessageBoardMessage());
+
+			page =
+				messageBoardMessageResource.
+					getSiteUserMessageBoardMessagesActivityPage(
+						irrelevantSiteId, irrelevantUserId,
+						Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantMessageBoardMessage),
+				(List<MessageBoardMessage>)page.getItems());
+			assertValid(
+				page,
+				testGetSiteUserMessageBoardMessagesActivityPage_getExpectedActions(
+					irrelevantSiteId, irrelevantUserId));
+		}
+
+		MessageBoardMessage messageBoardMessage1 =
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				siteId, userId, randomMessageBoardMessage());
+
+		MessageBoardMessage messageBoardMessage2 =
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				siteId, userId, randomMessageBoardMessage());
+
+		page =
+			messageBoardMessageResource.
+				getSiteUserMessageBoardMessagesActivityPage(
+					siteId, userId, Pagination.of(1, 10));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(messageBoardMessage1, messageBoardMessage2),
+			(List<MessageBoardMessage>)page.getItems());
+		assertValid(
+			page,
+			testGetSiteUserMessageBoardMessagesActivityPage_getExpectedActions(
+				siteId, userId));
+
+		messageBoardMessageResource.deleteMessageBoardMessage(
+			messageBoardMessage1.getId());
+
+		messageBoardMessageResource.deleteMessageBoardMessage(
+			messageBoardMessage2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetSiteUserMessageBoardMessagesActivityPage_getExpectedActions(
+				Long siteId, Long userId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetSiteUserMessageBoardMessagesActivityPageWithPagination()
+		throws Exception {
+
+		Long siteId =
+			testGetSiteUserMessageBoardMessagesActivityPage_getSiteId();
+		Long userId =
+			testGetSiteUserMessageBoardMessagesActivityPage_getUserId();
+
+		MessageBoardMessage messageBoardMessage1 =
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				siteId, userId, randomMessageBoardMessage());
+
+		MessageBoardMessage messageBoardMessage2 =
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				siteId, userId, randomMessageBoardMessage());
+
+		MessageBoardMessage messageBoardMessage3 =
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				siteId, userId, randomMessageBoardMessage());
+
+		Page<MessageBoardMessage> page1 =
+			messageBoardMessageResource.
+				getSiteUserMessageBoardMessagesActivityPage(
+					siteId, userId, Pagination.of(1, 2));
+
+		List<MessageBoardMessage> messageBoardMessages1 =
+			(List<MessageBoardMessage>)page1.getItems();
+
+		Assert.assertEquals(
+			messageBoardMessages1.toString(), 2, messageBoardMessages1.size());
+
+		Page<MessageBoardMessage> page2 =
+			messageBoardMessageResource.
+				getSiteUserMessageBoardMessagesActivityPage(
+					siteId, userId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<MessageBoardMessage> messageBoardMessages2 =
+			(List<MessageBoardMessage>)page2.getItems();
+
+		Assert.assertEquals(
+			messageBoardMessages2.toString(), 1, messageBoardMessages2.size());
+
+		Page<MessageBoardMessage> page3 =
+			messageBoardMessageResource.
+				getSiteUserMessageBoardMessagesActivityPage(
+					siteId, userId, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				messageBoardMessage1, messageBoardMessage2,
+				messageBoardMessage3),
+			(List<MessageBoardMessage>)page3.getItems());
+	}
+
+	protected MessageBoardMessage
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				Long siteId, Long userId,
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetSiteUserMessageBoardMessagesActivityPage_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Long
+			testGetSiteUserMessageBoardMessagesActivityPage_getIrrelevantSiteId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
+	}
+
+	protected Long testGetSiteUserMessageBoardMessagesActivityPage_getUserId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetSiteUserMessageBoardMessagesActivityPage_getIrrelevantUserId()
+		throws Exception {
+
+		return null;
 	}
 
 	@Rule

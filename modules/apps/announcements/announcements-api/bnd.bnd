@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Announcements API
 Bundle-SymbolicName: com.liferay.announcements.api
-Bundle-Version: 5.0.5
+Bundle-Version: 5.0.6
 Export-Package: com.liferay.announcements.constants

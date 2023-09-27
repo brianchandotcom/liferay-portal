@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.poshi.core.util;
@@ -20,6 +11,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.IllegalFormatConversionException;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 
@@ -819,6 +811,21 @@ public class StringUtil {
 
 		for (int i = 0; i < oldSubs.length; i++) {
 			s = replaceFirst(s, oldSubs[i], newSubs[i]);
+		}
+
+		return s;
+	}
+
+	public static String replacePropertyVariables(String s) {
+		Properties properties = PropsUtil.getProperties();
+
+		for (Object object : properties.keySet()) {
+			String propertyName = (String)object;
+
+			System.out.println(propertyName);
+
+			s = s.replace(
+				"${" + propertyName + "}", PropsUtil.get(propertyName));
 		}
 
 		return s;

@@ -293,9 +293,10 @@ components:
                     readOnly: true
                     type: object
                 quantity:
-                    format: int32
+                    example: 10.1
+                    format: bigdecimal
                     readOnly: true
-                    type: integer
+                    type: number
                 replacedSku:
                     readOnly: true
                     type: string
@@ -314,6 +315,10 @@ components:
                     readOnly: true
                     type: boolean
                 thumbnail:
+                    readOnly: true
+                    type: string
+                unitOfMeasureKey:
+                    example: m
                     readOnly: true
                     type: string
                 valid:
@@ -370,9 +375,10 @@ components:
                     readOnly: true
                     type: integer
                 quantity:
-                    format: int32
+                    example: 10.1
+                    format: bigdecimal
                     readOnly: true
-                    type: integer
+                    type: number
                 shippingAddressId:
                     example: 31130
                     format: int64
@@ -398,6 +404,13 @@ components:
                     type: boolean
                 trackingNumber:
                     example: "123AD-asd"
+                    readOnly: true
+                    type: string
+                trackingURL:
+                    readOnly: true
+                    type: string
+                unitOfMeasureKey:
+                    example: m
                     readOnly: true
                     type: string
             type: object
@@ -458,22 +471,26 @@ components:
             properties:
                 allowedQuantities:
                     items:
-                        format: int32
-                        type: integer
+                        example: 10.1
+                        format: bigdecimal
+                        type: number
                     readOnly: true
                     type: array
                 maxQuantity:
-                    format: int32
+                    example: 10.1
+                    format: bigdecimal
                     readOnly: true
-                    type: integer
+                    type: number
                 minQuantity:
-                    format: int32
+                    example: 10.1
+                    format: bigdecimal
                     readOnly: true
-                    type: integer
+                    type: number
                 multipleQuantity:
-                    format: int32
+                    example: 10.1
+                    format: bigdecimal
                     readOnly: true
-                    type: integer
+                    type: number
             type: object
         ShippingMethod:
             properties:
@@ -528,8 +545,10 @@ components:
                     readOnly: true
                     type: string
                 itemsQuantity:
+                    example: 10.1
+                    format: bigdecimal
                     readOnly: true
-                    type: integer
+                    type: number
                 shippingDiscountPercentages:
                     items:
                         type: string
@@ -605,7 +624,7 @@ components:
 info:
     description:
         "Headless Delivery Commerce Order API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.delivery.order.client', and version '1.0.10'."
+        artifact ID 'com.liferay.headless.commerce.delivery.order.client', and version '1.0.13'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.discount.internal;
@@ -50,13 +41,14 @@ public abstract class BaseCommerceDiscountCalculation
 
 	protected List<CommerceDiscount> getProductCommerceDiscountByHierarchy(
 			long companyId, CommerceContext commerceContext,
-			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId)
+			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		return _getProductCommerceDiscountByHierarchy(
 			companyId, CommerceUtil.getCommerceAccountId(commerceContext),
 			commerceContext.getCommerceChannelId(), commerceOrderTypeId,
-			cpDefinitionId, cpInstanceId);
+			cpDefinitionId, cpInstanceId, unitOfMeasureKey);
 	}
 
 	@Reference
@@ -349,7 +341,8 @@ public abstract class BaseCommerceDiscountCalculation
 
 	private List<CommerceDiscount> _getProductCommerceDiscountByHierarchy(
 			long companyId, long commerceAccountId, long commerceChannelId,
-			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId)
+			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
@@ -365,7 +358,7 @@ public abstract class BaseCommerceDiscountCalculation
 				commerceDiscountLocalService.fetchDefaultCommerceDiscount(
 					commerceChannelAccountEntryRel.
 						getCommerceChannelAccountEntryRelId(),
-					cpDefinitionId, cpInstanceId);
+					cpDefinitionId, cpInstanceId, unitOfMeasureKey);
 
 			if (defaultCommerceDiscount != null) {
 				return Collections.singletonList(defaultCommerceDiscount);
@@ -379,7 +372,7 @@ public abstract class BaseCommerceDiscountCalculation
 			commerceDiscountLocalService.
 				getAccountAndChannelAndOrderTypeCommerceDiscounts(
 					commerceAccountId, commerceChannelId, commerceOrderTypeId,
-					cpDefinitionId, cpInstanceId);
+					cpDefinitionId, cpInstanceId, unitOfMeasureKey);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			List<CommerceDiscount> defaultCommerceDiscounts =
@@ -396,7 +389,7 @@ public abstract class BaseCommerceDiscountCalculation
 		commerceDiscounts =
 			commerceDiscountLocalService.getAccountAndChannelCommerceDiscounts(
 				commerceAccountId, commerceChannelId, cpDefinitionId,
-				cpInstanceId);
+				cpInstanceId, unitOfMeasureKey);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			List<CommerceDiscount> defaultCommerceDiscounts =
@@ -414,7 +407,8 @@ public abstract class BaseCommerceDiscountCalculation
 
 		commerceDiscounts =
 			commerceDiscountLocalService.getAccountCommerceDiscounts(
-				commerceAccountId, cpDefinitionId, cpInstanceId);
+				commerceAccountId, cpDefinitionId, cpInstanceId,
+				unitOfMeasureKey);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			List<CommerceDiscount> defaultCommerceDiscounts =
@@ -437,7 +431,8 @@ public abstract class BaseCommerceDiscountCalculation
 			commerceDiscountLocalService.
 				getAccountGroupAndChannelAndOrderTypeCommerceDiscount(
 					commerceAccountGroupIds, commerceChannelId,
-					commerceOrderTypeId, cpDefinitionId, cpInstanceId);
+					commerceOrderTypeId, cpDefinitionId, cpInstanceId,
+					unitOfMeasureKey);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			List<CommerceDiscount> defaultCommerceDiscounts =
@@ -457,7 +452,7 @@ public abstract class BaseCommerceDiscountCalculation
 			commerceDiscountLocalService.
 				getAccountGroupAndChannelCommerceDiscount(
 					commerceAccountGroupIds, commerceChannelId, cpDefinitionId,
-					cpInstanceId);
+					cpInstanceId, unitOfMeasureKey);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			List<CommerceDiscount> defaultCommerceDiscounts =
@@ -475,7 +470,8 @@ public abstract class BaseCommerceDiscountCalculation
 
 		commerceDiscounts =
 			commerceDiscountLocalService.getAccountGroupCommerceDiscount(
-				commerceAccountGroupIds, cpDefinitionId, cpInstanceId);
+				commerceAccountGroupIds, cpDefinitionId, cpInstanceId,
+				unitOfMeasureKey);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			List<CommerceDiscount> defaultCommerceDiscounts =
@@ -495,7 +491,7 @@ public abstract class BaseCommerceDiscountCalculation
 			commerceDiscountLocalService.
 				getChannelAndOrderTypeCommerceDiscounts(
 					commerceChannelId, commerceOrderTypeId, cpDefinitionId,
-					cpInstanceId);
+					cpInstanceId, unitOfMeasureKey);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			List<CommerceDiscount> defaultCommerceDiscounts =
@@ -513,7 +509,8 @@ public abstract class BaseCommerceDiscountCalculation
 
 		commerceDiscounts =
 			commerceDiscountLocalService.getOrderTypeCommerceDiscounts(
-				commerceOrderTypeId, cpDefinitionId, cpInstanceId);
+				commerceOrderTypeId, cpDefinitionId, cpInstanceId,
+				unitOfMeasureKey);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			List<CommerceDiscount> defaultCommerceDiscounts =
@@ -531,7 +528,8 @@ public abstract class BaseCommerceDiscountCalculation
 
 		commerceDiscounts =
 			commerceDiscountLocalService.getChannelCommerceDiscounts(
-				commerceChannelId, cpDefinitionId, cpInstanceId);
+				commerceChannelId, cpDefinitionId, cpInstanceId,
+				unitOfMeasureKey);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			List<CommerceDiscount> defaultCommerceDiscounts =
@@ -549,7 +547,7 @@ public abstract class BaseCommerceDiscountCalculation
 
 		commerceDiscounts =
 			commerceDiscountLocalService.getUnqualifiedCommerceDiscounts(
-				companyId, cpDefinitionId, cpInstanceId);
+				companyId, cpDefinitionId, cpInstanceId, unitOfMeasureKey);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			List<CommerceDiscount> defaultCommerceDiscounts =

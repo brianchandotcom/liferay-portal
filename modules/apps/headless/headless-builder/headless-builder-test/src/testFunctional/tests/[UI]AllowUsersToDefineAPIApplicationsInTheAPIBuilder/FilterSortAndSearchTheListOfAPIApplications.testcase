@@ -1,0 +1,208 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+
+		task ("Given three applications and one of the status of the applications is published") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "test1",
+				status = "published",
+				title = "test1");
+
+			ApplicationAPI.createAPIApplication(
+				baseURL = "test2",
+				status = "unpublished",
+				title = "test2");
+
+			ApplicationAPI.createAPIApplication(
+				baseURL = "test3",
+				status = "unpublished",
+				title = "test3");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanFilterAPIsByExcludeStatus {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I filter by Published status with exclude enabled") {
+			APIBuilderUI.filterByStatus(
+				exclude = "true",
+				labelName = "Published");
+		}
+
+		task ("Then two unpublished APIs are listed") {
+			AssertElementPresent(
+				key_status = "Unpublished",
+				key_title = "test2",
+				locator1 = "APIBuilder#APPLICATION_STATUS");
+
+			AssertElementPresent(
+				key_status = "Unpublished",
+				key_title = "test3",
+				locator1 = "APIBuilder#APPLICATION_STATUS");
+
+			AssertElementNotPresent(
+				key_status = "Published",
+				key_title = "test1",
+				locator1 = "APIBuilder#APPLICATION_STATUS");
+		}
+	}
+
+	@priority = 4
+	test CanFilterAPIsByLastUpdated {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I filter by Last updated From 06/30/2023 to 06/30/2023") {
+			APIBuilderUI.filterByLastUpdated(
+				fromDate = "06/30/2023",
+				toDate = "06/30/2023");
+		}
+
+		task ("Then I can see no API Application Found") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No API Application Found");
+		}
+	}
+
+	@priority = 4
+	test CanFilterAPIsByStatus {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I filter by Published status") {
+			APIBuilderUI.filterByStatus(labelName = "Published");
+		}
+
+		task ("Then only the published API is listed") {
+			AssertElementPresent(
+				key_status = "Published",
+				key_title = "test1",
+				locator1 = "APIBuilder#APPLICATION_STATUS");
+
+			AssertElementNotPresent(
+				key_status = "Unpublished",
+				key_title = "test2",
+				locator1 = "APIBuilder#APPLICATION_STATUS");
+
+			AssertElementNotPresent(
+				key_status = "Unpublished",
+				key_title = "test3",
+				locator1 = "APIBuilder#APPLICATION_STATUS");
+		}
+	}
+
+	@priority = 4
+	test CanSearchAPIsByTitle {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I search the API applications with a valid title") {
+			APIBuilderUI.searchItem(value = "test1");
+		}
+
+		task ("Then I can retrieve all available API applications") {
+			APIBuilderUI.viewItemsInOrder(itemList = "test1");
+		}
+	}
+
+	@priority = 4
+	test CanSearchAPIsWithoutAvailableOnes {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I search the API applications with unrelated word") {
+			APIBuilderUI.searchItem(value = "Application");
+		}
+
+		task ("Then no API application were found") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No API Application Found");
+		}
+	}
+
+	@priority = 4
+	test CanSortAPIsByLastUpdated {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I sort the APIs by Last Updated") {
+			Click(
+				locator1 = "APIBuilder#DND_TR_BUTTON",
+				value = "Last updated");
+		}
+
+		task ("Then the APIs are sorted by Last Updated") {
+			APIBuilderUI.viewItemsInOrder(itemList = "test1,test2,test3");
+		}
+	}
+
+	@priority = 4
+	test CanSortAPIsByStatus {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I sort the APIs by Status") {
+			Click(
+				locator1 = "APIBuilder#DND_TR_BUTTON",
+				value = "Status");
+		}
+
+		task ("Then the APIs are sorted by Status") {
+			APIBuilderUI.assertSortedStatusInOrder(statusList = "Published,Unpublished,Unpublished");
+		}
+	}
+
+	@priority = 4
+	test CanSortAPIsByTitle {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I sort the APIs by Title") {
+			Click(
+				locator1 = "APIBuilder#DND_TR_BUTTON",
+				value = "Title");
+		}
+
+		task ("Then the APIs are sorted by Title") {
+			APIBuilderUI.viewItemsInOrder(itemList = "test1,test2,test3");
+		}
+	}
+
+}

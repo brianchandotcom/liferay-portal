@@ -217,6 +217,7 @@
 		<column name="commerceDiscountId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="typeSettings" type="String" />
 
 		<!-- Order -->
 
@@ -324,6 +325,7 @@
 		<exception>CommerceDiscountLimitationType</exception>
 		<exception>CommerceDiscountMaxPriceValue</exception>
 		<exception>CommerceDiscountRuleType</exception>
+		<exception>CommerceDiscountRuleTypeSettings</exception>
 		<exception>CommerceDiscountTarget</exception>
 		<exception>CommerceDiscountTitle</exception>
 		<exception>CommerceDiscountValidator</exception>

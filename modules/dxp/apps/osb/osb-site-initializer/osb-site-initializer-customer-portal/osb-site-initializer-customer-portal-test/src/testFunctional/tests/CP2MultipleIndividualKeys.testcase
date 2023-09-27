@@ -89,7 +89,7 @@ definition {
 	@description = "Story ID: LPS-146061 | Test summary: Verify that user can see the correct option of download when they select two keys with different expiration dates"
 	@ignore = "true"
 	@priority = 5
-	test AssertThatMultipleIndividualKeysNotAgregatedDowloadOptions {
+	test AssertThatMultipleIndividualKeysNotAgregatedDownloadOptions {
 		property portal.upstream = "quarantine";
 
 		task ("Given I go to the test account") {
@@ -138,7 +138,7 @@ definition {
 	@description = "Story ID: LPS-146061 | Test Summary: Verify that user can see the correct option of download when they select two keys with the same expiration date."
 	@ignore = "true"
 	@priority = 5
-	test AssertThetMultipleIndividualKeysAgregatedDowloadOptions {
+	test AssertThetMultipleIndividualKeysAgregatedDownloadOptions {
 		property portal.upstream = "quarantine";
 
 		task ("Given the user go to the test account") {

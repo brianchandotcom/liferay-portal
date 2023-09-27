@@ -56,20 +56,20 @@ definition {
 				entry = "Fragment Name",
 				item = "Edit");
 
-			var htmlSnippet = '''
-<div class="test">
-CSS
+			var htmlSnippet = '''<div class="test">
+	CSS
 </div>
 <div>
-NO CSS
-</div>
-		''';
-			var cssSnippet = '''
-.test
-{ font-size: 40px; }
-		''';
+	NO CSS
+</div>''';
+			var cssSnippet = '''.test
+{
+	font-size: 40px;
+}''';
 
 			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
+
+			FragmentsEditor.waitForAutoSave();
 
 			FragmentsEditor.typeCssEditor(content = ${cssSnippet});
 
@@ -117,7 +117,9 @@ NO CSS
 	@priority = 4
 	test MarkFragmentWithoutReadOnlyImportedToPortalAsCacheable {
 		task ("Import a fragment collection without Read-Only") {
-			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
+			FragmentsAdmin.importCollectionFromDependenciesFolder(
+				collectionZipFile = "fragment-collection.zip",
+				importOption = "Do Not Import Existing Items");
 		}
 
 		task ("Mark the imported fragment as cacheable") {

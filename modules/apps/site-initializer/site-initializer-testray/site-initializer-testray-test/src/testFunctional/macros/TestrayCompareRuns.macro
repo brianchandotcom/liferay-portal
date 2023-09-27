@@ -1,0 +1,11 @@
+definition {
+
+	macro goToCompareRuns {
+		Click(
+			key_button = "Compare Runs",
+			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");
+
+		Button.click(button = ${button});
+	}
+
+}

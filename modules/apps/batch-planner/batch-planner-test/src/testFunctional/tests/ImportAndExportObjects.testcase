@@ -1,10 +1,10 @@
-@component-name = "portal-batch-engine"
+@component-name = "portal-batch-planner"
 definition {
 
-	property custom.properties = "feature.flag.COMMERCE-8087=true";
+	property custom.properties = "feature.flag.COMMERCE-8087=true${line.separator}feature.flag.LPS-186620=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Batch Engine";
+	property testray.main.component.name = "Import/Export";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-189722"
+	@description = "Ignored due to LPS-191607"
 	@ignore = "true"
 	@priority = 3
 	test DownloadSampleFileOfTheCustomObject {
@@ -191,8 +191,6 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-189722"
-	@ignore = "true"
 	@priority = 4
 	test ExportCustomObjectWithAllFieldTypesMapped {
 		property portal.acceptance = "true";
@@ -243,6 +241,22 @@ definition {
 		}
 
 		task ("Then the zip file contains a related file type export successfully") {
+			var filePath = TestCase.getDependenciesDirPath(fileName = "json_objectEntry_export.txt");
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+			var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
+			var attachmenId = JSONPathUtil.getProperty(
+				property = "$.items..customAttachment.id",
+				response = ${response});
+			var attachmenHref = JSONPathUtil.getProperty(
+				property = "$.items..customAttachment.link.href",
+				response = ${response});
+
+			FileUtil.replaceStringInFile(${filePath}, 20123, ${userId});
+
+			FileUtil.replaceStringInFile(${filePath}, 36105, ${attachmenId});
+
+			FileUtil.replaceStringInFile(${filePath}, "/documents/36568/36570/Document_3.png", ${attachmenHref});
+
 			ImportExport.assertFileContent(
 				comparisonFileName = "json_objectEntry_export.txt",
 				fileName = "export.json");

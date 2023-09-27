@@ -3,7 +3,6 @@ com/liferay/portal/convert/ConvertProcess.getConfigurationErrorMessage()Ljava/la
 com/liferay/portal/convert/ConvertProcess.getDescription()Ljava/lang/String;:SAFE
 com/liferay/portal/convert/ConvertProcess.getParameterDescription()Ljava/lang/String;:SAFE
 com/liferay/portal/convert/ConvertProcess.getParameterNames()[Ljava/lang/String;:SAFE
-com/liferay/portal/kernel/patcher/PatcherUtil.getInstalledPatches()[Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/scripting/ScriptingUtil.getSupportedLanguages()Ljava/util/Set;:SAFE
 com/liferay/portal/kernel/servlet/SessionMessages.get(UNKNOWN,"scriptOutput"):SAFE@org/apache/jsp/script_jsp
 com/liferay/portal/kernel/util/ReleaseInfo.getReleaseInfo()Ljava/lang/String;:SAFE

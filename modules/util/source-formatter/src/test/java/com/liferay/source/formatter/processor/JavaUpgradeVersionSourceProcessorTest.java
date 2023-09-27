@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.source.formatter.processor;
@@ -24,34 +15,34 @@ public class JavaUpgradeVersionSourceProcessorTest
 
 	@Test
 	public void testMajorUpgradeByAlterColumnName() throws Exception {
-		test("MajorUpgradeByAlterColumnName.testjava", "2.0.0", 32);
+		test("MajorUpgradeByAlterColumnName.testjava", "2.0.0", 23);
 	}
 
 	@Test
 	public void testMajorUpgradeByAlterTableDropColumn() throws Exception {
-		test("MajorUpgradeByAlterTableDropColumn.testjava", "2.0.0", 33);
+		test("MajorUpgradeByAlterTableDropColumn.testjava", "2.0.0", 24);
 	}
 
 	@Test
 	public void testMajorUpgradeByAlterTableDropColumnClause()
 		throws Exception {
 
-		test("MajorUpgradeByAlterTableDropColumnClause.testjava", "2.0.0", 33);
+		test("MajorUpgradeByAlterTableDropColumnClause.testjava", "2.0.0", 24);
 	}
 
 	@Test
 	public void testMajorUpgradeByDropTable() throws Exception {
-		test("MajorUpgradeByDropTable.testjava", "2.0.0", 32);
+		test("MajorUpgradeByDropTable.testjava", "2.0.0", 23);
 	}
 
 	@Test
 	public void testMinorUpgradeByAlterTableAddColumn() throws Exception {
-		test("MinorUpgradeByAlterTableAddColumn.testjava", "1.1.0", 33);
+		test("MinorUpgradeByAlterTableAddColumn.testjava", "1.1.0", 24);
 	}
 
 	@Test
 	public void testMinorUpgradeByAlterTableAddColumnClause() throws Exception {
-		test("MinorUpgradeByAlterTableAddColumnClause.testjava", "1.1.0", 33);
+		test("MinorUpgradeByAlterTableAddColumnClause.testjava", "1.1.0", 24);
 	}
 
 	@Test

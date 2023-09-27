@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.order.content.web.internal.display.context;
@@ -67,6 +58,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,8 +69,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -177,14 +168,14 @@ public class CommerceOrderContentDisplayContext {
 
 		_portletDisplay = _cpRequestHelper.getPortletDisplay();
 
-		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
+		_themeDisplay = _cpRequestHelper.getThemeDisplay();
 
 		_commerceOrderDateFormatDate = FastDateFormatFactoryUtil.getDate(
-			DateFormat.MEDIUM, themeDisplay.getLocale(),
-			themeDisplay.getTimeZone());
+			DateFormat.MEDIUM, _themeDisplay.getLocale(),
+			_themeDisplay.getTimeZone());
 		_commerceOrderDateFormatTime = FastDateFormatFactoryUtil.getTime(
-			DateFormat.MEDIUM, themeDisplay.getLocale(),
-			themeDisplay.getTimeZone());
+			DateFormat.MEDIUM, _themeDisplay.getLocale(),
+			_themeDisplay.getTimeZone());
 
 		_commerceContext = (CommerceContext)httpServletRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
@@ -519,9 +510,10 @@ public class CommerceOrderContentDisplayContext {
 
 			OpenCommerceOrderContentPortletInstanceConfiguration
 				openCommerceOrderContentPortletInstanceConfiguration =
-					_portletDisplay.getPortletInstanceConfiguration(
+					_configurationProvider.getPortletInstanceConfiguration(
 						OpenCommerceOrderContentPortletInstanceConfiguration.
-							class);
+							class,
+						_themeDisplay);
 
 			return openCommerceOrderContentPortletInstanceConfiguration.
 				displayStyle();
@@ -529,8 +521,9 @@ public class CommerceOrderContentDisplayContext {
 		else if (portletId.equals(CommercePortletKeys.COMMERCE_ORDER_CONTENT)) {
 			CommerceOrderContentPortletInstanceConfiguration
 				commerceOrderContentPortletInstanceConfiguration =
-					_portletDisplay.getPortletInstanceConfiguration(
-						CommerceOrderContentPortletInstanceConfiguration.class);
+					_configurationProvider.getPortletInstanceConfiguration(
+						CommerceOrderContentPortletInstanceConfiguration.class,
+						_themeDisplay);
 
 			return commerceOrderContentPortletInstanceConfiguration.
 				displayStyle();
@@ -550,9 +543,10 @@ public class CommerceOrderContentDisplayContext {
 
 			OpenCommerceOrderContentPortletInstanceConfiguration
 				openCommerceOrderContentPortletInstanceConfiguration =
-					_portletDisplay.getPortletInstanceConfiguration(
+					_configurationProvider.getPortletInstanceConfiguration(
 						OpenCommerceOrderContentPortletInstanceConfiguration.
-							class);
+							class,
+						_themeDisplay);
 
 			return openCommerceOrderContentPortletInstanceConfiguration.
 				displayStyleGroupId();
@@ -560,8 +554,9 @@ public class CommerceOrderContentDisplayContext {
 		else if (portletId.equals(CommercePortletKeys.COMMERCE_ORDER_CONTENT)) {
 			CommerceOrderContentPortletInstanceConfiguration
 				commerceOrderContentPortletInstanceConfiguration =
-					_portletDisplay.getPortletInstanceConfiguration(
-						CommerceOrderContentPortletInstanceConfiguration.class);
+					_configurationProvider.getPortletInstanceConfiguration(
+						CommerceOrderContentPortletInstanceConfiguration.class,
+						_themeDisplay);
 
 			return commerceOrderContentPortletInstanceConfiguration.
 				displayStyleGroupId();
@@ -1168,8 +1163,9 @@ public class CommerceOrderContentDisplayContext {
 	public boolean isShowCommerceOrderCreateTime() throws PortalException {
 		CommerceOrderContentPortletInstanceConfiguration
 			commerceOrderContentPortletInstanceConfiguration =
-				_portletDisplay.getPortletInstanceConfiguration(
-					CommerceOrderContentPortletInstanceConfiguration.class);
+				_configurationProvider.getPortletInstanceConfiguration(
+					CommerceOrderContentPortletInstanceConfiguration.class,
+					_themeDisplay);
 
 		return commerceOrderContentPortletInstanceConfiguration.
 			showCommerceOrderCreateTime();
@@ -1382,5 +1378,6 @@ public class CommerceOrderContentDisplayContext {
 	private final PortletDisplay _portletDisplay;
 	private final PortletResourcePermission _portletResourcePermission;
 	private SearchContainer<CommerceOrder> _searchContainer;
+	private final ThemeDisplay _themeDisplay;
 
 }

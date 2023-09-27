@@ -1,9 +1,9 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
 	static var randomSiteName = StringUtil.randomString(8);
@@ -11,6 +11,10 @@ definition {
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
@@ -49,6 +53,7 @@ definition {
 	test CannotSearchContentPageWithoutPublishedVersion {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a page creator has a content page with Heading fragment and keeps it as draft") {
 			ContentPagesNavigator.openEditContentPage(
@@ -86,6 +91,7 @@ definition {
 	test FilterByTypeFacet {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Type Facet to Search page") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -132,7 +138,7 @@ definition {
 		}
 
 		task ("Check the Page type in Type Facet") {
-			SearchFacetPortlet.checkFacet(facetValueName = "Page");
+			SearchFacetPortlet.checkFacet(facetTerm = "Page");
 		}
 
 		task ("View only the content page shown in the search results") {
@@ -147,6 +153,7 @@ definition {
 	test SearchByInlineText {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -219,6 +226,7 @@ definition {
 	test SearchByNotEditableText {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
@@ -278,6 +286,7 @@ definition {
 	@priority = 4
 	test SearchPageInSelectModalWhenMapPageToEditableField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a parent widget page") {
 			JSONLayout.addPublicLayout(
@@ -355,8 +364,8 @@ definition {
 	@description = "This is a use case for LPS-164924. Able to search page with workflow by inline text or map content."
 	@priority = 4
 	test SearchPageWithWorkflowByInlineTextAndMapContent {
-		property ci.retries.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given enable workflow for Content Pages") {
 			Workflow.openWorkflowAdmin(siteURLKey = ${siteURLKey});
@@ -499,6 +508,7 @@ definition {
 	@priority = 3
 	test ViewContentPageNotShownInSearchResultsAfterDeleteCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Publish the content page") {
 			JSONLayout.publishLayout(
@@ -574,6 +584,7 @@ definition {
 	test ViewContentPageShownInSearchResultsAfterExecuteReindexAll {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Paragraph fragment to content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -637,6 +648,52 @@ definition {
 			for (var title : list "Test Content Page Name,Searchable Web Content Title") {
 				Search.viewResultAssetTitle(searchAssetTitle = ${title});
 			}
+		}
+	}
+
+	@description = "This is a test for LPS-163785. View content page shown in search results after remove View permissions for guest."
+	@priority = 4
+	test ViewContentPageShownInSearchResultsAfterRemoveViewPermissionForGuest {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a user has a content page with a Paragraph fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "lorem ipsum");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user removes the View permission for guest") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			PermissionsInline.gotoSitePageCP(pageName = "Test Content Page Name");
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Guest");
+
+			IFrame.selectTopFrame();
+		}
+
+		task ("Then the user can still see the content page in search results") {
+			Navigator.gotoSitePage(
+				pageName = "Search",
+				siteName = ${randomSiteName});
+
+			Search.searchCP(searchTerm = "lorem");
+
+			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
 		}
 	}
 

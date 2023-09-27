@@ -142,6 +142,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="fieldType" />
 		</finder>
+		<finder name="S_F" return-type="Collection">
+			<finder-column name="storageId" />
+			<finder-column name="fieldName" />
+		</finder>
 		<finder name="S_I" return-type="DDMField" unique="true">
 			<finder-column name="storageId" />
 			<finder-column name="instanceId" />

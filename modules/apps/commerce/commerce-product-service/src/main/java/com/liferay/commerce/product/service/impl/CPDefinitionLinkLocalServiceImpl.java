@@ -1,19 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.commerce.product.exception.CPDefinitionLinkDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionLinkExpirationDateException;
 import com.liferay.commerce.product.internal.util.CPDefinitionLocalServiceCircularDependencyUtil;
@@ -29,15 +21,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -151,6 +146,10 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		_reindexCPDefinition(cpDefinitionId);
 
+		if (serviceContext != null) {
+			_updateAsset(cpDefinitionLink, serviceContext);
+		}
+
 		return _startWorkflowInstance(
 			user.getUserId(), cpDefinitionLink, serviceContext);
 	}
@@ -188,6 +187,12 @@ public class CPDefinitionLinkLocalServiceImpl
 		// Commerce product definition link
 
 		cpDefinitionLinkPersistence.remove(cpDefinitionLink);
+
+		// Asset
+
+		_assetEntryLocalService.deleteEntry(
+			CPDefinitionLink.class.getName(),
+			cpDefinitionLink.getCPDefinitionLinkId());
 
 		// Expando
 
@@ -423,6 +428,10 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		_reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
 
+		if (serviceContext != null) {
+			_updateAsset(cpDefinitionLink, serviceContext);
+		}
+
 		return _startWorkflowInstance(
 			user.getUserId(), cpDefinitionLink, serviceContext);
 	}
@@ -607,8 +616,40 @@ public class CPDefinitionLinkLocalServiceImpl
 			serviceContext, workflowContext);
 	}
 
+	private void _updateAsset(
+			CPDefinitionLink cpDefinitionLink, ServiceContext serviceContext)
+		throws PortalException {
+
+		Company company = _companyLocalService.getCompany(
+			serviceContext.getCompanyId());
+
+		CProduct cProduct = _cProductPersistence.findByPrimaryKey(
+			cpDefinitionLink.getCProductId());
+
+		CPDefinition cpDefinition = _cpDefinitionPersistence.findByPrimaryKey(
+			cProduct.getPublishedCPDefinitionId());
+
+		_assetEntryLocalService.updateEntry(
+			serviceContext.getUserId(), company.getGroupId(),
+			cpDefinitionLink.getCreateDate(),
+			cpDefinitionLink.getModifiedDate(),
+			CPDefinitionLink.class.getName(),
+			cpDefinitionLink.getCPDefinitionLinkId(), null, 0,
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(), true, true, null, null, null,
+			null, ContentTypes.TEXT_PLAIN, cpDefinition.getNameMapAsXML(),
+			cpDefinition.getDescriptionMapAsXML(), null, null, null, 0, 0,
+			null);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionLinkLocalServiceImpl.class);
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private CPDefinitionPersistence _cpDefinitionPersistence;

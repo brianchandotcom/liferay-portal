@@ -1,29 +1,24 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import java.sql.Connection;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -100,27 +95,24 @@ public class ReleaseManagerTest {
 	public void testUnsuccessfulUpgradeByMissingPortalUpgrade()
 		throws Exception {
 
-		Release release = _releaseLocalService.fetchRelease(
-			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+		try (Connection connection = DataAccess.getConnection()) {
+			Version version = PortalUpgradeProcess.getCurrentSchemaVersion(
+				connection);
 
-		String currentSchemaVersion = release.getSchemaVersion();
+			PortalUpgradeProcess.updateSchemaVersion(
+				connection, new Version(0, 0, 0));
 
-		try {
-			release.setSchemaVersion("0.0.0");
-
-			release = _releaseLocalService.updateRelease(release);
-
-			Assert.assertFalse(_releaseManager.isUpgraded());
-			Assert.assertFalse(
-				Validator.isBlank(
-					_releaseManager.getShortStatusMessage(false)));
-			Assert.assertFalse(
-				Validator.isBlank(_releaseManager.getStatusMessage(false)));
-		}
-		finally {
-			release.setSchemaVersion(currentSchemaVersion);
-
-			_releaseLocalService.updateRelease(release);
+			try {
+				Assert.assertFalse(_releaseManager.isUpgraded());
+				Assert.assertFalse(
+					Validator.isBlank(
+						_releaseManager.getShortStatusMessage(false)));
+				Assert.assertFalse(
+					Validator.isBlank(_releaseManager.getStatusMessage(false)));
+			}
+			finally {
+				PortalUpgradeProcess.updateSchemaVersion(connection, version);
+			}
 		}
 	}
 

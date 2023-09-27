@@ -1,0 +1,337 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"parameters": {
+		},
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "jenkinsNodeType",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "master",
+					"key": "master",
+					"name": "Master",
+					"name_i18n": {
+						"en-US": "Master"
+					}
+				},
+				{
+					"externalReferenceCode": "slave",
+					"key": "slave",
+					"name": "Slave",
+					"name_i18n": {
+						"en-US": "Slave"
+					}
+				}
+			],
+			"name": "jenkinsNodeType",
+			"name_i18n": {
+				"en-US": "Jenkins Node Type"
+			}
+		},
+		{
+			"externalReferenceCode": "liferayBundle",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "dxpFixpackRelease",
+					"key": "dxpFixpackRelease",
+					"name": "DXP Fixpack Release",
+					"name_i18n": {
+						"en-US": "DXP Fixpack Release"
+					}
+				},
+				{
+					"externalReferenceCode": "dxpHotfixRelease",
+					"key": "dxpHotfixRelease",
+					"name": "DXP Hotfix Release",
+					"name_i18n": {
+						"en-US": "DXP Hotfix Release"
+					}
+				},
+				{
+					"externalReferenceCode": "dxpRelease",
+					"key": "dxpRelease",
+					"name": "DXP Release",
+					"name_i18n": {
+						"en-US": "DXP Release"
+					}
+				},
+				{
+					"externalReferenceCode": "dxpSource",
+					"key": "dxpSource",
+					"name": "DXP Source",
+					"name_i18n": {
+						"en-US": "DXP Source"
+					}
+				},
+				{
+					"externalReferenceCode": "portalRelease",
+					"key": "portalRelease",
+					"name": "Portal Release",
+					"name_i18n": {
+						"en-US": "Portal Release"
+					}
+				},
+				{
+					"externalReferenceCode": "portalSource",
+					"key": "portalSource",
+					"name": "Portal Source",
+					"name_i18n": {
+						"en-US": "Portal Source"
+					}
+				}
+			],
+			"name": "liferayBundle",
+			"name_i18n": {
+				"en-US": "Liferay Bundle"
+			}
+		},
+		{
+			"externalReferenceCode": "liferayPortalBranch",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "70x",
+					"key": "70x",
+					"name": "7.0.x",
+					"name_i18n": {
+						"en-US": "7.0.x"
+					}
+				},
+				{
+					"externalReferenceCode": "71x",
+					"key": "71x",
+					"name": "7.1.x",
+					"name_i18n": {
+						"en-US": "7.1.x"
+					}
+				},
+				{
+					"externalReferenceCode": "72x",
+					"key": "72x",
+					"name": "7.2.x",
+					"name_i18n": {
+						"en-US": "7.2.x"
+					}
+				},
+				{
+					"externalReferenceCode": "73x",
+					"key": "73x",
+					"name": "7.3.x",
+					"name_i18n": {
+						"en-US": "7.3.x"
+					}
+				},
+				{
+					"externalReferenceCode": "ee6130",
+					"key": "ee6130",
+					"name": "ee6130",
+					"name_i18n": {
+						"en-US": "ee-6.1.30"
+					}
+				},
+				{
+					"externalReferenceCode": "ee61x",
+					"key": "ee61x",
+					"name": "ee61x",
+					"name_i18n": {
+						"en-US": "ee-6.1.x"
+					}
+				},
+				{
+					"externalReferenceCode": "ee6210",
+					"key": "ee6210",
+					"name": "ee6210",
+					"name_i18n": {
+						"en-US": "ee-6.2.10"
+					}
+				},
+				{
+					"externalReferenceCode": "ee62x",
+					"key": "ee62x",
+					"name": "ee62x",
+					"name_i18n": {
+						"en-US": "ee-6.2.x"
+					}
+				},
+				{
+					"externalReferenceCode": "master",
+					"key": "master",
+					"name": "master",
+					"name_i18n": {
+						"en-US": "master"
+					}
+				}
+			],
+			"name": "liferayPortalBranch",
+			"name_i18n": {
+				"en-US": "Liferay Portal Branch"
+			}
+		},
+		{
+			"externalReferenceCode": "jobComparatorType",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "fifo",
+					"key": "fifo",
+					"name": "First In First Out",
+					"name_i18n": {
+						"en-US": "First In First Out"
+					}
+				},
+				{
+					"externalReferenceCode": "jobPriority",
+					"key": "jobPriority",
+					"name": "Job Priority",
+					"name_i18n": {
+						"en-US": "Job Priority"
+					}
+				},
+				{
+					"externalReferenceCode": "jobStartDate",
+					"key": "jobStartDate",
+					"name": "Job Start Date",
+					"name_i18n": {
+						"en-US": "Job Start Date"
+					}
+				},
+				{
+					"externalReferenceCode": "jobType",
+					"key": "jobType",
+					"name": "Job Type",
+					"name_i18n": {
+						"en-US": "Job Type"
+					}
+				},
+				{
+					"externalReferenceCode": "testSuiteName",
+					"key": "testSuiteName",
+					"name": "Test Suite Name",
+					"name_i18n": {
+						"en-US": "Test Suite Name"
+					}
+				},
+				{
+					"externalReferenceCode": "upstreamGitBranchName",
+					"key": "upstreamGitBranchName",
+					"name": "Upstream Git Branch Name",
+					"name_i18n": {
+						"en-US": "Upstream Git Branch Name"
+					}
+				}
+			],
+			"name": "jobComparatorType",
+			"name_i18n": {
+				"en-US": "Job Comparator Type"
+			}
+		},
+		{
+			"externalReferenceCode": "jobType",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "default",
+					"key": "default",
+					"name": "Default",
+					"name_i18n": {
+						"en-US": "Default"
+					}
+				},
+				{
+					"externalReferenceCode": "portalPullRequest",
+					"key": "portalPullRequest",
+					"name": "Portal Pull Request",
+					"name_i18n": {
+						"en-US": "Portal Pull Request"
+					}
+				},
+				{
+					"externalReferenceCode": "portalPullRequestSF",
+					"key": "portalPullRequestSF",
+					"name": "Portal Pull Request SF",
+					"name_i18n": {
+						"en-US": "Portal Pull Request SF"
+					}
+				}
+			],
+			"name": "jobType",
+			"name_i18n": {
+				"en-US": "Job Type"
+			}
+		},
+		{
+			"externalReferenceCode": "result",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "failed",
+					"key": "failed",
+					"name": "Failed",
+					"name_i18n": {
+						"en-US": "Failed"
+					}
+				},
+				{
+					"externalReferenceCode": "passed",
+					"key": "passed",
+					"name": "Passed",
+					"name_i18n": {
+						"en-US": "Passed"
+					}
+				}
+			],
+			"name": "result",
+			"name_i18n": {
+				"en-US": "Result"
+			}
+		},
+		{
+			"externalReferenceCode": "state",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "blocked",
+					"key": "blocked",
+					"name": "Blocked",
+					"name_i18n": {
+						"en-US": "Blocked"
+					}
+				},
+				{
+					"externalReferenceCode": "completed",
+					"key": "completed",
+					"name": "Completed",
+					"name_i18n": {
+						"en-US": "Completed"
+					}
+				},
+				{
+					"externalReferenceCode": "opened",
+					"key": "opened",
+					"name": "Opened",
+					"name_i18n": {
+						"en-US": "Opened"
+					}
+				},
+				{
+					"externalReferenceCode": "queued",
+					"key": "queued",
+					"name": "Queued",
+					"name_i18n": {
+						"en-US": "Queued"
+					}
+				},
+				{
+					"externalReferenceCode": "running",
+					"key": "running",
+					"name": "Running",
+					"name_i18n": {
+						"en-US": "Running"
+					}
+				}
+			],
+			"name": "state",
+			"name_i18n": {
+				"en-US": "State"
+			}
+		}
+	]
+}

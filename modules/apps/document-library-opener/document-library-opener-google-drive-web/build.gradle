@@ -5,8 +5,6 @@ dependencies {
 	compileInclude group: "com.google.api-client", name: "google-api-client-servlet", version: "1.23.0"
 	compileInclude group: "com.google.apis", name: "google-api-services-drive", version: "v3-rev20190311-1.28.0"
 	compileInclude group: "com.google.apis", name: "google-api-services-oauth2", version: "v2-rev137-1.23.0"
-	compileInclude group: "com.google.errorprone", name: "error_prone_annotations", version: "2.5.1"
-	compileInclude group: "com.google.guava", name: "guava", version: "30.1.1-jre"
 	compileInclude group: "com.google.http-client", name: "google-http-client", version: "1.23.0"
 	compileInclude group: "com.google.http-client", name: "google-http-client-jackson2", version: "1.23.0"
 	compileInclude group: "com.google.oauth-client", name: "google-oauth-client", version: "1.34.1"
@@ -14,6 +12,7 @@ dependencies {
 	compileInclude group: "com.google.oauth-client", name: "google-oauth-client-servlet", version: "1.34.1"
 
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
+	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -23,12 +22,12 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:connected-app:connected-app-api")
 	compileOnly project(":apps:document-library-opener:document-library-opener-api")
-	compileOnly project(":apps:document-library-opener:document-library-opener-google-drive-api")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:document-library:document-library-google-drive-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:portal-background-task:portal-background-task-api")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/ibermatica-digital-healthcare-ecosystem",
+	"hidden": true,
+	"name": "Digital Healthcare Ecosystem",
+	"name_i18n": {
+		"en_US": "Digital Healthcare Ecosystem"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

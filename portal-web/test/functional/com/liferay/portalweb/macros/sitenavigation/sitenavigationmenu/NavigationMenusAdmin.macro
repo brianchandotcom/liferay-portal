@@ -332,7 +332,7 @@ definition {
 			WaitForElementPresent(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
 			if (IsElementPresent(key_displayStyle = "list", locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE")) {
-				Click(
+				ClickNoError(
 					key_listEntry = ${assetTitle},
 					locator1 = "LexiconList#LIST_ENTRY_TITLE");
 			}
@@ -411,7 +411,7 @@ definition {
 	macro addTranslation {
 		NavigationMenusAdmin.openItemSidebar(itemName = ${itemName});
 
-		if (IsElementPresent(locator1 = "SiteNavigationMenu#USE_CUSTOM_NAME_CHECKBOX")) {
+		if ((${item} != "Submenu") && (${item} != "URL")) {
 			Check.checkToggleSwitch(locator1 = "SiteNavigationMenu#USE_CUSTOM_NAME_CHECKBOX");
 		}
 

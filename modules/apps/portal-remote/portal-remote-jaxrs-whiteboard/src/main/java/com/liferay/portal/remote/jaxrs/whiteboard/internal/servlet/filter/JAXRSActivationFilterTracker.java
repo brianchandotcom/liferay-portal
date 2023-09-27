@@ -1,21 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.remote.jaxrs.whiteboard.internal.servlet.filter;
 
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.remote.jaxrs.whiteboard.lifecycle.JAXRSLifecycle;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -27,6 +18,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -36,8 +28,6 @@ public class JAXRSActivationFilterTracker {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
 		_countDownLatch = new CountDownLatch(1);
 
 		_filterServiceRegistration = bundleContext.registerService(
@@ -58,12 +48,6 @@ public class JAXRSActivationFilterTracker {
 	@Deactivate
 	protected synchronized void deactivate() {
 		_unregister();
-
-		if (_readyServiceRegistration != null) {
-			_readyServiceRegistration.unregister();
-
-			_readyServiceRegistration = null;
-		}
 	}
 
 	protected synchronized void setReady() throws ServletException {
@@ -74,14 +58,9 @@ public class JAXRSActivationFilterTracker {
 			throw new ServletException(interruptedException);
 		}
 
-		if (_readyServiceRegistration == null) {
-			_readyServiceRegistration = _bundleContext.registerService(
-				Object.class, new Object(),
-				MapUtil.singletonDictionary(
-					"liferay.jaxrs.whiteboard.ready", true));
+		_jaxrsLifecycle.ensureReady();
 
-			_unregister();
-		}
+		_unregister();
 	}
 
 	private void _unregister() {
@@ -92,9 +71,10 @@ public class JAXRSActivationFilterTracker {
 		}
 	}
 
-	private BundleContext _bundleContext;
 	private CountDownLatch _countDownLatch;
 	private ServiceRegistration<Filter> _filterServiceRegistration;
-	private ServiceRegistration<?> _readyServiceRegistration;
+
+	@Reference
+	private JAXRSLifecycle _jaxrsLifecycle;
 
 }

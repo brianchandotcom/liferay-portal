@@ -1,0 +1,21 @@
+{
+	"description": "Blog Posts",
+	"externalReferenceCode": "PRMC043",
+	"name": "Blog Posts",
+	"name_i18n": {
+		"ar_SA": "Blog Posts",
+		"ca_ES": "Blog Posts",
+		"de_DE": "Blog Posts",
+		"en_US": "Blog Posts",
+		"es_ES": "Blog Posts",
+		"fi_FI": "Blog Posts",
+		"fr_FR": "Blog Posts",
+		"hu_HU": "Blog Posts",
+		"ja_JP": "Blog Posts",
+		"nl_NL": "Blog Posts",
+		"pt_BR": "Blog Posts",
+		"sv_SE": "Blog Posts",
+		"zh_CN": "Blog Posts"
+	},
+	"viewableBy": "Anyone"
+}

@@ -6,8 +6,8 @@ task deployJar(type: Copy)
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "org.gagravarr", name: "vorbis-java-core", version: "0.8"
-	compile group: "org.gagravarr", name: "vorbis-java-tika", version: "0.8"
+	api group: "org.gagravarr", name: "vorbis-java-core", version: "0.8"
+	api group: "org.gagravarr", name: "vorbis-java-tika", version: "0.8"
 }
 
 deploy {

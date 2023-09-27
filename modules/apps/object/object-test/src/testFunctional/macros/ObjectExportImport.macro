@@ -23,7 +23,7 @@ definition {
 
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
-		MenuItem.click(menuItem = "Import");
+		MenuItem.click(menuItem = "Import Object Definition");
 
 		var filePath = TestCase.getDependenciesDirPath(fileName = "${objectFileName}.json");
 

@@ -18,6 +18,7 @@ definition {
 	var projectName = "Project 1";
 	var routineName = "Routine 1";
 	var runName = "Option 1";
+	var taskName = "Task_1";
 	var teamName = "Team 1";
 	var testSiteName = "Testray 2";
 
@@ -91,6 +92,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete task, routine, case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "tasks",
@@ -113,8 +116,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -123,15 +124,7 @@ definition {
 	@description = "Story ID: LPS-162695 | Test Summary: Verify if as an Administrator I should be able to add a task with user groups"
 	@priority = 5
 	test AdminCanAddTaskWithUserGroups {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given the user add a user and UserGroups") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
+		task ("Given the user add User Groups") {
 			JSONUserGroup.addUserGroup(
 				userGroupDescription = "UG UserGroup Name Description",
 				userGroupName = "UG UserGroup Name");
@@ -146,47 +139,17 @@ definition {
 
 			TestrayTestflow.goToTestflow();
 
-			Click(locator1 = "Button#PLUS");
-
-			TestrayTestflow.editBreadcrumb(
-				build = ${buildName},
-				project = ${projectName},
-				routine = ${routineName});
-
-			Button.click(button = "Analyze");
-
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "Task_1");
-
-			Click(
-				key_checkboxOption = "Compile",
-				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
-
-			Button.click(button = "Assign User Groups");
-
-			Click.clickAtNotVisible(
-				key_checkboxOption = "UG UserGroup Name",
-				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
-
-			Button.click(button = "Select User Groups");
-
-			Testray.checkSuccessAlertAppearsAndDisappears();
+			TestrayTestflow.addTask(
+				caseTypeList = "Compile",
+				selectBuild = ${buildName},
+				selectProject = ${projectName},
+				selectRoutine = ${routineName},
+				taskName = "Task_1",
+				userGroups = "true",
+				userList = "UG UserGroup Name");
 		}
 
 		task ("Then can see a created task with details") {
-			TestrayTestflow.assertAssignTask(
-				email = "test@liferay.com",
-				userName = "Test Test");
-
-			TestrayTestflow.assertAssignTask(
-				email = "userea@liferay.com",
-				userName = "userfn userln");
-
-			Button.click(button = "Save");
-
-			Alert.viewSuccessMessage();
-
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.assertTaskDetails(
@@ -201,149 +164,81 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to delete a task through the Context Menu"
 	@priority = 5
 	test AdminCanDeleteTaskContextMenu {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that the user add a Task") {
-			TestrayTestflow.goToTestflow();
-
-			TestrayTestflow.addTask(
-				checkCaseType = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userName = "Test Test");
-
-			Alert.viewSuccessMessage();
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
 
 			TestrayTestflow.goToTestflow();
-
-			TestrayTestflow.assertTaskDetails(
-				build = ${buildName},
-				project = ${projectName},
-				routine = ${routineName},
-				status = "In Analysis",
-				taskName = "Task_1");
 		}
 
 		task ("And go to task through build") {
-			TestrayLayout.clickResultsOnSidebar();
+			TestrayTestflow.goToTaskByBuild(
+				buildName = ${buildName},
+				projectName = ${projectName},
+				routineName = ${routineName});
+		}
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
-
-			TestrayBuild.goToBuild(buildName = ${buildName});
-
-			Button.click(button = "View Task");
-
+		task ("And the user complete the task") {
 			Button.click(button = "Complete");
 
 			TestrayTestflow.goToTestflow();
 		}
 
 		task ("When the user delete the task through the Context Menu") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Task_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+			Testray.deleteItem(itemName = "Task_1");
 		}
 
 		task ("Then the task is not displayed anymore") {
-			Testray.assertItemNotPresent(key_name = "Task_1");
+			Testray.viewTableEntryListNotPresent(listEntry = "Task_1");
 		}
 	}
 
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to edit a task"
 	@priority = 4
 	test AdminCanEditTask {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that the user add a Task") {
-			TestrayTestflow.goToTestflow();
-
-			TestrayTestflow.addTask(
-				checkCaseType = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userName = "Test Test");
-
-			Alert.viewSuccessMessage();
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
 
 			TestrayTestflow.goToTestflow();
 
-			TestrayTestflow.assertTaskDetails(
-				build = ${buildName},
-				project = ${projectName},
-				routine = ${routineName},
-				status = "In Analysis",
-				taskName = "Task_1");
-
-			TestrayLayout.clickResultsOnSidebar();
-
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
-
-			TestrayBuild.goToBuild(buildName = ${buildName});
-
-			Button.click(button = "View Task");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 		}
 
 		task ("When the user edit the task") {
 			TestrayTestflow.editTask(
 				taskName = "Task_2",
-				userName = "Lead User");
+				userNameList = "Lead User");
 
 			TestrayTestflow.goToTestflow();
 		}
 
-		task ("Then the task is edited with new details") {
-			AssertElementPresent(
-				key_projectName = "Task_2",
-				locator1 = "Testray#ITEM_NAME");
+		task ("Then the task name is edited") {
+			Testray.viewTableEntryList(listEntry = "Task_2");
 		}
 	}
 
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Task"
 	@priority = 5
 	test AdminCanNotAddDuplicateTestflow {
-		property test.liferay.virtual.instance = "false";
-
-		task ("When the user try to add a duplicate Task") {
-			TestrayTestflow.goToTestflow();
-
-			TestrayTestflow.addTask(
-				checkCaseType = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userName = "Test Test");
-
-			Alert.viewSuccessMessage();
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
 
 			TestrayTestflow.goToTestflow();
+		}
 
-			TestrayTestflow.assertTaskDetails(
-				build = ${buildName},
-				project = ${projectName},
-				routine = ${routineName},
-				status = "In Analysis",
-				taskName = "Task_1");
-
-			Click(locator1 = "Button#PLUS");
+		task ("When the user add a duplicate Task") {
+			LexiconEntry.gotoAdd();
 
 			TestrayTestflow.editBreadcrumb(
 				build = ${buildName},
@@ -361,8 +256,6 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an administrator I can reanalyze an abandoned task"
 	@priority = 3
 	test AdminCanReanalyzeAbandonedTask {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user add a Task and subtask via API") {
 			JSONTestray.addTask(
 				buildName = ${buildName},
@@ -377,20 +270,15 @@ definition {
 				subtaskName = "Subtask_1",
 				subtaskNumber = 1,
 				taskName = "Task_1");
-
-			TestrayTestflow.goToTestflow();
-
-			TestrayTestflow.assertTaskDetails(
-				build = ${buildName},
-				project = ${projectName},
-				routine = ${routineName},
-				status = "In Analysis",
-				taskName = "Task_1");
-
-			TestrayTestflow.goToTask(taskName = "Task_1");
 		}
 
-		task ("When the user abandon a task") {
+		task ("And the user go to task page") {
+			TestrayTestflow.goToTestflow();
+
+			Testray.clickTableEntry(tableEntry = "Task_1");
+		}
+
+		task ("And the user abandon a task") {
 			Button.click(button = "Abandon");
 
 			TestrayTestflow.assertStatus(
@@ -398,7 +286,7 @@ definition {
 				status = "Abandoned");
 		}
 
-		task ("And the user reanalyze a task") {
+		task ("When the user reanalyze a task") {
 			Button.click(button = "Reanalyze");
 		}
 
@@ -412,41 +300,22 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an administrator I can reanalyze an complete task"
 	@priority = 3
 	test AdminCanReanalyzeCompleteTask {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that the user add a Task") {
-			TestrayTestflow.goToTestflow();
-
-			TestrayTestflow.addTask(
-				checkCaseType = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userName = "Test Test");
-
-			Alert.viewSuccessMessage();
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
 
 			TestrayTestflow.goToTestflow();
 
-			TestrayTestflow.assertTaskDetails(
-				build = ${buildName},
-				project = ${projectName},
-				routine = ${routineName},
-				status = "In Analysis",
-				taskName = "Task_1");
-
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 		}
 
 		task ("When the user reanalyze an complete task") {
 			Button.click(button = "Complete");
 
 			Button.click(button = "Reanalyze");
-
-			TestrayTestflow.assertStatus(
-				label = "Task Details",
-				status = "Complete");
 		}
 
 		task ("Then the task should appear on the list with the status in analysis") {
@@ -459,36 +328,16 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to update a task's status to complete"
 	@priority = 4
 	test AdminCanUpdateTaskStatusToComplete {
-		property test.liferay.virtual.instance = "false";
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
 
-		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
-			TestrayTestflow.addTask(
-				checkCaseType = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userName = "Test Test");
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("And go to the analyzed task") {
-			TestrayLayout.clickResultsOnSidebar();
-
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
-
-			TestrayBuild.goToBuild(buildName = ${buildName});
-
-			Button.click(button = "View Task");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 		}
 
 		task ("When the user update task status to complete") {
@@ -505,59 +354,43 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an Administrator I should see the build that is associated with the task"
 	@priority = 2
 	test AdminCanViewAssociatedBuildInTask {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that the user add a Task") {
-			TestrayTestflow.goToTestflow();
-
-			TestrayTestflow.addTask(
-				checkCaseType = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userName = "Test Test");
-
-			Alert.viewSuccessMessage();
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
 
 			TestrayTestflow.goToTestflow();
-
-			TestrayTestflow.assertTaskDetails(
-				build = ${buildName},
-				project = ${projectName},
-				routine = ${routineName},
-				status = "In Analysis",
-				taskName = "Task_1");
 		}
 
-		task ("When the user associates a task with a build") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Task_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "View Associated Build");
+		task ("When the user clicks in the task with an associated build") {
+			TestrayManage.selectTableRowOption(
+				rowOption = "View Associated Build",
+				tableEntry = "Task_1");
 		}
 
-		task ("Then the user can redirect to the build associated with the task") {
-			TestrayHeader.assertBreadcrumbTitle(key_value = ${buildName});
+		task ("Then the user can redirect to the associated build") {
+			TestrayDropdown.assertBreadcrumbTitle(text = ${buildName});
 		}
 	}
 
 	@description = "Story ID: LPS-162695 | Test Summary: Verify that the user cannot create a task without assign users"
 	@priority = 4
 	test AdminCanViewRequiredAssignUsers {
-		property test.liferay.virtual.instance = "false";
-
-		task ("When the user try to add a Task without User") {
+		task ("When the user try to add a Task without a User") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.addTask(
-				checkCaseType = "Compile",
+				caseTypeList = "Compile",
+				fieldRequired = "fieldRequired",
 				selectBuild = ${buildName},
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = "Task_1");
 		}
 
-		task ("Then the required User message is displayed") {
+		task ("Then the required field message is displayed") {
 			Alert.viewErrorMessage(errorMessage = "Mark at least one user or user group for assignment.");
 		}
 	}
@@ -565,20 +398,20 @@ definition {
 	@description = "Story ID: LPS-162693 | Test Summary: Verify that the user cannot create a task without Case Type"
 	@priority = 2
 	test AdminCanViewRequiredCaseType {
-		property test.liferay.virtual.instance = "false";
-
-		task ("When the user try to add a Task without case type") {
+		task ("When the user try to add a Task without a case type") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.addTask(
+				fieldRequired = "fieldRequired",
 				selectBuild = ${buildName},
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = "Task_1",
-				userName = "Test Test");
+				userGroups = "false",
+				userList = "Test Test");
 		}
 
-		task ("Then the required Case Type message is displayed") {
+		task ("Then the required field message is displayed") {
 			Alert.viewErrorMessage(errorMessage = "Mark at least one case type for processing.");
 		}
 	}
@@ -586,39 +419,15 @@ definition {
 	@description = "Story ID: LPS-162693 | Test Summary: Verify if as an Administrator I should be able view task in analysis"
 	@priority = 4
 	test AdminCanViewTaskInAnalysis {
-		property test.liferay.virtual.instance = "false";
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
+		}
 
-		task ("Given the user add a Task in a different flow") {
-			TestrayLayout.clickResultsOnSidebar();
-
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
-
-			TestrayBuild.goToBuild(buildName = ${buildName});
-
-			Button.click(button = "Analyze");
-
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "Task_1");
-
-			Click(
-				key_checkboxOption = "Compile",
-				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
-
-			Testray.selectUsers(listUserName = "Test Test");
-
-			Testray.checkSuccessAlertAppearsAndDisappears();
-
-			Button.click(button = "Save");
-
-			Alert.viewSuccessMessage();
-
+		task ("When the user goes to Task page") {
 			TestrayTestflow.goToTestflow();
 		}
 
@@ -632,12 +441,10 @@ definition {
 	@description = "Story ID: LPS-162693 | Test Summary: Verify that As an administrator can remove users from the context menu"
 	@priority = 3
 	test CanRemoveUser {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given the user add a Task") {
+		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
-			Click(locator1 = "Button#PLUS");
+			LexiconEntry.gotoAdd();
 
 			TestrayTestflow.editBreadcrumb(
 				build = ${buildName},
@@ -646,43 +453,41 @@ definition {
 
 			Button.click(button = "Analyze");
 
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "Task_1");
+			PortletEntry.inputName(name = "Task_1");
 
-			Click(
+			Click.clickAtNotVisible(
 				key_checkboxOption = "Compile",
 				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
 		}
 
-		task ("When assign a user") {
-			Testray.selectUsers(listUserName = "Test Test");
+		task ("And assign a user in the task") {
+			Testray.selectCheckboxOptions(
+				buttonText = "Select Users",
+				checkboxNameList = "Test Test",
+				linkText = "Assign Users");
 
-			Testray.checkSuccessAlertAppearsAndDisappears();
-
-			TestrayTestflow.assertAssignTask(
-				email = "test@liferay.com",
-				userName = "Test Test");
+			Testray.viewTableEntryList(listEntry = "Test Test,test@liferay.com");
 		}
 
-		task ("Then can remove a user") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Test Test");
+		task ("When remove the user") {
+			TestrayManage.selectTableRowOption(
+				rowOption = "Remove",
+				tableEntry = "Test Test");
+		}
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Remove");
-
-			Testray.assertItemNotPresent(text = "Test Test");
+		task ("Then can not see the user in the list") {
+			Testray.viewTableEntryListNotPresent(listEntry = "Test Test,test@liferay.com");
 		}
 	}
 
 	@description = "Story ID: LPS-162693 | Test Summary: Verify that the user can not create a task without name"
 	@priority = 2
 	test CanViewFieldNameRequired {
-		property test.liferay.virtual.instance = "false";
-
-		task ("When the user try to add a Task without name") {
+		task ("When the user try to add a Task without a name") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.addTask(
+				fieldRequired = "fieldRequired",
 				selectBuild = ${buildName},
 				selectProject = ${projectName},
 				selectRoutine = ${routineName});

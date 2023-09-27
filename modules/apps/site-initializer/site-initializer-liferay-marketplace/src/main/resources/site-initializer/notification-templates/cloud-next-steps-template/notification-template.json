@@ -1,0 +1,24 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"externalReferenceCode": "MARKETPLACE-ACTION-CLOUD-EMAIL-TEMPLATE",
+	"name": "Next Steps MarketPlace",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "[%CURRENT_USER_EMAIL_ADDRESS%]",
+			"fromName": {
+				"en-US": "[%CURRENT_USER_FIRST_NAME%]"
+			},
+			"to": {
+				"en-US": "[%GETAPPINFORMATION_AUTHOR_EMAIL_ADDRESS%]"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "Liferay Marketplace - Next steps on [%GETAPPINFORMATION_PROJECTNAME%] purchase"
+	},
+	"type": "email"
+}

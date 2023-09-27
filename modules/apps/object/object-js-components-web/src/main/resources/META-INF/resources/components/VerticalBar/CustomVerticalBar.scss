@@ -1,0 +1,68 @@
+.lfr__objects-custom-vertical-bar {
+	&-content {
+		.c-slideout-show.sidebar {
+			overflow: auto;
+		}
+	}
+
+	&--left-closed {
+		animation: close-left-vertical-bar 0.5s;
+	}
+
+	&--left-open {
+		animation: open-left-vertical-bar 0.5s;
+		position: inherit;
+	}
+
+	&--right-closed {
+		animation: close-right-vertical-bar 0.5s;
+	}
+
+	&--right-open {
+		animation: open-right-vertical-bar 0.5s;
+		background: #fff;
+		position: inherit;
+	}
+}
+
+@keyframes close-left-vertical-bar {
+	from {
+		left: 0;
+	}
+	to {
+		left: -50%;
+	}
+}
+
+@keyframes close-right-vertical-bar {
+	from {
+		right: 0;
+	}
+	to {
+		right: -50%;
+	}
+}
+
+@keyframes open-left-vertical-bar {
+	from {
+		left: -50%;
+	}
+	to {
+		left: 0;
+	}
+}
+
+@keyframes open-right-vertical-bar {
+	from {
+		right: -50%;
+	}
+	to {
+		right: 0;
+	}
+}
+
+.dropdown-menu {
+	max-width: 17rem;
+	width: 17rem;
+	z-index: 1035;
+}

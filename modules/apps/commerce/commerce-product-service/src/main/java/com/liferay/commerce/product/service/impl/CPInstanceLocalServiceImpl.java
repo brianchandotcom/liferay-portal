@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.service.impl;
@@ -29,7 +20,9 @@ import com.liferay.commerce.product.internal.util.CPDefinitionLocalServiceCircul
 import com.liferay.commerce.product.internal.util.SKUCombinationsIterator;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionRelTable;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRelTable;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CProduct;
@@ -38,11 +31,14 @@ import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServi
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
+import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
+import com.liferay.commerce.product.service.persistence.CPInstanceUnitOfMeasurePersistence;
 import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -544,6 +540,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			resetCPInstanceCPDefinitionOptionValueRels(
 				cpInstance.getCPInstanceUuid());
 
+		_cpInstanceUnitOfMeasurePersistence.removeByCPInstanceId(
+			cpInstance.getCPInstanceId());
+
 		// Expando
 
 		_expandoRowLocalService.deleteRows(cpInstance.getCPInstanceId());
@@ -592,6 +591,30 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
+	public CPInstance fetchCPInstance(long cProductId, String cpInstanceUuid) {
+		CProduct cProduct = _cProductLocalService.fetchCProduct(cProductId);
+
+		if (cProduct == null) {
+			return null;
+		}
+
+		CPDefinition cpDefinition = _cpDefinitionPersistence.fetchByPrimaryKey(
+			cProduct.getPublishedCPDefinitionId());
+
+		if (cpDefinition == null) {
+			cpDefinition = _cpDefinitionPersistence.fetchByC_V(
+				cProduct.getCProductId(), cProduct.getLatestVersion());
+
+			if (cpDefinition == null) {
+				return null;
+			}
+		}
+
+		return cpInstancePersistence.fetchByC_C(
+			cpDefinition.getCPDefinitionId(), cpInstanceUuid);
+	}
+
+	@Override
 	public CPInstance fetchCProductInstance(
 		long cProductId, String cpInstanceUuid) {
 
@@ -603,6 +626,99 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		return cpInstancePersistence.fetchByC_C(
 			cProduct.getPublishedCPDefinitionId(), cpInstanceUuid);
+	}
+
+	@Override
+	public CPInstance fetchDefaultCPInstance(long cpDefinitionId) {
+		List<CPInstance> cpInstances = cpInstancePersistence.findByC_ST(
+			cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (cpInstances.isEmpty()) {
+			return null;
+		}
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+				cpDefinitionId, true);
+
+		if (cpDefinitionOptionRels.isEmpty()) {
+			return cpInstances.get(0);
+		}
+
+		long cpDefinitionOptionRelId = 0;
+		List<CPDefinitionOptionValueRel> defaultCPDefinitionOptionValueRels =
+			new ArrayList<>();
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			_cpDefinitionOptionValueRelPersistence.dslQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					CPDefinitionOptionValueRelTable.INSTANCE
+				).from(
+					CPDefinitionOptionValueRelTable.INSTANCE
+				).innerJoinON(
+					CPDefinitionOptionRelTable.INSTANCE,
+					CPDefinitionOptionRelTable.INSTANCE.CPDefinitionOptionRelId.
+						eq(
+							CPDefinitionOptionValueRelTable.INSTANCE.
+								CPDefinitionOptionRelId)
+				).where(
+					CPDefinitionOptionRelTable.INSTANCE.CPDefinitionId.eq(
+						cpDefinitionId
+					).and(
+						CPDefinitionOptionRelTable.INSTANCE.skuContributor.eq(
+							true)
+					)
+				).orderBy(
+					CPDefinitionOptionValueRelTable.INSTANCE.
+						CPDefinitionOptionRelId.ascending(),
+					CPDefinitionOptionValueRelTable.INSTANCE.preselected.
+						descending(),
+					CPDefinitionOptionValueRelTable.INSTANCE.priority.
+						ascending(),
+					CPDefinitionOptionValueRelTable.INSTANCE.createDate.
+						ascending()
+				));
+
+		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+				cpDefinitionOptionValueRels) {
+
+			if (cpDefinitionOptionRelId ==
+					cpDefinitionOptionValueRel.getCPDefinitionOptionRelId()) {
+
+				continue;
+			}
+
+			cpDefinitionOptionRelId =
+				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId();
+
+			defaultCPDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
+		}
+
+		for (CPInstance cpInstance : cpInstances) {
+			boolean defaultCPInstance = true;
+
+			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+					defaultCPDefinitionOptionValueRels) {
+
+				defaultCPInstance =
+					_cpInstanceOptionValueRelLocalService.
+						hasCPInstanceCPDefinitionOptionValueRel(
+							cpDefinitionOptionValueRel.
+								getCPDefinitionOptionValueRelId(),
+							cpInstance.getCPInstanceId());
+
+				if (!defaultCPInstance) {
+					break;
+				}
+			}
+
+			if (defaultCPInstance) {
+				return cpInstance;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -1878,6 +1994,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				"_cpDefinitionOptionValueRelLocalService", true);
 
 	@Reference
+	private CPDefinitionOptionValueRelPersistence
+		_cpDefinitionOptionValueRelPersistence;
+
+	@Reference
 	private CPDefinitionPersistence _cpDefinitionPersistence;
 
 	@Reference
@@ -1887,6 +2007,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Reference
 	private CPInstanceOptionValueRelPersistence
 		_cpInstanceOptionValueRelPersistence;
+
+	@Reference
+	private CPInstanceUnitOfMeasurePersistence
+		_cpInstanceUnitOfMeasurePersistence;
 
 	@Reference
 	private CProductLocalService _cProductLocalService;

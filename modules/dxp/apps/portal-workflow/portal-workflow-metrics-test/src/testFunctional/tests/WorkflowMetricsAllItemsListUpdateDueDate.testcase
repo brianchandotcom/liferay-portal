@@ -33,6 +33,7 @@ definition {
 	@priority = 5
 	test BulkUpdateModalIsDisplayedWhenMoreThan1PendingTaskIsSelected {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Multi Task Process");
 
@@ -95,7 +96,9 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToUpdateDueDateTasks();
+		PortletEntry.selectAll();
+
+		WorkflowMetrics.goToUpdateTasksDueDates();
 
 		WorkflowMetricsAllItemsListUpdateDueDate.selectUpdateDueDateTasksCardFilterValueAssignee(workflowAssignee = "Test Test");
 
@@ -154,7 +157,9 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToUpdateDueDateTasks();
+		PortletEntry.selectAll();
+
+		WorkflowMetrics.goToUpdateTasksDueDates();
 
 		WorkflowMetricsAllItemsListUpdateDueDate.selectUpdateDueDateCardFilterValueProcessStep(workflowStep = "Review");
 
@@ -178,6 +183,7 @@ definition {
 	@priority = 4
 	test CanNotUpdateDueDateOfUnassignedTasks {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "user@liferay.com",
@@ -219,8 +225,6 @@ definition {
 
 		WorkflowMetrics.viewButtonUpdateDueDateIsNotAvailable();
 
-		WorkflowMetrics.viewKebabMenuOptionsIsNotAvailable();
-
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "user@liferay.com",
 			userLoginFullName = "userfn userln");
@@ -232,7 +236,9 @@ definition {
 
 		WorkflowMetrics.viewButtonUpdateDueDateIsAvailable();
 
-		WorkflowMetrics.viewKebabMenuOptionsIsAvailable(dropdownItem = "Update Due Date");
+		Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+		MenuItem.viewPresent(menuItem = "Update Due Date");
 	}
 
 	@description = "LPS-105497 - Verify that users can hover over a row to see action options and select to Update Task Due Date by hovering over the calendar icon"
@@ -301,7 +307,9 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToUpdateDueDateTasks();
+		PortletEntry.selectAll();
+
+		WorkflowMetrics.goToUpdateTasksDueDates();
 
 		var currentYear = DateUtil.getCurrentYear();
 
@@ -395,7 +403,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToUpdateDueDateTasks();
+		PortletEntry.selectAll();
+
+		WorkflowMetrics.goToUpdateTasksDueDates();
 
 		Check.checkNotVisible(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
 

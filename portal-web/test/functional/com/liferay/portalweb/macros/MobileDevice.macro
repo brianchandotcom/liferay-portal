@@ -61,8 +61,34 @@ definition {
 		AssertVisible(locator1 = "Home#PAGE_ACTIVE");
 	}
 
+	macro previewBy {
+		if (isSet(previewBy)) {
+			Click.waitForMenuToggleJSClick(
+				key_fieldLabel = "Preview By",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
+
+			DropdownMenuItem.click(menuItem = ${previewBy});
+		}
+
+		if (isSet(experience)) {
+			Click.waitForMenuToggleJSClick(
+				key_fieldLabel = "Experience",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
+
+			DropdownMenuItem.click(menuItem = ${experience});
+		}
+
+		if (isSet(segment)) {
+			Click.waitForMenuToggleJSClick(
+				key_fieldLabel = "Segment",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
+
+			DropdownMenuItem.click(menuItem = ${segment});
+		}
+	}
+
 	macro previewPG {
-		Click(locator1 = "ControlMenu#SIMULATION");
+		Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
 
 		AssertElementNotPresent(locator1 = "IFrame#LOADING_MESSAGE");
 
@@ -113,21 +139,23 @@ definition {
 			takeScreenshot();
 
 			if (isSet(height)) {
-				Type(
+				TripleClick(locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD");
+
+				Type.sendKeys(
 					locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD",
 					value1 = ${height});
 			}
-			else {
-				var height = 400;
-			}
 
 			if (isSet(width)) {
-				Type(
+				TripleClick(locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_WIDTH_FIELD");
+
+				Type.sendKeys(
 					locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_WIDTH_FIELD",
 					value1 = ${width});
 			}
-			else {
-				var width = 400;
+
+			if (${applyCustomSize} == "true") {
+				Button.click(button = "Apply Custom Size");
 			}
 
 			takeScreenshot();

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
@@ -23,10 +14,16 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {SIZES, Size} from '../constants/sizes';
+import {
+	useCustomSize,
+	useSetCustomHeight,
+	useSetCustomWidth,
+} from '../contexts/CustomSizeContext';
 
 interface ISizeSelectorProps {
 	activeSize: Size;
 	namespace: string;
+	open: boolean;
 	previewRef: React.RefObject<HTMLDivElement>;
 	setActiveSize: Function;
 }
@@ -45,6 +42,7 @@ const MIN_CUSTOM_SIZE: number = 1;
 export default function SizeSelector({
 	activeSize,
 	namespace,
+	open,
 	previewRef,
 	setActiveSize,
 }: ISizeSelectorProps) {
@@ -87,6 +85,7 @@ export default function SizeSelector({
 						<CustomSizeSelector
 							id={customSizeSelectorId}
 							namespace={namespace}
+							open={open}
 							previewRef={previewRef}
 						/>
 					)}
@@ -117,6 +116,7 @@ export default function SizeSelector({
 						<CustomSizeSelector
 							id={customSizeSelectorId}
 							namespace={namespace}
+							open={open}
 							previewRef={previewRef}
 						/>
 					)}
@@ -208,18 +208,20 @@ SizeButton.propTypes = {
 interface ICustomSizeSelectorProps {
 	id: string;
 	namespace: string;
+	open: boolean;
 	previewRef: React.RefObject<HTMLDivElement>;
 }
 
 function CustomSizeSelector({
 	id,
 	namespace,
+	open,
 	previewRef,
 }: ICustomSizeSelectorProps) {
-	const [height, setHeight] = useState<number>(
-		SIZES.custom.screenSize.height
-	);
-	const [width, setWidth] = useState<number>(SIZES.custom.screenSize.width);
+	const {height, width} = useCustomSize();
+
+	const setHeight = useSetCustomHeight();
+	const setWidth = useSetCustomWidth();
 
 	const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
@@ -245,14 +247,14 @@ function CustomSizeSelector({
 			setWidth(preview.clientWidth);
 		});
 
-		if (previewRef.current) {
+		if (previewRef.current && open) {
 			resizeObserver.observe(previewRef.current);
 		}
 
 		return () => {
 			resizeObserver.disconnect();
 		};
-	}, [previewRef]);
+	}, [open, previewRef, setHeight, setWidth]);
 
 	return (
 		<div id={id}>

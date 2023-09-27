@@ -151,11 +151,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ERROR_3_LINK</td>
-	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-warning'))]/a)</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ERROR_DELETE_USED_SITE_TEMPLATES</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'You cannot delete site templates that are used by a site')]</td>
 	<td></td>
@@ -206,6 +201,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_FIELD</td>
+	<td>//label[normalize-space()='${fieldLabel}']//following-sibling::p[contains(@class,'text-danger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_FIELD_REQUIRED</td>
 	<td>//label[contains(.,'${key_fieldFieldLabel}')]/..//div[@role='alert' and contains(.,'The ${key_fieldFieldLabel} field is required')]</td>
 	<td></td>
@@ -218,6 +218,16 @@
 <tr>
 	<td>ERROR_FORM_VALIDATION</td>
 	<td>//div[contains(@class,'form-validator-stack')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_IMPORT</td>
+	<td>//span[contains(@class,'text-danger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_IMPORT_SUBTEXT</td>
+	<td>//div[contains(@class,'list-group-title')][normalize-space()='${itemName}']//following-sibling::div[contains(@class,'text-danger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -322,7 +332,7 @@
 </tr>
 <tr>
 	<td>INFO_SPECIFIC</td>
-	<td>//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))][contains(.,'${key_infoMessage}')]</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info') and not(contains(@class,'hide'))][contains(.,'${key_infoMessage}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -436,6 +446,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_IMPORT</td>
+	<td>//span[contains(@class,'text-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_IMPORT_SUBTEXT</td>
+	<td>//div[contains(@class,'list-group-title')][normalize-space()='${itemName}']//following-sibling::div[contains(@class,'text-success')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_IMPORT_TRANSLATIONS</td>
 	<td>//div[contains(@class,'text-success')]</td>
 	<td></td>
@@ -493,6 +513,16 @@
 <tr>
 	<td>WARNING_FEEDBACK</td>
 	<td>//div[contains(@class,'form-feedback-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WARNING_IMPORT</td>
+	<td>//span[contains(@class,'text-warning')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WARNING_IMPORT_SUBTEXT</td>
+	<td>//div[contains(@class,'list-group-title')][normalize-space()='${itemName}']//following-sibling::div[contains(@class,'text-warning')]</td>
 	<td></td>
 </tr>
 <tr>

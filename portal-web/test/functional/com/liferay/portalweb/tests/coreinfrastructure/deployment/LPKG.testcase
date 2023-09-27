@@ -21,6 +21,8 @@ definition {
 	test DeployRestartRequiredLPKG {
 		property skip.start.app.server = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+		property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -49,7 +51,10 @@ definition {
 
 		WaitForConsoleTextPresent(value1 = "The portal instance needs to be restarted to complete the installation");
 
-		User.firstLoginPG();
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -64,7 +69,7 @@ definition {
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
-		User.firstLoginPG();
+		Navigator.openSpecificURL(url = "http://localhost:8080");
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 

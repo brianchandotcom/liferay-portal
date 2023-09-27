@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {
@@ -22,7 +13,7 @@ import {
 import {defaultLanguageId} from '../../utils/constants';
 
 export function useListTypeForm({initialValues, onSubmit}: IUseListTypeForm) {
-	const validate = (picklist: Partial<PickList>) => {
+	const validate = (picklist: Partial<ListTypeDefinition>) => {
 		const errors: ObjectValidationErrors = {};
 		const label = picklist.name_i18n?.[defaultLanguageId];
 
@@ -37,7 +28,7 @@ export function useListTypeForm({initialValues, onSubmit}: IUseListTypeForm) {
 	};
 
 	const {errors, handleChange, handleSubmit, setValues, values} = useForm<
-		PickList
+		ListTypeDefinition
 	>({
 		initialValues,
 		onSubmit,
@@ -47,8 +38,8 @@ export function useListTypeForm({initialValues, onSubmit}: IUseListTypeForm) {
 	return {errors, handleChange, handleSubmit, setValues, values};
 }
 interface IUseListTypeForm {
-	initialValues: Partial<PickList>;
-	onSubmit: (picklist: PickList) => void;
+	initialValues: Partial<ListTypeDefinition>;
+	onSubmit: (picklist: ListTypeDefinition) => void;
 }
 
-export type ObjectValidationErrors = FormError<PickList>;
+export type ObjectValidationErrors = FormError<ListTypeDefinition>;

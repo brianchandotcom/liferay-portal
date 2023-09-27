@@ -1,0 +1,25 @@
+package com.liferay.source.formatter.dependencies.upgrade;
+
+public class UpgradeJavaAddFileEntryParameterCheck {
+
+	public void method(
+		long userId, long repositoryId, long folderId,
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, byte[] bytes,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext){
+
+		_dlAppLocalService.addFileEntry(
+			null, userId, repositoryId, folderId, sourceFileName, mimeType, title, null, description, changeLog, bytes, null, null, serviceContext);
+
+		DLAppLocalServiceUtil.addFileEntry(
+			null, userId, repositoryId, folderId, sourceFileName, mimeType, title, null, description, changeLog, bytes, null, null, serviceContext);
+
+		DLAppLocalServiceUtil.addFileEntry(
+			1234, repositoryId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, bytes, serviceContext);
+
+	}
+
+	private DLAppLocalService _dlAppLocalService;
+
+}

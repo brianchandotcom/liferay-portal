@@ -5,7 +5,7 @@
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
-			"featureFlag": "LPS-184413",
+			"featureFlag": "LPS-178642",
 			"importStrategy": "ON_ERROR_FAIL",
 			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
@@ -26,58 +26,16 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "OBJECT_FIELD_ERC",
+					"externalReferenceCode": "ODATA_SORT",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Object Field ERC"
+						"en_US": "OData Sort"
 					},
-					"name": "objectFieldERC",
+					"name": "oDataSort",
 					"required": true,
 					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"defaultValue": "ascending",
-					"externalReferenceCode": "ORDER",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Order"
-					},
-					"listTypeDefinitionExternalReferenceCode": "ORDER_PICKLIST",
-					"name": "order",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "ascending",
-										"objectStateTransitions": [
-											{
-												"key": "descending"
-											}
-										]
-									},
-									{
-										"key": "descending",
-										"objectStateTransitions": [
-											{
-												"key": "ascending"
-											}
-										]
-									}
-								]
-							}
-						}
-					],
-					"required": true,
-					"state": true,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],
@@ -112,7 +70,7 @@
 					"name": "oDataFilter",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],
@@ -147,7 +105,7 @@
 					"name": "description",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -178,7 +136,7 @@
 					],
 					"required": true,
 					"state": true,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -193,7 +151,7 @@
 					"name": "name",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -208,7 +166,64 @@
 					"name": "path",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "PATH_PARAMETER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Path Parameter"
+					},
+					"name": "pathParameter",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "collection",
+					"externalReferenceCode": "RETRIEVE_TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Retrieve Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "RETRIEVE_TYPE_PICKLIST",
+					"name": "retrieveType",
+					"objectFieldSettings": [
+						{
+							"name": "stateFlow",
+							"value": {
+								"objectStates": [
+									{
+										"key": "collection",
+										"objectStateTransitions": [
+											{
+												"key": "singleElement"
+											}
+										]
+									},
+									{
+										"key": "singleElement",
+										"objectStateTransitions": [
+											{
+												"key": "collection"
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					"required": true,
+					"state": true,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -250,7 +265,7 @@
 					],
 					"required": true,
 					"state": true,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],
@@ -318,7 +333,7 @@
 					"name": "description",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -333,7 +348,7 @@
 					"name": "name",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -348,22 +363,22 @@
 					"name": "objectFieldERC",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "OBJECT_RELATIONSHIP_IDS",
+					"externalReferenceCode": "OBJECT_RELATIONSHIP_NAMES",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Object Relationship IDs"
+						"en_US": "Object Relationship Names"
 					},
-					"name": "objectRelationshipIds",
+					"name": "objectRelationshipNames",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -378,7 +393,7 @@
 					"name": "parentAPIPropertyERC",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],
@@ -431,7 +446,7 @@
 					"name": "description",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -446,7 +461,7 @@
 					"name": "mainObjectDefinitionERC",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -461,7 +476,7 @@
 					"name": "name",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],
@@ -569,7 +584,7 @@
 					],
 					"required": true,
 					"state": true,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -591,7 +606,7 @@
 					],
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -607,7 +622,7 @@
 					"name": "description",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -629,7 +644,7 @@
 					],
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -645,7 +660,7 @@
 					"name": "version",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],

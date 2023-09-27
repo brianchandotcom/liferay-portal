@@ -1,23 +1,15 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.message.boards.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.service.MBMessageService;
-import com.liferay.message.boards.web.internal.upload.TempAttachmentMBUploadFileEntryHandler;
+import com.liferay.message.boards.web.internal.upload.BaseMBUploadFileEntryHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -41,6 +33,7 @@ import com.liferay.upload.UploadResponseHandler;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -57,6 +50,13 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditMessageAttachmentsMVCActionCommand
 	extends BaseMVCActionCommand {
+
+	@Activate
+	protected void activate() {
+		_tempAttachmentMBUploadFileEntryHandler =
+			new TempAttachmentMBUploadFileEntryHandler(
+				_dlValidator, _mbMessageService);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -183,6 +183,9 @@ public class EditMessageAttachmentsMVCActionCommand
 		EditMessageAttachmentsMVCActionCommand.class);
 
 	@Reference
+	private DLValidator _dlValidator;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
@@ -194,11 +197,26 @@ public class EditMessageAttachmentsMVCActionCommand
 	@Reference
 	private Portal _portal;
 
-	@Reference
 	private TempAttachmentMBUploadFileEntryHandler
 		_tempAttachmentMBUploadFileEntryHandler;
 
 	@Reference
 	private UploadHandler _uploadHandler;
+
+	private static class TempAttachmentMBUploadFileEntryHandler
+		extends BaseMBUploadFileEntryHandler {
+
+		public TempAttachmentMBUploadFileEntryHandler(
+			DLValidator dlValidator, MBMessageService mbMessageService) {
+
+			super(dlValidator, mbMessageService);
+		}
+
+		@Override
+		protected String getParameterName() {
+			return "file";
+		}
+
+	}
 
 }

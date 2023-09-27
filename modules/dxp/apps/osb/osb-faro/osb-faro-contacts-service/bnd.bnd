@@ -3,12 +3,19 @@ Bundle-SymbolicName: com.liferay.osb.faro.contacts.service
 Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.counter.kernel.service;version="[2.1.0,9999.0.0)",\
+	com.liferay.expando.kernel.model;version="[6.0.0,9999.0.0)",\
+	com.liferay.expando.kernel.util;version="[1.8.0,9999.0.0)",\
+	com.liferay.petra.sql.dsl.query;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.bean;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.configuration;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.dao.db;version="[12.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.dao.jdbc;version="[9.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.dao.orm;version="[12.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.exception;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.log;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.model;version="[29.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.model.impl;version="[7.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.module.framework.service;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.search;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.security;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.security.auth;version="[6.0.0,9999.0.0)",\
@@ -19,6 +26,6 @@ Import-Package:\
 	com.liferay.portal.kernel.util;version="[59.0.0,9999.0.0)",\
 	\
 	*
-Liferay-Require-SchemaVersion: 2.0.0
+Liferay-Require-SchemaVersion: 2.1.0
 Liferay-Service: true
 -dsannotations-options: inherit

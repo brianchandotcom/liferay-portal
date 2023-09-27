@@ -146,7 +146,8 @@ definition {
 			for (var productSKU : list ${productSKUs}) {
 				var discountId = CommerceJSONDiscountsAPI._addDiscountSku(
 					discountTitle = ${title},
-					productSKU = ${productSKU});
+					productSKU = ${productSKU},
+					unitOfMeasureKey = ${unitOfMeasureKey});
 			}
 		}
 	}
@@ -242,6 +243,22 @@ definition {
 			var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
 		}
 
+		if (isSet(unitOfMeasureKey)) {
+			var body = '''
+				-d {
+					"skuId": ${skuId},
+					"unitOfMeasureKey": "${unitOfMeasureKey}"
+				}
+			''';
+		}
+		else {
+			var body = '''
+				-d '{
+					"skuId": ${skuId}
+				}'
+			''';
+		}
+
 		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
@@ -250,10 +267,9 @@ definition {
 				-u ${userLoginInfo} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-				-d '{
-					"skuId": ${skuId}
-				}'
 		''';
+
+		var curl = StringUtil.add(${curl}, ${body}, " ");
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 
@@ -291,6 +307,54 @@ definition {
 		}
 	}
 
+	macro _deleteDiscountSkuUom {
+		Variables.assertDefined(parameterList = ${uomKey});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var responseBody = CommerceJSONDiscountsAPI._getCommerceDiscountSkuById(discountTitle = ${discountTitle});
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+
+		var discountSkuId = JSONUtil.getWithJSONPath(${responseBody}, "$..items[?(@['unitOfMeasureKey'] == '${uomKey}' && @['skuId'] == ${skuId})].['discountSkuId']");
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discount-skus/${discountSkuId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		JSONCurlUtil.delete(${curl});
+	}
+
+	macro _getCommerceDiscountById {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(discountId)) && isSet(discountTitle)) {
+			var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
+	}
+
 	macro _getCommerceDiscountIds {
 		var baseURL = ${baseURL};
 
@@ -318,6 +382,33 @@ definition {
 		return ${discountIds};
 	}
 
+	macro _getCommerceDiscounts {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(discountCount)) {
+			var discountsCount = ${discountCount};
+		}
+		else {
+			var discountsCount = 100;
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts?pageSize=${discountsCount} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
+	}
+
 	macro _getCommerceDiscountsCount {
 		var baseURL = ${baseURL};
 
@@ -338,6 +429,30 @@ definition {
 		echo("The Commerce discounts count is: ${discountsCount}");
 
 		return ${discountsCount};
+	}
+
+	macro _getCommerceDiscountSkuById {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(discountId)) && isSet(discountTitle)) {
+			var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId}/discount-skus \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
 	}
 
 	macro _getDiscountId {
@@ -367,6 +482,150 @@ definition {
 		var discountId = JSONCurlUtil.get(${curl}, "$.items[?(@['title'] == '${discountTitle}')].['id']");
 
 		return ${discountId};
+	}
+
+	macro _patchCommerceDiscount {
+		Variables.assertDefined(parameterList = ${discountTitle});
+
+		var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
+		var fieldsList = ListUtil.newList();
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(active)) {
+			var active = '''"active": ${active}''';
+
+			ListUtil.add(${fieldsList}, ${active});
+		}
+
+		if (isSet(couponCode)) {
+			var couponCode = '''"couponCode": "${couponCode}"''';
+
+			ListUtil.add(${fieldsList}, ${couponCode});
+		}
+
+		if (!(isSet(limitationType))) {
+			var limitationType = '''"limitationType": "unlimited"''';
+		}
+		else {
+			var limitationType = '''"limitationType": "${limitationType}"''';
+		}
+
+		ListUtil.add(${fieldsList}, ${limitationType});
+
+		if (isSet(maximumDiscountAmount)) {
+			var maximumDiscountAmount = '''"maximumDiscountAmount": ${maximumDiscountAmount}''';
+
+			ListUtil.add(${fieldsList}, ${maximumDiscountAmount});
+		}
+
+		if (isSet(percentageLevel1)) {
+			var percentageLevel1 = '''"percentageLevel1": ${percentageLevel1}''';
+
+			ListUtil.add(${fieldsList}, ${percentageLevel1});
+		}
+
+		if (isSet(percentageLevel2)) {
+			var percentageLevel1 = '''"percentageLevel2": ${percentageLevel2}''';
+
+			ListUtil.add(${fieldsList}, ${percentageLevel2});
+		}
+
+		if (isSet(percentageLevel3)) {
+			var percentageLevel1 = '''"percentageLevel3": ${percentageLevel3}''';
+
+			ListUtil.add(${fieldsList}, ${percentageLevel3});
+		}
+
+		if (isSet(percentageLevel4)) {
+			var percentageLevel1 = '''"percentageLevel4": ${percentageLevel4}''';
+
+			ListUtil.add(${fieldsList}, ${percentageLevel4});
+		}
+
+		if (!(isSet(target))) {
+			var target = '''"target": "products"''';
+		}
+		else {
+			var target = '''"target": "${target}"''';
+		}
+
+		ListUtil.add(${fieldsList}, ${target});
+
+		if (isSet(newTitle)) {
+			var title = '''"title": "${newTitle}"''';
+		}
+		else {
+			var title = '''"title": "${discountTitle}"''';
+		}
+
+		ListUtil.add(${fieldsList}, ${title});
+
+		if (isSet(useCouponCode)) {
+			var useCouponCode = '''"useCouponCode": "${useCouponCode}"''';
+
+			ListUtil.add(${fieldsList}, ${useCouponCode});
+		}
+
+		if (isSet(usePercentage)) {
+			var usePercentage = '''"usePercentage": "${usePercentage}"''';
+
+			ListUtil.add(${fieldsList}, ${usePercentage});
+		}
+
+		var fieldsList = ListUtil.toString(${fieldsList});
+
+		echo("Fieldlist: ${fieldsList}");
+
+		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = ${fieldsList});
+
+		echo("payload: ${payload}");
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{${payload}}'
+		''';
+
+		var responseBody = JSONCurlUtil.patch(${curl});
+
+		return ${responseBody};
+	}
+
+	macro getCommerceDiscountFieldById {
+		Variables.assertDefined(parameterList = ${jsonPath});
+
+		if (!(isSet(responseBody))) {
+			var responseBody = CommerceJSONDiscountsAPI._getCommerceDiscountById(
+				discountId = ${discountId},
+				discountTitle = ${discountTitle});
+		}
+
+		var fieldValue = JSONUtil.getWithJSONPath(${responseBody}, ${jsonPath});
+
+		echo("Value: ${fieldValue}");
+
+		return ${fieldValue};
+	}
+
+	macro getCommerceDiscountsFieldValuesList {
+		Variables.assertDefined(parameterList = ${jsonPath});
+
+		if (!(isSet(responseBody))) {
+			var responseBody = CommerceJSONDiscountsAPI._getCommerceDiscounts(discountCount = ${discountCount});
+		}
+
+		var fieldValuesList = JSONUtil.getWithJSONPath(${responseBody}, ${jsonPath});
+
+		echo("Values: ${fieldValuesList}");
+
+		return ${fieldValuesList};
 	}
 
 }

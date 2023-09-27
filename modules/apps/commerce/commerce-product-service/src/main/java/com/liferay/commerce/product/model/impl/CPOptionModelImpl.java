@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.model.impl;
@@ -86,7 +77,7 @@ public class CPOptionModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"DDMFormFieldTypeName", Types.VARCHAR}, {"facetable", Types.BOOLEAN},
+		{"commerceOptionTypeKey", Types.VARCHAR}, {"facetable", Types.BOOLEAN},
 		{"required", Types.BOOLEAN}, {"skuContributor", Types.BOOLEAN},
 		{"key_", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
@@ -107,7 +98,7 @@ public class CPOptionModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("DDMFormFieldTypeName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("commerceOptionTypeKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("facetable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
@@ -116,7 +107,7 @@ public class CPOptionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPOption (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPOptionId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN,key_ VARCHAR(75) null,lastPublishDate DATE null,primary key (CPOptionId, ctCollectionId))";
+		"create table CPOption (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPOptionId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,commerceOptionTypeKey VARCHAR(75) null,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN,key_ VARCHAR(75) null,lastPublishDate DATE null,primary key (CPOptionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CPOption";
 
@@ -286,7 +277,7 @@ public class CPOptionModelImpl
 			attributeGetterFunctions.put(
 				"description", CPOption::getDescription);
 			attributeGetterFunctions.put(
-				"DDMFormFieldTypeName", CPOption::getDDMFormFieldTypeName);
+				"commerceOptionTypeKey", CPOption::getCommerceOptionTypeKey);
 			attributeGetterFunctions.put("facetable", CPOption::getFacetable);
 			attributeGetterFunctions.put("required", CPOption::getRequired);
 			attributeGetterFunctions.put(
@@ -345,9 +336,9 @@ public class CPOptionModelImpl
 				"description",
 				(BiConsumer<CPOption, String>)CPOption::setDescription);
 			attributeSetterBiConsumers.put(
-				"DDMFormFieldTypeName",
+				"commerceOptionTypeKey",
 				(BiConsumer<CPOption, String>)
-					CPOption::setDDMFormFieldTypeName);
+					CPOption::setCommerceOptionTypeKey);
 			attributeSetterBiConsumers.put(
 				"facetable",
 				(BiConsumer<CPOption, Boolean>)CPOption::setFacetable);
@@ -805,22 +796,22 @@ public class CPOptionModelImpl
 
 	@JSON
 	@Override
-	public String getDDMFormFieldTypeName() {
-		if (_DDMFormFieldTypeName == null) {
+	public String getCommerceOptionTypeKey() {
+		if (_commerceOptionTypeKey == null) {
 			return "";
 		}
 		else {
-			return _DDMFormFieldTypeName;
+			return _commerceOptionTypeKey;
 		}
 	}
 
 	@Override
-	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName) {
+	public void setCommerceOptionTypeKey(String commerceOptionTypeKey) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_DDMFormFieldTypeName = DDMFormFieldTypeName;
+		_commerceOptionTypeKey = commerceOptionTypeKey;
 	}
 
 	@JSON
@@ -1092,7 +1083,7 @@ public class CPOptionModelImpl
 		cpOptionImpl.setModifiedDate(getModifiedDate());
 		cpOptionImpl.setName(getName());
 		cpOptionImpl.setDescription(getDescription());
-		cpOptionImpl.setDDMFormFieldTypeName(getDDMFormFieldTypeName());
+		cpOptionImpl.setCommerceOptionTypeKey(getCommerceOptionTypeKey());
 		cpOptionImpl.setFacetable(isFacetable());
 		cpOptionImpl.setRequired(isRequired());
 		cpOptionImpl.setSkuContributor(isSkuContributor());
@@ -1129,8 +1120,8 @@ public class CPOptionModelImpl
 		cpOptionImpl.setName(this.<String>getColumnOriginalValue("name"));
 		cpOptionImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
-		cpOptionImpl.setDDMFormFieldTypeName(
-			this.<String>getColumnOriginalValue("DDMFormFieldTypeName"));
+		cpOptionImpl.setCommerceOptionTypeKey(
+			this.<String>getColumnOriginalValue("commerceOptionTypeKey"));
 		cpOptionImpl.setFacetable(
 			this.<Boolean>getColumnOriginalValue("facetable"));
 		cpOptionImpl.setRequired(
@@ -1285,14 +1276,14 @@ public class CPOptionModelImpl
 			cpOptionCacheModel.description = null;
 		}
 
-		cpOptionCacheModel.DDMFormFieldTypeName = getDDMFormFieldTypeName();
+		cpOptionCacheModel.commerceOptionTypeKey = getCommerceOptionTypeKey();
 
-		String DDMFormFieldTypeName = cpOptionCacheModel.DDMFormFieldTypeName;
+		String commerceOptionTypeKey = cpOptionCacheModel.commerceOptionTypeKey;
 
-		if ((DDMFormFieldTypeName != null) &&
-			(DDMFormFieldTypeName.length() == 0)) {
+		if ((commerceOptionTypeKey != null) &&
+			(commerceOptionTypeKey.length() == 0)) {
 
-			cpOptionCacheModel.DDMFormFieldTypeName = null;
+			cpOptionCacheModel.commerceOptionTypeKey = null;
 		}
 
 		cpOptionCacheModel.facetable = isFacetable();
@@ -1394,7 +1385,7 @@ public class CPOptionModelImpl
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
-	private String _DDMFormFieldTypeName;
+	private String _commerceOptionTypeKey;
 	private boolean _facetable;
 	private boolean _required;
 	private boolean _skuContributor;
@@ -1445,7 +1436,7 @@ public class CPOptionModelImpl
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put(
-			"DDMFormFieldTypeName", _DDMFormFieldTypeName);
+			"commerceOptionTypeKey", _commerceOptionTypeKey);
 		_columnOriginalValues.put("facetable", _facetable);
 		_columnOriginalValues.put("required", _required);
 		_columnOriginalValues.put("skuContributor", _skuContributor);
@@ -1499,7 +1490,7 @@ public class CPOptionModelImpl
 
 		columnBitmasks.put("description", 2048L);
 
-		columnBitmasks.put("DDMFormFieldTypeName", 4096L);
+		columnBitmasks.put("commerceOptionTypeKey", 4096L);
 
 		columnBitmasks.put("facetable", 8192L);
 

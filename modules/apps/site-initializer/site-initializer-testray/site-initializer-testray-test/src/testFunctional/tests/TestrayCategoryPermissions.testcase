@@ -31,6 +31,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -45,8 +47,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -55,8 +55,6 @@ definition {
 	@description = "Story ID: LPS-178262 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the factor category"
 	@priority = 3
 	test AnalystRoleCanNotCreateEditAndDelete {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -66,15 +64,13 @@ definition {
 		}
 
 		task ("When go to the category page") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Categories");
 		}
 
 		task ("Then can see the category in the table") {
-			AssertElementPresent(
-				key_projectName = ${categoryName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${categoryName});
 		}
 
 		task ("And can not see add button") {
@@ -83,26 +79,20 @@ definition {
 
 		task ("When right click in category") {
 			RightClick.rightClick(
-				key_projectName = ${categoryName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${categoryName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then can not see the 'Edit, Delete' options in right click") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 	}
 
 	@description = "Story ID: LPS-178262 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create/edit/delete the factor category"
 	@priority = 3
 	test LeadRoleCanNotCreateEditAndDelete {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -112,15 +102,13 @@ definition {
 		}
 
 		task ("When go to the category page") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Categories");
 		}
 
 		task ("Then can see the category in the table") {
-			AssertElementPresent(
-				key_projectName = ${categoryName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${categoryName});
 		}
 
 		task ("And can not see add button") {
@@ -129,26 +117,20 @@ definition {
 
 		task ("When right click in category") {
 			RightClick.rightClick(
-				key_projectName = ${categoryName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${categoryName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then can not see the 'Edit, Delete' options in right click") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 	}
 
 	@description = "Story ID: LPS-178262 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the factor category"
 	@priority = 2
 	test UserRoleCanNotCreateEditAndDelete {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
@@ -158,15 +140,13 @@ definition {
 		}
 
 		task ("When go to the category page") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Categories");
 		}
 
 		task ("Then can see the category in the table") {
-			AssertElementPresent(
-				key_projectName = ${categoryName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${categoryName});
 		}
 
 		task ("And can not see add button") {
@@ -175,18 +155,14 @@ definition {
 
 		task ("When right click in category") {
 			RightClick.rightClick(
-				key_projectName = ${categoryName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${categoryName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then can not see the 'Edit, Delete' options in right click") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 	}
 

@@ -19,17 +19,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "This is a test for LPS-81244. The web content can be assigned to the default display page."
 	@priority = 4
 	test AddWebContentAssignedToDefaultDisplayPage {
@@ -116,6 +105,77 @@ definition {
 				webContentTitle = "Web Content Title");
 
 			WebContent.viewExpirationDateCP(expirationDate = "01/02/3000");
+		}
+	}
+
+	@description = "This is a test for LPS-192836. Assert can select feature image from Document and Media in web content creation."
+	@priority = 5
+	test AddWebContentWithFeaturedImageFromDocumentsAndMedia {
+		property custom.properties = "feature.flag.LPS-180855=true";
+
+		task ("Given a user accesses to the web content editor") {
+			HeadlessSite.addSite(
+				siteName = "Site Name",
+				templateName = "Welcome",
+				templateType = "Site Initializer");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(webContentTitle = "Web Content Title");
+		}
+
+		task ("When the user selects the From Documents and Media as Featured Image") {
+			Panel.expandPanel(panel = "Featured Image");
+
+			Select(
+				locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_TYPE",
+				value1 = "From Documents and Media");
+		}
+
+		task ("Then the user cannot publish the web content without select an existing small image") {
+			Button.clickPublish();
+
+			Alert.viewErrorMessage(errorMessage = "Please select an existing small image.");
+		}
+
+		task ("When the user selects an image from Documents and Media") {
+			WebContent.addFeaturedImageFromDocumentsAndMedia(
+				dmFolderName = "Provided by Liferay",
+				imageFileName = "earth.png");
+		}
+
+		task ("Then the user could publish the web content") {
+			PortletEntry.publish();
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			LexiconCard.viewSpecificCardThumbnail(
+				card = "Web Content Title",
+				imageFileName = "earth.png");
+		}
+
+		task ("When the user edits the web content") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			AssertTextEquals(
+				locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_INPUT",
+				value1 = "earth.png");
+		}
+
+		task ("Then the user could change the selected featured image") {
+			WebContent.addFeaturedImageFromDocumentsAndMedia(
+				dmFolderName = "Provided by Liferay",
+				imageFileName = "moon.png");
+
+			PortletEntry.publish();
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			LexiconCard.viewSpecificCardThumbnail(
+				card = "Web Content Title",
+				imageFileName = "moon.png");
 		}
 	}
 
@@ -696,7 +756,7 @@ definition {
 				webContentDateFieldLabel = "Date and Time",
 				webContentTitle = "Web Content Title");
 
-			PageEditor.publish();
+			PortletEntry.publish();
 		}
 
 		task ("When we have a display page with a date fragment") {
@@ -1305,7 +1365,7 @@ definition {
 		task ("Copy the Web Content") {
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "WC WebContent 1",
-				menuItem = "Copy");
+				menuItem = "Make a Copy");
 		}
 
 		task ("Add the second web content and select the display page template in web content") {
@@ -1338,6 +1398,7 @@ definition {
 	test ViewCategorizationSettingsAfterDeleteCategoryOfWebContent {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -1843,6 +1904,64 @@ definition {
 				key_text = "/web/test-site-name/content-page-name",
 				locator1 = "Link#ANY",
 				value1 = "/web/test-site-name/content-page-name");
+		}
+	}
+
+	@description = "This is a test for LPS-172129. reserved-article-id is missing from templates."
+	@priority = 4
+	test ViewReservedVariablesDisplayOnWebContent {
+		task ("Given add a web content structure and a template with reserved-article-id") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "HTML",
+				fieldName = "Rich Text");
+
+			WebContentStructures.saveCP();
+
+			NavItem.gotoTemplates();
+
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateFile = "freemarker template.ftl",
+				templateName = "WC Template Name");
+		}
+
+		task ("When create a web content using the new structure and template") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentRichText = "This is a Rich Text field",
+				webContentRichTextFieldLabel = "HTML",
+				webContentTitle = "Web Content Title");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the reserved-article-id should be available on web content") {
+			task ("Add a page with a Web Content Display widget and display the Web Content article in the Web Content Display widget") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Web Content Display Page");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Display Page",
+					siteName = "Test Site Name");
+
+				WidgetPages.addRecentContentWithoutSearch(assetTitle = "Web Content Title");
+			}
+
+			task ("View reserved-article-id is available on web content") {
+				for (var reservedVariables : list "reserved-article-asset-tag-names,reserved-article-author-comments,reserved-article-author-email-address,reserved-article-author-id,reserved-article-author-job-title,reserved-article-author-name,reserved-article-create-date,reserved-article-description,reserved-article-display-date,reserved-article-id, reserved-article-modified-date,reserved-article-small-image-url,reserved-article-title,reserved-article-url-title, reserved-article-version") {
+					AssertElementPresent(locator1 = "//li[contains(.,'${reservedVariables}')]//*[name()='svg'][contains(@class,'check')]");
+				}
+			}
 		}
 	}
 

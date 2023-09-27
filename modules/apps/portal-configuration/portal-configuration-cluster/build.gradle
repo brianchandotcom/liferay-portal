@@ -10,6 +10,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "junit", name: "junit", version: "4.13.1"
-	testCompile project(":core:petra:petra-function")
+	testImplementation group: "junit", name: "junit", version: "4.13.1"
+	testImplementation project(":core:petra:petra-function")
 }

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jethr0.event.handler;
@@ -25,11 +16,11 @@ public interface EventHandler {
 
 		BUILD_COMPLETED, BUILD_STARTED, COMPUTER_BUSY, COMPUTER_IDLE,
 		COMPUTER_OFFLINE, COMPUTER_ONLINE, COMPUTER_TEMPORARILY_OFFLINE,
-		COMPUTER_TEMPORARILY_ONLINE, CREATE_BUILD, CREATE_PROJECT,
-		QUEUE_ITEM_ENTER_BLOCKED, QUEUE_ITEM_ENTER_BUILDABLE,
+		COMPUTER_TEMPORARILY_ONLINE, CREATE_BUILD, CREATE_JENKINS_COHORT,
+		CREATE_JOB, QUEUE_ITEM_ENTER_BLOCKED, QUEUE_ITEM_ENTER_BUILDABLE,
 		QUEUE_ITEM_ENTER_WAITING, QUEUE_ITEM_LEAVE_BLOCKED,
 		QUEUE_ITEM_LEAVE_BUILDABLE, QUEUE_ITEM_LEAVE_WAITING, QUEUE_ITEM_LEFT,
-		QUEUE_PROJECT
+		QUEUE_JOB
 
 	}
 

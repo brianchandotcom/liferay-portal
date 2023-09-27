@@ -1,5 +1,5 @@
 apply plugin: "com.liferay.js.transpiler"
-apply plugin: "java"
+apply plugin: "java-library"
 
 node {
 	useNpm = true

@@ -24,6 +24,7 @@ definition {
 	test CustomizeFileFilter {
 		property custom.properties = "module.framework.file.install.filter=^(?!test-theme).*\\..*";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -42,6 +43,7 @@ definition {
 	test CustomizeNewWatchedDirectory {
 		property custom.properties = "module.framework.auto.deploy.dirs=${liferay.home}/alt-deploy/osgi/portal,${liferay.home}/osgi/modules,${liferay.home}/osgi/war,${liferay.home}/osgi/configs,${liferay.home}/osgi/marketplace";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -64,6 +66,7 @@ definition {
 	test CustomizeRecursiveSubdirectoryMode {
 		property custom.properties = "module.framework.file.install.subdir.mode=recurse";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -86,6 +89,7 @@ definition {
 	test CustomizeSkipSubdirectoryMode {
 		property custom.properties = "module.framework.file.install.subdir.mode=skip";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -111,6 +115,7 @@ definition {
 		property create.osgi.hidden.file = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -124,6 +129,7 @@ definition {
 	test RestartingPortalDuplicatesOSGiConfiguration {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -159,6 +165,7 @@ definition {
 	test UninstallJarOffline {
 		property test.assert.warning.exceptions = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.deployClusteringModule(nodePort = 8080);
 
@@ -198,6 +205,7 @@ definition {
 	@priority = 4
 	test UninstallWarOffline {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FileInstall.deployFileOnServer(jarFile = "test-theme.war");
 

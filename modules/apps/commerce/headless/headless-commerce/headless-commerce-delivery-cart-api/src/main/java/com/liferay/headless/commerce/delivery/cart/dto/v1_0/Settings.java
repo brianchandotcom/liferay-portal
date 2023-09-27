@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.delivery.cart.dto.v1_0;
@@ -29,12 +20,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Generated;
+
+import javax.validation.Valid;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -57,17 +52,19 @@ public class Settings implements Serializable {
 	}
 
 	@Schema
-	public Integer[] getAllowedQuantities() {
+	@Valid
+	public BigDecimal[] getAllowedQuantities() {
 		return allowedQuantities;
 	}
 
-	public void setAllowedQuantities(Integer[] allowedQuantities) {
+	public void setAllowedQuantities(BigDecimal[] allowedQuantities) {
 		this.allowedQuantities = allowedQuantities;
 	}
 
 	@JsonIgnore
 	public void setAllowedQuantities(
-		UnsafeSupplier<Integer[], Exception> allowedQuantitiesUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal[], Exception>
+			allowedQuantitiesUnsafeSupplier) {
 
 		try {
 			allowedQuantities = allowedQuantitiesUnsafeSupplier.get();
@@ -82,20 +79,21 @@ public class Settings implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer[] allowedQuantities;
+	protected BigDecimal[] allowedQuantities;
 
-	@Schema
-	public Integer getMaxQuantity() {
+	@Schema(example = "10.1")
+	@Valid
+	public BigDecimal getMaxQuantity() {
 		return maxQuantity;
 	}
 
-	public void setMaxQuantity(Integer maxQuantity) {
+	public void setMaxQuantity(BigDecimal maxQuantity) {
 		this.maxQuantity = maxQuantity;
 	}
 
 	@JsonIgnore
 	public void setMaxQuantity(
-		UnsafeSupplier<Integer, Exception> maxQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> maxQuantityUnsafeSupplier) {
 
 		try {
 			maxQuantity = maxQuantityUnsafeSupplier.get();
@@ -110,20 +108,21 @@ public class Settings implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer maxQuantity;
+	protected BigDecimal maxQuantity;
 
-	@Schema
-	public Integer getMinQuantity() {
+	@Schema(example = "10.1")
+	@Valid
+	public BigDecimal getMinQuantity() {
 		return minQuantity;
 	}
 
-	public void setMinQuantity(Integer minQuantity) {
+	public void setMinQuantity(BigDecimal minQuantity) {
 		this.minQuantity = minQuantity;
 	}
 
 	@JsonIgnore
 	public void setMinQuantity(
-		UnsafeSupplier<Integer, Exception> minQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> minQuantityUnsafeSupplier) {
 
 		try {
 			minQuantity = minQuantityUnsafeSupplier.get();
@@ -138,20 +137,21 @@ public class Settings implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer minQuantity;
+	protected BigDecimal minQuantity;
 
-	@Schema
-	public Integer getMultipleQuantity() {
+	@Schema(example = "10.1")
+	@Valid
+	public BigDecimal getMultipleQuantity() {
 		return multipleQuantity;
 	}
 
-	public void setMultipleQuantity(Integer multipleQuantity) {
+	public void setMultipleQuantity(BigDecimal multipleQuantity) {
 		this.multipleQuantity = multipleQuantity;
 	}
 
 	@JsonIgnore
 	public void setMultipleQuantity(
-		UnsafeSupplier<Integer, Exception> multipleQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> multipleQuantityUnsafeSupplier) {
 
 		try {
 			multipleQuantity = multipleQuantityUnsafeSupplier.get();
@@ -166,7 +166,7 @@ public class Settings implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer multipleQuantity;
+	protected BigDecimal multipleQuantity;
 
 	@Override
 	public boolean equals(Object object) {

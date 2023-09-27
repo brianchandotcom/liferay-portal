@@ -1,27 +1,28 @@
 dependencies {
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
-	testIntegrationCompile group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
-	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	testIntegrationCompile project(":apps:asset:asset-display-page-api")
-	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	testIntegrationCompile project(":apps:export-import:export-import-test-util")
-	testIntegrationCompile project(":apps:fragment:fragment-api")
-	testIntegrationCompile project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")
-	testIntegrationCompile project(":apps:headless:headless-delivery:headless-delivery-api")
-	testIntegrationCompile project(":apps:info:info-api")
-	testIntegrationCompile project(":apps:layout:layout-admin-api")
-	testIntegrationCompile project(":apps:layout:layout-api")
-	testIntegrationCompile project(":apps:layout:layout-page-template-api")
-	testIntegrationCompile project(":apps:layout:layout-page-template-service")
-	testIntegrationCompile project(":apps:layout:layout-test-util")
-	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
-	testIntegrationCompile project(":apps:portal:portal-json-validator")
-	testIntegrationCompile project(":apps:portal:portal-props-test-util")
-	testIntegrationCompile project(":apps:segments:segments-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
+	testIntegrationImplementation group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationImplementation project(":apps:asset:asset-display-page-api")
+	testIntegrationImplementation project(":apps:asset:asset-link-api")
+	testIntegrationImplementation project(":apps:change-tracking:change-tracking-test-util")
+	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
+	testIntegrationImplementation project(":apps:fragment:fragment-api")
+	testIntegrationImplementation project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")
+	testIntegrationImplementation project(":apps:headless:headless-delivery:headless-delivery-api")
+	testIntegrationImplementation project(":apps:info:info-api")
+	testIntegrationImplementation project(":apps:layout:layout-admin-api")
+	testIntegrationImplementation project(":apps:layout:layout-api")
+	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
+	testIntegrationImplementation project(":apps:layout:layout-page-template-service")
+	testIntegrationImplementation project(":apps:layout:layout-test-util")
+	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationImplementation project(":apps:portal:portal-json-validator")
+	testIntegrationImplementation project(":apps:portal:portal-props-test-util")
+	testIntegrationImplementation project(":apps:segments:segments-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

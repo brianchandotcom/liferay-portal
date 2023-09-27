@@ -38,6 +38,7 @@ definition {
 	test CanAddAutoTag {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -60,6 +61,7 @@ definition {
 	@priority = 4
 	test CanAddAutoTagForODTFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -88,6 +90,7 @@ definition {
 	test CanAssertImageAutoTagAfterPublishToLive {
 		property custom.properties = "dl.actions.visible=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -138,6 +141,7 @@ definition {
 	@refactordone
 	test CanDeleteAutoTaggedDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -168,6 +172,7 @@ definition {
 	@refactordone
 	test CannotAddAutoTagForManuallyTaggedImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			assetTagNames = "manualtag",
@@ -194,6 +199,7 @@ definition {
 	@refactordone
 	test CanRemoveImageAutoTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "Auto Tagged Image Description",
@@ -228,6 +234,7 @@ definition {
 	@refactordone
 	test CanRemoveOpenNLPAutoTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -269,6 +276,7 @@ definition {
 	@priority = 5
 	test NoTagUpdatesForImageAfterDisablingUpdateAutoTags {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "System Settings");
 
@@ -303,6 +311,7 @@ definition {
 	@priority = 5
 	test NoTagUpdatesForTextDMAfterDisablingUpdateAutoTags {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -349,6 +358,7 @@ definition {
 	@priority = 5
 	test TagUpdatesForImageAfterEnablingUpdateAutoTags {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "System Settings");
 
@@ -387,6 +397,7 @@ definition {
 	@priority = 5
 	test TagUpdatesForTextDMAfterEnablingUpdateAutoTags {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",

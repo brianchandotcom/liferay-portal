@@ -119,19 +119,19 @@ definition {
 		task ("Go to Testray 2 and Go to the build page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete case type, factor category, routine and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "casetypes",
@@ -154,8 +154,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -164,565 +162,296 @@ definition {
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by assignee"
 	@priority = 3
 	test CanFilterByAssignee {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Adding a user") {
-			JSONUser.addUser(
-				userEmailAddress = "user@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
 		task ("Given that the user assign to me a case result") {
-			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+			Testray.clickTableEntry(tableEntry = "Case 1");
 
-			TestrayTestflow.userAvatarNotPresent(
-				label = "Dates",
-				status = "Test Test");
+			TestrayTestflow.userAvatarNotPresent();
 
 			Button.click(button = "Assign to Me");
 		}
 
 		task ("When the user filter a case result by assign") {
-			TR2Utils.clickBreadcrumb(text = ${buildName});
+			Testray.clickBreadcrumb(text = ${buildName});
 
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Assignee",
-				value1 = "Test");
-
-			Button.click(button = "Apply");
+				selectValue = "Test");
 		}
 
 		task ("Then the user can see user avatar in the table") {
-			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+			Testray.clickTableEntry(tableEntry = "Case 1");
 
-			TestrayTestflow.userAvatarPresent(
-				label = "Dates",
-				status = "Test Test");
-		}
-
-		task ("Delete user created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
+			TestrayTestflow.userAvatarPresent();
 		}
 	}
 
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by case name"
 	@priority = 4
 	test CanFilterByCaseName {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two cases different in the table") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 		}
 
 		task ("When the user filter a case result by case name") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case 1");
 		}
 
 		task ("Then the user see only the Case 1 in the table") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1");
 		}
 
 		task ("And do not see Case 2 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
 	}
 
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by case type"
 	@priority = 3
 	test CanFilterByCaseType {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two cases different in the table related with the two case types") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 		}
 
 		task ("When the user filter a case result by case type") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			TestrayFilter.multiSelect(
-				header = "Case Type",
-				label = "Case Type",
-				listMultiSelect = "Case Type 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Case Type",
+				multiSelectValue = "Case Type 1");
 		}
 
 		task ("Then the user see only case type 1 in the table") {
-			AssertElementPresent(
-				key_projectName = "Case Type 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case Type 1");
 		}
 
 		task ("And do not see the case type 2 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Case Type 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case Type 2");
 		}
 	}
 
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by component"
 	@priority = 3
 	test CanFilterByComponent {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two component different in the table") {
-			AssertElementPresent(
-				key_projectName = "Component 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Component 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Component 1,Component 2");
 		}
 
 		task ("When the user filter a case result by component") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			TestrayFilter.multiSelect(
-				header = "Component",
-				label = "Component",
-				listMultiSelect = "Component 2");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Component",
+				multiSelectValue = "Component 2");
 		}
 
 		task ("Then the user see only component 2 in the table") {
-			AssertElementPresent(
-				key_projectName = "Component 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Component 2");
 		}
 
 		task ("And do not see the component 1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Component 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Component 1");
 		}
 	}
 
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by enviroments"
 	@priority = 3
 	test CanFilterByEnviroments {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two enviroments different in the table") {
-			TestrayFilter.clickColumn();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			ScrollWebElementIntoView(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT_2");
 
 			TestrayFilter.selectColumns(listColumn = "Environment");
 
-			AssertElementPresent(
-				key_projectName = "Option 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Option 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Option 1,Option 2");
 		}
 
 		task ("When the user filter a case result by enviroment") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
-
-			Type(
-				key_fieldLabel = "Environment",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Option 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Environment",
+				inputValue = "Option 1");
 		}
 
 		task ("Then the user see only the option 1 in the table") {
-			AssertElementPresent(
-				key_projectName = "Option 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Option 1");
 		}
 
 		task ("And do not see option 2 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Option 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Option 2");
 		}
 	}
 
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by error"
 	@priority = 4
 	test CanFilterByError {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two case result with errors different in the table") {
-			AssertElementPresent(
-				key_projectName = "Failed to run on CI",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Aborted prior to running test",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Failed to run on CI,Aborted prior to running test");
 		}
 
 		task ("When the user filter the case result by error") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
-
-			Type(
-				key_text = "errors",
-				locator1 = "TextArea#ANY",
-				value1 = "Failed to run on CI");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "textArea",
+				textAreaFieldLabel = "errors",
+				textAreaValue = "Failed to run on CI");
 		}
 
 		task ("Then the user see only case result 1 with error in the table") {
-			AssertElementPresent(
-				key_projectName = "Failed to run on CI",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Failed to run on CI");
 		}
 
 		task ("And do not see the case result 2 with error in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Aborted prior to running test",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Aborted prior to running test");
 		}
 	}
 
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by priority "
 	@priority = 3
 	test CanFilterByPriority {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two priority different in the table") {
-			AssertElementPresent(
-				key_projectName = 5,
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = 3,
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "5,3");
 		}
 
 		task ("When the user filter a case result by priority") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Priority",
-				value1 = 3);
-
-			Button.click(button = "Apply");
+				selectValue = 3);
 		}
 
 		task ("Then the user see only the priority 3 in the table") {
-			AssertElementPresent(
-				key_projectName = 3,
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = 3);
 		}
 
 		task ("And do not see priority 5 in the table") {
-			AssertElementNotPresent(
-				key_projectName = 5,
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = 5);
 		}
 	}
 
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by status"
 	@priority = 3
 	test CanFilterByStatus {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user complete a test with passed status") {
-			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+			Testray.clickTableEntry(tableEntry = "Case 1");
 
 			Button.click(button = "Assign to Me");
 
-			Button.click(button = "Complete Test");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-
-			WaitForPageLoad();
+			TestrayTestflow.editStatus(
+				button = "Complete Test",
+				selectStatus = "Passed");
 		}
 
 		task ("And that the user has two status different in the table") {
-			TR2Utils.clickBreadcrumb(text = ${buildName});
+			Testray.clickBreadcrumb(text = ${buildName});
 
-			AssertElementPresent(
-				key_projectName = "Untested",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Passed",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Untested,Passed");
 		}
 
 		task ("When the user filter a case result with passed status") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			Click.clickAtNotVisible(
-				key_label = "Status",
-				key_status = "Passed",
-				locator1 = "TestrayFilter#STATUS_IN_FILTER");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				checkboxFieldLabel = "Status",
+				checkboxValue = "Passed",
+				fieldType = "checkbox");
 		}
 
 		task ("Then the user see passed status in the table") {
-			AssertElementPresent(
-				key_projectName = "Passed",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Passed");
 		}
 
 		task ("And do not see status Untested in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Untested",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Untested");
 		}
 	}
 
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by team"
 	@priority = 3
 	test CanFilterByTeam {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two team different in the table") {
-			AssertElementPresent(
-				key_projectName = "Team 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Team 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Team 1,Team 2");
 		}
 
 		task ("When the user filter a case result by team") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			TestrayFilter.multiSelect(
-				header = "Team",
-				label = "Team",
-				listMultiSelect = "Team 2");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Team",
+				multiSelectValue = "Team 2");
 		}
 
 		task ("Then the user see only Team 2 in the table") {
-			AssertElementPresent(
-				key_projectName = "Team 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Team 2");
 		}
 
 		task ("And do not see the Team 1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Team 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Team 1");
 		}
 	}
 
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results using multiple filtering options"
 	@priority = 4
 	test CanFilterWithMultipleOptions {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user complete a test with passed status") {
-			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+			Testray.clickTableEntry(tableEntry = "Case 1");
 
 			Button.click(button = "Assign to Me");
 
-			WaitForElementPresent(
-				key_text = "Complete Test",
-				locator1 = "Button#ANY");
-
-			Button.click(button = "Complete Test");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-
-			WaitForPageLoad();
+			TestrayTestflow.editStatus(
+				button = "Complete Test",
+				selectStatus = "Passed");
 		}
 
 		task ("And that the user has two case result different in the table") {
-			TR2Utils.clickBreadcrumb(text = ${buildName});
+			Testray.clickBreadcrumb(text = ${buildName});
 
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 		}
 
 		task ("When the user filter a case result with multiple options") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
-
-			Click.clickAtNotVisible(
-				key_label = "Status",
-				key_status = "Passed",
-				locator1 = "TestrayFilter#STATUS_IN_FILTER");
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 1");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				checkboxFieldLabel = "Status",
+				checkboxValue = "Passed",
+				fieldType = "checkbox,input,select",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case 1",
 				selectFieldLabel = "Priority",
-				value1 = 5);
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
-				selectFieldLabel = "Assignee",
-				value1 = "Test");
-
-			TestrayFilter.multiSelect(
-				header = "Component",
-				label = "Component",
-				listMultiSelect = "Component 1");
-
-			Button.click(button = "Apply");
+				selectValue = 5);
 		}
 
-		task ("Then the user see only the Case 1, user and status in the table") {
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 1",
-				casePriority = 5);
-
-			TestrayTestflow.userAvatarPresent(
-				label = "Tests",
-				status = "Test Test");
-
-			TestrayTestflow.assertStatus(
-				label = "Tests",
-				status = "Passed");
+		task ("Then the user see only the Case 1 and status in the table") {
+			Testray.viewTableEntryList(listEntry = "5,Case 1,Passed");
 		}
 
 		task ("And do not see Case 2 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
 	}
 
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should not see case results that don't exist when I try filtering for them"
 	@priority = 3
 	test CanNotFilterForNonexistent {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user filter a case result existent") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case");
 		}
 
 		task ("And can see the case result in the list and not see case result 3") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementNotPresent(
-				key_projectName = "Case 3",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 3");
 		}
 
 		task ("When the user filter a case result by its non-existent name") {
 			Refresh();
 
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 3");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case 3");
 		}
 
 		task ("Then can not see the case result in the list") {
-			AssertElementNotPresent(
-				key_projectName = "Case 3",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 3");
 		}
 
 		task ("And can see message no results found") {
@@ -733,26 +462,18 @@ definition {
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an User I should be able to search by a filter"
 	@priority = 2
 	test CanSearchByFilter {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user has two field different in the filter") {
-			AssertElementPresent(
-				key_projectName = "Priority",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Run",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Priority,Run");
 		}
 
 		task ("When the user searches for a field called run") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 1",
+				locator1 = "Testray#TABLE_ENTRY");
 
-			TestrayFilter.searchFilter(value = "Run");
+			TestrayFilter.searchFilter(filterName = "Run");
 		}
 
 		task ("Then the user can see the field label called run") {

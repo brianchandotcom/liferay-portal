@@ -1,0 +1,21 @@
+{
+	"description": "Infographics",
+	"externalReferenceCode": "PRMC052",
+	"name": "Infographics",
+	"name_i18n": {
+		"ar_SA": "Infographics",
+		"ca_ES": "Infographics",
+		"de_DE": "Infographics",
+		"en_US": "Infographics",
+		"es_ES": "Infographics",
+		"fi_FI": "Infographics",
+		"fr_FR": "Infographics",
+		"hu_HU": "Infographics",
+		"ja_JP": "Infographics",
+		"nl_NL": "Infographics",
+		"pt_BR": "Infographics",
+		"sv_SE": "Infographics",
+		"zh_CN": "Infographics"
+	},
+	"viewableBy": "Anyone"
+}

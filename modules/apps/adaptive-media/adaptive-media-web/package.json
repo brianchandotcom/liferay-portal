@@ -2,7 +2,7 @@
 	"dependencies": {
 		"@clayui/alert": "3.93.0",
 		"@clayui/button": "3.100.0",
-		"@clayui/form": "3.100.0",
+		"@clayui/form": "3.104.0",
 		"@clayui/icon": "3.56.0",
 		"@clayui/layout": "3.93.0",
 		"@clayui/progress-bar": "3.65.0",
@@ -18,5 +18,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "5.0.66"
+	"version": "5.0.70"
 }

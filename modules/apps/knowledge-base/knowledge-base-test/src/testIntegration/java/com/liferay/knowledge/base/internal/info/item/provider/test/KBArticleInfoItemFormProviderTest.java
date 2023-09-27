@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.knowledge.base.internal.info.item.provider.test;
@@ -22,6 +13,7 @@ import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TagsInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -47,6 +39,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -91,7 +84,7 @@ public class KBArticleInfoItemFormProviderTest {
 			Comparator.comparing(
 				InfoField::getName, String::compareToIgnoreCase));
 
-		Assert.assertEquals(infoFields.toString(), 8, infoFields.size());
+		Assert.assertEquals(infoFields.toString(), 9, infoFields.size());
 
 		Iterator<InfoField<?>> iterator = infoFields.iterator();
 
@@ -128,6 +121,13 @@ public class KBArticleInfoItemFormProviderTest {
 		Assert.assertEquals(
 			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 		Assert.assertEquals("description", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = iterator.next();
+
+		Assert.assertEquals(
+			URLInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals("displayPageURL", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
 
 		infoField = iterator.next();
@@ -216,7 +216,7 @@ public class KBArticleInfoItemFormProviderTest {
 				KBFolderConstants.getClassName()),
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, "title KB Article",
 			StringUtil.randomString(), "<strong>Context text</strong>",
-			"Description", null, StringPool.BLANK, null, null, null,
+			"Description", null, StringPool.BLANK, new Date(), null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

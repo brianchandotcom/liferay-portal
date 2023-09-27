@@ -34,6 +34,7 @@ definition {
 	@priority = 4
 	test CanNavigateByClickingInSections {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -76,6 +77,7 @@ definition {
 	@priority = 5
 	test SectionIsCompleted {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -102,6 +104,7 @@ definition {
 	@priority = 5
 	test SectionIsHighlighted {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -124,6 +127,7 @@ definition {
 	@priority = 5
 	test SectionIsIncomplete {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

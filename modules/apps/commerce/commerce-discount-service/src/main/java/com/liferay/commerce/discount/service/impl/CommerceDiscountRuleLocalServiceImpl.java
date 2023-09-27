@@ -1,20 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.discount.service.impl;
 
 import com.liferay.commerce.discount.exception.CommerceDiscountRuleTypeException;
+import com.liferay.commerce.discount.exception.CommerceDiscountRuleTypeSettingsException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
@@ -69,7 +61,7 @@ public class CommerceDiscountRuleLocalServiceImpl
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		_validate(type);
+		_validate(0, type, typeSettings);
 
 		long commerceDiscountRuleId = counterLocalService.increment();
 
@@ -190,7 +182,7 @@ public class CommerceDiscountRuleLocalServiceImpl
 			commerceDiscountRulePersistence.findByPrimaryKey(
 				commerceDiscountRuleId);
 
-		_validate(type);
+		_validate(commerceDiscountRuleId, type, typeSettings);
 
 		commerceDiscountRule.setType(type);
 
@@ -223,7 +215,7 @@ public class CommerceDiscountRuleLocalServiceImpl
 			commerceDiscountRulePersistence.findByPrimaryKey(
 				commerceDiscountRuleId);
 
-		_validate(type);
+		_validate(commerceDiscountRuleId, type, typeSettings);
 
 		commerceDiscountRule.setName(name);
 		commerceDiscountRule.setType(type);
@@ -257,12 +249,21 @@ public class CommerceDiscountRuleLocalServiceImpl
 		indexer.reindex(commerceDiscount);
 	}
 
-	private void _validate(String type) throws PortalException {
+	private void _validate(
+			long commerceDiscountRuleId, String type, String typeSettings)
+		throws PortalException {
+
 		CommerceDiscountRuleType commerceDiscountRuleType =
 			_commerceDiscountRuleTypeRegistry.getCommerceDiscountRuleType(type);
 
 		if (commerceDiscountRuleType == null) {
 			throw new CommerceDiscountRuleTypeException();
+		}
+
+		if ((commerceDiscountRuleId > 0) &&
+			!commerceDiscountRuleType.validate(typeSettings)) {
+
+			throw new CommerceDiscountRuleTypeSettingsException();
 		}
 	}
 

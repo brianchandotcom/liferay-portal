@@ -1,34 +1,23 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.preview.pdf.internal.configuration.admin.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.lang.reflect.Method;
 
 import java.util.Dictionary;
 
@@ -251,14 +240,14 @@ public class PDFPreviewManagedServiceFactoryTest {
 				CompanyConstants.SYSTEM));
 	}
 
-	private long _getMaxNumberOfPages(String scope, long scopePK)
+	private int _getMaxNumberOfPages(String scope, long scopePK)
 		throws Exception {
 
-		Method method = ReflectionUtil.getDeclaredMethod(
-			_managedServiceFactory.getClass(), "getMaxNumberOfPages",
-			String.class, long.class);
-
-		return (int)method.invoke(_managedServiceFactory, scope, scopePK);
+		return ReflectionTestUtil.invoke(
+			ReflectionTestUtil.<Object>getFieldValue(
+				_managedServiceFactory, "_pdfPreviewConfigurationHelper"),
+			"getMaxNumberOfPages", new Class<?>[] {String.class, long.class},
+			scope, scopePK);
 	}
 
 	private <E extends Exception> void _withCompanyConfiguration(
@@ -305,7 +294,9 @@ public class PDFPreviewManagedServiceFactoryTest {
 		}
 	}
 
-	@Inject(filter = "component.name=*.PDFPreviewManagedServiceFactory")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.preview.pdf.internal.configuration.admin.service.PDFPreviewManagedServiceFactory"
+	)
 	private ManagedServiceFactory _managedServiceFactory;
 
 }

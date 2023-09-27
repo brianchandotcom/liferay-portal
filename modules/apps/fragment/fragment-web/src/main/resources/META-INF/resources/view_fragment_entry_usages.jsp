@@ -1,23 +1,14 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentEntryLinkDisplayContext fragmentEntryLinkDisplayContext = new FragmentEntryLinkDisplayContext(renderRequest, renderResponse);
+FragmentEntryLinkDisplayContext fragmentEntryLinkDisplayContext = new FragmentEntryLinkDisplayContext(request, renderRequest, renderResponse);
 
 FragmentEntry fragmentEntry = fragmentEntryLinkDisplayContext.getFragmentEntry();
 
@@ -34,88 +25,13 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 		<clay:col
 			lg="3"
 		>
-			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
-				<ul class="nav nav-nested">
-					<li class="nav-item">
-						<strong class="text-uppercase">
-							<liferay-ui:message key="usages" />
-						</strong>
+			<strong class="text-uppercase">
+				<liferay-ui:message key="usages" />
+			</strong>
 
-						<ul class="nav nav-stacked">
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "all") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											fragmentEntryLinkDisplayContext.getPortletURL()
-										).setNavigation(
-											"all"
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getAllUsageCount() %>" key="all-x" />
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "pages") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											fragmentEntryLinkDisplayContext.getPortletURL()
-										).setNavigation(
-											"pages"
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPagesUsageCount() %>" key="pages-x" />
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "master-pages") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											fragmentEntryLinkDisplayContext.getPortletURL()
-										).setNavigation(
-											"master-pages"
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getMasterPagesUsageCount() %>" key="master-pages-x" />
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "page-templates") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											fragmentEntryLinkDisplayContext.getPortletURL()
-										).setNavigation(
-											"page-templates"
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "display-page-templates") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											fragmentEntryLinkDisplayContext.getPortletURL()
-										).setNavigation(
-											"display-page-templates"
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getDisplayPagesUsageCount() %>" key="display-page-templates-x" />
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</nav>
+			<clay:vertical-nav
+				verticalNavItems="<%= fragmentEntryLinkDisplayContext.getVerticalNavItemList() %>"
+			/>
 		</clay:col>
 
 		<clay:col

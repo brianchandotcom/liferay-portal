@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>COHORT_ANALYSIS_SELECT_VISITOR_TYPE</td>
-	<td>//select[contains(@class,'visitors-type-select')]</td>
+	<td>//button[contains(@class,'visitors-type-select')]</td>
 	<td></td>
 </tr>
 <tr>

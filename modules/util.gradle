@@ -333,6 +333,7 @@ private void _createSetUpPortalToolTasks() {
 				}
 			}
 
+			duplicatesStrategy = DuplicatesStrategy.INCLUDE
 			inputFile = ivyXmlFile
 			into new File(portalToolDir, "lib")
 

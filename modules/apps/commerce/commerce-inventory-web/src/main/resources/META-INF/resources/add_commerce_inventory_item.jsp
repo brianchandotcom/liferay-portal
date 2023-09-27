@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -29,26 +20,58 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
+		<liferay-ui:error exception="<%= CPInstanceUnitOfMeasureKeyException.class %>" message="inventory-item-with-this-sku-and-uom-already-exists-in-the-selected-warehouse" />
 		<liferay-ui:error exception="<%= DuplicateCommerceInventoryWarehouseItemException.class %>" message="inventory-item-with-this-sku-already-exists-in-the-selected-warehouse" />
+		<liferay-ui:error exception="<%= NoSuchCPInstanceUnitOfMeasureException.class %>" message="no-such-uom-exists-with-this-sku" />
 
-		<aui:input name="sku" required="<%= true %>" type="text" />
+		<%
+		boolean featureFlagEnabled = FeatureFlagManagerUtil.isEnabled("COMMERCE-11287");
+		%>
 
-		<aui:select label="warehouse" name="commerceInventoryWarehouseId" required="<%= true %>">
+		<div class="row">
+			<div class="col-<%= featureFlagEnabled ? "6" : "12" %>">
+				<aui:input name="sku" required="<%= true %>" type="text" />
+			</div>
 
-			<%
-			for (CommerceInventoryWarehouse commerceInventoryWarehouse : commerceInventoryDisplayContext.getCommerceInventoryWarehouses()) {
-			%>
+			<c:if test="<%= featureFlagEnabled %>">
+				<div class="col-6">
+					<aui:input name="unitOfMeasure" type="text" />
+				</div>
+			</c:if>
+		</div>
 
-				<aui:option label="<%= commerceInventoryWarehouse.getName(locale) %>" value="<%= commerceInventoryWarehouse.getCommerceInventoryWarehouseId() %>" />
+		<div class="row">
+			<div class="col-12">
+				<aui:select label="warehouse" name="commerceInventoryWarehouseId" required="<%= true %>" title="warehouse">
 
-			<%
-			}
-			%>
+					<%
+					for (CommerceInventoryWarehouse commerceInventoryWarehouse : commerceInventoryDisplayContext.getCommerceInventoryWarehouses()) {
+					%>
 
-		</aui:select>
+					<aui:option label="<%= commerceInventoryWarehouse.getName(locale) %>" value="<%= commerceInventoryWarehouse.getCommerceInventoryWarehouseId() %>" />
 
-		<aui:input name="quantity" required="<%= true %>" type="text">
-			<aui:validator name="min">1</aui:validator>
-		</aui:input>
+					<%
+					}
+					%>
+
+				</aui:select>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<aui:input min="0" name="quantity" required="<%= true %>" type="text" wrapperCssClass="mb-0">
+					<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-x", 0) %>' name="custom">
+						function(val) {
+							if (Number(val) > 0) {
+								return true;
+							}
+
+							return false;
+						}
+					</aui:validator>
+				</aui:input>
+			</div>
+		</div>
 	</aui:form>
 </commerce-ui:modal-content>

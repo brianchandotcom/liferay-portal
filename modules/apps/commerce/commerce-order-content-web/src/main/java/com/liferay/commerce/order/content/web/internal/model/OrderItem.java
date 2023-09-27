@@ -1,18 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.order.content.web.internal.model;
+
+import java.math.BigDecimal;
 
 import java.util.List;
 
@@ -26,8 +19,8 @@ public class OrderItem {
 		String formattedQuantity, String formattedSubscriptionPeriod,
 		String name, String options, long orderId, long orderItemId,
 		List<OrderItem> orderItems, long parentOrderItemId, String price,
-		String promoPrice, int shippedQuantity, String sku, String thumbnail,
-		String total) {
+		String promoPrice, BigDecimal shippedQuantity, String sku,
+		String thumbnail, String total, String unitOfMeasureKey) {
 
 		_cpInstanceId = cpInstanceId;
 		_discount = discount;
@@ -46,6 +39,7 @@ public class OrderItem {
 		_sku = sku;
 		_thumbnail = thumbnail;
 		_total = total;
+		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
 	public long getCPInstanceId() {
@@ -100,7 +94,7 @@ public class OrderItem {
 		return _promoPrice;
 	}
 
-	public int getShippedQuantity() {
+	public BigDecimal getShippedQuantity() {
 		return _shippedQuantity;
 	}
 
@@ -116,6 +110,10 @@ public class OrderItem {
 		return _total;
 	}
 
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
 	private final long _cpInstanceId;
 	private final String _discount;
 	private final String[] _errorMessages;
@@ -129,9 +127,10 @@ public class OrderItem {
 	private final long _parentOrderItemId;
 	private final String _price;
 	private final String _promoPrice;
-	private final int _shippedQuantity;
+	private final BigDecimal _shippedQuantity;
 	private final String _sku;
 	private final String _thumbnail;
 	private final String _total;
+	private final String _unitOfMeasureKey;
 
 }

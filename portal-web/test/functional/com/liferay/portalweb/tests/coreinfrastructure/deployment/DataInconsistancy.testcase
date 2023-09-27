@@ -11,6 +11,7 @@ definition {
 	test RestartWithMissingChildPagePermission {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a widget page with a child page") {
 			User.firstLoginPG();
@@ -52,6 +53,7 @@ definition {
 	test RestartWithMissingPagePermission {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a widget page") {
 			User.firstLoginPG();

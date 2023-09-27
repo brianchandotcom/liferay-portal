@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC072",
+	"name": "Liferay Experience Cloud Self-Managed",
+	"name_i18n": {
+		"ar_SA": "Liferay Experience Cloud Self-Managed",
+		"ca_ES": "Liferay Experience Cloud Self-Managed",
+		"de_DE": "Liferay Experience Cloud Self-Managed",
+		"en_US": "Liferay Experience Cloud Self-Managed",
+		"es_ES": "Liferay Experience Cloud Self-Managed",
+		"fi_FI": "Liferay Experience Cloud Self-Managed",
+		"fr_FR": "Liferay Experience Cloud Self-Managed",
+		"hu_HU": "Liferay Experience Cloud Self-Managed",
+		"ja_JP": "Liferay Experience Cloud Self-Managed",
+		"nl_NL": "Liferay Experience Cloud Self-Managed",
+		"pt_BR": "Liferay Experience Cloud Self-Managed",
+		"sv_SE": "Liferay Experience Cloud Self-Managed",
+		"zh_CN": "Liferay Experience Cloud Self-Managed"
+	},
+	"viewableBy": "Anyone"
+}

@@ -1,0 +1,21 @@
+{
+	"description": "Research and Analysis",
+	"externalReferenceCode": "PRMC056",
+	"name": "Research and Analysis",
+	"name_i18n": {
+		"ar_SA": "Research and Analysis",
+		"ca_ES": "Research and Analysis",
+		"de_DE": "Research and Analysis",
+		"en_US": "Research and Analysis",
+		"es_ES": "Research and Analysis",
+		"fi_FI": "Research and Analysis",
+		"fr_FR": "Research and Analysis",
+		"hu_HU": "Research and Analysis",
+		"ja_JP": "Research and Analysis",
+		"nl_NL": "Research and Analysis",
+		"pt_BR": "Research and Analysis",
+		"sv_SE": "Research and Analysis",
+		"zh_CN": "Research and Analysis"
+	},
+	"viewableBy": "Anyone"
+}

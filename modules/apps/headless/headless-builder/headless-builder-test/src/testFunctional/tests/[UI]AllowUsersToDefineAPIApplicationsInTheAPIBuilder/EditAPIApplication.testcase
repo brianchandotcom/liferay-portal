@@ -1,0 +1,182 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+
+		task ("Given create an API application") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "unpublished",
+				title = "App-test");
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 3
+	test CanNavigateToAppDetailsForm {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When from dropdown menu I click Edit option") {
+			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
+		}
+
+		task ("Then a form with editable app details: title, URL, description is visible") {
+			AssertTextEquals(
+				locator1 = "APIBuilder#ENTER_TITLE",
+				value1 = "App-test");
+
+			AssertTextEquals(
+				locator1 = "APIBuilder#AUTOMATED_URL",
+				value1 = "app-test");
+
+			AssertElementPresent(locator1 = "APIBuilder#DESCRIPTION");
+		}
+	}
+
+	@priority = 4
+	test CannotStoreModifiedValuesWithoutSaving {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given from dropdown menu I click Edit option") {
+			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
+		}
+
+		task ("When I edit the title and click Cancel > Continue Without Saving") {
+			Type(
+				locator1 = "APIBuilder#ENTER_TITLE",
+				value1 = "App-test-1");
+
+			Click(locator1 = "Button#CANCEL");
+
+			Click(locator1 = "APIBuilder#CONTINUE_WITHOUT_SAVING_BUTTON");
+		}
+
+		task ("Then back to API Builder list") {
+			AssertElementPresent(
+				key_objectLabel = "API Builder",
+				locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
+		}
+
+		task ("And Then app Title is not changed") {
+			AssertElementPresent(
+				key_name = "App-test",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 4
+	test CanSaveModifiedValuesAndPublishApplication {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given from dropdown menu I click Edit option") {
+			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
+		}
+
+		task ("When I edit the title and click the Publish button") {
+			Type(
+				locator1 = "APIBuilder#ENTER_TITLE",
+				value1 = "App-test-1");
+
+			Click(locator1 = "APIBuilder#PUBLISH_BUTTON");
+		}
+
+		task ("Then back to API Builder list") {
+			Click(locator1 = "Icon#BACK");
+
+			AssertElementPresent(
+				key_objectLabel = "API Builder",
+				locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
+		}
+
+		task ("And Then Title, Status fields are updated") {
+			AssertElementPresent(
+				key_name = "App-test-1",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+
+			AssertElementPresent(
+				key_status = "Published",
+				key_title = "App-test",
+				locator1 = "APIBuilder#APPLICATION_STATUS");
+		}
+	}
+
+	@priority = 4
+	test CanSaveModifiedValuesForUnpublishedApplication {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And Given from dropdown menu I click Edit option") {
+			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
+		}
+
+		task ("When I edit the title and click the save button") {
+			Type(
+				locator1 = "APIBuilder#ENTER_TITLE",
+				value1 = "App-test-1");
+
+			Click(locator1 = "Button#SAVE");
+		}
+
+		task ("Then back to API Builder list") {
+			Click(locator1 = "Icon#BACK");
+
+			AssertElementPresent(
+				key_objectLabel = "API Builder",
+				locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
+		}
+
+		task ("And Then app Title is updated") {
+			AssertElementPresent(
+				key_name = "App-test-1",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 3
+	test CanSeeEditOptionButton {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I click on the dropdown menu of created API application") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+
+			Click(
+				key_title = "App-test",
+				locator1 = "APIBuilder#DROPDOWN_MENU");
+		}
+
+		task ("Then edit button is visible") {
+			AssertElementPresent(locator1 = "Button#EDIT");
+		}
+	}
+
+}

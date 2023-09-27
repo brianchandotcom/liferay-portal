@@ -1,6 +1,19 @@
 <#-- Guest user -->
 
-<@insertUser _userModel=dataFactory.newGuestUserModel() />
+<#assign guestUserModel = dataFactory.newGuestUserModel() />
+
+<@insertGroup _groupModel=dataFactory.newGroupModel(guestUserModel) />
+
+<#assign
+	groupIds = [guestGroupModel.groupId]
+	roleIds = [dataFactory.guestRoleModel.roleId]
+/>
+
+<@insertUser
+	_groupIds=groupIds
+	_roleIds=roleIds
+	_userModel=guestUserModel
+/>
 
 <#-- Default admin user -->
 

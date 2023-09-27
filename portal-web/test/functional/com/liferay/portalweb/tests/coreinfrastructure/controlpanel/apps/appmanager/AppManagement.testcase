@@ -1,4 +1,4 @@
-@component-name = "portal-security"
+@component-name = "portal-user-management"
 definition {
 
 	property portal.release = "true";
@@ -14,7 +14,7 @@ definition {
 	}
 
 	@description = "This test asserts that apps in App Management do not display in non default instances"
-	@priority = 4
+	@priority = 3
 	test AppManagementAppsAreNotInDefaultInstances {
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -48,6 +48,7 @@ definition {
 	@priority = 3
 	test AppManagerFilterAndOrder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -83,6 +84,7 @@ definition {
 	@priority = 3
 	test AppManagerLocalization {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
@@ -112,9 +114,10 @@ definition {
 
 	}
 
-	@priority = 4
+	@priority = 3
 	test AppShouldNotBeNestedWithinItself {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -131,10 +134,11 @@ definition {
 	}
 
 	@description = "This ensures that the Adaptive Media app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateAdaptiveMedia {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Adaptive Media";
 
 		ApplicationsMenu.gotoPortlet(
@@ -164,10 +168,11 @@ definition {
 	}
 
 	@description = "This ensures that the Asset Libraries app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateAssetLibraries {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Depot";
 
 		ApplicationsMenu.gotoPortlet(
@@ -197,10 +202,13 @@ definition {
 	}
 
 	@description = "This ensures that the Blogs app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateBlogs {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Blogs";
 
 		ApplicationsMenu.gotoPortlet(
@@ -230,10 +238,11 @@ definition {
 	}
 
 	@description = "This ensures that the Comment app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateComment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Content Page Review";
 
 		ApplicationsMenu.gotoPortlet(
@@ -263,10 +272,11 @@ definition {
 	}
 
 	@description = "This ensures that the Document Library Opener app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateDocumentLibraryOpener {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Document Management";
 
 		ApplicationsMenu.gotoPortlet(
@@ -296,10 +306,11 @@ definition {
 	}
 
 	@description = "This ensures that the Knowledge Base app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateKnowledgeBase {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Knowledge Base";
 
 		ApplicationsMenu.gotoPortlet(
@@ -329,10 +340,11 @@ definition {
 	}
 
 	@description = "This ensures that the Message Boards app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateMessageBoards {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Message Boards";
 
 		ApplicationsMenu.gotoPortlet(
@@ -362,10 +374,11 @@ definition {
 	}
 
 	@description = "This ensures that the Notifications app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateNotifications {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Notifications";
 
 		ApplicationsMenu.gotoPortlet(
@@ -395,10 +408,11 @@ definition {
 	}
 
 	@description = "This ensures that the Questions app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateQuestions {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Questions";
 
 		ApplicationsMenu.gotoPortlet(
@@ -428,10 +442,11 @@ definition {
 	}
 
 	@description = "This ensures that the Ratings app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateRatings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Ratings";
 
 		ApplicationsMenu.gotoPortlet(
@@ -461,10 +476,11 @@ definition {
 	}
 
 	@description = "This ensures that the Sharing app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateSharing {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Asset Sharing";
 
 		ApplicationsMenu.gotoPortlet(
@@ -494,10 +510,11 @@ definition {
 	}
 
 	@description = "This ensures that the Translation app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateTranslation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Translations Management";
 
 		ApplicationsMenu.gotoPortlet(
@@ -527,10 +544,11 @@ definition {
 	}
 
 	@description = "This ensures that the Wiki app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateWiki {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Wiki";
 
 		ApplicationsMenu.gotoPortlet(
@@ -563,6 +581,7 @@ definition {
 	@priority = 3
 	test CanFilterMarketplaceStoreAppsByCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given user login marketplace") {
 			ApplicationsMenu.gotoPortlet(
@@ -606,6 +625,7 @@ definition {
 	@priority = 3
 	test CanFilterMarketplaceStoreAppsByLiferayVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given user login marketplace") {
 			ApplicationsMenu.gotoPortlet(
@@ -649,6 +669,7 @@ definition {
 	@priority = 3
 	test CanFilterMarketplaceStoreAppsByPrice {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given user login marketplace") {
 			ApplicationsMenu.gotoPortlet(
@@ -688,9 +709,10 @@ definition {
 		}
 	}
 
-	@priority = 5
+	@priority = 3
 	test InstallViaUploadIsSuccessful {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -712,6 +734,7 @@ definition {
 	@priority = 3
 	test InvalidFileShouldNotBeUploaded {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -741,6 +764,7 @@ definition {
 	@priority = 3
 	test SearchMarketplaceStore {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given user login marketplace store assert user login in Purchased page") {
 			Navigator.openStoreURL();
@@ -789,9 +813,10 @@ definition {
 		}
 	}
 
-	@priority = 5
+	@priority = 3
 	test UninstallAppIsSuccessful {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var appName = "test-app-portlet";
 
@@ -820,9 +845,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-99031."
-	@priority = 5
+	@priority = 3
 	test ViewLicenseManager {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Marketplace",
@@ -838,6 +864,7 @@ definition {
 	@priority = 3
 	test ViewPurchasedApp {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given login marketplace store") {
 			Navigator.openStoreURL();

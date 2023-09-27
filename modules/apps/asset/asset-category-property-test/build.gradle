@@ -1,7 +1,7 @@
 dependencies {
-	testIntegrationCompile project(":apps:asset:asset-api")
-	testIntegrationCompile project(":apps:asset:asset-category-property-api")
-	testIntegrationCompile project(":apps:asset:asset-test-util")
-	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:asset:asset-api")
+	testIntegrationImplementation project(":apps:asset:asset-category-property-api")
+	testIntegrationImplementation project(":apps:asset:asset-test-util")
+	testIntegrationImplementation project(":apps:change-tracking:change-tracking-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

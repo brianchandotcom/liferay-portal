@@ -6,12 +6,69 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Login";
 
+	@description = "This is a test for LPS-179689. TC-8: Verify if users cannot edit their password on the My Account page if the change password option is disabled by default policy and Facebook SSO is enabled. Blocked by LPS-173860."
+	@ignore = "true"
+	@priority = 5
+	test CannotChangePasswordWhenLoginViaFacebookSSOWithDisablePasswordChangeable {
+		property portal.ssl.enabled = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		var facebookApplicationId = PropsUtil.get("facebook.application.id");
+		var facebookApplicationSecret = PropsUtil.get("facebook.application.secret");
+		var facebookEmail = PropsUtil.get("facebook.email");
+		var facebookPassword = PropsUtil.get("facebook.password");
+
+		task ("Given: Go to edit default password policy to disable password changeable and enabled Facebook SSO") {
+			User.firstLoginPG();
+
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
+
+			PasswordPolicies.openPasswordPoliciesAdmin();
+
+			PasswordPolicies.disableChangeable(
+				passwordPolicyName = "Default Password Policy",
+				passwordPolicyPanel = "Password Changes");
+
+			PortalSettings.gotoConfiguration(
+				baseURL = "http://localhost:8080",
+				configurationCategory = "SSO",
+				configurationName = "Facebook Connect",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.editConfigurationAuthenticationFacebook(
+				facebookApplicationId = ${facebookApplicationId},
+				facebookApplicationSecret = ${facebookApplicationSecret});
+
+			User.logoutPG();
+		}
+
+		task ("When: Login portal using the Facebook login option and navigate to Account Settings") {
+			User.loginUserWithFacebookSSOEnabledPG(
+				baseURL = "https://localhost:8443",
+				facebookEmail = ${facebookEmail},
+				facebookPassword = ${facebookPassword},
+				siteName = ${siteName});
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			UserNavigator.gotoGeneral();
+		}
+
+		task ("Then: Assert there is no Password menu item at the General tab") {
+			AssertElementNotPresent(
+				key_navNested = "Password",
+				locator1 = "NavNested#NAV_NESTED_LINK");
+		}
+	}
+
 	@description = "This is a use case for LPS-39744 and LPS-78508. Default landing page could be set by property and user is redirected to the changed landing page."
 	@priority = 5
 	test DefaultPortalLandingPageSetByProperty {
-		property custom.properties = "default.landing.page.path=/web/guest/landing${line.separator}company.default.home.url=";
+		property custom.properties = "company.default.home.url=${line.separator}default.landing.page.path=/web/guest/landing";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Login and add a public page ") {
 			User.firstLoginPG();
@@ -40,10 +97,11 @@ definition {
 
 	@description = "This is a use case for LRQA-27624. Users could login and logout using their Facebook profile. Blocked by LPS-173860."
 	@ignore = "true"
-	@priority = 4
+	@priority = 5
 	test FacebookSSOSmoke {
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var facebookApplicationId = PropsUtil.get("facebook.application.id");
 		var facebookApplicationSecret = PropsUtil.get("facebook.application.secret");
@@ -88,6 +146,7 @@ definition {
 	test LoginWithSpanishOnlyEnabledLocale {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Login and configure spanish as default and current portal language") {
 			User.firstLoginPG();
@@ -105,7 +164,7 @@ definition {
 		}
 
 		task ("Logout, restart server and login") {
-			User.logoutPG();
+			User.logoutPG(signOutLocalizationName = "Salir");
 
 			Portlet.shutdownServer();
 
@@ -130,6 +189,7 @@ definition {
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Login and go to control panel - roles") {
 			User.firstLoginUI();
@@ -147,6 +207,7 @@ definition {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When: User tries to login with wrong credential") {
 			User.firstLoginUI(userEmailAddress = "wrong@liferay.com");
@@ -171,6 +232,7 @@ definition {
 		property portal.release = "false";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Login and enable OTP and Sign Out as Instance Admin") {
 			User.firstLoginUI();
@@ -205,6 +267,7 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property openam.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to http://test.able.com:8080/openam and run ant command") {
 			Navigator.openSpecificURL(url = "http://test.able.com:8080/openam");
@@ -271,6 +334,7 @@ definition {
 	@priority = 5
 	test RedirectToDefaultPortalLandingPageOnLogin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Login and configure landing page CP") {
 			User.firstLoginPG();
@@ -308,6 +372,7 @@ definition {
 	test TokenBasedSSOSmoke {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Login and reset token based SSO configuration") {
 			User.firstLoginPG();
@@ -326,6 +391,10 @@ definition {
 			FormFields.enableCheckbox(fieldName = "Enabled");
 
 			SystemSettings.saveConfiguration();
+
+			// The pause is necessary because it takes a while to load new configuration
+
+			Pause(locator1 = 3000);
 		}
 
 		task ("Run and command") {
@@ -361,6 +430,10 @@ definition {
 			FormFields.enableCheckbox(fieldName = "enabled");
 
 			SystemSettings.saveConfiguration();
+
+			// The pause is necessary because it takes a while to load new configuration
+
+			Pause(locator1 = 3000);
 		}
 
 		task ("Run ant command") {
@@ -371,8 +444,9 @@ definition {
 	@description = "This is a use case for LPS-150388 TC-1/5: Admin password need to be set on first startup if the default admin password property is not set."
 	@priority = 5
 	test UserSetNewPasswordWithoutPasswordProperty {
-		property custom.properties = "company.security.send.password.reset.link=true${line.separator}passwords.default.policy.change.required=false${line.separator}default.admin.password=${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "company.security.send.password.reset.link=true${line.separator}default.admin.password=${line.separator}jsonws.web.service.paths.excludes=${line.separator}passwords.default.policy.change.required=false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User opens the portal for the first time without default admin password property") {
 			Navigator.openURL();
@@ -398,10 +472,11 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-27619. Verify that LDAP and OpenSSO portlets are present at Instance Settings."
-	@priority = 3
+	@priority = 5
 	test ViewInstanceSettingsAuthentication {
 		property osgi.app.includes = "portal-security-sso-openid";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Login and view General CP authentication settings") {
 			User.firstLoginPG();
@@ -423,6 +498,7 @@ definition {
 	test VirtualInstancesNeedExtraInformationWithoutPasswordProperty {
 		property custom.properties = "default.admin.password=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User opens the portal for the first time without default admin password property") {
 			Navigator.openURL();
@@ -467,6 +543,7 @@ definition {
 	test VirtualInstancesNeedNoExtraInformationWithPasswordProperty {
 		property custom.properties = "company.security.send.password.reset.link=true${line.separator}passwords.default.policy.change.required=false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User opens the portal with a set admin password and logs in") {
 			User.firstLoginUI();

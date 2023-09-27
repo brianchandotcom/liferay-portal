@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Asset Link API
+Bundle-SymbolicName: com.liferay.asset.link.api
+Bundle-Version: 1.0.2
+Export-Package:\
+	com.liferay.asset.link.constants,\
+	com.liferay.asset.link.exception,\
+	com.liferay.asset.link.model,\
+	com.liferay.asset.link.model.adapter,\
+	com.liferay.asset.link.service,\
+	com.liferay.asset.link.service.persistence

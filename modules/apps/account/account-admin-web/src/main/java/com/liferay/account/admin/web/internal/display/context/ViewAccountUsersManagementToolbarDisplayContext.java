@@ -1,21 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.account.admin.web.internal.display.context;
 
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -105,6 +97,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 	@Override
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
+			() -> _hasManageUsersPermission(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "selectAccountUsers");
 				dropdownItem.putData(
@@ -133,6 +126,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, "assign-users"));
 			}
 		).addDropdownItem(
+			() -> _hasInviteUserPermission() || _hasManageUsersPermission(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "inviteAccountUsers");
 				dropdownItem.putData(
@@ -216,7 +210,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		return _hasManageUsersPermission();
+		return _hasInviteUserPermission() || _hasManageUsersPermission();
 	}
 
 	@Override
@@ -243,6 +237,16 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 	private long _getAccountEntryId() {
 		return ParamUtil.getLong(liferayPortletRequest, "accountEntryId");
+	}
+
+	private boolean _hasInviteUserPermission() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return AccountEntryPermission.contains(
+			themeDisplay.getPermissionChecker(), _getAccountEntryId(),
+			AccountActionKeys.INVITE_USER);
 	}
 
 	private boolean _hasManageUsersPermission() {

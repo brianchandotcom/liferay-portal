@@ -34,9 +34,13 @@ definition {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
 			UserBar.gotoDropdown();
 
-			ScrollWebElementIntoView(locator1 = "UserBar#USER_AVATAR_DROPDOWN_SIGNOUT");
+			ScrollWebElementIntoView(
+				key_signOutLocalizationName = ${signOutLocalizationName},
+				locator1 = "UserBar#USER_AVATAR_DROPDOWN_SIGNOUT");
 
-			Click(locator1 = "UserBar#USER_AVATAR_DROPDOWN_SIGNOUT");
+			Click(
+				key_signOutLocalizationName = ${signOutLocalizationName},
+				locator1 = "UserBar#USER_AVATAR_DROPDOWN_SIGNOUT");
 		}
 	}
 

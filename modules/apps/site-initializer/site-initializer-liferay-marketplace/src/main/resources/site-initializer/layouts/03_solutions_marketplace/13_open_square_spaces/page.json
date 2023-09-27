@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/smc-open-square-spaces",
+	"hidden": true,
+	"name": "Open Square Spaces",
+	"name_i18n": {
+		"en_US": "Open Square Spaces"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

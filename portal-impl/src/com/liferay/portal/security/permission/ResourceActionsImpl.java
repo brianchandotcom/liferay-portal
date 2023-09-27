@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.security.permission;
@@ -20,6 +11,8 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.partition.DBPartitionUtil;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -464,9 +457,9 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		if (checkResourceActions) {
 			for (String modelResourceName : modelResourceNames) {
-				resourceActionLocalService.checkResourceActions(
-					modelResourceName,
-					getModelResourceActions(modelResourceName));
+				_checkResourceActions(
+					getModelResourceActions(modelResourceName),
+					modelResourceName);
 			}
 		}
 	}
@@ -492,8 +485,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		_readModelResources(document.getRootElement(), modelResourceNames);
 
 		for (String modelResourceName : modelResourceNames) {
-			resourceActionLocalService.checkResourceActions(
-				modelResourceName, getModelResourceActions(modelResourceName));
+			_checkResourceActions(
+				getModelResourceActions(modelResourceName), modelResourceName);
 		}
 	}
 
@@ -511,9 +504,9 @@ public class ResourceActionsImpl implements ResourceActions {
 		String portletResourceName = PortletIdCodec.decodePortletName(
 			portlet.getPortletId());
 
-		resourceActionLocalService.checkResourceActions(
-			portletResourceName,
-			_getPortletResourceActions(portletResourceName, portlet));
+		_checkResourceActions(
+			_getPortletResourceActions(portletResourceName, portlet),
+			portletResourceName);
 	}
 
 	@Override
@@ -538,9 +531,9 @@ public class ResourceActionsImpl implements ResourceActions {
 		String portletResourceName = PortletIdCodec.decodePortletName(
 			portlet.getPortletId());
 
-		resourceActionLocalService.checkResourceActions(
-			portletResourceName,
-			_getPortletResourceActions(portletResourceName, portlet));
+		_checkResourceActions(
+			_getPortletResourceActions(portletResourceName, portlet),
+			portletResourceName);
 	}
 
 	@Override
@@ -574,9 +567,9 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		if (checkResourceActions) {
 			for (String portletResourceName : portletResourceNames) {
-				resourceActionLocalService.checkResourceActions(
-					portletResourceName,
-					getPortletResourceActions(portletResourceName));
+				_checkResourceActions(
+					getPortletResourceActions(portletResourceName),
+					portletResourceName);
 			}
 		}
 	}
@@ -621,12 +614,22 @@ public class ResourceActionsImpl implements ResourceActions {
 	private void _check(
 		String portletName, List<String> portletResourceActions) {
 
-		ResourceActionLocalServiceUtil.checkResourceActions(
-			portletName, portletResourceActions);
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					ResourceActionLocalServiceUtil.checkResourceActions(
+						portletName, portletResourceActions);
 
-		for (String modelName : getPortletModelResources(portletName)) {
-			ResourceActionLocalServiceUtil.checkResourceActions(
-				modelName, getModelResourceActions(modelName));
+					for (String modelName :
+							getPortletModelResources(portletName)) {
+
+						ResourceActionLocalServiceUtil.checkResourceActions(
+							modelName, getModelResourceActions(modelName));
+					}
+				});
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -660,6 +663,23 @@ public class ResourceActionsImpl implements ResourceActions {
 		actions.add(ActionKeys.PERMISSIONS);
 		actions.add(ActionKeys.PREFERENCES);
 		actions.add(ActionKeys.VIEW);
+	}
+
+	private void _checkResourceActions(List<String> actionIds, String name) {
+		if (StartupHelperUtil.isDBNew()) {
+			resourceActionLocalService.checkResourceActions(name, actionIds);
+		}
+		else {
+			try {
+				DBPartitionUtil.forEachCompanyId(
+					companyId ->
+						resourceActionLocalService.checkResourceActions(
+							name, actionIds));
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
 	}
 
 	private String _getCompositeModelName(Element compositeModelNameElement) {

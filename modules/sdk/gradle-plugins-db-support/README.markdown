@@ -7,7 +7,7 @@ following actions are available:
 - Cleans the Liferay database from the Service Builder tables and rows of a
 module.
 
-The plugin has been successfully tested with Gradle 6.9.2.
+The plugin has been successfully tested with Gradle 7.3.3.
 
 ## Usage
 
@@ -16,7 +16,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.db.support", version: "1.1.0"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.db.support", version: "1.1.1"
 	}
 
 	repositories {

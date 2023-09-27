@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -34,11 +25,6 @@ if (addURL == null) {
 		"/site_navigation_admin/add_site_navigation_menu_item"
 	).buildPortletURL();
 }
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(siteNavigationMenuItemType.getAddTitle(locale));
 %>
 
 <liferay-ui:error exception="<%= SiteNavigationMenuItemNameException.class %>">
@@ -50,22 +36,27 @@ renderResponse.setTitle(siteNavigationMenuItemType.getAddTitle(locale));
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenuId %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 
-	<div class="sheet">
-		<div class="panel-group panel-group-flush">
-			<aui:fieldset>
+	<aui:fieldset>
 
-				<%
-				siteNavigationMenuItemType.renderAddPage(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
-				%>
+		<%
+		siteNavigationMenuItemType.renderAddPage(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+		%>
 
-			</aui:fieldset>
-		</div>
-	</div>
+	</aui:fieldset>
 
 	<aui:button-row cssClass="modal-footer position-fixed">
-		<aui:button name="addButton" type="submit" value='<%= type.equals("layout") ? "select" : "add" %>' />
+		<clay:button
+			id='<%= liferayPortletResponse.getNamespace() + "addButton" %>'
+			label='<%= type.equals("layout") ? "select" : "add" %>'
+			type="submit"
+		/>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<clay:button
+			displayType="btn-secondary cancel"
+			label="cancel"
+			onClick='<%= "Liferay.Util.navigation('" + redirect + "')" %>'
+			type="button"
+		/>
 	</aui:button-row>
 </aui:form>
 

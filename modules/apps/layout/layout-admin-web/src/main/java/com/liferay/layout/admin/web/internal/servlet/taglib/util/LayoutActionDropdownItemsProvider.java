@@ -1,29 +1,29 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.util;
 
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownContextItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -31,11 +31,18 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
+import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 
 import java.util.List;
+import java.util.Objects;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,11 +55,13 @@ public class LayoutActionDropdownItemsProvider {
 		HttpServletRequest httpServletRequest,
 		LayoutActionsHelper layoutActionsHelper,
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext,
+		LiferayPortletResponse liferayPortletResponse,
 		TranslationURLProvider translationURLProvider) {
 
 		_httpServletRequest = httpServletRequest;
 		_layoutActionsHelper = layoutActionsHelper;
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
+		_liferayPortletResponse = liferayPortletResponse;
 		_translationURLProvider = translationURLProvider;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -204,7 +213,7 @@ public class LayoutActionDropdownItemsProvider {
 						RequestBackedPortletURLFactoryUtil.create(
 							_httpServletRequest))
 				).setRedirect(
-					PortalUtil.getCurrentURL(_httpServletRequest)
+					_layoutsAdminDisplayContext.getRedirect()
 				).setPortletResource(
 					() -> {
 						PortletDisplay portletDisplay =
@@ -223,6 +232,15 @@ public class LayoutActionDropdownItemsProvider {
 		};
 	}
 
+	private String _getBackURL() {
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			_httpServletRequest, _layoutsAdminDisplayContext.getGroup(),
+			LayoutAdminPortletKeys.GROUP_PAGES, 0, 0,
+			PortletRequest.RENDER_PHASE);
+
+		return portletURL.toString();
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getConfigureLayoutActionUnsafeConsumer(Layout layout) {
 
@@ -239,14 +257,31 @@ public class LayoutActionDropdownItemsProvider {
 		_getConvertToContentPageLayoutActionUnsafeConsumer(Layout layout) {
 
 		return dropdownItem -> {
-			dropdownItem.setHref(
-				_layoutsAdminDisplayContext.getLayoutConversionPreviewURL(
-					layout));
+			dropdownItem.setHref(_getLayoutConversionPreviewURL(layout));
 			dropdownItem.setIcon("page");
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_httpServletRequest, "convert-to-content-page..."));
 		};
+	}
+
+	private String _getCopyLayoutRenderURL(
+			boolean copyPermissions, Layout layout)
+		throws Exception {
+
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/layout_admin/add_layout"
+		).setParameter(
+			"copyPermissions", copyPermissions
+		).setParameter(
+			"privateLayout", _layoutsAdminDisplayContext.isPrivateLayout()
+		).setParameter(
+			"sourcePlid", layout.getPlid()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private UnsafeConsumer<DropdownContextItem, Exception>
@@ -262,8 +297,7 @@ public class LayoutActionDropdownItemsProvider {
 							dropdownItem.putData("action", "copyLayout");
 							dropdownItem.putData(
 								"copyLayoutURL",
-								_layoutsAdminDisplayContext.
-									getCopyLayoutRenderURL(false, layout));
+								_getCopyLayoutRenderURL(false, layout));
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "page"));
 						}
@@ -273,8 +307,7 @@ public class LayoutActionDropdownItemsProvider {
 								"action", "copyLayoutWithPermissions");
 							dropdownItem.putData(
 								"copyLayoutURL",
-								_layoutsAdminDisplayContext.
-									getCopyLayoutRenderURL(true, layout));
+								_getCopyLayoutRenderURL(true, layout));
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest,
@@ -288,7 +321,7 @@ public class LayoutActionDropdownItemsProvider {
 
 			dropdownContextItem.setIcon("copy");
 			dropdownContextItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "copy"));
+				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 		};
 	}
 
@@ -298,8 +331,7 @@ public class LayoutActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteLayout");
 			dropdownItem.putData(
-				"deleteLayoutURL",
-				_layoutsAdminDisplayContext.getDeleteLayoutURL(layout));
+				"deleteLayoutURL", _getDeleteLayoutURL(layout));
 
 			String messageKey =
 				"are-you-sure-you-want-to-delete-the-page-x.-it-will-be-" +
@@ -335,13 +367,34 @@ public class LayoutActionDropdownItemsProvider {
 		};
 	}
 
+	private String _getDeleteLayoutURL(Layout layout) throws PortalException {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/layout_admin/delete_layout"
+		).setRedirect(
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setParameter(
+				"layoutSetBranchId",
+				_layoutsAdminDisplayContext.getActiveLayoutSetBranchId()
+			).setParameter(
+				"selPlid", layout.getParentPlid()
+			).buildString()
+		).setParameter(
+			"layoutSetBranchId",
+			_layoutsAdminDisplayContext.getActiveLayoutSetBranchId()
+		).setParameter(
+			"selPlid", layout.getPlid()
+		).buildString();
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDiscardConversionDraftLayoutActionUnsafeConsumer(
 			Layout draftLayout) {
 
 		return dropdownItem -> {
-			dropdownItem.setHref(
-				_layoutsAdminDisplayContext.getDeleteLayoutURL(draftLayout));
+			dropdownItem.setHref(_getDeleteLayoutURL(draftLayout));
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_httpServletRequest, "discard-conversion-draft"));
@@ -354,11 +407,27 @@ public class LayoutActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "discardDraft");
 			dropdownItem.putData(
-				"discardDraftURL",
-				_layoutsAdminDisplayContext.getDiscardDraftURL(layout));
+				"discardDraftURL", _getDiscardDraftURL(layout));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "discard-draft"));
 		};
+	}
+
+	private String _getDiscardDraftURL(Layout layout) {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/layout_admin/discard_draft_layout"
+		).setRedirect(
+			_layoutsAdminDisplayContext.getRedirect()
+		).setParameter(
+			"selPlid",
+			() -> {
+				Layout draftLayout = layout.fetchDraftLayout();
+
+				return draftLayout.getPlid();
+			}
+		).buildString();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
@@ -395,7 +464,7 @@ public class LayoutActionDropdownItemsProvider {
 						RequestBackedPortletURLFactoryUtil.create(
 							_httpServletRequest))
 				).setRedirect(
-					PortalUtil.getCurrentURL(_httpServletRequest)
+					_layoutsAdminDisplayContext.getRedirect()
 				).setPortletResource(
 					() -> {
 						PortletDisplay portletDisplay =
@@ -426,7 +495,7 @@ public class LayoutActionDropdownItemsProvider {
 						RequestBackedPortletURLFactoryUtil.create(
 							_httpServletRequest))
 				).setRedirect(
-					PortalUtil.getCurrentURL(_httpServletRequest)
+					_layoutsAdminDisplayContext.getRedirect()
 				).setPortletResource(
 					() -> {
 						PortletDisplay portletDisplay =
@@ -441,12 +510,35 @@ public class LayoutActionDropdownItemsProvider {
 		};
 	}
 
+	private String _getLayoutConversionPreviewURL(Layout layout) {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/layout_admin/add_layout_conversion_preview"
+		).setRedirect(
+			_layoutsAdminDisplayContext.getRedirect()
+		).setParameter(
+			"selPlid", layout.getPlid()
+		).buildString();
+	}
+
+	private String _getOrphanPortletsURL(Layout layout) {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/orphan_portlets.jsp"
+		).setBackURL(
+			_getBackURL()
+		).setParameter(
+			"selPlid", layout.getPlid()
+		).buildString();
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getOrphanWidgetsLayoutActionUnsafeConsumer(Layout layout) {
 
 		return dropdownItem -> {
-			dropdownItem.setHref(
-				_layoutsAdminDisplayContext.getOrphanPortletsURL(layout));
+			dropdownItem.setHref(_getOrphanPortletsURL(layout));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "orphan-widgets"));
 		};
@@ -458,12 +550,20 @@ public class LayoutActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissionLayout");
 			dropdownItem.putData(
-				"permissionLayoutURL",
-				_layoutsAdminDisplayContext.getPermissionsURL(layout));
+				"permissionLayoutURL", _getPermissionsURL(layout));
 			dropdownItem.setIcon("password-policies");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
+	}
+
+	private String _getPermissionsURL(Layout layout) throws Exception {
+		return PermissionsURLTag.doTag(
+			StringPool.BLANK, Layout.class.getName(),
+			HtmlUtil.escape(layout.getName(_themeDisplay.getLocale())), null,
+			String.valueOf(layout.getPlid()),
+			LiferayWindowState.POP_UP.toString(), null,
+			_themeDisplay.getRequest());
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
@@ -471,12 +571,16 @@ public class LayoutActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.put("symbolRight", "shortcut");
-			dropdownItem.setHref(
-				_layoutsAdminDisplayContext.getPreviewDraftURL(layout));
+			dropdownItem.setHref(_getPreviewDraftURL(layout));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "preview-draft"));
 			dropdownItem.setTarget("_blank");
 		};
+	}
+
+	private String _getPreviewDraftURL(Layout layout) throws PortalException {
+		return PortalUtil.getLayoutFriendlyURL(
+			layout.fetchDraftLayout(), _themeDisplay);
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
@@ -513,11 +617,50 @@ public class LayoutActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "viewCollectionItems");
 			dropdownItem.putData(
-				"viewCollectionItemsURL",
-				_layoutsAdminDisplayContext.getViewCollectionItemsURL(layout));
+				"viewCollectionItemsURL", _getViewCollectionItemsURL(layout));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "view-collection-items"));
 		};
+	}
+
+	private String _getViewCollectionItemsURL(Layout layout)
+		throws PortalException, WindowStateException {
+
+		if (!Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_COLLECTION)) {
+
+			return null;
+		}
+
+		String collectionType = layout.getTypeSettingsProperty(
+			"collectionType");
+
+		if (Validator.isNull(collectionType)) {
+			return null;
+		}
+
+		String collectionPK = layout.getTypeSettingsProperty("collectionPK");
+
+		if (Validator.isNull(collectionPK)) {
+			return null;
+		}
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			_httpServletRequest, AssetListEntry.class.getName(),
+			PortletProvider.Action.VIEW);
+
+		if (portletURL == null) {
+			return null;
+		}
+
+		portletURL.setParameter(
+			"redirect", _layoutsAdminDisplayContext.getRedirect());
+		portletURL.setParameter("collectionPK", collectionPK);
+		portletURL.setParameter("collectionType", collectionType);
+		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
 	}
 
 	private boolean _hasScopeGroup(Layout layout) throws Exception {
@@ -537,6 +680,7 @@ public class LayoutActionDropdownItemsProvider {
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutActionsHelper _layoutActionsHelper;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
 	private final TranslationURLProvider _translationURLProvider;
 

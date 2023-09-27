@@ -1,18 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.pricing.web.internal.model;
+
+import java.math.BigDecimal;
 
 /**
  * @author Alessio Antonio Rendina
@@ -21,7 +14,7 @@ public class TierPriceEntry {
 
 	public TierPriceEntry(
 		String discountLevels, String endDate, String override, String price,
-		int quantity, String startDate, long tierPriceEntryId) {
+		BigDecimal quantity, String startDate, long tierPriceEntryId) {
 
 		_discountLevels = discountLevels;
 		_endDate = endDate;
@@ -48,7 +41,7 @@ public class TierPriceEntry {
 		return _price;
 	}
 
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
 	}
 
@@ -64,7 +57,7 @@ public class TierPriceEntry {
 	private final String _endDate;
 	private final String _override;
 	private final String _price;
-	private final int _quantity;
+	private final BigDecimal _quantity;
 	private final String _startDate;
 	private final long _tierPriceEntryId;
 

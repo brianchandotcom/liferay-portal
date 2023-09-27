@@ -1,48 +1,48 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.inventory.web.internal.model;
+
+import com.liferay.portal.kernel.util.BigDecimalUtil;
+
+import java.math.BigDecimal;
 
 /**
  * @author Luca Pellizzon
  */
 public class InventoryItem {
 
-	public InventoryItem(String sku, int stock, int booked, int incoming) {
+	public InventoryItem(
+		String sku, String unitOfMeasureKey, BigDecimal booked,
+		BigDecimal incoming, BigDecimal stock) {
+
 		_sku = sku;
-		_stock = stock;
-
-		if ((stock > 0) && (booked >= 0)) {
-			_available = stock - booked;
-		}
-		else {
-			_available = 0;
-		}
-
+		_unitOfMeasureKey = unitOfMeasureKey;
 		_booked = booked;
 		_incoming = incoming;
+		_stock = stock;
+
+		if (BigDecimalUtil.gt(stock, BigDecimal.ZERO) &&
+			BigDecimalUtil.gte(booked, BigDecimal.ZERO)) {
+
+			_available = stock.subtract(booked);
+		}
+		else {
+			_available = BigDecimal.ZERO;
+		}
 	}
 
-	public int getAvailable() {
+	public BigDecimal getAvailable() {
 		return _available;
 	}
 
-	public int getBooked() {
+	public BigDecimal getBooked() {
 		return _booked;
 	}
 
-	public int getIncoming() {
+	public BigDecimal getIncoming() {
 		return _incoming;
 	}
 
@@ -50,14 +50,19 @@ public class InventoryItem {
 		return _sku;
 	}
 
-	public int getStock() {
+	public BigDecimal getStock() {
 		return _stock;
 	}
 
-	private final int _available;
-	private final int _booked;
-	private final int _incoming;
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
+	private final BigDecimal _available;
+	private final BigDecimal _booked;
+	private final BigDecimal _incoming;
 	private final String _sku;
-	private final int _stock;
+	private final BigDecimal _stock;
+	private final String _unitOfMeasureKey;
 
 }

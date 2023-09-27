@@ -13,12 +13,17 @@
 
 <tr>
 	<td>QUICK_LINK</td>
-	<td>//*[@aria-label="Quick Links"]//li//*[contains(text(),"${key_link}")]</td>
+	<td>//*[@aria-label="Quick Links"]//*[contains(text(),"${key_link}")]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MODAL_TITLE</td>
 	<td>//*[@class="modal-title"][contains(text(),"${key_modal_title}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_SPECIFIC_CLASS</td>
+	<td>//body[contains(@class, '${key_class}')]</td>
 	<td></td>
 </tr>
 </tbody>

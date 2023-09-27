@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.model;
@@ -17,6 +8,7 @@ package com.liferay.commerce.product.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -42,8 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPOptionModel
-	extends BaseModel<CPOption>, CTModel<CPOption>, LocalizedModel, MVCCModel,
-			ShardedModel, StagedAuditedModel {
+	extends BaseModel<CPOption>, CTModel<CPOption>, ExternalReferenceCodeModel,
+			LocalizedModel, MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -122,6 +114,7 @@ public interface CPOptionModel
 	 * @return the external reference code of this cp option
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -129,6 +122,7 @@ public interface CPOptionModel
 	 *
 	 * @param externalReferenceCode the external reference code of this cp option
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
@@ -443,19 +437,19 @@ public interface CPOptionModel
 		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
-	 * Returns the ddm form field type name of this cp option.
+	 * Returns the commerce option type key of this cp option.
 	 *
-	 * @return the ddm form field type name of this cp option
+	 * @return the commerce option type key of this cp option
 	 */
 	@AutoEscape
-	public String getDDMFormFieldTypeName();
+	public String getCommerceOptionTypeKey();
 
 	/**
-	 * Sets the ddm form field type name of this cp option.
+	 * Sets the commerce option type key of this cp option.
 	 *
-	 * @param DDMFormFieldTypeName the ddm form field type name of this cp option
+	 * @param commerceOptionTypeKey the commerce option type key of this cp option
 	 */
-	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName);
+	public void setCommerceOptionTypeKey(String commerceOptionTypeKey);
 
 	/**
 	 * Returns the facetable of this cp option.

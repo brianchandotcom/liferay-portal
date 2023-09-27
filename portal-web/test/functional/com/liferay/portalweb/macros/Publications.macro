@@ -130,6 +130,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro disableManageRemotely {
+		PublicationsNavigator.openPublicationsSettings();
+
+		Uncheck.uncheckToggleSwitch(locator1 = "Publications#ENABLE_MANAGE_REMOTELY");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
 	macro disablePublications {
 		if (${gotoInstancesettings} == "true") {
 			ApplicationsMenu.gotoPortlet(
@@ -167,16 +175,17 @@ definition {
 	}
 
 	macro enableAllowUnapprovedChanges {
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		Click.waitForMenuToggleJSClick(locator1 = "Publications#PUBLICATIONS_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Settings");
+		PublicationsNavigator.openPublicationsSettings();
 
 		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_ALLOW_UNAPPROVED_CHANGES");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
+	macro enableManageRemotely {
+		PublicationsNavigator.openPublicationsSettings();
+
+		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_MANAGE_REMOTELY");
 
 		Click(locator1 = "Button#SAVE");
 	}
@@ -222,14 +231,7 @@ definition {
 	}
 
 	macro enableSandboxOnly {
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		Click.waitForMenuToggleJSClick(locator1 = "Publications#PUBLICATIONS_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Settings");
+		PublicationsNavigator.openPublicationsSettings();
 
 		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_SANDBOX_ONLY_TOGGLE_SWITCH");
 
@@ -317,18 +319,15 @@ definition {
 	macro publishPublication {
 		var key_publicationName = ${publicationName};
 
-		if (${gotoPublicationsAdmin} == "true") {
+		if (!(IsElementPresent(key_uniqueSuccess = "No unresolved conflicts, ready to publish.", locator1 = "Message#UNIQUE_SUCCESS"))) {
 			PublicationsNavigator.gotoPublish(
-				gotoPublicationsAdmin = "true",
+				gotoPublicationsAdmin = ${gotoPublicationsAdmin},
 				publicationName = ${publicationName});
-		}
-		else if (${reviewChangesPage} == "true") {
-			Click(locator1 = "Publications#PUBLISH_NAV_BAR");
-		}
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#SUCCESS",
-			value1 = "No unresolved conflicts, ready to publish.");
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "No unresolved conflicts, ready to publish.");
+		}
 
 		Click(locator1 = "Publications#PUBLISH_BUTTON");
 
@@ -336,11 +335,18 @@ definition {
 
 		PublicationsNavigator.openPublicationsHistory();
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		if (!(IsElementPresent(locator1 = "//div[(@class='data-set-content-wrapper')]"))) {
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		AssertTextEquals(
-			locator1 = "Publications#LIST_PUBLISHED_STATUS",
-			value1 = "Published");
+			AssertTextEquals(
+				locator1 = "Publications#LIST_PUBLISHED_STATUS",
+				value1 = "Published");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Publications#PUBLISHED_STATUS_IN_DATASET_DIAPLAY",
+				value1 = "Published");
+		}
 	}
 
 	macro revertPublication {
@@ -401,10 +407,6 @@ definition {
 			PublicationsNavigator.gotoPublicationEllipsisItem(
 				menuItem = "Reschedule",
 				publicationName = ${publicationName});
-
-			// Workaround LPS-123416
-
-			Click.mouseOverClick(locator1 = "Publications#DELETE_THE_ENTERED_TIME_BUTTON");
 		}
 		else {
 			PublicationsNavigator.gotoReviewChanges();

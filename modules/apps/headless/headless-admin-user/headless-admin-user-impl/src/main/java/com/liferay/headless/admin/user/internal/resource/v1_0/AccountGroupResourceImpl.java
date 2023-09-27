@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
@@ -25,7 +16,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTO
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountGroupEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.AccountGroupResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -190,7 +181,7 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 		com.liferay.account.model.AccountGroup serviceBuilderAccountGroup =
 			_accountGroupService.addAccountGroup(
 				contextUser.getUserId(), accountGroup.getDescription(),
-				accountGroup.getName(), _getServiceContext(accountGroup));
+				accountGroup.getName(), _createServiceContext(accountGroup));
 
 		serviceBuilderAccountGroup =
 			_accountGroupService.updateExternalReferenceCode(
@@ -226,7 +217,7 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 		return _toAccountGroup(
 			_accountGroupService.updateAccountGroup(
 				accountGroupId, accountGroup.getDescription(),
-				accountGroup.getName(), _getServiceContext(accountGroup)));
+				accountGroup.getName(), _createServiceContext(accountGroup)));
 	}
 
 	@Override
@@ -238,6 +229,24 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			DTOConverterUtil.getModelPrimaryKey(
 				_accountGroupResourceDTOConverter, externalReferenceCode),
 			accountGroup);
+	}
+
+	private ServiceContext _createServiceContext(AccountGroup accountGroup)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			contextCompany.getGroupId(), contextHttpServletRequest, null
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				com.liferay.account.model.AccountGroup.class.getName(),
+				contextCompany.getCompanyId(), accountGroup.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
+
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
+		serviceContext.setUserId(contextUser.getUserId());
+
+		return serviceContext;
 	}
 
 	private Page<AccountGroup> _getAccountGroups(
@@ -322,24 +331,6 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			null, contextHttpServletRequest, accountGroupId,
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 			contextUser);
-	}
-
-	private ServiceContext _getServiceContext(AccountGroup accountGroup)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				CustomFieldsUtil.toMap(
-					com.liferay.account.model.AccountGroup.class.getName(),
-					contextCompany.getCompanyId(),
-					accountGroup.getCustomFields(),
-					contextAcceptLanguage.getPreferredLocale()),
-				contextCompany.getGroupId(), contextHttpServletRequest, null);
-
-		serviceContext.setCompanyId(contextCompany.getCompanyId());
-		serviceContext.setUserId(contextUser.getUserId());
-
-		return serviceContext;
 	}
 
 	private AccountGroup _toAccountGroup(

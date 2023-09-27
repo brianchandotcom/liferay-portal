@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-import DeleteExperimentModal from 'experiments/components/modals/DeleteExperimentModal';
 import ImprovementTooltip from 'experiments/components/variant-card/ImprovementTooltip';
 import moment from 'moment';
 import PublishOtherVariantModal from 'experiments/components/modals/PublishOtherVariantModal';
@@ -23,11 +22,10 @@ import {
 	GetStatusNameFn,
 	GetStepFn,
 	GetTicksFn,
-	GetVariantLabel,
+	GetVariantLabels,
 	MakeAllRefetchFn,
 	MergedVariantsFn,
 	ModalCompleteFn,
-	ModalDeleteFn,
 	ModalPublishOtherVariantFn,
 	ModalPublishVariantFn,
 	NormalizeHistogramFn,
@@ -36,6 +34,7 @@ import {
 	TooltipMetric
 } from './types';
 import {getDate as getDateUtil} from 'shared/util/date';
+import {IActionProps} from 'shared/components/base-page/Header';
 import {round} from 'lodash';
 import {toRounded, toThousands, toThousandsBase} from 'shared/util/numbers';
 import {useStateValue} from 'experiments/state';
@@ -145,8 +144,15 @@ export const formatYAxis: FormatYAxisFn = metricUnit => value => {
 	return `${value.toFixed(1)}${metricUnit}`;
 };
 
-export const getExperimentLink: GetLinkFn = (pageURL, id) =>
-	`${pageURL}?segmentsExperimentKey=${id}`;
+export const getExperimentLink: GetLinkFn = ({action, id, pageURL}) => {
+	const experimentLink = `${pageURL}?segmentsExperimentKey=${id}`;
+
+	if (action) {
+		return `${experimentLink}&segmentsExperimentAction=${action}`;
+	}
+
+	return experimentLink;
+};
 
 export const getFormattedHistogram: GetFormattedHistogramFn = histogram => ({
 	key: histogram.map(({key}) => getDateUtil(key)),
@@ -195,7 +201,6 @@ export const getStatusName: GetStatusNameFn = status =>
 
 export const getStep: GetStepFn = ({
 	disabled,
-	label,
 	showIcon = true,
 	tooltip,
 	...otherProps
@@ -208,8 +213,7 @@ export const getStep: GetStepFn = ({
 		...(tooltip && {
 			['data-tooltip']: true,
 			title: tooltip
-		}),
-		label
+		})
 	};
 
 	return {
@@ -218,7 +222,7 @@ export const getStep: GetStepFn = ({
 	};
 };
 
-export const getVariantLink: GetLinkFn = (pageURL, id) =>
+export const getVariantLink: GetLinkFn = ({id, pageURL}) =>
 	`${pageURL}?segmentsExperienceKey=${id}`;
 
 export const mergedVariants: MergedVariantsFn = (variants, variantMetrics) =>
@@ -259,14 +263,6 @@ export const modalComplete: ModalCompleteFn = (
 		title: Liferay.Language.get('complete-test')
 	},
 	title: Liferay.Language.get('complete-test')
-});
-
-export const modalDelete: ModalDeleteFn = experimentId => ({
-	Component: DeleteExperimentModal,
-	props: {
-		experimentId
-	},
-	title: Liferay.Language.get('delete-test')
 });
 
 export const modalPublishVariant: ModalPublishVariantFn = (
@@ -354,25 +350,40 @@ export const useAddRefetch = (refetch: Function) => {
 	}, [refetch]);
 };
 
-export const getVariantLabel: GetVariantLabel = (
-	status,
+export const getVariantLabels: GetVariantLabels = ({
 	bestVariant,
-	winnerVariantId,
-	variantId
-) => {
-	let label = undefined;
+	dxpVariantId,
+	publishedDXPVariantId,
+	status,
+	winnerDXPVariantId
+}) => {
+	const labels = [];
 
-	if (
-		bestVariant &&
-		status === 'RUNNING' &&
-		bestVariant.dxpVariantId === variantId
-	) {
-		label = Liferay.Language.get('current-best');
-	} else if (status === 'FINISHED_WINNER' && winnerVariantId === variantId) {
-		label = Liferay.Language.get('winner');
+	if (status === 'RUNNING' && bestVariant?.dxpVariantId === dxpVariantId) {
+		labels.push({
+			status: 'success',
+			value: Liferay.Language.get('current-best')
+		});
 	}
 
-	return label;
+	if (
+		winnerDXPVariantId === dxpVariantId &&
+		(status === 'COMPLETED' || status === 'FINISHED_WINNER')
+	) {
+		labels.push({
+			status: 'success',
+			value: Liferay.Language.get('winner')
+		});
+	}
+
+	if (publishedDXPVariantId === dxpVariantId) {
+		labels.push({
+			status: 'info',
+			value: Liferay.Language.get('published')
+		});
+	}
+
+	return labels;
 };
 
 export const getTicks: GetTicksFn = maxValue => {
@@ -447,3 +458,107 @@ export const sortOrderExperiment: SortOrderExperiment = (
 	{control: experimentControlA},
 	{control: experimentControlB}
 ) => Number(experimentControlB) - Number(experimentControlA);
+
+export const getActions = (
+	status: string,
+	{id, onDelete, pageURL, publishable} = null
+): IActionProps[] => {
+	const deleteButton = {
+		displayType: 'secondary',
+		label: Liferay.Language.get('delete'),
+		onClick: onDelete
+	};
+
+	switch (status) {
+		case 'COMPLETED': {
+			return [deleteButton];
+		}
+		case 'DRAFT': {
+			return [
+				{
+					displayType: 'primary',
+					label: Liferay.Language.get('review'),
+					redirectURL: getExperimentLink({
+						action: 'reviewAndRun',
+						id,
+						pageURL
+					})
+				},
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('delete'),
+					redirectURL: getExperimentLink({
+						action: 'delete',
+						id,
+						pageURL
+					})
+				}
+			];
+		}
+		case 'FINISHED_NO_WINNER':
+		case 'FINISHED_WINNER': {
+			return [
+				{
+					displayType: 'primary',
+					label: Liferay.Language.get('publish'),
+					redirectURL: getExperimentLink({
+						action: 'publish',
+						id,
+						pageURL
+					})
+				},
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('delete'),
+					redirectURL: getExperimentLink({
+						action: 'delete',
+						id,
+						pageURL
+					})
+				}
+			];
+		}
+		case 'TERMINATED': {
+			if (publishable) {
+				return [
+					{
+						displayType: 'primary',
+						label: Liferay.Language.get('publish'),
+						redirectURL: getExperimentLink({
+							action: 'publish',
+							id,
+							pageURL
+						})
+					},
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('delete'),
+						redirectURL: getExperimentLink({
+							action: 'delete',
+							id,
+							pageURL
+						})
+					}
+				];
+			}
+
+			return [deleteButton];
+		}
+		case 'RUNNING': {
+			return [
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('terminate'),
+					redirectURL: getExperimentLink({
+						action: 'terminate',
+						id,
+						pageURL
+					})
+				}
+			];
+		}
+		default: {
+			return [];
+		}
+	}
+};

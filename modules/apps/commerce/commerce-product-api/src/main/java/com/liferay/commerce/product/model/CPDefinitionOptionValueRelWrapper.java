@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.model;
@@ -64,12 +55,13 @@ public class CPDefinitionOptionValueRelWrapper
 		attributes.put("CPDefinitionOptionRelId", getCPDefinitionOptionRelId());
 		attributes.put("CPInstanceUuid", getCPInstanceUuid());
 		attributes.put("CProductId", getCProductId());
-		attributes.put("name", getName());
-		attributes.put("priority", getPriority());
 		attributes.put("key", getKey());
-		attributes.put("quantity", getQuantity());
+		attributes.put("name", getName());
 		attributes.put("preselected", isPreselected());
 		attributes.put("price", getPrice());
+		attributes.put("priority", getPriority());
+		attributes.put("quantity", getQuantity());
+		attributes.put("unitOfMeasureKey", getUnitOfMeasureKey());
 
 		return attributes;
 	}
@@ -156,28 +148,16 @@ public class CPDefinitionOptionValueRelWrapper
 			setCProductId(CProductId);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		Double priority = (Double)attributes.get("priority");
-
-		if (priority != null) {
-			setPriority(priority);
-		}
-
 		String key = (String)attributes.get("key");
 
 		if (key != null) {
 			setKey(key);
 		}
 
-		Integer quantity = (Integer)attributes.get("quantity");
+		String name = (String)attributes.get("name");
 
-		if (quantity != null) {
-			setQuantity(quantity);
+		if (name != null) {
+			setName(name);
 		}
 
 		Boolean preselected = (Boolean)attributes.get("preselected");
@@ -190,6 +170,24 @@ public class CPDefinitionOptionValueRelWrapper
 
 		if (price != null) {
 			setPrice(price);
+		}
+
+		Double priority = (Double)attributes.get("priority");
+
+		if (priority != null) {
+			setPriority(priority);
+		}
+
+		BigDecimal quantity = (BigDecimal)attributes.get("quantity");
+
+		if (quantity != null) {
+			setQuantity(quantity);
+		}
+
+		String unitOfMeasureKey = (String)attributes.get("unitOfMeasureKey");
+
+		if (unitOfMeasureKey != null) {
+			setUnitOfMeasureKey(unitOfMeasureKey);
 		}
 	}
 
@@ -452,8 +450,18 @@ public class CPDefinitionOptionValueRelWrapper
 	 * @return the quantity of this cp definition option value rel
 	 */
 	@Override
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return model.getQuantity();
+	}
+
+	/**
+	 * Returns the unit of measure key of this cp definition option value rel.
+	 *
+	 * @return the unit of measure key of this cp definition option value rel
+	 */
+	@Override
+	public String getUnitOfMeasureKey() {
+		return model.getUnitOfMeasureKey();
 	}
 
 	/**
@@ -747,8 +755,18 @@ public class CPDefinitionOptionValueRelWrapper
 	 * @param quantity the quantity of this cp definition option value rel
 	 */
 	@Override
-	public void setQuantity(int quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		model.setQuantity(quantity);
+	}
+
+	/**
+	 * Sets the unit of measure key of this cp definition option value rel.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this cp definition option value rel
+	 */
+	@Override
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		model.setUnitOfMeasureKey(unitOfMeasureKey);
 	}
 
 	/**

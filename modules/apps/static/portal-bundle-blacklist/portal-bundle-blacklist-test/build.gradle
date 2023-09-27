@@ -1,14 +1,14 @@
 dependencies {
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testCompile project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-test-util")
-	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:petra:petra-string")
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testImplementation project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-test-util")
+	testImplementation project(":core:petra:petra-lang")
+	testImplementation project(":core:petra:petra-string")
 
-	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
-	testIntegrationCompile project(":apps:static:osgi:osgi-util")
-	testIntegrationCompile project(":apps:static:portal-bundle-blacklist:portal-bundle-blacklist-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
+	testIntegrationImplementation project(":apps:static:osgi:osgi-util")
+	testIntegrationImplementation project(":apps:static:portal-bundle-blacklist:portal-bundle-blacklist-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }
 
 test {

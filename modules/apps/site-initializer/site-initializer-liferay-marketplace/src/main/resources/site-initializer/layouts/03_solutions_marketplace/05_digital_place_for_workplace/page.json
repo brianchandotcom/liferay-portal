@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/placecube-digital-place-workplace",
+	"hidden": true,
+	"name": "Digital Place for Workplace",
+	"name_i18n": {
+		"en_US": "Digital Place for Workplace"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

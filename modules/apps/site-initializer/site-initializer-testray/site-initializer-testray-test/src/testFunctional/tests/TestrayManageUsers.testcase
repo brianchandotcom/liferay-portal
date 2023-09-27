@@ -24,27 +24,23 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("Add a user via API") {
-			JSONUser.addUser(
-				userEmailAddress = "user@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+		task ("Go to the Testray Site") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
-		task ("Go to Testray") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
+		task ("Go to manage user page") {
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Manage Users");
 		}
 	}
 
 	tearDown {
-		task ("Delete user via API, Testray Site and Client Extensions") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
+		task ("Delete Testray Site and Client Extensions") {
 			Testray.testrayApisTearDown();
 		}
-
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -54,20 +50,10 @@ definition {
 	@description = "Story ID: LPS-173531 | Test Summary: Verify that as an administrator can add and delete a new user"
 	@priority = 5
 	test AdminCanAddAndDeleteNewUser {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that go to manage user") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
-		}
-
-		task ("When the administrator add a user") {
-			Click(locator1 = "Button#PLUS");
-
+		task ("Given that the administrator add a user") {
 			TestrayManageUser.addUser(
-				listRoles = "Testray User",
 				rePassword = "test1",
+				rolePermissionList = "Testray User",
 				userEmailAddressEdit = "userfirst@liferay.com",
 				userFirstNameEdit = "changedfirstname",
 				userLastNameEdit = "Updateln",
@@ -75,119 +61,75 @@ definition {
 				userScreenNameEdit = "testscreen");
 		}
 
-		task ("Then can see the user created in the table") {
-			AssertElementPresent(
-				key_projectName = "changedfirstname Updateln",
-				locator1 = "Testray#ITEM_NAME");
+		task ("And can see the user created in the table") {
+			Testray.viewTableEntryList(listEntry = "changedfirstname Updateln");
 		}
 
-		task ("And delete the user") {
-			Testray.goToProjectPage(projectName = "changedfirstname Updateln");
+		task ("When the administrator delete the user") {
+			Testray.clickTableEntry(tableEntry = "changedfirstname Updateln");
 
-			Button.clickNoError(button = "Delete User");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+			TestrayManageUser.deleteUser();
 		}
 
 		task ("Then can not see the user in the table") {
 			Refresh();
 
-			AssertElementNotPresent(
-				key_projectName = "changedfirstname Updateln",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "changedfirstname Updateln");
 		}
 	}
 
 	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should be able to filter manage users by name"
 	@priority = 4
 	test AdminCanFilterUsersByName {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that go to manage user") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
-		}
-
-		task ("And assert that have two users present in the table") {
-			AssertElementPresent(
-				key_projectName = "userfn userln",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Test Test",
-				locator1 = "Testray#ITEM_NAME");
+		task ("Given that have two users present in the table") {
+			Testray.viewTableEntryList(listEntry = "User User,Test Test");
 		}
 
 		task ("When the user filter a user by name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Name",
-				value = "userfn userln");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Name",
+				inputValue = "User User");
 		}
 
-		task ("Then can see the user named test test in the table") {
-			AssertElementPresent(
-				key_projectName = "userfn userln",
-				locator1 = "Testray#ITEM_NAME");
+		task ("Then can see the user in the table") {
+			Testray.viewTableEntryList(listEntry = "User User");
 		}
 
-		task ("And can not longer see the userfn userln in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Test Test",
-				locator1 = "Testray#ITEM_NAME");
+		task ("And can not longer see the user 'Test' in the table") {
+			Testray.viewTableEntryListNotPresent(listEntry = "Test Test");
 		}
 	}
 
 	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should not see manage users that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanNotFilterForNonExistentUsers {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that go to manage user") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
-		}
-
-		task ("And assert that the user is present") {
-			AssertElementPresent(
-				key_projectName = "Test Test",
-				locator1 = "Testray#ITEM_NAME");
+		task ("Given that the user is present") {
+			Testray.viewTableEntryList(listEntry = "Test Test");
 		}
 
 		task ("When filtering a user by his non-existent name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Name",
-				value = "Test 2");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Name",
+				inputValue = "Test 2");
 		}
 
 		task ("Then the user is not present in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Test Test",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Test Test");
 		}
 	}
 
 	@description = "Story ID: LPS-149551 | Test Summary: Verify if as an User can edit account information"
 	@priority = 4
 	test CanEditAccountInformation {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that go to user created") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
-
-			Testray.goToProjectPage(projectName = "user@liferay.com");
+		task ("Given that go to the user created") {
+			Testray.clickTableEntry(tableEntry = "user@testray.com");
 		}
 
 		task ("When the user change the account informations") {
 			TestrayManageUser.editUserInformation(
-				userEmailAddressEdit = "user@liferay.com",
+				userEmailAddressEdit = "user@testray.com",
 				userFirstNameEdit = "changedfirstname",
 				userLastNameEdit = "Updateln",
 				userScreenNameEdit = "testscreen");
@@ -196,12 +138,12 @@ definition {
 		}
 
 		task ("And go to user changed") {
-			Testray.goToProjectPage(projectName = "changedfirstname Updateln");
+			Testray.clickTableEntry(tableEntry = "changedfirstname Updateln");
 		}
 
 		task ("Then can see the new informations to the account") {
 			TestrayManageUser.viewUserInfomation(
-				emailAddress = "user@liferay.com",
+				emailAddress = "user@testray.com",
 				firstName = "changedfirstname",
 				lastName = "Updateln",
 				screenName = "testscreen");
@@ -211,22 +153,12 @@ definition {
 	@description = "Story ID: LPS-164964 | Test Summary: Verify if as an administrator I cannot save roles without the select options"
 	@priority = 3
 	test CanNotSaveRolesWithoutOptions {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that go to manage user") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
-
-			Testray.goToProjectPage(projectName = "test@liferay.com");
+		task ("Given that go to the created user") {
+			Testray.clickTableEntry(tableEntry = "test@liferay.com");
 		}
 
 		task ("And the user deselects all roles") {
-			TestrayManageUser.changeRole(roleName = "Administrator");
-
-			TestrayManageUser.changeRole(roleName = "Power User");
-
-			TestrayManageUser.changeRole(roleName = "User");
+			TestrayManageUser.selectRolesPermissions(rolePermissionList = "Administrator,Power User,User");
 		}
 
 		task ("When the user tries to save roles without options selected") {
@@ -241,14 +173,8 @@ definition {
 	@description = "Story ID: LPS-149551 | Test Summary: Verify that the user can not edit informations of user if all the required fields are not filled in"
 	@priority = 2
 	test CanViewFieldRequired {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given that go to manage user") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
-
-			Testray.goToProjectPage(projectName = "user@liferay.com");
+		task ("Given that go to the created user") {
+			Testray.clickTableEntry(tableEntry = "lead@testray.com");
 		}
 
 		task ("When the user tries to created account without informations") {

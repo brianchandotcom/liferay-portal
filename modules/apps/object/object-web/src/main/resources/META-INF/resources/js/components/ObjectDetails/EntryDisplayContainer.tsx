@@ -1,18 +1,8 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayPanel from '@clayui/panel';
 import {
 	FormError,
 	SingleSelect,
@@ -22,6 +12,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 interface EntryDisplayContainerProps {
 	errors: FormError<ObjectDefinition>;
+	isLinkedObjectDefinition?: boolean;
 	nonRelationshipObjectFieldsInfo: {
 		label: LocalizedValue<string>;
 		name: string;
@@ -33,6 +24,7 @@ interface EntryDisplayContainerProps {
 
 export function EntryDisplayContainer({
 	errors,
+	isLinkedObjectDefinition,
 	nonRelationshipObjectFieldsInfo,
 	objectFields,
 	setValues,
@@ -43,7 +35,7 @@ export function EntryDisplayContainer({
 	>();
 
 	const titleFieldOptions = useMemo(() => {
-		return nonRelationshipObjectFieldsInfo.map(({label, name}) => {
+		return nonRelationshipObjectFieldsInfo?.map(({label, name}) => {
 			return {
 				label: getLocalizableLabel(
 					values.defaultLanguageId as Liferay.Language.Locale,
@@ -75,35 +67,27 @@ export function EntryDisplayContainer({
 	}, [values.titleObjectFieldName, objectFields]);
 
 	return (
-		<ClayPanel
-			collapsable
-			defaultExpanded
-			displayTitle={Liferay.Language.get('entry-display')}
-			displayType="unstyled"
-		>
-			<ClayPanel.Body>
-				<SingleSelect<{label: string; name: string}>
-					error={errors.titleObjectFieldId}
-					label={Liferay.Language.get('title-object-field-id')}
-					onChange={(target: {label: string; name: string}) => {
-						const field = objectFields.find(
-							({name}) => name === target.name
-						);
+		<SingleSelect<{label: string; name: string}>
+			disabled={isLinkedObjectDefinition}
+			error={errors.titleObjectFieldId}
+			label={Liferay.Language.get('entry-title-field')}
+			onChange={(target: {label: string; name: string}) => {
+				const field = objectFields.find(
+					({name}) => name === target.name
+				);
 
-						setSelectedObjectField(field);
+				setSelectedObjectField(field);
 
-						setValues({
-							titleObjectFieldName: field?.name,
-						});
-					}}
-					options={titleFieldOptions}
-					value={getLocalizableLabel(
-						values.defaultLanguageId as Liferay.Language.Locale,
-						selectedObjectField?.label,
-						selectedObjectField?.name
-					)}
-				/>
-			</ClayPanel.Body>
-		</ClayPanel>
+				setValues({
+					titleObjectFieldName: field?.name,
+				});
+			}}
+			options={titleFieldOptions}
+			value={getLocalizableLabel(
+				values.defaultLanguageId as Liferay.Language.Locale,
+				selectedObjectField?.label,
+				selectedObjectField?.name
+			)}
+		/>
 	);
 }

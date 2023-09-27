@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Recycle Bin";
@@ -221,7 +222,7 @@ definition {
 	@description = "Assert scheduled clean up in recycle bin works."
 	@priority = 3
 	test RecycleBinScheduledCleanup {
-		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
+		property custom.properties = "trash.entries.max.age=1${line.separator}trash.entry.check.interval=1";
 
 		task ("Add a blogs widget to page and a blog entry") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -543,49 +544,139 @@ definition {
 		}
 	}
 
-	@description = "Restore DM document in DM folder in recycle bin."
+	@description = "This is a test for LPS-190757. The Home folder of document should be visible on Warning modal."
 	@priority = 5
-	test RestoreDMDocumentFromFolderCP {
+	test RestoreDocumentToExistingFolder {
 		property portal.acceptance = "true";
-		property portal.upstream = "true";
 
-		task ("Add a DM folder and 3 documents to the folder") {
-			JSONFolder.addFolder(
-				dmFolderName = "DM Folder Name",
-				groupName = "Site Name");
+		task ("Given a site administrator has folders with documents") {
+			for (var i : list "1,2") {
+				JSONFolder.addFolder(
+					dmFolderName = "DM Folder Name ${i}",
+					groupName = "Site Name");
+			}
 
 			for (var i : list "1,2,3") {
 				JSONDocument.addFile(
 					dmDocumentDescription = "DM Document Description ${i}",
 					dmDocumentTitle = "DM Document Title ${i}",
-					folderName = "DM Folder Name",
+					folderName = "DM Folder Name 1",
 					groupName = "Site Name");
 			}
 		}
 
-		task ("Move document to recycle bin and restore") {
+		task ("When the site administrator moves a folder with documents into the Recycle Bin") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 			DMFolder.moveToRecycleBinCP(
 				assetType = "Documents Folder",
-				dmFolderName = "DM Folder Name");
+				dmFolderName = "DM Folder Name 1");
+		}
 
+		task ("Then the site administrator could restore documents to existing folders") {
 			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
 			RecycleBin.restoreContentFromFolderCP(
-				assetName = "DM Folder Name",
+				assetName = "DM Folder Name 1",
 				assetRestoreLocation = "Home",
 				assetType = "Documents Folder",
 				assetType2 = "Document",
+				breadcrumbName = "Home",
 				documentName = "DM Document Title 2");
-		}
 
-		task ("View document is restored") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
 
 			DMDocument.viewCP(dmDocumentTitle = "DM Document Title 2");
+
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+			RecycleBin.restoreContentFromFolderCP(
+				assetName = "DM Folder Name 1",
+				assetRestoreLocation = "DM Folder Name 2",
+				assetType = "Documents Folder",
+				assetType2 = "Document",
+				breadcrumbName = "Home",
+				documentName = "DM Document Title 3");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			DMNavigator.gotoFolder(dmFolderName = "DM Folder Name 2");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 3");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Document Title 3");
+		}
+	}
+
+	@description = "This is a test for LPS-190757. The Home folder of web content should be visible on Warning modal."
+	@priority = 4
+	test RestoreWebContentToExistingFolder {
+		task ("Given a site administrator has folders with web contents") {
+			for (var i : list "1,2") {
+				JSONWebcontent.addFolder(
+					folderName = "WC Folder Name ${i}",
+					groupName = "Site Name");
+			}
+
+			for (var i : list "1,2,3") {
+				HeadlessWebcontent.addBasicWebContent(
+					content = "Web Content Content ${i}",
+					folderName = "WC Folder Name 1",
+					groupName = "Site Name",
+					title = "Web Content Title ${i}");
+			}
+		}
+
+		task ("When the site administrator moves a folder with web contents into the Recycle Bin") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentFolder.moveToRecycleBinCP(
+				assetType = "Web Content Folder",
+				folderName = "WC Folder Name 1");
+		}
+
+		task ("Then the site administrator could restore web contents to existing folders") {
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+			RecycleBin.restoreContentFromFolderCP(
+				assetName = "WC Folder Name 1",
+				assetRestoreLocation = "Home",
+				assetType = "Web Content Folder",
+				assetType2 = "Web Content Article",
+				breadcrumbName = "Home",
+				documentName = "Web Content Title 1");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 1");
+
+			WebContent.viewCP(
+				webContentContent = "Web Content Content 1",
+				webContentTitle = "Web Content Title 1");
+
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+			RecycleBin.restoreContentFromFolderCP(
+				assetName = "WC Folder Name 1",
+				assetRestoreLocation = "WC Folder Name 2",
+				assetType = "Web Content Folder",
+				assetType2 = "Web Content Article",
+				breadcrumbName = "Home",
+				documentName = "Web Content Title 2");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentFolder.gotoCP(
+				folderName = "WC Folder Name 2",
+				webContentTitle = "WC Folder Name 2");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+
+			WebContent.viewCP(
+				webContentContent = "Web Content Content 2",
+				webContentTitle = "Web Content Title 2");
 		}
 	}
 

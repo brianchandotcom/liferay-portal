@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.service.builder;
@@ -33,9 +24,12 @@ import java.util.Set;
 
 import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
@@ -49,11 +43,15 @@ import org.gradle.util.CollectionUtils;
 public class BuildServiceTask extends JavaExec {
 
 	public BuildServiceTask() {
+		Property<String> mainClass = getMainClass();
+
+		mainClass.set(
+			"com.liferay.portal.tools.service.builder.ServiceBuilder");
+
 		modelHintsConfigs((Object[])ServiceBuilderArgs.MODEL_HINTS_CONFIGS);
 		readOnlyPrefixes((Object[])ServiceBuilderArgs.READ_ONLY_PREFIXES);
 		resourceActionsConfigs(
 			(Object[])ServiceBuilderArgs.RESOURCE_ACTION_CONFIGS);
-		setMain("com.liferay.portal.tools.service.builder.ServiceBuilder");
 		springNamespaces("beans");
 		systemProperty("file.encoding", StandardCharsets.UTF_8.name());
 	}
@@ -65,10 +63,16 @@ public class BuildServiceTask extends JavaExec {
 		super.exec();
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getApiDir() {
-		return GradleUtil.toFile(getProject(), _apiDir);
+		File file = GradleUtil.toFile(getProject(), _apiDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
 	@Input
@@ -86,16 +90,29 @@ public class BuildServiceTask extends JavaExec {
 		return _databaseNameMaxLength;
 	}
 
-	@Input
+	@InputFile
+	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getHbmFile() {
-		return GradleUtil.toFile(getProject(), _hbmFile);
+		File file = GradleUtil.toFile(getProject(), _hbmFile);
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return file;
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getImplDir() {
-		return GradleUtil.toFile(getProject(), _implDir);
+		File file = GradleUtil.toFile(getProject(), _implDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
 	@Input
@@ -128,10 +145,17 @@ public class BuildServiceTask extends JavaExec {
 		return GradleUtil.toStringList(_modelHintsConfigs);
 	}
 
-	@Input
+	@InputFile
+	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getModelHintsFile() {
-		return GradleUtil.toFile(getProject(), _modelHintsFile);
+		File file = GradleUtil.toFile(getProject(), _modelHintsFile);
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return file;
 	}
 
 	@Input
@@ -154,16 +178,29 @@ public class BuildServiceTask extends JavaExec {
 		return GradleUtil.toStringList(_resourceActionsConfigs);
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getResourcesDir() {
-		return GradleUtil.toFile(getProject(), _resourcesDir);
+		File file = GradleUtil.toFile(getProject(), _resourcesDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
-	@Input
+	@InputFile
+	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getSpringFile() {
-		return GradleUtil.toFile(getProject(), _springFile);
+		File file = GradleUtil.toFile(getProject(), _springFile);
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return file;
 	}
 
 	@Input
@@ -171,10 +208,16 @@ public class BuildServiceTask extends JavaExec {
 		return GradleUtil.toStringList(_springNamespaces);
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getSqlDir() {
-		return GradleUtil.toFile(getProject(), _sqlDir);
+		File file = GradleUtil.toFile(getProject(), _sqlDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
 	@Input
@@ -198,25 +241,55 @@ public class BuildServiceTask extends JavaExec {
 		return GradleUtil.toString(_targetEntityName);
 	}
 
-	@Input
+	@InputDirectory
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getTestDir() {
-		return GradleUtil.toFile(getProject(), _testDir);
+		if (_testDir == null) {
+			return null;
+		}
+
+		File file = GradleUtil.toFile(getProject(), _testDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
-	@Input
+	@InputDirectory
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getUADDir() {
-		return GradleUtil.toFile(getProject(), _uadDir);
+		if (_uadDir == null) {
+			return null;
+		}
+
+		File file = GradleUtil.toFile(getProject(), _uadDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
-	@Input
+	@InputDirectory
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getUADTestIntegrationDir() {
-		return GradleUtil.toFile(getProject(), _uadTestIntegrationDir);
+		if (_uadTestIntegrationDir == null) {
+			return null;
+		}
+
+		File file = GradleUtil.toFile(getProject(), _uadTestIntegrationDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
 	public BuildServiceTask incubationFeatures(
@@ -451,6 +524,7 @@ public class BuildServiceTask extends JavaExec {
 		return springNamespaces(Arrays.asList(springNamespaces));
 	}
 
+	@Internal
 	protected List<String> getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
@@ -464,7 +538,9 @@ public class BuildServiceTask extends JavaExec {
 		args.add("service.build.number=" + getBuildNumber());
 		args.add(
 			"service.database.name.max.length=" + getDatabaseNameMaxLength());
-		args.add("service.hbm.file=" + _relativize(getHbmFile()));
+		args.add(
+			"service.hbm.file=" +
+				_relativize(_getOptionalFile(getHbmFile(), _hbmFile)));
 		args.add("service.impl.dir=" + _relativize(getImplDir()));
 		args.add(
 			"service.incubation.features=" +
@@ -473,8 +549,12 @@ public class BuildServiceTask extends JavaExec {
 		args.add(
 			"service.model.hints.configs=" +
 				CollectionUtils.join(",", getCompleteModelHintsConfigs()));
-		args.add(
-			"service.model.hints.file=" + _relativize(getModelHintsFile()));
+
+		File modelHintsFile = _getOptionalFile(
+			getModelHintsFile(), _modelHintsFile);
+
+		args.add("service.model.hints.file=" + _relativize(modelHintsFile));
+
 		args.add("service.osgi.module=" + isOsgiModule());
 		args.add("service.plugin.name=" + getPluginName());
 		args.add("service.props.util=" + getPropsUtil());
@@ -485,7 +565,9 @@ public class BuildServiceTask extends JavaExec {
 			"service.resource.actions.configs=" +
 				CollectionUtils.join(",", getResourceActionsConfigs()));
 		args.add("service.resources.dir=" + _relativize(getResourcesDir()));
-		args.add("service.spring.file=" + _relativize(getSpringFile()));
+		args.add(
+			"service.spring.file=" +
+				_relativize(_getOptionalFile(getSpringFile(), _springFile)));
 		args.add(
 			"service.spring.namespaces=" +
 				CollectionUtils.join(",", getSpringNamespaces()));
@@ -525,10 +607,11 @@ public class BuildServiceTask extends JavaExec {
 		return args;
 	}
 
+	@Input
 	protected List<String> getCompleteModelHintsConfigs() {
 		List<String> modelHintsConfigs = getModelHintsConfigs();
-
-		File modelHintsFile = getModelHintsFile();
+		File modelHintsFile = _getOptionalFile(
+			getModelHintsFile(), _modelHintsFile);
 		Project project = getProject();
 
 		boolean found = false;
@@ -552,6 +635,14 @@ public class BuildServiceTask extends JavaExec {
 		}
 
 		return modelHintsConfigs;
+	}
+
+	private File _getOptionalFile(File file, Object defaultFile) {
+		if (file != null) {
+			return file;
+		}
+
+		return GradleUtil.toFile(getProject(), defaultFile);
 	}
 
 	private String _relativize(File file) {

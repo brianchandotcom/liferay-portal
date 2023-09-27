@@ -16,5 +16,5 @@ liferay {
 }
 
 updateFileVersions {
-	match(/\t\t<dependency name="com.liferay.ant.mirors.get" org="com.liferay" rev="(\d.+)" \/>/, "../../../tools/sdk/dependencies/com.liferay.ant.mirors.get/ivy.xml")
+	match(/\t\t<dependency name="com.liferay.ant.mirrors.get" org="com.liferay" rev="(\d.+)" \/>/, "../../../tools/sdk/dependencies/com.liferay.ant.mirrors.get/ivy.xml")
 }

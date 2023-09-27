@@ -1,0 +1,44 @@
+package com.liferay.source.formatter.dependencies.upgrade;
+
+public class UpgradeJavaUpdateFileEntryMethodCheck {
+
+	public void method(
+		long userId, long fileEntryId, String sourceFileName, String mimeType,
+		String title, String description, String changeLog,
+		boolean majorVersion, byte[] bytes, ServiceContext serviceContext) {
+
+		_dlAppLocalService.updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, bytes, serviceContext);
+
+		DLAppLocalServiceUtil.updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, bytes, serviceContext);
+
+		DLAppLocalServiceUtil.updateFileEntry(
+			12345, 54321, test, mimeType, title, description, changeLog,
+			majorVersion, bytes, serviceContext);
+	}
+
+	public void method(
+		long userId, long fileEntryId, String sourceFileName, String mimeType,
+		String title, String description, String changeLog,
+		DLVersionNumberIncrease dlVersionNumberIncrease, byte[] bytes,
+		ServiceContext serviceContext) {
+
+		_dlAppLocalService.updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, dlVersionNumberIncrease, bytes, serviceContext);
+
+		DLAppLocalServiceUtil.updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, dlVersionNumberIncrease, bytes, serviceContext);
+
+		DLAppLocalServiceUtil.updateFileEntry(
+			12345, 54321, test, mimeType, title, description, changeLog,
+			dlVersionNumberIncrease, bytes, serviceContext);
+	}
+
+	private DLAppLocalService _dlAppLocalService;
+
+}

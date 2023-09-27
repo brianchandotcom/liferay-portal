@@ -8,10 +8,10 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compile group: "com.liferay", name: "com.sun.el.javax.el", version: "3.0.1.LIFERAY-PATCHED-1"
-	compile group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
-	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
-	compile group: "org.glassfish.web", name: "javax.servlet.jsp", transitive: false, version: "2.3.3-b02"
+	api group: "com.liferay", name: "com.sun.el.javax.el", version: "3.0.1.LIFERAY-PATCHED-1"
+	api group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
+	api group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
+	api group: "org.glassfish.web", name: "javax.servlet.jsp", transitive: false, version: "2.3.3-b02"
 }
 
 patch {

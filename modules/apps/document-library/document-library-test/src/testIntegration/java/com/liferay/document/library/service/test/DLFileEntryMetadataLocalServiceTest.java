@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.service.test;
@@ -37,7 +28,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -45,16 +35,17 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.ByteArrayInputStream;
 
@@ -62,6 +53,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -80,12 +72,12 @@ public class DLFileEntryMetadataLocalServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
 		_group = GroupTestUtil.addGroup();
 
 		User user = TestPropsValues.getUser();
@@ -198,7 +190,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 			_ddmStructure = _ddmStructureLocalService.fetchStructure(
 				_ddmStructure.getStructureId());
 
-			_ddmStructure.setCompanyId(_company.getCompanyId());
+			_ddmStructure.setCompanyId(0);
 
 			_ddmStructure = _ddmStructureLocalService.updateDDMStructure(
 				_ddmStructure);
@@ -233,17 +225,26 @@ public class DLFileEntryMetadataLocalServiceTest {
 					_ddmStructure.getStructureId(),
 					dlFileVersion.getFileVersionId());
 
-			_ddmStructureLocalService.deleteDDMStructure(_ddmStructure);
-
 			List<DLFileEntryMetadata> dlFileEntryMetadatas =
 				_dlFileEntryMetadataLocalService.
 					getNoStructuresFileEntryMetadatas();
 
+			_ddmStructureLocalService.deleteDDMStructure(_ddmStructure);
+
+			List<DLFileEntryMetadata> currentDLFileEntryMetadatas =
+				_dlFileEntryMetadataLocalService.
+					getNoStructuresFileEntryMetadatas();
+
 			Assert.assertEquals(
-				dlFileEntryMetadatas.toString(), 1,
-				dlFileEntryMetadatas.size());
-			Assert.assertEquals(
-				dlFileEntryMetadata, dlFileEntryMetadatas.get(0));
+				currentDLFileEntryMetadatas.toString(),
+				dlFileEntryMetadatas.size() + 1,
+				currentDLFileEntryMetadatas.size());
+
+			Assert.assertTrue(
+				ListUtil.exists(
+					currentDLFileEntryMetadatas,
+					dlFileEntryMetadata1 -> Objects.equals(
+						dlFileEntryMetadata1, dlFileEntryMetadata)));
 		}
 		finally {
 			if (_ddmStructure != null) {
@@ -317,9 +318,6 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 	@Inject
 	private static GroupLocalService _groupLocalService;
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
 	private DDMFormDeserializer _ddmFormDeserializer;

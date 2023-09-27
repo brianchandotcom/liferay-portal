@@ -645,7 +645,7 @@ definition {
 			value1 = "${webContentTitle} is not approved.");
 
 		AssertClick(
-			locator1 = "Message#ERROR_3_LINK",
+			locator1 = "Message#WARNING_SPECIFIC_LINK_1",
 			value1 = "${webContentTitle} is not approved.");
 
 		AssertTextEquals(

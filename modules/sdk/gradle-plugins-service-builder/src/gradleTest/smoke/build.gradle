@@ -1,5 +1,5 @@
 subprojects {
-	apply plugin: "java"
+	apply plugin: "java-library"
 
 	group = "com.example.sample"
 
@@ -14,10 +14,10 @@ task runGradleTest
 
 project(":sample-api") {
 	dependencies {
-		compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-		compile group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
-		compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
-		compile group: "org.osgi", name: "osgi.core", version: "6.0.0"
+		api group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+		api group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
+		api group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
+		api group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	}
 }
 
@@ -30,8 +30,8 @@ project(":sample-service") {
 	}
 
 	dependencies {
-		compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
-		compile project(":sample-api")
+		api group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
+		api project(":sample-api")
 	}
 }
 

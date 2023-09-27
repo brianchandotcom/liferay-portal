@@ -32,6 +32,8 @@ components:
                     type: string
                 description:
                     type: string
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     readOnly: true
@@ -153,6 +155,10 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                clientId:
+                    type: string
+                clientSecret:
+                    type: string
                 dateCreated:
                     description:
                         The remote's creation date.
@@ -193,7 +199,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.change.tracking.rest.client', and version '1.0.5'."
+        'com.liferay.change.tracking.rest.client', and version '1.1.1'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -243,6 +249,65 @@ paths:
             tags: ["CTCollection"]
         post:
             operationId: postCTCollection
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CTCollection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/CTCollection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CTCollection"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CTCollection"
+            tags: ["CTCollection"]
+    "/ct-collections/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteCTCollectionByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["CTCollection"]
+        get:
+            operationId: getCTCollectionByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CTCollection"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CTCollection"
+            tags: ["CTCollection"]
+        patch:
+            operationId: patchCTCollectionByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

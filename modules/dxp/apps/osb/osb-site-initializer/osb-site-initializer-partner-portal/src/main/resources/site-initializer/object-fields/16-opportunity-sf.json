@@ -16,7 +16,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "AccountId",
+			"externalReferenceCode": "Account_Name__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -68,7 +68,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Partner_First_Name__c",
+			"externalReferenceCode": "Primary_Partner_First_Name__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -81,7 +81,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Partner_Last_Name__c",
+			"externalReferenceCode": "Primary_Partner_Last_Name__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -94,7 +94,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Partner_Email__c",
+			"externalReferenceCode": "Primary_Partner_Email__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -159,7 +159,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Owner_Name__c",
+			"externalReferenceCode": "Channel_Owner_Name__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

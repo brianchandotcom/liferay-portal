@@ -1,25 +1,15 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.build.repository.BuildRunRepository;
-import com.liferay.jethr0.build.run.BuildRun;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
-import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
-import com.liferay.jethr0.jenkins.server.JenkinsServer;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
+import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -71,7 +61,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return buildJSONObject.optLong("number");
 	}
 
-	protected BuildRun getBuildRun() throws Exception {
+	protected BuildRunEntity getBuildRun() throws Exception {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
 		if (buildJSONObject == null) {
@@ -85,18 +75,20 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 			throw new Exception("Missing parameters from build");
 		}
 
-		String buildRunID = parmetersJSONObject.optString("BUILD_RUN_ID");
+		String buildRunID = parmetersJSONObject.optString(
+			"JETHR0_BUILD_RUN_ID");
 
 		if ((buildRunID == null) || !buildRunID.matches("\\d+")) {
 			return null;
 		}
 
-		BuildRunRepository buildRunRepository = getBuildRunRepository();
+		BuildRunEntityRepository buildRunEntityRepository =
+			getBuildRunRepository();
 
-		return buildRunRepository.getById(Long.valueOf(buildRunID));
+		return buildRunEntityRepository.getById(Long.valueOf(buildRunID));
 	}
 
-	protected BuildRun.Result getBuildRunResult() throws Exception {
+	protected BuildRunEntity.Result getBuildRunResult() throws Exception {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
 		if (!buildJSONObject.has("result")) {
@@ -106,16 +98,10 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		String result = buildJSONObject.getString("result");
 
 		if (result.equals("SUCCESS")) {
-			return BuildRun.Result.PASSED;
+			return BuildRunEntity.Result.PASSED;
 		}
 
-		return BuildRun.Result.FAILED;
-	}
-
-	protected URL getBuildURL() throws Exception {
-		return StringUtil.toURL(
-			StringUtil.combine(
-				getJenkinsURL(), "job/", getJobName(), "/", getBuildNumber()));
+		return BuildRunEntity.Result.FAILED;
 	}
 
 	protected JSONObject getComputerJSONObject() throws Exception {
@@ -131,6 +117,12 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return computerJSONObject;
 	}
 
+	protected URL getJenkinsBuildURL() throws Exception {
+		return StringUtil.toURL(
+			StringUtil.combine(
+				getJenkinsURL(), "job/", getJobName(), "/", getBuildNumber()));
+	}
+
 	protected JSONObject getJenkinsJSONObject() throws Exception {
 		JSONObject messageJSONObject = getMessageJSONObject();
 
@@ -144,36 +136,36 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return jenkinsJSONObject;
 	}
 
-	protected JenkinsNode getJenkinsNode() throws Exception {
-		JenkinsServer jenkinsServer = getJenkinsServer();
-
-		JenkinsNodeRepository jenkinsNodeRepository =
-			getJenkinsNodeRepository();
+	protected JenkinsNodeEntity getJenkinsNodeEntity() throws Exception {
+		JenkinsServerEntity jenkinsServerEntity = getJenkinsServerEntity();
 
 		JSONObject computerJSONObject = getComputerJSONObject();
 
 		String computerName = computerJSONObject.getString("name");
 
-		for (JenkinsNode jenkinsNode : jenkinsNodeRepository.getAll()) {
+		for (JenkinsNodeEntity jenkinsNodeEntity :
+				jenkinsServerEntity.getJenkinsNodeEntities()) {
+
 			if (!Objects.equals(
-					jenkinsServer, jenkinsNode.getJenkinsServer())) {
+					jenkinsServerEntity,
+					jenkinsNodeEntity.getJenkinsServerEntity())) {
 
 				continue;
 			}
 
-			if (Objects.equals(computerName, jenkinsNode.getName())) {
-				return jenkinsNode;
+			if (Objects.equals(computerName, jenkinsNodeEntity.getName())) {
+				return jenkinsNodeEntity;
 			}
 		}
 
 		return null;
 	}
 
-	protected JenkinsServer getJenkinsServer() throws Exception {
-		JenkinsServerRepository jenkinsServerRepository =
-			getJenkinsServerRepository();
+	protected JenkinsServerEntity getJenkinsServerEntity() throws Exception {
+		JenkinsServerEntityRepository jenkinsServerEntityRepository =
+			getJenkinsServerEntityRepository();
 
-		return jenkinsServerRepository.getByURL(getJenkinsURL());
+		return jenkinsServerEntityRepository.getByURL(getJenkinsURL());
 	}
 
 	protected URL getJenkinsURL() throws Exception {
@@ -208,7 +200,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return jobJSONObject.optString("name");
 	}
 
-	protected JenkinsNode updateJenkinsNode() throws Exception {
+	protected JenkinsNodeEntity updateJenkinsNodeEntity() throws Exception {
 		JSONObject computerJSONObject = getComputerJSONObject();
 
 		computerJSONObject.put(
@@ -217,11 +209,11 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 			"offline", !computerJSONObject.getBoolean("online")
 		);
 
-		JenkinsNode jenkinsNode = getJenkinsNode();
+		JenkinsNodeEntity jenkinsNodeEntity = getJenkinsNodeEntity();
 
-		jenkinsNode.update(computerJSONObject);
+		jenkinsNodeEntity.update(computerJSONObject);
 
-		return jenkinsNode;
+		return jenkinsNodeEntity;
 	}
 
 }

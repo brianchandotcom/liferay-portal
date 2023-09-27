@@ -1,0 +1,6 @@
+<header class="cadmin portlet-topper">
+	<@liferay_frontend["icon-options"] direction="right cadmin" portletConfigurationIcons=portlet_configuration_icons />
+
+	${portletTitleMenu.setDirection("right cadmin")}
+	<@liferay_ui["menu"] menu=portletTitleMenu />
+</header>

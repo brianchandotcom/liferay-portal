@@ -1,7 +1,8 @@
 apply plugin: "com.liferay.node"
-apply plugin: "java"
+apply plugin: "java-library"
 
 node {
+	nodeVersion = "8.9.0"
 	useNpm = true
 }
 

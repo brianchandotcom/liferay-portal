@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
@@ -680,16 +671,18 @@ public interface BigDecimalEntryPersistence
 	 *
 	 * @param pk the primary key of the big decimal entry
 	 * @param lvEntryPK the primary key of the lv entry
+	 * @return <code>true</code> if an association between the big decimal entry and the lv entry was added; <code>false</code> if they were already associated
 	 */
-	public void addLVEntry(long pk, long lvEntryPK);
+	public boolean addLVEntry(long pk, long lvEntryPK);
 
 	/**
 	 * Adds an association between the big decimal entry and the lv entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the big decimal entry
 	 * @param lvEntry the lv entry
+	 * @return <code>true</code> if an association between the big decimal entry and the lv entry was added; <code>false</code> if they were already associated
 	 */
-	public void addLVEntry(
+	public boolean addLVEntry(
 		long pk,
 		com.liferay.portal.tools.service.builder.test.model.LVEntry lvEntry);
 
@@ -698,16 +691,18 @@ public interface BigDecimalEntryPersistence
 	 *
 	 * @param pk the primary key of the big decimal entry
 	 * @param lvEntryPKs the primary keys of the lv entries
+	 * @return <code>true</code> if at least one association between the big decimal entry and the lv entries was added; <code>false</code> if they were all already associated
 	 */
-	public void addLVEntries(long pk, long[] lvEntryPKs);
+	public boolean addLVEntries(long pk, long[] lvEntryPKs);
 
 	/**
 	 * Adds an association between the big decimal entry and the lv entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the big decimal entry
 	 * @param lvEntries the lv entries
+	 * @return <code>true</code> if at least one association between the big decimal entry and the lv entries was added; <code>false</code> if they were all already associated
 	 */
-	public void addLVEntries(
+	public boolean addLVEntries(
 		long pk,
 		java.util.List
 			<com.liferay.portal.tools.service.builder.test.model.LVEntry>

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.poshi.runner.util;
@@ -37,7 +28,54 @@ public class JSONUtil {
 		if (!equals(jsonObject1, jsonObject2)) {
 			throw new RuntimeException(
 				"JSON object \n" + jsonObject1.toString() +
-					"\n is not equal to \n" + jsonObject2);
+					"\n is not equal to \n" + jsonObject2.toString());
+		}
+	}
+
+	public static void assertJSONValue(String json, String path, String value)
+		throws Exception {
+
+		String jsonValue = getWithJSONPath(json, path);
+
+		if (!value.equals(jsonValue)) {
+			throw new RuntimeException(
+				"Expected JSON value: " + value +
+					" does not equal actual JSON value: " + jsonValue);
+		}
+	}
+
+	public static void assertNotEquals(
+			JSONObject jsonObject1, JSONObject jsonObject2)
+		throws Exception {
+
+		if (equals(jsonObject1, jsonObject2)) {
+			throw new RuntimeException(
+				"JSON object \n" + jsonObject1.toString() +
+					"\n is equal to \n" + jsonObject2.toString());
+		}
+	}
+
+	public static void assertNotJSONValue(
+			String json, String path, String value)
+		throws Exception {
+
+		String jsonValue = getWithJSONPath(json, path);
+
+		if (value.equals(jsonValue)) {
+			throw new RuntimeException(
+				"Expected JSON value: " + value +
+					" equals actual JSON value: " + jsonValue);
+		}
+	}
+
+	public static void assertNotSimilar(
+			JSONObject jsonObject1, JSONObject jsonObject2)
+		throws Exception {
+
+		if (similar(jsonObject1, jsonObject2)) {
+			throw new RuntimeException(
+				"JSON object \n" + jsonObject1.toString() +
+					"\n is similar to \n" + jsonObject2.toString());
 		}
 	}
 
@@ -48,7 +86,7 @@ public class JSONUtil {
 		if (!similar(jsonObject1, jsonObject2)) {
 			throw new RuntimeException(
 				"JSON object \n" + jsonObject1.toString() +
-					"\n is not similar to \n" + jsonObject2);
+					"\n is not similar to \n" + jsonObject2.toString());
 		}
 	}
 
@@ -112,20 +150,20 @@ public class JSONUtil {
 		return jsonObject.optString(name);
 	}
 
-	public static String getWithJSONPath(String jsonString, String jsonPath) {
-		return getWithJSONPath(jsonString, jsonPath, "true");
+	public static String getWithJSONPath(String json, String path) {
+		return getWithJSONPath(json, path, "true");
 	}
 
 	public static String getWithJSONPath(
-		String jsonString, String jsonPath, String format) {
+		String json, String path, String format) {
 
-		DocumentContext documentContext = JsonPath.parse(jsonString);
+		DocumentContext documentContext = JsonPath.parse(json);
 
-		Object object = documentContext.read(jsonPath);
+		Object object = documentContext.read(path);
 
 		if (object == null) {
 			throw new RuntimeException(
-				"Invalid JSON path " + jsonPath + " in " + jsonString);
+				"Invalid JSON path " + path + " in " + json);
 		}
 
 		if (Boolean.parseBoolean(format) && (object instanceof List)) {

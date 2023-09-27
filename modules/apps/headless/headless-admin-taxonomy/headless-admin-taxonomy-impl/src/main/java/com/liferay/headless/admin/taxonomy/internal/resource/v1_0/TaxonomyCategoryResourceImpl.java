@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
@@ -27,7 +18,7 @@ import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategoryProperty;
 import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.CategoryEntityModel;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -330,9 +321,10 @@ public class TaxonomyCategoryResourceImpl
 					_assetCategoryPropertyLocalService.getCategoryProperties(
 						assetCategory.getCategoryId()),
 					taxonomyCategory.getTaxonomyCategoryProperties()),
-				ServiceContextRequestUtil.createServiceContext(
+				ServiceContextBuilder.create(
 					assetCategory.getGroupId(), contextHttpServletRequest,
-					taxonomyCategory.getViewableByAsString())));
+					taxonomyCategory.getViewableByAsString()
+				).build()));
 	}
 
 	@Override
@@ -442,9 +434,10 @@ public class TaxonomyCategoryResourceImpl
 				descriptionMap, taxonomyVocabularyId,
 				_toStringArray(
 					taxonomyCategory.getTaxonomyCategoryProperties()),
-				ServiceContextRequestUtil.createServiceContext(
+				ServiceContextBuilder.create(
 					groupId, contextHttpServletRequest,
-					taxonomyCategory.getViewableByAsString())));
+					taxonomyCategory.getViewableByAsString()
+				).build()));
 	}
 
 	private AssetCategory _getAssetCategory(String taxonomyCategoryId)
@@ -688,9 +681,10 @@ public class TaxonomyCategoryResourceImpl
 			assetCategory.getCategoryId(), parentAssetCategoryId, titleMap,
 			descriptionMap, assetVocabularyId,
 			_toStringArray(taxonomyCategory.getTaxonomyCategoryProperties()),
-			ServiceContextRequestUtil.createServiceContext(
+			ServiceContextBuilder.create(
 				assetCategory.getGroupId(), contextHttpServletRequest,
-				taxonomyCategory.getViewableByAsString()));
+				taxonomyCategory.getViewableByAsString()
+			).build());
 	}
 
 	private static final EntityModel _entityModel = new CategoryEntityModel();

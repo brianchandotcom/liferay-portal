@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.workflow.kaleo.forms.web.internal.portlet.action;
@@ -21,13 +12,14 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -66,7 +58,7 @@ public class DeactivateWorkflowDefinitionMVCActionCommand
 		int version = ParamUtil.getInteger(actionRequest, "version");
 
 		try {
-			WorkflowDefinitionManagerUtil.updateActive(
+			_workflowDefinitionManager.updateActive(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
 				version, false);
 		}
@@ -89,5 +81,8 @@ public class DeactivateWorkflowDefinitionMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeactivateWorkflowDefinitionMVCActionCommand.class);
+
+	@Reference
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

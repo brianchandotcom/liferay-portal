@@ -1,12 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
@@ -118,7 +112,7 @@ describe('The InstanceDetailsModal component should', () => {
 
 			expect(getByText('OPEN (1)')).toBeTruthy();
 			expect(resultStatus[0]).toHaveTextContent(
-				'Jan 24, 2020, 10:08 AM (0d 3h 43min overdue)'
+				'Jan 24, 2020, 2:08 AM (0d 3h 43min overdue)'
 			);
 			expect(resultIcons[1].children[0].classList).toContain(
 				'lexicon-icon-exclamation-circle'
@@ -137,12 +131,12 @@ describe('The InstanceDetailsModal component should', () => {
 			expect(instanceDetailsRows[0]).toHaveTextContent('completed');
 			expect(instanceDetailsRows[1]).toHaveTextContent('Test Test');
 			expect(instanceDetailsRows[2]).toHaveTextContent(
-				'Jan 20, 2020, 11:08 AM'
+				'Jan 20, 2020, 3:08 AM'
 			);
 			expect(instanceDetailsRows[3]).toHaveTextContent('Blogs Entry');
 			expect(instanceDetailsRows[4]).toHaveTextContent('Blog 01');
 			expect(instanceDetailsRows[5]).toHaveTextContent(
-				'Jan 21, 2020, 10:08 AM'
+				'Jan 21, 2020, 2:08 AM'
 			);
 		});
 
@@ -208,7 +202,7 @@ describe('The InstanceDetailsModal component should', () => {
 			expect(instanceDetailsRows[0]).toHaveTextContent('pending');
 			expect(instanceDetailsRows[1]).toHaveTextContent('Test Test');
 			expect(instanceDetailsRows[2]).toHaveTextContent(
-				'Jan 20, 2020, 11:08 AM'
+				'Jan 20, 2020, 3:08 AM'
 			);
 			expect(instanceDetailsRows[3]).toHaveTextContent('Blogs Entry');
 			expect(instanceDetailsRows[4]).toHaveTextContent('Blog 01');

@@ -28,14 +28,7 @@ exports[`NewRequestModal renders 1`] = `
           <p
             class="text-secondary"
           >
-            New requests will be added to the queue and you will be notified once the job has completed running. You can also 
-            <a
-              href="https://learn.liferay.com/analytics-cloud/latest/en/apis.html"
-              target="_blank"
-            >
-              create requests via API
-            </a>
-            .
+            New requests will be added to the queue and you will be notified once the job has completed running.
           </p>
           <div
             class="form-group"
@@ -106,6 +99,41 @@ exports[`NewRequestModal renders 1`] = `
                           class="text-secondary"
                         >
                            - Delete user's PII and add them to the suppression list.
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div
+              class="form-group-item"
+            >
+              <div
+                class="custom-control custom-checkbox"
+              >
+                <label>
+                  <input
+                    class="custom-control-input"
+                    form="[object Object]"
+                    name="suppressRequest"
+                    type="checkbox"
+                    value="false"
+                  />
+                  <span
+                    class="custom-control-label"
+                  >
+                    <span
+                      class="custom-control-label-text"
+                    >
+                      <span
+                        class="checkbox-label"
+                      >
+                        Suppress
+                        <span
+                          class="text-secondary"
+                        >
+                           - Suppress identity resolution of users based on their email.
                         </span>
                       </span>
                     </span>

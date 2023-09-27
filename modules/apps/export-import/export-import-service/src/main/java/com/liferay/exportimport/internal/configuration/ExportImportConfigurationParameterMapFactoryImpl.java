@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.exportimport.internal.configuration;
@@ -619,17 +610,19 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 	 */
 	private void _replaceParameterMap(Map<String, String[]> parameterMap) {
 		try {
-			List<Portlet> dataSiteLevelPortlets =
-				_exportImportHelper.getDataSiteLevelPortlets(
+			List<Portlet> dataSiteAndInstanceLevelPortlets =
+				_exportImportHelper.getDataSiteAndInstanceLevelPortlets(
 					CompanyThreadLocal.getCompanyId());
 
 			boolean portletDataAll = MapUtil.getBoolean(
 				parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
 
-			for (Portlet dataSiteLevelPortlet : dataSiteLevelPortlets) {
+			for (Portlet dataSiteAndInstanceLevelPortlet :
+					dataSiteAndInstanceLevelPortlets) {
+
 				String portletDataKey =
 					PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-						dataSiteLevelPortlet.getRootPortletId();
+						dataSiteAndInstanceLevelPortlet.getRootPortletId();
 
 				String[] portletDataValues = parameterMap.get(portletDataKey);
 
@@ -638,13 +631,14 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 					 GetterUtil.getBoolean(portletDataValues[0]))) {
 
 					_populatePortletResourceNames(
-						parameterMap, dataSiteLevelPortlet);
+						parameterMap, dataSiteAndInstanceLevelPortlet);
 
 					_populateStagedModelTypes(
-						parameterMap, dataSiteLevelPortlet);
+						parameterMap, dataSiteAndInstanceLevelPortlet);
 
 					_addModelParameter(
-						parameterMap, dataSiteLevelPortlet, portletDataAll);
+						parameterMap, dataSiteAndInstanceLevelPortlet,
+						portletDataAll);
 				}
 			}
 

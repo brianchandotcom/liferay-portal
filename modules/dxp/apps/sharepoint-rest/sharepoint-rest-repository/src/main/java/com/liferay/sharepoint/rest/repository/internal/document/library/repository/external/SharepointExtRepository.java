@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.sharepoint.rest.repository.internal.document.library.repository.external;
@@ -48,7 +39,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
-import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointSearchConfiguration;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointFileEntry;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointModel;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointRootFolder;
@@ -76,12 +66,10 @@ public class SharepointExtRepository implements ExtRepository {
 
 	public SharepointExtRepository(
 		TokenStore tokenStore,
-		SharepointRepositoryConfiguration sharepointRepositoryConfiguration,
-		SharepointSearchConfiguration sharepointSearchConfiguration) {
+		SharepointRepositoryConfiguration sharepointRepositoryConfiguration) {
 
 		_tokenStore = tokenStore;
 		_sharepointRepositoryConfiguration = sharepointRepositoryConfiguration;
-		_sharepointSearchConfiguration = sharepointSearchConfiguration;
 	}
 
 	@Override
@@ -540,8 +528,7 @@ public class SharepointExtRepository implements ExtRepository {
 				StringPool.DASH));
 
 		_sharepointURLHelper = new SharepointURLHelper(
-			_siteAbsoluteURL,
-			_sharepointSearchConfiguration.sharepointResultsSourceId());
+			_siteAbsoluteURL, _RESULTS_SOURCE_ID);
 
 		_sharepointServerResponseConverter =
 			new SharepointServerResponseConverter(
@@ -912,11 +899,13 @@ public class SharepointExtRepository implements ExtRepository {
 		}
 	}
 
+	private static final String _RESULTS_SOURCE_ID =
+		"8413cd39-2156-4e00-b54d-11efd9abdb89";
+
 	private String _libraryPath;
 	private ExtRepositoryFolder _rootFolder;
 	private final SharepointRepositoryConfiguration
 		_sharepointRepositoryConfiguration;
-	private final SharepointSearchConfiguration _sharepointSearchConfiguration;
 	private SharepointServerResponseConverter
 		_sharepointServerResponseConverter;
 	private SharepointURLHelper _sharepointURLHelper;

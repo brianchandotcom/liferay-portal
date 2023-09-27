@@ -3,7 +3,19 @@
 	"externalReferenceCode": "PRMV001",
 	"name": "Blog",
 	"name_i18n": {
-		"en_US": "Blog"
+		"ar_SA": "Blog",
+		"ca_ES": "Blog",
+		"de_DE": "Blog",
+		"en_US": "Blog",
+		"es_ES": "Blog",
+		"fi_FI": "Blog",
+		"fr_FR": "Blog",
+		"hu_HU": "Blog",
+		"ja_JP": "Blog",
+		"nl_NL": "Blog",
+		"pt_BR": "Blog",
+		"sv_SE": "Blog",
+		"zh_CN": "Blog"
 	},
 	"viewableBy": "Anyone"
 }

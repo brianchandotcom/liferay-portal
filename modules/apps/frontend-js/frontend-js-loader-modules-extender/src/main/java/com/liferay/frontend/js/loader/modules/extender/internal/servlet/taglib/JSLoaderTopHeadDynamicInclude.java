@@ -1,23 +1,14 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.frontend.js.loader.modules.extender.internal.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
-import com.liferay.frontend.js.loader.modules.extender.internal.servlet.JSResolveModulesServlet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProvider;
 import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
@@ -26,6 +17,7 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
@@ -63,7 +55,18 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.write("<script data-senna-track=\"temporary\" type=\"");
+		printWriter.write("<script data-senna-track=\"temporary\"");
+
+		String nonce = _contentSecurityPolicyNonceProvider.getNonce(
+			httpServletRequest);
+
+		if (Validator.isNotNull(nonce)) {
+			printWriter.write(" nonce=\"");
+			printWriter.write(nonce);
+			printWriter.write(StringPool.QUOTE);
+		}
+
+		printWriter.write(" type=\"");
 		printWriter.write(ContentTypes.TEXT_JAVASCRIPT);
 		printWriter.write("\">window.__CONFIG__= {basePath: '',");
 
@@ -83,9 +86,10 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 		printWriter.write(_details.logLevel());
 		printWriter.write("', moduleType: '");
 		printWriter.write(FrontendESMUtil.getScriptType());
-		printWriter.write("', namespace:'Liferay', ");
+		printWriter.write("', namespace:'Liferay', nonce: '");
+		printWriter.write(nonce);
 		printWriter.write(
-			"reportMismatchedAnonymousModules: 'warn', resolvePath: '");
+			"', reportMismatchedAnonymousModules: 'warn', resolvePath: '");
 		printWriter.write(_getResolvePath(httpServletRequest));
 		printWriter.write("', url: '");
 		printWriter.write(_getURL(httpServletRequest, themeDisplay));
@@ -140,7 +144,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 				httpServletRequest);
 
 		return absolutePortalURLBuilder.forServlet(
-			_jsResolveModulesServlet.getURL()
+			"/js_resolve_modules"
 		).build();
 	}
 
@@ -166,11 +170,12 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private volatile Bundle _bundle;
-	private volatile Details _details;
 
 	@Reference
-	private JSResolveModulesServlet _jsResolveModulesServlet;
+	private ContentSecurityPolicyNonceProvider
+		_contentSecurityPolicyNonceProvider;
 
+	private volatile Details _details;
 	private volatile String _lastModified;
 
 	@Reference

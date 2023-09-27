@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
@@ -40,6 +31,7 @@ function AssetVocabulariesCategoriesSelector({
 	portletURL,
 	required,
 	selectedItems = [],
+	showVocabularyLabel = true,
 	singleSelect,
 	sourceItemsVocabularyIds = [],
 	useFallbackInput,
@@ -149,7 +141,9 @@ function AssetVocabulariesCategoriesSelector({
 
 	const handleSelectButtonClick = () => {
 		const url = createPortletURL(portletURL, {
+			p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
 			selectedCategories: selectedItems.map((item) => item.value).join(),
+			selectedCategoryIds: selectedItems.map((item) => item.value).join(),
 			singleSelect,
 			vocabularyIds: sourceItemsVocabularyIds.concat(),
 		});
@@ -206,7 +200,10 @@ function AssetVocabulariesCategoriesSelector({
 				)}
 
 				{label && (
-					<label htmlFor={inputName + '_MultiSelect'}>
+					<label
+						className={showVocabularyLabel ? '' : 'sr-only'}
+						htmlFor={inputName + '_MultiSelect'}
+					>
 						{label}
 
 						{required && (
@@ -253,7 +250,6 @@ function AssetVocabulariesCategoriesSelector({
 										Liferay.Language.get(
 											`category-x-does-not-exist`
 										),
-
 										invalidItems
 											.map((item) => item.label)
 											.join(',')

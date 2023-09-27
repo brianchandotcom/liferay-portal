@@ -8,6 +8,7 @@ create index IX_E9BFF5F2 on SiteNavigationMenu (uuid_[$COLUMN_LENGTH:75$], ctCol
 create unique index IX_F1C8DDF4 on SiteNavigationMenu (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create index IX_9C7CF713 on SiteNavigationMenuItem (companyId, ctCollectionId);
+create unique index IX_7B4515FE on SiteNavigationMenuItem (externalReferenceCode[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 create index IX_5A4EA097 on SiteNavigationMenuItem (parentSiteNavigationMenuItemId, ctCollectionId);
 create index IX_CB221BDA on SiteNavigationMenuItem (siteNavigationMenuId, ctCollectionId);
 create index IX_9E380099 on SiteNavigationMenuItem (siteNavigationMenuId, name[$COLUMN_LENGTH:255$], ctCollectionId);

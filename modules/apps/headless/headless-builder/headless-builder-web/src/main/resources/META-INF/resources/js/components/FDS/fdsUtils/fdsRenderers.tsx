@@ -1,21 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 
 import StatusLabel from '../../StatusLabel';
 import {wrapStringInForwardSlashes} from '../../utils/string';
@@ -27,20 +18,26 @@ export function itemMethodRenderer({
 }) {
 	return <ClayLabel displayType="info">{itemData.httpMethod.name}</ClayLabel>;
 }
-
 export function itemPathRenderer({
-	itemData,
-}: FDSItem<APIApplicationEndpointItem>) {
-	const path = wrapStringInForwardSlashes(itemData.path);
+	fdsItem,
+	setMainEndpointNav,
+}: {
+	fdsItem: FDSItem<APIEndpointItem>;
+	setMainEndpointNav: Dispatch<SetStateAction<MainNav>>;
+}) {
+	const path = wrapStringInForwardSlashes(fdsItem.itemData.path);
 
 	return (
 		<ClayTooltipProvider>
-			<div className="table-list-title">
+			<div className="endpoint-table-list-title table-list-title">
 				<ClayLink
 					data-senna-off
 					data-tooltip-align="top"
 					decoration="none"
 					href="#"
+					onClick={() =>
+						setMainEndpointNav({edit: fdsItem.itemData.id})
+					}
 					title={path}
 				>
 					{path}

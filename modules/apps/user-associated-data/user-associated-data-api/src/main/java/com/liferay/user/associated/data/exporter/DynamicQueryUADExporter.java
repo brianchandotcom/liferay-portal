@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.user.associated.data.exporter;
@@ -28,7 +19,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 
 import java.io.File;
@@ -68,11 +59,14 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 	}
 
 	@Override
-	public File exportAll(long userId) throws PortalException {
+	public File exportAll(long userId, ZipWriterFactory zipWriterFactory)
+		throws PortalException {
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery(userId);
 
-		ZipWriter zipWriter = getZipWriter(userId, getTypeKey());
+		ZipWriter zipWriter = getZipWriter(
+			userId, getTypeKey(), zipWriterFactory);
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(T baseModel) -> {
@@ -149,10 +143,12 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 	 * @param  modelClassName the string representation of the model class name
 	 * @return a {@code ZipWriter} where each piece of data is written
 	 */
-	protected ZipWriter getZipWriter(long userId, String modelClassName) {
+	protected ZipWriter getZipWriter(
+		long userId, String modelClassName, ZipWriterFactory zipWriterFactory) {
+
 		File file = createFolder(userId);
 
-		return ZipWriterFactoryUtil.getZipWriter(
+		return zipWriterFactory.getZipWriter(
 			new File(
 				StringBundler.concat(
 					file.getAbsolutePath(), StringPool.SLASH, modelClassName,

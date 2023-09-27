@@ -1,43 +1,44 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export function getMinQuantity(minQuantity = 1, multipleQuantity = 1) {
-	if (multipleQuantity <= 1) {
-		return minQuantity;
-	}
-
+export function getMinQuantity(
+	minQuantity = 1,
+	multipleQuantity = 1,
+	precision = 0
+) {
 	const minDifference = minQuantity % multipleQuantity;
 
 	if (!minDifference) {
-		return multipleQuantity;
+		if (multipleQuantity <= minQuantity) {
+			return minQuantity.toFixed(precision);
+		}
+
+		return multipleQuantity.toFixed(precision);
 	}
 
-	return minQuantity + multipleQuantity - minDifference;
+	return Number(minQuantity + multipleQuantity - minDifference).toFixed(
+		precision
+	);
 }
 
-export function getProductMaxQuantity(maxQuantity, multipleQuantity = 1) {
+export function getProductMaxQuantity(
+	maxQuantity,
+	multipleQuantity = 1,
+	precision = 0
+) {
 	if (!maxQuantity) {
 		return '';
 	}
 
-	if (multipleQuantity <= 1) {
-		return maxQuantity;
-	}
-
 	const maxDifference = maxQuantity % multipleQuantity;
 
-	return maxQuantity - maxDifference;
+	if (!maxDifference) {
+		return maxQuantity.toFixed(precision);
+	}
+
+	return Number(maxQuantity - maxDifference).toFixed(precision);
 }
 
 export function getProductMinQuantity({
@@ -55,4 +56,19 @@ export function getProductMinQuantity({
 	}
 
 	return minQuantity;
+}
+
+export function getNumberOfDecimals(value) {
+	if (value && Math.floor(value) !== Math.ceil(value)) {
+		return value.toString().split('.')[1].length || 0;
+	}
+
+	return 0;
+}
+
+export function isMultiple(value1, value2, precision = 0) {
+	return (
+		(Math.round(value1 / value2) / (1 / value2)).toFixed(precision) ===
+		Number(value1).toFixed(precision)
+	);
 }

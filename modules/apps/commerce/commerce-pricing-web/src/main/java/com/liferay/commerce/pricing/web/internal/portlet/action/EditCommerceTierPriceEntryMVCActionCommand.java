@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
@@ -212,7 +203,8 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 
 		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "price", BigDecimal.ZERO);
-		int minQuantity = ParamUtil.getInteger(actionRequest, "minQuantity");
+		BigDecimal minQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "minQuantity", BigDecimal.ZERO);
 		boolean overrideDiscount = ParamUtil.getBoolean(
 			actionRequest, "overrideDiscount");
 		BigDecimal discountLevel1 = (BigDecimal)ParamUtil.getNumber(
@@ -274,8 +266,7 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 		if (commerceTierPriceEntryId <= 0) {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.addCommerceTierPriceEntry(
-					null, commercePriceEntryId, price,
-					BigDecimal.valueOf(minQuantity),
+					null, commercePriceEntryId, price, minQuantity,
 					commercePriceEntry.isBulkPricing(), !overrideDiscount,
 					discountLevel1, discountLevel2, discountLevel3,
 					discountLevel4, displayDateMonth, displayDateDay,
@@ -287,8 +278,7 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 		else {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.updateCommerceTierPriceEntry(
-					commerceTierPriceEntryId, price,
-					BigDecimal.valueOf(minQuantity),
+					commerceTierPriceEntryId, price, minQuantity,
 					commercePriceEntry.isBulkPricing(), !overrideDiscount,
 					discountLevel1, discountLevel2, discountLevel3,
 					discountLevel4, displayDateMonth, displayDateDay,

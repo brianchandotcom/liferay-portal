@@ -1,19 +1,10 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
+import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
@@ -29,6 +20,8 @@ import {FUZZY_OPTIONS} from '../Constants';
 import Search from './Search';
 
 import '../../css/OrderableTable.scss';
+
+const ROW_DRAGGABLE = 'rowDraggable';
 
 interface IAction {
 	icon: string;
@@ -53,23 +46,21 @@ interface IField {
 	name: string;
 }
 
-interface IOrderableTableRowProps {
-	actions?: Array<IAction>;
-	fields: Array<IField>;
-	index: number;
-	item: any;
-	onOrderChange: Function;
-	query: string;
-}
-
-const OrderableTableRow = ({
+const Row = ({
 	actions,
 	fields,
 	index,
 	item,
-	onOrderChange,
+	onDragCrossover,
 	query,
-}: IOrderableTableRowProps) => {
+}: {
+	actions?: Array<IAction>;
+	fields: Array<IField>;
+	index: number;
+	item: any;
+	onDragCrossover: Function;
+	query: string;
+}) => {
 	const tableRowRef = useRef<HTMLTableRowElement>(null);
 
 	const [{isDragging}, dragRef] = useDrag({
@@ -78,14 +69,14 @@ const OrderableTableRow = ({
 		}),
 		item: {
 			index,
-			type: 'FIELD',
+			type: ROW_DRAGGABLE,
 		},
 	});
 
 	const [, dropRef] = useDrop({
-		accept: 'FIELD',
+		accept: ROW_DRAGGABLE,
 		hover(item: {index: number; type: string}, monitor) {
-			if (!tableRowRef.current || !onOrderChange) {
+			if (!tableRowRef.current || !onDragCrossover) {
 				return;
 			}
 
@@ -117,7 +108,7 @@ const OrderableTableRow = ({
 				return;
 			}
 
-			onOrderChange({draggedIndex, targetIndex});
+			onDragCrossover({draggedIndex, targetIndex});
 
 			item.index = targetIndex;
 		},
@@ -130,7 +121,6 @@ const OrderableTableRow = ({
 			className={classNames('orderable-table-row', {
 				dragging: isDragging,
 			})}
-			key={index}
 			ref={tableRowRef}
 		>
 			<ClayTable.Cell className="drag-handle-cell">
@@ -226,36 +216,94 @@ const OrderableTableRow = ({
 	);
 };
 
+const Table = ({
+	actions,
+	fields,
+	items,
+	onDragCrossover,
+	onDrop,
+	query,
+}: {
+	actions?: Array<IAction>;
+	fields: Array<IField>;
+	items: Array<any>;
+	onDragCrossover: Function;
+	onDrop: Function;
+	query: string;
+}) => {
+	const [, dropRef] = useDrop({
+		accept: ROW_DRAGGABLE,
+		drop() {
+			onDrop();
+		},
+	});
+
+	return (
+		<ClayTable className="orderable-table" ref={dropRef}>
+			<ClayTable.Head>
+				<ClayTable.Row>
+					<ClayTable.Cell className="drag-handle-cell" />
+
+					{fields.map((field) => (
+						<ClayTable.Cell headingCell key={field.name}>
+							{field.label}
+						</ClayTable.Cell>
+					))}
+
+					{actions && <ClayTable.Cell className="actions-cell" />}
+				</ClayTable.Row>
+			</ClayTable.Head>
+
+			<ClayTable.Body>
+				{items.map((item, index) => (
+					<Row
+						actions={actions}
+						fields={fields}
+						index={index}
+						item={item}
+						key={item.id || index}
+						onDragCrossover={onDragCrossover}
+						query={query}
+					/>
+				))}
+			</ClayTable.Body>
+		</ClayTable>
+	);
+};
+
 interface IOrderableTableProps {
 	actions?: Array<IAction>;
-	disableSave?: boolean;
+	className?: string;
+	creationMenuItems?: React.ComponentProps<
+		typeof ClayDropDownWithItems
+	>['items'];
+	creationMenuLabel?: string;
 	fields: Array<IField>;
 	items: Array<any>;
 	noItemsButtonLabel: string;
 	noItemsDescription: string;
 	noItemsTitle: string;
-	onCancelButtonClick: Function;
-	onCreationButtonClick: Function;
-	onOrderChange: (args: {orderedItems: any[]}) => void;
-	onSaveButtonClick: Function;
-	title: string;
+	onOrderChange: (args: {order: string}) => void;
+	title?: string;
 }
 
 const OrderableTable = ({
 	actions,
-	disableSave,
+	className,
+	creationMenuItems,
+	creationMenuLabel = Liferay.Language.get('add'),
 	fields,
 	items: initialItems,
 	noItemsButtonLabel,
 	noItemsDescription,
 	noItemsTitle,
-	onCancelButtonClick,
-	onCreationButtonClick,
 	onOrderChange,
-	onSaveButtonClick,
 	title,
 }: IOrderableTableProps) => {
 	const [items, setItems] = useState(initialItems);
+	const [order, setOrder] = useState(
+		initialItems.map((item) => item.id).join(',')
+	);
 	const [query, setQuery] = useState('');
 
 	useEffect(() => setItems(initialItems), [initialItems]);
@@ -282,31 +330,15 @@ const OrderableTable = ({
 		);
 	};
 
-	const handleOnOrderChange = ({
-		draggedIndex,
-		targetIndex,
-	}: {
-		draggedIndex: number;
-		targetIndex: number;
-	}) => {
-		const orderedItems = items.slice(0);
-
-		orderedItems.splice(draggedIndex, 1);
-
-		orderedItems.splice(targetIndex, 0, items[draggedIndex]);
-
-		setItems(orderedItems);
-
-		onOrderChange({
-			orderedItems,
-		});
-	};
-
 	return (
-		<ClayLayout.Sheet className="mt-3 orderable-table-sheet">
-			<ClayLayout.SheetHeader>
-				<h2 className="sheet-title">{title}</h2>
-			</ClayLayout.SheetHeader>
+		<ClayLayout.Sheet
+			className={classNames('orderable-table-sheet', className)}
+		>
+			{title && (
+				<ClayLayout.SheetHeader>
+					<h2 className="sheet-title">{title}</h2>
+				</ClayLayout.SheetHeader>
+			)}
 
 			<ClayLayout.SheetSection>
 				<ManagementToolbar.Container>
@@ -315,54 +347,79 @@ const OrderableTable = ({
 							<Search onSearch={onSearch} query={query} />
 						</ManagementToolbar.Item>
 
-						<ManagementToolbar.Item>
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get('add')}
-								className="nav-btn nav-btn-monospaced"
-								onClick={() => onCreationButtonClick()}
-								symbol="plus"
-							/>
-						</ManagementToolbar.Item>
+						{creationMenuItems?.length && (
+							<ManagementToolbar.Item>
+								{creationMenuItems.length > 1 ? (
+									<ClayDropDownWithItems
+										items={creationMenuItems}
+										trigger={
+											<ClayButtonWithIcon
+												aria-label={creationMenuLabel}
+												className="nav-btn nav-btn-monospaced"
+												symbol="plus"
+												title={creationMenuLabel}
+											/>
+										}
+									/>
+								) : (
+									<ClayButtonWithIcon
+										aria-label={
+											creationMenuItems[0].label ??
+											creationMenuLabel
+										}
+										className="nav-btn nav-btn-monospaced"
+										onClick={creationMenuItems[0].onClick}
+										symbol="plus"
+										title={
+											creationMenuItems[0].label ??
+											creationMenuLabel
+										}
+									/>
+								)}
+							</ManagementToolbar.Item>
+						)}
 					</ManagementToolbar.ItemList>
 				</ManagementToolbar.Container>
 
 				{items.length ? (
-					<ClayTable className="orderable-table">
-						<ClayTable.Head>
-							<ClayTable.Row>
-								<ClayTable.Cell className="drag-handle-cell" />
+					<DndProvider backend={HTML5Backend}>
+						<Table
+							actions={actions}
+							fields={fields}
+							items={items}
+							onDragCrossover={({
+								draggedIndex,
+								targetIndex,
+							}: {
+								draggedIndex: number;
+								targetIndex: number;
+							}) => {
+								const orderedItems = [...items];
 
-								{fields.map((field) => (
-									<ClayTable.Cell
-										headingCell
-										key={field.name}
-									>
-										{field.label}
-									</ClayTable.Cell>
-								))}
+								orderedItems.splice(draggedIndex, 1);
 
-								{actions && (
-									<ClayTable.Cell className="actions-cell" />
-								)}
-							</ClayTable.Row>
-						</ClayTable.Head>
+								orderedItems.splice(
+									targetIndex,
+									0,
+									items[draggedIndex]
+								);
 
-						<ClayTable.Body>
-							<DndProvider backend={HTML5Backend}>
-								{items.map((item, index) => (
-									<OrderableTableRow
-										actions={actions}
-										fields={fields}
-										index={index}
-										item={item}
-										key={item.id || index}
-										onOrderChange={handleOnOrderChange}
-										query={query}
-									/>
-								))}
-							</DndProvider>
-						</ClayTable.Body>
-					</ClayTable>
+								setItems(orderedItems);
+							}}
+							onDrop={() => {
+								const newOrder = items
+									.map((item) => item.id)
+									.join(',');
+
+								if (newOrder !== order) {
+									setOrder(newOrder);
+
+									onOrderChange({order: newOrder});
+								}
+							}}
+							query={query}
+						/>
+					</DndProvider>
 				) : query ? (
 					<ClayEmptyState
 						description={Liferay.Language.get(
@@ -375,35 +432,31 @@ const OrderableTable = ({
 						description={noItemsDescription}
 						title={noItemsTitle}
 					>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => onCreationButtonClick()}
-						>
-							{noItemsButtonLabel}
-						</ClayButton>
+						{creationMenuItems?.length &&
+							(creationMenuItems.length > 1 ? (
+								<ClayDropDownWithItems
+									alignmentPosition={4}
+									items={creationMenuItems}
+									trigger={
+										<ClayButton
+											aria-label={creationMenuLabel}
+											displayType="secondary"
+										>
+											{noItemsButtonLabel}
+										</ClayButton>
+									}
+								/>
+							) : (
+								<ClayButton
+									displayType="secondary"
+									onClick={creationMenuItems[0].onClick}
+								>
+									{noItemsButtonLabel}
+								</ClayButton>
+							))}
 					</ClayEmptyState>
 				)}
 			</ClayLayout.SheetSection>
-
-			{!!items.length && (
-				<ClayLayout.SheetFooter>
-					<ClayButton.Group spaced>
-						<ClayButton
-							disabled={disableSave}
-							onClick={() => onSaveButtonClick()}
-						>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-
-						<ClayButton
-							displayType="secondary"
-							onClick={() => onCancelButtonClick()}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-					</ClayButton.Group>
-				</ClayLayout.SheetFooter>
-			)}
 		</ClayLayout.Sheet>
 	);
 };

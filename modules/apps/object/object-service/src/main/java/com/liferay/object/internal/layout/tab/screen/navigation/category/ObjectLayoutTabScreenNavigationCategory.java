@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.internal.layout.tab.screen.navigation.category;
@@ -18,10 +9,13 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.object.service.ObjectLayoutLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 
 import java.io.IOException;
@@ -39,25 +33,43 @@ public class ObjectLayoutTabScreenNavigationCategory
 			   ScreenNavigationEntry<ObjectLayoutTab> {
 
 	public ObjectLayoutTabScreenNavigationCategory(
-		ObjectDefinition objectDefinition, ObjectLayoutTab objectLayoutTab) {
+		ObjectDefinition objectDefinition, ObjectLayoutTab objectLayoutTab,
+		ObjectRelationship objectRelationship) {
 
 		_objectDefinition = objectDefinition;
 		_objectLayoutTab = objectLayoutTab;
+		_objectRelationship = objectRelationship;
 	}
 
 	@Override
 	public String getCategoryKey() {
-		return String.valueOf(_objectLayoutTab.getObjectLayoutTabId());
+		return _getKey();
 	}
 
 	@Override
 	public String getEntryKey() {
-		return String.valueOf(_objectLayoutTab.getObjectLayoutTabId());
+		return _getKey();
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _objectLayoutTab.getName(locale);
+		if (_objectLayoutTab != null) {
+			return _objectLayoutTab.getName(locale);
+		}
+
+		if (_objectRelationship == null) {
+			return LanguageUtil.get(locale, "basic-details");
+		}
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+				_objectRelationship.getObjectDefinitionId2());
+
+		if (objectDefinition == null) {
+			return StringPool.BLANK;
+		}
+
+		return objectDefinition.getLabel(locale);
 	}
 
 	@Override
@@ -67,23 +79,21 @@ public class ObjectLayoutTabScreenNavigationCategory
 
 	@Override
 	public boolean isVisible(User user, ObjectLayoutTab objectLayoutTab) {
-		long objectRelationshipId = _objectLayoutTab.getObjectRelationshipId();
+		ObjectLayout objectLayout =
+			ObjectLayoutLocalServiceUtil.fetchDefaultObjectLayout(
+				_objectDefinition.getObjectDefinitionId());
 
-		if (objectRelationshipId == 0) {
-			return true;
+		if ((objectLayout != null) && (_objectLayoutTab == null)) {
+			return false;
 		}
 
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipLocalServiceUtil.fetchObjectRelationship(
-				objectRelationshipId);
-
-		if (objectRelationship == null) {
-			return false;
+		if (_objectRelationship == null) {
+			return true;
 		}
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-				objectRelationship.getObjectDefinitionId2());
+				_objectRelationship.getObjectDefinitionId2());
 
 		if ((objectDefinition == null) || !objectDefinition.isActive()) {
 			return false;
@@ -102,7 +112,21 @@ public class ObjectLayoutTabScreenNavigationCategory
 			ObjectWebKeys.REGULAR_OBJECT_LAYOUT_TAB, Boolean.TRUE);
 	}
 
+	private String _getKey() {
+		if (_objectLayoutTab != null) {
+			return String.valueOf(_objectLayoutTab.getObjectLayoutTabId());
+		}
+
+		if (_objectRelationship != null) {
+			return String.valueOf(
+				_objectRelationship.getObjectRelationshipId());
+		}
+
+		return String.valueOf(_objectDefinition.getObjectDefinitionId());
+	}
+
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectLayoutTab _objectLayoutTab;
+	private final ObjectRelationship _objectRelationship;
 
 }

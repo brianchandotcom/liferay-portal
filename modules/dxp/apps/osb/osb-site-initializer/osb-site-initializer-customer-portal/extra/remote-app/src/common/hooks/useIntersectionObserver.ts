@@ -1,15 +1,9 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 const INTERSECTION_OPTIONS = {
 	root: null,
@@ -17,7 +11,7 @@ const INTERSECTION_OPTIONS = {
 };
 
 export default function useIntersectionObserver() {
-	const [trackedRefCurrent, setTrackedRefCurrent] = useState();
+	const trackedRefCurrent = useRef(null);
 	const [isIntersecting, setIsIntersecting] = useState(false);
 
 	const memoizedSetIntersecting = useCallback((entities: any[]) => {
@@ -32,16 +26,17 @@ export default function useIntersectionObserver() {
 			INTERSECTION_OPTIONS
 		);
 
-		if (trackedRefCurrent) {
-			observer.observe(trackedRefCurrent);
+		if (trackedRefCurrent.current) {
+			observer.observe(trackedRefCurrent.current);
 		}
 
 		return () => {
-			if (trackedRefCurrent) {
-				observer.unobserve(trackedRefCurrent);
+			if (trackedRefCurrent.current) {
+				// eslint-disable-next-line react-hooks/exhaustive-deps
+				observer.unobserve(trackedRefCurrent.current);
 			}
 		};
-	}, [memoizedSetIntersecting, trackedRefCurrent]);
+	}, [memoizedSetIntersecting]);
 
-	return [setTrackedRefCurrent, isIntersecting];
+	return [trackedRefCurrent, isIntersecting];
 }

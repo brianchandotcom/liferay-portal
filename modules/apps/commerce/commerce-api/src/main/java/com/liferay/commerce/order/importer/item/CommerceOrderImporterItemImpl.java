@@ -1,20 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.order.importer.item;
 
 import com.liferay.commerce.price.CommerceOrderItemPrice;
+
+import java.math.BigDecimal;
 
 import java.util.Locale;
 import java.util.Map;
@@ -65,7 +58,7 @@ public class CommerceOrderImporterItemImpl
 	}
 
 	@Override
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
 	}
 
@@ -82,6 +75,10 @@ public class CommerceOrderImporterItemImpl
 	@Override
 	public String getSKU() {
 		return _sku;
+	}
+
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
 	}
 
 	@Override
@@ -137,7 +134,7 @@ public class CommerceOrderImporterItemImpl
 			parentCommerceOrderItemCPDefinitionId;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		_quantity = quantity;
 	}
 
@@ -155,6 +152,10 @@ public class CommerceOrderImporterItemImpl
 		_sku = sku;
 	}
 
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		_unitOfMeasureKey = unitOfMeasureKey;
+	}
+
 	private CommerceOrderItemPrice _commerceOrderItemPrice;
 	private long _cpDefinitionId;
 	private long _cpInstanceId;
@@ -162,9 +163,10 @@ public class CommerceOrderImporterItemImpl
 	private String _json;
 	private Map<Locale, String> _nameMap;
 	private long _parentCommerceOrderItemCPDefinitionId;
-	private int _quantity;
+	private BigDecimal _quantity;
 	private String _replacingSKU;
 	private String _requestedDeliveryDateString;
 	private String _sku;
+	private String _unitOfMeasureKey;
 
 }

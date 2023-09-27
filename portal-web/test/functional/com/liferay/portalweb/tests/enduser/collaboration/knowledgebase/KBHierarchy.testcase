@@ -192,16 +192,16 @@ definition {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.moveArticleCP(
-			kbArticleCurrentParent = "Home",
+			destinationItem = "Folder 1",
 			kbArticleTitle = "Article 1 Title");
 
-		KBFolder.selectParentCP(kbFolderName = "Folder 1");
+		Alert.reloadPageAfterSuccessMessage(successMessage = "Your request completed successfully.");
 
 		KBArticle.moveArticleCP(
-			kbArticleCurrentParent = "Home",
+			destinationItem = "Folder 2",
 			kbArticleTitle = "Article 2 Title");
 
-		KBFolder.selectParentCP(kbFolderName = "Folder 2");
+		Alert.reloadPageAfterSuccessMessage(successMessage = "Your request completed successfully.");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 

@@ -1,0 +1,18 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "productType == \"Cloud App\"",
+		"externalReferenceCode": "MKT-CLOUD-EMAIL",
+		"label": {
+			"en_US": "Cloud Email Template"
+		},
+		"name": "CloudEmailMarketPlace",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterAdd",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:GetAppInformation$]",
+		"parameters": {
+			"notificationTemplateExternalReferenceCode": "MARKETPLACE-ACTION-CLOUD-EMAIL-TEMPLATE",
+			"type": "email"
+		}
+	}
+]

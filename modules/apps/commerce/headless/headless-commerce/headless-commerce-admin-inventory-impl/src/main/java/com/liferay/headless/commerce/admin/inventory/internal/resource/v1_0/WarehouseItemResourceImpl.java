@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.inventory.internal.resource.v1_0;
@@ -25,14 +16,15 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseItemResource;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,11 +42,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/warehouse-item.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, WarehouseItemResource.class}
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
+	service = WarehouseItemResource.class
 )
-public class WarehouseItemResourceImpl
-	extends BaseWarehouseItemResourceImpl implements NestedFieldSupport {
+public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 
 	@Override
 	public Response deleteWarehouseItem(Long id) throws Exception {
@@ -216,14 +207,19 @@ public class WarehouseItemResourceImpl
 	public Response patchWarehouseItem(Long id, WarehouseItem warehouseItem)
 		throws Exception {
 
-		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
-				warehouseItem.getWarehouseId());
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+			_commerceInventoryWarehouseItemService.
+				getCommerceInventoryWarehouseItem(id);
 
 		_commerceInventoryWarehouseItemService.
 			updateCommerceInventoryWarehouseItem(
-				id, GetterUtil.getInteger(warehouseItem.getQuantity()),
-				commerceInventoryWarehouse.getMvccVersion());
+				id, commerceInventoryWarehouseItem.getMvccVersion(),
+				BigDecimalUtil.get(
+					warehouseItem.getQuantity(),
+					commerceInventoryWarehouseItem.getQuantity()),
+				GetterUtil.get(
+					warehouseItem.getUnitOfMeasureKey(),
+					commerceInventoryWarehouseItem.getUnitOfMeasureKey()));
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -250,8 +246,13 @@ public class WarehouseItemResourceImpl
 			updateCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				GetterUtil.getInteger(warehouseItem.getQuantity()),
-				commerceInventoryWarehouseItem.getMvccVersion());
+				commerceInventoryWarehouseItem.getMvccVersion(),
+				BigDecimalUtil.get(
+					warehouseItem.getQuantity(),
+					commerceInventoryWarehouseItem.getQuantity()),
+				GetterUtil.get(
+					warehouseItem.getUnitOfMeasureKey(),
+					commerceInventoryWarehouseItem.getUnitOfMeasureKey()));
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
@@ -279,8 +280,10 @@ public class WarehouseItemResourceImpl
 					warehouseItem.getExternalReferenceCode(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					warehouseItem.getQuantity(), warehouseItem.getSku(),
-					StringPool.BLANK);
+					BigDecimalUtil.get(
+						warehouseItem.getQuantity(), BigDecimal.ZERO),
+					warehouseItem.getSku(),
+					warehouseItem.getUnitOfMeasureKey());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -304,8 +307,10 @@ public class WarehouseItemResourceImpl
 					warehouseItem.getExternalReferenceCode(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					warehouseItem.getQuantity(), warehouseItem.getSku(),
-					StringPool.BLANK);
+					BigDecimalUtil.get(
+						warehouseItem.getQuantity(), BigDecimal.ZERO),
+					warehouseItem.getSku(),
+					warehouseItem.getUnitOfMeasureKey());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -356,8 +361,10 @@ public class WarehouseItemResourceImpl
 					externalReferenceCode,
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					warehouseItem.getQuantity(), warehouseItem.getSku(),
-					StringPool.BLANK);
+					BigDecimalUtil.get(
+						warehouseItem.getQuantity(), BigDecimal.ZERO),
+					warehouseItem.getSku(),
+					warehouseItem.getUnitOfMeasureKey());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(

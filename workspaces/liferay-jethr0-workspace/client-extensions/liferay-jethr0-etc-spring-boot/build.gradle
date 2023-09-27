@@ -1,11 +1,13 @@
 buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
-		classpath group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.7.9"
+		classpath group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.7.11"
 	}
 
 	repositories {
-		mavenLocal()
+		maven {
+			url new File(rootProject.projectDir, "../../.m2-tmp")
+		}
 
 		maven {
 			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
@@ -14,20 +16,31 @@ buildscript {
 }
 
 apply plugin: "com.liferay.source.formatter"
-apply plugin: "java"
+apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
 
+bootRun {
+	String liferayVirtualInstanceId = project.hasProperty("liferay.virtual.instance.id") ? project.getProperty("liferay.virtual.instance.id") : "default"
+
+	environment "LIFERAY_ROUTES_CLIENT_EXTENSION", "${gradle.liferayWorkspace.homeDir}/routes/${liferayVirtualInstanceId}/${project.name}"
+	environment "LIFERAY_ROUTES_DXP", "${gradle.liferayWorkspace.homeDir}/routes/${liferayVirtualInstanceId}/dxp"
+}
+
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "1.0.9"
-	compile group: "org.json", name: "json", version: "20230227"
-	compile group: "org.springframework.boot", name: "spring-boot-starter-activemq", version: "2.7.9"
-	compile group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.9"
-	compile group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.9"
-	compile group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.9"
+	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "latest.release"
+	implementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"
+	implementation group: "org.apache.commons", name: "commons-lang3", version: "3.12.0"
+	implementation group: "org.json", name: "json", version: "20230227"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-activemq", version: "2.7.11"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.11"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.11"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.11"
 }
 
 repositories {
-	mavenLocal()
+	maven {
+		url new File(rootProject.projectDir, "../../.m2-tmp")
+	}
 
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"

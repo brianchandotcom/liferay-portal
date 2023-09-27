@@ -49,7 +49,6 @@ exports[`ReactFieldBase does not render the label if showLabel is false 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <input
       name="undefined_edited"
@@ -71,7 +70,6 @@ exports[`ReactFieldBase renders the FieldBase with contentRenderer 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div>
       <h1>
@@ -92,7 +90,6 @@ exports[`ReactFieldBase renders the FieldBase with help text 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <input
       name="undefined_edited"
@@ -124,7 +121,6 @@ exports[`ReactFieldBase renders the FieldBase with id 1`] = `
   <div
     aria-labelledby="Id_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <input
       name="undefined_edited"
@@ -249,7 +245,6 @@ exports[`ReactFieldBase renders the default markup 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <input
       name="undefined_edited"

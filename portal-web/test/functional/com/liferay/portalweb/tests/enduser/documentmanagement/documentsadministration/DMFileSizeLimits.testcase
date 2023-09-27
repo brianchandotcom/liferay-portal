@@ -30,6 +30,7 @@ definition {
 	@priority = 4
 	test CanLimitMaxFileSizeForDepotAtInstanceScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateMaximumFileSize(fieldValue = 65536);
 
@@ -53,6 +54,7 @@ definition {
 	@priority = 3
 	test CanLimitMaxFileSizeInMediaGallery {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -90,6 +92,7 @@ definition {
 	@priority = 4
 	test CanLimitSizeOnlyInCurrentSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -135,6 +138,7 @@ definition {
 	@priority = 4
 	test InstanceSizeLimitTakesEffectOverSiteAndSystemSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateMaximumFileSize(fieldValue = 51200);
 
@@ -175,6 +179,7 @@ definition {
 	@priority = 4
 	test WhenInstanceIsDefaultItIsOverriddenByServlet {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -207,6 +212,7 @@ definition {
 	@priority = 4
 	test WhenServletIsSmallerItOverridesInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 

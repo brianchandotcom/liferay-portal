@@ -1,7 +1,7 @@
 Bundle-Description: The Maven Plugin Builder Gradle Plugin lets you generate the Maven plugin descriptor for any Mojos found in your project.
 Bundle-Name: Liferay Gradle Plugins Maven Plugin Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.maven.plugin.builder
-Bundle-Version: 2.0.1
+Bundle-Version: 2.0.3
 Export-Package:\
 	com.liferay.gradle.plugins.maven.plugin.builder,\
 	com.liferay.gradle.plugins.maven.plugin.builder.task

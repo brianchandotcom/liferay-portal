@@ -37,6 +37,7 @@ definition {
 	test CanBeCollapsed {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -359,7 +360,7 @@ definition {
 		}
 
 		task ("Then assert the entry fields are shown after clicking the form creates before via the view entry action") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 			FormsAdminNavigator.gotoViewEntries();
 

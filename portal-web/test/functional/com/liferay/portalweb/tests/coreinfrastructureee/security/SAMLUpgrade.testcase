@@ -6,7 +6,9 @@ definition {
 	property dummy.socket.proxy.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
 	property test.run.environment = "EE";
+	property test.run.type = "single";
 	property testray.component.names = "SAML";
 	property testray.main.component.name = "Upgrades Security";
 
@@ -19,11 +21,10 @@ definition {
 	@description = "LPS-152122 TC8. Can import JSON file to configure the SAML IdP provider via Import/Export Center after upgrading from 7.1.10.3."
 	@priority = 4
 	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade71103 {
-		property custom.properties = "feature.flag.COMMERCE-8087=true";
+		property custom.properties = "feature.flag.COMMERCE-8087=true${line.separator}feature.flag.LPS-186620=true";
 		property data.archive.type = "data-archive-saml-broken-mapping";
 		property portal.release = "false";
 		property portal.version = "7.1.10.3";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add SAP") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -73,11 +74,10 @@ definition {
 	@description = "LPS-152122 TC8. Can import JSON file to configure the SAML IdP provider via Import/Export Center after upgrading from 7.2.10.1."
 	@priority = 4
 	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade72101 {
-		property custom.properties = "feature.flag.COMMERCE-8087=true";
+		property custom.properties = "feature.flag.COMMERCE-8087=true${line.separator}feature.flag.LPS-186620=true";
 		property data.archive.type = "data-archive-saml-broken-mapping";
 		property portal.release = "false";
 		property portal.version = "7.2.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add SAP") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -127,11 +127,10 @@ definition {
 	@description = "LPS-152122 TC8. Can import JSON file to configure the SAML IdP provider via Import/Export Center after upgrading from 7.3.10.1."
 	@priority = 4
 	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade73101 {
-		property custom.properties = "feature.flag.COMMERCE-8087=true";
+		property custom.properties = "feature.flag.COMMERCE-8087=true${line.separator}feature.flag.LPS-186620=true";
 		property data.archive.type = "data-archive-saml-broken-mapping";
 		property portal.release = "false";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add SAP") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -181,11 +180,10 @@ definition {
 	@description = "LPS-152122 TC8. Can import JSON file to configure the SAML IdP provider via Import/Export Center after upgrading from 7.0.10.16."
 	@priority = 4
 	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade701016 {
-		property custom.properties = "feature.flag.COMMERCE-8087=true";
+		property custom.properties = "feature.flag.COMMERCE-8087=true${line.separator}feature.flag.LPS-186620=true";
 		property data.archive.type = "data-archive-saml-broken-mapping";
 		property portal.release = "false";
 		property portal.version = "7.0.10.16";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add SAP") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -237,7 +235,6 @@ definition {
 	test CanProvisionNewSPUserAfterUpgrade71103 {
 		property data.archive.type = "data-archive-saml-broken-mapping";
 		property portal.version = "7.1.10.3";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Assert portal can provision a new SP user after successfully authenticating on the IDP") {
 			User.logoutPG();
@@ -260,7 +257,6 @@ definition {
 	test CanProvisionNewSPUserAfterUpgrade72101 {
 		property data.archive.type = "data-archive-saml-broken-mapping";
 		property portal.version = "7.2.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Assert portal can provision a new SP user after successfully authenticating on the IDP") {
 			User.logoutPG();
@@ -283,7 +279,6 @@ definition {
 	test CanProvisionNewSPUserAfterUpgrade73101 {
 		property data.archive.type = "data-archive-saml-broken-mapping";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Assert portal can provision a new SP user after successfully authenticating on the IDP") {
 			User.logoutPG();
@@ -306,7 +301,6 @@ definition {
 	test CanProvisionNewSPUserAfterUpgrade701016 {
 		property data.archive.type = "data-archive-saml-broken-mapping";
 		property portal.version = "7.0.10.16";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Assert portal can provision a new SP user after successfully authenticating on the IDP") {
 			User.logoutPG();
@@ -325,11 +319,10 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-64613. View SAML configuration after upgrade 7.3.10."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.3.10";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View SAML general IdP and connection configuration") {
 			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
@@ -339,11 +332,12 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.4.12."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade7412 {
 		property data.archive.type = "data-archive-saml";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.4.12";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View SAML general IdP and connection configuration") {
 			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
@@ -353,11 +347,10 @@ definition {
 	}
 
 	@description = "View SAML configuration after upgrade 7.1.10.3."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade71103 {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.1.10.3";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View SAML general IdP and connection configuration") {
 			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
@@ -367,11 +360,10 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.2.10.1."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.2.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View SAML general IdP and connection configuration") {
 			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
@@ -381,12 +373,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-136367. View SAML configuration after upgrade 7.3.10.1."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade73101 {
 		property data.archive.type = "data-archive-saml";
 		property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View SAML general IdP and connection configuration") {
 			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
@@ -396,11 +387,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-132679. View SAML configuration after upgrade 7.0.10.10."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade701016 {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.0.10.16";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View SAML general IdP and connection configuration") {
 			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
@@ -410,12 +400,11 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-64613. View SAML with encryption configuration after upgrade 7.3.10."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml-encryption";
 		property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
 		property portal.version = "7.3.10";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View SAML general IdP and connection with encryption configuration ") {
 			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
@@ -425,11 +414,12 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.4.12."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7412 {
 		property data.archive.type = "data-archive-saml-encryption";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.4.12";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View SAML general IdP and connection with encryption configuration") {
 			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
@@ -439,11 +429,10 @@ definition {
 	}
 
 	@description = "View SAML configuration after upgrade 7.2.10.1."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-saml-encryption";
 		property portal.version = "7.2.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View SAML general IdP and connection with encryption configuration") {
 			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");

@@ -4,6 +4,7 @@ import {
 	formatHistogramKeyValue,
 	formatProcessedDate,
 	formatYAxis,
+	getActions,
 	getFormattedMedian,
 	getFormattedMedianLabel,
 	getFormattedProbabilityToWin,
@@ -13,7 +14,7 @@ import {
 	getStatusName,
 	getStep,
 	getTicks,
-	getVariantLabel,
+	getVariantLabels,
 	normalizeHistogram,
 	toThousandsABTesting
 } from '../experiments';
@@ -280,43 +281,74 @@ describe('formatProcessedDate', () => {
 	});
 });
 
-describe('getVariantLabel', () => {
+describe('getVariantLabels', () => {
 	it('should return a label in especific cases', () => {
 		expect(
-			getVariantLabel('RUNNING', mockBestVariant, undefined, 'DEFAULT')
-		).toBe('Current Best');
+			getVariantLabels({
+				bestVariant: mockBestVariant,
+				dxpVariantId: 'DEFAULT',
+				status: 'RUNNING'
+			})
+		).toEqual([{status: 'success', value: 'Current Best'}]);
 
 		expect(
-			getVariantLabel(
-				'FINISHED_WINNER',
-				mockBestVariant,
-				'DEFAULT',
-				'DEFAULT'
-			)
-		).toBe('Winner');
+			getVariantLabels({
+				bestVariant: mockBestVariant,
+				dxpVariantId: 'DEFAULT',
+				status: 'FINISHED_WINNER',
+				winnerDXPVariantId: 'DEFAULT'
+			})
+		).toEqual([{status: 'success', value: 'Winner'}]);
+
+		expect(
+			getVariantLabels({
+				bestVariant: mockBestVariant,
+				dxpVariantId: 'DEFAULT',
+				publishedDXPVariantId: 'DEFAULT',
+				status: 'TERMINATED'
+			})
+		).toEqual([{status: 'info', value: 'Published'}]);
+
+		expect(
+			getVariantLabels({
+				bestVariant: mockBestVariant,
+				dxpVariantId: 'DEFAULT',
+				publishedDXPVariantId: 'DEFAULT',
+				status: 'FINISHED_WINNER',
+				winnerDXPVariantId: 'DEFAULT'
+			})
+		).toEqual([
+			{status: 'success', value: 'Winner'},
+			{status: 'info', value: 'Published'}
+		]);
 	});
-	it('should return undefined', () => {
+	it('should return an empty array', () => {
 		expect(
-			getVariantLabel('RUNNING', undefined, undefined, 'DEFAULT')
-		).toBe(undefined);
+			getVariantLabels({
+				dxpVariantId: 'DEFAULT',
+				status: 'RUNNING'
+			})
+		).toEqual([]);
 
 		expect(
-			getVariantLabel(
-				'FINISHED_WINNER',
-				mockBestVariant,
-				'1000',
-				'DEFAULT'
-			)
-		).toBe(undefined);
+			getVariantLabels({
+				bestVariant: mockBestVariant,
+				dxpVariantId: 'DEFAULT',
+				publishedDXPVariantId: null,
+				status: 'FINISHED_NO_WINNER',
+				winnerDXPVariantId: null
+			})
+		).toEqual([]);
 
 		expect(
-			getVariantLabel(
-				'FINISHED_NO_WINNER',
-				mockBestVariant,
-				'DEFAULT',
-				'DEFAULT'
-			)
-		).toBe(undefined);
+			getVariantLabels({
+				bestVariant: mockBestVariant,
+				dxpVariantId: 'DEFAULT',
+				publishedDXPVariantId: null,
+				status: 'TERMINATED',
+				winnerDXPVariantId: null
+			})
+		).toEqual([]);
 	});
 });
 
@@ -379,5 +411,162 @@ describe('toThousandsABTesting', () => {
 		expect(toThousandsABTesting(4560000000)).toEqual('4B');
 		expect(toThousandsABTesting(4567000000)).toEqual('4B');
 		expect(toThousandsABTesting(1500000000000)).toEqual('1T');
+	});
+});
+
+describe('getActions', () => {
+	it('should return actions for COMPLETED status', () => {
+		const onDelete = jest.fn();
+
+		expect(getActions('COMPLETED', {onDelete})).toEqual([
+			{
+				displayType: 'secondary',
+				label: 'Delete',
+				onClick: onDelete
+			}
+		]);
+	});
+
+	it('should return actions for DRAFT status', () => {
+		expect(
+			getActions('DRAFT', {
+				id: '123',
+				pageURL: 'https://liferay.com'
+			})
+		).toEqual([
+			{
+				displayType: 'primary',
+				label: 'Review',
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=reviewAndRun'
+			},
+			{
+				displayType: 'secondary',
+				label: 'Delete',
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=delete'
+			}
+		]);
+	});
+
+	it('should return actions for FINISHED_NO_WINNER status and able to publish', () => {
+		expect(
+			getActions('FINISHED_NO_WINNER', {
+				id: '123',
+				pageURL: 'https://liferay.com',
+				publishable: true
+			})
+		).toEqual([
+			{
+				displayType: 'primary',
+				label: 'Publish',
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=publish'
+			},
+			{
+				displayType: 'secondary',
+				label: 'Delete',
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=delete'
+			}
+		]);
+	});
+
+	it('should return actions for FINISHED_NO_WINNER status and not able to publish', () => {
+		const onDelete = jest.fn();
+
+		expect(getActions('FINISHED_NO_WINNER', {onDelete})).toEqual([
+			{
+				displayType: 'secondary',
+				label: 'Delete',
+				onClick: onDelete
+			}
+		]);
+	});
+
+	it('should return actions for FINISHED_WINNER status and able to publish', () => {
+		expect(
+			getActions('FINISHED_WINNER', {
+				id: '123',
+				pageURL: 'https://liferay.com',
+				publishable: true
+			})
+		).toEqual([
+			{
+				displayType: 'primary',
+				label: 'Publish',
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=publish'
+			},
+			{
+				displayType: 'secondary',
+				label: 'Delete',
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=delete'
+			}
+		]);
+	});
+
+	it('should return actions for FINISHED_WINNER status and not able to publish', () => {
+		const onDelete = jest.fn();
+
+		expect(getActions('FINISHED_WINNER', {onDelete})).toEqual([
+			{
+				displayType: 'secondary',
+				label: 'Delete',
+				onClick: onDelete
+			}
+		]);
+	});
+
+	it('should return actions for TERMINATED status and able to publish', () => {
+		expect(
+			getActions('TERMINATED', {
+				id: '123',
+				pageURL: 'https://liferay.com',
+				publishable: true
+			})
+		).toEqual([
+			{
+				displayType: 'primary',
+				label: 'Publish',
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=publish'
+			},
+			{
+				displayType: 'secondary',
+				label: 'Delete',
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=delete'
+			}
+		]);
+	});
+
+	it('should return actions for TERMINATED status and not able to publish', () => {
+		const onDelete = jest.fn();
+
+		expect(getActions('TERMINATED', {onDelete})).toEqual([
+			{
+				displayType: 'secondary',
+				label: 'Delete',
+				onClick: onDelete
+			}
+		]);
+	});
+
+	it('should return actions for RUNNING status and able to publish', () => {
+		expect(
+			getActions('RUNNING', {
+				id: '123',
+				pageURL: 'https://liferay.com'
+			})
+		).toEqual([
+			{
+				displayType: 'secondary',
+				label: 'Terminate',
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=terminate'
+			}
+		]);
 	});
 });

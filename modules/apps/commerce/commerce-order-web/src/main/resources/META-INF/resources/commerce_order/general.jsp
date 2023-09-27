@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -163,8 +154,9 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 					%>
 
 					<commerce-ui:info-box
-						actionLabel='<%= LanguageUtil.get(request, Validator.isNull(purchaseOrderNumber) ? "add" : "edit") %>'
+						actionLabel='<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) ? LanguageUtil.get(request, Validator.isNull(purchaseOrderNumber) ? "add" : "edit") : null %>'
 						actionTargetId="purchase-order-number-modal"
+						actionUrl="<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) ? editPurchaseOrderNumberURL: null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "purchase-order-number") %>'
 					>
@@ -195,8 +187,9 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 					%>
 
 					<commerce-ui:info-box
-						actionLabel='<%= LanguageUtil.get(request, (billingCommerceAddress == null) ? "add" : "edit") %>'
+						actionLabel='<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) ? LanguageUtil.get(request, (billingCommerceAddress == null) ? "add" : "edit") : null %>'
 						actionTargetId="billing-address-modal"
+						actionUrl="<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) ? editBillingAddressURL: null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "billing-address") %>'
 					>
@@ -208,16 +201,16 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 							</c:when>
 							<c:otherwise>
 								<p class="mb-0">
-									<%= billingCommerceAddress.getStreet1() %>
+									<%= HtmlUtil.escape(billingCommerceAddress.getStreet1()) %>
 								</p>
 
 								<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet2()) %>">
 									<p class="mb-0">
-										<%= billingCommerceAddress.getStreet2() %>
+										<%= HtmlUtil.escape(billingCommerceAddress.getStreet2()) %>
 									</p>
 
 									<p class="mb-0">
-										<%= billingCommerceAddress.getStreet3() %>
+										<%= HtmlUtil.escape(billingCommerceAddress.getStreet3()) %>
 									</p>
 								</c:if>
 
@@ -233,8 +226,9 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 					%>
 
 					<commerce-ui:info-box
-						actionLabel='<%= LanguageUtil.get(request, (shippingCommerceAddress == null) ? "add" : "edit") %>'
+						actionLabel='<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) ? LanguageUtil.get(request, (shippingCommerceAddress == null) ? "add" : "edit") : null %>'
 						actionTargetId="shipping-address-modal"
+						actionUrl="<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) ? editShippingAddressURL: null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "shipping-address") %>'
 					>
@@ -246,16 +240,16 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 							</c:when>
 							<c:otherwise>
 								<p class="mb-0">
-									<%= shippingCommerceAddress.getStreet1() %>
+									<%= HtmlUtil.escape(shippingCommerceAddress.getStreet1()) %>
 								</p>
 
 								<c:if test="<%= !Validator.isBlank(shippingCommerceAddress.getStreet2()) %>">
 									<p class="mb-0">
-										<%= shippingCommerceAddress.getStreet2() %>
+										<%= HtmlUtil.escape(shippingCommerceAddress.getStreet2()) %>
 									</p>
 
 									<p class="mb-0">
-										<%= shippingCommerceAddress.getStreet3() %>
+										<%= HtmlUtil.escape(shippingCommerceAddress.getStreet3()) %>
 									</p>
 								</c:if>
 
@@ -328,8 +322,9 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 					%>
 
 					<commerce-ui:info-box
-						actionLabel='<%= LanguageUtil.get(request, (requestedDeliveryDate == null) ? "add" : "edit") %>'
+						actionLabel='<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) ? LanguageUtil.get(request, (requestedDeliveryDate == null) ? "add" : "edit") : null %>'
 						actionTargetId="requested-delivery-date-modal"
+						actionUrl="<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) ? editRequestedDeliveryDateURL: null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "requested-delivery-date") %>'
 					>
@@ -355,8 +350,9 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 
 				<div class="col-xl-3">
 					<commerce-ui:info-box
-						actionLabel='<%= LanguageUtil.get(request, Validator.isNull(printedNote) ? "add" : "edit") %>'
+						actionLabel='<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) ? LanguageUtil.get(request, Validator.isNull(printedNote) ? "add" : "edit") : null %>'
 						actionTargetId="printed-note-modal"
+						actionUrl="<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) ? editPrintedNoteURL: null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "printed-note") %>'
 					>
@@ -420,9 +416,9 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 		/>
 
 		<commerce-ui:panel
-			actionLabel='<%= LanguageUtil.get(request, "edit") %>'
+			actionLabel='<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPricesPermission() ? LanguageUtil.get(request, "edit") : null %>'
 			actionTargetId="order-summary-modal"
-			actionUrl="<%= editOrderSummaryURL %>"
+			actionUrl="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPricesPermission() ? editOrderSummaryURL : null %>"
 			title='<%= LanguageUtil.get(request, "order-summary") %>'
 		>
 			<div id="summary-root"></div>

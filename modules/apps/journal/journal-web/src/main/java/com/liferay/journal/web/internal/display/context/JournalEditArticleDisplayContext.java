@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.journal.web.internal.display.context;
@@ -18,6 +9,7 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.item.selector.criterion.AssetDisplayPageSelectorCriterion;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.form.renderer.constants.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.item.selector.DDMTemplateItemSelectorReturnType;
@@ -34,8 +26,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -69,6 +63,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -798,6 +793,92 @@ public class JournalEditArticleDisplayContext {
 		return _portletResource;
 	}
 
+	public Map<String, Object> getProps() {
+		return HashMapBuilder.<String, Object>put(
+			"itemSelectorURL",
+			() -> {
+				ItemSelectorCriterion itemSelectorCriterion =
+					new ImageItemSelectorCriterion();
+
+				itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+					new FileEntryItemSelectorReturnType());
+
+				return String.valueOf(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							_httpServletRequest),
+						_liferayPortletResponse.getNamespace() + "selectImage",
+						itemSelectorCriterion));
+			}
+		).put(
+			"previewURL",
+			() -> {
+				if (_article == null) {
+					return null;
+				}
+
+				return _article.getArticleImageURL(_themeDisplay);
+			}
+		).put(
+			"smallImageId",
+			() -> {
+				if ((_article != null) &&
+					(_article.getSmallImageSource() ==
+						JournalArticleConstants.
+							SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA)) {
+
+					return _article.getSmallImageId();
+				}
+
+				return 0;
+			}
+		).put(
+			"smallImageName",
+			() -> {
+				if ((_article != null) && _article.isSmallImage() &&
+					(_article.getSmallImageId() > 0) &&
+					(_article.getSmallImageSource() ==
+						JournalArticleConstants.
+							SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA)) {
+
+					try {
+						FileEntry fileEntry =
+							DLAppLocalServiceUtil.getFileEntry(
+								_article.getSmallImageId());
+
+						return fileEntry.getTitle();
+					}
+					catch (PortalException portalException) {
+						_log.error(portalException);
+					}
+				}
+
+				return StringPool.BLANK;
+			}
+		).put(
+			"smallImageSource",
+			() -> {
+				if (_article == null) {
+					return JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE;
+				}
+
+				return _article.getSmallImageSource();
+			}
+		).put(
+			"smallImageURL",
+			() -> {
+				if ((_article != null) && _article.isSmallImage() &&
+					(_article.getSmallImageSource() ==
+						JournalArticleConstants.SMALL_IMAGE_SOURCE_URL)) {
+
+					return _article.getSmallImageURL();
+				}
+
+				return StringPool.BLANK;
+			}
+		).build();
+	}
+
 	public String getPublishButtonLabel() throws PortalException {
 		if (getClassNameId() > JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
 			return "save";
@@ -920,34 +1001,35 @@ public class JournalEditArticleDisplayContext {
 		return _defaultLanguageId;
 	}
 
-	public String getSmallImageSource() {
-		if (Validator.isNotNull(_smallImageSource)) {
+	public int getSmallImageSource() {
+		if (_smallImageSource != null) {
 			return _smallImageSource;
 		}
 
 		if (_article == null) {
-			_smallImageSource = "none";
+			_smallImageSource = JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE;
 
 			return _smallImageSource;
 		}
 
-		_smallImageSource = ParamUtil.getString(
+		_smallImageSource = ParamUtil.getInteger(
 			_httpServletRequest, "smallImageSource");
 
-		if (Validator.isNotNull(_smallImageSource)) {
+		if (_smallImageSource <= 0) {
 			return _smallImageSource;
 		}
 
 		if (!_article.isSmallImage()) {
-			_smallImageSource = "none";
+			_smallImageSource = JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE;
 		}
 		else if (Validator.isNotNull(_article.getSmallImageURL())) {
-			_smallImageSource = "url";
+			_smallImageSource = JournalArticleConstants.SMALL_IMAGE_SOURCE_URL;
 		}
 		else if ((_article.getSmallImageId() > 0) &&
 				 Validator.isNull(_article.getSmallImageURL())) {
 
-			_smallImageSource = "file";
+			_smallImageSource =
+				JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER;
 		}
 
 		return _smallImageSource;
@@ -1332,7 +1414,6 @@ public class JournalEditArticleDisplayContext {
 			layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 				new UUIDItemSelectorReturnType());
 			layoutItemSelectorCriterion.setShowBreadcrumb(false);
-			layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 			itemSelectorCriteria.add(layoutItemSelectorCriterion);
 		}
@@ -1485,6 +1566,7 @@ public class JournalEditArticleDisplayContext {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 		if (Validator.isNotNull(getRedirect())) {
 			portletDisplay.setURLBack(getRedirect());
@@ -1549,7 +1631,7 @@ public class JournalEditArticleDisplayContext {
 	private String _referringPortletResource;
 	private Boolean _showHeader;
 	private Boolean _showSelectFolder;
-	private String _smallImageSource;
+	private Integer _smallImageSource;
 	private final ThemeDisplay _themeDisplay;
 	private Double _version;
 

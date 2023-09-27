@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-tools-db-partition-virtual-instance-migrator" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="../../../../../../build-test.xml" />
+
+	<macrodef name="clean-script">
+		<sequential>
+			<delete failonerror="false" file="${project.dir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db-partition-virtual-instance-migrator.log" />
+
+			<replace
+				file="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh"
+				token="exit 0"
+				value=""
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="modify-script-exit-code">
+		<sequential>
+			<echo append="true" file="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh">
+                <![CDATA[
+exit 0
+                ]]>
+			</echo>
+
+			<chmod
+				file="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh"
+				perm="a+x"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-script">
+		<attribute default="lportal" name="database.schema.source.name" />
+		<attribute default="" name="database.schema.source.password" />
+		<attribute default="lportal_target" name="database.schema.target.name" />
+		<attribute default="" name="database.schema.target.password" />
+
+		<sequential>
+			<get-database-property property.name="database.host" />
+			<if>
+				<equals arg1="${database.host}" arg2="localhost_mysql" />
+				<then>
+					<property name="custom.database.url" value="localhost:3307" />
+				</then>
+				<else>
+					<property name="custom.database.url" value="${database.host}" />
+				</else>
+			</if>
+
+			<exec dir="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator" executable="/bin/bash" failonerror="false" output="db-partition-virtual-instance-migrator.log">
+				<arg value="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh" />
+				<arg value="-s" />
+				<arg value="jdbc:mysql://${custom.database.url}/${database.schema.source.name}?characterEncoding=UTF-8&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true&amp;serverTimezone=GMT&amp;useFastDateParsing=false&amp;useUnicode=true" />
+				<arg value="-su" />
+				<arg value="${database.mysql.username}" />
+				<arg value="-sp" />
+				<arg value="${database.schema.source.password}" />
+				<arg value="-t" />
+				<arg value="jdbc:mysql://${custom.database.url}/${database.schema.target.name}?characterEncoding=UTF-8&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true&amp;serverTimezone=GMT&amp;useFastDateParsing=false&amp;useUnicode=true" />
+				<arg value="-tu" />
+				<arg value="${database.mysql.username}" />
+				<arg value="-tp" />
+				<arg value="${database.schema.target.password}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<target name="clean-db-partition-migrator-tool">
+		<clean-script />
+	</target>
+
+	<target name="execute-db-partition-migrator-tool">
+		<get-testcase-property property.name="ignore.errors" />
+
+		<if>
+			<isset property="ignore.errors" />
+			<then>
+				<modify-script-exit-code />
+
+				<run-script database.schema.source.name="${database.schema.source.name}" database.schema.source.password="${database.schema.source.password}" database.schema.target.name="${database.schema.target.name}" database.schema.target.password="${database.schema.target.password}" />
+			</then>
+			<else>
+				<run-script database.schema.source.name="${database.schema.source.name}" database.schema.source.password="${database.schema.source.password}" database.schema.target.name="${database.schema.target.name}" database.schema.target.password="${database.schema.target.password}" />
+			</else>
+		</if>
+
+		<print-file file.name="modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db-partition-virtual-instance-migrator.log" />
+	</target>
+</project>

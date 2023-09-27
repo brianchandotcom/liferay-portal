@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.price.list.pricing.test;
@@ -25,11 +16,12 @@ import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.discovery.CommercePriceListDiscovery;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
-import com.liferay.commerce.price.list.test.util.CommercePriceListTestUtil;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -212,7 +204,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
-				catalog.getGroupId(), 0, 0, 0, null, _TYPE);
+				catalog.getGroupId(), 0, 0, 0, null, _TYPE, StringPool.BLANK);
 
 		Assert.assertEquals(
 			commercePriceList.getCommercePriceListId(),
@@ -245,7 +237,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
 				catalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-				_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE);
+				_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE,
+				StringPool.BLANK);
 
 		Assert.assertEquals(
 			commerceUnqualifiedPriceList.getCommercePriceListId(),
@@ -258,7 +251,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
 			catalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE);
+			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			commerceChannelPriceList.getCommercePriceListId(),
@@ -274,7 +268,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
 			catalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE);
+			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			commerceAccountGroupPriceList.getCommercePriceListId(),
@@ -287,7 +282,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
 			catalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE);
+			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			commerceAccountGroupAndChannelPriceList.getCommercePriceListId(),
@@ -300,7 +296,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
 			catalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE);
+			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			commerceAccountPriceList.getCommercePriceListId(),
@@ -313,7 +310,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
 			catalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE);
+			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			commerceAccountAndChannelPriceList.getCommercePriceListId(),
@@ -346,7 +344,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
 				catalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-				RandomTestUtil.nextLong(), 0, null, _TYPE);
+				RandomTestUtil.nextLong(), 0, null, _TYPE, StringPool.BLANK);
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
@@ -385,7 +383,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
 				catalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-				RandomTestUtil.nextLong(), 0, null, _TYPE);
+				RandomTestUtil.nextLong(), 0, null, _TYPE, StringPool.BLANK);
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
@@ -412,7 +410,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
 				_catalog.getGroupId(), _accountEntry3.getAccountEntryId(),
-				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE);
+				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE,
+				StringPool.BLANK);
 
 		Assert.assertEquals(
 			_commercePriceList1.getCommercePriceListId(),
@@ -435,7 +434,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
 				_catalog.getGroupId(), _accountEntry5.getAccountEntryId(),
-				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE);
+				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE,
+				StringPool.BLANK);
 
 		Assert.assertEquals(
 			_commercePriceList3.getCommercePriceListId(),
@@ -461,7 +461,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
 				_catalog.getGroupId(), _accountEntry4.getAccountEntryId(),
-				_commerceChannel3.getCommerceChannelId(), 0, null, _TYPE);
+				_commerceChannel3.getCommerceChannelId(), 0, null, _TYPE,
+				StringPool.BLANK);
 
 		Assert.assertEquals(
 			_commercePriceList2.getCommercePriceListId(),
@@ -484,7 +485,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
 				_catalog.getGroupId(), _accountEntry2.getAccountEntryId(),
-				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE);
+				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE,
+				StringPool.BLANK);
 
 		Assert.assertEquals(
 			_commercePriceList1.getCommercePriceListId(),
@@ -507,7 +509,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
 				_catalog.getGroupId(), _accountEntry6.getAccountEntryId(),
-				_commerceChannel4.getCommerceChannelId(), 0, null, _TYPE);
+				_commerceChannel4.getCommerceChannelId(), 0, null, _TYPE,
+				StringPool.BLANK);
 
 		Assert.assertEquals(
 			_commercePriceList4.getCommercePriceListId(),
@@ -530,7 +533,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
 				_catalog.getGroupId(), AccountConstants.ACCOUNT_ENTRY_ID_GUEST,
-				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE);
+				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE,
+				StringPool.BLANK);
 
 		Assert.assertEquals(
 			_commercePriceList1.getCommercePriceListId(),
@@ -553,7 +557,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
 				_catalog.getGroupId(), _accountEntry7.getAccountEntryId(),
-				_commerceChannel5.getCommerceChannelId(), 0, null, _TYPE);
+				_commerceChannel5.getCommerceChannelId(), 0, null, _TYPE,
+				StringPool.BLANK);
 
 		Assert.assertEquals(
 			_commercePriceList5.getCommercePriceListId(),

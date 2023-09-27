@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.web.internal.display.context;
@@ -41,7 +32,7 @@ import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -73,29 +64,31 @@ public class DefaultDLViewFileVersionDisplayContext
 	implements DLViewFileVersionDisplayContext {
 
 	public DefaultDLViewFileVersionDisplayContext(
+			DDMStorageEngineManager ddmStorageEngineManager,
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 			DLPreviewRendererProvider dlPreviewRendererProvider,
 			DLTrashHelper dlTrashHelper, DLURLHelper dlURLHelper,
 			FileShortcut fileShortcut, HttpServletRequest httpServletRequest,
-			StorageEngine storageEngine, VersioningStrategy versioningStrategy)
+			VersioningStrategy versioningStrategy)
 		throws PortalException {
 
 		this(
 			httpServletRequest, fileShortcut.getFileVersion(), fileShortcut,
-			dlMimeTypeDisplayContext, storageEngine, dlTrashHelper,
+			ddmStorageEngineManager, dlMimeTypeDisplayContext, dlTrashHelper,
 			dlPreviewRendererProvider, versioningStrategy, dlURLHelper);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
+		DDMStorageEngineManager ddmStorageEngineManager,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		DLPreviewRendererProvider dlPreviewRendererProvider,
 		DLTrashHelper dlTrashHelper, DLURLHelper dlURLHelper,
 		FileVersion fileVersion, HttpServletRequest httpServletRequest,
-		StorageEngine storageEngine, VersioningStrategy versioningStrategy) {
+		VersioningStrategy versioningStrategy) {
 
 		this(
-			httpServletRequest, fileVersion, null, dlMimeTypeDisplayContext,
-			storageEngine, dlTrashHelper, dlPreviewRendererProvider,
+			httpServletRequest, fileVersion, null, ddmStorageEngineManager,
+			dlMimeTypeDisplayContext, dlTrashHelper, dlPreviewRendererProvider,
 			versioningStrategy, dlURLHelper);
 	}
 
@@ -188,7 +181,7 @@ public class DefaultDLViewFileVersionDisplayContext
 			DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
 				ddmStructure.getStructureId(), _fileVersion.getFileVersionId());
 
-		return _storageEngine.getDDMFormValues(
+		return _ddmStorageEngineManager.getDDMFormValues(
 			dlFileEntryMetadata.getDDMStorageId());
 	}
 
@@ -196,7 +189,12 @@ public class DefaultDLViewFileVersionDisplayContext
 	public DDMFormValues getDDMFormValues(long classPK)
 		throws StorageException {
 
-		return _storageEngine.getDDMFormValues(classPK);
+		try {
+			return _ddmStorageEngineManager.getDDMFormValues(classPK);
+		}
+		catch (PortalException portalException) {
+			throw new StorageException(portalException);
+		}
 	}
 
 	@Override
@@ -359,16 +357,17 @@ public class DefaultDLViewFileVersionDisplayContext
 	private DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest httpServletRequest, FileVersion fileVersion,
 		FileShortcut fileShortcut,
+		DDMStorageEngineManager ddmStorageEngineManager,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
-		StorageEngine storageEngine, DLTrashHelper dlTrashHelper,
+		DLTrashHelper dlTrashHelper,
 		DLPreviewRendererProvider dlPreviewRendererProvider,
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		try {
 			_httpServletRequest = httpServletRequest;
 			_fileVersion = fileVersion;
+			_ddmStorageEngineManager = ddmStorageEngineManager;
 			_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
-			_storageEngine = storageEngine;
 			_dlPreviewRendererProvider = dlPreviewRendererProvider;
 
 			DLRequestHelper dlRequestHelper = new DLRequestHelper(
@@ -534,6 +533,7 @@ public class DefaultDLViewFileVersionDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultDLViewFileVersionDisplayContext.class);
 
+	private final DDMStorageEngineManager _ddmStorageEngineManager;
 	private List<DDMStructure> _ddmStructures;
 	private DLFileEntryType _dlFileEntryType;
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
@@ -545,7 +545,6 @@ public class DefaultDLViewFileVersionDisplayContext
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;
-	private final StorageEngine _storageEngine;
 	private final UIItemsBuilder _uiItemsBuilder;
 
 }

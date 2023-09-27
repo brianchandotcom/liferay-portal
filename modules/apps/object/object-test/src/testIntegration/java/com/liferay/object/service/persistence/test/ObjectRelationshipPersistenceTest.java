@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.service.persistence.test;
@@ -152,6 +143,8 @@ public class ObjectRelationshipPersistenceTest {
 
 		newObjectRelationship.setDBTableName(RandomTestUtil.randomString());
 
+		newObjectRelationship.setEdge(RandomTestUtil.randomBoolean());
+
 		newObjectRelationship.setLabel(RandomTestUtil.randomString());
 
 		newObjectRelationship.setName(RandomTestUtil.randomString());
@@ -210,6 +203,9 @@ public class ObjectRelationshipPersistenceTest {
 			existingObjectRelationship.getDBTableName(),
 			newObjectRelationship.getDBTableName());
 		Assert.assertEquals(
+			existingObjectRelationship.isEdge(),
+			newObjectRelationship.isEdge());
+		Assert.assertEquals(
 			existingObjectRelationship.getLabel(),
 			newObjectRelationship.getLabel());
 		Assert.assertEquals(
@@ -260,6 +256,14 @@ public class ObjectRelationshipPersistenceTest {
 		_persistence.countByObjectFieldId2(RandomTestUtil.nextLong());
 
 		_persistence.countByObjectFieldId2(0L);
+	}
+
+	@Test
+	public void testCountByODI1_E() throws Exception {
+		_persistence.countByODI1_E(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByODI1_E(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -387,8 +391,8 @@ public class ObjectRelationshipPersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"objectDefinitionId1", true, "objectDefinitionId2", true,
 			"objectFieldId2", true, "parameterObjectFieldId", true,
-			"deletionType", true, "dbTableName", true, "label", true, "name",
-			true, "reverse", true, "type", true);
+			"deletionType", true, "dbTableName", true, "edge", true, "label",
+			true, "name", true, "reverse", true, "type", true);
 	}
 
 	@Test
@@ -730,6 +734,8 @@ public class ObjectRelationshipPersistenceTest {
 		objectRelationship.setDeletionType(RandomTestUtil.randomString());
 
 		objectRelationship.setDBTableName(RandomTestUtil.randomString());
+
+		objectRelationship.setEdge(RandomTestUtil.randomBoolean());
 
 		objectRelationship.setLabel(RandomTestUtil.randomString());
 

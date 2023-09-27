@@ -279,8 +279,9 @@ components:
                     readOnly: true
                     type: object
                 quantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 replacedSku:
                     example: "12341234"
                     readOnly: true
@@ -296,6 +297,8 @@ components:
                 skuId:
                     format: int64
                     type: integer
+                skuUnitOfMeasure:
+                    $ref: "#/components/schemas/SkuUnitOfMeasure"
                 subscription:
                     example: true
                     readOnly: true
@@ -399,18 +402,22 @@ components:
             properties:
                 allowedQuantities:
                     items:
-                        format: int32
-                        type: integer
+                        example: 10.1
+                        format: bigdecimal
+                        type: number
                     type: array
                 maxQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 minQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 multipleQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
             type: object
         ShippingMethod:
             properties:
@@ -438,6 +445,36 @@ components:
                 name:
                     type: string
             type: object
+        SkuUnitOfMeasure:
+            properties:
+                incrementalOrderQuantity:
+                    example: 1.5
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                key:
+                    example: pl
+                    type: string
+                name:
+                    example: Pallet
+                    type: string
+                precision:
+                    example: 3
+                    type: integer
+                primary:
+                    example: true
+                    type: boolean
+                priority:
+                    example: 1.1
+                    format: double
+                    minimum: 0
+                    type: number
+                rate:
+                    example: 202.1
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+            type: object
         Status:
             properties:
                 code:
@@ -456,7 +493,9 @@ components:
                 currency:
                     type: string
                 itemsQuantity:
-                    type: integer
+                    example: 1.1
+                    format: bigdecimal
+                    type: number
                 shippingDiscountPercentages:
                     items:
                         type: string
@@ -513,7 +552,7 @@ components:
 info:
     description:
         "Headless Delivery Commerce Cart API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.delivery.cart.client', and version '4.0.27'."
+        artifact ID 'com.liferay.headless.commerce.delivery.cart.client', and version '4.0.30'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

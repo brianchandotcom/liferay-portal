@@ -1,0 +1,21 @@
+{
+	"description": "Case Studies",
+	"externalReferenceCode": "PRMC046",
+	"name": "Case Studies",
+	"name_i18n": {
+		"ar_SA": "Case Studies",
+		"ca_ES": "Case Studies",
+		"de_DE": "Case Studies",
+		"en_US": "Case Studies",
+		"es_ES": "Case Studies",
+		"fi_FI": "Case Studies",
+		"fr_FR": "Case Studies",
+		"hu_HU": "Case Studies",
+		"ja_JP": "Case Studies",
+		"nl_NL": "Case Studies",
+		"pt_BR": "Case Studies",
+		"sv_SE": "Case Studies",
+		"zh_CN": "Case Studies"
+	},
+	"viewableBy": "Anyone"
+}

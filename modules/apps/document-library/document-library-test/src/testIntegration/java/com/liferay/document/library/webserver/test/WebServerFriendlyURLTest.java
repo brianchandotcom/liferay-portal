@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.webserver.test;
@@ -28,6 +19,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.methods.Method;
@@ -79,17 +71,69 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 	}
 
 	@Test
+	public void testHasFilesWithFileEntryNameHasPlusSign() throws Exception {
+		String nameBase = RandomTestUtil.randomString();
+
+		String fileURL = nameBase + "%2B.txt";
+		String fileName = nameBase + "+.txt";
+
+		Assert.assertFalse(
+			WebServerServlet.hasFiles(
+				_createMockHttpServletRequest(
+					String.format("/%s/0/%s", group.getGroupId(), fileURL))));
+
+		_addFileEntry(fileName, RandomTestUtil.randomString());
+
+		Assert.assertTrue(
+			WebServerServlet.hasFiles(
+				_createMockHttpServletRequest(
+					String.format("/%s/0/%s", group.getGroupId(), fileURL))));
+		Assert.assertFalse(
+			WebServerServlet.hasFiles(
+				_createMockHttpServletRequest(
+					String.format("/%s/0/%s", group.getGroupId(), fileName))));
+	}
+
+	@Test
+	public void testHasFilesWithFileEntryNameHasSpaces() throws Exception {
+		String nameBase = RandomTestUtil.randomString();
+
+		String fileURL = nameBase + "+.txt";
+		String fileName = nameBase + " .txt";
+
+		Assert.assertFalse(
+			WebServerServlet.hasFiles(
+				_createMockHttpServletRequest(
+					String.format("/%s/0/%s", group.getGroupId(), fileURL))));
+
+		_addFileEntry(fileName, RandomTestUtil.randomString());
+
+		Assert.assertTrue(
+			WebServerServlet.hasFiles(
+				_createMockHttpServletRequest(
+					String.format("/%s/0/%s", group.getGroupId(), fileURL))));
+		Assert.assertTrue(
+			WebServerServlet.hasFiles(
+				_createMockHttpServletRequest(
+					String.format(
+						"/%s/0/%s", group.getGroupId(),
+						nameBase + "%20.txt"))));
+	}
+
+	@Test
 	public void testHasFilesWithFileEntryNameHasSpecialChars()
 		throws Exception {
 
-		String fileName = RandomTestUtil.randomString() + "+ .txt";
+		String fileName = RandomTestUtil.randomString() + "%2B .txt";
 
 		Assert.assertFalse(
 			WebServerServlet.hasFiles(
 				_createMockHttpServletRequest(
 					String.format("/%s/0/%s", group.getGroupId(), fileName))));
 
-		_addFileEntry(fileName, RandomTestUtil.randomString());
+		_addFileEntry(
+			HttpComponentsUtil.decodeURL(fileName),
+			RandomTestUtil.randomString());
 
 		Assert.assertTrue(
 			WebServerServlet.hasFiles(

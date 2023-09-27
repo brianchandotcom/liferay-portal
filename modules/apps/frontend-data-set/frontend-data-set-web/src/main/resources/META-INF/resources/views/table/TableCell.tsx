@@ -1,30 +1,18 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FDSCellRendererArgs} from '@liferay/js-api/data-set';
+import {FDSTableCellHTMLElementBuilderArgs} from '@liferay/js-api/data-set';
+import {ClientExtension} from 'frontend-js-components-web';
+import {TRenderer, getRenderer} from 'frontend-js-web';
 import React, {ComponentType, useContext, useEffect, useState} from 'react';
 
-// @ts-ignore
-
-import FrontendDataSetContext from '../../FrontendDataSetContext';
+import FrontendDataSetContext, {
+	IFrontendDataSetContext,
+} from '../../FrontendDataSetContext';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
-import ClientExtensionRenderer from '../../components/ClientExtensionRenderer';
-import {
-	CellRenderer,
-	getCellRendererByURL,
-	getInputRendererById,
-} from '../../utils/renderer';
+import {getInputRendererById} from '../../utils/renderer';
 
 // @ts-ignore
 
@@ -39,8 +27,8 @@ function InlineEditInputRenderer({
 	valuePath,
 	...otherProps
 }: any) {
-	const {itemsChanges, updateItem} = useContext(
-		FrontendDataSetContext as React.Context<any>
+	const {itemsChanges, updateItem}: IFrontendDataSetContext = useContext(
+		FrontendDataSetContext
 	);
 
 	const [InputRenderer, setInputRenderer] = useState<ComponentType>(() =>
@@ -54,7 +42,7 @@ function InlineEditInputRenderer({
 	let inputValue = value;
 
 	if (
-		itemsChanges[itemId] &&
+		itemsChanges?.[itemId] &&
 		typeof itemsChanges[itemId][rootPropertyName] !== 'undefined'
 	) {
 		inputValue = itemsChanges[itemId][rootPropertyName].value;
@@ -66,7 +54,7 @@ function InlineEditInputRenderer({
 			itemId={itemId}
 			options={options}
 			updateItem={(newValue: any) =>
-				updateItem(itemId, rootPropertyName, valuePath, newValue)
+				updateItem?.(itemId, rootPropertyName, valuePath, newValue)
 			}
 			value={inputValue}
 		/>
@@ -75,62 +63,67 @@ function InlineEditInputRenderer({
 
 function TableCell({
 	actions,
-	inlineEditSettings,
+	field,
 	itemData,
 	itemId,
 	itemInlineChanges,
-	options,
 	rootPropertyName,
 	value,
 	valuePath,
-	view,
 }: any) {
 	const {
 		customDataRenderers,
+		customRenderers,
 		inlineEditingSettings,
 		loadData,
 		openSidePanel,
-	} = useContext(FrontendDataSetContext as React.Context<any>);
+	}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
 
 	const [loading, setLoading] = useState(false);
 
-	const contentRenderer = view.contentRenderer || 'default';
+	const contentRenderer = field.contentRenderer || 'default';
 
-	const [cellRenderer, setCellRenderer] = useState<CellRenderer | null>(
-		() => {
-			if (view.contentRendererModuleURL) {
-				return null;
-			}
-
-			if (customDataRenderers && customDataRenderers[contentRenderer]) {
-				return {
-					component: customDataRenderers[contentRenderer],
-					type: 'internal',
-				};
-			}
-
-			return getInternalCellRenderer(contentRenderer);
+	const [cellRenderer, setCellRenderer] = useState<TRenderer | null>(() => {
+		if (field.contentRendererModuleURL) {
+			return null;
 		}
-	);
+
+		const customTableCellRenderer = customRenderers?.tableCell?.find(
+			(renderer: TRenderer) => renderer.name === contentRenderer
+		);
+
+		if (customTableCellRenderer) {
+			return customTableCellRenderer;
+		}
+
+		if (customDataRenderers && customDataRenderers[contentRenderer]) {
+			return {
+				component: customDataRenderers[contentRenderer],
+				type: 'internal',
+			};
+		}
+
+		return getInternalCellRenderer(contentRenderer);
+	});
 
 	useEffect(() => {
-		if (!loading && view.contentRendererModuleURL && !cellRenderer) {
+		if (!loading && field.contentRendererModuleURL && !cellRenderer) {
 			setLoading(true);
 
-			getCellRendererByURL(
-				view.contentRendererModuleURL,
-				view.contentRendererClientExtension
+			getRenderer({
+				type: field.contentRendererClientExtension
 					? 'clientExtension'
-					: 'internal'
-			)
-				.then((cellRenderer) => {
-					setCellRenderer(() => cellRenderer);
+					: 'internal',
+				url: field.contentRendererModuleURL,
+			})
+				.then((renderer: TRenderer) => {
+					setCellRenderer(() => renderer);
 
 					setLoading(false);
 				})
-				.catch((error) => {
+				.catch((error: string) => {
 					console.error(
-						`Unable to load FDS cell renderer at ${view.contentRendererModuleURL}:`,
+						`Unable to load FDS cell renderer at ${field.contentRendererModuleURL}:`,
 						error
 					);
 
@@ -139,21 +132,21 @@ function TableCell({
 					setLoading(false);
 				});
 		}
-	}, [view, loading, cellRenderer]);
+	}, [field, loading, cellRenderer]);
 
 	if (
-		inlineEditSettings &&
-		(itemInlineChanges || inlineEditingSettings?.alwaysOn)
+		inlineEditingSettings &&
+		(itemInlineChanges || inlineEditingSettings.alwaysOn)
 	) {
 		return (
-			<DndTableCell columnName={String(options.fieldName)}>
+			<DndTableCell columnName={String(field.fieldName)}>
 				<InlineEditInputRenderer
 					actions={actions}
 					itemData={itemData}
 					itemId={itemId}
-					options={options}
+					options={field}
 					rootPropertyName={rootPropertyName}
-					type={inlineEditSettings.type}
+					type={field.inlineEditSettings.type}
 					value={value}
 					valuePath={valuePath}
 				/>
@@ -163,7 +156,7 @@ function TableCell({
 
 	if (!cellRenderer || loading) {
 		return (
-			<DndTableCell columnName={String(options.fieldName)}>
+			<DndTableCell columnName={String(field.fieldName)}>
 				<span
 					aria-hidden="true"
 					className="loading-animation loading-animation-sm"
@@ -172,34 +165,41 @@ function TableCell({
 		);
 	}
 
-	if (cellRenderer.type === 'clientExtension') {
+	if (
+		cellRenderer.type === 'clientExtension' &&
+		cellRenderer.htmlElementBuilder
+	) {
 		return (
-			<DndTableCell columnName={String(options.fieldName)}>
-				<ClientExtensionRenderer<FDSCellRendererArgs>
+			<DndTableCell columnName={String(field.fieldName)}>
+				<ClientExtension<FDSTableCellHTMLElementBuilderArgs>
 					args={{value}}
-					renderer={cellRenderer.renderer}
+					htmlElementBuilder={cellRenderer.htmlElementBuilder}
 				/>
 			</DndTableCell>
 		);
 	}
 
-	const CellRendererComponent = cellRenderer.component;
+	if (cellRenderer.type === 'internal' && cellRenderer.component) {
+		const CellRendererComponent = cellRenderer.component;
 
-	return (
-		<DndTableCell columnName={String(options.fieldName)}>
-			<CellRendererComponent
-				actions={actions}
-				itemData={itemData}
-				itemId={itemId}
-				loadData={loadData}
-				openSidePanel={openSidePanel}
-				options={options}
-				rootPropertyName={rootPropertyName}
-				value={value}
-				valuePath={valuePath}
-			/>
-		</DndTableCell>
-	);
+		return (
+			<DndTableCell columnName={String(field.fieldName)}>
+				{CellRendererComponent && (
+					<CellRendererComponent
+						actions={actions}
+						itemData={itemData}
+						itemId={itemId}
+						loadData={loadData}
+						openSidePanel={openSidePanel}
+						options={field}
+						rootPropertyName={rootPropertyName}
+						value={value}
+						valuePath={valuePath}
+					/>
+				)}
+			</DndTableCell>
+		);
+	}
 }
 
 export default TableCell;

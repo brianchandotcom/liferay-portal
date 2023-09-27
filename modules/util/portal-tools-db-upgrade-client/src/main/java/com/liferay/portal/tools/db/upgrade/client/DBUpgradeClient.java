@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.tools.db.upgrade.client;
@@ -75,20 +66,24 @@ public class DBUpgradeClient {
 				return;
 			}
 
-			String jvmOpts = null;
+			List<String> jvmOpts = new ArrayList<>();
 
 			if (commandLine.hasOption("jvm-opts")) {
-				jvmOpts = commandLine.getOptionValue("jvm-opts");
+				String optionValue = commandLine.getOptionValue("jvm-opts");
+
+				Collections.addAll(jvmOpts, optionValue.split(" "));
 			}
 			else {
-				jvmOpts =
-					"-Dfile.encoding=UTF8 -Duser.country=US " +
-						"-Duser.language=en -Duser.timezone=GMT -Xmx2048m";
+				jvmOpts.add("-Dfile.encoding=UTF8");
+				jvmOpts.add("-Duser.country=US");
+				jvmOpts.add("-Duser.language=en");
+				jvmOpts.add("-Duser.timezone=GMT");
+				jvmOpts.add("-Xmx2048m");
 			}
 
 			if (commandLine.hasOption("debug")) {
-				jvmOpts = jvmOpts.concat(
-					" -agentlib:jdwp=transport=dt_socket,address=8001,server=" +
+				jvmOpts.add(
+					"-agentlib:jdwp=transport=dt_socket,address=8001,server=" +
 						"y,suspend=y");
 			}
 
@@ -146,7 +141,7 @@ public class DBUpgradeClient {
 		}
 	}
 
-	public DBUpgradeClient(String jvmOpts, File logFile, boolean shell)
+	public DBUpgradeClient(List<String> jvmOpts, File logFile, boolean shell)
 		throws IOException {
 
 		_jvmOpts = jvmOpts;
@@ -191,16 +186,17 @@ public class DBUpgradeClient {
 		commands.add("-cp");
 		commands.add(_getBootstrapClassPath());
 
-		String jvmOptsCommands = _jvmOpts.concat(
-			" -Dexternal-properties=portal-upgrade.properties " +
-				"-Dserver.detector.server.id=" +
-					_appServer.getServerDetectorServerId() +
-						" -Dliferay.shielded.container.lib.portal.dir=" +
-							_appServer.getPortalShieldedContainerLibDir());
+		_jvmOpts.add("-Dexternal-properties=portal-upgrade.properties");
+		_jvmOpts.add(
+			"-Dliferay.shielded.container.lib.portal.dir=" +
+				_appServer.getPortalShieldedContainerLibDir());
+		_jvmOpts.add(
+			"-Dserver.detector.server.id=" +
+				_appServer.getServerDetectorServerId());
 
-		System.out.println("JVM arguments: " + jvmOptsCommands);
+		System.out.println("JVM arguments: " + _jvmOpts.toString());
 
-		Collections.addAll(commands, jvmOptsCommands.split(" "));
+		commands.addAll(_jvmOpts);
 
 		commands.add(DBUpgraderLauncher.class.getName());
 
@@ -227,7 +223,9 @@ public class DBUpgradeClient {
 			String line = null;
 
 			while ((line = bufferedReader.readLine()) != null) {
-				if (line.contains("UpgradeRecorder") && line.contains("fail")) {
+				if (line.contains("UpgradeRecorder") &&
+					(line.contains("fail") || line.contains("unresolved"))) {
+
 					upgradeFailed = true;
 				}
 
@@ -274,7 +272,8 @@ public class DBUpgradeClient {
 					}
 				}
 			}
-			catch (Exception exception) {
+			catch (IOException ioException) {
+				ioException.printStackTrace();
 			}
 		}
 
@@ -804,7 +803,7 @@ public class DBUpgradeClient {
 	private final File _appServerPropertiesFile;
 	private final ConsoleReader _consoleReader = new ConsoleReader();
 	private final FileOutputStream _fileOutputStream;
-	private final String _jvmOpts;
+	private List<String> _jvmOpts = new ArrayList<>();
 	private final File _logFile;
 	private final Properties _portalUpgradeDatabaseProperties;
 	private final File _portalUpgradeDatabasePropertiesFile;

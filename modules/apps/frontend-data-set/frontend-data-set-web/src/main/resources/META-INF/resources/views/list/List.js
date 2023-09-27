@@ -1,20 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
@@ -25,21 +17,31 @@ import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import ImageRenderer from '../../cell_renderers/ImageRenderer';
 
-const List = ({items, schema}) => {
+const List = ({header, items, schema}) => {
 	const {selectedItemsKey} = useContext(FrontendDataSetContext);
 
 	return items?.length ? (
-		<ClayList>
-			{items.map((item, index) => {
-				return (
+		<ClayLayout.Sheet
+			className={classNames('list-sheet', {
+				'no-header': !header?.title,
+			})}
+		>
+			{header?.title && (
+				<ClayLayout.SheetHeader className="mb-4">
+					<h2 className="sheet-title">{header?.title}</h2>
+				</ClayLayout.SheetHeader>
+			)}
+
+			<ClayList>
+				{items.map((item, index) => (
 					<ListItem
 						item={item}
 						key={item[selectedItemsKey] || index}
 						schema={schema}
 					/>
-				);
-			})}
-		</ClayList>
+				))}
+			</ClayList>
+		</ClayLayout.Sheet>
 	) : (
 		<ClayEmptyState
 			description={Liferay.Language.get('sorry,-no-results-were-found')}

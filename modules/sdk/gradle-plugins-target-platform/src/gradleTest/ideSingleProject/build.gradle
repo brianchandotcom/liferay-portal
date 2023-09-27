@@ -1,10 +1,10 @@
 apply plugin: "com.liferay.target.platform.ide"
-apply plugin: "java"
+apply plugin: "java-library"
 
 task runGradleTest
 
 dependencies {
-	compile group: "org.osgi", name: "org.osgi.service.component.annotations"
+	api group: "org.osgi", name: "org.osgi.service.component.annotations"
 
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom.compile.only", version: "7.2.1"
 }

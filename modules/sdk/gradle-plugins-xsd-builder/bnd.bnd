@@ -1,5 +1,5 @@
 Bundle-Description: The XSD Builder Gradle plugin lets you generate Apache XMLBeans bindings from XML Schema (XSD) files.
 Bundle-Name: Liferay Gradle Plugins XSD Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.xsd.builder
-Bundle-Version: 1.0.12
+Bundle-Version: 1.0.13
 Export-Package: com.liferay.gradle.plugins.xsd.builder

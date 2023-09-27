@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.dynamic.data.mapping.item.selector.web.internal;
@@ -102,27 +93,29 @@ public class DDMTemplateItemSelectorViewDescriptor
 	public SearchContainer<DDMTemplate> getSearchContainer()
 		throws PortalException {
 
-		SearchContainer<DDMTemplate> ddmTemplateSearch = new SearchContainer<>(
-			(PortletRequest)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST),
-			_portletURL, null, "there-are-no-templates");
+		SearchContainer<DDMTemplate> ddmTemplateSearchContainer =
+			new SearchContainer<>(
+				(PortletRequest)_httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST),
+				_portletURL, null, "there-are-no-templates");
 
-		if (ddmTemplateSearch.isSearch()) {
-			ddmTemplateSearch.setEmptyResultsMessage("no-templates-were-found");
+		if (ddmTemplateSearchContainer.isSearch()) {
+			ddmTemplateSearchContainer.setEmptyResultsMessage(
+				"no-templates-were-found");
 		}
 
-		ddmTemplateSearch.setOrderByCol(getOrderByCol());
-		ddmTemplateSearch.setOrderByComparator(
+		ddmTemplateSearchContainer.setOrderByCol(getOrderByCol());
+		ddmTemplateSearchContainer.setOrderByComparator(
 			DDMUtil.getTemplateOrderByComparator(
 				getOrderByCol(), getOrderByType()));
-		ddmTemplateSearch.setOrderByType(getOrderByType());
+		ddmTemplateSearchContainer.setOrderByType(getOrderByType());
 
 		long[] groupIds =
 			SiteConnectedGroupGroupProviderUtil.
 				getCurrentAndAncestorSiteAndDepotGroupIds(
 					_themeDisplay.getScopeGroupId(), true);
 
-		ddmTemplateSearch.setResultsAndTotal(
+		ddmTemplateSearchContainer.setResultsAndTotal(
 			() -> DDMTemplateServiceUtil.search(
 				_themeDisplay.getCompanyId(), groupIds,
 				new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
@@ -131,9 +124,10 @@ public class DDMTemplateItemSelectorViewDescriptor
 				},
 				_ddmTemplateItemSelectorCriterion.getClassNameId(),
 				_getKeywords(), StringPool.BLANK, StringPool.BLANK,
-				WorkflowConstants.STATUS_ANY, ddmTemplateSearch.getStart(),
-				ddmTemplateSearch.getEnd(),
-				ddmTemplateSearch.getOrderByComparator()),
+				WorkflowConstants.STATUS_ANY,
+				ddmTemplateSearchContainer.getStart(),
+				ddmTemplateSearchContainer.getEnd(),
+				ddmTemplateSearchContainer.getOrderByComparator()),
 			DDMTemplateServiceUtil.searchCount(
 				_themeDisplay.getCompanyId(), groupIds,
 				new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
@@ -144,7 +138,7 @@ public class DDMTemplateItemSelectorViewDescriptor
 				_getKeywords(), StringPool.BLANK, StringPool.BLANK,
 				WorkflowConstants.STATUS_ANY));
 
-		return ddmTemplateSearch;
+		return ddmTemplateSearchContainer;
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 import com.liferay.gradle.plugins.patcher.PatchTask
 
 apply plugin: "com.liferay.patcher"
-apply plugin: "nebula.optional-base"
 
 task patch(type: PatchTask)
 
@@ -9,10 +8,11 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compile group: "axis", name: "axis", optional, version: "1.4"
-	compile group: "commons-logging", name: "commons-logging", version: "1.2"
-	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	compile group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
+	api group: "commons-logging", name: "commons-logging", version: "1.2"
+	api group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	api group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
+
+	compileOnly group: "axis", name: "axis", version: "1.4"
 }
 
 patch {
@@ -21,6 +21,7 @@ patch {
 	}
 
 	fileNames "org/apache/axis/AxisEngine.java"
+	fileNames "org/apache/axis/client/ServiceFactory.java"
 	fileNames "org/apache/axis/description/JavaServiceDesc.java"
 	fileNames "org/apache/axis/encoding/ser/MapDeserializer.java"
 	fileNames "org/apache/axis/EngineConfiguration.java"

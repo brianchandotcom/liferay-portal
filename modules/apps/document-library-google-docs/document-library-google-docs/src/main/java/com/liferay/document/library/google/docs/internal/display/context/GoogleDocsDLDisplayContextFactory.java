@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.google.docs.internal.display.context;
@@ -26,14 +17,14 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -106,9 +97,10 @@ public class GoogleDocsDLDisplayContextFactory
 
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
 			new GoogleDocsMetadataHelper(
-				_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
-				(DLFileEntry)model, _dlFileEntryMetadataLocalService,
-				_fieldsToDDMFormValuesConverter, _storageEngine);
+				_ddmFormValuesToFieldsConverter, _ddmStorageEngineManager,
+				_ddmStructureLocalService, (DLFileEntry)model,
+				_dlFileEntryMetadataLocalService,
+				_fieldsToDDMFormValuesConverter);
 
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
 			return new GoogleDocsDLEditFileEntryDisplayContext(
@@ -172,9 +164,10 @@ public class GoogleDocsDLDisplayContextFactory
 
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
 			new GoogleDocsMetadataHelper(
-				_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
-				(DLFileVersion)model, _dlFileEntryMetadataLocalService,
-				_fieldsToDDMFormValuesConverter, _storageEngine);
+				_ddmFormValuesToFieldsConverter, _ddmStorageEngineManager,
+				_ddmStructureLocalService, (DLFileVersion)model,
+				_dlFileEntryMetadataLocalService,
+				_fieldsToDDMFormValuesConverter);
 
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
 			return new GoogleDocsDLViewFileVersionDisplayContext(
@@ -212,6 +205,9 @@ public class GoogleDocsDLDisplayContextFactory
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
@@ -222,8 +218,5 @@ public class GoogleDocsDLDisplayContextFactory
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="INFO" name="com.liferay.headless.admin.user.resource.v1_0.test.UserAccountResourcePerformanceTest" />
+	</Loggers>
+</Configuration>

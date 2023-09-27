@@ -5,7 +5,7 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.resolve", version: "4.1.0"
+	api group: "biz.aQute.bnd", name: "biz.aQute.resolve", version: "4.1.0"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", transitive: false, version: "4.1.0"
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.repository", transitive: false, version: "4.1.0"

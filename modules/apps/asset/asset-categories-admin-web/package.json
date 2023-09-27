@@ -1,6 +1,9 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*"
+		"asset-taglib": "*",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
+		"react": "16.12.0"
 	},
 	"name": "asset-categories-admin-web",
 	"scripts": {
@@ -8,5 +11,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "5.0.87"
+	"version": "5.0.93"
 }

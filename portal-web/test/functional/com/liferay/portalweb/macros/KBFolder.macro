@@ -121,16 +121,6 @@ definition {
 		}
 	}
 
-	macro goToMoveCPViaNavigationPane {
-		KBFolder.gotoMenuItemViaNavigationPane(
-			kbFolderName = ${kbFolderName},
-			menuItem = "Move");
-
-		AssertClick(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
-	}
-
 	macro gotoViaKBDisplayPG {
 		var key_kbFolderName = ${kbFolderName};
 
@@ -139,34 +129,29 @@ definition {
 			value1 = ${kbFolderName});
 	}
 
-	macro selectParentCP {
-		var key_kbArticleTitle = ${kbFolderName};
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		if (${kbFolderName} == "Home") {
-			Click(locator1 = "KnowledgeBaseSelectParent#BREADCRUMB_HOME");
-
-			AssertClick(
-				key_text = "Select This Folder",
-				locator1 = "Button#ANY",
-				value1 = "Select This Folder");
+	macro moveFolder {
+		if (isSet(navigationPane)) {
+			KBFolder.gotoMenuItemViaNavigationPane(
+				kbFolderName = ${kbFolderName},
+				menuItem = "Move");
 		}
 		else {
 			Click(
-				locator1 = "KnowledgeBaseSelectParent#SELECT_BUTTON",
-				value1 = "Select");
+				key_rowEntry = ${kbFolderName},
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Move");
 		}
 
-		SelectFrame(value1 = "relative=top");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD",
-			value1 = ${kbFolderName});
+		Click(
+			key_nodeName = ${destinationItem},
+			locator1 = "Treeview#NODE_ITEM");
 
-		Click(locator1 = "Button#MOVE");
+		SelectFrameTop();
 
-		Alert.viewSuccessMessage();
+		Button.clickSave();
 	}
 
 	macro tearDownCP {

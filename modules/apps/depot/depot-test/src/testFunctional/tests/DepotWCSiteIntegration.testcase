@@ -270,6 +270,10 @@ definition {
 
 		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
+		Refresh();
+
+		WaitForPageLoad();
+
 		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(
@@ -332,7 +336,7 @@ definition {
 			templateFieldNames = "Web Content",
 			templateName = "WC Template Name");
 
-		DDLDataDefinition.save();
+		PortletEntry.save();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -610,6 +614,7 @@ definition {
 	@refactordone
 	test CanViewCustomizedWCInAP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -691,6 +696,7 @@ definition {
 	@refactordone
 	test CanViewCustomizedWCInWCD {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

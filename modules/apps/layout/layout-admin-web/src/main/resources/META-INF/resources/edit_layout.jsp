@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -69,48 +60,47 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 
 <c:choose>
 	<c:when test="<%= incomplete %>">
-		<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
+		<clay:container-fluid>
+			<clay:sheet>
+				<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
 
-		<aui:button-row>
-			<aui:button id="enableLayoutButton" name="enableLayout" value='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
+				<aui:button-row>
+					<clay:button
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "enableLayoutButton" %>'
+						label='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>'
+					/>
 
-			<aui:button cssClass="remove-layout" id="deleteLayoutButton" name="deleteLayout" value="delete-in-all-pages-variations" />
+					<clay:button
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "deleteLayoutButton" %>'
+						label="delete-in-all-pages-variations"
+					/>
 
-			<script>
-				(function () {
-					var enableLayoutButton = document.getElementById(
-						'<portlet:namespace />enableLayoutButton'
-					);
+					<portlet:actionURL name="/layout_admin/delete_layout" var="deleteLayoutURL">
+						<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
+						<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
+						<portlet:param name="layoutSetBranchId" value="0" />
+					</portlet:actionURL>
 
-					if (enableLayoutButton) {
-						enableLayoutButton.addEventListener('click', (event) => {
-							<portlet:actionURL name="/layout_admin/enable_layout" var="enableLayoutURL">
-								<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
-								<portlet:param name="incompleteLayoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-							</portlet:actionURL>
+					<portlet:actionURL name="/layout_admin/enable_layout" var="enableLayoutURL">
+						<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
+						<portlet:param name="incompleteLayoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+					</portlet:actionURL>
 
-							submitForm(document.hrefFm, '<%= enableLayoutURL %>');
-						});
-					}
-
-					var deleteLayoutButton = document.getElementById(
-						'<portlet:namespace />deleteLayoutButton'
-					);
-
-					if (deleteLayoutButton) {
-						deleteLayoutButton.addEventListener('click', (event) => {
-							<portlet:actionURL name="/layout_admin/delete_layout" var="deleteLayoutURL">
-								<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
-								<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
-								<portlet:param name="layoutSetBranchId" value="0" />
-							</portlet:actionURL>
-
-							submitForm(document.hrefFm, '<%= deleteLayoutURL %>');
-						});
-					}
-				})();
-			</script>
-		</aui:button-row>
+					<liferay-frontend:component
+						context='<%=
+							HashMapBuilder.<String, Object>put(
+								"deleteLayoutURL", deleteLayoutURL
+							).put(
+								"enableLayoutURL", enableLayoutURL
+							).build()
+						%>'
+						module="js/layout/IncompleteLayoutEventListener"
+					/>
+				</aui:button-row>
+			</clay:sheet>
+		</clay:container-fluid>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:success key='<%= portletResource + "layoutUpdated" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-updated-successfully") %>' />

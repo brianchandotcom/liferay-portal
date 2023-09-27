@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -30,6 +21,7 @@ if (Validator.isNull(backURL)) {
 Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 
 UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSettingsProperties();
+boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsSEODisplayContext.isDefaultAssetDisplayPage() && FeatureFlagManagerUtil.isEnabled("LPS-195205");
 %>
 
 <liferay-util:html-top>
@@ -71,7 +63,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 				<clay:alert
 					cssClass="mb-4"
 					displayType="info"
-					message='<%= LanguageUtil.get(request, "add-multiple-fields-to-define-how-the-meta-tags-will-be-filled") %>'
+					message="add-multiple-fields-to-define-how-the-meta-tags-will-be-filled"
 				/>
 
 				<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
@@ -202,7 +194,18 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 					</c:otherwise>
 				</c:choose>
 
-				<aui:input name="robots" placeholder="robots" />
+				<c:if test="<%= nondefaultAssetDisplayPage %>">
+					<clay:alert
+						displayType="info"
+						message="robots-can-only-be-defined-for-display-page-templates-marked-as-default"
+					/>
+
+					<aui:input disabled="<%= true %>" id="<%= StringUtil.randomId() %>" label="robots" name="" placeholder="robots" type="textarea" value="noindex, nofollow" />
+				</c:if>
+
+				<div class="<%= nondefaultAssetDisplayPage ? "d-none" : StringPool.BLANK %>">
+					<aui:input name="robots" placeholder="robots" />
+				</div>
 			</clay:sheet-section>
 		</clay:sheet>
 
@@ -225,25 +228,56 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 					boolean sitemapInclude = GetterUtil.getBoolean(layoutTypeSettingsUnicodeProperties.getProperty(LayoutTypePortletConstants.SITEMAP_INCLUDE), true);
 					%>
 
-					<aui:select cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="include" name="TypeSettingsProperties--sitemap-include--">
-						<aui:option label="yes" selected="<%= sitemapInclude %>" value="1" />
-						<aui:option label="no" selected="<%= !sitemapInclude %>" value="0" />
-					</aui:select>
+					<c:if test="<%= nondefaultAssetDisplayPage %>">
+						<div class="section-disabled">
+							<clay:alert
+								displayType="info"
+								message="only-display-page-templates-that-are-marked-as-default-for-an-asset-type-will-be-indexed-in-order-to-avoid-duplicity"
+							/>
 
-					<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="page-priority-help" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" placeholder="0.0" size="3" type="text" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY) %>'>
-						<aui:validator name="number" />
-						<aui:validator errorMessage="please-enter-a-valid-page-priority" name="range">[0,1]</aui:validator>
-					</aui:input>
+							<aui:select cssClass="propagatable-field" disabled="<%= true %>" id="<%= StringUtil.randomId() %>" label="include" name="">
+								<aui:option label="yes" value="1" />
+								<aui:option label="no" selected="<%= true %>" value="0" />
+							</aui:select>
 
-					<aui:select cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY) %>'>
-						<aui:option label="always" />
-						<aui:option label="hourly" />
-						<aui:option label="daily" />
-						<aui:option label="weekly" />
-						<aui:option label="monthly" />
-						<aui:option label="yearly" />
-						<aui:option label="never" />
-					</aui:select>
+							<aui:input cssClass="propagatable-field" disabled="<%= true %>" helpMessage="page-priority-help" id="<%= StringUtil.randomId() %>" label="page-priority" name="" placeholder="0.0" size="3" type="text" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY) %>'>
+								<aui:validator name="number" />
+								<aui:validator errorMessage="please-enter-a-valid-page-priority" name="range">[0,1]</aui:validator>
+							</aui:input>
+
+							<aui:select cssClass="propagatable-field" disabled="<%= true %>" id="<%= StringUtil.randomId() %>" label="change-frequency" name="" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY) %>'>
+								<aui:option label="always" />
+								<aui:option label="hourly" />
+								<aui:option label="daily" />
+								<aui:option label="weekly" />
+								<aui:option label="monthly" />
+								<aui:option label="yearly" />
+								<aui:option label="never" />
+							</aui:select>
+						</div>
+					</c:if>
+
+					<div class="<%= nondefaultAssetDisplayPage ? "d-none" : StringPool.BLANK %>">
+						<aui:select cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="include" name="TypeSettingsProperties--sitemap-include--">
+							<aui:option label="yes" selected="<%= sitemapInclude %>" value="1" />
+							<aui:option label="no" selected="<%= !sitemapInclude %>" value="0" />
+						</aui:select>
+
+						<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="page-priority-help" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" placeholder="0.0" size="3" type="text" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY) %>'>
+							<aui:validator name="number" />
+							<aui:validator errorMessage="please-enter-a-valid-page-priority" name="range">[0,1]</aui:validator>
+						</aui:input>
+
+						<aui:select cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY) %>'>
+							<aui:option label="always" />
+							<aui:option label="hourly" />
+							<aui:option label="daily" />
+							<aui:option label="weekly" />
+							<aui:option label="monthly" />
+							<aui:option label="yearly" />
+							<aui:option label="never" />
+						</aui:select>
+					</div>
 				</clay:sheet-section>
 			</clay:sheet>
 		</c:if>

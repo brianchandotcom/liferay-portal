@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.journal.internal.transformer;
@@ -35,6 +26,7 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -46,7 +38,6 @@ import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -74,7 +65,6 @@ import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -527,21 +517,10 @@ public class JournalTransformer {
 				Time.getRFC822(article.getDisplayDate()));
 		}
 
-		String smallImageURL = StringPool.BLANK;
-
-		if (Validator.isNotNull(article.getSmallImageURL())) {
-			smallImageURL = article.getSmallImageURL();
-		}
-		else if ((themeDisplay != null) && article.isSmallImage()) {
-			smallImageURL = StringBundler.concat(
-				themeDisplay.getPathImage(), "/journal/article?img_id=",
-				article.getSmallImageId(), "&t=",
-				WebServerServletTokenUtil.getToken(article.getSmallImageId()));
-		}
-
 		_addReservedEl(
 			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
-			templateNodes, themeDisplay, tokens, smallImageURL);
+			templateNodes, themeDisplay, tokens,
+			article.getArticleImageURL(themeDisplay));
 
 		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
 			JournalArticle.class.getName(), article.getResourcePrimKey());

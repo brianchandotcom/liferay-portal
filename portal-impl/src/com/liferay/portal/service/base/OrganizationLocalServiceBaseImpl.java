@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.service.base;
@@ -513,31 +504,33 @@ public abstract class OrganizationLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addGroupOrganization(long groupId, long organizationId) {
-		groupPersistence.addOrganization(groupId, organizationId);
+	public boolean addGroupOrganization(long groupId, long organizationId) {
+		return groupPersistence.addOrganization(groupId, organizationId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addGroupOrganization(long groupId, Organization organization) {
-		groupPersistence.addOrganization(groupId, organization);
+	public boolean addGroupOrganization(
+		long groupId, Organization organization) {
+
+		return groupPersistence.addOrganization(groupId, organization);
 	}
 
 	/**
 	 */
 	@Override
-	public void addGroupOrganizations(long groupId, long[] organizationIds) {
-		groupPersistence.addOrganizations(groupId, organizationIds);
+	public boolean addGroupOrganizations(long groupId, long[] organizationIds) {
+		return groupPersistence.addOrganizations(groupId, organizationIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addGroupOrganizations(
+	public boolean addGroupOrganizations(
 		long groupId, List<Organization> organizations) {
 
-		groupPersistence.addOrganizations(groupId, organizations);
+		return groupPersistence.addOrganizations(groupId, organizations);
 	}
 
 	/**
@@ -648,31 +641,31 @@ public abstract class OrganizationLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addUserOrganization(long userId, long organizationId) {
-		userPersistence.addOrganization(userId, organizationId);
+	public boolean addUserOrganization(long userId, long organizationId) {
+		return userPersistence.addOrganization(userId, organizationId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addUserOrganization(long userId, Organization organization) {
-		userPersistence.addOrganization(userId, organization);
+	public boolean addUserOrganization(long userId, Organization organization) {
+		return userPersistence.addOrganization(userId, organization);
 	}
 
 	/**
 	 */
 	@Override
-	public void addUserOrganizations(long userId, long[] organizationIds) {
-		userPersistence.addOrganizations(userId, organizationIds);
+	public boolean addUserOrganizations(long userId, long[] organizationIds) {
+		return userPersistence.addOrganizations(userId, organizationIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addUserOrganizations(
+	public boolean addUserOrganizations(
 		long userId, List<Organization> organizations) {
 
-		userPersistence.addOrganizations(userId, organizations);
+		return userPersistence.addOrganizations(userId, organizations);
 	}
 
 	/**

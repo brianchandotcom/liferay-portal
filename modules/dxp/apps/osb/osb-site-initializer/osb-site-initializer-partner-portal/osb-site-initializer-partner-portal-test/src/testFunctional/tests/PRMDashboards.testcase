@@ -25,6 +25,16 @@ definition {
 			JSONPRM.updateAccount();
 		}
 
+		task ("Assign the users to the account") {
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "pmu@partner.com");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
 		task ("Go to Partner Portal and login with the created user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
@@ -131,6 +141,7 @@ definition {
 	@priority = 4
 	test MDFApprovedValueAppearInDashboard {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -243,6 +254,7 @@ definition {
 	@priority = 4
 	test MDFRequestedValueAppearInDashboard {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 

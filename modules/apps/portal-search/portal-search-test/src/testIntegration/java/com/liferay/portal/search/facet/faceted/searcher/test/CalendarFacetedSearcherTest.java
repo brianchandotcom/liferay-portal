@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.search.facet.faceted.searcher.test;
@@ -25,11 +16,9 @@ import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -38,8 +27,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.search.facet.user.UserFacetFactory;
 import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -115,8 +104,7 @@ public class CalendarFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits,
-			Collections.singletonMap(
-				StringUtil.toLowerCase(user2.getFullName()), 1));
+			Collections.singletonMap(String.valueOf(user2.getUserId()), 1));
 	}
 
 	protected void addCalendarBooking(User user, Group group, String title)
@@ -151,11 +139,7 @@ public class CalendarFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 	}
 
 	protected Facet createUserFacet(SearchContext searchContext) {
-		Facet facet = new MultiValueFacet(searchContext);
-
-		facet.setFieldName(Field.USER_NAME);
-
-		return facet;
+		return userFacetFactory.newInstance(searchContext);
 	}
 
 	@Inject
@@ -166,6 +150,9 @@ public class CalendarFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 	@Inject
 	protected static PermissionCheckerFactory permissionCheckerFactory;
+
+	@Inject
+	protected static UserFacetFactory userFacetFactory;
 
 	private PermissionChecker _originalPermissionChecker;
 

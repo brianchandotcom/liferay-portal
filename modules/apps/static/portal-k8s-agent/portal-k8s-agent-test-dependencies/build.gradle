@@ -1,9 +1,0 @@
-dependencies {
-	compileInclude group: "com.squareup.okhttp3", name: "mockwebserver", version: "3.12.12"
-	compileInclude group: "io.fabric8", name: "kubernetes-server-mock", version: "5.12.2"
-	compileInclude group: "io.fabric8", name: "mockwebserver", version: "0.2.2"
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/test")
-}

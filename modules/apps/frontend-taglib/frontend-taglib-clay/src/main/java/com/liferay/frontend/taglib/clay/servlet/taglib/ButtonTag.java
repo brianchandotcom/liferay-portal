@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.frontend.taglib.clay.servlet.taglib;
@@ -21,6 +12,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.TagResourceBundleUtil;
+
+import java.io.IOException;
 
 import java.util.Map;
 import java.util.Set;
@@ -95,6 +88,10 @@ public class ButtonTag extends BaseContainerTag {
 		return _small;
 	}
 
+	public boolean getSwapIconSide() {
+		return _swapIconSide;
+	}
+
 	public void setAlert(boolean alert) {
 		_alert = alert;
 	}
@@ -131,6 +128,10 @@ public class ButtonTag extends BaseContainerTag {
 		_small = small;
 	}
 
+	public void setSwapIconSide(boolean swapIconSide) {
+		_swapIconSide = swapIconSide;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -144,6 +145,7 @@ public class ButtonTag extends BaseContainerTag {
 		_monospaced = false;
 		_outline = false;
 		_small = false;
+		_swapIconSide = false;
 	}
 
 	@Override
@@ -161,6 +163,7 @@ public class ButtonTag extends BaseContainerTag {
 		props.put("borderless", _borderless);
 		props.put("displayType", _displayType);
 		props.put("icon", _icon);
+		props.put("swapIconSide", _swapIconSide);
 
 		if (Validator.isNotNull(_label)) {
 			props.put(
@@ -222,42 +225,59 @@ public class ButtonTag extends BaseContainerTag {
 		if (Validator.isNotNull(_icon) || Validator.isNotNull(_label)) {
 			JspWriter jspWriter = pageContext.getOut();
 
-			if (Validator.isNotNull(_icon)) {
+			if (Validator.isNotNull(_icon) && !_swapIconSide) {
 				jspWriter.write("<span class=\"inline-item");
 
 				if (Validator.isNotNull(_label)) {
 					jspWriter.write(" inline-item-before");
 				}
 
-				jspWriter.write("\"><svg class=\"lexicon-icon lexicon-icon-");
-				jspWriter.write(_icon);
-				jspWriter.write("\" role=\"presentation\" viewBox=\"0 0 512 ");
-				jspWriter.write("512\"><use xlink:href=\"");
-
-				HttpServletRequest httpServletRequest = getRequest();
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				jspWriter.write(themeDisplay.getPathThemeSpritemap());
-
-				jspWriter.write("#");
-				jspWriter.write(_icon);
-				jspWriter.write("\" /></svg></span>");
+				writeIcon(jspWriter);
 			}
 
 			if (Validator.isNotNull(_label)) {
-				jspWriter.write(
-					LanguageUtil.get(
-						TagResourceBundleUtil.getResourceBundle(pageContext),
-						_label));
+				writeLabel(jspWriter);
+			}
+
+			if (Validator.isNotNull(_icon) && _swapIconSide) {
+				jspWriter.write("<span class=\"inline-item");
+
+				if (Validator.isNotNull(_label)) {
+					jspWriter.write(" inline-item-after");
+				}
+
+				writeIcon(jspWriter);
 			}
 
 			return SKIP_BODY;
 		}
 
 		return EVAL_BODY_INCLUDE;
+	}
+
+	protected void writeIcon(JspWriter jspWriter) throws IOException {
+		jspWriter.write("\"><svg class=\"lexicon-icon lexicon-icon-");
+		jspWriter.write(_icon);
+		jspWriter.write("\" role=\"presentation\" viewBox=\"0 0 512 ");
+		jspWriter.write("512\"><use xlink:href=\"");
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		jspWriter.write(themeDisplay.getPathThemeSpritemap());
+
+		jspWriter.write("#");
+		jspWriter.write(_icon);
+		jspWriter.write("\" /></svg></span>");
+	}
+
+	protected void writeLabel(JspWriter jspWriter) throws IOException {
+		jspWriter.write(
+			LanguageUtil.get(
+				TagResourceBundleUtil.getResourceBundle(pageContext), _label));
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:button:";
@@ -271,5 +291,6 @@ public class ButtonTag extends BaseContainerTag {
 	private boolean _monospaced;
 	private boolean _outline;
 	private boolean _small;
+	private boolean _swapIconSide;
 
 }

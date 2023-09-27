@@ -42,6 +42,7 @@ definition {
 	@refactordone
 	test AutoTagCanBeReplacedInDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -84,6 +85,7 @@ definition {
 	@refactordone
 	test CanDeleteAutotaggedWebContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Web Content Article",
@@ -119,6 +121,7 @@ definition {
 	@refactordone
 	test CanDisableAtInstanceScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Instance Settings");
 
@@ -142,6 +145,7 @@ definition {
 	@refactordone
 	test CanDisableAtSystemScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "System Settings");
 
@@ -165,6 +169,7 @@ definition {
 	@refactordone
 	test CanDisableForImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableTensorFlow();
 
@@ -193,6 +198,7 @@ definition {
 	@refactordone
 	test CanDisableForTextDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -223,6 +229,7 @@ definition {
 	@refactordone
 	test CanDisableForWebContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Web Content Article",
@@ -253,6 +260,7 @@ definition {
 	@refactordone
 	test ImageCanBeAutoTagged {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableTensorFlow();
 
@@ -287,6 +295,7 @@ definition {
 	@refactordone
 	test TextDocumentCanBeAutoTagged {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -313,6 +322,7 @@ definition {
 	@refactordone
 	test WebContentCanBeAutoTagged {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Web Content Article",

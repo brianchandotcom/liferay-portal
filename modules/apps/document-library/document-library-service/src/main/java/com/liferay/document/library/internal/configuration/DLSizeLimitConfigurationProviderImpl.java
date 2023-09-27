@@ -1,21 +1,12 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.document.library.internal.configuration;
 
 import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
-import com.liferay.document.library.internal.configuration.admin.service.DLSizeLimitManagedServiceFactory;
+import com.liferay.document.library.internal.configuration.helper.DLSizeLimitConfigurationHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -38,51 +29,50 @@ public class DLSizeLimitConfigurationProviderImpl
 
 	@Override
 	public long getCompanyFileMaxSize(long companyId) {
-		return _dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(
-			companyId);
+		return _dlSizeLimitConfigurationHelper.getCompanyFileMaxSize(companyId);
 	}
 
 	@Override
 	public long getCompanyMaxSizeToCopy(long companyId) {
-		return _dlSizeLimitManagedServiceFactory.getCompanyMaxSizeToCopy(
+		return _dlSizeLimitConfigurationHelper.getCompanyMaxSizeToCopy(
 			companyId);
 	}
 
 	@Override
 	public Map<String, Long> getCompanyMimeTypeSizeLimit(long companyId) {
-		return _dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+		return _dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
 			companyId);
 	}
 
 	@Override
 	public long getGroupFileMaxSize(long groupId) {
-		return _dlSizeLimitManagedServiceFactory.getGroupFileMaxSize(groupId);
+		return _dlSizeLimitConfigurationHelper.getGroupFileMaxSize(groupId);
 	}
 
 	@Override
 	public long getGroupMaxSizeToCopy(long groupId) {
-		return _dlSizeLimitManagedServiceFactory.getGroupMaxSizeToCopy(groupId);
+		return _dlSizeLimitConfigurationHelper.getGroupMaxSizeToCopy(groupId);
 	}
 
 	@Override
 	public Map<String, Long> getGroupMimeTypeSizeLimit(long groupId) {
-		return _dlSizeLimitManagedServiceFactory.getGroupMimeTypeSizeLimit(
+		return _dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
 			groupId);
 	}
 
 	@Override
 	public long getSystemFileMaxSize() {
-		return _dlSizeLimitManagedServiceFactory.getSystemFileMaxSize();
+		return _dlSizeLimitConfigurationHelper.getSystemFileMaxSize();
 	}
 
 	@Override
 	public long getSystemMaxSizeToCopy() {
-		return _dlSizeLimitManagedServiceFactory.getSystemMaxSizeToCopy();
+		return _dlSizeLimitConfigurationHelper.getSystemMaxSizeToCopy();
 	}
 
 	@Override
 	public Map<String, Long> getSystemMimeTypeSizeLimit() {
-		return _dlSizeLimitManagedServiceFactory.getSystemMimeTypeSizeLimit();
+		return _dlSizeLimitConfigurationHelper.getSystemMimeTypeSizeLimit();
 	}
 
 	@Override
@@ -219,6 +209,6 @@ public class DLSizeLimitConfigurationProviderImpl
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
-	private DLSizeLimitManagedServiceFactory _dlSizeLimitManagedServiceFactory;
+	private DLSizeLimitConfigurationHelper _dlSizeLimitConfigurationHelper;
 
 }

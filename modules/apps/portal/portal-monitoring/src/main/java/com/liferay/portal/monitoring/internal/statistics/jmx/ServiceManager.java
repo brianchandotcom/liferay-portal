@@ -1,20 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.monitoring.internal.statistics.jmx;
 
-import com.liferay.portal.monitoring.internal.statistics.service.ServerStatistics;
+import com.liferay.portal.monitoring.internal.statistics.service.ServerStatisticsHelper;
 
 import javax.management.DynamicMBean;
 import javax.management.NotCompliantMBeanException;
@@ -45,7 +36,7 @@ public class ServiceManager
 	public long getErrorCount(
 		String className, String methodName, String[] parameterTypes) {
 
-		return _serverStatistics.getErrorCount(
+		return _serverStatisticsHelper.getErrorCount(
 			className, methodName, parameterTypes);
 	}
 
@@ -53,7 +44,7 @@ public class ServiceManager
 	public long getMaxTime(
 		String className, String methodName, String[] parameterTypes) {
 
-		return _serverStatistics.getMaxTime(
+		return _serverStatisticsHelper.getMaxTime(
 			className, methodName, parameterTypes);
 	}
 
@@ -61,7 +52,7 @@ public class ServiceManager
 	public long getMinTime(
 		String className, String methodName, String[] parameterTypes) {
 
-		return _serverStatistics.getMinTime(
+		return _serverStatisticsHelper.getMinTime(
 			className, methodName, parameterTypes);
 	}
 
@@ -69,11 +60,11 @@ public class ServiceManager
 	public long getRequestCount(
 		String className, String methodName, String[] parameterTypes) {
 
-		return _serverStatistics.getRequestCount(
+		return _serverStatisticsHelper.getRequestCount(
 			className, methodName, parameterTypes);
 	}
 
 	@Reference
-	private ServerStatistics _serverStatistics;
+	private ServerStatisticsHelper _serverStatisticsHelper;
 
 }

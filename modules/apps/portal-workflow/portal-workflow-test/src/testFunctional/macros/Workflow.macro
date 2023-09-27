@@ -6,6 +6,25 @@ definition {
 		MenuItem.click(menuItem = "Pending");
 	}
 
+	macro _matchTaskCase {
+		var key_workflowAssetTitle = ${workflowAssetTitle};
+		var key_workflowTask = ${workflowTask};
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		if (IsTextNotEqual(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK", value1 = ${workflowTask})) {
+			var workflowTask = StringUtil.upperCaseFirstLetter(${workflowTask});
+
+			if (isSet(workflowDefinitionTask)) {
+				var workflowDefinitionTask = StringUtil.upperCaseFirstLetter(${workflowDefinitionTask});
+
+				return ${workflowDefinitionTask};
+			}
+		}
+
+		return ${workflowTask};
+	}
+
 	macro _tearDownWorkflow {
 		var noWorkflow = "No Workflow";
 
@@ -383,7 +402,9 @@ definition {
 	macro configureWorkflow {
 		var key_workflowResourceValue = ${workflowResourceValue};
 
-		Search.searchCP(searchTerm = ${workflowResourceValue});
+		if (!(IsElementPresent(locator1 = "Pagination#ICON_DISABLED", type = "angle-right")) && (IsElementPresent(locator1 = "Pagination#FIRST_LINK"))) {
+			Pagination.changePagination(itemsPerPage = 40);
+		}
 
 		AssertClick.pauseAssertTextClickAt(
 			key_rowEntry = ${workflowResourceValue},
@@ -410,10 +431,6 @@ definition {
 			value1 = "Save");
 
 		Alert.viewSuccessMessage();
-
-		Workflow.viewConfigurationSelected(
-			workflowDefinition = ${workflowDefinition},
-			workflowResourceValue = ${workflowResourceValue});
 	}
 
 	macro configureWorkflowCancel {
@@ -544,15 +561,15 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Duplicate");
 
+		if (isSet(workflowName)) {
+			Type(
+				locator1 = "WorkflowDefinition#DUPLICATE_WORKFLOW_MODAL_INPUT",
+				value1 = ${workflowName});
+		}
+
 		Button.click(button = "Duplicate");
 
-		PortletEntry.inputTitle(title = ${workflowName});
-
-		ScrollWebElementIntoView(
-			key_text = "Update",
-			locator1 = "Button#ANY");
-
-		Button.click(button = "Update");
+		Alert.viewSuccessMessage();
 	}
 
 	macro gotoAssetViaTableTitle {
@@ -1353,11 +1370,11 @@ definition {
 			value1 = "Preview of ${workflowAssetType}");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MyWorkflowTasksTask#PREVIEW_TITLE",
+			locator1 = "WorkflowSubmissionsTask#PREVIEW_CONTENT_TITLE",
 			value1 = ${workflowAssetTitle});
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MyWorkflowTasksTask#PREVIEW_CONTENT",
+			locator1 = "WorkflowSubmissionsTask#PREVIEW_CONTENT_BODY",
 			value1 = ${workflowAssetContent});
 
 		Portlet.viewTitle(portletName = ${workflowSubmissionTitle});

@@ -1,21 +1,14 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
 
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -24,12 +17,13 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.workflow.kaleo.KaleoTaskAssignmentFactory;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentImpl;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.ScriptingAssigneeSelector;
 import com.liferay.portal.workflow.kaleo.runtime.constants.AssigneeConstants;
+import com.liferay.portal.workflow.kaleo.runtime.internal.configuration.WorkflowTaskScriptConfiguration;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
 import java.util.Collection;
@@ -96,14 +90,32 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 		Assert.assertEquals(_USER_ID, kaleoTaskAssignment.getAssigneeClassPK());
 	}
 
+	private ConfigurationProvider _getConfigurationProvider()
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider = Mockito.mock(
+			ConfigurationProvider.class);
+
+		WorkflowTaskScriptConfiguration workflowTaskScriptConfiguration =
+			_getWorkflowTaskScriptConfiguration();
+
+		Mockito.when(
+			configurationProvider.getConfiguration(Mockito.any(), Mockito.any())
+		).thenReturn(
+			workflowTaskScriptConfiguration
+		);
+
+		return configurationProvider;
+	}
+
 	private ExecutionContext _getExecutionContext() {
 		ExecutionContext executionContext = Mockito.mock(
 			ExecutionContext.class);
 
 		Mockito.when(
-			executionContext.getKaleoInstanceToken()
+			executionContext.getKaleoTaskInstanceToken()
 		).thenReturn(
-			Mockito.mock(KaleoInstanceToken.class)
+			Mockito.mock(KaleoTaskInstanceToken.class)
 		);
 
 		return executionContext;
@@ -145,12 +157,16 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 	}
 
 	private MultiLanguageKaleoTaskAssignmentSelector
-		_getMultiLanguageKaleoTaskAssignmentSelector() {
+			_getMultiLanguageKaleoTaskAssignmentSelector()
+		throws ConfigurationException {
 
 		MultiLanguageKaleoTaskAssignmentSelector
 			multiLanguageKaleoTaskAssignmentSelector =
 				new MultiLanguageKaleoTaskAssignmentSelector();
 
+		ReflectionTestUtil.setFieldValue(
+			multiLanguageKaleoTaskAssignmentSelector, "_configurationProvider",
+			_getConfigurationProvider());
 		ReflectionTestUtil.setFieldValue(
 			multiLanguageKaleoTaskAssignmentSelector,
 			"_kaleoInstanceLocalService", _getKaleoInstanceLocalService());
@@ -186,6 +202,21 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 		);
 
 		return new TestJavaScriptingAssigneeSelector();
+	}
+
+	private WorkflowTaskScriptConfiguration
+		_getWorkflowTaskScriptConfiguration() {
+
+		WorkflowTaskScriptConfiguration workflowTaskScriptConfiguration =
+			Mockito.mock(WorkflowTaskScriptConfiguration.class);
+
+		Mockito.doReturn(
+			0
+		).when(
+			workflowTaskScriptConfiguration
+		).scriptedAssignmentCacheExpirationTime();
+
+		return workflowTaskScriptConfiguration;
 	}
 
 	private static final long _USER_ID = RandomTestUtil.randomLong();

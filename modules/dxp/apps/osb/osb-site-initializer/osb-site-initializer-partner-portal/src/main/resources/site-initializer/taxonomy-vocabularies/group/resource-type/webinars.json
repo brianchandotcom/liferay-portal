@@ -1,0 +1,21 @@
+{
+	"description": "Webinars",
+	"externalReferenceCode": "PRMC058",
+	"name": "Webinars",
+	"name_i18n": {
+		"ar_SA": "Webinars",
+		"ca_ES": "Webinars",
+		"de_DE": "Webinars",
+		"en_US": "Webinars",
+		"es_ES": "Webinars",
+		"fi_FI": "Webinars",
+		"fr_FR": "Webinars",
+		"hu_HU": "Webinars",
+		"ja_JP": "Webinars",
+		"nl_NL": "Webinars",
+		"pt_BR": "Webinars",
+		"sv_SE": "Webinars",
+		"zh_CN": "Webinars"
+	},
+	"viewableBy": "Anyone"
+}

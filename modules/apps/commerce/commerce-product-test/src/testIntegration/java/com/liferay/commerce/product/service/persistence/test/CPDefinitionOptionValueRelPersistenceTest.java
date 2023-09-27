@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.service.persistence.test;
@@ -161,19 +152,23 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 
 		newCPDefinitionOptionValueRel.setCProductId(RandomTestUtil.nextLong());
 
-		newCPDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
-
-		newCPDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
-
 		newCPDefinitionOptionValueRel.setKey(RandomTestUtil.randomString());
 
-		newCPDefinitionOptionValueRel.setQuantity(RandomTestUtil.nextInt());
+		newCPDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
 
 		newCPDefinitionOptionValueRel.setPreselected(
 			RandomTestUtil.randomBoolean());
 
 		newCPDefinitionOptionValueRel.setPrice(
 			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		newCPDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
+
+		newCPDefinitionOptionValueRel.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		newCPDefinitionOptionValueRel.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
 
 		_cpDefinitionOptionValueRels.add(
 			_persistence.update(newCPDefinitionOptionValueRel));
@@ -227,23 +222,26 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 			existingCPDefinitionOptionValueRel.getCProductId(),
 			newCPDefinitionOptionValueRel.getCProductId());
 		Assert.assertEquals(
-			existingCPDefinitionOptionValueRel.getName(),
-			newCPDefinitionOptionValueRel.getName());
-		AssertUtils.assertEquals(
-			existingCPDefinitionOptionValueRel.getPriority(),
-			newCPDefinitionOptionValueRel.getPriority());
-		Assert.assertEquals(
 			existingCPDefinitionOptionValueRel.getKey(),
 			newCPDefinitionOptionValueRel.getKey());
 		Assert.assertEquals(
-			existingCPDefinitionOptionValueRel.getQuantity(),
-			newCPDefinitionOptionValueRel.getQuantity());
+			existingCPDefinitionOptionValueRel.getName(),
+			newCPDefinitionOptionValueRel.getName());
 		Assert.assertEquals(
 			existingCPDefinitionOptionValueRel.isPreselected(),
 			newCPDefinitionOptionValueRel.isPreselected());
 		Assert.assertEquals(
 			existingCPDefinitionOptionValueRel.getPrice(),
 			newCPDefinitionOptionValueRel.getPrice());
+		AssertUtils.assertEquals(
+			existingCPDefinitionOptionValueRel.getPriority(),
+			newCPDefinitionOptionValueRel.getPriority());
+		Assert.assertEquals(
+			existingCPDefinitionOptionValueRel.getQuantity(),
+			newCPDefinitionOptionValueRel.getQuantity());
+		Assert.assertEquals(
+			existingCPDefinitionOptionValueRel.getUnitOfMeasureKey(),
+			newCPDefinitionOptionValueRel.getUnitOfMeasureKey());
 	}
 
 	@Test
@@ -363,9 +361,9 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 			true, "uuid", true, "CPDefinitionOptionValueRelId", true, "groupId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "CPDefinitionOptionRelId",
-			true, "CPInstanceUuid", true, "CProductId", true, "name", true,
-			"priority", true, "key", true, "quantity", true, "preselected",
-			true, "price", true);
+			true, "CPInstanceUuid", true, "CProductId", true, "key", true,
+			"name", true, "preselected", true, "price", true, "priority", true,
+			"quantity", true, "unitOfMeasureKey", true);
 	}
 
 	@Test
@@ -729,19 +727,23 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 
 		cpDefinitionOptionValueRel.setCProductId(RandomTestUtil.nextLong());
 
-		cpDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
-
-		cpDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
-
 		cpDefinitionOptionValueRel.setKey(RandomTestUtil.randomString());
 
-		cpDefinitionOptionValueRel.setQuantity(RandomTestUtil.nextInt());
+		cpDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
 
 		cpDefinitionOptionValueRel.setPreselected(
 			RandomTestUtil.randomBoolean());
 
 		cpDefinitionOptionValueRel.setPrice(
 			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		cpDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
+
+		cpDefinitionOptionValueRel.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		cpDefinitionOptionValueRel.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
 
 		_cpDefinitionOptionValueRels.add(
 			_persistence.update(cpDefinitionOptionValueRel));

@@ -1,20 +1,22 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
+import DeleteExperimentModal from 'experiments/components/modals/DeleteExperimentModal';
 import ErrorPage from 'shared/pages/ErrorPage';
-import React from 'react';
+import React, {useState} from 'react';
 import SessionCard from 'experiments/components/SessionCard';
 import SummaryCard from 'experiments/components/summary-card/SummaryCard';
 import TextTruncate from 'shared/components/TextTruncate';
 import VariantCard from 'experiments/components/variant-card/index';
 import {connect, ConnectedProps} from 'react-redux';
 import {EXPERIMENT_ROOT_QUERY} from 'experiments/queries/ExperimentQuery';
+import {getActions, useAddRefetch} from 'experiments/util/experiments';
 import {RootState} from 'shared/store';
 import {Router} from 'shared/types';
 import {Routes, toRoute} from 'shared/util/router';
 import {SafeResults} from 'shared/hoc/util';
 import {StateProvider} from 'experiments/state';
-import {useAddRefetch} from 'experiments/util/experiments';
 import {useChannelContext} from 'shared/context/channel';
+import {useModal} from '@clayui/modal';
 import {useQuery} from '@apollo/react-hooks';
 
 const NAV_ITEMS = [
@@ -52,6 +54,45 @@ interface IExperimentOverviewPage
 	router: Router;
 }
 
+interface IExperimentActionsProps extends React.HTMLAttributes<HTMLElement> {
+	experiment: {
+		id: string;
+		pageURL: string;
+		publishable: boolean;
+		status: string;
+	};
+}
+
+const ExperimentActions: React.FC<IExperimentActionsProps> = ({
+	experiment: {id, pageURL, publishable, status}
+}) => {
+	const [visibleDeleteModal, setVisibleDeleteModal] = useState(false);
+	const {observer, onClose} = useModal({
+		onClose: () => setVisibleDeleteModal(false)
+	});
+
+	return (
+		<>
+			<BasePage.Header.Actions
+				actions={getActions(status, {
+					id,
+					onDelete: () => setVisibleDeleteModal(true),
+					pageURL,
+					publishable
+				})}
+			/>
+
+			{visibleDeleteModal && (
+				<DeleteExperimentModal
+					experimentId={id}
+					observer={observer}
+					onClose={onClose}
+				/>
+			)}
+		</>
+	);
+};
+
 const ExperimentOverviewPage: React.FC<IExperimentOverviewPage> = ({
 	router,
 	timeZoneId
@@ -61,6 +102,7 @@ const ExperimentOverviewPage: React.FC<IExperimentOverviewPage> = ({
 	} = router;
 
 	const {refetch, ...result} = useQuery(EXPERIMENT_ROOT_QUERY, {
+		fetchPolicy: 'network-only',
 		variables: {experimentId}
 	});
 
@@ -101,6 +143,8 @@ const ExperimentOverviewPage: React.FC<IExperimentOverviewPage> = ({
 								}
 								title={experiment.name}
 							/>
+
+							<ExperimentActions experiment={experiment} />
 
 							<BasePage.Header.NavBar
 								items={NAV_ITEMS}

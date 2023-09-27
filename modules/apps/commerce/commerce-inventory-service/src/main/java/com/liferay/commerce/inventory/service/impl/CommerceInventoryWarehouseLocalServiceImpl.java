@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.inventory.service.impl;
@@ -20,14 +11,20 @@ import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWareho
 import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.internal.search.CommerceInventoryWarehouseIndexer;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItemTable;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseTable;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryWarehouseLocalServiceBaseImpl;
+import com.liferay.commerce.product.model.CommerceChannelRelTable;
+import com.liferay.commerce.product.model.CommerceChannelTable;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -240,15 +237,72 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses(
 		long companyId, long groupId, boolean active) {
 
-		return commerceInventoryWarehouseFinder.findByC_G_A(
-			companyId, groupId, active);
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+				CommerceInventoryWarehouseTable.INSTANCE
+			).from(
+				CommerceInventoryWarehouseTable.INSTANCE
+			).innerJoinON(
+				CommerceChannelRelTable.INSTANCE,
+				CommerceInventoryWarehouseTable.INSTANCE.
+					commerceInventoryWarehouseId.eq(
+						CommerceChannelRelTable.INSTANCE.classPK)
+			).innerJoinON(
+				CommerceChannelTable.INSTANCE,
+				CommerceChannelRelTable.INSTANCE.commerceChannelId.eq(
+					CommerceChannelTable.INSTANCE.commerceChannelId)
+			).innerJoinON(
+				GroupTable.INSTANCE,
+				CommerceChannelTable.INSTANCE.commerceChannelId.eq(
+					GroupTable.INSTANCE.classPK)
+			).where(
+				CommerceInventoryWarehouseTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					GroupTable.INSTANCE.groupId.eq(groupId)
+				).and(
+					CommerceInventoryWarehouseTable.INSTANCE.active.eq(active)
+				)
+			));
 	}
 
 	@Override
 	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses(
 		long groupId, String sku) {
 
-		return commerceInventoryWarehouseFinder.findByG_S(groupId, sku);
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+				CommerceInventoryWarehouseTable.INSTANCE
+			).from(
+				CommerceInventoryWarehouseTable.INSTANCE
+			).innerJoinON(
+				CommerceChannelRelTable.INSTANCE,
+				CommerceInventoryWarehouseTable.INSTANCE.
+					commerceInventoryWarehouseId.eq(
+						CommerceChannelRelTable.INSTANCE.classPK)
+			).innerJoinON(
+				CommerceChannelTable.INSTANCE,
+				CommerceChannelRelTable.INSTANCE.commerceChannelId.eq(
+					CommerceChannelTable.INSTANCE.commerceChannelId)
+			).innerJoinON(
+				GroupTable.INSTANCE,
+				CommerceChannelTable.INSTANCE.commerceChannelId.eq(
+					GroupTable.INSTANCE.classPK)
+			).innerJoinON(
+				CommerceInventoryWarehouseItemTable.INSTANCE,
+				CommerceInventoryWarehouseItemTable.INSTANCE.
+					commerceInventoryWarehouseId.eq(
+						CommerceInventoryWarehouseTable.INSTANCE.
+							commerceInventoryWarehouseId)
+			).where(
+				GroupTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					CommerceInventoryWarehouseItemTable.INSTANCE.sku.eq(sku)
+				).and(
+					CommerceInventoryWarehouseTable.INSTANCE.active.eq(true)
+				)
+			));
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Connected App Web
 Bundle-SymbolicName: com.liferay.connected.app.web
-Bundle-Version: 3.0.18
+Bundle-Version: 3.0.19
 Web-ContextPath: /connected-app-web
 -dsannotations-options: inherit

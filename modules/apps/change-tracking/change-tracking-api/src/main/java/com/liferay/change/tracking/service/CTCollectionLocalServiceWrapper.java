@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.service;
@@ -57,11 +48,13 @@ public class CTCollectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTCollection addCTCollection(
-			long companyId, long userId, String name, String description)
+			String externalReferenceCode, long companyId, long userId,
+			long ctRemoteId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCollectionLocalService.addCTCollection(
-			companyId, userId, name, description);
+			externalReferenceCode, companyId, userId, ctRemoteId, name,
+			description);
 	}
 
 	@Override
@@ -435,18 +428,6 @@ public class CTCollectionLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Map
-		<Long, java.util.List<com.liferay.change.tracking.model.CTEntry>>
-				getDiscardCTEntries(
-					long ctCollectionId, long modelClassNameId,
-					long modelClassPK)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ctCollectionLocalService.getDiscardCTEntries(
-			ctCollectionId, modelClassNameId, modelClassPK);
-	}
-
-	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTCollection>
 			getExclusivePublishedCTCollections(
 				long modelClassNameId, long modelClassPK)
@@ -496,10 +477,23 @@ public class CTCollectionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTEntry>
-		getRelatedCTEntries(long ctCollectionId, long[] ctEntryIds) {
+			getRelatedCTEntries(long ctCollectionId, long[] ctEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCollectionLocalService.getRelatedCTEntries(
 			ctCollectionId, ctEntryIds);
+	}
+
+	@Override
+	public java.util.Map
+		<Long, java.util.List<com.liferay.change.tracking.model.CTEntry>>
+				getRelatedCTEntriesMap(
+					long ctCollectionId, long modelClassNameId,
+					long modelClassPK)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionLocalService.getRelatedCTEntriesMap(
+			ctCollectionId, modelClassNameId, modelClassPK);
 	}
 
 	@Override
@@ -515,6 +509,17 @@ public class CTCollectionLocalServiceWrapper
 
 		return _ctCollectionLocalService.isCTEntryEnclosed(
 			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
+	@Override
+	public void moveCTEntry(
+			long fromCTCollectionId, long toCTCollectionId,
+			long modelClassNameId, long modelClassPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_ctCollectionLocalService.moveCTEntry(
+			fromCTCollectionId, toCTCollectionId, modelClassNameId,
+			modelClassPK);
 	}
 
 	@Override

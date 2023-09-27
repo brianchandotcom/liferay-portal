@@ -137,7 +137,7 @@ definition {
 
 		Click(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
 
-		MenuItem.click(menuItem = "Copy");
+		MenuItem.click(menuItem = "Make a Copy");
 
 		if (isSet(structureCopyName)) {
 			PortletEntry.inputName(name = ${structureCopyName});
@@ -228,7 +228,9 @@ definition {
 	}
 
 	macro resetStructureDefaultValuesCP {
-		ClickNoError(locator1 = "Button#RESET_VALUES");
+		ClickNoError(
+			key_text = "Reset Values",
+			locator1 = "Button#ANY");
 
 		if (isSet(cancel)) {
 			Confirm.dismissAlert();
@@ -279,7 +281,7 @@ definition {
 	}
 
 	macro saveCP {
-		DDLDataDefinition.save(publicationsEnabled = ${publicationsEnabled});
+		PortletEntry.save();
 
 		if (isSet(addRoleViewPermissions)) {
 			LexiconEntry.gotoEntryMenuItem(

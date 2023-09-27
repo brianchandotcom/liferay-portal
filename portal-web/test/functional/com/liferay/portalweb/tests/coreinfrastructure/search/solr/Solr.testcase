@@ -27,8 +27,10 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test AssertSearchAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -104,10 +106,25 @@ definition {
 			locator1 = "ApplicationsMenu#PORTLET");
 	}
 
+	@description = "This is a use case for LPS-183360."
+	@priority = 3
+	test ReindexModeNotAvailableWithSolr {
+		property custom.properties = "feature.flag.LPS-183661=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Go to Search Admin and assert the Reindex mode selection is not available while using Solr") {
+			SearchAdministration.openIndexActions();
+
+			AssertElementNotPresent(locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN");
+		}
+	}
+
 	@description = "This smoke test is to ensure that Liferay is successfully running on a remote Solr by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal."
 	@priority = 4
 	test SolrSmokeTest {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -158,6 +175,7 @@ definition {
 	test SolrWithSolrCloudSmokeTest {
 		property solr.solrcloud.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "zkClient has connected");
 
@@ -222,8 +240,10 @@ definition {
 	@description = "This smoke test is to ensure that Liferay is successfully running on a remote Solr with SSL Authentication by asserting console logging for KeyStoreLoaderImpl and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal."
 	@priority = 4
 	test SolrWithSSLAuthenticationSmokeTest {
+		property search.environment.suite.exclude = "true";
 		property solr.ssl.authentication.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONMBMessage.addMessage(
 			groupName = "Guest",

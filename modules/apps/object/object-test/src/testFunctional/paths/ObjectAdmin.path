@@ -326,7 +326,7 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>OBJECT_LABEL_COLUMN</td>
+		<td>GENERIC_LABEL_COLUMN</td>
 		<td>//div[contains(@class,'dnd-th')]//button[contains(text(),'Label')]</td>
 		<td></td>
 	</tr>
@@ -393,11 +393,6 @@
 	<tr>
 		<td>SIDE_PANEL_TITLE</td>
 		<td>//div[contains(@class, 'lfr-objects__side-panel-content-header')]//h3[contains(@class, 'mb-0')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>FIELDS_LABEL_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th') and contains(text(),'Label')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -526,13 +521,18 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>VIEW_FIELD_LONG_TEXT_DISABLED</td>
+		<td>//textarea[@disabled][contains(@class, 'ddm-field-text')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>VIEW_OPTION_TITLE_FIELD</td>
 		<td>//*[contains(@id,'titleObjectFieldId')]//option[contains(text(),'${key_optionName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>VIEW_PICKLIST_OPTIONS</td>
-		<td>//div[@class='dropdown-menu show']//.//ul//button[contains(@class, 'dropdown-item')]//div[contains(text(), '${key_optionName}')]</td>
+		<td>//div[@class='dropdown-menu autocomplete-expand show']//div[contains(text(), '${key_optionName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -557,7 +557,7 @@
 	</tr>
 	<tr>
 		<td>DROPDOWN_DEFAULT_VALUE</td>
-		<td>//div[contains(@class,'form-group')]//label[contains(text(),'Default Value')]//..//div[contains(@class,'input-group-item')]</td>
+		<td>//div[contains(@class,'form-group')]//label[contains(text(),'Default Value') or contains(text(),'Input as Value')]//..//div[contains(@class,'input-group-item')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -623,11 +623,6 @@
 	<tr>
 		<td>PICKLIST_INPUT_AS_VALUE_OR_EXPRESSION</td>
 		<td>//div[contains(@class,'card-body')]//button[contains(text(), '${key_optionDefaulValue}')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>VIEW_ICON_OBJECT_ADMIN</td>
-		<td>//div[(@class='table-list-title')]//*[(@class='lexicon-icon lexicon-icon-view')]</td>
 		<td></td>
 	</tr>
 </tbody>

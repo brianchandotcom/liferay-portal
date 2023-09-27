@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.taglib.servlet.taglib;
@@ -18,7 +9,11 @@ import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil;
 import com.liferay.commerce.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.math.BigDecimal;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -34,23 +29,39 @@ public class QuantityInputTag extends IncludeTag {
 	public int doStartTag() throws JspException {
 		_allowedOrderQuantities = new int[0];
 		_maxOrderQuantity =
-			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY;
+			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY.
+				intValue();
 		_minOrderQuantity =
-			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
+			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY.
+				intValue();
 		_multipleOrderQuantity =
-			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY;
+			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY.
+				intValue();
 
 		CPDefinitionInventory cpDefinitionInventory =
 			CPDefinitionInventoryLocalServiceUtil.
 				fetchCPDefinitionInventoryByCPDefinitionId(_cpDefinitionId);
 
 		if (cpDefinitionInventory != null) {
-			_allowedOrderQuantities =
-				cpDefinitionInventory.getAllowedOrderQuantitiesArray();
-			_maxOrderQuantity = cpDefinitionInventory.getMaxOrderQuantity();
-			_minOrderQuantity = cpDefinitionInventory.getMinOrderQuantity();
-			_multipleOrderQuantity =
+			_allowedOrderQuantities = TransformUtil.transformToIntArray(
+				ListUtil.fromArray(
+					cpDefinitionInventory.getAllowedOrderQuantitiesArray()),
+				BigDecimal::intValue);
+
+			BigDecimal maxOrderQuantity =
+				cpDefinitionInventory.getMaxOrderQuantity();
+
+			_maxOrderQuantity = maxOrderQuantity.intValue();
+
+			BigDecimal minOrderQuantity =
+				cpDefinitionInventory.getMinOrderQuantity();
+
+			_minOrderQuantity = minOrderQuantity.intValue();
+
+			BigDecimal multipleOrderQuantity =
 				cpDefinitionInventory.getMultipleOrderQuantity();
+
+			_multipleOrderQuantity = multipleOrderQuantity.intValue();
 		}
 
 		if (_value == 0) {

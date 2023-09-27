@@ -1,0 +1,99 @@
+{
+	"actions": {
+		"createBatch": {
+			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition",
+			"method": "POST"
+		}
+	},
+	"configuration": {
+		"className": "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition",
+		"companyId": 0,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "INSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"active": true,
+			"content": "<?xml version=\"1.0\"?> <workflow-definition xmlns=\"urn:liferay.com:liferay-workflow_7.4.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd\"> <name>D4B8 Hybrid Approver</name> <description>An automated approval process that requires human review when specified.</description> <version>1</version> <state> <name>start</name> <description>Begin a workflow.</description> <metadata> <![CDATA[{\"xy\": [165,73]}]]> </metadata> <initial>true</initial> <labels><label language-id=\"en_US\">Start</label></labels> <transitions> <transition> <labels><label language-id=\"en_US\">Initial Review</label></labels> <name>initial-review</name> <target>machine-review</target> <default>true</default> </transition> </transitions> </state> <state> <name>approved</name> <description>Conclude the workflow.</description> <metadata> <![CDATA[{\"xy\": [648.683349609375,303.63330078125],\"terminal\": true}]]> </metadata> <actions> <action> <name>approve</name> <script> <![CDATA[ import com.liferay.portal.kernel.workflow.WorkflowConstants; import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus(\"approved\"), workflowContext); ]]> </script> <script-language>groovy</script-language> <execution-type>onEntry</execution-type> </action> </actions> <labels><label language-id=\"en_US\">Approved</label></labels> </state> <task> <name>update</name> <description>Ask a user to work on the item.</description> <metadata> <![CDATA[{\"xy\": [162.70001220703125,555.2333374023438]}]]> </metadata> <actions> <action> <name>reject</name> <script> <![CDATA[ import com.liferay.portal.kernel.workflow.WorkflowConstants; import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus( \"denied\"), workflowContext);WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus(\"pending\"), workflowContext); ]]> </script> <script-language>groovy</script-language> <execution-type>onAssignment</execution-type> </action> <notification> <name>Creator Modification Notification</name><template> <![CDATA[Your submission was rejected by ${userName}, please modify and resubmit.]]> </template> <template-language>freemarker</template-language> <notification-type>email</notification-type> <notification-type>user-notification</notification-type> <recipients receptionType=\"to\"> <user /> </recipients> <execution-type>onAssignment</execution-type> </notification> </actions> <assignments> <user> <email-address>test@liferay.com</email-address> </user> </assignments> <labels><label language-id=\"en_US\">Update</label></labels> <transitions> <transition> <labels><label language-id=\"en_US\">Resubmit</label></labels> <name>resubmit</name> <target>manager-review</target> <default>true</default> </transition> </transitions> </task> <task> <name>machine-review</name> <description>Machine Action reviews this entry.</description> <metadata> <![CDATA[{\"xy\": [163,229]}]]> </metadata> <actions> <action> <name>Machine Action</name> <description /> <script> <![CDATA[ ]]> </script> <script-language>function#liferay-delectablebonsai-etc-spring-boot-workflow-action-application</script-language> <priority>1</priority> <execution-type>onEntry</execution-type> </action> <notification> <name>Review Notification</name> <description> <![CDATA[]]> </description><template> <![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]> </template> <template-language>freemarker</template-language> <notification-type>user-notification</notification-type> <recipients receptionType=\"to\"> <assignees /> </recipients> <execution-type>onAssignment</execution-type> </notification> </actions> <assignments> <user> <email-address>test@liferay.com</email-address> </user> </assignments> <labels><label language-id=\"en_US\">Machine Review</label></labels> <transitions> <transition> <labels><label language-id=\"en_US\">Auto Approve</label></labels> <name>auto-approve</name> <target>approved</target> <default>true</default> </transition> <transition> <labels><label language-id=\"en_US\">Review</label></labels> <name>review</name> <target>manager-review</target> <default>false</default> </transition> </transitions> </task> <task> <name>manager-review</name> <description>Ask a user to work on the item.</description> <metadata> <![CDATA[{\"xy\": [162.58331298828125,383.86669921875]}]]> </metadata> <actions> <notification> <name>Review Notification</name> <description> <![CDATA[]]> </description><template> <![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]> </template> <template-language>freemarker</template-language> <notification-type>user-notification</notification-type> <recipients receptionType=\"to\"> <assignees /> </recipients> <execution-type>onAssignment</execution-type> </notification> </actions> <assignments> <roles> <role> <role-type>regular</role-type> <name>Business Development Manager</name> </role> </roles> </assignments> <labels><label language-id=\"en_US\">Manager Review</label></labels> <transitions> <transition> <labels><label language-id=\"en_US\">Reject</label></labels> <name>reject</name> <target>update</target> <default>false</default> </transition> <transition> <labels><label language-id=\"en_US\">Approve</label></labels> <name>approve</name> <target>approved</target> <default>true</default> </transition> </transitions> </task> </workflow-definition>",
+			"description": "An automated approval process that requires human review when specified.",
+			"name": "D4B8 Hybrid Approver",
+			"nodes": [
+				{
+					"label": "Approved",
+					"name": "approved",
+					"type": "TERMINAL_STATE"
+				},
+				{
+					"label": "Manager Review",
+					"name": "manager-review",
+					"type": "TASK"
+				},
+				{
+					"label": "Machine Review",
+					"name": "machine-review",
+					"type": "TASK"
+				},
+				{
+					"label": "Start",
+					"name": "start",
+					"type": "INITIAL_STATE"
+				},
+				{
+					"label": "Update",
+					"name": "update",
+					"type": "TASK"
+				}
+			],
+			"title": "D4B8 Hybrid Approver",
+			"title_i18n": {
+				"en_US": "D4B8 Hybrid Approver"
+			},
+			"transitions": [
+				{
+					"label": "Approve",
+					"name": "approve",
+					"sourceNodeName": "manager-review",
+					"targetNodeName": "approved"
+				},
+				{
+					"label": "Auto Approve",
+					"name": "auto-approve",
+					"sourceNodeName": "machine-review",
+					"targetNodeName": "approved"
+				},
+				{
+					"label": "Initial Review",
+					"name": "initial-review",
+					"sourceNodeName": "start",
+					"targetNodeName": "machine-review"
+				},
+				{
+					"label": "Reject",
+					"name": "reject",
+					"sourceNodeName": "manager-review",
+					"targetNodeName": "update"
+				},
+				{
+					"label": "Review",
+					"name": "review",
+					"sourceNodeName": "machine-review",
+					"targetNodeName": "manager-review"
+				},
+				{
+					"label": "Resubmit",
+					"name": "resubmit",
+					"sourceNodeName": "update",
+					"targetNodeName": "manager-review"
+				}
+			],
+			"version": "1"
+		}
+	]
+}

@@ -100,13 +100,13 @@ definition {
 		task ("Go to Testray 2 and change the pagination") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete case type, factor category, routine and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "casetypes",
@@ -127,8 +127,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -137,54 +135,44 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Components in the kebab menu"
 	@priority = 3
 	test AdminCanAddManageComponents {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to components") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Components");
 		}
 
 		task ("When the user create the new component through kebab") {
-			Testray.addNewComponent(componentName = "Component 2");
+			TestrayManage.createComponent(componentName = "Component 2");
 		}
 
 		task ("Then the user can see the new component in the table") {
-			AssertElementPresent(
-				key_projectName = "Component 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Component 2");
 		}
 	}
 
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Product Versions in the kebab menu"
 	@priority = 3
 	test AdminCanAddManageProductVersions {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to product version") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Product Versions");
 		}
 
 		task ("When the user create the new product version through kebab") {
-			TestrayManage.createTeam(teamName = "7.4");
+			TestrayManage.createProductVersion(productVersion = "7.4");
 		}
 
 		task ("Then the user can see the new product version in the table") {
-			AssertElementPresent(
-				key_projectName = "7.4",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "7.4");
 		}
 	}
 
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Teams in the kebab menu"
 	@priority = 3
 	test AdminCanAddManageTeams {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to teams") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Teams");
 		}
@@ -194,170 +182,133 @@ definition {
 		}
 
 		task ("Then the user can see the new teams in the table") {
-			AssertElementPresent(
-				key_projectName = "Team 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Team 2");
 		}
 	}
 
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can delete cases in the kebab menu"
 	@priority = 3
 	test AdminCanDeleteCases {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that go to the case created") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Cases");
+			Navigator.gotoNavTab(navTab = "Cases");
 
-			Testray.goToProjectPage(projectName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 		}
 
 		task ("When delete the routine through kebab") {
-			Testray.kebabMenuOption(kebabOption = "Delete Case");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
-
-			Refresh();
+			Testray.deleteByKebab(kebabOption = "Delete Case");
 		}
 
 		task ("Then can not see the case in the table") {
-			AssertElementNotPresent(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = ${caseName});
 		}
 	}
 
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can delete project in the kebab menu"
 	@priority = 3
 	test AdminCanDeleteProject {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that go to the project created") {
-			Testray.goToProjectPage(projectName = "Project 2");
+			Testray.clickTableEntry(tableEntry = "Project 2");
 		}
 
 		task ("When delete the project through kebab") {
-			Testray.kebabMenuOption(kebabOption = "Delete Project");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
-
-			Refresh();
+			Testray.deleteByKebab(kebabOption = "Delete Project");
 		}
 
 		task ("And the user is redirected to the project page") {
 			WaitForElementPresent(
 				key_pageTabTitle = "Projects",
-				locator1 = "TestrayHeader#PAGE_TAB_TITLE");
+				locator1 = "Testray#PAGE_TAB_TITLE");
 
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
+			Testray.assertTabPageTitle(pageTabTitle = "Projects");
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 
 		task ("Then can not see the project in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Project 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Project 2");
 		}
 	}
 
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to delete Requirements in the kebab menu"
 	@priority = 3
 	test AdminCanDeleteRequirements {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that go to the requirement created") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Requirements");
+			Navigator.gotoNavTab(navTab = "Requirements");
 
-			Testray.goToProjectPage(projectName = ${requirementName});
+			Testray.clickTableEntry(tableEntry = ${requirementName});
 		}
 
 		task ("When delete the requirement through kebab") {
-			Testray.kebabMenuOption(kebabOption = "Delete Requirement");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
-
-			Refresh();
+			Testray.deleteByKebab(kebabOption = "Delete Requirement");
 		}
 
 		task ("And the user is redirected to the requirement tab") {
 			WaitForElementPresent(
 				key_pageTabTitle = "Requirements",
-				locator1 = "TestrayHeader#PAGE_TAB_TITLE");
+				locator1 = "Testray#PAGE_TAB_TITLE");
 
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Requirements");
+			Testray.assertTabPageTitle(pageTabTitle = "Requirements");
 		}
 
 		task ("Then can not see the requirement in the table") {
-			AssertElementNotPresent(
-				key_projectName = ${requirementName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = ${requirementName});
 		}
 	}
 
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can delete routine in the kebab menu"
 	@priority = 3
 	test AdminCanDeleteRoutine {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that go to the routine created") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 		}
 
 		task ("When delete the routine through kebab") {
-			Testray.kebabMenuOption(kebabOption = "Delete Routine");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
-
-			Refresh();
+			Testray.deleteByKebab(kebabOption = "Delete Routine");
 		}
 
 		task ("And the user is redirected to the routine page") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Routines");
+			Testray.assertTabPageTitle(pageTabTitle = "Routines");
 		}
 
 		task ("Then can not see the routine in the table") {
-			AssertElementNotPresent(
-				key_projectName = ${routineName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = ${routineName});
 		}
 	}
 
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit build in the kebab menu"
 	@priority = 3
 	test AdminCanEditBuild {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to build") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user edit the build through kebab") {
 			Testray.kebabMenuOption(kebabOption = "Edit Build");
 
 			TestrayBuild.editBuild(
+				caseList = ${caseName},
 				description = "Description Edited",
-				fieldName = "Build Edited",
 				gitHash = 12345,
+				newName = "Build Edited",
 				productVersion = "1.2",
 				routine = "Routine 1");
 		}
 
 		task ("Then the user is redirected to the build page and can see the edited build title") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Tests");
+			Testray.assertTabPageTitle(pageTabTitle = "Tests");
 
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Build Edited");
+			TestrayDropdown.assertBreadcrumbTitle(text = "Build Edited");
 		}
 
 		task ("Delete the build edited") {
@@ -370,33 +321,31 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit cases in the kebab menu"
 	@priority = 3
 	test AdminCanEditCases {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to case") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			PRMNavigator.goToNavItem(navItem = "Cases");
 
-			Testray.goToProjectPage(projectName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 		}
 
 		task ("When the user edit the case through kebab") {
 			Testray.kebabMenuOption(kebabOption = "Edit Case");
 
 			TestrayCases.editCases(
-				caseName = "Case Edited",
-				caseTypeId = "Case Type 1",
-				componentId = "Component 1",
+				caseType = "Case Type 1",
+				component = "Component 1",
 				description = "Case Description",
 				duration = 30,
+				newName = "Case Edited",
 				priority = 3,
 				steps = "http://test.edit.com");
 		}
 
 		task ("Then the user is redirected to the case page and can see the edited case title") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Test History");
+			Testray.assertTabPageTitle(pageTabTitle = "Test History");
 
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Case Edited");
+			TestrayDropdown.assertBreadcrumbTitle(text = "Case Edited");
 		}
 
 		task ("Delete the case edited") {
@@ -409,24 +358,22 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit project in the kebab menu"
 	@priority = 3
 	test AdminCanEditProject {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to project") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 		}
 
 		task ("When the user edit the project through kebab") {
 			Testray.kebabMenuOption(kebabOption = "Edit Project");
 
-			Testray.editProjectTestray(
-				description = "Project Description Edited",
-				name = "Project Edited");
+			TestrayProject.editProject(
+				newDescription = "Project Description Edited",
+				newName = "Project Edited");
 		}
 
 		task ("Then the user is redirected to the project page and can see the edited project title") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Routines");
+			Testray.assertTabPageTitle(pageTabTitle = "Routines");
 
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Project Edited");
+			TestrayDropdown.assertBreadcrumbTitle(text = "Project Edited");
 		}
 
 		task ("Delete the project edited") {
@@ -437,8 +384,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to edit Requirements in the kebab menu"
 	@priority = 3
 	test AdminCanEditRequirements {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to requirement") {
 			JSONTestray.addRequirement(
 				componentName = ${componentName},
@@ -446,11 +391,11 @@ definition {
 				projectName = ${projectName},
 				requirementName = "Requirement Summary");
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			PRMNavigator.goToNavItem(navItem = "Requirements");
 
-			Testray.goToProjectPage(projectName = "Requirement Summary");
+			Testray.clickTableEntry(tableEntry = "Requirement Summary");
 		}
 
 		task ("When the user edit the requirement through kebab") {
@@ -460,13 +405,13 @@ definition {
 				componentId = "Component 1",
 				linkTitle = "The page edited",
 				linkURL = "https://reddit.com",
-				requirementName = "Requirement Edited");
+				newName = "Requirement Edited");
 		}
 
 		task ("Then the user is redirected to the requirement page and can see the edited requirement title") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Cases");
+			Testray.assertTabPageTitle(pageTabTitle = "Cases");
 
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Requirement Edited");
+			TestrayDropdown.assertBreadcrumbTitle(text = "Requirement Edited");
 		}
 
 		task ("Delete the requirement edited") {
@@ -479,26 +424,22 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit routine in the kebab menu"
 	@priority = 3
 	test AdminCanEditRoutine {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to routine") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 		}
 
 		task ("When the user edit the routine through kebab") {
 			Testray.kebabMenuOption(kebabOption = "Edit Routine");
 
-			PortletEntry.inputName(name = "Routine Edited");
-
-			PortletEntry.save();
+			TestrayRoutines.editRoutine(newName = "Routine Edited");
 		}
 
 		task ("Then the user is redirected to the routine page and can see the edited routine title") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Build History");
+			Testray.assertTabPageTitle(pageTabTitle = "Build History");
 
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Routine Edited");
+			TestrayDropdown.assertBreadcrumbTitle(text = "Routine Edited");
 		}
 
 		task ("Delete the routine edited") {
@@ -511,28 +452,26 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to edit Suite in the kebab menu"
 	@priority = 3
 	test AdminCanEditSuite {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to suite") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			PRMNavigator.goToNavItem(navItem = "Suites");
 
-			Testray.goToProjectPage(projectName = ${suiteName});
+			Testray.clickTableEntry(tableEntry = ${suiteName});
 		}
 
 		task ("When the user edit the suite through kebab") {
 			Testray.kebabMenuOption(kebabOption = "Edit Suite");
 
-			PortletEntry.inputName(name = "Suite Edited");
-
-			PortletEntry.save();
+			TestraySuites.editSuite(
+				newDescription = "Suite Description Edited",
+				newName = "Suite Edited");
 		}
 
 		task ("Then the user is redirected to the suite page and can see the edited suite title") {
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Suite Edited");
+			TestrayDropdown.assertBreadcrumbTitle(text = "Suite Edited");
 		}
 
 		task ("Delete the suite edited") {
@@ -545,14 +484,12 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can promoted build in the kebab menu"
 	@priority = 3
 	test AdminCanPromotedBuilds {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given that the user go to build") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user promoted the build through kebab") {
@@ -560,9 +497,9 @@ definition {
 		}
 
 		task ("Then the promoted build should appear on the list") {
-			TR2Utils.clickBreadcrumb(text = ${routineName});
+			Testray.clickBreadcrumb(text = ${routineName});
 
-			TestrayBuild.verifyPromoteBuild();
+			TestrayBuild.verifyPromotedBuild();
 		}
 	}
 

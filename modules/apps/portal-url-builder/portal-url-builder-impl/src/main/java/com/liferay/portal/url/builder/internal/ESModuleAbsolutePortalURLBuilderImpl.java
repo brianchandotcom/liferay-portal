@@ -1,25 +1,13 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.url.builder.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.ESModuleAbsolutePortalURLBuilder;
-import com.liferay.portal.url.builder.internal.util.CacheHelper;
 import com.liferay.portal.url.builder.internal.util.URLUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +19,7 @@ public class ESModuleAbsolutePortalURLBuilderImpl
 	implements ESModuleAbsolutePortalURLBuilder {
 
 	public ESModuleAbsolutePortalURLBuilderImpl(
-		CacheHelper cacheHelper, String esModulePath, String cdnHost,
+		String esModulePath, String cdnHost,
 		HttpServletRequest httpServletRequest, String pathModule,
 		String pathProxy, String webContextPath) {
 
@@ -43,7 +31,6 @@ public class ESModuleAbsolutePortalURLBuilderImpl
 			webContextPath = StringPool.SLASH + webContextPath;
 		}
 
-		_cacheHelper = cacheHelper;
 		_esModulePath = esModulePath;
 		_cdnHost = cdnHost;
 		_httpServletRequest = httpServletRequest;
@@ -61,27 +48,7 @@ public class ESModuleAbsolutePortalURLBuilderImpl
 			_pathModule + _webContextPath + "/__liferay__", _pathProxy,
 			_esModulePath);
 
-		if (_cachePolicy == CachePolicy.NEVER) {
-			_cacheHelper.appendNeverCacheParam(sb);
-		}
-		else if (_cachePolicy == CachePolicy.UNTIL_CHANGED) {
-			_cacheHelper.appendLastRestartCacheParam(sb);
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		URLUtil.appendParam(sb, "languageId", themeDisplay.getLanguageId());
-
 		return sb.toString();
-	}
-
-	@Override
-	public ESModuleAbsolutePortalURLBuilder cache(CachePolicy cachePolicy) {
-		_cachePolicy = cachePolicy;
-
-		return this;
 	}
 
 	@Override
@@ -98,8 +65,6 @@ public class ESModuleAbsolutePortalURLBuilderImpl
 		return this;
 	}
 
-	private final CacheHelper _cacheHelper;
-	private CachePolicy _cachePolicy = CachePolicy.UNTIL_CHANGED;
 	private final String _cdnHost;
 	private final String _esModulePath;
 	private final HttpServletRequest _httpServletRequest;

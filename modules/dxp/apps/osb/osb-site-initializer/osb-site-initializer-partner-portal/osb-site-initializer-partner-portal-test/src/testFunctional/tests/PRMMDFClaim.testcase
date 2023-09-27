@@ -25,6 +25,16 @@ definition {
 			JSONPRM.updateAccount();
 		}
 
+		task ("Assign the users to the account") {
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "pmu@partner.com");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
 		task ("Login with the Partner user and go to Partner Portal") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "pmu@partner.com",
@@ -63,6 +73,7 @@ definition {
 	test CanExportAllVisibleClaims {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -111,6 +122,7 @@ definition {
 	@priority = 4
 	test CanExportFilteredClaims {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -241,6 +253,7 @@ definition {
 	test CanExportSearchedClaims {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -251,8 +264,6 @@ definition {
 		}
 
 		task ("And creates two claims") {
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",
 				reimbursementInvoice = "Document_1.png",
@@ -314,6 +325,7 @@ definition {
 	test CanSubmitFullClaim {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -341,6 +353,7 @@ definition {
 	test CanSubmitPartialClaim {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -367,6 +380,7 @@ definition {
 	test CFMCanChangeStatusToClaimPaid {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a new claim is created and approved") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -420,6 +434,7 @@ definition {
 	@priority = 5
 	test CMDCannotChangeStatusToClaimPaid {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a new claim is created and approved") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -457,6 +472,7 @@ definition {
 	@priority = 5
 	test CMMCannotChangeStatusToClaimPaid {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a new claim is created and approved") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -490,10 +506,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-195725. Verify that it's possible to delete the MDF Claim while in draft status"
+	@priority = 4
+	test PMUUserCanDeleteMDFClaimInDraftStatus {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given that the PMU user goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("And creates a draft Claim") {
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				saveAsDraft = "true",
+				thirdInvoice = "Document_1.png");
+
+			PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+		}
+
+		task ("When the PMU goes to the created draft Claim") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("And delete the draft Claim") {
+			PRMUtils.deleteMDF();
+		}
+
+		task ("Then the draft Claim should not be present") {
+			PRMNavigator.openSitePage(pageName = "MDF Claims");
+
+			PRMUtils.assertMDFNotPresent(
+				mdfType = "Claim",
+				requestID = ${staticClaimId1});
+		}
+	}
+
 	@description = "This is a test for LPS-179371. Verify that the Total Claim Amount reflects the value claimed per budget"
 	@priority = 5
 	test TotalClaimAmountReflectsBudgetValue {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 

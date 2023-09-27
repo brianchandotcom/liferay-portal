@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.discount.model.impl;
@@ -78,7 +69,7 @@ public class CommerceDiscountRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,6 +91,8 @@ public class CommerceDiscountRelCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", typeSettings=");
+		sb.append(typeSettings);
 		sb.append("}");
 
 		return sb.toString();
@@ -140,13 +133,22 @@ public class CommerceDiscountRelCacheModel
 		commerceDiscountRelImpl.setClassNameId(classNameId);
 		commerceDiscountRelImpl.setClassPK(classPK);
 
+		if (typeSettings == null) {
+			commerceDiscountRelImpl.setTypeSettings("");
+		}
+		else {
+			commerceDiscountRelImpl.setTypeSettings(typeSettings);
+		}
+
 		commerceDiscountRelImpl.resetOriginalValues();
 
 		return commerceDiscountRelImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		commerceDiscountRelId = objectInput.readLong();
@@ -163,6 +165,7 @@ public class CommerceDiscountRelCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
+		typeSettings = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -190,6 +193,13 @@ public class CommerceDiscountRelCacheModel
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
+
+		if (typeSettings == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(typeSettings);
+		}
 	}
 
 	public long mvccVersion;
@@ -202,5 +212,6 @@ public class CommerceDiscountRelCacheModel
 	public long commerceDiscountId;
 	public long classNameId;
 	public long classPK;
+	public String typeSettings;
 
 }

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 declare module '*.svg' {
 	const content: any;
@@ -23,6 +14,7 @@ type Account = {
 	description: string;
 	externalReferenceCode: string;
 	id: number;
+	logoURL?: string;
 	name: string;
 	type: string;
 };
@@ -99,6 +91,7 @@ type BillingAddress = {
 	city?: string;
 	country?: string;
 	countryISOCode: string;
+	description?: string;
 	name?: string;
 	phoneNumber?: string;
 	regionISOCode?: string;
@@ -189,7 +182,7 @@ interface Order {
 	accountId: number;
 	billingAddressId?: number;
 	channel: {
-		currencyCode: string;
+		currencyCode?: string;
 		id: number;
 		type: string;
 	};
@@ -206,13 +199,17 @@ interface Order {
 	orderDate?: string;
 	orderItems: [
 		{
+			id?: number;
+			quantity?: number;
 			skuId: number;
-			unitPriceWithTaxAmount: number;
+			unitPriceWithTaxAmount?: number;
 		}
 	];
 	orderStatus: number;
 	orderTypeExternalReferenceCode?: string;
 	orderTypeId: number;
+	shippingAmount?: number;
+	shippingWithTaxAmount?: number;
 }
 
 interface OrderType {
@@ -303,6 +300,7 @@ interface Product {
 	attachments: ProductAttachment[];
 	catalogId: number;
 	categories: ProductCategories[];
+	customFields?: CustomField[];
 	description: {[key: string]: string};
 	externalReferenceCode: string;
 	id: number;
@@ -313,6 +311,7 @@ interface Product {
 	productId: number;
 	productStatus: number;
 	productType: string;
+	skus: SKU[];
 	thumbnail: string;
 	version: number;
 	workflowStatusInfo: {
@@ -383,6 +382,7 @@ type UserAccount = {
 	alternateName: string;
 	currentPassword: string;
 	emailAddress: string;
+	externalReferenceCode: string;
 	familyName: string;
 	givenName: string;
 	id: number;
@@ -422,4 +422,43 @@ type AdditionalInfoBody = {
 	roles: string;
 	sendType: {key: string; name: string};
 	userFirstName: string;
+};
+
+type PhonesFlags = {
+	code: string;
+	flag: string;
+};
+
+type Industries = {
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	name: string;
+	name_i18n: {
+		'en-US': string;
+	};
+};
+
+type UserForm = {
+	agreeToTermsAndConditions: boolean;
+	companyName: string;
+	emailAddress: string;
+	extension?: string | undefined;
+	familyName: string;
+	givenName: string;
+	industry: string;
+	phone: PhonesFlags;
+	phoneNumber: string;
+};
+
+type OrderInfo = {
+	account: Account | UserForm;
+	product?: Product;
+	sku?: number;
+	specifications?: ProductSpecification[];
+};
+
+type RadioOption<T> = {
+	index: number;
+	value: T;
 };

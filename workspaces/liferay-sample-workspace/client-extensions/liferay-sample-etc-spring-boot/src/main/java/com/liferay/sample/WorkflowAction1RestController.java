@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.sample;
@@ -45,59 +36,53 @@ public class WorkflowAction1RestController extends BaseRestController {
 
 	@PostMapping
 	public ResponseEntity<String> post(
-		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
+		throws Exception {
 
 		log(jwt, _log, json);
 
-		try {
-			WebClient.Builder builder = WebClient.builder();
+		WebClient.Builder builder = WebClient.builder();
 
-			WebClient webClient = builder.baseUrl(
-				lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-			).defaultHeader(
-				HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
-			).defaultHeader(
-				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-			).build();
+		WebClient webClient = builder.baseUrl(
+			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
+		).defaultHeader(
+			HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
+		).defaultHeader(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).defaultHeader(
+			HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
+		).build();
 
-			JSONObject jsonObject = new JSONObject(json);
+		JSONObject jsonObject = new JSONObject(json);
 
-			webClient.post(
-			).uri(
-				jsonObject.getString("transitionURL")
-			).bodyValue(
-				"{\"transitionName\": \"approve\"}"
-			).header(
-				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-			).exchangeToMono(
-				clientResponse -> {
-					HttpStatus httpStatus = clientResponse.statusCode();
+		webClient.post(
+		).uri(
+			jsonObject.getString("transitionURL")
+		).bodyValue(
+			"{\"transitionName\": \"approve\"}"
+		).exchangeToMono(
+			clientResponse -> {
+				HttpStatus httpStatus = clientResponse.statusCode();
 
-					if (httpStatus.is2xxSuccessful()) {
-						return clientResponse.bodyToMono(String.class);
-					}
-					else if (httpStatus.is4xxClientError()) {
-						return Mono.just(httpStatus.getReasonPhrase());
-					}
-
-					Mono<WebClientResponseException> mono =
-						clientResponse.createException();
-
-					return mono.flatMap(Mono::error);
+				if (httpStatus.is2xxSuccessful()) {
+					return clientResponse.bodyToMono(String.class);
 				}
-			).doOnNext(
-				output -> {
-					if (_log.isInfoEnabled()) {
-						_log.info("Output: " + output);
-					}
+				else if (httpStatus.is4xxClientError()) {
+					return Mono.just(httpStatus.getReasonPhrase());
 				}
-			).subscribe();
-		}
-		catch (Exception exception) {
-			_log.error("JSON: " + json, exception);
 
-			return new ResponseEntity<>(json, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
+				Mono<WebClientResponseException> mono =
+					clientResponse.createException();
+
+				return mono.flatMap(Mono::error);
+			}
+		).doOnNext(
+			output -> {
+				if (_log.isInfoEnabled()) {
+					_log.info("Output: " + output);
+				}
+			}
+		).subscribe();
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}

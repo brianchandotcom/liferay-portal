@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.workflow.web.internal.display.context;
@@ -38,17 +29,17 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
-import com.liferay.portal.kernel.workflow.WorkflowLogManagerUtil;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
+import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.manager.WorkflowLogManager;
+import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.web.internal.search.WorkflowInstanceSearch;
 import com.liferay.portal.workflow.web.internal.util.WorkflowInstancePortletUtil;
 
@@ -73,12 +64,17 @@ public class WorkflowInstanceViewDisplayContext
 
 	public WorkflowInstanceViewDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+			LiferayPortletResponse liferayPortletResponse,
+			WorkflowComparatorFactory workflowComparatorFactory,
+			WorkflowLogManager workflowLogManager)
 		throws PortalException {
 
 		super(liferayPortletRequest, liferayPortletResponse);
 
 		_liferayPortletRequest = liferayPortletRequest;
+
+		_workflowComparatorFactory = workflowComparatorFactory;
+		_workflowLogManager = workflowLogManager;
 	}
 
 	public String getAssetIconCssClass(WorkflowInstance workflowInstance) {
@@ -267,7 +263,8 @@ public class WorkflowInstanceViewDisplayContext
 		_searchContainer = new WorkflowInstanceSearch(
 			liferayPortletRequest,
 			PortletURLUtil.getCurrent(
-				liferayPortletRequest, liferayPortletResponse));
+				liferayPortletRequest, liferayPortletResponse),
+			_workflowComparatorFactory);
 
 		WorkflowModelSearchResult<WorkflowInstance> workflowModelSearchResult =
 			getWorkflowModelSearchResult(
@@ -527,10 +524,10 @@ public class WorkflowInstanceViewDisplayContext
 		throws PortalException {
 
 		List<WorkflowLog> workflowLogs =
-			WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(
+			_workflowLogManager.getWorkflowLogsByWorkflowInstance(
 				workflowInstanceRequestHelper.getCompanyId(),
 				workflowInstance.getWorkflowInstanceId(), null, 0, 1,
-				WorkflowComparatorFactoryUtil.getLogCreateDateComparator());
+				_workflowComparatorFactory.getLogCreateDateComparator(false));
 
 		if (workflowLogs.isEmpty()) {
 			return null;
@@ -560,5 +557,7 @@ public class WorkflowInstanceViewDisplayContext
 	private String _orderByType;
 	private WorkflowInstanceSearch _searchContainer;
 	private Boolean _showExtraInfo;
+	private final WorkflowComparatorFactory _workflowComparatorFactory;
+	private final WorkflowLogManager _workflowLogManager;
 
 }

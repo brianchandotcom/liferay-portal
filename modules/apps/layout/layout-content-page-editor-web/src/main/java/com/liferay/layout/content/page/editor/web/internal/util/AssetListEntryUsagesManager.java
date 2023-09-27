@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.layout.content.page.editor.web.internal.util;
@@ -43,7 +34,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -127,6 +117,10 @@ public class AssetListEntryUsagesManager {
 				_assetListEntryUsageLocalService.getAssetEntryListUsagesByPlid(
 					plid)) {
 
+			if (!_exists(assetListEntryUsage)) {
+				continue;
+			}
+
 			String uniqueKey = _generateUniqueLayoutClassedModelUsageKey(
 				assetListEntryUsage);
 
@@ -198,13 +192,48 @@ public class AssetListEntryUsagesManager {
 		return liferayRenderRequest;
 	}
 
+	private boolean _exists(AssetListEntryUsage assetListEntryUsage) {
+		if (Objects.equals(
+				assetListEntryUsage.getClassName(),
+				AssetListEntry.class.getName())) {
+
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.fetchAssetListEntry(
+					GetterUtil.getLong(assetListEntryUsage.getKey()));
+
+			if (assetListEntry != null) {
+				return true;
+			}
+		}
+
+		if (Objects.equals(
+				assetListEntryUsage.getClassName(),
+				InfoCollectionProvider.class.getName())) {
+
+			InfoCollectionProvider<?> infoCollectionProvider =
+				_infoItemServiceRegistry.getInfoItemService(
+					InfoCollectionProvider.class, assetListEntryUsage.getKey());
+
+			if (infoCollectionProvider == null) {
+				infoCollectionProvider =
+					_infoItemServiceRegistry.getInfoItemService(
+						RelatedInfoItemCollectionProvider.class,
+						assetListEntryUsage.getKey());
+			}
+
+			if (infoCollectionProvider != null) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private String _generateUniqueLayoutClassedModelUsageKey(
 		AssetListEntryUsage assetListEntryUsage) {
 
-		return StringBundler.concat(
-			assetListEntryUsage.getClassNameId(), StringPool.DASH,
-			assetListEntryUsage.getContainerKey(), StringPool.DASH,
-			assetListEntryUsage.getKey());
+		return assetListEntryUsage.getClassNameId() + StringPool.DASH +
+			assetListEntryUsage.getKey();
 	}
 
 	private String _getAssetEntryListSubtypeLabel(

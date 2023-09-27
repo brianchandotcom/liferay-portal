@@ -1,12 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
@@ -356,78 +350,101 @@ const SelectSubscription = ({
 					</div>
 
 					<div>
-						{subscriptionTerms?.map((subscriptionTerm, index) => {
-							const selected =
-								JSON.stringify(selectedSubscription) ===
-								JSON.stringify({
-									...subscriptionTerm,
+						{subscriptionTerms
+							?.filter((subscriptionTerm) => {
+								return (
+									new Date() < new Date(subscriptionTerm.endDate) &&
+									subscriptionTerm
+								);
+							})
+							.sort(
+								(
+									firstSubscriptionTerm,
+									secondSubscriptionTerm
+								) => {
+									const firstAvailableKeysQty =
+										firstSubscriptionTerm.quantity -
+										firstSubscriptionTerm.provisionedCount;
+
+									const secondAvailableKeysQty =
+										secondSubscriptionTerm.quantity -
+										secondSubscriptionTerm.provisionedCount;
+
+									return (
+										secondAvailableKeysQty -
+										firstAvailableKeysQty
+									);
+								}
+							)
+							?.map((subscriptionTerm, index) => {
+								const selected =
+									JSON.stringify(selectedSubscription) ===
+									JSON.stringify({
+										...subscriptionTerm,
+										index,
+									});
+								const currentStartAndEndDate = `${getDateCustomFormat(
+									subscriptionTerm.startDate,
+									FORMAT_DATE_TYPES.day2DMonthSYearN
+								)} - ${getDateCustomFormat(
+									subscriptionTerm.endDate,
+									FORMAT_DATE_TYPES.day2DMonthSYearN
+								)}`;
+
+								const infoSelectedKey = {
 									index,
-								});
-							const currentStartAndEndDate = `${getDateCustomFormat(
-								subscriptionTerm.startDate,
-								FORMAT_DATE_TYPES.day2DMonthSYearN
-							)} - ${getDateCustomFormat(
-								subscriptionTerm.endDate,
-								FORMAT_DATE_TYPES.day2DMonthSYearN
-							)}`;
+									licenseEntryType: selectedKeyType,
+									productType: productGroupName,
+									productVersion: selectedVersion,
+								};
 
-							const infoSelectedKey = {
-								index,
-								licenseEntryType: selectedKeyType,
-								productType: productGroupName,
-								productVersion: selectedVersion,
-							};
+								const displayAlertType = getCustomAlert(
+									subscriptionTerm
+								);
 
-							const displayAlertType = getCustomAlert(
-								subscriptionTerm
-							);
+								let numberOfActivationKeysAvailable =
+									subscriptionTerm.quantity -
+									subscriptionTerm.provisionedCount;
+								numberOfActivationKeysAvailable =
+									numberOfActivationKeysAvailable < 0
+										? 0
+										: numberOfActivationKeysAvailable;
 
-							let numberOfActivationKeysAvailable =
-								subscriptionTerm.quantity -
-								subscriptionTerm.provisionedCount;
-							numberOfActivationKeysAvailable =
-								numberOfActivationKeysAvailable < 0
-									? 0
-									: numberOfActivationKeysAvailable;
-
-							const isNotExpired =
-								new Date() < new Date(subscriptionTerm.endDate);
-
-							return (
-								<Radio
-									description={i18n.sub(
-										'key-activation-available-x-of-x',
-										[
-											numberOfActivationKeysAvailable,
-											subscriptionTerm.quantity,
-										]
-									)}
-									hasCustomAlert={
-										selected && displayAlertType
-									}
-									isActivationKeyAvailable={
-										subscriptionTerm.quantity -
-											subscriptionTerm.provisionedCount >
-											0 && isNotExpired
-									}
-									key={index}
-									label={currentStartAndEndDate}
-									onChange={(event) => {
-										setSelectedSubscription({
-											...event.target.value,
-											index,
-										});
-										setInfoSelectedKey(infoSelectedKey);
-										setHasKeyComplementary(false);
-									}}
-									selected={selected}
-									subtitle={i18n.sub('instance-size-x', [
-										subscriptionTerm?.instanceSize || 1,
-									])}
-									value={subscriptionTerm}
-								/>
-							);
-						})}
+								return (
+									<Radio
+										description={i18n.sub(
+											'key-activation-available-x-of-x',
+											[
+												numberOfActivationKeysAvailable,
+												subscriptionTerm.quantity,
+											]
+										)}
+										hasCustomAlert={
+											selected && displayAlertType
+										}
+										isActivationKeyAvailable={
+											subscriptionTerm.quantity -
+												subscriptionTerm.provisionedCount >
+											0
+										}
+										key={index}
+										label={currentStartAndEndDate}
+										onChange={(event) => {
+											setSelectedSubscription({
+												...event.target.value,
+												index,
+											});
+											setInfoSelectedKey(infoSelectedKey);
+											setHasKeyComplementary(false);
+										}}
+										selected={selected}
+										subtitle={i18n.sub('instance-size-x', [
+											subscriptionTerm?.instanceSize || 1,
+										])}
+										value={subscriptionTerm}
+									/>
+								);
+							})}
 					</div>
 
 					{featureFlags.includes('LPS-148342') && allowComplimentary && (
@@ -448,7 +465,7 @@ const SelectSubscription = ({
 							}}
 							selected={hasKeyComplementary}
 							subtitle={i18n.translate(
-								'chose-this-option-if-you-want-a-subscription-for-30-days'
+								'choose-this-option-if-you-want-an-activation-key-for-30-days'
 							)}
 							value={mockedValuesForComplimentaryKeys}
 						/>

@@ -26,6 +26,7 @@ definition {
 	@priority = 4
 	test CanDeleteAttachment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151577",
@@ -105,6 +106,7 @@ definition {
 	@priority = 4
 	test CanDownloadFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151581",
@@ -227,6 +229,7 @@ definition {
 	@priority = 4
 	test CanReplaceFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151578",
@@ -310,6 +313,7 @@ definition {
 	test CantUploadInvalidSizeFile {
 		property ci.retries.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151575",
@@ -388,6 +392,7 @@ definition {
 	@priority = 4
 	test CanViewFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151576",
@@ -432,6 +437,7 @@ definition {
 	@priority = 4
 	test CanViewFileNameAndExtension {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151576",

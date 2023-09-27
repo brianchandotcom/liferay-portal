@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.service.impl;
@@ -29,7 +20,10 @@ import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeC
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceUnitOfMeasureException;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.base.CommerceShipmentItemLocalServiceBaseImpl;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
@@ -44,9 +38,12 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.Objects;
@@ -70,8 +67,8 @@ public class CommerceShipmentItemLocalServiceImpl
 	public CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, boolean validateInventory,
-			ServiceContext serviceContext)
+			BigDecimal quantity, String unitOfMeasureKey,
+			boolean validateInventory, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce shipment item
@@ -112,6 +109,25 @@ public class CommerceShipmentItemLocalServiceImpl
 		commerceShipmentItem.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
 		commerceShipmentItem.setQuantity(quantity);
+
+		if (Validator.isNotNull(unitOfMeasureKey)) {
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				_cpInstanceUnitOfMeasureLocalService.
+					fetchCPInstanceUnitOfMeasure(
+						commerceOrderItem.getCPInstanceId(), unitOfMeasureKey);
+
+			if (cpInstanceUnitOfMeasure == null) {
+				throw new NoSuchCPInstanceUnitOfMeasureException(
+					"No commerce product instance unit of measure exists " +
+						"with the primary key " + unitOfMeasureKey);
+			}
+
+			commerceShipmentItem.setUnitOfMeasureKey(unitOfMeasureKey);
+		}
+		else {
+			commerceShipmentItem.setUnitOfMeasureKey(
+				commerceOrderItem.getUnitOfMeasureKey());
+		}
 
 		commerceShipmentItem = commerceShipmentItemPersistence.update(
 			commerceShipmentItem);
@@ -160,8 +176,8 @@ public class CommerceShipmentItemLocalServiceImpl
 	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, boolean validateInventory,
-			ServiceContext serviceContext)
+			BigDecimal quantity, String unitOfMeasureKey,
+			boolean validateInventory, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -178,8 +194,8 @@ public class CommerceShipmentItemLocalServiceImpl
 		if (commerceShipmentItem == null) {
 			return commerceShipmentItemLocalService.addCommerceShipmentItem(
 				externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-				commerceInventoryWarehouseId, quantity, validateInventory,
-				serviceContext);
+				commerceInventoryWarehouseId, quantity, unitOfMeasureKey,
+				validateInventory, serviceContext);
 		}
 
 		return commerceShipmentItemLocalService.updateCommerceShipmentItem(
@@ -214,19 +230,18 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		// Commerce order item
 
-		int shippedQuantity = Math.negateExact(
-			commerceShipmentItem.getQuantity());
+		BigDecimal shippedQuantity = commerceShipmentItem.getQuantity();
 
 		try {
 			commerceOrderItem =
 				_commerceOrderItemLocalService.incrementShippedQuantity(
 					commerceShipmentItem.getCommerceOrderItemId(),
-					shippedQuantity);
+					shippedQuantity.negate());
 
 			// Stock quantity
 
 			if ((commerceShipmentItem.getCommerceInventoryWarehouseId() > 0) &&
-				(commerceShipmentItem.getQuantity() > 0)) {
+				(shippedQuantity.compareTo(BigDecimal.ZERO) > 0)) {
 
 				_restoreStockQuantity(
 					commerceOrderItem, commerceShipmentItem,
@@ -346,7 +361,7 @@ public class CommerceShipmentItemLocalServiceImpl
 	@Override
 	public CommerceShipmentItem updateCommerceShipmentItem(
 			long commerceShipmentItemId, long commerceInventoryWarehouseId,
-			int quantity, boolean validateInventory)
+			BigDecimal quantity, boolean validateInventory)
 		throws PortalException {
 
 		// Commerce shipment item
@@ -359,7 +374,7 @@ public class CommerceShipmentItemLocalServiceImpl
 			_commerceOrderItemLocalService.getCommerceOrderItem(
 				commerceShipmentItem.getCommerceOrderItemId());
 
-		int originalQuantity = commerceShipmentItem.getQuantity();
+		BigDecimal originalQuantity = commerceShipmentItem.getQuantity();
 
 		if (validateInventory) {
 			_validate(
@@ -374,16 +389,16 @@ public class CommerceShipmentItemLocalServiceImpl
 		commerceShipmentItem = commerceShipmentItemPersistence.update(
 			commerceShipmentItem);
 
-		int quantityDelta = quantity - originalQuantity;
+		BigDecimal quantityDelta = quantity.subtract(originalQuantity);
 
 		// Stock quantity
 
-		if (commerceOrderItem.getQuantity() ==
-				commerceOrderItem.getShippedQuantity()) {
+		if (BigDecimalUtil.eq(
+				commerceOrderItem.getQuantity(),
+				commerceOrderItem.getShippedQuantity())) {
 
 			_restoreStockQuantity(
-				commerceOrderItem, commerceShipmentItem,
-				Math.abs(quantityDelta));
+				commerceOrderItem, commerceShipmentItem, quantityDelta.abs());
 		}
 		else {
 			_updateStockQuantity(
@@ -427,7 +442,7 @@ public class CommerceShipmentItemLocalServiceImpl
 	}
 
 	private CommerceInventoryWarehouseItem _fetchCommerceInventoryWarehouseItem(
-			long commerceShipmentItemId, String sku)
+			long commerceShipmentItemId, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
 		CommerceShipmentItem commerceShipmentItem =
@@ -436,12 +451,13 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		return _commerceInventoryWarehouseItemLocalService.
 			fetchCommerceInventoryWarehouseItem(
-				commerceShipmentItem.getCommerceInventoryWarehouseId(), sku);
+				commerceShipmentItem.getCommerceInventoryWarehouseId(), sku,
+				unitOfMeasureKey);
 	}
 
 	private void _restoreStockQuantity(
 			CommerceOrderItem commerceOrderItem,
-			CommerceShipmentItem commerceShipmentItem, int quantity)
+			CommerceShipmentItem commerceShipmentItem, BigDecimal quantity)
 		throws PortalException {
 
 		long commerceCatalogGroupId = 0;
@@ -454,14 +470,16 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		_commerceInventoryEngine.increaseStockQuantity(
 			commerceShipmentItem.getUserId(), commerceCatalogGroupId,
-			commerceShipmentItem.getCommerceInventoryWarehouseId(),
-			commerceOrderItem.getSku(), quantity);
+			commerceShipmentItem.getCommerceInventoryWarehouseId(), quantity,
+			commerceOrderItem.getSku(),
+			commerceOrderItem.getUnitOfMeasureKey());
 
 		_commerceInventoryBookedQuantityLocalService.
-			resetCommerceBookedQuantity(
-				commerceOrderItem.getBookedQuantityId(),
+			resetCommerceInventoryBookedQuantity(
+				commerceOrderItem.getCommerceInventoryBookedQuantityId(),
 				commerceOrderItem.getUserId(), null, quantity,
 				commerceOrderItem.getSku(),
+				commerceOrderItem.getUnitOfMeasureKey(),
 				HashMapBuilder.put(
 					CommerceInventoryAuditTypeConstants.ORDER_ID,
 					String.valueOf(commerceOrderItem.getCommerceOrderId())
@@ -476,7 +494,7 @@ public class CommerceShipmentItemLocalServiceImpl
 
 	private void _updateStockQuantity(
 			CommerceOrderItem commerceOrderItem, long commerceShipmentItemId,
-			int quantity)
+			BigDecimal quantity)
 		throws PortalException {
 
 		if (commerceOrderItem == null) {
@@ -485,7 +503,8 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_fetchCommerceInventoryWarehouseItem(
-				commerceShipmentItemId, commerceOrderItem.getSku());
+				commerceShipmentItemId, commerceOrderItem.getSku(),
+				commerceOrderItem.getUnitOfMeasureKey());
 
 		if (commerceInventoryWarehouseItem == null) {
 			return;
@@ -504,10 +523,11 @@ public class CommerceShipmentItemLocalServiceImpl
 		}
 
 		_commerceInventoryEngine.consumeQuantity(
-			commerceShipmentItem.getUserId(), commerceCatalogGroupId,
-			commerceShipmentItem.getCommerceInventoryWarehouseId(),
-			commerceOrderItem.getSku(), quantity,
-			commerceOrderItem.getBookedQuantityId(),
+			commerceShipmentItem.getUserId(),
+			commerceOrderItem.getCommerceInventoryBookedQuantityId(),
+			commerceCatalogGroupId,
+			commerceShipmentItem.getCommerceInventoryWarehouseId(), quantity,
+			commerceOrderItem.getSku(), commerceOrderItem.getUnitOfMeasureKey(),
 			HashMapBuilder.put(
 				CommerceInventoryAuditTypeConstants.ORDER_ID,
 				String.valueOf(commerceOrderItem.getCommerceOrderId())
@@ -526,7 +546,8 @@ public class CommerceShipmentItemLocalServiceImpl
 	private void _validate(
 			CommerceOrderItem commerceOrderItem,
 			CommerceShipment commerceShipment,
-			long commerceInventoryWarehouseId, int quantity, int newQuantity)
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			BigDecimal newQuantity)
 		throws PortalException {
 
 		if ((commerceShipment != null) &&
@@ -548,9 +569,10 @@ public class CommerceShipmentItemLocalServiceImpl
 			throw new CommerceShipmentInactiveWarehouseException();
 		}
 
-		int availableQuantity =
-			commerceOrderItem.getQuantity() -
-				commerceOrderItem.getShippedQuantity();
+		BigDecimal commerceOrderItemQuantity = commerceOrderItem.getQuantity();
+
+		BigDecimal availableQuantity = commerceOrderItemQuantity.subtract(
+			commerceOrderItem.getShippedQuantity());
 
 		CommerceShipmentItem commerceShipmentItem =
 			commerceShipmentItemPersistence.fetchByC_C_C(
@@ -559,18 +581,20 @@ public class CommerceShipmentItemLocalServiceImpl
 				commerceInventoryWarehouseId);
 
 		if (commerceShipmentItem != null) {
-			availableQuantity =
-				availableQuantity + commerceShipmentItem.getQuantity();
+			availableQuantity = availableQuantity.add(
+				commerceShipmentItem.getQuantity());
 		}
 
-		int commerceInventoryWarehouseQuantity =
+		BigDecimal commerceInventoryWarehouseQuantity =
 			_commerceOrderItemLocalService.
 				getCommerceInventoryWarehouseItemQuantity(
 					commerceOrderItem.getCommerceOrderItemId(),
 					commerceInventoryWarehouseId);
 
-		if (((newQuantity > quantity) && (newQuantity > availableQuantity)) ||
-			(newQuantity > commerceInventoryWarehouseQuantity)) {
+		if ((BigDecimalUtil.gt(newQuantity, quantity) &&
+			 BigDecimalUtil.gt(newQuantity, availableQuantity)) ||
+			BigDecimalUtil.gt(
+				newQuantity, commerceInventoryWarehouseQuantity)) {
 
 			throw new CommerceShipmentItemQuantityException();
 		}
@@ -625,6 +649,10 @@ public class CommerceShipmentItemLocalServiceImpl
 
 	@Reference
 	private CommerceShipmentPersistence _commerceShipmentPersistence;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

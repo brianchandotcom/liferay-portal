@@ -1,0 +1,16 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"externalReferenceCode": "PROJECTNAME",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Project Name"
+			},
+			"name": "projectName",
+			"required": false
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:CommerceOrder$]"
+}

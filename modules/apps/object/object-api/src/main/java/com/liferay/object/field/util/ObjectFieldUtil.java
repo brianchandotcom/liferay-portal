@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.field.util;
@@ -36,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -53,6 +45,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Guilherme Camacho
@@ -206,6 +199,10 @@ public class ObjectFieldUtil {
 		return DateUtil.ISO_8601_PATTERN;
 	}
 
+	public static boolean isMetadata(String objectFieldName) {
+		return _metadataObjectFieldNames.contains(objectFieldName);
+	}
+
 	public static Map<String, ObjectField> toObjectFieldsMap(
 		List<ObjectField> objectFields) {
 
@@ -264,13 +261,9 @@ public class ObjectFieldUtil {
 		}
 
 		for (Map.Entry<String, Object> entry : values.entrySet()) {
-			if (Objects.equals(entry.getKey(), "status")) {
-				continue;
-			}
-
 			ObjectField objectField = objectFieldsMap.get(entry.getKey());
 
-			if ((objectField == null) ||
+			if ((objectField == null) || objectField.isMetadata() ||
 				Objects.equals(
 					objectField.getReadOnly(),
 					ObjectFieldConstants.READ_ONLY_FALSE)) {
@@ -404,5 +397,11 @@ public class ObjectFieldUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectFieldUtil.class);
+
+	private static final Set<String> _metadataObjectFieldNames =
+		Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				"createDate", "creator", "externalReferenceCode", "id",
+				"modifiedDate", "status"));
 
 }

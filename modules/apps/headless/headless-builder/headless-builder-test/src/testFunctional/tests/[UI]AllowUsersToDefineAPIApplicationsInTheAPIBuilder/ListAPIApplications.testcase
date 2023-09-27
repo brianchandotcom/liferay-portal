@@ -1,0 +1,85 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 3
+	test CanListCreatedPublishedAPIApplication {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given with postAPIApplication to create an API application with published status") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "test",
+				status = "published",
+				title = "test");
+		}
+
+		task ("When navigate to API builder") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+		}
+
+		task ("Then the published API application created is shown") {
+			AssertElementPresent(
+				key_status = "Published",
+				key_title = "test",
+				locator1 = "APIBuilder#APPLICATION_STATUS");
+		}
+	}
+
+	@priority = 4
+	test CanListCreatedUnpublishedAPIApplication {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given with postAPIApplication to create an API application with unpublished status") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "test",
+				status = "unpublished",
+				title = "test");
+		}
+
+		task ("When navigate to API builder") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+		}
+
+		task ("Then the unpublished API application created is shown") {
+			AssertElementPresent(
+				key_status = "Unpublished",
+				key_title = "test",
+				locator1 = "APIBuilder#APPLICATION_STATUS");
+		}
+
+		task ("And Then no errors in the console") {
+			AssertConsoleTextNotPresent(value1 = "404 Not Found");
+		}
+	}
+
+}

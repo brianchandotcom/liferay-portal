@@ -1,0 +1,13 @@
+.input-localized {
+	.form-group {
+		margin-bottom: 0;
+	}
+
+	.form-text:empty {
+		display: none;
+	}
+
+	&--rtl {
+		text-align: right;
+	}
+}

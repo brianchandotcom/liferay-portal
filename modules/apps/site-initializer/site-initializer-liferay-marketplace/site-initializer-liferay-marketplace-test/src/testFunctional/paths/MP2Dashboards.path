@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>MP2Dashboards</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MP2Dashboards</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>ANY_DASHBOARD_BUTTON</td>
+	<td>//*[contains(@class, 'dashboard-page') and contains(text(), '${key_buttonName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_DETAILS</td>
+	<td>//div[contains(@class, 'detailed-card-container')]//h2[contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DASHBOARD_TABLE</td>
+	<td>//*[contains(@class, 'dashboard-table-header') and contains(.,'${key_label}')]/following::span[contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SVG_DROPDOWN</td>
+	<td>//*[contains(@class, 'dashboard-navigation-header')]/following-sibling::div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SVG_DROPDOWN_LIST</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(), '${key_accountTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FIELDS</td>
+	<td>//label[contains(@class, 'control-label')]/parent::div//input[@id='${key_field}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER</td>
+	<td>//*[contains(@class, 'header-container')]//*[contains(text(), '${key_header}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITED_MEMBER</td>
+	<td>//span[text()='${key_name}']/following::span[text()='Invited']</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

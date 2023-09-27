@@ -1,9 +1,24 @@
+[#assign
+	localFileUploaded = false
+	showDocumentLibrarySelector = input.attributes.selectFromDocumentLibrary?? && input.attributes.selectFromDocumentLibrary
+]
+
+[#if input.value?? && !showDocumentLibrarySelector]
+	[#assign localFileUploaded = true]
+[/#if]
+
 <div class="file-upload">
-	<div class="form-group mb-0">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-file-upload">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-file-upload-label">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
 		<div class="align-items-center d-flex">
-			<label class="btn btn-secondary" for="${fragmentEntryLinkNamespace}-file-upload">[@clay["icon"] symbol="upload" /] ${htmlUtil.escape(configuration.buttonText)}</label>
+			<div class="position-relative">
+				<button class="btn btn-secondary" id="${fragmentEntryLinkNamespace}-file-upload-button-label" type="button">[@clay["icon"] symbol="upload" /] ${htmlUtil.escape(configuration.buttonText)}</button>
+
+				<input id="${fragmentEntryLinkNamespace}-file-upload-hidden" [#if localFileUploaded]name="${input.name}"[/#if] type="hidden" value="${input.value}" />
+
+				<input accept="${(input.attributes.allowedFileExtensions?has_content)?then(input.attributes.allowedFileExtensions, '*')}" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-file-upload-label ${fragmentEntryLinkNamespace}-file-upload-button-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-file-upload-error-message[/#if]" class="file-upload-input" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" [#if !localFileUploaded]name="${input.name}"[/#if] ${input.required?then('required', '' )} type="${showDocumentLibrarySelector?then('text', 'file')}" [#if input.value??]value="${input.value}"[/#if] tabIndex="-1" />
+			</div>
 
 			<small class="inline-item inline-item-after">
 				<strong class="forms-file-upload-file-name">
@@ -11,12 +26,22 @@
 				</strong>
 			</small>
 
-			<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary d-none ml-1" type="button">
+			<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary d-none ml-1" id="${fragmentEntryLinkNamespace}-file-upload-remove-button" type="button">
 				[@clay["icon"] symbol="times-circle-full" /]
 			</button>
-
-			<input accept="${(input.attributes.allowedFileExtensions?has_content)?then(input.attributes.allowedFileExtensions, '*')}" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" class="d-none" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" name="${input.name}" ${input.required?then('required', '' )} type="${(input.attributes.selectFromDocumentLibrary?? && input.attributes.selectFromDocumentLibrary)?then('text', 'file')}" [#if input.value??]value="${input.value}"[/#if] />
 		</div>
+
+		[#if input.errorMessage?has_content]
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentEntryLinkNamespace}-file-upload-error-message">
+				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+					<use xlink:href="${siteSpritemap}#info-circle" />
+				</svg>
+
+				<span>
+					${input.errorMessage}
+				</span>
+			</p>
+		[/#if]
 
 		[#if (input.showHelpText && input.helpText?has_content) || (configuration.showSupportedFileInfo && input.attributes.allowedFileExtensions?? && input.attributes.maxFileSize??)]
 			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-file-upload-help-text">${configuration.showSupportedFileInfo?then(languageUtil.format(locale, "upload-a-x-no-larger-than-x-mb", [input.attributes.allowedFileExtensions!"", input.attributes.maxFileSize!""]), '' )} ${input.showHelpText?then(htmlUtil.escape(input.helpText), '' )}</p>

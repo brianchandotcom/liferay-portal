@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -275,7 +266,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 			<aui:model-context bean="<%= calendarBooking %>" model="<%= CalendarBooking.class %>" />
 
-			<aui:fieldset markupView="lexicon">
+			<clay:sheet-section>
 				<aui:input defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="title" />
 
 				<div class="<%= allDay ? "allday-class-active" : "" %>" id="<portlet:namespace />startDateContainer">
@@ -295,25 +286,13 @@ while (manageableCalendarsIterator.hasNext()) {
 				</aui:field-wrapper>
 
 				<aui:input defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="description" />
-			</aui:fieldset>
+			</clay:sheet-section>
 
-			<aui:fieldset markupView="lexicon">
-				<liferay-ui:panel-container
-					cssClass="panel-group-flush panel-group-sm"
-					extended="<%= true %>"
-					id="calendarBookingDetailsPanelContainer"
-					persistState="<%= true %>"
+			<clay:panel-group>
+				<clay:panel
+					displayTitle='<%= LanguageUtil.get(request, "details") %>'
 				>
-					<liferay-ui:panel
-						collapsible="<%= true %>"
-						cssClass="panel-unstyled"
-						defaultState="closed"
-						extended="<%= false %>"
-						id="calendarBookingDetailsPanel"
-						markupView="lexicon"
-						persistState="<%= true %>"
-						title="details"
-					>
+					<div class="panel-body">
 						<aui:select label="calendar" name="calendarId">
 
 							<%
@@ -360,18 +339,13 @@ while (manageableCalendarsIterator.hasNext()) {
 								/>
 							</aui:field-wrapper>
 						</c:if>
-					</liferay-ui:panel>
+					</div>
+				</clay:panel>
 
-					<liferay-ui:panel
-						collapsible="<%= true %>"
-						cssClass="panel-unstyled"
-						defaultState="closed"
-						extended="<%= false %>"
-						id="calendarBookingInvitationPanel"
-						markupView="lexicon"
-						persistState="<%= true %>"
-						title="invitations"
-					>
+				<clay:panel
+					displayTitle='<%= LanguageUtil.get(request, "invitations") %>'
+				>
+					<div class="panel-body">
 						<c:if test="<%= invitable %>">
 							<aui:input inputCssClass="calendar-portlet-invite-resources-input" label="" name="inviteResource" placeholder="add-people-sites-rooms" type="text" />
 
@@ -449,31 +423,21 @@ while (manageableCalendarsIterator.hasNext()) {
 								</div>
 							</clay:col>
 						</clay:row>
-					</liferay-ui:panel>
+					</div>
+				</clay:panel>
 
-					<liferay-ui:panel
-						collapsible="<%= true %>"
-						cssClass="panel-unstyled"
-						defaultState="closed"
-						extended="<%= false %>"
-						id="calendarBookingReminderPanel"
-						markupView="lexicon"
-						persistState="<%= true %>"
-						title="reminders"
-					>
+				<clay:panel
+					displayTitle='<%= LanguageUtil.get(request, "reminders") %>'
+				>
+					<div class="panel-body">
 						<div class="calendar-booking-reminders" id="<portlet:namespace />reminders"></div>
-					</liferay-ui:panel>
+					</div>
+				</clay:panel>
 
-					<liferay-ui:panel
-						collapsible="<%= true %>"
-						cssClass="panel-unstyled"
-						defaultState="closed"
-						extended="<%= false %>"
-						id="calendarBookingCategorizationPanel"
-						markupView="lexicon"
-						persistState="<%= true %>"
-						title="categorization"
-					>
+				<clay:panel
+					displayTitle='<%= LanguageUtil.get(request, "categorization") %>'
+				>
+					<div class="panel-body">
 						<liferay-asset:asset-categories-selector
 							className="<%= CalendarBooking.class.getName() %>"
 							classPK="<%= calendarBookingId %>"
@@ -484,25 +448,20 @@ while (manageableCalendarsIterator.hasNext()) {
 							className="<%= CalendarBooking.class.getName() %>"
 							classPK="<%= calendarBookingId %>"
 						/>
-					</liferay-ui:panel>
+					</div>
+				</clay:panel>
 
-					<liferay-ui:panel
-						collapsible="<%= true %>"
-						cssClass="panel-unstyled"
-						defaultState="closed"
-						extended="<%= false %>"
-						id="calendarBookingAssetLinksPanel"
-						markupView="lexicon"
-						persistState="<%= true %>"
-						title="related-assets"
-					>
+				<clay:panel
+					displayTitle='<%= LanguageUtil.get(request, "related-assets") %>'
+				>
+					<div class="panel-body">
 						<liferay-asset:input-asset-links
 							className="<%= CalendarBooking.class.getName() %>"
 							classPK="<%= calendarBookingId %>"
 						/>
-					</liferay-ui:panel>
-				</liferay-ui:panel-container>
-			</aui:fieldset>
+					</div>
+				</clay:panel>
+			</clay:panel-group>
 
 			<%@ include file="/calendar_booking_recurrence_container.jspf" %>
 		</clay:sheet>

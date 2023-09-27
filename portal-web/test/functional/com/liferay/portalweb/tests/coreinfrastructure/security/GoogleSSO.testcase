@@ -14,7 +14,7 @@ definition {
 	}
 
 	@description = "LPS-126599 TC-2: Validate there is no Google Auth option under SSO category in Instance Settings."
-	@priority = 4
+	@priority = 2
 	test AssertGoogleAuthNotAvailableUnderInstanceSettings {
 		task ("Go to SSO under instance settings") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "LPS-126599 TC-1: Validate there is no Google Auth option under SSO category in System Settings."
-	@priority = 4
+	@priority = 2
 	test AssertGoogleAuthNotAvailableUnderSystemSettings {
 		task ("Go to SSO under system settings") {
 			var baseURL = PropsUtil.get("portal.url");

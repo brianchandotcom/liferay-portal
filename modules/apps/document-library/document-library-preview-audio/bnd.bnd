@@ -1,4 +1,5 @@
 Bundle-Name: Liferay Document Library Preview Audio
 Bundle-SymbolicName: com.liferay.document.library.preview.audio
-Bundle-Version: 3.0.17
+Bundle-Version: 3.0.19
 Web-ContextPath: /document-library-preview-audio
+-dsannotations-options: inherit

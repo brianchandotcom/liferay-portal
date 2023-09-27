@@ -1,21 +1,26 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayButton from '@clayui/button';
-import ClayDropDown, {Align} from '@clayui/drop-down';
+import {Option, Picker} from '@clayui/core';
 import {SearchForm} from '@liferay/layout-js-components-web';
 import React from 'react';
+
+const Trigger = React.forwardRef(
+	({className, selectedItem, ...otherProps}, ref) => (
+		<ClayButton
+			{...otherProps}
+			aria-label={Liferay.Language.get('filter-by-content-type')}
+			className={`${className} c-mb-2 form-control-sm`}
+			displayType="unstyled"
+			ref={ref}
+		>
+			<span>{selectedItem}</span>
+		</ClayButton>
+	)
+);
 
 export default function ContentFilter({
 	contentTypes,
@@ -29,44 +34,16 @@ export default function ContentFilter({
 				{Liferay.Language.get('content-filtering-help')}
 			</p>
 
-			<ClayDropDown
-				alignmentPosition={Align.BottomLeft}
-				className="mb-2"
-				closeOnClick
-				menuElementAttrs={{
-					containerProps: {
-						className: 'cadmin',
-					},
-				}}
-				trigger={
-					<ClayButton
-						aria-label={Liferay.Language.get(
-							'filter-by-content-type'
-						)}
-						className="form-control form-control-select form-control-sm text-left"
-						displayType="unstyled"
-						size="sm"
-						type="button"
-					>
-						<span>{selectedType}</span>
-					</ClayButton>
-				}
+			<Picker
+				UNSAFE_menuClassName="cadmin"
+				as={Trigger}
+				items={contentTypes}
+				onSelectionChange={onChangeSelect}
+				selectedItem={selectedType}
+				selectedKey={selectedType}
 			>
-				<ClayDropDown.ItemList role="listbox">
-					{contentTypes?.map((type) => (
-						<React.Fragment key={type}>
-							<ClayDropDown.Item
-								onClick={() => onChangeSelect(type)}
-								symbolRight={
-									selectedType === type ? 'check' : undefined
-								}
-							>
-								{type}
-							</ClayDropDown.Item>
-						</React.Fragment>
-					))}
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
+				{(type) => <Option key={type}>{type}</Option>}
+			</Picker>
 
 			<SearchForm
 				className="mb-3"

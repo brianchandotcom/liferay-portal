@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.search.experiences.internal.suggestions.spi;
@@ -24,7 +15,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -37,6 +27,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -97,11 +88,14 @@ public class SXPBlueprintSuggestionsContributor
 			(Map<String, Object>)
 				suggestionsContributorConfiguration.getAttributes();
 
-		if ((attributes == null) || !attributes.containsKey("sxpBlueprintId")) {
+		if ((attributes == null) ||
+			(!attributes.containsKey("sxpBlueprintExternalReferenceCode") &&
+			 !attributes.containsKey("sxpBlueprintId"))) {
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Attributes do not contain search experiences blueprint " +
-						"ID");
+						"External Reference Code or ID");
 			}
 
 			return null;
@@ -118,6 +112,8 @@ public class SXPBlueprintSuggestionsContributor
 				searchContext,
 				GetterUtil.getInteger(
 					suggestionsContributorConfiguration.getSize(), 5),
+				MapUtil.getString(
+					attributes, "sxpBlueprintExternalReferenceCode"),
 				MapUtil.getLong(attributes, "sxpBlueprintId")));
 
 		SearchHits searchHits = searchResponse.getSearchHits();
@@ -153,18 +149,6 @@ public class SXPBlueprintSuggestionsContributor
 		return false;
 	}
 
-	private Layout _fetchLayoutByFriendlyURL(long groupId, String friendlyURL) {
-		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			groupId, false, friendlyURL);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		return _layoutLocalService.fetchLayoutByFriendlyURL(
-			groupId, true, friendlyURL);
-	}
-
 	private AssetRenderer<?> _getAssetRenderer(
 		AssetRendererFactory<?> assetRendererFactory, long entryClassPK) {
 
@@ -181,22 +165,19 @@ public class SXPBlueprintSuggestionsContributor
 	private String _getAssetURL(
 		AssetRenderer<?> assetRenderer,
 		AssetRendererFactory<?> assetRendererFactory, String entryClassName,
-		long entryClassPK, Layout layout,
-		LiferayPortletRequest liferayPortletRequest,
+		long entryClassPK, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		try {
-			if (layout == null) {
-				return StringPool.BLANK;
-			}
-
 			String viewURL = null;
 
 			PortletURL viewContentURL =
 				PortletURLBuilder.createLiferayPortletURL(
-					liferayPortletResponse, layout.getPlid(),
+					liferayPortletResponse,
 					SearchResultsPortletKeys.SEARCH_RESULTS,
 					PortletRequest.RENDER_PHASE
+				).setRedirect(
+					_portal.getCurrentURL(liferayPortletRequest)
 				).setPortletMode(
 					PortletMode.VIEW
 				).setWindowState(
@@ -282,7 +263,8 @@ public class SXPBlueprintSuggestionsContributor
 	}
 
 	private SearchRequest _getSearchRequest(
-		SearchContext searchContext1, int size, long sxpBlueprintId) {
+		SearchContext searchContext1, int size,
+		String sxpBlueprintExternalReferenceCode, long sxpBlueprintId) {
 
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder();
@@ -299,6 +281,9 @@ public class SXPBlueprintSuggestionsContributor
 					SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH,
 					searchContext1.getAttribute(
 						SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH));
+				searchContext2.setAttribute(
+					"search.experiences.blueprint.external.reference.code",
+					sxpBlueprintExternalReferenceCode);
 				searchContext2.setAttribute(
 					"search.experiences.blueprint.id", sxpBlueprintId);
 				searchContext2.setAttribute(
@@ -325,8 +310,7 @@ public class SXPBlueprintSuggestionsContributor
 
 	private Suggestion _getSuggestion(
 		List<String> fieldNames, boolean includeAssetSearchSummary,
-		boolean includeAssetURL, Layout layout,
-		LiferayPortletRequest liferayPortletRequest,
+		boolean includeAssetURL, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		SearchContext searchContext, SearchHit searchHit, String text,
 		boolean useAssetTitle) {
@@ -381,7 +365,7 @@ public class SXPBlueprintSuggestionsContributor
 				"assetURL",
 				_getAssetURL(
 					assetRenderer, assetRendererFactory, entryClassName,
-					entryClassPK, layout, liferayPortletRequest,
+					entryClassPK, liferayPortletRequest,
 					liferayPortletResponse));
 		}
 
@@ -409,16 +393,6 @@ public class SXPBlueprintSuggestionsContributor
 		boolean includeAssetURL = MapUtil.getBoolean(
 			attributes, "includeAssetURL", true);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Layout layout = _fetchLayoutByFriendlyURL(
-			themeDisplay.getScopeGroupId(),
-			GetterUtil.getString(
-				searchContext.getAttribute(
-					"search.suggestions.destination.friendly.url")));
-
 		String textFieldName = MapUtil.getString(attributes, "textField");
 
 		for (SearchHit searchHit : searchHits) {
@@ -428,7 +402,7 @@ public class SXPBlueprintSuggestionsContributor
 				suggestions.add(
 					_getSuggestion(
 						fieldNames, includeAssetSearchSummary, includeAssetURL,
-						layout, liferayPortletRequest, liferayPortletResponse,
+						liferayPortletRequest, liferayPortletResponse,
 						searchContext, searchHit, StringPool.BLANK, true));
 
 				continue;
@@ -447,7 +421,7 @@ public class SXPBlueprintSuggestionsContributor
 						suggestions.add(
 							_getSuggestion(
 								fieldNames, includeAssetSearchSummary,
-								includeAssetURL, layout, liferayPortletRequest,
+								includeAssetURL, liferayPortletRequest,
 								liferayPortletResponse, searchContext,
 								searchHit, part, false));
 					}
@@ -456,7 +430,7 @@ public class SXPBlueprintSuggestionsContributor
 					suggestions.add(
 						_getSuggestion(
 							fieldNames, includeAssetSearchSummary,
-							includeAssetURL, layout, liferayPortletRequest,
+							includeAssetURL, liferayPortletRequest,
 							liferayPortletResponse, searchContext, searchHit,
 							text, false));
 				}
@@ -489,6 +463,9 @@ public class SXPBlueprintSuggestionsContributor
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private Searcher _searcher;

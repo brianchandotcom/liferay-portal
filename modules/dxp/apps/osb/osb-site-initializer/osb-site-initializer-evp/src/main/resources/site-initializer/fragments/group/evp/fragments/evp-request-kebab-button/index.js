@@ -1,19 +1,14 @@
 /* eslint-disable no-undef */
 /* eslint-disable @liferay/portal/no-global-fetch */
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 const MODAL_BTN_OPTION = {
-	APPROVE: 'approve',
-	REVIEW: 'review',
+	APPROVE: 'md-approve',
+	REJECT: 'md-reject',
+	REVIEW: 'md-review',
 };
 
 const ROLE = {
@@ -207,7 +202,7 @@ const openModal = (optionBtn) => {
 								type: 'submit',
 							},
 						],
-						headerHTML: `<p class="request-modal-header">Approve Request:</p><p>${requestName}</p>`,
+						headerHTML: `<p class="request-modal-header">Approve Request: <span>${requestName}</span></p>`,
 				  }
 				: {
 						buttons: [
@@ -230,13 +225,13 @@ const openModal = (optionBtn) => {
 								type: 'submit',
 							},
 						],
-						headerHTML: `<p class="request-modal-header">Reject Request:</p><p>${requestName}</p>`,
+						headerHTML: `<p class="request-modal-header">Reject Request: <span>${requestName}</span></p>`,
 				  };
 	}
 
 	Liferay.Util.openModal({
 		bodyHTML:
-			'<textarea id="messageDescribed" style="word-wrap: break-word;width:100%;height: 10em;resize: none; border-style: inset;border-width: 1px;border-radius: 5px;" placeholder="Describe here..."></textarea>' +
+			'<textarea id="messageDescribed" style="word-wrap: break-word;width:100%;height: 10em;resize: none; border-style: inset;border-width: 1px;border-radius: 5px;padding: 5px;" placeholder="Describe here..."></textarea>' +
 			'<div id="messageDanger" class="alert alert-danger" role="alert" hidden>This field is mandatory, please fill it in.</div>',
 		buttons: modalConfigs?.buttons,
 		center: true,
@@ -249,6 +244,9 @@ const btnOpenModal = fragmentElement.querySelectorAll('.btn-open-modal');
 
 if (btnOpenModal.length) {
 	btnOpenModal.forEach((cur_optionBtn) => {
-		cur_optionBtn.onclick = () => openModal(cur_optionBtn.classList[1]);
+		const type = Array.from(cur_optionBtn.classList).find((className) =>
+			className.includes('md-')
+		);
+		cur_optionBtn.onclick = () => openModal(type);
 	});
 }

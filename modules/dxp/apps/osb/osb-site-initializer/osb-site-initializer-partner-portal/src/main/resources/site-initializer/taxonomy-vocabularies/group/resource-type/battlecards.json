@@ -1,0 +1,21 @@
+{
+	"description": "Battlecards",
+	"externalReferenceCode": "PRMC042",
+	"name": "Battlecards",
+	"name_i18n": {
+		"ar_SA": "Battlecards",
+		"ca_ES": "Battlecards",
+		"de_DE": "Battlecards",
+		"en_US": "Battlecards",
+		"es_ES": "Battlecards",
+		"fi_FI": "Battlecards",
+		"fr_FR": "Battlecards",
+		"hu_HU": "Battlecards",
+		"ja_JP": "Battlecards",
+		"nl_NL": "Battlecards",
+		"pt_BR": "Battlecards",
+		"sv_SE": "Battlecards",
+		"zh_CN": "Battlecards"
+	},
+	"viewableBy": "Anyone"
+}

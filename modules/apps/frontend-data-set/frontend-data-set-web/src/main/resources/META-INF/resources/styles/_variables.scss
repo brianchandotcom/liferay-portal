@@ -1,20 +1,37 @@
 @import 'atlas-variables';
 
-$warning-secondary: #ff8f39;
-$warning-primary: #863a00;
+// Colors
 
-$danger-secondary: #f48989;
+$border-color: #e7e7ed;
+
 $danger-primary: #da1414;
-
-$success-secondary: #5aca76;
-$success-primary: #287d3d;
-
-$info-secondary: #89a7e0;
-$info-primary: #2e5aac;
+$danger-secondary: #f48989;
 
 $error-l1: lighten($danger-primary, 28%);
+
+$gray-200: #f1f2f5;
 $gray-600: #6b6c7e;
+
+$info-bc: #eef2fa;
+$info-primary: #2e5aac;
+$info-secondary: #89a7e0;
+
+$primary-color: #0b5fff;
+
 $secondary-text: $gray-600;
+
+$step-tracker-active: #6b6c7e;
+$step-tracker-completed: #6fcf97;
+$step-tracker-inactive: #cdced9;
+
+$success-primary: #287d3d;
+$success-secondary: #5aca76;
+
+$warning-primary: #863a00;
+$warning-secondary: #ff8f39;
+
+// Spacers
+
 $spacer: 1rem;
 
 $spacers: (
@@ -25,12 +42,3 @@ $spacers: (
 	4: $spacer * 1.5,
 	5: $spacer * 3,
 );
-
-$primary-color: #0b5fff;
-$background-color: #f1f2f4;
-$border-color: #e7e7ed;
-$info-bc: #eef2fa;
-
-$step-tracker-completed: #6fcf97;
-$step-tracker-active: #6b6c7e;
-$step-tracker-inactive: #cdced9;

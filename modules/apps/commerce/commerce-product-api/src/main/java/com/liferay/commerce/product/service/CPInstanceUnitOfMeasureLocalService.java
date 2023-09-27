@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.service;
@@ -89,6 +80,13 @@ public interface CPInstanceUnitOfMeasureLocalService
 		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure);
 
 	public CPInstanceUnitOfMeasure addCPInstanceUnitOfMeasure(
+			long userId, long cpInstanceId, boolean active,
+			BigDecimal incrementalOrderQuantity, String key,
+			Map<Locale, String> nameMap, int precision, boolean primary,
+			double priority, BigDecimal rate, String sku)
+		throws PortalException;
+
+	public CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
 			long userId, long cpInstanceId, boolean active,
 			BigDecimal incrementalOrderQuantity, String key,
 			Map<Locale, String> nameMap, int precision, boolean primary,
@@ -228,6 +226,10 @@ public interface CPInstanceUnitOfMeasureLocalService
 	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
 		long cpInstanceId, String key);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
+		long companyId, String key, String sku);
+
 	/**
 	 * Returns the cp instance unit of measure with the matching UUID and company.
 	 *
@@ -241,7 +243,18 @@ public interface CPInstanceUnitOfMeasureLocalService
 			String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstanceUnitOfMeasure fetchPrimaryCPInstanceUnitOfMeasure(
+		long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstanceUnitOfMeasure> getActiveCPInstanceUnitOfMeasures(
+		long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getActiveCPInstanceUnitOfMeasuresCount(long cpInstanceId);
 
 	/**
 	 * Returns the cp instance unit of measure with the primary key.
@@ -293,6 +306,10 @@ public interface CPInstanceUnitOfMeasureLocalService
 		long cpInstanceId, int start, int end,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures(
+		long companyId, String sku);
+
 	/**
 	 * Returns the number of cp instance unit of measures.
 	 *
@@ -303,6 +320,9 @@ public interface CPInstanceUnitOfMeasureLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPInstanceUnitOfMeasuresCount(long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstanceUnitOfMeasuresCount(long companyId, String sku);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

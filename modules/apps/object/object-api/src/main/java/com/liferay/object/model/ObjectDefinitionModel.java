@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.model;
@@ -17,6 +8,7 @@ package com.liferay.object.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -41,8 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ObjectDefinitionModel
-	extends BaseModel<ObjectDefinition>, LocalizedModel, MVCCModel,
-			ShardedModel, StagedAuditedModel {
+	extends BaseModel<ObjectDefinition>, ExternalReferenceCodeModel,
+			LocalizedModel, MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -103,6 +95,7 @@ public interface ObjectDefinitionModel
 	 * @return the external reference code of this object definition
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -110,6 +103,7 @@ public interface ObjectDefinitionModel
 	 *
 	 * @param externalReferenceCode the external reference code of this object definition
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
@@ -251,6 +245,34 @@ public interface ObjectDefinitionModel
 	 * @param descriptionObjectFieldId the description object field ID of this object definition
 	 */
 	public void setDescriptionObjectFieldId(long descriptionObjectFieldId);
+
+	/**
+	 * Returns the object folder ID of this object definition.
+	 *
+	 * @return the object folder ID of this object definition
+	 */
+	public long getObjectFolderId();
+
+	/**
+	 * Sets the object folder ID of this object definition.
+	 *
+	 * @param objectFolderId the object folder ID of this object definition
+	 */
+	public void setObjectFolderId(long objectFolderId);
+
+	/**
+	 * Returns the root object definition ID of this object definition.
+	 *
+	 * @return the root object definition ID of this object definition
+	 */
+	public long getRootObjectDefinitionId();
+
+	/**
+	 * Sets the root object definition ID of this object definition.
+	 *
+	 * @param rootObjectDefinitionId the root object definition ID of this object definition
+	 */
+	public void setRootObjectDefinitionId(long rootObjectDefinitionId);
 
 	/**
 	 * Returns the title object field ID of this object definition.
@@ -499,6 +521,27 @@ public interface ObjectDefinitionModel
 	 * @param enableLocalization the enable localization of this object definition
 	 */
 	public void setEnableLocalization(boolean enableLocalization);
+
+	/**
+	 * Returns the enable object entry draft of this object definition.
+	 *
+	 * @return the enable object entry draft of this object definition
+	 */
+	public boolean getEnableObjectEntryDraft();
+
+	/**
+	 * Returns <code>true</code> if this object definition is enable object entry draft.
+	 *
+	 * @return <code>true</code> if this object definition is enable object entry draft; <code>false</code> otherwise
+	 */
+	public boolean isEnableObjectEntryDraft();
+
+	/**
+	 * Sets whether this object definition is enable object entry draft.
+	 *
+	 * @param enableObjectEntryDraft the enable object entry draft of this object definition
+	 */
+	public void setEnableObjectEntryDraft(boolean enableObjectEntryDraft);
 
 	/**
 	 * Returns the enable object entry history of this object definition.

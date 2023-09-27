@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.gradle.plugins.go.task;
@@ -26,6 +17,10 @@ import java.util.Map;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.CacheableTask;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 
 /**
@@ -75,30 +70,39 @@ public class ExecuteGoTask extends DefaultTask {
 		_goExecutor.execute();
 	}
 
+	@Input
 	public List<Object> getArgs() {
 		return _goExecutor.getArgs();
 	}
 
+	@Input
 	public String getCommand() {
 		return _goExecutor.getCommand();
 	}
 
+	@Input
 	public Map<?, ?> getEnvironment() {
 		return _goExecutor.getEnvironment();
 	}
 
+	@InputDirectory
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getGoDir() {
 		return _goExecutor.getGoDir();
 	}
 
+	@InputDirectory
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getWorkingDir() {
 		return _goExecutor.getWorkingDir();
 	}
 
+	@Input
 	public boolean isInheritProxy() {
 		return _goExecutor.isInheritProxy();
 	}
 
+	@Input
 	public boolean isUseGradleExec() {
 		return _goExecutor.isUseGradleExec();
 	}

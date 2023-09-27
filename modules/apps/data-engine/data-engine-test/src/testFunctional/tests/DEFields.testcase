@@ -1,0 +1,179 @@
+@component-name = "data-engine"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Data Engine";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Account.tearDownCP();
+		}
+	}
+
+	@description = "LPS-179785 - It's possible to cancel the edition when re-ordering repeatable fields"
+	@priority = 3
+	test CancelRepeatableFieldsReordering {
+		task ("Given a Web Content with Structure that contains repeatable fields") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Title");
+
+			DEBuilder.addField(
+				fieldLabel = "Text",
+				fieldName = "Text");
+
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("and Given the repeatable fields from a Web Content are being reordered") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+			PortletEntry.inputTitle(title = "Web Content Title");
+
+			DataEngine.addRepeatableField(fieldLabel = "Text");
+
+			DERenderer.inputDataInTextField(
+				fieldLabel = "Text",
+				index = 1,
+				value = "Entry 1");
+
+			DERenderer.inputDataInTextField(
+				fieldLabel = "Text",
+				index = 2,
+				value = "Entry 2");
+
+			Button.clickPublish();
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fieldFieldLabel = "Text",
+				key_index = 1,
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY",
+				locator2 = "DDMEditStructure#FORM_FIELD_GROUP_TARGET_SPACE");
+		}
+
+		task ("When a user cancels the editing") {
+			AssertTextEquals.assertValue(
+				index = 1,
+				key_fieldLabel = "Text",
+				locator1 = "DataEngineRenderer#TEXT_INPUT_INDEXED",
+				value1 = "Entry 2");
+
+			AssertTextEquals.assertValue(
+				index = 2,
+				key_fieldLabel = "Text",
+				locator1 = "DataEngineRenderer#TEXT_INPUT_INDEXED",
+				value1 = "Entry 1");
+
+			AssertClick(
+				locator1 = "Button#CANCEL",
+				value1 = "Cancel");
+		}
+
+		task ("Then the asset should keep the previous order") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			AssertTextEquals.assertValue(
+				index = 1,
+				key_fieldLabel = "Text",
+				locator1 = "DataEngineRenderer#TEXT_INPUT_INDEXED",
+				value1 = "Entry 1");
+
+			AssertTextEquals.assertValue(
+				index = 2,
+				key_fieldLabel = "Text",
+				locator1 = "DataEngineRenderer#TEXT_INPUT_INDEXED",
+				value1 = "Entry 2");
+		}
+	}
+
+	@description = "LPS-179788 - It's not possible to mix repeatable fields with other repeatable fields"
+	@priority = 4
+	test CannotMixRepeatableFields {
+		task ("Given a Web Content with Structure that contains repeatable fields") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Title");
+
+			DEBuilder.addField(
+				fieldLabel = "Text",
+				fieldName = "Text");
+
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
+
+			DEBuilder.addField(
+				fieldLabel = "Date",
+				fieldName = "Date");
+
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Date");
+
+			DEBuilder.addField(
+				fieldLabel = "Numeric",
+				fieldName = "Numeric");
+
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Numeric");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When a user creates a Web Content from the Structure") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+			PortletEntry.inputTitle(title = "Web Content Title");
+		}
+
+		task ("and When the user try be able to mix repeatable fields") {
+			AssertElementPresent(locator1 = "DDMEditStructure#FORM_FIELD_GROUP_TARGET_SPACE");
+
+			DragOver(
+				key_fieldFieldLabel = "Text",
+				key_indexItem = 1,
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY",
+				locator2 = "DDMEditStructure#FORM_FIELD_GROUP_TARGET_SPACE");
+		}
+
+		task ("Then the user should not be able to mix repeatable fields with other repeatable fields") {
+			AssertTextEquals(
+				index = 1,
+				key_fieldFieldLabel = "Text",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+				value1 = "Text");
+
+			AssertTextEquals(
+				index = 2,
+				key_fieldFieldLabel = "Date",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+				value1 = "Date");
+
+			AssertTextEquals(
+				index = 3,
+				key_fieldFieldLabel = "Numeric",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+				value1 = "Numeric");
+		}
+	}
+
+}

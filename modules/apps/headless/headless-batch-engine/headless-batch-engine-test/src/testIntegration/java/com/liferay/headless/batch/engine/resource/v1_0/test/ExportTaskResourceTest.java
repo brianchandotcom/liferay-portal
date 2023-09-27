@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.batch.engine.resource.v1_0.test;
@@ -360,6 +351,7 @@ public class ExportTaskResourceTest {
 			"ProductSpecification",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku",
+		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuUnitOfMeasure",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
 			"PaymentMethodGroupRelOrderType",
@@ -454,6 +446,8 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0." +
+			"ProductOptionValue",
+		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0." +
 			"ProductSpecification",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0." +
 			"RelatedProduct",
@@ -503,6 +497,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.notification.rest.dto.v1_0.NotificationQueueEntry",
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectAction",
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectField",
+		"com.liferay.object.admin.rest.dto.v1_0.ObjectFolder",
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectLayout",
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship",
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule",
@@ -535,7 +530,6 @@ public class ExportTaskResourceTest {
 		"com.liferay.search.experiences.rest.dto.v1_0." +
 			"SearchableAssetNameDisplay",
 		"com.liferay.search.experiences.rest.dto.v1_0.SearchIndex",
-		"com.liferay.search.experiences.rest.dto.v1_0.SXPElement",
 		"com.liferay.search.experiences.rest.dto.v1_0." +
 			"SXPParameterContributorDefinition",
 		"com.liferay.segments.asah.rest.dto.v1_0.Experiment",

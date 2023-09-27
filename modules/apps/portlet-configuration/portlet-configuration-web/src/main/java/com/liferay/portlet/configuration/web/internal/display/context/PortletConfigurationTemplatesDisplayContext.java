@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portlet.configuration.web.internal.display.context;
@@ -23,7 +14,7 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.ArchivedSettingsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -60,6 +51,9 @@ public class PortletConfigurationTemplatesDisplayContext {
 
 		_moduleName = (String)renderRequest.getAttribute(
 			PortletConfigurationWebKeys.MODULE_NAME);
+		_archivedSettingsFactory =
+			(ArchivedSettingsFactory)renderRequest.getAttribute(
+				PortletConfigurationWebKeys.SETTINGS_FACTORY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems(
@@ -77,21 +71,21 @@ public class PortletConfigurationTemplatesDisplayContext {
 	public SearchContainer<ArchivedSettings>
 		getArchivedSettingsSearchContainer() {
 
-		if (_archivedSettingsSearch != null) {
-			return _archivedSettingsSearch;
+		if (_archivedSettingsSearchContainer != null) {
+			return _archivedSettingsSearchContainer;
 		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContainer<ArchivedSettings> archivedSettingsSearch =
+		SearchContainer<ArchivedSettings> archivedSettingsSearchContainer =
 			new SearchContainer<>(
 				_renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM,
 				SearchContainer.DEFAULT_DELTA, getPortletURL(), null,
 				"there-are-no-configuration-templates");
 
-		archivedSettingsSearch.setOrderByCol(getOrderByCol());
+		archivedSettingsSearchContainer.setOrderByCol(getOrderByCol());
 
 		boolean orderByAsc = false;
 
@@ -109,25 +103,25 @@ public class PortletConfigurationTemplatesDisplayContext {
 			orderByComparator = new ArchivedSettingsNameComparator(orderByAsc);
 		}
 
-		archivedSettingsSearch.setOrderByComparator(orderByComparator);
-		archivedSettingsSearch.setOrderByType(getOrderByType());
+		archivedSettingsSearchContainer.setOrderByComparator(orderByComparator);
+		archivedSettingsSearchContainer.setOrderByType(getOrderByType());
 
 		Portlet selPortlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), getPortletResource());
 
-		archivedSettingsSearch.setResultsAndTotal(
+		archivedSettingsSearchContainer.setResultsAndTotal(
 			ListUtil.sort(
-				SettingsFactoryUtil.getPortletInstanceArchivedSettingsList(
+				_archivedSettingsFactory.getPortletInstanceArchivedSettingsList(
 					themeDisplay.getScopeGroupId(),
 					selPortlet.getRootPortletId()),
-				archivedSettingsSearch.getOrderByComparator()));
+				archivedSettingsSearchContainer.getOrderByComparator()));
 
-		archivedSettingsSearch.setRowChecker(
+		archivedSettingsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
-		_archivedSettingsSearch = archivedSettingsSearch;
+		_archivedSettingsSearchContainer = archivedSettingsSearchContainer;
 
-		return _archivedSettingsSearch;
+		return _archivedSettingsSearchContainer;
 	}
 
 	public String getDisplayStyle() {
@@ -249,7 +243,8 @@ public class PortletConfigurationTemplatesDisplayContext {
 		return _returnToFullPageURL;
 	}
 
-	private SearchContainer<ArchivedSettings> _archivedSettingsSearch;
+	private final ArchivedSettingsFactory _archivedSettingsFactory;
+	private SearchContainer<ArchivedSettings> _archivedSettingsSearchContainer;
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private final String _moduleName;

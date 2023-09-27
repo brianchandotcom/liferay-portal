@@ -5,7 +5,7 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "org.quartz-scheduler", name: "quartz", version: "2.1.7"
+	api group: "org.quartz-scheduler", name: "quartz", version: "2.1.7"
 }
 
 patch {

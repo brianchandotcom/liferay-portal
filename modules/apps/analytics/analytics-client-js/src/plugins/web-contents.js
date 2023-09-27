@@ -1,18 +1,9 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getNumberOfWords} from '../utils/assets';
+import {getNumberOfWords, isTrackable} from '../utils/assets';
 import {WEB_CONTENT} from '../utils/constants';
 import {debounce} from '../utils/debounce';
 import {clickEvent, onEvents, onReady} from '../utils/events';
@@ -38,15 +29,6 @@ function getWebContentPayload({dataset}) {
 }
 
 /**
- * Wether a WebContent is trackable or not.
- * @param {Object} element The WebContent DOM element
- * @returns {boolean} True if the element is trackable.
- */
-function isTrackableWebContent(element) {
-	return element && 'analyticsAssetId' in element.dataset;
-}
-
-/**
  * Sends information when user clicks on a Web Content.
  * @param {Object} The Analytics client instance
  */
@@ -56,7 +38,7 @@ function trackWebContentClicked(analytics) {
 		applicationId,
 		eventType: 'webContentClicked',
 		getPayload: getWebContentPayload,
-		isTrackable: isTrackableWebContent,
+		isTrackable,
 		type: 'web-content',
 	});
 }
@@ -73,7 +55,7 @@ function trackWebContentViewed(analytics) {
 					'[data-analytics-asset-type="web-content"]:not([data-analytics-asset-viewed="true"]'
 				)
 			)
-			.filter((element) => isTrackableWebContent(element));
+			.filter((element) => isTrackable(element));
 
 		elements.forEach((element) => {
 			if (isPartiallyInViewport(element)) {

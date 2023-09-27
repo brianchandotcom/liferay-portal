@@ -1,16 +1,7 @@
 <%--
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
@@ -101,13 +92,13 @@ PortletURL editPageURL = PortletURLBuilder.createRenderURL(
 	"title", title
 ).buildPortletURL();
 
-PortletURL printPageURL = PortletURLBuilder.create(
+String printPageURL = PortletURLBuilder.create(
 	PortletURLUtil.clone(viewPageURL, renderResponse)
 ).setParameter(
 	"viewMode", Constants.PRINT
 ).setWindowState(
 	LiferayWindowState.POP_UP
-).buildPortletURL();
+).buildString();
 
 PortletURL categorizedPagesURL = PortletURLBuilder.createRenderURL(
 	renderResponse
@@ -202,17 +193,6 @@ if (portletTitleBasedNavigation) {
 								print();
 							</aui:script>
 						</c:when>
-						<c:otherwise>
-							<aui:script>
-								function <portlet:namespace />printPage() {
-									window.open(
-										'<%= printPageURL %>',
-										'',
-										'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640'
-									);
-								}
-							</aui:script>
-						</c:otherwise>
 					</c:choose>
 
 					<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
@@ -316,10 +296,20 @@ if (portletTitleBasedNavigation) {
 
 							<liferay-ui:icon
 								icon="print"
+								id="printPageButton"
 								label="<%= true %>"
 								markupView="lexicon"
 								message="print"
-								url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage();" %>'
+								url="javascript:void(0);"
+							/>
+
+							<liferay-frontend:component
+								context='<%=
+									HashMapBuilder.<String, Object>put(
+										"printPageURL", printPageURL
+									).build()
+								%>'
+								module="wiki/js/printPageButtonEventListener"
 							/>
 						</div>
 					</c:if>

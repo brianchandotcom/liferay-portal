@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Product Navigation Simulation API
 Bundle-SymbolicName: com.liferay.product.navigation.simulation.api
-Bundle-Version: 5.0.5
+Bundle-Version: 5.0.6
 Export-Package: com.liferay.product.navigation.simulation.constants

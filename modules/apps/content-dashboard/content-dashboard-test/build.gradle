@@ -1,22 +1,22 @@
 dependencies {
-	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
-	testIntegrationCompile group: "org.apache.commons", name: "commons-collections4", version: "4.4"
-	testIntegrationCompile group: "org.apache.commons", name: "commons-compress", version: "1.21"
-	testIntegrationCompile group: "org.apache.poi", name: "poi", version: "5.2.2"
-	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
-	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
-	testIntegrationCompile project(":apps:application-list:application-list-api")
-	testIntegrationCompile project(":apps:asset:asset-entry-rel-api")
-	testIntegrationCompile project(":apps:asset:asset-test-util")
-	testIntegrationCompile project(":apps:blogs:blogs-api")
-	testIntegrationCompile project(":apps:content-dashboard:content-dashboard-api")
-	testIntegrationCompile project(":apps:content-dashboard:content-dashboard-web")
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
-	testIntegrationCompile project(":apps:info:info-api")
-	testIntegrationCompile project(":apps:item-selector:item-selector-api")
-	testIntegrationCompile project(":apps:journal:journal-api")
-	testIntegrationCompile project(":apps:journal:journal-test-util")
-	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	testIntegrationImplementation group: "org.apache.commons", name: "commons-collections4", version: "4.4"
+	testIntegrationImplementation group: "org.apache.commons", name: "commons-compress", version: "1.21"
+	testIntegrationImplementation group: "org.apache.poi", name: "poi", version: "5.2.2"
+	testIntegrationImplementation group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
+	testIntegrationImplementation group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
+	testIntegrationImplementation project(":apps:application-list:application-list-api")
+	testIntegrationImplementation project(":apps:asset:asset-entry-rel-api")
+	testIntegrationImplementation project(":apps:asset:asset-test-util")
+	testIntegrationImplementation project(":apps:blogs:blogs-api")
+	testIntegrationImplementation project(":apps:content-dashboard:content-dashboard-api")
+	testIntegrationImplementation project(":apps:content-dashboard:content-dashboard-web")
+	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationImplementation project(":apps:info:info-api")
+	testIntegrationImplementation project(":apps:item-selector:item-selector-api")
+	testIntegrationImplementation project(":apps:journal:journal-api")
+	testIntegrationImplementation project(":apps:journal:journal-test-util")
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

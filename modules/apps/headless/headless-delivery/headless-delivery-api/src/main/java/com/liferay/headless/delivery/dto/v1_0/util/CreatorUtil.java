@@ -36,9 +36,7 @@ public class CreatorUtil {
 				familyName = user.getLastName();
 				givenName = user.getFirstName();
 
-				id = user.getUserId();
-				name = user.getFullName();
-
+				setId(user.getUserId());
 				setImage(
 					() -> {
 						if (user.getPortraitId() == 0) {
@@ -53,6 +51,7 @@ public class CreatorUtil {
 
 						return user.getPortraitURL(themeDisplay);
 					});
+				setName(user.getFullName());
 				setProfileURL(
 					() -> {
 						if ((dtoConverterContext == null) ||

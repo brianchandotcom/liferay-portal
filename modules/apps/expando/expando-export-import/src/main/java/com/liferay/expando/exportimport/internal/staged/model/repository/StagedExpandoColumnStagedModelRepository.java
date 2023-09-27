@@ -95,8 +95,7 @@ public class StagedExpandoColumnStagedModelRepository
 
 		List<StagedExpandoColumn> stagedExpandoColumns =
 			fetchStagedModelsByUuidAndCompanyId(
-				extraDataJSONObject.getString("uuid"),
-				group.getCompanyId());
+				extraDataJSONObject.getString("uuid"), group.getCompanyId());
 
 		if (ListUtil.isEmpty(stagedExpandoColumns)) {
 			return;

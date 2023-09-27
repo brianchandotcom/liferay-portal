@@ -7802,7 +7802,7 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			String suffix = StringBundler.concat(
-				StringPool.DASH, copy, StringPool.DASH, i, StringPool.DASH);
+				StringPool.DASH, copy, StringPool.DASH, i);
 
 			urlTitle = prefix + suffix;
 		}

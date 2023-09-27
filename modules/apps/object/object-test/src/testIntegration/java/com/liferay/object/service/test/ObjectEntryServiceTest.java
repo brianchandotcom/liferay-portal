@@ -114,10 +114,10 @@ public class ObjectEntryServiceTest {
 
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-
 		_tree = TreeTestUtil.createTree(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
+		_user = UserTestUtil.addUser();
 
 		ObjectDefinition rootObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -127,8 +127,6 @@ public class ObjectEntryServiceTest {
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				_adminUser.getUserId(),
 				rootObjectDefinition.getObjectDefinitionId());
-
-		_user = UserTestUtil.addUser();
 	}
 
 	@After

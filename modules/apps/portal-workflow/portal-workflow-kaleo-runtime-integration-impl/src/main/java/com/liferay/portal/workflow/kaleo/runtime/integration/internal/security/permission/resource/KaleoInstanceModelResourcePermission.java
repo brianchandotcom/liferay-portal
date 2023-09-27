@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstance",
 	service = ModelResourcePermission.class
 )
-public class WorkflowInstanceModelResourcePermission
+public class KaleoInstanceModelResourcePermission
 	implements ModelResourcePermission<KaleoInstance> {
 
 	@Override

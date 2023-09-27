@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken",
 	service = ModelResourcePermission.class
 )
-public class WorkflowTaskModelResourcePermission
+public class KaleoTaskModelResourcePermission
 	implements ModelResourcePermission<KaleoTaskInstanceToken> {
 
 	@Override

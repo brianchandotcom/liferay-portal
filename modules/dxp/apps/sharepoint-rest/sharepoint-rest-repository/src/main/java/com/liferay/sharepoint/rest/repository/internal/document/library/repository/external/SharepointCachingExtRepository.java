@@ -38,8 +38,9 @@ public class SharepointCachingExtRepository implements ExtRepository {
 
 	@Override
 	public ExtRepositoryFileEntry addExtRepositoryFileEntry(
-			String extRepositoryParentFolderKey, String mimeType, String title,
-			String description, String changeLog, InputStream inputStream)
+			String extRepositoryParentFolderKey, String fileName,
+			String mimeType, String title, String description, String changeLog,
+			InputStream inputStream)
 		throws PortalException {
 
 		Map<String, List<ExtRepositoryObject>> extRepositoryObjectsCache =
@@ -49,8 +50,8 @@ public class SharepointCachingExtRepository implements ExtRepository {
 
 		ExtRepositoryFileEntry extRepositoryFileEntry =
 			_extRepository.addExtRepositoryFileEntry(
-				extRepositoryParentFolderKey, mimeType, title, description,
-				changeLog, inputStream);
+				extRepositoryParentFolderKey, fileName, mimeType, title,
+				description, changeLog, inputStream);
 
 		Map<String, ExtRepositoryObject> extRepositoryObjectCache =
 			_extRepositoryObjectCache.get();

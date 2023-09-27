@@ -45,8 +45,9 @@ public interface ExtRepository {
 	 *
 	 * @param  extRepositoryParentFolderKey the primary key of the repository
 	 *         file entry's parent folder
+	 * @param  fileName the repository file entry's file name
 	 * @param  mimeType the repository file entry's MIME type
-	 * @param  title the repository file entry's name
+	 * @param  title the repository file entry's title
 	 * @param  description the repository file entry's description
 	 * @param  changeLog the repository file entry's version change log
 	 * @param  inputStream the repository file entry's data (optionally
@@ -56,8 +57,9 @@ public interface ExtRepository {
 	 *         found or if the repository file entry's information was invalid
 	 */
 	public ExtRepositoryFileEntry addExtRepositoryFileEntry(
-			String extRepositoryParentFolderKey, String mimeType, String title,
-			String description, String changeLog, InputStream inputStream)
+			String extRepositoryParentFolderKey, String fileName,
+			String mimeType, String title, String description, String changeLog,
+			InputStream inputStream)
 		throws PortalException;
 
 	/**

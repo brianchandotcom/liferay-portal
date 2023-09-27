@@ -74,8 +74,9 @@ public class SharepointWSRepository
 
 	@Override
 	public ExtRepositoryFileEntry addExtRepositoryFileEntry(
-			String extRepositoryParentFolderKey, String mimeType, String title,
-			String description, String changeLog, InputStream inputStream)
+			String extRepositoryParentFolderKey, String fileName,
+			String mimeType, String title, String description, String changeLog,
+			InputStream inputStream)
 		throws PortalException {
 
 		String filePath = null;

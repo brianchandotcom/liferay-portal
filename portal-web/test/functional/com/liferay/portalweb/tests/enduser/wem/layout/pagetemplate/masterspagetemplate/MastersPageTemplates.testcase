@@ -38,7 +38,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102566, LPS-109594 and LPS-119634. Add a page based on custom master."
+	@description = "This is a test for LPS-102566, LPS-109594, LPS-119634 and LPS-104629. Add a page based on custom master."
 	@priority = 5
 	test AddPageBasedOnCustomMaster {
 		property portal.acceptance = "true";

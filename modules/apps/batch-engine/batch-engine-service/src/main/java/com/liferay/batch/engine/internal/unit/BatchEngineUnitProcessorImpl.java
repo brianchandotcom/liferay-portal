@@ -269,10 +269,14 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 						"processed"),
 					"."));
 
+			if (batchMarkerFile == null) {
+				return false;
+			}
+
 			String lastModifiedString = String.valueOf(
 				bundle.getLastModified());
 
-			if ((batchMarkerFile != null) && batchMarkerFile.exists() &&
+			if (batchMarkerFile.exists() &&
 				Objects.equals(
 					FileUtil.read(batchMarkerFile), lastModifiedString)) {
 

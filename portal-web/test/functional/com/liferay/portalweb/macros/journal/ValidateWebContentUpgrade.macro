@@ -64,6 +64,8 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
+		WaitForPageLoad();
+
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Boolean",
 			fieldFieldLabelEdit = "Boolean Edit",

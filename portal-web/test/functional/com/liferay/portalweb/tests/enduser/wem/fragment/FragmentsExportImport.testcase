@@ -22,21 +22,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			Navigator.openURL();
-
-			Site.tearDownCP();
-		}
-	}
-
 	@description = "This is a test for LPS-188478. Assert new import page of composition works."
 	@priority = 3
 	test CannotImportInvalidFragmentComposition {

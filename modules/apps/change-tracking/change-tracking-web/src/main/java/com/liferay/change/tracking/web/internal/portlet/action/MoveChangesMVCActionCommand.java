@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -43,17 +44,15 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "fromCTCollectionId");
 		long toCTCollectionId = ParamUtil.getLong(
 			actionRequest, "toCTCollectionId");
+		long modelClassNameId = ParamUtil.getLong(
+			actionRequest, "modelClassNameId");
+		long modelClassPK = ParamUtil.getLong(actionRequest, "modelClassPK");
 
 		if ((fromCTCollectionId != toCTCollectionId) &&
 			(fromCTCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) &&
 			(toCTCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
 
 			try {
-				long modelClassNameId = ParamUtil.getLong(
-					actionRequest, "modelClassNameId");
-				long modelClassPK = ParamUtil.getLong(
-					actionRequest, "modelClassPK");
-
 				_ctCollectionService.moveCTEntry(
 					fromCTCollectionId, toCTCollectionId, modelClassNameId,
 					modelClassPK);
@@ -67,6 +66,28 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (!SessionErrors.isEmpty(actionRequest)) {
+			redirect = PortletURLBuilder.createRenderURL(
+				_portal.getLiferayPortletResponse(actionResponse)
+			).setMVCRenderCommandName(
+				"/change_tracking/view_move_changes"
+			).setRedirect(
+				PortletURLBuilder.createRenderURL(
+					_portal.getLiferayPortletResponse(actionResponse)
+				).setMVCRenderCommandName(
+					"/change_tracking/view_changes"
+				).setParameter(
+					"ctCollectionId", fromCTCollectionId
+				).buildString()
+			).setParameter(
+				"ctCollectionId", fromCTCollectionId
+			).setParameter(
+				"modelClassNameId", modelClassNameId
+			).setParameter(
+				"modelClassPK", modelClassPK
+			).buildString();
+		}
 
 		actionResponse.sendRedirect(redirect);
 	}

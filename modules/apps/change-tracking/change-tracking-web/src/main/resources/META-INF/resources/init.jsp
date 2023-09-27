@@ -21,7 +21,9 @@ taglib uri="http://liferay.com/tld/user" prefix="liferay-user" %>
 
 <%@ page import="com.liferay.change.tracking.constants.CTActionKeys" %><%@
 page import="com.liferay.change.tracking.constants.CTConstants" %><%@
+page import="com.liferay.change.tracking.exception.CTCollectionStatusException" %><%@
 page import="com.liferay.change.tracking.exception.CTLocalizedException" %><%@
+page import="com.liferay.change.tracking.exception.CTPublishConflictException" %><%@
 page import="com.liferay.change.tracking.model.CTCollection" %><%@
 page import="com.liferay.change.tracking.model.CTCollectionTemplate" %><%@
 page import="com.liferay.change.tracking.model.CTProcess" %><%@
@@ -55,6 +57,7 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.ModelHintsUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder" %><%@
 page import="com.liferay.portal.kernel.servlet.MultiSessionErrors" %><%@
+page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@

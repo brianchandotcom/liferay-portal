@@ -24,9 +24,19 @@ renderResponse.setTitle(LanguageUtil.get(request, "move-changes"));
 		<clay:sheet-section>
 			<h2 class="sheet-title"><liferay-ui:message key="moved-changes" /></h2>
 
-			<div class="sheet-text">
-				<liferay-ui:message key="the-following-changes-will-be-moved" />
-			</div>
+			<c:if test="<%= SessionErrors.contains(renderRequest, CTPublishConflictException.class) %>">
+				<clay:alert
+					displayType="danger"
+					message="one-or-more-changes-conflict-with-existing-changes-in-the-destination-publication"
+				/>
+			</c:if>
+
+			<c:if test="<%= SessionErrors.contains(renderRequest, CTCollectionStatusException.class) %>">
+				<clay:alert
+					displayType="danger"
+					message="the-changes-could-not-be-moved"
+				/>
+			</c:if>
 
 			<div>
 				<react:component

@@ -100,7 +100,18 @@ public class RoleLocalServiceTest {
 	}
 
 	@Test
-	public void testAddRoleWithDescriptionTextType() throws Exception {
+	public void testAddRole() throws Exception {
+		try {
+			RoleTestUtil.addRole(
+				RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE,
+				RoleConstants.TYPE_REGULAR);
+
+			Assert.fail();
+		}
+		catch (RoleNameException roleNameException) {
+			Assert.assertNotNull(roleNameException);
+		}
+
 		_role = _roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, RandomTestUtil.randomString(),
 			null,
@@ -109,13 +120,6 @@ public class RoleLocalServiceTest {
 			RoleConstants.TYPE_REGULAR, null, null);
 
 		Assert.assertNotNull(_role);
-	}
-
-	@Test(expected = RoleNameException.class)
-	public void testAddRoleWithPlaceholderName() throws Exception {
-		RoleTestUtil.addRole(
-			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE,
-			RoleConstants.TYPE_REGULAR);
 	}
 
 	@Test

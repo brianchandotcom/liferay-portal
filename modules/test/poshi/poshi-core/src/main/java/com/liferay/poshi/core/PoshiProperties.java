@@ -367,7 +367,7 @@ public class PoshiProperties extends Properties {
 		getProperty(PROXY_SERVER_ENABLED));
 	public int proxyServerPort = GetterUtil.getInteger(
 		getProperty(PROXY_SERVER_PORT));
-	public Boolean reportType = GetterUtil.getBoolean(getProperty(REPORT_TYPE));
+	public String reportType = getProperty(REPORT_TYPE);
 	public boolean saveScreenshot = GetterUtil.getBoolean(
 		getProperty(SAVE_SCREENSHOT));
 	public boolean saveWebPage = GetterUtil.getBoolean(

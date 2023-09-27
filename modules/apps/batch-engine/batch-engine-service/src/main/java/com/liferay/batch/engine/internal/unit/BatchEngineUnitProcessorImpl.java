@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.File;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -281,7 +280,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 			if (batchMarkerFile.exists() &&
 				Objects.equals(
-					FileUtil.read(batchMarkerFile), lastModifiedString)) {
+					_file.read(batchMarkerFile), lastModifiedString)) {
 
 				return true;
 			}
@@ -290,7 +289,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				batchMarkerFile.createNewFile();
 			}
 
-			FileUtil.write(batchMarkerFile, lastModifiedString, true);
+			_file.write(batchMarkerFile, lastModifiedString, true);
 
 			return false;
 		}

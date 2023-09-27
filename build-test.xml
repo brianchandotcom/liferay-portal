@@ -4269,6 +4269,159 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
+				<isset property="openid.provider.auth0.client.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.auth0.client.id=${openid.provider.auth0.client.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.auth0.client.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.auth0.client.password=${openid.provider.auth0.client.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.azure.client.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.azure.client.id=${openid.provider.azure.client.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.azure.client.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.azure.client.password=${openid.provider.azure.client.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.default.client.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.default.client.id=${openid.provider.default.client.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.default.client.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.default.client.password=${openid.provider.default.client.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.google.client.secret.1" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.google.client.secret.1=${openid.provider.google.client.secret.1}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.google.client.secret.2" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.google.client.secret.2=${openid.provider.google.client.secret.2}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.google.client.secret.3" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.google.client.secret.3=${openid.provider.google.client.secret.3}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.keycloak.client.id.1" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.keycloak.client.id.1=${openid.provider.keycloak.client.id.1}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.keycloak.client.id.2" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.keycloak.client.id.2=${openid.provider.keycloak.client.id.2}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.keycloak.client.password.1" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.keycloak.client.password.1=${openid.provider.keycloak.client.password.1}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.keycloak.client.password.2" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.keycloak.client.password.2=${openid.provider.keycloak.client.password.2}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.okta.client.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.okta.client.id=${openid.provider.okta.client.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.okta.client.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.okta.client.password=${openid.provider.okta.client.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.pingone.client.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.pingone.client.id=${openid.provider.pingone.client.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.pingone.client.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.pingone.client.password=${openid.provider.pingone.client.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
 				<isset property="openid.username" />
 				<then>
 					<echo append="true" file="${test.ext.properties.file}">

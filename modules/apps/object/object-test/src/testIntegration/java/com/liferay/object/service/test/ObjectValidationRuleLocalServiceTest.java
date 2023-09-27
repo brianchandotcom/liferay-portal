@@ -15,6 +15,7 @@ import com.liferay.object.exception.ObjectValidationRuleOutputTypeException;
 import com.liferay.object.exception.ObjectValidationRuleScriptException;
 import com.liferay.object.exception.ObjectValidationRuleSettingNameException;
 import com.liferay.object.exception.ObjectValidationRuleSettingValueException;
+import com.liferay.object.exception.ObjectValidationRuleSystemException;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
@@ -199,6 +200,17 @@ public class ObjectValidationRuleLocalServiceTest {
 					).value(
 						objectValidationRuleSettingValue
 					).build())));
+
+		AssertUtils.assertFailure(
+			ObjectValidationRuleSystemException.class, false,
+			"Only allowed bundles can add system object validation rules",
+			() -> _addObjectValidationRule(
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringPool.BLANK,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				_VALID_DDM_SCRIPT, true, Collections.emptyList()));
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 

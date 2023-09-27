@@ -100,6 +100,28 @@ public class ChangeTrackingServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"CTRemote", "clientId VARCHAR(75)",
 				"clientSecret VARCHAR(75)"));
+
+		registry.register(
+			"2.11.0", "2.12.0",
+			new BaseUuidUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {{"CTEntry", "ctEntryId"}};
+				}
+
+			});
+
+		registry.register(
+			"2.12.0", "2.12.1",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {{"CTEntry", "ctEntryId"}};
+				}
+
+			});
 	}
 
 }

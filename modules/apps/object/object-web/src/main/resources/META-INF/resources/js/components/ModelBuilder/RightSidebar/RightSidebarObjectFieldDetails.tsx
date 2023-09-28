@@ -4,12 +4,18 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import {Text} from '@clayui/core';
 import ClayPanel from '@clayui/panel';
-import {API, openToast} from '@liferay/object-js-components-web';
-import {createResourceURL} from 'frontend-js-web';
+import {
+	API,
+	getLocalizableLabel,
+	openToast,
+} from '@liferay/object-js-components-web';
+import {createResourceURL, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {useStore} from 'react-flow-renderer';
 
+import ModalDeletionNotAllowed from '../../ModalDeletionNotAllowed';
 import {objectFieldInitialValues} from '../../ObjectField/EditObjectField';
 import {EditObjectFieldContent} from '../../ObjectField/EditObjectFieldContent';
 import {ModalDeleteObjectField} from '../../ObjectField/ModalDeleteObjectField';
@@ -25,9 +31,9 @@ export function RightSidebarObjectFieldDetails() {
 		setShowDeletionObjectFieldModal,
 	] = useState(false);
 	const [
-		showObjectFieldDeletionNotAllowedModal,
-		setShowObjectFieldDeletionNotAllowedModal,
-	] = useState<boolean>(false);
+		showDeletionNotAllowedModal,
+		setShowDeletionNotAllowedModal,
+	] = useState<DeletionNotAllowedModal>();
 	const [
 		{
 			baseResourceURL,
@@ -70,16 +76,28 @@ export function RightSidebarObjectFieldDetails() {
 			}
 		).href;
 
-		const objectFieldModalDeletionModalResponse = await API.fetchJSON<{
+		const showModalResponse = await API.fetchJSON<{
+			deleteLastPublishedObjectDefinitionObjectField: boolean;
+			deleteObjectFieldObjectValidationRuleSetting: boolean;
 			showDeletionModal: boolean;
-			showDeletionNotAllowedModal: boolean;
 		}>(objectFieldModalDeletionModalUrl);
 
-		setShowDeletionObjectFieldModal(true);
-
-		setShowObjectFieldDeletionNotAllowedModal(
-			objectFieldModalDeletionModalResponse.showDeletionNotAllowedModal
-		);
+		if (showModalResponse.showDeletionModal) {
+			setShowDeletionObjectFieldModal(
+				showModalResponse.showDeletionModal
+			);
+		}
+		else {
+			setShowDeletionNotAllowedModal({
+				deleteLastPublishedObjectDefinitionObjectField:
+					showModalResponse.deleteLastPublishedObjectDefinitionObjectField,
+				deleteObjectFieldObjectValidationRuleSetting:
+					showModalResponse.deleteObjectFieldObjectValidationRuleSetting,
+				showModal:
+					!showModalResponse.deleteObjectFieldObjectValidationRuleSetting ||
+					!showModalResponse.deleteLastPublishedObjectDefinitionObjectField,
+			});
+		}
 	};
 
 	const onSubmit = async (editedObjectField?: Partial<ObjectField>) => {
@@ -255,8 +273,39 @@ export function RightSidebarObjectFieldDetails() {
 						}
 					}}
 					setModalVisibility={setShowDeletionObjectFieldModal}
-					showObjectFieldDeletionNotAllowedModal={
-						showObjectFieldDeletionNotAllowedModal
+				/>
+			)}
+
+			{showDeletionNotAllowedModal?.showModal && (
+				<ModalDeletionNotAllowed
+					content={
+						showDeletionNotAllowedModal?.deleteObjectFieldObjectValidationRuleSetting ? (
+							<Text>
+								{sub(
+									Liferay.Language.get(
+										'x-is-the-only-field-of-the-published-object-definition-and-cannot-be-deleted'
+									),
+									`${getLocalizableLabel(
+										selectedObjectDefinitionNode?.data
+											?.defaultLanguageId as Liferay.Language.Locale,
+										values.label,
+										values.name
+									)}`
+								)}
+							</Text>
+						) : (
+							<Text>
+								{Liferay.Language.get(
+									'this-field-cannot-be-deleted-as-it-is-used-in-a-composite-unique-key-validation'
+								)}
+							</Text>
+						)
+					}
+					onVisibilityChange={() =>
+						setShowDeletionNotAllowedModal({
+							...showDeletionNotAllowedModal,
+							showModal: false,
+						})
 					}
 				/>
 			)}

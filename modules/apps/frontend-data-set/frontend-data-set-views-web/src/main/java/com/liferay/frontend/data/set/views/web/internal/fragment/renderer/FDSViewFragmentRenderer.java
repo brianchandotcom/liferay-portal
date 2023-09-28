@@ -444,11 +444,13 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				String type = MapUtil.getString(properties, "type");
 
 				if (Objects.equals(type, "date")) {
-					String from = _getDateJSONObject(properties.get("from"));
-					String to = _getDateJSONObject(properties.get("to"));
+					JSONObject fromJSONObject = _getDateJSONObject(
+						properties.get("from"));
+					JSONObject toJSONObject = _getDateJSONObject(
+						properties.get("to"));
 
 					boolean hasPreloadedData =
-						Validator.isNotNull(to) || Validator.isNotNull(from);
+						!!fromJSONObject || !!toJSONObject;
 
 					return JSONUtil.put(
 						"active", hasPreloadedData
@@ -466,9 +468,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 							}
 
 							return JSONUtil.put(
-								"from", from
+								"from", fromJSONObject
 							).put(
-								"to", to
+								"to", toJSONObject
 							);
 						}
 					).put(

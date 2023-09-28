@@ -126,10 +126,10 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 		UnicodeProperties draftLayoutypeSettingsUnicodeProperties =
 			draftLayout.getTypeSettingsProperties();
 
-		draftLayoutypeSettingsUnicodeProperties.put(
-			LayoutTypeSettingsConstants.KEY_PUBLISHED, Boolean.TRUE.toString());
 		draftLayoutypeSettingsUnicodeProperties.remove(
 			LayoutTypeSettingsConstants.KEY_DESIGN_CONFIGURATION_MODIFIED);
+		draftLayoutypeSettingsUnicodeProperties.put(
+			LayoutTypeSettingsConstants.KEY_PUBLISHED, Boolean.TRUE.toString());
 
 		draftLayout.setTypeSettingsProperties(
 			draftLayoutypeSettingsUnicodeProperties);

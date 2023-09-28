@@ -300,29 +300,6 @@ definition {
 			value1 = ${content});
 	}
 
-	macro viewNoMail {
-		MockMock._gotoMail();
-
-		AssertElementPresent(locator1 = "MockMock#MOCKMOCK_NO_EMAIL_IN_QUEUE");
-	}
-
-	macro viewUnformattedHTMLText {
-		MockMock._gotoMail();
-
-		MockMock._viewMailFromInbox(
-			asset = ${asset},
-			recipient = ${recipient},
-			sender = ${sender});
-
-		MockMock._gotoMailMessage(
-			asset = ${subject},
-			recipient = ${recipient});
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "MockMock#MOCKMOCK_HTML_BODY_UNFORMATTED_FIELD",
-			value1 = ${unFormattedContent});
-	}
-
 	macro viewMailFromInbox {
 		if (!(isSet(key_columnEntry))) {
 			var key_columnEntry = "";
@@ -346,6 +323,29 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "MockMock#MOCKMOCK_SUBJECT_FIELD",
 			value1 = ${asset});
+	}
+
+	macro viewNoMail {
+		MockMock._gotoMail();
+
+		AssertElementPresent(locator1 = "MockMock#MOCKMOCK_NO_EMAIL_IN_QUEUE");
+	}
+
+	macro viewUnformattedHTMLText {
+		MockMock._gotoMail();
+
+		MockMock._viewMailFromInbox(
+			asset = ${asset},
+			recipient = ${recipient},
+			sender = ${sender});
+
+		MockMock._gotoMailMessage(
+			asset = ${subject},
+			recipient = ${recipient});
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "MockMock#MOCKMOCK_HTML_BODY_UNFORMATTED_FIELD",
+			value1 = ${unFormattedContent});
 	}
 
 }

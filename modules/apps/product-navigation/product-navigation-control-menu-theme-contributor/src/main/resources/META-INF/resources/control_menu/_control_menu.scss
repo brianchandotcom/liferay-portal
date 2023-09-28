@@ -274,3 +274,11 @@ html#{$cadmin-selector} {
 		}
 	}
 }
+
+.has-control-menu {	
+	--control-menu-height: 56px;
+
+	@include media-breakpoint-down(xs, $cadmin-grid-breakpoints) {
+		--control-menu-height: 48px;
+	}
+}

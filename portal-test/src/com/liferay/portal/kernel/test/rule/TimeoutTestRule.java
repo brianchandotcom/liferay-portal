@@ -22,14 +22,9 @@ import org.junit.runners.model.Statement;
  */
 public class TimeoutTestRule implements TestRule {
 
-	public static final TimeoutTestRule INSTANCE = new TimeoutTestRule(
-		TestPropsValues.CI_TEST_TIMEOUT_TIME);
+	public static final TimeoutTestRule INSTANCE = new TimeoutTestRule();
 
 	public static final int TIMEOUT_EXIT_CODE = 200;
-
-	public TimeoutTestRule(long timeout) {
-		_timeout = timeout;
-	}
 
 	@Override
 	public Statement apply(Statement statement, Description description) {
@@ -50,12 +45,13 @@ public class TimeoutTestRule implements TestRule {
 
 						@Override
 						public Void call() throws InterruptedException {
-							Thread.sleep(_timeout);
+							Thread.sleep(TestPropsValues.CI_TEST_TIMEOUT_TIME);
 
 							System.out.println(
 								StringBundler.concat(
 									"Thread dump for ", description,
-									" timeout after waited ", _timeout, "ms:",
+									" timeout after waited ",
+									TestPropsValues.CI_TEST_TIMEOUT_TIME, "ms:",
 									ThreadUtil.threadDump()));
 
 							System.exit(TIMEOUT_EXIT_CODE);
@@ -83,7 +79,5 @@ public class TimeoutTestRule implements TestRule {
 
 		};
 	}
-
-	private final long _timeout;
 
 }

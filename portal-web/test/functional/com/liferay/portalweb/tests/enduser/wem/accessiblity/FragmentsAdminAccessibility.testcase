@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-188478. View the accessibility of fragment import."
+	@description = "This is a test for LPS-188478 and LPS-175120. View the accessibility of fragment import."
 	@priority = 3
 	test ViewAccessibilityOfFragmentImport {
 		task ("Given a user accesses to the Fragments admin") {
@@ -49,6 +49,24 @@ definition {
 
 		task ("Then the import results page should have correct accessibility") {
 			AssertElementAccessible(locator1 = "//div[contains(@id,'main-content')]//div[contains(@role,'tabpanel')]");
+
+			Button.clickDone();
+		}
+
+		task ("When the user imports the same fragment set") {
+			FragmentsAdminNavigator.gotoImportCollection();
+
+			WaitForPageLoad();
+
+			UploadDependencyFile.uploadArchiveFile(fileName = "fragment-collection.zip");
+
+			Button.clickImport();
+		}
+
+		task ("Then the import options modal should have correct accessibility") {
+			WaitForVisible(locator1 = "Modal#HEADER");
+
+			AssertElementAccessible(locator1 = "//div[contains(@class,'modal-content')]");
 		}
 	}
 

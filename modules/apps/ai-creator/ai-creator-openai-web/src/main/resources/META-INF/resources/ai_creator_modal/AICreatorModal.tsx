@@ -130,8 +130,11 @@ export default function AICreatorModal({
 							/>
 						) : null}
 
-						<ClayForm.Group className="c-mb-0 d-none">
-							<ClayLink href="#">
+						<ClayForm.Group className="c-mb-0">
+							<ClayLink
+								href="https://learn.liferay.com/w/dxp/content-authoring-and-management/web-content/web-content-articles/generating-text-content-using-ai"
+								target="_blank"
+							>
 								{Liferay.Language.get(
 									'learn-more-about-openai-integration'
 								)}

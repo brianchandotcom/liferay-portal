@@ -733,98 +733,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="get-test-project-information">
-		<attribute default="" name="test.class" />
-
-		<sequential>
-			<var name="test.name" unset="true" />
-			<var name="test.project.name" unset="true" />
-			<var name="test.project.results.dir" unset="true" />
-
-			<local name="test.class.file" />
-			<local name="test.class.file.path" />
-			<local name="test.class.java" />
-
-			<propertyregex
-				casesensitive="true"
-				input="@{test.class}"
-				property="test.class.java"
-				regexp="\.class"
-				replace="\.java"
-			/>
-
-			<first id="test.class.file">
-				<fileset
-					dir="modules"
-					excludes="**/node_modules/**"
-					includes="**/${test.class.java}"
-				/>
-			</first>
-
-			<property name="test.class.file.path" value="${toString:test.class.file}" />
-
-			<beanshell>
-				<![CDATA[
-					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-
-					import java.util.Properties;
-					import java.util.regex.Matcher;
-					import java.util.regex.Pattern;
-
-					public static String getTestName(String testClassFilePath) {
-						Pattern pattern = Pattern.compile("/([^/]+)\\.java");
-
-						Matcher matcher = pattern.matcher(testClassFilePath);
-
-						if (matcher.find()) {
-							return matcher.group(1);
-						}
-
-						return null;
-					}
-
-					public static String getTestProjectName(String testClassFilePath) {
-						String projectDir = project.getProperty("project.dir");
-
-						String regex = projectDir + "/modules(\\/+.+)/src/test";
-
-						Pattern pattern = Pattern.compile(regex);
-
-						Matcher matcher = pattern.matcher(testClassFilePath);
-
-						if (matcher.find()) {
-							String testProjectName = matcher.group(1);
-
-							return testProjectName.replaceAll("/", ":");
-						}
-
-						return null;
-					}
-
-					public static String getTestProjectResultsDir(String testClassFilePath) {
-						String testProjectName = getTestProjectName(testClassFilePath);
-
-						File testProjectResultsDir = new File(project.getProperty("project.dir") + "/modules/" + testProjectName.replaceAll(":", "/") + "/test-results/");
-
-						return JenkinsResultsParserUtil.getCanonicalPath(testProjectResultsDir);
-					}
-
-					String testClassFilePath = project.getProperty("test.class.file.path");
-
-					String testProjectName = getTestProjectName(testClassFilePath);
-
-					if (testProjectName == null) {
-						throw new Exception("Unable to find corresponding project name for " + testClassFilePath + ".");
-					}
-
-					project.setProperty("test.name", getTestName(testClassFilePath));
-					project.setProperty("test.project.name", testProjectName);
-					project.setProperty("test.project.results.dir", getTestProjectResultsDir(testClassFilePath));
-				]]>
-			</beanshell>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="merge-test-results">
 		<sequential>
 			<antcall target="merge-test-results" />
@@ -2509,15 +2417,11 @@ log.sanitizer.enabled=false</echo>
 
 							<lstopwatch action="start" name="test.execution.duration" />
 
-							<for list="${test.class.group}" param="test.class">
-								<sequential>
-									<run-modules-junit-test test.class="@{test.class}" test.task="testIntegration">
-										<arg value="--continue" />
-										<arg value="-Dbuild.exclude.ant.plugin=true" />
-										<arg value="-Dtest.class.group.index=${axis.variable}" />
-									</run-modules-junit-test>
-								</sequential>
-							</for>
+							<run-modules-junit-test test.class.group="${test.class.group}" test.task="testIntegration">
+								<arg value="--continue" />
+								<arg value="-Dbuild.exclude.ant.plugin=true" />
+								<arg value="-Dtest.class.group.index=${axis.variable}" />
+							</run-modules-junit-test>
 
 							<lstopwatch action="total" name="test.execution.duration" />
 
@@ -7129,18 +7033,14 @@ information. Make sure to commit in all format-javadoc results.
 					</then>
 				</if>
 
-				<for list="${test.class.group}" param="test.class">
-					<sequential>
-						<run-modules-junit-test test.class="@{test.class}" test.task="test">
-							<arg value="--continue" />
-							<arg value="-Dbuild.exclude.ant.plugin=true" />
-							<arg if:true="${run.solr.unit.tests}" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true" />
-							<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
-							<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
-							<arg value="-Dtest.class.group.index=${axis.variable}" />
-						</run-modules-junit-test>
-					</sequential>
-				</for>
+				<run-modules-junit-test test.class.group="${test.class.group}" test.task="test">
+					<arg value="--continue" />
+					<arg value="-Dbuild.exclude.ant.plugin=true" />
+					<arg if:true="${run.solr.unit.tests}" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true" />
+					<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
+					<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
+					<arg value="-Dtest.class.group.index=${axis.variable}" />
+				</run-modules-junit-test>
 
 				<lstopwatch action="total" name="test.execution.duration" />
 			</test-action>

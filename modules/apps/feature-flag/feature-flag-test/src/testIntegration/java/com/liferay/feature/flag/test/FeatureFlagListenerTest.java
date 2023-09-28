@@ -181,7 +181,7 @@ public class FeatureFlagListenerTest {
 			FeatureFlagTestUtil.setFeatureFlagValue(
 				_companyId, _value1, _FEATURE_FLAG_KEY_1);
 
-			testFeatureFlagListener.assertSubsetInvocations(
+			testFeatureFlagListener.assertInvocations(
 				_valuesToString(_companyId, _FEATURE_FLAG_KEY_1, !_value1),
 				_valuesToString(_companyId, _FEATURE_FLAG_KEY_2, !_value2),
 				_valuesToString(_companyId, _FEATURE_FLAG_KEY_1, _value1));

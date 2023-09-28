@@ -387,36 +387,23 @@ public class SegmentsExperimentLocalServiceImpl
 		SegmentsExperience controlSegmentsExperience,
 		SegmentsExperience variantSegmentsExperience) {
 
+		int controlSegmentsExperiencePriority =
+			controlSegmentsExperience.getPriority();
+
 		SegmentsExperience segmentsExperience =
 			_segmentsExperiencePersistence.fetchByG_P_Last(
 				controlSegmentsExperience.getGroupId(),
 				controlSegmentsExperience.getPlid(), null);
 
-		int controlSegmentsExperiencePriority =
-			controlSegmentsExperience.getPriority();
-		int variantSegmentsExperiencePriority =
-			variantSegmentsExperience.getPriority();
-
 		controlSegmentsExperience.setPriority(
 			segmentsExperience.getPriority() - 1);
 
-		controlSegmentsExperience = _segmentsExperiencePersistence.update(
-			controlSegmentsExperience);
-
-		variantSegmentsExperience.setPriority(
-			segmentsExperience.getPriority() - 2);
-
-		variantSegmentsExperience = _segmentsExperiencePersistence.update(
-			variantSegmentsExperience);
-
-		_segmentsExperiencePersistence.flush();
-
-		controlSegmentsExperience.setPriority(
-			variantSegmentsExperiencePriority);
 		controlSegmentsExperience.setActive(false);
 
 		_segmentsExperienceLocalService.updateSegmentsExperience(
 			controlSegmentsExperience);
+
+		_segmentsExperiencePersistence.flush();
 
 		variantSegmentsExperience.setPriority(
 			controlSegmentsExperiencePriority);

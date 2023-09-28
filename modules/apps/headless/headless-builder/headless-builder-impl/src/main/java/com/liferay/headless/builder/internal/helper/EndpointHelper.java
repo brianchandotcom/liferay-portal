@@ -199,16 +199,10 @@ public class EndpointHelper {
 				continue;
 			}
 
-			Object relatedObjectValue = _getRelatedObjectValue(
-				objectEntry, property, objectRelationshipNames);
-
-			if ((relatedObjectValue instanceof Collection<?>) &&
-				((Collection<?>)relatedObjectValue).isEmpty()) {
-
-				continue;
-			}
-
-			responseEntityMap.put(property.getName(), relatedObjectValue);
+			responseEntityMap.put(
+				property.getName(),
+				_getRelatedObjectValue(
+					objectEntry, property, objectRelationshipNames));
 		}
 
 		return responseEntityMap;

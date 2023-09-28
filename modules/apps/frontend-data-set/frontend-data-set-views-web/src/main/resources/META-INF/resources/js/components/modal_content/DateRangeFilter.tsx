@@ -93,7 +93,7 @@ function Body({
 					inputName={toFormElementId}
 					onChange={onToChange}
 					placeholder="YYYY-MM-DD"
-					value={to ? format(new Date(to), 'yyyy-MM-dd'): ''}
+					value={to ? format(new Date(to), 'yyyy-MM-dd') : ''}
 					years={{
 						end: getYear(new Date()) + 25,
 						start: getYear(new Date()) - 50,

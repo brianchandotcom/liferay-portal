@@ -37,8 +37,8 @@ const General = ({
 			(firstName, lastName, emailAddress, telephone) => {
 				setFieldValue('partnerFirstName', firstName);
 				setFieldValue('partnerLastName', lastName);
-				setFieldValue("primaryPartnerEmail", emailAddress);
-				setFieldValue("primaryPartnerPhone", telephone);
+				setFieldValue('primaryPartnerEmail', emailAddress);
+				setFieldValue('primaryPartnerPhone', telephone);
 			},
 			[setFieldValue]
 		)

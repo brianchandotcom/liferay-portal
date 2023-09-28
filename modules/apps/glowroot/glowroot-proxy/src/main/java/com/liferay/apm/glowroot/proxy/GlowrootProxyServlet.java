@@ -1,30 +1,26 @@
 package com.liferay.apm.glowroot.proxy;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portlet.admin.util.OmniadminUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.util.Portal;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.mitre.dsmiley.httpproxy.ProxyServlet;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 @Component(
 	    immediate = true,
@@ -38,31 +34,55 @@ import org.osgi.service.component.annotations.Component;
 public class GlowrootProxyServlet extends ProxyServlet {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void service(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
-			throws ServletException, IOException {
+	protected void service(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		long userId;
-		Exception exception;
 		try {
-			userId = _getUser(httpServletRequest).getUserId();
-			if(OmniadminUtil.isOmniadmin(userId)) {
-				GzipEncodingRequestWrapper wrapper = new GzipEncodingRequestWrapper(httpServletRequest);
-				super.service(wrapper, httpServletResponse);
-				return;
-			} else {
-				exception = new PortalException("Only omniadmin can access Glowroot APM");
-			}		
-		} catch (Exception e) {
-			exception = new PortalException("Only omniadmin can access Glowroot APM", e);
+			PermissionChecker permissionChecker = _getPermissionChecker(
+				httpServletRequest);
+
+			if (!permissionChecker.isOmniadmin()) {
+				throw new PrincipalException.MustBeCompanyAdmin(
+					permissionChecker.getUserId());
+			}
+
+			GzipEncodingRequestWrapper wrapper = new GzipEncodingRequestWrapper(
+				httpServletRequest);
+
+			super.service(wrapper, httpServletResponse);
 		}
-		PortalUtil.sendError(HttpServletResponse.SC_FORBIDDEN, exception, httpServletRequest, httpServletResponse);
-		
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
+
+	private PermissionChecker _getPermissionChecker(
+		HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		User user = _portal.getUser(httpServletRequest);
+
+		if (user == null) {
+			throw new PrincipalException.MustBeAuthenticated(0);
+		}
+
+		return _permissionCheckerFactory.create(user);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GlowrootProxyServlet.class);
+
+	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Reference
+	private Portal _portal;
 	
 	// Need to remove the Accept-Encoding header because gzip breaks the ProxyServlet
 	private class GzipEncodingRequestWrapper extends HttpServletRequestWrapper {
@@ -105,35 +125,4 @@ public class GlowrootProxyServlet extends ProxyServlet {
 	        return super.getHeader(name);
 	    }
 	}
-	
-	private static User _getUser(HttpServletRequest httpServletRequest)
-			throws Exception {
-
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		if (PortalSessionThreadLocal.getHttpSession() == null) {
-			PortalSessionThreadLocal.setHttpSession(httpSession);
-		}
-
-		User user = PortalUtil.getUser(httpServletRequest);
-
-		if (user != null) {
-			return user;
-		}
-
-		String userIdString = (String)httpSession.getAttribute("j_username");
-		String password = (String)httpSession.getAttribute("j_password");
-
-		if ((userIdString != null) && (password != null)) {
-			long userId = GetterUtil.getLong(userIdString);
-
-			return UserLocalServiceUtil.getUser(userId);
-		}
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			PortalUtil.getCompanyId(httpServletRequest));
-
-		return company.getGuestUser();
-	}
-	
 }

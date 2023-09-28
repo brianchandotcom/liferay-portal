@@ -154,13 +154,13 @@ public class EndpointHelper {
 
 		Object item = properties.get(relationshipsNames.remove(0));
 
-		List<ObjectEntry> relatedObjectEntries = new ArrayList<>();
+		ObjectEntry[] relatedObjectEntries = null;
 
 		if (item instanceof ObjectEntry[]) {
-			relatedObjectEntries = ListUtil.fromArray((ObjectEntry[])item);
+			relatedObjectEntries = (ObjectEntry[])item;
 		}
 		else {
-			relatedObjectEntries.add((ObjectEntry)item);
+			relatedObjectEntries = new ObjectEntry[] {(ObjectEntry)item};
 		}
 
 		for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {

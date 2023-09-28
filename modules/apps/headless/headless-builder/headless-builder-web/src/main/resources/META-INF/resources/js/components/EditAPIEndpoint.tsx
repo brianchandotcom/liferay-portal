@@ -17,9 +17,10 @@ import React, {
 } from 'react';
 
 import {EditAPIApplicationContext} from './EditAPIApplicationContext';
+import EditEndpointConfiguration from './EditEndpointConfiguration';
 import BaseAPIEndpointFields from './baseComponents/BaseAPIEndpointFields';
 import {CancelEditAPIApplicationModalContent} from './modals/CancelEditAPIApplicationModalContent';
-import {hasDataChanged, resetToFetched} from './utils/dataUtils';
+import {hasEndpointDataChanged} from './utils/dataUtils';
 import {fetchJSON, updateData} from './utils/fetchUtil';
 
 import '../../css/main.scss';
@@ -50,11 +51,11 @@ export default function EditAPIEndpoint({
 }: EditAPIEndpointProps) {
 	const {
 		fetchedData,
+		isDataUnsaved,
 		setFetchedData,
 		setHideManagementButtons,
 		setIsDataUnsaved,
 	} = useContext(EditAPIApplicationContext);
-
 	const [activeTab, setActiveTab] = useState(0);
 	const [localUIData, setLocalUIData] = useState<Partial<APIEndpointUIData>>(
 		{}
@@ -66,34 +67,28 @@ export default function EditAPIEndpoint({
 
 	const fetchAPIEndpoint = () => {
 		fetchJSON<APIEndpointItem>({
-			input: apiURLPaths.endpoints + endpointId,
+			input:
+				apiURLPaths.endpoints +
+				endpointId +
+				'?nestedFields=apiEndpointToAPIFilters, apiEndpointToAPISorts',
 		}).then((response) => {
-			if (response.id === endpointId) {
-				setFetchedData((previous) => ({
-					...previous,
-					apiEndpoint: response,
-				}));
+			setFetchedData((previous) => ({
+				...previous,
+				apiEndpoint: response,
+			}));
 
-				setLocalUIData({
-					...(response.description && {
-						description: response.description,
-					}),
-					path: response.path,
-					scope: response.scope,
-				});
-			}
+			setLocalUIData({
+				...(response.description && {
+					description: response.description,
+				}),
+				path: response.path,
+				...(response.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId && {
+					r_responseAPISchemaToAPIEndpoints_c_apiSchemaId:
+						response.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
+				}),
+				scope: response.scope,
+			});
 		});
-	};
-
-	const resetLocalUIData = () => {
-		if (fetchedData.apiEndpoint) {
-			setLocalUIData(
-				resetToFetched<APIEndpointItem, Partial<APIEndpointUIData>>({
-					fetchedEntityData: fetchedData.apiEndpoint,
-					localUIData,
-				})
-			);
-		}
 	};
 
 	function validateData() {
@@ -122,6 +117,7 @@ export default function EditAPIEndpoint({
 						...previousErrors,
 						[field]: true,
 					}));
+
 					isDataValid = false;
 				}
 			});
@@ -134,11 +130,19 @@ export default function EditAPIEndpoint({
 		({successMessage}: {successMessage: string}) => {
 			const isDataValid = validateData();
 
-			if (localUIData && isDataValid && fetchedData?.apiEndpoint) {
-				updateData<APIEndpointUIData>({
+			if (
+				fetchedData?.apiEndpoint &&
+				Object.keys(localUIData).length &&
+				isDataValid
+			) {
+				updateData<APIEndpointItem>({
 					dataToUpdate: {
 						description: localUIData.description,
-						path: beginStringWithForwardSlash(localUIData.path),
+						...(localUIData.path && {
+							path: beginStringWithForwardSlash(localUIData.path),
+						}),
+						r_responseAPISchemaToAPIEndpoints_c_apiSchemaId:
+							localUIData.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
 						scope: localUIData.scope,
 					},
 					method: 'PATCH',
@@ -148,12 +152,17 @@ export default function EditAPIEndpoint({
 							type: 'danger',
 						});
 					},
-					onSuccess: () => {
+					onSuccess: (responseJSON) => {
+						setFetchedData((previous) => ({
+							...previous,
+							apiEndpoint: {
+								...responseJSON,
+							},
+						}));
 						openToast({
 							message: successMessage,
 							type: 'success',
 						});
-						fetchAPIEndpoint();
 					},
 					url: fetchedData.apiEndpoint.actions.update.href,
 				});
@@ -195,21 +204,14 @@ export default function EditAPIEndpoint({
 		}
 	};
 
-	const handleCancel = () => {
-		if (
-			fetchedData?.apiEndpoint &&
-			hasDataChanged({
-				fetchedEntityData: fetchedData.apiEndpoint,
-				localUIData,
-			})
-		) {
+	const handleCancel = useCallback(() => {
+		if (isDataUnsaved) {
 			openModal({
 				center: true,
 				contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
 					CancelEditAPIApplicationModalContent({
 						closeModal,
 						onConfirm: () => {
-							resetLocalUIData();
 							setIsDataUnsaved(false);
 							setMainEndpointNav('list');
 						},
@@ -222,21 +224,21 @@ export default function EditAPIEndpoint({
 		else {
 			setMainEndpointNav('list');
 		}
-	};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isDataUnsaved]);
 
 	useEffect(() => {
 		setHideManagementButtons(false);
 
 		fetchAPIEndpoint();
-
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		if (fetchedData.apiEndpoint) {
 			setIsDataUnsaved(
-				hasDataChanged({
-					fetchedEntityData: fetchedData.apiEndpoint,
+				hasEndpointDataChanged({
+					fetchedEndpointData: fetchedData.apiEndpoint,
 					localUIData,
 				})
 			);
@@ -282,7 +284,7 @@ export default function EditAPIEndpoint({
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [localUIData]);
+	}, [fetchedData, isDataUnsaved, localUIData]);
 
 	const APIEndpointHttpMethodName = fetchedData.apiEndpoint?.httpMethod.name?.toUpperCase();
 	const editAPIEndpointBreadcrumbLabel = `${
@@ -318,28 +320,60 @@ export default function EditAPIEndpoint({
 					>
 						{Liferay.Language.get('info')}
 					</ClayTabs.Item>
+
+					<ClayTabs.Item
+						innerProps={{
+							'aria-controls': 'tabpanel-2',
+						}}
+					>
+						{Liferay.Language.get('configuration')}
+					</ClayTabs.Item>
 				</ClayTabs>
 
-				<ClayTabs.Content>
-					<ClayTabs.TabPane
-						aria-label={Liferay.Language.get('information-tab')}
-						className="info-tab"
-					>
-						<ClayCard.Body>
-							<div className="endpoints-fields-card-body">
-								<BaseAPIEndpointFields
-									apiApplicationBaseURL={
-										apiApplicationBaseURL
-									}
-									basePath={basePath}
-									data={localUIData}
-									displayError={displayError}
-									editMode={true}
-									setData={setLocalUIData}
-								/>
-							</div>
-						</ClayCard.Body>
-					</ClayTabs.TabPane>
+				<ClayTabs.Content activeIndex={activeTab} fade>
+					{activeTab === 0 && (
+						<ClayTabs.TabPane
+							aria-label={Liferay.Language.get('information-tab')}
+							className="info-tab"
+						>
+							<ClayCard.Body>
+								<div className="endpoints-fields-card-body">
+									<BaseAPIEndpointFields
+										apiApplicationBaseURL={
+											apiApplicationBaseURL
+										}
+										basePath={basePath}
+										data={localUIData}
+										displayError={displayError}
+										editMode={true}
+										setData={setLocalUIData}
+									/>
+								</div>
+							</ClayCard.Body>
+						</ClayTabs.TabPane>
+					)}
+
+					{activeTab === 1 && (
+						<ClayTabs.TabPane
+							aria-label={Liferay.Language.get(
+								'configuration-tab'
+							)}
+							className="info-tab"
+						>
+							<ClayCard.Body>
+								<div className="endpoints-fields-card-body">
+									<EditEndpointConfiguration
+										currentAPIApplicationId={
+											currentAPIApplicationId
+										}
+										data={localUIData}
+										schemaAPIURLPath={apiURLPaths.schemas}
+										setData={setLocalUIData}
+									/>
+								</div>
+							</ClayCard.Body>
+						</ClayTabs.TabPane>
+					)}
 				</ClayTabs.Content>
 			</ClayCard>
 		</div>

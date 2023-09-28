@@ -54,24 +54,25 @@ public class PortalAddressOSGiCommands {
 		populateCompanyCountries(companyId);
 	}
 
-	public void populateCompanyCountries(long companyId) throws Exception {
-		Company company = _companyLocalService.getCompany(companyId);
-
-		int count = _countryLocalService.getCompanyCountriesCount(companyId);
+	public void populateCompanyCountries(Company company) throws Exception {
+		int count = _countryLocalService.getCompanyCountriesCount(
+			company.getCompanyId());
 
 		if (count > 0) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"Skipping country initialization. Countries are ",
-						"already initialized for company ", companyId, "."));
+						"already initialized for company ",
+						company.getCompanyId(), "."));
 			}
 
 			return;
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Initializing countries for company " + companyId);
+			_log.debug(
+				"Initializing countries for company " + company.getCompanyId());
 		}
 
 		JSONArray countriesJSONArray = _getJSONArray(
@@ -87,6 +88,10 @@ public class PortalAddressOSGiCommands {
 				_log.error(exception);
 			}
 		}
+	}
+
+	public void populateCompanyCountries(long companyId) throws Exception {
+		populateCompanyCountries(_companyLocalService.getCompany(companyId));
 	}
 
 	public void repopulateCompanyCountries(long companyId) throws Exception {

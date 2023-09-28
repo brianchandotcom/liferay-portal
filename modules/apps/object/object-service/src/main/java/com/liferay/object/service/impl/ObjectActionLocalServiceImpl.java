@@ -96,7 +96,7 @@ public class ObjectActionLocalServiceImpl
 		throws PortalException {
 
 		_validateInvokerBundle(
-			"Only allowed bundles can create system object actions", system);
+			"Only allowed bundles can add system object actions", system);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);

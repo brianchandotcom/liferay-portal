@@ -90,7 +90,7 @@ public class ObjectValidationRuleLocalServiceImpl
 		throws PortalException {
 
 		_validateInvokerBundle(
-			"Only allowed bundles can create system object validation rules",
+			"Only allowed bundles can add system object validation rules",
 			system);
 
 		User user = _userLocalService.getUser(userId);

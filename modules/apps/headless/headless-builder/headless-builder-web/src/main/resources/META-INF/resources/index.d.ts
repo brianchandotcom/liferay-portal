@@ -14,6 +14,7 @@ interface APIEndpointItem extends BaseItem {
 	httpMethod: APIListType;
 	path: string;
 	r_apiApplicationToAPIEndpoints_c_apiApplicationId: string;
+	r_responseAPISchemaToAPIEndpoints_c_apiSchemaId?: number;
 	scope: APIListType;
 }
 
@@ -254,10 +255,14 @@ type APIApplicationUIData = Pick<
 	'baseURL' | 'description' | 'title'
 >;
 
-type APIEndpointUIData = Pick<
-	APIEndpointItem,
-	'description' | 'path' | 'scope'
->;
+type APIEndpointUIData = {
+	description: string;
+	httpMethod: APIListType;
+	path: string;
+	r_apiApplicationToAPIEndpoints_c_apiApplicationId: string;
+	r_responseAPISchemaToAPIEndpoints_c_apiSchemaId: number;
+	scope: APIListType;
+};
 
 type ActiveNav = 'details' | 'endpoints' | 'schemas';
 

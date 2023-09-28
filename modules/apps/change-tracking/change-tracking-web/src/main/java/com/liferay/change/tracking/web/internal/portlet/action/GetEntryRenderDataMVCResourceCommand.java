@@ -652,14 +652,14 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 
 		if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
-			JSONArray localesJSONArray = _jsonFactory.createJSONArray();
+			JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 			for (String languageId : availableLanguageIds) {
-				localesJSONArray.put(_getLocaleJSONObject(languageId));
+				jsonArray.put(_getLocaleJSONObject(languageId));
 			}
 
 			jsonObject.put(
-				"locales", localesJSONArray
+				"locales", jsonArray
 			).put(
 				"localizedTitles", localizedTitlesJSONObject
 			);
@@ -681,7 +681,7 @@ public class GetEntryRenderDataMVCResourceCommand
 							ctEntry.getModelClassPK())
 					));
 
-			JSONArray segmentsExperienceJSONArray =
+			JSONArray jsonArray =
 				_jsonFactory.createJSONArray();
 
 			List<SegmentsExperience> modifiableSegmentsExperiences =
@@ -700,7 +700,7 @@ public class GetEntryRenderDataMVCResourceCommand
 			for (SegmentsExperience segmentsExperience :
 					modifiableSegmentsExperiences) {
 
-				segmentsExperienceJSONArray.put(
+				jsonArray.put(
 					JSONUtil.put(
 						"active",
 						() -> {
@@ -752,12 +752,11 @@ public class GetEntryRenderDataMVCResourceCommand
 
 					jsonObject.put(
 						"activeSegmentsExperience",
-						segmentsExperienceJSONArray.get(
-							segmentsExperienceJSONArray.length() - 1));
+						jsonArray.get(jsonArray.length() - 1));
 				}
 			}
 
-			jsonObject.put("segmentsExperiences", segmentsExperienceJSONArray);
+			jsonObject.put("segmentsExperiences", jsonArray);
 		}
 
 		return jsonObject;

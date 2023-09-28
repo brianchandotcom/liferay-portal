@@ -36,47 +36,47 @@ public class TemplatesAspect {
 		},
 		timerName = "Fragment Entry Link Template Parser Transform"
 	)
-	public static class FragmentEntryLinkTransformAdvice {
+	public static class FreeMarkerFragmentEntryProcessorAdvice {
 
 		@OnBefore
 		public static TraceEntry onBefore(
-			OptionalThreadContext context,
-			@BindParameter FragmentEntryLinkShim fragmentEntryLink,
+			OptionalThreadContext optionalThreadContext,
+			@BindParameter FragmentEntryLinkShim fragmentEntryLinkShim,
 			@BindParameter String html,
 			@BindParameter FragmentEntryProcessorContextShim
-				fragmentEntryProcessorContext) {
+				fragmentEntryProcessorContextShim) {
 
-			long companyId = fragmentEntryLink.getCompanyId();
-			long siteGroupId = fragmentEntryLink.getGroupId();
+			long companyId = fragmentEntryLinkShim.getCompanyId();
+			long siteGroupId = fragmentEntryLinkShim.getGroupId();
 
-			StringBuilder messageBuilder = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
-			messageBuilder.append("Fragment Entry Link Template Parser ");
-			messageBuilder.append("Transform [fragmentEntryLinkId: ");
-			messageBuilder.append(fragmentEntryLink.getFragmentEntryLinkId());
-			messageBuilder.append(", companyId: ");
-			messageBuilder.append(companyId);
-			messageBuilder.append(", siteGroupId: ");
-			messageBuilder.append(siteGroupId);
-			messageBuilder.append("]");
+			sb.append("Fragment Entry Link Template Parser ");
+			sb.append("Transform [fragmentEntryLinkId: ");
+			sb.append(fragmentEntryLinkShim.getFragmentEntryLinkId());
+			sb.append(", companyId: ");
+			sb.append(companyId);
+			sb.append(", siteGroupId: ");
+			sb.append(siteGroupId);
+			sb.append("]");
 
 			if (TemplatesPluginProperties.captureAsOuterTransaction()) {
-				context.setTransactionOuter();
+				optionalThreadContext.setTransactionOuter();
 
 				if (TemplatesPluginProperties.
 						captureTemplateScriptInTransaction()) {
 
-					context.addTransactionAttribute(
+					optionalThreadContext.addTransactionAttribute(
 						"Fragment Entry Link html", html);
 				}
 
-				return context.startTransaction(
-					"Templates", messageBuilder.toString(),
-					MessageSupplier.create(messageBuilder.toString()), _timer);
+				return optionalThreadContext.startTransaction(
+					"Templates", sb.toString(),
+					MessageSupplier.create(sb.toString()), _timerName);
 			}
 
-			return context.startTraceEntry(
-				MessageSupplier.create(messageBuilder.toString()), _timer);
+			return optionalThreadContext.startTraceEntry(
+				MessageSupplier.create(sb.toString()), _timerName);
 		}
 
 		@OnReturn
@@ -92,8 +92,8 @@ public class TemplatesAspect {
 			traceEntry.endWithError(throwable);
 		}
 
-		private static final TimerName _timer = Agent.getTimerName(
-			JournalTransformAdvice.class);
+		private static final TimerName _timerName = Agent.getTimerName(
+			FreeMarkerFragmentEntryProcessorAdvice.class);
 
 	}
 
@@ -112,47 +112,46 @@ public class TemplatesAspect {
 		},
 		timerName = "Journal Template Parser Transform"
 	)
-	public static class JournalTransformAdvice {
+	public static class JournalTransformerAdvice {
 
 		@OnBefore
 		public static TraceEntry onBefore(
-			OptionalThreadContext context,
+			OptionalThreadContext optionalThreadContext,
 			@BindParameterArray Object[] parameters) {
 
-			ThemeDisplayShim themeDisplay = (ThemeDisplayShim)parameters[9];
-			DDMTemplateShim ddmTemplate = (DDMTemplateShim)parameters[1];
+			ThemeDisplayShim themeDisplayShim = (ThemeDisplayShim)parameters[9];
+			DDMTemplateShim dDMTemplateShim = (DDMTemplateShim)parameters[1];
 
-			long companyId = themeDisplay.getCompanyId();
-			long siteGroupId = themeDisplay.getSiteGroupId();
+			long companyId = themeDisplayShim.getCompanyId();
+			long siteGroupId = themeDisplayShim.getSiteGroupId();
 
-			StringBuilder messageBuilder = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
-			messageBuilder.append(
-				"Journal Template Parser Transform [templateId: ");
-			messageBuilder.append(ddmTemplate.getTemplateId());
-			messageBuilder.append(", companyId: ");
-			messageBuilder.append(companyId);
-			messageBuilder.append(", siteGroupId: ");
-			messageBuilder.append(siteGroupId);
-			messageBuilder.append("]");
+			sb.append("Journal Template Parser Transform [templateId: ");
+			sb.append(dDMTemplateShim.getTemplateId());
+			sb.append(", companyId: ");
+			sb.append(companyId);
+			sb.append(", siteGroupId: ");
+			sb.append(siteGroupId);
+			sb.append("]");
 
 			if (TemplatesPluginProperties.captureAsOuterTransaction()) {
-				context.setTransactionOuter();
+				optionalThreadContext.setTransactionOuter();
 
 				if (TemplatesPluginProperties.
 						captureTemplateScriptInTransaction()) {
 
-					context.addTransactionAttribute(
-						"Template script", ddmTemplate.getScript());
+					optionalThreadContext.addTransactionAttribute(
+						"Template script", dDMTemplateShim.getScript());
 				}
 
-				return context.startTransaction(
-					"Templates", messageBuilder.toString(),
-					MessageSupplier.create(messageBuilder.toString()), _timer);
+				return optionalThreadContext.startTransaction(
+					"Templates", sb.toString(),
+					MessageSupplier.create(sb.toString()), _timerName);
 			}
 
-			return context.startTraceEntry(
-				MessageSupplier.create(messageBuilder.toString()), _timer);
+			return optionalThreadContext.startTraceEntry(
+				MessageSupplier.create(sb.toString()), _timerName);
 		}
 
 		@OnReturn
@@ -168,8 +167,8 @@ public class TemplatesAspect {
 			traceEntry.endWithError(throwable);
 		}
 
-		private static final TimerName _timer = Agent.getTimerName(
-			JournalTransformAdvice.class);
+		private static final TimerName _timerName = Agent.getTimerName(
+			JournalTransformerAdvice.class);
 
 	}
 
@@ -185,48 +184,50 @@ public class TemplatesAspect {
 		},
 		timerName = "Template Parser Transform"
 	)
-	public static class TransformAdvice {
+	public static class TransformerAdvice {
 
 		@OnBefore
 		public static TraceEntry onBefore(
-			OptionalThreadContext context,
-			@BindParameter ThemeDisplayShim themeDisplay,
+			OptionalThreadContext optionalThreadContext,
+			@BindParameter ThemeDisplayShim themeDisplayShim,
 			@BindParameter Map<String, Object> contextObjects,
 			@BindParameter String script, @BindParameter String type) {
 
-			long companyId = themeDisplay.getCompanyId();
-			long siteGroupId = themeDisplay.getSiteGroupId();
+			long companyId = themeDisplayShim.getCompanyId();
+			long siteGroupId = themeDisplayShim.getSiteGroupId();
 
 			String templateId = String.valueOf(
 				contextObjects.get("template_id"));
 
-			StringBuilder messageBuilder = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
-			messageBuilder.append("Template Parser Transform [templateId: ");
-			messageBuilder.append(templateId);
-			messageBuilder.append(", companyId: ");
-			messageBuilder.append(companyId);
-			messageBuilder.append(", siteGroupId: ");
-			messageBuilder.append(siteGroupId);
-			messageBuilder.append("]");
+			sb.append("Template Parser Transform [templateId: ");
+			sb.append(templateId);
+			sb.append(", companyId: ");
+			sb.append(companyId);
+			sb.append(", siteGroupId: ");
+			sb.append(siteGroupId);
+			sb.append("]");
 
 			if (TemplatesPluginProperties.captureAsOuterTransaction()) {
-				context.setTransactionOuter();
+				optionalThreadContext.setTransactionOuter();
 
 				if (TemplatesPluginProperties.
 						captureTemplateScriptInTransaction()) {
 
-					context.addTransactionAttribute("Template type", type);
-					context.addTransactionAttribute("Template script", script);
+					optionalThreadContext.addTransactionAttribute(
+						"Template type", type);
+					optionalThreadContext.addTransactionAttribute(
+						"Template script", script);
 				}
 
-				return context.startTransaction(
-					"Templates", messageBuilder.toString(),
-					MessageSupplier.create(messageBuilder.toString()), _timer);
+				return optionalThreadContext.startTransaction(
+					"Templates", sb.toString(),
+					MessageSupplier.create(sb.toString()), _timerName);
 			}
 
-			return context.startTraceEntry(
-				MessageSupplier.create(messageBuilder.toString()), _timer);
+			return optionalThreadContext.startTraceEntry(
+				MessageSupplier.create(sb.toString()), _timerName);
 		}
 
 		@OnReturn
@@ -242,8 +243,8 @@ public class TemplatesAspect {
 			traceEntry.endWithError(throwable);
 		}
 
-		private static final TimerName _timer = Agent.getTimerName(
-			TransformAdvice.class);
+		private static final TimerName _timerName = Agent.getTimerName(
+			TransformerAdvice.class);
 
 	}
 

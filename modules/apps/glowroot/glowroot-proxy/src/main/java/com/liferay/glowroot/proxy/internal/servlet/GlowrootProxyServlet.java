@@ -57,10 +57,9 @@ public class GlowrootProxyServlet extends ProxyServlet implements Serializable {
 					permissionChecker.getUserId());
 			}
 
-			GzipEncodingRequestWrapper wrapper = new GzipEncodingRequestWrapper(
-				httpServletRequest);
-
-			super.service(wrapper, httpServletResponse);
+			super.service(
+				new GzipEncodingRequestWrapper(httpServletRequest),
+				httpServletResponse);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -94,12 +93,6 @@ public class GlowrootProxyServlet extends ProxyServlet implements Serializable {
 	private static class GzipEncodingRequestWrapper
 		extends HttpServletRequestWrapper {
 
-		public GzipEncodingRequestWrapper(
-			HttpServletRequest httpServletRequest) {
-
-			super(httpServletRequest);
-		}
-
 		@Override
 		public String getHeader(String name) {
 			if ("Accept-Encoding".equalsIgnoreCase(name)) {
@@ -113,12 +106,11 @@ public class GlowrootProxyServlet extends ProxyServlet implements Serializable {
 		public Enumeration<String> getHeaderNames() {
 			if (_headerNameSet == null) {
 				_headerNameSet = new HashSet<>();
-				Enumeration<String> wrappedHeaderNameEnumeration =
-					super.getHeaderNames();
 
-				while (wrappedHeaderNameEnumeration.hasMoreElements()) {
-					String headerName =
-						wrappedHeaderNameEnumeration.nextElement();
+				Enumeration<String> enumeration = super.getHeaderNames();
+
+				while (enumeration.hasMoreElements()) {
+					String headerName = enumeration.nextElement();
 
 					if (!"Accept-Encoding".equalsIgnoreCase(headerName)) {
 						_headerNameSet.add(headerName);
@@ -136,6 +128,12 @@ public class GlowrootProxyServlet extends ProxyServlet implements Serializable {
 			}
 
 			return super.getHeaders(name);
+		}
+
+		private GzipEncodingRequestWrapper(
+			HttpServletRequest httpServletRequest) {
+
+			super(httpServletRequest);
 		}
 
 		private Set<String> _headerNameSet;

@@ -755,55 +755,55 @@ fi
 				</echo>
 			</then>
 		</if>
-		<echo file="${liferay.home}/glowroot/admin.json">
+		<echo file="${liferay.home}/glowroot/admin.json"><![CDATA[
 {
-  "users": [
-    {
-      "username": "anonymous",
-      "roles": [
-        "Administrator"
-      ]
-    }
-  ],
-  "roles": [
-    {
-      "name": "Administrator",
-      "permissions": [
-        "agent:transaction",
-        "agent:error",
-        "agent:jvm",
-        "agent:incident",
-        "agent:config",
-        "admin"
-      ]
-    }
-  ],
-  "web": {
-    "port": 4000,
-    "bindAddress": "127.0.0.1",
-    "contextPath": "/o/glowroot",
-    "sessionTimeoutMinutes": 30,
-    "sessionCookieName": "GLOWROOT_SESSION_ID"
-  },
-  "storage": {
-    "rollupExpirationHours": [
-      72,
-      336,
-      2160,
-      2160
-    ],
-    "traceExpirationHours": 336,
-    "fullQueryTextExpirationHours": 336,
-    "rollupCappedDatabaseSizesMb": [
-      500,
-      500,
-      500,
-      500
-    ],
-    "traceCappedDatabaseSizeMb": 500
-  }
+	"roles": [
+		{
+			"name": "Administrator",
+			"permissions": [
+				"admin",
+				"agent:config",
+				"agent:error",
+				"agent:incident",
+				"agent:jvm",
+				"agent:transaction"
+			]
+		}
+	],
+	"storage": {
+		"fullQueryTextExpirationHours": 336,
+		"rollupCappedDatabaseSizesMb": [
+			500,
+			500,
+			500,
+			500
+		],
+		"rollupExpirationHours": [
+			72,
+			336,
+			2160,
+			2160
+		],
+		"traceCappedDatabaseSizeMb": 500,
+		"traceExpirationHours": 336
+	},
+	"users": [
+		{
+			"roles": [
+				"Administrator"
+			],
+			"username": "anonymous"
+		}
+	],
+	"web": {
+		"bindAddress": "127.0.0.1",
+		"contextPath": "/o/glowroot",
+		"port": 4000,
+		"sessionCookieName": "GLOWROOT_SESSION_ID",
+		"sessionTimeoutMinutes": 30
+	}
 }
-		</echo>
+		]]></echo>
 	</target>
 
 	<target name="unzip-jboss">

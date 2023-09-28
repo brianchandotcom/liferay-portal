@@ -13,18 +13,16 @@ import com.liferay.users.admin.management.toolbar.FilterContributor;
 
 import java.util.List;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Drew Brokke
  */
-@Component(service = FilterContributorRegistry.class)
-public class FilterContributorRegistry {
+public class FilterContributorRegistryUtil {
 
-	public FilterContributor[] getFilterContributors(String id) {
+	public static FilterContributor[] getFilterContributors(String id) {
 		List<FilterContributor> filterContributors =
 			_serviceTrackerMap.getService(id);
 
@@ -39,27 +37,20 @@ public class FilterContributorRegistry {
 		return filterContributors.toArray(new FilterContributor[0]);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, FilterContributor.class, null,
-			(serviceReference, emitter) -> {
-				FilterContributor filterContributor = bundleContext.getService(
-					serviceReference);
-
-				emitter.emit(filterContributor.getManagementToolbarKey());
-			});
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		FilterContributorRegistry.class);
+		FilterContributorRegistryUtil.class);
 
-	private ServiceTrackerMap<String, List<FilterContributor>>
+	private static final ServiceTrackerMap<String, List<FilterContributor>>
 		_serviceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			FilterContributorRegistryUtil.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, FilterContributor.class, "filter.contributor.key");
+	}
 
 }

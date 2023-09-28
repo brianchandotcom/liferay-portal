@@ -12,7 +12,7 @@ import com.liferay.users.admin.constants.UsersAdminManagementToolbarKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.user.action.contributor.UserActionContributor;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
-import com.liferay.users.admin.web.internal.users.admin.management.toolbar.FilterContributorRegistry;
+import com.liferay.users.admin.web.internal.users.admin.management.toolbar.FilterContributorRegistryUtil;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -21,7 +21,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -42,7 +41,7 @@ public class ViewServiceAccountsMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			UsersAdminWebKeys.MANAGEMENT_TOOLBAR_FILTER_CONTRIBUTORS,
-			_filterContributorRegistry.getFilterContributors(
+			FilterContributorRegistryUtil.getFilterContributors(
 				UsersAdminManagementToolbarKeys.VIEW_SERVICE_ACCOUNTS));
 		renderRequest.setAttribute(
 			UsersAdminWebKeys.USER_ACTION_CONTRIBUTORS,
@@ -61,9 +60,6 @@ public class ViewServiceAccountsMVCRenderCommand implements MVCRenderCommand {
 	protected void deactivate() {
 		_serviceTrackerList.close();
 	}
-
-	@Reference
-	private FilterContributorRegistry _filterContributorRegistry;
 
 	private ServiceTrackerList<UserActionContributor> _serviceTrackerList;
 

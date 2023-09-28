@@ -414,7 +414,9 @@ public abstract class BaseEntityRelationshipDALO
 	private static final Log _log = LogFactory.getLog(
 		BaseEntityRelationshipDALO.class);
 
-	@Value("${liferay.portal.url}")
+	@Value(
+		"${com.liferay.lxc.dxp.server.protocol}://${com.liferay.lxc.dxp.main.domain}"
+	)
 	private String _liferayPortalURL;
 
 }

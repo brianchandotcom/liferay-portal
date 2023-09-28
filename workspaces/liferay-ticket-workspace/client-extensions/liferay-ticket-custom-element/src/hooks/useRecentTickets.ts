@@ -7,6 +7,7 @@ import {useMemo} from 'react';
 import {useQuery} from 'react-query';
 
 import {fetchRecentTickets} from '../services/tickets';
+import {TicketPayload} from '../types';
 
 const useRecentTickets = () => {
 	const recentTickets = useQuery(['recentTickets'], fetchRecentTickets, {
@@ -16,7 +17,7 @@ const useRecentTickets = () => {
 
 	const recentTicketsMemoized = useMemo(() => {
 		if (recentTickets.isSuccess) {
-			return recentTickets.data?.items.map((ticket) => {
+			return recentTickets.data?.items.map((ticket: TicketPayload) => {
 				let suggestions = [];
 				try {
 					suggestions = JSON.parse(ticket?.suggestions);

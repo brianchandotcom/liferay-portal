@@ -10,6 +10,7 @@ import {
 	J3Y7_REGIONS,
 	J3Y7_RESOLUTIONS,
 	J3Y7_TYPES,
+	ListTypeDefinitions,
 	fetchListTypeDefinitions,
 } from './listTypeEntries';
 
@@ -22,11 +23,23 @@ const ticketSubjects = [
 	'Client Extensions are amazing - how can I learn more?',
 ];
 
-function getRandomElement(array) {
+function getRandomElement(array: any[]) {
 	return array[Math.floor(Math.random() * array.length)];
 }
 
-export async function fetchTickets({queryKey}) {
+export type FetchTicketsQueryKey = {
+	queryKey: [
+		string,
+		{
+			filter: {field: string; value: string};
+			page: number;
+			pageSize: number;
+			search?: string;
+		}
+	];
+};
+
+export async function fetchTickets({queryKey}: FetchTicketsQueryKey) {
 	const [, {filter, page, pageSize, search}] = queryKey;
 
 	let filterString = '';
@@ -70,7 +83,7 @@ export async function fetchRecentTickets() {
 }
 
 export async function generateNewTicket() {
-	let listTypeDefinitions = {};
+	let listTypeDefinitions = {} as ListTypeDefinitions;
 
 	if (!(J3Y7_PRIORITIES in listTypeDefinitions)) {
 		listTypeDefinitions = await fetchListTypeDefinitions();

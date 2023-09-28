@@ -1110,6 +1110,68 @@ definition {
 			value1 = "50.00");
 	}
 
+	@description = "This is a test for COMMERCE-9409. As an admin, I can add an SKU to the price list when the product for the SKU is in draft status"
+	@priority = 3
+	test CanAddADraftProductSKUToAPriceList {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a draft simple product with master catalog is created") {
+			CommerceProducts.openProductsAdmin();
+
+			CPCommerceCatalog.newProductsEntry(
+				compileDescription = "false",
+				productName = "Simple T-Shirt",
+				productType = "Simple",
+				publishProduct = "false");
+
+			AssertElementPresent(
+				key_status = "Draft",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
+
+		task ("When the admin tries to add the SKU for the simple product in the Master Base Price List admin details page") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Master Base Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+
+			Type(
+				key_placeHolder = "Find a SKU",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "default");
+
+			AssertElementPresent(
+				key_formViewName = "default",
+				locator1 = "FormViewBuilder#ASSERT_FORM");
+
+			Click(
+				key_text = "Select",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then no alert can be viewed after selecting") {
+			AssertAlertNotPresent();
+		}
+
+		task ("And the SKU can be added successfully to the master price list") {
+			AssertTextEquals(
+				key_cellName1 = "default",
+				key_cellName2 = "Simple T-Shirt",
+				key_columnNumber = 2,
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+				value1 = "default");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6225. As admin, I can add, edit and delete Price Modifier."
 	@priority = 5
 	test CanAddEditAndDeletePriceModifier {

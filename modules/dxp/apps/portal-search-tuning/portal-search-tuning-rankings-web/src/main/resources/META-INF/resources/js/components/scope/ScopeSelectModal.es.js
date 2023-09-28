@@ -57,7 +57,7 @@ const ScopeSelectModal = ({
 			.finally(() => {
 				setLoading(false);
 			});
-	}, [activePage, delta, fetchItemsUrl, type]);
+	}, [activePage, delta, fetchItemsUrl]);
 
 	/**
 	 * Handles what is displayed depending on loading/error/results/no results.

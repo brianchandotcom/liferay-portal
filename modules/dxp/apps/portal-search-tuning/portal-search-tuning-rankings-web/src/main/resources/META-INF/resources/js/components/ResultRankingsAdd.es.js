@@ -170,7 +170,7 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 			{(Liferay.FeatureFlags['LPS-159650'] ||
 				Liferay.FeatureFlags['LPS-157988']) && (
 				<ClayForm.Group>
-					<label htmlFor="searchScope">
+					<label htmlFor="searchScopeType">
 						{Liferay.Language.get('scope')}
 
 						<ClayIcon
@@ -183,6 +183,7 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 						aria-label={Liferay.Language.get('scope')}
 						className="form-control form-control-select"
 						displayType="unstyled"
+						id="searchScopeType"
 						onClick={_handleScopeDropdownChange}
 						ref={alignElementRef}
 					>

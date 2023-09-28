@@ -6,12 +6,28 @@
 import {useState} from 'react';
 
 export default function usePagination() {
-	const [activeDelta, setActiveDelta] = useState<number>(10);
+	const [activeDelta, setActiveDelta] = useState<number>(20);
 	const [activePage, setActivePage] = useState<number>(1);
+
+	const deltas = [
+		{
+			label: 20,
+		},
+		{
+			label: 50,
+		},
+		{
+			label: 100,
+		},
+		{
+			label: 200,
+		},
+	]
 
 	return {
 		activeDelta,
 		activePage,
+		deltas,
 		onDeltaChange: setActiveDelta,
 		onPageChange: setActivePage,
 	};

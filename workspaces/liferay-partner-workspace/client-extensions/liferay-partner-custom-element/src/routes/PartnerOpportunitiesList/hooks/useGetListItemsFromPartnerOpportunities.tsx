@@ -33,9 +33,6 @@ export default function useGetListItemsFromPartnerOpportunities(
 				[PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME]: item.partnerAccountName
 					? item.partnerAccountName
 					: ' - ',
-				[PartnerOpportunitiesColumnKey.PARTNER_NAME]: `${
-					item.partnerFirstName ? item.partnerFirstName : ''
-				}${item.partnerLastName ? ' ' + item.partnerLastName : ''}`,
 				...(item.projectSubscriptionStartDate
 					? getOpportunityDates(
 							item.projectSubscriptionStartDate,
@@ -56,16 +53,10 @@ export default function useGetListItemsFromPartnerOpportunities(
 					? item.closeDate
 					: '- ',
 				[PartnerOpportunitiesColumnKey.PARTNER_REP_NAME]: `${
-					item.primaryContactFirstName
-						? item.primaryContactFirstName
-						: ' - '
-				}${
-					item.primaryContactLastName
-						? ' ' + item.primaryContactLastName
-						: ' '
-				}`,
-				[PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL]: item.primaryContactEmail
-					? item.primaryContactEmail
+					item.partnerFirstName ? item.partnerFirstName : ''
+				}${item.partnerLastName ? ' ' + item.partnerLastName : ''}`,
+				[PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL]: item.partnerEmail
+					? item.partnerEmail
 					: ' - ',
 				[PartnerOpportunitiesColumnKey.LIFERAY_REP]: item.ownerName
 					? item.ownerName

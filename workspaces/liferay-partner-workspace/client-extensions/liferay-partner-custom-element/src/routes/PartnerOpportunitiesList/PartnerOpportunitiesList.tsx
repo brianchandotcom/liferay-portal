@@ -80,10 +80,6 @@ const PartnerOpportunitiesList = ({
 			label: 'Partner Account Name',
 		},
 		{
-			columnKey: PartnerOpportunitiesColumnKey.PARTNER_NAME,
-			label: 'Partner Name',
-		},
-		{
 			columnKey: PartnerOpportunitiesColumnKey.ACCOUNT_NAME,
 			label: 'Account Name',
 		},

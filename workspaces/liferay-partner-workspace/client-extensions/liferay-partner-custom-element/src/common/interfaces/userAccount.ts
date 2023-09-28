@@ -9,10 +9,11 @@ import Role from './role';
 interface Telephone {
 	id: number;
 	phoneNumber: string;
+	primary: boolean
 }
 
 interface UserAccountContactInformation {
-	telephones: Telephone[];
+	telephones?: Telephone[];
 }
 
 export default interface UserAccount {

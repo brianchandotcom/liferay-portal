@@ -7,8 +7,6 @@ Import-Package:\
 	\
 	!groovyjarjarasm.asm.tree.analysis.*,\
 	\
-	!javax.swing.*,\
-	\
 	!jline.*,\
 	\
 	!junit.*,\

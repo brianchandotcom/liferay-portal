@@ -399,18 +399,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.commerce.report.impl.jar!groovy-all.jar</file-name>
-				<version>2.4.21</version>
-				<project-name>Groovy Runtime</project-name>
-				<project-url>http://groovy-lang.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.commerce.report.impl.jar!icu4j.jar</file-name>
 				<version>57.1</version>
 				<project-name>ICU4J</project-name>
@@ -2618,18 +2606,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.scripting.groovy.jar!groovy-all.jar</file-name>
-				<version>2.4.21</version>
-				<project-name>Groovy Runtime</project-name>
-				<project-url>http://groovy-lang.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!asm-debug-all.jar</file-name>
 				<version>5.1</version>
 				<project-name>ASM all classes with debug info</project-name>
@@ -4552,18 +4528,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.server.admin.web.jar!groovy-all.jar</file-name>
-				<version>2.4.21</version>
-				<project-name>Groovy Runtime</project-name>
-				<project-url>http://groovy-lang.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-beanutils.jar</file-name>
 				<version>1.9.4</version>
 				<project-name>Apache Commons BeanUtils</project-name>
@@ -4783,6 +4747,18 @@
 				<version>7.0</version>
 				<project-name>org.objectweb.asm</project-name>
 				<project-url>http://asm.ow2.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.groovy.all.jar!groovy-all.jar</file-name>
+				<version>2.4.21</version>
+				<project-name>Groovy Runtime</project-name>
+				<project-url>http://groovy-lang.org</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>

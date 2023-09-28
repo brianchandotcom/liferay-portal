@@ -21,8 +21,6 @@ definition {
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		ACDefinitions.deleteAllSearchQuery();
-
 		ACUtils.tearDownDXP();
 
 		if (${testLiferayVirtualInstance} == "true") {
@@ -32,10 +30,9 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
-		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+		ACDefinitions.deleteAllSearchQuery();
 
-		//ACUtils.tearDownAC();
-
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8779 | Test Summary: Add search query parameters"

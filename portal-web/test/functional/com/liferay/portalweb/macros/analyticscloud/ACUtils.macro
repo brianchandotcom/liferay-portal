@@ -1019,14 +1019,16 @@ definition {
 		var localStorageItem = selenium.getEval(${javaScript});
 	}
 
-	//macro tearDownAC {
+	macro tearDownAC {
 
-	// // It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+	// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
 
-	//	ACUtils.launchAC();
-	//	ACSettings.deleteAllProperties();
-	//	ACSettings.deleteAllDataSource();
-	//}
+		ACUtils.launchAC();
+
+		ACSettings.deleteAllProperties();
+
+		// ACSettings.deleteAllDataSource();
+	}
 
 	@summary = "Default summary"
 	macro tearDownCommerce() {

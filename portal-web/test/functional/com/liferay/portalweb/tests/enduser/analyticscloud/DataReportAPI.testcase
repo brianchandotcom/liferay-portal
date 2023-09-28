@@ -36,9 +36,7 @@ definition {
 
 		ACUtils.clickAnyButton(button = "Continue");
 
-		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
-
-		//ACUtils.tearDownAC();
+		ACUtils.tearDownAC();
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();

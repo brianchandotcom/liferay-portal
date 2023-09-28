@@ -513,18 +513,12 @@
 							"fragmentStyle": {
 								"borderRadius": "",
 								"borderWidth": "0",
-								"marginLeft": "5",
-								"marginTop": "3",
 								"paddingLeft": "2",
-								"paddingTop": "3",
 								"shadow": "",
 								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
-								"marginLeft": 4,
-								"marginTop": 1,
-								"paddingTop": 1
 							}
 						},
 						"pageElements": [

@@ -3,17 +3,24 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"marginLeft": "5",
+						"marginTop": "3",
+						"paddingLeft": "2",
+						"paddingTop": "3"
+					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,
-						"marginLeft": 0,
+						"marginLeft": 4,
 						"marginRight": 0,
-						"marginTop": 0,
+						"marginTop": 1,
 						"paddingBottom": 0,
 						"paddingLeft": 0,
 						"paddingRight": 0,
-						"paddingTop": 0,
+						"paddingTop": 1,
 						"widthType": "Fluid"
 					}
 				},

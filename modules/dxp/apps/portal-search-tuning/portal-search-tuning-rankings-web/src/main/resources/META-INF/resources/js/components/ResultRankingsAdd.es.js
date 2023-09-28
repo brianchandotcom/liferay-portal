@@ -35,7 +35,7 @@ const SCOPE_INFO = {
 	},
 };
 
-function ResultRankingsAdd({cancelUrl, formName, namespace}) {
+function ResultRankingsAdd({cancelUrl, fetchSitesUrl, formName, namespace}) {
 	const [errors, setErrors] = useState({});
 	const [scopeType, setScopeType] = useState(SCOPE_TYPES.EVERYTHING);
 	const [scope, setScope] = useState('');
@@ -243,7 +243,7 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 					<ScopeSelect
 						disabled={false}
 						error={errors.scope}
-						fetchItemsUrl="/o/headless-admin-user/v1.0/sites"
+						fetchItemsUrl={fetchSitesUrl}
 						locator={{
 							id: 'externalReferenceCode',
 							label: 'descriptiveName',
@@ -272,7 +272,9 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 					<ScopeSelect
 						disabled={false}
 						error={errors.scope}
-						fetchItemsUrl="/o/search-experiences-rest/v1.0/sxp-blueprints"
+						fetchItemsUrl={`${
+							window.location.origin
+						}${Liferay.ThemeDisplay.getPathContext()}/o/search-experiences-rest/v1.0/sxp-blueprints`}
 						locator={{
 							id: 'externalReferenceCode',
 							label: 'title',
@@ -313,11 +315,18 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 	);
 }
 
-export default function ({cancelUrl, formName, learnResources, namespace}) {
+export default function ({
+	cancelUrl,
+	fetchSitesUrl,
+	formName,
+	learnResources,
+	namespace = '',
+}) {
 	return (
 		<LearnResourcesContext.Provider value={learnResources}>
 			<ResultRankingsAdd
 				cancelUrl={cancelUrl}
+				fetchSitesUrl={fetchSitesUrl}
 				formName={formName}
 				namespace={namespace}
 			/>

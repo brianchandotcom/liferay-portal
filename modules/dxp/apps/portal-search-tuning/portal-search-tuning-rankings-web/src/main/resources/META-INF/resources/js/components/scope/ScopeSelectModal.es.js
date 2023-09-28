@@ -39,15 +39,7 @@ const ScopeSelectModal = ({
 	useEffect(() => {
 		setLoading(true);
 
-		fetchResponse(
-			`${
-				window.location.origin
-			}${Liferay.ThemeDisplay.getPathContext()}${fetchItemsUrl}`,
-			{
-				page: activePage,
-				pageSize: delta,
-			}
-		)
+		fetchResponse(fetchItemsUrl, {activePage, pageSize: delta})
 			.then((response) => {
 				setResource(response);
 			})

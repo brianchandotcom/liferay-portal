@@ -53,12 +53,10 @@ const ScopeSelect = ({
 	const _fetchDropdownItems = () => {
 		setLoading(true);
 
-		fetchResponse(
-			`${
-				window.location.origin
-			}${Liferay.ThemeDisplay.getPathContext()}${fetchItemsUrl}`,
-			{activePage: 1, pageSize: 5}
-		)
+		fetchResponse(fetchItemsUrl, {
+			activePage: 1,
+			pageSize: 5,
+		})
 			.then(({items}) => {
 				setResourceItems(items || []);
 			})

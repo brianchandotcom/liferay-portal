@@ -295,27 +295,25 @@ class ResultRankingsForm extends Component {
 		) {
 			const scopeInfo = this.props.initialGroupExternalReferenceCode
 				? {
-						fetchItemByIdUrl:
-							'/o/headless-admin-user/v1.0/sites/by-external-reference-code/',
+						fetchItemByIdUrl: this.props
+							.fetchSiteByExternalReferenceCodeUrl,
 						label: 'descriptiveName',
 						value: this.props.initialGroupExternalReferenceCode,
 				  }
 				: {
-						fetchItemByIdUrl:
-							'/o/search-experiences-rest/v1.0/sxp-blueprints/by-external-reference-code/',
+						fetchItemByIdUrl: `${
+							window.location.origin
+						}${Liferay.ThemeDisplay.getPathContext()}/o/search-experiences-rest/v1.0/sxp-blueprints/by-external-reference-code/${
+							this.props.initialSXPBlueprintExternalReferenceCode
+						}`,
 						label: 'title',
 						value: this.props
 							.initialSXPBlueprintExternalReferenceCode,
 				  };
 
-			fetchResponse(
-				`${
-					window.location.origin
-				}${Liferay.ThemeDisplay.getPathContext()}${
-					scopeInfo.fetchItemByIdUrl
-				}${scopeInfo.value}`,
-				{}
-			)
+			fetchResponse(scopeInfo.fetchItemByIdUrl, {
+				[`${this.context.namespace}externalReferenceCode`]: scopeInfo.value,
+			})
 				.then((response) => {
 					this.setState(() => ({
 						scopeDisplayName:

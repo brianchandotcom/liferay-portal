@@ -186,4 +186,79 @@ definition {
 			AssertLocation.assertPartialLocation(value1 = "web/marketplace-site/customer-dashboard");
 		}
 	}
+
+	@description = "LPS-174845 | Verify if the user can be invited to more than one account (Publisher and Customer)."
+	@priority = 4
+	test CannotBeInvitedToMoreThanOneDashboard { 
+		task ("Given that a marketplace account administrator invites a member to the Publisher Dashboard"){
+			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "App Editor",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("And the user accepts the invitation") {
+			User.logoutPG();
+
+			MockMock._gotoMail();
+
+			MP2Utils.firstLoginMKT(
+				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				bodyLink = "Accept invitation",
+				recipient = "da@administrator.com",
+				userEmailAddress = "test.mp@liferay.com");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			var table = '''
+				| Name    | Test QA             |
+				| Email   | test.mp@liferay.com |
+				| Role    | App Editor          |
+			''';
+
+			var rawTable = TableUtil.newTable(${table});
+
+			for (var row : table ${rawTable}) {
+				var label = "${row[0]}";
+				var value = "${row[1]}";
+
+				AssertElementPresent(
+					key_label = ${label},
+					key_text = ${value},
+					locator1 = "MP2Dashboards#DASHBOARD_TABLE");
+			}
+		}
+
+		task ("When I invite the same user to the Customer Dashboard") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "da@administrator.com",
+				userLoginFullName = "Dashboard Administrator");
+			
+			MP2Navigator.gotoMP2();
+			
+			MP2Navigator.openSitePage(pageName = "Customer Dashboard");
+
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Development");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "Account Buyer",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("Then I should be able to state that the user cannot invite the same non-admin user, for both dashboards") {
+			MP2Utils.viewErrorMessage();
+		}
+			
+	}
 }

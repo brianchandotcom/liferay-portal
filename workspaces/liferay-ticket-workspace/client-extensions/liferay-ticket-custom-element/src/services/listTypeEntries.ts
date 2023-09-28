@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-async function fetchListTypeEntries(externalReferenceCode) {
+import {Liferay} from './liferay';
+
+async function fetchListTypeEntries(externalReferenceCode: string) {
 	const response = await fetch(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${externalReferenceCode}/list-type-entries`,
 		{
@@ -17,7 +19,7 @@ async function fetchListTypeEntries(externalReferenceCode) {
 
 	const data = await response.json();
 
-	return data?.items.map((item) => ({
+	return data?.items.map((item: {key: string; name: string}) => ({
 		key: item.key,
 		name: item.name,
 	}));
@@ -35,10 +37,18 @@ const listTypeDefinitionERCs = [
 	J3Y7_REGIONS,
 	J3Y7_STATUSES,
 	J3Y7_TYPES,
-];
+] as const;
+
+export type ListTypeDefinitions = {
+	[J3Y7_PRIORITIES]: any;
+	[J3Y7_REGIONS]: any;
+	[J3Y7_RESOLUTIONS]: any;
+	[J3Y7_STATUSES]: any;
+	[J3Y7_TYPES]: any;
+};
 
 export async function fetchListTypeDefinitions() {
-	const listTypeDefinitions = {};
+	const listTypeDefinitions = {} as ListTypeDefinitions;
 
 	for (const listTypeDefinitionERC of listTypeDefinitionERCs) {
 		listTypeDefinitions[listTypeDefinitionERC] = await fetchListTypeEntries(

@@ -14,6 +14,7 @@
 		"@types/react": "^18.0.28",
 		"@types/react-dom": "^18.0.11",
 		"@vitejs/plugin-react": "^4.0.0",
+		"typescript": "^4.9.3",
 		"vite": "^4.3.9"
 	},
 	"eslintConfig": {
@@ -24,7 +25,7 @@
 	"name": "@liferay/liferay-ticket-custom-element",
 	"private": true,
 	"scripts": {
-		"build": "vite build",
+		"build": "tsc && vite build",
 		"dev": "vite",
 		"preview": "vite preview"
 	},

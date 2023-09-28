@@ -33,7 +33,7 @@
 <#if entries?has_content>
 	<div class="menu-container">
 		<#list entries as navigationEntry>
-			<div class="menu-item text-link-md font-weight-bold ${navigationEntry.isSelected()?then('selected','')}">
+			<div class="font-weight-bold menu-item text-link-md ${navigationEntry.isSelected()?then('selected','')}">
 				<a
 					class="text-neutral-7 ${navigationEntry.isSelected()?then('','hvr-overline-from-center')}"
 					href="${navigationEntry.getURL()}">${navigationEntry.getName()}</a>

@@ -134,6 +134,18 @@ function getOdataString({
 	}
 }
 
+const Divider = () => <div className="dropdown-divider" role="separator"></div>;
+
+const Item = ({multiple, ...props}: ItemArgs) => {
+	const Input = multiple ? ClayCheckbox : ClayRadio;
+
+	return (
+		<li className="pb-1 pt-1">
+			<Input {...props} />
+		</li>
+	);
+};
+
 function SelectionFilter({
 	apiURL,
 	autocompleteEnabled,
@@ -486,18 +498,6 @@ function SelectionFilter({
 		</>
 	);
 }
-
-const Divider = () => <div className="dropdown-divider" role="separator"></div>;
-
-const Item = ({multiple, ...props}: ItemArgs) => {
-	const Input = multiple ? ClayCheckbox : ClayRadio;
-
-	return (
-		<li className="pb-1 pt-1">
-			<Input {...props} />
-		</li>
-	);
-};
 
 SelectionFilter.propTypes = {
 	apiURL: PropTypes.string,

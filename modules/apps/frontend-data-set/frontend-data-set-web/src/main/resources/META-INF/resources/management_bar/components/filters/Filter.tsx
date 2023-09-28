@@ -76,8 +76,8 @@ const Filter = ({id, moduleURL, type, ...otherProps}: FilterComponentArgs) => {
 		throw new Error(`Filter type '${type}' not found.`);
 	}
 
-	const [Component, setComponent] = useState(() =>
-		(moduleURL ? null : filterImplementation.Component) as any
+	const [Component, setComponent] = useState(
+		() => (moduleURL ? null : filterImplementation.Component) as any
 	);
 
 	useEffect(() => {
@@ -124,11 +124,7 @@ const Filter = ({id, moduleURL, type, ...otherProps}: FilterComponentArgs) => {
 
 	return Component ? (
 		<div className="data-set-filter">
-			<Component
-				id={id}
-				setFilter={setFilter}
-				{...otherProps}
-			/>
+			<Component id={id} setFilter={setFilter} {...otherProps} />
 		</div>
 	) : (
 		<ClayLoadingIndicator size="sm" />

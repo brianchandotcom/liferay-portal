@@ -308,67 +308,77 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can setup the landing page topic navigation for the widget."
+	@description = "LPS-116845 - Validate if the user can setup the landing page topic navigation for the widget."
 	@priority = 4
 	@refactordone
 	test CanConfigureLandingPageTopicNavigation {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category1",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.configureLandingPageTopicNavigation(toggleValue = "disable");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		AssertElementNotPresent(
-			key_card = "Questions Test Category1",
-			locator1 = "Card#CARD_TITLE");
-
-		Questions.viewHomeTopicsList(topicsName = "Questions Test Category1");
-
-		Questions.addSubTopic(
-			subTopicDescription = "Description",
-			subTopicName = "Questions Test Category2");
-
-		Questions.viewHomeTopicsList(topicsName = "Questions Test Category1,Questions Test Category2");
-
-		Questions.addSubTopic(
-			subTopicDescription = "Description",
-			subTopicName = "Questions Test SubCategory2");
-
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestion",
-			categoryName = "Questions Test Category1",
-			groupName = "Guest",
-			titleField = "Title AddQuestion");
-
-		Questions.configureLandingPageTopicNavigation(toggleValue = "enable");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		for (var topicName : list "Questions Test Category1,Questions Test Category2") {
-			AssertElementPresent(
-				key_card = ${topicName},
-				locator1 = "Card#CARD_TITLE");
+		task ("Given there is a caregory created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category1",
+				userEmailAddress = "test@liferay.com");
 		}
 
-		Questions.gotoCategory(categoryName = "Questions Test Category1");
+		task ("And disable landing page topic navigation") {
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		AssertVisible(
-			key_questionTitle = "Title AddQuestion",
-			locator1 = "Questions#QUESTIONS_TITLE");
+			Questions.configureLandingPageTopicNavigation(toggleValue = "disable");
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category2");
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.changeTopic(
-			parentTopicName = "Questions Test Category2",
-			subTopicName = "Questions Test SubCategory2");
+			AssertElementNotPresent(
+				key_card = "Questions Test Category1",
+				locator1 = "Card#CARD_TITLE");
+
+			Questions.viewHomeTopicsList(topicsName = "Questions Test Category1");
+		}
+
+		task ("When the user add subtopics and a question") {
+			Questions.addSubTopic(
+				subTopicDescription = "Description",
+				subTopicName = "Questions Test Category2");
+
+			Questions.viewHomeTopicsList(topicsName = "Questions Test Category1,Questions Test Category2");
+
+			Questions.addSubTopic(
+				subTopicDescription = "Description",
+				subTopicName = "Questions Test SubCategory2");
+
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion",
+				categoryName = "Questions Test Category1",
+				groupName = "Guest",
+				titleField = "Title AddQuestion");
+		}
+
+		task ("And enable landing page topic navigation") {
+			Questions.configureLandingPageTopicNavigation(toggleValue = "enable");
+
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			for (var topicName : list "Questions Test Category1,Questions Test Category2") {
+				AssertElementPresent(
+					key_card = ${topicName},
+					locator1 = "Card#CARD_TITLE");
+			}
+		}
+
+		task ("Then the he can navigate through the topics") {
+			Questions.gotoCategory(categoryName = "Questions Test Category1");
+
+			AssertVisible(
+				key_questionTitle = "Title AddQuestion",
+				locator1 = "Questions#QUESTIONS_TITLE");
+
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category2");
+
+			Questions.changeTopic(
+				parentTopicName = "Questions Test Category2",
+				subTopicName = "Questions Test SubCategory2");
+		}
 	}
 
 	@description = "LPS-116844 - Validate if the user can setup the root topic for the widget."
@@ -579,18 +589,24 @@ definition {
 	@description = "LPS-137639 - Validate if the user can delete a thread through Activity, it also covers LPS-137639."
 	@priority = 4
 	test CanDeleteThreadThroughMyActivity {
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
+		task ("Given there is a message created") {
+			JSONMBMessage.addMessage(
+				groupName = "Guest",
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject");
+		}
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		task ("When the user goes to Activity tab") {
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoTab(questionTabField = "Activity");
+			Questions.gotoTab(questionTabField = "Activity");
+		}
 
-		Questions.gotoDetails(questionTitle = "MB Thread Message Subject");
+		task ("Then the user can deletes the question") {
+			Questions.gotoDetails(questionTitle = "MB Thread Message Subject");
 
-		Questions.deleteQuestion(deleteInActivity = "true");
+			Questions.deleteQuestion(deleteInActivity = "true");
+		}
 	}
 
 	@description = "LPS-128698 - Validate if the user can delete a topic, it also covers LPS-128699."
@@ -649,96 +665,108 @@ definition {
 		}
 	}
 
-	@description = " Validate if the user can lock and unlock a question through the MB."
+	@description = "LPS-121205 - Validate if the user can lock and unlock a question through the MB."
 	@priority = 4
 	@refactordone
 	test CanLockAndUnlockThroughMB {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("Given there is a question and a answer created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "Content1",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Question1");
+			JSONQuestions.addQuestion(
+				bodyField = "Content1",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Question1");
 
-		JSONQuestions.addAnswer(
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			replyBody = "This is my answer",
-			threadSubject = "Question1",
-			titleField = "Question1");
+			JSONQuestions.addAnswer(
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				replyBody = "This is my answer",
+				threadSubject = "Question1",
+				titleField = "Question1");
+		}
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+		task ("When the user locks a question through the message board") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
 
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Question1");
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Question1");
 
-		AssertVisible(
-			key_answerBodyContent = "This is my answer",
-			locator1 = "Questions#ANSWER_BODY");
+			AssertVisible(
+				key_answerBodyContent = "This is my answer",
+				locator1 = "Questions#ANSWER_BODY");
 
-		MessageboardsCategory.openToCategory(
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			siteURLKey = "guest");
+			MessageboardsCategory.openToCategory(
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				siteURLKey = "guest");
 
-		LexiconEntry.openEntryMenu(rowEntry = "Question1");
+			LexiconEntry.openEntryMenu(rowEntry = "Question1");
 
-		MenuItem.click(menuItem = "Lock");
+			MenuItem.click(menuItem = "Lock");
+		}
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+		task ("Then he can see that the question was locked") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
 
-		AssertElementPresent(
-			key_questionTitle = "Question1",
-			locator1 = "Questions#QUESTIONS_LIST_LOCKED_ICON");
+			AssertElementPresent(
+				key_questionTitle = "Question1",
+				locator1 = "Questions#QUESTIONS_LIST_LOCKED_ICON");
 
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Question1");
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Question1");
 
-		AssertVisible(
-			key_answerBodyContent = "This is my answer",
-			locator1 = "Questions#ANSWER_BODY");
+			AssertVisible(
+				key_answerBodyContent = "This is my answer",
+				locator1 = "Questions#ANSWER_BODY");
 
-		Questions.viewLockedQuestion(
-			lockedStatus = "true",
-			questionTitle = "Question1");
+			Questions.viewLockedQuestion(
+				lockedStatus = "true",
+				questionTitle = "Question1");
+		}
 
-		MessageboardsCategory.openToCategory(
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			siteURLKey = "guest");
+		task ("When the user unlock a question through message board") {
+			MessageboardsCategory.openToCategory(
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				siteURLKey = "guest");
 
-		LexiconEntry.openEntryMenu(rowEntry = "Question1");
+			LexiconEntry.openEntryMenu(rowEntry = "Question1");
 
-		MenuItem.click(menuItem = "Unlock");
+			MenuItem.click(menuItem = "Unlock");
+		}
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+		task ("Then he can see that the questions is unlocked") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
 
-		AssertElementNotPresent(
-			key_questionTitle = "Question1",
-			locator1 = "Questions#QUESTIONS_LIST_LOCKED_ICON");
+			AssertElementNotPresent(
+				key_questionTitle = "Question1",
+				locator1 = "Questions#QUESTIONS_LIST_LOCKED_ICON");
 
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Question1");
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Question1");
 
-		Questions.viewUnlockedQuestion(questionTitle = "Question1");
+			Questions.viewUnlockedQuestion(questionTitle = "Question1");
+		}
 
-		Questions.answerQuestion(contentField = "This is my answer2");
+		task ("And he can answer the question") {
+			Questions.answerQuestion(contentField = "This is my answer2");
+		}
 	}
 
 	@description = "LPS-122830 - Validate if the user can add a comment to an answer, it also covers that the published dates for responses can be shown."
@@ -827,185 +855,227 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can search for the questions."
+	@description = "LPS-112029 - Validate if the user can search for the questions."
 	@priority = 4
 	@refactordone
 	test CanSearchForQuestions {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("Given there is a category with some questions created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestionWithTag(
-			bodyField = "Content1",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			tagField = "new",
-			titleField = "Question1");
-
-		for (var num : list "2,3,4") {
-			JSONQuestions.addQuestion(
-				bodyField = "Content${num}",
+			JSONQuestions.addQuestionWithTag(
+				bodyField = "Content1",
 				categoryName = "Questions Test Category",
 				groupName = "Guest",
-				titleField = "Question${num}");
+				tagField = "new",
+				titleField = "Question1");
+
+			for (var num : list "2,3,4") {
+				JSONQuestions.addQuestion(
+					bodyField = "Content${num}",
+					categoryName = "Questions Test Category",
+					groupName = "Guest",
+					titleField = "Question${num}");
+			}
+
+			JSONQuestions.addQuestion(
+				bodyField = "Quesions Body 5",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Questions Title 5");
 		}
 
-		JSONQuestions.addQuestion(
-			bodyField = "Quesions Body 5",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Questions Title 5");
+		task ("When the user search for 'questions title 5'") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+			Questions.search(
+				resultsInfo = '''1 Result for "questions title 5"''',
+				searchKey = "Questions Title 5");
+		}
 
-		Questions.search(
-			resultsInfo = '''1 Result for "questions title 5"''',
-			searchKey = "Questions Title 5");
+		task ("Then he can see that only 'questions title 5' is being showed") {
+			Questions.viewSearchResults(questionsList = "Questions Title 5");
 
-		Questions.viewSearchResults(questionsList = "Questions Title 5");
+			Questions.viewNoSearchResults(questionsList = "Question1,Question2,Question3,Question4");
+		}
 
-		Questions.viewNoSearchResults(questionsList = "Question1,Question2,Question3,Question4");
+		task ("When the user search for 'Test'") {
+			Questions.search(
+				resultsInfo = '''5 Results for "test"''',
+				searchKey = "Test");
+		}
 
-		Questions.search(
-			resultsInfo = '''5 Results for "test"''',
-			searchKey = "Test");
+		task ("Then he can see all questios created by Test user") {
+			Questions.viewSearchResults(questionsList = "Question1,Question2,Question3,Question4");
+		}
 
-		Questions.viewSearchResults(questionsList = "Question1,Question2,Question3,Question4");
+		task ("When the user search for 'Question4'") {
+			Questions.search(
+				resultsInfo = '''1 Result for "question4"''',
+				searchKey = "Question4");
+		}
 
-		Questions.search(
-			resultsInfo = '''1 Result for "question4"''',
-			searchKey = "Question4");
+		task ("Then he can see that only 'Question4' is being showed") {
+			Questions.viewSearchResults(questionsList = "Question4");
 
-		Questions.viewSearchResults(questionsList = "Question4");
+			Questions.viewNoSearchResults(questionsList = "Question1,Question2,Question3");
+		}
 
-		Questions.viewNoSearchResults(questionsList = "Question1,Question2,Question3");
+		task ("When the user search for a especific content'Content2'") {
+			Questions.search(
+				resultsInfo = '''1 Result for "content2"''',
+				searchKey = "Content2");
+		}
 
-		Questions.search(
-			resultsInfo = '''1 Result for "content2"''',
-			searchKey = "Content2");
+		task ("Then he can see that only the question with this specific content is being showed") {
+			Questions.viewSearchResults(questionsList = "Question2");
 
-		Questions.viewSearchResults(questionsList = "Question2");
+			Questions.viewNoSearchResults(questionsList = "Question1,Question3,Question4");
+		}
 
-		Questions.viewNoSearchResults(questionsList = "Question1,Question3,Question4");
+		task ("When the user search for a tag:'new'") {
+			Questions.search(
+				resultsInfo = '''1 Result for "new"''',
+				searchKey = "New");
+		}
 
-		Questions.search(
-			resultsInfo = '''1 Result for "new"''',
-			searchKey = "New");
+		task ("hen he can see that only the question with this specific tag is being showed") {
+			Questions.viewSearchResults(questionsList = "Question1");
 
-		Questions.viewSearchResults(questionsList = "Question1");
+			Questions.viewNoSearchResults(questionsList = "Question2,Question3,Question4,Questions Title 5");
+		}
 
-		Questions.viewNoSearchResults(questionsList = "Question2,Question3,Question4,Questions Title 5");
+		task ("When the search for question that is not exists then he can see 'There are no results' message") {
+			Questions.search(
+				noQuestionsResults = "true",
+				searchKey = "Questions5");
+		}
 
-		Questions.search(
-			noQuestionsResults = "true",
-			searchKey = "Questions5");
+		task ("When the user clear search results") {
+			Questions.clearSearchResults();
+		}
 
-		Questions.clearSearchResults();
+		task ("Then all the questions are showed") {
+			for (var num : list "1,2,3,4") {
+				AssertVisible(
+					key_questionTitle = "Question${num}",
+					locator1 = "Questions#QUESTIONS_TITLE");
+			}
 
-		for (var num : list "1,2,3,4") {
 			AssertVisible(
-				key_questionTitle = "Question${num}",
+				key_questionTitle = "Questions Title 5",
 				locator1 = "Questions#QUESTIONS_TITLE");
 		}
-
-		AssertVisible(
-			key_questionTitle = "Questions Title 5",
-			locator1 = "Questions#QUESTIONS_TITLE");
 	}
 
-	@description = "Validate if the user can subscribe and unsubscribe from the question."
+	@description = "LPS-113166 - Validate if the user can subscribe and unsubscribe from the question."
 	@priority = 5
 	@refactordone
 	test CanSubscribeAndUnsubscribeFromQuestion {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Given there is a user, a category and a question created") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com");
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "Content AddQuestion",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Title AddQuestion");
+			JSONQuestions.addQuestion(
+				bodyField = "Content AddQuestion",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Title AddQuestion");
+		}
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		task ("When the user subscribes on a question") {
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoTab(questionTabField = "Subscriptions");
+			Questions.gotoTab(questionTabField = "Subscriptions");
 
-		Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
+			Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				questionsTitle = "title-addquestion",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
 
-		Questions.subscribeQuestion();
+			Questions.subscribeQuestion();
+		}
 
-		Questions.gotoTab(questionTabField = "Subscriptions");
+		task ("Then he can see that he was subscribed on 'Subscriptions' page") {
+			Questions.gotoTab(questionTabField = "Subscriptions");
 
-		Questions.viewSubscribedQuestion(subscribedQuestion = "Title AddQuestion");
+			Questions.viewSubscribedQuestion(subscribedQuestion = "Title AddQuestion");
+		}
 
-		Questions.unsubscribeFromQuestion(questionTitle = "Title AddQuestion");
+		task ("When the user unsubscribes on a question") {
+			Questions.unsubscribeFromQuestion(questionTitle = "Title AddQuestion");
+		}
 
-		Questions.gotoTab(questionTabField = "Questions");
+		task ("Then he ca see that he was subscribed on 'Subscriptions' page") {
+			Questions.gotoTab(questionTabField = "Questions");
 
-		Questions.gotoTab(questionTabField = "Subscriptions");
+			Questions.gotoTab(questionTabField = "Subscriptions");
 
-		Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
+			Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
+		}
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+		task ("When another user asnwer a question that the Test user is subscribed") {
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				questionsTitle = "title-addquestion",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
 
-		Questions.subscribeQuestion();
+			Questions.subscribeQuestion();
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				questionsTitle = "title-addquestion",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
 
-		Questions.answerQuestion(contentField = "This is my answer");
+			Questions.answerQuestion(contentField = "This is my answer");
+		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+		task ("Then the Test user will receive a notification and can see the answer") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
 
-		Notifications.gotoNotifications();
+			Notifications.gotoNotifications();
 
-		Notifications.navigateToContent(contentBody = "Title AddQuestion");
+			Notifications.navigateToContent(contentBody = "Title AddQuestion");
 
-		AssertVisible(
-			key_answerBodyContent = "This is my answer",
-			locator1 = "Questions#ANSWER_BODY");
+			AssertVisible(
+				key_answerBodyContent = "This is my answer",
+				locator1 = "Questions#ANSWER_BODY");
+		}
 	}
 
 	@description = "LPS-113166 - Validate if the user can subscribe and unsubscribe from the topic."
@@ -1095,38 +1165,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can unsubscribe a question from the details page, it also covers LPS-125842."
-	@priority = 3
-	@refactordone
-	test CanUnsubscribeFromQuestionDetails {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Question Body Text",
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			titleField = "Questions Title",
-			topicName = "questions-test-category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Questions Title");
-
-		Questions.unsubscribeFromQuestionViaDetails();
-
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			questionsTitle = "questions-title",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
-
-		Questions.viewSubscriptionStatusFromDetails(noSubscribedQuestion = "Questions Title");
-	}
-
-	@description = "Validate if the guest can check the canonical URL, also covers LPS-137636."
+	@description = "LPS-133798 - Validate if the guest can check the canonical URL, also covers LPS-137636."
 	@priority = 4
 	test CanViewCanonicalURL {
 		property test.liferay.virtual.instance = "false";
@@ -1134,45 +1173,51 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Category",
-			userEmailAddress = "test@liferay.com");
+		task ("Given there is a category and a question created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestion",
-			categoryName = "Category",
-			groupName = "Guest",
-			titleField = "Question");
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion",
+				categoryName = "Category",
+				groupName = "Guest",
+				titleField = "Question");
+		}
 
-		Questions.openToConfigInSystemSettings(portlet = "Questions");
+		task ("When the user set the configuration and enable anonoymius read") {
+			Questions.openToConfigInSystemSettings(portlet = "Questions");
 
-		SystemSettings.editTextAreaSetting(
-			settingName = "Set Base Path for History Router",
-			settingValue = "/questions-page");
+			SystemSettings.editTextAreaSetting(
+				settingName = "Set Base Path for History Router",
+				settingValue = "/questions-page");
 
-		SystemSettings.saveConfiguration();
+			SystemSettings.saveConfiguration();
 
-		Questions.enableAnonymousRead();
+			Questions.enableAnonymousRead();
+		}
 
-		User.logoutPG();
+		task ("Then a anonymous user can go to question page and se a question detail") {
+			User.logoutPG();
 
-		Navigator.gotoPage(pageName = "Questions Page");
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoCategory(categoryName = "Category");
+			Questions.gotoCategory(categoryName = "Category");
 
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Question");
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Question");
 
-		Questions.assertCanonicalURL(
-			category = "category",
-			pageName = "Questions Page",
-			portalURL = ${portalURL},
-			title = "question");
+			Questions.assertCanonicalURL(
+				category = "category",
+				pageName = "Questions Page",
+				portalURL = ${portalURL},
+				title = "question");
+		}
 	}
 
-	@description = "Validate if the guest can check the canonical URL for duplicated questions."
+	@description = "LPS-133798 - Validate if the guest can check the canonical URL for duplicated questions."
 	@priority = 4
 	test CanViewCanonicalURLForDuplicatedQuestions {
 		property test.liferay.virtual.instance = "false";
@@ -1180,66 +1225,78 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Questions.openToConfigInSystemSettings(portlet = "Questions");
+		task ("Given that the configuration is set and anonymous read is anable") {
+			Questions.openToConfigInSystemSettings(portlet = "Questions");
 
-		SystemSettings.editTextAreaSetting(
-			settingName = "Set Base Path for History Router",
-			settingValue = "/questions-page");
+			SystemSettings.editTextAreaSetting(
+				settingName = "Set Base Path for History Router",
+				settingValue = "/questions-page");
 
-		SystemSettings.saveConfiguration();
+			SystemSettings.saveConfiguration();
 
-		Questions.enableAnonymousRead();
+			Questions.enableAnonymousRead();
+		}
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Category",
-			userEmailAddress = "test@liferay.com");
+		task ("And there are duplicated questions") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestion",
-			categoryName = "Category",
-			groupName = "Guest",
-			titleField = "Question");
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion",
+				categoryName = "Category",
+				groupName = "Guest",
+				titleField = "Question");
 
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestion Text",
-			categoryName = "Category",
-			groupName = "Guest",
-			titleField = "Question");
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion Text",
+				categoryName = "Category",
+				groupName = "Guest",
+				titleField = "Question");
+		}
 
-		User.logoutPG();
+		task ("When an anonymous goes to the fist question's detail page") {
+			User.logoutPG();
 
-		Navigator.gotoPage(pageName = "Questions Page");
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoCategory(categoryName = "Category");
+			Questions.gotoCategory(categoryName = "Category");
 
-		Questions.gotoDetails(
-			duplicatedQuestions = "true",
-			questionTabField = "Questions",
-			questionTitle = "Question");
+			Questions.gotoDetails(
+				duplicatedQuestions = "true",
+				questionTabField = "Questions",
+				questionTitle = "Question");
+		}
 
-		Questions.assertCanonicalURL(
-			category = "category",
-			pageName = "Questions Page",
-			portalURL = ${portalURL},
-			title = "question");
+		task ("Then a he can see the question title on url as 'question'") {
+			Questions.assertCanonicalURL(
+				category = "category",
+				pageName = "Questions Page",
+				portalURL = ${portalURL},
+				title = "question");
+		}
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page");
+		task ("When an anonymous user goes to the most recently created question's detail page") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page");
 
-		Questions.gotoCategory(categoryName = "Category");
+			Questions.gotoCategory(categoryName = "Category");
 
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Question");
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Question");
+		}
 
-		Questions.assertCanonicalURL(
-			category = "category",
-			pageName = "Questions Page",
-			portalURL = ${portalURL},
-			title = "question-1");
+		task ("Then a he can see the question title on url as 'question-1'") {
+			Questions.assertCanonicalURL(
+				category = "category",
+				pageName = "Questions Page",
+				portalURL = ${portalURL},
+				title = "question-1");
+		}
 	}
 
-	@description = "Validate if the guest can check the canonical URL with special characters."
+	@description = "LPS-133798 - Validate if the guest can check the canonical URL with special characters."
 	@priority = 3
 	test CanViewCanonicalURLWithSpecialCharacters {
 		property test.liferay.virtual.instance = "false";
@@ -1247,75 +1304,91 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Questions.openToConfigInSystemSettings(portlet = "Questions");
+		task ("Given that the configuration is set and anonymous read is anable") {
+			Questions.openToConfigInSystemSettings(portlet = "Questions");
 
-		SystemSettings.editTextAreaSetting(
-			settingName = "Set Base Path for History Router",
-			settingValue = "/questions-page");
+			SystemSettings.editTextAreaSetting(
+				settingName = "Set Base Path for History Router",
+				settingValue = "/questions-page");
 
-		SystemSettings.saveConfiguration();
+			SystemSettings.saveConfiguration();
 
-		Questions.enableAnonymousRead();
+			Questions.enableAnonymousRead();
+		}
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Category",
-			userEmailAddress = "test@liferay.com");
+		task ("And there are a category and a question created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestion",
-			categoryName = "Category",
-			groupName = "Guest",
-			titleField = "Question@#");
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion",
+				categoryName = "Category",
+				groupName = "Guest",
+				titleField = "Question@#");
+		}
 
-		User.logoutPG();
+		task ("When an anonymous goes to the question detail page") {
+			User.logoutPG();
 
-		Navigator.gotoPage(pageName = "Questions Page");
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoCategory(categoryName = "Category");
+			Questions.gotoCategory(categoryName = "Category");
 
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Question@#");
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Question@#");
+		}
 
-		Questions.assertCanonicalURL(
-			category = "category",
-			pageName = "Questions Page",
-			portalURL = ${portalURL},
-			title = "question-");
+		task ("Then he can see the URL with especial characters.") {
+			Questions.assertCanonicalURL(
+				category = "category",
+				pageName = "Questions Page",
+				portalURL = ${portalURL},
+				title = "question-");
+		}
 	}
 
-	@description = "Validate if the user can view the select filter and search field after adding a question."
+	@description = "LPS-116841 - Validate if the user can view the select filter and search field after adding a question."
 	@priority = 4
 	test CanViewFilterAndSearchFieldAfterAddingQuestion {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("Given there is a category created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+		}
 
-		Questions.viewSearchField(noQuestion = "true");
+		task ("And the user can se that there are not questions created") {
+			Questions.viewSearchField(noQuestion = "true");
 
-		Questions.viewSelectFilter(noQuestion = "true");
+			Questions.viewSelectFilter(noQuestion = "true");
+		}
 
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestionWithTheTestBody",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Title AddQuestion");
+		task ("When the user creates a question") {
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestionWithTheTestBody",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Title AddQuestion");
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+		}
 
-		Questions.viewSearchField();
+		task ("Then he can see the select filter and serarch field") {
+			Questions.viewSearchField();
 
-		Questions.viewSelectFilter();
+			Questions.viewSelectFilter();
+		}
 	}
 
 	@description = "LPS-122831 - Validate if the user can view the activity default after delete all the responses."
@@ -1519,283 +1592,315 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can view the question after changing the subtopic using the breadcrumb filter."
+	@description = "LPS-115724 - Validate if the user can view the question after changing the subtopic using the breadcrumb filter."
 	@priority = 3
 	@refactordone
 	test CanViewQuestionAfterChangingSubTopic {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category1",
-			userEmailAddress = "test@liferay.com");
+		task ("Given there are a category and subcategories created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category1",
+				userEmailAddress = "test@liferay.com");
 
-		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "Questions Test Category1",
-			groupName = "Guest");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Subcategory Description",
-			categoryName = "Questions Test Category2",
-			groupName = "Guest",
-			parentCategoryId = ${parentCategoryId},
-			userEmailAddress = "test@liferay.com");
-
-		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "Questions Test Category2",
-			groupName = "Guest");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Subcategory Description",
-			categoryName = "Questions Test Category3",
-			groupName = "Guest",
-			parentCategoryId = ${parentCategoryId},
-			userEmailAddress = "test@liferay.com");
-
-		JSONQuestions.addQuestion(
-			bodyField = "Question Body 2",
-			categoryName = "Questions Test Category2",
-			groupName = "Guest",
-			titleField = "Question 2");
-
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category1");
-
-		Questions.changeTopic(
-			parentTopicName = "Questions Test Category1",
-			subTopicName = "Questions Test Category2");
-
-		Questions.changeTopic(
-			parentTopicName = "Questions Test Category2",
-			subTopicName = "Questions Test Category3");
-
-		Questions.changeTopic(
-			gotoParentTopic = "Questions Test Category2",
-			multipleSubTopics = "true");
-
-		Questions.viewNoBreadcrumbEllipsis();
-
-		Questions.viewList(listedQuestions = "Question 2");
-	}
-
-	@description = "Validate if the user can filter by votes."
-	@priority = 4
-	@refactordone
-	test CanViewQuestionsAfterFilteringByVotes {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		for (var num : list "1,2,3") {
-			JSONQuestions.addQuestion(
-				bodyField = "Question Body ${num}",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Question ${num}");
-		}
-
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			questionsTitle = "question-1",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
-
-		Questions.voteQuestion(
-			currentVotedCount = 0,
-			voteUp = "true");
-
-		Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Question 2");
-
-		Questions.voteQuestion(
-			currentVotedCount = 0,
-			voteUp = "true");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			questionsTitle = "question-2",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
-
-		Questions.voteQuestion(
-			currentVotedCount = 1,
-			voteUp = "true");
-
-		Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.viewVotedResult(
-			questionTitle = "Question 1",
-			votedCount = 1);
-
-		Questions.viewVotedResult(
-			questionTitle = "Question 2",
-			votedCount = 2);
-
-		Questions.viewVotedResult(
-			questionTitle = "Question 3",
-			votedCount = 0);
-
-		Questions.configureFilter(filterBy = "Most Voted");
-
-		Questions.viewFilterResults(
-			lastQuestionTitle = "Question 1",
-			questionTitle = "Question 2");
-	}
-
-	@description = "Validate if the users can view the questions from different topics via the breadcrumb."
-	@priority = 4
-	@refactordone
-	test CanViewQuestionsFromDifferentSubTopics {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		JSONQuestions.addQuestion(
-			bodyField = "Content Question3",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Question 3");
-
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
-
-		for (var num : list "1,2") {
 			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-				categoryName = "Questions Test Category",
+				categoryName = "Questions Test Category1",
 				groupName = "Guest");
 
 			JSONMBMessage.addCategory(
 				categoryDescription = "MB Subcategory Description",
-				categoryName = "Questions Subcategory${num}",
+				categoryName = "Questions Test Category2",
+				groupName = "Guest",
+				parentCategoryId = ${parentCategoryId},
+				userEmailAddress = "test@liferay.com");
+
+			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+				categoryName = "Questions Test Category2",
+				groupName = "Guest");
+
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Subcategory Description",
+				categoryName = "Questions Test Category3",
 				groupName = "Guest",
 				parentCategoryId = ${parentCategoryId},
 				userEmailAddress = "test@liferay.com");
 		}
 
-		for (var num : list "1,2") {
+		task ("And a question is created") {
 			JSONQuestions.addQuestion(
-				bodyField = "Question Body ${num}",
-				categoryName = "Questions Subcategory${num}",
+				bodyField = "Question Body 2",
+				categoryName = "Questions Test Category2",
 				groupName = "Guest",
-				titleField = "Question ${num}");
+				titleField = "Question 2");
 		}
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+		task ("When the user do to the main category and change topic to 'Questions Test Category2'") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category1");
 
-		Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
+			Questions.changeTopic(
+				parentTopicName = "Questions Test Category1",
+				subTopicName = "Questions Test Category2");
 
-		Questions.changeTopic(
-			parentTopicName = "Questions Test Category",
-			subTopicName = "Questions Subcategory1");
+			Questions.changeTopic(
+				parentTopicName = "Questions Test Category2",
+				subTopicName = "Questions Test Category3");
 
-		Questions.viewList(
-			listedQuestions = "Question 1",
-			unlistedQuestions = "Question 2,Question 3");
+			Questions.changeTopic(
+				gotoParentTopic = "Questions Test Category2",
+				multipleSubTopics = "true");
 
-		Questions.changeTopic(
-			parentTopicName = "Questions Test Category",
-			subTopicName = "Questions Subcategory2");
+			Questions.viewNoBreadcrumbEllipsis();
+		}
 
-		Questions.viewList(
-			listedQuestions = "Question 2",
-			unlistedQuestions = "Question 1,Question 3");
-
-		Questions.changeTopic(
-			parentTopicName = "Questions Subcategory2",
-			subTopicName = "Questions Test Category");
-
-		Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
+		task ("Then he can see the question created") {
+			Questions.viewList(listedQuestions = "Question 2");
+		}
 	}
 
-	@description = "Validate if the user can select the filter and view the related results."
+	@description = "LPS-117752 - Validate if the user can filter by votes."
+	@priority = 4
+	@refactordone
+	test CanViewQuestionsAfterFilteringByVotes {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given there is a user created") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("And a category with questions created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
+
+			for (var num : list "1,2,3") {
+				JSONQuestions.addQuestion(
+					bodyField = "Question Body ${num}",
+					categoryName = "Questions Test Category",
+					groupName = "Guest",
+					titleField = "Question ${num}");
+			}
+		}
+
+		task ("When the user vottes on questions") {
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				questionsTitle = "question-1",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+
+			Questions.voteQuestion(
+				currentVotedCount = 0,
+				voteUp = "true");
+
+			Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
+
+			Questions.gotoCategory(categoryName = "Questions Test Category");
+
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Question 2");
+
+			Questions.voteQuestion(
+				currentVotedCount = 0,
+				voteUp = "true");
+		}
+
+		task ("Then another user can see and filter questions by filters") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				questionsTitle = "question-2",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+
+			Questions.voteQuestion(
+				currentVotedCount = 1,
+				voteUp = "true");
+
+			Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
+
+			Questions.gotoCategory(categoryName = "Questions Test Category");
+
+			Questions.viewVotedResult(
+				questionTitle = "Question 1",
+				votedCount = 1);
+
+			Questions.viewVotedResult(
+				questionTitle = "Question 2",
+				votedCount = 2);
+
+			Questions.viewVotedResult(
+				questionTitle = "Question 3",
+				votedCount = 0);
+
+			Questions.configureFilter(filterBy = "Most Voted");
+
+			Questions.viewFilterResults(
+				lastQuestionTitle = "Question 1",
+				questionTitle = "Question 2");
+		}
+	}
+
+	@description = "LPS-115724 - Validate if the users can view the questions from different topics via the breadcrumb."
+	@priority = 4
+	@refactordone
+	test CanViewQuestionsFromDifferentSubTopics {
+		task ("Given there are categories and questions created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
+
+			JSONQuestions.addQuestion(
+				bodyField = "Content Question3",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Question 3");
+
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+
+			for (var num : list "1,2") {
+				var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+					categoryName = "Questions Test Category",
+					groupName = "Guest");
+
+				JSONMBMessage.addCategory(
+					categoryDescription = "MB Subcategory Description",
+					categoryName = "Questions Subcategory${num}",
+					groupName = "Guest",
+					parentCategoryId = ${parentCategoryId},
+					userEmailAddress = "test@liferay.com");
+			}
+
+			for (var num : list "1,2") {
+				JSONQuestions.addQuestion(
+					bodyField = "Question Body ${num}",
+					categoryName = "Questions Subcategory${num}",
+					groupName = "Guest",
+					titleField = "Question ${num}");
+			}
+		}
+
+		task ("When the user goes the topic page") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+
+			Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
+		}
+
+		task ("And change topic through breadcrumb then he can see the question created in each category") {
+			Questions.changeTopic(
+				parentTopicName = "Questions Test Category",
+				subTopicName = "Questions Subcategory1");
+
+			Questions.viewList(
+				listedQuestions = "Question 1",
+				unlistedQuestions = "Question 2,Question 3");
+
+			Questions.changeTopic(
+				parentTopicName = "Questions Test Category",
+				subTopicName = "Questions Subcategory2");
+
+			Questions.viewList(
+				listedQuestions = "Question 2",
+				unlistedQuestions = "Question 1,Question 3");
+
+			Questions.changeTopic(
+				parentTopicName = "Questions Subcategory2",
+				subTopicName = "Questions Test Category");
+
+			Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
+		}
+	}
+
+	@description = "LPS-112029 - Validate if the user can select the filter and view the related results."
 	@priority = 4
 	@refactordone
 	test CanViewQuestionsWithConfiguredFilter {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		for (var num : list "1,2") {
-			JSONQuestions.addQuestion(
-				bodyField = "Question Body ${num}",
+		task ("Given there are a category and questions created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
 				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Question ${num}");
+				userEmailAddress = "test@liferay.com");
+
+			for (var num : list "1,2") {
+				JSONQuestions.addQuestion(
+					bodyField = "Question Body ${num}",
+					categoryName = "Questions Test Category",
+					groupName = "Guest",
+					titleField = "Question ${num}");
+			}
 		}
 
-		MessageboardsThread.openToEditThread(
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			siteURLKey = "guest",
-			threadSubject = "Question 1");
+		task ("And the user edits a question") {
+			MessageboardsThread.openToEditThread(
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				siteURLKey = "guest",
+				threadSubject = "Question 1");
 
-		MessageboardsThread.editCP(
-			skipNavigation = "true",
-			threadBodyEdit = "Question Body 1 Edit",
-			threadSubjectEdit = "Question 1 Edit");
+			MessageboardsThread.editCP(
+				skipNavigation = "true",
+				threadBodyEdit = "Question Body 1 Edit",
+				threadSubjectEdit = "Question 1 Edit");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+		task ("When the user select the filter 'Latest Edited'") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
 
-		Questions.configureFilter(filterBy = "Latest Edited");
+			Questions.configureFilter(filterBy = "Latest Edited");
+		}
 
-		Questions.viewFilterResults(
-			lastQuestionTitle = "Question 2",
-			questionTitle = "Question 1 Edit");
+		task ("Then he can see questions that had been edited lately") {
+			Questions.viewFilterResults(
+				lastQuestionTitle = "Question 2",
+				questionTitle = "Question 1 Edit");
+		}
 
-		Questions.configureFilter(filterBy = "Voted in the Last Week");
+		task ("When the user select another kind of filters then he can see the expected results") {
+			Questions.configureFilter(filterBy = "Voted in the Last Week");
 
-		Questions.viewNoFilteredResult();
+			Questions.viewNoFilteredResult();
 
-		Questions.configureFilter(filterBy = "Voted in the Last Month");
+			Questions.configureFilter(filterBy = "Voted in the Last Month");
 
-		Questions.viewNoFilteredResult();
+			Questions.viewNoFilteredResult();
 
-		Questions.configureFilter(filterBy = "Latest Created");
+			Questions.configureFilter(filterBy = "Latest Created");
 
-		Questions.viewFilterResults(
-			lastQuestionTitle = "Question 1 Edit",
-			questionTitle = "Question 2");
+			Questions.viewFilterResults(
+				lastQuestionTitle = "Question 1 Edit",
+				questionTitle = "Question 2");
+		}
 	}
 
 	@description = "LPS-125810 - Validate if the user can create the second answer to a question, it also covers LPS-125810."
@@ -2078,148 +2183,184 @@ definition {
 		}
 	}
 
-	@description = "Validate if a user can view question details when using history router."
+	@description = "LPS-131941 - Validate if a user can view question details when using history router."
 	@priority = 4
 	test DetailsCanbeViewedWithHistoryRouter {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		Questions.openToConfigInSystemSettings(portlet = "Questions");
+		task ("Given that the router configutation is set") {
+			Questions.openToConfigInSystemSettings(portlet = "Questions");
 
-		SystemSettings.editTextAreaSetting(
-			settingName = "Set Base Path for History Router",
-			settingValue = "/questions-page");
+			SystemSettings.editTextAreaSetting(
+				settingName = "Set Base Path for History Router",
+				settingValue = "/questions-page");
 
-		SystemSettings.saveConfiguration();
+			SystemSettings.saveConfiguration();
+		}
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("And a question is created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestion",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Title AddQuestion");
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Title AddQuestion");
+		}
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		task ("When the user goes to details page using history router") {
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoCategory(categoryName = "Questions Test Category");
+			Questions.gotoCategory(categoryName = "Questions Test Category");
 
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestion");
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Title AddQuestion");
+		}
 
-		AssertLocation(value1 = "http://localhost:8080/web/guest/questions-page/questions/questions-test-category/title-addquestion");
+		task ("Then he can see the details URL") {
+			AssertLocation(value1 = "http://localhost:8080/web/guest/questions-page/questions/questions-test-category/title-addquestion");
+		}
 	}
 
-	@description = "Validate if the Activity tab appears"
+	@description = "LPS-110458 - Validate if the Activity tab appears"
 	@priority = 4
 	@refactordone
 	test MyActivityCanBeViewedInTopic {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("Given there is a category created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+		task ("WHen the user goes to topic page") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+		}
 
-		AssertElementPresent(
-			key_questionTabField = "Activity",
-			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+		task ("Then he can see Activity tab") {
+			AssertElementPresent(
+				key_questionTabField = "Activity",
+				locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+		}
 	}
 
 	@description = "Validate if the user can view a question via an edited topic."
 	@priority = 5
 	@refactordone
 	test QuestionCanBeViewedAfterEditingTopic {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("Given there are a category and a question created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestion",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Question Title");
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Question Title");
+		}
 
-		Questions.editRootTopic(
-			categoryName = "Questions Test Category",
-			categoryNameEdit = "Edit Questions Test Category",
-			groupName = "Guest",
-			siteURLKey = "guest");
+		task ("When the user edit a topic") {
+			Questions.editRootTopic(
+				categoryName = "Questions Test Category",
+				categoryNameEdit = "Edit Questions Test Category",
+				groupName = "Guest",
+				siteURLKey = "guest");
+		}
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			questionsTitle = "question-title",
-			siteURLKey = "guest",
-			topicName = "edit-questions-test-category");
+		task ("Then he can see the topic edited") {
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				questionsTitle = "question-title",
+				siteURLKey = "guest",
+				topicName = "edit-questions-test-category");
+		}
 	}
 
-	@description = "Validate if the pagination will appear and works when we have more than 4 questions."
+	@description = "LPS-113676 - Validate if the pagination will appear and works when we have more than 4 questions."
 	@priority = 3
 	@refactordone
 	test QuestionsPaginationCanBeViewedInTopic {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		for (var num : list "1,2,3,4,5,6,7,8,9,10") {
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion ${num}",
+		task ("Given there are a category and some questions created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
 				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Question ${num}");
+				userEmailAddress = "test@liferay.com");
+
+			for (var num : list "1,2,3,4,5,6,7,8,9,10") {
+				JSONQuestions.addQuestion(
+					bodyField = "Body AddQuestion ${num}",
+					categoryName = "Questions Test Category",
+					groupName = "Guest",
+					titleField = "Question ${num}");
+			}
 		}
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+		task ("When the user goest to topic page") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+		}
 
-		Questions.viewPaginationResults(results = "Showing 1 to 10 of 10");
+		task ("Then he can see the pagination") {
+			Questions.viewPaginationResults(results = "Showing 1 to 10 of 10");
+		}
 
-		Questions.changePagination(itemsPerPage = "4 items");
+		task ("And can change and navigate through the pagination") {
+			Questions.changePagination(itemsPerPage = "4 items");
 
-		Questions.viewPaginationResults(results = "Showing 1 to 4 of 10");
+			Questions.viewPaginationResults(results = "Showing 1 to 4 of 10");
 
-		Click(locator1 = "Questions#PAGINATION_NEXT_LINK");
+			Click(locator1 = "Questions#PAGINATION_NEXT_LINK");
 
-		Questions.viewPaginationResults(results = "Showing 5 to 8 of 10");
+			Questions.viewPaginationResults(results = "Showing 5 to 8 of 10");
 
-		Click(locator1 = "Questions#PAGINATION_NEXT_LINK");
+			Click(locator1 = "Questions#PAGINATION_NEXT_LINK");
 
-		Questions.viewPaginationResults(results = "Showing 9 to 10 of 10");
+			Questions.viewPaginationResults(results = "Showing 9 to 10 of 10");
+		}
 	}
 
 	@description = "This test checks that the javascript in the user name will not be executed when viewing a question on page."
 	@priority = 3
 	test XSSIsNotExecutedWhenViewingUsernameInQuestion {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("Given there is a catergory created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		Navigator.openURL();
+		task ("When the user configurates the user informations") {
+			Navigator.openURL();
 
-		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
-		User.editUserInformation(userLastNameEdit = '''Test<script>alert('hello!')</script>''');
+			User.editUserInformation(userLastNameEdit = '''Test<script>alert('hello!')</script>''');
+		}
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Content AddQuestion",
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			titleField = "Title AddQuestion",
-			topicName = "questions-test-category");
+		task ("And add a question") {
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Content AddQuestion",
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				titleField = "Title AddQuestion",
+				topicName = "questions-test-category");
+		}
 
-		AssertAlertNotPresent();
+		task ("Then the script is not executed") {
+			AssertAlertNotPresent();
+		}
 	}
 
 }

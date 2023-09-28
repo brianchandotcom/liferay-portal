@@ -79,8 +79,7 @@ public interface ObjectFolderLocalService
 			Map<Locale, String> labelMap, String name)
 		throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
-	public ObjectFolder addUncategorizedObjectFolder(long companyId)
+	public ObjectFolder addOrGetUncategorizedObjectFolder(long companyId)
 		throws PortalException;
 
 	/**

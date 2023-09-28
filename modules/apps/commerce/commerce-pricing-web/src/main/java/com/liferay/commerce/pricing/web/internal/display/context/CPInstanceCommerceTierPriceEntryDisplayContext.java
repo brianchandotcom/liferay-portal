@@ -17,7 +17,6 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -163,7 +162,8 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(_getAddCommerceTierPriceEntryURL());
-				dropdownItem.setLabel(StringPool.BLANK);
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add-new-price-tier"));
 				dropdownItem.setTarget("modal-lg");
 			}
 		).build();

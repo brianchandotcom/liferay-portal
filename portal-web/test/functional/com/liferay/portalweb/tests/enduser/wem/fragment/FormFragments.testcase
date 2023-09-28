@@ -722,6 +722,8 @@ definition {
 				card = "Fragment Example",
 				cardLabel = "Warnings",
 				index = 2);
+
+			AssertElementAccessible(locator1 = "//div[contains(@class,'card')][contains(.,'Fragment Example')]//span[contains(@class,'label-warning')]");
 		}
 
 		task ("When the fragment admin accesses to fragment in read-only mode") {

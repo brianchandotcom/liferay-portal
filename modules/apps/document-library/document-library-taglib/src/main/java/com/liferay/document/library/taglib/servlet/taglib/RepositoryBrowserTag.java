@@ -13,12 +13,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -103,10 +102,13 @@ public class RepositoryBrowserTag extends IncludeTag {
 			RepositoryBrowserTagDisplayContext.class.getName(),
 			new RepositoryBrowserTagDisplayContext(
 				_getActionsSet(), DLAppServiceUtil.getService(),
-				_fileEntryModelResourcePermission,
-				_fileShortcutModelResourcePermission,
-				_folderModelResourcePermission, _getFolderId(),
-				httpServletRequest,
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					FileEntry.class.getName()),
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					FileShortcut.class.getName()),
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					Folder.class.getName()),
+				_getFolderId(), httpServletRequest,
 				PortalUtil.getLiferayPortletRequest(portletRequest),
 				PortalUtil.getLiferayPortletResponse(portletResponse),
 				portletRequest, _getRepositoryId(), getFolderId()));
@@ -154,25 +156,6 @@ public class RepositoryBrowserTag extends IncludeTag {
 
 	private static final Set<String> _allActions = SetUtil.fromArray(
 		"add-folder", "delete", "rename", "upload");
-	private static volatile ModelResourcePermission<FileEntry>
-		_fileEntryModelResourcePermission =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ModelResourcePermission.class, RepositoryBrowserTag.class,
-				"_fileEntryModelResourcePermission",
-				"(model.class.name=" + FileEntry.class.getName() + ")", false);
-	private static volatile ModelResourcePermission<FileShortcut>
-		_fileShortcutModelResourcePermission =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ModelResourcePermission.class, RepositoryBrowserTag.class,
-				"_fileShortcutModelResourcePermission",
-				"(model.class.name=" + FileShortcut.class.getName() + ")",
-				false);
-	private static volatile ModelResourcePermission<Folder>
-		_folderModelResourcePermission =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ModelResourcePermission.class, RepositoryBrowserTag.class,
-				"_folderModelResourcePermission",
-				"(model.class.name=" + Folder.class.getName() + ")", false);
 
 	private String _actions = StringPool.BLANK;
 	private long _folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;

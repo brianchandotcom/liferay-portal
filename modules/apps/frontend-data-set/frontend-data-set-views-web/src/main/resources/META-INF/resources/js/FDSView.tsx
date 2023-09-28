@@ -19,7 +19,7 @@ import Pagination from './fds_view/Pagination';
 import Sorting from './fds_view/Sorting';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 
-let NAVIGATION_BAR_ITEMS = [
+const NAVIGATION_BAR_ITEMS = [
 	{
 		Component: Details,
 		label: Liferay.Language.get('details'),
@@ -28,24 +28,14 @@ let NAVIGATION_BAR_ITEMS = [
 		Component: Fields,
 		label: Liferay.Language.get('fields'),
 	},
-];
-
-if (Liferay.FeatureFlags['LPS-188645']) {
-	NAVIGATION_BAR_ITEMS = [
-		...NAVIGATION_BAR_ITEMS,
-		{
-			Component: Filters,
-			label: Liferay.Language.get('filters'),
-		},
-		{
-			Component: Sorting,
-			label: Liferay.Language.get('sorting'),
-		},
-	];
-}
-
-NAVIGATION_BAR_ITEMS = [
-	...NAVIGATION_BAR_ITEMS,
+	{
+		Component: Filters,
+		label: Liferay.Language.get('filters'),
+	},
+	{
+		Component: Sorting,
+		label: Liferay.Language.get('sorting'),
+	},
 	{
 		Component: Actions,
 		label: Liferay.Language.get('actions'),

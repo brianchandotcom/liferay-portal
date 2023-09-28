@@ -58,4 +58,8 @@ definition {
 		}
 	}
 
+	macro viewErrorMessage {
+		AssertElementPresent(locator1 = "MP2Utils#ALERT_NOTIFICATION");
+	}
+
 }

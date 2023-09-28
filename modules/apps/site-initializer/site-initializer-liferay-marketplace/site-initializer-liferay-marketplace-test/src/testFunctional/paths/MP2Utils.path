@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ALERT_NOTIFICATION</td>
+	<td>//div[contains(@class, 'alert-notifications alert-notifications-fixed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMAIL_ADDRESS_FIELD</td>
 	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_login']</td>
 	<td></td>

@@ -60,7 +60,7 @@ const dataReducer = (state, action) => {
 			return {
 				...state,
 				isOpen: true,
-				loading: true,
+				loading: action.loading ?? true,
 			};
 
 		case 'SET_ERROR':
@@ -185,12 +185,12 @@ const SidebarPanel = React.forwardRef(
 
 		useImperativeHandle(ref, () => ({
 			close: () => safeDispatch({type: 'CLOSE_SIDEBAR'}),
-			open: (fetchURL, View) => {
+			open: (url, View) => {
 				CurrentViewRef.current = View;
 
-				safeDispatch({type: 'OPEN_SIDEBAR'});
+				safeDispatch({loading: url !== fetchURL, type: 'OPEN_SIDEBAR'});
 
-				setFetchURL(fetchURL);
+				setFetchURL(url);
 			},
 		}));
 

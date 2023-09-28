@@ -75,10 +75,12 @@ export function ModalEditObjectFolder({
 			openToast({
 				message: sub(
 					Liferay.Language.get('x-was-saved-successfully'),
-					`<strong>${getLocalizableLabel(
-						defaultLanguageId,
-						objectFolder.label,
-						objectFolder.name
+					`<strong>${Liferay.Util.escapeHTML(
+						getLocalizableLabel(
+							defaultLanguageId,
+							objectFolder.label,
+							objectFolder.name
+						)
 					)}</strong>`
 				),
 				type: 'success',

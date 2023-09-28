@@ -115,7 +115,7 @@ export function ModalAddObjectDefinition({
 			openToast({
 				message: sub(
 					Liferay.Language.get('x-was-created-successfully'),
-					`<strong>${label}</strong>`
+					`<strong>${Liferay.Util.escapeHTML(label)}</strong>`
 				),
 				type: 'success',
 			});

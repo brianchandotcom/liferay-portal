@@ -13,9 +13,11 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.model.CTRemote;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.change.tracking.service.CTRemoteLocalService;
 import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
@@ -546,27 +548,91 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				themeDisplay.getPermissionChecker(),
 				CTActionKeys.ADD_PUBLICATION)) {
 
-			data.put(
-				"createDropdownItem",
-				JSONUtil.put(
-					"href",
-					PortletURLBuilder.create(
-						_portal.getControlPanelPortletURL(
-							httpServletRequest, themeDisplay.getScopeGroup(),
-							CTPortletKeys.PUBLICATIONS, 0, 0,
-							PortletRequest.RENDER_PHASE)
-					).setMVCRenderCommandName(
-						"/change_tracking/add_ct_collection"
-					).setRedirect(
-						themeDisplay.getURLCurrent()
-					).buildString()
-				).put(
-					"label",
-					_language.get(
-						themeDisplay.getLocale(), "create-new-publication")
-				).put(
-					"symbolLeft", "plus"
-				));
+			List<CTRemote> ctRemotes = _ctRemoteLocalService.getCTRemotes(
+				themeDisplay.getCompanyId());
+
+			if (!ctRemotes.isEmpty()) {
+				JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+				jsonArray.put(
+					JSONUtil.put(
+						"href",
+						PortletURLBuilder.create(
+							_portal.getControlPanelPortletURL(
+								httpServletRequest,
+								themeDisplay.getScopeGroup(),
+								CTPortletKeys.PUBLICATIONS, 0, 0,
+								PortletRequest.RENDER_PHASE)
+						).setMVCRenderCommandName(
+							"/change_tracking/add_ct_collection"
+						).setRedirect(
+							themeDisplay.getURLCurrent()
+						).buildString()
+					).put(
+						"label",
+						_language.get(themeDisplay.getLocale(), "local")
+					));
+
+				for (CTRemote ctRemote : ctRemotes) {
+					jsonArray.put(
+						JSONUtil.put(
+							"href",
+							PortletURLBuilder.create(
+								_portal.getControlPanelPortletURL(
+									httpServletRequest,
+									themeDisplay.getScopeGroup(),
+									CTPortletKeys.PUBLICATIONS, 0, 0,
+									PortletRequest.RENDER_PHASE)
+							).setMVCRenderCommandName(
+								"/change_tracking/add_ct_collection"
+							).setRedirect(
+								themeDisplay.getURLCurrent()
+							).setParameter(
+								"ctRemoteId", ctRemote.getCtRemoteId()
+							).buildString()
+						).put(
+							"label", ctRemote.getName()
+						));
+				}
+
+				data.put(
+					"createDropdownItem",
+					JSONUtil.put(
+						"items", jsonArray
+					).put(
+						"label",
+						_language.get(
+							themeDisplay.getLocale(), "create-new-publication")
+					).put(
+						"symbolLeft", "plus"
+					).put(
+						"type", "contextual"
+					));
+			}
+			else {
+				data.put(
+					"createDropdownItem",
+					JSONUtil.put(
+						"href",
+						PortletURLBuilder.create(
+							_portal.getControlPanelPortletURL(
+								httpServletRequest,
+								themeDisplay.getScopeGroup(),
+								CTPortletKeys.PUBLICATIONS, 0, 0,
+								PortletRequest.RENDER_PHASE)
+						).setMVCRenderCommandName(
+							"/change_tracking/add_ct_collection"
+						).setRedirect(
+							themeDisplay.getURLCurrent()
+						).buildString()
+					).put(
+						"label",
+						_language.get(
+							themeDisplay.getLocale(), "create-new-publication")
+					).put(
+						"symbolLeft", "plus"
+					));
+			}
 		}
 
 		if (ctCollection != null) {
@@ -730,6 +796,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private CTRemoteLocalService _ctRemoteLocalService;
 
 	@Reference
 	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;

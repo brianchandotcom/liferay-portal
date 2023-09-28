@@ -4,20 +4,31 @@
  */
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
-import PropTypes from 'prop-types';
 import React from 'react';
+
+import {getSelectOptions} from '../../../../../../../common/getSelectOptions';
 
 const VERTICAL_ALIGNMENT_OPTIONS = [
 	{label: Liferay.Language.get('top'), value: 'start'},
 	{label: Liferay.Language.get('middle'), value: 'center'},
 	{label: Liferay.Language.get('bottom'), value: 'end'},
-];
+] as const;
+
+export type VerticalAlignmentOption = typeof VERTICAL_ALIGNMENT_OPTIONS[number]['value'];
+
+interface Props {
+	collectionVerticalAlignmentId: string;
+	handleConfigurationChanged: (change: {
+		verticalAlignment: VerticalAlignmentOption;
+	}) => void;
+	value?: VerticalAlignmentOption;
+}
 
 export function VerticalAlignmentSelector({
 	collectionVerticalAlignmentId,
 	handleConfigurationChanged,
 	value,
-}) {
+}: Props) {
 	return (
 		<ClayForm.Group small>
 			<label htmlFor={collectionVerticalAlignmentId}>
@@ -27,21 +38,16 @@ export function VerticalAlignmentSelector({
 			<ClaySelectWithOption
 				id={collectionVerticalAlignmentId}
 				onChange={(event) => {
-					const nextValue = event.target.value;
+					const nextValue = event.target
+						.value as VerticalAlignmentOption;
 
 					handleConfigurationChanged({
 						verticalAlignment: nextValue,
 					});
 				}}
-				options={VERTICAL_ALIGNMENT_OPTIONS}
+				options={getSelectOptions(VERTICAL_ALIGNMENT_OPTIONS)}
 				value={value || ''}
 			/>
 		</ClayForm.Group>
 	);
 }
-
-VerticalAlignmentSelector.propTypes = {
-	collectionVerticalAlignmentId: PropTypes.string.isRequired,
-	handleConfigurationChanged: PropTypes.func.isRequired,
-	value: PropTypes.string.isRequired,
-};

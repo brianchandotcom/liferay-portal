@@ -60,6 +60,8 @@ public class FeatureFlagListenerTest {
 			_companyId, _FEATURE_FLAG_KEY_1);
 		_value2 = FeatureFlagTestUtil.getFeatureFlagValue(
 			_companyId, _FEATURE_FLAG_KEY_2);
+		_value3 = FeatureFlagTestUtil.getFeatureFlagValue(
+			_companyId, _FEATURE_FLAG_KEY_3);
 
 		_valueSystem = FeatureFlagTestUtil.getFeatureFlagValue(
 			CompanyConstants.SYSTEM, _FEATURE_FLAG_KEY_SYSTEM);
@@ -71,6 +73,8 @@ public class FeatureFlagListenerTest {
 			_companyId, _value1, _FEATURE_FLAG_KEY_1);
 		FeatureFlagTestUtil.setFeatureFlagValue(
 			_companyId, _value2, _FEATURE_FLAG_KEY_2);
+		FeatureFlagTestUtil.setFeatureFlagValue(
+			_companyId, _value3, _FEATURE_FLAG_KEY_3);
 		FeatureFlagTestUtil.setFeatureFlagValue(
 			CompanyConstants.SYSTEM, _valueSystem, _FEATURE_FLAG_KEY_SYSTEM);
 	}
@@ -170,7 +174,11 @@ public class FeatureFlagListenerTest {
 
 			testFeatureFlagListener.assertSubsetInvocations(
 				_valuesToString(_companyId, _FEATURE_FLAG_KEY_1, _value1),
-				_valuesToString(_companyId, _FEATURE_FLAG_KEY_2, _value2));
+				_valuesToString(_companyId, _FEATURE_FLAG_KEY_2, _value2),
+				_valuesToString(_companyId, _FEATURE_FLAG_KEY_3, false),
+				_valuesToString(
+					CompanyConstants.SYSTEM, _FEATURE_FLAG_KEY_SYSTEM,
+					_valueSystem));
 
 			FeatureFlagTestUtil.setFeatureFlagValue(
 				_companyId, !_value1, _FEATURE_FLAG_KEY_1);
@@ -181,10 +189,17 @@ public class FeatureFlagListenerTest {
 			FeatureFlagTestUtil.setFeatureFlagValue(
 				_companyId, _value1, _FEATURE_FLAG_KEY_1);
 
+			FeatureFlagTestUtil.setFeatureFlagValue(
+				CompanyConstants.SYSTEM, !_valueSystem,
+				_FEATURE_FLAG_KEY_SYSTEM);
+
 			testFeatureFlagListener.assertInvocations(
 				_valuesToString(_companyId, _FEATURE_FLAG_KEY_1, !_value1),
 				_valuesToString(_companyId, _FEATURE_FLAG_KEY_2, !_value2),
-				_valuesToString(_companyId, _FEATURE_FLAG_KEY_1, _value1));
+				_valuesToString(_companyId, _FEATURE_FLAG_KEY_1, _value1),
+				_valuesToString(
+					CompanyConstants.SYSTEM, _FEATURE_FLAG_KEY_SYSTEM,
+					!_valueSystem));
 		}
 	}
 
@@ -200,6 +215,8 @@ public class FeatureFlagListenerTest {
 
 	private static final String _FEATURE_FLAG_KEY_2 = "TEST-456";
 
+	private static final String _FEATURE_FLAG_KEY_3 = "TEST-789";
+
 	private static final String _FEATURE_FLAG_KEY_SYSTEM = "TEST-000";
 
 	private static long _companyId;
@@ -207,6 +224,7 @@ public class FeatureFlagListenerTest {
 	private BundleContext _bundleContext;
 	private boolean _value1;
 	private boolean _value2;
+	private boolean _value3;
 	private boolean _valueSystem;
 
 	private class TestFeatureFlagListener

@@ -7,6 +7,7 @@ package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
@@ -81,6 +82,9 @@ public class CompanyIndexFactoryFixture {
 			_companyIndexFactory, "_companyIndexFactoryHelper",
 			getCompanyIndexFactoryHelper());
 		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactory, "_companyLocalService",
+			Mockito.mock(CompanyLocalService.class));
+		ReflectionTestUtil.setFieldValue(
 			_companyIndexFactory, "_elasticsearchConfigurationWrapper",
 			createElasticsearchConfigurationWrapper());
 
@@ -99,6 +103,9 @@ public class CompanyIndexFactoryFixture {
 
 		_companyIndexFactoryHelper = new CompanyIndexFactoryHelper();
 
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactoryHelper, "_companyLocalService",
+			Mockito.mock(CompanyLocalService.class));
 		ReflectionTestUtil.setFieldValue(
 			_companyIndexFactoryHelper, "_elasticsearchConfigurationWrapper",
 			createElasticsearchConfigurationWrapper());

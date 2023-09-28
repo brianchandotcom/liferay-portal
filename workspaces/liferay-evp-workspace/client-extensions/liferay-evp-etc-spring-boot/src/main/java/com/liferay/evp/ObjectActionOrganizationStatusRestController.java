@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Elvison Victor
  */
-@RequestMapping("/object/action/evp/organization/status")
+@RequestMapping("/object/action/organization/status")
 @RestController
-public class ObjectActionEVPOrganizationStatusRestController
+public class ObjectActionOrganizationStatusRestController
 	extends BaseRestController {
 
 	@PostMapping

@@ -16,7 +16,6 @@ definition {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		ACUtils.tearDownAC();
-
 	}
 
 	@description = "Automation ID: LRAC-9051 | Test Summary: Admin can be edited or removed"

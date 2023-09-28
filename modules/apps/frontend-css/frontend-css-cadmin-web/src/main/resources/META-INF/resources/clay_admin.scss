@@ -1064,3 +1064,12 @@ html#{$cadmin-selector} {
 		position: static;
 	}
 }
+
+body {
+	/* stylelint-disable */
+	--control-menu-container-height: calc(
+		var(--change-tracking-indicator-height, 0px) +
+			var(--control-menu-height, 0px)
+	);
+	/* stylelint-enable */
+}

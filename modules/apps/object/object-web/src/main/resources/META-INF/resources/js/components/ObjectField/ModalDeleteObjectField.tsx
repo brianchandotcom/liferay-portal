@@ -6,11 +6,9 @@
 import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
-import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
-import WarningModal from '../WarningModal';
 import {deleteObjectField} from './deleteObjectFieldUtil';
 
 interface ModalDeleteObjectFieldProps {
@@ -18,7 +16,6 @@ interface ModalDeleteObjectFieldProps {
 	onAfterSubmit: () => void;
 	setModalVisibility: (value: boolean) => void;
 	setObjectField?: (values: ObjectField | null) => void;
-	showObjectFieldDeletionNotAllowedModal: boolean;
 }
 
 export function ModalDeleteObjectField({
@@ -26,7 +23,6 @@ export function ModalDeleteObjectField({
 	onAfterSubmit,
 	setModalVisibility,
 	setObjectField,
-	showObjectFieldDeletionNotAllowedModal,
 }: ModalDeleteObjectFieldProps) {
 	const {observer, onClose, open} = useModal({
 		onClose: () => setModalVisibility(false),
@@ -35,83 +31,60 @@ export function ModalDeleteObjectField({
 	return (
 		<ClayModalProvider>
 			{objectField && (
-				<>
-					{showObjectFieldDeletionNotAllowedModal ? (
-						<WarningModal
-							observer={observer}
-							onClose={() => onClose()}
-							title={Liferay.Language.get('deletion-not-allowed')}
-						>
-							<Text>
-								{sub(
-									Liferay.Language.get(
-										'x-is-the-only-field-of-the-published-object-definition-and-cannot-be-deleted'
-									),
-									`${objectField.label[defaultLanguageId]}`
-								)}
-							</Text>
-						</WarningModal>
-					) : (
-						<ClayModal center observer={observer} status="danger">
-							<ClayModal.Header>
-								{Liferay.Language.get('delete-object-field')}
-							</ClayModal.Header>
+				<ClayModal center observer={observer} status="danger">
+					<ClayModal.Header>
+						{Liferay.Language.get('delete-object-field')}
+					</ClayModal.Header>
 
-							<ClayModal.Body>
-								<Text as="p">
-									{Liferay.Language.get(
-										"this-action-cannot-be-undone-and-will-permanently-delete-this-field's-data"
-									)}
-								</Text>
+					<ClayModal.Body>
+						<Text as="p">
+							{Liferay.Language.get(
+								"this-action-cannot-be-undone-and-will-permanently-delete-this-field's-data"
+							)}
+						</Text>
 
-								<Text as="p">
-									{Liferay.Language.get(
-										'it-may-affect-many-records'
-									)}
-								</Text>
+						<Text as="p">
+							{Liferay.Language.get('it-may-affect-many-records')}
+						</Text>
 
-								<Text as="p">
-									{Liferay.Language.get(
-										'do-you-want-to-proceed'
-									)}
-								</Text>
-							</ClayModal.Body>
+						<Text as="p">
+							{Liferay.Language.get('do-you-want-to-proceed')}
+						</Text>
+					</ClayModal.Body>
 
-							<ClayModal.Footer
-								last={
-									<ClayButton.Group spaced>
-										<ClayButton
-											displayType="secondary"
-											onClick={() => onClose()}
-										>
-											{Liferay.Language.get('cancel')}
-										</ClayButton>
+					<ClayModal.Footer
+						last={
+							<ClayButton.Group spaced>
+								<ClayButton
+									displayType="secondary"
+									onClick={() => onClose()}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
 
-										<ClayButton
-											displayType="danger"
-											onClick={() => {
-												deleteObjectField(
-													defaultLanguageId,
-													objectField.id,
-													objectField
-												);
+								<ClayButton
+									displayType="danger"
+									onClick={() => {
+										deleteObjectField(
+											defaultLanguageId,
+											objectField.id,
+											objectField
+										);
 
-												open
-													? onClose()
-													: setObjectField &&
-													  setObjectField(null);
+										open
+											? onClose()
+											: setObjectField &&
+											  setObjectField(null);
 
-												onAfterSubmit();
-											}}
-										>
-											{Liferay.Language.get('delete')}
-										</ClayButton>
-									</ClayButton.Group>
-								}
-							></ClayModal.Footer>
-						</ClayModal>
-					)}
-				</>
+										onAfterSubmit();
+									}}
+								>
+									{Liferay.Language.get('delete')}
+								</ClayButton>
+							</ClayButton.Group>
+						}
+					></ClayModal.Footer>
+				</ClayModal>
 			)}
 		</ClayModalProvider>
 	);

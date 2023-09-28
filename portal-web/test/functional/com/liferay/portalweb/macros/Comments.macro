@@ -88,6 +88,22 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro configureCommentEditable {
+		if (${commentEditable} == "true") {
+			FormFields.enableCheckbox(fieldName = "Always Editable by Owner");
+		}
+		else if (${commentEditable} == "false") {
+			FormFields.disableCheckbox(fieldName = "Always Editable by Owner");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
+
 	macro configureCommentSubscribe {
 		if (${commentSubscribe} == "true") {
 			FormFields.enableCheckbox(fieldName = "Subscribe");

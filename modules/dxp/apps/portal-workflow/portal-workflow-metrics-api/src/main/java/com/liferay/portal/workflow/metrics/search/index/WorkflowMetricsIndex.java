@@ -14,8 +14,6 @@ public interface WorkflowMetricsIndex {
 
 	public boolean createIndex(long companyId) throws PortalException;
 
-	public boolean exists(long companyId);
-
 	public String getIndexName(long companyId);
 
 	public String getIndexType();

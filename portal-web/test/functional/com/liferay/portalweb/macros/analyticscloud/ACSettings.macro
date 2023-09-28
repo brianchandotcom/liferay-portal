@@ -615,29 +615,33 @@ definition {
 		}
 	}
 
-	// @summary = "Deletes all properties \  @param propertyList the list of properties you want to delete (optional)"
+	@summary = "Deletes all properties \  @param propertyList the list of properties you want to delete (optional)"
+	macro deleteAllProperties {
+		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
+			ACNavigation.goToSettings();
+		}
 
-	//macro deleteAllProperties {
+		ACSettings.goToProperties();
 
-	// // It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+		if (IsElementPresent(locator1 = "ACSettings#SELECT_ALL_CHECKBOX")) {
+			KeyPress(
+				locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+				value1 = "\SPACE");
 
-	//	if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
-	//		ACNavigation.goToSettings();
-	//}
-	//	ACSettings.goToProperties();
-	//	if (IsElementPresent(locator1 = "ACSettings#SELECT_ALL_CHECKBOX")) {
-	//		KeyPress(
-	//			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
-	//			value1 = "\SPACE");
-	//		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
-	//		var confirmMessage = selenium.getElementValue("ACSettings#DELETE_CONFIRMATION_MESSAGE");
-	//		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-	//		Type(
-	//			locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
-	//			value1 = ${confirmMessage});
-	//		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
-	//}
-	//}
+			Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+
+			var confirmMessage = selenium.getText("ACSettings#DELETE_CONFIRMATION_MESSAGE");
+
+			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+			Type(
+				locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
+				value1 = ${confirmMessage});
+
+			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+		}
+	}
+
 	// @summary = "Deletes a specific data source \  @param dataSourceName the name of the data source you want to delete"
 
 	//macro deleteDataSource {

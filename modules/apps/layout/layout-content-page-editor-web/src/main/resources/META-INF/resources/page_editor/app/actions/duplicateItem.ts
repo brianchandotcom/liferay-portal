@@ -5,7 +5,7 @@
 
 import {DUPLICATE_ITEM} from './types';
 
-import type {LayoutData} from '../../types/LayoutData';
+import type {LayoutData} from '../../types/layout_data/LayoutData';
 import type {FragmentEntryLink} from './addFragmentEntryLinks';
 
 export default function duplicateItem({

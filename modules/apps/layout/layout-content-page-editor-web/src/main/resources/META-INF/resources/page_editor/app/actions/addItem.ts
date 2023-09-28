@@ -5,7 +5,7 @@
 
 import {ADD_ITEM} from './types';
 
-import type {LayoutData} from '../../types/LayoutData';
+import type {LayoutData} from '../../types/layout_data/LayoutData';
 
 export interface PageContent {
 	actions: {

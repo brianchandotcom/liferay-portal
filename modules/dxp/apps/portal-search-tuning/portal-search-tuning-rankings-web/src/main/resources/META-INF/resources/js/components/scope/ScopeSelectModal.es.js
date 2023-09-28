@@ -39,7 +39,7 @@ const ScopeSelectModal = ({
 	useEffect(() => {
 		setLoading(true);
 
-		fetchResponse(fetchItemsUrl, {activePage, pageSize: delta})
+		fetchResponse(fetchItemsUrl, {page: activePage, pageSize: delta})
 			.then((response) => {
 				setResource(response);
 			})

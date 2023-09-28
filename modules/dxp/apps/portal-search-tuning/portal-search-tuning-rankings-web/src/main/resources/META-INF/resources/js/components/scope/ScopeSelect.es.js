@@ -54,7 +54,7 @@ const ScopeSelect = ({
 		setLoading(true);
 
 		fetchResponse(fetchItemsUrl, {
-			activePage: 1,
+			page: 1,
 			pageSize: 5,
 		})
 			.then(({items}) => {

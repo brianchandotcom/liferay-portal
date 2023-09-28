@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.exception.DuplicateSegmentsExperimentException;
@@ -60,6 +61,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -399,6 +401,19 @@ public class SegmentsExperimentLocalServiceImpl
 			segmentsExperience.getPriority() - 1);
 
 		controlSegmentsExperience.setActive(false);
+
+		if (Objects.equals(
+				SegmentsExperienceConstants.KEY_DEFAULT,
+				controlSegmentsExperience.getSegmentsExperienceKey())) {
+
+			controlSegmentsExperience.setSegmentsExperienceKey(
+				String.valueOf(
+					counterLocalService.increment(
+						SegmentsExperience.class.getName())));
+
+			variantSegmentsExperience.setSegmentsExperienceKey(
+				SegmentsExperienceConstants.KEY_DEFAULT);
+		}
 
 		_segmentsExperienceLocalService.updateSegmentsExperience(
 			controlSegmentsExperience);

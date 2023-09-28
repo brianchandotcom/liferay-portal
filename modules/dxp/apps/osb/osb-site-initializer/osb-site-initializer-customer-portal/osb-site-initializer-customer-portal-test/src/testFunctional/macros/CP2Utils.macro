@@ -405,6 +405,18 @@ definition {
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
+	macro openPageInTheNewTab {
+		var baseURL = PropsUtil.get("portal.url");
+
+		Open.openInTheNewTab(locator1 = "${baseURL}/web/customer-portal-site/${pageURL}");
+	}
+
+	macro openPageLiferayExperienceCloudViaURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/customer-portal-site/project/#/KOR-3809080/liferay-experience-cloud");
+	}
+
 	macro search {
 		if (IsElementPresent(locator1 = "CP2Utils#PROJECT_SEARCH")) {
 			Type(

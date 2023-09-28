@@ -22,7 +22,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemMapper.class)
+@Component(
+	property = "class.name=com.liferay.layout.util.structure.ColumnLayoutStructureItem",
+	service = LayoutStructureItemMapper.class
+)
 public class ColumnLayoutStructureItemMapper
 	implements LayoutStructureItemMapper {
 

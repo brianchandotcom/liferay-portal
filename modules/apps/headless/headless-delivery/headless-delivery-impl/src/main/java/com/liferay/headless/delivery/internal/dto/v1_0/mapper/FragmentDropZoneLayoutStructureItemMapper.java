@@ -15,7 +15,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = LayoutStructureItemMapper.class)
+@Component(
+	property = "class.name=com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem",
+	service = LayoutStructureItemMapper.class
+)
 public class FragmentDropZoneLayoutStructureItemMapper
 	implements LayoutStructureItemMapper {
 

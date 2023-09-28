@@ -25,7 +25,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemMapper.class)
+@Component(
+	property = "class.name=com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem",
+	service = LayoutStructureItemMapper.class
+)
 public class FragmentLayoutStructureItemMapper
 	extends BaseStyledLayoutStructureItemMapper {
 

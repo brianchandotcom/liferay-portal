@@ -8,6 +8,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -138,7 +139,8 @@ public class NavigationBarTag extends BaseContainerTag {
 				}
 
 				jspWriter.write("><span class=\"navbar-text-truncate\">");
-				jspWriter.write((String)navigationItem.get("label"));
+				jspWriter.write(
+					HtmlUtil.escape((String)navigationItem.get("label")));
 				jspWriter.write("</span></a></li>");
 			}
 

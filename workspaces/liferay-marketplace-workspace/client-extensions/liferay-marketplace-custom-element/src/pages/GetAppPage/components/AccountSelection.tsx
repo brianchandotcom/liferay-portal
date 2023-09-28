@@ -15,9 +15,13 @@ const enabledAccountRoles = ['Account Administrator', 'Account Buyer'];
 
 interface AccountSelectionProps {
 	onSelectAccount: (account: Account) => void;
+	selectedAccount: Account | undefined;
 }
 
-const AccountSelection = ({onSelectAccount}: AccountSelectionProps) => {
+const AccountSelection = ({
+	onSelectAccount,
+	selectedAccount,
+}: AccountSelectionProps) => {
 	const [userAccount, setUserAccount] = useState<UserAccount>();
 	const [accounts, setAccounts] = useState<RadioCardContent<Account>[]>([]);
 
@@ -29,16 +33,27 @@ const AccountSelection = ({onSelectAccount}: AccountSelectionProps) => {
 		const radioAccountList: RadioCardContent<Account>[] = [];
 
 		for (const accountBrief of userAccount.accountBriefs) {
-			const displayAccount = accountBrief.roleBriefs.reduce(
-				(display, roleBrief) => {
-					if (enabledAccountRoles.includes(roleBrief.name)) {
-						return true;
-					}
+			let displayAccount: boolean = false;
+			if (!accountBrief.roleBriefs.length) {
+				const accountInfo: Account = await getAccountInfo({
+					accountId: Number(accountBrief.id),
+				});
+				if (accountInfo.type === 'person') {
+					displayAccount = true;
+				}
+			}
+			else {
+				displayAccount = accountBrief.roleBriefs.reduce(
+					(display, roleBrief) => {
+						if (enabledAccountRoles.includes(roleBrief.name)) {
+							return true;
+						}
 
-					return display;
-				},
-				false
-			);
+						return display;
+					},
+					false
+				);
+			}
 
 			if (displayAccount) {
 				const accountInfo: Account = await getAccountInfo({
@@ -47,6 +62,12 @@ const AccountSelection = ({onSelectAccount}: AccountSelectionProps) => {
 
 				radioAccountList.push({
 					imageURL: accountInfo.logoURL,
+					selected:
+						selectedAccount &&
+						selectedAccount.externalReferenceCode ===
+							accountInfo.externalReferenceCode
+							? true
+							: false,
 					title: accountInfo.name,
 					value: accountInfo,
 				});
@@ -58,7 +79,25 @@ const AccountSelection = ({onSelectAccount}: AccountSelectionProps) => {
 
 	useEffect(() => {
 		getUserAccountList();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	const handleSelectAccount = (radioOption: RadioOption<Account>) => {
+		onSelectAccount(radioOption.value);
+
+		setAccounts((previousValue) =>
+			previousValue.map((account, index) => {
+				if (index === radioOption.index) {
+					account.selected = true;
+
+					return account;
+				}
+				account.selected = false;
+
+				return account;
+			})
+		);
+	};
 
 	return (
 		<div>
@@ -75,7 +114,7 @@ const AccountSelection = ({onSelectAccount}: AccountSelectionProps) => {
 			<RadioCardList
 				contentList={accounts}
 				leftRadio
-				onSelect={onSelectAccount}
+				onSelect={handleSelectAccount}
 				showImage
 			/>
 

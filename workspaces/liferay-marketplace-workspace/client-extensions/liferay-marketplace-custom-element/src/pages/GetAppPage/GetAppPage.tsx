@@ -44,7 +44,7 @@ const sectionProperties = {
 const GetAppFlow = () => {
 	const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
 
-	const {setValue, watch} = useForm<getAppProps>({
+	const {getValues, setValue, watch} = useForm<getAppProps>({
 		defaultValues: {
 			product: undefined,
 			selectedAccount: undefined,
@@ -73,6 +73,7 @@ const GetAppFlow = () => {
 				onSelectAccount={(account: Account) => {
 					setValue('selectedAccount', account);
 				}}
+				selectedAccount={getValues('selectedAccount')}
 			/>
 		),
 	};

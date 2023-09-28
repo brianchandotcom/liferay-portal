@@ -3,20 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useState} from 'react';
-
 import RadioCard from './components/RadioCard';
 
 interface RadioCardListProps<T> {
 	contentList: RadioCardContent<T>[];
 	leftRadio?: boolean;
-	onSelect: (value: T) => void;
+	onSelect: (value: RadioOption<T>) => void;
 	showImage?: boolean;
 }
 
 export interface RadioCardContent<T> {
 	description?: string;
 	imageURL?: string;
+	selected: boolean;
 	title: string;
 	value: T;
 }
@@ -27,12 +26,8 @@ const RadioCardList = <T extends unknown>({
 	onSelect,
 	showImage,
 }: RadioCardListProps<T>) => {
-	const [radio, setRadio] = useState<RadioOption<T>>();
-
 	const handleSelectRadio = (selectedRadio: RadioOption<T>) => {
-		setRadio(selectedRadio);
-
-		onSelect(selectedRadio.value);
+		onSelect(selectedRadio);
 	};
 
 	return (
@@ -40,7 +35,7 @@ const RadioCardList = <T extends unknown>({
 			<div className="mb-0 pr-3 w-100">
 				{contentList.map((content, index) => (
 					<RadioCard
-						activeRadio={radio}
+						activeRadio={content.selected}
 						description={content.description}
 						imageURL={content.imageURL}
 						index={index}

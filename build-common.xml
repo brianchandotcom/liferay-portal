@@ -2108,6 +2108,16 @@ rerun your task.
 		</java>
 	</target>
 
+	<target name="generate-backend-batch-junit-report-modules">
+		<generate-backend-batch-junit-report
+			junit.failure.count="1"
+			junit.failure.message.element="&lt;failure message=&quot;Failed to run test on CI&quot; /&gt;"
+			test.class.name="${test.class.name}"
+			test.command.name="testRun"
+			test.results.dir="modules/test-results"
+		/>
+	</target>
+
 	<target name="generate-code-coverage-report">
 		<delete dir="${jacoco.report.folder}" />
 		<mkdir dir="${jacoco.report.folder}" />
@@ -2198,6 +2208,10 @@ rerun your task.
 				</jacoco-report>
 			</else>
 		</if>
+	</target>
+
+	<target name="gradle-execute-modules">
+		<gradle-execute dir="${dir}" task="${test.task}" test.name="${test.name}" />
 	</target>
 
 	<target name="print-properties">

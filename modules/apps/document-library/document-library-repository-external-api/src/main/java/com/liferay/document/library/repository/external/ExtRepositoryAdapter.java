@@ -77,27 +77,22 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 	@Override
 	public FileEntry addFileEntry(
 			String externalReferenceCode, long userId, long folderId,
-			String sourceFileName, String mimeType, String title,
-			String urlTitle, String description, String changeLog,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+			String fileName, String mimeType, String title, String urlTitle,
+			String description, String changeLog, InputStream inputStream,
+			long size, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		String fileName = null;
-
 		if (Validator.isNull(title)) {
-			fileName = sourceFileName;
-		}
-		else {
-			fileName = title;
+			title = fileName;
 		}
 
 		String extRepositoryFolderKey = getExtRepositoryObjectKey(folderId);
 
 		ExtRepositoryFileEntry extRepositoryFileEntry =
 			_extRepository.addExtRepositoryFileEntry(
-				extRepositoryFolderKey, sourceFileName, mimeType, fileName,
-				description, changeLog, inputStream);
+				extRepositoryFolderKey, fileName, mimeType, title, description,
+				changeLog, inputStream);
 
 		return _toExtRepositoryObjectAdapter(
 			ExtRepositoryObjectAdapterType.FILE, extRepositoryFileEntry);

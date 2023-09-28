@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Elvison Victor
  */
-@RequestMapping("/object/action/evp/request/status")
+@RequestMapping("/object/action/request/status")
 @RestController
-public class ObjectActionEVPRequestStatusRestController
+public class ObjectActionRequestStatusRestController
 	extends BaseRestController {
 
 	@PostMapping

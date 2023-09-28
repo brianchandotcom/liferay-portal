@@ -13,10 +13,10 @@ liferay-evp-etc-spring-boot-oauth-application-user-agent:
 liferay-evp-etc-spring-boot-object-action-organization-status:
     name: Liferay EVP Etc Spring Boot Spring Boot Object Action Organization Status
     oAuth2ApplicationExternalReferenceCode: liferay-evp-etc-spring-boot-oauth-application-user-agent
-    resourcePath: /object/action/evp/organization/status/update
+    resourcePath: /object/action/organization/status/update
     type: objectAction
 liferay-evp-etc-spring-boot-object-action-request-status:
     name: Liferay EVP Etc Spring Boot Spring Boot Object Action Request Status
     oAuth2ApplicationExternalReferenceCode: liferay-evp-etc-spring-boot-oauth-application-user-agent
-    resourcePath: /object/action/evp/request/status
+    resourcePath: /object/action/request/status
     type: objectAction

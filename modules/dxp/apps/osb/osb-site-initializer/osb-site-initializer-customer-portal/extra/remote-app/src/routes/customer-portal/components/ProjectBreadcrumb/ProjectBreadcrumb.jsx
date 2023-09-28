@@ -42,8 +42,9 @@ const ProjectBreadcrumb = () => {
 	useEffect(() => {
 		if (data?.c.koroneikiAccounts.totalCount > initialTotalCount) {
 			setInitialTotalCount(data.c.koroneikiAccounts.totalCount);
-			setProjectStatus(selectedKoroneikiAccount?.status);
 		}
+
+		setProjectStatus(selectedKoroneikiAccount?.status);
 	}, [
 		data?.c.koroneikiAccounts.totalCount,
 		initialTotalCount,
@@ -87,11 +88,9 @@ const ProjectBreadcrumb = () => {
 						title={i18n.translate(`${projectStatus}`)}
 					/>
 
-					{projectStatus && (
-						<span className="cp-breadcrumbs-status text-paragraph-sm">
-							{i18n.translate(`${projectStatus}`)}
-						</span>
-					)}
+					<span className="cp-breadcrumbs-status text-paragraph-sm">
+						{i18n.translate(`${projectStatus}`)}
+					</span>
 				</div>
 			</div>
 		</div>

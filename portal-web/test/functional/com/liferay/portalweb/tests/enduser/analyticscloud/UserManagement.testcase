@@ -124,7 +124,7 @@ definition {
 	test AdminCanRemoveDataSources {
 
 		// AC Bug ticket: LRAC-10534
-		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+		// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
 
 		task ("Logout AC and login as an admin user") {
 			ACWorkspace.signOut();
@@ -617,7 +617,7 @@ definition {
 	test OwnerCanRemoveDataSources {
 
 		// AC Bug ticket: LRAC-10534
-		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+		// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
 
 		task ("Connect DXP to AC") {
 			ACSettings.takeTokenFromAnalyticsCloud();

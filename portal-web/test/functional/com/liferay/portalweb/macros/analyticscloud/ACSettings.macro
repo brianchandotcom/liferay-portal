@@ -579,7 +579,7 @@ definition {
 
 	//macro deleteAllDataSource {
 
-	// // It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+	// // It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
 
 	//	if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
 	//		ACNavigation.goToSettings();
@@ -646,7 +646,7 @@ definition {
 
 	//macro deleteDataSource {
 
-	// // It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+	// // It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
 
 	//	if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
 	//		ACNavigation.goToSettings();

@@ -527,7 +527,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// AC Quarantine Reason: Segment membership takes long time to load LRAC-10769
-		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+		// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
 
 		task ("Get site assigned property name") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

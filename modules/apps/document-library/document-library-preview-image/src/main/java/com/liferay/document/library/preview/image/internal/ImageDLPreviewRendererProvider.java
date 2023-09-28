@@ -90,7 +90,8 @@ public class ImageDLPreviewRendererProvider
 
 		if (!imageProcessor.hasImages(fileVersion)) {
 			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
-				throw new DLPreviewSizeException();
+				throw new DLPreviewSizeException(
+					DLProcessorRegistryUtil.getPreviewableProcessorMaxSize());
 			}
 
 			throw new DLPreviewGenerationInProcessException();

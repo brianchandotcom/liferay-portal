@@ -85,7 +85,8 @@ public class DocumentPreviewRendererProvider
 
 		if (!PDFProcessorUtil.hasImages(fileVersion)) {
 			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
-				throw new DLPreviewSizeException();
+				throw new DLPreviewSizeException(
+					DLProcessorRegistryUtil.getPreviewableProcessorMaxSize());
 			}
 
 			throw new DLPreviewGenerationInProcessException();

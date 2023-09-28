@@ -755,6 +755,55 @@ fi
 				</echo>
 			</then>
 		</if>
+		<echo file="${liferay.home}/glowroot/admin.json">
+{
+  "users": [
+    {
+      "username": "anonymous",
+      "roles": [
+        "Administrator"
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "name": "Administrator",
+      "permissions": [
+        "agent:transaction",
+        "agent:error",
+        "agent:jvm",
+        "agent:incident",
+        "agent:config",
+        "admin"
+      ]
+    }
+  ],
+  "web": {
+    "port": 4000,
+    "bindAddress": "127.0.0.1",
+    "contextPath": "/o/glowroot",
+    "sessionTimeoutMinutes": 30,
+    "sessionCookieName": "GLOWROOT_SESSION_ID"
+  },
+  "storage": {
+    "rollupExpirationHours": [
+      72,
+      336,
+      2160,
+      2160
+    ],
+    "traceExpirationHours": 336,
+    "fullQueryTextExpirationHours": 336,
+    "rollupCappedDatabaseSizesMb": [
+      500,
+      500,
+      500,
+      500
+    ],
+    "traceCappedDatabaseSizeMb": 500
+  }
+}
+		</echo>
 	</target>
 
 	<target name="unzip-jboss">

@@ -60,10 +60,10 @@ public class ObjectFolderLocalServiceUtil {
 			externalReferenceCode, userId, labelMap, name);
 	}
 
-	public static ObjectFolder addUncategorizedObjectFolder(long companyId)
+	public static ObjectFolder addOrGetUncategorizedObjectFolder(long companyId)
 		throws PortalException {
 
-		return getService().addUncategorizedObjectFolder(companyId);
+		return getService().addOrGetUncategorizedObjectFolder(companyId);
 	}
 
 	/**

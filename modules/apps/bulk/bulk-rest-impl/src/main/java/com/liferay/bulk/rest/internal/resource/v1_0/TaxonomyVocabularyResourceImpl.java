@@ -17,6 +17,7 @@ import com.liferay.bulk.rest.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.bulk.rest.internal.selection.v1_0.DocumentBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
@@ -145,7 +145,8 @@ public class TaxonomyVocabularyResourceImpl
 
 		for (AssetVocabulary assetVocabulary :
 				_assetVocabularyLocalService.getGroupVocabularies(
-					_portal.getCurrentAndAncestorSiteGroupIds(siteId))) {
+					_siteConnectedGroupGroupProvider.
+						getCurrentAndAncestorSiteAndDepotGroupIds(siteId))) {
 
 			if (!assetVocabulary.isAssociatedToClassNameId(_getClassNameId())) {
 				continue;
@@ -204,6 +205,6 @@ public class TaxonomyVocabularyResourceImpl
 	private DocumentBulkSelectionFactory _documentBulkSelectionFactory;
 
 	@Reference
-	private Portal _portal;
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 }

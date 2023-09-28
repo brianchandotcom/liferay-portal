@@ -1164,7 +1164,7 @@ public class CTCollectionLocalServiceImpl
 		Map<Long, Set<Long>> enclosureMap = CTEnclosureUtil.getEnclosureMap(
 			ctClosure, modelClassNameId, modelClassPK);
 
-		Map<Long, List<CTEntry>> discardCTEntries = new HashMap<>();
+		Map<Long, List<CTEntry>> relatedEntriesMap = new HashMap<>();
 
 		for (Map.Entry<Long, Set<Long>> enclosureEntry :
 				enclosureMap.entrySet()) {
@@ -1188,10 +1188,10 @@ public class CTCollectionLocalServiceImpl
 				continue;
 			}
 
-			discardCTEntries.put(classNameId, ctEntries);
+			relatedEntriesMap.put(classNameId, ctEntries);
 		}
 
-		return discardCTEntries;
+		return relatedEntriesMap;
 	}
 
 	private void _moveCTEntries(

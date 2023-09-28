@@ -16,7 +16,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alberto Chaparro
  */
 @Component(service = UpgradeStepRegistrator.class)
-public class BundleBlacklistImplUpgradeStepRegistrator
+public class BundleBlacklistUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 
 	@Override

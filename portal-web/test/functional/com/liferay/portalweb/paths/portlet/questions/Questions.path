@@ -142,7 +142,7 @@
 </tr>
 <tr>
 	<td>QUESTIONS_BREADCRUMB_HOME_DROPDOWN_TOGGLE</td>
-	<td>//li[contains(@class,'breadcrumb-item')][1]//div[contains(@class,'dropdown')]//*[name()='svg'][contains(@class,'caret-bottom')]</td>
+	<td>//li[contains(@class,'breadcrumb-item')]//div[contains(@class,'dropdown')]//*[name()='svg'][contains(@class,'caret-bottom')]</td>
 	<td></td>
 </tr>
 <tr>

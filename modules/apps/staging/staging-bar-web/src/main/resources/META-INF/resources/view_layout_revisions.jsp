@@ -70,7 +70,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 					</c:if>
 
 					<liferay-ui:search-container
-						id="<%= liferayPortletResponse.getNamespace() + "layoutRevisionsSearchContainer_" + i %>"
+						id='<%= liferayPortletResponse.getNamespace() + "layoutRevisionsSearchContainer_" + i %>'
 						total="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisionsCount(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getLayoutBranchId(), rootLayoutRevision.getPlid()) %>"
 					>
 						<liferay-ui:search-container-results

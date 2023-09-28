@@ -25,6 +25,9 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.Objects;
+
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -32,6 +35,131 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
+
+	@Override
+	protected void assertValid(CTEntry ctEntry) throws Exception {
+		boolean valid = true;
+
+		if ((ctEntry.getDateCreated() == null) ||
+			(ctEntry.getDateModified() == null) || (ctEntry.getId() == null)) {
+
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(additionalAssertFieldName, "actions")) {
+				if (ctEntry.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "changeType")) {
+				if (ctEntry.getChangeType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "ctCollectionId")) {
+				if (ctEntry.getCtCollectionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "hideable")) {
+				if (ctEntry.getHideable() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "modelClassNameId")) {
+				if (ctEntry.getModelClassNameId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "modelClassPK")) {
+				if (ctEntry.getModelClassPK() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "ownerId")) {
+				if (ctEntry.getOwnerId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "ownerName")) {
+				if (ctEntry.getOwnerName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "siteId")) {
+				if (ctEntry.getSiteId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "siteName")) {
+				if (ctEntry.getSiteName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "status")) {
+				if (ctEntry.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "title")) {
+				if (ctEntry.getTitle() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "typeName")) {
+				if (ctEntry.getTypeName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
@@ -42,7 +170,10 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
-		return new String[] {"changeType", "ownerName", "siteName", "status"};
+		return new String[] {
+			"changeType", "ownerName", "siteId", "siteName", "status",
+			"typeName"
+		};
 	}
 
 	@Override

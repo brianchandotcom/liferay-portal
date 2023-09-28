@@ -489,6 +489,55 @@ definition {
 			changeTitle = "DM Document Title Edit");
 	}
 
+	@description = "This is the use case for LPS-196973.As a publication admin, I would like to hide applications that shouldn't be used in a publication"
+	@priority = 3
+	test CanHideApplicationThatShouldnotBeUsedInPublication {
+		task ("Go to Publications Instance Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Publications",
+				configurationName = "Publications View Changes",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Add Roles to Hidden Applications") {
+			SystemSettings.editTextAreaSetting(
+				settingName = "Hidden Applications",
+				settingValue = "com_liferay_roles_admin_web_portlet_RolesAdminPortlet");
+		}
+
+		task ("Assert Roles showing in Application Menu") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+			AssertElementPresent(
+				key_category = "Users",
+				key_portlet = "Roles",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("Add a new Publication and switch to the new Publication") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Assert Roles is not showing in Application Menu") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+			AssertElementNotPresent(
+				locator1 = "ApplicationsMenu#PORTLET",
+				portlet = "Roles");
+		}
+	}
+
 	@description = "This is the use case for LPS-158789."
 	@priority = 4
 	test CannotChangePublicationViaURLWithNonexistentCollectionId {

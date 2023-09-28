@@ -722,55 +722,37 @@ definition {
 		}
 	}
 
-	//macro deleteProperty {
+	macro deletePropertyByCheckbox {
+		Click.clickAtNotVisible(
+			key_propertyName = ${propertyName},
+			locator1 = "ACSettings#PROPERTY_CHECKBOX");
 
-	// // It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
 
-	//	ACUtils.searchBar(searchItem = ${propertyName});
-	//	ACNavigation.openItem(itemName = ${propertyName});
-	//	Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
-	//	AssertTextEquals(
-	//		locator1 = "Modal#HEADER",
-	//		value1 = "Delete ${propertyName}?");
-	//	AssertTextPresent(
-	//		locator1 = "Modal#BODY",
-	//		value1 = "To delete ${propertyName}, copy the sentence below to confirm your intention to delete property.");
-	//	AssertTextPresent(
-	//		locator1 = "Modal#BODY",
-	//		value1 = "This will result in the complete removal of this property's historical events. You will not be able to undo this operation.");
-	//	var confirmMessage = selenium.getElementValue("ACSettings#DELETE_CONFIRMATION_MESSAGE");
-	//	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-	//	Type(
-	//		locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
-	//		value1 = ${confirmMessage});
-	//	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
-	//	Alert.viewSuccessMessage();
-	//}
-	//macro deletePropertyByCheckbox {
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Delete ${propertyName}?");
 
-	// // It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+		AssertTextPresent(
+			locator1 = "Modal#BODY",
+			value1 = "To delete ${propertyName}, copy the sentence below to confirm your intention to delete property.");
 
-	//	Click.clickAtNotVisible(
-	//		key_propertyName = ${propertyName},
-	//		locator1 = "ACSettings#PROPERTY_CHECKBOX");
-	//	Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
-	//	AssertTextEquals(
-	//		locator1 = "Modal#HEADER",
-	//		value1 = "Delete ${propertyName}?");
-	//	AssertTextPresent(
-	//		locator1 = "Modal#BODY",
-	//		value1 = "To delete ${propertyName}, copy the sentence below to confirm your intention to delete property.");
-	//	AssertTextPresent(
-	//		locator1 = "Modal#BODY",
-	//		value1 = "This will result in the complete removal of this property's historical events. You will not be able to undo this operation.");
-	//	var confirmMessage = selenium.getElementValue("ACSettings#DELETE_CONFIRMATION_MESSAGE");
-	//	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-	//	Type(
-	//		locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
-	//		value1 = ${confirmMessage});
-	//	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
-	//	Alert.viewSuccessMessage();
-	//}
+		AssertTextPresent(
+			locator1 = "Modal#BODY",
+			value1 = "This will result in the complete removal of this property's historical events. You will not be able to undo this operation.");
+
+		var confirmMessage = selenium.getText("ACSettings#DELETE_CONFIRMATION_MESSAGE");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Type(
+			locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
+			value1 = ${confirmMessage});
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
 
 	@summary = "Default summary"
 	macro deletePropertyByEllipse(propertyName = null) {

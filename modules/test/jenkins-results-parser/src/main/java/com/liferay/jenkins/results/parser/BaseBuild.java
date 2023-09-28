@@ -1224,6 +1224,26 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Invocation invoke() {
+		JenkinsCohort jenkinsCohort = getJenkinsCohort();
+
+		JenkinsMaster jenkinsMaster =
+			jenkinsCohort.getMostAvailableJenkinsMaster(
+				_getInvokedBatchSize(), _getMinimumRAM(),
+				_getMaximumSlavesPerHost());
+
+		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
+			jenkinsMaster, getJobName(), getParameters());
+
+		Invocation invocation = new Invocation(
+			jenkinsMaster, jsonObject.getLong("queueId"));
+
+		_invocations.add(invocation);
+
+		return invocation;
+	}
+
+	@Override
 	public boolean isBuildModified() {
 		return !status.equals(_previousStatus);
 	}
@@ -3445,6 +3465,44 @@ public abstract class BaseBuild implements Build {
 		return jobParameters;
 	}
 
+	private int _getInvokedBatchSize() {
+		String invokedJobBatchSize = getParameterValue(
+			"INVOKED_JOB_BATCH_SIZE");
+
+		if (JenkinsResultsParserUtil.isInteger(invokedJobBatchSize)) {
+			return Integer.parseInt(invokedJobBatchSize);
+		}
+
+		String testBatchSize = getParameterValue("TEST_BATCH_SIZE");
+
+		if (JenkinsResultsParserUtil.isInteger(testBatchSize)) {
+			return Integer.parseInt(testBatchSize);
+		}
+
+		return _INVOKED_BATCH_SIZE_DEFAULT;
+	}
+
+	private int _getMaximumSlavesPerHost() {
+		String maximumSlavesPerHost = getParameterValue(
+			"MAXIMUM_SLAVES_PER_HOST");
+
+		if (JenkinsResultsParserUtil.isInteger(maximumSlavesPerHost)) {
+			return Integer.parseInt(maximumSlavesPerHost);
+		}
+
+		return _MAXIMUM_SLAVES_PER_HOST;
+	}
+
+	private int _getMinimumRAM() {
+		String minimumSlaveRAM = getParameterValue("MINIMUM_SLAVE_RAM");
+
+		if (JenkinsResultsParserUtil.isInteger(minimumSlaveRAM)) {
+			return Integer.parseInt(minimumSlaveRAM);
+		}
+
+		return _MINIMUM_SLAVE_RAM_DEFAULT;
+	}
+
 	private List<Element> _getStopWatchRecordTableRowElements(
 		StopWatchRecord stopWatchRecord) {
 
@@ -3621,6 +3679,12 @@ public abstract class BaseBuild implements Build {
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{new GenericFailureMessageGenerator()};
 
+	private static final Integer _INVOKED_BATCH_SIZE_DEFAULT = 1;
+
+	private static final Integer _MAXIMUM_SLAVES_PER_HOST = 2;
+
+	private static final Integer _MINIMUM_SLAVE_RAM_DEFAULT = 12;
+
 	private static final String _NAME_JENKINS_REPORT_TIME_ZONE;
 
 	private static final int _PIXELS_WIDTH_EXPANDER = 20;
@@ -3665,6 +3729,7 @@ public abstract class BaseBuild implements Build {
 	private Boolean _buildDurationsEnabled;
 	private int _buildNumber = -1;
 	private Long _duration;
+	private final List<Invocation> _invocations = new ArrayList<>();
 	private JenkinsCohort _jenkinsCohort;
 	private JenkinsConsoleTextLoader _jenkinsConsoleTextLoader;
 	private JenkinsMaster _jenkinsMaster;

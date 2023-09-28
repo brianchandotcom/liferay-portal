@@ -155,6 +155,8 @@ public interface Build {
 
 	public boolean hasGenericCIFailure();
 
+	public Invocation invoke();
+
 	public boolean isBuildModified();
 
 	public boolean isCompareToUpstream();
@@ -208,6 +210,26 @@ public interface Build {
 		public String getUpstreamBranchName();
 
 		public String getUpstreamBranchSHA();
+
+	}
+
+	public class Invocation {
+
+		public Invocation(JenkinsMaster jenkinsMaster, long queueId) {
+			_jenkinsMaster = jenkinsMaster;
+			_queueId = queueId;
+		}
+
+		public JenkinsMaster getJenkinsMaster() {
+			return _jenkinsMaster;
+		}
+
+		public long getQueueId() {
+			return _queueId;
+		}
+
+		private final JenkinsMaster _jenkinsMaster;
+		private final long _queueId;
 
 	}
 

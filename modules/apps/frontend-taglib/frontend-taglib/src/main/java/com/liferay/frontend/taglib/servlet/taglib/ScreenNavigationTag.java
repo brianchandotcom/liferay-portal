@@ -49,11 +49,8 @@ public class ScreenNavigationTag extends IncludeTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		ScreenNavigationRegistry screenNavigationRegistry =
-			ServletContextUtil.getScreenNavigationRegistry();
-
 		_screenNavigationCategories =
-			screenNavigationRegistry.getScreenNavigationCategories(
+			ScreenNavigationRegistryUtil.getScreenNavigationCategories(
 				_key, themeDisplay.getUser(), getModelContext());
 
 		return super.doStartTag();
@@ -305,10 +302,7 @@ public class ScreenNavigationTag extends IncludeTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		ScreenNavigationRegistry screenNavigationRegistry =
-			ServletContextUtil.getScreenNavigationRegistry();
-
-		return screenNavigationRegistry.getScreenNavigationEntries(
+		return ScreenNavigationRegistryUtil.getScreenNavigationEntries(
 			selectedScreenNavigationCategory, themeDisplay.getUser(),
 			getModelContext());
 	}

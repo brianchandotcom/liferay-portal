@@ -16,19 +16,18 @@ import com.liferay.portal.kernel.util.ListUtil;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = ScreenNavigationRegistry.class)
-public class ScreenNavigationRegistry {
+public class ScreenNavigationRegistryUtil {
 
-	public <T> List<ScreenNavigationCategory> getScreenNavigationCategories(
-		String screenNavigationId, User user, T context) {
+	public static <T> List<ScreenNavigationCategory>
+		getScreenNavigationCategories(
+			String screenNavigationId, User user, T context) {
 
 		List<ScreenNavigationCategory> screenNavigationCategories =
 			_screenNavigationCategoriesMap.getService(screenNavigationId);
@@ -44,7 +43,7 @@ public class ScreenNavigationRegistry {
 					screenNavigationCategory, user, context)));
 	}
 
-	public <T> List<ScreenNavigationEntry<T>> getScreenNavigationEntries(
+	public static <T> List<ScreenNavigationEntry<T>> getScreenNavigationEntries(
 		ScreenNavigationCategory screenNavigationCategory, User user,
 		T context) {
 
@@ -65,8 +64,23 @@ public class ScreenNavigationRegistry {
 				user, context));
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
+	private static String _getKey(
+		String screenNavigationId, String screenCategoryKey) {
+
+		return screenNavigationId + StringPool.PERIOD + screenCategoryKey;
+	}
+
+	private static final ServiceTrackerMap
+		<String, List<ScreenNavigationCategory>> _screenNavigationCategoriesMap;
+	private static final ServiceTrackerMap
+		<String, List<ScreenNavigationEntry<?>>> _screenNavigationEntriesMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			ScreenNavigationRegistryUtil.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
 		_screenNavigationCategoriesMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ScreenNavigationCategory.class, null,
@@ -92,22 +106,5 @@ public class ScreenNavigationRegistry {
 					new PropertyServiceReferenceComparator<>(
 						"screen.navigation.entry.order")));
 	}
-
-	@Deactivate
-	protected void deactivate() {
-		_screenNavigationCategoriesMap.close();
-		_screenNavigationEntriesMap.close();
-	}
-
-	private String _getKey(
-		String screenNavigationId, String screenCategoryKey) {
-
-		return screenNavigationId + StringPool.PERIOD + screenCategoryKey;
-	}
-
-	private ServiceTrackerMap<String, List<ScreenNavigationCategory>>
-		_screenNavigationCategoriesMap;
-	private ServiceTrackerMap<String, List<ScreenNavigationEntry<?>>>
-		_screenNavigationEntriesMap;
 
 }

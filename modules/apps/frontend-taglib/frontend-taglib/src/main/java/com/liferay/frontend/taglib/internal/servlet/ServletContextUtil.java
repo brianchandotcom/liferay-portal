@@ -7,7 +7,6 @@ package com.liferay.frontend.taglib.internal.servlet;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryProvider;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryProvider;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationRegistry;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
 import javax.servlet.ServletContext;
@@ -27,10 +26,6 @@ public class ServletContextUtil {
 		return _formNavigatorEntryProviderSnapshot.get();
 	}
 
-	public static ScreenNavigationRegistry getScreenNavigationRegistry() {
-		return _screenNavigationRegistrySnapshot.get();
-	}
-
 	public static ServletContext getServletContext() {
 		return _servletContextSnapshot.get();
 	}
@@ -41,9 +36,6 @@ public class ServletContextUtil {
 	private static final Snapshot<FormNavigatorEntryProvider>
 		_formNavigatorEntryProviderSnapshot = new Snapshot<>(
 			ServletContextUtil.class, FormNavigatorEntryProvider.class);
-	private static final Snapshot<ScreenNavigationRegistry>
-		_screenNavigationRegistrySnapshot = new Snapshot<>(
-			ServletContextUtil.class, ScreenNavigationRegistry.class);
 	private static final Snapshot<ServletContext> _servletContextSnapshot =
 		new Snapshot<>(
 			ServletContextUtil.class, ServletContext.class,

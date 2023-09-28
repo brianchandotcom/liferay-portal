@@ -12,7 +12,6 @@ import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.Ind
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.metrics.search.index.TransitionWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndex;
 
 import java.util.Objects;
 
@@ -33,7 +32,7 @@ public class KaleoTransitionModelListener
 				kaleoTransition.getKaleoDefinitionVersionId());
 
 		if (Objects.isNull(kaleoDefinitionVersion) ||
-			!_transitionWorkflowMetricsIndex.exists(
+			!_indexerHelper.hasWorkflowMetricsIndices(
 				kaleoTransition.getCompanyId())) {
 
 			return;
@@ -51,7 +50,7 @@ public class KaleoTransitionModelListener
 
 	@Override
 	public void onAfterRemove(KaleoTransition kaleoTransition) {
-		if (!_transitionWorkflowMetricsIndex.exists(
+		if (!_indexerHelper.hasWorkflowMetricsIndices(
 				kaleoTransition.getCompanyId())) {
 
 			return;
@@ -63,9 +62,6 @@ public class KaleoTransitionModelListener
 
 	@Reference
 	private IndexerHelper _indexerHelper;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=transition)")
-	private WorkflowMetricsIndex _transitionWorkflowMetricsIndex;
 
 	@Reference
 	private TransitionWorkflowMetricsIndexer _transitionWorkflowMetricsIndexer;

@@ -115,7 +115,7 @@ function ExecutionOptions({
 				{Liferay.Language.get('configuration')}
 			</h2>
 
-			{Liferay.FeatureFlags['LPS-183661'] && isConcurrentModeSupported && (
+			{isConcurrentModeSupported && (
 				<div className="c-mb-1 sheet-section">
 					<div
 						className="sheet-subtitle text-secondary"
@@ -224,44 +224,23 @@ function ExecutionOptions({
 			)}
 
 			<div className="sheet-section">
-				{Liferay.FeatureFlags['LPS-183661'] ? (
-					<div
-						className="sheet-subtitle text-secondary"
-						style={{textTransform: 'none'}}
-					>
-						<span>{Liferay.Language.get('reindex-scope')}</span>
+				<div
+					className="sheet-subtitle text-secondary"
+					style={{textTransform: 'none'}}
+				>
+					<span>{Liferay.Language.get('reindex-scope')}</span>
 
-						<ClayTooltipProvider>
-							<ClaySticker
-								data-tooltip-align="bottom-left"
-								displayType="secondary"
-								size="sm"
-								title={Liferay.Language.get(
-									'execution-scope-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</ClaySticker>
-						</ClayTooltipProvider>
-					</div>
-				) : (
-					<h2 className="sheet-title">
-						{Liferay.Language.get('execution-scope')}
-
-						<ClayTooltipProvider>
-							<ClaySticker
-								data-tooltip-align="bottom-left"
-								displayType="secondary"
-								size="md"
-								title={Liferay.Language.get(
-									'execution-scope-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</ClaySticker>
-						</ClayTooltipProvider>
-					</h2>
-				)}
+					<ClayTooltipProvider>
+						<ClaySticker
+							data-tooltip-align="bottom-left"
+							displayType="secondary"
+							size="sm"
+							title={Liferay.Language.get('execution-scope-help')}
+						>
+							<ClayIcon symbol="question-circle-full" />
+						</ClaySticker>
+					</ClayTooltipProvider>
+				</div>
 
 				<ClayRadioGroup
 					className="c-pb-2"

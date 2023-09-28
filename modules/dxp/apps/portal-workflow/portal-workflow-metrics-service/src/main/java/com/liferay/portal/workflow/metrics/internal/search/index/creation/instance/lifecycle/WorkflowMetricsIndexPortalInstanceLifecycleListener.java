@@ -10,23 +10,24 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.workflow.metrics.internal.search.index.creation.helper.WorkflowMetricsIndexCreator;
 
-import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	property = Constants.SERVICE_RANKING + ":Integer=200",
-	service = PortalInstanceLifecycleListener.class
-)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class WorkflowMetricsIndexPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
+	public void portalInstancePreregistered(Company company) throws Exception {
 		_workflowMetricsIndexCreator.createIndex(company);
+	}
+
+	@Override
+	public void portalInstanceRegistered(Company company) throws Exception {
+		_workflowMetricsIndexCreator.reindex(company);
 	}
 
 	@Override

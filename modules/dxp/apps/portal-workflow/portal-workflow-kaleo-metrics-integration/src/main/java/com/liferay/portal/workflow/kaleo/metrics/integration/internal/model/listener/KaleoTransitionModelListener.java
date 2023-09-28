@@ -31,10 +31,7 @@ public class KaleoTransitionModelListener
 			getKaleoDefinitionVersion(
 				kaleoTransition.getKaleoDefinitionVersionId());
 
-		if (Objects.isNull(kaleoDefinitionVersion) ||
-			!_indexerHelper.hasWorkflowMetricsIndices(
-				kaleoTransition.getCompanyId())) {
-
+		if (Objects.isNull(kaleoDefinitionVersion)) {
 			return;
 		}
 
@@ -50,12 +47,6 @@ public class KaleoTransitionModelListener
 
 	@Override
 	public void onAfterRemove(KaleoTransition kaleoTransition) {
-		if (!_indexerHelper.hasWorkflowMetricsIndices(
-				kaleoTransition.getCompanyId())) {
-
-			return;
-		}
-
 		_transitionWorkflowMetricsIndexer.deleteTransition(
 			_indexerHelper.createDeleteTransitionRequest(kaleoTransition));
 	}

@@ -15,5 +15,4 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:portal-workflow:portal-workflow-metrics-api")
 	compileOnly project(":dxp:apps:portal-workflow:portal-workflow-metrics-rest-spi")
-	compileOnly project(":apps:portal-search:portal-search-engine-adapter-api")
 }

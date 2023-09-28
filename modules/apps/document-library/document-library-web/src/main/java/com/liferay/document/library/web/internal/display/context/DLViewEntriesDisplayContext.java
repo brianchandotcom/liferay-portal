@@ -8,6 +8,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -364,7 +365,8 @@ public class DLViewEntriesDisplayContext {
 
 		List<AssetVocabulary> assetVocabularies =
 			AssetVocabularyServiceUtil.getGroupVocabularies(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId));
+				SiteConnectedGroupGroupProviderUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(scopeGroupId));
 
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
 			if (!assetVocabulary.isAssociatedToClassNameId(

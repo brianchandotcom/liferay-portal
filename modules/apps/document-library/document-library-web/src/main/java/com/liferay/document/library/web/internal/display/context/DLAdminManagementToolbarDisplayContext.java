@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
 import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
@@ -585,8 +586,9 @@ public class DLAdminManagementToolbarDisplayContext
 			"vocabularyIds",
 			StringUtil.merge(
 				AssetVocabularyServiceUtil.getGroupsVocabularies(
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(
-						_themeDisplay.getScopeGroupId()),
+					SiteConnectedGroupGroupProviderUtil.
+						getCurrentAndAncestorSiteAndDepotGroupIds(
+							_themeDisplay.getScopeGroupId()),
 					DLFileEntryConstants.getClassName()),
 				assetVocabulary -> String.valueOf(
 					assetVocabulary.getVocabularyId()),
@@ -975,7 +977,8 @@ public class DLAdminManagementToolbarDisplayContext
 
 		List<AssetVocabulary> assetVocabularies =
 			AssetVocabularyServiceUtil.getGroupVocabularies(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId));
+				SiteConnectedGroupGroupProviderUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(scopeGroupId));
 
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
 			if (!assetVocabulary.isAssociatedToClassNameId(

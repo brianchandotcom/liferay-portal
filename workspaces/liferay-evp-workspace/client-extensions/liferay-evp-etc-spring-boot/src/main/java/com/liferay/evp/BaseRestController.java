@@ -84,6 +84,6 @@ public abstract class BaseRestController {
 	protected String lxcDXPServerProtocol;
 
 	private static final Log _log = LogFactory.getLog(
-		ObjectActionEVPRequestStatusRestController.class);
+		BaseRestController.class);
 
 }

@@ -87,6 +87,8 @@ public interface Build {
 
 	public Long getInvokedTime();
 
+	public JenkinsCohort getJenkinsCohort();
+
 	public JenkinsMaster getJenkinsMaster();
 
 	public JenkinsSlave getJenkinsSlave();

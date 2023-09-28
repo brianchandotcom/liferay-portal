@@ -668,6 +668,31 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public JenkinsCohort getJenkinsCohort() {
+		if (_jenkinsCohort != null) {
+			return _jenkinsCohort;
+		}
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (topLevelBuild != null) {
+			_jenkinsCohort = topLevelBuild.getJenkinsCohort();
+
+			return _jenkinsCohort;
+		}
+
+		String cohortName = JenkinsResultsParserUtil.getCohortName();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(cohortName)) {
+			_jenkinsCohort = JenkinsCohort.getInstance(cohortName);
+
+			return _jenkinsCohort;
+		}
+
+		return null;
+	}
+
+	@Override
 	public JenkinsMaster getJenkinsMaster() {
 		return _jenkinsMaster;
 	}
@@ -3640,6 +3665,7 @@ public abstract class BaseBuild implements Build {
 	private Boolean _buildDurationsEnabled;
 	private int _buildNumber = -1;
 	private Long _duration;
+	private JenkinsCohort _jenkinsCohort;
 	private JenkinsConsoleTextLoader _jenkinsConsoleTextLoader;
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;

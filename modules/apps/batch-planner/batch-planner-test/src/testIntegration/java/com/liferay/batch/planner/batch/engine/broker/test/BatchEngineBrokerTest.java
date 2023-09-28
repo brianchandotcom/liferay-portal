@@ -296,7 +296,7 @@ public class BatchEngineBrokerTest {
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
 			"isEmailAddress(textObjectField)", false, Collections.emptyList());
 
 		_objectViewLocalService.addObjectView(

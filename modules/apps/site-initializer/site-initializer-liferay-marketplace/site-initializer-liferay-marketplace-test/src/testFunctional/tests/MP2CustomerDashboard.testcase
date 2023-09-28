@@ -148,4 +148,42 @@ definition {
 		}
 	}
 
+	@description = "LPS-174845 | If the user chooses Accept Invitation, he can log in with the invited roles."
+	@priority = 5
+	test CanLogWithInvitedRoles {
+		task ("Given that a marketplace account administrator invites a member to the Customer Dashboard"){
+			MP2Navigator.openSitePage(pageName = "Customer Dashboard");
+
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Development");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "Account Buyer",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("And I log out of the marketplace account") {
+			User.logoutPG();
+		}
+
+		task ("And go to the Mock Mock page > Accept the email you received") {
+			MockMock._gotoMail();
+		}
+
+		task ("When the user log into the account") {
+			MP2Utils.firstLoginMKT(
+				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				bodyLink = "Accept invitation",
+				recipient = "da@administrator.com",
+				userEmailAddress = "test.mp@liferay.com");
+		}
+
+		task ("Then I should be able to assert that the user has access to the Publisher Dashboard from the Marketpace account") {
+			AssertLocation.assertPartialLocation(value1 = "web/marketplace-site/customer-dashboard");
+		}
+	}
 }

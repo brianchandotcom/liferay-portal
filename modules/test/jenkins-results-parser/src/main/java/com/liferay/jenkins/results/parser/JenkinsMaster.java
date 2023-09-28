@@ -289,6 +289,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return new HashMap<>(_queuedBuildURLs);
 	}
 
+	public String getRemoteURL() {
+		return _masterRemoteURL;
+	}
+
 	public Integer getSlaveRAM() {
 		return _slaveRAM;
 	}
@@ -724,6 +728,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				JenkinsResultsParserUtil.combine(
 					"jenkins.local.url[", _masterName, "]"));
 
+			_masterRemoteURL = properties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"jenkins.remote.url[", _masterName, "]"));
+
 			Integer slaveRAM = getSlaveRAMMinimumDefault();
 
 			String slaveRAMString = JenkinsResultsParserUtil.getProperty(
@@ -816,6 +824,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private final Map<String, JenkinsSlave> _jenkinsSlavesMap =
 		Collections.synchronizedMap(new HashMap<String, JenkinsSlave>());
 	private final String _masterName;
+	private final String _masterRemoteURL;
 	private final String _masterURL;
 	private int _queueCount;
 	private final Map<String, JSONObject> _queuedBuildURLs =

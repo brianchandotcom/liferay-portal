@@ -620,7 +620,7 @@ describe('Winner declared', () => {
 		expect(publishExperience).toHaveBeenCalledTimes(0);
 	});
 
-	it('Discard button action', async () => {
+	it('Discard button action for winner declared status', async () => {
 		const {APIServiceMocks, getByText} = renderApp({
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
@@ -628,6 +628,32 @@ describe('Winner declared', () => {
 				status: {
 					label: 'Winner Declared',
 					value: STATUS_FINISHED_WINNER,
+				},
+			},
+			initialSegmentsVariants: segmentsVariants,
+			winnerSegmentsVariantId: '1',
+		});
+		const {publishExperience} = APIServiceMocks;
+
+		const discardButton = getByText('discard-test');
+
+		userEvent.click(discardButton);
+
+		expect(publishExperience).toHaveBeenCalledWith({
+			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			status: STATUS_COMPLETED,
+			winnerSegmentsExperienceId: segmentsExperiment.segmentsExperienceId,
+		});
+	});
+
+	it('Discard button action for no clear winner status', async () => {
+		const {APIServiceMocks, getByText} = renderApp({
+			initialSegmentsExperiment: {
+				...segmentsExperiment,
+				editable: false,
+				status: {
+					label: 'Winner Declared',
+					value: STATUS_FINISHED_NO_WINNER,
 				},
 			},
 			initialSegmentsVariants: segmentsVariants,
@@ -774,7 +800,7 @@ describe('Terminated', () => {
 		expect(within(rows[2]).getByText(/100-loss/i)).toBeInTheDocument();
 	});
 
-	it('check if improvement value is shown in terminated status', async () => {
+	it('check if improvement value is shown in winner declared status', async () => {
 		const {getByRole} = renderApp({
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
@@ -811,7 +837,7 @@ describe('Terminated', () => {
 		expect(within(rows[2]).getByText(/100-lift/i)).toBeInTheDocument();
 	});
 
-	it('check if the improvement value is getting worse for variant in terminated status', async () => {
+	it('check if the improvement value is getting worse for variant in winner declared status', async () => {
 		const {getByRole} = renderApp({
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
@@ -819,6 +845,80 @@ describe('Terminated', () => {
 				status: {
 					label: 'winner declared',
 					value: STATUS_FINISHED_WINNER,
+				},
+			},
+			initialSegmentsVariants: [
+				{
+					...controlVariant,
+					segmentsExperimentVariantImprovement: '-',
+				},
+				{
+					...variant,
+					segmentsExperimentVariantImprovement: '-100.00',
+				},
+			],
+		});
+
+		const table = getByRole('table');
+		const rows = within(table).getAllByRole('row');
+
+		expect(rows).toHaveLength(3);
+
+		expect(within(rows[0]).getByText(/name/i)).toBeInTheDocument();
+		expect(within(rows[0]).getByText(/improvement/i)).toBeInTheDocument();
+
+		expect(within(rows[1]).getByText(/control/i)).toBeInTheDocument();
+		expect(within(rows[1]).getByText(/0-loss/i)).toBeInTheDocument();
+
+		expect(within(rows[2]).getByText(/variant/i)).toBeInTheDocument();
+		expect(within(rows[2]).getByText(/100-loss/i)).toBeInTheDocument();
+	});
+
+	it('check if improvement value is shown in no clear winner status', async () => {
+		const {getByRole} = renderApp({
+			initialSegmentsExperiment: {
+				...segmentsExperiment,
+				editable: false,
+				status: {
+					label: 'winner declared',
+					value: STATUS_FINISHED_NO_WINNER,
+				},
+			},
+			initialSegmentsVariants: [
+				{
+					...controlVariant,
+					segmentsExperimentVariantImprovement: '-',
+				},
+				{
+					...variant,
+					segmentsExperimentVariantImprovement: '100.00',
+				},
+			],
+		});
+
+		const table = getByRole('table');
+		const rows = within(table).getAllByRole('row');
+
+		expect(rows).toHaveLength(3);
+
+		expect(within(rows[0]).getByText(/name/i)).toBeInTheDocument();
+		expect(within(rows[0]).getByText(/improvement/i)).toBeInTheDocument();
+
+		expect(within(rows[1]).getByText(/control/i)).toBeInTheDocument();
+		expect(within(rows[1]).getByText(/0-loss/i)).toBeInTheDocument();
+
+		expect(within(rows[2]).getByText(/variant/i)).toBeInTheDocument();
+		expect(within(rows[2]).getByText(/100-lift/i)).toBeInTheDocument();
+	});
+
+	it('check if the improvement value is getting worse for variant no clear winner status', async () => {
+		const {getByRole} = renderApp({
+			initialSegmentsExperiment: {
+				...segmentsExperiment,
+				editable: false,
+				status: {
+					label: 'winner declared',
+					value: STATUS_FINISHED_NO_WINNER,
 				},
 			},
 			initialSegmentsVariants: [

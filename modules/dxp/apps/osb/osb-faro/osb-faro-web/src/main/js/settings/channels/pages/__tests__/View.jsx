@@ -92,7 +92,7 @@ describe('View Channel', () => {
 		expect(queryByText('Clear Data')).toBeInTheDocument();
 	});
 
-	it.only('should check error modal message and hyperlink on deleting property that has CHANNELS synced', async () => {
+	it('should check error modal message and hyperlink on deleting property that has CHANNELS synced', async () => {
 		API.user.fetchCurrentUser.mockReturnValueOnce(
 			Promise.resolve(data.mockUser())
 		);

@@ -36,10 +36,6 @@ public class FeatureFlagsBag {
 		_featureFlagsMap = featureFlagsMap;
 	}
 
-	public FeatureFlag getFeatureFlag(String key) {
-		return _featureFlagsMap.get(key);
-	}
-
 	public List<FeatureFlag> getFeatureFlags(Predicate<FeatureFlag> predicate) {
 		List<FeatureFlag> featureFlags = new ArrayList<>();
 

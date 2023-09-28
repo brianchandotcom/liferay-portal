@@ -30,8 +30,7 @@ public class PortalInstanceLifecycleListenerImpl
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_portalAddressOSGiCommands.populateCompanyCountries(
-			company.getCompanyId());
+		_portalAddressOSGiCommands.populateCompanyCountries(company);
 	}
 
 	@Override

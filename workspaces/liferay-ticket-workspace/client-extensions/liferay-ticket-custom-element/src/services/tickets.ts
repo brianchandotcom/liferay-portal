@@ -70,7 +70,7 @@ export async function fetchTickets({queryKey}: FetchTicketsQueryKey) {
 
 export async function fetchRecentTickets() {
 	const response = await fetch(
-		`/o/c/j3y7tickets?pageSize=3&page=1&sort=dateModified:desc`,
+		'/o/c/j3y7tickets?pageSize=3&page=1&sort=dateModified:desc',
 		{
 			headers: {
 				'accept': 'application/json',

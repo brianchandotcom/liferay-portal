@@ -15,7 +15,7 @@ export default function useGetMDFActivity(accountEntryERC?: string) {
 	return useSWR(
 		accountEntryERC
 			? [
-					`/o/${LiferayAPIs.OBJECT}/activities?filter=r_accToActs_accountEntryERC eq '${accountEntryERC}'`,
+					`/o/${LiferayAPIs.OBJECT}/activities?filter=r_accToActs_accountEntryERC eq '${accountEntryERC}' and submitted eq true and externalReferenceCodeSF ne ''`,
 					Liferay.authToken,
 			  ]
 			: null,

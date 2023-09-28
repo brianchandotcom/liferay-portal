@@ -45,11 +45,6 @@ public class CollectionLayoutStructureItemMapper
 	extends BaseStyledLayoutStructureItemMapper {
 
 	@Override
-	public String getClassName() {
-		return CollectionStyledLayoutStructureItem.class.getName();
-	}
-
-	@Override
 	public PageElement getPageElement(
 		long groupId, LayoutStructureItem layoutStructureItem,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {

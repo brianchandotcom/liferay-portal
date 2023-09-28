@@ -9,7 +9,6 @@ import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -92,14 +90,9 @@ public class PageElementUtil {
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(PageElementUtil.class);
 
-		BundleContext bundleContext = bundle.getBundleContext();
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, LayoutStructureItemMapper.class, null,
-			ServiceReferenceMapperFactory.create(
-				bundleContext,
-				(layoutStructureItemMapper, emitter) -> emitter.emit(
-					layoutStructureItemMapper.getClassName())));
+			bundle.getBundleContext(), LayoutStructureItemMapper.class,
+			"class.name");
 	}
 
 }

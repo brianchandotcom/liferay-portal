@@ -13,8 +13,6 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
  */
 public interface LayoutStructureItemMapper {
 
-	public String getClassName();
-
 	public PageElement getPageElement(
 		long groupId, LayoutStructureItem layoutStructureItem,
 		boolean saveInlineContent, boolean saveMappingConfiguration);

@@ -28,11 +28,6 @@ public class CollectionItemLayoutStructureItemMapper
 	implements LayoutStructureItemMapper {
 
 	@Override
-	public String getClassName() {
-		return CollectionItemLayoutStructureItem.class.getName();
-	}
-
-	@Override
 	public PageElement getPageElement(
 		long groupId, LayoutStructureItem layoutStructureItem,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {

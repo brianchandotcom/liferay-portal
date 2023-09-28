@@ -23,11 +23,6 @@ public class FragmentDropZoneLayoutStructureItemMapper
 	implements LayoutStructureItemMapper {
 
 	@Override
-	public String getClassName() {
-		return FragmentDropZoneLayoutStructureItem.class.getName();
-	}
-
-	@Override
 	public PageElement getPageElement(
 		long groupId, LayoutStructureItem layoutStructureItem,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {

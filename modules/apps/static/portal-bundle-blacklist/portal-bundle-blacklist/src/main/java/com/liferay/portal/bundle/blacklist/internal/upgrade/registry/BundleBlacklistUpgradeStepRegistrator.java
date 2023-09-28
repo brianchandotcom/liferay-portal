@@ -7,7 +7,9 @@ package com.liferay.portal.bundle.blacklist.internal.upgrade.registry;
 
 import com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.ReleaseRenamingUpgradeStep;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -21,6 +23,12 @@ public class BundleBlacklistUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
+		registry.registerReleaseCreationUpgradeSteps(
+			new ReleaseRenamingUpgradeStep(
+				"com.liferay.portal.bundle.blacklist",
+				"com.liferay.portal.bundle.blacklist.impl",
+				_releaseLocalService));
+
 		registry.registerInitialization();
 
 		registry.register(
@@ -33,5 +41,8 @@ public class BundleBlacklistUpgradeStepRegistrator
 
 	@Reference
 	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
+
+	@Reference
+	private ReleaseLocalService _releaseLocalService;
 
 }

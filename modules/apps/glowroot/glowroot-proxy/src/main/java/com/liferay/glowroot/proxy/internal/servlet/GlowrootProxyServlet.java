@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -95,7 +96,7 @@ public class GlowrootProxyServlet extends ProxyServlet implements Serializable {
 
 		@Override
 		public String getHeader(String name) {
-			if ("Accept-Encoding".equalsIgnoreCase(name)) {
+			if (StringUtil.equalsIgnoreCase("Accept-Encoding", name)) {
 				return null;
 			}
 
@@ -112,7 +113,9 @@ public class GlowrootProxyServlet extends ProxyServlet implements Serializable {
 				while (enumeration.hasMoreElements()) {
 					String headerName = enumeration.nextElement();
 
-					if (!"Accept-Encoding".equalsIgnoreCase(headerName)) {
+					if (!StringUtil.equalsIgnoreCase(
+							"Accept-Encoding", headerName)) {
+
 						_headerNameSet.add(headerName);
 					}
 				}
@@ -123,7 +126,7 @@ public class GlowrootProxyServlet extends ProxyServlet implements Serializable {
 
 		@Override
 		public Enumeration<String> getHeaders(String name) {
-			if ("Accept-Encoding".equalsIgnoreCase(name)) {
+			if (StringUtil.equalsIgnoreCase("Accept-Encoding", name)) {
 				return Collections.emptyEnumeration();
 			}
 

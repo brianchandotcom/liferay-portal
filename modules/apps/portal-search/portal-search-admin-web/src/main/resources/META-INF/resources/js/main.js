@@ -321,9 +321,7 @@ AUI.add(
 
 					submitForm(form, instance.get(STR_URL));
 
-					if (
-						data.cmd === 'reindexDictionaries'
-					) {
+					if (data.cmd === 'reindexDictionaries') {
 						document
 							.querySelectorAll(instance.get('submitButton'))
 							.forEach((element) => {

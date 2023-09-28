@@ -9,7 +9,6 @@ import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextMapConstants;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -37,7 +36,6 @@ import com.liferay.portal.search.admin.web.internal.util.DictionaryReindexer;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -133,13 +131,11 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 		String className = ParamUtil.getString(actionRequest, "className");
 
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-183661")) {
-			taskContextMap.put(
+		Map<String, Serializable> taskContextMap =
+			new HashMapBuilder<>().<String, Serializable>put(
 				ReindexBackgroundTaskConstants.EXECUTION_MODE,
-				ParamUtil.getString(actionRequest, "executionMode"));
-		}
+				ParamUtil.getString(actionRequest, "executionMode")
+			).build();
 
 		if (!ParamUtil.getBoolean(actionRequest, "blocking")) {
 			_indexWriterHelper.reindex(

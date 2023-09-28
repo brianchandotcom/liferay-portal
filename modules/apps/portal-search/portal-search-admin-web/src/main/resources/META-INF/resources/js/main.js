@@ -303,12 +303,7 @@ AUI.add(
 						return;
 					}
 
-					if (Liferay.FeatureFlags['LPS-183661']) {
-						this._showConfirmationModal(data);
-					}
-					else {
-						this._onSubmitForm(data);
-					}
+					this._showConfirmationModal(data);
 				},
 
 				_onSubmitForm(data) {
@@ -327,7 +322,6 @@ AUI.add(
 					submitForm(form, instance.get(STR_URL));
 
 					if (
-						Liferay.FeatureFlags['LPS-183661'] &&
 						data.cmd === 'reindexDictionaries'
 					) {
 						document

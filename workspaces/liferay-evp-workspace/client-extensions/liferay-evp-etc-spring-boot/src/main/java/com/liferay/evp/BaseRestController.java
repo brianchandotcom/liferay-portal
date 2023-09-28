@@ -83,7 +83,6 @@ public abstract class BaseRestController {
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	protected String lxcDXPServerProtocol;
 
-	private static final Log _log = LogFactory.getLog(
-		BaseRestController.class);
+	private static final Log _log = LogFactory.getLog(BaseRestController.class);
 
 }

@@ -4,9 +4,7 @@
  */
 
 package com.liferay.evp;
-
 import com.liferay.petra.string.StringBundler;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -22,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Elvison Victor
  */
-@RequestMapping("/object/action/organization/status")
+@RequestMapping("/object/action/organization/status/update")
 @RestController
 public class ObjectActionOrganizationStatusRestController
 	extends BaseRestController {
@@ -30,7 +28,6 @@ public class ObjectActionOrganizationStatusRestController
 	@PostMapping
 	public ResponseEntity<String> post(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
-
 		JSONObject evpOrganizationJSONObject1 = new JSONObject(json);
 
 		JSONObject originalObjectEntryDTOEVPOrganizationJSONObject =
@@ -49,30 +46,8 @@ public class ObjectActionOrganizationStatusRestController
 					evpOrganizationJSONObject2.getJSONObject(
 						"organizationStatus");
 
-				get(
-					response2 -> {
-						JSONObject evpRequestsJSONObject = new JSONObject(
-							response2);
-
-						if (evpRequestsJSONObject.getInt("totalCount") < 0) {
-							return;
-						}
-
-						JSONArray itemsJSONArray =
-							evpRequestsJSONObject.getJSONArray("items");
-
-						_checkStatusOrganization(
-							evpOrganizationStatusJSONObject, itemsJSONArray);
-
-						put(
-							itemsJSONArray.toString(), jwt,
-							"/o/c/evprequests/batch");
-					},
-					jwt,
-					StringBundler.concat(
-						"/o/c/evprequests?filter=",
-						"r_organization_c_evpOrganizationId eq '",
-						evpOrganizationId, "'"));
+				_getEvpRequestsData(
+					jwt, evpOrganizationId, evpOrganizationStatusJSONObject);
 			},
 			jwt, "/o/c/evporganizations/" + evpOrganizationId);
 
@@ -113,6 +88,32 @@ public class ObjectActionOrganizationStatusRestController
 				);
 			}
 		}
+	}
+
+	private void _getEvpRequestsData(
+		Jwt jwt, long evpOrganizationId,
+		JSONObject evpOrganizationStatusJSONObject) {
+
+		get(
+			response2 -> {
+				JSONObject evpRequestsJSONObject = new JSONObject(response2);
+
+				if (evpRequestsJSONObject.getInt("totalCount") < 0) {
+					return;
+				}
+
+				JSONArray itemsJSONArray = evpRequestsJSONObject.getJSONArray(
+					"items");
+
+				_checkStatusOrganization(
+					evpOrganizationStatusJSONObject, itemsJSONArray);
+
+				put(itemsJSONArray.toString(), jwt, "/o/c/evprequests/batch");
+			},
+			jwt,StringBundler.concat(
+				"/o/c/evprequests?filter=",
+				"r_organization_c_evpOrganizationId eq '",
+				evpOrganizationId, "'"));
 	}
 
 	private void _setRequestStatus(

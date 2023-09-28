@@ -5,7 +5,7 @@
 
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
-import {fetch, openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
 import React, {Component} from 'react';
 
@@ -308,32 +308,20 @@ class ResultRankingsForm extends Component {
 							.initialSXPBlueprintExternalReferenceCode,
 				  };
 
-			fetch(
+			fetchResponse(
 				`${
 					window.location.origin
 				}${Liferay.ThemeDisplay.getPathContext()}${
 					scopeInfo.fetchItemByIdUrl
 				}${scopeInfo.value}`,
-				{
-					credentials: 'include',
-					headers: new Headers({
-						'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-						'x-csrf-token': Liferay.authToken,
-					}),
-					method: 'GET',
-				}
+				{}
 			)
 				.then((response) => {
-					if (response.ok) {
-						return response.json();
-					}
-
-					throw new Error();
-				})
-				.then((item) => {
 					this.setState(() => ({
 						scopeDisplayName:
-							item[scopeInfo.label] || scopeInfo.value,
+							response.status !== 'NOT_FOUND'
+								? response[scopeInfo.label]
+								: scopeInfo.value,
 					}));
 				})
 				.catch(() => {

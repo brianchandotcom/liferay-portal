@@ -9,9 +9,9 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
-import {addParams, fetch} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
+import {fetchResponse} from '../../utils/api.es';
 import {SCOPE_TYPES} from '../../utils/constants.es';
 import {sub} from '../../utils/language.es';
 import ScopeSelectModal from './ScopeSelectModal.es';
@@ -53,31 +53,14 @@ const ScopeSelect = ({
 	const _fetchDropdownItems = () => {
 		setLoading(true);
 
-		fetch(
-			addParams(
-				{activePage: 1, pageSize: 5},
-				`${
-					window.location.origin
-				}${Liferay.ThemeDisplay.getPathContext()}${fetchItemsUrl}`
-			),
-			{
-				credentials: 'include',
-				headers: new Headers({
-					'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-					'x-csrf-token': Liferay.authToken,
-				}),
-				method: 'GET',
-			}
+		fetchResponse(
+			`${
+				window.location.origin
+			}${Liferay.ThemeDisplay.getPathContext()}${fetchItemsUrl}`,
+			{activePage: 1, pageSize: 5}
 		)
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				}
-
-				throw new Error();
-			})
 			.then(({items}) => {
-				setResourceItems(items);
+				setResourceItems(items || []);
 			})
 			.catch(() => {
 				setResourceItems([]);

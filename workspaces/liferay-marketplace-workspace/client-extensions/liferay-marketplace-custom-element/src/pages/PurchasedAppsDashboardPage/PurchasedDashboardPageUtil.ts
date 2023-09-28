@@ -14,6 +14,7 @@ export const appList: AppProps[] = [];
 export const initialAccountState: Account[] = [
 	{
 		description: '',
+		emailAddress: '',
 		externalReferenceCode: '',
 		id: 0,
 		name: '',

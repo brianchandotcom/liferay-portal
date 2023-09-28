@@ -18,7 +18,7 @@ export function CardButton({
 }: {
 	description: string;
 	disabled: boolean;
-	icon: string;
+	icon?: string;
 	onClick: (event: MouseEvent) => void;
 	selected: boolean;
 	title: string;

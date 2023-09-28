@@ -232,7 +232,7 @@ interface OrderType {
 
 type PaymentMethodMode = 'PayPal';
 
-type PaymentMethodSelector = 'order' | 'pay' | 'trial' | null;
+type PaymentMethodSelector = 'order' | 'pay' | 'trial';
 
 interface PlacedOrder {
 	account: string;

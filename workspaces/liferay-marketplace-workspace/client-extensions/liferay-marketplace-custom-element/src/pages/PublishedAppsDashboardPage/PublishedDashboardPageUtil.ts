@@ -138,6 +138,7 @@ export const memberTableHeaders = [
 export const initialAccountsState: Account[] = [
 	{
 		description: '',
+		emailAddress: '',
 		externalReferenceCode: '',
 		id: 0,
 		name: '',

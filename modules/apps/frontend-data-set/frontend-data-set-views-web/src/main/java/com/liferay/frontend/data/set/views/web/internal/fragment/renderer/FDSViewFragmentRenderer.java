@@ -450,7 +450,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 						properties.get("to"));
 
 					boolean hasPreloadedData =
-						!!fromJSONObject || !!toJSONObject;
+						(fromJSONObject != null) || (toJSONObject != null);
 
 					return JSONUtil.put(
 						"active", hasPreloadedData

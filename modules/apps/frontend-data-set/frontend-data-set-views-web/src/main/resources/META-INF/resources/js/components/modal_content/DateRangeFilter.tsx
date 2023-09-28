@@ -64,10 +64,7 @@ function Body({
 					inputName={fromFormElementId}
 					onChange={onFromChange}
 					placeholder="YYYY-MM-DD"
-					value={format(
-						from ? new Date(from) : new Date(),
-						'yyyy-MM-dd'
-					)}
+					value={from ? format(new Date(from), 'yyyy-MM-dd') : ''}
 					years={{
 						end: getYear(new Date()) + 25,
 						start: getYear(new Date()) - 50,
@@ -96,7 +93,7 @@ function Body({
 					inputName={toFormElementId}
 					onChange={onToChange}
 					placeholder="YYYY-MM-DD"
-					value={format(to ? new Date(to) : new Date(), 'yyyy-MM-dd')}
+					value={to ? format(new Date(to), 'yyyy-MM-dd'): ''}
 					years={{
 						end: getYear(new Date()) + 25,
 						start: getYear(new Date()) - 50,

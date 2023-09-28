@@ -74,6 +74,7 @@ export function getAPIEndpointsFDSProps(
 							fieldName: 'path',
 							label: Liferay.Language.get('path'),
 							localizeLabel: true,
+							sortable: true,
 						},
 						{
 							fieldName: 'description',

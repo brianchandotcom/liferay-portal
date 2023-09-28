@@ -82,12 +82,6 @@ definition {
 			Button.clickSave();
 		}
 
-		Click(
-			key_panel = "Details",
-			locator1 = "Panel#PANEL_COLLAPSED");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Tier Price Entries");
-
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame.selectFrameTop();
@@ -97,7 +91,7 @@ definition {
 		CommerceSKUs.addPriceToSKU(price = ${price});
 
 		Type(
-			key_fieldLabel = "Minimum Quantity",
+			key_fieldLabel = "Quantity",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = ${quantity});
 
@@ -222,12 +216,6 @@ definition {
 	macro editTierPriceEntryDirectlyInsideProductSKU {
 		SelectFrame.selectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		Click(
-			key_panel = "Details",
-			locator1 = "Panel#PANEL_COLLAPSED");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Tier Price Entries");
-
 		CommerceEntry.clickEntryDropdownMenuItem(
 			entryName = ${entryName},
 			menuItem = "Edit");
@@ -239,7 +227,7 @@ definition {
 		CommerceSKUs.addPriceToSKU(price = ${price});
 
 		Type(
-			key_fieldLabel = "Minimum Quantity",
+			key_fieldLabel = "Quantity",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = ${quantity});
 

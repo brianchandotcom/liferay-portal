@@ -562,7 +562,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					).put(
 						"id", properties.get("fieldName")
 					).put(
-						"label", properties.get("label")
+						"label", _getValue("label", "fieldName", properties)
 					).put(
 						"moduleURL", fdsFilterCET.getURL()
 					).put(

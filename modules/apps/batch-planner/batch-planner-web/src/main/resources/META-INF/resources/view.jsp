@@ -8,6 +8,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+portletDisplay.setBeta(true);
+
 BatchPlannerPlanDisplayContext batchPlannerPlanDisplayContext = (BatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 SearchContainer<BatchPlannerPlanDisplay> batchPlannerPlanDisplaySearchContainer = batchPlannerPlanDisplayContext.getSearchContainer();

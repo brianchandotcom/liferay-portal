@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-declare type LocalUIData =
-	| APIApplicationUIData
-	| APIEndpointUIData
-	| APISchemaUIData;
+declare type LocalUIData = APIApplicationUIData | APISchemaUIData;
 interface AddObjectFieldsDataToProperties {
 	apiSchema: APISchemaItem;
 	objectDefinitions: ObjectDefinition[];
@@ -21,8 +18,15 @@ export declare function hasDataChanged({
 	fetchedEntityData,
 	localUIData,
 }: {
-	fetchedEntityData: APIApplicationItem | APIEndpointItem | APISchemaItem;
+	fetchedEntityData: APIApplicationItem | APISchemaItem;
 	localUIData: Partial<LocalUIData>;
+}): boolean;
+export declare function hasEndpointDataChanged({
+	fetchedEndpointData,
+	localUIData,
+}: {
+	fetchedEndpointData: APIEndpointItem;
+	localUIData: Partial<APIEndpointUIData>;
 }): boolean;
 export declare function hasPropertiesDataChanged({
 	fetchedPropertiesData,

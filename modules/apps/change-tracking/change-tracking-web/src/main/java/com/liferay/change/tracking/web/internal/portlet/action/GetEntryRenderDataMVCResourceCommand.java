@@ -670,7 +670,7 @@ public class GetEntryRenderDataMVCResourceCommand
 			FeatureFlagManagerUtil.isEnabled(
 				themeDisplay.getCompanyId(), "LPS-187183")) {
 
-			List<SegmentsExperience> segmentsExperienceList =
+			List<SegmentsExperience> segmentsExperiences =
 				_segmentsExperienceLocalService.dslQuery(
 					DSLQueryFactoryUtil.select(
 						SegmentsExperienceTable.INSTANCE
@@ -684,21 +684,21 @@ public class GetEntryRenderDataMVCResourceCommand
 			JSONArray segmentsExperienceJSONArray =
 				_jsonFactory.createJSONArray();
 
-			List<SegmentsExperience> modifiableSegmentsExperienceList =
-				new ArrayList<>(segmentsExperienceList);
+			List<SegmentsExperience> modifiableSegmentsExperiences =
+				new ArrayList<>(segmentsExperiences);
 
-			modifiableSegmentsExperienceList.sort(
+			modifiableSegmentsExperiences.sort(
 				Comparator.comparingInt(SegmentsExperienceModel::getPriority));
 
 			SegmentsExperience highestPrioritySegmentsExperience =
-				modifiableSegmentsExperienceList.get(
-					modifiableSegmentsExperienceList.size() - 1);
+				modifiableSegmentsExperiences.get(
+					modifiableSegmentsExperiences.size() - 1);
 
 			long highestPrioritySegmentsExperienceId =
 				highestPrioritySegmentsExperience.getSegmentsExperienceId();
 
 			for (SegmentsExperience segmentsExperience :
-					modifiableSegmentsExperienceList) {
+					modifiableSegmentsExperiences) {
 
 				segmentsExperienceJSONArray.put(
 					JSONUtil.put(

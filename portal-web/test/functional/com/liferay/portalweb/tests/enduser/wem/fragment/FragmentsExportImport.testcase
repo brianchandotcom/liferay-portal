@@ -1253,7 +1253,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98501. Export and Import a global fragment."
+	@description = "This is a test for LPS-98501 and LPS-175242. Export and Import a global fragment."
 	@priority = 4
 	test ExportImportGlobalFragment {
 		task ("Add a fragment collection in Global site") {
@@ -1347,10 +1347,15 @@ definition {
 			FragmentsAdmin.viewEntryPresent(entry = "Global Fragment Name");
 		}
 
-		task ("Delete the global fragment collection") {
-			JSONFragment.deleteFragmentCollection(
-				groupName = "Global",
-				name = "Global Collection Name");
+		task ("View only the Approved label shown on fragment card") {
+			LexiconCard.viewCardLabel(
+				card = "Global Fragment Name",
+				cardLabel = "Approved");
+
+			AssertElementNotPresent(
+				index = 2,
+				key_card = "Global Fragment Name",
+				locator1 = "Card#CARD_LABEL");
 		}
 	}
 

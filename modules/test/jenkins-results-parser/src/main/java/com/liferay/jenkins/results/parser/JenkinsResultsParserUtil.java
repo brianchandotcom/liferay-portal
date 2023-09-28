@@ -735,6 +735,12 @@ public class JenkinsResultsParserUtil {
 	public static String executeJenkinsScript(
 		String jenkinsMasterName, String script) {
 
+		return executeJenkinsScript(jenkinsMasterName, script, false);
+	}
+
+	public static String executeJenkinsScript(
+		String jenkinsMasterName, String script, boolean rawResponse) {
+
 		try {
 			String url = fixURL(
 				getLocalURL("http://" + jenkinsMasterName + "/script"));
@@ -799,11 +805,15 @@ public class JenkinsResultsParserUtil {
 			String responseText = readInputStream(
 				httpURLConnection.getInputStream());
 
-			return combine(
-				jenkinsMasterName, ":\n",
-				responseText.substring(
-					responseText.lastIndexOf("<pre>") + 5,
-					responseText.lastIndexOf("</pre>")));
+			String rawResponseText = responseText.substring(
+				responseText.lastIndexOf("<pre>") + 5,
+				responseText.lastIndexOf("</pre>"));
+
+			if (rawResponse) {
+				return rawResponseText.trim();
+			}
+
+			return combine(jenkinsMasterName, ":\n", rawResponseText);
 		}
 		catch (IOException ioException) {
 			System.out.println("Unable to execute Jenkins script");
@@ -2608,6 +2618,18 @@ public class JenkinsResultsParserUtil {
 		return localURL + localURLQueryString;
 	}
 
+	public static JenkinsMaster getMostAvailableJenkinsMaster(
+		String baseInvocationURL, String blacklist, int invokedBatchSize,
+		int minimumRAM, int maximumSlavesPerHost) {
+
+		String mostAvailableMasterURL = getMostAvailableMasterURL(
+			baseInvocationURL, blacklist, invokedBatchSize, minimumRAM,
+			maximumSlavesPerHost);
+
+		return JenkinsMaster.getInstance(
+			mostAvailableMasterURL.replaceAll("http://(.+)", "$1"));
+	}
+
 	public static String getMostAvailableMasterURL(
 		String baseInvocationURL, int invokedBatchSize) {
 
@@ -3265,6 +3287,47 @@ public class JenkinsResultsParserUtil {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	public static JSONObject invokeJenkinsBuild(
+		JenkinsMaster jenkinsMaster, String jenkinsJobName,
+		Map<String, String> buildParameters) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Map<String, TopLevelItem> topLevelItems = ");
+		sb.append("Jenkins.instance.getItemMap();\n");
+
+		sb.append("TopLevelItem topLevelItem = topLevelItems.get(\"");
+		sb.append(jenkinsJobName);
+		sb.append("\");\n");
+
+		sb.append(
+			"List<ParameterValue> parameterValues = new ArrayList<>();\n");
+
+		for (Map.Entry<String, String> buildParameter :
+				buildParameters.entrySet()) {
+
+			sb.append("parameterValues.add(new StringParameterValue(\"");
+			sb.append(buildParameter.getKey());
+			sb.append("\", \"");
+			sb.append(buildParameter.getValue());
+			sb.append("\"));\n");
+		}
+
+		sb.append("def waitingItem = Jenkins.instance.queue.schedule(");
+		sb.append("topLevelItem, 0, new ParametersAction(parameterValues));\n");
+
+		sb.append("def jsonBuilder = new groovy.json.JsonBuilder()\n");
+
+		sb.append("jsonBuilder queueId: waitingItem.getId()\n");
+
+		sb.append("println(jsonBuilder);");
+
+		String response = executeJenkinsScript(
+			jenkinsMaster.getName(), sb.toString(), true);
+
+		return new JSONObject(response);
 	}
 
 	public static boolean isCINode() {

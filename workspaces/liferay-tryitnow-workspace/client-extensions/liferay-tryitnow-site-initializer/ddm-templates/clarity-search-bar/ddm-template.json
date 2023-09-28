@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortlet",
+	"ddmTemplateKey": "CLARITY-SEARCH-BAR",
+	"name": "Clarity Search Bar",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

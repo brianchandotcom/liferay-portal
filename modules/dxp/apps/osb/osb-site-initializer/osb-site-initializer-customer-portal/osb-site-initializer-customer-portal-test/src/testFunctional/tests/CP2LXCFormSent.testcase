@@ -1,0 +1,105 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var pageURL = "project/#/KOR-3809080/liferay-experience-cloud";
+	var testAccount = "2022 FIFA World Cup Qatar - FAN ID";
+	var testSiteName = "Customer Portal Site";
+	var testSiteTamplate = "Liferay OSB Site Initializer Customer Portal";
+	var testProduct = "LXC - SM";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
+		}
+
+		task ("Login on OKTA") {
+			CustomerPortal.loginOktaToUpdateCP();
+		}
+
+		task ("Add assignee to role via users tab") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testProduct});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Provisioning",
+				accountUserName = "Test Test");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if (${testLiferayVirtualInstance} == "false") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+		}
+	}
+
+	@description = "LPS-161280 - Verify if after a user submits the Liferay Experience Cloud activation form and then tries to resend it (or another user) in another browser window a helpful message is shown"
+	@priority = 3
+	test AssertTheModalWithTheUsefulMessageToTheUser {
+		task ("Given I complete the onboarding flow and go to Liferay Experience Cloud page via URL") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			CP2Utils.onboardingFlow();
+
+			CustomerPortal.clickAtButton(text = "Liferay Experience Cloud");
+
+			CP2Utils.openPageInTheNewTab(pageURL = ${pageURL});
+		}
+
+		task ("And I fill in all the required fields and close window") {
+			CP2Utils.finishActivation(
+				email = "test@liferay.com",
+				fullName = "Test Test",
+				incidentManagementEmail = "test@liferay.com",
+				incidentManagementFullName = "Manager Test",
+				primaryRegion = "Europe",
+				projectId = "testid");
+
+			Navigator.closeWindow();
+		}
+
+		task ("When I fill again in all the required fields") {
+			CP2Utils.finishActivation(
+				email = "test@liferay.com",
+				fullName = "Test Test",
+				incidentManagementEmail = "test@liferay.com",
+				incidentManagementFullName = "Manager Test",
+				primaryRegion = "Europe",
+				projectId = "testid");
+		}
+
+		task ("Then I assert that the message appears in the modal") {
+			CustomerPortal.viewConfirmationModal(modalText = "Another user already submitted the Liferay Experience Cloud activation request.");
+		}
+	}
+
+}

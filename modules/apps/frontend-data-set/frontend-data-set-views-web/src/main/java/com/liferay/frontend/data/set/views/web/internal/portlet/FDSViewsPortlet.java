@@ -240,11 +240,13 @@ public class FDSViewsPortlet extends MVCPortlet {
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 						_language.get(
 							locale, "fds-filter-client-extension-erc"),
-						"fdsFilterClientExtensionERC", true),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "name"), "name", true)));
+						"fdsFilterClientExtensionERC", true)));
+
+		_enableLocalization(fdsClientExtensionFilterObjectDefinition);
+
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "label"), "label",
+			fdsClientExtensionFilterObjectDefinition, userId);
 
 		_objectDefinitionLocalService.publishSystemObjectDefinition(
 			userId,

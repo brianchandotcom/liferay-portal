@@ -3,6 +3,8 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
 	property testray.main.component.name = "Comment";
 
 	setUp {
@@ -29,9 +31,6 @@ definition {
 	@description = "This ensures that the comment of an asset can be subscribed automatically when the setting is true."
 	@priority = 5
 	test CanConfigureDiscussionSubscribeAtInstanceLevel {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		Comments.openToCommentsConfiguration();
 
 		Comments.configureCommentSubscribe(commentSubscribe = "false");
@@ -60,9 +59,6 @@ definition {
 	@description = "This ensures that the comment of an asset will not be subscribed automatically when the setting is false."
 	@priority = 5
 	test CanConfigureDiscussionSubscribeAtSystemLevel {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		Comments.openToCommentsConfiguration();
 
 		Comments.configureCommentSubscribe(commentSubscribe = "false");
@@ -88,8 +84,6 @@ definition {
 	@priority = 5
 	test CanDeleteCommentWhenEnablingEditableByOwner {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		Comments.openToCommentsConfiguration(configurationScope = "Instance Settings");
 
@@ -140,8 +134,6 @@ definition {
 	@priority = 5
 	test CanEditCommentWhenEnablingEditableByOwner {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		Comments.openToCommentsConfiguration();
 
@@ -194,8 +186,6 @@ definition {
 	@priority = 5
 	test CannotEditCommentWhenEditableByOwnerIsDisabled {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		Comments.openToCommentsConfiguration();
 
@@ -251,11 +241,9 @@ definition {
 	}
 
 	@description = "This ensures that users without permissions can not edit/delete other people's comments when the “Always editable by owner” is enabled."
-	@priority = 5
+	@priority = 3
 	test CannotEditOtherUsersCommentWhenEditableByOwnerIsEnabled {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		Comments.openToCommentsConfiguration(configurationScope = "Instance Settings");
 
@@ -313,9 +301,6 @@ definition {
 	@description = "This ensures that changing the comments configuraton in one instance does not affect the value in another instance."
 	@priority = 5
 	test InstanceLevelConfigurationsAreIndependentFromOneAnother {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "www.able.com",
 			portalInstanceId = "www.able.com",

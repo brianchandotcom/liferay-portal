@@ -42,6 +42,7 @@ UpgradeJavaPortletSharedSearchSettingsCheck | .bnd, .ftl, .gradle, .java, .json,
 UpgradeJavaSchedulerEntryImplConstructorCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace constructors that use the empty constructor of the SchedulerEntryImpl class. |
 UpgradeJavaServiceReferenceAnnotationCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Run code migration to replace '@ServiceReference' by '@Reference' |
 UpgradeJavaServiceTrackerListCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace the number of generic type arguments in ServiceTrackerList |
+UpgradeJavaStorageTypeAwareCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Run code to delete StorageTypeAware interface |
 UpgradeJavaUpdateCommerceAddressCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace parameter in updateCommerceAddress method by other parameters list |
 UpgradeJavaUpdateFileEntryMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Fill in the new parameters of the method 'updateFileEntry' of 'DLAppLocalService' and 'DLAppLocalServiceUtil' |
 UpgradeJavaUserLocalServiceUtilCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace parameters of addUser and updateStatus methods in UserServices |

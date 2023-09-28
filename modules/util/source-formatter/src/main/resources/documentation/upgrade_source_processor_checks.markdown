@@ -34,6 +34,7 @@ UpgradeJavaPortletSharedSearchSettingsCheck | [Upgrade](upgrade_checks.markdown#
 UpgradeJavaSchedulerEntryImplConstructorCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace constructors that use the empty constructor of the SchedulerEntryImpl class. |
 UpgradeJavaServiceReferenceAnnotationCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code migration to replace '@ServiceReference' by '@Reference' |
 UpgradeJavaServiceTrackerListCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace the number of generic type arguments in ServiceTrackerList |
+UpgradeJavaStorageTypeAwareCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code to delete StorageTypeAware interface |
 UpgradeJavaUpdateCommerceAddressCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace parameter in updateCommerceAddress method by other parameters list |
 UpgradeJavaUpdateFileEntryMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Fill in the new parameters of the method 'updateFileEntry' of 'DLAppLocalService' and 'DLAppLocalServiceUtil' |
 UpgradeJavaUserLocalServiceUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace parameters of addUser and updateStatus methods in UserServices |

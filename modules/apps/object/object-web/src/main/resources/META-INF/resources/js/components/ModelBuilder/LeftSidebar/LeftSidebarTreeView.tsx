@@ -114,9 +114,11 @@ export default function LeftSidebarTreeView({
 				openToast({
 					message: sub(
 						Liferay.Language.get('x-was-moved-successfully'),
-						`<strong>${getLocalizableLabel(
-							objectDefinitionToBeMoved.defaultLanguageId,
-							objectDefinitionToBeMoved.label
+						`<strong>${Liferay.Util.escapeHTML(
+							getLocalizableLabel(
+								objectDefinitionToBeMoved.defaultLanguageId,
+								objectDefinitionToBeMoved.label
+							)
 						)}</strong>`
 					),
 					type: 'success',
@@ -230,9 +232,11 @@ export default function LeftSidebarTreeView({
 									}
 								/>
 
-								<Text weight="semi-bold">
-									{leftSidebarItem.name}
-								</Text>
+								<div className="lfr-objects__model-builder-left-sidebar-current-object-folder-content-title">
+									<Text weight="semi-bold">
+										{leftSidebarItem.name}
+									</Text>
+								</div>
 
 								{leftSidebarItem.objectFolderName !==
 									selectedObjectFolder.name && (

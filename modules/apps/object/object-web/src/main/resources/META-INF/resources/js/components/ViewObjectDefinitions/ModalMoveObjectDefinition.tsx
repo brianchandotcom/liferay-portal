@@ -86,10 +86,12 @@ export function ModalMoveObjectDefinition({
 			openToast({
 				message: sub(
 					Liferay.Language.get('x-was-moved-successfully'),
-					`<strong>${getLocalizableLabel(
-						defaultLanguageId,
-						movedObjectDefinition.label,
-						movedObjectDefinition.name
+					`<strong>${Liferay.Util.escapeHTML(
+						getLocalizableLabel(
+							defaultLanguageId,
+							movedObjectDefinition.label,
+							movedObjectDefinition.name
+						)
 					)}</strong>`
 				),
 				type: 'success',

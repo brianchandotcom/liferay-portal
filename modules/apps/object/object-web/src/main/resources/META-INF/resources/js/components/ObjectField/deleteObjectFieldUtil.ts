@@ -17,10 +17,12 @@ export async function deleteObjectField(
 		Liferay.Util.openToast({
 			message: sub(
 				Liferay.Language.get('x-was-deleted-successfully'),
-				`<strong>${getLocalizableLabel(
-					defaultLanguageId,
-					objectField.label,
-					objectField.name
+				`<strong>${Liferay.Util.escapeHTML(
+					getLocalizableLabel(
+						defaultLanguageId,
+						objectField.label,
+						objectField.name
+					)
 				)}</strong>`
 			),
 		});

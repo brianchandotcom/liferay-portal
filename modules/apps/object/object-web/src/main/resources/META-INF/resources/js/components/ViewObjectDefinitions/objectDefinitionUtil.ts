@@ -59,7 +59,7 @@ export async function deleteObjectFolder(id: number, objectFolderName: string) {
 		Liferay.Util.openToast({
 			message: sub(
 				Liferay.Language.get('x-was-deleted-successfully'),
-				`<strong>${objectFolderName}</strong>`
+				`<strong>${Liferay.Util.escapeHTML(objectFolderName)}</strong>`
 			),
 		});
 	});
@@ -73,7 +73,9 @@ export async function deleteObjectDefinitionToast(
 		Liferay.Util.openToast({
 			message: sub(
 				Liferay.Language.get('x-was-deleted-successfully'),
-				`<strong>${objectDefinitionName}</strong>`
+				`<strong>${Liferay.Util.escapeHTML(
+					objectDefinitionName
+				)}</strong>`
 			),
 		});
 	});

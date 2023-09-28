@@ -1,0 +1,14 @@
+package com.liferay.source.formatter.dependencies.upgrade;
+
+public class UpgradeJavaCommerceOrderValidatorCheck implements CommerceOrderValidator{
+
+	@Override
+	public CommerceOrderValidatorResult validate(Locale locale,
+			CommerceOrder commerceOrder, CPInstance cpInstance, int quantity)
+		throws PortalException {
+
+		int validateQuantity = quantity;
+
+	}
+
+}

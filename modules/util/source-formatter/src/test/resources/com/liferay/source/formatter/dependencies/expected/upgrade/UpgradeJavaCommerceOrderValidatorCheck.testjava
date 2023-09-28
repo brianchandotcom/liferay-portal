@@ -1,0 +1,18 @@
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import java.math.BigDecimal;
+
+public class UpgradeJavaCommerceOrderValidatorCheck implements CommerceOrderValidator{
+
+	@Override
+	public CommerceOrderValidatorResult validate(Locale locale,
+			CommerceOrder commerceOrder, CPInstance cpInstance, BigDecimal quantity)
+		throws PortalException {
+
+		int quantityInt = quantity.intValue();
+
+		int validateQuantity = quantityInt;
+
+	}
+
+}

@@ -177,6 +177,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaCommerceOrderValidatorCheck() throws Exception {
+		test("upgrade/UpgradeJavaCommerceOrderValidatorCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaCommerceRegionCheck() throws Exception {
 		test("upgrade/UpgradeJavaCommerceRegionCheck.testjava");
 	}

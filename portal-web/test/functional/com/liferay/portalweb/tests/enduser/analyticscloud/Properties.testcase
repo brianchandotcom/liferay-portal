@@ -89,7 +89,7 @@ definition {
 	@priority = 3
 	test CanCreatePropertiesWhenNoDataSourceIsCreatedYet {
 
-		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+		// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
 
 		task ("Remove all data sources present") {
 			ACUtils.launchAC();

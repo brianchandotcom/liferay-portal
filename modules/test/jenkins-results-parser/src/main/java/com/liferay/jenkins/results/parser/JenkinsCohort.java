@@ -56,6 +56,20 @@ public class JenkinsCohort {
 		return new ArrayList<>(_jenkinsMastersMap.values());
 	}
 
+	public JenkinsMaster getMostAvailableJenkinsMaster(
+		int invokedBatchSize, int minimumRAM, int maximumSlavesPerHost) {
+
+		String mostAvailableMasterURL =
+			JenkinsResultsParserUtil.getMostAvailableMasterURL(
+				JenkinsResultsParserUtil.combine(
+					"http://", getName(), ".liferay.com"),
+				JenkinsResultsParserUtil.join(",", _jenkinsMastersBlacklist),
+				invokedBatchSize, minimumRAM, maximumSlavesPerHost);
+
+		return JenkinsMaster.getInstance(
+			mostAvailableMasterURL.replaceAll("http://(.+)", "$1"));
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -485,8 +499,24 @@ public class JenkinsCohort {
 		".*\\/([0-9]+)");
 	private static final Map<String, JenkinsCohort> _jenkinsCohorts =
 		new HashMap<>();
+	private static final List<String> _jenkinsMastersBlacklist =
+		new ArrayList<>();
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"https?:.*job\\/(.*?)\\/");
+
+	static {
+		try {
+			String jenkinsMastersBlacklist =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"jenkins.load.balancer.blacklist");
+
+			Collections.addAll(
+				_jenkinsMastersBlacklist, jenkinsMastersBlacklist.split(","));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
 
 	private final Map<String, JenkinsCohortJob> _jenkinsCohortJobsMap =
 		new HashMap<>();

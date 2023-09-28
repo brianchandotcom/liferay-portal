@@ -953,7 +953,7 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(4);
 
-		HashMap<String, Serializable> values =
+		Map<String, Serializable> values =
 			HashMapBuilder.<String, Serializable>put(
 				"birthday", "2010-12-25"
 			).put(

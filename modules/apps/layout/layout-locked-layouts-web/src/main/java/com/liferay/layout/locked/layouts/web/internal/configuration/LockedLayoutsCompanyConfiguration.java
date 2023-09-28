@@ -18,7 +18,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration",
-	localization = "content/Language", name = "locked-pages-configuration-name"
+	localization = "content/Language",
+	name = "locked-layouts-company-configuration-name"
 )
 public interface LockedLayoutsCompanyConfiguration {
 

@@ -731,6 +731,26 @@ definition {
 	//	Alert.viewSuccessMessage();
 	//}
 
+	macro deletePropertyByEllipse {
+		ACUtils.searchBar(searchItem = ${propertyName});
+
+		ACUtils.clickKebab();
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		var confirmMessage = selenium.getText("ACSettings#DELETE_CONFIRMATION_MESSAGE");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Type(
+			locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
+			value1 = ${confirmMessage});
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteUser {
 		if (IsVisible(locator1 = "ACSettings#USER_LIST_EMAIL", value1 = ${userDelete})) {
 			Click(locator1 = "ACSettings#DELETE_USER");

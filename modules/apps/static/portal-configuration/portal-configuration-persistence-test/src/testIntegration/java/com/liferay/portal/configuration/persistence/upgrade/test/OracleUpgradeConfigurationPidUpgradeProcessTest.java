@@ -43,7 +43,7 @@ import org.junit.runner.RunWith;
  * @author Sergio Alonso
  */
 @RunWith(Arquillian.class)
-public class UpgradeConfigurationPidUpgradeOracleTest {
+public class OracleUpgradeConfigurationPidUpgradeProcessTest {
 
 	@ClassRule
 	@Rule

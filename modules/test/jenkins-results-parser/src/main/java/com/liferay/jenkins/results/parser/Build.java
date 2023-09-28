@@ -219,9 +219,17 @@ public interface Build {
 
 	public class Invocation {
 
+		public Invocation(JenkinsMaster jenkinsMaster) {
+			_jenkinsMaster = jenkinsMaster;
+		}
+
 		public Invocation(JenkinsMaster jenkinsMaster, long queueId) {
 			_jenkinsMaster = jenkinsMaster;
 			_queueId = queueId;
+		}
+
+		public int getBuildNumber() {
+			return _buildNumber;
 		}
 
 		public JenkinsMaster getJenkinsMaster() {
@@ -232,8 +240,17 @@ public interface Build {
 			return _queueId;
 		}
 
+		public void setBuildNumber(int buildNumber) {
+			_buildNumber = buildNumber;
+		}
+
+		public void setQueueId(long queueId) {
+			_queueId = queueId;
+		}
+
+		private int _buildNumber;
 		private final JenkinsMaster _jenkinsMaster;
-		private final long _queueId;
+		private long _queueId;
 
 	}
 

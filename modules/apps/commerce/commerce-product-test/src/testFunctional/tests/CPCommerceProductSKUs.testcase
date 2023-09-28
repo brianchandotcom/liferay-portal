@@ -312,12 +312,6 @@ definition {
 
 			SelectFrame.selectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			Click(
-				key_panel = "Details",
-				locator1 = "Panel#PANEL_COLLAPSED");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Tier Price Entries");
-
 			CommerceEntry.clickEntryDropdownMenuItem(
 				entryName = 10,
 				menuItem = "Delete");

@@ -5,8 +5,8 @@
 
 package com.liferay.feature.flag.test.util;
 
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import javax.servlet.http.HttpServletRequest;

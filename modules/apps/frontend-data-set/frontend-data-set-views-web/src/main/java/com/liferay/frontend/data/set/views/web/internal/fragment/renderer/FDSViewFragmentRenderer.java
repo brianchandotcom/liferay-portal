@@ -519,7 +519,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					).put(
 						"multiple", properties.get("multiple")
 					).put(
-						"selectedData",
+						"preloadedData",
 						JSONUtil.put(
 							"exclude", false
 						).put(

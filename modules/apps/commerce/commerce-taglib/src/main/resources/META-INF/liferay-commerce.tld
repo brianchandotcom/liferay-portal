@@ -93,8 +93,8 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>uom-tier-price</name>
-		<tag-class>com.liferay.commerce.taglib.servlet.taglib.UOMTierPriceTag</tag-class>
+		<name>unit-of-measure-tier-price</name>
+		<tag-class>com.liferay.commerce.taglib.servlet.taglib.UnitOfMeasureTierPriceTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>CPInstanceId</name>

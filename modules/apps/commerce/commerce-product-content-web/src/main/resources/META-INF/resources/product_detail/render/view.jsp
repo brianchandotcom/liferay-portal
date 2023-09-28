@@ -163,7 +163,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 			<c:if test="<%= cpSku != null %>">
 				<div class="mt-3">
-					<liferay-commerce:uom-tier-price
+					<liferay-commerce:unit-of-measure-tier-price
 						CPInstanceId="<%= cpSku.getCPInstanceId() %>"
 						CProductId="<%= cpCatalogEntry.getCProductId() %>"
 						namespace="<%= liferayPortletResponse.getNamespace() %>"

@@ -18,13 +18,13 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <portlet:defineObjects />
 
 <%
-String commerceAccountId = (String)request.getAttribute("liferay-commerce:uom-tier-price:commerceAccountId");
-String commerceChannelId = (String)request.getAttribute("liferay-commerce:uom-tier-price:commerceChannelId");
-String cpInstanceId = (String)request.getAttribute("liferay-commerce:uom-tier-price:cpInstanceId");
-String namespace = (String)request.getAttribute("liferay-commerce:uom-tier-price:namespace");
-String productId = (String)request.getAttribute("liferay-commerce:uom-tier-price:productId");
+String commerceAccountId = (String)request.getAttribute("liferay-commerce:unit-of-measure-tier-price:commerceAccountId");
+String commerceChannelId = (String)request.getAttribute("liferay-commerce:unit-of-measure-tier-price:commerceChannelId");
+String cpInstanceId = (String)request.getAttribute("liferay-commerce:unit-of-measure-tier-price:cpInstanceId");
+String namespace = (String)request.getAttribute("liferay-commerce:unit-of-measure-tier-price:namespace");
+String productId = (String)request.getAttribute("liferay-commerce:unit-of-measure-tier-price:productId");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + StringPool.UNDERLINE;
 
-String uomTierPriceId = randomNamespace + "uom_tier_price";
+String unitOfMeasureTierPriceId = randomNamespace + "unit_of_measure_tier_price";
 %>

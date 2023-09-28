@@ -5,9 +5,9 @@
  */
 --%>
 
-<%@ include file="/uom_tier_price/init.jsp" %>
+<%@ include file="/unit_of_measure_tier_price/init.jsp" %>
 
-<div class="mb-2 tier-price-table" id="<%= uomTierPriceId %>"></div>
+<div class="mb-2 tier-price-table" id="<%= unitOfMeasureTierPriceId %>"></div>
 
 <aui:script require="commerce-frontend-js/components/tier_price/entry as TierPrice">
 	const props = {
@@ -18,5 +18,9 @@
 		productId: <%= productId %>,
 	};
 
-	TierPrice.default('<%= uomTierPriceId %>', '<%= uomTierPriceId %>', props);
+	TierPrice.default(
+		'<%= unitOfMeasureTierPriceId %>',
+		'<%= unitOfMeasureTierPriceId %>',
+		props
+	);
 </aui:script>

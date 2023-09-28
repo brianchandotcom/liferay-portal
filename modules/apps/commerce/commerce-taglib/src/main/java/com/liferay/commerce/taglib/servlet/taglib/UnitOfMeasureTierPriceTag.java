@@ -20,7 +20,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Stefano Motta
  */
-public class UOMTierPriceTag extends IncludeTag {
+public class UnitOfMeasureTierPriceTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -107,12 +107,12 @@ public class UOMTierPriceTag extends IncludeTag {
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
-		"liferay-commerce:uom-tier-price:";
+		"liferay-commerce:unit-of-measure-tier-price:";
 
-	private static final String _PAGE = "/uom_tier_price/page.jsp";
+	private static final String _PAGE = "/unit_of_measure_tier_price/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UOMTierPriceTag.class);
+		UnitOfMeasureTierPriceTag.class);
 
 	private long _commerceAccountId;
 	private long _commerceChannelId;

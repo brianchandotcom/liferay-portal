@@ -24,7 +24,10 @@ import {InputLocalized} from 'frontend-js-components-web';
 import {defaultLanguageId} from '../../../utils/constants';
 import {firstLetterUppercase} from '../../../utils/string';
 import {ModalDeleteObjectRelationship} from '../../ObjectRelationship/ModalDeleteObjectRelationship';
-import {useObjectRelationshipForm} from '../../ObjectRelationship/ObjectRelationshipFormBase';
+import {
+	OBJECT_RELATIONSHIP_TYPES,
+	useObjectRelationshipForm,
+} from '../../ObjectRelationship/ObjectRelationshipFormBase';
 import SelectObjectRelationship from '../../ObjectRelationship/SelectObjectRelationship';
 import {getUpdatedModelBuilderStructurePayload} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
@@ -263,6 +266,17 @@ export function RightSidebarObjectRelationshipDetails({
 					label={Liferay.Language.get('name')}
 					required
 					value={values.name}
+				/>
+
+				<Input
+					disabled
+					label={Liferay.Language.get('type')}
+					required
+					value={
+						OBJECT_RELATIONSHIP_TYPES.find(
+							({value}) => value === values.type
+						)?.label
+					}
 				/>
 
 				<Input

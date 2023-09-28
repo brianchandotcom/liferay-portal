@@ -81,7 +81,11 @@ const ONE_TO_ONE = {
 	value: ObjectRelationshipType.ONE_TO_ONE,
 };
 
-const OBJECT_RELATIONSHIP_TYPES = [MANY_TO_MANY, ONE_TO_MANY, ONE_TO_ONE];
+export const OBJECT_RELATIONSHIP_TYPES = [
+	MANY_TO_MANY,
+	ONE_TO_MANY,
+	ONE_TO_ONE,
+];
 
 export function useObjectRelationshipForm({
 	initialValues,

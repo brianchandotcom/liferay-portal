@@ -163,6 +163,31 @@ public class FeatureFlagListenerTest {
 		}
 	}
 
+	@Test
+	public void testRegisterWithWildcardKey() throws Exception {
+		try (TestFeatureFlagListener testFeatureFlagListener =
+				new TestFeatureFlagListener("*")) {
+
+			testFeatureFlagListener.assertSubsetInvocations(
+				_valuesToString(_companyId, _FEATURE_FLAG_KEY_1, _value1),
+				_valuesToString(_companyId, _FEATURE_FLAG_KEY_2, _value2));
+
+			FeatureFlagTestUtil.setFeatureFlagValue(
+				_companyId, !_value1, _FEATURE_FLAG_KEY_1);
+
+			FeatureFlagTestUtil.setFeatureFlagValue(
+				_companyId, !_value2, _FEATURE_FLAG_KEY_2);
+
+			FeatureFlagTestUtil.setFeatureFlagValue(
+				_companyId, _value1, _FEATURE_FLAG_KEY_1);
+
+			testFeatureFlagListener.assertSubsetInvocations(
+				_valuesToString(_companyId, _FEATURE_FLAG_KEY_1, !_value1),
+				_valuesToString(_companyId, _FEATURE_FLAG_KEY_2, !_value2),
+				_valuesToString(_companyId, _FEATURE_FLAG_KEY_1, _value1));
+		}
+	}
+
 	private String _valuesToString(
 		long companyId, String featureFlagKey, boolean enabled) {
 
@@ -211,6 +236,19 @@ public class FeatureFlagListenerTest {
 
 			for (int i = 0; i < expectedStrings.length; i++) {
 				Assert.assertEquals(expectedStrings[i], _strings.get(i));
+			}
+
+			_strings.clear();
+		}
+
+		public void assertSubsetInvocations(String... expectedStrings) {
+			Assert.assertTrue(expectedStrings.length <= _strings.size());
+
+			int index = _strings.indexOf(expectedStrings[0]);
+
+			for (int i = 0; i < expectedStrings.length; i++) {
+				Assert.assertEquals(
+					expectedStrings[i], _strings.get(i + index));
 			}
 
 			_strings.clear();

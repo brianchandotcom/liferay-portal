@@ -64,7 +64,7 @@ definition {
 		}
 
 		task ("Then I should be able to assert the subject of the email") {
-			MockMock._viewMailFromInbox(
+			MockMock.viewMailFromInbox(
 				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
 				recipient = "test.mp@liferay.com",
 				sender = "da@administrator.com");

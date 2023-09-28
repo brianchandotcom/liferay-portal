@@ -323,4 +323,29 @@ definition {
 			value1 = ${unFormattedContent});
 	}
 
+	macro viewMailFromInbox {
+		if (!(isSet(key_columnEntry))) {
+			var key_columnEntry = "";
+		}
+
+		var key_recipient = ${recipient};
+		var key_sender = ${sender};
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "MockMock#MOCKMOCK_HAVE_EMAILS_MESSAGE",
+			value1 = "You have");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "MockMock#MOCKMOCK_FROM_FIELD",
+			value1 = ${sender});
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "MockMock#MOCKMOCK_TO_FIELD",
+			value1 = ${recipient});
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "MockMock#MOCKMOCK_SUBJECT_FIELD",
+			value1 = ${asset});
+	}
+
 }

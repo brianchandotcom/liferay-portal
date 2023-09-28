@@ -146,6 +146,98 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-14082 | Automation ID: LRAC-14648 | Test Summary: Check that a message appears if you don't put text or the expected text in the delete modal"
+	@priority = 2
+	test CheckMessageAppearsIfNotPutTextOrExpectedTextOnDeleteModal {
+		var propertyName = "Property CheckMessageAppearsIfNotPutTextOrExpectedTextOnDeleteModal";
+
+		task ("Go to properties page and add new property") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = ${propertyName});
+		}
+
+		task ("Check that the created property is present in the list") {
+			ACSettings.goToProperties();
+
+			ACUtils.assertItemsName(itemList = ${propertyName});
+		}
+
+		task ("Open the property deletion modal") {
+			ACUtils.searchBar(searchItem = ${propertyName});
+
+			ACUtils.clickKebab();
+
+			MenuItem.clickNoError(menuItem = "Delete");
+		}
+
+		task ("Click on the text field to write the deletion confirmation and then click on another part of the modal to remove the focus of the field") {
+			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+		}
+
+		task ("Check that a UI feedback appears because the field is empty") {
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "String does not match.");
+		}
+
+		task ("Write a different value than expected in the deletion confirmation field") {
+			Type(
+				locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
+				value1 = ${propertyName});
+
+			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+		}
+
+		task ("Check that a UI feedback appears if the field value is not equal to what was expected") {
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "String does not match.");
+		}
+
+		task ("Write the expected value in the delete confirmation field") {
+			Type(
+				locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
+				value1 = "Delete ${propertyName}");
+		}
+
+		task ("Check that a UI feedback does not appear") {
+			AssertElementNotPresent(locator1 = "Message#WARNING_FEEDBACK");
+		}
+	}
+
+	@description = "Feature ID: LRAC-14082 | Automation ID: LRAC-14649 | Test Summary: Check that a successful alert appears if the property is deleted correctly"
+	@priority = 2
+	test CheckSuccessfulAlertAppearsIfPropertyDeleted {
+		var propertyName = "Property CheckSuccessfulAlertAppearsIfPropertyDeleted";
+
+		task ("Go to properties page and add new property") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = ${propertyName});
+		}
+
+		task ("Check that the created property is present in the list") {
+			ACSettings.goToProperties();
+
+			ACUtils.assertItemsName(itemList = ${propertyName});
+		}
+
+		task ("Delete the property use ellipse") {
+			ACSettings.deletePropertyByEllipse(propertyName = ${propertyName});
+		}
+
+		task ("Check that the success alert with the correct message appears after deletion") {
+			Alert.viewSuccessMessageText(successMessage = "Success:1 property has been deleted");
+		}
+	}
+
 	@description = "Bug: LRAC-10602 | Automation ID: LRAC-11055 | Test Summary: Deleted properties don't appear as an option to sync sites"
 	@ignore = "true"
 	@priority = 2
@@ -295,31 +387,4 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-14082 | Automation ID: LRAC-14649 | Test Summary: Check that a successful alert appears if the property is deleted correctly"
-	@priority = 2
-	test CheckSuccessfulAlertAppearsIfPropertyDeleted {
-		var propertyName = "Property CheckSuccessfulAlertAppearsIfPropertyDeleted";
-
-		task ("Go to properties page and add new property") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-
-			ACProperties.addNewProperty(propertyName = ${propertyName});
-		}
-
-		task ("Check that the created property is present in the list") {
-			ACSettings.goToProperties();
-
-			ACUtils.assertItemsName(itemList = ${propertyName});
-		}
-
-		task ("Delete the property use ellipse") {
-			ACSettings.deletePropertyByEllipse(propertyName = ${propertyName});
-		}
-
-		task ("Check that the success alert with the correct message appears after deletion") {
-			Alert.viewSuccessMessageText(successMessage = "Success:1 property has been deleted");
-		}
-	}
 }

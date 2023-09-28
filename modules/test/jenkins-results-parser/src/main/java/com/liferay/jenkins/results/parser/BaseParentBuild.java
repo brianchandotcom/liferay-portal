@@ -440,6 +440,10 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	@Override
 	public void update() {
+		if (skipUpdate()) {
+			return;
+		}
+
 		super.update();
 
 		List<Build> downstreamBuilds = getDownstreamBuilds(null);
@@ -634,6 +638,21 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		else {
 			setStatus("completed");
 		}
+	}
+
+	@Override
+	protected boolean skipUpdate() {
+		if (isBuildModified() || hasModifiedDownstreamBuilds()) {
+			return false;
+		}
+
+		String status = getStatus();
+
+		if (!status.equals("completed")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private List<Build> _downstreamBuilds;

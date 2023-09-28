@@ -1552,93 +1552,81 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public synchronized void update() {
+		if (skipUpdate()) {
+			return;
+		}
+
 		_duration = null;
 
 		String status = getStatus();
 
-		boolean hasModifiedDownstreamBuilds = false;
+		_previousStatus = status;
 
-		if (this instanceof ParentBuild) {
-			ParentBuild parentBuild = (ParentBuild)this;
+		try {
+			if (status.equals("missing") || status.equals("queued") ||
+				status.equals("starting")) {
 
-			hasModifiedDownstreamBuilds =
-				parentBuild.hasModifiedDownstreamBuilds();
-		}
+				JSONObject runningBuildJSONObject = getRunningBuildJSONObject();
 
-		if ((status.equals("completed") &&
-			 (isBuildModified() || hasModifiedDownstreamBuilds)) ||
-			!status.equals("completed")) {
+				if (runningBuildJSONObject != null) {
+					setBuildNumber(runningBuildJSONObject.getInt("number"));
+				}
+				else {
+					JSONObject queueItemJSONObject = null;
 
-			_previousStatus = this.status;
+					try {
+						queueItemJSONObject = getQueueItemJSONObject();
+					}
+					catch (IOException ioException) {
+						ioException.printStackTrace();
 
-			try {
-				if (status.equals("missing") || status.equals("queued") ||
-					status.equals("starting")) {
+						throw new RuntimeException(
+							"Unable to get queue item JSON", ioException);
+					}
 
-					JSONObject runningBuildJSONObject =
-						getRunningBuildJSONObject();
+					if (queueItemJSONObject != null) {
+						setStatus("queued");
+					}
+					else if (status.equals("queued") ||
+							 status.equals("starting")) {
 
-					if (runningBuildJSONObject != null) {
-						setBuildNumber(runningBuildJSONObject.getInt("number"));
+						setStatus("missing");
 					}
 					else {
-						JSONObject queueItemJSONObject = null;
+						if (_reinvocationCount >= REINVOCATIONS_SIZE_MAX) {
+							setResult("MISSING");
+
+							return;
+						}
+
+						String invocationURL =
+							JenkinsResultsParserUtil.getLocalURL(
+								getInvocationURL());
 
 						try {
-							queueItemJSONObject = getQueueItemJSONObject();
+							JenkinsResultsParserUtil.toString(invocationURL);
 						}
 						catch (IOException ioException) {
 							ioException.printStackTrace();
 
 							throw new RuntimeException(
-								"Unable to get queue item JSON", ioException);
+								"Unable to invoke build " + invocationURL,
+								ioException);
 						}
 
-						if (queueItemJSONObject != null) {
-							setStatus("queued");
-						}
-						else if (status.equals("queued") ||
-								 status.equals("starting")) {
+						setStatus("starting");
 
-							setStatus("missing");
-						}
-						else {
-							if (_reinvocationCount >= REINVOCATIONS_SIZE_MAX) {
-								setResult("MISSING");
-
-								return;
-							}
-
-							String invocationURL =
-								JenkinsResultsParserUtil.getLocalURL(
-									getInvocationURL());
-
-							try {
-								JenkinsResultsParserUtil.toString(
-									invocationURL);
-							}
-							catch (IOException ioException) {
-								ioException.printStackTrace();
-
-								throw new RuntimeException(
-									"Unable to invoke build " + invocationURL,
-									ioException);
-							}
-
-							setStatus("starting");
-
-							_reinvocationCount++;
-						}
+						_reinvocationCount++;
 					}
 				}
-
-				applySlaveOfflineRules();
-
-				applyReinvokeRules();
 			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
+
+			applySlaveOfflineRules();
+
+			applyReinvokeRules();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -3195,6 +3183,20 @@ public abstract class BaseBuild implements Build {
 				System.out.println(getBuildMessage());
 			}
 		}
+	}
+
+	protected boolean skipUpdate() {
+		if (isBuildModified()) {
+			return false;
+		}
+
+		String status = getStatus();
+
+		if (!status.equals("completed")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected String toJenkinsReportDateString(Date date, String timeZoneName) {

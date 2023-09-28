@@ -693,6 +693,10 @@ public abstract class BaseTopLevelBuild
 
 	@Override
 	public synchronized void update() {
+		if (skipUpdate()) {
+			return;
+		}
+
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		super.update();

@@ -42,6 +42,37 @@ public class BatchBuild extends BaseParentBuild {
 	}
 
 	@Override
+	public boolean applyReinvokeRules() {
+		if (badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX) {
+			return false;
+		}
+
+		List<Build> builds = new ArrayList<>();
+
+		builds.add(this);
+
+		builds.addAll(getDownstreamBuilds("completed"));
+
+		for (Build build : builds) {
+			if (!isCompleted() || !isFailing() || isFromArchive()) {
+				continue;
+			}
+
+			for (ReinvokeRule reinvokeRule : reinvokeRules) {
+				if (!reinvokeRule.matches(build)) {
+					continue;
+				}
+
+				reinvoke(reinvokeRule);
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public URL getArtifactsBaseURL() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
@@ -278,54 +309,6 @@ public class BatchBuild extends BaseParentBuild {
 		String status, boolean modifiedBuildsOnly) {
 
 		return getTotalSlavesUsedCount(status, modifiedBuildsOnly, true);
-	}
-
-	@Override
-	public synchronized void update() {
-		super.update();
-
-		if (badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX) {
-			return;
-		}
-
-		String status = getStatus();
-		String result = getResult();
-
-		if ((status.equals("completed") && result.equals("SUCCESS")) ||
-			fromArchive) {
-
-			return;
-		}
-
-		boolean reinvoked = false;
-
-		List<Build> builds = new ArrayList<>();
-
-		builds.add(this);
-
-		builds.addAll(getDownstreamBuilds("completed"));
-
-		for (Build build : builds) {
-			if (reinvoked) {
-				break;
-			}
-
-			for (ReinvokeRule reinvokeRule : reinvokeRules) {
-				String buildResult = build.getResult();
-
-				if ((buildResult == null) || buildResult.equals("SUCCESS") ||
-					!reinvokeRule.matches(build)) {
-
-					continue;
-				}
-
-				reinvoke(reinvokeRule);
-
-				reinvoked = true;
-
-				break;
-			}
-		}
 	}
 
 	protected BatchBuild(String url) {

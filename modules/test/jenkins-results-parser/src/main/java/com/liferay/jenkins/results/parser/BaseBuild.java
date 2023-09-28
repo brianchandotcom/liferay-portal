@@ -51,6 +51,58 @@ import org.json.JSONObject;
 public abstract class BaseBuild implements Build {
 
 	@Override
+	public boolean applyReinvokeRules() {
+		if (!isCompleted() || !isFailing() || isFromArchive()) {
+			return false;
+		}
+
+		for (ReinvokeRule reinvokeRule : reinvokeRules) {
+			if (!reinvokeRule.matches(this)) {
+				continue;
+			}
+
+			reinvoke(reinvokeRule);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean applySlaveOfflineRules() {
+		if (!isCompleted() || !isFailing() || isFromArchive() ||
+			(badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX)) {
+
+			return false;
+		}
+
+		JenkinsSlave jenkinsSlave = getJenkinsSlave();
+
+		if (jenkinsSlave == null) {
+			return false;
+		}
+
+		jenkinsSlave.update();
+
+		if (jenkinsSlave.isOffline()) {
+			return false;
+		}
+
+		for (SlaveOfflineRule slaveOfflineRule : slaveOfflineRules) {
+			if (!slaveOfflineRule.matches(this)) {
+				continue;
+			}
+
+			takeSlaveOffline(slaveOfflineRule);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public void archive() {
 		archive(getArchiveName());
 	}
@@ -1618,49 +1670,11 @@ public abstract class BaseBuild implements Build {
 					}
 
 					findDownstreamBuilds();
-
-					if ((result == null) || result.equals("SUCCESS")) {
-						return;
-					}
-
-					JenkinsSlave jenkinsSlave = getJenkinsSlave();
-
-					if (jenkinsSlave != null) {
-						jenkinsSlave.update();
-
-						if (!fromArchive && !jenkinsSlave.isOffline()) {
-							for (SlaveOfflineRule slaveOfflineRule :
-									slaveOfflineRules) {
-
-								if (!slaveOfflineRule.matches(this)) {
-									continue;
-								}
-
-								takeSlaveOffline(slaveOfflineRule);
-
-								break;
-							}
-						}
-					}
-
-					if (this instanceof AxisBuild ||
-						this instanceof BatchBuild ||
-						this instanceof TopLevelBuild || fromArchive ||
-						(badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX)) {
-
-						return;
-					}
-
-					for (ReinvokeRule reinvokeRule : reinvokeRules) {
-						if (!reinvokeRule.matches(this)) {
-							continue;
-						}
-
-						reinvoke(reinvokeRule);
-
-						break;
-					}
 				}
+
+				applySlaveOfflineRules();
+
+				applyReinvokeRules();
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);

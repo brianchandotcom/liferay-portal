@@ -83,6 +83,11 @@ public abstract class BaseTopLevelBuild
 	}
 
 	@Override
+	public boolean applyReinvokeRules() {
+		return false;
+	}
+
+	@Override
 	public String getAcceptanceUpstreamJobName() {
 		String jobName = getJobName();
 

@@ -26,6 +26,10 @@ public interface Build {
 
 	public void addTimelineData(TimelineData timelineData);
 
+	public boolean applyReinvokeRules();
+
+	public boolean applySlaveOfflineRules();
+
 	public void archive();
 
 	public void archive(String archiveName);

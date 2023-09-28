@@ -856,13 +856,14 @@ definition {
 	}
 
 	macro viewHomeTopicsList {
+		Refresh();
+
 		Click(locator1 = "Questions#QUESTIONS_BREADCRUMB_HOME_DROPDOWN_TOGGLE");
 
 		for (var topicName : list ${topicsName}) {
-			AssertTextEquals(
+			AssertElementPresent(
 				key_topicName = ${topicName},
-				locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_OPTION",
-				value1 = ${topicName});
+				locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_OPTION");
 		}
 	}
 

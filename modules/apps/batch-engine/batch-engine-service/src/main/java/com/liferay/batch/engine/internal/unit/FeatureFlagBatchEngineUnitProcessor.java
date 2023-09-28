@@ -7,8 +7,8 @@ package com.liferay.batch.engine.internal.unit;
 
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.portal.kernel.feature.flag.FeatureFlag;
-import com.liferay.portal.kernel.feature.flag.listener.FeatureFlagListener;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Tuple;
 
 import java.util.ArrayList;
@@ -51,7 +51,8 @@ public class FeatureFlagBatchEngineUnitProcessor {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(
-			FeatureFlagListener.class, new FeatureFlagListenerImpl(), null);
+			FeatureFlagListener.class, new FeatureFlagListenerImpl(),
+			MapUtil.singletonDictionary("featureFlagKey", "*"));
 	}
 
 	@Deactivate
@@ -74,12 +75,14 @@ public class FeatureFlagBatchEngineUnitProcessor {
 	private class FeatureFlagListenerImpl implements FeatureFlagListener {
 
 		@Override
-		public void onDisabled(long companyId, FeatureFlag featureFlag) {
-		}
+		public void onValue(
+			long companyId, String featureFlagKey, boolean enabled) {
 
-		@Override
-		public void onEnabled(long companyId, FeatureFlag featureFlag) {
-			Tuple tuple = _getTuple(companyId, featureFlag.getKey());
+			if (!enabled) {
+				return;
+			}
+
+			Tuple tuple = _getTuple(companyId, featureFlagKey);
 
 			if (!_unsafeSuppliers.containsKey(tuple)) {
 				return;

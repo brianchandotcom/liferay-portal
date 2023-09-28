@@ -18,7 +18,6 @@ import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
-import com.liferay.portal.workflow.metrics.internal.search.index.cache.WorkflowMetricsIndexCache;
 import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndex;
 
 import org.osgi.service.component.annotations.Reference;
@@ -55,26 +54,11 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
 	public boolean exists(long companyId) {
-		if (!searchCapabilities.isWorkflowMetricsSupported()) {
-			return false;
-		}
-
-		if (workflowMetricsIndexCache.hasIndex(
-				companyId, getIndexName(companyId))) {
-
-			return true;
-		}
-
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(getIndexName(companyId));
 
 		IndicesExistsIndexResponse indicesExistsIndexResponse =
 			searchEngineAdapter.execute(indicesExistsIndexRequest);
-
-		if (indicesExistsIndexResponse.isExists()) {
-			workflowMetricsIndexCache.putIndex(
-				companyId, getIndexName(companyId));
-		}
 
 		return indicesExistsIndexResponse.isExists();
 	}
@@ -90,9 +74,6 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 		searchEngineAdapter.execute(
 			new DeleteIndexRequest(getIndexName(companyId)));
 
-		workflowMetricsIndexCache.removeIndex(
-			companyId, getIndexName(companyId));
-
 		return true;
 	}
 
@@ -101,9 +82,6 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
-
-	@Reference
-	protected WorkflowMetricsIndexCache workflowMetricsIndexCache;
 
 	private String _readJSON(String fileName) {
 		try {

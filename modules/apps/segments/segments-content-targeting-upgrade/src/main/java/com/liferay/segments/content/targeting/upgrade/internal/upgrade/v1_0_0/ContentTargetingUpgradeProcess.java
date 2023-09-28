@@ -5,6 +5,7 @@
 
 package com.liferay.segments.content.targeting.upgrade.internal.upgrade.v1_0_0;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -19,7 +20,6 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.content.targeting.upgrade.internal.upgrade.v1_0_0.util.RuleConverter;
-import com.liferay.segments.content.targeting.upgrade.internal.upgrade.v1_0_0.util.RuleConverterRegistry;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -36,11 +36,11 @@ import java.util.Map;
 public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 
 	public ContentTargetingUpgradeProcess(
-		RuleConverterRegistry ruleConverterRegistry,
-		SegmentsEntryLocalService segmentsEntryLocalService) {
+		SegmentsEntryLocalService segmentsEntryLocalService,
+		ServiceTrackerMap<String, RuleConverter> serviceTrackerMap) {
 
-		_ruleConverterRegistry = ruleConverterRegistry;
 		_segmentsEntryLocalService = segmentsEntryLocalService;
+		_serviceTrackerMap = serviceTrackerMap;
 	}
 
 	@Override
@@ -103,8 +103,8 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 				while (resultSet.next()) {
 					String ruleKey = resultSet.getString("ruleKey");
 
-					RuleConverter ruleConverter =
-						_ruleConverterRegistry.getRuleConverter(ruleKey);
+					RuleConverter ruleConverter = _serviceTrackerMap.getService(
+						ruleKey);
 
 					if (ruleConverter == null) {
 						if (_log.isWarnEnabled()) {
@@ -188,7 +188,7 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentTargetingUpgradeProcess.class);
 
-	private final RuleConverterRegistry _ruleConverterRegistry;
 	private final SegmentsEntryLocalService _segmentsEntryLocalService;
+	private final ServiceTrackerMap<String, RuleConverter> _serviceTrackerMap;
 
 }

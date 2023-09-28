@@ -112,6 +112,17 @@ public class FeatureFlagsBagProviderImpl
 				featureFlagListener.onValue(companyId, key, enabled);
 			}
 		}
+
+		featureFlagListeners = _featureFlagListenerServiceTrackerMap.getService(
+			"*");
+
+		if (featureFlagListeners != null) {
+			for (FeatureFlagListener featureFlagListener :
+					featureFlagListeners) {
+
+				featureFlagListener.onValue(companyId, key, enabled);
+			}
+		}
 	}
 
 	@Override
@@ -360,8 +371,9 @@ public class FeatureFlagsBagProviderImpl
 			List<String> featureFlagKeys = _getFeatureFlagKeys(
 				serviceReference);
 
-			Predicate<FeatureFlag> predicate =
-				featureFlag -> featureFlagKeys.contains(featureFlag.getKey());
+			Predicate<FeatureFlag> predicate = featureFlag ->
+				featureFlagKeys.contains(featureFlag.getKey()) ||
+				featureFlagKeys.contains("*");
 
 			UnsafeConsumer<Long, Exception> companyIdUnsafeConsumer =
 				companyId -> {

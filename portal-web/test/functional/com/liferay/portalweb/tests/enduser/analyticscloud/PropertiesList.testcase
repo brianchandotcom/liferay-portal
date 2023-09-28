@@ -245,7 +245,6 @@ definition {
 	@description = "Bug: LRAC-10602 | Automation ID: LRAC-11055 | Test Summary: Deleted properties don't appear as an option to sync sites"
 	@priority = 2
 	test DeletedPropertiesNotAppearAsOptionInSyncSites {
-
 		task ("Go to properties page and add 2 new properties") {
 			var propertyList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 1,Property DeletedPropertiesNotAppearAsOptionInSyncSites 2";
 
@@ -262,7 +261,6 @@ definition {
 			ACSettings.goToProperties();
 
 			ACSettings.deletePropertyByCheckbox(propertyName = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 2");
-
 		}
 
 		task ("Copy the token from AC") {
@@ -297,7 +295,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: Property field is displayed in empty state when no property is available"
 	@priority = 3
 	test ViewPropertyListDefault {
-
 		task ("Go to properties") {
 			ACNavigation.goToSettings();
 
@@ -305,7 +302,6 @@ definition {
 		}
 
 		task ("Assert empty state on properties page") {
-
 			if (IsElementNotPresent(key_textValue = "No Properties Found", locator1 = "ACUtils#GENERIC_TEXT")) {
 				ACSettings.deleteAllProperties();
 			}

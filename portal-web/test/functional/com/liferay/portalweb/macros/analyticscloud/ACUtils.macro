@@ -1021,13 +1021,14 @@ definition {
 
 	macro tearDownAC {
 
-	// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
+		// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
 
 		ACUtils.launchAC();
 
 		ACSettings.deleteAllProperties();
 
-		// ACSettings.deleteAllDataSource();
+		//ACSettings.deleteAllDataSource();
+
 	}
 
 	@summary = "Default summary"

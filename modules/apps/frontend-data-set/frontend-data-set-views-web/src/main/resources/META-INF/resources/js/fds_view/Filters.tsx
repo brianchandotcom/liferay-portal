@@ -11,7 +11,6 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
-import {format} from 'date-fns';
 import {InputLocalized} from 'frontend-js-components-web';
 import {IClientExtensionRenderer, fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -329,7 +328,7 @@ function AddFDSFilterModalContent({
 					<ClayForm.Group>
 						<InputLocalized
 							id={nameFormElementId}
-							label={Liferay.Language.get('label')}
+							label={Liferay.Language.get('name')}
 							name="label"
 							onChange={setI18nFilterLabels}
 							translations={i18nFilterLabels}
@@ -338,7 +337,7 @@ function AddFDSFilterModalContent({
 				) : (
 					<ClayForm.Group>
 						<label htmlFor={nameFormElementId}>
-							{Liferay.Language.get('label')}
+							{Liferay.Language.get('name')}
 
 							<span
 								className="label-icon lfr-portal-tooltip ml-2"
@@ -351,12 +350,12 @@ function AddFDSFilterModalContent({
 						</label>
 
 						<ClayInput
-							aria-label={Liferay.Language.get('label')}
+							aria-label={Liferay.Language.get('name')}
 							name={nameFormElementId}
 							onChange={(event) => setLabel(event.target.value)}
 							placeholder={
 								selectedField?.label ||
-								Liferay.Language.get('label')
+								Liferay.Language.get('name')
 							}
 							value={label}
 						/>
@@ -778,7 +777,7 @@ function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
 				]}
 				fields={[
 					{
-						label: Liferay.Language.get('label'),
+						label: Liferay.Language.get('name'),
 						name: 'label',
 					},
 					{

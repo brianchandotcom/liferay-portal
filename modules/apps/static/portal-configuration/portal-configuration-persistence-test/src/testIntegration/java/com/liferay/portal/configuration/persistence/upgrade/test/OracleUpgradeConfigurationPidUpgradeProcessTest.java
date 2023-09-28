@@ -97,8 +97,8 @@ public class OracleUpgradeConfigurationPidUpgradeProcessTest {
 			catch (SQLException sqlException2) {
 				Assert.assertTrue(
 					"SQLException is not ORA-00001 caused by ORA-12899",
-					(sqlException1.getErrorCode() == 12899) &&
-					(sqlException2.getErrorCode() == 1));
+					(sqlException1.getErrorCode() == 1) &&
+					(sqlException2.getErrorCode() == 12899));
 			}
 		}
 		finally {

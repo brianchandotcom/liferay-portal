@@ -165,12 +165,15 @@ definition {
 		}
 
 		task ("When I create an endpoint with id of API application and path not start with '/'") {
+			var applicationId = JSONPathUtil.getIdValue(response = ${response});
+
 			ApplicationsMenu.gotoPortlet(
 				category = "Object",
 				panel = "Control Panel",
 				portlet = "API Endpoints");
 
 			APIBuilderUI.createAPIEndpoint(
+				applicationId = ${applicationId},
 				name = "testEndpoint",
 				path = "testEndpoint");
 		}

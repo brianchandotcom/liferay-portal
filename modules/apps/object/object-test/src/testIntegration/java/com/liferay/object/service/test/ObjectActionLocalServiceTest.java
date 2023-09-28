@@ -484,7 +484,7 @@ public class ObjectActionLocalServiceTest {
 				"Peter", ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
 				"Peter", WorkflowConstants.STATUS_APPROVED);
 
-			// Add object entry as draft and update
+			// Draft
 
 			_objectDefinition.setEnableObjectEntryDraft(true);
 

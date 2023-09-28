@@ -2497,7 +2497,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 					<replaceregexp
 						file="@{properties.file}"
 						flags="g"
-						match="^${propertyName}=.*"
+						match="${propertyName}=.*"
 						replace=""
 					/>
 

@@ -199,7 +199,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8323 | Test Summary: A user lost access to a given property (because the admin removed the user's access or someone deleted the property of the system)"
-	@ignore = "true"
 	@priority = 4
 	test UserLostAccess {
 
@@ -252,8 +251,7 @@ definition {
 
 			ACSettings.goToProperties();
 
-			//ACSettings.deleteAllProperties();
-
+			ACSettings.deleteAllProperties();
 		}
 
 		task ("Log in as the user corbin.murakami@faro.io, go to the properties menu and checks if the property has been deleted for the user") {

@@ -31,8 +31,7 @@ public class DDMStructureReindexMessageListener extends BaseMessageListener {
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		DDMStructureIndexer ddmStructureIndexer =
-			(DDMStructureIndexer)message.get(
-				"ddmStructureIndexer");
+			(DDMStructureIndexer)message.get("ddmStructureIndexer");
 
 		long structureId = message.getLong("structureId");
 

@@ -168,6 +168,9 @@ public class JournalArticleDDMTemplateInfoItemTemplatedRenderer
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
+		finally {
+			httpServletRequest.removeAttribute(WebKeys.JOURNAL_TEMPLATE_ID);
+		}
 	}
 
 	@Reference

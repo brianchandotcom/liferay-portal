@@ -1,6 +1,6 @@
 dependencies {
-	compileInclude "org.glowroot:glowroot-agent-plugin-api:0.13.6"
-	compileInclude "javax.servlet:javax.servlet-api:3.1.0"
+	compileInclude group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	compileInclude group: "org.glowroot", name: "glowroot-agent-plugin-api", version: "0.13.6"
 }
 
 liferay {

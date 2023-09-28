@@ -1,42 +1,56 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.glowroot.plugin.freemarker;
 
 import org.glowroot.agent.plugin.api.Agent;
 import org.glowroot.agent.plugin.api.config.ConfigListener;
 import org.glowroot.agent.plugin.api.config.ConfigService;
 
+/**
+ * @author Fabian Bouché
+ */
 public class TemplatesPluginProperties {
 
-	private static final ConfigService configService = Agent.getConfigService("liferay-templates-plugin");
-	
-	private static boolean captureAsOuterTransaction;
-	private static boolean captureTemplateScriptInTransaction;
-	
-    static {
-        configService.registerConfigListener(new TemplatesPluginConfigListener());
-    }
-    
-    public static boolean captureAsOuterTransaction() {
-        return captureAsOuterTransaction;
-    }
-    
-    public static boolean captureTemplateScriptInTransaction() {
-        return captureTemplateScriptInTransaction;
-    }
-    
-    private static class TemplatesPluginConfigListener implements ConfigListener {
+	public static boolean captureAsOuterTransaction() {
+		return _captureAsOuterTransaction;
+	}
 
-        @Override
-        public void onChange() {
-            recalculateProperties();
-        }
+	public static boolean captureTemplateScriptInTransaction() {
+		return _captureTemplateScriptInTransaction;
+	}
 
-        private static void recalculateProperties() {
-            captureAsOuterTransaction =
-                    configService.getBooleanProperty("captureAsOuterTransaction").value();
-            
-            captureTemplateScriptInTransaction =
-                    configService.getBooleanProperty("captureTemplateScriptInTransaction").value();
-        }
- 
-    }
+	private static boolean _captureAsOuterTransaction;
+	private static boolean _captureTemplateScriptInTransaction;
+	private static final ConfigService _configService = Agent.getConfigService(
+		"liferay-templates-plugin");
+
+	private static class TemplatesPluginConfigListener
+		implements ConfigListener {
+
+		@Override
+		public void onChange() {
+			_recalculateProperties();
+		}
+
+		private void _recalculateProperties() {
+			_captureAsOuterTransaction = _configService.getBooleanProperty(
+				"captureAsOuterTransaction"
+			).value();
+
+			_captureTemplateScriptInTransaction =
+				_configService.getBooleanProperty(
+					"captureTemplateScriptInTransaction"
+				).value();
+		}
+
+	}
+
+	static {
+		_configService.registerConfigListener(
+			new TemplatesPluginConfigListener());
+	}
+
 }

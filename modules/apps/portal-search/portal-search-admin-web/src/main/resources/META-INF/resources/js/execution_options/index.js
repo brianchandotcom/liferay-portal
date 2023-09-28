@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
@@ -21,18 +22,21 @@ const EXECUTION_MODES = {
 			'reindex-mode-concurrent-description'
 		),
 		label: Liferay.Language.get('concurrent'),
+		showBetaBadge: true,
 		symbol: 'change-list',
 		value: 'concurrent',
 	},
 	REGULAR: {
 		description: Liferay.Language.get('reindex-mode-full-description'),
 		label: Liferay.Language.get('full'),
+		showBetaBadge: false,
 		symbol: 'globe-lines',
 		value: 'regular',
 	},
 	SYNC: {
 		description: Liferay.Language.get('reindex-mode-sync-description'),
 		label: Liferay.Language.get('sync'),
+		showBetaBadge: true,
 		symbol: 'reload',
 		value: 'sync',
 	},
@@ -107,6 +111,10 @@ function ExecutionOptions({
 
 	return (
 		<div className="execution-scope-sheet sheet sheet-lg">
+			<h2 className="sheet-title">
+				{Liferay.Language.get('configuration')}
+			</h2>
+
 			{Liferay.FeatureFlags['LPS-183661'] && isConcurrentModeSupported && (
 				<div className="c-mb-1 sheet-section">
 					<div
@@ -117,10 +125,6 @@ function ExecutionOptions({
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="executionMode">
-							{Liferay.Language.get('reindex-mode')}
-						</label>
-
 						<ClayButton
 							className="form-control form-control-select"
 							displayType="secondary"
@@ -158,35 +162,53 @@ function ExecutionOptions({
 									EXECUTION_MODES.REGULAR,
 									EXECUTION_MODES.CONCURRENT,
 									EXECUTION_MODES.SYNC,
-								].map(({description, label, symbol, value}) => {
-									return (
-										<ClayDropDown.Item
-											className="c-pb-2 c-pt-2"
-											key={value}
-											onClick={() =>
-												_handleExecutionModeChange(
-													value
-												)
-											}
-										>
-											<div className="d-flex">
-												<div className="c-mr-2">
-													<ClayIcon symbol={symbol} />
-												</div>
-
-												<div className="autofit-col-expand c-ml-2">
-													<div className="list-group-title">
-														{label}
+								].map(
+									({
+										description,
+										label,
+										showBetaBadge,
+										symbol,
+										value,
+									}) => {
+										return (
+											<ClayDropDown.Item
+												className="c-pb-2 c-pt-2"
+												key={value}
+												onClick={() =>
+													_handleExecutionModeChange(
+														value
+													)
+												}
+											>
+												<div className="d-flex">
+													<div className="c-mr-2">
+														<ClayIcon
+															symbol={symbol}
+														/>
 													</div>
 
-													<div className="list-group-subtext">
-														{description}
+													<div className="autofit-col-expand c-ml-2">
+														<div className="list-group-title">
+															{label}
+
+															{showBetaBadge && (
+																<ClayBadge
+																	className="c-ml-1"
+																	displayType="beta"
+																	label="beta"
+																/>
+															)}
+														</div>
+
+														<div className="list-group-subtext">
+															{description}
+														</div>
 													</div>
 												</div>
-											</div>
-										</ClayDropDown.Item>
-									);
-								})}
+											</ClayDropDown.Item>
+										);
+									}
+								)}
 							</ClayDropDown.ItemList>
 						</ClayDropDown.Menu>
 

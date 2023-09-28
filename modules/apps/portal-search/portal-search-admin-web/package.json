@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@clayui/badge": "3.100.0",
 		"@clayui/button": "3.100.0",
 		"@clayui/drop-down": "3.105.0",
 		"@clayui/form": "3.104.0",

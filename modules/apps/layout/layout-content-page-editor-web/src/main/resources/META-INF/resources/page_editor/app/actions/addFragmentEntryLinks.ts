@@ -44,6 +44,7 @@ export interface FragmentEntryLink<
 	icon: string;
 	masterLayout?: boolean;
 	name: string;
+	portletId?: string;
 	removed: boolean;
 	segmentsExperienceId: string;
 }

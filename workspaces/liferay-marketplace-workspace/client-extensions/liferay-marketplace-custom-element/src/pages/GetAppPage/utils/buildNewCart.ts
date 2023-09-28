@@ -12,7 +12,7 @@ export default function buildNewCart(
 	product: Product | undefined,
 	purchaseOrderNumber: string,
 	selectedAccount: Account | undefined,
-	selectedPaymentMethod: string | null,
+	selectedPaymentMethod: PaymentMethodSelector,
 	sku: SKU
 ) {
 	const cart: Partial<Cart> = {
@@ -42,31 +42,23 @@ export default function buildNewCart(
 		return {...cart};
 	}
 
-	let newCart = {};
-
-	if (selectedPaymentMethod === 'pay') {
-		newCart = {
-			...cart,
-			billingAddress,
-			paymentMethod: 'paypal',
-		};
-	}
-
-	if (selectedPaymentMethod === 'order') {
-		newCart = {
+	const newCart = {
+		order: {
 			...cart,
 			author: email,
 			billingAddress,
 			purchaseOrderNumber,
-		};
-	}
-
-	if (selectedPaymentMethod === 'trial') {
-		newCart = {
+		},
+		pay: {
 			...cart,
 			billingAddress,
-		};
-	}
+			paymentMethod: 'paypal',
+		},
+		trial: {
+			...cart,
+			billingAddress,
+		},
+	};
 
-	return newCart;
+	return newCart[selectedPaymentMethod];
 }

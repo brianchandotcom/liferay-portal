@@ -46,7 +46,7 @@ const ProductFooter = ({
 }: ProductFooterProps) => {
 	const getButtonText = () => {
 		const isAccountOrLicenseStep =
-			step === 'account' || step === 'licenses';
+			step === StepType.ACCOUNT || step === StepType.LICENSES;
 		const isPayMethodSelected = selectedPaymentMethod === paymentMethod.PAY;
 		const isTrialMethodSelected =
 			selectedPaymentMethod === paymentMethod.TRIAL;
@@ -81,9 +81,9 @@ const ProductFooter = ({
 	};
 
 	const onContinue = async (nextStep: StepType) => {
-		const isAccountStep = step === 'account';
-		const isPaymentStep = step === 'payment';
-		const isLicenseStep = step === 'licenses';
+		const isAccountStep = step === StepType.ACCOUNT;
+		const isPaymentStep = step === StepType.PAYMENT;
+		const isLicenseStep = step === StepType.LICENSES;
 
 		if ((!isFreeApp && isAccountStep && selectedAccount) || isLicenseStep) {
 			setStep(nextStep);
@@ -129,7 +129,7 @@ const ProductFooter = ({
 				</div>
 			</div>
 			{!isFreeApp &&
-				step === 'payment' &&
+				step === StepType.PAYMENT &&
 				selectedPaymentMethod === paymentMethod.PAY && (
 					<div className="align-items-end d-flex flex-column mt-4">
 						<span>

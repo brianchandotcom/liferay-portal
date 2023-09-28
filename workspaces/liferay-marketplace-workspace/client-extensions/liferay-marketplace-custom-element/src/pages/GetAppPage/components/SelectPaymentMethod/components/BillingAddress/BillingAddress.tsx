@@ -141,59 +141,59 @@ export function BillingAddress({
 					<div className="billing-address-section-container d-flex flex-column p-4 w-100">
 						<Input
 							label="Full Name"
-							onChange={({target}) => {
+							onChange={({target}) =>
 								setBillingAddress({
 									...billingAddress,
 									name: target.value,
-								});
-							}}
+								})
+							}
 							required
 							value={billingAddress?.name}
 						/>
 
 						<Input
 							label="Address"
-							onChange={({target}) => {
+							onChange={({target}) =>
 								setBillingAddress({
 									...billingAddress,
 									street1: target.value,
-								});
-							}}
+								})
+							}
 							required
 							value={billingAddress?.street1}
 						/>
 
 						<Input
-							onChange={({target}) => {
+							onChange={({target}) =>
 								setBillingAddress({
 									...billingAddress,
 									street2: target.value,
-								});
-							}}
+								})
+							}
 							value={billingAddress?.street2}
 						/>
 
 						<div className="billing-address-double-input">
 							<Input
 								label="City"
-								onChange={({target}) => {
+								onChange={({target}) =>
 									setBillingAddress({
 										...billingAddress,
 										city: target.value,
-									});
-								}}
+									})
+								}
 								required
 								value={billingAddress?.city}
 							/>
 
 							<Input
 								label="State"
-								onChange={({target}) => {
+								onChange={({target}) =>
 									setBillingAddress({
 										...billingAddress,
 										regionISOCode: target.value,
-									});
-								}}
+									})
+								}
 								required
 								value={billingAddress?.regionISOCode}
 							/>
@@ -202,24 +202,24 @@ export function BillingAddress({
 						<div className="billing-address-double-input">
 							<Input
 								label="Zip/Area Code"
-								onChange={({target}) => {
+								onChange={({target}) =>
 									setBillingAddress({
 										...billingAddress,
 										zip: target.value,
-									});
-								}}
+									})
+								}
 								required
 								value={billingAddress?.zip}
 							/>
 
 							<Input
 								label="Country"
-								onChange={({target}) => {
+								onChange={({target}) =>
 									setBillingAddress({
 										...billingAddress,
 										country: target.value,
-									});
-								}}
+									})
+								}
 								required
 								value={billingAddress?.country}
 							/>
@@ -227,12 +227,12 @@ export function BillingAddress({
 
 						<Input
 							label="Phone"
-							onChange={({target}) => {
+							onChange={({target}) =>
 								setBillingAddress({
 									...billingAddress,
 									phoneNumber: target.value,
-								});
-							}}
+								})
+							}
 							required
 							value={billingAddress?.phoneNumber}
 						/>

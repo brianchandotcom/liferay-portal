@@ -670,22 +670,19 @@ public class GetEntryRenderDataMVCResourceCommand
 			FeatureFlagManagerUtil.isEnabled(
 				themeDisplay.getCompanyId(), "LPS-187183")) {
 
-			List<SegmentsExperience> segmentsExperiences =
-				_segmentsExperienceLocalService.dslQuery(
-					DSLQueryFactoryUtil.select(
-						SegmentsExperienceTable.INSTANCE
-					).from(
-						SegmentsExperienceTable.INSTANCE
-					).where(
-						SegmentsExperienceTable.INSTANCE.plid.eq(
-							ctEntry.getModelClassPK())
-					));
-
-			JSONArray jsonArray =
-				_jsonFactory.createJSONArray();
+			JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 			List<SegmentsExperience> modifiableSegmentsExperiences =
-				new ArrayList<>(segmentsExperiences);
+				new ArrayList<>(
+					_segmentsExperienceLocalService.dslQuery(
+						DSLQueryFactoryUtil.select(
+							SegmentsExperienceTable.INSTANCE
+						).from(
+							SegmentsExperienceTable.INSTANCE
+						).where(
+							SegmentsExperienceTable.INSTANCE.plid.eq(
+								ctEntry.getModelClassPK())
+						)));
 
 			modifiableSegmentsExperiences.sort(
 				Comparator.comparingInt(SegmentsExperienceModel::getPriority));

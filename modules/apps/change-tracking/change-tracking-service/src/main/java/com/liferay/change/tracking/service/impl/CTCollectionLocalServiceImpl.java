@@ -808,6 +808,24 @@ public class CTCollectionLocalServiceImpl
 				fromCTCollection.getCompanyId(), fromCTCollectionId,
 				toCTCollectionId, entry.getKey(), entry.getValue());
 		}
+
+		relatedCTEntriesMap = _getRelateCTEntriesMap(
+			toCTCollection, modelClassNameId, modelClassPK);
+
+		ctEntries = new ArrayList<>();
+
+		for (List<CTEntry> entries : relatedCTEntriesMap.values()) {
+			ctEntries.addAll(entries);
+		}
+
+		conflictInfoMap = checkConflicts(
+			fromCTCollection.getCompanyId(), ctEntries, toCTCollectionId,
+			toCTCollection.getName(), CTConstants.CT_COLLECTION_ID_PRODUCTION,
+			"Production");
+
+		if (!conflictInfoMap.isEmpty()) {
+			throw new CTPublishConflictException("Conflict detected");
+		}
 	}
 
 	@Override

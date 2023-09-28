@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import type {LayoutData} from '../../types/LayoutData';
+import type {LayoutData} from '../../types/layout_data/LayoutData';
 import type {EditableType} from '../config/constants/editableTypes';
 import type {FragmentEntryType} from '../config/constants/fragmentEntryTypes';
 import type {FragmentEntryLinkComment} from './addFragmentEntryLinkComment';

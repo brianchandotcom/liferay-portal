@@ -5,7 +5,7 @@
 
 import {UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION} from './types';
 
-import type {LayoutData} from '../../types/LayoutData';
+import type {LayoutData} from '../../types/layout_data/LayoutData';
 import type {FragmentEntryLink} from './addFragmentEntryLinks';
 import type {PageContent} from './addItem';
 

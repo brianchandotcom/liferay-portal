@@ -5,7 +5,7 @@
 
 import {ADD_FRAGMENT_ENTRY_LINKS} from './types';
 
-import type {LayoutData} from '../../types/LayoutData';
+import type {LayoutData} from '../../types/layout_data/LayoutData';
 import type {EditableType} from '../config/constants/editableTypes';
 import type {FragmentEntryType} from '../config/constants/fragmentEntryTypes';
 import type {FragmentEntryLinkComment} from './addFragmentEntryLinkComment';

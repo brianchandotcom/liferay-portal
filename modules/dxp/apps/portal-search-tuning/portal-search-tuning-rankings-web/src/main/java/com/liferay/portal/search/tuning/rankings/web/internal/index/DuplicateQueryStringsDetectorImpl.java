@@ -121,14 +121,14 @@ public class DuplicateQueryStringsDetectorImpl
 				return;
 			}
 
+			_groupExternalReferenceCode =
+				criteriaImpl._groupExternalReferenceCode;
 			_index = criteriaImpl._index;
 			_queryStrings = new HashSet<>(criteriaImpl._queryStrings);
 			_rankingIndexName = criteriaImpl._rankingIndexName;
-			_unlessRankingDocumentId = criteriaImpl._unlessRankingDocumentId;
-			_groupExternalReferenceCode =
-				criteriaImpl._groupExternalReferenceCode;
 			_sxpBlueprintExternalReferenceCode =
 				criteriaImpl._sxpBlueprintExternalReferenceCode;
+			_unlessRankingDocumentId = criteriaImpl._unlessRankingDocumentId;
 		}
 
 		protected static class BuilderImpl implements Criteria.Builder {

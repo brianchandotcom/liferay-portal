@@ -295,4 +295,31 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-14082 | Automation ID: LRAC-14649 | Test Summary: Check that a successful alert appears if the property is deleted correctly"
+	@priority = 2
+	test CheckSuccessfulAlertAppearsIfPropertyDeleted {
+		var propertyName = "Property CheckSuccessfulAlertAppearsIfPropertyDeleted";
+
+		task ("Go to properties page and add new property") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = ${propertyName});
+		}
+
+		task ("Check that the created property is present in the list") {
+			ACSettings.goToProperties();
+
+			ACUtils.assertItemsName(itemList = ${propertyName});
+		}
+
+		task ("Delete the property use ellipse") {
+			ACSettings.deletePropertyByEllipse(propertyName = ${propertyName});
+		}
+
+		task ("Check that the success alert with the correct message appears after deletion") {
+			Alert.viewSuccessMessageText(successMessage = "Success:1 property has been deleted");
+		}
+	}
 }

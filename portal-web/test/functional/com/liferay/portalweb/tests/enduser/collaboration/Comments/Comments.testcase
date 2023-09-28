@@ -84,7 +84,233 @@ definition {
 		AssertVisible(locator1 = "Button#SUBSCRIBE");
 	}
 
-	@description = "This ensures that changing the discussion subscription value in one instance does not affect the value in another instance."
+	@description = "This ensures that users without permissions can delete his own comments when the “Always editable by owner” is enabled."
+	@priority = 5
+	test CanDeleteCommentWhenEnablingEditableByOwner {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Comments.openToCommentsConfiguration(configurationScope = "Instance Settings");
+
+		Comments.configureCommentEditable(commentEditable = "true");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Userfn",
+			userLastName = "Userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpg",
+			sourceFileName = "Document_1.jpg");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpg");
+
+		Comments.addPG(entryComment = "This is a comment");
+
+		Comments.delete(entryComment = "This is a comment");
+	}
+
+	@description = "This ensures that users without permissions can edit his own comments when the “Always editable by owner” is enabled."
+	@priority = 5
+	test CanEditCommentWhenEnablingEditableByOwner {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Comments.openToCommentsConfiguration();
+
+		Comments.configureCommentEditable(commentEditable = "true");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Userfn",
+			userLastName = "Userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpg",
+			sourceFileName = "Document_1.jpg");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpg");
+
+		Comments.addPG(entryComment = "This is a comment");
+
+		Comments.edit(
+			entryComment = "This is a comment",
+			entryCommentEdit = "This is a new comment");
+	}
+
+	@description = "This ensures that users without permissions can not delete his own comments when the “Always editable by owner” is disabled."
+	@priority = 5
+	test CannotEditCommentWhenEditableByOwnerIsDisabled {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Comments.openToCommentsConfiguration();
+
+		Comments.configureCommentEditable(commentEditable = "true");
+
+		Comments.openToCommentsConfiguration(configurationScope = "Instance Settings");
+
+		Comments.configureCommentEditable(commentEditable = "false");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Userfn",
+			userLastName = "Userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpg",
+			sourceFileName = "Document_1.jpg");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpg");
+
+		Comments.addPG(entryComment = "This is a comment");
+
+		MouseOver(
+			key_entryComment = "This is a comment",
+			locator1 = "Comments#COMMENT_BODY_SPECIFIC");
+
+		AssertElementNotPresent(locator1 = "Comments#COMMENT_ACTIONS");
+	}
+
+	@description = "This ensures that users without permissions can not edit/delete other people's comments when the “Always editable by owner” is enabled."
+	@priority = 5
+	test CannotEditOtherUsersCommentWhenEditableByOwnerIsEnabled {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Comments.openToCommentsConfiguration(configurationScope = "Instance Settings");
+
+		Comments.configureCommentEditable(commentEditable = "true");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Userfn",
+			userLastName = "Userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpg",
+			sourceFileName = "Document_1.jpg");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpg");
+
+		Comments.addPG(entryComment = "This is a comment");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpg");
+
+		MouseOver(
+			key_entryComment = "This is a comment",
+			locator1 = "Comments#COMMENT_BODY_SPECIFIC");
+
+		AssertElementNotPresent(locator1 = "Comments#COMMENT_ACTIONS");
+	}
+
+	@description = "This ensures that changing the comments configuraton in one instance does not affect the value in another instance."
 	@priority = 5
 	test InstanceLevelConfigurationsAreIndependentFromOneAnother {
 		property test.liferay.virtual.instance = "false";
@@ -99,10 +325,44 @@ definition {
 
 		Comments.configureCommentSubscribe(commentSubscribe = "false");
 
+		Comments.configureCommentEditable(commentEditable = "true");
+
 		User.firstLoginUI(
 			password = "test",
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
+
+		JSONUser.addUser(
+			creatorEmailAddress = "test@www.able.com",
+			creatorPassword = "test",
+			portalInstanceName = "www.able.com",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "userea@www.able.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		User.openUsersAdmin(baseURL = "http://www.able.com:8080");
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		User.editPassword(newPassword = "test");
+
+		Navigator.openURL(baseURL = "http://www.able.com:8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(
+			pageName = "Test Page",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Test Page",
+			url = "http://www.able.com:8080");
+
+		Portlet.addPG(portletName = "Documents and Media");
 
 		DMNavigator.openDocumentsAndMediaAdmin(
 			baseURL = "http://www.able.com:8080",
@@ -113,11 +373,28 @@ definition {
 			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+		User.logoutPG(specificURL = "http://www.able.com:8080");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "userea@www.able.com");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Test Page",
+			url = "http://www.able.com:8080");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
 
 		Comments.addPG(entryComment = "This is a comment");
 
 		AssertVisible(locator1 = "Button#UNSUBSCRIBE");
+
+		MouseOver(
+			key_entryComment = "This is a comment",
+			locator1 = "Comments#COMMENT_BODY_SPECIFIC");
+
+		AssertElementNotPresent(locator1 = "Comments#COMMENT_ACTIONS");
 	}
 
 }

@@ -222,18 +222,18 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 	@Test
 	public void testPreventBidingWithinPublishedDefinitions() throws Exception {
-		ObjectDefinition objectDefinitionPublished =
+		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"PUB", _objectDefinitionLocalService);
+				RandomTestUtil.randomString(), _objectDefinitionLocalService);
 
-		ObjectDefinition objectDefinitionA =
+		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"A", _objectDefinitionLocalService);
+				RandomTestUtil.randomString(), _objectDefinitionLocalService);
 
 		_objectRelationshipLocalService.addObjectRelationship(
 			TestPropsValues.getUserId(),
-			objectDefinitionPublished.getObjectDefinitionId(),
-			objectDefinitionA.getObjectDefinitionId(), 0,
+			objectDefinition1.getObjectDefinitionId(),
+			objectDefinition2.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(),
@@ -241,13 +241,13 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
-			objectDefinitionPublished.getObjectDefinitionId());
+			objectDefinition1.getObjectDefinitionId());
 
 		Assert.assertEquals(
 			_jsonFactory.createJSONArray(
 			).toString(),
 			_getObjectRelationshipEdgeCandidatesJSONArray(
-				2, objectDefinitionA.getObjectDefinitionId()
+				2, objectDefinition2.getObjectDefinitionId()
 			).toString());
 	}
 

@@ -11,7 +11,12 @@ import useGetMyUserAccount from '../../../common/services/liferay/user-account/u
 import getEntriesByListTypeDefinitions from '../../../common/utils/getEntriesByListTypeDefinitions';
 
 export default function useDynamicFieldEntries(
-	handleSelected: (firstName?: string, lastName?: string, emailAddress?: string, telephone?: string) => void
+	handleSelected: (
+		firstName?: string,
+		lastName?: string,
+		emailAddress?: string,
+		telephone?: string
+	) => void
 ) {
 	const {data: userAccount} = useGetMyUserAccount();
 	const {data: listTypeDefinitions} = useGetListTypeDefinitions([
@@ -40,10 +45,25 @@ export default function useDynamicFieldEntries(
 	);
 
 	useEffect(() => {
-		if (userAccount?.givenName || userAccount?.familyName && userAccount?.emailAddress || partnerPrimaryPhone?.phoneNumber) {
-			handleSelected(userAccount?.givenName, userAccount?.familyName, userAccount?.emailAddress, partnerPrimaryPhone?.phoneNumber);
+		if (
+			userAccount?.givenName ||
+			(userAccount?.familyName && userAccount?.emailAddress) ||
+			partnerPrimaryPhone?.phoneNumber
+		) {
+			handleSelected(
+				userAccount?.givenName,
+				userAccount?.familyName,
+				userAccount?.emailAddress,
+				partnerPrimaryPhone?.phoneNumber
+			);
 		}
-	}, [handleSelected, userAccount?.familyName, userAccount?.givenName, userAccount?.emailAddress, partnerPrimaryPhone?.phoneNumber]);
+	}, [
+		handleSelected,
+		userAccount?.familyName,
+		userAccount?.givenName,
+		userAccount?.emailAddress,
+		partnerPrimaryPhone?.phoneNumber,
+	]);
 
 	const fieldEntries = useMemo(
 		() => getEntriesByListTypeDefinitions(listTypeDefinitions?.items),

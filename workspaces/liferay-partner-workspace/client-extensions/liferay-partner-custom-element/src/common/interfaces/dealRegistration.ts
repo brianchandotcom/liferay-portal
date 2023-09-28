@@ -47,10 +47,10 @@ export default interface DealRegistration extends Partial<LiferayObject> {
 	primaryContactEmail?: string;
 	primaryContactFirstName?: string;
 	primaryContactLastName?: string;
-	primaryPartnerEmail: string,
-	primaryPartnerFirstName: string,
-	primaryPartnerLastName: string,
-	primaryPartnerPhone?: string
+	primaryPartnerEmail: string;
+	primaryPartnerFirstName: string;
+	primaryPartnerLastName: string;
+	primaryPartnerPhone?: string;
 	primaryProspect: PrimaryProspect;
 	projectCategories: string[];
 	projectNeed: string[];

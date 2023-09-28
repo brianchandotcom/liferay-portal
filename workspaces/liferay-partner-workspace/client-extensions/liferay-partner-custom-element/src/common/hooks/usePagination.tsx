@@ -22,7 +22,7 @@ export default function usePagination() {
 		{
 			label: 200,
 		},
-	]
+	];
 
 	return {
 		activeDelta,

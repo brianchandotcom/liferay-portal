@@ -9,7 +9,7 @@ import Role from './role';
 interface Telephone {
 	id: number;
 	phoneNumber: string;
-	primary: boolean
+	primary: boolean;
 }
 
 interface UserAccountContactInformation {

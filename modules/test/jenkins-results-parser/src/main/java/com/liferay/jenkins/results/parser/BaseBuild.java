@@ -1632,46 +1632,6 @@ public abstract class BaseBuild implements Build {
 					}
 				}
 
-				if (this instanceof ParentBuild) {
-					ParentBuild parentBuild = (ParentBuild)this;
-
-					List<Build> downstreamBuilds =
-						parentBuild.getDownstreamBuilds(null);
-
-					List<Callable<Object>> callables = new ArrayList<>();
-
-					for (final Build downstreamBuild : downstreamBuilds) {
-						Callable<Object> callable = new Callable<Object>() {
-
-							@Override
-							public Object call() {
-								downstreamBuild.update();
-
-								return null;
-							}
-
-						};
-
-						callables.add(callable);
-					}
-
-					ParallelExecutor<Object> parallelExecutor =
-						new ParallelExecutor<>(callables, getExecutorService());
-
-					parallelExecutor.execute();
-
-					String result = getResult();
-
-					if ((result != null) &&
-						(downstreamBuilds.size() ==
-							parentBuild.getDownstreamBuildCount("completed"))) {
-
-						setResult(result);
-					}
-
-					findDownstreamBuilds();
-				}
-
 				applySlaveOfflineRules();
 
 				applyReinvokeRules();

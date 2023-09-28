@@ -77,10 +77,16 @@ public class ObjectFolderLocalServiceImpl
 		return objectFolder;
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ObjectFolder addUncategorizedObjectFolder(long companyId)
+	public ObjectFolder addOrGetUncategorizedObjectFolder(long companyId)
 		throws PortalException {
+
+		ObjectFolder objectFolder = fetchObjectFolder(
+			companyId, ObjectFolderConstants.NAME_UNCATEGORIZED);
+
+		if (objectFolder != null) {
+			return objectFolder;
+		}
 
 		return objectFolderLocalService.addObjectFolder(
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED,

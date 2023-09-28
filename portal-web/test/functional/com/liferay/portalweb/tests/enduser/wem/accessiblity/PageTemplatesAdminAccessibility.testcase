@@ -48,7 +48,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-173150. View the accessibility of page template import."
+	@description = "This is a test for LPS-173150 and LPS-175120. View the accessibility of page template import."
 	@priority = 3
 	test ViewAccessibilityOfPageTemplateImport {
 		task ("Given a user accesses to the Page Templates admin") {
@@ -87,6 +87,26 @@ definition {
 			AssertElementAccessible(locator1 = "//div[contains(@id,'main-content')]//div[contains(@role,'tabpanel')]");
 
 			AssertElementAccessible(locator1 = "xpath=(//div[contains(@id,'main-content')]//div[contains(@class,'panel-body')])[2]");
+
+			Button.clickDone();
+		}
+
+		task ("When the user imports the same page template set") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Import");
+
+			WaitForPageLoad();
+
+			UploadDependencyFile.uploadArchiveFile(fileName = "page-templates-with-invalid-value.zip");
+
+			Button.clickImport();
+		}
+
+		task ("Then the import options modal should have correct accessibility") {
+			WaitForVisible(locator1 = "Modal#HEADER");
+
+			AssertElementAccessible(locator1 = "//div[contains(@class,'modal-content')]");
 		}
 	}
 

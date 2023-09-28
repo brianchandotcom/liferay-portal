@@ -264,6 +264,13 @@ public class ObjectRelationshipPersistenceTest {
 	}
 
 	@Test
+	public void testCountByParameterObjectFieldId() throws Exception {
+		_persistence.countByParameterObjectFieldId(RandomTestUtil.nextLong());
+
+		_persistence.countByParameterObjectFieldId(0L);
+	}
+
+	@Test
 	public void testCountByODI1_E() throws Exception {
 		_persistence.countByODI1_E(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());

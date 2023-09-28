@@ -163,7 +163,7 @@ function EditItem() {
 
 	return (
 		<>
-			<div className="d-flex flex-column h-100 mini-cart-edit-item">
+			<div className="d-flex flex-column h-100 mini-cart-edit-item overflow-hidden">
 				<div className="align-items-center d-flex mini-cart-header px-4">
 					<ClayButtonWithIcon
 						aria-label={backLabel}
@@ -178,7 +178,7 @@ function EditItem() {
 					</span>
 				</div>
 
-				<div className="flex-grow-1 p-4">
+				<div className="flex-grow-1 flex-shrink-1 overflow-auto p-4">
 					{options?.items?.length > 0 ? (
 						<ClayForm>
 							<Options
@@ -191,8 +191,10 @@ function EditItem() {
 							/>
 						</ClayForm>
 					) : null}
+				</div>
 
-					<div className="mini-cart-prices pt-2">
+				<div>
+					<div className="mini-cart-prices p-4">
 						<PriceRow
 							priceName={Liferay.Language.get('list-price')}
 						>
@@ -239,20 +241,20 @@ function EditItem() {
 							</span>
 						</PriceRow>
 					</div>
-				</div>
 
-				<div className="mini-cart-footer px-4 py-2 text-right">
-					<ClayButton
-						className="mr-3"
-						displayType="secondary"
-						onClick={() => setEditedItem(null)}
-					>
-						{Liferay.Language.get('cancel')}
-					</ClayButton>
+					<div className="mini-cart-footer px-4 py-2 text-right">
+						<ClayButton
+							className="mr-3"
+							displayType="secondary"
+							onClick={() => setEditedItem(null)}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
 
-					<ClayButton disabled={disabled} onClick={handleSave}>
-						{Liferay.Language.get('save')}
-					</ClayButton>
+						<ClayButton disabled={disabled} onClick={handleSave}>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+					</div>
 				</div>
 			</div>
 		</>

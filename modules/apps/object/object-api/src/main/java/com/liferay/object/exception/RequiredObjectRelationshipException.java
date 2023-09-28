@@ -36,8 +36,9 @@ public class RequiredObjectRelationshipException extends PortalException {
 			objectRelationship.getName(), objectDefinition2.getShortName());
 
 		_messageKey =
-			"the-prevent-deletion-type-in-the-relationship-x-with-object-" +
-				"definition-x-is-preventing-this-entry-from-being-deleted";
+			"the-prevent-deletion-type-in-the-object-relationship-x-with-" +
+				"object-definition-x-is-preventing-this-object-entry-from-" +
+					"being-deleted";
 	}
 
 	public List<Object> getArguments() {

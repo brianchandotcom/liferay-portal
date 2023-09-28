@@ -10,7 +10,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -73,7 +73,7 @@ public class RecommendationIndexerPortalInstanceLifecycleListener
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		if (!_featureFlagManager.isEnabled("LRAC-14771")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LRAC-14771")) {
 			_serviceTrackerList = null;
 
 			return;
@@ -94,9 +94,6 @@ public class RecommendationIndexerPortalInstanceLifecycleListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RecommendationIndexerPortalInstanceLifecycleListener.class);
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

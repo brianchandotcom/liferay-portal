@@ -5,7 +5,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.field.expression.handler;
 
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.saml.opensaml.integration.field.expression.handler.UserFieldExpressionHandler;
 
@@ -27,7 +27,7 @@ public class MembershipsUserFieldExpressionHandlerRegistrator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		if (!_featureFlagManager.isEnabled("LPS-180198")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180198")) {
 			return;
 		}
 
@@ -50,9 +50,6 @@ public class MembershipsUserFieldExpressionHandlerRegistrator {
 			_serviceRegistration.unregister();
 		}
 	}
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private ServiceReference<MembershipsUserFieldExpressionHandler>

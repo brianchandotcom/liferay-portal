@@ -16,7 +16,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.Portal;
@@ -54,7 +54,7 @@ public class AssetEntityAnalyticsBatchEngineTaskItemDelegate
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		if (!_featureFlagManager.isEnabled("LRAC-14771")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LRAC-14771")) {
 			return Page.of(
 				Collections.emptyList(),
 				Pagination.of(pagination.getPage(), pagination.getPageSize()),
@@ -134,9 +134,6 @@ public class AssetEntityAnalyticsBatchEngineTaskItemDelegate
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	private List<Long> _classNameIds;
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Portal _portal;

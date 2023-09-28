@@ -11,7 +11,7 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegist
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,7 +58,7 @@ public class AssetEntityAnalyticsExportDispatchTaskExecutor
 
 	@Override
 	public boolean isHiddenInUI() {
-		return !_featureFlagManager.isEnabled("LRAC-14771");
+		return !FeatureFlagManagerUtil.isEnabled("LRAC-14771");
 	}
 
 	@Reference
@@ -67,8 +67,5 @@ public class AssetEntityAnalyticsExportDispatchTaskExecutor
 
 	@Reference
 	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 }

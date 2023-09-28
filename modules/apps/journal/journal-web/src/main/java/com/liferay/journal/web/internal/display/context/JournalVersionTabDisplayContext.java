@@ -13,6 +13,7 @@ import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.trash.TrashHelper;
 
@@ -66,6 +67,20 @@ public class JournalVersionTabDisplayContext {
 	public int getJournalArticlesVersionsCount() {
 		return JournalArticleServiceUtil.getArticlesCountByArticleId(
 			_article.getGroupId(), _article.getArticleId());
+	}
+
+	public String getViewMoreURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/view_article_history.jsp"
+		).setBackURL(
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).buildString()
+		).setParameter(
+			"articleId", _article.getArticleId()
+		).buildString();
 	}
 
 	private final JournalArticle _article;

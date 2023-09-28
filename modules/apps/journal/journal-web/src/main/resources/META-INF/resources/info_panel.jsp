@@ -323,6 +323,17 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							%>
 
 						</ul>
+
+						<c:if test="<%= journalVersionTabDisplayContext.getJournalArticlesVersionsCount() > 10 %>">
+							<div class="c-mt-3 d-flex justify-content-center">
+								<clay:link
+									displayType="secondary"
+									href="<%= journalVersionTabDisplayContext.getViewMoreURL() %>"
+									label="view-more"
+									type="button"
+								/>
+							</div>
+						</c:if>
 					</clay:tabs-panel>
 				</clay:tabs>
 			</c:when>

@@ -229,9 +229,25 @@ function AddFDSFilterModalContent({
 
 		const responseJSON = await response.json();
 
+		let updatedFilter: any = {};
+
+		if (filterType === EFilterType.DATE_RANGE) {
+			if (!responseJSON.from) {
+				updatedFilter.from = '';
+			}
+			if (!responseJSON.to) {
+				updatedFilter.to = '';
+			}
+
+			updatedFilter = {...responseJSON, ...updatedFilter};
+		}
+		else {
+			updatedFilter = {...responseJSON};
+		}
+
 		openDefaultSuccessToast();
 
-		onSave({...responseJSON, displayType, filterType});
+		onSave({...updatedFilter, displayType, filterType});
 
 		closeModal();
 	};

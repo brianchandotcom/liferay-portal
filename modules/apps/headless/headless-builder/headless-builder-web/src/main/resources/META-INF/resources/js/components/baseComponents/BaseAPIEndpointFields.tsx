@@ -69,7 +69,7 @@ export default function BaseAPIEndpointFields({
 	const handleSelectScope = (value: string) => {
 		setData((previousValue) => ({
 			...previousValue,
-			scope: {key: value},
+			scope: {key: value, name: ''},
 		}));
 
 		setSelectedScope(scopeOptions.find((option) => option.value === value));
@@ -245,10 +245,18 @@ export default function BaseAPIEndpointFields({
 					className="form-control"
 					id="endpointDescriptionField"
 					onChange={({target: {value}}) =>
-						setData((previousData) => ({
-							...previousData,
-							description: value,
-						}))
+						setData((previousData) => {
+							if (value === '' && previousData.description) {
+								delete previousData.description;
+
+								return {...previousData};
+							}
+
+							return {
+								...previousData,
+								description: value,
+							};
+						})
 					}
 					placeholder={endpointDescriptionLabel}
 					value={data.description}

@@ -710,21 +710,7 @@ definition {
 				unitOfMeasureName = "Crate");
 		}
 
-		task ("Then can verify the base and the promo price lists prices in details tab is updated according to the first UOM pricing") {
-			CommerceEntry.gotoMenuTab(menuTab = "Details");
-
-			AssertElementPresent(
-				key_text = "Base Price",
-				locator1 = "TextInput#ANY",
-				value1 = 75);
-
-			AssertElementPresent(
-				key_text = "Promotion Price",
-				locator1 = "TextInput#ANY",
-				value1 = 70);
-		}
-
-		task ("And can verify the Minium Base Price and the Minium Promotion prices in Pricing tab are also updated according to the first UOM") {
+		task ("Then can verify the Minium Base Price and the Minium Promotion prices in Price tab are updated according to the first UOM") {
 			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			AssertTextEquals(

@@ -12,6 +12,7 @@ import com.liferay.notification.rest.client.pagination.Pagination;
 import com.liferay.notification.rest.client.problem.Problem;
 import com.liferay.notification.rest.client.serdes.v1_0.NotificationTemplateSerDes;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -443,6 +444,10 @@ public interface NotificationTemplateResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			List<String> values = new ArrayList<>();
+
+			httpInvoker.body(values.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1622,6 +1627,10 @@ public interface NotificationTemplateResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			List<String> values = new ArrayList<>();
+
+			httpInvoker.body(values.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

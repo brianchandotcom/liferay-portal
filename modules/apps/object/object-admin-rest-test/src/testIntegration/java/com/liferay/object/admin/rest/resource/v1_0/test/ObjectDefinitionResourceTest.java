@@ -9,6 +9,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.client.dto.v1_0.Status;
 import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
@@ -17,6 +18,7 @@ import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectDefinitionSerDes;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -548,6 +550,108 @@ public class ObjectDefinitionResourceTest
 
 		assertEquals(
 			expectedObjectDefinitions, (List<ObjectDefinition>)page.getItems());
+	}
+
+	private ObjectDefinition _randomModifiableSystemObjectDefinition()
+		throws Exception {
+
+		ObjectDefinition objectDefinition = randomObjectDefinition();
+
+		objectDefinition.setActive(true);
+
+		String randomObjectDefinitionExternalReferenceCode =
+			"L_" + objectDefinition.getExternalReferenceCode();
+
+		objectDefinition.setExternalReferenceCode(
+			randomObjectDefinitionExternalReferenceCode);
+
+		objectDefinition.setName("Test");
+		objectDefinition.setObjectFields(
+			new ObjectField[] {
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.create("String");
+						externalReferenceCode = "customObjectFieldERC";
+						indexed = false;
+						indexedAsKeyword = false;
+						label = Collections.singletonMap(
+							"en-US", RandomTestUtil.randomString());
+						localized = false;
+						name = "customObjectField";
+						readOnly = ReadOnly.FALSE;
+						required = false;
+						system = false;
+					}
+				},
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.create("String");
+						externalReferenceCode = StringPool.BLANK;
+						indexed = false;
+						indexedAsKeyword = false;
+						label = Collections.singletonMap(
+							"en-US", RandomTestUtil.randomString());
+						localized = false;
+						name = "systemObjectField";
+						readOnly = ReadOnly.FALSE;
+						required = false;
+						system = true;
+					}
+				}
+			});
+		objectDefinition.setObjectValidationRules(
+			new ObjectValidationRule[] {
+				new ObjectValidationRule() {
+					{
+						active = true;
+						engine = ObjectValidationRuleConstants.ENGINE_TYPE_DDM;
+						errorLabel = Collections.singletonMap(
+							"en-US", RandomTestUtil.randomString());
+						externalReferenceCode = "customObjectValidationRuleERC";
+						name = Collections.singletonMap(
+							"en-US", RandomTestUtil.randomString());
+						objectDefinitionExternalReferenceCode =
+							randomObjectDefinitionExternalReferenceCode;
+						outputType = OutputType.create("fullValidation");
+						script = "isEmailAddress(customObjectField)";
+						system = false;
+					}
+				},
+				new ObjectValidationRule() {
+					{
+						active = true;
+						engine = ObjectValidationRuleConstants.ENGINE_TYPE_DDM;
+						errorLabel = Collections.singletonMap(
+							"en-US", RandomTestUtil.randomString());
+						externalReferenceCode = "systemObjectValidationRuleERC";
+						name = Collections.singletonMap(
+							"en-US", RandomTestUtil.randomString());
+						objectDefinitionExternalReferenceCode =
+							randomObjectDefinitionExternalReferenceCode;
+						outputType = OutputType.create("fullValidation");
+						script = "isEmailAddress(systemObjectField)";
+						system = true;
+					}
+				}
+			});
+		objectDefinition.setStatus(
+			new Status() {
+				{
+					code = WorkflowConstants.STATUS_APPROVED;
+					label = WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_APPROVED);
+					label_i18n = _language.get(
+						LanguageResources.getResourceBundle(
+							LocaleUtil.getDefault()),
+						WorkflowConstants.getStatusLabel(
+							WorkflowConstants.STATUS_APPROVED));
+				}
+			});
+		objectDefinition.setSystem(true);
+
+		return objectDefinition;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

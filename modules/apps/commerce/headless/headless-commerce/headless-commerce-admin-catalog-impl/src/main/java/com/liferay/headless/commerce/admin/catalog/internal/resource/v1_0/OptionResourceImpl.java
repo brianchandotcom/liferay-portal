@@ -10,6 +10,7 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.OptionEntityModel;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -31,6 +33,8 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Map;
@@ -162,6 +166,12 @@ public class OptionResourceImpl extends BaseOptionResourceImpl {
 	private Option _addOrUpdateOption(Option option) throws Exception {
 		Option.FieldType fieldType = option.getFieldType();
 
+		ServiceContext serviceContext =
+			_serviceContextHelper.getServiceContext();
+
+		serviceContext.setExpandoBridgeAttributes(
+			_getExpandoBridgeAttributes(option));
+
 		CPOption cpOption = _cpOptionService.addOrUpdateCPOption(
 			option.getExternalReferenceCode(),
 			LanguageUtils.getLocalizedMap(option.getName()),
@@ -169,7 +179,7 @@ public class OptionResourceImpl extends BaseOptionResourceImpl {
 			fieldType.getValue(), GetterUtil.get(option.getFacetable(), false),
 			GetterUtil.get(option.getRequired(), false),
 			GetterUtil.get(option.getSkuContributor(), false), option.getKey(),
-			_serviceContextHelper.getServiceContext());
+			serviceContext);
 
 		_addOrUpdateOptionValues(cpOption, option.getOptionValues());
 
@@ -213,6 +223,15 @@ public class OptionResourceImpl extends BaseOptionResourceImpl {
 		).build();
 	}
 
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		Option option) {
+
+		return CustomFieldsUtil.toMap(
+			CPOption.class.getName(), contextCompany.getCompanyId(),
+			option.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+	}
+
 	private Option _toOption(Long cpOptionId) throws Exception {
 		return _optionDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -227,6 +246,12 @@ public class OptionResourceImpl extends BaseOptionResourceImpl {
 
 		Option.FieldType fieldType = option.getFieldType();
 
+		ServiceContext serviceContext =
+			_serviceContextHelper.getServiceContext();
+
+		serviceContext.setExpandoBridgeAttributes(
+			_getExpandoBridgeAttributes(option));
+
 		cpOption = _cpOptionService.updateCPOption(
 			cpOption.getCPOptionId(),
 			LanguageUtils.getLocalizedMap(option.getName()),
@@ -236,7 +261,7 @@ public class OptionResourceImpl extends BaseOptionResourceImpl {
 			GetterUtil.get(option.getRequired(), cpOption.isRequired()),
 			GetterUtil.get(
 				option.getSkuContributor(), cpOption.isSkuContributor()),
-			option.getKey(), _serviceContextHelper.getServiceContext());
+			option.getKey(), serviceContext);
 
 		return _toOption(cpOption.getCPOptionId());
 	}

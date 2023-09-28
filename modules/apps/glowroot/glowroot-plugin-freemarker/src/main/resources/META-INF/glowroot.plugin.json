@@ -1,0 +1,22 @@
+{
+	"name": "Liferay Templates Plugin",
+	"id": "liferay-templates-plugin",
+	"properties": [
+		{
+			"name": "captureAsOuterTransaction",
+			"type": "boolean",
+			"label": "Capture Template transformations as an outer transaction",
+			"checkboxLabel": "Capture Template transformations as an outer transaction"
+		},
+		{
+			"name": "captureTemplateScriptInTransaction",
+			"type": "boolean",
+			"label": "Capture Template script when captured as an outer transaction",
+			"checkboxLabel": "Capture Template script when captured as an outer transaction"
+		}
+	],
+	"aspects": [
+		"com.liferay.glowroot.plugin.freemarker.TemplatesAspect"
+	],
+	"collocate": true
+}

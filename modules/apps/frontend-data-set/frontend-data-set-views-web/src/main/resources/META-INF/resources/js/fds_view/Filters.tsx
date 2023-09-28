@@ -229,25 +229,9 @@ function AddFDSFilterModalContent({
 
 		const responseJSON = await response.json();
 
-		let updatedFilter: any = {};
-
-		if (filterType === EFilterType.DATE_RANGE) {
-			if (!responseJSON.from) {
-				updatedFilter.from = '';
-			}
-			if (!responseJSON.to) {
-				updatedFilter.to = '';
-			}
-
-			updatedFilter = {...responseJSON, ...updatedFilter};
-		}
-		else {
-			updatedFilter = {...responseJSON};
-		}
-
 		openDefaultSuccessToast();
 
-		onSave({...updatedFilter, displayType, filterType});
+		onSave({...responseJSON, displayType, filterType});
 
 		closeModal();
 	};
@@ -697,6 +681,15 @@ function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
 					onSave={(newfilter) => {
 						const newFilters = filters.map((item) => {
 							if (item.id === newfilter.id) {
+								if (
+									item.filterType === EFilterType.DATE_RANGE
+								) {
+									(newfilter as IDateFilter).from =
+										(newfilter as IDateFilter).from || '';
+									(newfilter as IDateFilter).to =
+										(newfilter as IDateFilter).to || '';
+								}
+
 								return {...item, ...newfilter};
 							}
 

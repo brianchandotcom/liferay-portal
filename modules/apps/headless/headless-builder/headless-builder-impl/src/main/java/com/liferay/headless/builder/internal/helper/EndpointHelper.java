@@ -51,8 +51,7 @@ public class EndpointHelper {
 		}
 
 		if (Objects.equals(
-				pathParameter,
-				HeadlessBuilderConstants.PATH_PARAMETER_ERC)) {
+				pathParameter, HeadlessBuilderConstants.PATH_PARAMETER_ERC)) {
 
 			objectEntry = _objectEntryHelper.getObjectEntry(
 				companyId, ListUtil.fromCollection(relationshipsNames),

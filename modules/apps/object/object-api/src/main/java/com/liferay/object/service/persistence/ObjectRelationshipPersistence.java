@@ -664,6 +664,150 @@ public interface ObjectRelationshipPersistence
 	public int countByObjectFieldId2(long objectFieldId2);
 
 	/**
+	 * Returns all the object relationships where parameterObjectFieldId = &#63;.
+	 *
+	 * @param parameterObjectFieldId the parameter object field ID
+	 * @return the matching object relationships
+	 */
+	public java.util.List<ObjectRelationship> findByParameterObjectFieldId(
+		long parameterObjectFieldId);
+
+	/**
+	 * Returns a range of all the object relationships where parameterObjectFieldId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parameterObjectFieldId the parameter object field ID
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @return the range of matching object relationships
+	 */
+	public java.util.List<ObjectRelationship> findByParameterObjectFieldId(
+		long parameterObjectFieldId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object relationships where parameterObjectFieldId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parameterObjectFieldId the parameter object field ID
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object relationships
+	 */
+	public java.util.List<ObjectRelationship> findByParameterObjectFieldId(
+		long parameterObjectFieldId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectRelationship>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the object relationships where parameterObjectFieldId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parameterObjectFieldId the parameter object field ID
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object relationships
+	 */
+	public java.util.List<ObjectRelationship> findByParameterObjectFieldId(
+		long parameterObjectFieldId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectRelationship>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first object relationship in the ordered set where parameterObjectFieldId = &#63;.
+	 *
+	 * @param parameterObjectFieldId the parameter object field ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public ObjectRelationship findByParameterObjectFieldId_First(
+			long parameterObjectFieldId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectRelationship>
+				orderByComparator)
+		throws NoSuchObjectRelationshipException;
+
+	/**
+	 * Returns the first object relationship in the ordered set where parameterObjectFieldId = &#63;.
+	 *
+	 * @param parameterObjectFieldId the parameter object field ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public ObjectRelationship fetchByParameterObjectFieldId_First(
+		long parameterObjectFieldId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectRelationship>
+			orderByComparator);
+
+	/**
+	 * Returns the last object relationship in the ordered set where parameterObjectFieldId = &#63;.
+	 *
+	 * @param parameterObjectFieldId the parameter object field ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public ObjectRelationship findByParameterObjectFieldId_Last(
+			long parameterObjectFieldId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectRelationship>
+				orderByComparator)
+		throws NoSuchObjectRelationshipException;
+
+	/**
+	 * Returns the last object relationship in the ordered set where parameterObjectFieldId = &#63;.
+	 *
+	 * @param parameterObjectFieldId the parameter object field ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public ObjectRelationship fetchByParameterObjectFieldId_Last(
+		long parameterObjectFieldId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectRelationship>
+			orderByComparator);
+
+	/**
+	 * Returns the object relationships before and after the current object relationship in the ordered set where parameterObjectFieldId = &#63;.
+	 *
+	 * @param objectRelationshipId the primary key of the current object relationship
+	 * @param parameterObjectFieldId the parameter object field ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object relationship
+	 * @throws NoSuchObjectRelationshipException if a object relationship with the primary key could not be found
+	 */
+	public ObjectRelationship[] findByParameterObjectFieldId_PrevAndNext(
+			long objectRelationshipId, long parameterObjectFieldId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectRelationship>
+				orderByComparator)
+		throws NoSuchObjectRelationshipException;
+
+	/**
+	 * Removes all the object relationships where parameterObjectFieldId = &#63; from the database.
+	 *
+	 * @param parameterObjectFieldId the parameter object field ID
+	 */
+	public void removeByParameterObjectFieldId(long parameterObjectFieldId);
+
+	/**
+	 * Returns the number of object relationships where parameterObjectFieldId = &#63;.
+	 *
+	 * @param parameterObjectFieldId the parameter object field ID
+	 * @return the number of matching object relationships
+	 */
+	public int countByParameterObjectFieldId(long parameterObjectFieldId);
+
+	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
 	 *
 	 * @param objectDefinitionId1 the object definition id1

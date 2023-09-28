@@ -192,7 +192,6 @@ public class ObjectActionLocalServiceTest {
 				StringPool.BLANK, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				ObjectActionTriggerConstants.KEY_STANDALONE));
-
 		AssertUtils.assertFailure(
 			ObjectActionLabelException.class,
 			"Label is null for locale " + LocaleUtil.US.getDisplayName(),
@@ -218,14 +217,12 @@ public class ObjectActionLocalServiceTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), name,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE));
-
 		AssertUtils.assertFailure(
 			ObjectActionNameException.class, "Name is null",
 			() -> _addObjectAction(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE));
-
 		AssertUtils.assertFailure(
 			ObjectActionNameException.class,
 			"Name must be less than 41 characters",
@@ -233,7 +230,6 @@ public class ObjectActionLocalServiceTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(42),
 				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE));
-
 		AssertUtils.assertFailure(
 			ObjectActionNameException.class,
 			"Name must only contain letters and digits",
@@ -241,7 +237,6 @@ public class ObjectActionLocalServiceTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), "Abl e",
 				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE));
-
 		AssertUtils.assertFailure(
 			ObjectActionNameException.class,
 			"Name must only contain letters and digits",
@@ -249,7 +244,6 @@ public class ObjectActionLocalServiceTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), "Abl-e",
 				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE));
-
 		AssertUtils.assertFailure(
 			ObjectActionTriggerKeyException.class,
 			"The object action trigger key onAfterRootUpdate can only be " +

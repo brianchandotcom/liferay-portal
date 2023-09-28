@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1580137848008
+Bundle-Description: Conveys Liferay's recommended approach to override
+  an application's JSP by leveraging OSGi fragment modules.
+Bundle-ManifestVersion: 2
+Bundle-Name: com.liferay.login.web.jsp.override.sample
+Bundle-SymbolicName: com.liferay.login.web.jsp.override.sample
+Bundle-Version: 1.0.0
+Created-By: 1.8.0_121 (Oracle Corporation)
+Fragment-Host: com.liferay.login.web;bundle-version="4.0.14"
+Import-Package: javax.servlet,javax.servlet.http
+Javac-Debug: on
+Javac-Deprecation: off
+Javac-Encoding: UTF-8
+Tool: Bnd-3.5.0.201709291849

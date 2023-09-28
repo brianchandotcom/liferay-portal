@@ -142,9 +142,7 @@ public class EditSegmentsExperimentStatusMVCActionCommand
 						SegmentsExperimentConstants.STATUS_COMPLETED) ||
 					 (segmentsExperiment.getStatus() ==
 						 SegmentsExperimentConstants.STATUS_TERMINATED)) &&
-					(winnerSegmentsExperienceId != -1) &&
-					(winnerSegmentsExperienceId ==
-						segmentsExperiment.getWinnerSegmentsExperienceId())) {
+					(winnerSegmentsExperienceId != -1)) {
 
 					Experiment experiment = ExperimentUtil.toExperiment(
 						_companyLocalService,

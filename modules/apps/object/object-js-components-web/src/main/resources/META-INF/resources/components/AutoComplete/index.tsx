@@ -68,6 +68,9 @@ export default function AutoComplete<T>({
 		label: Liferay.Language.get('choose-an-option'),
 	};
 
+	const element = document.querySelector(`.custom-select__content-${id}`);
+	const elementRect = element?.getBoundingClientRect();
+
 	return (
 		<FieldBase
 			className={className}
@@ -81,7 +84,9 @@ export default function AutoComplete<T>({
 		>
 			<ClayDropDown
 				active={!disabled && active}
-				menuElementAttrs={{className: 'autocomplete-expand'}}
+				menuElementAttrs={{
+					style: {maxWidth: elementRect?.width, width: '100%'},
+				}}
 				onActiveChange={(value: boolean) =>
 					!disabled ? setActive(value) : setActive(false)
 				}
@@ -90,6 +95,7 @@ export default function AutoComplete<T>({
 					<CustomSelect
 						contentRight={<>{value && contentRight}</>}
 						disabled={disabled}
+						id={id}
 						placeholder={
 							placeholder ??
 							Liferay.Language.get('choose-an-option')

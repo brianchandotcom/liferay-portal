@@ -14,7 +14,15 @@ export const CustomSelect = React.forwardRef<
 	ICustomSelectProps
 >(
 	(
-		{contentRight, disabled, onClick, placeholder, value, ...otherProps},
+		{
+			contentRight,
+			disabled,
+			id,
+			onClick,
+			placeholder,
+			value,
+			...otherProps
+		},
 		forwardRef
 	) => {
 		return (
@@ -22,13 +30,14 @@ export const CustomSelect = React.forwardRef<
 				<div
 					{...otherProps}
 					className={classNames(
-						'custom-select__content form-control',
+						`custom-select__content-${id} form-control`,
 						{
 							'custom-select__content--disabled form-control': disabled,
 						}
 					)}
 					onClick={disabled ? undefined : onClick}
 					ref={forwardRef}
+					style={{display: 'flex', justifyContent: 'space-between'}}
 					tabIndex={0}
 				>
 					<span>{value || placeholder}</span>

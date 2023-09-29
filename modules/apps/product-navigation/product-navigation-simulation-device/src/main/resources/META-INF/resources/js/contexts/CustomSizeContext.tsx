@@ -11,56 +11,40 @@ import React, {
 	useState,
 } from 'react';
 
-import {SIZES} from '../constants/sizes';
+import {SIZES, ScreenSize} from '../constants/sizes';
 
 interface State {
-	height: number;
-	setHeight: Dispatch<SetStateAction<number>>;
-	setWidth: Dispatch<SetStateAction<number>>;
-	width: number;
+	customSize: ScreenSize;
+	setCustomSize: Dispatch<SetStateAction<ScreenSize>>;
 }
 
 const INITIAL_STATE: State = {
-	height: SIZES.custom.screenSize.height,
-	setHeight: () => {},
-	setWidth: () => {},
-	width: SIZES.custom.screenSize.width,
+	customSize: SIZES.custom.screenSize,
+	setCustomSize: () => {},
 };
 
 const CustomSizeContext = createContext(INITIAL_STATE);
 
-const useSetCustomWidth = () => {
-	return useContext(CustomSizeContext).setWidth;
-};
-
-const useSetCustomHeight = () => {
-	return useContext(CustomSizeContext).setHeight;
+const useSetCustomSize = () => {
+	return useContext(CustomSizeContext).setCustomSize;
 };
 
 const useCustomSize = () => {
-	const {height, width} = useContext(CustomSizeContext);
+	const {customSize} = useContext(CustomSizeContext);
 
-	return {height, width};
+	return customSize;
 };
 
 function CustomSizeContextProvider({children}: {children: React.ReactNode}) {
-	const [height, setHeight] = useState<number>(
-		SIZES.custom.screenSize.height
+	const [customSize, setCustomSize] = useState<ScreenSize>(
+		SIZES.custom.screenSize
 	);
-	const [width, setWidth] = useState<number>(SIZES.custom.screenSize.width);
 
 	return (
-		<CustomSizeContext.Provider
-			value={{height, setHeight, setWidth, width}}
-		>
+		<CustomSizeContext.Provider value={{customSize, setCustomSize}}>
 			{children}
 		</CustomSizeContext.Provider>
 	);
 }
 
-export {
-	CustomSizeContextProvider,
-	useSetCustomHeight,
-	useSetCustomWidth,
-	useCustomSize,
-};
+export {CustomSizeContextProvider, useCustomSize, useSetCustomSize};

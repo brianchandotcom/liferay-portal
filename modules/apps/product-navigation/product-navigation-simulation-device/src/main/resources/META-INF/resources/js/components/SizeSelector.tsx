@@ -14,11 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {SIZES, Size} from '../constants/sizes';
-import {
-	useCustomSize,
-	useSetCustomHeight,
-	useSetCustomWidth,
-} from '../contexts/CustomSizeContext';
+import {useSetCustomSize} from '../contexts/CustomSizeContext';
 
 interface ISizeSelectorProps {
 	activeSize: Size;
@@ -218,17 +214,20 @@ function CustomSizeSelector({
 	open,
 	previewRef,
 }: ICustomSizeSelectorProps) {
-	const {height, width} = useCustomSize();
-
-	const setHeight = useSetCustomHeight();
-	const setWidth = useSetCustomWidth();
+	const setCustomSize = useSetCustomSize();
 
 	const [alertMessage, setAlertMessage] = useState<string | null>(null);
+	const [height, setHeight] = useState<number>(
+		SIZES.custom.screenSize.height
+	);
+	const [width, setWidth] = useState<number>(SIZES.custom.screenSize.width);
 
 	const updatePreview = () => {
 		if (previewRef.current) {
 			previewRef.current.style.height = `${height}px`;
 			previewRef.current.style.width = `${width}px`;
+
+			setCustomSize({height, width});
 
 			setAlertMessage(
 				sub(
@@ -243,6 +242,10 @@ function CustomSizeSelector({
 		const resizeObserver = new ResizeObserver(([firstEntry]) => {
 			const preview = firstEntry.target as HTMLElement;
 
+			setCustomSize({
+				height: preview.clientHeight,
+				width: preview.clientWidth,
+			});
 			setHeight(preview.clientHeight);
 			setWidth(preview.clientWidth);
 		});
@@ -254,7 +257,7 @@ function CustomSizeSelector({
 		return () => {
 			resizeObserver.disconnect();
 		};
-	}, [open, previewRef, setHeight, setWidth]);
+	}, [open, previewRef, setCustomSize]);
 
 	return (
 		<div id={id}>

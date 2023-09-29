@@ -4,24 +4,14 @@
  */
 
 import React from 'react';
-declare const useSetCustomWidth: () => React.Dispatch<
-	React.SetStateAction<number>
+import {ScreenSize} from '../constants/sizes';
+declare const useSetCustomSize: () => React.Dispatch<
+	React.SetStateAction<ScreenSize>
 >;
-declare const useSetCustomHeight: () => React.Dispatch<
-	React.SetStateAction<number>
->;
-declare const useCustomSize: () => {
-	height: number;
-	width: number;
-};
+declare const useCustomSize: () => ScreenSize;
 declare function CustomSizeContextProvider({
 	children,
 }: {
 	children: React.ReactNode;
 }): JSX.Element;
-export {
-	CustomSizeContextProvider,
-	useSetCustomHeight,
-	useSetCustomWidth,
-	useCustomSize,
-};
+export {CustomSizeContextProvider, useCustomSize, useSetCustomSize};

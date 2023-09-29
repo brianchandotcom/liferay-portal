@@ -80,6 +80,43 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 					DropdownItemListBuilder.add(
 						() -> LayoutPageTemplateCollectionPermission.contains(
 							themeDisplay.getPermissionChecker(),
+							layoutPageTemplateCollection, ActionKeys.UPDATE),
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "updateLayoutPageTemplateCollection");
+							dropdownItem.putData(
+								"updateLayoutPageTemplateCollectionURL",
+								PortletURLBuilder.createActionURL(
+									_renderResponse
+								).setActionName(
+									"/layout_page_template_admin" +
+										"/update_layout_page_template_" +
+											"collection"
+								).setRedirect(
+									PortletURLBuilder.createRenderURL(
+										_renderResponse
+									).setTabs1(
+										tabs1
+									).buildString()
+								).setParameter(
+									"layoutPageTemplateCollectionId",
+									layoutPageTemplateCollection.
+										getLayoutPageTemplateCollectionId()
+								).buildString());
+							dropdownItem.setIcon("pencil");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "rename"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> LayoutPageTemplateCollectionPermission.contains(
+							themeDisplay.getPermissionChecker(),
 							layoutPageTemplateCollection,
 							ActionKeys.PERMISSIONS),
 						dropdownItem -> {

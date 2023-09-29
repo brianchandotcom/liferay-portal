@@ -69,6 +69,11 @@ public class ValidationBuild extends BaseBuild {
 	}
 
 	@Override
+	public String getBuildName() {
+		return "default";
+	}
+
+	@Override
 	public Element getGitHubMessageElement() {
 		update();
 

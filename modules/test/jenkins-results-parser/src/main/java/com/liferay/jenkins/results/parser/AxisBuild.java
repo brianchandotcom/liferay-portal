@@ -187,6 +187,12 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
+	public String getBuildName() {
+		return JenkinsResultsParserUtil.combine(
+			getJobVariant(), "/", getAxisVariable());
+	}
+
+	@Override
 	public String getBuildURL() {
 		String jobURL = getJobURL();
 		int buildNumber = getBuildNumber();

@@ -54,6 +54,8 @@ public interface Build {
 
 	public JSONObject getBuildJSONObject();
 
+	public String getBuildName();
+
 	public int getBuildNumber();
 
 	public Job.BuildProfile getBuildProfile();

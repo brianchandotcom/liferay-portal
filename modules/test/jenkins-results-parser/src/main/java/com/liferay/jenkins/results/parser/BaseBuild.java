@@ -1245,7 +1245,8 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean isApplyReinvokeRules() {
-		if (!isCompleted() || !isFailing() || isFromArchive() ||
+		if ((isCompleted() && !isFailing()) || !isCompleted() ||
+			isFromArchive() ||
 			(badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX)) {
 
 			return false;
@@ -1266,7 +1267,9 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean isApplySlaveOfflineRules() {
-		if (!isCompleted() || !isFailing() || isFromArchive()) {
+		if ((isCompleted() && !isFailing()) || !isCompleted() ||
+			isFromArchive()) {
+
 			return false;
 		}
 

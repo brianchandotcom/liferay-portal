@@ -293,7 +293,9 @@ public class BatchBuild extends BaseParentBuild {
 		builds.addAll(getDownstreamBuilds("completed"));
 
 		for (Build build : builds) {
-			if (!isCompleted() || !isFailing() || isFromArchive()) {
+			if ((isCompleted() && !isFailing()) || !isCompleted() ||
+				isFromArchive()) {
+
 				continue;
 			}
 

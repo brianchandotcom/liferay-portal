@@ -930,6 +930,79 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
+	public void testGetWithIndirectlyRelatedProperty() throws Exception {
+		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"applicationStatus", "published"
+			).put(
+				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
+
+		JSONObject apiEndpointJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"httpMethod", "get"
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"path", StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				apiApplicationJSONObject.getLong("id")
+			).put(
+				"responseAPISchemaToAPIEndpoints",
+				JSONUtil.put(
+					"apiSchemaToAPIProperties",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"description", RandomTestUtil.randomString()
+						).put(
+							"name", RandomTestUtil.randomString()
+						).put(
+							"objectFieldERC", "NAME"
+						),
+						JSONUtil.put(
+							"description", RandomTestUtil.randomString()
+						).put(
+							"name", RandomTestUtil.randomString()
+						).put(
+							"objectFieldERC", "NAME"
+						).put(
+							"objectRelationshipNames",
+							"apiApplicationToAPIEndpoints,apiApplicationToAPI" +
+								"Schemas"
+						))
+				).put(
+					"description", RandomTestUtil.randomString()
+				).put(
+					"mainObjectDefinitionERC", "L_API_ENDPOINT"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"r_apiApplicationToAPISchemas_c_apiApplicationId",
+					apiApplicationJSONObject.getLong("id")
+				)
+			).put(
+				"retrieveType", "collection"
+			).put(
+				"scope", "company"
+			).toString(),
+			"headless-builder/endpoints", Http.Method.POST);
+
+		assertSuccessfulHttpCode(
+			null,
+			"c/" + apiApplicationJSONObject.getString("baseURL") +
+				apiEndpointJSONObject.getString("path"),
+			Http.Method.GET);
+	}
+
+	@Test
 	public void testGetWithPagination() throws Exception {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,

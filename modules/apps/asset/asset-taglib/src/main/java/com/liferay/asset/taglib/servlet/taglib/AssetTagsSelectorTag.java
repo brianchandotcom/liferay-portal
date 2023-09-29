@@ -11,6 +11,7 @@ import com.liferay.asset.taglib.internal.item.selector.ItemSelectorUtil;
 import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -165,8 +166,9 @@ public class AssetTagsSelectorTag extends IncludeTag {
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				return PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					themeDisplay.getScopeGroupId());
+				return SiteConnectedGroupGroupProviderUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						themeDisplay.getScopeGroupId());
 			}
 
 			return PortalUtil.getCurrentAndAncestorSiteGroupIds(_groupIds);

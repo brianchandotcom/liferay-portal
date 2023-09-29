@@ -708,7 +708,7 @@ definition {
 		task ("Then the View Billing Address permission is present") {
 			Role.viewPermissionCP(
 				permissionDefinitionValue = "View Billing Address",
-				permissionNavigationValue = "Open Carts > Commerce Orders:");
+				permissionNavigationValue = "Open Carts > Orders:");
 		}
 	}
 

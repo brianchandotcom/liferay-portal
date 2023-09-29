@@ -90,7 +90,7 @@ definition {
 
 				AssertClick(
 					locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-					value1 = "Category Manager sent you a Commerce Product Link for review in the workflow.");
+					value1 = "Category Manager sent you a Product Link for review in the workflow.");
 
 				LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
 
@@ -321,7 +321,7 @@ definition {
 
 			AssertClick(
 				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-				value1 = "Category Manager sent you a Commerce Product Link for review in the workflow.");
+				value1 = "Category Manager sent you a Product Link for review in the workflow.");
 
 			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
 
@@ -413,7 +413,7 @@ definition {
 
 				AssertClick(
 					locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-					value1 = "Category Manager sent you a Commerce Product Link for review in the workflow.");
+					value1 = "Category Manager sent you a Product Link for review in the workflow.");
 
 				LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
 
@@ -483,7 +483,7 @@ definition {
 
 				AssertClick(
 					locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-					value1 = "Category Manager sent you a Commerce Product Link for review in the workflow.");
+					value1 = "Category Manager sent you a Product Link for review in the workflow.");
 
 				LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
 
@@ -615,7 +615,7 @@ definition {
 
 			AssertClick(
 				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-				value1 = "Category Manager sent you a Commerce Product Link for review in the workflow.");
+				value1 = "Category Manager sent you a Product Link for review in the workflow.");
 
 			AssertElementPresent(
 				key_scopeName = "Hoses",

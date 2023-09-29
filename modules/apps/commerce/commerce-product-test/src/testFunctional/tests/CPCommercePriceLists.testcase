@@ -1571,7 +1571,7 @@ definition {
 
 			Role.viewPermissionCP(
 				permissionDefinitionValue = "View",
-				permissionNavigationValue = "Catalogs > Commerce Catalog");
+				permissionNavigationValue = "Catalogs > Catalog");
 		}
 
 		task ("And a user with Discount Manager role is created") {

@@ -13,6 +13,7 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
@@ -51,6 +52,7 @@ public class CommercePriceEntryDisplayContext
 		ModelResourcePermission<CommercePriceList>
 			commercePriceListModelResourcePermission,
 		CommercePriceListService commercePriceListService,
+		CPInstanceLocalService cpInstanceLocalService,
 		CPInstanceUnitOfMeasureLocalService cpInstanceUnitOfMeasureLocalService,
 		HttpServletRequest httpServletRequest) {
 
@@ -60,6 +62,7 @@ public class CommercePriceEntryDisplayContext
 
 		_commercePriceEntryLocalService = commercePriceEntryLocalService;
 		_commercePriceEntryService = commercePriceEntryService;
+		_cpInstanceLocalService = cpInstanceLocalService;
 		_cpInstanceUnitOfMeasureLocalService =
 			cpInstanceUnitOfMeasureLocalService;
 	}
@@ -133,7 +136,9 @@ public class CommercePriceEntryDisplayContext
 
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
-		CPInstance cpInstance = commercePriceEntry.getCPInstance();
+		CPInstance cpInstance = _cpInstanceLocalService.getCProductInstance(
+			commercePriceEntry.getCProductId(),
+			commercePriceEntry.getCPInstanceUuid());
 
 		return ListUtil.sort(
 			_cpInstanceUnitOfMeasureLocalService.
@@ -212,6 +217,7 @@ public class CommercePriceEntryDisplayContext
 	private final CommercePriceEntryLocalService
 		_commercePriceEntryLocalService;
 	private final CommercePriceEntryService _commercePriceEntryService;
+	private final CPInstanceLocalService _cpInstanceLocalService;
 	private final CPInstanceUnitOfMeasureLocalService
 		_cpInstanceUnitOfMeasureLocalService;
 

@@ -37,11 +37,6 @@ public class ServiceAccountUsersFilterContributor implements FilterContributor {
 	}
 
 	@Override
-	public String getManagementToolbarKey() {
-		return UsersAdminManagementToolbarKeys.VIEW_SERVICE_ACCOUNTS;
-	}
-
-	@Override
 	public String getParameter() {
 		return "types";
 	}

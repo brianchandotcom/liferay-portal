@@ -149,6 +149,9 @@ definition {
 	@description = "Feature ID: LRAC-14082 | Automation ID: LRAC-14648 | Test Summary: Check that a message appears if you don't put text or the expected text in the delete modal"
 	@priority = 2
 	test CheckMessageAppearsIfNotPutTextOrExpectedTextOnDeleteModal {
+		property analytics.cloud.release = "false";
+		property portal.upstream = "false";
+
 		var propertyName = "Property CheckMessageAppearsIfNotPutTextOrExpectedTextOnDeleteModal";
 
 		task ("Go to properties page and add new property") {
@@ -213,6 +216,9 @@ definition {
 	@description = "Feature ID: LRAC-14082 | Automation ID: LRAC-14649 | Test Summary: Check that a successful alert appears if the property is deleted correctly"
 	@priority = 2
 	test CheckSuccessfulAlertAppearsIfPropertyDeleted {
+		property analytics.cloud.release = "false";
+		property portal.upstream = "false";
+
 		var propertyName = "Property CheckSuccessfulAlertAppearsIfPropertyDeleted";
 
 		task ("Go to properties page and add new property") {

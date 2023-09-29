@@ -14,16 +14,16 @@ import org.glowroot.agent.plugin.api.config.ConfigService;
  */
 public class TemplatesPluginProperties {
 
-	public static boolean captureAsOuterTransaction() {
-		return _captureAsOuterTransaction;
-	}
-
 	public static boolean captureTemplateScriptInTransaction() {
 		return _captureTemplateScriptInTransaction;
 	}
 
-	private static boolean _captureAsOuterTransaction;
+	public static boolean captureTemplateTransformationsInOuterTransaction() {
+		return _captureTemplateTransformationsInOuterTransaction;
+	}
+
 	private static boolean _captureTemplateScriptInTransaction;
+	private static boolean _captureTemplateTransformationsInOuterTransaction;
 	private static final ConfigService _configService = Agent.getConfigService(
 		"liferay-templates-plugin");
 
@@ -36,10 +36,10 @@ public class TemplatesPluginProperties {
 		}
 
 		private void _recalculateProperties() {
-			_captureAsOuterTransaction = _configService.getBooleanProperty(
-				"captureAsOuterTransaction"
-			).value();
-
+			_captureTemplateTransformationsInOuterTransaction =
+				_configService.getBooleanProperty(
+					"captureTemplateTransformationsInOuterTransaction"
+				).value();
 			_captureTemplateScriptInTransaction =
 				_configService.getBooleanProperty(
 					"captureTemplateScriptInTransaction"

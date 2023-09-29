@@ -67,11 +67,9 @@ public class DisplayContextUtil {
 		SearchResponse searchResponse = searcher.search(
 			searchRequestBuilder.build());
 
-		List<Document> list = searchResponse.getDocuments();
-
 		Map<Long, String> siteNames = new HashMap<>();
 
-		for (Document document : list) {
+		for (Document document : searchResponse.getDocuments()) {
 			siteNames.put(
 				document.getLong(Field.GROUP_ID),
 				document.getString("groupName"));

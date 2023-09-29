@@ -161,7 +161,8 @@ public class AsahSegmentsExperimentProcessor {
 		_asahFaroBackendClient.updateExperimentDXPVariants(
 			companyId, segmentsExperimentKey,
 			DXPVariantUtil.toDXPVariants(
-				LocaleUtil.getSiteDefault(), segmentsExperimentRels));
+				LocaleUtil.getSiteDefault(), _segmentsExperienceLocalService,
+				segmentsExperimentRels));
 	}
 
 	private final AnalyticsSettingsManager _analyticsSettingsManager;

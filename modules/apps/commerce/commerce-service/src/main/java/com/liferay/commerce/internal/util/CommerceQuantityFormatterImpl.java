@@ -9,6 +9,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.util.CommerceQuantityFormatter;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -25,11 +26,8 @@ public class CommerceQuantityFormatterImpl
 
 	@Override
 	public BigDecimal format(
-		CPInstance cpInstance, BigDecimal quantity, String unitOfMeasureKey) {
-
-		if (cpInstance == null) {
-			return quantity.setScale(0, RoundingMode.HALF_UP);
-		}
+			CPInstance cpInstance, BigDecimal quantity, String unitOfMeasureKey)
+		throws PortalException {
 
 		return _format(
 			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
@@ -39,14 +37,17 @@ public class CommerceQuantityFormatterImpl
 
 	@Override
 	public BigDecimal format(
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure, BigDecimal quantity) {
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure,
+			BigDecimal quantity)
+		throws PortalException {
 
 		return _format(cpInstanceUnitOfMeasure, quantity);
 	}
 
 	@Override
 	public BigDecimal format(
-		long cpInstanceId, BigDecimal quantity, String unitOfMeasureKey) {
+			long cpInstanceId, BigDecimal quantity, String unitOfMeasureKey)
+		throws PortalException {
 
 		return _format(
 			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
@@ -56,8 +57,9 @@ public class CommerceQuantityFormatterImpl
 
 	@Override
 	public BigDecimal format(
-		long companyId, BigDecimal quantity, String sku,
-		String unitOfMeasureKey) {
+			long companyId, BigDecimal quantity, String sku,
+			String unitOfMeasureKey)
+		throws PortalException {
 
 		return _format(
 			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(

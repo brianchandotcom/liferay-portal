@@ -13,9 +13,11 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -23,8 +25,10 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.DefaultModelHintsImpl;
 import com.liferay.portal.model.impl.ClassNameImpl;
+import com.liferay.portal.model.impl.ResourceActionImpl;
 import com.liferay.portal.service.impl.ClassNameLocalServiceImpl;
 import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
+import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PortalInstances;
@@ -34,7 +38,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -57,10 +63,20 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		entityCache.removeCache(ClassNameImpl.class.getName());
 		finderCache.removeCache(ClassNameImpl.class.getName());
+		entityCache.removeCache(ResourceActionImpl.class.getName());
+		finderCache.removeCache(ResourceActionImpl.class.getName());
 
 		createControlTable(TEST_CONTROL_TABLE_NAME);
 
 		addDBPartitions();
+
+		_resourceActionMap = ReflectionTestUtil.getFieldValue(
+			ResourceActionLocalServiceImpl.class, "_resourceActions");
+
+		_resourceActionMap.clear();
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> _resourceActionLocalService.checkResourceActions());
 
 		insertPartitionRequiredData();
 	}
@@ -77,6 +93,13 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		entityCache.removeCache(ClassNameImpl.class.getName());
 		finderCache.removeCache(ClassNameImpl.class.getName());
+		entityCache.removeCache(ResourceActionImpl.class.getName());
+		finderCache.removeCache(ResourceActionImpl.class.getName());
+
+		_resourceActionMap.clear();
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> _resourceActionLocalService.checkResourceActions());
 	}
 
 	@After
@@ -171,6 +194,46 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testCopyResourceAction() throws Exception {
+		String actionId = "";
+		long bitwiseValue = 0;
+		String name = "";
+		long resourceActionId = 0;
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select resourceActionId, name, actionId, bitwiseValue from " +
+					"ResourceAction order by resourceActionId asc limit 1;");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				actionId = resultSet.getString(3);
+				bitwiseValue = resultSet.getLong(4);
+				name = resultSet.getString(2);
+				resourceActionId = resultSet.getLong(1);
+			}
+		}
+
+		String finalActionId = actionId;
+		long finalBitwiseValue = bitwiseValue;
+		String finalName = name;
+		long finalResourceActionId = resourceActionId;
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> {
+				ResourceAction resourceAction =
+					_resourceActionLocalService.fetchResourceAction(
+						finalName, finalActionId);
+
+				Assert.assertNotNull(resourceAction);
+				Assert.assertEquals(
+					finalBitwiseValue, resourceAction.getBitwiseValue());
+				Assert.assertEquals(
+					finalResourceActionId,
+					resourceAction.getResourceActionId());
+			});
+	}
+
+	@Test
 	public void testDropIndexControlTable() throws Exception {
 		createIndex(TEST_CONTROL_TABLE_NAME);
 
@@ -200,6 +263,54 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> _classNameLocalService.deleteClassName(
 					_classNameLocalService.fetchClassName("class.name.test")));
+		}
+	}
+
+	@Test
+	public void testGetResourceAction() throws Exception {
+		CopyOnWriteArraySet<ResourceAction> resourceActions =
+			new CopyOnWriteArraySet<>();
+
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					_resourceActionLocalService.addResourceAction(
+						"resource.action.test", "TEST", companyId);
+
+					_resourceActionLocalService.checkResourceActions(
+						"resource.action.test",
+						Collections.singletonList("TEST"));
+				});
+
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					ResourceAction resourceAction =
+						_resourceActionLocalService.getResourceAction(
+							"resource.action.test", "TEST");
+
+					Assert.assertTrue(resourceActions.add(resourceAction));
+
+					Assert.assertEquals(
+						(long)companyId, resourceAction.getBitwiseValue());
+				});
+
+			Assert.assertEquals(
+				resourceActions.toString(),
+				_companyLocalService.getCompaniesCount(),
+				resourceActions.size());
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					ResourceAction resourceAction =
+						_resourceActionLocalService.fetchResourceAction(
+							"resource.action.test", "TEST");
+
+					if (resourceAction != null) {
+						_resourceActionLocalService.deleteResourceAction(
+							resourceAction);
+					}
+				});
 		}
 	}
 
@@ -349,6 +460,11 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX =
 		"lpartitiontest_";
+
+	@Inject
+	private static ResourceActionLocalService _resourceActionLocalService;
+
+	private static Map<String, ResourceAction> _resourceActionMap;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

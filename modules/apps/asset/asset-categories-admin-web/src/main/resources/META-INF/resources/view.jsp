@@ -69,12 +69,13 @@
 					<c:if test="<%= MapUtil.isNotEmpty(assetCategoriesDisplayContext.getInheritedVocabularies()) %>">
 
 						<%
-						Map<String, List<AssetVocabulary>> inheritedVocabularies = assetCategoriesDisplayContext.getInheritedVocabularies();
+						Map<Long, List<AssetVocabulary>> inheritedVocabularies = assetCategoriesDisplayContext.getInheritedVocabularies();
 
-						for (Map.Entry<String, List<AssetVocabulary>> entry : inheritedVocabularies.entrySet()) {
+						for (Map.Entry<Long, List<AssetVocabulary>> entry : inheritedVocabularies.entrySet()) {
+							Group group = GroupLocalServiceUtil.getGroup(entry.getKey());
 						%>
 
-							<span class="text-truncate"><%= entry.getKey() %></span>
+							<span class="text-truncate"><%= group.getDescriptiveName(locale) %></span>
 
 							<clay:vertical-nav
 								verticalNavItems="<%= assetCategoriesDisplayContext.getVerticalNavItemList(entry.getValue()) %>"

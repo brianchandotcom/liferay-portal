@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.CommonPermissionUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil_IW;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil_IW;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil_IW;
@@ -692,7 +692,7 @@ public class TemplateContextHelper {
 		try {
 			variables.put(
 				"organizationPermission",
-				OrganizationPermissionUtil.getOrganizationPermission());
+				OrganizationPermissionUtil_IW.getInstance());
 		}
 		catch (SecurityException securityException) {
 			_log.error(securityException);
@@ -793,7 +793,7 @@ public class TemplateContextHelper {
 		try {
 			variables.put(
 				"locationPermission",
-				OrganizationPermissionUtil.getOrganizationPermission());
+				OrganizationPermissionUtil_IW.getInstance());
 		}
 		catch (SecurityException securityException) {
 			_log.error(securityException);

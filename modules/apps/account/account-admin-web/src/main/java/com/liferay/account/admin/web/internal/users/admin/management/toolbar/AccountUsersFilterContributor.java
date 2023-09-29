@@ -37,11 +37,6 @@ public class AccountUsersFilterContributor implements FilterContributor {
 	}
 
 	@Override
-	public String getManagementToolbarKey() {
-		return UsersAdminManagementToolbarKeys.VIEW_FLAT_USERS;
-	}
-
-	@Override
 	public String getParameter() {
 		return "domain";
 	}

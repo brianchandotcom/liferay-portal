@@ -24,8 +24,6 @@ public interface FilterContributor {
 
 	public String getLabel(Locale locale);
 
-	public String getManagementToolbarKey();
-
 	public String getParameter();
 
 	public Map<String, Object> getSearchParameters(String currentValue);

@@ -3295,6 +3295,9 @@ public class JenkinsResultsParserUtil {
 
 		StringBuilder sb = new StringBuilder();
 
+		sb.append("import org.jvnet.jenkins.plugins.nodelabelparameter.");
+		sb.append("LabelParameterValue;\n");
+
 		sb.append("Map<String, TopLevelItem> topLevelItems = ");
 		sb.append("Jenkins.instance.getItemMap();\n");
 
@@ -3308,7 +3311,18 @@ public class JenkinsResultsParserUtil {
 		for (Map.Entry<String, String> buildParameter :
 				buildParameters.entrySet()) {
 
-			sb.append("parameterValues.add(new StringParameterValue(\"");
+			sb.append("parameterValues.add(");
+
+			String buildParamaterName = buildParameter.getKey();
+
+			if (buildParamaterName.equals("SLAVE_LABEL")) {
+				sb.append("new LabelParameterValue");
+			}
+			else {
+				sb.append("new StringParameterValue");
+			}
+
+			sb.append("(\"");
 			sb.append(buildParameter.getKey());
 			sb.append("\", \"");
 			sb.append(buildParameter.getValue());

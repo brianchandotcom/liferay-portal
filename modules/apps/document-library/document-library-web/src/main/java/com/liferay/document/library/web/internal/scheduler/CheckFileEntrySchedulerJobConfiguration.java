@@ -48,14 +48,16 @@ public class CheckFileEntrySchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_dlConfiguration.checkInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_dlConfiguration.checkInterval(), TimeUnit.MINUTE);
 	}
 
 	@Reference
@@ -65,5 +67,7 @@ public class CheckFileEntrySchedulerJobConfiguration
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

@@ -37,24 +37,26 @@ public class CheckCommerceInventoryBookedQuantitySchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_commerceInventorySystemConfiguration.
-				checkCommerceInventoryTemporaryBookedQuantityInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_commerceInventorySystemConfiguration =
-			ConfigurableUtil.createConfigurable(
-				CommerceInventorySystemConfiguration.class, properties);
+		CommerceInventorySystemConfiguration
+			commerceInventorySystemConfiguration =
+				ConfigurableUtil.createConfigurable(
+					CommerceInventorySystemConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			commerceInventorySystemConfiguration.
+				checkCommerceInventoryTemporaryBookedQuantityInterval(),
+			TimeUnit.MINUTE);
 	}
 
 	@Reference
 	private CommerceInventoryBookedQuantityLocalService
 		_commerceInventoryBookedQuantityLocalService;
 
-	private CommerceInventorySystemConfiguration
-		_commerceInventorySystemConfiguration;
+	private TriggerConfiguration _triggerConfiguration;
 
 }

@@ -36,20 +36,23 @@ public class DeleteExpiredSharingEntriesSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_sharingSystemConfiguration.expiredSharingEntriesCheckInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_sharingSystemConfiguration = ConfigurableUtil.createConfigurable(
-			SharingSystemConfiguration.class, properties);
+		SharingSystemConfiguration sharingSystemConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SharingSystemConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			sharingSystemConfiguration.expiredSharingEntriesCheckInterval(),
+			TimeUnit.MINUTE);
 	}
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
 
-	private volatile SharingSystemConfiguration _sharingSystemConfiguration;
+	private TriggerConfiguration _triggerConfiguration;
 
 }

@@ -50,10 +50,7 @@ public class CheckCommerceInventoryAuditSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_commerceInventorySystemConfiguration.
-				checkCommerceInventoryAuditQuantityInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
@@ -61,6 +58,11 @@ public class CheckCommerceInventoryAuditSchedulerJobConfiguration
 		_commerceInventorySystemConfiguration =
 			ConfigurableUtil.createConfigurable(
 				CommerceInventorySystemConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_commerceInventorySystemConfiguration.
+				checkCommerceInventoryAuditQuantityInterval(),
+			TimeUnit.MINUTE);
 	}
 
 	@Reference
@@ -69,5 +71,6 @@ public class CheckCommerceInventoryAuditSchedulerJobConfiguration
 
 	private CommerceInventorySystemConfiguration
 		_commerceInventorySystemConfiguration;
+	private TriggerConfiguration _triggerConfiguration;
 
 }

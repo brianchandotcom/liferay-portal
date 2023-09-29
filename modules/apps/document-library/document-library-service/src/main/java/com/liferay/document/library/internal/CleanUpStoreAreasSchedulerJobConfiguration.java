@@ -52,16 +52,18 @@ public class CleanUpStoreAreasSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_storeAreaConfiguration.cleanUpInterval(), TimeUnit.DAY);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_startOffsets = new ConcurrentHashMap<>();
-
 		_storeAreaConfiguration = ConfigurableUtil.createConfigurable(
 			StoreAreaConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_storeAreaConfiguration.cleanUpInterval(), TimeUnit.DAY);
+
+		_startOffsets = new ConcurrentHashMap<>();
 	}
 
 	private void _cleanUpStorageAreas(long companyId) {
@@ -115,5 +117,6 @@ public class CleanUpStoreAreasSchedulerJobConfiguration
 
 	private Map<Long, String> _startOffsets;
 	private StoreAreaConfiguration _storeAreaConfiguration;
+	private TriggerConfiguration _triggerConfiguration;
 
 }

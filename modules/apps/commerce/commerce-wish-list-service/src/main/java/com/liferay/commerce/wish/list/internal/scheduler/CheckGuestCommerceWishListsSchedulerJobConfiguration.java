@@ -48,14 +48,16 @@ public class CheckGuestCommerceWishListsSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_commerceWishListConfiguration.checkInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_commerceWishListConfiguration = ConfigurableUtil.createConfigurable(
 			CommerceWishListConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_commerceWishListConfiguration.checkInterval(), TimeUnit.MINUTE);
 	}
 
 	private volatile CommerceWishListConfiguration
@@ -63,5 +65,7 @@ public class CheckGuestCommerceWishListsSchedulerJobConfiguration
 
 	@Reference
 	private CommerceWishListLocalService _commerceWishListLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

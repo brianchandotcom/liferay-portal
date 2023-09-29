@@ -37,20 +37,23 @@ public class OAuth2AuthorizationSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_oAuth2ProviderConfiguration.expiredAuthorizationsCheckInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
-			OAuth2ProviderConfiguration.class, properties);
+		OAuth2ProviderConfiguration oAuth2ProviderConfiguration =
+			ConfigurableUtil.createConfigurable(
+				OAuth2ProviderConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			oAuth2ProviderConfiguration.expiredAuthorizationsCheckInterval(),
+			TimeUnit.MINUTE);
 	}
 
 	@Reference
 	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
-	private OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
+	private TriggerConfiguration _triggerConfiguration;
 
 }

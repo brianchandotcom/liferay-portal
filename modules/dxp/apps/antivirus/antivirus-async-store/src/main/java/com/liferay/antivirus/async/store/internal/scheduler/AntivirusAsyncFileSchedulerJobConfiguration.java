@@ -40,22 +40,20 @@ public class AntivirusAsyncFileSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		TriggerConfiguration triggerConfiguration =
-			TriggerConfiguration.createTriggerConfiguration(
-				_retryCronExpression);
-
-		triggerConfiguration.setStartDate(
-			new Date(
-				System.currentTimeMillis() + TimeUnit.SECOND.toMillis(10)));
-
-		return triggerConfiguration;
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_jobName = (String)properties.get("jobName");
 		_message = (Message)properties.get("message");
-		_retryCronExpression = (String)properties.get("retryCronExpression");
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			(String)properties.get("retryCronExpression"));
+
+		_triggerConfiguration.setStartDate(
+			new Date(
+				System.currentTimeMillis() + TimeUnit.SECOND.toMillis(10)));
 	}
 
 	@Reference
@@ -63,6 +61,6 @@ public class AntivirusAsyncFileSchedulerJobConfiguration
 
 	private String _jobName;
 	private Message _message;
-	private String _retryCronExpression;
+	private TriggerConfiguration _triggerConfiguration;
 
 }

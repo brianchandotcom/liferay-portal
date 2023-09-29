@@ -49,19 +49,23 @@ public class CheckGuestCommerceOrdersSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_commerceOrderConfiguration.checkInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_commerceOrderConfiguration = ConfigurableUtil.createConfigurable(
 			CommerceOrderConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_commerceOrderConfiguration.checkInterval(), TimeUnit.MINUTE);
 	}
 
 	private volatile CommerceOrderConfiguration _commerceOrderConfiguration;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

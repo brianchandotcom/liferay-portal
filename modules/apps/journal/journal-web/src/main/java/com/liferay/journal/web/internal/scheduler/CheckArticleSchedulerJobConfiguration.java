@@ -49,14 +49,17 @@ public class CheckArticleSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_journalServiceConfiguration.checkInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_journalServiceConfiguration = ConfigurableUtil.createConfigurable(
-			JournalServiceConfiguration.class, properties);
+		JournalServiceConfiguration journalServiceConfiguration =
+			ConfigurableUtil.createConfigurable(
+				JournalServiceConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			journalServiceConfiguration.checkInterval(), TimeUnit.MINUTE);
 	}
 
 	@Reference
@@ -65,6 +68,6 @@ public class CheckArticleSchedulerJobConfiguration
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
-	private JournalServiceConfiguration _journalServiceConfiguration;
+	private TriggerConfiguration _triggerConfiguration;
 
 }

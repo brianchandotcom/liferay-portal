@@ -52,20 +52,22 @@ public class SamlSpAuthRequestSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_samlConfiguration.getSpAuthRequestCheckInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_samlConfiguration = ConfigurableUtil.createConfigurable(
-			SamlConfiguration.class, properties);
-	}
+		SamlConfiguration samlConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SamlConfiguration.class, properties);
 
-	private SamlConfiguration _samlConfiguration;
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			samlConfiguration.getSpAuthRequestCheckInterval(), TimeUnit.MINUTE);
+	}
 
 	@Reference
 	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

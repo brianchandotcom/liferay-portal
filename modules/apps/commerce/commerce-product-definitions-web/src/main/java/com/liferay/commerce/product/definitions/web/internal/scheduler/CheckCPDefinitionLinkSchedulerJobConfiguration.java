@@ -36,19 +36,22 @@ public class CheckCPDefinitionLinkSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_cpDefinitionLinkConfiguration.checkInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_cpDefinitionLinkConfiguration = ConfigurableUtil.createConfigurable(
-			CPDefinitionLinkConfiguration.class, properties);
-	}
+		CPDefinitionLinkConfiguration cpDefinitionLinkConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CPDefinitionLinkConfiguration.class, properties);
 
-	private CPDefinitionLinkConfiguration _cpDefinitionLinkConfiguration;
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			cpDefinitionLinkConfiguration.checkInterval(), TimeUnit.MINUTE);
+	}
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

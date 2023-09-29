@@ -42,19 +42,22 @@ public class LinkbackSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_blogsConfiguration.linkbackJobInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_blogsConfiguration = ConfigurableUtil.createConfigurable(
-			BlogsConfiguration.class, properties);
-	}
+		BlogsConfiguration blogsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BlogsConfiguration.class, properties);
 
-	private BlogsConfiguration _blogsConfiguration;
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			blogsConfiguration.linkbackJobInterval(), TimeUnit.MINUTE);
+	}
 
 	@Reference
 	private LinkbackConsumer _linkbackConsumer;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

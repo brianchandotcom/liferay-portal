@@ -64,23 +64,26 @@ public class DeleteExpiredTicketsSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_subscriptionConfiguration.deleteExpiredTicketsInterval(),
-			TimeUnit.HOUR);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_subscriptionConfiguration = ConfigurableUtil.createConfigurable(
-			SubscriptionConfiguration.class, properties);
+		SubscriptionConfiguration subscriptionConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SubscriptionConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			subscriptionConfiguration.deleteExpiredTicketsInterval(),
+			TimeUnit.HOUR);
 	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	private volatile SubscriptionConfiguration _subscriptionConfiguration;
-
 	@Reference
 	private TicketLocalService _ticketLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

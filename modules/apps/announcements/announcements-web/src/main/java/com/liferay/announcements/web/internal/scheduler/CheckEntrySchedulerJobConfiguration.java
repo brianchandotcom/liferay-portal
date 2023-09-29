@@ -50,12 +50,14 @@ public class CheckEntrySchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			PropsValues.ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL, TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			PropsValues.ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL, TimeUnit.MINUTE);
+
 		_serviceRegistration = bundleContext.registerService(
 			ClusterMasterTokenTransitionListener.class,
 			new CheckEntryClusterMasterTokenTransitionListener(), null);
@@ -75,6 +77,7 @@ public class CheckEntrySchedulerJobConfiguration
 	private Date _previousEndDate;
 	private ServiceRegistration<ClusterMasterTokenTransitionListener>
 		_serviceRegistration;
+	private TriggerConfiguration _triggerConfiguration;
 
 	private class CheckEntryClusterMasterTokenTransitionListener
 		implements ClusterMasterTokenTransitionListener {

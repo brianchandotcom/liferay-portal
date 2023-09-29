@@ -38,18 +38,21 @@ public class WorkflowMetricsSLAProcessSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_workflowMetricsConfiguration.checkSLAJobInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_workflowMetricsConfiguration = ConfigurableUtil.createConfigurable(
-			WorkflowMetricsConfiguration.class, properties);
+		WorkflowMetricsConfiguration workflowMetricsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				WorkflowMetricsConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			workflowMetricsConfiguration.checkSLAJobInterval(),
+			TimeUnit.MINUTE);
 	}
 
-	private WorkflowMetricsConfiguration _workflowMetricsConfiguration;
+	private TriggerConfiguration _triggerConfiguration;
 
 	@Reference
 	private WorkflowMetricsSLAProcessBackgroundTaskHelper

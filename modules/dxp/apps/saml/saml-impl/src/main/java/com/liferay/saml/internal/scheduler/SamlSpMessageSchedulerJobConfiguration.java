@@ -51,19 +51,22 @@ public class SamlSpMessageSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_samlConfiguration.getSpMessageCheckInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_samlConfiguration = ConfigurableUtil.createConfigurable(
-			SamlConfiguration.class, properties);
-	}
+		SamlConfiguration samlConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SamlConfiguration.class, properties);
 
-	private SamlConfiguration _samlConfiguration;
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			samlConfiguration.getSpMessageCheckInterval(), TimeUnit.MINUTE);
+	}
 
 	@Reference
 	private SamlSpMessageLocalService _samlSpMessageLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

@@ -36,23 +36,24 @@ public class CheckCommercePriceModifierSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_commercePriceModifierConfiguration.checkInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_commercePriceModifierConfiguration =
+		CommercePriceModifierConfiguration commercePriceModifierConfiguration =
 			ConfigurableUtil.createConfigurable(
 				CommercePriceModifierConfiguration.class, properties);
-	}
 
-	private CommercePriceModifierConfiguration
-		_commercePriceModifierConfiguration;
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			commercePriceModifierConfiguration.checkInterval(),
+			TimeUnit.MINUTE);
+	}
 
 	@Reference
 	private CommercePriceModifierLocalService
 		_commercePriceModifierLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

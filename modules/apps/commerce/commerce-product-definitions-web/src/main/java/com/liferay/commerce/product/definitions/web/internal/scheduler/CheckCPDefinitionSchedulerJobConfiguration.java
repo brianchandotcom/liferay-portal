@@ -37,19 +37,22 @@ public class CheckCPDefinitionSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_cpDefinitionConfiguration.checkInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_cpDefinitionConfiguration = ConfigurableUtil.createConfigurable(
-			CPDefinitionConfiguration.class, properties);
-	}
+		CPDefinitionConfiguration cpDefinitionConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CPDefinitionConfiguration.class, properties);
 
-	private CPDefinitionConfiguration _cpDefinitionConfiguration;
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			cpDefinitionConfiguration.checkInterval(), TimeUnit.MINUTE);
+	}
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

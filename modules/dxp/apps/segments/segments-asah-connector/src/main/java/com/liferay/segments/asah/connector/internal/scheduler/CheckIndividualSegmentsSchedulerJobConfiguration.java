@@ -71,8 +71,7 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_segmentsAsahConfiguration.checkInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
@@ -90,8 +89,12 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 
 	@Modified
 	protected void modified(Map<String, Object> properties) {
-		_segmentsAsahConfiguration = ConfigurableUtil.createConfigurable(
-			SegmentsAsahConfiguration.class, properties);
+		SegmentsAsahConfiguration segmentsAsahConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SegmentsAsahConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			segmentsAsahConfiguration.checkInterval(), TimeUnit.MINUTE);
 	}
 
 	private void _addSegmentsEntry(
@@ -438,13 +441,13 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 	@Reference
 	private Portal _portal;
 
-	private volatile SegmentsAsahConfiguration _segmentsAsahConfiguration;
-
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
+
+	private volatile TriggerConfiguration _triggerConfiguration;
 
 	@Reference
 	private UserLocalService _userLocalService;

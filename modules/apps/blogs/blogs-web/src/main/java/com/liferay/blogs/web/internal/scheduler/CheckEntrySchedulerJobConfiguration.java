@@ -36,19 +36,22 @@ public class CheckEntrySchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_blogsConfiguration.entryCheckInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_blogsConfiguration = ConfigurableUtil.createConfigurable(
-			BlogsConfiguration.class, properties);
-	}
+		BlogsConfiguration blogsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BlogsConfiguration.class, properties);
 
-	private BlogsConfiguration _blogsConfiguration;
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			blogsConfiguration.entryCheckInterval(), TimeUnit.MINUTE);
+	}
 
 	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

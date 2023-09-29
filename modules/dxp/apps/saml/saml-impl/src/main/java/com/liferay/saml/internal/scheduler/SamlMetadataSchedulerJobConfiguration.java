@@ -61,14 +61,17 @@ public class SamlMetadataSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_samlConfiguration.getMetadataRefreshInterval(), TimeUnit.SECOND);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_samlConfiguration = ConfigurableUtil.createConfigurable(
-			SamlConfiguration.class, properties);
+		SamlConfiguration samlConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SamlConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			samlConfiguration.getMetadataRefreshInterval(), TimeUnit.SECOND);
 	}
 
 	private void _updateIdpMetadata(long companyId) {
@@ -178,8 +181,6 @@ public class SamlMetadataSchedulerJobConfiguration
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private SamlConfiguration _samlConfiguration;
-
 	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
 
@@ -188,5 +189,7 @@ public class SamlMetadataSchedulerJobConfiguration
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

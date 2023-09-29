@@ -250,7 +250,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 	private void _populateCompanyCountries(Company company) throws Exception {
 		if (_hasCountries(company.getCompanyId())) {
 			if (_log.isDebugEnabled()) {
-				_log.error(
+				_log.debug(
 					StringBundler.concat(
 						"Skipping country initialization. Countries are ",
 						"already initialized for company ",
@@ -268,7 +268,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		_companyGuestUser = company.getGuestUser();
 
 		if (_log.isDebugEnabled()) {
-			_log.error(
+			_log.debug(
 				"Initializing countries for company " + company.getCompanyId());
 		}
 

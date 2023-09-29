@@ -61,6 +61,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -493,6 +494,12 @@ public class KnowledgeBaseArticleResourceImpl
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 
+		Date datePublished = knowledgeBaseArticle.getDatePublished();
+
+		if (datePublished == null) {
+			datePublished = new Date();
+		}
+
 		return _toKnowledgeBaseArticle(
 			_kbArticleService.addKBArticle(
 				externalReferenceCode, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
@@ -501,7 +508,7 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getFriendlyUrlPath(),
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null,
-				knowledgeBaseArticle.getDatePublished(), null, null, null,
+				datePublished, null, null, null,
 				_createServiceContext(
 					knowledgeBaseArticle.getTaxonomyCategoryIds(),
 					knowledgeBaseArticle.getKeywords(), groupId,

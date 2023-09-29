@@ -162,6 +162,7 @@ const SaveFDSFieldsModalContent = ({
 
 	const saveFDSFields = async () => {
 		setSaveButtonDisabled(true);
+		
 		const creationData: Array<{name: string; type: string}> = [];
 		const deletionIds: Array<number> = [];
 

@@ -386,7 +386,9 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 								Version.parseVersion(
 									resultSet.getString("schemaVersion")),
 								resultSet.getInt("buildNumber"),
-								new java.util.Date(buildDate.getTime()),
+								(buildDate != null) ?
+									new java.util.Date(buildDate.getTime()) :
+										null,
 								resultSet.getInt("state_"),
 								resultSet.getString("testString"));
 						}

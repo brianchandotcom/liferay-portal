@@ -256,6 +256,10 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		Map<String, Serializable> parameters =
 			batchEngineUnitConfiguration.getParameters();
 
+		if (parameters == null) {
+			return null;
+		}
+
 		return (String)parameters.get("featureFlag");
 	}
 

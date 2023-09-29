@@ -66,9 +66,9 @@ public interface CETFactory {
 		ClientExtensionEntryConstants.TYPE_STATIC_CONTENT, "LPS-177027"
 	).put(
 
-		// feature.flag.LPS-184016
+		// feature.flag.LPS-164563
 
-		ClientExtensionEntryConstants.TYPE_FDS_FILTER, "LPS-184016"
+		ClientExtensionEntryConstants.TYPE_FDS_FILTER, "LPS-164563"
 	).build();
 
 }

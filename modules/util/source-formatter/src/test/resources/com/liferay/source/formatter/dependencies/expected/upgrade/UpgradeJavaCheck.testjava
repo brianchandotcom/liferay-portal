@@ -5,6 +5,8 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
+import java.util.Locale;
+
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
@@ -59,7 +61,7 @@ import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 public class UpgradeJavaCheck extends BaseTableFDSView {
 
 	@Override
-	public FDSTableSchema getFDSTableSchema() {
+	public FDSTableSchema getFDSTableSchema(Locale locale) {
 		FDSTableSchemaBuilder fDSTableSchemaBuilder =
 			_fDSTableSchemaBuilderFactory.create();
 

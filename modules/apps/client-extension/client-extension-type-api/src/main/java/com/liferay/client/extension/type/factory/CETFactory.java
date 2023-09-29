@@ -51,6 +51,11 @@ public interface CETFactory {
 		ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER, "LPS-164563"
 	).put(
 
+		// feature.flag.LPS-164563
+
+		ClientExtensionEntryConstants.TYPE_FDS_FILTER, "LPS-164563"
+	).put(
+
 		// feature.flag.LPS-166479
 
 		ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, "LPS-166479"
@@ -64,11 +69,6 @@ public interface CETFactory {
 		// feature.flag.LPS-177027
 
 		ClientExtensionEntryConstants.TYPE_STATIC_CONTENT, "LPS-177027"
-	).put(
-
-		// feature.flag.LPS-164563
-
-		ClientExtensionEntryConstants.TYPE_FDS_FILTER, "LPS-164563"
 	).build();
 
 }

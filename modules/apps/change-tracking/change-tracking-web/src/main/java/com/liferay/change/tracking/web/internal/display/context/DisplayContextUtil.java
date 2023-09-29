@@ -44,6 +44,8 @@ public class DisplayContextUtil {
 	public static Map<Long, String> getSiteNames(
 		long ctCollectionId, ThemeDisplay themeDisplay) {
 
+		Map<Long, String> siteNames = new HashMap<>();
+
 		Searcher searcher = _searcherSnapshot.get();
 
 		SearchRequestBuilderFactory searchRequestBuilderFactory =
@@ -66,8 +68,6 @@ public class DisplayContextUtil {
 
 		SearchResponse searchResponse = searcher.search(
 			searchRequestBuilder.build());
-
-		Map<Long, String> siteNames = new HashMap<>();
 
 		for (Document document : searchResponse.getDocuments()) {
 			siteNames.put(

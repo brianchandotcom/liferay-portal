@@ -447,9 +447,7 @@ public class JournalArticleModelValidator
 
 		_journalFolderLocalService.getFolder(folderId);
 
-		if (ddmStructureId > 0) {
-			_ddmStructureLocalService.getDDMStructure(ddmStructureId);
-		}
+		_ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
 		if (Validator.isNotNull(ddmTemplateKey)) {
 			DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(

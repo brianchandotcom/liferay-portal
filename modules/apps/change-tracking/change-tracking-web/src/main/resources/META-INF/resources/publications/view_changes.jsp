@@ -19,8 +19,6 @@ else {
 	reactData = viewChangesDisplayContext.getReactData();
 }
 
-renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
-
 if (!user.isOnDemandUser()) {
 	portletDisplay.setURLBack(viewChangesDisplayContext.getBackURL());
 	portletDisplay.setShowBackIcon(true);
@@ -28,6 +26,8 @@ if (!user.isOnDemandUser()) {
 else {
 	portletDisplay.setShowBackIcon(false);
 }
+
+renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 %>
 
 <div class="publications-view-changes-wrapper">

@@ -12,10 +12,10 @@ ViewChangesDisplayContext viewChangesDisplayContext = (ViewChangesDisplayContext
 
 Map<String, Object> reactData = viewChangesDisplayContext.getReactData();
 
-renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
-
 portletDisplay.setURLBack(viewChangesDisplayContext.getBackURL());
 portletDisplay.setShowBackIcon(true);
+
+renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 %>
 
 <div class="publications-view-changes-wrapper">

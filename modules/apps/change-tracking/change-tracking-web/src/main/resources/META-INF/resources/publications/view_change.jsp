@@ -8,15 +8,14 @@
 <%@ include file="/publications/init.jsp" %>
 
 <%
-ViewChangesDisplayContext viewChangesDisplayContext = (ViewChangesDisplayContext)request.getAttribute(CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT);
-
-renderResponse.setTitle(LanguageUtil.get(request, "review-change"));
-
 String redirect = ParamUtil.getString(request, "redirect");
 
-portletDisplay.setURLBack(redirect);
+ViewChangesDisplayContext viewChangesDisplayContext = (ViewChangesDisplayContext)request.getAttribute(CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT);
 
+portletDisplay.setURLBack(redirect);
 portletDisplay.setShowBackIcon(true);
+
+renderResponse.setTitle(LanguageUtil.get(request, "review-change"));
 %>
 
 <div class="publications-view-changes-wrapper">

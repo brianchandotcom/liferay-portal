@@ -233,7 +233,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getBranchName() {
-		return branchName;
+		return _branchName;
 	}
 
 	@Override
@@ -340,20 +340,21 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getBuildURL() {
 		String jobURL = getJobURL();
+		int buildNumber = getBuildNumber();
 
-		if ((jobURL == null) || (_buildNumber == -1)) {
+		if ((jobURL == null) || (buildNumber == -1)) {
 			return null;
 		}
 
 		if (fromArchive) {
-			return jobURL + "/" + _buildNumber + "/";
+			return jobURL + "/" + buildNumber + "/";
 		}
 
 		try {
 			jobURL = JenkinsResultsParserUtil.decode(jobURL);
 
 			return JenkinsResultsParserUtil.encode(
-				jobURL + "/" + _buildNumber + "/");
+				jobURL + "/" + buildNumber + "/");
 		}
 		catch (MalformedURLException | URISyntaxException exception) {
 			throw new RuntimeException("Unable to encode build URL", exception);
@@ -735,23 +736,24 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getJobName() {
-		return jobName;
+		return _jobName;
 	}
 
 	@Override
 	public String getJobURL() {
-		if ((_jenkinsMaster == null) || (jobName == null)) {
+		if ((_jenkinsMaster == null) || (_jobName == null)) {
 			return null;
 		}
 
 		if (fromArchive) {
 			return JenkinsResultsParserUtil.combine(
 				Build.DEPENDENCIES_URL_TOKEN, "/", getArchiveName(), "/",
-				_jenkinsMaster.getName(), "/", jobName);
+				_jenkinsMaster.getName(), "/", _jobName);
 		}
 
 		String jobURL = JenkinsResultsParserUtil.combine(
-			"https://", _jenkinsMaster.getName(), ".liferay.com/job/", jobName);
+			"https://", _jenkinsMaster.getName(), ".liferay.com/job/",
+			_jobName);
 
 		try {
 			return JenkinsResultsParserUtil.encode(jobURL);
@@ -899,13 +901,13 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public long getStatusAge() {
 		return JenkinsResultsParserUtil.getCurrentTimeMillis() -
-			statusModifiedTime;
+			_statusModifiedTime;
 	}
 
 	@Override
 	public long getStatusDuration(String status) {
-		if (statusDurations.containsKey(status)) {
-			return statusDurations.get(status);
+		if (_statusDurations.containsKey(status)) {
+			return _statusDurations.get(status);
 		}
 
 		return 0;
@@ -1252,7 +1254,7 @@ public abstract class BaseBuild implements Build {
 			return false;
 		}
 
-		for (ReinvokeRule reinvokeRule : reinvokeRules) {
+		for (ReinvokeRule reinvokeRule : ReinvokeRule.getReinvokeRules()) {
 			if (!reinvokeRule.matches(this)) {
 				continue;
 			}
@@ -1285,7 +1287,9 @@ public abstract class BaseBuild implements Build {
 			return false;
 		}
 
-		for (SlaveOfflineRule slaveOfflineRule : slaveOfflineRules) {
+		for (SlaveOfflineRule slaveOfflineRule :
+				SlaveOfflineRule.getSlaveOfflineRules()) {
+
 			if (!slaveOfflineRule.matches(this)) {
 				continue;
 			}
@@ -2168,15 +2172,15 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected String getBaseGitRepositoryType() {
-		if (jobName.startsWith("test-subrepository-acceptance-pullrequest")) {
+		if (_jobName.startsWith("test-subrepository-acceptance-pullrequest")) {
 			return getBaseGitRepositoryName();
 		}
 
-		if (jobName.contains("portal")) {
+		if (_jobName.contains("portal")) {
 			return "portal";
 		}
 
-		if (jobName.contains("plugins")) {
+		if (_jobName.contains("plugins")) {
 			return "plugins";
 		}
 
@@ -2216,7 +2220,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected String getBuildMessage() {
-		if (jobName != null) {
+		if (_jobName != null) {
 			String status = getStatus();
 
 			StringBuilder sb = new StringBuilder();
@@ -2229,7 +2233,7 @@ public abstract class BaseBuild implements Build {
 				sb.append(downstreamBuild.getAxisName());
 			}
 			else {
-				sb.append(jobName);
+				sb.append(_jobName);
 			}
 
 			sb.append("\"");
@@ -2662,7 +2666,7 @@ public abstract class BaseBuild implements Build {
 
 			String queueItemName = taskJSONObject.getString("name");
 
-			if (!queueItemName.equals(jobName)) {
+			if (!queueItemName.equals(_jobName)) {
 				continue;
 			}
 
@@ -3153,17 +3157,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setJobName(String jobName) {
-		this.jobName = jobName;
+		_jobName = jobName;
 
 		Matcher matcher = jobNamePattern.matcher(jobName);
 
 		if (matcher.find()) {
-			branchName = matcher.group("branchName");
+			_branchName = matcher.group("branchName");
 
 			return;
 		}
 
-		branchName = "master";
+		_branchName = "master";
 	}
 
 	protected void setResult(String result) {
@@ -3181,14 +3185,14 @@ public abstract class BaseBuild implements Build {
 		if (_isDifferent(status, _status)) {
 			_status = status;
 
-			long previousStatusModifiedTime = statusModifiedTime;
+			long previousStatusModifiedTime = _statusModifiedTime;
 
-			statusModifiedTime =
+			_statusModifiedTime =
 				JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-			statusDurations.put(
+			_statusDurations.put(
 				_previousStatus,
-				statusModifiedTime - previousStatusModifiedTime);
+				_statusModifiedTime - previousStatusModifiedTime);
 
 			if (isParentBuildRoot() &&
 				!badBuildNumbers.contains(_buildNumber)) {
@@ -3266,21 +3270,13 @@ public abstract class BaseBuild implements Build {
 		new SimpleDateFormat("MM-dd-yyyy HH:mm:ss:SSS z");
 
 	protected List<Integer> badBuildNumbers = new ArrayList<>();
-	protected String branchName;
 	protected int consoleReadCursor;
 	protected boolean fromArchive;
 	protected boolean fromCompletedBuild;
 	protected String gitRepositoryName;
 	protected Long invokedTime;
-	protected String jobName;
-	protected List<ReinvokeRule> reinvokeRules =
-		ReinvokeRule.getReinvokeRules();
 	protected String result;
-	protected List<SlaveOfflineRule> slaveOfflineRules =
-		SlaveOfflineRule.getSlaveOfflineRules();
 	protected Long startTime;
-	protected Map<String, Long> statusDurations = new HashMap<>();
-	protected long statusModifiedTime;
 	protected Element upstreamJobFailureMessageElement;
 
 	private void _archive(String content, boolean required, String urlSuffix) {
@@ -3713,6 +3709,7 @@ public abstract class BaseBuild implements Build {
 			"file:".length()));
 	private final Map<String, BranchInformation> _branchInformationMap =
 		new HashMap<>();
+	private String _branchName;
 	private String _buildDescription;
 	private Boolean _buildDurationsEnabled;
 	private int _buildNumber = -1;
@@ -3723,11 +3720,14 @@ public abstract class BaseBuild implements Build {
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;
 	private Job _job;
+	private String _jobName;
 	private Map<String, String> _parameters = new HashMap<>();
 	private final Build _parentBuild;
 	private String _previousStatus;
 	private int _reinvocationCount;
 	private String _status;
+	private final Map<String, Long> _statusDurations = new HashMap<>();
+	private long _statusModifiedTime;
 	private StopWatchRecordsGroup _stopWatchRecordsGroup;
 	private Map<String, TestClassResult> _testClassResults;
 	private List<URL> _testrayAttachmentURLs;

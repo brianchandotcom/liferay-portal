@@ -370,11 +370,10 @@ const IncidentContactCard = ({
 														  )}
 												</div>
 											</div>
-
-											{open &&
-												HighPriorityContactsModal()}
 										</>
 									)}
+
+									{open && HighPriorityContactsModal()}
 								</div>
 							</div>
 						</>

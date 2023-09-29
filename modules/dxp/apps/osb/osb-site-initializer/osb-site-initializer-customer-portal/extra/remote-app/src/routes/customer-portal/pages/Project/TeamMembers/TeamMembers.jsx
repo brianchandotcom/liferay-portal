@@ -7,12 +7,19 @@ import {useQuery} from '@apollo/client';
 import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
+import SearchBuilder from '~/common/core/SearchBuilder';
 import IncidentContactCard from '~/routes/customer-portal/components/IncidentContactCard';
 import i18n from '../../../../../common/I18n';
 import useCurrentKoroneikiAccount from '../../../../../common/hooks/useCurrentKoroneikiAccount';
 import {getAccountSubscriptionGroups} from '../../../../../common/services/liferay/graphql/queries';
 import ManageProductUsers from './components/ManageProductUsers/ManageProductUsers';
 import TeamMembersTable from './components/TeamMembersTable/TeamMembersTable';
+
+const targetProducts = [
+	'Liferay Experience Cloud',
+	'Analytics Cloud',
+	'LXC - SM',
+];
 
 const TeamMembers = () => {
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
@@ -25,7 +32,11 @@ const TeamMembers = () => {
 		getAccountSubscriptionGroups,
 		{
 			variables: {
-				filter: `accountKey eq '${koroneikiAccount?.accountKey}' and hasActivation eq true`,
+				filter: new SearchBuilder()
+					.eq('accountKey', koroneikiAccount?.accountKey)
+					.and()
+					.eq('hasActivation', true)
+					.build(),
 			},
 		}
 	);
@@ -36,8 +47,6 @@ const TeamMembers = () => {
 	const accountSubscriptionGroupsNames = accountSubscriptionGroups?.map(
 		(group) => group.name
 	);
-
-	const targetProducts = ['Liferay Experience Cloud', 'Analytics Cloud'];
 
 	const hasActiveProduct = accountSubscriptionGroups?.some(
 		(item) =>
@@ -73,15 +82,9 @@ const TeamMembers = () => {
 				/>
 
 				{featureFlags.includes('LPS-159127') &&
-					(accountSubscriptionGroupsNames?.includes(
-						'Analytics Cloud'
-					) ||
-						accountSubscriptionGroupsNames?.includes(
-							'Liferay Experience Cloud'
-						) ||
-						accountSubscriptionGroupsNames?.includes(
-							'LXC - SM'
-						)) && (
+					accountSubscriptionGroupsNames?.some((groupName) =>
+						targetProducts.includes(groupName)
+					) && (
 						<IncidentContactCard
 							accountSubscriptionGroupsNames={
 								accountSubscriptionGroupsNames

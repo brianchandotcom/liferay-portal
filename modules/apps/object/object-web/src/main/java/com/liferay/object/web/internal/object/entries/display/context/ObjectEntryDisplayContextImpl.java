@@ -608,11 +608,10 @@ public class ObjectEntryDisplayContextImpl
 			ObjectField objectField, boolean readOnly)
 		throws PortalException {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-170122") ||
-			(!objectField.compareBusinessType(
+		if (!objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
-			 !objectField.compareBusinessType(
-				 ObjectFieldConstants.BUSINESS_TYPE_FORMULA))) {
+			!objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 			ddmFormFields.add(
 				_getDDMFormField(objectEntry, objectField, readOnly));
@@ -1208,10 +1207,6 @@ public class ObjectEntryDisplayContextImpl
 	private boolean _isReadOnly(
 			ObjectEntry objectEntry, ObjectField objectField, boolean readOnly)
 		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
-			return readOnly;
-		}
 
 		if (readOnly) {
 			return true;

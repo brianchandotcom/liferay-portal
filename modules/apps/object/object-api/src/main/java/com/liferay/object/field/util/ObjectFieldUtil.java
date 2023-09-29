@@ -21,7 +21,6 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -221,9 +220,7 @@ public class ObjectFieldUtil {
 			Map<String, Object> values)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-170122") ||
-			ObjectEntryThreadLocal.isSkipReadOnlyObjectFieldsValidation()) {
-
+		if (ObjectEntryThreadLocal.isSkipReadOnlyObjectFieldsValidation()) {
 			return;
 		}
 

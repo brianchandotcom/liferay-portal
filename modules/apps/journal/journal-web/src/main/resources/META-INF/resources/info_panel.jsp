@@ -77,33 +77,68 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 			</clay:content-row>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<c:choose>
+			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-197307") %>'>
+				<clay:tabs
+					tabsItems="<%= journalDisplayContext.getInfoPanelTabsItems(false) %>"
+				>
+					<clay:tabs-panel>
+						<div class="sidebar-body">
+							<p class="sidebar-dt"><liferay-ui:message key="num-of-items" /></p>
 
-		<div class="sidebar-body">
-			<p class="sidebar-dt"><liferay-ui:message key="num-of-items" /></p>
+							<%
+							long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-			<%
-			long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+							if (folder != null) {
+								folderId = folder.getFolderId();
+							}
+							%>
 
-			if (folder != null) {
-				folderId = folder.getFolderId();
-			}
-			%>
+							<p class="sidebar-dd">
+								<%= JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, journalDisplayContext.getStatus()) %>
+							</p>
 
-			<p class="sidebar-dd">
-				<%= JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, journalDisplayContext.getStatus()) %>
-			</p>
+							<c:if test="<%= folder != null %>">
+								<p class="sidebar-dt"><liferay-ui:message key="created" /></p>
 
-			<c:if test="<%= folder != null %>">
-				<p class="sidebar-dt"><liferay-ui:message key="created" /></p>
+								<p class="sidebar-dd">
+									<%= HtmlUtil.escape(folder.getUserName()) %>
+								</p>
+							</c:if>
+						</div>
+					</clay:tabs-panel>
+				</clay:tabs>
+			</c:when>
+			<c:otherwise>
+				<clay:navigation-bar
+					navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
+				/>
 
-				<p class="sidebar-dd">
-					<%= HtmlUtil.escape(folder.getUserName()) %>
-				</p>
-			</c:if>
-		</div>
+				<div class="sidebar-body">
+					<p class="sidebar-dt"><liferay-ui:message key="num-of-items" /></p>
+
+					<%
+					long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+					if (folder != null) {
+						folderId = folder.getFolderId();
+					}
+					%>
+
+					<p class="sidebar-dd">
+						<%= JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, journalDisplayContext.getStatus()) %>
+					</p>
+
+					<c:if test="<%= folder != null %>">
+						<p class="sidebar-dt"><liferay-ui:message key="created" /></p>
+
+						<p class="sidebar-dd">
+							<%= HtmlUtil.escape(folder.getUserName()) %>
+						</p>
+					</c:if>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</c:when>
 	<c:when test="<%= ListUtil.isEmpty(folders) && ListUtil.isNotEmpty(articles) && (articles.size() == 1) %>">
 
@@ -185,7 +220,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 				%>
 
 				<clay:tabs
-					tabsItems="<%= journalDisplayContext.getInfoPanelTabsItems() %>"
+					tabsItems="<%= journalDisplayContext.getInfoPanelTabsItems(true) %>"
 				>
 					<clay:tabs-panel>
 						<p class="sidebar-dt"><liferay-ui:message key="id" /></p>
@@ -471,12 +506,27 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 			</clay:content-row>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<c:choose>
+			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-197307") %>'>
+				<clay:tabs
+					tabsItems="<%= journalDisplayContext.getInfoPanelTabsItems(false) %>"
+				>
+					<clay:tabs-panel>
+						<div class="sidebar-body">
+							<p class="sidebar-dt"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></p>
+						</div>
+					</clay:tabs-panel>
+				</clay:tabs>
+			</c:when>
+			<c:otherwise>
+				<clay:navigation-bar
+					navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
+				/>
 
-		<div class="sidebar-body">
-			<p class="sidebar-dt"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></p>
-		</div>
+				<div class="sidebar-body">
+					<p class="sidebar-dt"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></p>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>

@@ -35,7 +35,9 @@ public class JournalFeedTableReferenceDefinition
 		ChildTableReferenceInfoBuilder<JournalFeedTable>
 			childTableReferenceInfoBuilder) {
 
-		childTableReferenceInfoBuilder.referenceInnerJoin(
+		childTableReferenceInfoBuilder.assetEntryReference(
+			JournalFeedTable.INSTANCE.id, JournalFeed.class
+		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				DDMStructureLinkTable.INSTANCE
 			).innerJoinON(

@@ -147,13 +147,13 @@ const FrontendDataSet = ({
 						filter.active = true;
 						filter.selectedData = preloadedData;
 
-						const filterimplementation =
+						const filterImplementation =
 							FILTER_IMPLEMENTATIONS[filter.type];
 
-						filter.odataFilterString = filterimplementation.getOdataString(
+						filter.odataFilterString = filterImplementation.getOdataString(
 							filter
 						);
-						filter.selectedItemsLabel = filterimplementation.getSelectedItemsLabel(
+						filter.selectedItemsLabel = filterImplementation.getSelectedItemsLabel(
 							filter
 						);
 					}

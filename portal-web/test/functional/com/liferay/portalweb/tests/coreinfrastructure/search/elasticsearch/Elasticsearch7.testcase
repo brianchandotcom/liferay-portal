@@ -292,7 +292,7 @@ definition {
 	@description = "This is a use case for LPS-177666"
 	@priority = 3
 	test CanSetDefaultReindexExecutionMode {
-		property custom.properties = "feature.flag.LPS-177664=true${line.separator}feature.flag.LPS-183661=true";
+		property custom.properties = "feature.flag.LPS-177664=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.search.configuration.ReindexConfiguration.config";
 		property osgi.module.configurations = "defaultReindexExecutionMode=\"concurrent\"";
 		property test.liferay.virtual.instance = "false";

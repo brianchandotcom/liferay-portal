@@ -51,6 +51,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
+import org.apache.commons.lang.time.StopWatch;
+
 /**
  * @author Tina Tian
  */
@@ -113,8 +115,8 @@ public class DefaultSearchResultPermissionFilter
 			return _getHits(searchContext);
 		}
 
-		SlidingWindowSearcher slidingWindowSearcher =
-			new SlidingWindowSearcher();
+		SlidingWindowSearcher slidingWindowSearcher = new SlidingWindowSearcher(
+			_log);
 
 		return slidingWindowSearcher.search(start, end, searchContext);
 	}
@@ -343,6 +345,10 @@ public class DefaultSearchResultPermissionFilter
 
 	private class SlidingWindowSearcher {
 
+		public SlidingWindowSearcher(Log log) {
+			_log = log;
+		}
+
 		public Hits search(int start, int end, SearchContext searchContext) {
 			int amplifiedCount =
 				_permissionFilteredSearchResultAccurateCountThreshold;
@@ -351,9 +357,22 @@ public class DefaultSearchResultPermissionFilter
 			int filteredDocsCount = 0;
 			int hitsSize = 0;
 			int offset = 0;
+			int searchCount = 0;
 			long startTime = 0;
 
+			StopWatch hitFilteringStopWatch = new StopWatch();
+
+			StopWatch slidingWindowStopWatch = new StopWatch();
+
+			slidingWindowStopWatch.start();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Starting sliding window searches");
+			}
+
 			while (true) {
+				searchCount++;
+
 				int count = end - filteredDocsCount;
 
 				if ((offset > 0) || (amplifiedCount < count)) {
@@ -365,6 +384,19 @@ public class DefaultSearchResultPermissionFilter
 					(_searchQueryResultWindowLimit > 0)) {
 
 					amplifiedCount = _searchQueryResultWindowLimit;
+				}
+
+				if (_log.isDebugEnabled()) {
+					StringBundler sb = new StringBundler(6);
+
+					sb.append("Count: ");
+					sb.append(count);
+					sb.append(" AmplificationFactor: ");
+					sb.append(amplificationFactor);
+					sb.append(" AmplifiedCount: ");
+					sb.append(amplifiedCount);
+
+					_log.debug(sb.toString());
 				}
 
 				int amplifiedEnd = offset + amplifiedCount;
@@ -384,7 +416,16 @@ public class DefaultSearchResultPermissionFilter
 
 				Document[] oldDocs = hits.getDocs();
 
+				if (searchCount == 1) {
+					hitFilteringStopWatch.start();
+				}
+				else {
+					hitFilteringStopWatch.resume();
+				}
+
 				_filterHits(hits, searchContext);
+
+				hitFilteringStopWatch.suspend();
 
 				Document[] newDocs = hits.getDocs();
 
@@ -401,6 +442,21 @@ public class DefaultSearchResultPermissionFilter
 					updateDocuments(filteredDocsCount, start, end);
 
 					updateHits(hits, hitsSize - excludedDocsSize, startTime);
+
+					slidingWindowStopWatch.stop();
+
+					if (_log.isDebugEnabled()) {
+						StringBundler sb = new StringBundler(6);
+
+						sb.append(searchCount);
+						sb.append(" sliding window searches took ");
+						sb.append(slidingWindowStopWatch.getTime());
+						sb.append(" ms, Hit filtering took ");
+						sb.append(hitFilteringStopWatch.getTime());
+						sb.append(" ms");
+
+						_log.debug(sb.toString());
+					}
 
 					return hits;
 				}
@@ -527,6 +583,8 @@ public class DefaultSearchResultPermissionFilter
 			searchRequestBuilder.size(
 				searchContext.getEnd() - searchContext.getStart());
 		}
+
+		private final Log _log;
 
 	}
 

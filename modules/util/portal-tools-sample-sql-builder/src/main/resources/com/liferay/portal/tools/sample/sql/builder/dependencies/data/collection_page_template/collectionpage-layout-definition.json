@@ -1,0 +1,2568 @@
+{
+	"deletedItems": [
+	],
+	"items": {
+		"0016a6a8-54b8-f248-8a48-e01085fc9f72": {
+			"children": [
+				"c8343e0b-6b60-0a49-c008-e6c7e716f4c5"
+			],
+			"config": {
+			},
+			"itemId": "0016a6a8-54b8-f248-8a48-e01085fc9f72",
+			"parentId": "edb449fd-55c4-8fc6-1c06-7a3d6ac282d9",
+			"type": "collection-item"
+		},
+		"033e913f-0c9e-11ff-c56d-ff38c591036f": {
+			"children": [
+				"2921defb-d8ed-40fe-9f90-9b1707e6c9d9"
+			],
+			"config": {
+			},
+			"itemId": "033e913f-0c9e-11ff-c56d-ff38c591036f",
+			"parentId": "6777e273-df2b-f2be-bcba-55172e877bd4",
+			"type": "collection-item"
+		},
+		"03f48940-a1c8-8d70-f919-7d6a0c103ca6": {
+			"children": [
+				"ee50b925-8f1d-9701-fea5-37ffa2d1664c"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "03f48940-a1c8-8d70-f919-7d6a0c103ca6",
+			"parentId": "89bd0add-f360-1415-d045-522bdc9cc171",
+			"type": "column"
+		},
+		"079f1229-dce9-2c04-8fc6-952257e11239": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "079f1229-dce9-2c04-8fc6-952257e11239",
+			"parentId": "228a07dd-0b5c-47c8-c673-6dc26fdaba32",
+			"type": "fragment"
+		},
+		"087da8f8-08bd-d561-3f22-3f4e6777d838": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "087da8f8-08bd-d561-3f22-3f4e6777d838",
+			"parentId": "c5ddefce-53aa-3fab-3cf3-70e7e707def2",
+			"type": "fragment"
+		},
+		"08d49141-edbd-204c-b9f9-66a8ac9bfa84": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "08d49141-edbd-204c-b9f9-66a8ac9bfa84",
+			"parentId": "d232210a-de53-0668-c7cf-b4b135aac4fb",
+			"type": "fragment"
+		},
+		"0a5343de-7115-199f-2075-643d31823396": {
+			"children": [
+				"64aebd85-5653-4356-8908-ecaf94835de7"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "0a5343de-7115-199f-2075-643d31823396",
+			"parentId": "499c442a-54e5-6370-a007-79dd0cd74fbc",
+			"type": "collection"
+		},
+		"1048ffd4-6aec-f910-2d3e-2beec88c5ffe": {
+			"children": [
+				"6777e273-df2b-f2be-bcba-55172e877bd4"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "1048ffd4-6aec-f910-2d3e-2beec88c5ffe",
+			"parentId": "7d015c17-5bf5-fff1-9510-44017b631962",
+			"type": "column"
+		},
+		"10d95aec-5016-9e66-11ab-4e785eb40cb3": {
+			"children": [
+				"53b8d854-0f1e-097b-a5ba-9f6fb545dbdd",
+				"e9f06eb3-fbfb-af2d-6a54-41b9981c3b3b",
+				"ce91c859-de70-2506-a4b7-40cb306496f2"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"gutters": true,
+				"landscapeMobile": {
+					"modulesPerRow": 1,
+					"styles": {
+					}
+				},
+				"modulesPerRow": 3,
+				"numberOfColumns": 3,
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"reverseOrder": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "10d95aec-5016-9e66-11ab-4e785eb40cb3",
+			"parentId": "d6fee537-14ff-7c75-b7aa-ef2a13b6387c",
+			"type": "row"
+		},
+		"1120627e-922d-5cbd-ba84-6a0b04ac9e7c": {
+			"children": [
+				"cac829a9-f659-c330-ddcd-b409bec9a397"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "1120627e-922d-5cbd-ba84-6a0b04ac9e7c",
+			"parentId": "82004879-0df3-a4ce-182a-217941adac0a",
+			"type": "collection"
+		},
+		"1146da1e-d6c9-5286-d134-6409fa6575ab": {
+			"children": [
+				"89bd0add-f360-1415-d045-522bdc9cc171"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"widthType": "fixed"
+			},
+			"itemId": "1146da1e-d6c9-5286-d134-6409fa6575ab",
+			"parentId": "48951b72-5a83-c6f3-6c89-f9129f94f176",
+			"type": "container"
+		},
+		"12df6637-7745-0a36-ddb4-18e1ba8c805d": {
+			"children": [
+				"3c0d1fc5-6df6-5fe0-674f-c74a7dafb1c1"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "12df6637-7745-0a36-ddb4-18e1ba8c805d",
+			"parentId": "53b8d854-0f1e-097b-a5ba-9f6fb545dbdd",
+			"type": "collection"
+		},
+		"1a900f09-8f69-dcab-414b-b9abfd5a6234": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "1a900f09-8f69-dcab-414b-b9abfd5a6234",
+			"parentId": "1e380af5-a49e-80fd-7382-17eea9efec80",
+			"type": "fragment"
+		},
+		"1b7e8720-1a74-8dd6-abd9-433b1ae7c431": {
+			"children": [
+				"b5ef317b-4a74-c8db-58cf-e081df9733ac",
+				"4c704a5d-b392-e47e-37f2-d52c9644462d",
+				"8f367ccf-4996-1b8c-8008-05029d3f7474"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"gutters": true,
+				"landscapeMobile": {
+					"modulesPerRow": 1,
+					"styles": {
+					}
+				},
+				"modulesPerRow": 3,
+				"numberOfColumns": 3,
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"reverseOrder": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "1b7e8720-1a74-8dd6-abd9-433b1ae7c431",
+			"parentId": "9ac3922e-57d0-ba0d-6507-55d1cda21a5e",
+			"type": "row"
+		},
+		"1c15456c-3904-e94a-2fa1-5010c557f9e7": {
+			"children": [
+				"ee62c7c9-01cb-5d25-29e6-3f1a005cf769"
+			],
+			"config": {
+			},
+			"itemId": "1c15456c-3904-e94a-2fa1-5010c557f9e7",
+			"parentId": "7fe3f45f-8f9c-ddf9-a761-17742247b764",
+			"type": "collection-item"
+		},
+		"1d6b0672-f40e-7c6d-e40a-a5afe63b2e89": {
+			"children": [
+				"5b8a8e46-4089-e239-d987-3e5f3902558f",
+				"6a3f00eb-4d25-c4a5-a727-3fa785250d9f",
+				"d83b2428-6bbd-8f0d-ea94-715198cc91db"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"gutters": true,
+				"landscapeMobile": {
+					"modulesPerRow": 1,
+					"styles": {
+					}
+				},
+				"modulesPerRow": 3,
+				"numberOfColumns": 3,
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"reverseOrder": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "1d6b0672-f40e-7c6d-e40a-a5afe63b2e89",
+			"parentId": "76e38051-60f8-6d76-24d7-6c10684a6a07",
+			"type": "row"
+		},
+		"1d8468ca-d6bf-ae69-5f81-6fe2688999ec": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "1d8468ca-d6bf-ae69-5f81-6fe2688999ec",
+			"parentId": "87a9d4dc-b25f-9aa9-737b-8f9c4c91833a",
+			"type": "fragment"
+		},
+		"1e380af5-a49e-80fd-7382-17eea9efec80": {
+			"children": [
+				"1a900f09-8f69-dcab-414b-b9abfd5a6234"
+			],
+			"config": {
+			},
+			"itemId": "1e380af5-a49e-80fd-7382-17eea9efec80",
+			"parentId": "5cc11001-b2e5-5fcc-a9fe-1fd6d7bb4376",
+			"type": "collection-item"
+		},
+		"228a07dd-0b5c-47c8-c673-6dc26fdaba32": {
+			"children": [
+				"079f1229-dce9-2c04-8fc6-952257e11239"
+			],
+			"config": {
+			},
+			"itemId": "228a07dd-0b5c-47c8-c673-6dc26fdaba32",
+			"parentId": "7a858176-844d-6be7-3d80-0c1230d39486",
+			"type": "collection-item"
+		},
+		"2921defb-d8ed-40fe-9f90-9b1707e6c9d9": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "2921defb-d8ed-40fe-9f90-9b1707e6c9d9",
+			"parentId": "033e913f-0c9e-11ff-c56d-ff38c591036f",
+			"type": "fragment"
+		},
+		"30eaa9ef-b998-dc49-3161-d911b5ff8eaf": {
+			"children": [
+				"7fe3f45f-8f9c-ddf9-a761-17742247b764"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "30eaa9ef-b998-dc49-3161-d911b5ff8eaf",
+			"parentId": "f8d2af8f-fa45-788a-9910-97d0947e3b33",
+			"type": "column"
+		},
+		"3ab27b7d-73e5-0e9a-2914-74453b01c6ed": {
+			"children": [
+				"5182112d-7e33-fc71-a5b1-4f294b1967f1"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "3ab27b7d-73e5-0e9a-2914-74453b01c6ed",
+			"parentId": "ce91c859-de70-2506-a4b7-40cb306496f2",
+			"type": "collection"
+		},
+		"3c09758c-ccba-1ff1-465e-d6e3a1391d02": {
+			"children": [
+				"b73f129e-d7cf-6f66-0a43-3946ecd34ec1"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "3c09758c-ccba-1ff1-465e-d6e3a1391d02",
+			"parentId": "9935b8e7-082c-d565-3fe7-38cb01aee9e8",
+			"type": "collection"
+		},
+		"3c0d1fc5-6df6-5fe0-674f-c74a7dafb1c1": {
+			"children": [
+				"48315558-a1fa-2afc-70a8-fd5ea217cc45"
+			],
+			"config": {
+			},
+			"itemId": "3c0d1fc5-6df6-5fe0-674f-c74a7dafb1c1",
+			"parentId": "12df6637-7745-0a36-ddb4-18e1ba8c805d",
+			"type": "collection-item"
+		},
+		"3daa9a94-9192-cd68-0c3d-c79772d42e85": {
+			"children": [
+				"74074c5e-481c-140d-6d04-db157a7a3750"
+			],
+			"config": {
+			},
+			"itemId": "3daa9a94-9192-cd68-0c3d-c79772d42e85",
+			"parentId": "f43e45d9-9f05-d205-fd0e-e5c2ccac00ae",
+			"type": "collection-item"
+		},
+		"45f49c4f-f956-4f6f-9821-dd34079a84ff": {
+			"children": [
+				"afc4ba45-daf9-6bf9-2a78-780a57f6bd99"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "45f49c4f-f956-4f6f-9821-dd34079a84ff",
+			"parentId": "5b8a8e46-4089-e239-d987-3e5f3902558f",
+			"type": "collection"
+		},
+		"47086a54-153a-11d1-1976-d0440d069d02": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "47086a54-153a-11d1-1976-d0440d069d02",
+			"parentId": "5182112d-7e33-fc71-a5b1-4f294b1967f1",
+			"type": "fragment"
+		},
+		"48315558-a1fa-2afc-70a8-fd5ea217cc45": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "48315558-a1fa-2afc-70a8-fd5ea217cc45",
+			"parentId": "3c0d1fc5-6df6-5fe0-674f-c74a7dafb1c1",
+			"type": "fragment"
+		},
+		"48951b72-5a83-c6f3-6c89-f9129f94f176": {
+			"children": [
+				"1146da1e-d6c9-5286-d134-6409fa6575ab",
+				"76e38051-60f8-6d76-24d7-6c10684a6a07",
+				"9ac3922e-57d0-ba0d-6507-55d1cda21a5e",
+				"d141a329-7aa7-4eb5-10e1-327f06600703",
+				"f9e7c767-031b-1d95-70ac-b6c97a2184b9",
+				"642530f7-0c7c-584d-9671-cc409c3825a7",
+				"d6fee537-14ff-7c75-b7aa-ef2a13b6387c"
+			],
+			"config": {
+			},
+			"itemId": "48951b72-5a83-c6f3-6c89-f9129f94f176",
+			"parentId": "",
+			"type": "root"
+		},
+		"499c442a-54e5-6370-a007-79dd0cd74fbc": {
+			"children": [
+				"0a5343de-7115-199f-2075-643d31823396"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "499c442a-54e5-6370-a007-79dd0cd74fbc",
+			"parentId": "7d015c17-5bf5-fff1-9510-44017b631962",
+			"type": "column"
+		},
+		"4c704a5d-b392-e47e-37f2-d52c9644462d": {
+			"children": [
+				"d51f4c44-2b56-af8e-2ef0-a13cb1ab5816"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "4c704a5d-b392-e47e-37f2-d52c9644462d",
+			"parentId": "1b7e8720-1a74-8dd6-abd9-433b1ae7c431",
+			"type": "column"
+		},
+		"5182112d-7e33-fc71-a5b1-4f294b1967f1": {
+			"children": [
+				"47086a54-153a-11d1-1976-d0440d069d02"
+			],
+			"config": {
+			},
+			"itemId": "5182112d-7e33-fc71-a5b1-4f294b1967f1",
+			"parentId": "3ab27b7d-73e5-0e9a-2914-74453b01c6ed",
+			"type": "collection-item"
+		},
+		"528ba04e-3276-5500-87d6-7ef5b1868b66": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "528ba04e-3276-5500-87d6-7ef5b1868b66",
+			"parentId": "b73f129e-d7cf-6f66-0a43-3946ecd34ec1",
+			"type": "fragment"
+		},
+		"53b8d854-0f1e-097b-a5ba-9f6fb545dbdd": {
+			"children": [
+				"12df6637-7745-0a36-ddb4-18e1ba8c805d"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "53b8d854-0f1e-097b-a5ba-9f6fb545dbdd",
+			"parentId": "10d95aec-5016-9e66-11ab-4e785eb40cb3",
+			"type": "column"
+		},
+		"55dfcfb2-27c9-6018-1419-4c056b9c7fb5": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "55dfcfb2-27c9-6018-1419-4c056b9c7fb5",
+			"parentId": "e9963d87-3e91-f9e2-d3b4-53eaf7eb356f",
+			"type": "fragment"
+		},
+		"5a5262b2-6b15-7d68-3fb5-fcaa99d4fecb": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "5a5262b2-6b15-7d68-3fb5-fcaa99d4fecb",
+			"parentId": "64aebd85-5653-4356-8908-ecaf94835de7",
+			"type": "fragment"
+		},
+		"5b8a8e46-4089-e239-d987-3e5f3902558f": {
+			"children": [
+				"45f49c4f-f956-4f6f-9821-dd34079a84ff"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "5b8a8e46-4089-e239-d987-3e5f3902558f",
+			"parentId": "1d6b0672-f40e-7c6d-e40a-a5afe63b2e89",
+			"type": "column"
+		},
+		"5cc11001-b2e5-5fcc-a9fe-1fd6d7bb4376": {
+			"children": [
+				"1e380af5-a49e-80fd-7382-17eea9efec80"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "5cc11001-b2e5-5fcc-a9fe-1fd6d7bb4376",
+			"parentId": "6a3f00eb-4d25-c4a5-a727-3fa785250d9f",
+			"type": "collection"
+		},
+		"642530f7-0c7c-584d-9671-cc409c3825a7": {
+			"children": [
+				"d1845dcd-052c-4f0e-bdcc-1eb90eb1df5d"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"widthType": "fixed"
+			},
+			"itemId": "642530f7-0c7c-584d-9671-cc409c3825a7",
+			"parentId": "48951b72-5a83-c6f3-6c89-f9129f94f176",
+			"type": "container"
+		},
+		"6452cab9-2eac-2295-6d9a-de5b1b4c48e8": {
+			"children": [
+				"7a85a396-68f1-d3d2-7859-ff1ee38082b2"
+			],
+			"config": {
+			},
+			"itemId": "6452cab9-2eac-2295-6d9a-de5b1b4c48e8",
+			"parentId": "70eeb370-1067-0909-a525-a9aa8d5e2dbc",
+			"type": "collection-item"
+		},
+		"64aebd85-5653-4356-8908-ecaf94835de7": {
+			"children": [
+				"5a5262b2-6b15-7d68-3fb5-fcaa99d4fecb"
+			],
+			"config": {
+			},
+			"itemId": "64aebd85-5653-4356-8908-ecaf94835de7",
+			"parentId": "0a5343de-7115-199f-2075-643d31823396",
+			"type": "collection-item"
+		},
+		"6777e273-df2b-f2be-bcba-55172e877bd4": {
+			"children": [
+				"033e913f-0c9e-11ff-c56d-ff38c591036f"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "6777e273-df2b-f2be-bcba-55172e877bd4",
+			"parentId": "1048ffd4-6aec-f910-2d3e-2beec88c5ffe",
+			"type": "collection"
+		},
+		"68a651f6-1e29-9afb-1bd9-b97c240d9bb3": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "68a651f6-1e29-9afb-1bd9-b97c240d9bb3",
+			"parentId": "afc4ba45-daf9-6bf9-2a78-780a57f6bd99",
+			"type": "fragment"
+		},
+		"6a3f00eb-4d25-c4a5-a727-3fa785250d9f": {
+			"children": [
+				"5cc11001-b2e5-5fcc-a9fe-1fd6d7bb4376"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "6a3f00eb-4d25-c4a5-a727-3fa785250d9f",
+			"parentId": "1d6b0672-f40e-7c6d-e40a-a5afe63b2e89",
+			"type": "column"
+		},
+		"70eeb370-1067-0909-a525-a9aa8d5e2dbc": {
+			"children": [
+				"6452cab9-2eac-2295-6d9a-de5b1b4c48e8"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "70eeb370-1067-0909-a525-a9aa8d5e2dbc",
+			"parentId": "e7ab5d35-3d09-e142-492c-721e2ea4c22a",
+			"type": "collection"
+		},
+		"726b73bf-314f-9edc-97b2-7d3a7894d6d8": {
+			"children": [
+				"e9963d87-3e91-f9e2-d3b4-53eaf7eb356f"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "726b73bf-314f-9edc-97b2-7d3a7894d6d8",
+			"parentId": "ad565c38-fe91-5e4b-d687-e64998a101d8",
+			"type": "collection"
+		},
+		"733f33d6-561e-a21f-ef21-c36c70b9ac54": {
+			"children": [
+				"c5ddefce-53aa-3fab-3cf3-70e7e707def2"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "733f33d6-561e-a21f-ef21-c36c70b9ac54",
+			"parentId": "8754af8c-3272-1e44-cda2-e99278083884",
+			"type": "collection"
+		},
+		"74074c5e-481c-140d-6d04-db157a7a3750": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "74074c5e-481c-140d-6d04-db157a7a3750",
+			"parentId": "3daa9a94-9192-cd68-0c3d-c79772d42e85",
+			"type": "fragment"
+		},
+		"74d65943-4753-ea76-d04a-9b55d9961d13": {
+			"children": [
+				"ebcb38fd-7802-bdb3-f90a-a48f35a01dbf"
+			],
+			"config": {
+			},
+			"itemId": "74d65943-4753-ea76-d04a-9b55d9961d13",
+			"parentId": "d51f4c44-2b56-af8e-2ef0-a13cb1ab5816",
+			"type": "collection-item"
+		},
+		"76e38051-60f8-6d76-24d7-6c10684a6a07": {
+			"children": [
+				"1d6b0672-f40e-7c6d-e40a-a5afe63b2e89"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"widthType": "fixed"
+			},
+			"itemId": "76e38051-60f8-6d76-24d7-6c10684a6a07",
+			"parentId": "48951b72-5a83-c6f3-6c89-f9129f94f176",
+			"type": "container"
+		},
+		"7a858176-844d-6be7-3d80-0c1230d39486": {
+			"children": [
+				"228a07dd-0b5c-47c8-c673-6dc26fdaba32"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "7a858176-844d-6be7-3d80-0c1230d39486",
+			"parentId": "8f367ccf-4996-1b8c-8008-05029d3f7474",
+			"type": "collection"
+		},
+		"7a85a396-68f1-d3d2-7859-ff1ee38082b2": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "7a85a396-68f1-d3d2-7859-ff1ee38082b2",
+			"parentId": "6452cab9-2eac-2295-6d9a-de5b1b4c48e8",
+			"type": "fragment"
+		},
+		"7d015c17-5bf5-fff1-9510-44017b631962": {
+			"children": [
+				"9935b8e7-082c-d565-3fe7-38cb01aee9e8",
+				"499c442a-54e5-6370-a007-79dd0cd74fbc",
+				"1048ffd4-6aec-f910-2d3e-2beec88c5ffe"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"gutters": true,
+				"landscapeMobile": {
+					"modulesPerRow": 1,
+					"styles": {
+					}
+				},
+				"modulesPerRow": 3,
+				"numberOfColumns": 3,
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"reverseOrder": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "7d015c17-5bf5-fff1-9510-44017b631962",
+			"parentId": "f9e7c767-031b-1d95-70ac-b6c97a2184b9",
+			"type": "row"
+		},
+		"7fe3f45f-8f9c-ddf9-a761-17742247b764": {
+			"children": [
+				"1c15456c-3904-e94a-2fa1-5010c557f9e7"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "7fe3f45f-8f9c-ddf9-a761-17742247b764",
+			"parentId": "30eaa9ef-b998-dc49-3161-d911b5ff8eaf",
+			"type": "collection"
+		},
+		"82004879-0df3-a4ce-182a-217941adac0a": {
+			"children": [
+				"1120627e-922d-5cbd-ba84-6a0b04ac9e7c"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "82004879-0df3-a4ce-182a-217941adac0a",
+			"parentId": "89bd0add-f360-1415-d045-522bdc9cc171",
+			"type": "column"
+		},
+		"83819761-2e72-ad5b-25c2-1d64aa28e953": {
+			"children": [
+				"fc9a7098-6859-b2f2-303d-fdc5a32e5d18"
+			],
+			"config": {
+			},
+			"itemId": "83819761-2e72-ad5b-25c2-1d64aa28e953",
+			"parentId": "bc8ef936-284a-4361-494f-1d2f9df5235c",
+			"type": "collection-item"
+		},
+		"8754af8c-3272-1e44-cda2-e99278083884": {
+			"children": [
+				"733f33d6-561e-a21f-ef21-c36c70b9ac54"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "8754af8c-3272-1e44-cda2-e99278083884",
+			"parentId": "89bd0add-f360-1415-d045-522bdc9cc171",
+			"type": "column"
+		},
+		"87a9d4dc-b25f-9aa9-737b-8f9c4c91833a": {
+			"children": [
+				"1d8468ca-d6bf-ae69-5f81-6fe2688999ec"
+			],
+			"config": {
+			},
+			"itemId": "87a9d4dc-b25f-9aa9-737b-8f9c4c91833a",
+			"parentId": "9e51e52c-74cd-42fc-8bef-950aff13ba3c",
+			"type": "collection-item"
+		},
+		"8961f560-3156-47f6-8064-ddaac11716c2": {
+			"children": [
+				"f43e45d9-9f05-d205-fd0e-e5c2ccac00ae"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "8961f560-3156-47f6-8064-ddaac11716c2",
+			"parentId": "d1845dcd-052c-4f0e-bdcc-1eb90eb1df5d",
+			"type": "column"
+		},
+		"89bd0add-f360-1415-d045-522bdc9cc171": {
+			"children": [
+				"8754af8c-3272-1e44-cda2-e99278083884",
+				"82004879-0df3-a4ce-182a-217941adac0a",
+				"03f48940-a1c8-8d70-f919-7d6a0c103ca6"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"gutters": true,
+				"landscapeMobile": {
+					"modulesPerRow": 1,
+					"styles": {
+					}
+				},
+				"modulesPerRow": 3,
+				"numberOfColumns": 3,
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"reverseOrder": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "89bd0add-f360-1415-d045-522bdc9cc171",
+			"parentId": "1146da1e-d6c9-5286-d134-6409fa6575ab",
+			"type": "row"
+		},
+		"8e7da5c0-7fe1-3ad4-f979-1c01a8c12ff1": {
+			"children": [
+				"9e51e52c-74cd-42fc-8bef-950aff13ba3c"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "8e7da5c0-7fe1-3ad4-f979-1c01a8c12ff1",
+			"parentId": "f8d2af8f-fa45-788a-9910-97d0947e3b33",
+			"type": "column"
+		},
+		"8f367ccf-4996-1b8c-8008-05029d3f7474": {
+			"children": [
+				"7a858176-844d-6be7-3d80-0c1230d39486"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "8f367ccf-4996-1b8c-8008-05029d3f7474",
+			"parentId": "1b7e8720-1a74-8dd6-abd9-433b1ae7c431",
+			"type": "column"
+		},
+		"9935b8e7-082c-d565-3fe7-38cb01aee9e8": {
+			"children": [
+				"3c09758c-ccba-1ff1-465e-d6e3a1391d02"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "9935b8e7-082c-d565-3fe7-38cb01aee9e8",
+			"parentId": "7d015c17-5bf5-fff1-9510-44017b631962",
+			"type": "column"
+		},
+		"9ac3922e-57d0-ba0d-6507-55d1cda21a5e": {
+			"children": [
+				"1b7e8720-1a74-8dd6-abd9-433b1ae7c431"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"widthType": "fixed"
+			},
+			"itemId": "9ac3922e-57d0-ba0d-6507-55d1cda21a5e",
+			"parentId": "48951b72-5a83-c6f3-6c89-f9129f94f176",
+			"type": "container"
+		},
+		"9e51e52c-74cd-42fc-8bef-950aff13ba3c": {
+			"children": [
+				"87a9d4dc-b25f-9aa9-737b-8f9c4c91833a"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "9e51e52c-74cd-42fc-8bef-950aff13ba3c",
+			"parentId": "8e7da5c0-7fe1-3ad4-f979-1c01a8c12ff1",
+			"type": "collection"
+		},
+		"ad565c38-fe91-5e4b-d687-e64998a101d8": {
+			"children": [
+				"726b73bf-314f-9edc-97b2-7d3a7894d6d8"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "ad565c38-fe91-5e4b-d687-e64998a101d8",
+			"parentId": "f8d2af8f-fa45-788a-9910-97d0947e3b33",
+			"type": "column"
+		},
+		"afc4ba45-daf9-6bf9-2a78-780a57f6bd99": {
+			"children": [
+				"68a651f6-1e29-9afb-1bd9-b97c240d9bb3"
+			],
+			"config": {
+			},
+			"itemId": "afc4ba45-daf9-6bf9-2a78-780a57f6bd99",
+			"parentId": "45f49c4f-f956-4f6f-9821-dd34079a84ff",
+			"type": "collection-item"
+		},
+		"b5ef317b-4a74-c8db-58cf-e081df9733ac": {
+			"children": [
+				"b6724b38-6770-b8c1-c199-d11e0315a427"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "b5ef317b-4a74-c8db-58cf-e081df9733ac",
+			"parentId": "1b7e8720-1a74-8dd6-abd9-433b1ae7c431",
+			"type": "column"
+		},
+		"b6724b38-6770-b8c1-c199-d11e0315a427": {
+			"children": [
+				"b6eec8af-99f1-008d-c979-a7bc69880436"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "b6724b38-6770-b8c1-c199-d11e0315a427",
+			"parentId": "b5ef317b-4a74-c8db-58cf-e081df9733ac",
+			"type": "collection"
+		},
+		"b6eec8af-99f1-008d-c979-a7bc69880436": {
+			"children": [
+				"c715b7b5-6eed-bfab-855c-3613dadf4b2a"
+			],
+			"config": {
+			},
+			"itemId": "b6eec8af-99f1-008d-c979-a7bc69880436",
+			"parentId": "b6724b38-6770-b8c1-c199-d11e0315a427",
+			"type": "collection-item"
+		},
+		"b73f129e-d7cf-6f66-0a43-3946ecd34ec1": {
+			"children": [
+				"528ba04e-3276-5500-87d6-7ef5b1868b66"
+			],
+			"config": {
+			},
+			"itemId": "b73f129e-d7cf-6f66-0a43-3946ecd34ec1",
+			"parentId": "3c09758c-ccba-1ff1-465e-d6e3a1391d02",
+			"type": "collection-item"
+		},
+		"b85eb64a-36cb-6d87-c55d-963523fabf11": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "b85eb64a-36cb-6d87-c55d-963523fabf11",
+			"parentId": "c46e17d6-e0d9-c6ec-ec73-5f0b742cdce2",
+			"type": "fragment"
+		},
+		"bc8ef936-284a-4361-494f-1d2f9df5235c": {
+			"children": [
+				"83819761-2e72-ad5b-25c2-1d64aa28e953"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "bc8ef936-284a-4361-494f-1d2f9df5235c",
+			"parentId": "e9f06eb3-fbfb-af2d-6a54-41b9981c3b3b",
+			"type": "collection"
+		},
+		"c46e17d6-e0d9-c6ec-ec73-5f0b742cdce2": {
+			"children": [
+				"b85eb64a-36cb-6d87-c55d-963523fabf11"
+			],
+			"config": {
+			},
+			"itemId": "c46e17d6-e0d9-c6ec-ec73-5f0b742cdce2",
+			"parentId": "d337943b-439e-3457-f4dd-6fd4e71db883",
+			"type": "collection-item"
+		},
+		"c5ddefce-53aa-3fab-3cf3-70e7e707def2": {
+			"children": [
+				"087da8f8-08bd-d561-3f22-3f4e6777d838"
+			],
+			"config": {
+			},
+			"itemId": "c5ddefce-53aa-3fab-3cf3-70e7e707def2",
+			"parentId": "733f33d6-561e-a21f-ef21-c36c70b9ac54",
+			"type": "collection-item"
+		},
+		"c715b7b5-6eed-bfab-855c-3613dadf4b2a": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "c715b7b5-6eed-bfab-855c-3613dadf4b2a",
+			"parentId": "b6eec8af-99f1-008d-c979-a7bc69880436",
+			"type": "fragment"
+		},
+		"c8343e0b-6b60-0a49-c008-e6c7e716f4c5": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "c8343e0b-6b60-0a49-c008-e6c7e716f4c5",
+			"parentId": "0016a6a8-54b8-f248-8a48-e01085fc9f72",
+			"type": "fragment"
+		},
+		"cac829a9-f659-c330-ddcd-b409bec9a397": {
+			"children": [
+				"ee19c42d-fdf7-6875-a20c-0bdfea2bb52f"
+			],
+			"config": {
+			},
+			"itemId": "cac829a9-f659-c330-ddcd-b409bec9a397",
+			"parentId": "1120627e-922d-5cbd-ba84-6a0b04ac9e7c",
+			"type": "collection-item"
+		},
+		"ce91c859-de70-2506-a4b7-40cb306496f2": {
+			"children": [
+				"3ab27b7d-73e5-0e9a-2914-74453b01c6ed"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "ce91c859-de70-2506-a4b7-40cb306496f2",
+			"parentId": "10d95aec-5016-9e66-11ab-4e785eb40cb3",
+			"type": "column"
+		},
+		"d088b7cb-b38b-94e7-5694-4343fbf263dd": {
+			"children": [
+				"edb449fd-55c4-8fc6-1c06-7a3d6ac282d9"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "d088b7cb-b38b-94e7-5694-4343fbf263dd",
+			"parentId": "d1845dcd-052c-4f0e-bdcc-1eb90eb1df5d",
+			"type": "column"
+		},
+		"d141a329-7aa7-4eb5-10e1-327f06600703": {
+			"children": [
+				"f8d2af8f-fa45-788a-9910-97d0947e3b33"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"widthType": "fixed"
+			},
+			"itemId": "d141a329-7aa7-4eb5-10e1-327f06600703",
+			"parentId": "48951b72-5a83-c6f3-6c89-f9129f94f176",
+			"type": "container"
+		},
+		"d1845dcd-052c-4f0e-bdcc-1eb90eb1df5d": {
+			"children": [
+				"8961f560-3156-47f6-8064-ddaac11716c2",
+				"e7ab5d35-3d09-e142-492c-721e2ea4c22a",
+				"d088b7cb-b38b-94e7-5694-4343fbf263dd"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"gutters": true,
+				"landscapeMobile": {
+					"modulesPerRow": 1,
+					"styles": {
+					}
+				},
+				"modulesPerRow": 3,
+				"numberOfColumns": 3,
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"reverseOrder": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "d1845dcd-052c-4f0e-bdcc-1eb90eb1df5d",
+			"parentId": "642530f7-0c7c-584d-9671-cc409c3825a7",
+			"type": "row"
+		},
+		"d232210a-de53-0668-c7cf-b4b135aac4fb": {
+			"children": [
+				"08d49141-edbd-204c-b9f9-66a8ac9bfa84"
+			],
+			"config": {
+			},
+			"itemId": "d232210a-de53-0668-c7cf-b4b135aac4fb",
+			"parentId": "ee50b925-8f1d-9701-fea5-37ffa2d1664c",
+			"type": "collection-item"
+		},
+		"d337943b-439e-3457-f4dd-6fd4e71db883": {
+			"children": [
+				"c46e17d6-e0d9-c6ec-ec73-5f0b742cdce2"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "d337943b-439e-3457-f4dd-6fd4e71db883",
+			"parentId": "d83b2428-6bbd-8f0d-ea94-715198cc91db",
+			"type": "collection"
+		},
+		"d51f4c44-2b56-af8e-2ef0-a13cb1ab5816": {
+			"children": [
+				"74d65943-4753-ea76-d04a-9b55d9961d13"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "d51f4c44-2b56-af8e-2ef0-a13cb1ab5816",
+			"parentId": "4c704a5d-b392-e47e-37f2-d52c9644462d",
+			"type": "collection"
+		},
+		"d6fee537-14ff-7c75-b7aa-ef2a13b6387c": {
+			"children": [
+				"10d95aec-5016-9e66-11ab-4e785eb40cb3"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"widthType": "fixed"
+			},
+			"itemId": "d6fee537-14ff-7c75-b7aa-ef2a13b6387c",
+			"parentId": "48951b72-5a83-c6f3-6c89-f9129f94f176",
+			"type": "container"
+		},
+		"d83b2428-6bbd-8f0d-ea94-715198cc91db": {
+			"children": [
+				"d337943b-439e-3457-f4dd-6fd4e71db883"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "d83b2428-6bbd-8f0d-ea94-715198cc91db",
+			"parentId": "1d6b0672-f40e-7c6d-e40a-a5afe63b2e89",
+			"type": "column"
+		},
+		"e7ab5d35-3d09-e142-492c-721e2ea4c22a": {
+			"children": [
+				"70eeb370-1067-0909-a525-a9aa8d5e2dbc"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "e7ab5d35-3d09-e142-492c-721e2ea4c22a",
+			"parentId": "d1845dcd-052c-4f0e-bdcc-1eb90eb1df5d",
+			"type": "column"
+		},
+		"e9963d87-3e91-f9e2-d3b4-53eaf7eb356f": {
+			"children": [
+				"55dfcfb2-27c9-6018-1419-4c056b9c7fb5"
+			],
+			"config": {
+			},
+			"itemId": "e9963d87-3e91-f9e2-d3b4-53eaf7eb356f",
+			"parentId": "726b73bf-314f-9edc-97b2-7d3a7894d6d8",
+			"type": "collection-item"
+		},
+		"e9f06eb3-fbfb-af2d-6a54-41b9981c3b3b": {
+			"children": [
+				"bc8ef936-284a-4361-494f-1d2f9df5235c"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "e9f06eb3-fbfb-af2d-6a54-41b9981c3b3b",
+			"parentId": "10d95aec-5016-9e66-11ab-4e785eb40cb3",
+			"type": "column"
+		},
+		"ebcb38fd-7802-bdb3-f90a-a48f35a01dbf": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "ebcb38fd-7802-bdb3-f90a-a48f35a01dbf",
+			"parentId": "74d65943-4753-ea76-d04a-9b55d9961d13",
+			"type": "fragment"
+		},
+		"edb449fd-55c4-8fc6-1c06-7a3d6ac282d9": {
+			"children": [
+				"0016a6a8-54b8-f248-8a48-e01085fc9f72"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "edb449fd-55c4-8fc6-1c06-7a3d6ac282d9",
+			"parentId": "d088b7cb-b38b-94e7-5694-4343fbf263dd",
+			"type": "collection"
+		},
+		"ee19c42d-fdf7-6875-a20c-0bdfea2bb52f": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "ee19c42d-fdf7-6875-a20c-0bdfea2bb52f",
+			"parentId": "cac829a9-f659-c330-ddcd-b409bec9a397",
+			"type": "fragment"
+		},
+		"ee50b925-8f1d-9701-fea5-37ffa2d1664c": {
+			"children": [
+				"d232210a-de53-0668-c7cf-b4b135aac4fb"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "ee50b925-8f1d-9701-fea5-37ffa2d1664c",
+			"parentId": "03f48940-a1c8-8d70-f919-7d6a0c103ca6",
+			"type": "collection"
+		},
+		"ee62c7c9-01cb-5d25-29e6-3f1a005cf769": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "ee62c7c9-01cb-5d25-29e6-3f1a005cf769",
+			"parentId": "1c15456c-3904-e94a-2fa1-5010c557f9e7",
+			"type": "fragment"
+		},
+		"f43e45d9-9f05-d205-fd0e-e5c2ccac00ae": {
+			"children": [
+				"3daa9a94-9192-cd68-0c3d-c79772d42e85"
+			],
+			"config": {
+				"collection": {
+					"classNameId": "${assetListEntryClassNameId}",
+					"classPK": "${assetListEntryClassPK}",
+					"itemSubtype": "",
+					"itemType": "com.liferay.blogs.model.BlogsEntry",
+					"title": "${assetListEntryTitle}",
+					"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 20,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "f43e45d9-9f05-d205-fd0e-e5c2ccac00ae",
+			"parentId": "8961f560-3156-47f6-8064-ddaac11716c2",
+			"type": "collection"
+		},
+		"f8d2af8f-fa45-788a-9910-97d0947e3b33": {
+			"children": [
+				"ad565c38-fe91-5e4b-d687-e64998a101d8",
+				"8e7da5c0-7fe1-3ad4-f979-1c01a8c12ff1",
+				"30eaa9ef-b998-dc49-3161-d911b5ff8eaf"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"gutters": true,
+				"landscapeMobile": {
+					"modulesPerRow": 1,
+					"styles": {
+					}
+				},
+				"modulesPerRow": 3,
+				"numberOfColumns": 3,
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"reverseOrder": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "f8d2af8f-fa45-788a-9910-97d0947e3b33",
+			"parentId": "d141a329-7aa7-4eb5-10e1-327f06600703",
+			"type": "row"
+		},
+		"f9e7c767-031b-1d95-70ac-b6c97a2184b9": {
+			"children": [
+				"7d015c17-5bf5-fff1-9510-44017b631962"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"widthType": "fixed"
+			},
+			"itemId": "f9e7c767-031b-1d95-70ac-b6c97a2184b9",
+			"parentId": "48951b72-5a83-c6f3-6c89-f9129f94f176",
+			"type": "container"
+		},
+		"fc9a7098-6859-b2f2-303d-fdc5a32e5d18": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "fc9a7098-6859-b2f2-303d-fdc5a32e5d18",
+			"parentId": "83819761-2e72-ad5b-25c2-1d64aa28e953",
+			"type": "fragment"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "48951b72-5a83-c6f3-6c89-f9129f94f176"
+	},
+	"version": 1.1
+}

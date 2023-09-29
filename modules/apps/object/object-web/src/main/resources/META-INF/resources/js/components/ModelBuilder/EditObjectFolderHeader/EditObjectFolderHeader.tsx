@@ -13,6 +13,10 @@ import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext
 
 import './EditObjectFolderHeader.scss';
 
+import {getLocalizableLabel} from '@liferay/object-js-components-web';
+
+import {defaultLanguageId} from '../../../utils/constants';
+
 interface EditObjectFolderHeaderProps {
 	hasDraftObjectDefinitions: boolean;
 	selectedObjectFolder: ObjectFolder;
@@ -32,20 +36,30 @@ export default function EditObjectFolderHeader({
 				<div className="lfr-objects__model-builder-header-object-folder-info">
 					<div
 						className={classNames(
-							'lfr-objects__model-builder-header-object-folder-info-name',
+							'lfr-objects__model-builder-header-object-folder-info-label',
 							{
-								'lfr-objects__model-builder-header-object-folder-info-name-changes-saved': showChangesSaved,
+								'lfr-objects__model-builder-header-object-folder-info-label-changes-saved': showChangesSaved,
 							}
 						)}
 					>
 						<ClayTooltipProvider>
 							<span
 								title={
-									Liferay.Language.get('folder-name') +
-									`: ${selectedObjectFolder.name}`
+									Liferay.Language.get(
+										'object-folder-label'
+									) +
+									`: ${getLocalizableLabel(
+										defaultLanguageId,
+										selectedObjectFolder.label,
+										selectedObjectFolder.name
+									)}`
 								}
 							>
-								{selectedObjectFolder.name}
+								{getLocalizableLabel(
+									defaultLanguageId,
+									selectedObjectFolder.label,
+									selectedObjectFolder.name
+								)}
 							</span>
 						</ClayTooltipProvider>
 					</div>

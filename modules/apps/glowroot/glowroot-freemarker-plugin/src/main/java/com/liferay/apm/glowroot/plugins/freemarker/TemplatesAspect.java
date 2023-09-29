@@ -19,6 +19,9 @@ import org.glowroot.agent.plugin.api.weaving.Shim;
 
 public class TemplatesAspect {
 
+	private static final String LEVEL_DEBUG = "DEBUG";
+	private static final String LEVEL_TRACE = "TRACE";
+
     @Shim("com.liferay.portal.kernel.theme.ThemeDisplay")
     public interface ThemeDisplayShim {
 		long getCompanyId();
@@ -60,7 +63,7 @@ public class TemplatesAspect {
             		"javax.servlet.http.HttpServletResponse"},
             timerName = "Template Parser Transform")
     public static class TransformAdvice {
-
+		
         private static final TimerName timer = Agent.getTimerName(TransformAdvice.class);
 
         @OnBefore
@@ -84,19 +87,31 @@ public class TemplatesAspect {
         	messageBuilder.append(siteGroupId);
         	messageBuilder.append("]");
         	
-        	if(TemplatesPluginProperties.captureAsOuterTransaction()) {
-        		context.setTransactionOuter();
-
-        		if(TemplatesPluginProperties.captureTemplateScriptInTransaction()) {
+        	TraceEntry traceEntry;
+        	
+        	switch(TemplatesPluginProperties.templateInstrumentationLevel()) {
+        	
+        		case LEVEL_TRACE:
+        			traceEntry = context.startTransaction("Templates", messageBuilder.toString(),
+            				MessageSupplier.create(messageBuilder.toString()), timer);
+            		context.setTransactionOuter();
         			context.addTransactionAttribute("Template type", type);
         			context.addTransactionAttribute("Template script", script);
-        		}
-        		
-            	return context.startTransaction("Templates", messageBuilder.toString(), MessageSupplier.create(messageBuilder.toString()), timer);
-        		
-        	} else {
-    			return context.startTraceEntry(MessageSupplier.create(messageBuilder.toString()), timer);
+            		break;
+        			
+        		case LEVEL_DEBUG:
+        			traceEntry = context.startTransaction("Templates", messageBuilder.toString(),
+            				MessageSupplier.create(messageBuilder.toString()), timer);
+            		context.setTransactionOuter();
+            		break;
+        			
+        		default:
+        			traceEntry = context.startTraceEntry(MessageSupplier.create(messageBuilder.toString()), timer);
+        			
         	}
+
+        	return traceEntry;
+        	
         }
 
         @OnReturn
@@ -151,18 +166,30 @@ public class TemplatesAspect {
         	messageBuilder.append(siteGroupId);
         	messageBuilder.append("]");
         	
-        	if(TemplatesPluginProperties.captureAsOuterTransaction()) {
-        		context.setTransactionOuter();
-
-        		if(TemplatesPluginProperties.captureTemplateScriptInTransaction()) {
+        	TraceEntry traceEntry;
+        	
+        	switch(TemplatesPluginProperties.templateInstrumentationLevel()) {
+        	
+	    		case LEVEL_TRACE:
+	    			traceEntry = context.startTransaction("Templates", messageBuilder.toString(),
+	        				MessageSupplier.create(messageBuilder.toString()), timer);
+	        		context.setTransactionOuter();
         			context.addTransactionAttribute("Template script", ddmTemplate.getScript());
-        		}
-        		
-            	return context.startTransaction("Templates", messageBuilder.toString(), MessageSupplier.create(messageBuilder.toString()), timer);
-        		
-        	} else {
-    			return context.startTraceEntry(MessageSupplier.create(messageBuilder.toString()), timer);
-        	}
+	        		break;
+	    			
+	    		case LEVEL_DEBUG:
+	    			traceEntry = context.startTransaction("Templates", messageBuilder.toString(),
+	        				MessageSupplier.create(messageBuilder.toString()), timer);
+	        		context.setTransactionOuter();
+	        		break;
+	    			
+	    		default:
+	    			traceEntry = context.startTraceEntry(MessageSupplier.create(messageBuilder.toString()), timer);
+	    			
+	    	}
+        	
+        	return traceEntry;
+
         }
 
         @OnReturn
@@ -207,18 +234,29 @@ public class TemplatesAspect {
         	messageBuilder.append(siteGroupId);
         	messageBuilder.append("]");
         	
-        	if(TemplatesPluginProperties.captureAsOuterTransaction()) {
-        		context.setTransactionOuter();
-
-        		if(TemplatesPluginProperties.captureTemplateScriptInTransaction()) {
+        	TraceEntry traceEntry;
+        	
+        	switch(TemplatesPluginProperties.templateInstrumentationLevel()) {
+        	
+	    		case LEVEL_TRACE:
+	    			traceEntry = context.startTransaction("Templates", messageBuilder.toString(),
+	        				MessageSupplier.create(messageBuilder.toString()), timer);
+            		context.setTransactionOuter();
         			context.addTransactionAttribute("Fragment Entry Link html", html);
-        		}
-        		
-            	return context.startTransaction("Templates", messageBuilder.toString(), MessageSupplier.create(messageBuilder.toString()), timer);
-        		
-        	} else {
-    			return context.startTraceEntry(MessageSupplier.create(messageBuilder.toString()), timer);
-        	}
+	        		break;
+	    			
+	    		case LEVEL_DEBUG:
+	    			traceEntry = context.startTransaction("Templates", messageBuilder.toString(),
+	        				MessageSupplier.create(messageBuilder.toString()), timer);
+	        		context.setTransactionOuter();
+	        		break;
+	    			
+	    		default:
+	    			traceEntry = context.startTraceEntry(MessageSupplier.create(messageBuilder.toString()), timer);
+	    			
+	    	}
+        	
+        	return traceEntry;
         }
 
         @OnReturn

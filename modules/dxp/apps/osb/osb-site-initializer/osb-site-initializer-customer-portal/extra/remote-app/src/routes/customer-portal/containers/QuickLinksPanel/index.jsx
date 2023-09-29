@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import DOMPurify from 'dompurify';
 import {useCallback, useEffect, useMemo} from 'react';
 import useSWR from 'swr';
+import {Liferay} from '~/common/services/liferay';
 import i18n from '../../../../common/I18n';
 import {fetchHeadless} from '../../../../common/services/liferay/api';
 import {storage} from '../../../../common/services/liferay/storage';
@@ -70,7 +71,7 @@ const QuickLinksPanel = () => {
 	}, [pageRoutes, project?.accountKey, quickLinks, structuredContents]);
 
 	const {data: quickLinksContents = [], isLoading} = useSWR(
-		'overview/banner',
+		`overview/banner/${Liferay.ThemeDisplay.getLanguageId()}`,
 		fetchQuickLinksPanelContent
 	);
 

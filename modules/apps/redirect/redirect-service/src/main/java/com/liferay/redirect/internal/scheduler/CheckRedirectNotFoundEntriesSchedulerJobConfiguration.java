@@ -46,15 +46,17 @@ public class CheckRedirectNotFoundEntriesSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_redirectConfiguration.checkRedirectNotFoundEntriesInterval(),
-			TimeUnit.HOUR);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_redirectConfiguration = ConfigurableUtil.createConfigurable(
 			RedirectConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_redirectConfiguration.checkRedirectNotFoundEntriesInterval(),
+			TimeUnit.HOUR);
 	}
 
 	private void _removeMaximumOverflowRedirectNotFoundEntries()
@@ -120,5 +122,7 @@ public class CheckRedirectNotFoundEntriesSchedulerJobConfiguration
 	@Reference
 	private RedirectNotFoundEntryLocalService
 		_redirectNotFoundEntryLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

@@ -52,20 +52,24 @@ public class SamlIdpSsoSessionSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_samlConfiguration.getIdpSsoSessionCheckInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_samlConfiguration = ConfigurableUtil.createConfigurable(
 			SamlConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_samlConfiguration.getIdpSsoSessionCheckInterval(),
+			TimeUnit.MINUTE);
 	}
 
 	private SamlConfiguration _samlConfiguration;
 
 	@Reference
 	private SamlIdpSsoSessionLocalService _samlIdpSsoSessionLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

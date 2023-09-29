@@ -36,19 +36,23 @@ public class UpdateExchangeRateSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_commerceCurrencyConfiguration.updateInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_commerceCurrencyConfiguration = ConfigurableUtil.createConfigurable(
 			CommerceCurrencyConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_commerceCurrencyConfiguration.updateInterval(), TimeUnit.MINUTE);
 	}
 
 	private CommerceCurrencyConfiguration _commerceCurrencyConfiguration;
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

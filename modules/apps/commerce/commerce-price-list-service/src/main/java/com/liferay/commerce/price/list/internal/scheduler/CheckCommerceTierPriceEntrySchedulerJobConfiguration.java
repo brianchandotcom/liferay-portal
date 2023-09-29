@@ -37,9 +37,7 @@ public class CheckCommerceTierPriceEntrySchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_commerceTierPriceEntryConfiguration.checkInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
@@ -47,6 +45,10 @@ public class CheckCommerceTierPriceEntrySchedulerJobConfiguration
 		_commerceTierPriceEntryConfiguration =
 			ConfigurableUtil.createConfigurable(
 				CommerceTierPriceEntryConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_commerceTierPriceEntryConfiguration.checkInterval(),
+			TimeUnit.MINUTE);
 	}
 
 	private CommerceTierPriceEntryConfiguration
@@ -55,5 +57,7 @@ public class CheckCommerceTierPriceEntrySchedulerJobConfiguration
 	@Reference
 	private CommerceTierPriceEntryLocalService
 		_commerceTierPriceEntryLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

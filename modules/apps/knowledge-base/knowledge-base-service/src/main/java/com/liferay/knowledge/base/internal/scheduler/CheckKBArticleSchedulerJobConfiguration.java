@@ -46,14 +46,16 @@ public class CheckKBArticleSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_kbServiceConfiguration.checkInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_kbServiceConfiguration = ConfigurableUtil.createConfigurable(
 			KBServiceConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_kbServiceConfiguration.checkInterval(), TimeUnit.MINUTE);
 	}
 
 	@Reference
@@ -63,5 +65,6 @@ public class CheckKBArticleSchedulerJobConfiguration
 	private KBArticleLocalService _kbArticleLocalService;
 
 	private KBServiceConfiguration _kbServiceConfiguration;
+	private TriggerConfiguration _triggerConfiguration;
 
 }

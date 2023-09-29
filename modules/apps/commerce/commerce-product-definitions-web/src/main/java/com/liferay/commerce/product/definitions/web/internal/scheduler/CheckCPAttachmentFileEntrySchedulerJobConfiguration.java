@@ -36,9 +36,7 @@ public class CheckCPAttachmentFileEntrySchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_cpAttachmentFileEntryConfiguration.checkInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
@@ -46,6 +44,10 @@ public class CheckCPAttachmentFileEntrySchedulerJobConfiguration
 		_cpAttachmentFileEntryConfiguration =
 			ConfigurableUtil.createConfigurable(
 				CPAttachmentFileEntryConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_cpAttachmentFileEntryConfiguration.checkInterval(),
+			TimeUnit.MINUTE);
 	}
 
 	private CPAttachmentFileEntryConfiguration
@@ -54,5 +56,7 @@ public class CheckCPAttachmentFileEntrySchedulerJobConfiguration
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

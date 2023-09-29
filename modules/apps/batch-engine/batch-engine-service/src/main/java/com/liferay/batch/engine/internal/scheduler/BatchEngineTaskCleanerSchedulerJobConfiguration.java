@@ -60,15 +60,17 @@ public class BatchEngineTaskCleanerSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_batchEngineTaskConfiguration.completedTasksCleanerScanInterval(),
-			TimeUnit.DAY);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_batchEngineTaskConfiguration = ConfigurableUtil.createConfigurable(
 			BatchEngineTaskConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_batchEngineTaskConfiguration.completedTasksCleanerScanInterval(),
+			TimeUnit.DAY);
 	}
 
 	@Reference
@@ -80,5 +82,6 @@ public class BatchEngineTaskCleanerSchedulerJobConfiguration
 		_batchEngineImportTaskLocalService;
 
 	private BatchEngineTaskConfiguration _batchEngineTaskConfiguration;
+	private TriggerConfiguration _triggerConfiguration;
 
 }

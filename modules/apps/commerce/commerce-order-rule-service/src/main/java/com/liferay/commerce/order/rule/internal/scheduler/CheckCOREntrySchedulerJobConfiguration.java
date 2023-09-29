@@ -36,19 +36,23 @@ public class CheckCOREntrySchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_corEntryConfiguration.checkInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_corEntryConfiguration = ConfigurableUtil.createConfigurable(
 			COREntryConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_corEntryConfiguration.checkInterval(), TimeUnit.MINUTE);
 	}
 
 	private COREntryConfiguration _corEntryConfiguration;
 
 	@Reference
 	private COREntryLocalService _corEntryLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

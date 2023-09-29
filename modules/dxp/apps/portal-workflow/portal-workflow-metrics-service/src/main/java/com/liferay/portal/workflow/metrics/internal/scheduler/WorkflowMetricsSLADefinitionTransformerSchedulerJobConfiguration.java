@@ -62,15 +62,17 @@ public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_workflowMetricsConfiguration.checkSLADefinitionsJobInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_workflowMetricsConfiguration = ConfigurableUtil.createConfigurable(
 			WorkflowMetricsConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_workflowMetricsConfiguration.checkSLADefinitionsJobInterval(),
+			TimeUnit.MINUTE);
 	}
 
 	private BooleanQuery _createBooleanQuery(long companyId) {
@@ -154,6 +156,7 @@ public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
 
+	private TriggerConfiguration _triggerConfiguration;
 	private volatile WorkflowMetricsConfiguration _workflowMetricsConfiguration;
 
 	@Reference

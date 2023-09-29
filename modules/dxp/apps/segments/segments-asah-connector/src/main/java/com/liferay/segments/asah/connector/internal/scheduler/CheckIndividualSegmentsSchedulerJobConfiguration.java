@@ -36,19 +36,22 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_segmentsAsahConfiguration.checkInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_segmentsAsahConfiguration = ConfigurableUtil.createConfigurable(
 			SegmentsAsahConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_segmentsAsahConfiguration.checkInterval(), TimeUnit.MINUTE);
 	}
 
 	@Reference
 	private IndividualSegmentsChecker _individualSegmentsChecker;
 
 	private SegmentsAsahConfiguration _segmentsAsahConfiguration;
+	private TriggerConfiguration _triggerConfiguration;
 
 }

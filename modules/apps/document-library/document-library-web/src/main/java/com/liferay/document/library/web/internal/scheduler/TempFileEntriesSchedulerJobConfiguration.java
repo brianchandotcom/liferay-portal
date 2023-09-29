@@ -54,15 +54,17 @@ public class TempFileEntriesSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_dlConfiguration.temporaryFileEntriesCheckInterval(),
-			TimeUnit.HOUR);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_dlConfiguration.temporaryFileEntriesCheckInterval(),
+			TimeUnit.HOUR);
 	}
 
 	private void _deleteExpiredTemporaryFileEntries(Repository repository) {
@@ -117,5 +119,7 @@ public class TempFileEntriesSchedulerJobConfiguration
 
 	@Reference
 	private RepositoryProvider _repositoryProvider;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

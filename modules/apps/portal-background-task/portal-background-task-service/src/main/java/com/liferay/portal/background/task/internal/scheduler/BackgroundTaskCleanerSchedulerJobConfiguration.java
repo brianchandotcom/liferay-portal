@@ -44,8 +44,7 @@ public class BackgroundTaskCleanerSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_backgroundTaskCleanerConfiguration.interval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
@@ -54,6 +53,9 @@ public class BackgroundTaskCleanerSchedulerJobConfiguration
 		_backgroundTaskCleanerConfiguration =
 			ConfigurableUtil.createConfigurable(
 				BackgroundTaskCleanerConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_backgroundTaskCleanerConfiguration.interval(), TimeUnit.MINUTE);
 	}
 
 	private volatile BackgroundTaskCleanerConfiguration
@@ -64,5 +66,7 @@ public class BackgroundTaskCleanerSchedulerJobConfiguration
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
+
+	private volatile TriggerConfiguration _triggerConfiguration;
 
 }

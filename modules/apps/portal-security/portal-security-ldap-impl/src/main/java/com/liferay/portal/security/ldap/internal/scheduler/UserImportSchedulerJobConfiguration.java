@@ -61,14 +61,16 @@ public class UserImportSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_ldapImportConfiguration.importInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_ldapImportConfiguration = (LDAPImportConfiguration)properties.get(
 			"configuration");
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_ldapImportConfiguration.importInterval(), TimeUnit.MINUTE);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -142,5 +144,7 @@ public class UserImportSchedulerJobConfiguration
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile LDAPUserImporter _ldapUserImporter;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

@@ -37,19 +37,22 @@ public class ExpireBanSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_mbConfiguration.expireBanJobInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_mbConfiguration = ConfigurableUtil.createConfigurable(
 			MBConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_mbConfiguration.expireBanJobInterval(), TimeUnit.MINUTE);
 	}
 
 	@Reference
 	private MBBanLocalService _mbBanLocalService;
 
 	private volatile MBConfiguration _mbConfiguration;
+	private TriggerConfiguration _triggerConfiguration;
 
 }

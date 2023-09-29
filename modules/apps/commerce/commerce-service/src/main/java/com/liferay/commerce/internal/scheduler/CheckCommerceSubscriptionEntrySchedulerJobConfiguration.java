@@ -58,9 +58,7 @@ public class CheckCommerceSubscriptionEntrySchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_commerceSubscriptionConfiguration.renewalCheckIntervalMinutes(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
@@ -68,6 +66,10 @@ public class CheckCommerceSubscriptionEntrySchedulerJobConfiguration
 		_commerceSubscriptionConfiguration =
 			ConfigurableUtil.createConfigurable(
 				CommerceSubscriptionConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_commerceSubscriptionConfiguration.renewalCheckIntervalMinutes(),
+			TimeUnit.MINUTE);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -82,5 +84,7 @@ public class CheckCommerceSubscriptionEntrySchedulerJobConfiguration
 	@Reference
 	private CommerceSubscriptionEntryLocalService
 		_commerceSubscriptionEntryLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

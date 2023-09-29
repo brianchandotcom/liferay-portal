@@ -55,9 +55,7 @@ public class CheckCommerceNotificationQueueEntrySchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_commerceNotificationQueueEntryConfiguration.checkInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
@@ -65,6 +63,10 @@ public class CheckCommerceNotificationQueueEntrySchedulerJobConfiguration
 		_commerceNotificationQueueEntryConfiguration =
 			ConfigurableUtil.createConfigurable(
 				CommerceNotificationQueueEntryConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_commerceNotificationQueueEntryConfiguration.checkInterval(),
+			TimeUnit.MINUTE);
 	}
 
 	private volatile CommerceNotificationQueueEntryConfiguration
@@ -73,5 +75,7 @@ public class CheckCommerceNotificationQueueEntrySchedulerJobConfiguration
 	@Reference
 	private CommerceNotificationQueueEntryLocalService
 		_commerceNotificationQueueEntryLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

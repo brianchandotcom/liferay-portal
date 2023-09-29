@@ -37,9 +37,7 @@ public class CheckCommerceVirtualOrderItemSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_commerceVirtualOrderItemConfiguration.checkInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
@@ -47,6 +45,10 @@ public class CheckCommerceVirtualOrderItemSchedulerJobConfiguration
 		_commerceVirtualOrderItemConfiguration =
 			ConfigurableUtil.createConfigurable(
 				CommerceVirtualOrderItemConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_commerceVirtualOrderItemConfiguration.checkInterval(),
+			TimeUnit.MINUTE);
 	}
 
 	private CommerceVirtualOrderItemConfiguration
@@ -55,5 +57,7 @@ public class CheckCommerceVirtualOrderItemSchedulerJobConfiguration
 	@Reference
 	private CommerceVirtualOrderItemLocalService
 		_commerceVirtualOrderItemLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

@@ -59,15 +59,17 @@ public class SegmentsEntryRelIndexerSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_segmentsConfiguration.segmentsPreviewCheckInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_segmentsConfiguration = ConfigurableUtil.createConfigurable(
 			SegmentsConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_segmentsConfiguration.segmentsPreviewCheckInterval(),
+			TimeUnit.MINUTE);
 	}
 
 	private void _reindex(SegmentsEntry segmentsEntry) {
@@ -88,5 +90,7 @@ public class SegmentsEntryRelIndexerSchedulerJobConfiguration
 
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

@@ -45,19 +45,23 @@ public class OnDemandAdminCleanerSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_onDemandAdminConfiguration.cleanUpInterval(), TimeUnit.HOUR);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_onDemandAdminConfiguration = ConfigurableUtil.createConfigurable(
 			OnDemandAdminConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_onDemandAdminConfiguration.cleanUpInterval(), TimeUnit.HOUR);
 	}
 
 	private volatile OnDemandAdminConfiguration _onDemandAdminConfiguration;
 
 	@Reference
 	private OnDemandAdminManager _onDemandAdminManager;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

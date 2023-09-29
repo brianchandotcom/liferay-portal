@@ -72,9 +72,7 @@ public class UserNotificationEventCleanerSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_userNotificationConfiguration.userNotificationEventCheckInterval(),
-			TimeUnit.DAY);
+		return _triggerConfiguration;
 	}
 
 	@Activate
@@ -82,10 +80,15 @@ public class UserNotificationEventCleanerSchedulerJobConfiguration
 		_userNotificationConfiguration = ConfigurableUtil.createConfigurable(
 			UserNotificationConfiguration.class, properties);
 
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_userNotificationConfiguration.userNotificationEventCheckInterval(),
+			TimeUnit.DAY);
+
 		_userNotificationEventDaysLimit =
 			_userNotificationConfiguration.userNotificationEventDaysLimit();
 	}
 
+	private TriggerConfiguration _triggerConfiguration;
 	private UserNotificationConfiguration _userNotificationConfiguration;
 	private int _userNotificationEventDaysLimit;
 

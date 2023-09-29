@@ -36,19 +36,23 @@ public class CheckCommerceOrderTypeSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_commerceOrderTypeConfiguration.checkInterval(), TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_commerceOrderTypeConfiguration = ConfigurableUtil.createConfigurable(
 			CommerceOrderTypeConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_commerceOrderTypeConfiguration.checkInterval(), TimeUnit.MINUTE);
 	}
 
 	private CommerceOrderTypeConfiguration _commerceOrderTypeConfiguration;
 
 	@Reference
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

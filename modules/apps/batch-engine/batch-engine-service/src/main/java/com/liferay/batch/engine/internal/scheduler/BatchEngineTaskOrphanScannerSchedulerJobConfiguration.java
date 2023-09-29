@@ -83,15 +83,17 @@ public class BatchEngineTaskOrphanScannerSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			_batchEngineTaskConfiguration.orphanScanInterval(),
-			TimeUnit.MINUTE);
+		return _triggerConfiguration;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_batchEngineTaskConfiguration = ConfigurableUtil.createConfigurable(
 			BatchEngineTaskConfiguration.class, properties);
+
+		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+			_batchEngineTaskConfiguration.orphanScanInterval(),
+			TimeUnit.MINUTE);
 
 		_orphanageThreshold =
 			_batchEngineTaskConfiguration.orphanageThreshold() * Time.MINUTE;
@@ -129,5 +131,7 @@ public class BatchEngineTaskOrphanScannerSchedulerJobConfiguration
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;
+
+	private TriggerConfiguration _triggerConfiguration;
 
 }

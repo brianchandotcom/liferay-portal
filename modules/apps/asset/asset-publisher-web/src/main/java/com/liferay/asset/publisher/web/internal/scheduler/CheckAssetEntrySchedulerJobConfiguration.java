@@ -46,6 +46,18 @@ public class CheckAssetEntrySchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
+		return _triggerConfiguration;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
+			AssetPublisherWebConfiguration.class, properties);
+
+		_triggerConfiguration = _getTriggerConfiguration();
+	}
+
+	private TriggerConfiguration _getTriggerConfiguration() {
 		String checkCronExpression =
 			_assetPublisherWebConfiguration.checkCronExpression();
 
@@ -68,12 +80,6 @@ public class CheckAssetEntrySchedulerJobConfiguration
 			_assetPublisherWebConfiguration.checkInterval(), TimeUnit.HOUR);
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
-			AssetPublisherWebConfiguration.class, properties);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckAssetEntrySchedulerJobConfiguration.class);
 
@@ -81,6 +87,7 @@ public class CheckAssetEntrySchedulerJobConfiguration
 	private AssetEntriesCheckerHelper _assetEntriesCheckerUtil;
 
 	private AssetPublisherWebConfiguration _assetPublisherWebConfiguration;
+	private TriggerConfiguration _triggerConfiguration;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

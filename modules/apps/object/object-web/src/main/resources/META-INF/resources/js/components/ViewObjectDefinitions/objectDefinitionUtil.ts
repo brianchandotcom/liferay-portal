@@ -340,7 +340,6 @@ export async function getUpdatedModelBuilderStructurePayload(
 								.actions.update,
 							hasObjectDefinitionViewResourcePermission: !!objectDefinition
 								.actions.get,
-							hasSelfObjectRelationships: false,
 							linkedObjectDefinition,
 							objectFields: objectDefinition.objectFields.map(
 								({

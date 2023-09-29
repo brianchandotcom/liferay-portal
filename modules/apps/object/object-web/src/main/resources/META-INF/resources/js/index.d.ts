@@ -199,7 +199,6 @@ interface ObjectDefinitionNodeData
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	hasObjectDefinitionUpdateResourcePermission: boolean;
 	hasObjectDefinitionViewResourcePermission: boolean;
-	hasSelfObjectRelationships: boolean;
 	linkedObjectDefinition: boolean;
 	objectFields: ObjectFieldNodeRow[];
 	selected: boolean;

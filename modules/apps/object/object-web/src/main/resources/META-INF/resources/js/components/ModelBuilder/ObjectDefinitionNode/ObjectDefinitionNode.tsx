@@ -51,7 +51,6 @@ export function ObjectDefinitionNode({
 		externalReferenceCode,
 		hasObjectDefinitionDeleteResourcePermission,
 		hasObjectDefinitionManagePermissionsResourcePermission,
-		hasSelfObjectRelationships,
 		id,
 		label,
 		linkedObjectDefinition,
@@ -274,33 +273,30 @@ export function ObjectDefinitionNode({
 						/>
 					))}
 				</>
-
-				{hasSelfObjectRelationships && (
-					<>
-						<Handle
-							className="lfr-objects__model-builder-node-handle"
-							id="fixedLeftHandle"
-							position={Position.Left}
-							style={{
-								...selfRelationshipHandleStyle,
-								left: '10px',
-								top: '50%',
-							}}
-							type="source"
-						/>
-						<Handle
-							className="lfr-objects__model-builder-node-handle"
-							id="fixedRightHandle"
-							position={Position.Right}
-							style={{
-								...selfRelationshipHandleStyle,
-								right: '4px',
-								top: '50%',
-							}}
-							type="target"
-						/>
-					</>
-				)}
+				<>
+					<Handle
+						className="lfr-objects__model-builder-node-handle"
+						id="fixedLeftHandle"
+						position={Position.Left}
+						style={{
+							...selfRelationshipHandleStyle,
+							left: '10px',
+							top: '50%',
+						}}
+						type="source"
+					/>
+					<Handle
+						className="lfr-objects__model-builder-node-handle"
+						id="fixedRightHandle"
+						position={Position.Right}
+						style={{
+							...selfRelationshipHandleStyle,
+							right: '4px',
+							top: '50%',
+						}}
+						type="target"
+					/>
+				</>
 			</div>
 
 			{showModal.addObjectField && (

@@ -60,7 +60,9 @@ public class TemplatesAspect {
 			sb.append(siteGroupId);
 			sb.append("]");
 
-			if (TemplatesPluginProperties.captureAsOuterTransaction()) {
+			if (TemplatesPluginProperties.
+					captureTemplateTransformationsInOuterTransaction()) {
+
 				optionalThreadContext.setTransactionOuter();
 
 				if (TemplatesPluginProperties.
@@ -135,7 +137,9 @@ public class TemplatesAspect {
 			sb.append(siteGroupId);
 			sb.append("]");
 
-			if (TemplatesPluginProperties.captureAsOuterTransaction()) {
+			if (TemplatesPluginProperties.
+					captureTemplateTransformationsInOuterTransaction()) {
+
 				optionalThreadContext.setTransactionOuter();
 
 				if (TemplatesPluginProperties.
@@ -209,7 +213,9 @@ public class TemplatesAspect {
 			sb.append(siteGroupId);
 			sb.append("]");
 
-			if (TemplatesPluginProperties.captureAsOuterTransaction()) {
+			if (TemplatesPluginProperties.
+					captureTemplateTransformationsInOuterTransaction()) {
+
 				optionalThreadContext.setTransactionOuter();
 
 				if (TemplatesPluginProperties.

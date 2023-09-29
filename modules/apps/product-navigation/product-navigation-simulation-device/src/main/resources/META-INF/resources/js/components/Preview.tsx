@@ -38,7 +38,7 @@ export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 		};
 	}, []);
 
-	const updateAutosizePreview = useCallback(() => {
+	const updatePreview = useCallback(() => {
 		if (!open || !previewWrapperRef.current) {
 			return;
 		}
@@ -57,11 +57,11 @@ export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 	}, [activeSize.id, activeSize.screenSize, open]);
 
 	useEffect(() => {
-		updateAutosizePreview();
-	}, [activeSize, updateAutosizePreview]);
+		updatePreview();
+	}, [activeSize, updatePreview]);
 
 	const handleWindowResize = debounce(() => {
-		updateAutosizePreview();
+		updatePreview();
 	}, 250);
 
 	// @ts-ignore

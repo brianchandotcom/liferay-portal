@@ -87,7 +87,7 @@ const GetAppFlow = () => {
 
 	const {sku} = useGetProductSkus(product, setEnableTrialMethod);
 	const {channel} = useGetChannelInfo();
-	const {addresses} = useGetAddresses(selectedAccount);
+	const {addresses} = useGetAddresses(selectedAccount?.id);
 	const {isFreeApp, priceModel} = useProductPriceModel(product);
 
 	async function handleGetApp() {

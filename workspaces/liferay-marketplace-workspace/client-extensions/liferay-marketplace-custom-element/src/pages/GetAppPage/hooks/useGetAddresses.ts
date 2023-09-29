@@ -3,22 +3,27 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import {getAccountAddressesFromCommerce} from '../../../utils/api';
 
-const useGetAddresses = (selectedAccount: Account | undefined) => {
+const useGetAddresses = (selectedAccountId: number | undefined) => {
 	const [addresses, setAddresses] = useState<BillingAddress[]>([]);
-	const getAddresses = async () => {
-		if (selectedAccount?.id) {
+
+	const getAddresses = async (selectedAccountId: number | undefined) => {
+		if (selectedAccountId) {
 			const billingAddresses = await getAccountAddressesFromCommerce(
-				selectedAccount?.id as number
+				selectedAccountId as number
 			);
 
 			setAddresses(billingAddresses.items);
 		}
 	};
-	getAddresses();
+
+	useEffect(() => {
+		getAddresses(selectedAccountId);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectedAccountId]);
 
 	return {
 		addresses,

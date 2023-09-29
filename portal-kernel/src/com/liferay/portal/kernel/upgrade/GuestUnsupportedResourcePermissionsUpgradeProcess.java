@@ -57,7 +57,9 @@ public class GuestUnsupportedResourcePermissionsUpgradeProcess
 
 			preparedStatement.setString(1, _resourceName);
 
-			for (int i = 0; i < _guestUnsupportedResourceActionIds.length; i++) {
+			for (int i = 0; i < _guestUnsupportedResourceActionIds.length;
+				 i++) {
+
 				preparedStatement.setString(
 					i + 2, _guestUnsupportedResourceActionIds[i]);
 			}

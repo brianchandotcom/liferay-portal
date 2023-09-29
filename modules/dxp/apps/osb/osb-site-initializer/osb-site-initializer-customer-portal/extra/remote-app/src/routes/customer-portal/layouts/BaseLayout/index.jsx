@@ -23,28 +23,28 @@ const Layout = () => {
 	}, [accountKey]);
 
 	return (
-		<>
-			<div className="align-items-center cp-layout-header d-flex justify-content-between ml-4 mt-4">
-				<ProjectBreadcrumb />
-			</div>
-
-			<div className="d-flex position-relative w-100">
-				{hasSideMenu && <SideMenu />}
-
-				<div className="d-flex flex-fill pt-4">
-					<div className="mx-4 px-2 w-100">
-						<Outlet
-							context={{
-								setHasQuickLinksPanel,
-								setHasSideMenu,
-							}}
-						/>
-					</div>
-
-					{hasQuickLinksPanel && <QuickLinksPanel />}
+		<div className="d-flex position-relative w-100">
+			<div>
+				<div className="align-items-center cp-layout-header d-flex justify-content-between ml-4 mt-4">
+					<ProjectBreadcrumb />
 				</div>
+
+				{hasSideMenu && <SideMenu />}
 			</div>
-		</>
+
+			<div className="d-flex flex-fill pt-4">
+				<div className="mx-4 px-2 w-100">
+					<Outlet
+						context={{
+							setHasQuickLinksPanel,
+							setHasSideMenu,
+						}}
+					/>
+				</div>
+
+				{hasQuickLinksPanel && <QuickLinksPanel />}
+			</div>
+		</div>
 	);
 };
 

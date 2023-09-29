@@ -3115,24 +3115,23 @@ public abstract class BaseBuild implements Build {
 			throw new RuntimeException("Invalid invocation URL");
 		}
 
+		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
+			invocationURLMatcher.group("master"));
+
 		setJobName(invocationURLMatcher.group("jobName"));
-		setJenkinsMaster(
-			JenkinsMaster.getInstance(invocationURLMatcher.group("master")));
+		setJenkinsMaster(jenkinsMaster);
 
 		loadParametersFromQueryString(invocationURL);
 
 		setStatus("starting");
 
-		if (JenkinsResultsParserUtil.isCINode()) {
-			invocationURL = JenkinsResultsParserUtil.getLocalURL(invocationURL);
-		}
+		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
+			jenkinsMaster, getJobName(), getParameters());
 
-		try {
-			JenkinsResultsParserUtil.toString(invocationURL, false);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		Invocation invocation = new Invocation(
+			jenkinsMaster, jsonObject.getLong("queueId"));
+
+		_invocations.add(invocation);
 	}
 
 	protected void setJenkinsMaster(JenkinsMaster jenkinsMaster) {

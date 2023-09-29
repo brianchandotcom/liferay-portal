@@ -1,0 +1,148 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.scim.client.internal.configuration;
+
+import com.liferay.oauth2.provider.constants.ClientProfile;
+import com.liferay.oauth2.provider.constants.GrantType;
+import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
+import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
+
+import java.util.Collections;
+import java.util.Map;
+
+import org.osgi.service.component.ComponentConstants;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Olivér Kecskeméty
+ */
+@Component(
+	configurationPid = "com.liferay.scim.client.internal.configuration.ScimClientOAuth2ApplicationConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
+)
+public class ScimClientOAuth2ApplicationConfigurationFactory {
+
+	@Activate
+	protected void activate(Map<String, Object> properties) throws Exception {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Activate " + properties);
+		}
+
+		ConfigurationFactoryUtil.executeAsCompany(
+			_companyLocalService, properties,
+			companyId -> {
+				ScimClientOAuth2ApplicationConfiguration
+					scimClientOAuth2ApplicationConfiguration =
+						ConfigurableUtil.createConfigurable(
+							ScimClientOAuth2ApplicationConfiguration.class,
+							properties);
+
+				_oAuth2Application = _getOrAddOAuth2Application(
+					companyId, scimClientOAuth2ApplicationConfiguration);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("OAuth 2 application " + _oAuth2Application);
+				}
+			});
+	}
+
+	@Deactivate
+	protected void deactivate(Integer reason) throws PortalException {
+		if (reason !=
+				ComponentConstants.DEACTIVATION_REASON_CONFIGURATION_DELETED) {
+
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Deactivating " + _oAuth2Application);
+		}
+
+		_oAuth2ApplicationLocalService.deleteOAuth2Application(
+			_oAuth2Application);
+	}
+
+	@Reference
+	protected UserLocalService userLocalService;
+
+	private String _generateClientId(String applicationName) {
+		String lowerCaseApplicationName = StringUtil.toLowerCase(
+			applicationName);
+
+		String dashSeparatedLowerCaseApplicationName = StringUtil.replace(
+			lowerCaseApplicationName, CharPool.SPACE, CharPool.DASH);
+
+		return "scim-" + dashSeparatedLowerCaseApplicationName;
+	}
+
+	private OAuth2Application _getOrAddOAuth2Application(
+			long companyId,
+			ScimClientOAuth2ApplicationConfiguration
+				scimClientOAuth2ApplicationConfiguration)
+		throws Exception {
+
+		User user = userLocalService.getGuestUser(companyId);
+
+		User serviceUser = userLocalService.getUserByScreenName(
+			companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME);
+
+		String clientId = _generateClientId(
+			scimClientOAuth2ApplicationConfiguration.applicationName());
+
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.fetchOAuth2Application(
+				companyId, clientId);
+
+		if (oAuth2Application == null) {
+			oAuth2Application =
+				_oAuth2ApplicationLocalService.addOAuth2Application(
+					companyId, user.getUserId(), user.getScreenName(),
+					ListUtil.fromArray(GrantType.JWT_BEARER),
+					"client_secret_post", serviceUser.getUserId(), clientId,
+					ClientProfile.HEADLESS_SERVER.id(),
+					OAuth2SecureRandomGenerator.generateClientSecret(), null,
+					Collections.emptyList(), null, 0, null,
+					scimClientOAuth2ApplicationConfiguration.applicationName(),
+					null, Collections.emptyList(), false, true, null,
+					new ServiceContext());
+		}
+
+		return _oAuth2ApplicationLocalService.updateScopeAliases(
+			oAuth2Application.getUserId(), oAuth2Application.getUserName(),
+			oAuth2Application.getOAuth2ApplicationId(),
+			ListUtil.fromArray("Liferay.SCIM.Application.everything"));
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ScimClientOAuth2ApplicationConfigurationFactory.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	private volatile OAuth2Application _oAuth2Application;
+
+	@Reference
+	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
+
+}

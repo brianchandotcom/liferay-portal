@@ -106,11 +106,11 @@ const GetAppFlow = () => {
 			email,
 			isFreeApp,
 			orderType,
-			product,
 			purchaseOrderNumber,
-			selectedAccount,
 			selectedPaymentMethod,
-			sku
+			sku,
+			product,
+			selectedAccount
 		);
 
 		const cartResponse = await postCartByPaymentMethod(cart, channel.id);

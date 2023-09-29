@@ -9,11 +9,11 @@ export default function buildNewCart(
 	email: string,
 	isFreeApp: boolean,
 	orderType: OrderType,
-	product: Product | undefined,
 	purchaseOrderNumber: string,
-	selectedAccount: Account | undefined,
 	selectedPaymentMethod: PaymentMethodSelector,
-	sku: SKU
+	sku: SKU,
+	product?: Product,
+	selectedAccount?: Account
 ) {
 	const cart: Partial<Cart> = {
 		accountId: selectedAccount?.id as number,

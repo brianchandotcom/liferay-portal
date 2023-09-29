@@ -567,7 +567,7 @@ export async function getProductSKU({appProductId}: {appProductId: number}) {
 export async function getProductSpecifications({
 	appProductId,
 }: {
-	appProductId: number;
+	appProductId?: number;
 }) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${appProductId}/productSpecifications`,
@@ -1072,7 +1072,9 @@ export async function postAccountByERCUserAccountByERC(
 	);
 }
 
-export async function postEmailAppInformation(emailInformation: any) {
+export async function postEmailAppInformation(
+	emailInformation: EmailAppInformation
+) {
 	await fetch(`${baseURL}/o/c/getappinformations/`, {
 		body: JSON.stringify(emailInformation),
 		headers,

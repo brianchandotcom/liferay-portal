@@ -6,9 +6,9 @@
 export default function getEmailInformation(
 	dashboardURL: string,
 	orderID: number,
-	priceModel: string | undefined,
-	productName: string | undefined,
-	productType: string
+	productType: string,
+	priceModel?: string,
+	productName?: string
 ) {
 	const emailAppInformation: EmailAppInformation = {
 		dashboardLink: dashboardURL,

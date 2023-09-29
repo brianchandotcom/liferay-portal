@@ -6,8 +6,8 @@
 import {useEffect, useState} from 'react';
 
 const useGetProductSkus = (
-	product: Product | undefined,
-	setEnableTrialMethod: (value: boolean) => void
+	setEnableTrialMethod: (value: boolean) => void,
+	product?: Product
 ) => {
 	const [sku, setSku] = useState<SKU>({
 		cost: 0,

@@ -85,7 +85,7 @@ const GetAppFlow = () => {
 	const productId = product?.productId;
 	const productName = product?.name.en_US;
 
-	const {sku} = useGetProductSkus(product, setEnableTrialMethod);
+	const {sku} = useGetProductSkus(setEnableTrialMethod, product);
 	const {channel} = useGetChannelInfo();
 	const {addresses} = useGetAddresses(selectedAccount?.id);
 	const {isFreeApp, priceModel} = useProductPriceModel(product);
@@ -125,9 +125,9 @@ const GetAppFlow = () => {
 		const emailAppInformation = getEmailInformation(
 			dashboardURL,
 			cartResponse.id,
+			productType,
 			priceModel,
-			productName,
-			productType
+			productName
 		);
 
 		await postEmailAppInformation(emailAppInformation);

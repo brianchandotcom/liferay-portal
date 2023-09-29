@@ -5,7 +5,7 @@
 
 import {getProductSpecifications} from '../../../utils/api';
 
-export async function getProductSpecificationValues(productId: any) {
+export async function getProductSpecificationValues(productId?: number) {
 	const productSpecifications = await getProductSpecifications({
 		appProductId: productId,
 	});

@@ -380,12 +380,12 @@ type SKU = {
 };
 
 type ProductSpecification = {
-	id: number;
-	optionCategoryId: number;
-	priority: number;
-	productId: number;
-	specificationId: number;
-	specificationKey: string;
+	id?: number;
+	optionCategoryId?: number;
+	priority?: number;
+	productId?: number;
+	specificationId?: number;
+	specificationKey?: string;
 	value: {[key: string]: string};
 };
 

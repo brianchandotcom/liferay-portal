@@ -394,6 +394,29 @@
 																	}
 																},
 																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/home"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
 																}
 															}
 														}
@@ -424,6 +447,7 @@
 											},
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] a {\ncolor: #3e3f4a !important;\ntext-decoration: none !important;\n}",
 													"fragment": {
 														"key": "BASIC_COMPONENT-heading"
 													},
@@ -435,6 +459,29 @@
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/home"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
 																},
 																"text": {
 																	"value_i18n": {

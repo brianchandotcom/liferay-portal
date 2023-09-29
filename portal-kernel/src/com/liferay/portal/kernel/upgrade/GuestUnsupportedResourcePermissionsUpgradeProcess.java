@@ -18,14 +18,14 @@ import java.sql.ResultSet;
 /**
  * @author Michael Bowerman
  */
-public class GuestUnsupportedResourceActionsUpgradeProcess
+public class GuestUnsupportedResourcePermissionsUpgradeProcess
 	extends UpgradeProcess {
 
-	public GuestUnsupportedResourceActionsUpgradeProcess(
-		String resourceName, String... guestUnsupportedResourceActions) {
+	public GuestUnsupportedResourcePermissionsUpgradeProcess(
+		String resourceName, String... guestUnsupportedResourceActionIds) {
 
 		_resourceName = resourceName;
-		_guestUnsupportedResourceActions = guestUnsupportedResourceActions;
+		_guestUnsupportedResourceActionIds = guestUnsupportedResourceActionIds;
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class GuestUnsupportedResourceActionsUpgradeProcess
 		long bitmask = _getBitmask();
 
 		CompanyLocalServiceUtil.forEachCompanyId(
-			companyId -> _removeGuestUnsupportedResourceActionsPermissions(
+			companyId -> _removeGuestUnsupportedResourcePermissions(
 				bitmask, companyId));
 	}
 
@@ -41,12 +41,12 @@ public class GuestUnsupportedResourceActionsUpgradeProcess
 		long bitmask = 0xFFFFFFFFFFFFFFFFL;
 
 		StringBundler sb = new StringBundler(
-			2 + _guestUnsupportedResourceActions.length);
+			2 + _guestUnsupportedResourceActionIds.length);
 
 		sb.append("select bitwiseValue from ResourceAction where name = ? ");
 		sb.append("and (");
 
-		for (int i = 1; i < _guestUnsupportedResourceActions.length; i++) {
+		for (int i = 1; i < _guestUnsupportedResourceActionIds.length; i++) {
 			sb.append("actionId = ? or ");
 		}
 
@@ -57,9 +57,9 @@ public class GuestUnsupportedResourceActionsUpgradeProcess
 
 			preparedStatement.setString(1, _resourceName);
 
-			for (int i = 0; i < _guestUnsupportedResourceActions.length; i++) {
+			for (int i = 0; i < _guestUnsupportedResourceActionIds.length; i++) {
 				preparedStatement.setString(
-					i + 2, _guestUnsupportedResourceActions[i]);
+					i + 2, _guestUnsupportedResourceActionIds[i]);
 			}
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -90,7 +90,7 @@ public class GuestUnsupportedResourceActionsUpgradeProcess
 		}
 	}
 
-	private void _removeGuestUnsupportedResourceActionsPermissions(
+	private void _removeGuestUnsupportedResourcePermissions(
 			long bitmask, long companyId)
 		throws Exception {
 
@@ -126,7 +126,7 @@ public class GuestUnsupportedResourceActionsUpgradeProcess
 		}
 
 		if (!ArrayUtil.contains(
-				_guestUnsupportedResourceActions, ActionKeys.VIEW)) {
+				_guestUnsupportedResourceActionIds, ActionKeys.VIEW)) {
 
 			return;
 		}
@@ -143,7 +143,7 @@ public class GuestUnsupportedResourceActionsUpgradeProcess
 		}
 	}
 
-	private final String[] _guestUnsupportedResourceActions;
+	private final String[] _guestUnsupportedResourceActionIds;
 	private final String _resourceName;
 
 }

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.GuestUnsupportedResourceActionsUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.GuestUnsupportedResourcePermissionsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
@@ -53,16 +53,16 @@ public class MBServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.0", "1.0.1",
-			new GuestUnsupportedResourceActionsUpgradeProcess(
+			new GuestUnsupportedResourcePermissionsUpgradeProcess(
 				MBCategory.class.getName(), ActionKeys.DELETE,
 				ActionKeys.MOVE_THREAD, ActionKeys.PERMISSIONS),
-			new GuestUnsupportedResourceActionsUpgradeProcess(
+			new GuestUnsupportedResourcePermissionsUpgradeProcess(
 				MBMessage.class.getName(), ActionKeys.DELETE,
 				ActionKeys.PERMISSIONS),
-			new GuestUnsupportedResourceActionsUpgradeProcess(
+			new GuestUnsupportedResourcePermissionsUpgradeProcess(
 				MBConstants.RESOURCE_NAME, ActionKeys.LOCK_THREAD,
 				ActionKeys.MOVE_THREAD),
-			new GuestUnsupportedResourceActionsUpgradeProcess(
+			new GuestUnsupportedResourcePermissionsUpgradeProcess(
 				MBThread.class.getName(), ActionKeys.DELETE));
 
 		registry.register("1.0.1", "1.1.0", new MBThreadUpgradeProcess());

@@ -501,6 +501,28 @@ public class AxisBuild extends BaseBuild {
 		throw new RuntimeException("Axis builds cannot be reinvoked");
 	}
 
+	@Override
+	public void setBuildURL(String buildURL) {
+		super.setBuildURL(buildURL);
+
+		MultiPattern buildURLMultiPattern = getBuildURLMultiPattern();
+
+		Matcher matcher = buildURLMultiPattern.find(buildURL);
+
+		if (matcher == null) {
+			axisVariable = null;
+
+			return;
+		}
+
+		try {
+			axisVariable = matcher.group("axisVariable");
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			axisVariable = null;
+		}
+	}
+
 	protected AxisBuild(String url) {
 		this(url, null);
 	}
@@ -511,18 +533,6 @@ public class AxisBuild extends BaseBuild {
 
 	@Override
 	protected void checkForReinvocation(String consoleText) {
-	}
-
-	@Override
-	protected void extractBuildURLComponents(Matcher matcher) {
-		super.extractBuildURLComponents(matcher);
-
-		try {
-			axisVariable = matcher.group("axisVariable");
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-			axisVariable = null;
-		}
 	}
 
 	@Override

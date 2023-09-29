@@ -480,7 +480,7 @@ public class AssetCategoriesDisplayContext {
 		return group.getDescriptiveName(_themeDisplay.getLocale());
 	}
 
-	public Map<String, List<AssetVocabulary>> getInheritedVocabularies()
+	public Map<Long, List<AssetVocabulary>> getInheritedVocabularies()
 		throws PortalException {
 
 		if (_inheritedVocabularies != null) {
@@ -495,7 +495,7 @@ public class AssetCategoriesDisplayContext {
 			Group group = company.getGroup();
 
 			_inheritedVocabularies.put(
-				group.getDescriptiveName(_themeDisplay.getLocale()),
+				group.getGroupId(),
 				AssetVocabularyServiceUtil.getGroupVocabularies(
 					company.getGroupId(), false, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS,
@@ -518,8 +518,7 @@ public class AssetCategoriesDisplayContext {
 
 			if (ListUtil.isNotEmpty(groupVocabularies)) {
 				_inheritedVocabularies.put(
-					group.getDescriptiveName(_themeDisplay.getLocale()),
-					groupVocabularies);
+					group.getGroupId(), groupVocabularies);
 			}
 		}
 
@@ -968,11 +967,11 @@ public class AssetCategoriesDisplayContext {
 			return vocabulary.getVocabularyId();
 		}
 
-		Map<String, List<AssetVocabulary>> inheritedVocabularies =
+		Map<Long, List<AssetVocabulary>> inheritedVocabularies =
 			getInheritedVocabularies();
 
 		if (MapUtil.isNotEmpty(inheritedVocabularies)) {
-			for (Map.Entry<String, List<AssetVocabulary>> entry :
+			for (Map.Entry<Long, List<AssetVocabulary>> entry :
 					inheritedVocabularies.entrySet()) {
 
 				vocabularies = entry.getValue();
@@ -1052,7 +1051,7 @@ public class AssetCategoriesDisplayContext {
 	private Long _categoryId;
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
-	private Map<String, List<AssetVocabulary>> _inheritedVocabularies;
+	private Map<Long, List<AssetVocabulary>> _inheritedVocabularies;
 	private String _keywords;
 	private String _navigation;
 	private String _orderByCol;

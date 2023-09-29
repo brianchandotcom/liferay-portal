@@ -52,7 +52,9 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean applyReinvokeRules() {
-		if (!isCompleted() || !isFailing() || isFromArchive()) {
+		if (!isCompleted() || !isFailing() || isFromArchive() ||
+			(badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX)) {
+
 			return false;
 		}
 
@@ -71,9 +73,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean applySlaveOfflineRules() {
-		if (!isCompleted() || !isFailing() || isFromArchive() ||
-			(badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX)) {
-
+		if (!isCompleted() || !isFailing() || isFromArchive()) {
 			return false;
 		}
 

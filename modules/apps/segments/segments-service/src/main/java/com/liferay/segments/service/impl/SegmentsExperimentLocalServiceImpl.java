@@ -406,10 +406,14 @@ public class SegmentsExperimentLocalServiceImpl
 				SegmentsExperienceConstants.KEY_DEFAULT,
 				controlSegmentsExperience.getSegmentsExperienceKey())) {
 
+			_setSegmentsExperienceKeyProperty(controlSegmentsExperience);
+
 			controlSegmentsExperience.setSegmentsExperienceKey(
 				String.valueOf(
 					counterLocalService.increment(
 						SegmentsExperience.class.getName())));
+
+			_setSegmentsExperienceKeyProperty(variantSegmentsExperience);
 
 			variantSegmentsExperience.setSegmentsExperienceKey(
 				SegmentsExperienceConstants.KEY_DEFAULT);
@@ -460,6 +464,20 @@ public class SegmentsExperimentLocalServiceImpl
 				"segmentsExperimentKey",
 				segmentsExperiment.getSegmentsExperimentKey()
 			));
+	}
+
+	private void _setSegmentsExperienceKeyProperty(
+		SegmentsExperience segmentsExperience) {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			segmentsExperience.getTypeSettingsUnicodeProperties();
+
+		typeSettingsUnicodeProperties.setProperty(
+			"segmentsExperimentSegmentsExperienceKey",
+			segmentsExperience.getSegmentsExperienceKey());
+
+		segmentsExperience.setTypeSettingsUnicodeProperties(
+			typeSettingsUnicodeProperties);
 	}
 
 	private SegmentsExperiment _updateSegmentsExperimentStatus(

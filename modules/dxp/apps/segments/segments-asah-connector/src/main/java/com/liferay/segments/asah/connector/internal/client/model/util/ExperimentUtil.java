@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
@@ -102,7 +104,8 @@ public class ExperimentUtil {
 		if (ListUtil.isNotEmpty(segmentsExperimentRels)) {
 			experiment.setDXPVariants(
 				DXPVariantUtil.toDXPVariantList(
-					locale, segmentsExperimentRels));
+					locale, segmentsExperienceLocalService,
+					segmentsExperimentRels));
 		}
 
 		experiment.setExperimentStatus(
@@ -118,11 +121,14 @@ public class ExperimentUtil {
 
 		if ((segmentsExperiment.getStatus() ==
 				SegmentsExperimentConstants.STATUS_COMPLETED) ||
-			(segmentsExperiment.getStatus() ==
-				SegmentsExperimentConstants.STATUS_TERMINATED)) {
+			((segmentsExperiment.getStatus() ==
+				SegmentsExperimentConstants.STATUS_TERMINATED) &&
+			 (segmentsExperiment.getWinnerSegmentsExperienceId() > 0))) {
 
 			experiment.setPublishedDXPVariantId(
-				segmentsExperiment.getWinnerSegmentsExperienceKey());
+				_getSegmentsExperienceKey(
+					segmentsExperienceLocalService.getSegmentsExperience(
+						segmentsExperiment.getWinnerSegmentsExperienceId())));
 		}
 
 		SegmentsExperience segmentsExperience =
@@ -130,7 +136,7 @@ public class ExperimentUtil {
 				segmentsExperiment.getSegmentsExperienceId());
 
 		experiment.setDXPExperienceId(
-			segmentsExperience.getSegmentsExperienceKey());
+			_getSegmentsExperienceKey(segmentsExperience));
 		experiment.setDXPExperienceName(segmentsExperience.getName(locale));
 
 		SegmentsEntry segmentsEntry =
@@ -210,6 +216,23 @@ public class ExperimentUtil {
 		sb.append(layout.getFriendlyURL());
 
 		return sb.toString();
+	}
+
+	private static String _getSegmentsExperienceKey(
+		SegmentsExperience segmentsExperience) {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			segmentsExperience.getTypeSettingsUnicodeProperties();
+
+		String segmentsExperimentSegmentsExperienceKey =
+			typeSettingsUnicodeProperties.get(
+				"segmentsExperimentSegmentsExperienceKey");
+
+		if (Validator.isNotNull(segmentsExperimentSegmentsExperienceKey)) {
+			return segmentsExperimentSegmentsExperienceKey;
+		}
+
+		return segmentsExperience.getSegmentsExperienceKey();
 	}
 
 	private static Goal _toExperimentGoal(SegmentsExperiment segmentsExperiment)

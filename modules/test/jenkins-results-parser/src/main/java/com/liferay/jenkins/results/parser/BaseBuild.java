@@ -889,11 +889,11 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getStatus() {
-		if ((status == null) || !status.equals("completed")) {
+		if ((_status == null) || !_status.equals("completed")) {
 			getResult();
 		}
 
-		return status;
+		return _status;
 	}
 
 	@Override
@@ -1300,7 +1300,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean isBuildModified() {
-		return !status.equals(_previousStatus);
+		return _isDifferent(_status, _previousStatus);
 	}
 
 	@Override
@@ -3178,8 +3178,8 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setStatus(String status) {
-		if (_isDifferent(status, this.status)) {
-			this.status = status;
+		if (_isDifferent(status, _status)) {
+			_status = status;
 
 			long previousStatusModifiedTime = statusModifiedTime;
 
@@ -3279,7 +3279,6 @@ public abstract class BaseBuild implements Build {
 	protected List<SlaveOfflineRule> slaveOfflineRules =
 		SlaveOfflineRule.getSlaveOfflineRules();
 	protected Long startTime;
-	protected String status;
 	protected Map<String, Long> statusDurations = new HashMap<>();
 	protected long statusModifiedTime;
 	protected Element upstreamJobFailureMessageElement;
@@ -3728,6 +3727,7 @@ public abstract class BaseBuild implements Build {
 	private final Build _parentBuild;
 	private String _previousStatus;
 	private int _reinvocationCount;
+	private String _status;
 	private StopWatchRecordsGroup _stopWatchRecordsGroup;
 	private Map<String, TestClassResult> _testClassResults;
 	private List<URL> _testrayAttachmentURLs;

@@ -313,7 +313,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		int totalSlavesUsedCount = 1;
 
 		if (ignoreCurrentBuild || (modifiedBuildsOnly && !isBuildModified()) ||
-			((status != null) && !this.status.equals(status))) {
+			((status != null) && !status.equals(getStatus()))) {
 
 			totalSlavesUsedCount = 0;
 		}

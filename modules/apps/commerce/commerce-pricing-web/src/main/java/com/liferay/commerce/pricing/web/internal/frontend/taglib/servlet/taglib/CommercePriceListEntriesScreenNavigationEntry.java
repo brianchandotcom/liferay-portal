@@ -10,6 +10,7 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.pricing.web.internal.display.context.CommercePriceEntryDisplayContext;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -81,7 +82,7 @@ public class CommercePriceListEntriesScreenNavigationEntry
 					_commerceCatalogService, _commercePriceEntryLocalService,
 					_commercePriceEntryService,
 					_commercePriceListModelResourcePermission,
-					_commercePriceListService,
+					_commercePriceListService, _cpInstanceLocalService,
 					_cpInstanceUnitOfMeasureLocalService, httpServletRequest);
 
 			httpServletRequest.setAttribute(
@@ -117,6 +118,9 @@ public class CommercePriceListEntriesScreenNavigationEntry
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private CPInstanceUnitOfMeasureLocalService

@@ -24,7 +24,7 @@ describe('AddResult', () => {
 	it('shows an add result button', async () => {
 		const {getByText} = render(
 			<AddResult
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsSearchURL={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={jest.fn()}
 			/>
 		);
@@ -35,7 +35,7 @@ describe('AddResult', () => {
 	it('shows a modal when the add a result button gets clicked', async () => {
 		const {findByTestId, getByText} = render(
 			<AddResult
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsSearchURL={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={jest.fn()}
 			/>
 		);

@@ -73,9 +73,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 			module="js/components/ResultRankingsAdd.es"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
-					"cancelUrl", redirect
+					"cancelURL", redirect
 				).put(
-					"fetchSitesUrl",
+					"fetchSitesURL",
 					ResourceURLBuilder.createResourceURL(
 						renderResponse
 					).setCMD(

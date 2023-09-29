@@ -23,7 +23,7 @@ class List extends PureComponent {
 		dataLoading: PropTypes.bool,
 		dataMap: PropTypes.object,
 		displayError: PropTypes.bool,
-		fetchDocumentsSearchUrl: PropTypes.string,
+		fetchDocumentsSearchURL: PropTypes.string,
 		onAddResultSubmit: PropTypes.func,
 		onClickHide: PropTypes.func,
 		onClickPin: PropTypes.func,
@@ -215,7 +215,7 @@ class List extends PureComponent {
 			dataLoading,
 			dataMap,
 			displayError,
-			fetchDocumentsSearchUrl,
+			fetchDocumentsSearchURL,
 			onAddResultSubmit,
 			onClickHide,
 			onClickPin,
@@ -232,7 +232,7 @@ class List extends PureComponent {
 
 					<SearchBar
 						dataMap={dataMap}
-						fetchDocumentsSearchUrl={fetchDocumentsSearchUrl}
+						fetchDocumentsSearchURL={fetchDocumentsSearchURL}
 						onAddResultSubmit={onAddResultSubmit}
 						onClickHide={onClickHide}
 						onClickPin={onClickPin}

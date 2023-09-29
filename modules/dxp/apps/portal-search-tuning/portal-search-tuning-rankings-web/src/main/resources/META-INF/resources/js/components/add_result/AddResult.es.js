@@ -14,7 +14,7 @@ import AddResultModal from './AddResultModal.es';
 /**
  * A button that opens a modal to be able to search, select, and add results.
  */
-function AddResult({fetchDocumentsSearchUrl, onAddResultSubmit}) {
+function AddResult({fetchDocumentsSearchURL, onAddResultSubmit}) {
 	const [showModal, setShowModal] = useState(false);
 
 	const {observer, onClose} = useModal({
@@ -41,7 +41,7 @@ function AddResult({fetchDocumentsSearchUrl, onAddResultSubmit}) {
 			<ErrorBoundary component={Liferay.Language.get('add-result')} toast>
 				{showModal ? (
 					<AddResultModal
-						fetchDocumentsSearchUrl={fetchDocumentsSearchUrl}
+						fetchDocumentsSearchURL={fetchDocumentsSearchURL}
 						observer={observer}
 						onAddResultSubmit={onAddResultSubmit}
 						onClose={onClose}
@@ -53,7 +53,7 @@ function AddResult({fetchDocumentsSearchUrl, onAddResultSubmit}) {
 }
 
 AddResult.propTypes = {
-	fetchDocumentsSearchUrl: PropTypes.string.isRequired,
+	fetchDocumentsSearchURL: PropTypes.string.isRequired,
 	onAddResultSubmit: PropTypes.func.isRequired,
 };
 

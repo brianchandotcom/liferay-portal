@@ -35,7 +35,7 @@ const SCOPE_INFO = {
 	},
 };
 
-function ResultRankingsAdd({cancelUrl, fetchSitesUrl, formName, namespace}) {
+function ResultRankingsAdd({cancelURL, fetchSitesURL, formName, namespace}) {
 	const [errors, setErrors] = useState({});
 	const [scopeType, setScopeType] = useState(SCOPE_TYPES.EVERYTHING);
 	const [scope, setScope] = useState('');
@@ -84,7 +84,7 @@ function ResultRankingsAdd({cancelUrl, fetchSitesUrl, formName, namespace}) {
 	};
 
 	const _handleCancel = () => {
-		navigate(cancelUrl);
+		navigate(cancelURL);
 	};
 
 	const _handleSearchQueryChange = (event) => {
@@ -243,7 +243,7 @@ function ResultRankingsAdd({cancelUrl, fetchSitesUrl, formName, namespace}) {
 					<ScopeSelect
 						disabled={false}
 						error={errors.scope}
-						fetchItemsUrl={fetchSitesUrl}
+						fetchItemsUrl={fetchSitesURL}
 						locator={{
 							id: 'externalReferenceCode',
 							label: 'descriptiveName',
@@ -316,8 +316,8 @@ function ResultRankingsAdd({cancelUrl, fetchSitesUrl, formName, namespace}) {
 }
 
 export default function ({
-	cancelUrl,
-	fetchSitesUrl,
+	cancelURL,
+	fetchSitesURL,
 	formName,
 	learnResources,
 	namespace = '',
@@ -325,8 +325,8 @@ export default function ({
 	return (
 		<LearnResourcesContext.Provider value={learnResources}>
 			<ResultRankingsAdd
-				cancelUrl={cancelUrl}
-				fetchSitesUrl={fetchSitesUrl}
+				cancelURL={cancelURL}
+				fetchSitesURL={fetchSitesURL}
 				formName={formName}
 				namespace={namespace}
 			/>

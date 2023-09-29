@@ -26,7 +26,7 @@ class SearchBar extends Component {
 		 */
 		dataMap: PropTypes.object.isRequired,
 		disableSearch: PropTypes.bool,
-		fetchDocumentsSearchUrl: PropTypes.string,
+		fetchDocumentsSearchURL: PropTypes.string,
 		onAddResultSubmit: PropTypes.func,
 		onClickHide: PropTypes.func,
 		onClickPin: PropTypes.func,
@@ -107,7 +107,7 @@ class SearchBar extends Component {
 
 	render() {
 		const {
-			fetchDocumentsSearchUrl,
+			fetchDocumentsSearchURL,
 			onAddResultSubmit,
 			resultIds,
 			selectedIds,
@@ -278,8 +278,8 @@ class SearchBar extends Component {
 									<ManagementToolbar.ItemList>
 										<ManagementToolbar.Item>
 											<AddResult
-												fetchDocumentsSearchUrl={
-													fetchDocumentsSearchUrl
+												fetchDocumentsSearchURL={
+													fetchDocumentsSearchURL
 												}
 												onAddResultSubmit={
 													onAddResultSubmit

@@ -32,7 +32,7 @@ const AddResultModalWithModalMock = (props) => {
 
 	return (
 		<AddResultModal
-			fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+			fetchDocumentsSearchURL={FETCH_SEARCH_DOCUMENTS_URL}
 			observer={observer}
 			onAddResultSubmit={jest.fn()}
 			onClose={onClose}

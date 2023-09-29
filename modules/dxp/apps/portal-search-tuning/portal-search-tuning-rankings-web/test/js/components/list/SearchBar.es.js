@@ -23,7 +23,7 @@ function renderTestSearchBar(props) {
 	return render(
 		<SearchBar
 			dataMap={DATA_MAP}
-			fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+			fetchDocumentsSearchURL={FETCH_SEARCH_DOCUMENTS_URL}
 			onClickHide={jest.fn()}
 			onClickPin={jest.fn()}
 			onSelectAll={jest.fn()}

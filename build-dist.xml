@@ -755,8 +755,8 @@ fi
 				</echo>
 			</then>
 		</if>
-		<echo file="${liferay.home}/glowroot/admin.json"><![CDATA[
-{
+
+		<echo file="${liferay.home}/glowroot/admin.json"><![CDATA[{
 	"roles": [
 		{
 			"name": "Administrator",
@@ -802,8 +802,7 @@ fi
 		"sessionCookieName": "GLOWROOT_SESSION_ID",
 		"sessionTimeoutMinutes": 30
 	}
-}
-		]]></echo>
+}]]></echo>
 	</target>
 
 	<target name="unzip-jboss">

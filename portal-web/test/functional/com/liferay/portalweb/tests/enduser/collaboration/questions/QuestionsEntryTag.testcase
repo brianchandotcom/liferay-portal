@@ -44,85 +44,103 @@ definition {
 	@priority = 3
 	@refactordone
 	test CanAddQuestionWithTheMaximumTags {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a Questions category") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Body AddQuestionWithTheMaximumTags",
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			tagLocatorList = "Tag1,Tag2,Tag3,Tag4,Tag5",
-			titleField = "Title AddQuestionWithTheMaximumTags",
-			topicName = "questions-test-category");
+		task ("When a Question is added with the maximum 5 tags") {
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Body AddQuestionWithTheMaximumTags",
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				tagLocatorList = "Tag1,Tag2,Tag3,Tag4,Tag5",
+				titleField = "Title AddQuestionWithTheMaximumTags",
+				topicName = "questions-test-category");
+		}
 
-		Questions.viewList(listedQuestions = "Title AddQuestionWithTheMaximumTags");
+		task ("Then the Question should be created") {
+			Questions.viewList(listedQuestions = "Title AddQuestionWithTheMaximumTags");
+		}
 	}
 
 	@description = "Validate if the user can not create a question with the maximum of 6 tags with unexisting tag"
 	@priority = 2
 	@refactordone
 	test CannotAddQuestionWithMoreThanTheMaximumTags {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a Questions category") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Body AddQuestionWithMoreThanTheMaximumTags",
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			tagLocatorList = "Tag1,Tag2,Tag3,Tag4,Tag5,Tag6",
-			titleField = "Title AddQuestionWithMoreThanTheMaximumTags",
-			topicName = "questions-test-category");
+		task ("When a Question is added with more than the maximum of 5 tags") {
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Body AddQuestionWithMoreThanTheMaximumTags",
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				tagLocatorList = "Tag1,Tag2,Tag3,Tag4,Tag5,Tag6",
+				titleField = "Title AddQuestionWithMoreThanTheMaximumTags",
+				topicName = "questions-test-category");
+		}
 
-		AssertElementPresent(
-			key_errorMessage = "This is an invalid tag.",
-			locator1 = "Questions#ASK_QUESTION_ERROR_MESSAGE");
+		task ("Then an error message should be displayed saying that the 6th tag is invalid") {
+			AssertElementPresent(
+				key_errorMessage = "This is an invalid tag.",
+				locator1 = "Questions#ASK_QUESTION_ERROR_MESSAGE");
+		}
 	}
 
 	@description = "Validate that the user cannot post a question with a tag containing Java Script. It also covers LPS-137561 and LPS-137633."
 	@priority = 4
 	test CannotPostQuestionWithTagContainingJavaScript {
-		Navigator.openURL();
+		task ("Given a Questions category with JavaScript that is displayed on a page") {
+			Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "View",
-			pageName = "Questions Page");
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Questions Page");
 
-		ScrollWebElementIntoView(
-			key_text = "New Topic",
-			locator1 = "Button#ANY");
+			ScrollWebElementIntoView(
+				key_text = "New Topic",
+				locator1 = "Button#ANY");
 
-		Button.click(button = "New Topic");
+			Button.click(button = "New Topic");
 
-		Questions.addRootTopic(
-			invalidCharacters = "Topic",
-			rootTopicDescription = '''<script>alert(123);</script>''',
-			rootTopicName = '''<script>alert(123);</script>''');
+			Questions.addRootTopic(
+				invalidCharacters = "Topic",
+				rootTopicDescription = '''<script>alert(123);</script>''',
+				rootTopicName = '''<script>alert(123);</script>''');
 
-		Questions.viewDefault();
+			Questions.viewDefault();
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Body AddQuestionWithMoreText",
-			invalidCharacters = "Tag",
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			tagLocatorList = '''<script>alert(123);</script>''',
-			titleField = "Title AddQuestion",
-			topicName = "questions-test-category");
+		task ("When a Question that contains JavaScirpt is added") {
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Body AddQuestionWithMoreText",
+				invalidCharacters = "Tag",
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				tagLocatorList = '''<script>alert(123);</script>''',
+				titleField = "Title AddQuestion",
+				topicName = "questions-test-category");
+		}
 
-		AssertAlertNotPresent();
+		task ("Then the JavaScript alert should not pop up") {
+			AssertAlertNotPresent();
+		}
 	}
 
 	@description = "Validate if the user can subscribe from the tag."
@@ -130,67 +148,77 @@ definition {
 	test CanSubscribeFromTag {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Given a new user with an Administrator role") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com");
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("and a Question category and question with a tag") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestionWithTag(
-			bodyField = "Content AddQuestion",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			tagField = "tag",
-			titleField = "Title AddQuestion");
+			JSONQuestions.addQuestionWithTag(
+				bodyField = "Content AddQuestion",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				tagField = "tag",
+				titleField = "Title AddQuestion");
+		}
 
-		Questions.openToTagsTab(
-			layoutName = "questions-page",
-			siteURLKey = "guest");
+		task ("and the user is subscribed to the tag") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
 
-		Questions.subscribeFromTag();
+			Questions.subscribeFromTag();
+		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		task ("When the default user adds a Qeustion with the subscribed tag") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Content AddQuestion New",
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			tagLocatorList = "tag",
-			titleField = "Title AddQuestion New",
-			topicName = "questions-test-category");
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Content AddQuestion New",
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				tagLocatorList = "tag",
+				titleField = "Title AddQuestion New",
+				topicName = "questions-test-category");
+		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+		task ("Then the new user gets a notification that a new content was added on the subscribed tag") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
 
-		Notifications.viewBadgeCount(notificationCount = 1);
+			Notifications.viewBadgeCount(notificationCount = 1);
 
-		Notifications.gotoNotifications();
+			Notifications.gotoNotifications();
 
-		Notifications.viewNewContent(
-			assetType = "message boards message",
-			contentBody = "Title AddQuestion New",
-			user = "userfn userln");
+			Notifications.viewNewContent(
+				assetType = "message boards message",
+				contentBody = "Title AddQuestion New",
+				user = "userfn userln");
 
-		Notifications.navigateToContent(contentBody = "Title AddQuestion New");
+			Notifications.navigateToContent(contentBody = "Title AddQuestion New");
 
-		Questions.viewDetailsTitle(questionTitle = "Title AddQuestion New");
+			Questions.viewDetailsTitle(questionTitle = "Title AddQuestion New");
+		}
 	}
 
 	@description = "Validate if the user can unsubscribe from the tag."
@@ -199,123 +227,147 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property solutions.acceptance = "true";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Given a new user with the Administrator role") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com");
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("and a Question category and question with a tag") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestionWithTag(
-			bodyField = "Content AddQuestion",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			tagField = "tag",
-			titleField = "Title AddQuestion");
+			JSONQuestions.addQuestionWithTag(
+				bodyField = "Content AddQuestion",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				tagField = "tag",
+				titleField = "Title AddQuestion");
+		}
 
-		Questions.openToTagsTab(
-			layoutName = "questions-page",
-			siteURLKey = "guest");
+		task ("and the user is subscribed to the tag") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
 
-		Questions.subscribeFromTag();
+			Questions.subscribeFromTag();
+		}
 
-		Questions.unsubscribeFromTag();
+		task ("When the user unsubscribes from the tag") {
+			Questions.unsubscribeFromTag();
+		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		task ("and when a new content is added with the tag") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		JSONQuestions.addQuestionWithTag(
-			bodyField = "Content AddQuestion New",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			tagField = "tag",
-			titleField = "Title AddQuestion New",
-			userEmailAddress = "userea@liferay.com");
+			JSONQuestions.addQuestionWithTag(
+				bodyField = "Content AddQuestion New",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				tagField = "tag",
+				titleField = "Title AddQuestion New",
+				userEmailAddress = "userea@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
 
-		Notifications.viewBadgeCount(notificationCount = 0);
+		task ("Then there should be no notifications about the unsubscribed tag") {
+			Notifications.viewBadgeCount(notificationCount = 0);
+		}
 	}
 
 	@description = "Validate if when the user click in the tag of the Tags tab, the user is redirected to the questions that use this tag"
 	@priority = 3
 	@refactordone
 	test CanViewQuestionViaTag {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a Question with a tag") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestionWithTag(
-			bodyField = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			tagField = "tag1",
-			titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
+			JSONQuestions.addQuestionWithTag(
+				bodyField = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				tagField = "tag1",
+				titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
+		}
 
-		Questions.openToTagsTab(
-			layoutName = "questions-page",
-			siteURLKey = "guest");
+		task ("When the user views the tag") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
+		}
 
-		Questions.viewQuestionViaTag(
-			questionTitle = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
-			tagName = "tag1");
+		task ("Then the tagged Question can be viewed") {
+			Questions.viewQuestionViaTag(
+				questionTitle = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
+				tagName = "tag1");
+		}
 	}
 
 	@description = "Validate if Question portlet have one tab with all tags used in the questions"
 	@priority = 3
 	@refactordone
 	test ListOfTagsCanBeViewedInTagsTab {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Question ListOfTagsAppearsInTheTagsTab",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a category and no tags available") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Question ListOfTagsAppearsInTheTagsTab",
+				userEmailAddress = "test@liferay.com");
 
-		Questions.openToTagsTab(
-			layoutName = "questions-page",
-			siteURLKey = "guest");
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
 
-		Questions.viewTags(noTagResults = "true");
+			Questions.viewTags(noTagResults = "true");
 
-		Questions.configureTagsFilter(filterBy = "Latest Created");
+			Questions.configureTagsFilter(filterBy = "Latest Created");
 
-		Questions.viewTags(noTagResults = "true");
+			Questions.viewTags(noTagResults = "true");
+		}
 
-		JSONAssettag.addTag(
-			groupName = "Guest",
-			tagName = "tag2");
+		task ("When a tag and a Question with a tag is added") {
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "tag2");
 
-		JSONQuestions.addQuestionWithTag(
-			bodyField = "Body ListOfTagsAppearsInTheTagsTab",
-			categoryName = "Question ListOfTagsAppearsInTheTagsTab",
-			groupName = "Guest",
-			tagField = "tag1",
-			titleField = "Title ListOfTagsAppearsInTheTagsTab");
+			JSONQuestions.addQuestionWithTag(
+				bodyField = "Body ListOfTagsAppearsInTheTagsTab",
+				categoryName = "Question ListOfTagsAppearsInTheTagsTab",
+				groupName = "Guest",
+				tagField = "tag1",
+				titleField = "Title ListOfTagsAppearsInTheTagsTab");
+		}
 
-		Questions.openToTagsTab(
-			layoutName = "questions-page",
-			siteURLKey = "guest");
+		task ("Then the new tags can be viewed in the Tags Tab") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
 
-		Questions.configureTagsFilter(filterBy = "Latest Created");
+			Questions.configureTagsFilter(filterBy = "Latest Created");
 
-		for (var tagName : list "tag1,tag2") {
-			Questions.viewTags(tagName = ${tagName});
+			for (var tagName : list "tag1,tag2") {
+				Questions.viewTags(tagName = ${tagName});
+			}
 		}
 	}
 
@@ -324,160 +376,178 @@ definition {
 	@refactordone
 	@uitest
 	test QuestionsTagsCanBeSortedInTagsTab {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("Give a category and Questions with tags") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		for (var num : list "1,2") {
+			for (var num : list "1,2") {
+				JSONQuestions.addQuestionWithTag(
+					bodyField = "Question Body ${num}",
+					categoryName = "Questions Test Category",
+					groupName = "Guest",
+					tagField = "tag1",
+					titleField = "Question ${num}");
+			}
+
 			JSONQuestions.addQuestionWithTag(
-				bodyField = "Question Body ${num}",
+				bodyField = "Question Body 3",
 				categoryName = "Questions Test Category",
 				groupName = "Guest",
-				tagField = "tag1",
-				titleField = "Question ${num}");
+				tagField = "tag2",
+				titleField = "Question 3");
 		}
 
-		JSONQuestions.addQuestionWithTag(
-			bodyField = "Question Body 3",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			tagField = "tag2",
-			titleField = "Question 3");
+		task ("When the Tags are sorted by Latest Created date or Number of usages, Then the tags should be displayed accordingly") {
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Navigator.gotoPage(pageName = "Questions Page");
+			Questions.gotoCategory(categoryName = "Questions Test Category");
 
-		Questions.gotoCategory(categoryName = "Questions Test Category");
+			Questions.gotoTab(questionTabField = "Tags");
 
-		Questions.gotoTab(questionTabField = "Tags");
+			Questions.viewTagsFilterResults(
+				position = 1,
+				tagName = "tag1",
+				usedTimes = "Used 2 Times");
 
-		Questions.viewTagsFilterResults(
-			position = 1,
-			tagName = "tag1",
-			usedTimes = "Used 2 Times");
+			Questions.viewTagsFilterResults(
+				position = 2,
+				tagName = "tag2",
+				usedTimes = "Used 1 Times");
 
-		Questions.viewTagsFilterResults(
-			position = 2,
-			tagName = "tag2",
-			usedTimes = "Used 1 Times");
+			Questions.configureTagsFilter(filterBy = "Latest Created");
 
-		Questions.configureTagsFilter(filterBy = "Latest Created");
+			Questions.viewTagsFilterResults(
+				position = 1,
+				tagName = "tag2");
 
-		Questions.viewTagsFilterResults(
-			position = 1,
-			tagName = "tag2");
+			Questions.viewTagsFilterResults(
+				position = 2,
+				tagName = "tag1");
 
-		Questions.viewTagsFilterResults(
-			position = 2,
-			tagName = "tag1");
+			Questions.configureTagsFilter(filterBy = "Number of Usages");
 
-		Questions.configureTagsFilter(filterBy = "Number of Usages");
+			Questions.viewTagsFilterResults(
+				position = 1,
+				tagName = "tag1",
+				usedTimes = "Used 2 Times");
 
-		Questions.viewTagsFilterResults(
-			position = 1,
-			tagName = "tag1",
-			usedTimes = "Used 2 Times");
-
-		Questions.viewTagsFilterResults(
-			position = 2,
-			tagName = "tag2",
-			usedTimes = "Used 1 Times");
+			Questions.viewTagsFilterResults(
+				position = 2,
+				tagName = "tag2",
+				usedTimes = "Used 1 Times");
+		}
 	}
 
 	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"
 	@priority = 4
 	@refactordone
 	test QuestionTagsCanBeOrderedByOccurrenceInTagsTab {
-		for (var num : list "1,2") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Question ValidateTagsOccurrences${num}",
-				userEmailAddress = "test@liferay.com");
+		task ("Given categories and Questions with tags") {
+			for (var num : list "1,2") {
+				JSONMBMessage.addCategory(
+					categoryDescription = "Description",
+					categoryName = "Question ValidateTagsOccurrences${num}",
+					userEmailAddress = "test@liferay.com");
+			}
+
+			for (var num : list "1,2") {
+				JSONQuestions.addQuestionWithTag(
+					bodyField = "Question Body ${num}",
+					categoryName = "Question ValidateTagsOccurrences1",
+					groupName = "Guest",
+					tagField = "tag1",
+					titleField = "Question ${num}");
+			}
 		}
 
-		for (var num : list "1,2") {
+		task ("and tags are viewable by usage") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
+
+			Questions.viewTags(
+				amountOfUsedTimes = 2,
+				tagName = "tag1");
+		}
+
+		task ("When a new Question with a tag is added") {
 			JSONQuestions.addQuestionWithTag(
-				bodyField = "Question Body ${num}",
-				categoryName = "Question ValidateTagsOccurrences1",
+				bodyField = "Question Body 3",
+				categoryName = "Question ValidateTagsOccurrences2",
 				groupName = "Guest",
 				tagField = "tag1",
-				titleField = "Question ${num}");
+				titleField = "Question 3");
 		}
 
-		Questions.openToTagsTab(
-			layoutName = "questions-page",
-			siteURLKey = "guest");
+		task ("Then the number of times the tag is used is displayed") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
 
-		Questions.viewTags(
-			amountOfUsedTimes = 2,
-			tagName = "tag1");
-
-		JSONQuestions.addQuestionWithTag(
-			bodyField = "Question Body 3",
-			categoryName = "Question ValidateTagsOccurrences2",
-			groupName = "Guest",
-			tagField = "tag1",
-			titleField = "Question 3");
-
-		Questions.openToTagsTab(
-			layoutName = "questions-page",
-			siteURLKey = "guest");
-
-		Questions.viewTags(
-			amountOfUsedTimes = 3,
-			tagName = "tag1");
+			Questions.viewTags(
+				amountOfUsedTimes = 3,
+				tagName = "tag1");
+		}
 	}
 
 	@description = "This test covers LPS-119780. It ensures that the user can search by tags in the tags search field."
 	@priority = 4
 	@refactordone
 	test QuestionTagsCanBeSearchedInTagsTab {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Question ValidateSearchByQuestionTags",
-			userEmailAddress = "test@liferay.com");
-
-		for (var num : list "1,2,3") {
-			JSONQuestions.addQuestionWithTag(
-				bodyField = "Question Body ${num}",
+		task ("Given a category and Questions") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
 				categoryName = "Question ValidateSearchByQuestionTags",
-				groupName = "Guest",
-				tagField = "tag${num}",
-				titleField = "Question ${num}");
+				userEmailAddress = "test@liferay.com");
+
+			for (var num : list "1,2,3") {
+				JSONQuestions.addQuestionWithTag(
+					bodyField = "Question Body ${num}",
+					categoryName = "Question ValidateSearchByQuestionTags",
+					groupName = "Guest",
+					tagField = "tag${num}",
+					titleField = "Question ${num}");
+			}
 		}
 
-		Questions.openToTagsTab(
-			layoutName = "questions-page",
-			siteURLKey = "guest");
+		task ("When a tag is searched") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
 
-		Questions.search(
-			searchKey = "tag1",
-			searchTag = "true");
-
-		Questions.viewTags(tagName = "tag1");
-
-		Questions.viewNoTags(tagsList = "tag2,tag3");
-
-		Questions.clearSearchResults();
-
-		for (var tagName : list "tag1,tag2,tag3") {
-			Questions.viewTags(tagName = ${tagName});
+			Questions.search(
+				searchKey = "tag1",
+				searchTag = "true");
 		}
 
-		Questions.configureTagsFilter(filterBy = "Latest Created");
+		task ("Then only the matching tag is displayed") {
+			Questions.viewTags(tagName = "tag1");
 
-		Questions.search(
-			searchKey = "tag2",
-			searchTag = "true");
+			Questions.viewNoTags(tagsList = "tag2,tag3");
 
-		Questions.viewTags(tagName = "tag2");
+			Questions.clearSearchResults();
 
-		Questions.viewNoTags(tagsList = "tag1,tag3");
+			for (var tagName : list "tag1,tag2,tag3") {
+				Questions.viewTags(tagName = ${tagName});
+			}
 
-		Questions.clearSearchResults();
+			Questions.configureTagsFilter(filterBy = "Latest Created");
 
-		for (var tagName : list "tag1,tag2,tag3") {
-			Questions.viewTags(tagName = ${tagName});
+			Questions.search(
+				searchKey = "tag2",
+				searchTag = "true");
+
+			Questions.viewTags(tagName = "tag2");
+
+			Questions.viewNoTags(tagsList = "tag1,tag3");
+
+			Questions.clearSearchResults();
+
+			for (var tagName : list "tag1,tag2,tag3") {
+				Questions.viewTags(tagName = ${tagName});
+			}
 		}
 	}
 

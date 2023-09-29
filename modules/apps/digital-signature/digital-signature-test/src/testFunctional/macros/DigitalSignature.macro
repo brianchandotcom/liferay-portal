@@ -1,5 +1,19 @@
 definition {
 
+	macro addMoreRecipient {
+		Click(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ADD_RECIPIENT");
+
+		Type(
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_EXTRA_RECIPIENT_NAME",
+			value1 = ${fullName});
+
+		Type(
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_EXTRA_RECIPIENT_EMAIL",
+			value1 = ${recipientEmail});
+
+		Button.click(button = "Send");
+	}
+
 	macro addRecipient {
 		for (var list : list ${addList}) {
 			AssertClick(
@@ -35,6 +49,10 @@ definition {
 		AssertElementNotPresent(
 			key_text = "Add Recipient",
 			locator1 = "Button#ANY_WITH_SPAN");
+	}
+
+	macro canPageNavigator {
+		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_NAVIGATE_NEXT");
 	}
 
 	macro canSeeDataPersistAfterEnabled {
@@ -243,6 +261,14 @@ definition {
 		Click(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
 	}
 
+	macro enabledDigitalSignatureDownload {
+		Click(
+			envelopeName = ${documentName},
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ENVELOPE_NAME");
+
+		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_DOWNLOAD_BUTTON");
+	}
+
 	macro enableDigitalSignature {
 		if (isSet(siteStrategy)) {
 			Select(
@@ -340,10 +366,44 @@ definition {
 			locator1 = "DigitalSignatureEnvelopeSettings#ANY_DISABLED_BUTTON");
 	}
 
+	macro viewCreateDate {
+		WaitForElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECENT_CREATE_DATE");
+
+		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECENT_CREATE_DATE");
+	}
+
 	macro viewDigitalSignatureEnabled {
 		AssertElementPresent(
 			dsStatus = ${dsStatus},
 			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS");
+	}
+
+	macro viewDigitalSignaturestatus {
+		AssertElementPresent(
+			dsStatus = ${viewStatus},
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS");
+	}
+
+	macro viewEnabledDownload {
+		Click(
+			envelopeName = ${documentName},
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ELLIPSIS_BUTTON");
+
+		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_DOWNLOAD_BY_LIST");
+	}
+
+	macro viewEnvelopeDetails {
+		Click(
+			envelopeName = ${documentName},
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ENVELOPE_NAME");
+
+		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ENVELOPE_ID");
+	}
+
+	macro viewMoreRecipient {
+		WaitForElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
+
+		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
 	}
 
 	macro viewNotSupportedExtensionsError {

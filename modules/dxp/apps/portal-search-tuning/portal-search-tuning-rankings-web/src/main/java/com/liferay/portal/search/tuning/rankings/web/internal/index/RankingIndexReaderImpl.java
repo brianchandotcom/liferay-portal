@@ -104,65 +104,25 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		return null;
 	}
 
-	private BooleanQuery _getEmptyScopeBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		BooleanQuery groupBooleanQuery1 = _queries.booleanQuery();
-
-		groupBooleanQuery1.addMustNotQueryClauses(
-			_queries.exists(RankingFields.GROUP_EXTERNAL_REFERENCE_CODE));
-
-		BooleanQuery groupBooleanQuery2 = _queries.booleanQuery();
-
-		groupBooleanQuery2.addShouldQueryClauses(
-			groupBooleanQuery1,
-			_queries.term(
-				RankingFields.GROUP_EXTERNAL_REFERENCE_CODE, StringPool.BLANK));
-
-		BooleanQuery sxpBlueprintBooleanQuery1 = _queries.booleanQuery();
-
-		sxpBlueprintBooleanQuery1.addMustNotQueryClauses(
-			_queries.exists(
-				RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE));
-
-		BooleanQuery sxpBlueprintBooleanQuery2 = _queries.booleanQuery();
-
-		sxpBlueprintBooleanQuery2.addShouldQueryClauses(
-			sxpBlueprintBooleanQuery1,
-			_queries.term(
-				RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
-				StringPool.BLANK));
-
-		booleanQuery.addMustQueryClauses(
-			groupBooleanQuery2, sxpBlueprintBooleanQuery2);
-
-		return booleanQuery;
-	}
-
 	private BooleanQuery _getQuery(
 		String groupExternalReferenceCode, String queryString,
 		String sxpBlueprintExternalReferenceCode) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		BooleanQuery scopeBooleanQuery = _queries.booleanQuery();
-
-		scopeBooleanQuery.addShouldQueryClauses(_getEmptyScopeBooleanQuery());
-
 		if (!Validator.isBlank(sxpBlueprintExternalReferenceCode)) {
-			scopeBooleanQuery.addShouldQueryClauses(
+			booleanQuery.addFilterQueryClauses(
 				_queries.term(
 					RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
 					sxpBlueprintExternalReferenceCode));
 		}
 		else if (!Validator.isBlank(groupExternalReferenceCode)) {
-			scopeBooleanQuery.addShouldQueryClauses(
+			booleanQuery.addFilterQueryClauses(
 				_queries.term(
 					RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
 					groupExternalReferenceCode));
 		}
 
-		booleanQuery.addFilterQueryClauses(scopeBooleanQuery);
 		booleanQuery.addFilterQueryClauses(
 			_queries.term(RankingFields.QUERY_STRINGS_KEYWORD, queryString));
 		booleanQuery.addMustNotQueryClauses(

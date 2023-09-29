@@ -299,7 +299,7 @@ public class BatchBuild extends BaseParentBuild {
 				continue;
 			}
 
-			for (ReinvokeRule reinvokeRule : reinvokeRules) {
+			for (ReinvokeRule reinvokeRule : ReinvokeRule.getReinvokeRules()) {
 				if (!reinvokeRule.matches(build)) {
 					continue;
 				}

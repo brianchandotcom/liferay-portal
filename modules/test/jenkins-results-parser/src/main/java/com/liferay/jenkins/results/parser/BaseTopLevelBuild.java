@@ -1093,6 +1093,8 @@ public abstract class BaseTopLevelBuild
 			buildFailureElements.add(upstreamJobFailureElement);
 		}
 
+		String jobName = getJobName();
+
 		if (jobName.contains("pullrequest") &&
 			upstreamBuildFailureElements.isEmpty() &&
 			(acceptanceUpstreamJobURL != null)) {

@@ -164,6 +164,9 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 					cpSkuDTOConverterConvertContext.getUnitOfMeasureKey());
 				published = cpInstance.isPublished();
 				purchasable = cpInstance.isPurchasable();
+				replacementSku = _toReplacementSku(
+					commerceContext, replacementCPInstance,
+					cpSkuDTOConverterConvertContext);
 				sku = cpInstance.getSku();
 				skuOptions = skuOptionsArray;
 				skuUnitOfMeasures = TransformUtil.transformToArray(
@@ -209,113 +212,6 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 							cpInstance.getCPDefinition();
 
 						return cpDefinition.getCProductId();
-					});
-				setReplacementSku(
-					() -> {
-						if (replacementCPInstance == null) {
-							return null;
-						}
-
-						CPDefinition replacementCPDefinition =
-							replacementCPInstance.getCPDefinition();
-
-						JSONArray jsonArray = CPJSONUtil.toJSONArray(
-							_cpDefinitionOptionRelLocalService.
-								getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
-									replacementCPInstance.getCPInstanceId()));
-
-						SkuOption[] replacementSkuSkuOptions = _getSkuOptions(
-							_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
-								replacementCPInstance.getCPDefinitionId(),
-								jsonArray.toString()));
-
-						List<CPInstanceUnitOfMeasure>
-							replacementUnitOfMeasures =
-								_cpInstanceUnitOfMeasureLocalService.
-									getActiveCPInstanceUnitOfMeasures(
-										replacementCPInstance.
-											getCPInstanceId());
-
-						return new ReplacementSku() {
-							{
-								sku = replacementCPInstance.getSku();
-								skuId = replacementCPInstance.getCPInstanceId();
-								skuUnitOfMeasures =
-									TransformUtil.transformToArray(
-										replacementUnitOfMeasures,
-										replacementUnitOfMeasure ->
-											_toSkuUnitOfMeasure(
-												commerceContext,
-												replacementUnitOfMeasure,
-												cpSkuDTOConverterConvertContext.
-													getLocale()),
-										SkuUnitOfMeasure.class);
-								urls = LanguageUtils.getLanguageIdMap(
-									_cpDefinitionLocalService.getUrlTitleMap(
-										replacementCPInstance.
-											getCPDefinitionId()));
-
-								setPrice(
-									() -> {
-										String replacementUnitOfMeasureKey =
-											StringPool.BLANK;
-
-										if (!replacementUnitOfMeasures.
-												isEmpty()) {
-
-											CPInstanceUnitOfMeasure
-												replacementUnitOfMeasure =
-													replacementUnitOfMeasures.
-														get(0);
-
-											replacementUnitOfMeasureKey =
-												replacementUnitOfMeasure.
-													getKey();
-										}
-
-										return _getPrice(
-											cpSkuDTOConverterConvertContext.
-												getCommerceContext(),
-											replacementCPInstance,
-											JSONUtil.toString(
-												JSONUtil.toJSONArray(
-													replacementSkuSkuOptions,
-													replacementSkuSkuOption ->
-														_jsonFactory.
-															createJSONObject(
-																replacementSkuSkuOption.
-																	toString()))),
-											cpSkuDTOConverterConvertContext.
-												getLocale(),
-											cpSkuDTOConverterConvertContext.
-												getQuantity(),
-											replacementUnitOfMeasureKey);
-									});
-								setProductConfiguration(
-									() -> {
-										if (replacementCPDefinition == null) {
-											return null;
-										}
-
-										return _productConfigurationDTOConverter.
-											toDTO(
-												new DefaultDTOConverterContext(
-													_dtoConverterRegistry,
-													replacementCPDefinition.
-														getCPDefinitionId(),
-													cpSkuDTOConverterConvertContext.
-														getLocale(),
-													null, null));
-									});
-								setSkuOptions(
-									() -> SkuOptionUtil.getSkuOptions(
-										_cpInstanceHelper.
-											getCPInstanceCPDefinitionOptionRelsMap(
-												replacementCPInstance.
-													getCPInstanceId()),
-										_cpInstanceLocalService));
-							}
-						};
 					});
 				setReplacementSkuExternalReferenceCode(
 					() -> {
@@ -548,6 +444,97 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		}
 
 		return false;
+	}
+
+	private ReplacementSku _toReplacementSku(
+			CommerceContext commerceContext, CPInstance replacementCPInstance,
+			SkuDTOConverterContext cpSkuDTOConverterConvertContext)
+		throws Exception {
+
+		if (replacementCPInstance == null) {
+			return null;
+		}
+
+		CPDefinition replacementCPDefinition =
+			replacementCPInstance.getCPDefinition();
+
+		JSONArray jsonArray = CPJSONUtil.toJSONArray(
+			_cpDefinitionOptionRelLocalService.
+				getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
+					replacementCPInstance.getCPInstanceId()));
+
+		SkuOption[] replacementSkuSkuOptions = _getSkuOptions(
+			_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
+				replacementCPInstance.getCPDefinitionId(),
+				jsonArray.toString()));
+
+		List<CPInstanceUnitOfMeasure> replacementUnitOfMeasures =
+			_cpInstanceUnitOfMeasureLocalService.
+				getActiveCPInstanceUnitOfMeasures(
+					replacementCPInstance.getCPInstanceId());
+
+		return new ReplacementSku() {
+			{
+				sku = replacementCPInstance.getSku();
+				skuId = replacementCPInstance.getCPInstanceId();
+				skuUnitOfMeasures = TransformUtil.transformToArray(
+					replacementUnitOfMeasures,
+					replacementUnitOfMeasure -> _toSkuUnitOfMeasure(
+						commerceContext, replacementUnitOfMeasure,
+						cpSkuDTOConverterConvertContext.getLocale()),
+					SkuUnitOfMeasure.class);
+				urls = LanguageUtils.getLanguageIdMap(
+					_cpDefinitionLocalService.getUrlTitleMap(
+						replacementCPInstance.getCPDefinitionId()));
+
+				setPrice(
+					() -> {
+						String replacementUnitOfMeasureKey = StringPool.BLANK;
+
+						if (!replacementUnitOfMeasures.isEmpty()) {
+							CPInstanceUnitOfMeasure replacementUnitOfMeasure =
+								replacementUnitOfMeasures.get(0);
+
+							replacementUnitOfMeasureKey =
+								replacementUnitOfMeasure.getKey();
+						}
+
+						return _getPrice(
+							cpSkuDTOConverterConvertContext.
+								getCommerceContext(),
+							replacementCPInstance,
+							JSONUtil.toString(
+								JSONUtil.toJSONArray(
+									replacementSkuSkuOptions,
+									replacementSkuSkuOption ->
+										_jsonFactory.createJSONObject(
+											replacementSkuSkuOption.
+												toString()))),
+							cpSkuDTOConverterConvertContext.getLocale(),
+							cpSkuDTOConverterConvertContext.getQuantity(),
+							replacementUnitOfMeasureKey);
+					});
+				setProductConfiguration(
+					() -> {
+						if (replacementCPDefinition == null) {
+							return null;
+						}
+
+						return _productConfigurationDTOConverter.toDTO(
+							new DefaultDTOConverterContext(
+								_dtoConverterRegistry,
+								replacementCPDefinition.getCPDefinitionId(),
+								cpSkuDTOConverterConvertContext.getLocale(),
+								null, null));
+					});
+				setSkuOptions(
+					() -> SkuOptionUtil.getSkuOptions(
+						_cpInstanceHelper.
+							getCPInstanceCPDefinitionOptionRelsMap(
+								replacementCPInstance.getCPInstanceId()),
+						_cpInstanceLocalService));
+			}
+		};
 	}
 
 	private SkuUnitOfMeasure _toSkuUnitOfMeasure(

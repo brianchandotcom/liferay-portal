@@ -7,9 +7,9 @@ package com.liferay.frontend.theme.browser.support.internal.template;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.servlet.BrowserSnifferUtil;
 
 import java.util.Map;
 

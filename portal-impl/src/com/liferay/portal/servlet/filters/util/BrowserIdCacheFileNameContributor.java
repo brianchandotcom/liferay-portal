@@ -5,9 +5,9 @@
 
 package com.liferay.portal.servlet.filters.util;
 
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.servlet.BrowserSnifferUtil;
 
 import javax.servlet.http.HttpServletRequest;
 

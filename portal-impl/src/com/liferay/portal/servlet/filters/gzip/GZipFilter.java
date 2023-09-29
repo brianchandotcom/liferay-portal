@@ -7,11 +7,11 @@ package com.liferay.portal.servlet.filters.gzip;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.servlet.BrowserSnifferUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import javax.servlet.FilterChain;

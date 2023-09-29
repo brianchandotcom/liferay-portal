@@ -29,11 +29,11 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.servlet.BrowserSnifferUtil;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyGroupLocalizedTitleComparator;
 import com.liferay.taglib.security.PermissionsURLTag;
 

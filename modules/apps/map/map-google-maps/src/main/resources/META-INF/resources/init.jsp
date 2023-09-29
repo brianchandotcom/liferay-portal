@@ -16,11 +16,11 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.map.google.maps.internal.display.context.GoogleMapsDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpComponentsUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.servlet.BrowserSnifferUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <liferay-frontend:defineObjects />

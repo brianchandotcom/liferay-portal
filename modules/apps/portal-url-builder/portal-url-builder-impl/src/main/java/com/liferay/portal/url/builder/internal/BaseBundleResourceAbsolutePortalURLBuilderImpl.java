@@ -7,9 +7,9 @@ package com.liferay.portal.url.builder.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.servlet.BrowserSnifferUtil;
 import com.liferay.portal.url.builder.facet.BuildableAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.facet.CDNAwareAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.facet.CacheAwareAbsolutePortalURLBuilder;

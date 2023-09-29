@@ -131,14 +131,21 @@ public class DBUpgrader {
 				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
 		}
 
+		if (_upgradeDatabaseAutoRun != null) {
+			return _upgradeDatabaseAutoRun;
+		}
+
 		DB db = DBManagerUtil.getDB();
 
 		if (db.getDBType() == DBType.HYPERSONIC) {
-			return false;
+			_upgradeDatabaseAutoRun = false;
+		}
+		else {
+			_upgradeDatabaseAutoRun = GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
 		}
 
-		return GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
+		return _upgradeDatabaseAutoRun;
 	}
 
 	public static void main(String[] args) {
@@ -428,5 +435,6 @@ public class DBUpgrader {
 		_appenderServiceReference;
 	private static volatile StopWatch _stopWatch;
 	private static volatile boolean _upgradeClient;
+	private static Boolean _upgradeDatabaseAutoRun;
 
 }

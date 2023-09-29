@@ -3077,8 +3077,11 @@ public abstract class BaseBuild implements Build {
 			setArchiveName(matcher.group("archiveName"));
 		}
 
+		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
+			matcher.group("master"));
+
 		_buildNumber = Integer.parseInt(matcher.group("buildNumber"));
-		setJenkinsMaster(JenkinsMaster.getInstance(matcher.group("master")));
+		setJenkinsMaster(jenkinsMaster);
 		setJobName(matcher.group("jobName"));
 
 		loadParametersFromBuildJSONObject();
@@ -3088,6 +3091,15 @@ public abstract class BaseBuild implements Build {
 		setStatus("running");
 
 		fromCompletedBuild = isFromCompletedBuild();
+
+		JSONObject buildJSONObject = getBuildJSONObject("queueId");
+
+		Invocation invocation = new Invocation(
+			jenkinsMaster, buildJSONObject.getLong("queueId"));
+
+		invocation.setBuildNumber(_buildNumber);
+
+		_invocations.add(invocation);
 	}
 
 	protected void setInvocationURL(String invocationURL) {

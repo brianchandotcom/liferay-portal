@@ -233,6 +233,13 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaGetFDSTableSchemaParameterCheck()
+		throws Exception {
+
+		test("upgrade/UpgradeJavaGetFDSTableSchemaParameterCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaGetFileMethodCheck() throws Exception {
 		test("upgrade/UpgradeJavaGetFileMethodCheck.testjava");
 	}

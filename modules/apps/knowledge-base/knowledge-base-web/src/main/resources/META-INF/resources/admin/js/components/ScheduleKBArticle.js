@@ -8,11 +8,13 @@ import React, {useEffect, useState} from 'react';
 
 import ScheduleModal from './ScheduleModal';
 
-function ScheduleKBArticle(props) {
+export default function ScheduleKBArticle({
+	displayDate,
+	portletNamespace,
+	scheduled,
+}) {
 	const [showModal, setShowModal] = useState();
 	const [callback, setCallback] = useState();
-
-	const namespace = props.portletNamespace;
 
 	const handleOnClose = () => {
 		setShowModal(false);
@@ -23,7 +25,7 @@ function ScheduleKBArticle(props) {
 	});
 
 	useEffect(() => {
-		const bridgeComponentId = `${namespace}ScheduleKBArticleComponent`;
+		const bridgeComponentId = `${portletNamespace}ScheduleKBArticleComponent`;
 
 		if (!Liferay.component(bridgeComponentId)) {
 			Liferay.component(
@@ -43,20 +45,19 @@ function ScheduleKBArticle(props) {
 		return () => {
 			Liferay.destroyComponent(bridgeComponentId);
 		};
-	}, [namespace]);
+	}, [portletNamespace]);
 
 	return (
 		<>
 			{showModal && (
 				<ScheduleModal
-					{...props}
 					callback={callback}
+					displayDate={displayDate}
 					observer={observer}
 					onModalClose={onClose}
+					scheduled={scheduled}
 				/>
 			)}
 		</>
 	);
 }
-
-export default ScheduleKBArticle;

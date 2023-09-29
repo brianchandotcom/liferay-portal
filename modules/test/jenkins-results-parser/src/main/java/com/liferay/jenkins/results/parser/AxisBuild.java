@@ -57,10 +57,6 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	public void findDownstreamBuilds() {
-	}
-
-	@Override
 	public String getArchivePath() {
 		String archiveName = getArchiveName();
 

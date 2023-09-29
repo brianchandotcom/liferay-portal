@@ -495,6 +495,8 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		}
 	}
 
+	protected abstract void findDownstreamBuilds();
+
 	@Override
 	protected List<Callable<Object>> getArchiveCallables() {
 		List<Callable<Object>> archiveCallables = super.getArchiveCallables();

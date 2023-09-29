@@ -702,12 +702,7 @@ public abstract class BaseTopLevelBuild
 			return;
 		}
 
-		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
-
 		super.update();
-
-		_updateDuration =
-			JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
 		if (_sendBuildMetrics && !fromArchive && (getParentBuild() == null)) {
 			if (!fromCompletedBuild) {
@@ -2364,6 +2359,5 @@ public abstract class BaseTopLevelBuild
 	private String _metricsHostName;
 	private int _metricsHostPort;
 	private final boolean _sendBuildMetrics;
-	private long _updateDuration;
 
 }

@@ -139,6 +139,9 @@ const SaveFDSFieldsModalContent = ({
 }: ISaveFDSFieldsModalContentProps) => {
 	const [fields, setFields] = useState<Array<IField> | null>(null);
 	const [query, setQuery] = useState('');
+	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
+		false
+	);
 
 	const onSearch = (query: string) => {
 		setQuery(query);
@@ -158,6 +161,7 @@ const SaveFDSFieldsModalContent = ({
 	};
 
 	const saveFDSFields = async () => {
+		setSaveButtonDisabled(true);
 		const creationData: Array<{name: string; type: string}> = [];
 		const deletionIds: Array<number> = [];
 
@@ -191,6 +195,8 @@ const SaveFDSFieldsModalContent = ({
 
 		if (!response.ok) {
 			openDefaultFailureToast();
+
+			setSaveButtonDisabled(false);
 
 			return;
 		}
@@ -358,7 +364,10 @@ const SaveFDSFieldsModalContent = ({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton onClick={() => saveFDSFields()}>
+						<ClayButton
+							disabled={saveButtonDisabled}
+							onClick={() => saveFDSFields()}
+						>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 

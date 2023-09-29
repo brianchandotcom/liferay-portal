@@ -34,8 +34,8 @@ public class ReindexExecutionModeConfigurationFieldOptionsProvider
 
 		List<String> executionModes = new ArrayList<>();
 
-		executionModes.add("full");
 		executionModes.add("concurrent");
+		executionModes.add("full");
 		executionModes.add("sync");
 
 		for (String executionMode : executionModes) {

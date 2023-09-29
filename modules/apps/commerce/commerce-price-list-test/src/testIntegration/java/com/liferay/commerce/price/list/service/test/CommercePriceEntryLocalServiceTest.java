@@ -17,7 +17,6 @@ import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.price.list.CommercePriceEntryTestUtil;
@@ -941,10 +940,7 @@ public class CommercePriceEntryLocalServiceTest {
 			CommercePriceEntry commercePriceEntry)
 		throws Exception {
 
-		CPInstance actualCPInstance =
-			_cpInstanceLocalService.fetchCProductInstance(
-				commercePriceEntry.getCProductId(),
-				commercePriceEntry.getCPInstanceUuid());
+		CPInstance actualCPInstance = commercePriceEntry.getCPInstance();
 
 		Assert.assertThat(
 			cpInstance.getCPInstanceId(),
@@ -968,9 +964,6 @@ public class CommercePriceEntryLocalServiceTest {
 
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
-
-	@Inject
-	private CPInstanceLocalService _cpInstanceLocalService;
 
 	private Group _group;
 

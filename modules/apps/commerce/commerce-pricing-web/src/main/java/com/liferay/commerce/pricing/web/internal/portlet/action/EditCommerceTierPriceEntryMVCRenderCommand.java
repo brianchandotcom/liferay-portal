@@ -11,7 +11,6 @@ import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.pricing.web.internal.display.context.CommerceTierCommercePriceEntryDisplayContext;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -50,7 +49,6 @@ public class EditCommerceTierPriceEntryMVCRenderCommand
 					_commerceCatalogService, _commercePriceEntryService,
 					_commercePriceListModelResourcePermission,
 					_commercePriceListService, _commerceTierPriceEntryService,
-					_cpInstanceLocalService,
 					_portal.getHttpServletRequest(renderRequest));
 
 		renderRequest.setAttribute(
@@ -77,9 +75,6 @@ public class EditCommerceTierPriceEntryMVCRenderCommand
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
-
-	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -13,7 +13,6 @@ import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayCont
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -39,13 +38,11 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 	public CPInstanceCommerceTierPriceEntryDisplayContext(
 		ActionHelper actionHelper,
 		CommercePriceListActionHelper commercePriceListActionHelper,
-		CPInstanceLocalService cpInstanceLocalService,
 		HttpServletRequest httpServletRequest) {
 
 		super(actionHelper, httpServletRequest);
 
 		_commercePriceListActionHelper = commercePriceListActionHelper;
-		_cpInstanceLocalService = cpInstanceLocalService;
 	}
 
 	public CommercePriceEntry getCommercePriceEntry() throws PortalException {
@@ -108,10 +105,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
 		if (commercePriceEntry != null) {
-			CPInstance cpInstance =
-				_cpInstanceLocalService.fetchCProductInstance(
-					commercePriceEntry.getCProductId(),
-					commercePriceEntry.getCPInstanceUuid());
+			CPInstance cpInstance = commercePriceEntry.getCPInstance();
 
 			if (cpInstance != null) {
 				CPDefinition cpDefinition = cpInstance.getCPDefinition();
@@ -215,6 +209,5 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 	private final CommercePriceListActionHelper _commercePriceListActionHelper;
 	private CommerceTierPriceEntry _commerceTierPriceEntry;
 	private CPInstance _cpInstance;
-	private final CPInstanceLocalService _cpInstanceLocalService;
 
 }

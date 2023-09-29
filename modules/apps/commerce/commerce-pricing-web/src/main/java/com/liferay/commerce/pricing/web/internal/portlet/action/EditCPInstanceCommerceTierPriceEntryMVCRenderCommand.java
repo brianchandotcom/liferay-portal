@@ -10,7 +10,6 @@ import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHel
 import com.liferay.commerce.pricing.web.internal.display.context.CPInstanceCommerceTierPriceEntryDisplayContext;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -63,7 +62,7 @@ public class EditCPInstanceCommerceTierPriceEntryMVCRenderCommand
 				cpInstanceCommerceTierPriceEntryDisplayContext =
 					new CPInstanceCommerceTierPriceEntryDisplayContext(
 						_actionHelper, _commercePriceListActionHelper,
-						_cpInstanceLocalService, httpServletRequest);
+						httpServletRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -91,9 +90,6 @@ public class EditCPInstanceCommerceTierPriceEntryMVCRenderCommand
 
 	@Reference
 	private CommercePriceListActionHelper _commercePriceListActionHelper;
-
-	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -8,7 +8,6 @@ package com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceEntry;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -40,9 +39,7 @@ public class PriceEntryDTOConverter
 			_commercePriceEntryService.getCommercePriceEntry(
 				(Long)dtoConverterContext.getId());
 
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
-			commercePriceEntry.getCProductId(),
-			commercePriceEntry.getCPInstanceUuid());
+		CPInstance cpInstance = commercePriceEntry.getCPInstance();
 
 		ExpandoBridge expandoBridge = commercePriceEntry.getExpandoBridge();
 
@@ -56,39 +53,15 @@ public class PriceEntryDTOConverter
 				price = commercePriceEntry.getPrice();
 				priceListId = commercePriceEntry.getCommercePriceListId();
 				promoPrice = commercePriceEntry.getPromoPrice();
-
-				setSku(
-					() -> {
-						if (cpInstance == null) {
-							return null;
-						}
-
-						return cpInstance.getSku();
-					});
-				setSkuExternalReferenceCode(
-					() -> {
-						if (cpInstance == null) {
-							return null;
-						}
-
-						return cpInstance.getExternalReferenceCode();
-					});
-				setSkuId(
-					() -> {
-						if (cpInstance == null) {
-							return null;
-						}
-
-						return cpInstance.getCPInstanceId();
-					});
+				sku = cpInstance.getSku();
+				skuExternalReferenceCode =
+					cpInstance.getExternalReferenceCode();
+				skuId = cpInstance.getCPInstanceId();
 			}
 		};
 	}
 
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
-
-	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
 
 }

@@ -2,8 +2,8 @@
 	background: var(--brand-primary-lighten-lighten-6, #fbfcfe);
 	border: 0.063rem solid var(--brand-primary-lighten-lighten-5, #e7efff);
 	border-radius: 0.625rem;
-	height: 9.875rem;
 	max-width: 46.188rem;
+	min-height: 9.875rem;
 
 	.cp-account-subscription-card-icon {
 		background: var(--status-info-lighten-2, #e6ebf5);

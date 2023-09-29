@@ -1,8 +1,8 @@
 .cp-project-breadcrumbs-menu {
-	background-color: var(--color-neutral-1);
+	background-color: var(--color-neutral-0);
 	border-radius: 0.625rem;
 	box-shadow: 0 0.313rem 0.938rem 0 rgba(19, 20, 31, 0.12);
-	left: 5rem !important;
+	left: 2rem !important;
 	max-width: 21.5rem;
 	min-width: 13.25rem;
 	overflow-y: hidden;
@@ -109,11 +109,11 @@
 }
 
 .cp-extended-dropdown {
-	top: 12.188rem !important;
+	top: 16.7rem !important;
 
 	.dropdown-section {
 		padding-bottom: 0.625rem;
-		padding-top: 0.625rem;
+		padding-top: 0.725rem;
 	}
 
 	ul {
@@ -123,7 +123,7 @@
 }
 
 .cp-short-dropdown {
-	top: 8.75rem !important;
+	top: 13.2rem !important;
 
 	.dropdown-section {
 		padding: 0.2rem 1rem;

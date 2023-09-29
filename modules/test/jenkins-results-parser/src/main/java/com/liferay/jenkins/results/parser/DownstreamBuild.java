@@ -159,6 +159,11 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	@Override
+	public String getBuildName() {
+		return getAxisName();
+	}
+
+	@Override
 	public String getDisplayName() {
 		StringBuilder sb = new StringBuilder();
 

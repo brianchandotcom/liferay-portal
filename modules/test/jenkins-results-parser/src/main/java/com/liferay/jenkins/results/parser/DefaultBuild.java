@@ -30,6 +30,11 @@ public class DefaultBuild extends BaseBuild {
 	}
 
 	@Override
+	public String getBuildName() {
+		return "default";
+	}
+
+	@Override
 	protected Element getGitHubMessageJobResultsElement() {
 		return null;
 	}

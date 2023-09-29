@@ -63,6 +63,11 @@ public class BatchBuild extends BaseParentBuild {
 		return batchName;
 	}
 
+	@Override
+	public String getBuildName() {
+		return getJobVariant();
+	}
+
 	public List<AxisBuild> getDownstreamAxisBuilds() {
 		List<AxisBuild> downstreamAxisBuilds = new ArrayList<>();
 

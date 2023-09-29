@@ -210,6 +210,11 @@ public abstract class BaseTopLevelBuild
 	}
 
 	@Override
+	public String getBuildName() {
+		return "top-level";
+	}
+
+	@Override
 	public Build getControllerBuild() {
 		if (_controllerBuild != null) {
 			return _controllerBuild;

@@ -180,28 +180,11 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 
 	private void _defineRegionCounter() throws Exception {
 		try (Statement statement = connection.createStatement();
-			ResultSet resultSet1 = statement.executeQuery(
-				StringBundler.concat(
-					"select currentId from Counter where name = '",
-					Region.class.getName(), "'"))) {
+			ResultSet resultSet = statement.executeQuery(
+				"select max(regionId) from Region")) {
 
-			long currentId = 0;
-
-			if (resultSet1.next()) {
-				currentId = resultSet1.getLong("currentId");
-			}
-
-			try (ResultSet resultSet2 = statement.executeQuery(
-					"select max(regionId) from Region")) {
-
-				if (resultSet2.next()) {
-					long increment = Math.max(
-						0, resultSet2.getLong(1) - currentId);
-
-					if (increment > 0) {
-						increment(Region.class.getName(), (int)increment);
-					}
-				}
+			if (resultSet.next()) {
+				increment(Region.class.getName(), (int)resultSet.getLong(1));
 			}
 		}
 	}

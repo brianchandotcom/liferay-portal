@@ -337,6 +337,13 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 										<div class="list-group-subtitle">
 											<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(articleVersion.getUserName()), dateFormatDateTime.format(articleVersion.getStatusDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 										</div>
+
+										<div>
+											<liferay-portal-workflow:status
+												showStatusLabel="<%= false %>"
+												status="<%= articleVersion.getStatus() %>"
+											/>
+										</div>
 									</clay:content-col>
 
 									<clay:content-col>

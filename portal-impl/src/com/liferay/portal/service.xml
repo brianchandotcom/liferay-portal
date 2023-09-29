@@ -282,7 +282,7 @@
 		<!-- Localized entity -->
 
 		<localized-entity>
-			<localized-column name="title" />
+			<localized-column change-tracking-resolution-type="merge" name="title" />
 		</localized-entity>
 
 		<!-- Order -->
@@ -1909,7 +1909,7 @@
 		<!-- Localized entity -->
 
 		<localized-entity>
-			<localized-column name="title" />
+			<localized-column change-tracking-resolution-type="merge" name="title" />
 		</localized-entity>
 
 		<!-- Order -->

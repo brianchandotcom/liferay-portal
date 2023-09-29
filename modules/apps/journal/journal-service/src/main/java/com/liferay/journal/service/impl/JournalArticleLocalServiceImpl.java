@@ -430,9 +430,9 @@ public class JournalArticleLocalServiceImpl
 
 			try {
 				validateReferences(
-					groupId, ddmStructure.getStructureId(), ddmTemplateKey,
-					layoutUuid, smallImage, smallImageURL, smallImageBytes,
-					smallImageId, smallImageSource, content);
+					groupId, folderId, ddmStructure.getStructureId(),
+					ddmTemplateKey, layoutUuid, smallImage, smallImageURL,
+					smallImageBytes, smallImageId, smallImageSource, content);
 			}
 			catch (ExportImportContentValidationException
 						exportImportContentValidationException) {
@@ -4786,9 +4786,9 @@ public class JournalArticleLocalServiceImpl
 
 			try {
 				validateReferences(
-					groupId, latestArticle.getDDMStructureId(), ddmTemplateKey,
-					layoutUuid, smallImage, smallImageURL, smallImageBytes,
-					smallImageId, smallImageSource, content);
+					groupId, folderId, latestArticle.getDDMStructureId(),
+					ddmTemplateKey, layoutUuid, smallImage, smallImageURL,
+					smallImageBytes, smallImageId, smallImageSource, content);
 			}
 			catch (ExportImportContentValidationException
 						exportImportContentValidationException) {
@@ -7274,16 +7274,16 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void validateReferences(
-			long groupId, long ddmStructureId, String ddmTemplateKey,
-			String layoutUuid, boolean smallImage, String smallImageURL,
-			byte[] smallImageBytes, long smallImageId, int smallImageSource,
-			String content)
+			long groupId, long folderId, long ddmStructureId,
+			String ddmTemplateKey, String layoutUuid, boolean smallImage,
+			String smallImageURL, byte[] smallImageBytes, long smallImageId,
+			int smallImageSource, String content)
 		throws PortalException {
 
 		_getModelValidator().validateReferences(
-			groupId, ddmStructureId, ddmTemplateKey, layoutUuid, smallImage,
-			smallImageURL, smallImageBytes, smallImageId, smallImageSource,
-			content);
+			groupId, folderId, ddmStructureId, ddmTemplateKey, layoutUuid,
+			smallImage, smallImageURL, smallImageBytes, smallImageId,
+			smallImageSource, content);
 	}
 
 	@Reference

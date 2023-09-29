@@ -209,6 +209,7 @@
 		<column name="printedNote" type="String" />
 		<column name="purchaseOrderNumber" type="String" />
 		<column name="requestedDeliveryDate" type="Date" />
+		<column name="shippable" type="boolean" />
 		<column name="shippingAmount" type="BigDecimal" />
 		<column name="shippingDiscountAmount" type="BigDecimal" />
 		<column db-name="shippingDiscountPercentLevel1" name="shippingDiscountPercentageLevel1" type="BigDecimal" />

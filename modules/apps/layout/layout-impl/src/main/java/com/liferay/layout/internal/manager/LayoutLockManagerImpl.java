@@ -187,11 +187,11 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 						groupId, lockedLayoutType)
 				).where(
 					_getWherePredicate(groupId, lockedLayoutType)
-				).orderBy(
-					orderByStep -> _getLimitStep(lockedLayoutOrder, orderByStep)
 				).as(
 					"LockedLayoutsTable", LockedLayoutsTable.INSTANCE
 				)
+			).orderBy(
+				orderByStep -> _getLimitStep(lockedLayoutOrder, orderByStep)
 			));
 
 		List<LockedLayout> lockedLayouts = new ArrayList<>();
@@ -507,7 +507,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 		if (lockedLayoutOrder == null) {
 			return orderByStep.orderBy(
-				LockTable.INSTANCE.createDate.descending());
+				LockedLayoutsTable.INSTANCE.createDateColumn.descending());
 		}
 
 		if (Objects.equals(
@@ -515,7 +515,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				LockedLayoutOrder.LockedLayoutOrderType.NAME)) {
 
 			return orderByStep.orderBy(
-				LayoutTable.INSTANCE,
+				LockedLayoutsTable.INSTANCE,
 				new LayoutNameComparator(
 					lockedLayoutOrder.isAscending(),
 					lockedLayoutOrder.getLocale()));
@@ -532,10 +532,10 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				LockedLayoutOrder.LockedLayoutOrderType.LAST_AUTOSAVE)) {
 
 			if (lockedLayoutOrder.isAscending()) {
-				return LockTable.INSTANCE.createDate.ascending();
+				return LockedLayoutsTable.INSTANCE.createDateColumn.ascending();
 			}
 
-			return LockTable.INSTANCE.createDate.descending();
+			return LockedLayoutsTable.INSTANCE.createDateColumn.descending();
 		}
 
 		if (Objects.equals(
@@ -543,17 +543,17 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				LockedLayoutOrder.LockedLayoutOrderType.USER)) {
 
 			if (lockedLayoutOrder.isAscending()) {
-				return LockTable.INSTANCE.userName.ascending();
+				return LockedLayoutsTable.INSTANCE.userNameColumn.ascending();
 			}
 
-			return LockTable.INSTANCE.userName.descending();
+			return LockedLayoutsTable.INSTANCE.userNameColumn.descending();
 		}
 
 		if (lockedLayoutOrder.isAscending()) {
-			return LockTable.INSTANCE.createDate.ascending();
+			return LockedLayoutsTable.INSTANCE.createDateColumn.ascending();
 		}
 
-		return LockTable.INSTANCE.createDate.descending();
+		return LockedLayoutsTable.INSTANCE.createDateColumn.descending();
 	}
 
 	private Predicate _getWherePredicate(

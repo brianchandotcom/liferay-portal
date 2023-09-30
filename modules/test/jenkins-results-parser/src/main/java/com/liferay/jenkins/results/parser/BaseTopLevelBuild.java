@@ -2292,14 +2292,15 @@ public abstract class BaseTopLevelBuild
 
 	private String _getStatusSummary() {
 		return JenkinsResultsParserUtil.combine(
-			String.valueOf(getDownstreamBuildCount("starting")), " Starting  ",
-			"/ ", String.valueOf(getDownstreamBuildCount("missing")),
-			" Missing  ", "/ ",
-			String.valueOf(getDownstreamBuildCount("queued")), " Queued  ",
-			"/ ", String.valueOf(getDownstreamBuildCount("running")),
-			" Running  ", "/ ",
+			String.valueOf(getDownstreamBuildCount("invoking")), " Invoking / ",
+			String.valueOf(getDownstreamBuildCount("starting")), " Starting / ",
+			String.valueOf(getDownstreamBuildCount("missing")), " Missing / ",
+			String.valueOf(getDownstreamBuildCount("queued")), " Queued / ",
+			String.valueOf(getDownstreamBuildCount("running")), " Running / ",
+			String.valueOf(getDownstreamBuildCount("reporting")),
+			" Reporting / ",
 			String.valueOf(getDownstreamBuildCount("completed")),
-			" Completed  ", "/ ", String.valueOf(getDownstreamBuildCount(null)),
+			" Completed / ", String.valueOf(getDownstreamBuildCount(null)),
 			" Total ");
 	}
 

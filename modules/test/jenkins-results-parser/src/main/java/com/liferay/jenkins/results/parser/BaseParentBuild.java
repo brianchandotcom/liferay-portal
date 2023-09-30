@@ -444,8 +444,6 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			return;
 		}
 
-		super.update();
-
 		List<Build> downstreamBuilds = getDownstreamBuilds(null);
 
 		List<Callable<Object>> callables = new ArrayList<>();
@@ -470,15 +468,9 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 		parallelExecutor.execute();
 
-		String result = getResult();
-
-		if ((result != null) &&
-			(downstreamBuilds.size() == getDownstreamBuildCount("completed"))) {
-
-			setResult(result);
-		}
-
 		findDownstreamBuilds();
+
+		super.update();
 	}
 
 	protected BaseParentBuild(String url) {
@@ -616,6 +608,22 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		}
 
 		return tableRowElements;
+	}
+
+	protected boolean isJenkinsBuildCompleted() {
+		boolean jenkinsBuildCompleted = super.isJenkinsBuildCompleted();
+
+		if (jenkinsBuildCompleted) {
+			return true;
+		}
+
+		for (Build build : getDownstreamBuilds()) {
+			if (!build.isCompleted()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	@Override

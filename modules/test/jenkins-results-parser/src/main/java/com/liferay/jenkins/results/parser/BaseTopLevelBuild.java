@@ -863,8 +863,6 @@ public abstract class BaseTopLevelBuild
 			return;
 		}
 
-		super.findDownstreamBuilds();
-
 		_findDownstreamBuildsInConsoleText();
 
 		String consoleText = getConsoleText();

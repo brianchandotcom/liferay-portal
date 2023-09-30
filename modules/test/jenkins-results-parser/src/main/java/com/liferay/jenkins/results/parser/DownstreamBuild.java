@@ -59,10 +59,6 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	@Override
-	public void findDownstreamBuilds() {
-	}
-
-	@Override
 	public URL getArtifactsBaseURL() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 

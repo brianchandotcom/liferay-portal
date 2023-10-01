@@ -11,6 +11,8 @@ import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.resource.v1_0.PostalAddressResource;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -22,6 +24,8 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
+
+import javax.ws.rs.BadRequestException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,6 +39,26 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = PostalAddressResource.class
 )
 public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
+
+	@Override
+	public void deleteAccountPostalAddress(Long accountId, Long[] longs)
+		throws Exception {
+
+		for (long postalAddressesId : longs) {
+			Address realaddress = _addressLocalService.getAddress(
+				postalAddressesId);
+
+			if (!accountId.equals(realaddress.getClassPK())) {
+				throw new BadRequestException(
+					_language.format(
+						contextAcceptLanguage.getPreferredLocale(),
+						"account-entry-x-not-has-postal-address-y",
+						new String[] {accountId.toString(),String.valueOf(postalAddressesId)}));
+			}
+
+			_addressLocalService.deleteAddress(postalAddressesId);
+		}
+	}
 
 	@Override
 	public Page<PostalAddress> getAccountPostalAddressesPage(Long accountId)
@@ -114,6 +138,12 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Reference
 	private AddressService _addressService;
+
+	@Reference
+	private CommonPermission _commonPermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = DTOConverterConstants.ORGANIZATION_RESOURCE_DTO_CONVERTER

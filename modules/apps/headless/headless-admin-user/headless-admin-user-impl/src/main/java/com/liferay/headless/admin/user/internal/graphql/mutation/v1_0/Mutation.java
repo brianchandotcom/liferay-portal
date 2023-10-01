@@ -1249,7 +1249,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Deletes from the account the postal addresses requested"
 	)
-	public boolean deleteAccountPostalAddress(
+	public boolean deleteAccountPostalAddresses(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("longs") Long[] longs)
 		throws Exception {
@@ -1258,7 +1258,7 @@ public class Mutation {
 			_postalAddressResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			postalAddressResource ->
-				postalAddressResource.deleteAccountPostalAddress(
+				postalAddressResource.deleteAccountPostalAddresses(
 					accountId, longs));
 
 		return true;

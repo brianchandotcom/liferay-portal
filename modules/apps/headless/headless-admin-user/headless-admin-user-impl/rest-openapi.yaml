@@ -2716,7 +2716,7 @@ paths:
         delete:
             description:
                 Deletes from the account the postal addresses requested
-            operationId: deleteAccountPostalAddress
+            operationId: deleteAccountPostalAddresses
             parameters:
                 - in: path
                   name: accountId

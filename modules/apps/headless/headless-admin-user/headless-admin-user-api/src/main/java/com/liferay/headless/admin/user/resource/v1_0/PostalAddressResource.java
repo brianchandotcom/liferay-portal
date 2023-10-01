@@ -47,7 +47,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PostalAddressResource {
 
-	public void deleteAccountPostalAddress(Long accountId, Long[] longs)
+	public void deleteAccountPostalAddresses(Long accountId, Long[] longs)
 		throws Exception;
 
 	public Page<PostalAddress> getAccountPostalAddressesPage(Long accountId)

@@ -518,10 +518,6 @@ public class PDFProcessorTest {
 		DLProcessor cleanUpDLProcessor = new DLProcessor() {
 
 			@Override
-			public void afterPropertiesSet() throws Exception {
-			}
-
-			@Override
 			public void cleanUp(FileEntry fileEntry) {
 				cleanUp.set(true);
 			}

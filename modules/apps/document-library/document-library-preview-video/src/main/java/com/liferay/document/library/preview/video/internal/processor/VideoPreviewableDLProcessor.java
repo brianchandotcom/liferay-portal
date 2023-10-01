@@ -54,7 +54,6 @@ import org.apache.commons.lang.time.StopWatch;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -69,37 +68,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class VideoPreviewableDLProcessor
 	extends BasePreviewableDLProcessor implements VideoProcessor {
-
-	@Override
-	public void afterPropertiesSet() {
-		boolean valid = true;
-
-		if ((_PREVIEW_TYPES.length == 0) || (_PREVIEW_TYPES.length > 2)) {
-			valid = false;
-		}
-		else {
-			for (String previewType : _PREVIEW_TYPES) {
-				if (!previewType.equals("mp4") && !previewType.equals("ogv")) {
-					valid = false;
-
-					break;
-				}
-			}
-		}
-
-		if (!valid && _log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Liferay is incorrectly configured to generate video ",
-					"previews using video containers other than MP4 or OGV. ",
-					"Please change the property ",
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS,
-					" in portal-ext.properties."));
-		}
-
-		FileUtil.mkdirs(PREVIEW_TMP_PATH);
-		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
-	}
 
 	@Override
 	public void generatePreviews() {
@@ -229,12 +197,33 @@ public class VideoPreviewableDLProcessor
 
 	@Activate
 	protected void activate() {
-		afterPropertiesSet();
-	}
+		boolean valid = true;
 
-	@Deactivate
-	protected void deactivate() throws Exception {
-		destroy();
+		if ((_PREVIEW_TYPES.length == 0) || (_PREVIEW_TYPES.length > 2)) {
+			valid = false;
+		}
+		else {
+			for (String previewType : _PREVIEW_TYPES) {
+				if (!previewType.equals("mp4") && !previewType.equals("ogv")) {
+					valid = false;
+
+					break;
+				}
+			}
+		}
+
+		if (!valid && _log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"Liferay is incorrectly configured to generate video ",
+					"previews using video containers other than MP4 or OGV. ",
+					"Please change the property ",
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS,
+					" in portal-ext.properties."));
+		}
+
+		FileUtil.mkdirs(PREVIEW_TMP_PATH);
+		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 	}
 
 	@Override

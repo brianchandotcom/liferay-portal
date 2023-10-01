@@ -95,18 +95,6 @@ public class PDFPreviewableDLProcessor
 	extends BasePreviewableDLProcessor implements PDFProcessor {
 
 	@Override
-	public void afterPropertiesSet() {
-		FileUtil.mkdirs(DECRYPT_TMP_PATH);
-		FileUtil.mkdirs(PREVIEW_TMP_PATH);
-		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
-	}
-
-	@Override
-	public void destroy() {
-		FileUtil.deltree(TMP_PATH);
-	}
-
-	@Override
 	public void generateImages(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
@@ -259,7 +247,9 @@ public class PDFPreviewableDLProcessor
 
 	@Activate
 	protected void activate() {
-		afterPropertiesSet();
+		FileUtil.mkdirs(DECRYPT_TMP_PATH);
+		FileUtil.mkdirs(PREVIEW_TMP_PATH);
+		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 	}
 
 	@Override
@@ -296,7 +286,7 @@ public class PDFPreviewableDLProcessor
 
 	@Deactivate
 	protected void deactivate() {
-		destroy();
+		FileUtil.deltree(TMP_PATH);
 	}
 
 	@Override

@@ -56,10 +56,6 @@ public class RawMetadataProcessorImpl
 	implements DLProcessor, RawMetadataProcessor {
 
 	@Override
-	public void afterPropertiesSet() {
-	}
-
-	@Override
 	public void cleanUp(FileEntry fileEntry) {
 	}
 

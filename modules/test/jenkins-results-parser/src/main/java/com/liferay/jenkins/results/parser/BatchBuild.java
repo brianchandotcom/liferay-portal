@@ -89,8 +89,7 @@ public class BatchBuild extends BaseParentBuild {
 
 	@Override
 	public Element getGitHubMessageElement() {
-		Collections.sort(
-			getDownstreamBuilds(), new BaseBuild.BuildDisplayNameComparator());
+		sortDownstreamBuilds();
 
 		Element messageElement = super.getGitHubMessageElement();
 

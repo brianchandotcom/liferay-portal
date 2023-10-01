@@ -8,6 +8,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -73,10 +74,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		ParallelExecutor<Build> parallelExecutor = new ParallelExecutor<>(
 			callables, true, getExecutorService());
 
-		List<Build> downstreamBuilds = getDownstreamBuilds();
-
-		downstreamBuilds.addAll(
-			parallelExecutor.execute(1000L * 60L * 60L * 3L));
+		addDownstreamBuilds(parallelExecutor.execute(1000L * 60L * 60L * 3L));
 	}
 
 	@Override
@@ -104,13 +102,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	@Override
 	public synchronized List<Build> getDownstreamBuilds() {
-		if (_downstreamBuilds != null) {
-			return _downstreamBuilds;
-		}
-
-		_downstreamBuilds = new ArrayList<>();
-
-		return _downstreamBuilds;
+		return new ArrayList<>(_downstreamBuilds);
 	}
 
 	@Override
@@ -238,9 +230,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	public List<Build> getModifiedDownstreamBuildsByStatus(String status) {
 		List<Build> modifiedDownstreamBuilds = new ArrayList<>();
 
-		List<Build> downstreamBuilds = getDownstreamBuilds();
-
-		for (Build downstreamBuild : downstreamBuilds) {
+		for (Build downstreamBuild : getDownstreamBuilds()) {
 			if (downstreamBuild.isBuildModified()) {
 				modifiedDownstreamBuilds.add(downstreamBuild);
 
@@ -371,9 +361,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			return true;
 		}
 
-		List<Build> downstreamBuilds = getDownstreamBuilds();
-
-		for (Build downstreamBuild : downstreamBuilds) {
+		for (Build downstreamBuild : getDownstreamBuilds()) {
 			if (downstreamBuild.hasBuildURL(buildURL)) {
 				return true;
 			}
@@ -393,18 +381,16 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	@Override
 	public boolean hasModifiedDownstreamBuilds() {
-		List<Build> downstreamBuilds = getDownstreamBuilds();
-
-		for (Build build : downstreamBuilds) {
-			if (build.isBuildModified()) {
+		for (Build downstreamBuild : getDownstreamBuilds()) {
+			if (downstreamBuild.isBuildModified()) {
 				return true;
 			}
 
-			if (!(build instanceof ParentBuild)) {
+			if (!(downstreamBuild instanceof ParentBuild)) {
 				continue;
 			}
 
-			ParentBuild parentBuild = (ParentBuild)build;
+			ParentBuild parentBuild = (ParentBuild)downstreamBuild;
 
 			if (parentBuild.hasModifiedDownstreamBuilds()) {
 				return true;
@@ -416,9 +402,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	@Override
 	public void removeDownstreamBuild(Build build) {
-		List<Build> downstreamBuilds = getDownstreamBuilds();
-
-		downstreamBuilds.remove(build);
+		_downstreamBuilds.remove(build);
 	}
 
 	@Override
@@ -479,6 +463,16 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	protected BaseParentBuild(String url, Build parentBuild) {
 		super(url, parentBuild);
+	}
+
+	protected void addDownstreamBuilds(Collection<Build> builds) {
+		if (builds == null) {
+			return;
+		}
+
+		builds.removeAll(Collections.singleton(null));
+
+		_downstreamBuilds.addAll(builds);
 	}
 
 	protected void addDownstreamBuildsTimelineData(TimelineData timelineData) {
@@ -617,8 +611,8 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			return true;
 		}
 
-		for (Build build : getDownstreamBuilds()) {
-			if (!build.isCompleted()) {
+		for (Build downstreamBuild : getDownstreamBuilds()) {
+			if (!downstreamBuild.isCompleted()) {
 				return false;
 			}
 		}
@@ -630,9 +624,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	protected void reset() {
 		super.reset();
 
-		List<Build> downstreamBuilds = getDownstreamBuilds();
-
-		downstreamBuilds.clear();
+		_downstreamBuilds.clear();
 	}
 
 	@Override
@@ -665,6 +657,11 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		return true;
 	}
 
-	private List<Build> _downstreamBuilds;
+	protected void sortDownstreamBuilds() {
+		Collections.sort(
+			_downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
+	}
+
+	private final List<Build> _downstreamBuilds = new ArrayList<>();
 
 }

@@ -407,8 +407,7 @@ public abstract class BaseTopLevelBuild
 
 	@Override
 	public Element getGitHubMessageElement() {
-		Collections.sort(
-			getDownstreamBuilds(), new BaseBuild.BuildDisplayNameComparator());
+		sortDownstreamBuilds();
 
 		if (getParentBuild() == null) {
 			return getTopGitHubMessageElement();

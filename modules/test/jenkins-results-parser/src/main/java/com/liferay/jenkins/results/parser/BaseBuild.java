@@ -3686,10 +3686,6 @@ public abstract class BaseBuild implements Build {
 
 	private void _runCompleted() {
 		setStatus("completed");
-
-		if (isBuildModified()) {
-			archive();
-		}
 	}
 
 	private void _runInvoking() {
@@ -3715,9 +3711,7 @@ public abstract class BaseBuild implements Build {
 			return;
 		}
 
-		if (!isBuildModified()) {
-			_runInvoking();
-		}
+		setStatus("invoking");
 	}
 
 	private void _runQueued() {
@@ -3733,9 +3727,7 @@ public abstract class BaseBuild implements Build {
 			return;
 		}
 
-		if (isBuildModified()) {
-			_runMissing();
-		}
+		setStatus("missing");
 	}
 
 	private void _runReporting() {

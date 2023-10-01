@@ -75,7 +75,8 @@ public class CompanyCountriesUtil {
 
 	public static JSONArray getJSONArray(String path) throws Exception {
 		return JSONFactoryUtil.createJSONArray(
-			StringUtil.read(_getClassLoader(), path, false));
+			StringUtil.read(
+				CompanyCountriesUtil.class.getClassLoader(), path, false));
 	}
 
 	public static void populateCompanyCountries(
@@ -129,7 +130,8 @@ public class CompanyCountriesUtil {
 			String path =
 				"com/liferay/address/dependencies/regions/" + a2 + ".json";
 
-			ClassLoader classLoader = _getClassLoader();
+			ClassLoader classLoader =
+				CompanyCountriesUtil.class.getClassLoader();
 
 			if (classLoader.getResource(path) == null) {
 				return;
@@ -193,12 +195,6 @@ public class CompanyCountriesUtil {
 				_log.debug("No regions found for country " + a2, exception);
 			}
 		}
-	}
-
-	private static ClassLoader _getClassLoader() {
-		Class<?> clazz = CompanyCountriesUtil.class;
-
-		return clazz.getClassLoader();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

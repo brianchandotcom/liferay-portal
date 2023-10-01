@@ -1245,6 +1245,24 @@ public class Mutation {
 				userAccountId, callbackURL, contentType, fieldNames));
 	}
 
+	@GraphQLField(
+		description = "Deletes from the account the postal addresses requested"
+	)
+	public boolean deleteAccountPostalAddress(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("longs") Long[] longs)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource ->
+				postalAddressResource.deleteAccountPostalAddress(
+					accountId, longs));
+
+		return true;
+	}
+
 	@GraphQLField
 	public Response createAccountPostalAddressesPageExportBatch(
 			@GraphQLName("accountId") Long accountId,

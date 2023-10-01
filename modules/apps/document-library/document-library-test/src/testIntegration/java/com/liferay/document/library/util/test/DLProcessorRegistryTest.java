@@ -70,10 +70,6 @@ public class DLProcessorRegistryTest {
 			new DLProcessor() {
 
 				@Override
-				public void afterPropertiesSet() throws Exception {
-				}
-
-				@Override
 				public void cleanUp(FileEntry fileEntry) {
 					_cleanUp.set(true);
 				}

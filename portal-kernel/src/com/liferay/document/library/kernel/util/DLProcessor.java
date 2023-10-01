@@ -50,8 +50,6 @@ import com.liferay.portal.kernel.xml.Element;
  */
 public interface DLProcessor {
 
-	public void afterPropertiesSet() throws Exception;
-
 	/**
 	 * Cleans up any resources that the processor created for the file entry.
 	 * Note that all resources for all file versions of this file entry are
@@ -84,9 +82,6 @@ public interface DLProcessor {
 	 */
 	public void copy(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion);
-
-	public default void destroy() throws Exception {
-	}
 
 	/**
 	 * Exports any resources generated for the file entry into file entry

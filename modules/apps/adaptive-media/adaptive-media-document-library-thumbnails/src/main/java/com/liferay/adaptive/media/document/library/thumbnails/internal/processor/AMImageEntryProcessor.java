@@ -61,10 +61,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	@Override
-	public void afterPropertiesSet() {
-	}
-
-	@Override
 	public void cleanUp(FileEntry fileEntry) {
 	}
 

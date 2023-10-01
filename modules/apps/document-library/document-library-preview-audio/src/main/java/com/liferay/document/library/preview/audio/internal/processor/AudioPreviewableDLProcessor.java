@@ -48,7 +48,6 @@ import org.apache.commons.lang.time.StopWatch;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -63,36 +62,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AudioPreviewableDLProcessor
 	extends BasePreviewableDLProcessor implements AudioProcessor {
-
-	@Override
-	public void afterPropertiesSet() {
-		boolean valid = true;
-
-		if ((_PREVIEW_TYPES.length == 0) || (_PREVIEW_TYPES.length > 2)) {
-			valid = false;
-		}
-		else {
-			for (String previewType : _PREVIEW_TYPES) {
-				if (!previewType.equals("mp3") && !previewType.equals("ogg")) {
-					valid = false;
-
-					break;
-				}
-			}
-		}
-
-		if (!valid && _log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Liferay is incorrectly configured to generate video ",
-					"previews using video containers other than MP3 or OGG. ",
-					"Please change the property ",
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS,
-					" in portal-ext.properties."));
-		}
-
-		FileUtil.mkdirs(PREVIEW_TMP_PATH);
-	}
 
 	@Override
 	public void generateAudio(
@@ -208,12 +177,32 @@ public class AudioPreviewableDLProcessor
 
 	@Activate
 	protected void activate() {
-		afterPropertiesSet();
-	}
+		boolean valid = true;
 
-	@Deactivate
-	protected void deactivate() throws Exception {
-		destroy();
+		if ((_PREVIEW_TYPES.length == 0) || (_PREVIEW_TYPES.length > 2)) {
+			valid = false;
+		}
+		else {
+			for (String previewType : _PREVIEW_TYPES) {
+				if (!previewType.equals("mp3") && !previewType.equals("ogg")) {
+					valid = false;
+
+					break;
+				}
+			}
+		}
+
+		if (!valid && _log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"Liferay is incorrectly configured to generate video ",
+					"previews using video containers other than MP3 or OGG. ",
+					"Please change the property ",
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS,
+					" in portal-ext.properties."));
+		}
+
+		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 	}
 
 	@Override

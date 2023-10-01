@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Override
-	public void deleteAccountPostalAddresses(Long accountId, Long[] longs)
+	public void deleteAccountPostalAddress(Long accountId, Long[] longs)
 		throws Exception {
 
 		for (long postalAddressesId : longs) {

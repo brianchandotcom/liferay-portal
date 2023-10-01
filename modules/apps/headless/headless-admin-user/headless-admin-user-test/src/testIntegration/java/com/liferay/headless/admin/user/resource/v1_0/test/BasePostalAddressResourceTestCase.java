@@ -199,25 +199,25 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountPostalAddresses() throws Exception {
+	public void testDeleteAccountPostalAddress() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PostalAddress postalAddress =
-			testDeleteAccountPostalAddresses_addPostalAddress();
+			testDeleteAccountPostalAddress_addPostalAddress();
 
 		assertHttpResponseStatusCode(
 			204,
-			postalAddressResource.deleteAccountPostalAddressesHttpResponse(
-				testDeleteAccountPostalAddresses_getAccountId(), null));
+			postalAddressResource.deleteAccountPostalAddressHttpResponse(
+				testDeleteAccountPostalAddress_getAccountId(), null));
 	}
 
-	protected Long testDeleteAccountPostalAddresses_getAccountId()
+	protected Long testDeleteAccountPostalAddress_getAccountId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected PostalAddress testDeleteAccountPostalAddresses_addPostalAddress()
+	protected PostalAddress testDeleteAccountPostalAddress_addPostalAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

@@ -33,10 +33,10 @@ public interface PostalAddressResource {
 		return new Builder();
 	}
 
-	public void deleteAccountPostalAddresses(Long accountId, Long[] longs)
+	public void deleteAccountPostalAddress(Long accountId, Long[] longs)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse deleteAccountPostalAddressesHttpResponse(
+	public HttpInvoker.HttpResponse deleteAccountPostalAddressHttpResponse(
 			Long accountId, Long[] longs)
 		throws Exception;
 
@@ -241,11 +241,12 @@ public interface PostalAddressResource {
 	public static class PostalAddressResourceImpl
 		implements PostalAddressResource {
 
-		public void deleteAccountPostalAddresses(Long accountId, Long[] longs)
+
+		public void deleteAccountPostalAddress(Long accountId, Long[] longs)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountPostalAddressesHttpResponse(accountId, longs);
+				deleteAccountPostalAddressHttpResponse(accountId, longs);
 
 			String content = httpResponse.getContent();
 
@@ -306,9 +307,8 @@ public interface PostalAddressResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				deleteAccountPostalAddressesHttpResponse(
-					Long accountId, Long[] longs)
+		public HttpInvoker.HttpResponse deleteAccountPostalAddressHttpResponse(
+				Long accountId, Long[] longs)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

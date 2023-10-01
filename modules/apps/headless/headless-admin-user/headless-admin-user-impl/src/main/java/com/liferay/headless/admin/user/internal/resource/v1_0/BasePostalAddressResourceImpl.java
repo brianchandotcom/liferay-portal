@@ -96,7 +96,7 @@ public abstract class BasePostalAddressResourceImpl
 	@javax.ws.rs.Path("/accounts/{accountId}/postal-addresses")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteAccountPostalAddresses(
+	public void deleteAccountPostalAddress(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("accountId")

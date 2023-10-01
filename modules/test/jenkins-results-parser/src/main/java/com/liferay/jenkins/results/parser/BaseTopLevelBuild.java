@@ -83,6 +83,11 @@ public abstract class BaseTopLevelBuild
 	}
 
 	@Override
+	public boolean applyReinvokeRules() {
+		return false;
+	}
+
+	@Override
 	public String getAcceptanceUpstreamJobName() {
 		String jobName = getJobName();
 
@@ -617,11 +622,6 @@ public abstract class BaseTopLevelBuild
 		}
 
 		return validationBuild.getGitHubMessageElement();
-	}
-
-	@Override
-	public boolean isApplyReinvokeRules() {
-		return false;
 	}
 
 	@Override

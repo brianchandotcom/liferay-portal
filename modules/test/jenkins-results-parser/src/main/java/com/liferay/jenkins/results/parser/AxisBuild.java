@@ -57,6 +57,11 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
+	public boolean applySlaveOfflineRules() {
+		return false;
+	}
+
+	@Override
 	public String getArchivePath() {
 		String archiveName = getArchiveName();
 
@@ -491,11 +496,6 @@ public class AxisBuild extends BaseBuild {
 		}
 
 		return warningMessages;
-	}
-
-	@Override
-	public boolean isApplySlaveOfflineRules() {
-		return false;
 	}
 
 	@Override

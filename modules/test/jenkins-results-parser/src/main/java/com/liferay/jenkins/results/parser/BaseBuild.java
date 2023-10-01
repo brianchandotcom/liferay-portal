@@ -51,6 +51,63 @@ import org.json.JSONObject;
 public abstract class BaseBuild implements Build {
 
 	@Override
+	public boolean applyReinvokeRules() {
+		if ((isCompleted() && !isFailing()) || !isCompleted() ||
+			isFromArchive() ||
+			(badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX)) {
+
+			return false;
+		}
+
+		for (ReinvokeRule reinvokeRule : ReinvokeRule.getReinvokeRules()) {
+			if (!reinvokeRule.matches(this)) {
+				continue;
+			}
+
+			reinvoke(reinvokeRule);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean applySlaveOfflineRules() {
+		if ((isCompleted() && !isFailing()) || !isCompleted() ||
+			isFromArchive()) {
+
+			return false;
+		}
+
+		JenkinsSlave jenkinsSlave = getJenkinsSlave();
+
+		if (jenkinsSlave == null) {
+			return false;
+		}
+
+		jenkinsSlave.update();
+
+		if (jenkinsSlave.isOffline()) {
+			return false;
+		}
+
+		for (SlaveOfflineRule slaveOfflineRule :
+				SlaveOfflineRule.getSlaveOfflineRules()) {
+
+			if (!slaveOfflineRule.matches(this)) {
+				continue;
+			}
+
+			takeSlaveOffline(slaveOfflineRule);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public void archive() {
 		archive(getArchiveName());
 	}
@@ -1243,63 +1300,6 @@ public abstract class BaseBuild implements Build {
 		_invocations.add(invocation);
 
 		return invocation;
-	}
-
-	@Override
-	public boolean isApplyReinvokeRules() {
-		if ((isCompleted() && !isFailing()) || !isCompleted() ||
-			isFromArchive() ||
-			(badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX)) {
-
-			return false;
-		}
-
-		for (ReinvokeRule reinvokeRule : ReinvokeRule.getReinvokeRules()) {
-			if (!reinvokeRule.matches(this)) {
-				continue;
-			}
-
-			reinvoke(reinvokeRule);
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isApplySlaveOfflineRules() {
-		if ((isCompleted() && !isFailing()) || !isCompleted() ||
-			isFromArchive()) {
-
-			return false;
-		}
-
-		JenkinsSlave jenkinsSlave = getJenkinsSlave();
-
-		if (jenkinsSlave == null) {
-			return false;
-		}
-
-		jenkinsSlave.update();
-
-		if (jenkinsSlave.isOffline()) {
-			return false;
-		}
-
-		for (SlaveOfflineRule slaveOfflineRule :
-				SlaveOfflineRule.getSlaveOfflineRules()) {
-
-			if (!slaveOfflineRule.matches(this)) {
-				continue;
-			}
-
-			takeSlaveOffline(slaveOfflineRule);
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override
@@ -3733,9 +3733,9 @@ public abstract class BaseBuild implements Build {
 	private void _runReporting() {
 		setStatus("reporting");
 
-		isApplySlaveOfflineRules();
+		applySlaveOfflineRules();
 
-		if (isApplyReinvokeRules()) {
+		if (applyReinvokeRules()) {
 			_runStarting();
 
 			return;

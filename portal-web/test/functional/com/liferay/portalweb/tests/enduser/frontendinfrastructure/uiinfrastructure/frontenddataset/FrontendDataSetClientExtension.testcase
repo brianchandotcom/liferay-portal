@@ -386,6 +386,131 @@ definition {
 		}
 	}
 
+	@description = "LPS-181549 Verify if it is possible to see an apple icon instead of the word green using the Structured content endpoint in the Data Set"
+	@priority = 5
+	test CanSeeAppleIconInWebContentTitle {
+		property osgi.modules.includes = "liferay-sample-fds-cell-renderer";
+		property test.liferay.virtual.instance = "false";
+		property test.name.skip.portal.instance = "FrontendDataSetClientExtension#CanSeeAppleIconinWebContentTitle";
+
+		task ("Given a client extension zip file deployed") {
+			FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-cell-renderer.zip");
+
+			WaitForConsoleTextPresent(value1 = "STARTED liferaysamplefdscellrenderer_7.4.13");
+		}
+
+		task ("And a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Content",
+				restApplication = "/headless-admin-content/v1.0",
+				restEndpoint = "/v1.0/sites/{siteId}/structured-contents",
+				restSchema = "StructuredContent");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Content",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When goes to Fields Tab.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Content",
+				key_viewName = "View Test");
+
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("When the user adds fields to the view") {
+			DataSetAdmin.addFields(key_fieldList = "title,siteId");
+		}
+
+		task ("And edits one of the fields") {
+			Click(
+				key_fieldName = "title",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And changes the Cell Renderer field from Default to Liferay Sample Frontend Data Set Cell Renderer option") {
+			Click(
+				dropdownLabel = "Renderer",
+				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+
+			MenuItem.click(menuItem = "Liferay Sample Frontend Data Set Cell Renderer");
+		}
+
+		task ("And save the changes") {
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("And creates a new web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content Green",
+				webContentTitle = "Green");
+
+			PortletEntry.publish();
+		}
+
+		task ("When the user creates a new content page and adds the data set fragment portlet") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Green Page");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And adds the View Test view to the data set fragment portlet ") {
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "View Test",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then an apple emoji appears replacing the words in the modified field") {
+			Navigator.gotoPage(pageName = "Green Page");
+
+			WaitForElementPresent(
+				assetType = "apple",
+				index = 1,
+				locator1 = "Fragment#CONTENT_DISPLAY_TEXT");
+
+			AssertElementPresent(
+				assetType = "apple",
+				index = 1,
+				locator1 = "Fragment#CONTENT_DISPLAY_TEXT");
+		}
+	}
+
 	@description = "LPS-176807. Verify if the Client Extension are visible when deploys"
 	@priority = 4
 	test CanViewDeployedFile {

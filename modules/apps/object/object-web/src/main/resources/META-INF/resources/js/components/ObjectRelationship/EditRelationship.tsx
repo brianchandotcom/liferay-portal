@@ -45,6 +45,10 @@ export default function EditRelationship({
 }: EditRelationshipProps) {
 	const onSubmit = async (objectRelationship: ObjectRelationship) => {
 		try {
+			if (!Liferay.FeatureFlags['LPS-187142']) {
+				delete objectRelationship.edge;
+			}
+
 			await API.putObjectRelationship(objectRelationship);
 			saveAndReload();
 

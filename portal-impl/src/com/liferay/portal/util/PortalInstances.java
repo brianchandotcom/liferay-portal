@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -205,6 +206,16 @@ public class PortalInstances {
 		}
 
 		return ArrayUtil.toArray(companyIds.toArray(new Long[0]));
+	}
+
+	public static long getCurrentCompanyId() {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (companyId == CompanyConstants.SYSTEM) {
+			companyId = getDefaultCompanyId();
+		}
+
+		return companyId;
 	}
 
 	public static long getDefaultCompanyId() {

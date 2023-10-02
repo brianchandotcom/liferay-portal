@@ -9,11 +9,13 @@ import './ObjectFieldFormBase.scss';
 interface UniqueValuesProps {
 	disabled?: boolean;
 	objectField: Partial<ObjectField>;
+	onSubmit?: () => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 export declare function UniqueValues({
 	disabled,
 	objectField: values,
+	onSubmit,
 	setValues,
 }: UniqueValuesProps): JSX.Element;
 export {};

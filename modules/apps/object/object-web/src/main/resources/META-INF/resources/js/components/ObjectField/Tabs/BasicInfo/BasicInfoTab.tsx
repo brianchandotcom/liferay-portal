@@ -40,6 +40,7 @@ interface BasicInfoTabProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
 	objectRelationshipId: number;
+	onSubmit?: (editedObjectField?: Partial<ObjectField>) => void;
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
 	sidebarElements: SidebarCategory[];
@@ -58,6 +59,7 @@ export function BasicInfoTab({
 	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectRelationshipId,
+	onSubmit,
 	readOnly,
 	setValues,
 	sidebarElements,
@@ -115,6 +117,7 @@ export function BasicInfoTab({
 					objectDefinitionName={objectDefinition.name ?? ''}
 					objectFieldTypes={objectFieldTypes}
 					objectRelationshipId={objectRelationshipId}
+					onSubmit={onSubmit}
 					readOnly={readOnly}
 					setAggregationFilters={setAggregationFilters}
 					setObjectDefinitionExternalReferenceCode2={
@@ -137,6 +140,7 @@ export function BasicInfoTab({
 						objectDefinitionExternalReferenceCode2={
 							objectDefinitionExternalReferenceCode2
 						}
+						onSubmit={onSubmit}
 						setAggregationFilters={setAggregationFilters}
 						setCreationLanguageId2={setCreationLanguageId2}
 						setValues={setValues}
@@ -159,8 +163,10 @@ export function BasicInfoTab({
 						objectFieldSettings={
 							values.objectFieldSettings as ObjectFieldSetting[]
 						}
+						onSubmit={onSubmit}
 						setValues={setValues}
 						sidebarElements={sidebarElements}
+						values={values}
 					/>
 				</ContainerWrapper>
 			)}
@@ -177,6 +183,7 @@ export function BasicInfoTab({
 						isApproved={isApproved}
 						modelBuilder={modelBuilder}
 						objectField={values}
+						onSubmit={onSubmit}
 						readOnly={readOnly}
 						setValues={setValues}
 					/>
@@ -193,6 +200,7 @@ export function BasicInfoTab({
 				<TranslationOptionsContainer
 					modelBuilder={modelBuilder}
 					objectDefinition={objectDefinition}
+					onSubmit={onSubmit}
 					published={isApproved}
 					setValues={setValues}
 					values={values}
@@ -213,6 +221,13 @@ export function BasicInfoTab({
 						})}
 						label={Liferay.Language.get('external-reference-code')}
 						name="externalReferenceCode"
+						onBlur={(event) => {
+							event.stopPropagation();
+
+							if (onSubmit) {
+								onSubmit();
+							}
+						}}
 						onChange={handleChange}
 						value={values.externalReferenceCode}
 					/>

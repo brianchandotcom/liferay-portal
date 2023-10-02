@@ -50,6 +50,7 @@ export default function AutoComplete<T>({
 	items,
 	label,
 	onActive,
+	onBlur,
 	onChangeQuery,
 	onSelectEmptyStateItem,
 	onSelectItem,
@@ -84,6 +85,7 @@ export default function AutoComplete<T>({
 				onActiveChange={(value: boolean) =>
 					!disabled ? setActive(value) : setActive(false)
 				}
+				onBlur={onBlur}
 				trigger={
 					<CustomSelect
 						contentRight={<>{value && contentRight}</>}

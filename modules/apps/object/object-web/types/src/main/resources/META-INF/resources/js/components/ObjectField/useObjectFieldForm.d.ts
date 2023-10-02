@@ -45,7 +45,9 @@ export declare function useObjectFieldForm({
 	>;
 	handleChange: import('react').ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: import('react').FormEventHandler<HTMLFormElement>;
-	handleValidate: () => import('@liferay/object-js-components-web').FormError<
+	handleValidate: (
+		editedValues?: Partial<ObjectField> | undefined
+	) => import('@liferay/object-js-components-web').FormError<
 		ObjectField & {
 			function: unknown;
 			defaultValue: unknown;

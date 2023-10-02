@@ -9,6 +9,7 @@ import './TranslationOptionsContainer.scss';
 interface TranslationOptionsContainerProps {
 	modelBuilder?: boolean;
 	objectDefinition: Partial<ObjectDefinition>;
+	onSubmit?: () => void;
 	published: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
@@ -16,6 +17,7 @@ interface TranslationOptionsContainerProps {
 export declare function TranslationOptionsContainer({
 	modelBuilder,
 	objectDefinition,
+	onSubmit,
 	published,
 	setValues,
 	values,

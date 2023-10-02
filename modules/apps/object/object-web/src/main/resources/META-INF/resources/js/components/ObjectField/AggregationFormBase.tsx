@@ -15,7 +15,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {normalizeFieldSettings} from '../../utils/fieldSettings';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
-interface AggregationSourcePropertyProps {
+interface AggregationFormBaseProps {
 	creationLanguageId2: Liferay.Language.Locale;
 	disabled?: boolean;
 	editingObjectField?: boolean;
@@ -26,7 +26,9 @@ interface AggregationSourcePropertyProps {
 	onObjectRelationshipChange?: (
 		objectDefinitionExternalReferenceCode2: string
 	) => void;
+	onSubmit?: (values?: Partial<ObjectField>) => void;
 	setValues: (values: Partial<ObjectField>) => void;
+	values: Partial<ObjectField>;
 }
 
 type TObjectRelationship = {
@@ -65,10 +67,12 @@ export function AggregationFormBase({
 	editingObjectField,
 	onAggregationFilterChange,
 	onObjectRelationshipChange,
+	onSubmit,
 	objectDefinitionExternalReferenceCode,
 	objectFieldSettings = [],
 	setValues,
-}: AggregationSourcePropertyProps) {
+	values,
+}: AggregationFormBaseProps) {
 	const [relationshipsQuery, setRelationshipsQuery] = useState<string>('');
 	const [relationshipFieldsQuery, setRelationshipFieldsQuery] = useState<
 		string
@@ -258,6 +262,13 @@ export function AggregationFormBase({
 				objectRelationship.objectDefinitionExternalReferenceCode2
 			);
 		}
+
+		if (onSubmit) {
+			onSubmit({
+				...values,
+				objectFieldSettings: newObjectFieldSettings,
+			});
+		}
 	};
 
 	const handleAggregationFunctionChange = ({
@@ -379,6 +390,13 @@ export function AggregationFormBase({
 				disabled={disabled}
 				error={errors.function}
 				label={Liferay.Language.get('function')}
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onChange={handleAggregationFunctionChange}
 				options={aggregationFunctions}
 				required
@@ -396,6 +414,13 @@ export function AggregationFormBase({
 					onActive={(item) =>
 						item.name === selectedSummarizeField?.name
 					}
+					onBlur={(event) => {
+						event.stopPropagation();
+
+						if (onSubmit) {
+							onSubmit();
+						}
+					}}
 					onChangeQuery={setRelationshipFieldsQuery}
 					onSelectItem={(item) => {
 						handleSummarizeFieldChange(item);

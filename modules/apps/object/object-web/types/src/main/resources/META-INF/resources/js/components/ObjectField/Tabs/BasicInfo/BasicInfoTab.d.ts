@@ -31,6 +31,7 @@ interface BasicInfoTabProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
 	objectRelationshipId: number;
+	onSubmit?: (editedObjectField?: Partial<ObjectField>) => void;
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
 	sidebarElements: SidebarCategory[];
@@ -48,6 +49,7 @@ export declare function BasicInfoTab({
 	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectRelationshipId,
+	onSubmit,
 	readOnly,
 	setValues,
 	sidebarElements,

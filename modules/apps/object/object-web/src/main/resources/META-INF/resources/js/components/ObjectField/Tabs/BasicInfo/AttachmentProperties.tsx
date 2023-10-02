@@ -15,12 +15,14 @@ interface IAttachmentPropertiesProps {
 	errors: ObjectFieldErrors;
 	objectFieldSettings: ObjectFieldSetting[];
 	onSettingsChange: (setting: ObjectFieldSetting) => void;
+	onSubmit?: () => void;
 }
 
 export function AttachmentProperties({
 	errors,
 	objectFieldSettings,
 	onSettingsChange,
+	onSubmit,
 }: IAttachmentPropertiesProps) {
 	const settings = normalizeFieldSettings(objectFieldSettings);
 
@@ -38,6 +40,13 @@ export function AttachmentProperties({
 						)}
 						label={Liferay.Language.get('storage-folder')}
 						maxLength={255}
+						onBlur={(event) => {
+							event.stopPropagation();
+
+							if (onSubmit) {
+								onSubmit();
+							}
+						}}
 						onChange={({target: {value}}) =>
 							onSettingsChange({
 								name: 'storageDLFolderPath',
@@ -56,6 +65,13 @@ export function AttachmentProperties({
 					'enter-the-list-of-file-extensions-users-can-upload-use-commas-to-separate-extensions'
 				)}
 				label={Liferay.Language.get('accepted-file-extensions')}
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onChange={({target: {value}}) =>
 					onSettingsChange({name: 'acceptedFileExtensions', value})
 				}
@@ -68,6 +84,13 @@ export function AttachmentProperties({
 				feedbackMessage={Liferay.Language.get('maximum-file-size-help')}
 				label={Liferay.Language.get('maximum-file-size')}
 				min={0}
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onChange={({target: {value}}) =>
 					onSettingsChange({
 						name: 'maximumFileSize',

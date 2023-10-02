@@ -13,6 +13,7 @@ interface AdvancedTabProps {
 	isDefaultStorageType: boolean;
 	learnResources: ObjectWebLearnResources;
 	modelBuilder?: boolean;
+	onSubmit?: () => void;
 	readOnlySidebarElements: SidebarCategory[];
 	setValues: (value: Partial<ObjectField>) => void;
 	sidebarElements: SidebarCategory[];
@@ -25,6 +26,7 @@ export declare function AdvancedTab({
 	isDefaultStorageType,
 	learnResources,
 	modelBuilder,
+	onSubmit,
 	readOnlySidebarElements,
 	setValues,
 	sidebarElements,

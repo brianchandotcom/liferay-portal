@@ -8,7 +8,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {FieldBase} from 'frontend-js-components-web';
-import React, {ReactNode, cloneElement, useRef} from 'react';
+import React, {FocusEvent, ReactNode, cloneElement, useRef} from 'react';
 
 import './index.scss';
 
@@ -30,6 +30,7 @@ export interface SelectProps {
 	feedbackMessage?: string;
 	id?: string;
 	label?: string;
+	onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
 	placeholder?: string;
 	readonly?: boolean;
 	required?: boolean;
@@ -54,6 +55,7 @@ export function BaseSelect({
 	feedbackMessage,
 	id,
 	label,
+	onBlur,
 	placeholder = Liferay.Language.get('choose-an-option'),
 	readonly,
 	required,
@@ -74,7 +76,7 @@ export function BaseSelect({
 			label={label}
 			required={required}
 		>
-			<ClayAutocomplete>
+			<ClayAutocomplete onBlur={onBlur}>
 				{trigger ? (
 					cloneElement(trigger, {
 						disabled,

@@ -17,6 +17,7 @@ import './ObjectFieldFormBase.scss';
 interface TimeStorageProps {
 	disabled?: boolean;
 	objectFieldSettings: ObjectFieldSetting[];
+	onSubmit?: () => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 
@@ -34,6 +35,7 @@ const timeStorageOptions = [
 export function TimeStorage({
 	disabled,
 	objectFieldSettings,
+	onSubmit,
 	setValues,
 }: TimeStorageProps) {
 	const settings = normalizeFieldSettings(objectFieldSettings);
@@ -55,6 +57,13 @@ export function TimeStorage({
 			<SingleSelect
 				disabled={disabled}
 				label={Liferay.Language.get('time-storage')}
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onChange={handleValueChange}
 				options={timeStorageOptions}
 				required

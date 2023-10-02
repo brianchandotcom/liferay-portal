@@ -19,6 +19,7 @@ interface EditObjectFieldContentProps
 	errors: ObjectFieldErrors;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	modelBuilder?: boolean;
+	onSubmit?: (editedObjectField?: Partial<ObjectField>) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 }
@@ -34,6 +35,7 @@ export declare function EditObjectFieldContent({
 	learnResources,
 	modelBuilder,
 	objectDefinitionExternalReferenceCode,
+	onSubmit,
 	readOnly,
 	setValues,
 	values,

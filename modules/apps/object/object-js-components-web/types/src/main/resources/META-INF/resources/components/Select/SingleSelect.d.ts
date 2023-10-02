@@ -17,6 +17,7 @@ export declare function SingleSelect<
 >({
 	contentRight,
 	children,
+	onBlur,
 	onChange,
 	options,
 	...otherProps

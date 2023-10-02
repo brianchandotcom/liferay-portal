@@ -16,6 +16,7 @@ interface IAttachmentFormBaseProps {
 	error?: string;
 	objectDefinitionName: string;
 	objectFieldSettings: ObjectFieldSetting[];
+	onSubmit?: () => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 
@@ -43,6 +44,7 @@ export function AttachmentFormBase({
 	error,
 	objectDefinitionName,
 	objectFieldSettings,
+	onSubmit,
 	setValues,
 }: IAttachmentFormBaseProps) {
 	const settings = normalizeFieldSettings(objectFieldSettings);
@@ -101,6 +103,13 @@ export function AttachmentFormBase({
 				disabled={disabled}
 				error={error}
 				label={Liferay.Language.get('request-files')}
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onChange={handleAttachmentSourceChange}
 				options={attachmentSources}
 				required
@@ -115,6 +124,13 @@ export function AttachmentFormBase({
 							'show-files-in-documents-and-media'
 						)}
 						name="showFilesInDocumentsAndMedia"
+						onBlur={(event) => {
+							event.stopPropagation();
+
+							if (onSubmit) {
+								onSubmit();
+							}
+						}}
 						onToggle={toggleShowFiles}
 						toggled={!!settings.showFilesInDocumentsAndMedia}
 						tooltip={Liferay.Language.get(

@@ -18,7 +18,9 @@ export declare function useObjectDetailsForm({
 	errors: FormError<ObjectDefinition>;
 	handleChange: import('react').ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: import('react').FormEventHandler<HTMLFormElement>;
-	handleValidate: () => FormError<ObjectDefinition>;
+	handleValidate: (
+		editedValues?: Partial<ObjectDefinition> | undefined
+	) => FormError<ObjectDefinition>;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 };

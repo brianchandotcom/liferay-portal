@@ -10,6 +10,7 @@ interface SearchableProps {
 	isApproved: boolean;
 	modelBuilder?: boolean;
 	objectField: Partial<ObjectField>;
+	onSubmit?: () => void;
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
 }
@@ -17,6 +18,7 @@ export declare function SearchableContainer({
 	isApproved,
 	modelBuilder,
 	objectField,
+	onSubmit,
 	readOnly,
 	setValues,
 }: SearchableProps): JSX.Element;

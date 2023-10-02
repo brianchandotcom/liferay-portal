@@ -17,7 +17,7 @@ interface IUseForm<T, P = {}, K extends Partial<T> = Partial<T>> {
 	errors: FormError<T & P>;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: FormEventHandler<HTMLFormElement>;
-	handleValidate: () => FormError<T & P>;
+	handleValidate: (editedValues?: K) => FormError<T & P>;
 	setValues: (values: Partial<T>) => void;
 	validateSubmit: () => void;
 	values: K;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {ReactNode} from 'react';
+import React, {FocusEvent, ReactNode} from 'react';
 import './index.scss';
 export interface CustomItem<T = string> {
 	checked?: boolean;
@@ -25,6 +25,7 @@ export interface SelectProps {
 	feedbackMessage?: string;
 	id?: string;
 	label?: string;
+	onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
 	placeholder?: string;
 	readonly?: boolean;
 	required?: boolean;
@@ -47,6 +48,7 @@ export declare function BaseSelect({
 	feedbackMessage,
 	id,
 	label,
+	onBlur,
 	placeholder,
 	readonly,
 	required,

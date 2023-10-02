@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.helper;
+package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util;
 
 import com.liferay.dynamic.data.mapping.exception.FormInstanceExpiredException;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceSubmissionLimitException;
@@ -35,15 +35,12 @@ import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(service = AddFormInstanceRecordMVCCommandHelper.class)
-public class AddFormInstanceRecordMVCCommandHelper {
+public class AddFormInstanceRecordMVCCommandUtil {
 
-	public void updateNonevaluableDDMFormFields(
+	public static void updateNonevaluableDDMFormFields(
 			Map<String, DDMFormField> ddmFormFieldsMap,
 			Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
 				ddmFormFieldsPropertyChanges,
@@ -124,7 +121,7 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		}
 	}
 
-	public void updateReadOnlyDDMFormFields(
+	public static void updateReadOnlyDDMFormFields(
 			Map<String, DDMFormField> ddmFormFieldsMap,
 			Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
 				ddmFormFieldsPropertyChanges)
@@ -147,7 +144,7 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		}
 	}
 
-	public void validateExpirationStatus(
+	public static void validateExpirationStatus(
 			DDMFormInstance ddmFormInstance, PortletRequest portletRequest)
 		throws Exception {
 
@@ -163,7 +160,7 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		}
 	}
 
-	public void validateSubmissionLimitStatus(
+	public static void validateSubmissionLimitStatus(
 			DDMFormInstance ddmFormInstance,
 			DDMFormInstanceRecordVersionLocalService
 				ddmFormInstanceRecordVersionLocalService,

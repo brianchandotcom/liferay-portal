@@ -8,6 +8,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.helper
 import com.liferay.dynamic.data.mapping.exception.FormInstanceExpiredException;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceSubmissionLimitException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
+import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.AddFormInstanceRecordMVCCommandUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -46,7 +47,7 @@ import org.mockito.Mockito;
 /**
  * @author Leonardo Barros
  */
-public class AddFormInstanceRecordMVCCommandHelperTest {
+public class AddFormInstanceRecordMVCCommandUtilTest {
 
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
@@ -134,7 +135,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest {
 			themeDisplay
 		);
 
-		_addFormInstanceRecordMVCCommandHelper.validateExpirationStatus(
+		AddFormInstanceRecordMVCCommandUtil.validateExpirationStatus(
 			_mockDDMFormInstance(), _actionRequest);
 	}
 
@@ -148,7 +149,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest {
 			themeDisplay
 		);
 
-		_addFormInstanceRecordMVCCommandHelper.validateSubmissionLimitStatus(
+		AddFormInstanceRecordMVCCommandUtil.validateSubmissionLimitStatus(
 			_mockDDMFormInstance(),
 			_mockDDMFormInstanceRecordVersionLocalService(), _actionRequest);
 	}
@@ -309,7 +310,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest {
 
 		_createDDMFormValues(ddmForm, value);
 
-		_addFormInstanceRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
+		AddFormInstanceRecordMVCCommandUtil.updateNonevaluableDDMFormFields(
 			ddmForm.getDDMFormFieldsMap(true),
 			HashMapBuilder.put(
 				new DDMFormEvaluatorFieldContextKey(
@@ -339,9 +340,6 @@ public class AddFormInstanceRecordMVCCommandHelperTest {
 
 	private final ActionRequest _actionRequest = Mockito.mock(
 		ActionRequest.class);
-	private final AddFormInstanceRecordMVCCommandHelper
-		_addFormInstanceRecordMVCCommandHelper =
-			new AddFormInstanceRecordMVCCommandHelper();
 	private DDMFormField _ddmFormField;
 	private DDMFormValues _ddmFormValues;
 

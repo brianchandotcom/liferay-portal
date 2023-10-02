@@ -751,7 +751,7 @@ public class SegmentsExperimentLocalServiceTest {
 				segmentsExperience2.getSegmentsExperienceId());
 
 		Assert.assertFalse(segmentsExperience2.isActive());
-		Assert.assertEquals(2, segmentsExperience2.getPriority());
+		Assert.assertEquals(-3, segmentsExperience2.getPriority());
 
 		segmentsExperience3 =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
@@ -836,7 +836,7 @@ public class SegmentsExperimentLocalServiceTest {
 				segmentsExperience2.getSegmentsExperienceId());
 
 		Assert.assertFalse(segmentsExperience2.isActive());
-		Assert.assertEquals(3, segmentsExperience2.getPriority());
+		Assert.assertEquals(-2, segmentsExperience2.getPriority());
 
 		segmentsExperience3 =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(

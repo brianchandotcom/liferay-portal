@@ -60,25 +60,35 @@ public class TemplatesAspect {
 			sb.append(siteGroupId);
 			sb.append("]");
 
-			if (TemplatesPluginProperties.
-					captureTemplateTransformationsInOuterTransaction()) {
+			TraceEntry traceEntry;
+
+			if (_LEVEL_TRACE.equals(
+					TemplatesPluginProperties.templateInstrumentationLevel())) {
+
+				traceEntry = optionalThreadContext.startTransaction(
+					"Templates", sb.toString(),
+					MessageSupplier.create(sb.toString()), _timerName);
 
 				optionalThreadContext.setTransactionOuter();
+				optionalThreadContext.addTransactionAttribute(
+					"Fragment Entry Link html", html);
+			}
+			else if (_LEVEL_DEBUG.equals(
+						TemplatesPluginProperties.
+							templateInstrumentationLevel())) {
 
-				if (TemplatesPluginProperties.
-						captureTemplateScriptInTransaction()) {
-
-					optionalThreadContext.addTransactionAttribute(
-						"Fragment Entry Link HTML", html);
-				}
-
-				return optionalThreadContext.startTransaction(
+				traceEntry = optionalThreadContext.startTransaction(
 					"Templates", sb.toString(),
+					MessageSupplier.create(sb.toString()), _timerName);
+
+				optionalThreadContext.setTransactionOuter();
+			}
+			else {
+				traceEntry = optionalThreadContext.startTraceEntry(
 					MessageSupplier.create(sb.toString()), _timerName);
 			}
 
-			return optionalThreadContext.startTraceEntry(
-				MessageSupplier.create(sb.toString()), _timerName);
+			return traceEntry;
 		}
 
 		@OnReturn
@@ -137,25 +147,35 @@ public class TemplatesAspect {
 			sb.append(siteGroupId);
 			sb.append("]");
 
-			if (TemplatesPluginProperties.
-					captureTemplateTransformationsInOuterTransaction()) {
+			TraceEntry traceEntry;
+
+			if (_LEVEL_TRACE.equals(
+					TemplatesPluginProperties.templateInstrumentationLevel())) {
+
+				traceEntry = optionalThreadContext.startTransaction(
+					"Templates", sb.toString(),
+					MessageSupplier.create(sb.toString()), _timerName);
 
 				optionalThreadContext.setTransactionOuter();
+				optionalThreadContext.addTransactionAttribute(
+					"Template script", dDMTemplateShim.getScript());
+			}
+			else if (_LEVEL_DEBUG.equals(
+						TemplatesPluginProperties.
+							templateInstrumentationLevel())) {
 
-				if (TemplatesPluginProperties.
-						captureTemplateScriptInTransaction()) {
-
-					optionalThreadContext.addTransactionAttribute(
-						"Template script", dDMTemplateShim.getScript());
-				}
-
-				return optionalThreadContext.startTransaction(
+				traceEntry = optionalThreadContext.startTransaction(
 					"Templates", sb.toString(),
+					MessageSupplier.create(sb.toString()), _timerName);
+
+				optionalThreadContext.setTransactionOuter();
+			}
+			else {
+				traceEntry = optionalThreadContext.startTraceEntry(
 					MessageSupplier.create(sb.toString()), _timerName);
 			}
 
-			return optionalThreadContext.startTraceEntry(
-				MessageSupplier.create(sb.toString()), _timerName);
+			return traceEntry;
 		}
 
 		@OnReturn
@@ -213,27 +233,37 @@ public class TemplatesAspect {
 			sb.append(siteGroupId);
 			sb.append("]");
 
-			if (TemplatesPluginProperties.
-					captureTemplateTransformationsInOuterTransaction()) {
+			TraceEntry traceEntry;
+
+			if (_LEVEL_TRACE.equals(
+					TemplatesPluginProperties.templateInstrumentationLevel())) {
+
+				traceEntry = optionalThreadContext.startTransaction(
+					"Templates", sb.toString(),
+					MessageSupplier.create(sb.toString()), _timerName);
 
 				optionalThreadContext.setTransactionOuter();
+				optionalThreadContext.addTransactionAttribute(
+					"Template type", type);
+				optionalThreadContext.addTransactionAttribute(
+					"Template script", script);
+			}
+			else if (_LEVEL_DEBUG.equals(
+						TemplatesPluginProperties.
+							templateInstrumentationLevel())) {
 
-				if (TemplatesPluginProperties.
-						captureTemplateScriptInTransaction()) {
-
-					optionalThreadContext.addTransactionAttribute(
-						"Template type", type);
-					optionalThreadContext.addTransactionAttribute(
-						"Template script", script);
-				}
-
-				return optionalThreadContext.startTransaction(
+				traceEntry = optionalThreadContext.startTransaction(
 					"Templates", sb.toString(),
+					MessageSupplier.create(sb.toString()), _timerName);
+
+				optionalThreadContext.setTransactionOuter();
+			}
+			else {
+				traceEntry = optionalThreadContext.startTraceEntry(
 					MessageSupplier.create(sb.toString()), _timerName);
 			}
 
-			return optionalThreadContext.startTraceEntry(
-				MessageSupplier.create(sb.toString()), _timerName);
+			return traceEntry;
 		}
 
 		@OnReturn
@@ -294,5 +324,9 @@ public class TemplatesAspect {
 		public long getSiteGroupId();
 
 	}
+
+	private static final String _LEVEL_DEBUG = "DEBUG";
+
+	private static final String _LEVEL_TRACE = "TRACE";
 
 }

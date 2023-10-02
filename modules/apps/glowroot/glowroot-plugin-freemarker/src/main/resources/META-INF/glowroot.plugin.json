@@ -7,16 +7,11 @@
 	"name": "Liferay Templates Plugin",
 	"properties": [
 		{
-			"checkboxLabel": "Capture template transformations in outer transaction",
-			"label": "Capture template transformations in outer transaction",
-			"name": "captureTemplateTransformationsInOuterTransaction",
-			"type": "boolean"
-		},
-		{
-			"checkboxLabel": "Capture template script in transaction",
-			"label": "Capture template script in transaction",
-			"name": "captureTemplateScriptInTransaction",
-			"type": "boolean"
+			"default": "INFO",
+			"description": "INFO: captures timer and trace entries in slow transactions with template IDs -- DEBUG: captures Freemarker transformations as individual transactions -- TRACE: captures the Freemarker scripts",
+			"label": "Freemarker template instrumentation level",
+			"name": "templateInstrumentationLevel",
+			"type": "string"
 		}
 	]
 }

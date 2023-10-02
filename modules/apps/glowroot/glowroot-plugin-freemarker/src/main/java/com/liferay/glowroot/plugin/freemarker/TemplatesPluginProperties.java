@@ -14,18 +14,13 @@ import org.glowroot.agent.plugin.api.config.ConfigService;
  */
 public class TemplatesPluginProperties {
 
-	public static boolean captureTemplateScriptInTransaction() {
-		return _captureTemplateScriptInTransaction;
+	public static String templateInstrumentationLevel() {
+		return _templateInstrumentationLevel;
 	}
 
-	public static boolean captureTemplateTransformationsInOuterTransaction() {
-		return _captureTemplateTransformationsInOuterTransaction;
-	}
-
-	private static boolean _captureTemplateScriptInTransaction;
-	private static boolean _captureTemplateTransformationsInOuterTransaction;
 	private static final ConfigService _configService = Agent.getConfigService(
 		"liferay-templates-plugin");
+	private static String _templateInstrumentationLevel;
 
 	private static class TemplatesPluginConfigListener
 		implements ConfigListener {
@@ -36,14 +31,9 @@ public class TemplatesPluginProperties {
 		}
 
 		private void _recalculateProperties() {
-			_captureTemplateTransformationsInOuterTransaction =
-				_configService.getBooleanProperty(
-					"captureTemplateTransformationsInOuterTransaction"
-				).value();
-			_captureTemplateScriptInTransaction =
-				_configService.getBooleanProperty(
-					"captureTemplateScriptInTransaction"
-				).value();
+			_templateInstrumentationLevel = _configService.getStringProperty(
+				"templateInstrumentationLevel"
+			).value();
 		}
 
 	}

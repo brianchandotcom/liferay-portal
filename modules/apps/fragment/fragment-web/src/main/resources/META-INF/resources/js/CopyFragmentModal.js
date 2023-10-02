@@ -319,17 +319,17 @@ function FragmentSetForm({
 }
 
 function getDefaultFragmentSetName(fragmentCollections) {
-	const untitledSets = fragmentCollections.filter((fragmentCollection) =>
-		fragmentCollection.name?.startsWith(
-			Liferay.Language.get('untitled-set')
-		)
-	);
+	const nameIsUsed = (collections, name) =>
+		collections.some((collection) => collection.name === name);
 
-	if (untitledSets.length) {
-		return `${Liferay.Language.get('untitled-set')} ${
-			untitledSets.length + 1
-		}`;
+	let name = Liferay.Language.get('untitled-set');
+	let suffix = 0;
+
+	while (nameIsUsed(fragmentCollections, name)) {
+		suffix++;
+
+		name = `${Liferay.Language.get('untitled-set')} ${suffix}`;
 	}
 
-	return Liferay.Language.get('untitled-set');
+	return name;
 }

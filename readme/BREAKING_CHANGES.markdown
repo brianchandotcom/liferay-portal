@@ -1804,3 +1804,25 @@ There's no need to update the code. Further changes to the property must be made
 ### Why was this change made?
 
 Configuration options in portal properties are global. Product needs required it to be customizable at instance level.
+
+--------------------------------------
+
+## Portal property `sql.data.max.parameters` removed
+- **Date:** 2023-October-2
+- **JIRA Ticket:** [LPS-189621](https://liferay.atlassian.net/browse/LPS-189621)
+
+### What changed?
+
+The portal property `sql.data.max.parameters` has been removed.
+
+### Who is affected?
+
+This affects anyone using `sql.data.max.parameters` property.
+
+### How should I update my code?
+
+The property `database.max.parameters`, specific to each database, should be used instead.
+
+### Why was this change made?
+
+Database total parameter limitation varies in each database. New property allows database specific configuration.

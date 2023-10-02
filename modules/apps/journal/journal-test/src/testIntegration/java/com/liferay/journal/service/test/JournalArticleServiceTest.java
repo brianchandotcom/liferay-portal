@@ -31,8 +31,10 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
 import com.liferay.journal.util.comparator.ArticleTitleComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
@@ -204,6 +206,50 @@ public class JournalArticleServiceTest {
 
 		Assert.assertNotNull(_latestArticle);
 		Assert.assertEquals(_article, _latestArticle);
+	}
+
+	@Test
+	public void testCopyArticle() throws Exception {
+		JournalArticle journalArticle = _journalArticleService.copyArticle(
+			_article.getGroupId(), _article.getArticleId(),
+			RandomTestUtil.randomString(), true, _article.getVersion());
+
+		Assert.assertEquals(
+			_article.getCompanyId(), journalArticle.getCompanyId());
+		Assert.assertEquals(
+			_article.getDDMStructureId(), journalArticle.getDDMStructureId());
+		Assert.assertEquals(
+			_article.getDDMTemplateKey(), journalArticle.getDDMTemplateKey());
+		Assert.assertEquals(
+			_article.getDefaultLanguageId(),
+			journalArticle.getDefaultLanguageId());
+		Assert.assertEquals(
+			_article.getDisplayDate(), journalArticle.getDisplayDate());
+		Assert.assertEquals(
+			_article.getExpirationDate(), journalArticle.getExpirationDate());
+		Assert.assertEquals(
+			_article.getFolderId(), journalArticle.getFolderId());
+		Assert.assertEquals(
+			_article.getLayoutUuid(), journalArticle.getLayoutUuid());
+		Assert.assertEquals(
+			_article.getReviewDate(), journalArticle.getReviewDate());
+		Assert.assertEquals(
+			_article.getSmallImageSource(),
+			journalArticle.getSmallImageSource());
+		Assert.assertEquals(
+			_article.getSmallImageURL(), journalArticle.getSmallImageURL());
+		Assert.assertEquals(
+			StringBundler.concat(
+				_article.getTitle(), " (",
+				_language.get(LocaleUtil.getDefault(), "copy"), " 1)"),
+			journalArticle.getTitle());
+		Assert.assertEquals(
+			_article.getTreePath(), journalArticle.getTreePath());
+		Assert.assertEquals(_article.getGroupId(), journalArticle.getGroupId());
+		Assert.assertEquals(
+			_article.isIndexable(), journalArticle.isIndexable());
+		Assert.assertEquals(
+			_article.isSmallImage(), journalArticle.isSmallImage());
 	}
 
 	@Test
@@ -1250,6 +1296,9 @@ public class JournalArticleServiceTest {
 
 	@Inject
 	private JournalFolderLocalService _journalFolderLocalService;
+
+	@Inject
+	private Language _language;
 
 	private JournalArticle _latestArticle;
 	private String _originalPortalPreferencesXML;

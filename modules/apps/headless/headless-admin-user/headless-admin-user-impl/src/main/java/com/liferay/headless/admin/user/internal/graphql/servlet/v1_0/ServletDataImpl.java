@@ -491,6 +491,16 @@ public class ServletDataImpl implements ServletData {
 							PostalAddressResourceImpl.class,
 							"postAccountPostalAddressesPageExportBatch"));
 					put(
+						"mutation#createAccountPostalAddress",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"postAccountPostalAddress"));
+					put(
+						"mutation#createAccountPostalAddressBatch",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"postAccountPostalAddressBatch"));
+					put(
 						"mutation#createOrganizationPostalAddressesPageExportBatch",
 						new ObjectValuePair<>(
 							PostalAddressResourceImpl.class,

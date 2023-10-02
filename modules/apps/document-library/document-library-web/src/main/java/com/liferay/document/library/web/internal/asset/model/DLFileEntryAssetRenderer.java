@@ -244,8 +244,8 @@ public class DLFileEntryAssetRenderer
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		return PortletURLBuilder.create(
-			_getPortletURL(liferayPortletRequest)
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
 		).setActionName(
 			"/document_library/get_file"
 		).setParameter(

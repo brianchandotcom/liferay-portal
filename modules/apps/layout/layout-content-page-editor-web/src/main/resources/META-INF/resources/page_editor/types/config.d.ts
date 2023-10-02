@@ -4,6 +4,7 @@
  */
 
 import type {LayoutType} from '../app/config/constants/layoutTypes';
+import type {SidebarPanel} from './SidebarPanel';
 
 export interface Config {
 	actionableInfoItemSelectorURL: string;
@@ -178,16 +179,7 @@ export interface Config {
 
 	selectedSegmentsEntryId: string;
 
-	sidebarPanels: {
-		[key: string]: {
-			icon: string;
-			isLink: boolean;
-			label: string;
-			pluginEntryPoint?: string;
-			sidebarPanelId: string;
-			url?: string | null;
-		};
-	};
+	sidebarPanels: SidebarPanel[] | Record<string, SidebarPanel>;
 
 	singleSegmentsExperienceMode: boolean;
 	siteNavigationMenuItemSelectorURL: string;

@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
@@ -73,7 +74,8 @@ public class ExperimentUtilTest {
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
 			segmentsExperienceId,
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			SegmentsExperimentConstants.STATUS_DRAFT);
+			SegmentsExperimentConstants.STATUS_DRAFT,
+			segmentsExperience.getSegmentsExperienceKey());
 
 		String channelId = RandomTestUtil.randomString();
 		String dataSourceId = RandomTestUtil.randomString();
@@ -152,7 +154,7 @@ public class ExperimentUtilTest {
 
 		Mockito.when(
 			_segmentsExperienceLocalService.getSegmentsExperience(
-				segmentsExperienceId)
+				Mockito.anyLong())
 		).thenReturn(
 			segmentsExperience
 		);
@@ -160,7 +162,8 @@ public class ExperimentUtilTest {
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
 			segmentsExperienceId,
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			SegmentsExperimentConstants.STATUS_COMPLETED);
+			SegmentsExperimentConstants.STATUS_COMPLETED,
+			segmentsExperience.getSegmentsExperienceKey());
 
 		String channelId = RandomTestUtil.randomString();
 		String dataSourceId = RandomTestUtil.randomString();
@@ -241,7 +244,7 @@ public class ExperimentUtilTest {
 
 		Mockito.when(
 			_segmentsExperienceLocalService.getSegmentsExperience(
-				segmentsExperienceId)
+				Mockito.anyLong())
 		).thenReturn(
 			segmentsExperience
 		);
@@ -249,7 +252,8 @@ public class ExperimentUtilTest {
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
 			segmentsExperienceId,
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			SegmentsExperimentConstants.STATUS_TERMINATED);
+			SegmentsExperimentConstants.STATUS_TERMINATED,
+			segmentsExperience.getSegmentsExperienceKey());
 
 		String channelId = RandomTestUtil.randomString();
 		String dataSourceId = RandomTestUtil.randomString();
@@ -383,11 +387,18 @@ public class ExperimentUtilTest {
 			locale
 		);
 
+		Mockito.doReturn(
+			new UnicodeProperties()
+		).when(
+			segmentsExperience
+		).getTypeSettingsUnicodeProperties();
+
 		return segmentsExperience;
 	}
 
 	private SegmentsExperiment _createSegmentsExperiment(
-		long segmentsExperienceId, String goal, int status) {
+		long segmentsExperienceId, String goal, int status,
+		String winnerSegmentsExperienceKey) {
 
 		SegmentsExperiment segmentsExperiment = Mockito.mock(
 			SegmentsExperiment.class);
@@ -417,7 +428,13 @@ public class ExperimentUtilTest {
 		).getSegmentsExperimentKey();
 
 		Mockito.doReturn(
-			RandomTestUtil.randomString()
+			RandomTestUtil.randomLong(1, Long.MAX_VALUE)
+		).when(
+			segmentsExperiment
+		).getWinnerSegmentsExperienceId();
+
+		Mockito.doReturn(
+			winnerSegmentsExperienceKey
 		).when(
 			segmentsExperiment
 		).getWinnerSegmentsExperienceKey();

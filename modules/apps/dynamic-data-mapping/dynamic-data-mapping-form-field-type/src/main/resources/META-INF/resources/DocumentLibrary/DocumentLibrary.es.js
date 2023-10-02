@@ -64,7 +64,11 @@ function transformFileEntryProperties({fileEntryTitle, value}) {
 		}
 	}
 
-	return value ? [fileEntryTitle] : [];
+	return value && fileEntryTitle !== ''
+		? [fileEntryTitle]
+		: fileEntryTitle === ''
+		? [value.title]
+		: [];
 }
 
 const DocumentLibrary = ({

@@ -13,7 +13,6 @@ import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -80,10 +79,7 @@ public class ObjectActionUtil {
 								serviceBuilderObjectAction.getStatus()));
 					}
 				};
-
-				if (FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
-					system = serviceBuilderObjectAction.isSystem();
-				}
+				system = serviceBuilderObjectAction.isSystem();
 			}
 		};
 

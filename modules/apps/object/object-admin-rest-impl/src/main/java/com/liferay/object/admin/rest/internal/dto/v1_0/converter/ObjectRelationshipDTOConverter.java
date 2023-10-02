@@ -79,11 +79,7 @@ public class ObjectRelationshipDTOConverter
 					serviceBuilderObjectRelationship.
 						getParameterObjectFieldId();
 				reverse = serviceBuilderObjectRelationship.isReverse();
-
-				if (FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
-					system = serviceBuilderObjectRelationship.isSystem();
-				}
-
+				system = serviceBuilderObjectRelationship.isSystem();
 				type = ObjectRelationship.Type.create(
 					serviceBuilderObjectRelationship.getType());
 

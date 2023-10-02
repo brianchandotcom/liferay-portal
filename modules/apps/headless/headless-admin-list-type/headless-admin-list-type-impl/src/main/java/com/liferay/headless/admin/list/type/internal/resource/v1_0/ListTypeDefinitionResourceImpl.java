@@ -17,7 +17,6 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -131,18 +130,12 @@ public class ListTypeDefinitionResourceImpl
 			ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
-		boolean system = false;
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
-			system = GetterUtil.getBoolean(listTypeDefinition.getSystem());
-		}
-
 		return _toListTypeDefinition(
 			_listTypeDefinitionService.addListTypeDefinition(
 				listTypeDefinition.getExternalReferenceCode(),
 				LocalizedMapUtil.getLocalizedMap(
 					listTypeDefinition.getName_i18n()),
-				system,
+				GetterUtil.getBoolean(listTypeDefinition.getSystem()),
 				transformToList(
 					listTypeDefinition.getListTypeEntries(),
 					listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(
@@ -272,15 +265,7 @@ public class ListTypeDefinitionResourceImpl
 				name = serviceBuilderListTypeDefinition.getName(locale);
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					serviceBuilderListTypeDefinition.getNameMap());
-
-				setSystem(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
-							return null;
-						}
-
-						return serviceBuilderListTypeDefinition.getSystem();
-					});
+				system = serviceBuilderListTypeDefinition.getSystem();
 			}
 		};
 	}

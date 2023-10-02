@@ -168,12 +168,6 @@ public class ObjectRelationshipResourceImpl
 				return objectField.getObjectFieldId();
 			});
 
-		boolean system = false;
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
-			system = GetterUtil.getBoolean(objectRelationship.getSystem());
-		}
-
 		return _toObjectRelationship(
 			_objectRelationshipService.addObjectRelationship(
 				objectDefinition1.getObjectDefinitionId(),
@@ -181,7 +175,8 @@ public class ObjectRelationshipResourceImpl
 				objectRelationship.getParameterObjectFieldId(),
 				objectRelationship.getDeletionTypeAsString(),
 				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
-				objectRelationship.getName(), system,
+				objectRelationship.getName(),
+				GetterUtil.getBoolean(objectRelationship.getSystem()),
 				objectRelationship.getTypeAsString()));
 	}
 
@@ -208,12 +203,6 @@ public class ObjectRelationshipResourceImpl
 			objectDefinitionId2 = objectDefinition2.getObjectDefinitionId();
 		}
 
-		boolean system = false;
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
-			system = GetterUtil.getBoolean(objectRelationship.getSystem());
-		}
-
 		return _toObjectRelationship(
 			_objectRelationshipService.addObjectRelationship(
 				objectDefinitionId, objectDefinitionId2,
@@ -221,7 +210,8 @@ public class ObjectRelationshipResourceImpl
 					objectRelationship.getParameterObjectFieldId()),
 				objectRelationship.getDeletionTypeAsString(),
 				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
-				objectRelationship.getName(), system,
+				objectRelationship.getName(),
+				GetterUtil.getBoolean(objectRelationship.getSystem()),
 				objectRelationship.getTypeAsString()));
 	}
 

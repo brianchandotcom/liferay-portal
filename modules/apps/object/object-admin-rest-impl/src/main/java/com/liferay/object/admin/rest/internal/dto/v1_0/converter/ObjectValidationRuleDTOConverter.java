@@ -82,6 +82,7 @@ public class ObjectValidationRuleDTOConverter
 				objectDefinitionId =
 					serviceBuilderObjectValidationRule.getObjectDefinitionId();
 				script = serviceBuilderObjectValidationRule.getScript();
+				system = serviceBuilderObjectValidationRule.getSystem();
 
 				setObjectValidationRuleSettings(
 					() -> TransformUtil.transformToArray(
@@ -94,14 +95,6 @@ public class ObjectValidationRuleDTOConverter
 				setOutputType(
 					() -> ObjectValidationRule.OutputType.create(
 						serviceBuilderObjectValidationRule.getOutputType()));
-				setSystem(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
-							return null;
-						}
-
-						return serviceBuilderObjectValidationRule.getSystem();
-					});
 			}
 		};
 	}

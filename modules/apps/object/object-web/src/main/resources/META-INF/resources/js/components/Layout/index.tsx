@@ -150,16 +150,10 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				type: TYPES.ADD_OBJECT_LAYOUT,
 			});
 
-			const filteredObjectFields = objectFields.filter(
-				({system}) => !system
-			);
-
 			dispatch({
 				payload: {
 					objectFields: normalizeObjectFields({
-						objectFields: Liferay.FeatureFlags['LPS-193355']
-							? objectFields
-							: filteredObjectFields,
+						objectFields,
 						objectLayout,
 					}),
 				},

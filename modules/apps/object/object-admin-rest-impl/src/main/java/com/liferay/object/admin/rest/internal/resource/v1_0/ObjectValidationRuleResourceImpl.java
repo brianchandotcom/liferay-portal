@@ -20,7 +20,6 @@ import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectValidationRuleService;
 import com.liferay.object.service.ObjectValidationRuleSettingLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -176,12 +175,6 @@ public class ObjectValidationRuleResourceImpl
 			Long objectDefinitionId, ObjectValidationRule objectValidationRule)
 		throws Exception {
 
-		boolean system = false;
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
-			system = GetterUtil.getBoolean(objectValidationRule.getSystem());
-		}
-
 		return _toObjectValidationRule(
 			_objectValidationRuleService.addObjectValidationRule(
 				objectValidationRule.getExternalReferenceCode(),
@@ -195,7 +188,8 @@ public class ObjectValidationRuleResourceImpl
 				GetterUtil.getString(
 					objectValidationRule.getOutputTypeAsString(),
 					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION),
-				objectValidationRule.getScript(), system,
+				objectValidationRule.getScript(),
+				GetterUtil.getBoolean(objectValidationRule.getSystem()),
 				_toObjectValidationRuleSettings(
 					objectDefinitionId, _objectFieldLocalService,
 					_objectValidationRuleSettingLocalService,

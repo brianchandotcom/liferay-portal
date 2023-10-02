@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import ClayLabel from '@clayui/label';
-import ClayLink from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {Dispatch, SetStateAction} from 'react';
 
@@ -30,18 +30,17 @@ export function itemPathRenderer({
 	return (
 		<ClayTooltipProvider>
 			<div className="endpoint-table-list-title table-list-title">
-				<ClayLink
+				<ClayButton
 					data-senna-off
 					data-tooltip-align="top"
-					decoration="none"
-					href="#"
+					displayType="link"
 					onClick={() =>
 						setMainEndpointNav({edit: fdsItem.itemData.id})
 					}
 					title={path}
 				>
 					{path}
-				</ClayLink>
+				</ClayButton>
 			</div>
 		</ClayTooltipProvider>
 	);

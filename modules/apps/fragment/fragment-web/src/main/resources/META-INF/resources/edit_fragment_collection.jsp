@@ -14,6 +14,7 @@ FragmentCollection fragmentCollection = FragmentCollectionLocalServiceUtil.fetch
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(fragmentEntriesDisplayContext.getRedirect());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getName() : LanguageUtil.get(request, "add-fragment-set"));
 %>

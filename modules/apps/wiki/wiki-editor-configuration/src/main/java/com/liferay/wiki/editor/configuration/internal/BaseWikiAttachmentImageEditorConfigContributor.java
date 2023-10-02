@@ -124,9 +124,14 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		long wikiPageResourcePrimKey, ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
+		WikiFileUploadConfiguration wikiFileUploadConfiguration =
+			getWikiFileUploadConfiguration();
+
 		return UploadItemSelectorCriterion.builder(
 		).desiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType()
+		).maxFileSize(
+			wikiFileUploadConfiguration.attachmentMaxSize()
 		).mimeTypeRestriction(
 			ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE
 		).portletId(

@@ -111,7 +111,7 @@ export default async function submitForm(
 
 		formikHelpers.setValues(submitValues);
 
-		if (values.dateCreated) {
+		if (values.dateCreated && submitValues.mdfClaimStatus.key !== Status.DRAFT.key) {
 			Liferay.Util.navigate(
 				`${siteURL}/${PRMPageRoute.CONFIRMATION_MDF_CLAIM}`
 			);
@@ -126,7 +126,7 @@ export default async function submitForm(
 
 		if (submitValues.mdfClaimStatus.key === Status.DRAFT.key) {
 			Liferay.Util.navigate(
-				`${siteURL}/${PRMPageRoute.CONFIRMATION_MDF_CLAIM}`
+				`${siteURL}/${PRMPageRoute.MDF_CLAIM_LISTING}`
 			);
 
 			Liferay.Util.openToast({

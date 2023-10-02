@@ -1335,6 +1335,37 @@ public class DataFactory {
 		return blogEntryModels;
 	}
 
+	public List<FragmentEntryLinkModel> newCollectionFragmentEntryLinkModels(
+			List<LayoutModel> layoutModels)
+		throws Exception {
+
+		List<FragmentEntryLinkModel> fragmentEntryLinkModels =
+			new ArrayList<>();
+
+		for (LayoutModel layoutModel : layoutModels) {
+			String paragraphRenderNamespace = StringUtil.randomId();
+
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModel, _FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH,
+					_readFile(
+						_getFragmentComponentInputStream("paragraph", "css")),
+					_readFile(
+						_getFragmentComponentInputStream("paragraph", "html")),
+					_readFile(
+						"fragment_component" +
+							"/fragment_component_collection_paragraph_" +
+								"configuration.json"),
+					_readFile(
+						"fragment_component" +
+							"/fragment_component_collection_paragraph_" +
+								"editValue.json"),
+					0, paragraphRenderNamespace));
+		}
+
+		return fragmentEntryLinkModels;
+	}
+
 	public PortletPreferencesModel
 		newCommerceB2BSiteTypePortletPreferencesModel(long ownerId) {
 

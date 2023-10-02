@@ -71,7 +71,6 @@ const GetAppFlow = () => {
 	const [billingAddress, setBillingAddress] = useState<BillingAddress>(
 		initialBillingAddress
 	);
-	const [userAccount, setUserAccount] = useState<UserAccount>();
 
 	const {getValues, setValue, watch} = useForm<getAppProps>({
 		defaultValues: {
@@ -152,17 +151,17 @@ const GetAppFlow = () => {
 		}
 	}
 
-  const StepFormComponent: StepComponent = {
-    [StepType.ACCOUNT]: (
-      <AccountSelection
-        onSelectAccount={(account: Account) => {
-          setValue("selectedAccount", account);
-        }}
-        selectedAccount={getValues('selected')}
-      />
-    ),
-    [StepType.PAYMENT]: (
-      <SelectPaymentMethod
+	const StepFormComponent: StepComponent = {
+		[StepType.ACCOUNT]: (
+			<AccountSelection
+				onSelectAccount={(account: Account) => {
+					setValue('selectedAccount', account);
+				}}
+				selectedAccount={getValues('selectedAccount')}
+			/>
+		),
+		[StepType.PAYMENT]: (
+			<SelectPaymentMethod
 				addresses={addresses}
 				billingAddress={billingAddress}
 				email={email}
@@ -175,8 +174,8 @@ const GetAppFlow = () => {
 				setPurchaseOrderNumber={setPurchaseOrderNumber}
 				setSelectedPaymentMethod={setSelectedPaymentMethod}
 			/>
-    ),
-  };
+		),
+	};
 
 	return (
 		<>

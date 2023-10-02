@@ -278,6 +278,15 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/postal-addresses/batch".
+				replace("{accountId}", String.valueOf(accountId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
 		return expectedActions;
 	}
 
@@ -285,8 +294,8 @@ public abstract class BasePostalAddressResourceTestCase {
 			Long accountId, PostalAddress postalAddress)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return postalAddressResource.postAccountPostalAddress(
+			accountId, postalAddress);
 	}
 
 	protected Long testGetAccountPostalAddressesPage_getAccountId()
@@ -300,6 +309,25 @@ public abstract class BasePostalAddressResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostAccountPostalAddress() throws Exception {
+		PostalAddress randomPostalAddress = randomPostalAddress();
+
+		PostalAddress postPostalAddress =
+			testPostAccountPostalAddress_addPostalAddress(randomPostalAddress);
+
+		assertEquals(randomPostalAddress, postPostalAddress);
+		assertValid(postPostalAddress);
+	}
+
+	protected PostalAddress testPostAccountPostalAddress_addPostalAddress(
+			PostalAddress postalAddress)
+		throws Exception {
+
+		return postalAddressResource.postAccountPostalAddress(
+			testGetAccountPostalAddressesPage_getAccountId(), postalAddress);
 	}
 
 	@Test

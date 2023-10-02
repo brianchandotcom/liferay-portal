@@ -58,6 +58,14 @@ public interface PostalAddressResource {
 			String fieldNames)
 		throws Exception;
 
+	public PostalAddress postAccountPostalAddress(
+			Long accountId, PostalAddress postalAddress)
+		throws Exception;
+
+	public Response postAccountPostalAddressBatch(
+			Long accountId, String callbackURL, Object object)
+		throws Exception;
+
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
 			String organizationId)
 		throws Exception;

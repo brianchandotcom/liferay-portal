@@ -13,8 +13,10 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
+import java.util.Collection;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -62,8 +64,16 @@ public class PortletPreferencesPortletConfigurationImporterImpl
 		for (Map.Entry<String, Object> entrySet :
 				portletConfiguration.entrySet()) {
 
-			portletPreferences.setValue(
-				entrySet.getKey(), (String)entrySet.getValue());
+			Object value = entrySet.getValue();
+
+			if (value instanceof Collection) {
+				portletPreferences.setValues(
+					entrySet.getKey(),
+					ArrayUtil.toStringArray((Collection<String>)value));
+			}
+			else {
+				portletPreferences.setValue(entrySet.getKey(), (String)value);
+			}
 		}
 
 		String portletPreferencesXML = PortletPreferencesFactoryUtil.toXML(

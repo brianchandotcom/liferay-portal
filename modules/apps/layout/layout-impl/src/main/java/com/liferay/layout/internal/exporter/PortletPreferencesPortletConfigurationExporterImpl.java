@@ -70,7 +70,12 @@ public class PortletPreferencesPortletConfigurationExporterImpl
 			String[] values = entrySet.getValue();
 
 			if (ArrayUtil.isNotEmpty(values)) {
-				portletConfigurationMap.put(entrySet.getKey(), values[0]);
+				if (values.length > 1) {
+					portletConfigurationMap.put(entrySet.getKey(), values);
+				}
+				else {
+					portletConfigurationMap.put(entrySet.getKey(), values[0]);
+				}
 			}
 			else {
 				portletConfigurationMap.put(

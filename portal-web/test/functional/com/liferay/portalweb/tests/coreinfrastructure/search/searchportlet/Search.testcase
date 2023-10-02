@@ -405,11 +405,9 @@ definition {
 				Click(locator1 = "Button#TRASH_ENABLED");
 			}
 
-			Uncheck.uncheckToggleSwitch(
-				checkboxName = "On",
-				locator1 = "Checkbox#ANY_CHECKBOX",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
+			Uncheck.uncheckToggleSwitchNoErrorNoAssert(
+				key_toggleSwitchLabel = "On",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		task ("Assert the the portlet is still available") {
 			PortletEntry.save();

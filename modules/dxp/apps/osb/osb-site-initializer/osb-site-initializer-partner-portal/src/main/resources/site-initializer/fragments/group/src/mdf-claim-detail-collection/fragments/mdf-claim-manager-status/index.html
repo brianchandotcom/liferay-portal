@@ -223,12 +223,6 @@
 			[/#if]
 
 			[#if mdfClaimStatusKey == 'inFinanceReview']
-				[#if hasApproveAction]
-					<li class="dropdown-item" onclick="callMDFClaimModal('approved')">
-						Approved
-					</li>
-				[/#if]
-
 				[#if hasClaimPaidAction]
 					<li class="dropdown-item" onclick="callClaimPaidModal('claimPaid')">
 						Claim Paid

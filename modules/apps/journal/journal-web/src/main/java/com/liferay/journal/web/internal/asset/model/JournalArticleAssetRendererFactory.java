@@ -220,7 +220,7 @@ public class JournalArticleAssetRendererFactory
 			}
 		}
 
-		itemSelectorCriterion.setStatus(WorkflowConstants.STATUS_APPROVED);
+		itemSelectorCriterion.setStatus(WorkflowConstants.STATUS_ANY);
 
 		return _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest),

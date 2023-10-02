@@ -331,6 +331,42 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
+	public void testPutAccountPostalAddress() throws Exception {
+		PostalAddress postPostalAddress =
+			testPutAccountPostalAddress_addPostalAddress();
+
+		PostalAddress randomPostalAddress = randomPostalAddress();
+
+		PostalAddress putPostalAddress =
+			postalAddressResource.putAccountPostalAddress(
+				testPutAccountPostalAddress_getAccountId(),
+				postPostalAddress.getId(), randomPostalAddress);
+
+		assertEquals(randomPostalAddress, putPostalAddress);
+		assertValid(putPostalAddress);
+
+		PostalAddress getPostalAddress =
+			postalAddressResource.getAccountPostalAddress(
+				testPutAccountPostalAddress_getAccountId(),
+				putPostalAddress.getId());
+
+		assertEquals(randomPostalAddress, getPostalAddress);
+		assertValid(getPostalAddress);
+	}
+
+	protected Long testPutAccountPostalAddress_getAccountId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected PostalAddress testPutAccountPostalAddress_addPostalAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetOrganizationPostalAddressesPage() throws Exception {
 		String organizationId =
 			testGetOrganizationPostalAddressesPage_getOrganizationId();

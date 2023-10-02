@@ -327,7 +327,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	}
 
 	private ListType _getType(PostalAddress postalAddress) {
-
 		ListType type = _listTypeLocalService.getListType(
 			postalAddress.getAddressType(),
 			"com.liferay.account.model.AccountEntry.address");
@@ -369,7 +368,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Reference
 	private CountryService _countryService;
-
 
 	@Reference
 	private Language _language;

@@ -392,6 +392,7 @@ const ItemActionForm = ({
 									placeholder={Liferay.Language.get(
 										'add-a-value-here'
 									)}
+									value={actionData.permissionKey}
 								/>
 							</ClayForm.Group>
 

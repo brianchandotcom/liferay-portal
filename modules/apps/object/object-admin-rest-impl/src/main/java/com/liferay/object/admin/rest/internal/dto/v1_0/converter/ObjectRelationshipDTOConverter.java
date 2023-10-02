@@ -72,7 +72,9 @@ public class ObjectRelationshipDTOConverter
 					serviceBuilderObjectRelationship.getObjectDefinitionId1();
 				objectDefinitionId2 =
 					serviceBuilderObjectRelationship.getObjectDefinitionId2();
+				objectDefinitionModifiable2 = objectDefinition2.isModifiable();
 				objectDefinitionName2 = objectDefinition2.getShortName();
+				objectDefinitionSystem2 = objectDefinition2.isSystem();
 				parameterObjectFieldId =
 					serviceBuilderObjectRelationship.
 						getParameterObjectFieldId();
@@ -92,22 +94,6 @@ public class ObjectRelationshipDTOConverter
 						}
 
 						return serviceBuilderObjectRelationship.isEdge();
-					});
-				setObjectDefinitionModifiable2(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
-							return null;
-						}
-
-						return objectDefinition2.isModifiable();
-					});
-				setObjectDefinitionSystem2(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
-							return null;
-						}
-
-						return objectDefinition2.isSystem();
 					});
 				setParameterObjectFieldName(
 					() -> {

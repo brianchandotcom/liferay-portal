@@ -241,21 +241,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"indexer.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
-				ModelResourcePermission.class,
-				new ObjectEntryModelResourcePermission(
-					_accountEntryLocalService,
-					_accountEntryOrganizationRelLocalService,
-					_groupLocalService, objectDefinition.getClassName(),
-					_objectDefinitionLocalService, _objectEntryLocalService,
-					_objectFieldLocalService, _objectRelationshipLocalService,
-					portletResourcePermission, _resourcePermissionLocalService,
-					_treeFactory, _userGroupRoleLocalService),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"com.liferay.object", "true"
-				).put(
-					"model.class.name", objectDefinition.getClassName()
-				).build()),
-			_bundleContext.registerService(
 				NotificationHandler.class,
 				new ObjectDefinitionNotificationHandler(objectDefinition),
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -368,6 +353,27 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition, _objectEntryService,
 					_objectFieldLocalService,
 					_objectRelationshipLocalService)));
+
+		if (!objectDefinition.isRootDescendantNode()) {
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					ModelResourcePermission.class,
+					new ObjectEntryModelResourcePermission(
+						_accountEntryLocalService,
+						_accountEntryOrganizationRelLocalService,
+						_groupLocalService, objectDefinition.getClassName(),
+						_objectDefinitionLocalService, _objectEntryLocalService,
+						_objectFieldLocalService,
+						_objectRelationshipLocalService,
+						portletResourcePermission,
+						_resourcePermissionLocalService, _treeFactory,
+						_userGroupRoleLocalService),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"com.liferay.object", "true"
+					).put(
+						"model.class.name", objectDefinition.getClassName()
+					).build()));
+		}
 
 		try {
 			for (Locale locale : LanguageUtil.getAvailableLocales()) {

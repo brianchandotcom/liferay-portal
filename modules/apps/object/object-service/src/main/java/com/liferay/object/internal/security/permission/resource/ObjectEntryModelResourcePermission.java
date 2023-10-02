@@ -272,13 +272,9 @@ public class ObjectEntryModelResourcePermission
 				objectEntry.getRootObjectEntryId());
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
 		throw new PrincipalException.MustHavePermission(
-			permissionChecker, objectDefinition.getClassName(),
-			objectEntry.getObjectEntryId(), actionId);
+			permissionChecker, _modelName, objectEntry.getObjectEntryId(),
+			actionId);
 	}
 
 	private final AccountEntryLocalService _accountEntryLocalService;

@@ -132,6 +132,11 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
+		if (objectDefinition.isRootDescendantNode()) {
+			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
+				objectDefinition.getRootObjectDefinitionId());
+		}
+
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				objectDefinition.getClassName());
@@ -315,6 +320,11 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
+		if (objectDefinition.isRootDescendantNode()) {
+			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
+				objectDefinition.getRootObjectDefinitionId());
+		}
+
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				objectDefinition.getClassName());
@@ -331,6 +341,11 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
+
+		if (objectDefinition.isRootDescendantNode()) {
+			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
+				objectDefinition.getRootObjectDefinitionId());
+		}
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
@@ -351,6 +366,11 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
+
+		if (objectDefinition.isRootDescendantNode()) {
+			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
+				objectDefinition.getRootObjectDefinitionId());
+		}
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
@@ -532,6 +552,11 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
+
+		if (objectDefinition.isRootDescendantNode()) {
+			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
+				objectDefinition.getRootObjectDefinitionId());
+		}
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(

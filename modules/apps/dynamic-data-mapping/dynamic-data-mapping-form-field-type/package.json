@@ -45,10 +45,6 @@
 		],
 		"snapshotSerializers": [
 			"metal-jest-serializer"
-		],
-		"testPathIgnorePatterns": [
-			"Tooltip",
-			"withContextMock"
 		]
 	},
 	"main": "index.js",

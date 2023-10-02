@@ -1388,9 +1388,7 @@ definition {
 
 			PortletEntry.publish();
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name-staging");
-
-			FormsAdminNavigator.gotoAddForm();
+			FormsAdmin.addForm(groupName = "Site Name Staging");
 
 			Form.editName(formName = "Form Name");
 
@@ -1527,7 +1525,7 @@ definition {
 				site = "false",
 				title = "Web Content Title");
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name-staging");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name-staging");
 
 			FormsAdmin.deleteForm(formName = "Form Name");
 
@@ -2384,13 +2382,11 @@ definition {
 		}
 
 		task ("Export blank Forms lar from the default site and add a form entry in staging site") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 			LAR.exportPortlet(larFileName = "Forms_blank_portlet.lar");
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name-staging");
-
-			FormsAdminNavigator.gotoAddForm();
+			FormsAdmin.addForm(groupName = "Site Name Staging");
 
 			Form.editName(formName = "Test Form");
 
@@ -2424,7 +2420,7 @@ definition {
 				cancelImport = "true",
 				larFileName = "Blogs_blank_portlet.lar");
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			LAR.importPortletWithDeleteApplicationData(
 				cancelImport = "true",
@@ -2438,7 +2434,7 @@ definition {
 
 			Blogs.viewNoEntryCP();
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			LAR.importPortletWithDeleteApplicationData(larFileName = "Forms_blank_portlet.lar");
 
@@ -2462,13 +2458,11 @@ definition {
 		}
 
 		task ("Export blank Forms lar from the default site and add a form entry in staging site") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 			LAR.exportPortlet(larFileName = "Forms_blank_portlet.lar");
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name-staging");
-
-			FormsAdminNavigator.gotoAddForm();
+			FormsAdmin.addForm(groupName = "Site Name Staging");
 
 			Form.editName(formName = "Test Form");
 
@@ -2492,7 +2486,7 @@ definition {
 				cancelImport = "true",
 				larFileName = "Blogs_blank_portlet.lar");
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name-staging");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name-staging");
 
 			LAR.importPortletWithDeleteApplicationData(
 				cancelImport = "true",
@@ -2506,7 +2500,7 @@ definition {
 
 			Blogs.viewNoEntryCP();
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name-staging");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name-staging");
 
 			LAR.importPortletWithDeleteApplicationData(larFileName = "Forms_blank_portlet.lar");
 

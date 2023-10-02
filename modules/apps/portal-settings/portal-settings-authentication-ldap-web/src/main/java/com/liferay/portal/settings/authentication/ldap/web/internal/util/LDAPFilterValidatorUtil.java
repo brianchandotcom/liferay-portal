@@ -5,7 +5,7 @@
 
 package com.liferay.portal.settings.authentication.ldap.web.internal.util;
 
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
 
 /**

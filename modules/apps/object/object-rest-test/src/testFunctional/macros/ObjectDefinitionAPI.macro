@@ -574,7 +574,9 @@ definition {
 			en_US_label = ${en_US_label},
 			en_US_plural_label = ${en_US_plural_label},
 			name = ${name},
+			objectDefinitionExternalReferenceCode = ${objectDefinitionExternalReferenceCode},
 			requiredStringFieldName = ${requiredStringFieldName},
+			requiredStringFieldNameExternalReferenceCode = ${requiredStringFieldNameExternalReferenceCode},
 			scope = ${scope},
 			token = ${token},
 			virtualHost = ${virtualHost});
@@ -648,34 +650,68 @@ definition {
 			var requiredStringFieldName = "name";
 		}
 
-		var curl = '''
-			${portalURL}/o/object-admin/v1.0/object-definitions \
-				-u test@liferay.com:test \
-				-H Content-Type: application/json \
-				-d {
-					"active": true,
-					"label": {
-						"en_US": "${en_US_label}"
-					},
-					"name": "${name}",
-					"objectFields": [{
-						"businessType": "Text",
-						"indexed": true,
-						"indexedAsKeyword": true,
+		if (isSet(objectDefinitionExternalReferenceCode) && isSet(requiredStringFieldNameExternalReferenceCode)) {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions \
+					-u test@liferay.com:test \
+					-H Content-Type: application/json \
+					-d {
+						"active": true,
+						"externalReferenceCode": "${objectDefinitionExternalReferenceCode}",
 						"label": {
-							"en_US": "${requiredStringFieldName}"
+							"en_US": "${en_US_label}"
 						},
-						"name": "${requiredStringFieldName}",
-						"required": true,
-						"DBType": "String"
-					}],
-					"pluralLabel": {
-						"en_US": "${en_US_plural_label}"
-					},
-					"portlet": true,
-					"scope": "${scope}"
-				}
-		''';
+						"name": "${name}",
+						"objectFields": [{
+							"businessType": "Text",
+							"externalReferenceCode": "${requiredStringFieldNameExternalReferenceCode}",
+							"indexed": true,
+							"indexedAsKeyword": true,
+							"label": {
+								"en_US": "${requiredStringFieldName}"
+							},
+							"name": "${requiredStringFieldName}",
+							"required": true,
+							"DBType": "String"
+						}],
+						"pluralLabel": {
+							"en_US": "${en_US_plural_label}"
+						},
+						"portlet": true,
+						"scope": "${scope}"
+					}
+			''';
+		}
+		else {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions \
+					-u test@liferay.com:test \
+					-H Content-Type: application/json \
+					-d {
+						"active": true,
+						"label": {
+							"en_US": "${en_US_label}"
+						},
+						"name": "${name}",
+						"objectFields": [{
+							"businessType": "Text",
+							"indexed": true,
+							"indexedAsKeyword": true,
+							"label": {
+								"en_US": "${requiredStringFieldName}"
+							},
+							"name": "${requiredStringFieldName}",
+							"required": true,
+							"DBType": "String"
+						}],
+						"pluralLabel": {
+							"en_US": "${en_US_plural_label}"
+						},
+						"portlet": true,
+						"scope": "${scope}"
+					}
+			''';
+		}
 
 		if (isSet(token)) {
 			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");

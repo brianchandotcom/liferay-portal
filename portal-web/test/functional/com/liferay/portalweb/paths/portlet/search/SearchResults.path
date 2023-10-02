@@ -256,6 +256,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FACET_PORTLET_ITEMS_SPECIFIC_ORDER_VOCABULARY_LAYOUT</td>
+	<td>xpath=(//div[contains(@id,'CategoryFacet')]//span[contains(@class,'custom-control-label-text')])[${resultOrder}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FACET_PORTLET_WITH_CLEAR_BUTTON</td>
 	<td>//div[contains(@class,'facet_portlet')][.//button[contains(.,'Clear')]]//h2[contains(@class,'portlet-title-text')]</td>
 	<td></td>
@@ -270,22 +275,22 @@
 
 <tr>
 	<td>SEARCH_INSIGHTS_WIDGET_REQUEST_COPY_BUTTON</td>
-	<td>//div[contains(@id,'insightsRequestPanelContent')]//button[contains(.,'Copy')]</td>
+	<td>//button[contains(., 'Request String')]//following-sibling::div//button[contains(.,'Copy')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_INSIGHTS_WIDGET_RESPONSE_COPY_BUTTON</td>
-	<td>//div[contains(@id,'insightsResponsePanelContent')]//button[contains(.,'Copy')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY</td>
-	<td>//div[contains(@id,'insightsResponsePanelContent')]//div[contains(@class,'CodeMirror cm-s-default')]//span[contains(.,'${key_text}')]</td>
+	<td>//button[contains(., 'Response String')]//following-sibling::div//button[contains(.,'Copy')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY</td>
-	<td>//div[contains(@id,'insightsRequestPanelContent')]//div[contains(@class,'CodeMirror cm-s-default')]//span[contains(@class,'cm-string')][normalize-space()='${key_text}']</td>
+	<td>//button[contains(., 'Request String')]//following-sibling::div//div[contains(@class,'CodeMirror cm-s-default')]//span[contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY</td>
+	<td>//button[contains(., 'Response String')]//following-sibling::div//div[contains(@class,'CodeMirror cm-s-default')]//span[contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 

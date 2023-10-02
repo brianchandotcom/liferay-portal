@@ -157,7 +157,7 @@ definition {
 		}
 
 		task ("Then I should be able to assert that Specification Labels was created for the Marketplace Site") {
-			CommerceEntry.viewSpecificationLabelsEntries(specificationLabelsEntries = "Type,App API Reference URL,Latest Version,Source Code URL,License Term,Developer Name,Trial Length,License Type,App Usage Terms URL,Past Versions Work With,Current Requirements,Product Downloads,Publisher Name,Price Model,Lifetime License,App Installation Guide URL,Publisher Web site URL,App Documentation URL,Support URL,Product Notes");
+			CommerceEntry.viewSpecificationLabelsEntries(specificationLabelsEntries = "App API Reference URL,Latest Version,Source Code URL,Trial Length,License Term,Developer Name,License Type,App Usage Terms URL,Type,Past Versions Work With,Current Requirements,Product Downloads,Price Model,Lifetime License,Publisher Name,App Installation Guide URL,App Documentation URL,Licence Duration,Product Notes,Publisher Web site URL,Support URL");
 		}
 	}
 

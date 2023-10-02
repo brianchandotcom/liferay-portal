@@ -61,6 +61,9 @@ const DrilldownMenu = ({
 					<>
 						<div className="dropdown-header" onClick={onBack}>
 							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'previous-page'
+								)}
 								className="component-action dropdown-item-indicator-start"
 								onClick={onBack}
 								spritemap={spritemap}
@@ -103,6 +106,7 @@ export default function ChangeTrackingChangesView({
 	orderByTypeFromURL,
 	pageFromURL,
 	showAllItemsEnabled,
+	showDropdown,
 	showHideableFromURL,
 	siteNames,
 	sitesFromURL,
@@ -1315,6 +1319,9 @@ export default function ChangeTrackingChangesView({
 
 		return (
 			<ClayButton
+				aria-label={
+					Liferay.Language.get(title) + Liferay.Language.get('column')
+				}
 				className={columnState === column ? '' : 'text-secondary'}
 				displayType="unstyled"
 				onClick={() => {
@@ -1525,6 +1532,7 @@ export default function ChangeTrackingChangesView({
 	const getDrilldownRootItem = (label, value) => {
 		return (
 			<ClayButton
+				aria-label={label}
 				className="dropdown-item"
 				displayType="unstyled"
 				onClick={() => {
@@ -1581,6 +1589,9 @@ export default function ChangeTrackingChangesView({
 								<ClayInput.GroupInsetItem after tag="span">
 									{filterSearchTerms ? (
 										<ClayButton
+											aria-label={Liferay.Language.get(
+												'clear'
+											)}
 											displayType="unstyled"
 											onClick={() =>
 												setFilterSearchTerms('')
@@ -1594,6 +1605,9 @@ export default function ChangeTrackingChangesView({
 										</ClayButton>
 									) : (
 										<ClayButton
+											aria-label={Liferay.Language.get(
+												'search'
+											)}
 											displayType="unstyled"
 											type="button"
 										>
@@ -1687,7 +1701,7 @@ export default function ChangeTrackingChangesView({
 				currentTypeName = node.typeName;
 
 				rows.push(
-					<ClayTable.Row divider>
+					<ClayTable.Row divider key={node.typeName}>
 						<ClayTable.Cell colSpan={6}>
 							{node.typeName}
 						</ClayTable.Cell>
@@ -1698,6 +1712,7 @@ export default function ChangeTrackingChangesView({
 			rows.push(
 				<ClayTable.Row
 					className="cursor-pointer"
+					key={node.nodeId}
 					onClick={() => navigate(node.nodeId)}
 				>
 					<ClayTable.Cell>
@@ -1929,6 +1944,7 @@ export default function ChangeTrackingChangesView({
 						spritemap={spritemap}
 						trigger={
 							<ClayButton
+								aria-label={Liferay.Language.get('filter-by')}
 								className="nav-link"
 								disabled={!total}
 								displayType="unstyled"
@@ -2054,7 +2070,7 @@ export default function ChangeTrackingChangesView({
 										<ClayInput.GroupItem>
 											<ClayInput
 												aria-label={Liferay.Language.get(
-													'search'
+													'search-bar'
 												)}
 												className="form-control input-group-inset input-group-inset-after"
 												disabled={!total}
@@ -2075,6 +2091,9 @@ export default function ChangeTrackingChangesView({
 												tag="span"
 											>
 												<ClayButtonWithIcon
+													aria-label={Liferay.Language.get(
+														'clear'
+													)}
 													className="navbar-breakpoint-d-none"
 													disabled={!total}
 													displayType="unstyled"
@@ -2086,6 +2105,9 @@ export default function ChangeTrackingChangesView({
 												/>
 
 												<ClayButtonWithIcon
+													aria-label={Liferay.Language.get(
+														'search'
+													)}
 													disabled={!total}
 													displayType="unstyled"
 													spritemap={spritemap}
@@ -2102,6 +2124,9 @@ export default function ChangeTrackingChangesView({
 								{renderState.id === 0 && (
 									<ManagementToolbar.Item className="navbar-breakpoint-d-none">
 										<ClayButton
+											aria-label={Liferay.Language.get(
+												'search'
+											)}
 											className="nav-link nav-link-monospaced"
 											disabled={!total}
 											displayType="unstyled"
@@ -2441,6 +2466,7 @@ export default function ChangeTrackingChangesView({
 		items.push(
 			<ManagementToolbar.ResultsBarItem>
 				<ClayButton
+					aria-label={Liferay.Language.get('clear')}
 					className="component-link tbar-link"
 					displayType="unstyled"
 					onClick={() => {
@@ -2521,6 +2547,7 @@ export default function ChangeTrackingChangesView({
 					<ClayTable.Row>
 						<ClayTable.Cell headingCell>
 							<ClayButton
+								aria-label={Liferay.Language.get('name')}
 								displayType="unstyled"
 								onClick={() => {
 									pushState(
@@ -2707,7 +2734,6 @@ export default function ChangeTrackingChangesView({
 							<ChangeTrackingRenderView
 								childEntries={renderState.children}
 								ctEntry={!!renderState.node.ctEntryId}
-								dataURL={getDataURL(renderState.node)}
 								defaultLocale={defaultLocale}
 								description={
 									renderState.node.description
@@ -2726,11 +2752,13 @@ export default function ChangeTrackingChangesView({
 									navigate(nodeId, true)
 								}
 								handleShowHideable={handleShowHideableToggle}
+								initialDataURL={getDataURL(renderState.node)}
 								moveChangesURL={getMoveChangesURL(
 									renderState.node
 								)}
+								namespace={namespace}
 								parentEntries={renderState.parents}
-								showDropdown={renderState.node.modelClassNameId}
+								showDropdown={showDropdown}
 								showHideable={renderState.showHideable}
 								spritemap={spritemap}
 								title={renderState.node.title}

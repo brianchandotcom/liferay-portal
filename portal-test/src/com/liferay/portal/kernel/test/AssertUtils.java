@@ -118,8 +118,14 @@ public class AssertUtils {
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			Assert.assertTrue(clazz.isInstance(exception));
-			Assert.assertEquals(exception.getMessage(), message);
+			Class<?> exceptionClass = exception.getClass();
+
+			Assert.assertTrue(
+				exceptionClass.getName() + " is not an instance of " +
+					clazz.getName(),
+				clazz.isInstance(exception));
+
+			Assert.assertEquals(message, exception.getMessage());
 		}
 	}
 

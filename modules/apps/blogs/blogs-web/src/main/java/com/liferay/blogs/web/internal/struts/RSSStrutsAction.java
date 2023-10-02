@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -160,7 +160,7 @@ public class RSSStrutsAction implements StrutsAction {
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 		if ((groupId == 0) ||
-			_groupPermission.contains(
+			GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), groupId,
 				ActionKeys.VIEW)) {
 
@@ -193,9 +193,6 @@ public class RSSStrutsAction implements StrutsAction {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private Portal _portal;

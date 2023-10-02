@@ -237,7 +237,7 @@ const PurchasedSolutions: React.FC = () => {
 	}, [accountBriefs, product, sku, specifications]);
 
 	const {
-		formState: {errors},
+		formState: {errors, isValid},
 		handleSubmit,
 		register,
 		setValue,
@@ -254,6 +254,7 @@ const PurchasedSolutions: React.FC = () => {
 			phone: {code: '+1', flag: 'en-us'},
 			phoneNumber: undefined,
 		},
+		mode: 'all',
 		resolver: zodResolver(zodSchema.accountCreator),
 	});
 
@@ -326,6 +327,8 @@ const PurchasedSolutions: React.FC = () => {
 	};
 
 	const agreeToTermsAndConditions = watch('agreeToTermsAndConditions');
+
+	const hasAllValidations = agreeToTermsAndConditions && isValid;
 
 	return (
 		<>
@@ -550,30 +553,36 @@ const PurchasedSolutions: React.FC = () => {
 										</ClayForm.Group>
 
 										<ClayForm.Group>
-											<div className="d-flex flex-row-reverse justify-content-end">
-												<label
-													className="control-label ml-3 pb-1"
-													htmlFor="agreeToTermsAndConditions"
-												>
-													I agree to the
-													<ClayLink href="https://www.liferay.com/en/legal/marketplace-terms-of-service">
-														Terms & Conditions
-													</ClayLink>
-												</label>
-
-												<ClayCheckbox
-													checked={
-														agreeToTermsAndConditions
-													}
-													className="danger"
-													id="newsSubscription"
-													onChange={() =>
-														setValue(
-															'agreeToTermsAndConditions',
-															!agreeToTermsAndConditions
-														)
-													}
-												/>
+											<div className="d-flex justify-content-start">
+												<>
+													<ClayCheckbox
+														checked={
+															agreeToTermsAndConditions
+														}
+														className="danger"
+														id="newsSubscription"
+														onChange={() =>
+															setValue(
+																'agreeToTermsAndConditions',
+																!agreeToTermsAndConditions
+															)
+														}
+													/>
+													<label
+														className="ml-4"
+														htmlFor="agreeToTermsAndConditions"
+													>
+														I agree to the
+													</label>
+													<label className="ml-2">
+														<ClayLink
+															displayType="primary"
+															href="https://www.liferay.com/en/legal/marketplace-terms-of-service"
+														>
+															Terms & Conditions
+														</ClayLink>
+													</label>
+												</>
 											</div>
 										</ClayForm.Group>
 
@@ -592,7 +601,7 @@ const PurchasedSolutions: React.FC = () => {
 
 												<ClayButton
 													disabled={
-														!agreeToTermsAndConditions ||
+														!hasAllValidations ||
 														disabledButton
 													}
 													onClick={handleSubmit(

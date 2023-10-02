@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  * @author Keith R. Davis
  * @author Iliyan Peychev
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.document.library.taglib.servlet.taglib.UploadProgressTag}
  */
+@Deprecated
 public class UploadProgressTag extends IncludeTag {
 
 	public int getHeight() {

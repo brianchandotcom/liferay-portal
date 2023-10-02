@@ -631,11 +631,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Dictionary<String, String> headers = _bundle.getHeaders(
 			StringPool.BLANK);
 
-		String featureFlag = headers.get(
+		String featureFlagKey = headers.get(
 			"Liferay-Site-Initializer-Feature-Flag");
 
-		if (Validator.isNotNull(featureFlag) &&
-			!FeatureFlagManagerUtil.isEnabled(featureFlag)) {
+		if (Validator.isNotNull(featureFlagKey) &&
+			!FeatureFlagManagerUtil.isEnabled(featureFlagKey)) {
 
 			return false;
 		}
@@ -1228,7 +1228,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getString("objectActionExecutorKey"),
 					jsonObject.getString("objectActionTriggerKey"),
 					ObjectActionUtil.toParametersUnicodeProperties(
-						parametersJSONObject.toMap()));
+						parametersJSONObject.toMap()),
+					jsonObject.getBoolean("system"));
 			}
 		}
 
@@ -2832,7 +2833,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				jsonObject.getString("name"),
 				jsonObject.getString("objectActionExecutorKey"),
 				jsonObject.getString("objectActionTriggerKey"),
-				ObjectActionUtil.toParametersUnicodeProperties(parametersMap));
+				ObjectActionUtil.toParametersUnicodeProperties(parametersMap),
+				jsonObject.getBoolean("system"));
 		}
 	}
 

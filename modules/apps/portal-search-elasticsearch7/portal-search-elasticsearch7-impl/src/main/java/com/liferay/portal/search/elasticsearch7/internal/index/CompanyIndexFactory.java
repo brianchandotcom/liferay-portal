@@ -6,7 +6,6 @@
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -60,14 +59,12 @@ public class CompanyIndexFactory
 	public void deleteIndices(IndicesClient indicesClient, long companyId) {
 		String indexName = _companyIndexFactoryHelper.getIndexName(companyId);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-183661")) {
-			Company company = _companyLocalService.fetchCompany(companyId);
+		Company company = _companyLocalService.fetchCompany(companyId);
 
-			if ((company != null) &&
-				!Validator.isBlank(company.getIndexNameCurrent())) {
+		if ((company != null) &&
+			!Validator.isBlank(company.getIndexNameCurrent())) {
 
-				indexName = company.getIndexNameCurrent();
-			}
+			indexName = company.getIndexNameCurrent();
 		}
 
 		if (!_companyIndexFactoryHelper.hasIndex(indicesClient, indexName)) {

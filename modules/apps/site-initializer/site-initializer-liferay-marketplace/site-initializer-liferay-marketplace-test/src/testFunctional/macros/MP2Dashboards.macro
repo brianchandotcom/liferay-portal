@@ -18,8 +18,9 @@ definition {
 
 	macro clickOnTheInvitedUser {
 		Click(
-			key_text = ${text},
-			locator1 = "MP2Utils#RESPONSIVE_TABLE");
+			key_label = ${label},
+			key_text = ${value},
+			locator1 = "MP2Dashboards#DASHBOARD_TABLE");
 	}
 
 	macro inviteNewMember {

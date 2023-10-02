@@ -6,6 +6,8 @@
 package com.liferay.headless.builder.resource.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.builder.application.APIApplication;
+import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -285,7 +287,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			_objectDefinition2.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			relationshipName, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			relationshipName, false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectField aggregationObjectField = new AggregationObjectFieldBuilder(
 		).externalReferenceCode(
@@ -414,11 +417,15 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"path", "/single-element-path/{singleElementPathId}"
 					).put(
-						"pathParameter", "ID"
+						"pathParameter",
+						HeadlessBuilderConstants.PATH_PARAMETER_ID
 					).put(
-						"retrieveType", "singleElement"
+						"retrieveType",
+						APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
+							getValue()
 					).put(
-						"scope", "company"
+						"scope",
+						APIApplication.Endpoint.Scope.COMPANY.getValue()
 					),
 					JSONUtil.put(
 						"description", "description"
@@ -434,11 +441,14 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"/single-element-path/by-external-reference-code" +
 							"/{singleElementPathERC}"
 					).put(
-						"pathParameter", "externalReferenceCode"
+						"pathParameter",
+						HeadlessBuilderConstants.PATH_PARAMETER_ERC
 					).put(
-						"retrieveType", "singleElement"
+						"retrieveType",
+						APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
+							getValue()
 					).put(
-						"scope", "group"
+						"scope", APIApplication.Endpoint.Scope.GROUP.getValue()
 					),
 					JSONUtil.put(
 						"description", "description"
@@ -451,9 +461,12 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"path", "/path"
 					).put(
-						"retrieveType", "collection"
+						"retrieveType",
+						APIApplication.Endpoint.RetrieveType.COLLECTION.
+							getValue()
 					).put(
-						"scope", "company"
+						"scope",
+						APIApplication.Endpoint.Scope.COMPANY.getValue()
 					),
 					JSONUtil.put(
 						"description", "site scoped description"
@@ -466,9 +479,11 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"path", "/site-scoped-path"
 					).put(
-						"retrieveType", "collection"
+						"retrieveType",
+						APIApplication.Endpoint.RetrieveType.COLLECTION.
+							getValue()
 					).put(
-						"scope", "group"
+						"scope", APIApplication.Endpoint.Scope.GROUP.getValue()
 					),
 					JSONUtil.put(
 						"description", "site scoped no schema description"
@@ -482,7 +497,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"path", "/no-schema"
 					).put(
-						"scope", "group"
+						"scope", APIApplication.Endpoint.Scope.GROUP.getValue()
 					))
 			).put(
 				"apiApplicationToAPISchemas",
@@ -634,7 +649,9 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"apiSchemaToAPIProperties",
 						JSONUtil.putAll(
 							JSONUtil.put(
-								"description", "description"
+								"description",
+								"singleElementSiteScopedTextProperty " +
+									"description"
 							).put(
 								"name", "singleElementSiteScopedTextProperty"
 							).put(

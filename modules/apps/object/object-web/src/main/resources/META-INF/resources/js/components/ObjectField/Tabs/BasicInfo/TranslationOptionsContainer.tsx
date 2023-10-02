@@ -8,11 +8,13 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {Toggle} from '@liferay/object-js-components-web';
+import classNames from 'classnames';
 import React from 'react';
 
 import './TranslationOptionsContainer.scss';
 
 interface TranslationOptionsContainerProps {
+	modelBuilder?: boolean;
 	objectDefinition: Partial<ObjectDefinition>;
 	published: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
@@ -20,6 +22,7 @@ interface TranslationOptionsContainerProps {
 }
 
 export function TranslationOptionsContainer({
+	modelBuilder,
 	objectDefinition,
 	published,
 	setValues,
@@ -32,7 +35,13 @@ export function TranslationOptionsContainer({
 		!values.system;
 
 	return (
-		<>
+		<div
+			className={classNames({
+				'lfr-objects__edit-object-field-card-content':
+					modelBuilder === false,
+				'lfr-objects__edit-object-field-model-builder-panel': modelBuilder,
+			})}
+		>
 			{!translatableField && (
 				<ClayAlert
 					displayType="info"
@@ -80,6 +89,6 @@ export function TranslationOptionsContainer({
 					</span>
 				</ClayTooltipProvider>
 			</div>
-		</>
+		</div>
 	);
 }

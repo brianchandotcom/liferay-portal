@@ -232,6 +232,46 @@ definition {
 			userScreenName = "usersn");
 	}
 
+	@description = "This is a use case for LPS-180708."
+	@priority = 3
+	test CanUpdateInputFieldWithEmptyString {
+		CustomFields.openCustomFieldAdmin();
+
+		CustomFields.addCP(
+			customFieldName = "Text Field",
+			customFieldType = "Input Field",
+			customInputDataType = "Text",
+			resourceName = "Page",
+			startingValue = "Text Field");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		PagesAdmin.addPage(
+			pageName = "Widget Page Name",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoNavTab(navTab = "Design");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		Type(
+			key_fieldLabel = "Text Field",
+			locator1 = "CustomFields#CUSTOM_INPUT_FIELD",
+			value1 = "");
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			key_fieldLabel = "Text Field",
+			locator1 = "CustomFields#CUSTOM_INPUT_FIELD",
+			value1 = "");
+
+		AssertTextNotEquals(
+			key_fieldLabel = "Text Field",
+			locator1 = "CustomFields#CUSTOM_INPUT_FIELD",
+			value1 = "Text Field");
+	}
+
 	@priority = 5
 	test EditCustomFieldUserTextField {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";

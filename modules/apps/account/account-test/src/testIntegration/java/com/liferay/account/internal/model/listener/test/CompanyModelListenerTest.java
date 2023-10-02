@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -24,7 +23,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,45 +41,28 @@ public class CompanyModelListenerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_guestUser = _company.getGuestUser();
-
-		_accountEntry = AccountEntryTestUtil.addAccountEntry(
-			AccountEntryArgs.withOwner(_guestUser));
-	}
-
 	@Test
-	public void testCleanUpAccountEntries() throws Exception {
-		_deleteCompany();
+	public void testCleanUp() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		User guestUser = company.getGuestUser();
+
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			AccountEntryArgs.withOwner(guestUser));
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+			guestUser.getUserId(), accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString(), null, null);
+
+		_companyLocalService.deleteCompany(company);
 
 		Assert.assertNull(
 			_accountEntryLocalService.fetchAccountEntry(
-				_accountEntry.getAccountEntryId()));
-	}
-
-	@Test
-	public void testCleanUpAccountRoles() throws Exception {
-		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			_guestUser.getUserId(), _accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
-
-		_deleteCompany();
-
+				accountEntry.getAccountEntryId()));
 		Assert.assertNull(
 			_accountRoleLocalService.fetchAccountRole(
 				accountRole.getAccountRoleId()));
 	}
-
-	private void _deleteCompany() throws Exception {
-		_companyLocalService.deleteCompany(_company);
-
-		_company = null;
-	}
-
-	private AccountEntry _accountEntry;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
@@ -89,12 +70,7 @@ public class CompanyModelListenerTest {
 	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;
 
-	@DeleteAfterTestRun
-	private Company _company;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	private User _guestUser;
 
 }

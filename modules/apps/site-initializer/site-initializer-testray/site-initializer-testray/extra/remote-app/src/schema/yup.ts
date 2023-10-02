@@ -150,6 +150,18 @@ const yupSchema = {
 	issue: yup.object({
 		name: yup.string(),
 	}),
+	jiraImportRequirement: yup.object({
+		issues: yup.string().required(),
+		projectId: yup.number().required(),
+	}),
+	jiraIssues: yup.object({
+		issues: yup.array(
+			yup.object({
+				label: yup.string(),
+				value: yup.string(),
+			})
+		),
+	}),
 	option: yup.object({
 		name: yup.string(),
 	}),
@@ -167,6 +179,7 @@ const yupSchema = {
 	}),
 	requirement: yup.object({
 		componentId: yup.string().required(),
+		components: yup.string(),
 		description: yup.string(),
 		descriptionType: yup.string().required(),
 		id: yup.string(),

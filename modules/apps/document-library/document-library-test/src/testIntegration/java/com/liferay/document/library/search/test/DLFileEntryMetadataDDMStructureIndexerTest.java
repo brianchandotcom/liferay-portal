@@ -13,6 +13,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.search.DDMStructureIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -90,6 +91,7 @@ public class DLFileEntryMetadataDDMStructureIndexerTest
 
 		Message message = new Message();
 
+		message.put("ddmStructureIndexer", _ddmStructureIndexer);
 		message.put("structureId", ddmStructure.getStructureId());
 
 		_messageBus.sendMessage("liferay/ddm_structure_reindex", message);
@@ -124,5 +126,10 @@ public class DLFileEntryMetadataDDMStructureIndexerTest
 
 	@Inject
 	private static MessageBus _messageBus;
+
+	@Inject(
+		filter = "ddm.structure.indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata"
+	)
+	private DDMStructureIndexer _ddmStructureIndexer;
 
 }

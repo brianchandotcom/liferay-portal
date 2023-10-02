@@ -49,6 +49,8 @@ components:
                 status:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
+                system:
+                    type: boolean
             type: object
         ObjectDefinition:
             properties:
@@ -432,6 +434,8 @@ components:
                 reverse:
                     readOnly: true
                     type: boolean
+                system:
+                    type: boolean
                 type:
                     enum: [oneToMany, oneToOne, manyToMany]
                     type: string
@@ -488,6 +492,8 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     readOnly: true

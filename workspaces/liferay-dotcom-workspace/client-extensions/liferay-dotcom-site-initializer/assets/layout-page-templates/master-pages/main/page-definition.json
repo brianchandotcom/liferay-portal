@@ -1,0 +1,200 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "public-sites-navigation",
+								"siteKey": "www"
+							},
+							"fragmentConfig": {
+								"accountMenuId": 0,
+								"darkNav": true,
+								"navigationDDMTemplateKey": "NAVIGATION_BASIC",
+								"searchBlueprintId": 0,
+								"showAccountMenu": true,
+								"showCta": true,
+								"showLanguageMenu": true,
+								"showSearch": true,
+								"showSiteName": true,
+								"siteNavigationMenuId": 0
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"pageElements": [
+							{
+								"definition": {
+								},
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": [
+							{
+								"key": "BASIC_COMPONENT-slider"
+							},
+							{
+								"key": "FEATURED_CONTENT-features"
+							},
+							{
+								"key": "FOOTERS-footer-nav-dark"
+							},
+							{
+								"key": "NAVIGATION_BARS-header-light"
+							},
+							{
+								"key": "BASIC_COMPONENT-social"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner-center"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner-cover-center"
+							},
+							{
+								"key": "FEATURED_CONTENT-highlights"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner-cover"
+							},
+							{
+								"key": "NAVIGATION_BARS-header-dark"
+							},
+							{
+								"key": "FEATURED_CONTENT-highlights-circle"
+							},
+							{
+								"key": "BASIC_COMPONENT-spacer"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner-slider"
+							},
+							{
+								"key": "FOOTERS-footer-nav-light"
+							}
+						]
+					}
+				},
+				"type": "DropZone"
+			},
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "navigation-footer",
+								"siteKey": "www"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"pageElements": [
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
+											},
+											"fragmentConfig": {
+												"displayStyle": "stacked",
+												"hoveredItemColor": "",
+												"selectedItemColor": "",
+												"source": "{\"siteNavigationMenuId\":\"[$SITE_NAVIGATION_MENU_ITEM_ID:SITE-NAVIGATION-FOOTER$]\",\"parentSiteNavigationMenuItemId\":\"0\",\"privateLayout\":\"false\",\"title\":\"Footer\",\"type\":\"class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType\"}",
+												"sublevels": "-1"
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "DIALECT-dialect-text"
+											},
+											"fragmentConfig": {
+												"textType": "h6",
+												"truncateText": false
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "DIALECT-dialect-text"
+											},
+											"fragmentConfig": {
+												"textType": "h6",
+												"truncateText": false
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"themeName": "Dialect"
+	}
+}

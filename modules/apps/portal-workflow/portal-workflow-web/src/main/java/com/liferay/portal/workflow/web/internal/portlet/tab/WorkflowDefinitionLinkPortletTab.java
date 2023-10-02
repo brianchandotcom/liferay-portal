@@ -5,7 +5,7 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.tab;
 
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerVisibleFilter;

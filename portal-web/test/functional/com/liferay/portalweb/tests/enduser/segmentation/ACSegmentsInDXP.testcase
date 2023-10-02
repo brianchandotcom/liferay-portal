@@ -85,6 +85,7 @@ definition {
 	@description = "LPS-96574 Given I have edit, delete and permission permissions for segments And I have connected my DXP instance with AC When I create an Individual Segment in AC and it shows in the DXP Segments administration Then I don't see the edit action"
 	@priority = 3
 	test CheckNotEditableSegmentFromACAtDXP {
+		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
@@ -116,6 +117,7 @@ definition {
 	@priority = 5
 	test DefaultInstanceNotSynchronizedWithAC {
 		property portal.acceptance = "quarantine";
+		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
@@ -177,6 +179,7 @@ definition {
 	@priority = 4
 	test PersistSegmentFromACAtDXP {
 		property portal.acceptance = "quarantine";
+		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Change 'Check Interval' at Segment Analytics Cloud in System Settings") {
@@ -239,6 +242,7 @@ definition {
 	@priority = 5
 	test RedirectToSegmentPageAC {
 		property portal.acceptance = "quarantine";
+		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
@@ -278,6 +282,7 @@ definition {
 	@priority = 4
 	test RedirectToSegmentPageErrorAC {
 		property portal.acceptance = "quarantine";
+		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
@@ -364,6 +369,7 @@ definition {
 	@priority = 4
 	test ShoudNotRedirectToSegmentPageAC {
 		property portal.acceptance = "quarantine";
+		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Update Segments Analytics Cloud in System Settings") {

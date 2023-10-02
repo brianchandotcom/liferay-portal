@@ -17,6 +17,7 @@ interface CodeEditorProps extends ICodeMirrorEditor {
 	className?: string;
 	error?: string;
 	sidebarElements?: SidebarCategory[];
+	sidebarElementsDisabled?: boolean;
 }
 declare const CodeEditor: React.ForwardRefExoticComponent<
 	CodeEditorProps & React.RefAttributes<CodeMirror.Editor>

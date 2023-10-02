@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.service.OrgLaborService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.WebsiteService;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -108,7 +108,7 @@ public class UpdateOrganizationOrganizationSiteMVCActionCommand
 
 		Group organizationGroup = organization.getGroup();
 
-		if (_groupPermission.contains(
+		if (GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), organizationGroup,
 				ActionKeys.UPDATE)) {
 
@@ -133,9 +133,6 @@ public class UpdateOrganizationOrganizationSiteMVCActionCommand
 
 	@Reference
 	private EmailAddressService _emailAddressService;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private OrganizationService _organizationService;

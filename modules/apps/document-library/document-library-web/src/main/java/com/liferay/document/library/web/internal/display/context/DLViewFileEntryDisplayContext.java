@@ -172,14 +172,14 @@ public class DLViewFileEntryDisplayContext {
 		return _fileVersion;
 	}
 
-	public String getLockInfoCssClass() {
+	public String getLockInfoDisplayType() {
 		FileEntry fileEntry = getFileEntry();
 
 		if (!fileEntry.hasLock()) {
-			return "alert-danger";
+			return "danger";
 		}
 
-		return "alert-info";
+		return "info";
 	}
 
 	public String getLockInfoMessage(Locale locale) {

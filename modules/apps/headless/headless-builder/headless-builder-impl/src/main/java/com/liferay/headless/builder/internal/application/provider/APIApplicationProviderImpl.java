@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,7 +73,7 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					apiApplicationExternalReferenceCode + "'",
 				Arrays.asList(
 					"apiEndpointToAPIFilters", "apiEndpointToAPISorts"),
-				"L_API_ENDPOINT"),
+				"L_API_ENDPOINT", null),
 			objectEntry -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
@@ -100,22 +99,8 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					}
 
 					@Override
-					public PathParameter getPathParameter() {
-						ListEntry listEntry = (ListEntry)properties.get(
-							"pathParameter");
-
-						if (listEntry == null) {
-							return PathParameter.NONE;
-						}
-
-						if (Objects.equals(
-								listEntry.getKey(), "externalReferenceCode")) {
-
-							return PathParameter.EXTERNAL_REFERENCE_CODE;
-						}
-
-						return PathParameter.valueOf(
-							StringUtil.toUpperCase(listEntry.getKey()));
+					public String getPathParameter() {
+						return (String)properties.get("pathParameter");
 					}
 
 					@Override
@@ -141,14 +126,7 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 						ListEntry listEntry = (ListEntry)properties.get(
 							"retrieveType");
 
-						if (Objects.equals(
-								listEntry.getKey(), "singleElement")) {
-
-							return RetrieveType.SINGLE_ELEMENT;
-						}
-
-						return RetrieveType.valueOf(
-							StringUtil.toUpperCase(listEntry.getKey()));
+						return RetrieveType.parse(listEntry.getKey());
 					}
 
 					@Override
@@ -156,8 +134,7 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 						ListEntry listEntry = (ListEntry)properties.get(
 							"scope");
 
-						return Scope.valueOf(
-							StringUtil.toUpperCase(listEntry.getKey()));
+						return Scope.parse(listEntry.getKey());
 					}
 
 					@Override
@@ -309,7 +286,8 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 				companyId,
 				"apiApplicationToAPISchemas/externalReferenceCode eq '" +
 					apiApplicationObjectEntry.getExternalReferenceCode() + "'",
-				Arrays.asList("apiSchemaToAPIProperties"), "L_API_SCHEMA"),
+				Arrays.asList("apiSchemaToAPIProperties"), "L_API_SCHEMA",
+				null),
 			objectEntry -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 

@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React from 'react';
+import {SidebarCategory} from '@liferay/object-js-components-web';
+import React, {ElementType} from 'react';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 export interface AggregationFilters {
 	defaultSort?: boolean;
@@ -20,32 +21,36 @@ export interface AggregationFilters {
 	valueList?: LabelValueObject[];
 }
 interface BasicInfoTabProps {
+	containerWrapper: ElementType;
 	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
+	modelBuilder?: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
 	objectRelationshipId: number;
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
+	sidebarElements: SidebarCategory[];
 	values: Partial<ObjectField>;
 	workflowStatusJSONArray: LabelValueObject[];
 }
 export declare function BasicInfoTab({
+	containerWrapper: ContainerWrapper,
 	errors,
 	filterOperators,
 	handleChange,
 	isApproved,
 	isDefaultStorageType,
+	modelBuilder,
 	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
-	objectName,
 	objectRelationshipId,
 	readOnly,
 	setValues,
+	sidebarElements,
 	values,
 	workflowStatusJSONArray,
 }: BasicInfoTabProps): JSX.Element;

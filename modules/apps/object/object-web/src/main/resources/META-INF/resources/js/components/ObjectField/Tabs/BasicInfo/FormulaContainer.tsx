@@ -3,15 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ExpressionBuilder} from '@liferay/object-js-components-web';
+import {
+	ExpressionBuilder,
+	SidebarCategory,
+} from '@liferay/object-js-components-web';
+import classNames from 'classnames';
 import React from 'react';
 
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 
+import '../../EditObjectFieldContent.scss';
+
 interface FormulaContainerProps {
 	errors: ObjectFieldErrors;
+	modelBuilder?: boolean;
 	objectFieldSettings: ObjectFieldSetting[];
 	setValues: (values: Partial<ObjectField>) => void;
+	sidebarElements: SidebarCategory[];
 }
 
 const getNewObjectFieldSettings = (
@@ -31,15 +39,23 @@ const getNewObjectFieldSettings = (
 
 export function FormulaContainer({
 	errors,
+	modelBuilder = false,
 	objectFieldSettings,
 	setValues,
+	sidebarElements,
 }: FormulaContainerProps) {
 	const currentScript = objectFieldSettings?.find(
 		(objectFieldSetting) => objectFieldSetting.name === 'script'
 	);
 
 	return (
-		<>
+		<div
+			className={classNames({
+				'lfr-objects__edit-object-field-card-content':
+					modelBuilder === false,
+				'lfr-objects__edit-object-field-model-builder-panel': modelBuilder,
+			})}
+		>
 			<ExpressionBuilder
 				error={errors.script}
 				feedbackMessage={Liferay.Language.get(
@@ -58,6 +74,7 @@ export function FormulaContainer({
 					const parentWindow = Liferay.Util.getOpener();
 
 					parentWindow.Liferay.fire('openExpressionBuilderModal', {
+						eventSidebarElements: sidebarElements,
 						header: Liferay.Language.get('formula-builder'),
 						onSave: (script: string) => {
 							setValues({
@@ -86,6 +103,6 @@ export function FormulaContainer({
 				)}`}
 				value={(currentScript?.value as string) ?? ''}
 			/>
-		</>
+		</div>
 	);
 }

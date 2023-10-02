@@ -56,4 +56,19 @@ public interface QuestionsConfiguration {
 	)
 	public long rootTopicId();
 
+	@Meta.AD(name = "ask-question-button-text", required = false)
+	public String askQuestionButtonTextAsLocalizedXML();
+
+	@Meta.AD(name = "edit-question-page-title", required = false)
+	public String editQuestionPageTitleAsLocalizedXML();
+
+	@Meta.AD(name = "new-question-page-title", required = false)
+	public String newQuestionPageTitleAsLocalizedXML();
+
+	@Meta.AD(name = "post-your-question-button-text", required = false)
+	public String postYourQuestionButtonTextAsLocalizedXML();
+
+	@Meta.AD(name = "update-your-question-button-text", required = false)
+	public String updateYourQuestionButtonTextAsLocalizedXML();
+
 }

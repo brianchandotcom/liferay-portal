@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -47,7 +47,7 @@ public class LayoutSetCTDisplayRenderer
 
 		Group group = layoutSet.getGroup();
 
-		if (!_groupPermission.contains(
+		if (!GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), group,
 				ActionKeys.UPDATE)) {
 
@@ -98,9 +98,6 @@ public class LayoutSetCTDisplayRenderer
 	public String getTypeName(Locale locale) {
 		return _language.get(locale, "page-set");
 	}
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;

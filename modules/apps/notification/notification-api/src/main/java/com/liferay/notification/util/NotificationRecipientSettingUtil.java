@@ -8,7 +8,6 @@ package com.liferay.notification.util;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,8 +40,7 @@ public class NotificationRecipientSettingUtil {
 
 			Object value = notificationRecipientSetting.getValue();
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-187854") &&
-				StringUtil.equals(
+			if (StringUtil.equals(
 					notificationRecipientSetting.getName(),
 					"singleRecipient")) {
 

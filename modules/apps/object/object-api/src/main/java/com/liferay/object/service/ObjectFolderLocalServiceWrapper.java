@@ -57,11 +57,11 @@ public class ObjectFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.object.model.ObjectFolder
-			addOrGetUncategorizedObjectFolder(long companyId)
+	public com.liferay.object.model.ObjectFolder addUncategorizedObjectFolder(
+			long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _objectFolderLocalService.addOrGetUncategorizedObjectFolder(
+		return _objectFolderLocalService.addUncategorizedObjectFolder(
 			companyId);
 	}
 
@@ -287,6 +287,14 @@ public class ObjectFolderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectFolder fetchUncategorizedObjectFolder(
+		long companyId) {
+
+		return _objectFolderLocalService.fetchUncategorizedObjectFolder(
+			companyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -407,6 +415,15 @@ public class ObjectFolderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFolderLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectFolder getUncategorizedObjectFolder(
+			long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFolderLocalService.getUncategorizedObjectFolder(
+			companyId);
 	}
 
 	/**

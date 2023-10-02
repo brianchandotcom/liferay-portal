@@ -125,6 +125,41 @@ definition {
 			configurationScope = "System Scope");
 	}
 
+	@description = "This is a use case for LPS-102027. Verify JSP fragment module is still in Resolved status after removing osgi/state folder on LPKG bundle."
+	@priority = 3
+	test JSPFragmentModuleStillResolvedAfterRemovingStateFolderOnLPKGBundle {
+		property license.required = "true";
+		property portal.upstream = "false";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var moduleBaseDir = "modules/apps/adaptive-media/adaptive-media-blogs-web-fragment";
+		var projectDir = PropsUtil.get("project.dir");
+
+		AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=${moduleBaseDir}");
+
+		WaitForConsoleTextPresent(value1 = "STOPPED com.liferay.blogs.web_");
+
+		GogoShell.openGogoShellAdmin();
+
+		var fragmentName = '''"Liferay Adaptive Media Blogs Web Fragment"''';
+
+		GogoShell.executeCommand(commandName = "lb | grep ${fragmentName}");
+
+		GogoShell.viewOutput(outputContent = "Resolved");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer();
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "lb | grep ${fragmentName}");
+
+		GogoShell.viewOutput(outputContent = "Resolved");
+	}
+
 	@priority = 4
 	test RestartingPortalDuplicatesOSGiConfiguration {
 		property database.types = "mysql";

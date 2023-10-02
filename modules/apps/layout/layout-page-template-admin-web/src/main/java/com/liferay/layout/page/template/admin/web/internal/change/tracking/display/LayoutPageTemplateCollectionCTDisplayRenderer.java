@@ -12,7 +12,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
@@ -63,9 +62,6 @@ public class LayoutPageTemplateCollectionCTDisplayRenderer
 
 		return layoutPageTemplateCollection.getName();
 	}
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;

@@ -688,8 +688,12 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ResourcePermissionCheck">
 			<property name="category" value="Bug Prevention" />
+			<property name="checkModelClassName" value="true" />
 			<property name="description" value="Performs several checks on `*ResourcePermission` classes." />
-			<message key="remove.service.ranking.property" value="Remove property ''{0}'' from @Component annotation" />
+			<property name="enabled" value="false" />
+			<message key="model.class.name.mismatch" value="Expected `model.class.name` property value to be ''{0}'' but is ''{1}''" />
+			<message key="model.class.name.missing" value="The `model.class.name` property is missing from the @Component annotation" />
+			<message key="remove.service.ranking.property" value="Remove property ''{0}'' from the @Component annotation" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ResourcePermissionFactoryCheck">
 			<property name="category" value="Performance" />

@@ -226,6 +226,14 @@ public class ObjectEntryDTOConverter
 										objectDefinition.
 											getTitleObjectFieldId());
 
+								if (objectField == null) {
+									objectField =
+										_objectFieldLocalService.getObjectField(
+											objectDefinition.
+												getObjectDefinitionId(),
+											"id");
+								}
+
 								values.put(
 									objectField.getName(),
 									ObjectEntryValuesUtil.getTitleFieldValue(

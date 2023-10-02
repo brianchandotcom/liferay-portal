@@ -1,13 +1,7 @@
 {
-	"actions": {
-		"createBatch": {
-			"href": "/o/object-admin/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-			"method": "POST"
-		}
-	},
 	"configuration": {
 		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-		"companyId": 0,
+		"multiCompany": true,
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
@@ -179,6 +173,7 @@
 					"errorLabel": {
 						"en_US": "Please enter a valid URL."
 					},
+					"externalReferenceCode": "VALID_URL",
 					"name": {
 						"en_US": "Valid URL"
 					},

@@ -23,7 +23,7 @@ interface BaseAPIApplicationFieldsProps {
 	data: Partial<APIEndpointUIData>;
 	displayError: EndpointDataError;
 	editMode?: boolean;
-	setData: Dispatch<SetStateAction<APIEndpointUIData>>;
+	setData: Dispatch<SetStateAction<Partial<APIEndpointUIData>>>;
 }
 
 export default function BaseAPIEndpointFields({
@@ -69,7 +69,7 @@ export default function BaseAPIEndpointFields({
 	const handleSelectScope = (value: string) => {
 		setData((previousValue) => ({
 			...previousValue,
-			scope: {key: value},
+			scope: {key: value, name: ''},
 		}));
 
 		setSelectedScope(scopeOptions.find((option) => option.value === value));
@@ -81,12 +81,33 @@ export default function BaseAPIEndpointFields({
 
 	const endpointPathHostTextPreview =
 		selectedScope?.value === 'group'
-			? `${window.location.origin}${basePath}${apiApplicationBaseURL}/sites/{siteId}`
+			? `${window.location.origin}${basePath}${apiApplicationBaseURL}/scopes/${selectedScope.value}`
 			: `${window.location.origin}${basePath}${apiApplicationBaseURL}`;
 	const endpointPathLabel = Liferay.Language.get('enter-path');
 
 	return (
 		<ClayForm>
+			{(editMode ?? false) && (
+				<ClayForm.Group>
+					<label htmlFor="selectTrigger">
+						{Liferay.Language.get('method')}
+
+						<span className="ml-1 reference-mark text-warning">
+							<ClayIcon symbol="asterisk" />
+						</span>
+					</label>
+
+					<Select
+						disabled={true}
+						onClick={() => {}}
+						options={[{label: 'GET', value: 'get'}]}
+						required
+						searchable={false}
+						selectedOption={{label: 'GET', value: 'get'}}
+					/>
+				</ClayForm.Group>
+			)}
+
 			<ClayForm.Group
 				className={classNames({
 					'has-error': displayError.scope,
@@ -101,13 +122,6 @@ export default function BaseAPIEndpointFields({
 				</label>
 
 				<Select
-					cleanUp={() =>
-						setData((previousValue) => {
-							previousValue.scope = {key: '', name: ''};
-
-							return {...previousValue};
-						})
-					}
 					disabled={false}
 					dropDownSearchAriaLabel={Liferay.Language.get(
 						'search-for-an-object-definition-or-use-the-arrow-keys-to-navigate-and-select-an-object-definition-from-the-list'
@@ -148,7 +162,11 @@ export default function BaseAPIEndpointFields({
 				</div>
 			</ClayForm.Group>
 
-			<ClayForm.Group>
+			<ClayForm.Group
+				className={classNames({
+					'has-error': displayError.path,
+				})}
+			>
 				<label htmlFor="endpointPathField">
 					{Liferay.Language.get('path')}
 
@@ -161,11 +179,7 @@ export default function BaseAPIEndpointFields({
 					{endpointPathHostTextPreview}
 				</Text>
 
-				<ClayInput.Group
-					className={classNames({
-						'has-error': displayError.path,
-					})}
-				>
+				<ClayInput.Group>
 					<ClayInput.GroupItem prepend shrink>
 						<ClayInput.GroupText>/</ClayInput.GroupText>
 					</ClayInput.GroupItem>
@@ -202,19 +216,27 @@ export default function BaseAPIEndpointFields({
 						</Text>
 					</ClayForm.FeedbackGroup>
 				)}
+
+				<div className="feedback-container">
+					<ClayForm.FeedbackGroup>
+						{displayError.path && (
+							<ClayForm.FeedbackItem className="mt-2">
+								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+								<span id="selectScopeErrorMessage">
+									{Liferay.Language.get(
+										'please-enter-a-path'
+									)}
+								</span>
+							</ClayForm.FeedbackItem>
+						)}
+					</ClayForm.FeedbackGroup>
+				</div>
 			</ClayForm.Group>
 
-			<ClayForm.Group
-				className={classNames({
-					'has-error': displayError.description,
-				})}
-			>
+			<ClayForm.Group>
 				<label htmlFor="endpointDescriptionField">
 					{Liferay.Language.get('description')}
-
-					<span className="ml-1 reference-mark text-warning">
-						<ClayIcon symbol="asterisk" />
-					</span>
 				</label>
 
 				<textarea
@@ -223,10 +245,18 @@ export default function BaseAPIEndpointFields({
 					className="form-control"
 					id="endpointDescriptionField"
 					onChange={({target: {value}}) =>
-						setData((previousData) => ({
-							...previousData,
-							description: value,
-						}))
+						setData((previousData) => {
+							if (value === '' && previousData.description) {
+								delete previousData.description;
+
+								return {...previousData};
+							}
+
+							return {
+								...previousData,
+								description: value,
+							};
+						})
 					}
 					placeholder={endpointDescriptionLabel}
 					value={data.description}
@@ -234,9 +264,7 @@ export default function BaseAPIEndpointFields({
 			</ClayForm.Group>
 
 			<div aria-live="assertive" className="sr-only">
-				{(displayError.scope ||
-					displayError.path ||
-					displayError.description) && (
+				{(displayError.scope || displayError.path) && (
 					<span>
 						{Liferay.Language.get(
 							'there-are-errors-on-the-form-please-check-if-any-mandatory-fields-have-not-been-completed'

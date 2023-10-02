@@ -131,7 +131,7 @@ public abstract class BaseObjectValidationRuleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-validation-rules' -d $'{"active": ___, "engine": ___, "errorLabel": ___, "name": ___, "objectDefinitionExternalReferenceCode": ___, "objectDefinitionId": ___, "objectValidationRuleSettings": ___, "outputType": ___, "script": ___, "system": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-validation-rules' -d $'{"active": ___, "engine": ___, "errorLabel": ___, "externalReferenceCode": ___, "name": ___, "objectDefinitionExternalReferenceCode": ___, "objectDefinitionId": ___, "objectValidationRuleSettings": ___, "outputType": ___, "script": ___, "system": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -315,7 +315,7 @@ public abstract class BaseObjectValidationRuleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules' -d $'{"active": ___, "engine": ___, "errorLabel": ___, "name": ___, "objectDefinitionExternalReferenceCode": ___, "objectDefinitionId": ___, "objectValidationRuleSettings": ___, "outputType": ___, "script": ___, "system": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules' -d $'{"active": ___, "engine": ___, "errorLabel": ___, "externalReferenceCode": ___, "name": ___, "objectDefinitionExternalReferenceCode": ___, "objectDefinitionId": ___, "objectValidationRuleSettings": ___, "outputType": ___, "script": ___, "system": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -525,7 +525,7 @@ public abstract class BaseObjectValidationRuleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/object-admin/v1.0/object-validation-rules/{objectValidationRuleId}' -d $'{"active": ___, "engine": ___, "errorLabel": ___, "name": ___, "objectDefinitionExternalReferenceCode": ___, "objectDefinitionId": ___, "objectValidationRuleSettings": ___, "outputType": ___, "script": ___, "system": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/object-admin/v1.0/object-validation-rules/{objectValidationRuleId}' -d $'{"active": ___, "engine": ___, "errorLabel": ___, "externalReferenceCode": ___, "name": ___, "objectDefinitionExternalReferenceCode": ___, "objectDefinitionId": ___, "objectValidationRuleSettings": ___, "outputType": ___, "script": ___, "system": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -573,6 +573,11 @@ public abstract class BaseObjectValidationRuleResourceImpl
 				objectValidationRule.getErrorLabel());
 		}
 
+		if (objectValidationRule.getExternalReferenceCode() != null) {
+			existingObjectValidationRule.setExternalReferenceCode(
+				objectValidationRule.getExternalReferenceCode());
+		}
+
 		if (objectValidationRule.getName() != null) {
 			existingObjectValidationRule.setName(
 				objectValidationRule.getName());
@@ -616,7 +621,7 @@ public abstract class BaseObjectValidationRuleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-validation-rules/{objectValidationRuleId}' -d $'{"active": ___, "engine": ___, "errorLabel": ___, "name": ___, "objectDefinitionExternalReferenceCode": ___, "objectDefinitionId": ___, "objectValidationRuleSettings": ___, "outputType": ___, "script": ___, "system": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-validation-rules/{objectValidationRuleId}' -d $'{"active": ___, "engine": ___, "errorLabel": ___, "externalReferenceCode": ___, "name": ___, "objectDefinitionExternalReferenceCode": ___, "objectDefinitionId": ___, "objectValidationRuleSettings": ___, "outputType": ___, "script": ___, "system": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

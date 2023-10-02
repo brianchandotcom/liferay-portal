@@ -1225,6 +1225,14 @@ public abstract class BaseObjectActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (objectAction.getSystem() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1506,6 +1514,16 @@ public abstract class BaseObjectActionResourceTestCase {
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectAction1.getStatus(), objectAction2.getStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectAction1.getSystem(), objectAction2.getSystem())) {
 
 					return false;
 				}
@@ -1993,6 +2011,11 @@ public abstract class BaseObjectActionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("system")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -2052,6 +2075,7 @@ public abstract class BaseObjectActionResourceTestCase {
 					RandomTestUtil.randomString());
 				objectActionTriggerKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				system = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

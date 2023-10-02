@@ -74,13 +74,14 @@ public class SharepointExtRepository implements ExtRepository {
 
 	@Override
 	public ExtRepositoryFileEntry addExtRepositoryFileEntry(
-			String extRepositoryParentFolderKey, String mimeType, String title,
-			String description, String changeLog, InputStream inputStream)
+			String extRepositoryParentFolderKey, String fileName,
+			String mimeType, String title, String description, String changeLog,
+			InputStream inputStream)
 		throws PortalException {
 
 		try {
 			String url = _sharepointURLHelper.getAddFileURL(
-				extRepositoryParentFolderKey, title);
+				extRepositoryParentFolderKey, fileName);
 
 			JSONObject jsonObject = _post(url, inputStream);
 

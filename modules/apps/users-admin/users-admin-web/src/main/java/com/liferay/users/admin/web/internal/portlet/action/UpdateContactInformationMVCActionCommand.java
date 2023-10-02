@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 import com.liferay.users.admin.web.internal.manager.AddressContactInfoManager;
 import com.liferay.users.admin.web.internal.manager.ContactInfoManager;
 import com.liferay.users.admin.web.internal.manager.EmailAddressContactInfoManager;
@@ -175,12 +174,11 @@ public class UpdateContactInformationMVCActionCommand
 		else if (listType.equals(ListTypeConstants.EMAIL_ADDRESS)) {
 			return new EmailAddressContactInfoManager(
 				className, classPK, _emailAddressLocalService,
-				_emailAddressService, _usersAdmin);
+				_emailAddressService);
 		}
 		else if (listType.equals(ListTypeConstants.PHONE)) {
 			return new PhoneContactInfoManager(
-				className, classPK, _phoneLocalService, _phoneService,
-				_usersAdmin);
+				className, classPK, _phoneLocalService, _phoneService);
 		}
 		else if (listType.equals(ListTypeConstants.ORGANIZATION_SERVICE)) {
 			return new OrgLaborContactInfoManager(
@@ -188,8 +186,7 @@ public class UpdateContactInformationMVCActionCommand
 		}
 		else if (listType.equals(ListTypeConstants.WEBSITE)) {
 			return new WebsiteContactInfoManager(
-				className, classPK, _websiteLocalService, _websiteService,
-				_usersAdmin);
+				className, classPK, _websiteLocalService, _websiteService);
 		}
 
 		return null;
@@ -263,9 +260,6 @@ public class UpdateContactInformationMVCActionCommand
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 	@Reference
 	private WebsiteLocalService _websiteLocalService;

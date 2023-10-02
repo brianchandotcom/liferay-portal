@@ -50,7 +50,7 @@ public interface ObjectActionService extends BaseService {
 			Map<Locale, String> errorMessageMap, Map<Locale, String> labelMap,
 			String name, String objectActionExecutorKey,
 			String objectActionTriggerKey,
-			UnicodeProperties parametersUnicodeProperties)
+			UnicodeProperties parametersUnicodeProperties, boolean system)
 		throws PortalException;
 
 	public ObjectAction deleteObjectAction(long objectActionId)

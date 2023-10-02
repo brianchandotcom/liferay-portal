@@ -12,7 +12,6 @@ import com.liferay.layout.crawler.LayoutCrawler;
 import com.liferay.layout.internal.search.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -113,12 +113,17 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 			long originalThemeDisplayPlid = themeDisplay.getPlid();
 
 			try {
-				httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 				httpServletRequest.setAttribute(
 					WebKeys.SHOW_PORTLET_TOPPER, Boolean.FALSE);
 
-				themeDisplay.setLayout(layout);
-				themeDisplay.setPlid(layout.getPlid());
+				if ((layout != originalRequestLayout) ||
+					(layout != themeDisplay.getLayout())) {
+
+					httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+					themeDisplay.setLayout(layout);
+					themeDisplay.setPlid(layout.getPlid());
+				}
 
 				themeDisplay.setRequest(httpServletRequest);
 
@@ -147,12 +152,17 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 				return _htmlParser.extractText(content);
 			}
 			finally {
-				httpServletRequest.setAttribute(
-					WebKeys.LAYOUT, originalRequestLayout);
 				httpServletRequest.removeAttribute(WebKeys.SHOW_PORTLET_TOPPER);
 
-				themeDisplay.setLayout(originalThemeDisplayLayout);
-				themeDisplay.setPlid(originalThemeDisplayPlid);
+				if ((layout != originalRequestLayout) ||
+					(layout != themeDisplay.getLayout())) {
+
+					httpServletRequest.setAttribute(
+						WebKeys.LAYOUT, originalRequestLayout);
+
+					themeDisplay.setLayout(originalThemeDisplayLayout);
+					themeDisplay.setPlid(originalThemeDisplayPlid);
+				}
 
 				themeDisplay.setRequest(originalThemeDisplayHttpServletRequest);
 			}

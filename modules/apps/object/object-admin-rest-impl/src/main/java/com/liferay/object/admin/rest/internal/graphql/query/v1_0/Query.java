@@ -125,7 +125,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectAction(objectActionId: ___){actions, active, conditionExpression, dateCreated, dateModified, description, errorMessage, externalReferenceCode, id, label, name, objectActionExecutorKey, objectActionTriggerKey, parameters, status}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectAction(objectActionId: ___){actions, active, conditionExpression, dateCreated, dateModified, description, errorMessage, externalReferenceCode, id, label, name, objectActionExecutorKey, objectActionTriggerKey, parameters, status, system}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectAction objectAction(
@@ -517,7 +517,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectRelationship(objectRelationshipId: ___){actions, deletionType, edge, id, label, name, objectDefinitionExternalReferenceCode1, objectDefinitionExternalReferenceCode2, objectDefinitionId1, objectDefinitionId2, objectDefinitionModifiable2, objectDefinitionName2, objectDefinitionSystem2, parameterObjectFieldId, parameterObjectFieldName, reverse, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectRelationship(objectRelationshipId: ___){actions, deletionType, edge, id, label, name, objectDefinitionExternalReferenceCode1, objectDefinitionExternalReferenceCode2, objectDefinitionId1, objectDefinitionId2, objectDefinitionModifiable2, objectDefinitionName2, objectDefinitionSystem2, parameterObjectFieldId, parameterObjectFieldName, reverse, system, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectRelationship objectRelationship(
@@ -589,7 +589,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectValidationRule(objectValidationRuleId: ___){actions, active, dateCreated, dateModified, engine, engineLabel, errorLabel, id, name, objectDefinitionExternalReferenceCode, objectDefinitionId, objectValidationRuleSettings, outputType, script, system}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectValidationRule(objectValidationRuleId: ___){actions, active, dateCreated, dateModified, engine, engineLabel, errorLabel, externalReferenceCode, id, name, objectDefinitionExternalReferenceCode, objectDefinitionId, objectValidationRuleSettings, outputType, script, system}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectValidationRule objectValidationRule(

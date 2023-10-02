@@ -9,6 +9,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -262,6 +263,9 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		ElasticsearchIndexWriter elasticsearchIndexWriter =
 			new ElasticsearchIndexWriter();
 
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexWriter, "_companyLocalService",
+			Mockito.mock(CompanyLocalService.class));
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchIndexWriter, "_elasticsearchConfigurationWrapper",
 			createElasticsearchConfigurationWrapper(

@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.messaging;
 
-import com.liferay.dynamic.data.mapping.internal.background.task.DDMStructureIndexerRegistry;
 import com.liferay.dynamic.data.mapping.internal.constants.DDMDestinationNames;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -31,14 +30,11 @@ public class DDMStructureReindexMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		DDMStructureIndexer ddmStructureIndexer =
+			(DDMStructureIndexer)message.get(
+				"ddmStructureIndexer");
+
 		long structureId = message.getLong("structureId");
-
-		DDMStructure structure = _ddmStructureLocalService.getStructure(
-			structureId);
-
-		DDMStructureIndexer structureIndexer =
-			_ddmStructureIndexerRegistry.getDDMStructureIndexer(
-				structure.getClassName());
 
 		List<Long> ddmStructureIds = new ArrayList<>();
 
@@ -46,7 +42,7 @@ public class DDMStructureReindexMessageListener extends BaseMessageListener {
 
 		_collectChildrenStructureIds(ddmStructureIds, structureId);
 
-		structureIndexer.reindexDDMStructures(ddmStructureIds);
+		ddmStructureIndexer.reindexDDMStructures(ddmStructureIds);
 	}
 
 	private void _collectChildrenStructureIds(
@@ -62,9 +58,6 @@ public class DDMStructureReindexMessageListener extends BaseMessageListener {
 				structureIds, structure.getStructureId());
 		}
 	}
-
-	@Reference
-	private DDMStructureIndexerRegistry _ddmStructureIndexerRegistry;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

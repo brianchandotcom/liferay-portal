@@ -1,0 +1,91 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.change.tracking.internal.events;
+
+import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.portal.kernel.events.Action;
+import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Pei-Jung Lan
+ */
+@Component(
+	property = "key=servlet.service.events.pre", service = LifecycleAction.class
+)
+public class CTOnDemandUserPreAction extends Action {
+
+	@Override
+	public void run(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		if (!_featureFlagManager.isEnabled("LPS-187436")) {
+			return;
+		}
+
+		try {
+			_run(httpServletRequest, httpServletResponse);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+	}
+
+	private void _run(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		User user = _portal.getUser(httpServletRequest);
+
+		if ((user == null) || !user.isOnDemandUser()) {
+			return;
+		}
+
+		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
+
+		if (!Objects.equals(portletId, CTPortletKeys.PUBLICATIONS)) {
+			_authenticatedSessionManager.logout(
+				httpServletRequest, httpServletResponse);
+
+			httpServletRequest.setAttribute(WebKeys.LOGOUT, Boolean.TRUE);
+
+			httpServletResponse.sendRedirect(
+				_portal.getCurrentURL(httpServletRequest));
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTOnDemandUserPreAction.class);
+
+	@Reference
+	private AuthenticatedSessionManager _authenticatedSessionManager;
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
+
+	@Reference
+	private Portal _portal;
+
+}

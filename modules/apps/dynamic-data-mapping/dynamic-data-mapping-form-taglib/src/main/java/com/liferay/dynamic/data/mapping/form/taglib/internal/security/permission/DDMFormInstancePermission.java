@@ -6,8 +6,8 @@
 package com.liferay.dynamic.data.mapping.form.taglib.internal.security.permission;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 

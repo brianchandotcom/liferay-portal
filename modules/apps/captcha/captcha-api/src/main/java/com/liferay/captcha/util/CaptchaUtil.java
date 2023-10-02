@@ -6,9 +6,9 @@
 package com.liferay.captcha.util;
 
 import com.liferay.captcha.provider.CaptchaProvider;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.io.IOException;
 

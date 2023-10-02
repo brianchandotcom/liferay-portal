@@ -128,7 +128,8 @@ public class SXPBlueprintLocalServiceTest {
 			externalReferenceCode, sxpBlueprint.getExternalReferenceCode());
 
 		sxpBlueprint = _sxpBlueprintLocalService.updateSXPBlueprint(
-			sxpBlueprint.getUserId(), sxpBlueprint.getSXPBlueprintId(),
+			sxpBlueprint.getExternalReferenceCode(), sxpBlueprint.getUserId(),
+			sxpBlueprint.getSXPBlueprintId(),
 			sxpBlueprint.getConfigurationJSON(),
 			sxpBlueprint.getDescriptionMap(),
 			sxpBlueprint.getElementInstancesJSON(),

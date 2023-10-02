@@ -145,6 +145,7 @@ definition {
 	}
 
 	@description = "This is for COMMERCE-8384."
+	@priority = 3
 	test VerifySpecificationFacetSetupTab {
 		property portal.acceptance = "false";
 

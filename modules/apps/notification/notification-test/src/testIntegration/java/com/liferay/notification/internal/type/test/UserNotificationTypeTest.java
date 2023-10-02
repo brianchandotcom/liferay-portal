@@ -207,7 +207,8 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			UnicodePropertiesBuilder.put(
 				"notificationTemplateId",
 				notificationTemplate.getNotificationTemplateId()
-			).build());
+			).build(),
+			false);
 
 		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
 			dtoConverterContext, parentObjectDefinition,
@@ -302,7 +303,8 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			UnicodePropertiesBuilder.put(
 				"notificationTemplateId",
 				notificationTemplate.getNotificationTemplateId()
-			).build());
+			).build(),
+			false);
 
 		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
 			dtoConverterContext, parentObjectDefinition,

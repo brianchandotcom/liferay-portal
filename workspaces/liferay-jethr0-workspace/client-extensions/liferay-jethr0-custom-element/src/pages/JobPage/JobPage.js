@@ -33,7 +33,7 @@ function JobPage() {
 	const breadcrumbs = [
 		{active: false, link: '/', name: 'Home'},
 		{active: false, link: '/jobs', name: 'Jobs'},
-		{active: true, link: '/jobs/{id}', name: jobName},
+		{active: true, link: '/jobs/' + id, name: jobName},
 	];
 
 	return (

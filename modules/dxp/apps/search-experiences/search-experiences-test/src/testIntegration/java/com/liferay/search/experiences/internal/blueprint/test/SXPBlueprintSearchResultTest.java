@@ -2458,7 +2458,8 @@ public class SXPBlueprintSearchResultTest {
 
 	private void _updateSXPBlueprint() throws Exception {
 		_sxpBlueprintLocalService.updateSXPBlueprint(
-			_sxpBlueprint.getUserId(), _sxpBlueprint.getSXPBlueprintId(),
+			_sxpBlueprint.getExternalReferenceCode(), _sxpBlueprint.getUserId(),
+			_sxpBlueprint.getSXPBlueprintId(),
 			_sxpBlueprint.getConfigurationJSON(),
 			_sxpBlueprint.getDescriptionMap(),
 			_sxpBlueprint.getElementInstancesJSON(),

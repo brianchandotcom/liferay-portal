@@ -15,35 +15,48 @@ import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Michael Cavalcanti
  */
-public class UpgradeJavaFDSActionProviderCheck extends BaseFileCheck {
+public class UpgradeJavaFDSActionProviderCheck extends BaseUpgradeCheck {
 
 	@Override
-	protected String doProcess(
+	protected String format(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith(".java")) {
-			return content;
-		}
-
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
-		List<String> importNames = javaClass.getImportNames();
+		List<String> implementedClassNames =
+			javaClass.getImplementedClassNames();
 
-		if (!importNames.contains(
-				"com.liferay.frontend.data.set.provider.FDSActionProvider")) {
+		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
+			if (!childJavaTerm.isJavaMethod()) {
+				continue;
+			}
 
-			return content;
+			JavaMethod javaMethod = (JavaMethod)childJavaTerm;
+
+			String javaMethodContent = javaMethod.getContent();
+
+			String newJavaMethodContent = javaMethodContent;
+
+			if (implementedClassNames.contains("FDSActionProvider")) {
+				newJavaMethodContent = _formatMethodDefinition(
+					newJavaMethodContent);
+			}
+
+			newJavaMethodContent = _formatMethodCalls(
+				javaClass.getContent(), newJavaMethodContent);
+
+			content = StringUtil.replace(
+				content, javaMethodContent, newJavaMethodContent);
 		}
 
-		return _formatMethodDefinitions(content, javaClass);
+		return content;
 	}
 
 	private String _formatMethodCalls(
@@ -59,14 +72,17 @@ public class UpgradeJavaFDSActionProviderCheck extends BaseFileCheck {
 			List<String> parameterList = JavaSourceUtil.getParameterList(
 				methodCall);
 
-			if (_hasClassNameHttpServletRequest(
-					javaMethodContent, content, parameterList.get(0)) &&
-				_isFDSActionProviderMethodCall(
-					javaMethodContent, content, methodCall)) {
+			String variableTypeName = getVariableTypeName(
+				javaMethodContent, content, parameterList.get(0));
+
+			if (variableTypeName.equals("HttpServletRequest") &&
+				hasClassOrVariableName(
+					"FDSActionProvider", javaMethodContent, content,
+					methodCall)) {
 
 				javaMethodContent = StringUtil.replace(
 					javaMethodContent, methodCall,
-					_reorderParameters(methodCall, matcher.group(1)));
+					_reorderParameters(methodCall));
 			}
 		}
 
@@ -85,62 +101,15 @@ public class UpgradeJavaFDSActionProviderCheck extends BaseFileCheck {
 			javaMethodContent, matcher.start());
 
 		return StringUtil.replace(
-			javaMethodContent, methodCall,
-			_reorderParameters(methodCall, matcher.group(1)));
+			javaMethodContent, methodCall, _reorderParameters(methodCall));
 	}
 
-	private String _formatMethodDefinitions(
-		String content, JavaClass javaClass) {
-
-		List<String> implementedClassNames =
-			javaClass.getImplementedClassNames();
-
-		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
-			if (!childJavaTerm.isJavaMethod()) {
-				continue;
-			}
-
-			JavaMethod javaMethod = (JavaMethod)childJavaTerm;
-
-			String javaMethodContent = javaMethod.getContent();
-
-			if (implementedClassNames.contains("FDSActionProvider")) {
-				javaMethodContent = _formatMethodDefinition(javaMethodContent);
-			}
-
-			javaMethodContent = _formatMethodCalls(
-				javaClass.getContent(), javaMethodContent);
-
-			content = StringUtil.replace(
-				content, javaMethod.getContent(), javaMethodContent);
-		}
-
-		return content;
-	}
-
-	private boolean _hasClassNameHttpServletRequest(
-		String content, String fileContent, String variableName) {
-
-		return Objects.equals(
-			getVariableTypeName(content, fileContent, variableName),
-			"HttpServletRequest");
-	}
-
-	private boolean _isFDSActionProviderMethodCall(
-		String content, String fileContent, String methodCall) {
-
-		String variableTypeName = getVariableTypeName(
-			content, fileContent, getVariableName(methodCall), true);
-
-		return variableTypeName.contains("FDSActionProvider");
-	}
-
-	private String _reorderParameters(String methodCall, String parameters) {
+	private String _reorderParameters(String methodCall) {
 		List<String> parameterList = JavaSourceUtil.getParameterList(
 			methodCall);
 
 		return StringUtil.replace(
-			methodCall, parameters,
+			methodCall, JavaSourceUtil.getParameters(methodCall),
 			StringBundler.concat(
 				parameterList.get(1), StringPool.COMMA_AND_SPACE,
 				parameterList.get(0), StringPool.COMMA_AND_SPACE,
@@ -149,10 +118,10 @@ public class UpgradeJavaFDSActionProviderCheck extends BaseFileCheck {
 
 	private static final Pattern _getDropdownItemsMethodCallPattern =
 		Pattern.compile(
-			"\\w+\\.getDropdownItems\\((\\s*.+,\\s*.+,\\s*.+)\\s*\\)");
+			"\\w+\\.getDropdownItems\\s*\\(\\s*.+,\\s*.+,\\s*.+\\s*\\)");
 	private static final Pattern _getDropdownItemsMethodPattern =
 		Pattern.compile(
-			"getDropdownItems\\((\\s*HttpServletRequest\\s+.+,\\s*.+," +
-				"\\s*.+)\\s*\\)");
+			"getDropdownItems\\s*\\(\\s*HttpServletRequest\\s+.+,\\s*.+," +
+				"\\s*.+\\s*\\)");
 
 }

@@ -10,6 +10,9 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.spi.exception.CTEventException;
 import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,6 +52,16 @@ public class CTOnDemandUserEventListener implements CTEventListener {
 		throws CTEventException {
 
 		try {
+			for (Ticket ticket :
+					_ticketLocalService.getTickets(
+						ctCollection.getCompanyId(),
+						CTCollection.class.getName(),
+						ctCollection.getCtCollectionId(),
+						TicketConstants.TYPE_ON_DEMAND_USER_LOGIN)) {
+
+				_ticketLocalService.deleteTicket(ticket);
+			}
+
 			_userLocalService.deleteUser(ctCollection.getOnDemandUserId());
 
 			ctCollection.setOnDemandUserId(0);
@@ -62,6 +75,9 @@ public class CTOnDemandUserEventListener implements CTEventListener {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private TicketLocalService _ticketLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

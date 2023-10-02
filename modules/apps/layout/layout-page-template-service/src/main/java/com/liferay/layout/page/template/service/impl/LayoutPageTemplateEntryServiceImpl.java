@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.service.impl;
 
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -146,7 +147,8 @@ public class LayoutPageTemplateEntryServiceImpl
 			draftLayout.getTypeSettingsProperties();
 
 		typeSettingsUnicodeProperties.put(
-			"published", Boolean.FALSE.toString());
+			LayoutTypeSettingsConstants.KEY_PUBLISHED,
+			Boolean.FALSE.toString());
 
 		draftLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 

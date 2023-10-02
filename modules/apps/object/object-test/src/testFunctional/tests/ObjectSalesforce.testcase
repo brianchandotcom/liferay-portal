@@ -333,6 +333,99 @@ definition {
 		}
 	}
 
+	@description = "LPS-165252 - Verify CRUD functionality with an imported custom object that is mapped to a form container"
+	@priority = 5
+	test AssertCRUDWithFormContainer {
+		property portal.acceptance = "true";
+
+		task ("Given portal configured with Salesforce") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
+
+			Check.checkToggleSwitch(
+				key_featureFlag = "LPS-135430",
+				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Third Party",
+				configurationName = "Salesforce Integration",
+				configurationScope = "Site Scope");
+
+			ObjectSalesforce.configureSalesforce();
+		}
+
+		task ("And given an imported custom object with the storage type as Salesforce") {
+			ObjectExportImport.importObject(
+				objectFileName = "ImportedCustomObjectWithSalesforceStorageType",
+				objectName = "PoshiTest");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PoshiTest");
+		}
+
+		task ("And given a page with a form container fragment mapped with the custom object") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Poshi Test",
+				panel = "General");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user navigates to the page and creates an entry via the form container") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			InputField.editText(
+				fieldLabel = "Title",
+				text = "Entry added on form container");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the entry is created") {
+			ObjectAdmin.goToCustomObject(objectName = "PoshiTest");
+
+			ObjectPortlet.viewEntry(entry = "Entry added on form container");
+		}
+
+		task ("and When the user deletes the entry") {
+			ObjectPortlet.deleteEntry(entry = "Entry added on form container");
+		}
+
+		task ("Then the entry is deleted") {
+			AssertElementNotPresent(
+				key_entry = "Entry added on form container",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+	}
+
 	@description = "LPS-185427 Verify CRUD functionality with an imported custom object using Salesforce as the storage type"
 	@priority = 5
 	test AssertCRUDWithImportedCustomObject {

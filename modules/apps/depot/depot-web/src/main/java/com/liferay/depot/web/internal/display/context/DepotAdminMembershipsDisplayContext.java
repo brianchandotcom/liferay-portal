@@ -30,8 +30,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -107,7 +106,7 @@ public class DepotAdminMembershipsDisplayContext {
 			UserGroupRoleLocalServiceUtil.getUserGroupRoles(
 				_user.getUserId(), group.getGroupId(), 0,
 				PropsValues.USERS_ADMIN_ROLE_COLUMN_LIMIT),
-			UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR,
+			UsersAdminUtil.USER_GROUP_ROLE_TITLE_ACCESSOR,
 			UserGroupRoleLocalServiceUtil.getUserGroupRolesCount(
 				_user.getUserId(), group.getGroupId()));
 	}

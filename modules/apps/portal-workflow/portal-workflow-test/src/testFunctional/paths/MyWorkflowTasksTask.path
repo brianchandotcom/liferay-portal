@@ -84,7 +84,7 @@
 
 <tr>
 	<td>COMMENTS</td>
-	<td>//span[contains(@class,'panel-title') and contains(.,'Comments')]</td>
+	<td>//button//*[contains(@class,'panel-title') and contains(.,'Comments')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -7,14 +7,15 @@ package com.liferay.jethr0.bui1d.repository;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildEntityDALO;
+import com.liferay.jethr0.bui1d.dalo.BuildToBuildParametersEntityRelationshipDALO;
+import com.liferay.jethr0.bui1d.dalo.BuildToBuildRunsEntityRelationshipDALO;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -49,29 +50,7 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 	public BuildEntity create(JobEntity jobEntity, JSONObject jsonObject) {
 		jsonObject.put("r_jobToBuilds_c_jobId", jobEntity.getId());
 
-		BuildEntity buildEntity = create(jsonObject);
-
-		buildEntity.setJobEntity(jobEntity);
-
-		jobEntity.addBuildEntity(buildEntity);
-
-		return add(buildEntity);
-	}
-
-	public Set<BuildEntity> getAll(JobEntity jobEntity) {
-		Set<BuildEntity> buildEntities = new HashSet<>(
-			_jobToBuildsEntityRelationshipDALO.getChildEntities(jobEntity));
-
-		for (BuildEntity buildEntity : buildEntities) {
-			buildEntity.setJobEntity(jobEntity);
-
-			buildEntity.addBuildParameterEntities(
-				_buildParameterEntityRepository.getAll(buildEntity));
-			buildEntity.addBuildRunEntities(
-				_buildRunEntityRepository.getAll(buildEntity));
-		}
-
-		return addAll(buildEntities);
+		return create(jsonObject);
 	}
 
 	@Override
@@ -85,31 +64,22 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 
 	@Override
 	public synchronized void initializeRelationships() {
-		if (_initializedRelationships) {
-			return;
-		}
+	}
 
-		_jobEntityRepository.initializeRelationships();
+	public void relateBuildToBuildParameter(
+		BuildEntity buildEntity, BuildParameterEntity buildParameterEntity) {
 
-		for (BuildEntity buildEntity : getAll()) {
-			JobEntity jobEntity = null;
+		buildEntity.addBuildParameterEntity(buildParameterEntity);
 
-			long jobEntityId = buildEntity.getJobEntityId();
+		buildParameterEntity.setBuildEntity(buildEntity);
+	}
 
-			if (jobEntityId != 0) {
-				jobEntity = _jobEntityRepository.getById(jobEntityId);
-			}
+	public void relateBuildToBuildRun(
+		BuildEntity buildEntity, BuildRunEntity buildRunEntity) {
 
-			buildEntity.setJobEntity(jobEntity);
+		buildEntity.addBuildRunEntity(buildRunEntity);
 
-			buildEntity.addBuildParameterEntities(
-				_buildParameterEntityRepository.getAll(buildEntity));
-
-			buildEntity.addBuildRunEntities(
-				_buildRunEntityRepository.getAll(buildEntity));
-		}
-
-		_initializedRelationships = true;
+		buildRunEntity.setBuildEntity(buildEntity);
 	}
 
 	public void setBuildParameterEntityRepository(
@@ -130,12 +100,69 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 		_jobEntityRepository = jobEntityRepository;
 	}
 
+	@Override
+	protected BuildEntity updateRelationshipsFromDALO(BuildEntity buildEntity) {
+		_jobEntityRepository.relateJobToBuild(
+			_jobEntityRepository.getById(buildEntity.getJobEntityId()),
+			buildEntity);
+
+		buildEntity = _updateBuildToBuildRunRelationshipsFromDALO(buildEntity);
+		buildEntity = _updateBuildToBuildParameterRelationshipsFromDALO(
+			buildEntity);
+
+		return buildEntity;
+	}
+
+	@Override
+	protected BuildEntity updateRelationshipsToDALO(BuildEntity buildEntity) {
+		_buildToBuildParametersEntityRelationshipDALO.updateChildEntities(
+			buildEntity);
+		_buildToBuildRunsEntityRelationshipDALO.updateChildEntities(
+			buildEntity);
+
+		return buildEntity;
+	}
+
+	private BuildEntity _updateBuildToBuildParameterRelationshipsFromDALO(
+		BuildEntity parentBuildEntity) {
+
+		return updateParentToChildRelationshipsFromDALO(
+			parentBuildEntity, _buildToBuildParametersEntityRelationshipDALO,
+			_buildParameterEntityRepository,
+			(buildEntity, buildParameterEntity) -> relateBuildToBuildParameter(
+				buildEntity, buildParameterEntity),
+			buildEntity -> buildEntity.getBuildParameterEntities(),
+			(buildEntity, buildParameterEntity) ->
+				buildEntity.removeBuildParameterEntity(buildParameterEntity));
+	}
+
+	private BuildEntity _updateBuildToBuildRunRelationshipsFromDALO(
+		BuildEntity parentBuildEntity) {
+
+		return updateParentToChildRelationshipsFromDALO(
+			parentBuildEntity, _buildToBuildRunsEntityRelationshipDALO,
+			_buildRunEntityRepository,
+			(buildEntity, buildRunEntity) -> relateBuildToBuildRun(
+				buildEntity, buildRunEntity),
+			buildEntity -> buildEntity.getBuildRunEntities(),
+			(buildEntity, buildRunEntity) -> buildEntity.removeBuildRunEntity(
+				buildRunEntity));
+	}
+
 	@Autowired
 	private BuildEntityDALO _buildEntityDALO;
 
 	private BuildParameterEntityRepository _buildParameterEntityRepository;
 	private BuildRunEntityRepository _buildRunEntityRepository;
-	private boolean _initializedRelationships;
+
+	@Autowired
+	private BuildToBuildParametersEntityRelationshipDALO
+		_buildToBuildParametersEntityRelationshipDALO;
+
+	@Autowired
+	private BuildToBuildRunsEntityRelationshipDALO
+		_buildToBuildRunsEntityRelationshipDALO;
+
 	private JobEntityRepository _jobEntityRepository;
 
 	@Autowired

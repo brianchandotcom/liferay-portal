@@ -391,7 +391,6 @@ definition {
 	@description = "Verify that the user can add multiple notifications"
 	@priority = 4
 	test CanAddMultipleNotifications {
-		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

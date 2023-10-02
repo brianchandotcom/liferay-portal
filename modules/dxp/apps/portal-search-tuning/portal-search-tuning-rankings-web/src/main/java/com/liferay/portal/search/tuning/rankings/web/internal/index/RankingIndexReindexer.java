@@ -6,7 +6,6 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.json.storage.service.JSONStorageEntryLocalService;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -14,6 +13,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
@@ -37,83 +38,83 @@ import org.osgi.service.component.annotations.Reference;
 public class RankingIndexReindexer implements IndexReindexer {
 
 	@Override
-	public void reindex(long[] companyIds) throws Exception {
-		reindex(companyIds, null);
+	public void reindex(long companyId) throws Exception {
+		reindex(companyId, null);
 	}
 
 	@Override
-	public void reindex(long[] companyIds, String executionMode)
-		throws Exception {
-
+	public void reindex(long companyId, String executionMode) throws Exception {
 		if (!searchCapabilities.isResultRankingsSupported()) {
 			return;
 		}
 
-		for (long companyId : companyIds) {
-			List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
-				companyId, classNameLocalService.getClassNameId(Ranking.class),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
+			companyId, classNameLocalService.getClassNameId(Ranking.class),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			RankingIndexName rankingIndexName =
-				rankingIndexNameBuilder.getRankingIndexName(companyId);
+		RankingIndexName rankingIndexName =
+			rankingIndexNameBuilder.getRankingIndexName(companyId);
 
-			if (ListUtil.isEmpty(classPKs)) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Not reindexing ", rankingIndexName.getIndexName(),
-							" because the database has no ranking entries"));
-				}
-
-				continue;
+		if (ListUtil.isEmpty(classPKs)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Not reindexing ", rankingIndexName.getIndexName(),
+						" because the database has no ranking entries"));
 			}
 
-			Date date = null;
+			return;
+		}
 
-			if (_isExecuteSyncReindex(executionMode)) {
-				date = new Date();
+		Date date = null;
 
-				Thread.sleep(1000);
-			}
-			else {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Deleting index " + rankingIndexName.getIndexName());
-				}
+		if (_isExecuteSyncReindex(executionMode)) {
+			date = new Date();
 
-				try {
-					rankingIndexCreator.delete(rankingIndexName);
-				}
-				catch (RuntimeException runtimeException) {
-					_log.error(
-						"Unable to delete index " +
-							rankingIndexName.getIndexName(),
-						runtimeException);
-				}
+			Thread.sleep(1000);
+		}
+		else {
+			if (_log.isInfoEnabled()) {
+				_log.info("Deleting index " + rankingIndexName.getIndexName());
 			}
 
-			if (!_isExecuteSyncReindex(executionMode)) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Creating index " + rankingIndexName.getIndexName());
-				}
+			try {
+				rankingIndexCreator.delete(rankingIndexName);
+			}
+			catch (RuntimeException runtimeException) {
+				_log.error(
+					"Unable to delete index " + rankingIndexName.getIndexName(),
+					runtimeException);
+			}
+		}
 
-				rankingIndexCreator.create(rankingIndexName);
+		if (!_isExecuteSyncReindex(executionMode)) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Creating index " + rankingIndexName.getIndexName());
 			}
 
-			for (long classPK : classPKs) {
-				rankingIndexWriter.create(
-					rankingIndexName, _buildRanking(classPK));
-			}
+			rankingIndexCreator.create(rankingIndexName);
+		}
 
-			if (_isExecuteSyncReindex(executionMode)) {
-				SyncReindexManager syncReindexManager =
-					_syncReindexManagerSnapshot.get();
+		int sendStatusInterval = Math.max(100, classPKs.size() / 20);
 
-				syncReindexManager.deleteStaleDocuments(
-					rankingIndexName.getIndexName(), date,
-					Collections.emptySet());
+		for (int i = 0; i < classPKs.size(); i++) {
+			rankingIndexWriter.create(
+				rankingIndexName, _buildRanking(classPKs.get(i)));
+
+			if ((i % sendStatusInterval) == 0) {
+				ReindexStatusMessageSenderUtil.sendStatusMessage(
+					RankingIndexReindexer.class.getName(), i + 1,
+					classPKs.size());
 			}
+		}
+
+		if (_isExecuteSyncReindex(executionMode)) {
+			SyncReindexManager syncReindexManager =
+				_syncReindexManagerSnapshot.get();
+
+			syncReindexManager.deleteStaleDocuments(
+				rankingIndexName.getIndexName(), date, Collections.emptySet());
 		}
 	}
 

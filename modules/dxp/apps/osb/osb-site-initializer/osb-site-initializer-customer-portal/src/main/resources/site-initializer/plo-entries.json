@@ -1,0 +1,50 @@
+[
+	{
+		"key": "account-settings",
+		"value": {
+			"en-US": "Account Settings",
+			"es-ES": "Configuraciones de la cuenta",
+			"ja-JP": "アカウント設定",
+			"pt-BR": "Configurações de Conta"
+		}
+	},
+	{
+		"key": "community",
+		"value": {
+			"en-US": "Community"
+		}
+	},
+	{
+		"key": "help-center",
+		"value": {
+			"en-US": "Help Center"
+		}
+	},
+	{
+		"key": "liferay-learn",
+		"value": {
+			"en-US": "Liferay Learn"
+		}
+	},
+	{
+		"key": "marketplace",
+		"value": {
+			"en-US": "Marketplace"
+		}
+	},
+	{
+		"key": "notifications",
+		"value": {
+			"en-US": "Notifications",
+			"es-ES": "Notificaciones",
+			"ja-JP": "通知",
+			"pt-BR": "Notificações"
+		}
+	},
+	{
+		"key": "sites",
+		"value": {
+			"en-US": "Sites"
+		}
+	}
+]

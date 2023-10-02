@@ -382,9 +382,9 @@ definition {
 			locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
 			value1 = "SCHEDULED");
 
-		// Pausing 150 seconds due to LRQA-75909
+		// Pausing 210 seconds due to LRQA-75909
 
-		Pause(locator1 = 150000);
+		Pause(locator1 = 210000);
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
 
@@ -696,9 +696,9 @@ definition {
 
 		task ("View WebContent Article Publish on default Company") {
 
-			// Pausing 150 seconds due to LRQA-75909
+			// Pausing 210 seconds due to LRQA-75909
 
-			Pause(locator1 = 150000);
+			Pause(locator1 = 210000);
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",

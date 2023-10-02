@@ -16,6 +16,8 @@ import React, {useContext, useState} from 'react';
 
 import formatLocaleWithDashes from '../utils/language/format_locale_with_dashes';
 import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
+import sub from '../utils/language/sub';
+import EditERCModal from './EditERCModal';
 import EditTitleModal from './EditTitleModal';
 import ThemeContext from './ThemeContext';
 
@@ -62,9 +64,12 @@ export default function PageToolbar({
 	description,
 	descriptionI18n,
 	disableTitleAndDescriptionModal = false,
+	entityId,
+	externalReferenceCode,
 	isSubmitting,
 	onCancel,
 	onChangeTab,
+	onExternalReferenceCodeChange,
 	onSubmit,
 	onTitleAndDescriptionChange,
 	readOnly = false,
@@ -74,7 +79,7 @@ export default function PageToolbar({
 	titleAndDescriptionEdited,
 	titleI18n,
 }) {
-	const {availableLanguages, defaultLocale, locale} = useContext(
+	const {availableLanguages, defaultLocale, locale, sxpType} = useContext(
 		ThemeContext
 	);
 
@@ -106,7 +111,7 @@ export default function PageToolbar({
 			>
 				<ClayLayout.ContainerFluid>
 					<ClayToolbar.Nav>
-						<ClayToolbar.Item className="text-left" expand>
+						<ClayToolbar.Item className="border-right c-mr-3 c-pr-3 text-left title-description-toolbar-item">
 							{modalVisible && (
 								<EditTitleModal
 									disabled={disableTitleAndDescriptionModal}
@@ -123,13 +128,20 @@ export default function PageToolbar({
 							{readOnly ? (
 								<div>
 									<div className="entry-title text-truncate">
-										{title || (
-											<span className="entry-title-blank">
-												{Liferay.Language.get(
-													'untitled'
+										<ClayTooltipProvider>
+											<span
+												data-tooltip-align="bottom"
+												title={title}
+											>
+												{title || (
+													<span className="entry-title-blank">
+														{Liferay.Language.get(
+															'untitled'
+														)}
+													</span>
 												)}
 											</span>
-										)}
+										</ClayTooltipProvider>
 									</div>
 
 									<ClayTooltipProvider>
@@ -159,22 +171,37 @@ export default function PageToolbar({
 										monospaced={false}
 										onClick={_handleClickEdit('title')}
 									>
-										<div className="entry-title text-truncate">
-											{(!titleAndDescriptionEdited
-												? title
-												: titleI18n[displayLocale]) || (
-												<span className="entry-title-blank">
-													{Liferay.Language.get(
-														'untitled'
+										<ClayTooltipProvider>
+											<span
+												data-tooltip-align="bottom"
+												title={
+													!titleAndDescriptionEdited
+														? title
+														: titleI18n[
+																displayLocale
+														  ]
+												}
+											>
+												<div className="entry-title text-truncate">
+													{(!titleAndDescriptionEdited
+														? title
+														: titleI18n[
+																displayLocale
+														  ]) || (
+														<span className="entry-title-blank">
+															{Liferay.Language.get(
+																'untitled'
+															)}
+														</span>
 													)}
-												</span>
-											)}
 
-											<ClayIcon
-												className="entry-heading-edit-icon"
-												symbol="pencil"
-											/>
-										</div>
+													<ClayIcon
+														className="entry-heading-edit-icon"
+														symbol="pencil"
+													/>
+												</div>
+											</span>
+										</ClayTooltipProvider>
 									</ClayButton>
 
 									<ClayButton
@@ -221,6 +248,75 @@ export default function PageToolbar({
 									</ClayButton>
 								</div>
 							)}
+						</ClayToolbar.Item>
+
+						<ClayToolbar.Item
+							className="text-3 text-left text-truncate-inline"
+							expand
+						>
+							<div className="text-truncate">
+								<span className="c-mr-1 text-secondary">
+									{Liferay.Language.get('id')}:
+								</span>
+
+								<strong className="text-dark">
+									{entityId}
+								</strong>
+							</div>
+
+							<EditERCModal
+								disabled={readOnly}
+								externalReferenceCode={externalReferenceCode}
+								onSubmit={onExternalReferenceCodeChange}
+							>
+								<div className="entry-heading-edit-button text-truncate">
+									<span className="c-mr-1 text-secondary">
+										{Liferay.Language.get('erc')}:
+									</span>
+
+									<ClayTooltipProvider>
+										<span
+											className="font-weight-semi-bold text-dark"
+											data-tooltip-align="bottom-left"
+											title={externalReferenceCode}
+										>
+											{externalReferenceCode}
+										</span>
+									</ClayTooltipProvider>
+
+									<ClayTooltipProvider>
+										<span
+											data-tooltip-align="bottom-left"
+											title={sub(
+												Liferay.Language.get(
+													'unique-key-for-referencing-the-x'
+												),
+												[
+													sxpType === 'sxpBlueprint'
+														? Liferay.Language.get(
+																'blueprint'
+														  )
+														: Liferay.Language.get(
+																'element'
+														  ),
+												]
+											)}
+										>
+											<ClayIcon
+												className="c-ml-2 text-secondary"
+												symbol="question-circle"
+											/>
+										</span>
+									</ClayTooltipProvider>
+
+									{!readOnly && (
+										<ClayIcon
+											className="c-ml-2 entry-heading-edit-icon text-secondary"
+											symbol="pencil"
+										/>
+									)}
+								</div>
+							</EditERCModal>
 						</ClayToolbar.Item>
 
 						{children}
@@ -294,9 +390,12 @@ PageToolbar.propTypes = {
 	description: PropTypes.string,
 	descriptionI18n: PropTypes.object,
 	disableTitleAndDescriptionModal: PropTypes.bool,
+	entityId: PropTypes.string,
+	externalReferenceCode: PropTypes.string,
 	isSubmitting: PropTypes.bool,
 	onCancel: PropTypes.string.isRequired,
 	onChangeTab: PropTypes.func,
+	onExternalReferenceCodeChange: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,
 	onTitleAndDescriptionChange: PropTypes.func,
 	readOnly: PropTypes.bool,

@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleService;
-import com.liferay.portal.kernel.service.permission.RolePermission;
+import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -98,7 +98,7 @@ public class DeleteRolePortletConfigurationIcon
 					portletRequest);
 
 			if (currentRoleTypeContributor.isAllowDelete(role) &&
-				_rolePermission.contains(
+				RolePermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), roleId,
 					ActionKeys.DELETE)) {
 
@@ -127,9 +127,6 @@ public class DeleteRolePortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private RolePermission _rolePermission;
 
 	@Reference
 	private RoleService _roleService;

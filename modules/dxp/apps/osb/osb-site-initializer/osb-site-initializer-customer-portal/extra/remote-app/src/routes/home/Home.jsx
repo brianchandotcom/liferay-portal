@@ -35,9 +35,12 @@ const Home = () => {
 		search,
 		searching,
 	} = useKoroneikiAccounts({
-		selectedFilterCategory: projectCategoryItems.find(
-			({key}) => key === selectedProjectCategoryKey
-		),
+		selectedFilterCategory: {
+			...projectCategoryItems.find(
+				({key}) => key === selectedProjectCategoryKey
+			),
+			pageSize: 20,
+		},
 	});
 
 	const handleOnSelect = (key) => {
@@ -102,13 +105,13 @@ const Home = () => {
 								loading || searching || koroneikiCount === null
 							}
 							maxCardsLoading={THRESHOLD_COUNT}
-							onIntersect={(currentPage) =>
+							onIntersect={(currentPage) => {
 								fetchMore({
 									variables: {
 										page: currentPage + 1,
 									},
-								})
-							}
+								});
+							}}
 						/>
 					</ClayLayout.Col>
 				</ClayLayout.Row>

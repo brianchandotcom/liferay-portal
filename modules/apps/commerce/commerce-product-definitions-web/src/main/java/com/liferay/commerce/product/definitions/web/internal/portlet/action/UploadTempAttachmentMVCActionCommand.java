@@ -77,8 +77,7 @@ public class UploadTempAttachmentMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UploadTempAttachmentMVCActionCommand.
-			TempAttachmentsUploadFileEntryHandler.class);
+		UploadTempAttachmentMVCActionCommand.class);
 
 	private volatile AttachmentsConfiguration _attachmentsConfiguration;
 	private final AttachmentsUploadResponseHandler

@@ -174,6 +174,12 @@ definition {
 		}
 	}
 
+	macro disablePublicationSharing {
+		Uncheck.uncheckToggleSwitchAndPause(locator1 = "PublicationsChanges#ENABLE_SHARE_LINK_TOGGLE_SWITCH");
+
+		AssertElementNotPresent(locator1 = "PublicationsChanges#COPY_URL_BUTTON");
+	}
+
 	macro enableAllowUnapprovedChanges {
 		PublicationsNavigator.openPublicationsSettings();
 
@@ -230,6 +236,14 @@ definition {
 		}
 	}
 
+	macro enablePublicationSharing {
+		Click(locator1 = "PublicationsChanges#SHARE_ACCESS_BUTTON");
+
+		Check.checkToggleSwitch(locator1 = "PublicationsChanges#ENABLE_SHARE_LINK_TOGGLE_SWITCH");
+
+		Click(locator1 = "PublicationsChanges#COPY_URL_BUTTON");
+	}
+
 	macro enableSandboxOnly {
 		PublicationsNavigator.openPublicationsSettings();
 
@@ -271,6 +285,14 @@ definition {
 		var publicationName = selenium.getText("//span[contains(@class,'change-tracking-indicator-title')]");
 
 		return ${publicationName};
+	}
+
+	macro getShareLinkURL {
+		WaitForElementPresent(locator1 = "PublicationsChanges#SHARE_LINK_URL");
+
+		var publicURL = selenium.getElementValue("PublicationsChanges#SHARE_LINK_URL");
+
+		return ${publicURL};
 	}
 
 	macro inviteUsers {

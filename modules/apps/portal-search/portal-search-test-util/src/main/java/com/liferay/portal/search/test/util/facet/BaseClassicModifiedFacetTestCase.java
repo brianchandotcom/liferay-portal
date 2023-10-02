@@ -14,8 +14,6 @@ import com.liferay.portal.kernel.search.facet.ModifiedFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.util.List;
 
@@ -33,8 +31,6 @@ public abstract class BaseClassicModifiedFacetTestCase
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-
-		setUpDateFormatFactoryUtil();
 	}
 
 	@Test
@@ -113,13 +109,6 @@ public abstract class BaseClassicModifiedFacetTestCase
 		JSONObject jsonObject = facetConfiguration.getData();
 
 		jsonObject.put("ranges", createRangeArray(ranges));
-	}
-
-	protected void setUpDateFormatFactoryUtil() {
-		DateFormatFactoryUtil dateFormatFactoryUtil =
-			new DateFormatFactoryUtil();
-
-		dateFormatFactoryUtil.setDateFormatFactory(new DateFormatFactoryImpl());
 	}
 
 }

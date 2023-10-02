@@ -219,6 +219,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 					new LayoutActionDropdownItemsProvider(
 						_portal.getHttpServletRequest(renderRequest),
 						layoutActionsHelper, layoutsAdminDisplayContext,
+						_portal.getLiferayPortletResponse(renderResponse),
 						_translationURLProvider);
 
 			renderRequest.setAttribute(
@@ -231,7 +232,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.MILLER_COLUMNS_DISPLAY_CONTEXT,
 				new MillerColumnsDisplayContext(
-					layoutActionDropdownItemsProvider,
 					_layoutSetPrototypeHelper, layoutsAdminDisplayContext,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));

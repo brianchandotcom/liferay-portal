@@ -367,21 +367,43 @@ function CategorySelectorInput({
 						.then((response) => response.json())
 						.then((vocabularies) => {
 							tree[siteIndex] = {
-								children: vocabularies.items.map(
-									({
-										id,
-										name,
-										numberOfTaxonomyCategories,
-									}) => ({
+								children: vocabularies.items
+									.filter(({siteId}) => {
 
-										// In certain responses, 'id' is a number,
-										// so JSON.stringify for consistency.
+										// Filter out global vocabularies for
+										// non-global sites.
 
-										id: JSON.stringify(id),
-										name,
-										numberOfTaxonomyCategories,
+										const isGlobalSite =
+											site.id ===
+											Number(
+												Liferay.ThemeDisplay.getCompanyGroupId()
+											);
+
+										if (
+											!isGlobalSite &&
+											siteId?.toString() ===
+												Liferay.ThemeDisplay.getCompanyGroupId()
+										) {
+											return false;
+										}
+
+										return true;
 									})
-								),
+									.map(
+										({
+											id,
+											name,
+											numberOfTaxonomyCategories,
+										}) => ({
+
+											// In certain responses, 'id' is a number,
+											// so JSON.stringify for consistency.
+
+											id: JSON.stringify(id),
+											name,
+											numberOfTaxonomyCategories,
+										})
+									),
 								descriptiveName: site.descriptiveName,
 								id: JSON.stringify(site.id),
 								name: site.name,

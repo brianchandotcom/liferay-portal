@@ -20,13 +20,18 @@ import com.liferay.upload.UploadFileEntryHandler;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Adolfo Pérez
  */
 public abstract class BaseMBUploadFileEntryHandler
 	implements UploadFileEntryHandler {
+
+	public BaseMBUploadFileEntryHandler(
+		DLValidator dlValidator, MBMessageService mbMessageService) {
+
+		_dlValidator = dlValidator;
+		_mbMessageService = mbMessageService;
+	}
 
 	@Override
 	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
@@ -36,7 +41,7 @@ public abstract class BaseMBUploadFileEntryHandler
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		dlValidator.validateFileSize(
+		_dlValidator.validateFileSize(
 			themeDisplay.getScopeGroupId(),
 			uploadPortletRequest.getFileName(getParameterName()),
 			uploadPortletRequest.getContentType(getParameterName()),
@@ -47,7 +52,7 @@ public abstract class BaseMBUploadFileEntryHandler
 		try (InputStream inputStream = _getFileAsInputStream(
 				uploadPortletRequest)) {
 
-			return mbMessageService.addTempAttachment(
+			return _mbMessageService.addTempAttachment(
 				themeDisplay.getScopeGroupId(), categoryId,
 				MBMessageConstants.TEMP_FOLDER_NAME,
 				TempFileEntryUtil.getTempFileName(
@@ -57,12 +62,6 @@ public abstract class BaseMBUploadFileEntryHandler
 	}
 
 	protected abstract String getParameterName();
-
-	@Reference
-	protected DLValidator dlValidator;
-
-	@Reference
-	protected MBMessageService mbMessageService;
 
 	private String _getContentType(UploadPortletRequest uploadPortletRequest) {
 		return uploadPortletRequest.getContentType(getParameterName());
@@ -78,5 +77,8 @@ public abstract class BaseMBUploadFileEntryHandler
 	private String _getFileName(UploadPortletRequest uploadPortletRequest) {
 		return uploadPortletRequest.getFileName(getParameterName());
 	}
+
+	private final DLValidator _dlValidator;
+	private final MBMessageService _mbMessageService;
 
 }

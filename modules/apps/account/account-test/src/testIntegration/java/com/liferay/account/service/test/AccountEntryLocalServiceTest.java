@@ -180,7 +180,7 @@ public class AccountEntryLocalServiceTest {
 		Class<?> clazz = getClass();
 
 		_objectValidationRuleLocalService.addObjectValidationRule(
-			TestPropsValues.getUserId(),
+			StringPool.BLANK, TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), true,
 			ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
 			LocalizedMapUtil.getLocalizedMap("This name is invalid."),

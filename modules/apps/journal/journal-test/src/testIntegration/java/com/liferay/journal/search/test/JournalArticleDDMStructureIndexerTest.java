@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.DDMStructureIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -94,6 +95,8 @@ public class JournalArticleDDMStructureIndexerTest {
 
 		message.put("structureId", structure.getStructureId());
 
+		message.put("ddmStructureIndexer", _ddmStructureIndexer);
+
 		_messageBus.sendMessage("liferay/ddm_structure_reindex", message);
 
 		journalArticleIndexer.searchNoOne(searchTerm, locale);
@@ -115,6 +118,7 @@ public class JournalArticleDDMStructureIndexerTest {
 
 		Message message = new Message();
 
+		message.put("ddmStructureIndexer", _ddmStructureIndexer);
 		message.put("structureId", structure.getStructureId());
 
 		_messageBus.sendMessage("liferay/ddm_structure_reindex", message);
@@ -195,5 +199,10 @@ public class JournalArticleDDMStructureIndexerTest {
 
 	@Inject
 	private static MessageBus _messageBus;
+
+	@Inject(
+		filter = "ddm.structure.indexer.class.name=com.liferay.journal.model.JournalArticle"
+	)
+	private DDMStructureIndexer _ddmStructureIndexer;
 
 }

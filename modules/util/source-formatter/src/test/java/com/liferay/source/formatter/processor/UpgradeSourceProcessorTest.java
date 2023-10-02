@@ -78,6 +78,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaAccountPortletKeysCheck() throws Exception {
+		test("upgrade/UpgradeJavaAccountPortletKeysCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaAddAddressMethodCheck() throws Exception {
 		test(
 			"upgrade/UpgradeJavaAddAddressMethodCheck.testjava",
@@ -204,6 +209,21 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaFetchAssetCategoryByExternalReferenceCodeCheck()
+		throws Exception {
+
+		test(
+			"upgrade/UpgradeJavaFetchAssetCategoryByExternalReference" +
+				"CodeCheck.testjava",
+			StringBundler.concat(
+				"The fetchAssetCategoryByExternalReferenceCode method from ",
+				"AssetCategoryLocalService and AssetCategoryLocalServiceUtil ",
+				"no longer uses companyId as a parameter and has changed the ",
+				"order of its parameters. Fill the new parameters manually, ",
+				"see LPS-194134."));
+	}
+
+	@Test
 	public void testUpgradeJavaFetchCPDefinitionByCProductExternalReferenceCodeCheck()
 		throws Exception {
 
@@ -235,6 +255,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 		throws Exception {
 
 		test("upgrade/UpgradeJavaGetLayoutDisplayPageProviderCheck.testjava");
+	}
+
+	@Test
+	public void testUpgradeJavaGetLeftCategoryIdMethodCheck() throws Exception {
+		test("upgrade/UpgradeJavaGetLeftCategoryIdMethodCheck.testjava");
 	}
 
 	@Test

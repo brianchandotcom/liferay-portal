@@ -85,12 +85,13 @@ public class DispatchTaskExecutorRegistryImpl
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, DispatchTaskExecutor.class, null,
 			(serviceReference, emitter) -> {
-				String dispatchTaskFeatureFlag =
+				String dispatchTaskFeatureFlagKey =
 					(String)serviceReference.getProperty(
 						_KEY_DISPATCH_TASK_FEATURE_FLAG);
 
-				if (Validator.isNull(dispatchTaskFeatureFlag) ||
-					FeatureFlagManagerUtil.isEnabled(dispatchTaskFeatureFlag)) {
+				if (Validator.isNull(dispatchTaskFeatureFlagKey) ||
+					FeatureFlagManagerUtil.isEnabled(
+						dispatchTaskFeatureFlagKey)) {
 
 					emitter.emit(
 						(String)serviceReference.getProperty(

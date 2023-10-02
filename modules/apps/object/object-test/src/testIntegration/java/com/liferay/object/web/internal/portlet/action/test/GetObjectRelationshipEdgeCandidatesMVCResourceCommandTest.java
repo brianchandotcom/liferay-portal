@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -46,6 +47,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Feliphe Marinho
  */
+@FeatureFlags("LPS-187142")
 @RunWith(Arquillian.class)
 public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
@@ -67,7 +69,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				TestPropsValues.getCompanyId(), "C_AAA");
 
 		ObjectDefinition objectDefinitionAAAA =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				"AAAA", _objectDefinitionLocalService);
 
 		ObjectRelationship objectRelationshipAAA_AAAA =
@@ -77,7 +79,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				objectDefinitionAAAA.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
+				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		Assert.assertEquals(
@@ -157,7 +159,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				objectDefinitionAAAA.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
+				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		Assert.assertEquals(
@@ -185,7 +187,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 		// Object definition, not hierarchical structure
 
 		ObjectDefinition objectDefinitionBBB =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				"BBB", _objectDefinitionLocalService);
 
 		ObjectRelationship objectRelationshipBBB_AAAA =
@@ -195,7 +197,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				objectDefinitionAAAA.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
+				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		Assert.assertEquals(

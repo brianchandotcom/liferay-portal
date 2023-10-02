@@ -36,14 +36,15 @@ public class ObjectActionServiceUtil {
 			Map<java.util.Locale, String> labelMap, String name,
 			String objectActionExecutorKey, String objectActionTriggerKey,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				parametersUnicodeProperties)
+				parametersUnicodeProperties,
+			boolean system)
 		throws PortalException {
 
 		return getService().addObjectAction(
 			externalReferenceCode, objectDefinitionId, active,
 			conditionExpression, description, errorMessageMap, labelMap, name,
 			objectActionExecutorKey, objectActionTriggerKey,
-			parametersUnicodeProperties);
+			parametersUnicodeProperties, system);
 	}
 
 	public static ObjectAction deleteObjectAction(long objectActionId)

@@ -18,7 +18,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = PortalInstanceLifecycleListener.class)
+@Component(
+	property = "service.ranking:Integer=" + Integer.MIN_VALUE,
+	service = PortalInstanceLifecycleListener.class
+)
 public class MultiCompanyBatchEngineUnitPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
@@ -39,5 +42,10 @@ public class MultiCompanyBatchEngineUnitPortalInstanceLifecycleListener
 	@Reference
 	private MultiCompanyBatchEngineUnitProcessor
 		_multiCompanyBatchEngineUnitProcessor;
+
+	@Reference(
+		target = "(component.name=com.liferay.object.internal.instance.lifecycle.SystemObjectDefinitionManagerPortalInstanceLifecycleListener)"
+	)
+	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
 
 }

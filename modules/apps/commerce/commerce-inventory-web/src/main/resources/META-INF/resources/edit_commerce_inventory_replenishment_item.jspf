@@ -9,6 +9,7 @@
 <aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 <aui:input name="commerceInventoryReplenishmentItemId" type="hidden" value="<%= commerceInventoryDisplayContext.getCommerceInventoryReplenishmentItemId() %>" />
 <aui:input name="sku" type="hidden" value="<%= commerceInventoryDisplayContext.getSku() %>" />
+<aui:input name="unitOfMeasureKey" type="hidden" value="<%= commerceInventoryDisplayContext.getUnitOfMeasureKey() %>" />
 <aui:input name="mvccVersion" type="hidden" value="<%= (commerceInventoryReplenishmentItem == null) ? 0 : commerceInventoryReplenishmentItem.getMvccVersion() %>" />
 
 <aui:model-context bean="<%= commerceInventoryReplenishmentItem %>" model="<%= CommerceInventoryReplenishmentItem.class %>" />

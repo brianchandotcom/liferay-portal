@@ -53,6 +53,26 @@ definition {
 			value = "Test Test");
 	}
 
+	@description = "Story: LPS-167803 | Test Summary: Verify that it is possible to search for a project with just the project code"
+	@priority = 2
+	test AssertThatAbleToSearchWithProjectCode {
+		task ("Given that the User goes to Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When the User searches for a project by ERC") {
+			Type(
+				locator1 = "CustomerPortalSite#SEARCH_BAR",
+				value1 = "TESTACCOUNT01");
+		}
+
+		task ("Then state that the research brings the right project") {
+			AssertElementPresent(
+				locator1 = "CP2LiferayContact#PROJECT_TABLE",
+				title = "Test Account LXC - SM");
+		}
+	}
+
 	@description = "LPS-148456 - Verify if its possible login in Okta, Configure SAML Admin and create CP2.0"
 	@ignore = "true"
 	@priority = 5

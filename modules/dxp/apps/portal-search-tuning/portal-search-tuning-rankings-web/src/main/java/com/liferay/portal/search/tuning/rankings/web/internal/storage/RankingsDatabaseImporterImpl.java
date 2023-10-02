@@ -127,7 +127,7 @@ public class RankingsDatabaseImporterImpl implements RankingsDatabaseImporter {
 		}
 
 		try {
-			rankingIndexReindexer.reindex(new long[] {companyId});
+			rankingIndexReindexer.reindex(companyId);
 		}
 		catch (Exception exception) {
 			_log.error(

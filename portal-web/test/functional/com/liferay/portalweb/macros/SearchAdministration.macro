@@ -50,32 +50,19 @@ definition {
 				locator1 = "SearchAdmin#SELECTED_INSTANCE_INDEX_CHECKBOX");
 		}
 
-		var searchEngineVendor = SearchAdministration.getSearchEngineVendor();
+		if (!(isSet(action))) {
+			var action = "All Search Indexes";
+		}
 
-		while ((!(isSet(retryReindex)) || (${retryReindex} == "true")) && (maxIterations = "2")) {
-			if (isSet(action)) {
-				Click(
-					key_action = ${action},
-					locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
-			}
-			else if (isSet(reindexMode)) {
-				Click(
-					key_action = "All Search Indexes",
-					locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
-			}
-			else {
-				Click(
-					key_action = "Reindex Search Indexes",
-					locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
-			}
+		if (${waitForReindexFinished} != "false") {
+			while ((!(isSet(retryReindex)) || (${retryReindex} == "true")) && (maxIterations = "2")) {
+				SearchAdministration.startReindex(action = ${action});
 
-			if (IsElementPresent.isElementPresentNoSPARefresh(key_text = "Execute", locator1 = "Modal#MODAL_FOOTER_BUTTON")) {
-				Click(
-					key_text = "Execute",
-					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+				var retryReindex = SearchAdministration.waitForReindexFinished(waitForReindexRequest = "true");
 			}
-
-			var retryReindex = SearchAdministration.waitForReindexFinished(waitForReindexRequest = "true");
+		}
+		else {
+			SearchAdministration.startReindex(action = ${action});
 		}
 	}
 
@@ -118,6 +105,18 @@ definition {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet");
+	}
+
+	macro startReindex {
+		Click(
+			key_action = ${action},
+			locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+
+		if (IsElementPresent.isElementPresentNoSPARefresh(key_text = "Execute", locator1 = "Modal#MODAL_FOOTER_BUTTON")) {
+			Click(
+				key_text = "Execute",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
 	}
 
 	macro waitForReindexFinished {

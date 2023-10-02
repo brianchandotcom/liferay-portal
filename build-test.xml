@@ -9991,6 +9991,36 @@ org.apache.catalina.tribes.level = FINE]]>
 		</if>
 	</target>
 
+	<target name="deploy-maven-module">
+		<if>
+			<not>
+				<isset property="build.profiles" />
+			</not>
+			<then>
+				<var name="build.profiles" value="" />
+			</then>
+			<else>
+				<var name="build.profiles" value="-P ${build.profiles}" />
+			</else>
+		</if>
+
+		<execute dir="${module.base.dir}">
+			mvn clean package ${build.profiles}
+		</execute>
+
+		<copy
+			flatten="true"
+			todir="${liferay.home}/deploy"
+		>
+			<fileset
+				dir="${module.base.dir}"
+				includes="**/target/*.war"
+			/>
+		</copy>
+
+		<delete dir="${module.base.dir}/target" />
+	</target>
+
 	<target name="deploy-osgi-apps">
 		<for list="${osgi.app.includes}" param="osgi.app.name">
 			<sequential>
@@ -12654,6 +12684,16 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					gcs.bucket.id=${gcs.bucket.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="liferay.faces" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					liferay.faces.bridge.impl.dir=${liferay.faces.bridge.impl.dir}
+					liferay.faces.portal.dir=${liferay.faces.portal.dir}
 				</echo>
 			</then>
 		</if>

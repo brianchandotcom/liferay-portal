@@ -8,8 +8,8 @@ dependencies {
 	compileInclude group: "com.yubico", name: "webauthn-server-core-minimal", version: "1.12.2"
 	compileInclude group: "com.yubico", name: "yubico-util", version: "1.12.2"
 	compileInclude group: "net.i2p.crypto", name: "eddsa", version: "0.3.0"
-	compileInclude group: "org.bouncycastle", name: "bcprov-jdk15on", version: "1.69"
-	compileInclude group: "org.bouncycastle", name: "bcutil-jdk15on", version: "1.69"
+	compileInclude group: "org.bouncycastle", name: "bcprov-jdk18on", version: "1.76"
+	compileInclude group: "org.bouncycastle", name: "bcutil-jdk18on", version: "1.76"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
@@ -30,7 +30,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
-	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	compileOnly project(":apps:users-admin:users-admin-api")

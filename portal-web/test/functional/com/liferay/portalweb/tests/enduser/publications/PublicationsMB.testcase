@@ -382,15 +382,15 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Asset",
-			warningMessage = "Modification Conflict");
+			warningMessage = "Entity Recently Updated");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Message Boards Thread",
-			warningMessage = "Modification Conflict");
+			warningMessage = "Entity Recently Updated");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Message Boards Message",
-			warningMessage = "Modification Conflict");
+			warningMessage = "Entity Recently Updated");
 
 		PublicationsChanges.discardChanges(
 			changeCategory = "Message Boards Thread",

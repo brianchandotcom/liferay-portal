@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DASHBOARD_TABLE</td>
+	<td>//*[contains(@class, 'dashboard-table-header') and contains(.,'${key_label}')]/following::span[contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SVG_DROPDOWN</td>
 	<td>//*[contains(@class, 'dashboard-navigation-header')]/following-sibling::div</td>
 	<td></td>

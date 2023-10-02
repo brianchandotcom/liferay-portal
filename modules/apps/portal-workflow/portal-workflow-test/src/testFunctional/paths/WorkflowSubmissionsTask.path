@@ -33,7 +33,7 @@
 
 <tr>
 	<td>PREVIEW</td>
-	<td>//span[@class='panel-title']</td>
+	<td>xpath=(//span[@class='panel-title'])[1]</td>
 	<td></td>
 </tr>
 <tr>

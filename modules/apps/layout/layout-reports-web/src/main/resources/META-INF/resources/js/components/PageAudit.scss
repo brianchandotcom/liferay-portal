@@ -23,16 +23,19 @@ html#{$cadmin-selector} .cadmin .page-audit {
 				}
 			}
 
+			.select-fragment-button {
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 100%;
+			}
+
 			&__buttons {
 				opacity: 0;
-
-				.select-fragment-button {
-					height: 100%;
-					left: 0;
-					position: absolute;
-					top: 0;
-					width: 100%;
-				}
+				position: absolute;
+				right: 0;
+				top: 0;
 			}
 
 			.warning-badge {

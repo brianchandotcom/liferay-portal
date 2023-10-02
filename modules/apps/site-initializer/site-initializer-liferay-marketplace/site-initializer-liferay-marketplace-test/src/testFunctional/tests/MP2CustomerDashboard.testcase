@@ -140,7 +140,9 @@ definition {
 		task ("Then after inviting a member, verify if when clicking on the invited member, listed on 'members', the admin is able to see its details.") {
 			var cardDetailsList = "Profile,Roles,Account";
 
-			MP2Dashboards.clickOnTheInvitedUser(text = "Invited Member");
+			MP2Dashboards.clickOnTheInvitedUser(
+				label = "Role",
+				value = "Invited Member");
 
 			MP2Utils.assertDetailsUser(detailsList = ${cardDetailsList});
 		}

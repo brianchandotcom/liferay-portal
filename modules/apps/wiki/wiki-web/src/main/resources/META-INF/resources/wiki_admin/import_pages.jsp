@@ -71,12 +71,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 		</div>
 	</aui:form>
 
-	<liferay-ui:upload-progress
+	<liferay-document-library:upload-progress
 		id="<%= uploadProgressId %>"
 		message="uploading"
 	/>
 
-	<liferay-ui:upload-progress
+	<liferay-document-library:upload-progress
 		id="<%= importProgressId %>"
 		message="importing"
 	/>

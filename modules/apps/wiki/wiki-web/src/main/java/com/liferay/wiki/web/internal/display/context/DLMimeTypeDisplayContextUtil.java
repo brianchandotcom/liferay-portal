@@ -6,7 +6,7 @@
 package com.liferay.wiki.web.internal.display.context;
 
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 /**

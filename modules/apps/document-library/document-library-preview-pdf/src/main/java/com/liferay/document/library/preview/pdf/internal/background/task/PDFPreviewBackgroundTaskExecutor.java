@@ -5,6 +5,8 @@
 
 package com.liferay.document.library.preview.pdf.internal.background.task;
 
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.preview.background.task.BasePreviewBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
@@ -27,7 +29,9 @@ public class PDFPreviewBackgroundTaskExecutor
 
 	@Override
 	protected void generatePreview(FileVersion fileVersion) throws Exception {
-		_pdfProcessor.generateImages(null, fileVersion);
+		PDFProcessor pdfProcessor = (PDFProcessor)_dlProcessor;
+
+		pdfProcessor.generateImages(null, fileVersion);
 	}
 
 	@Override
@@ -35,7 +39,7 @@ public class PDFPreviewBackgroundTaskExecutor
 		return new String[] {ContentTypes.APPLICATION_PDF};
 	}
 
-	@Reference
-	private PDFProcessor _pdfProcessor;
+	@Reference(target = "(type=" + DLProcessorConstants.PDF_PROCESSOR + ")")
+	private DLProcessor _dlProcessor;
 
 }

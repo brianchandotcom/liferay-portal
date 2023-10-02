@@ -236,6 +236,16 @@ public class ObjectActionSerDes {
 			sb.append(String.valueOf(objectAction.getStatus()));
 		}
 
+		if (objectAction.getSystem() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"system\": ");
+
+			sb.append(objectAction.getSystem());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -377,6 +387,13 @@ public class ObjectActionSerDes {
 			map.put("status", String.valueOf(objectAction.getStatus()));
 		}
 
+		if (objectAction.getSystem() == null) {
+			map.put("system", null);
+		}
+		else {
+			map.put("system", String.valueOf(objectAction.getSystem()));
+		}
+
 		return map;
 	}
 
@@ -495,6 +512,11 @@ public class ObjectActionSerDes {
 				if (jsonParserFieldValue != null) {
 					objectAction.setStatus(
 						StatusSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "system")) {
+				if (jsonParserFieldValue != null) {
+					objectAction.setSystem((Boolean)jsonParserFieldValue);
 				}
 			}
 		}

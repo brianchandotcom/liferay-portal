@@ -132,6 +132,12 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 		url = HttpComponentsUtil.addParameter(
 			url, "previewCTCollectionId", layout.getCtCollectionId());
 
+		if (httpServletRequest.getParameter("segmentsExperienceId") != null) {
+			url = HttpComponentsUtil.addParameter(
+				url, "segmentsExperienceId",
+				httpServletRequest.getParameter("segmentsExperienceId"));
+		}
+
 		return StringBundler.concat(
 			"<iframe frameborder=\"0\" onload=\"this.style.height = ",
 			"(this.contentWindow.document.body.scrollHeight+20) + 'px';\" ",

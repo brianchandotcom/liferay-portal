@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_DESCRIPTION_HEADER</td>
+	<td>//div[contains(@class,'subtitle') and contains(.,'Description')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ARTICLE_VERSION_NUMBER</td>
 	<td>//span[contains(@class,'label-info')]/span</td>
 	<td></td>

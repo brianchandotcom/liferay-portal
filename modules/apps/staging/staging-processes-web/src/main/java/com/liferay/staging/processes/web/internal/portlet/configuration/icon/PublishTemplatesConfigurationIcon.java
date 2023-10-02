@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -76,7 +76,7 @@ public class PublishTemplatesConfigurationIcon
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		try {
-			if (!_groupPermission.contains(
+			if (!GroupPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), scopeGroup,
 					ActionKeys.PUBLISH_STAGING)) {
 
@@ -111,9 +111,6 @@ public class PublishTemplatesConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PublishTemplatesConfigurationIcon.class);
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;

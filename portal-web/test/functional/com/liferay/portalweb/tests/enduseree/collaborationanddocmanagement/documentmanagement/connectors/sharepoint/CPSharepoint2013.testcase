@@ -4,7 +4,7 @@ definition {
 	// Stop running on release until ISIT-32385 fixed
 
 	property cmis.repository.type = "sharepoint2013";
-	property custom.properties = "session.store.password=true${line.separator}company.security.auth.type=screenName";
+	property custom.properties = "company.security.auth.type=screenName${line.separator}session.store.password=true";
 	property osgi.modules.includes = "sharepoint-soap";
 	property portal.release = "false";
 	property portal.upstream = "true";

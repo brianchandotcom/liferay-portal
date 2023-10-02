@@ -5,6 +5,7 @@
 
 package com.liferay.headless.builder.model.listener.test;
 
+import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -210,7 +211,8 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 					).put(
 						"retrieveType", "collection"
 					).put(
-						"scope", "company"
+						"scope",
+						APIApplication.Endpoint.Scope.COMPANY.getValue()
 					))
 			).put(
 				"apiApplicationToAPISchemas",
@@ -310,7 +312,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			).put(
 				"portlet", true
 			).put(
-				"scope", "company"
+				"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
 			).put(
 				"status", JSONUtil.put("code", 0)
 			).toString(),

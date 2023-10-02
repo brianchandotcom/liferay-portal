@@ -279,6 +279,116 @@ export function getObjectFolderActions(
 	return kebabOptions;
 }
 
+export async function getUpdatedModelBuilderStructurePayload(
+	currentObjectFolderName: string
+) {
+	const objectFolders = await API.getAllObjectFolders();
+
+	const currentObjectFolder = objectFolders.find(
+		(objectFolder) => objectFolder.name === currentObjectFolderName
+	) as ObjectFolder;
+
+	const objectFoldersWithObjectDefinitions: ObjectFolder[] = await Promise.all(
+		objectFolders.map(async (objectFolder) => {
+			const objectFolderWithObjectDefinitions: ObjectDefinitionNodeData[] = [];
+
+			const objectDefinitionsFilteredByObjectFolder = await API.getObjectDefinitions(
+				`filter=objectFolderExternalReferenceCode eq '${objectFolder.externalReferenceCode}'`
+			);
+
+			const linkedObjectDefinitions: ObjectDefinition[] = [];
+
+			await Promise.all(
+				objectFolder.objectFolderItems
+					.filter(
+						(objectFolderItem) =>
+							objectFolderItem.linkedObjectDefinition
+					)
+					.map(async (objectFolderItem) => {
+						linkedObjectDefinitions.push(
+							await API.getObjectDefinitionByExternalReferenceCode(
+								objectFolderItem.objectDefinitionExternalReferenceCode
+							)
+						);
+					})
+			);
+
+			const updateObjectFolderObjectDefinitions = ({
+				linkedObjectDefinition,
+				objectDefinitions,
+			}: {
+				linkedObjectDefinition: boolean;
+				objectDefinitions: ObjectDefinition[];
+			}) => {
+				objectDefinitions.forEach((objectDefinition) => {
+					const objectFolderItem = objectFolder.objectFolderItems.find(
+						(objectFolderItem) =>
+							objectFolderItem.objectDefinitionExternalReferenceCode ===
+							objectDefinition.externalReferenceCode
+					);
+
+					if (objectFolderItem) {
+						objectFolderWithObjectDefinitions.push({
+							...objectDefinition,
+							hasObjectDefinitionDeleteResourcePermission: !!objectDefinition
+								.actions.delete,
+							hasObjectDefinitionManagePermissionsResourcePermission: !!objectDefinition
+								.actions.permissions,
+							hasObjectDefinitionUpdateResourcePermission: !!objectDefinition
+								.actions.update,
+							hasObjectDefinitionViewResourcePermission: !!objectDefinition
+								.actions.get,
+							hasSelfObjectRelationships: false,
+							linkedObjectDefinition,
+							objectFields: objectDefinition.objectFields.map(
+								({
+									businessType,
+									externalReferenceCode,
+									id,
+									label,
+									name,
+									required,
+								}) =>
+									({
+										businessType,
+										externalReferenceCode,
+										id,
+										label,
+										name,
+										primaryKey: name === 'id',
+										required,
+										selected: false,
+									} as ObjectFieldNodeRow)
+							),
+							selected: false,
+						});
+					}
+				});
+			};
+
+			updateObjectFolderObjectDefinitions({
+				linkedObjectDefinition: false,
+				objectDefinitions: objectDefinitionsFilteredByObjectFolder,
+			});
+
+			updateObjectFolderObjectDefinitions({
+				linkedObjectDefinition: true,
+				objectDefinitions: linkedObjectDefinitions,
+			});
+
+			return {
+				...objectFolder,
+				objectDefinitions: objectFolderWithObjectDefinitions,
+			};
+		})
+	);
+
+	return {
+		objectFolders: objectFoldersWithObjectDefinitions,
+		selectedObjectFolder: currentObjectFolder,
+	};
+}
+
 export function normalizeName(str: string) {
 	const split = str.split(' ');
 	const capitalizeFirstLetters = split.map((str: string) =>

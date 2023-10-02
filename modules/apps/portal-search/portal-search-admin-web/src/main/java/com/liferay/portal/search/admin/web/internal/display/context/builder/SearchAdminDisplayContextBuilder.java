@@ -10,14 +10,16 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerClassNameComparator;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.permission.comparator.ModelResourceComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
 import com.liferay.portal.search.index.IndexInformation;
+import com.liferay.portal.search.web.util.comparator.IndexerClassNameModelResourceComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -98,7 +99,8 @@ public class SearchAdminDisplayContextBuilder {
 		for (Indexer<?> indexer :
 				ListUtil.sort(
 					new ArrayList<Indexer<?>>(indexersSet),
-					new IndexerClassNameComparator(true))) {
+					new IndexerClassNameModelResourceComparator(
+						true, _renderRequest.getLocale()))) {
 
 			String key = "com.liferay.custom";
 
@@ -131,7 +133,11 @@ public class SearchAdminDisplayContextBuilder {
 			}
 		}
 
-		return new TreeMap<>(indexersMap);
+		return TreeMapBuilder.<String, List<Indexer<?>>>create(
+			new ModelResourceComparator(_renderRequest.getLocale())
+		).putAll(
+			indexersMap
+		).build();
 	}
 
 	protected String getSelectedTab() {

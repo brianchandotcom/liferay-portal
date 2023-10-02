@@ -6,16 +6,14 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Deployment";
 
-	setUp {
-		User.firstLoginUI();
-	}
-
 	@description = "LPS-157580. Verify users can deploy to custom module framework paths."
 	@priority = 4
 	test CustomPathDeploy {
 		property custom.properties = "module.framework.configs.dir=${liferay.home}/test/configs";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
+
+		User.firstLoginUI();
 
 		task ("When a config is deployed to the custom config path") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
@@ -39,6 +37,23 @@ definition {
 				fieldLabel = "Check Interval",
 				fieldValue = 25);
 		}
+	}
+
+	@description = "This is a test for LPS-114409. Verify portal can start up with a subfolder under osgi/configs."
+	@priority = 3
+	test PortalStartupWithSubfolderUnderConfigs {
+		property skip.start.app.server = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+		property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		FileUtil.write("${liferayHome}/configs/subfolder/emptyfile.txt", "");
+
+		Portlet.startServer(keepOsGiState = "true");
+
+		AssertConsoleTextNotPresent(value1 = "InvocationTargetException");
 	}
 
 }

@@ -34,12 +34,12 @@ public class ObjectRelationshipLocalServiceWrapper
 			long userId, long objectDefinitionId1, long objectDefinitionId2,
 			long parameterObjectFieldId, String deletionType,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
-			String type)
+			boolean system, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectRelationshipLocalService.addObjectRelationship(
 			userId, objectDefinitionId1, objectDefinitionId2,
-			parameterObjectFieldId, deletionType, labelMap, name, type);
+			parameterObjectFieldId, deletionType, labelMap, name, system, type);
 	}
 
 	/**

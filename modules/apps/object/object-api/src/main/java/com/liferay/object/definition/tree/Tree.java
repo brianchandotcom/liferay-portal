@@ -5,21 +5,18 @@
 
 package com.liferay.object.definition.tree;
 
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.object.definition.tree.constants.TreeConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+import java.util.Objects;
 
 /**
  * @author Feliphe Marinho
  */
 public class Tree {
-
-	public static final int MAX_HEIGHT = 4;
 
 	public Tree(Node rootNode) {
 		this.rootNode = rootNode;
@@ -64,41 +61,28 @@ public class Tree {
 	}
 
 	public Iterator<Node> iterator() {
-		return new BreadthFirstIterator(rootNode);
+		return iterator(TreeConstants.ITERATOR_TYPE_BREADTH_FIRST);
 	}
 
 	public Iterator<Node> iterator(long objectDefinitionId) {
 		return new BreadthFirstIterator(getNode(objectDefinitionId));
 	}
 
-	protected final Node rootNode;
+	public Iterator<Node> iterator(String iteratorType) {
+		if (Objects.equals(
+				iteratorType, TreeConstants.ITERATOR_TYPE_BREADTH_FIRST)) {
 
-	private static class BreadthFirstIterator implements Iterator<Node> {
+			return new BreadthFirstIterator(rootNode);
+		}
+		else if (Objects.equals(
+					iteratorType, TreeConstants.ITERATOR_TYPE_POST_ORDER)) {
 
-		public BreadthFirstIterator(Node node) {
-			_queue.add(node);
+			return new PostOrderIterator(rootNode);
 		}
 
-		@Override
-		public boolean hasNext() {
-			return !_queue.isEmpty();
-		}
-
-		@Override
-		public Node next() {
-			Node node = _queue.poll();
-
-			List<Node> nodes = node.getChildNodes();
-
-			if (ListUtil.isNotEmpty(nodes)) {
-				_queue.addAll(nodes);
-			}
-
-			return node;
-		}
-
-		private Queue<Node> _queue = new LinkedList<>();
-
+		return null;
 	}
+
+	protected final Node rootNode;
 
 }

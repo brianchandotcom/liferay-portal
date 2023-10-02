@@ -428,7 +428,7 @@ exports[`Select filters according to the input and calls onChange callback when 
                 class="input-group input-group-sm"
               >
                 <div
-                  class="input-group-item"
+                  class="input-group-item input-group-item-focusable"
                 >
                   <input
                     class="form-control input-group-inset input-group-inset-after"
@@ -2243,7 +2243,7 @@ exports[`Select shows a search input when the number of options is more than the
                 class="input-group input-group-sm"
               >
                 <div
-                  class="input-group-item"
+                  class="input-group-item input-group-item-focusable"
                 >
                   <input
                     class="form-control input-group-inset input-group-inset-after"

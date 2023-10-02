@@ -86,17 +86,9 @@
 	<bean class="com.liferay.portal.kernel.service.permission.CommonPermissionUtil" id="com.liferay.portal.kernel.service.permission.CommonPermissionUtil">
 		<property name="commonPermission" ref="com.liferay.portal.kernel.service.permission.CommonPermission" />
 	</bean>
-	<bean class="com.liferay.portal.service.permission.GroupPermissionImpl" id="com.liferay.portal.kernel.service.permission.GroupPermission" />
-	<bean class="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" id="com.liferay.portal.kernel.service.permission.GroupPermissionUtil">
-		<property name="groupPermission" ref="com.liferay.portal.kernel.service.permission.GroupPermission" />
-	</bean>
 	<bean class="com.liferay.portal.service.permission.OrganizationPermissionImpl" id="com.liferay.portal.kernel.service.permission.OrganizationPermission" />
 	<bean class="com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil" id="com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil">
 		<property name="organizationPermission" ref="com.liferay.portal.kernel.service.permission.OrganizationPermission" />
-	</bean>
-	<bean class="com.liferay.portal.service.permission.PasswordPolicyPermissionImpl" id="com.liferay.portal.kernel.service.permission.PasswordPolicyPermission" />
-	<bean class="com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil" id="com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil">
-		<property name="passwordPolicyPermission" ref="com.liferay.portal.kernel.service.permission.PasswordPolicyPermission" />
 	</bean>
 	<bean class="com.liferay.portal.service.permission.PortalPermissionImpl" id="com.liferay.portal.kernel.service.permission.PortalPermission" />
 	<bean class="com.liferay.portal.kernel.service.permission.PortalPermissionUtil" id="com.liferay.portal.kernel.service.permission.PortalPermissionUtil">
@@ -105,10 +97,6 @@
 	<bean class="com.liferay.portal.service.permission.PortletPermissionImpl" id="com.liferay.portal.kernel.service.permission.PortletPermission" />
 	<bean class="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" id="com.liferay.portal.kernel.service.permission.PortletPermissionUtil">
 		<property name="portletPermission" ref="com.liferay.portal.kernel.service.permission.PortletPermission" />
-	</bean>
-	<bean class="com.liferay.portal.service.permission.RolePermissionImpl" id="com.liferay.portal.kernel.service.permission.RolePermission" />
-	<bean class="com.liferay.portal.kernel.service.permission.RolePermissionUtil" id="com.liferay.portal.kernel.service.permission.RolePermissionUtil">
-		<property name="rolePermission" ref="com.liferay.portal.kernel.service.permission.RolePermission" />
 	</bean>
 	<bean class="com.liferay.portal.service.permission.UserGroupPermissionImpl" id="com.liferay.portal.kernel.service.permission.UserGroupPermission" />
 	<bean class="com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil" id="com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil">
@@ -135,12 +123,6 @@
 	<bean class="com.liferay.portal.kernel.util.CustomJspRegistryUtil" id="com.liferay.portal.kernel.util.CustomJspRegistryUtil">
 		<property name="customJspRegistry">
 			<bean class="com.liferay.portal.util.CustomJspRegistryImpl" />
-		</property>
-	</bean>
-	<bean class="com.liferay.portal.util.DateFormatFactoryImpl" id="com.liferay.portal.kernel.util.DateFormatFactory" />
-	<bean class="com.liferay.portal.kernel.util.DateFormatFactoryUtil" id="com.liferay.portal.kernel.util.DateFormatFactoryUtil">
-		<property name="dateFormatFactory">
-			<bean class="com.liferay.portal.util.DateFormatFactoryImpl" />
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.kernel.util.DigesterUtil" id="com.liferay.portal.kernel.util.DigesterUtil">
@@ -193,10 +175,6 @@
 	<bean class="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" id="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil">
 		<property name="webServerServletToken" ref="com.liferay.portal.kernel.webserver.WebServerServletToken" />
 	</bean>
-	<bean class="com.liferay.portal.workflow.permission.WorkflowPermissionImpl" id="com.liferay.portal.kernel.workflow.permission.WorkflowPermission" />
-	<bean class="com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil" id="com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil">
-		<property name="workflowPermission" ref="com.liferay.portal.kernel.workflow.permission.WorkflowPermission" />
-	</bean>
 	<bean class="com.liferay.portal.zip.ZipReaderFactoryImpl" id="com.liferay.portal.kernel.zip.ZipReaderFactory" />
 	<bean class="com.liferay.portal.zip.ZipWriterFactoryImpl" id="com.liferay.portal.kernel.zip.ZipWriterFactory" />
 	<bean class="com.liferay.portal.language.LanguageResources" id="com.liferay.portal.language.LanguageResources" />
@@ -237,9 +215,5 @@
 	<bean class="com.liferay.portlet.social.util.SocialConfigurationImpl" id="com.liferay.social.kernel.util.SocialConfiguration" />
 	<bean class="com.liferay.social.kernel.util.SocialConfigurationUtil" id="com.liferay.social.kernel.util.SocialConfigurationUtil">
 		<property name="socialConfiguration" ref="com.liferay.social.kernel.util.SocialConfiguration" />
-	</bean>
-	<bean class="com.liferay.portlet.usersadmin.util.UsersAdminImpl" id="com.liferay.users.admin.kernel.util.UsersAdmin" />
-	<bean class="com.liferay.users.admin.kernel.util.UsersAdminUtil" id="com.liferay.users.admin.kernel.util.UsersAdminUtil">
-		<property name="usersAdmin" ref="com.liferay.users.admin.kernel.util.UsersAdmin" />
 	</bean>
 </beans>

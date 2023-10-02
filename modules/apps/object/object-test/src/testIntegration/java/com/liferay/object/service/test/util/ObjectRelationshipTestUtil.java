@@ -32,7 +32,22 @@ public class ObjectRelationshipTestUtil {
 			objectDefinition2.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(),
+			StringUtil.randomId(), false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+	}
+
+	public static ObjectRelationship addObjectRelationship(
+			ObjectRelationshipLocalService objectRelationshipLocalService,
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2, String deletionType)
+		throws PortalException {
+
+		return objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			objectDefinition1.getObjectDefinitionId(),
+			objectDefinition2.getObjectDefinitionId(), 0, deletionType,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 

@@ -27,7 +27,7 @@ page import="com.liferay.portal.kernel.service.TeamLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.comparator.RoleNameComparator" %><%@
-page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
+page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 
 <%@ page import="java.util.List" %>
 

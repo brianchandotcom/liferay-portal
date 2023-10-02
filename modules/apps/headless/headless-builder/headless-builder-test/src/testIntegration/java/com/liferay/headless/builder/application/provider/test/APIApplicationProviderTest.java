@@ -45,9 +45,12 @@ public class APIApplicationProviderTest extends BaseTestCase {
 					).put(
 						"path", "/path"
 					).put(
-						"retrieveType", "collection"
+						"retrieveType",
+						APIApplication.Endpoint.RetrieveType.COLLECTION.
+							getValue()
 					).put(
-						"scope", "company"
+						"scope",
+						APIApplication.Endpoint.Scope.COMPANY.getValue()
 					))
 			).put(
 				"apiApplicationToAPISchemas",

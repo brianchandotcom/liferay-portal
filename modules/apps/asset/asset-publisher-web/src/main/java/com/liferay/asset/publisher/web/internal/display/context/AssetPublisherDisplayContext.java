@@ -29,7 +29,6 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
-import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
@@ -62,6 +61,10 @@ import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCrite
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -136,6 +139,9 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
 /**
  * Provides utility methods moved from the Asset Publisher portlet's JSP files
  * to reduce the complexity of the views.
@@ -155,7 +161,6 @@ public class AssetPublisherDisplayContext {
 	};
 
 	public AssetPublisherDisplayContext(
-			AssetEntryActionRegistry assetEntryActionRegistry,
 			AssetHelper assetHelper,
 			AssetListAssetEntryProvider assetListAssetEntryProvider,
 			AssetListEntrySegmentsEntryRelLocalService
@@ -172,7 +177,6 @@ public class AssetPublisherDisplayContext {
 			SegmentsEntryRetriever segmentsEntryRetriever)
 		throws ConfigurationException {
 
-		_assetEntryActionRegistry = assetEntryActionRegistry;
 		_assetHelper = assetHelper;
 		_assetListAssetEntryProvider = assetListAssetEntryProvider;
 		_assetListEntrySegmentsEntryRelLocalService =
@@ -405,7 +409,14 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public List<AssetEntryAction<?>> getAssetEntryActions(String className) {
-		return _assetEntryActionRegistry.getAssetEntryActions(className);
+		List<AssetEntryAction<?>> assetEntryActions =
+			_stringListServiceTrackerMap.getService(className);
+
+		if (assetEntryActions != null) {
+			return assetEntryActions;
+		}
+
+		return Collections.emptyList();
 	}
 
 	public String getAssetEntryId() {
@@ -2362,13 +2373,29 @@ public class AssetPublisherDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherDisplayContext.class);
 
+	private static final ServiceTrackerMap<String, List<AssetEntryAction<?>>>
+		_stringListServiceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			AssetPublisherDisplayContext.class);
+
+		_stringListServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundle.getBundleContext(),
+				(Class<AssetEntryAction<?>>)(Class<?>)AssetEntryAction.class,
+				null, new PropertyServiceReferenceMapper<>("model.class.name"),
+				Collections.reverseOrder(
+					new PropertyServiceReferenceComparator<>(
+						"asset.entry.action.order")));
+	}
+
 	private Integer _abstractLength;
 	private long[] _allAssetCategoryIds;
 	private String[] _allAssetTagNames;
 	private String[] _allKeywords;
 	private Boolean _anyAssetType;
 	private Long _assetCategoryId;
-	private final AssetEntryActionRegistry _assetEntryActionRegistry;
 	private AssetEntryQuery _assetEntryQuery;
 	private List<AssetEntryResult> _assetEntryResults;
 	private final AssetHelper _assetHelper;

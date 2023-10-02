@@ -8,7 +8,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Peter Yoo
  */
-public class DefaultTopLevelBuild extends TopLevelBuild {
+public class DefaultTopLevelBuild extends BaseTopLevelBuild {
 
 	public DefaultTopLevelBuild(String url) {
 		super(url);
@@ -22,10 +22,10 @@ public class DefaultTopLevelBuild extends TopLevelBuild {
 	public String getResult() {
 		String result = super.getResult();
 
-		if (!downstreamBuilds.isEmpty() && (result == null)) {
+		if (hasDownstreamBuilds() && (result == null)) {
 			boolean hasFailure = false;
 
-			for (Build downstreamBuild : downstreamBuilds) {
+			for (Build downstreamBuild : getDownstreamBuilds()) {
 				String downstreamBuildResult = downstreamBuild.getResult();
 
 				if (downstreamBuildResult == null) {

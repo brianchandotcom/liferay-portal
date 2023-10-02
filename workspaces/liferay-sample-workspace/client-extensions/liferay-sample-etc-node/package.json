@@ -8,7 +8,7 @@
 		"winston": "3.8.2"
 	},
 	"license": "LGPL",
-	"name": "liferay-sample-etc-node",
+	"name": "@liferay/liferay-sample-etc-node",
 	"scripts": {
 		"start": "node app.js"
 	},

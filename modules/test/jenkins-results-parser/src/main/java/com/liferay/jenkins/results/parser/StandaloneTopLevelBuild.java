@@ -8,7 +8,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Peter Yoo
  */
-public class StandaloneTopLevelBuild extends TopLevelBuild {
+public class StandaloneTopLevelBuild extends BaseTopLevelBuild {
 
 	public StandaloneTopLevelBuild(String url) {
 		super(url);

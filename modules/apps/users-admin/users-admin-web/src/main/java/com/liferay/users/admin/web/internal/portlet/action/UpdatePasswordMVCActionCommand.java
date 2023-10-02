@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.Date;
 
@@ -91,7 +91,7 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 			String reminderQueryQuestion = BeanParamUtil.getString(
 				user, actionRequest, "reminderQueryQuestion");
 
-			if (reminderQueryQuestion.equals(UsersAdmin.CUSTOM_QUESTION)) {
+			if (reminderQueryQuestion.equals(UsersAdminUtil.CUSTOM_QUESTION)) {
 				reminderQueryQuestion = BeanParamUtil.getStringSilent(
 					user, actionRequest, "reminderQueryCustomQuestion");
 			}

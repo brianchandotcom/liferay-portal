@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.List;
 
@@ -23,13 +22,12 @@ public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 
 	public PhoneContactInfoManager(
 		String className, long classPK, PhoneLocalService phoneLocalService,
-		PhoneService phoneService, UsersAdmin usersAdmin) {
+		PhoneService phoneService) {
 
 		_className = className;
 		_classPK = classPK;
 		_phoneLocalService = phoneLocalService;
 		_phoneService = phoneService;
-		_usersAdmin = usersAdmin;
 	}
 
 	@Override
@@ -99,6 +97,5 @@ public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 	private final long _classPK;
 	private final PhoneLocalService _phoneLocalService;
 	private final PhoneService _phoneService;
-	private final UsersAdmin _usersAdmin;
 
 }

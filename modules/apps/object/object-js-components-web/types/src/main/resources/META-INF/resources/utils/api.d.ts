@@ -98,6 +98,7 @@ interface saveProps {
 	returnValue?: boolean;
 	url: string;
 }
+export declare function deleteItem(url: string): Promise<void>;
 export declare function deleteObjectDefinition(
 	objectDefinitionId: number
 ): Promise<void>;
@@ -165,10 +166,10 @@ export declare function postListTypeEntry({
 	key,
 	listTypeDefinitionId,
 	name_i18n,
-}: Partial<ListTypeEntry>): Promise<any>;
+}: Partial<ListTypeEntry>): Promise<unknown>;
 export declare function postObjectDefinition(
 	objectDefinition: Partial<ObjectDefinition>
-): Promise<any>;
+): Promise<ObjectDefinition | undefined>;
 export declare function postObjectDefinitionPublish(
 	objectDefinitionId: number
 ): Promise<Response>;
@@ -183,20 +184,20 @@ export declare function putListTypeDefinition({
 	id,
 	listTypeEntries,
 	name_i18n,
-}: Partial<ListTypeDefinition>): Promise<any>;
+}: Partial<ListTypeDefinition>): Promise<unknown>;
 export declare function putListTypeEntry({
 	externalReferenceCode,
 	id,
 	name_i18n,
-}: Partial<ListTypeEntry>): Promise<any>;
+}: Partial<ListTypeEntry>): Promise<unknown>;
 export declare function putObjectRelationship({
 	id,
 	...others
-}: ObjectRelationship): Promise<any>;
-export declare function save({
+}: Partial<ObjectRelationship>): Promise<unknown>;
+export declare function save<T>({
 	item,
 	method,
 	returnValue,
 	url,
-}: saveProps): Promise<any>;
+}: saveProps): Promise<T | undefined>;
 export {};

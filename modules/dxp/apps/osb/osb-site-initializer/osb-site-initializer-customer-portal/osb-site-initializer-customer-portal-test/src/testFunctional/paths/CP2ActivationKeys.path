@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>DEACTIVATE_KEY_PAGE</td>
-	<td>//*[contains(.,'cp-project')]//p[contains(text(),'Select the activation key you wish to deactivate.')]</td>
+	<td>//p[contains(text(),'Select the activation key you want to deactivate.')]</td>
 	<td></td>
 </tr>
 <tr>

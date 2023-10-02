@@ -8,13 +8,14 @@ import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
 import React, {MouseEventHandler, useState} from 'react';
 
-export function Element({helpText, label, onClick}: IProps) {
+export function Element({disabled, helpText, label, onClick}: IProps) {
 	const [showPreview, setShowPreview] = useState(false);
 
 	return (
 		<ClayButton
 			borderless
 			className="lfr-objects__code-editor-sidebar-element-button"
+			disabled={disabled}
 			displayType="unstyled"
 			key={label}
 			onClick={onClick}
@@ -54,6 +55,7 @@ export function Element({helpText, label, onClick}: IProps) {
 }
 
 interface IProps {
+	disabled?: boolean;
 	helpText: string;
 	label: string;
 	onClick?: MouseEventHandler;

@@ -12,14 +12,41 @@ import java.util.Map;
  */
 public class IndexActionsDisplayContext {
 
+	public double getAvailableDiskSpace() {
+		return _availableDiskSpace;
+	}
+
+	public double getCurrentDiskSpaceUsed() {
+		return _currentDiskSpaceUsed;
+	}
+
 	public Map<String, Object> getData() {
 		return _data;
+	}
+
+	public boolean isLowOnDiskSpace() {
+		return _lowOnDiskSpace;
+	}
+
+	public void setAvailableDiskSpace(double availableDiskSpace) {
+		_availableDiskSpace = availableDiskSpace;
+	}
+
+	public void setCurrentDiskSpaceUsed(double currentDiskSpaceUsed) {
+		_currentDiskSpaceUsed = currentDiskSpaceUsed;
 	}
 
 	public void setData(Map<String, Object> data) {
 		_data = data;
 	}
 
+	public void setIsLowOnDiskSpace(boolean lowOnDiskSpace) {
+		_lowOnDiskSpace = lowOnDiskSpace;
+	}
+
+	private double _availableDiskSpace;
+	private double _currentDiskSpaceUsed;
 	private Map<String, Object> _data;
+	private boolean _lowOnDiskSpace;
 
 }

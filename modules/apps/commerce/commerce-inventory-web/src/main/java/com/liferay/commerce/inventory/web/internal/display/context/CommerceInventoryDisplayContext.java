@@ -15,6 +15,8 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemServ
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -64,6 +66,8 @@ public class CommerceInventoryDisplayContext {
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
 		_sku = ParamUtil.getString(httpServletRequest, "sku");
+		_unitOfMeasureKey = ParamUtil.getString(
+			httpServletRequest, "unitOfMeasureKey");
 	}
 
 	public String getAddQuantityActionURL() throws Exception {
@@ -73,6 +77,8 @@ public class CommerceInventoryDisplayContext {
 			"/commerce_inventory/edit_commerce_inventory_warehouse"
 		).setParameter(
 			"sku", _sku
+		).setParameter(
+			"unitOfMeasureKey", _unitOfMeasureKey
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
@@ -162,6 +168,8 @@ public class CommerceInventoryDisplayContext {
 			"/commerce_inventory/edit_commerce_inventory_replenishment_item"
 		).setParameter(
 			"sku", _sku
+		).setParameter(
+			"unitOfMeasureKey", _unitOfMeasureKey
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
@@ -249,6 +257,20 @@ public class CommerceInventoryDisplayContext {
 		return _sku;
 	}
 
+	public String getTitle() {
+		StringBundler sb = new StringBundler(getSku());
+
+		if (Validator.isNotNull(getUnitOfMeasureKey())) {
+			sb.append(
+				StringPool.SPACE
+			).append(
+				getUnitOfMeasureKey()
+			);
+		}
+
+		return sb.toString();
+	}
+
 	public String getTransferQuantitiesActionURL() throws Exception {
 		return PortletURLBuilder.createRenderURL(
 			_cpRequestHelper.getLiferayPortletResponse()
@@ -256,6 +278,8 @@ public class CommerceInventoryDisplayContext {
 			"/commerce_inventory/transfer_quantities"
 		).setParameter(
 			"sku", _sku
+		).setParameter(
+			"unitOfMeasureKey", _unitOfMeasureKey
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
@@ -273,6 +297,10 @@ public class CommerceInventoryDisplayContext {
 		).setParameter(
 			"sku", _sku
 		).buildPortletURL();
+	}
+
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
 	}
 
 	public CreationMenu getWarehousesCreationMenu() throws Exception {
@@ -322,5 +350,6 @@ public class CommerceInventoryDisplayContext {
 		_commerceInventoryWarehouseService;
 	private final CPRequestHelper _cpRequestHelper;
 	private String _sku;
+	private final String _unitOfMeasureKey;
 
 }

@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>EXECUTE_REINDEX_BUTTON</td>
-	<td>//li[contains(.,'${key_action}')]//button[contains(.,'Execute')]</td>
+	<td>//li[contains(.,'${key_action}')]//button[contains(.,'Reindex')]</td>
 	<td></td>
 </tr>
 <tr>

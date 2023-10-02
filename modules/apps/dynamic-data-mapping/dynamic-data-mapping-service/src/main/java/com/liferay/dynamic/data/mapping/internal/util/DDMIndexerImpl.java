@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.DateFormatFactory;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
@@ -847,7 +847,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 			pattern = "yyyy-MM-dd hh:mm";
 		}
 
-		DateFormat dateFormat = _dateFormatFactory.getSimpleDateFormat(pattern);
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			pattern);
 
 		for (String value : values) {
 			if (Validator.isNull(value)) {
@@ -918,9 +919,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 				PropsKeys.INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH));
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMIndexerImpl.class);
-
-	@Reference
-	private DateFormatFactory _dateFormatFactory;
 
 	@Reference
 	private DDM _ddm;

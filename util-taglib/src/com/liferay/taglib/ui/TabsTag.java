@@ -20,7 +20,10 @@ import javax.servlet.jsp.JspException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.clay.servlet.taglib.TabsTag}
  */
+@Deprecated
 public class TabsTag extends IncludeTag {
 
 	@Override

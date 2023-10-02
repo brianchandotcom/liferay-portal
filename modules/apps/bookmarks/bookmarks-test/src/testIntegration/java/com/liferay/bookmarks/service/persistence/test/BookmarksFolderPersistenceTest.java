@@ -117,6 +117,8 @@ public class BookmarksFolderPersistenceTest {
 
 		newBookmarksFolder.setMvccVersion(RandomTestUtil.nextLong());
 
+		newBookmarksFolder.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newBookmarksFolder.setUuid(RandomTestUtil.randomString());
 
 		newBookmarksFolder.setGroupId(RandomTestUtil.nextLong());
@@ -157,6 +159,9 @@ public class BookmarksFolderPersistenceTest {
 		Assert.assertEquals(
 			existingBookmarksFolder.getMvccVersion(),
 			newBookmarksFolder.getMvccVersion());
+		Assert.assertEquals(
+			existingBookmarksFolder.getCtCollectionId(),
+			newBookmarksFolder.getCtCollectionId());
 		Assert.assertEquals(
 			existingBookmarksFolder.getUuid(), newBookmarksFolder.getUuid());
 		Assert.assertEquals(
@@ -324,13 +329,13 @@ public class BookmarksFolderPersistenceTest {
 
 	protected OrderByComparator<BookmarksFolder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"BookmarksFolder", "mvccVersion", true, "uuid", true, "folderId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"parentFolderId", true, "treePath", true, "name", true,
-			"description", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"BookmarksFolder", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "folderId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "parentFolderId", true, "treePath", true,
+			"name", true, "description", true, "lastPublishDate", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -612,6 +617,8 @@ public class BookmarksFolderPersistenceTest {
 		BookmarksFolder bookmarksFolder = _persistence.create(pk);
 
 		bookmarksFolder.setMvccVersion(RandomTestUtil.nextLong());
+
+		bookmarksFolder.setCtCollectionId(RandomTestUtil.nextLong());
 
 		bookmarksFolder.setUuid(RandomTestUtil.randomString());
 

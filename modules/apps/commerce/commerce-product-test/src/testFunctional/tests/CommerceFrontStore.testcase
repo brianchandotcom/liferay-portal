@@ -14,6 +14,7 @@ definition {
 		CommerceConfiguration.commerceTearDown(doLogout = "true");
 	}
 
+	@priority = 4
 	test ViewStoreFrontSimpleProduct {
 		property portal.acceptance = "false";
 

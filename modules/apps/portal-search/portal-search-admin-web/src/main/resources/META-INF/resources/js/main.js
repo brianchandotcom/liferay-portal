@@ -303,12 +303,7 @@ AUI.add(
 						return;
 					}
 
-					if (Liferay.FeatureFlags['LPS-183661']) {
-						this._showConfirmationModal(data);
-					}
-					else {
-						this._onSubmitForm(data);
-					}
+					this._showConfirmationModal(data);
 				},
 
 				_onSubmitForm(data) {
@@ -326,13 +321,7 @@ AUI.add(
 
 					submitForm(form, instance.get(STR_URL));
 
-					if (
-						Liferay.FeatureFlags['LPS-183661'] &&
-						[
-							'reindexDictionaries',
-							'reindexIndexReindexer',
-						].includes(data.cmd)
-					) {
+					if (data.cmd === 'reindexDictionaries') {
 						document
 							.querySelectorAll(instance.get('submitButton'))
 							.forEach((element) => {
@@ -389,12 +378,8 @@ AUI.add(
 					const {
 						availableDiskSpace = 0,
 						currentDiskSpaceUsed = 0,
+						isLowOnDiskSpace = false,
 					} = instance.get('elasticSearchDiskSpace');
-
-					const isLowOnDiskSpace =
-						availableDiskSpace && currentDiskSpaceUsed
-							? availableDiskSpace < 1.5 * currentDiskSpaceUsed
-							: true;
 
 					const status =
 						isConcurrentMode && isLowOnDiskSpace

@@ -27,6 +27,7 @@
 		<field name="parameters" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="system" type="boolean" />
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.object.model.ObjectDefinition">
@@ -270,6 +271,7 @@
 		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
 		<field name="reverse" type="boolean" />
+		<field name="system" type="boolean" />
 		<field name="type" type="String" />
 	</model>
 	<model name="com.liferay.object.model.ObjectState">
@@ -311,6 +313,7 @@
 	<model name="com.liferay.object.model.ObjectValidationRule">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="objectValidationRuleId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

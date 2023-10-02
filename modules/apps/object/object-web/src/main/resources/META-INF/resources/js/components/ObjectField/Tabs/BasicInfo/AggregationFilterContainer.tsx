@@ -7,17 +7,19 @@ import {useModal} from '@clayui/modal';
 import {
 	API,
 	BuilderScreen,
-	Card,
 	getLocalizableLabel,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
-import React, {useCallback, useEffect, useState} from 'react';
+import classNames from 'classnames';
+import React, {ElementType, useCallback, useEffect, useState} from 'react';
 
 import {
 	FilterErrors,
 	FilterValidation,
 	ModalAddFilter,
 } from '../../../ModalAddFilter';
+
+import '../../EditObjectFieldContent.scss';
 
 interface IItem extends LabelValueObject {
 	checked?: boolean;
@@ -40,8 +42,10 @@ interface AggregationFilters {
 
 interface AggregationFilterProps {
 	aggregationFilters: AggregationFilters[];
+	containerWrapper: ElementType;
 	creationLanguageId2?: Liferay.Language.Locale;
 	filterOperators: TFilterOperators;
+	modelBuilder: boolean;
 	objectDefinitionExternalReferenceCode2?: string;
 	setAggregationFilters: (values: AggregationFilters[]) => void;
 	setCreationLanguageId2: (values: Liferay.Language.Locale) => void;
@@ -50,12 +54,18 @@ interface AggregationFilterProps {
 	workflowStatusJSONArray: LabelValueObject[];
 }
 
+interface CustomWindow extends Window {
+	__isReactDndBackendSetUp?: boolean;
+}
+
 const REQUIRED_MSG = Liferay.Language.get('required');
 
 export function AggregationFilterContainer({
 	aggregationFilters,
+	containerWrapper: ContainerWrapper,
 	creationLanguageId2,
 	filterOperators,
+	modelBuilder,
 	objectDefinitionExternalReferenceCode2,
 	setAggregationFilters,
 	setCreationLanguageId2,
@@ -519,34 +529,48 @@ export function AggregationFilterContainer({
 		);
 	};
 
+	if ((window as CustomWindow).__isReactDndBackendSetUp) {
+		(window as CustomWindow).__isReactDndBackendSetUp = false;
+	}
+
 	return (
 		<>
-			<Card title={Liferay.Language.get('filters')}>
-				<BuilderScreen
-					creationLanguageId={
-						creationLanguageId2 as Liferay.Language.Locale
-					}
-					disableEdit
-					emptyState={{
-						buttonText: Liferay.Language.get('new-filter'),
-						description: Liferay.Language.get(
-							'use-conditions-to-specify-which-fields-will-be-considered-in-the-aggregation'
-						),
-						title: Liferay.Language.get(
-							'no-filter-was-created-yet'
-						),
-					}}
-					filter
-					firstColumnHeader={Liferay.Language.get('filter-by')}
-					objectColumns={aggregationFilters}
-					onDeleteColumn={handleDeleteFilterColumn}
-					onEditingObjectFieldName={setEditingObjectFieldName}
-					onVisibleEditModal={setVisibleModal}
-					openModal={() => setVisibleModal(true)}
-					secondColumnHeader={Liferay.Language.get('type')}
-					thirdColumnHeader={Liferay.Language.get('value')}
-				/>
-			</Card>
+			<ContainerWrapper
+				displayTitle={Liferay.Language.get('filters')}
+				displayType="unstyled"
+				title={Liferay.Language.get('filters')}
+			>
+				<div
+					className={classNames({
+						'lfr-objects__edit-object-field-model-builder-panel': modelBuilder,
+					})}
+				>
+					<BuilderScreen
+						creationLanguageId={
+							creationLanguageId2 as Liferay.Language.Locale
+						}
+						disableEdit
+						emptyState={{
+							buttonText: Liferay.Language.get('new-filter'),
+							description: Liferay.Language.get(
+								'use-conditions-to-specify-which-fields-will-be-considered-in-the-aggregation'
+							),
+							title: Liferay.Language.get(
+								'no-filter-was-created-yet'
+							),
+						}}
+						filter
+						firstColumnHeader={Liferay.Language.get('filter-by')}
+						objectColumns={aggregationFilters}
+						onDeleteColumn={handleDeleteFilterColumn}
+						onEditingObjectFieldName={setEditingObjectFieldName}
+						onVisibleEditModal={setVisibleModal}
+						openModal={() => setVisibleModal(true)}
+						secondColumnHeader={Liferay.Language.get('type')}
+						thirdColumnHeader={Liferay.Language.get('value')}
+					/>
+				</div>
+			</ContainerWrapper>
 
 			{visibleModal && (
 				<ModalAddFilter

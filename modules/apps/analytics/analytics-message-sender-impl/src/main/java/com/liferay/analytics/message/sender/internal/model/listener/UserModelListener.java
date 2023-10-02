@@ -5,39 +5,25 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
-import com.liferay.analytics.message.sender.model.listener.BaseEntityModelListener;
-import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
+import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = {EntityModelListener.class, ModelListener.class})
-public class UserModelListener extends BaseEntityModelListener<User> {
+@Component(service = ModelListener.class)
+public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
-	public List<String> getAttributeNames(long companyId) {
-		return getUserAttributeNames(companyId);
+	protected AnalyticsEntityModel<User> getAnalyticsEntityModel() {
+		return _userAnalyticsEntityModel;
 	}
 
-	@Override
-	protected User getModel(long id) throws Exception {
-		return userLocalService.getUser(id);
-	}
-
-	@Override
-	protected String getPrimaryKeyName() {
-		return "userId";
-	}
-
-	@Override
-	protected boolean isExcluded(User user) {
-		return isUserExcluded(user);
-	}
+	@Reference(target = "(analytics.entity.model.type=user)")
+	private AnalyticsEntityModel<User> _userAnalyticsEntityModel;
 
 }

@@ -6,7 +6,7 @@
 package com.liferay.document.library.web.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelectionRunner;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Alejandro Tardín

@@ -5,13 +5,66 @@
 
 import ClayForm from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
-import {useEffect, useState} from 'react';
-import SearchBuilder from '~/common/core/SearchBuilder';
+import {useEffect, useMemo, useState} from 'react';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
+import useUserAccountsByAccountExternalReferenceCode from '~/routes/customer-portal/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useUserAccountsByAccountExternalReferenceCode';
+import {
+	getAccountRolesId,
+	getContactRoleByFilter,
+} from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import {useOnboarding} from '~/routes/onboarding/context';
 import {useCustomerPortal} from '../../../routes/customer-portal/context';
 import useCurrentKoroneikiAccount from '../../hooks/useCurrentKoroneikiAccount';
-import {getHighPriorityContacts} from '../../services/liferay/api';
 import HighPriorityContactsInput from './HighPriorityContactsInput';
+import {useHighPriorityContacts} from './hooks/useHighPriorityContacts';
+
+const mapFilterToContactsCategory = (filter) => ({
+	contactsCategory: {
+		key: (filter.charAt(0).toLowerCase() + filter.slice(1)).replace(
+			/\s/g,
+			''
+		),
+		name: filter.toLowerCase(),
+		role: getContactRoleByFilter(filter.toLowerCase()),
+	},
+});
+
+const getHighPriorityContactsByFilterRaysource = (
+	highPriorityContactsCategory,
+	userAccounts,
+	filter
+) =>
+	userAccounts
+		.filter((account) =>
+			account?.selectedAccountSummary?.roleBriefs?.some(
+				(role) => role?.name === filter
+			)
+		)
+		.map(
+			({
+				emailAddress: email,
+				id,
+				name,
+				selectedAccountSummary,
+				userAccountContactInformation,
+			}) => ({
+				contact:
+					userAccountContactInformation?.telephones.map((phone) =>
+						phone.primary ? phone.phoneNumber : []
+					) ?? [],
+				email,
+				id,
+				labelRole: highPriorityContactsCategory?.contactsCategory.name,
+				name,
+				role: selectedAccountSummary?.roleBriefs.filter(
+					({name}) => name === filter
+				)[0]?.name,
+				roleId: selectedAccountSummary?.roleBriefs.filter(
+					({name}) => name === filter
+				)[0]?.id,
+				value: id,
+			})
+		);
 
 const SetupHighPriorityContact = ({
 	addContactList,
@@ -20,127 +73,76 @@ const SetupHighPriorityContact = ({
 	isCriticalIncidentCard,
 	removedContactList,
 }) => {
-	const {data} = useCurrentKoroneikiAccount();
-
-	const projectPortal = useCustomerPortal();
-	const projectOnboarding = useOnboarding();
-	const project =
-		projectPortal?.[0].project || projectOnboarding?.[0].project;
-
-	const koroneikiAccount = data?.koroneikiAccountByExternalReferenceCode;
 	const [
 		currentHighPriorityContacts,
 		setCurrentHighPriorityContacts,
 	] = useState([]);
 
-	const getContactRoleByFilter = (filter) => {
-		if (filter.includes('Privacy')) {
-			return 'Data Breach Contact';
-		}
+	const [rolesId, setRolesId] = useState();
+	const {client} = useAppPropertiesContext();
+	const {data} = useCurrentKoroneikiAccount();
+	const projectOnboarding = useOnboarding();
+	const projectPortal = useCustomerPortal();
 
-		if (filter.includes('Security')) {
-			return 'Security Incident Contact';
-		}
-		if (filter.includes('Critical')) {
-			return 'Critical Incident Contact';
-		}
-	};
+	const highPriorityContactsCategory = useMemo(
+		() => mapFilterToContactsCategory(filter),
+		[filter]
+	);
+	const project = useMemo(
+		() => projectPortal?.[0].project || projectOnboarding?.[0].project,
+		[projectOnboarding, projectPortal]
+	);
 
-	const mapFilterToContactsCategory = (filter) => {
-		const _filter = (
-			filter.charAt(0).toLowerCase() + filter.slice(1)
-		).replace(/\s/g, '');
+	const koroneikiAccount = useMemo(
+		() => data?.koroneikiAccountByExternalReferenceCode,
+		[data?.koroneikiAccountByExternalReferenceCode]
+	);
 
-		return {
-			contactsCategory: {
-				key: _filter,
-				name: filter,
-				role: getContactRoleByFilter(filter),
-			},
-			filterRequest: new SearchBuilder()
-				.eq('contactsCategory', _filter)
-				.and()
-				.eq(
-					'r_accountEntryToHighPriorityContacts_accountEntryERC',
-					project.accountKey
-				)
-				.build(),
-		};
-	};
-
-	const highPriorityContactsCategory = mapFilterToContactsCategory(filter);
-
-	async function getContacts() {
-		const response = await getHighPriorityContacts(
-			highPriorityContactsCategory.filterRequest
-		);
-
-		return response.items;
-	}
+	const {updateContacts} = useHighPriorityContacts({
+		addContactList,
+		currentHighPriorityContacts,
+		highPriorityContactsCategory,
+		removedContactList,
+		rolesId,
+	});
 
 	useEffect(() => {
-		async function fetchHighPriorityContacts() {
-			try {
-				const highPriorityContacts = await getContacts();
-				const contacts = highPriorityContacts.map((contact, index) => {
-					const {r_userToHighPriorityContacts_user} = contact;
+		getAccountRolesId(project, client)
+			.then(setRolesId)
+			.catch(console.error);
+	}, [client, project, project.accountKey]);
 
-					return {
-						email: r_userToHighPriorityContacts_user?.emailAddress,
-						filter: highPriorityContactsCategory.contactsCategory,
-						id: r_userToHighPriorityContacts_user?.id,
-						label: `${r_userToHighPriorityContacts_user?.givenName} ${r_userToHighPriorityContacts_user?.familyName}`,
-						objectId: contact.id,
-						value: (index + 1).toString(),
-					};
-				});
-				setCurrentHighPriorityContacts(contacts);
-			} catch (error) {
-				console.error('Error fetching high priority contacts', error);
-			}
-		}
+	const [
+		,
+		{data: userAccountsData},
+	] = useUserAccountsByAccountExternalReferenceCode(project?.accountKey);
 
-		fetchHighPriorityContacts();
-	}, []);
-
-	const addContacts = (contacts, currentContacts) => {
-		const contactsWithoutCategory = contacts.filter(
-			(newContact) =>
-				!currentContacts.some(
-					(currentContact) => currentContact.id === newContact?.id
-				)
+	useEffect(() => {
+		const highPriorityContacts =
+			getHighPriorityContactsByFilterRaysource(
+				highPriorityContactsCategory,
+				userAccountsData?.accountUserAccountsByExternalReferenceCode
+					?.items ?? [],
+				highPriorityContactsCategory.contactsCategory.role
+			) ?? [];
+		setCurrentHighPriorityContacts(
+			highPriorityContacts.map((highPriorityContact, index) => ({
+				email: highPriorityContact?.email,
+				filter: highPriorityContact.role,
+				filterId: highPriorityContact.roleId,
+				filterLabel: highPriorityContact.name,
+				id: highPriorityContact?.id,
+				label: highPriorityContact?.name,
+				labelRole: highPriorityContact?.labelRole,
+				value: (index + 1).toString(),
+			}))
 		);
-		const contactsWithCategory = contactsWithoutCategory.map(
-			(newContact) => ({
-				...newContact,
-				category: highPriorityContactsCategory.contactsCategory,
-			})
-		);
-
-		return contactsWithCategory;
-	};
-
-	const deleteContacts = (currentContactsList, newContactsList) => {
-		return currentContactsList.filter(
-			(currentContact) =>
-				!newContactsList.some(
-					(newContact) => currentContact.id === newContact?.id
-				)
-		);
-	};
-
-	const updateContacts = (contacts) => {
-		const addedContacts = addContacts(
-			contacts,
-			currentHighPriorityContacts
-		);
-		const removedContacts = deleteContacts(
-			currentHighPriorityContacts,
-			contacts
-		);
-		addContactList(addedContacts);
-		removedContactList(removedContacts);
-	};
+	}, [
+		highPriorityContactsCategory.contactsCategory.role,
+		project,
+		userAccountsData,
+		highPriorityContactsCategory,
+	]);
 
 	const handleMetaErrorChange = (error, inputName) => {
 		disableSubmit(error, inputName);
@@ -171,35 +173,24 @@ const SetupHighPriorityContactForm = ({
 	disableSubmit,
 	removedContactList,
 	...props
-}) => {
-	const addedContactList = (contactList) => {
-		return addContactList(contactList);
-	};
-	const removeContactList = (contactList) => {
-		return removedContactList(contactList);
-	};
-	const handleMetaErrorChange = (error, inputName) => {
-		disableSubmit(error, inputName);
-	};
+}) => (
+	<Formik
+		initialValues={{
+			activations: {
+				criticalIncedentContact: [],
+			},
+		}}
+	>
+		{(formikProps) => (
+			<SetupHighPriorityContact
+				addContactList={addContactList}
+				disableSubmit={disableSubmit}
+				removedContactList={removedContactList}
+				{...props}
+				{...formikProps}
+			/>
+		)}
+	</Formik>
+);
 
-	return (
-		<Formik
-			initialValues={{
-				activations: {
-					criticalIncedentContact: [],
-				},
-			}}
-		>
-			{(formikProps) => (
-				<SetupHighPriorityContact
-					addContactList={addedContactList}
-					disableSubmit={handleMetaErrorChange}
-					removedContactList={removeContactList}
-					{...props}
-					{...formikProps}
-				/>
-			)}
-		</Formik>
-	);
-};
 export default SetupHighPriorityContactForm;

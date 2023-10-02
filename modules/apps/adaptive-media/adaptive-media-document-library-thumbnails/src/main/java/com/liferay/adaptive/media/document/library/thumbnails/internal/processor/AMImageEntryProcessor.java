@@ -55,9 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.adaptive.media.document.library.thumbnails.internal.configuration.AMSystemImagesConfiguration",
 	property = "type=" + DLProcessorConstants.IMAGE_PROCESSOR,
-	service = {
-		AMImageEntryProcessor.class, DLProcessor.class, ImageProcessor.class
-	}
+	service = DLProcessor.class
 )
 public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 

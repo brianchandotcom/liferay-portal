@@ -117,7 +117,9 @@ definition {
 	@priority = 4
 	test MarkFragmentWithoutReadOnlyImportedToPortalAsCacheable {
 		task ("Import a fragment collection without Read-Only") {
-			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
+			FragmentsAdmin.importCollectionFromDependenciesFolder(
+				collectionZipFile = "fragment-collection.zip",
+				importOption = "Do Not Import Existing Items");
 		}
 
 		task ("Mark the imported fragment as cacheable") {

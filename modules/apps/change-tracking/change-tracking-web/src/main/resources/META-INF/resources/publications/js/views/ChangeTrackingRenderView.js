@@ -22,6 +22,8 @@ import {
 } from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
+import ExperienceDropdown from '../components/ExperienceDropdown';
+
 const LocalizationDropdown = ({
 	currentLocale,
 	defaultLocale,
@@ -38,6 +40,7 @@ const LocalizationDropdown = ({
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton
+						aria-label="show-available-locales"
 						displayType="secondary"
 						monospaced
 						onClick={() => setActive(!active)}
@@ -125,14 +128,15 @@ const LocalizationDropdown = ({
 
 export default function ChangeTrackingRenderView({
 	childEntries,
-	dataURL,
 	defaultLocale,
 	description,
 	discardURL,
 	getCache,
 	handleNavigation,
 	handleShowHideable,
+	initialDataURL,
 	moveChangesURL,
+	namespace,
 	parentEntries,
 	showDropdown,
 	showHeader = true,
@@ -154,8 +158,13 @@ export default function ChangeTrackingRenderView({
 	const VIEW_SPLIT = 'VIEW_SPLIT';
 	const VIEW_UNIFIED = 'VIEW_UNIFIED';
 
+	const [dataURL, setDataURL] = useState(initialDataURL);
 	const [loading, setLoading] = useState(false);
 	const [selectedLocale, setSelectedLocale] = useState(defaultLocale);
+	const [
+		selectedSegmentsExperienceId,
+		setSelectedSegmentsExperienceId,
+	] = useState(null);
 	const [state, setState] = useState({
 		contentType: CONTENT_TYPE_PREVIEW,
 		renderData: null,
@@ -177,7 +186,11 @@ export default function ChangeTrackingRenderView({
 			cachedData = getCache();
 		}
 
-		if (cachedData && cachedData.changeType) {
+		if (
+			cachedData &&
+			cachedData.changeType &&
+			!selectedSegmentsExperienceId
+		) {
 			if (cachedData.changeType === CHANGE_TYPE_PRODUCTION) {
 				setState({
 					children: childEntries,
@@ -361,7 +374,14 @@ export default function ChangeTrackingRenderView({
 					},
 				});
 			});
-	}, [childEntries, dataURL, getCache, parentEntries, updateCache]);
+	}, [
+		childEntries,
+		dataURL,
+		getCache,
+		parentEntries,
+		selectedSegmentsExperienceId,
+		updateCache,
+	]);
 
 	let currentLocale = selectedLocale;
 	let currentTitle = title;
@@ -874,6 +894,7 @@ export default function ChangeTrackingRenderView({
 					spritemap={spritemap}
 					trigger={
 						<ClayButtonWithIcon
+							aria-label="more-actions"
 							displayType="unstyled"
 							small
 							spritemap={spritemap}
@@ -1271,6 +1292,7 @@ export default function ChangeTrackingRenderView({
 		items.push(
 			<ClayNavigationBar.Item
 				active={state.contentType === CONTENT_TYPE_PREVIEW}
+				key="display"
 			>
 				<ClayLink
 					className={
@@ -1351,6 +1373,7 @@ export default function ChangeTrackingRenderView({
 		items.push(
 			<ClayNavigationBar.Item
 				active={state.contentType === CONTENT_TYPE_RENDER}
+				key="data"
 			>
 				<ClayLink onClick={() => setContentType(CONTENT_TYPE_RENDER)}>
 					{Liferay.Language.get('data')}
@@ -1363,7 +1386,7 @@ export default function ChangeTrackingRenderView({
 			(state.children && !!state.children.length)
 		) {
 			items.push(
-				<li className="autofit-col nav-item row-divider">
+				<li className="autofit-col nav-item row-divider" key="divider">
 					<div />
 				</li>
 			);
@@ -1371,6 +1394,7 @@ export default function ChangeTrackingRenderView({
 			items.push(
 				<ClayNavigationBar.Item
 					active={state.contentType === CONTENT_TYPE_PARENTS}
+					key="parents"
 				>
 					<ClayLink
 						className={
@@ -1396,6 +1420,7 @@ export default function ChangeTrackingRenderView({
 			items.push(
 				<ClayNavigationBar.Item
 					active={state.contentType === CONTENT_TYPE_CHILDREN}
+					key="children"
 				>
 					<ClayLink
 						className={
@@ -1448,23 +1473,79 @@ export default function ChangeTrackingRenderView({
 		return renderEntry();
 	}
 
+	const updatePreviewRender = (segmentsExperienceId) => {
+		if (segmentsExperienceId) {
+			let newDataURL;
+
+			if (initialDataURL.includes('segmentsExperienceId=')) {
+				const regex = /segmentsExperienceId=\d*/i;
+
+				newDataURL = initialDataURL.replace(
+					regex,
+					'segmentsExperienceId=' +
+						encodeURIComponent(segmentsExperienceId)
+				);
+			}
+			else {
+				newDataURL =
+					initialDataURL +
+					'&' +
+					namespace +
+					'segmentsExperienceId=' +
+					encodeURIComponent(segmentsExperienceId);
+			}
+
+			setDataURL(newDataURL);
+			setSelectedSegmentsExperienceId(segmentsExperienceId);
+		}
+		else {
+			console.error(
+				'A SegmentsExperience was selected from ExperienceDropdown but no segmentsExperienceId ' +
+					'from the selected option was passed into the onSelectionChange method'
+			);
+		}
+	};
+
 	return (
 		<div className={`sheet ${loading ? 'publications-loading' : ''}`}>
 			{state.renderData && (
 				<div className="autofit-row sheet-title">
-					{state.renderData.locales &&
-						!!state.renderData.locales.length && (
-							<LocalizationDropdown
-								currentLocale={currentLocale}
-								defaultLocale={state.renderData.defaultLocale}
-								locales={state.renderData.locales}
-								setSelectedLocale={setSelectedLocale}
-								spritemap={spritemap}
-							/>
-						)}
-
 					<div className="autofit-col autofit-col-expand">
-						<h2>{currentTitle}</h2>
+						<div className="align-items-baseline autofit-row mb-2">
+							<h2 className="mr-3">{currentTitle}</h2>
+
+							{state.renderData.segmentsExperiences &&
+								!!state.renderData.segmentsExperiences
+									.length && (
+									<ExperienceDropdown
+										activeSegmentsExperience={
+											state.renderData.segmentsExperiences.filter(
+												(experience) =>
+													experience.active
+											)[0]
+										}
+										segmentsExperiences={
+											state.renderData.segmentsExperiences
+										}
+										updatePreviewRender={
+											updatePreviewRender
+										}
+									/>
+								)}
+
+							{state.renderData.locales &&
+								!!state.renderData.locales.length && (
+									<LocalizationDropdown
+										currentLocale={currentLocale}
+										defaultLocale={
+											state.renderData.defaultLocale
+										}
+										locales={state.renderData.locales}
+										setSelectedLocale={setSelectedLocale}
+										spritemap={spritemap}
+									/>
+								)}
+						</div>
 
 						<div className="entry-description">{description}</div>
 					</div>

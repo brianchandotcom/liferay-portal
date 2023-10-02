@@ -204,14 +204,25 @@ export function useObjectFieldForm({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, setValues, values} = useForm<
-		ObjectField,
-		{[key in ObjectFieldSettingName]: unknown}
-	>({
+	const {
+		errors,
+		handleChange,
+		handleSubmit,
+		handleValidate,
+		setValues,
+		values,
+	} = useForm<ObjectField, {[key in ObjectFieldSettingName]: unknown}>({
 		initialValues,
 		onSubmit,
 		validate,
 	});
 
-	return {errors, handleChange, handleSubmit, setValues, values};
+	return {
+		errors,
+		handleChange,
+		handleSubmit,
+		handleValidate,
+		setValues,
+		values,
+	};
 }

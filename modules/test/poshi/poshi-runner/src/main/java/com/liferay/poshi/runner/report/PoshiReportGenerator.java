@@ -47,23 +47,21 @@ import org.json.JSONArray;
 public class PoshiReportGenerator {
 
 	public static void main(String[] args) throws Exception {
-		if (Validator.isNotNull(_poshiProperties.reportType) &&
-			_poshiProperties.reportType.equals("usage")) {
+		if (Validator.isNull(_poshiProperties.reportType)) {
+			System.out.println("Please set 'report.type' to generate a report");
 
+			return;
+		}
+
+		if (_poshiProperties.reportType.equals("usage")) {
 			_generateMacroUsageHTMLReport();
 
 			return;
 		}
-		else if (Validator.isNotNull(_poshiProperties.reportType) &&
-				 _poshiProperties.reportType.equals("test-properties")) {
 
+		if (_poshiProperties.reportType.equals("test-properties")) {
 			_generateTestPropertiesCSVReport();
-
-			return;
 		}
-
-		System.out.println(
-			"Please set 'test.report.type' to generate a report");
 	}
 
 	private static void _findMacroExecuteElementUsages() {

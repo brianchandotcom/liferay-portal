@@ -1051,16 +1051,21 @@ public class JournalArticleLocalServiceImpl
 
 		for (Map.Entry<Locale, String> entry : newTitleMap.entrySet()) {
 			Locale locale = entry.getKey();
+			String title = entry.getValue();
 
-			String urlTitle = StringBundler.concat(
-				entry.getValue(), StringPool.SPACE,
-				_language.get(locale, "duplicate"), StringPool.SPACE,
-				uniqueUrlTitleCount);
-
-			newTitleMap.put(locale, urlTitle);
+			newTitleMap.put(
+				locale,
+				StringBundler.concat(
+					title, StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+					_language.get(locale, "copy"), StringPool.SPACE,
+					uniqueUrlTitleCount, StringPool.CLOSE_PARENTHESIS));
 			newUniqueURLTitleMap.put(
 				locale,
-				getUniqueUrlTitle(id, groupId, targetArticleId, urlTitle));
+				getUniqueUrlTitle(
+					id, groupId, targetArticleId,
+					StringBundler.concat(
+						title, StringPool.SPACE, _language.get(locale, "copy"),
+						StringPool.SPACE, uniqueUrlTitleCount)));
 		}
 
 		DDMFormValues ddmFormValues = sourceArticle.getDDMFormValues();
@@ -1084,7 +1089,7 @@ public class JournalArticleLocalServiceImpl
 		// Article localization
 
 		Map<Locale, String> friendlyURLMap = _checkFriendlyURLMap(
-			locale, new HashMap(), newTitleMap);
+			locale, new HashMap(), newUniqueURLTitleMap);
 
 		Map<String, String> newUrlTitleMap = _getURLTitleMap(
 			groupId, resourcePrimKey, friendlyURLMap, newUniqueURLTitleMap);
@@ -7789,6 +7794,9 @@ public class JournalArticleLocalServiceImpl
 	private int _getUniqueUrlTitleCount(
 		long groupId, String articleId, String urlTitle) {
 
+		String copy = _language.get(LocaleUtil.getMostRelevantLocale(), "copy");
+		String prefix = urlTitle;
+
 		for (int i = 1;; i++) {
 			JournalArticle article = fetchArticleByUrlTitle(groupId, urlTitle);
 
@@ -7798,16 +7806,8 @@ public class JournalArticleLocalServiceImpl
 				return i - 1;
 			}
 
-			String suffix = StringPool.DASH + i;
-
-			String prefix = urlTitle;
-
-			if (urlTitle.length() > suffix.length()) {
-				prefix = urlTitle.substring(
-					0, urlTitle.length() - suffix.length());
-			}
-
-			urlTitle = prefix + suffix;
+			urlTitle = StringBundler.concat(
+				prefix, StringPool.DASH, copy, StringPool.DASH, i);
 		}
 	}
 

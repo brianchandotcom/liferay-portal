@@ -5,17 +5,15 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
-import java.util.TimeZone;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
 
 /**
  * @author Alexander Chow
@@ -105,32 +103,14 @@ public class DateUtilTest {
 
 	@Test
 	public void testGetUTCFormat() {
-		DateFormatFactoryUtil dateFormatFactoryUtil =
-			new DateFormatFactoryUtil();
-
-		DateFormatFactory dateFormatFactory = Mockito.mock(
-			DateFormatFactory.class);
-
-		dateFormatFactoryUtil.setDateFormatFactory(dateFormatFactory);
-
-		Mockito.when(
-			dateFormatFactory.getSimpleDateFormat(
-				Mockito.anyString(), Mockito.any(TimeZone.class))
-		).thenAnswer(
-			(Answer<SimpleDateFormat>)
-				invocationOnMock -> new TestSimpleDateFormat(
-					(String)invocationOnMock.getArguments()[0])
-		);
-
 		DateFormat utcDateFormat = DateUtil.getUTCFormat("19721223");
 
 		Assert.assertNotNull(utcDateFormat);
 		Assert.assertTrue(utcDateFormat instanceof SimpleDateFormat);
 
-		TestSimpleDateFormat testSimpleDateFormat =
-			(TestSimpleDateFormat)utcDateFormat;
-
-		Assert.assertEquals("yyyyMMdd", testSimpleDateFormat.getPattern());
+		Assert.assertEquals(
+			"yyyyMMdd",
+			ReflectionTestUtil.getFieldValue(utcDateFormat, "pattern"));
 	}
 
 	private void _testGetDaysBetween(Date date1, Date date2, int expected) {
@@ -139,41 +119,11 @@ public class DateUtilTest {
 	}
 
 	private void _testGetISOFormat(String text, String pattern) {
-		DateFormatFactoryUtil dateFormatFactoryUtil =
-			new DateFormatFactoryUtil();
-
-		DateFormatFactory dateFormatFactory = Mockito.mock(
-			DateFormatFactory.class);
-
-		dateFormatFactoryUtil.setDateFormatFactory(dateFormatFactory);
-
-		Mockito.when(
-			dateFormatFactory.getSimpleDateFormat(pattern)
-		).thenReturn(
-			new SimpleDateFormat(pattern, LocaleUtil.SPAIN)
-		);
-
 		DateFormat dateFormat = DateUtil.getISOFormat(text);
 
 		SimpleDateFormat simpleDateFormat = (SimpleDateFormat)dateFormat;
 
 		Assert.assertEquals(pattern, simpleDateFormat.toPattern());
-	}
-
-	private static class TestSimpleDateFormat extends SimpleDateFormat {
-
-		public TestSimpleDateFormat(String pattern) {
-			super(pattern);
-
-			_pattern = pattern;
-		}
-
-		public String getPattern() {
-			return _pattern;
-		}
-
-		private final String _pattern;
-
 	}
 
 }

@@ -34,6 +34,7 @@
 		<column name="objectActionExecutorKey" type="String" />
 		<column name="objectActionTriggerKey" type="String" />
 		<column name="parameters" type="String" />
+		<column name="system" type="boolean" />
 		<column name="status" type="int" />
 
 		<!-- Finder methods -->
@@ -144,6 +145,11 @@
 			<finder-column name="companyId" />
 			<finder-column name="active" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="C_M_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="modifiable" />
+			<finder-column name="system" />
 		</finder>
 		<finder name="C_A_S_S" return-type="Collection">
 			<finder-column name="companyId" />
@@ -599,6 +605,7 @@
 		<column localized="true" name="label" type="String" />
 		<column name="name" type="String" />
 		<column name="reverse" type="boolean" />
+		<column name="system" type="boolean" />
 		<column name="type" type="String" />
 
 		<!-- Finder methods -->
@@ -752,6 +759,10 @@
 	</entity>
 	<entity local-service="true" name="ObjectValidationRule" remote-service="true" uuid="true">
 
+		<!-- External reference code -->
+
+		<column name="externalReferenceCode" type="String" />
+
 		<!-- PK fields -->
 
 		<column name="objectValidationRuleId" primary="true" type="long" />
@@ -787,6 +798,11 @@
 		<finder name="ODI_O" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="outputType" />
+		</finder>
+		<finder name="ERC_C_ODI" return-type="ObjectEntry" unique="true">
+			<finder-column name="externalReferenceCode" />
+			<finder-column name="companyId" />
+			<finder-column name="objectDefinitionId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectValidationRuleSetting" remote-service="false" uuid="true">
@@ -958,6 +974,7 @@
 		<exception>ObjectActionLabel</exception>
 		<exception>ObjectActionName</exception>
 		<exception>ObjectActionParameters</exception>
+		<exception>ObjectActionSystem</exception>
 		<exception>ObjectActionTriggerKey</exception>
 		<exception>ObjectDefinitionAccountEntryRestricted</exception>
 		<exception>ObjectDefinitionAccountEntryRestrictedObjectFieldId</exception>
@@ -989,6 +1006,7 @@
 		<exception>ObjectFieldReadOnly</exception>
 		<exception>ObjectFieldReadOnlyConditionExpression</exception>
 		<exception>ObjectFieldRelationshipType</exception>
+		<exception>ObjectFieldRequired</exception>
 		<exception>ObjectFieldSettingName</exception>
 		<exception>ObjectFieldSettingValue</exception>
 		<exception>ObjectFieldState</exception>
@@ -1003,6 +1021,7 @@
 		<exception>ObjectRelationshipName</exception>
 		<exception>ObjectRelationshipParameterObjectFieldId</exception>
 		<exception>ObjectRelationshipReverse</exception>
+		<exception>ObjectRelationshipSystem</exception>
 		<exception>ObjectRelationshipType</exception>
 		<exception>ObjectValidationRuleEngine</exception>
 		<exception>ObjectValidationRuleName</exception>

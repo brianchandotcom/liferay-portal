@@ -292,7 +292,7 @@
 </tr>
 <tr>
 	<td>SELECT_MONTH</td>
-	<td>//div[contains(@class,"dropdown-menu date-picker-dropdown-menu show")]//select[contains(@class,'form-control form-control-sm') and contains(@name,'${key_type}')]</td>
+	<td>xpath=(//div[contains(@class,"date-picker-nav")]//select[contains(@class,'form-control form-control-sm')])[${key_number}]</td>
 	<td></td>
 </tr>
 <tr>

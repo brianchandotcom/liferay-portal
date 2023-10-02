@@ -126,6 +126,7 @@ definition {
 	}
 
 	@description = "This is for COMMERCE-8646."
+	@priority = 3
 	test VerifyOptionFacetSetupTab {
 		property portal.acceptance = "false";
 

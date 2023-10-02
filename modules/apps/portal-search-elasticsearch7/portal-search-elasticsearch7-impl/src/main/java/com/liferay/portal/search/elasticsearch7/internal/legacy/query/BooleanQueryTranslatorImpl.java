@@ -5,9 +5,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.legacy.query;
 
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;

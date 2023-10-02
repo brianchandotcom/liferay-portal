@@ -10,7 +10,7 @@ interface BaseAPIApplicationFieldsProps {
 	data: Partial<APIEndpointUIData>;
 	displayError: EndpointDataError;
 	editMode?: boolean;
-	setData: Dispatch<SetStateAction<APIEndpointUIData>>;
+	setData: Dispatch<SetStateAction<Partial<APIEndpointUIData>>>;
 }
 export default function BaseAPIEndpointFields({
 	apiApplicationBaseURL,

@@ -87,6 +87,10 @@ public class ViewObjectEntriesDisplayContext {
 		return _apiURL + _getQueryString();
 	}
 
+	public String getByExternalReferenceCodePath() {
+		return _apiURL + "/by-external-reference-code";
+	}
+
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 
@@ -135,14 +139,9 @@ public class ViewObjectEntriesDisplayContext {
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
 				"get", null, null),
 			new FDSActionDropdownItem(
-				LanguageUtil.get(
-					_objectRequestHelper.getRequest(),
-					"it-may-affect-many-records-are-you-sure-you-want-to-" +
-						"delete-this-entry"),
-				_apiURL + "/by-external-reference-code/{externalReferenceCode}",
-				"trash", "delete",
+				null, "trash", "deleteObjectEntry",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
-				"delete", "delete", "async"),
+				"delete", "delete", null),
 			new FDSActionDropdownItem(
 				_getPermissionsURL(), "password-policies", "permissions",
 				LanguageUtil.get(

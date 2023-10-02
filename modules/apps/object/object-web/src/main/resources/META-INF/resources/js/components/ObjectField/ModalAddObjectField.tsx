@@ -18,27 +18,32 @@ import {useObjectFieldForm} from './useObjectFieldForm';
 
 import './ModalAddObjectField.scss';
 
+import {createResourceURL, fetch} from 'frontend-js-web';
+
 interface ModalAddObjectField {
-	apiURL: string;
+	baseResourceURL: string;
 	creationLanguageId: Liferay.Language.Locale;
 	objectDefinitionExternalReferenceCode: string;
-	objectFieldTypes: ObjectFieldType[];
-	objectName?: string;
+	objectDefinitionName?: string;
+	onAfterSubmit: (value: ObjectField) => void;
 	setVisibility: (value: boolean) => void;
 }
 
 export function ModalAddObjectField({
-	apiURL,
+	baseResourceURL,
 	creationLanguageId,
 	objectDefinitionExternalReferenceCode,
-	objectFieldTypes,
-	objectName,
+	objectDefinitionName,
+	onAfterSubmit,
 	setVisibility,
 }: ModalAddObjectField) {
 	const [error, setError] = useState<string>('');
 	const [objectDefinition, setObjectDefinition] = useState<
 		ObjectDefinition
 	>();
+	const [objectFieldTypes, setObjectFieldTypes] = useState<ObjectFieldType[]>(
+		[]
+	);
 	const {observer, onClose} = useModal({onClose: () => setVisibility(false)});
 
 	const initialValues: Partial<ObjectField> = {
@@ -77,10 +82,14 @@ export function ModalAddObjectField({
 			delete field.listTypeDefinitionId;
 
 			try {
-				await API.save({item: field, method: 'POST', url: apiURL});
+				const objectFieldResponse = await API.save<ObjectField>({
+					item: field,
+					method: 'POST',
+					returnValue: true,
+					url: `/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinitionExternalReferenceCode}/object-fields`,
+				});
 
-				onClose();
-				window.location.reload();
+				onAfterSubmit(objectFieldResponse as ObjectField);
 			}
 			catch (error) {
 				setError((error as Error).message);
@@ -99,31 +108,38 @@ export function ModalAddObjectField({
 		onSubmit,
 	});
 
-	const applyFeatureFlag = () => {
-		return objectFieldTypes.filter((objectFieldType) => {
-			if (!Liferay.FeatureFlags['LPS-164948']) {
-				return objectFieldType.businessType !== 'Formula';
-			}
-		});
-	};
-
 	const showEnableTranslationToggle =
 		values.businessType === 'LongText' ||
 		values.businessType === 'RichText' ||
 		values.businessType === 'Text';
 
 	useEffect(() => {
-		if (!objectDefinition) {
-			const makeFetch = async () => {
-				const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
-					objectDefinitionExternalReferenceCode
-				);
+		const makeFetch = async () => {
+			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
+				objectDefinitionExternalReferenceCode
+			);
 
-				setObjectDefinition(objectDefinitionResponse);
+			setObjectDefinition(objectDefinitionResponse);
+
+			const url = createResourceURL(baseResourceURL, {
+				objectDefinitionId: objectDefinitionResponse.id,
+				p_p_resource_id: '/object_definitions/get_object_field_types',
+			}).href;
+
+			const objectFieldTypesResponse = await fetch(url, {
+				method: 'GET',
+			});
+
+			const {
+				objectFieldTypes,
+			} = (await objectFieldTypesResponse.json()) as {
+				objectFieldTypes: ObjectFieldType[];
 			};
 
-			makeFetch();
-		}
+			setObjectFieldTypes(objectFieldTypes);
+		};
+
+		makeFetch();
 
 		if (Liferay.FeatureFlags['LPS-172017']) {
 			if (
@@ -144,7 +160,7 @@ export function ModalAddObjectField({
 			return;
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.businessType]);
+	}, [objectDefinitionExternalReferenceCode, values.businessType]);
 
 	return (
 		<ClayModalProvider>
@@ -179,13 +195,9 @@ export function ModalAddObjectField({
 							objectDefinitionExternalReferenceCode={
 								objectDefinitionExternalReferenceCode
 							}
+							objectDefinitionName={objectDefinitionName ?? ''}
 							objectField={values}
-							objectFieldTypes={
-								!Liferay.FeatureFlags['LPS-164948']
-									? applyFeatureFlag()
-									: objectFieldTypes
-							}
-							objectName={objectName ?? ''}
+							objectFieldTypes={objectFieldTypes}
 							setValues={setValues}
 						>
 							{Liferay.FeatureFlags['LPS-172017'] &&

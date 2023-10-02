@@ -12,8 +12,13 @@ ViewChangesDisplayContext viewChangesDisplayContext = (ViewChangesDisplayContext
 
 renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 
-portletDisplay.setURLBack(viewChangesDisplayContext.getBackURL());
-portletDisplay.setShowBackIcon(true);
+if (!user.isOnDemandUser()) {
+	portletDisplay.setURLBack(viewChangesDisplayContext.getBackURL());
+	portletDisplay.setShowBackIcon(true);
+}
+else {
+	portletDisplay.setShowBackIcon(false);
+}
 %>
 
 <div class="publications-view-changes-wrapper">

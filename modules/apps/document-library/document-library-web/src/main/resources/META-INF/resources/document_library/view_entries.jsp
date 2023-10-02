@@ -190,44 +190,50 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 											cssClass="table-cell-expand table-cell-minw-200"
 											name="title"
 										>
-											<div class="table-title">
-												<liferay-document-library:mime-type-sticker
-													cssClass="sticker-secondary"
-													fileVersion="<%= latestFileVersion %>"
-												/>
+											<div class="autofit-row">
+												<div class="autofit-col pr-1">
+													<liferay-document-library:mime-type-sticker
+														cssClass="sticker-secondary"
+														fileVersion="<%= latestFileVersion %>"
+													/>
+												</div>
 
-												<clay:link
-													href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
-													label="<%= HtmlUtil.unescape(latestFileVersion.getTitle()) %>"
-												/>
-
-												<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-													<span class="inline-item inline-item-after state-icon">
-														<clay:icon
-															aria-label='<%= LanguageUtil.get(request, "locked") %>'
-															symbol="lock"
+												<div class="autofit-col autofit-col-expand pl-1">
+													<div class="table-title">
+														<clay:link
+															href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
+															label="<%= HtmlUtil.unescape(latestFileVersion.getTitle()) %>"
 														/>
-													</span>
-												</c:if>
 
-												<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
-													<span class="inline-item inline-item-after lfr-portal-tooltip state-icon" title="<%= LanguageUtil.get(request, "shared") %>">
-														<clay:icon
-															aria-label='<%= LanguageUtil.get(request, "shared") %>'
-															symbol="users"
-														/>
-													</span>
-												</c:if>
+														<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
+															<span class="inline-item inline-item-after state-icon">
+																<clay:icon
+																	aria-label='<%= LanguageUtil.get(request, "locked") %>'
+																	symbol="lock"
+																/>
+															</span>
+														</c:if>
 
-												<c:if test="<%= fileShortcut != null %>">
-													<span class="inline-item inline-item-after state-icon">
-														<clay:icon
-															aria-label='<%= LanguageUtil.get(request, "shortcut") %>'
-															symbol="shortcut"
-															title='<%= LanguageUtil.get(request, "shortcut") %>'
-														/>
-													</span>
-												</c:if>
+														<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
+															<span class="inline-item inline-item-after lfr-portal-tooltip state-icon" title="<%= LanguageUtil.get(request, "shared") %>">
+																<clay:icon
+																	aria-label='<%= LanguageUtil.get(request, "shared") %>'
+																	symbol="users"
+																/>
+															</span>
+														</c:if>
+
+														<c:if test="<%= fileShortcut != null %>">
+															<span class="inline-item inline-item-after state-icon">
+																<clay:icon
+																	aria-label='<%= LanguageUtil.get(request, "shortcut") %>'
+																	symbol="shortcut"
+																	title='<%= LanguageUtil.get(request, "shortcut") %>'
+																/>
+															</span>
+														</c:if>
+													</div>
+												</div>
 											</div>
 										</liferay-ui:search-container-column-text>
 									</c:when>
@@ -392,27 +398,33 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 											cssClass="table-cell-expand table-cell-minw-200"
 											name="name"
 										>
-											<div class="table-title">
-												<clay:sticker
-													cssClass="sticker-document"
-													displayType="secondary"
-													icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
-												/>
+											<div class="autofit-row">
+												<div class="autofit-col pr-1">
+													<clay:sticker
+														cssClass="sticker-document"
+														displayType="secondary"
+														icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
+													/>
+												</div>
 
-												<clay:link
-													href='<%=
-														PortletURLBuilder.createRenderURL(
-															liferayPortletResponse
-														).setMVCRenderCommandName(
-															"/document_library/view_folder"
-														).setRedirect(
-															currentURL
-														).setParameter(
-															"folderId", curFolder.getFolderId()
-														).buildString()
-													%>'
-													label="<%= HtmlUtil.unescape(curFolder.getName()) %>"
-												/>
+												<div class="autofit-col autofit-col-expand pl-1">
+													<div class="table-title">
+														<clay:link
+															href='<%=
+																PortletURLBuilder.createRenderURL(
+																	liferayPortletResponse
+																).setMVCRenderCommandName(
+																	"/document_library/view_folder"
+																).setRedirect(
+																	currentURL
+																).setParameter(
+																	"folderId", curFolder.getFolderId()
+																).buildString()
+															%>'
+															label="<%= HtmlUtil.unescape(curFolder.getName()) %>"
+														/>
+													</div>
+												</div>
 											</div>
 										</liferay-ui:search-container-column-text>
 									</c:when>

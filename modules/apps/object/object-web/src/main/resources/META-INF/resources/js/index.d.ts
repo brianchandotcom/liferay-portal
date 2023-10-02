@@ -88,7 +88,9 @@ interface ModelBuilderModals
 		| 'deletionNotAllowed'
 		| 'unbindFromRootObjectDefinition'
 	> {
+	addObjectField: boolean;
 	addObjectRelationship: boolean;
+	deleteObjectRelationship: boolean;
 	editObjectDefinitionExternalReferenceCode: boolean;
 	publishObjectDefinitions: boolean;
 	redirectToEditObjectDefinitionDetails: boolean;
@@ -130,6 +132,7 @@ interface ObjectAction {
 	objectDefinitionsRelationshipsURL: string;
 	parameters: ObjectActionParameters;
 	script?: string;
+	system: boolean;
 }
 
 interface ObjectActionParameters {
@@ -198,11 +201,12 @@ interface ObjectDefinitionNodeData
 	hasObjectDefinitionViewResourcePermission: boolean;
 	hasSelfObjectRelationships: boolean;
 	linkedObjectDefinition: boolean;
-	objectFields: ObjectFieldNode[];
+	objectFields: ObjectFieldNodeRow[];
 	selected: boolean;
 }
 
 interface ObjectEntry {
+	actions: Actions;
 	creator: {
 		additionalName: string;
 		contentType: string;
@@ -287,7 +291,7 @@ type ObjectFieldFilterSetting = {
 		| string;
 };
 
-interface ObjectFieldNode extends Partial<ObjectField> {
+interface ObjectFieldNodeRow extends Partial<ObjectField> {
 	primaryKey: boolean;
 	required: boolean;
 	selected: boolean;
@@ -381,6 +385,7 @@ interface ObjectRelationship {
 	readonly objectDefinitionName2: string;
 	parameterObjectFieldName?: string;
 	reverse: boolean;
+	system?: boolean;
 	type: ObjectRelationshipType;
 }
 
@@ -409,6 +414,35 @@ interface ObjectValidation {
 	system?: boolean;
 }
 
+type ObjectWebLearnResources = {
+	'object-web': {
+		general: {
+			[key: string]: {
+				message: string;
+				url: string;
+			};
+		};
+	};
+};
+
+interface PickListItem {
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	name: string;
+	name_i18n: LocalizedValue<string>;
+}
+
+interface PickList {
+	actions: Actions;
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	listTypeEntries: PickListItem[];
+	name: string;
+	name_i18n: LocalizedValue<string>;
+}
+
 type ObjectValidationType = {
 	label: string;
 	name: string;
@@ -432,6 +466,7 @@ type TFilterOperators = {
 
 interface ViewObjectDefinitionsModals {
 	addObjectDefinition: boolean;
+	addObjectField: boolean;
 	addObjectFolder: boolean;
 	bindToRootObjectDefinition: boolean;
 	deleteObjectDefinition: boolean;

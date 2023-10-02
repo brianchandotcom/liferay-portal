@@ -2,12 +2,24 @@
 
 <instance-wrappers>
 	<instance-wrapper
+		parent-dir="../portal-impl/src"
+		src-file="com/liferay/portal/service/permission/PasswordPolicyPermissionUtil.java"
+	/>
+	<instance-wrapper
 		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/portlet/PortletModeFactory.java"
 	/>
 	<instance-wrapper
 		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/portlet/WindowStateFactory.java"
+	/>
+	<instance-wrapper
+		parent-dir="../portal-kernel/src"
+		src-file="com/liferay/portal/kernel/service/permission/GroupPermissionUtil.java"
+	/>
+	<instance-wrapper
+		parent-dir="../portal-kernel/src"
+		src-file="com/liferay/portal/kernel/service/permission/RolePermissionUtil.java"
 	/>
 	<instance-wrapper
 		parent-dir="../portal-kernel/src"

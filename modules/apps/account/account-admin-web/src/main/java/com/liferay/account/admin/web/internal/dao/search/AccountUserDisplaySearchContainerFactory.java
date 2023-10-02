@@ -11,13 +11,13 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -197,11 +197,9 @@ public class AccountUserDisplaySearchContainerFactory {
 		AccountUserRetriever accountUserRetriever =
 			_accountUserRetrieverSnapshot.get();
 
-		UsersAdmin usersAdmin = _usersAdminSnapshot.get();
-
 		return accountUserRetriever.searchAccountRoleUsers(
 			accountEntryId, accountRoleId, keywords, start, end,
-			usersAdmin.getUserOrderByComparator(orderByCol, orderByType));
+			UsersAdminUtil.getUserOrderByComparator(orderByCol, orderByType));
 	}
 
 	private static BaseModelSearchResult<User> _getBaseModelSearchResult(
@@ -245,8 +243,5 @@ public class AccountUserDisplaySearchContainerFactory {
 		_userGroupRoleLocalServiceSnapshot = new Snapshot<>(
 			AccountUserDisplaySearchContainerFactory.class,
 			UserGroupRoleLocalService.class);
-	private static final Snapshot<UsersAdmin> _usersAdminSnapshot =
-		new Snapshot<>(
-			AccountUserDisplaySearchContainerFactory.class, UsersAdmin.class);
 
 }

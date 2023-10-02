@@ -543,6 +543,27 @@ public interface ObjectActionModel
 	public void setParameters(String parameters);
 
 	/**
+	 * Returns the system of this object action.
+	 *
+	 * @return the system of this object action
+	 */
+	public boolean getSystem();
+
+	/**
+	 * Returns <code>true</code> if this object action is system.
+	 *
+	 * @return <code>true</code> if this object action is system; <code>false</code> otherwise
+	 */
+	public boolean isSystem();
+
+	/**
+	 * Sets whether this object action is system.
+	 *
+	 * @param system the system of this object action
+	 */
+	public void setSystem(boolean system);
+
+	/**
 	 * Returns the status of this object action.
 	 *
 	 * @return the status of this object action

@@ -14,16 +14,31 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 
 <c:choose>
 	<c:when test="<%= exception instanceof DLPreviewSizeException %>">
+
+		<%
+		DLPreviewSizeException dlPreviewSizeException = (DLPreviewSizeException)exception;
+		%>
+
 		<div class="preview-file-error-container">
-			<h3><liferay-ui:message key="file-too-big-to-preview" /></h3>
+			<h3><liferay-ui:message key="no-preview-available" /></h3>
 
 			<p class="text-secondary">
-				<liferay-ui:message key="file-exceeds-size-limit-to-preview-download-to-view-it" />
+
+				<%
+				long maxFileSize = dlPreviewSizeException.getMaxFileSize();
+
+				if (maxFileSize == 0) {
+					maxFileSize = DLProcessorRegistryUtil.getPreviewableProcessorMaxSize();
+				}
+				%>
+
+				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(maxFileSize, locale) %>" key="this-file-is-too-large-to-preview.-the-maximum-file-size-for-previews-is-x" />
 			</p>
 
 			<clay:link
-				displayType="secondary"
+				displayType="primary"
 				href="<%= DLURLHelperUtil.getDownloadURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, StringPool.BLANK) %>"
+				icon="download"
 				label="download"
 				title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(fileVersion.getSize(), locale), false) %>'
 				type="button"

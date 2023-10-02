@@ -8,23 +8,14 @@ import {Text, TreeView} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import Icon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {
-	API,
-	getLocalizableLabel,
-	stringIncludesQuery,
-} from '@liferay/object-js-components-web';
+import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import {openToast, sub} from 'frontend-js-web';
-import React, {useMemo} from 'react';
-import {
-	FlowElement,
-	Node,
-	isNode,
-	useStore,
-	useZoomPanHelper,
-} from 'react-flow-renderer';
+import React from 'react';
+import {Node, useStoreState, useZoomPanHelper} from 'react-flow-renderer';
 
 import './LeftSidebar.scss';
+import {getUpdatedModelBuilderStructurePayload} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {LeftSidebarItem, LeftSidebarObjectDefinitionItem} from '../types';
@@ -36,18 +27,22 @@ const TYPES_TO_SYMBOLS = {
 };
 
 export default function LeftSidebarTreeView({
-	query,
+	expandedKeys,
+	leftSidebarOtherObjectFoldersItems,
+	leftSidebarSelectedObjectFolderItem,
+	setExpandedKeys,
 	showActions,
 }: {
-	query: string;
+	expandedKeys: Set<React.Key>;
+	leftSidebarOtherObjectFoldersItems: LeftSidebarItem[];
+	leftSidebarSelectedObjectFolderItem: LeftSidebarItem;
+	setExpandedKeys: React.Dispatch<React.SetStateAction<Set<React.Key>>>;
 	showActions?: boolean;
 }) {
-	const [
-		{elements, leftSidebarItems, selectedObjectFolder},
-		dispatch,
-	] = useObjectFolderContext();
-	const store = useStore();
+	const [{selectedObjectFolder}, dispatch] = useObjectFolderContext();
 	const {setCenter} = useZoomPanHelper();
+
+	const {edges, nodes} = useStoreState((state) => state);
 
 	const changeObjectDefinitionNodeViewButton = (
 		hiddenObjectDefinitionNode: boolean,
@@ -67,27 +62,6 @@ export default function LeftSidebarTreeView({
 			symbol={hiddenObjectDefinitionNode ? 'hidden' : 'view'}
 		/>
 	);
-
-	const filteredLeftSidebarItems = useMemo(() => {
-		return leftSidebarItems.map((leftSidebarItem) => {
-			if (!leftSidebarItem.leftSidebarObjectDefinitionItems) {
-				return leftSidebarItem;
-			}
-
-			const newLeftSidebarObjectDefinitionItems = leftSidebarItem.leftSidebarObjectDefinitionItems.filter(
-				(leftSidebarObjectDefinitionItem) =>
-					stringIncludesQuery(
-						leftSidebarObjectDefinitionItem.label,
-						query
-					)
-			);
-
-			return {
-				...leftSidebarItem,
-				leftSidebarObjectDefinitionItems: newLeftSidebarObjectDefinitionItems,
-			};
-		});
-	}, [leftSidebarItems, query]);
 
 	const handleMove = async ({
 		objectDefinitionId,
@@ -119,46 +93,30 @@ export default function LeftSidebarTreeView({
 			};
 
 			try {
-				const movedObjectDefinition = (await API.save({
+				(await API.save({
 					item: objectDefinitionToBeMoved,
 					method: 'PATCH',
 					returnValue: true,
 					url: `/o/object-admin/v1.0/object-definitions/${objectDefinitionToBeMoved?.id}`,
 				})) as ObjectDefinition;
 
-				dispatch({
-					payload: {
-						newObjectDefinition: movedObjectDefinition,
-						selectedObjectFolderName: selectedObjectFolder.name,
-					},
-					type: TYPES.ADD_OBJECT_DEFINITION_TO_OBJECT_FOLDER,
-				});
+				setTimeout(async () => {
+					const payload = await getUpdatedModelBuilderStructurePayload(
+						selectedObjectFolder.name
+					);
 
-				const objectDefinitionNodeToBeMoved = elements.find(
-					(element) =>
-						isNode(element) &&
-						element.id === objectDefinitionToBeMoved!.id.toString()
-				) as FlowElement<ObjectDefinitionNodeData>;
-
-				if (
-					!objectDefinitionNodeToBeMoved.data?.linkedObjectDefinition
-				) {
 					dispatch({
-						payload: {
-							currentObjectFolderName: currentObjectFolder!.name,
-							deletedObjectDefinitionName:
-								movedObjectDefinition.name,
-						},
-						type: TYPES.DELETE_OBJECT_DEFINITION,
+						payload,
+						type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
 					});
-				}
+				}, 200);
 
 				openToast({
 					message: sub(
 						Liferay.Language.get('x-was-moved-successfully'),
 						`<strong>${getLocalizableLabel(
-							movedObjectDefinition.defaultLanguageId,
-							movedObjectDefinition.label
+							objectDefinitionToBeMoved.defaultLanguageId,
+							objectDefinitionToBeMoved.label
 						)}</strong>`
 					),
 					type: 'success',
@@ -176,18 +134,6 @@ export default function LeftSidebarTreeView({
 			type: TYPES.SET_OBJECT_FOLDER_NAME,
 		});
 	};
-
-	const leftSidebarOtherObjectFoldersItems = filteredLeftSidebarItems.filter(
-		(filteredLeftSidebarItem) =>
-			filteredLeftSidebarItem.objectFolderName !==
-			selectedObjectFolder.name
-	);
-
-	const leftSidebarSelectedObjectFolderItem = filteredLeftSidebarItems.find(
-		(filteredLeftSidebarItem) =>
-			filteredLeftSidebarItem.objectFolderName ===
-			selectedObjectFolder.name
-	) as LeftSidebarItem;
 
 	const linkedObjectDefinitions = leftSidebarSelectedObjectFolderItem.leftSidebarObjectDefinitionItems?.filter(
 		(leftSidebarObjectDefinitionItem) =>
@@ -224,26 +170,28 @@ export default function LeftSidebarTreeView({
 
 	return (
 		<TreeView<LeftSidebarItem | LeftSidebarObjectDefinitionItem>
+			expandedKeys={expandedKeys}
 			items={
 				showActions
 					? newLeftSidebarOtherObjectFolderItems
 					: [leftSidebarSelectedObjectFolderItem]
 			}
 			nestedKey="objectDefinitions"
+			onExpandedChange={setExpandedKeys}
 			onSelect={(item) => {
 				if (
-					selectedObjectFolder.objectDefinitions?.find(
-						(objectDefinition) =>
-							objectDefinition.id ===
-							(item as LeftSidebarObjectDefinitionItem).id
+					!showActions &&
+					selectedObjectFolder.objectFolderItems?.find(
+						(objectFolderItem) =>
+							objectFolderItem.objectDefinitionExternalReferenceCode ===
+							(item as LeftSidebarObjectDefinitionItem)
+								.externalReferenceCode
 					)
 				) {
-					const {edges, nodes} = store.getState();
-
 					dispatch({
 						payload: {
-							edges,
-							nodes,
+							objectDefinitionNodes: nodes,
+							objectRelationshipEdges: edges,
 							selectedObjectDefinitionId: (item as LeftSidebarObjectDefinitionItem).id.toString(),
 						},
 						type: TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE,
@@ -264,6 +212,7 @@ export default function LeftSidebarTreeView({
 						const y =
 							selectedObjectDefinitionNode.__rf.position.y +
 							selectedObjectDefinitionNode.__rf.height / 2;
+
 						setCenter(x, y, 1.2);
 					}
 				}
@@ -320,6 +269,8 @@ export default function LeftSidebarTreeView({
 												hiddenObjectFolderObjectDefinitionNodes:
 													leftSidebarItem.hiddenObjectFolderObjectDefinitionNodes,
 												leftSidebarItem,
+												objectDefinitionNodes: nodes,
+												objectRelationshipEdges: edges,
 											},
 											type: TYPES.BULK_CHANGE_NODE_VIEW,
 										})
@@ -382,6 +333,8 @@ export default function LeftSidebarTreeView({
 														hiddenObjectDefinitionNode,
 														objectDefinitionId: id,
 														objectDefinitionName: name,
+														objectDefinitionNodes: nodes,
+														objectRelationshipEdges: edges,
 														selectedSidebarItem: leftSidebarItem,
 													},
 													type:

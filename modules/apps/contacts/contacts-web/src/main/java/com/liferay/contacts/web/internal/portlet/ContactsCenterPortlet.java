@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.social.kernel.exception.NoSuchRelationException;
 import com.liferay.social.kernel.model.SocialRelation;
 import com.liferay.social.kernel.model.SocialRequest;
@@ -85,7 +86,6 @@ import com.liferay.social.kernel.model.SocialRequestConstants;
 import com.liferay.social.kernel.service.SocialRelationLocalService;
 import com.liferay.social.kernel.service.SocialRequestLocalService;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -775,9 +775,6 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		userNotificationEventLocalService;
 
 	@Reference
-	protected UsersAdmin usersAdmin;
-
-	@Reference
 	protected UserService userService;
 
 	private void _deleteEntry(ActionRequest actionRequest) throws Exception {
@@ -1179,9 +1176,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		usersAdmin.updateEmailAddresses(
+		UsersAdminUtil.updateEmailAddresses(
 			Contact.class.getName(), user.getContactId(),
-			usersAdmin.getEmailAddresses(actionRequest));
+			UsersAdminUtil.getEmailAddresses(actionRequest));
 	}
 
 	private void _updateAddresses(ActionRequest actionRequest)
@@ -1192,9 +1189,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		usersAdmin.updateAddresses(
+		UsersAdminUtil.updateAddresses(
 			Contact.class.getName(), user.getContactId(),
-			usersAdmin.getAddresses(actionRequest));
+			UsersAdminUtil.getAddresses(actionRequest));
 	}
 
 	private void _updateArchived(long userId, long userNotificationEventId)
@@ -1240,9 +1237,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		usersAdmin.updatePhones(
+		UsersAdminUtil.updatePhones(
 			Contact.class.getName(), user.getContactId(),
-			usersAdmin.getPhones(actionRequest));
+			UsersAdminUtil.getPhones(actionRequest));
 	}
 
 	private void _updateProfile(ActionRequest actionRequest) throws Exception {
@@ -1326,9 +1323,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		usersAdmin.updateWebsites(
+		UsersAdminUtil.updateWebsites(
 			Contact.class.getName(), user.getContactId(),
-			usersAdmin.getWebsites(actionRequest));
+			UsersAdminUtil.getWebsites(actionRequest));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

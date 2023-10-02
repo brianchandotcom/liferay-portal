@@ -81,8 +81,7 @@ public class UploadTempAssetCategoryAttachmentMVCActionCommand
 	protected AssetCategoryService assetCategoryService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UploadTempAssetCategoryAttachmentMVCActionCommand.
-			TempAssetCategoryAttachmentsUploadFileEntryHandler.class);
+		UploadTempAssetCategoryAttachmentMVCActionCommand.class);
 
 	private final AssetCategoryAttachmentsUploadResponseHandler
 		_assetCategoryAttachmentsUploadResponseHandler =

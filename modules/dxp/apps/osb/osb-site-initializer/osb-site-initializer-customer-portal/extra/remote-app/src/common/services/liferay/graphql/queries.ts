@@ -706,6 +706,36 @@ export const deleteAccountUserRoles = gql`
 	}
 `;
 
+export const createAccountUserRoles = gql`
+	mutation createAccountUserRoles(
+		$accountRoleId: Long!
+		$emailAddress: String!
+		$externalReferenceCode: String!
+	) {
+		createAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+			accountRoleId: $accountRoleId
+			emailAddress: $emailAddress
+			externalReferenceCode: $externalReferenceCode
+		)
+	}
+`;
+
+export const getAccountAccountRolesByExternalReferenceCode = gql`
+	query getAccountAccountRolesByExternalReferenceCode(
+		$externalReferenceCode: String
+	) {
+		accountAccountRolesByExternalReferenceCode(
+			externalReferenceCode: $externalReferenceCode
+		) {
+			items {
+				id
+				displayName
+				roleId
+			}
+		}
+	}
+`;
+
 export const deleteAccountUserAccount = gql`
 	mutation deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
 		$emailAddress: String!

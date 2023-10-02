@@ -20,7 +20,7 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 	<portlet:param name="redirect" value="<%= redirectURL %>" />
 </portlet:renderURL>
 
-<div class="sticky-top" style="top: 56px; z-index: 999;">
+<div class="sticky-top" style="top: var(--control-menu-container-height);">
 	<clay:management-toolbar
 		searchActionURL="<%= searchURL %>"
 		selectable="<%= false %>"

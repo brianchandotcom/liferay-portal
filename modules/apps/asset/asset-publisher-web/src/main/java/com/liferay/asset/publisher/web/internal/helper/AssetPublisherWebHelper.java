@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -501,12 +501,12 @@ public class AssetPublisherWebHelper {
 			}
 
 			if (checkPermission) {
-				return _groupPermission.contains(
+				return GroupPermissionUtil.contains(
 					permissionChecker, group, ActionKeys.UPDATE);
 			}
 		}
 		else if ((groupId != companyGroupId) && checkPermission) {
-			return _groupPermission.contains(
+			return GroupPermissionUtil.contains(
 				permissionChecker, groupId, ActionKeys.UPDATE);
 		}
 
@@ -683,9 +683,6 @@ public class AssetPublisherWebHelper {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;

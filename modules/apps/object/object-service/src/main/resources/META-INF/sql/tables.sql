@@ -18,6 +18,7 @@ create table ObjectAction (
 	objectActionExecutorKey VARCHAR(255) null,
 	objectActionTriggerKey VARCHAR(75) null,
 	parameters TEXT null,
+	system_ BOOLEAN,
 	status INTEGER
 );
 
@@ -260,6 +261,7 @@ create table ObjectRelationship (
 	label STRING null,
 	name VARCHAR(75) null,
 	reverse BOOLEAN,
+	system_ BOOLEAN,
 	type_ VARCHAR(75) null
 );
 
@@ -305,6 +307,7 @@ create table ObjectStateTransition (
 create table ObjectValidationRule (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	objectValidationRuleId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

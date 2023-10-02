@@ -90,8 +90,14 @@ export default function LinkField({field, onValueSelect, value}) {
 				nextValue,
 				languageId,
 				getFieldValue
-			).then((href) =>
-				setMappedHrefPreview(typeof href === 'string' ? href : '')
+			).then((fieldValue) =>
+				setMappedHrefPreview(
+					fieldValue.url
+						? fieldValue.url
+						: typeof fieldValue === 'string'
+						? fieldValue
+						: ''
+				)
 			);
 		}
 		else {

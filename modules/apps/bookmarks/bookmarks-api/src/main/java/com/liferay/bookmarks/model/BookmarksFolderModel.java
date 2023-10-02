@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -31,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface BookmarksFolderModel
-	extends BaseModel<BookmarksFolder>, ContainerModel, MVCCModel, ShardedModel,
+	extends BaseModel<BookmarksFolder>, ContainerModel,
+			CTModel<BookmarksFolder>, MVCCModel, ShardedModel,
 			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/*
@@ -45,6 +47,7 @@ public interface BookmarksFolderModel
 	 *
 	 * @return the primary key of this bookmarks folder
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -52,6 +55,7 @@ public interface BookmarksFolderModel
 	 *
 	 * @param primaryKey the primary key of this bookmarks folder
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -69,6 +73,22 @@ public interface BookmarksFolderModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this bookmarks folder.
+	 *
+	 * @return the ct collection ID of this bookmarks folder
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this bookmarks folder.
+	 *
+	 * @param ctCollectionId the ct collection ID of this bookmarks folder
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this bookmarks folder.

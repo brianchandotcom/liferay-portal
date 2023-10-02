@@ -5,7 +5,7 @@
 
 package com.liferay.trash.taglib.internal.servlet;
 
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.trash.TrashHelper;
 
 import javax.servlet.ServletContext;

@@ -20,7 +20,7 @@ import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.internal.helper.LayoutClassedModelUsagesHelper;
 import com.liferay.layout.util.LayoutsTree;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.service.SegmentsExperienceLocalService;

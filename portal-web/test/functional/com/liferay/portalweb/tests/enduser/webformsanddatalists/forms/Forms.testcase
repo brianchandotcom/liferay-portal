@@ -225,7 +225,7 @@ definition {
 			category = "Content & Data",
 			portlet = "Forms");
 
-		FormsAdminNavigator.gotoAddForm();
+		LexiconEntry.gotoAdd();
 
 		Form.editName();
 
@@ -613,7 +613,7 @@ definition {
 	@description = "Verify that a Form can be deleted"
 	@priority = 5
 	test CanBeDeleted {
-		FormsAdmin.addForm();
+		FormsAdminNavigator.gotoNewForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -630,6 +630,10 @@ definition {
 			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
 
 		FormsAdmin.deleteForm(formName = "Form 1");
+
+		Alert.viewSuccessMessage();
+
+		FormsAdmin.viewNoForms();
 	}
 
 	@description = "Verify that a Form can be duplicated"
@@ -1217,13 +1221,9 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
-
-		Navigator.gotoNavItem(navItem = "Data Providers");
-
-		FormsAdminNavigator.gotoAddDataProvider();
+		FormsAdminNavigator.gotoRESTDataProvider();
 
 		FormsAdmin.editDataProvider(
 			name = "Liferay Countries",
@@ -2183,7 +2183,7 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -2377,6 +2377,85 @@ definition {
 		FormFields.viewOptionsRowFieldValue(
 			fieldValue = "<test 2",
 			rowNumber = 2);
+	}
+
+	@description = "LPS-177877 - Verify that when reloading the widget page the scroll position still at the top"
+	@priority = 4
+	test ViewWidgetPageAtTheTop {
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given an created Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+
+			PortletEntry.publish();
+
+			Navigator.openURL();
+		}
+
+		task ("and Given an created Form with a text field") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.addTextField(fieldPositionNumber = 0);
+
+			Form.publishForm();
+		}
+
+		task ("When the user creates a Widget page with an asset publisher rendering dynamic content on top") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Form Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Form Page",
+				widgetName = "Asset Publisher");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Form Page",
+				widgetName = "Form");
+
+			Navigator.gotoPage(pageName = "Form Page");
+
+			AssetPublisherPortlet.gotoConfigurationPG();
+
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_DYNAMIC");
+
+			IFrame.closeFrame();
+
+			FormPortletNavigator.gotoSelectForm();
+
+			FormPortletConfiguration.selectForm(formName = "Form 1");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+		}
+
+		task ("and When the user leaves the page, returns to the page and refreshes") {
+			Navigator.openURL();
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest/form-page");
+
+			Refresh();
+		}
+
+		task ("Then the widget page the scroll position still at the top") {
+			AssertVisible(
+				key_assetTitle = "WC WebContent Title",
+				key_viewCount = "WC WebContent Content",
+				locator1 = "APAsset#ASSET_VIEW_COUNT");
+		}
 	}
 
 	@description = "Verify that a Form autosaves after 1 minute by default"

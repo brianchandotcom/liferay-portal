@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -177,15 +176,6 @@ public class ObjectValidationRuleResourceImpl
 			Long objectDefinitionId, ObjectValidationRule objectValidationRule)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187846") &&
-			(ArrayUtil.isNotEmpty(
-				objectValidationRule.getObjectValidationRuleSettings()) ||
-			 Validator.isNotNull(
-				 objectValidationRule.getOutputTypeAsString()))) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		boolean system = false;
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
@@ -194,6 +184,7 @@ public class ObjectValidationRuleResourceImpl
 
 		return _toObjectValidationRule(
 			_objectValidationRuleService.addObjectValidationRule(
+				objectValidationRule.getExternalReferenceCode(),
 				objectDefinitionId,
 				GetterUtil.getBoolean(objectValidationRule.getActive()),
 				objectValidationRule.getEngine(),
@@ -217,15 +208,6 @@ public class ObjectValidationRuleResourceImpl
 			ObjectValidationRule objectValidationRule)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187846") &&
-			(ArrayUtil.isNotEmpty(
-				objectValidationRule.getObjectValidationRuleSettings()) ||
-			 Validator.isNotNull(
-				 objectValidationRule.getOutputTypeAsString()))) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		com.liferay.object.model.ObjectValidationRule
 			serviceBuilderObjectValidationRule =
 				_objectValidationRuleLocalService.getObjectValidationRule(
@@ -233,6 +215,7 @@ public class ObjectValidationRuleResourceImpl
 
 		return _toObjectValidationRule(
 			_objectValidationRuleService.updateObjectValidationRule(
+				objectValidationRule.getExternalReferenceCode(),
 				objectValidationRuleId, objectValidationRule.getActive(),
 				objectValidationRule.getEngine(),
 				LocalizedMapUtil.getLocalizedMap(
@@ -255,9 +238,7 @@ public class ObjectValidationRuleResourceImpl
 		ObjectValidationRule objectValidationRule,
 		ObjectValidationRule existingObjectValidationRule) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187846") ||
-			(objectValidationRule.getObjectValidationRuleSettings() == null)) {
-
+		if (objectValidationRule.getObjectValidationRuleSettings() == null) {
 			return;
 		}
 

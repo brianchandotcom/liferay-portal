@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
@@ -21,18 +22,21 @@ const EXECUTION_MODES = {
 			'reindex-mode-concurrent-description'
 		),
 		label: Liferay.Language.get('concurrent'),
+		showBetaBadge: true,
 		symbol: 'change-list',
 		value: 'concurrent',
 	},
-	REGULAR: {
+	FULL: {
 		description: Liferay.Language.get('reindex-mode-full-description'),
 		label: Liferay.Language.get('full'),
+		showBetaBadge: false,
 		symbol: 'globe-lines',
-		value: 'regular',
+		value: 'full',
 	},
 	SYNC: {
 		description: Liferay.Language.get('reindex-mode-sync-description'),
 		label: Liferay.Language.get('sync'),
+		showBetaBadge: true,
 		symbol: 'reload',
 		value: 'sync',
 	},
@@ -60,7 +64,7 @@ function ExecutionOptions({
 	virtualInstances = [],
 }) {
 	const [executionMode, setExecutionMode] = useState(
-		initialExecutionMode || EXECUTION_MODES.REGULAR.value
+		initialExecutionMode || EXECUTION_MODES.FULL.value
 	);
 	const [
 		executionModeDropdownActive,
@@ -107,7 +111,11 @@ function ExecutionOptions({
 
 	return (
 		<div className="execution-scope-sheet sheet sheet-lg">
-			{Liferay.FeatureFlags['LPS-183661'] && isConcurrentModeSupported && (
+			<h2 className="sheet-title">
+				{Liferay.Language.get('configuration')}
+			</h2>
+
+			{isConcurrentModeSupported && (
 				<div className="c-mb-1 sheet-section">
 					<div
 						className="sheet-subtitle text-secondary"
@@ -117,10 +125,6 @@ function ExecutionOptions({
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="executionMode">
-							{Liferay.Language.get('reindex-mode')}
-						</label>
-
 						<ClayButton
 							className="form-control form-control-select"
 							displayType="secondary"
@@ -155,38 +159,56 @@ function ExecutionOptions({
 						>
 							<ClayDropDown.ItemList>
 								{[
-									EXECUTION_MODES.REGULAR,
+									EXECUTION_MODES.FULL,
 									EXECUTION_MODES.CONCURRENT,
 									EXECUTION_MODES.SYNC,
-								].map(({description, label, symbol, value}) => {
-									return (
-										<ClayDropDown.Item
-											className="c-pb-2 c-pt-2"
-											key={value}
-											onClick={() =>
-												_handleExecutionModeChange(
-													value
-												)
-											}
-										>
-											<div className="d-flex">
-												<div className="c-mr-2">
-													<ClayIcon symbol={symbol} />
-												</div>
-
-												<div className="autofit-col-expand c-ml-2">
-													<div className="list-group-title">
-														{label}
+								].map(
+									({
+										description,
+										label,
+										showBetaBadge,
+										symbol,
+										value,
+									}) => {
+										return (
+											<ClayDropDown.Item
+												className="c-pb-2 c-pt-2"
+												key={value}
+												onClick={() =>
+													_handleExecutionModeChange(
+														value
+													)
+												}
+											>
+												<div className="d-flex">
+													<div className="c-mr-2">
+														<ClayIcon
+															symbol={symbol}
+														/>
 													</div>
 
-													<div className="list-group-subtext">
-														{description}
+													<div className="autofit-col-expand c-ml-2">
+														<div className="list-group-title">
+															{label}
+
+															{showBetaBadge && (
+																<ClayBadge
+																	className="c-ml-1"
+																	displayType="beta"
+																	label="beta"
+																/>
+															)}
+														</div>
+
+														<div className="list-group-subtext">
+															{description}
+														</div>
 													</div>
 												</div>
-											</div>
-										</ClayDropDown.Item>
-									);
-								})}
+											</ClayDropDown.Item>
+										);
+									}
+								)}
 							</ClayDropDown.ItemList>
 						</ClayDropDown.Menu>
 
@@ -202,44 +224,23 @@ function ExecutionOptions({
 			)}
 
 			<div className="sheet-section">
-				{Liferay.FeatureFlags['LPS-183661'] ? (
-					<div
-						className="sheet-subtitle text-secondary"
-						style={{textTransform: 'none'}}
-					>
-						<span>{Liferay.Language.get('reindex-scope')}</span>
+				<div
+					className="sheet-subtitle text-secondary"
+					style={{textTransform: 'none'}}
+				>
+					<span>{Liferay.Language.get('reindex-scope')}</span>
 
-						<ClayTooltipProvider>
-							<ClaySticker
-								data-tooltip-align="bottom-left"
-								displayType="secondary"
-								size="sm"
-								title={Liferay.Language.get(
-									'execution-scope-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</ClaySticker>
-						</ClayTooltipProvider>
-					</div>
-				) : (
-					<h2 className="sheet-title">
-						{Liferay.Language.get('execution-scope')}
-
-						<ClayTooltipProvider>
-							<ClaySticker
-								data-tooltip-align="bottom-left"
-								displayType="secondary"
-								size="md"
-								title={Liferay.Language.get(
-									'execution-scope-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</ClaySticker>
-						</ClayTooltipProvider>
-					</h2>
-				)}
+					<ClayTooltipProvider>
+						<ClaySticker
+							data-tooltip-align="bottom-left"
+							displayType="secondary"
+							size="sm"
+							title={Liferay.Language.get('execution-scope-help')}
+						>
+							<ClayIcon symbol="question-circle-full" />
+						</ClaySticker>
+					</ClayTooltipProvider>
+				</div>
 
 				<ClayRadioGroup
 					className="c-pb-2"

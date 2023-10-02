@@ -22,7 +22,7 @@ import {
 	ObjectRelationshipType,
 	useObjectRelationshipForm,
 } from './ObjectRelationshipFormBase';
-import SelectRelationship from './SelectRelationship';
+import SelectObjectRelationship from './SelectObjectRelationship';
 
 interface EditRelationshipProps {
 	baseResourceURL: string;
@@ -73,7 +73,10 @@ export default function EditRelationship({
 		parameterRequired,
 	});
 
-	const readOnly = !hasUpdateObjectDefinitionPermission || values.reverse;
+	const readOnly =
+		!hasUpdateObjectDefinitionPermission ||
+		values.reverse ||
+		initialValues.system;
 
 	return (
 		<SidePanelForm
@@ -113,7 +116,7 @@ export default function EditRelationship({
 					baseResourceURL={baseResourceURL}
 					errors={errors}
 					handleChange={handleChange}
-					objectDefinitionExternalReferenceCode={
+					objectDefinitionExternalReferenceCode1={
 						objectDefinitionExternalReferenceCode
 					}
 					readonly
@@ -122,7 +125,10 @@ export default function EditRelationship({
 				/>
 
 				<SingleSelect
-					disabled={readOnly}
+					disabled={
+						readOnly ||
+						(Liferay.FeatureFlags['LPS-187142'] && values.edge)
+					}
 					label={Liferay.Language.get('deletion-type')}
 					onChange={(deletionType) =>
 						setValues({deletionType: deletionType.value})
@@ -142,9 +148,9 @@ export default function EditRelationship({
 							value={restContextPath}
 						/>
 
-						<SelectRelationship
+						<SelectObjectRelationship
 							error={errors.parameterObjectFieldName}
-							objectDefinitionExternalReferenceCode={
+							objectDefinitionExternalReferenceCode1={
 								values.objectDefinitionExternalReferenceCode2 as string
 							}
 							onChange={(parameterObjectFieldName) =>

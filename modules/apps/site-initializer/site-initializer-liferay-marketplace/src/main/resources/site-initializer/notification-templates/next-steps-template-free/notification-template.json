@@ -1,0 +1,24 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"externalReferenceCode": "MARKETPLACE-ACTION-DXP-FREE-EMAIL-TEMPLATE",
+	"name": "Next Steps Email Free MarketPlace",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "[%CURRENT_USER_EMAIL_ADDRESS%]",
+			"fromName": {
+				"en-US": "[%CURRENT_USER_FIRST_NAME%]"
+			},
+			"to": {
+				"en-US": "[%GETAPPINFORMATION_AUTHOR_EMAIL_ADDRESS%]"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "Next steps on [%GETAPPINFORMATION_PROJECTNAME%] purchase"
+	},
+	"type": "email"
+}

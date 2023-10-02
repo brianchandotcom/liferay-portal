@@ -90,7 +90,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "type=" + DLProcessorConstants.PDF_PROCESSOR,
-	service = {DLProcessor.class, PDFProcessor.class}
+	service = DLProcessor.class
 )
 public class PDFProcessorImpl
 	extends DLPreviewableProcessor implements PDFProcessor {

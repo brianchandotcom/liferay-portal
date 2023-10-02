@@ -7,8 +7,8 @@ package com.liferay.multi.factor.authentication.email.otp.web.internal.portlet;
 
 import com.liferay.multi.factor.authentication.email.otp.web.internal.constants.MFAEmailOTPPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.security.auth.InterruptedPortletRequestWhitelistUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.security.auth.InterruptedPortletRequestWhitelistUtil;
 import com.liferay.portal.util.PropsValues;
 
 import javax.portlet.Portlet;
@@ -17,7 +17,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tomas Polesovsky
@@ -49,7 +48,7 @@ public class MFAEmailOTPVerifyPortlet extends MVCPortlet {
 			PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST,
 			MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY);
 
-		_interruptedPortletRequestWhitelistUtil.
+		InterruptedPortletRequestWhitelistUtil.
 			resetPortletInvocationWhitelist();
 	}
 
@@ -59,12 +58,8 @@ public class MFAEmailOTPVerifyPortlet extends MVCPortlet {
 			PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST,
 			MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY);
 
-		_interruptedPortletRequestWhitelistUtil.
+		InterruptedPortletRequestWhitelistUtil.
 			resetPortletInvocationWhitelist();
 	}
-
-	@Reference
-	private InterruptedPortletRequestWhitelistUtil
-		_interruptedPortletRequestWhitelistUtil;
 
 }

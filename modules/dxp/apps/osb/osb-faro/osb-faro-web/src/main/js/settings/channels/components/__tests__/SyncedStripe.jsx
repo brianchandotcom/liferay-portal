@@ -37,13 +37,13 @@ describe('SyncedStripe', () => {
 				if (channelsSyncedCount === 1) {
 					expect(
 						queryByText(
-							`There is ${sitesSyncedCount} Site and ${channelsSyncedCount} Channel synced to this property.`
+							`There is ${sitesSyncedCount} site and ${channelsSyncedCount} channel synced to this property.`
 						)
 					).toBeInTheDocument();
 				} else {
 					expect(
 						queryByText(
-							`There is ${sitesSyncedCount} Site and ${channelsSyncedCount} Channels synced to this property.`
+							`There is ${sitesSyncedCount} site and ${channelsSyncedCount} channels synced to this property.`
 						)
 					).toBeInTheDocument();
 				}
@@ -51,13 +51,13 @@ describe('SyncedStripe', () => {
 				if (channelsSyncedCount === 1) {
 					expect(
 						queryByText(
-							`There are ${sitesSyncedCount} Sites and ${channelsSyncedCount} Channel synced to this property.`
+							`There are ${sitesSyncedCount} sites and ${channelsSyncedCount} channel synced to this property.`
 						)
 					).toBeInTheDocument();
 				} else {
 					expect(
 						queryByText(
-							`There are ${sitesSyncedCount} Sites and ${channelsSyncedCount} Channels synced to this property.`
+							`There are ${sitesSyncedCount} sites and ${channelsSyncedCount} channels synced to this property.`
 						)
 					).toBeInTheDocument();
 				}
@@ -83,21 +83,21 @@ describe('getTitle', () => {
 			if (sitesSyncedCount === 1) {
 				if (channelsSyncedCount === 1) {
 					expect(title).toEqual(
-						`There is 1 Site and ${channelsSyncedCount} Channel synced to this property.`
+						`There is 1 site and ${channelsSyncedCount} channel synced to this property.`
 					);
 				} else {
 					expect(title).toEqual(
-						`There is 1 Site and ${channelsSyncedCount} Channels synced to this property.`
+						`There is 1 site and ${channelsSyncedCount} channels synced to this property.`
 					);
 				}
 			} else {
 				if (channelsSyncedCount === 1) {
 					expect(title).toEqual(
-						`There are ${sitesSyncedCount} Sites and 1 Channel synced to this property.`
+						`There are ${sitesSyncedCount} sites and 1 channel synced to this property.`
 					);
 				} else {
 					expect(title).toEqual(
-						`There are ${sitesSyncedCount} Sites and ${channelsSyncedCount} Channels synced to this property.`
+						`There are ${sitesSyncedCount} sites and ${channelsSyncedCount} channels synced to this property.`
 					);
 				}
 			}

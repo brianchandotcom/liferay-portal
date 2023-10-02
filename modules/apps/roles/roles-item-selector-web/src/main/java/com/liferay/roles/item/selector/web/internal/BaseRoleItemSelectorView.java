@@ -17,12 +17,12 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.roles.admin.search.RoleSearch;
 import com.liferay.roles.admin.search.RoleSearchTerms;
 import com.liferay.roles.item.selector.web.internal.constants.RoleItemSelectorViewConstants;
 import com.liferay.roles.item.selector.web.internal.display.context.RoleItemSelectorViewDisplayContext;
 import com.liferay.roles.item.selector.web.internal.search.RoleItemSelectorChecker;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 
@@ -117,9 +117,6 @@ public abstract class BaseRoleItemSelectorView<T extends ItemSelectorCriterion>
 	)
 	protected ServletContext servletContext;
 
-	@Reference
-	protected UsersAdmin usersAdmin;
-
 	private SearchContainer<Role> _getSearchContainer(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		long[] checkedRoleIds, String[] excludedRoleNames, int type) {
@@ -132,7 +129,7 @@ public abstract class BaseRoleItemSelectorView<T extends ItemSelectorCriterion>
 
 		searchContainer.setEmptyResultsMessage("no-roles-were-found");
 		searchContainer.setOrderByComparator(
-			usersAdmin.getRoleOrderByComparator(
+			UsersAdminUtil.getRoleOrderByComparator(
 				searchContainer.getOrderByCol(),
 				searchContainer.getOrderByType()));
 

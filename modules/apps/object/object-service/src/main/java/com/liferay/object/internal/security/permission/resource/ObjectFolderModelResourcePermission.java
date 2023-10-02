@@ -63,7 +63,7 @@ public class ObjectFolderModelResourcePermission
 
 		if (objectFolderId == 0) {
 			objectFolder =
-				_objectFolderLocalService.addOrGetUncategorizedObjectFolder(
+				_objectFolderLocalService.getUncategorizedObjectFolder(
 					permissionChecker.getCompanyId());
 		}
 		else {

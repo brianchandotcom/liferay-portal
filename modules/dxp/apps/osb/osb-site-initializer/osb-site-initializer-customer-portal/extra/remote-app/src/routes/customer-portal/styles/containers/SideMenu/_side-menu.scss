@@ -1,7 +1,8 @@
 .cp-side-menu {
+	border-radius: 10px;
 	min-height: 83.3vh;
 	min-width: 240px;
-	width: 240px;
+	width: 280px !important;
 
 	.cp-menu-btn-active {
 		background-color: var(--color-action-primary-active-lighten);

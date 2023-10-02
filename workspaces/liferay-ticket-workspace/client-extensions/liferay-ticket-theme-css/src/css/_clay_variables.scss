@@ -1,0 +1,18 @@
+liferay-ticket-ui section main .rdg {
+	--rdg-color-scheme: dark;
+	--rdg-background-color: #000;
+	--rdg-color: #fff;
+	--rdg-border-color: #4c5672;
+	--rdg-summary-border-color: #4c5672;
+	--rdg-background-color: hsl(0deg 100% 0%);
+	--rdg-header-background-color: hsl(0deg 97.5% 0%);
+	--rdg-row-hover-background-color: hsl(0deg 96% 0%);
+	--rdg-row-selected-background-color: hsl(207deg 92% 76%);
+	--rdg-row-selected-hover-background-color: hsl(207deg 88% 76%);
+	--rdg-checkbox-color: hsl(207deg 100% 29%);
+	--rdg-checkbox-focus-color: hsl(207deg 100% 69%);
+	--rdg-checkbox-disabled-border-color: #ccc;
+	--rdg-checkbox-disabled-background-color: #ddd;
+	--rdg-selection-color: #66afe9;
+	--rdg-font-size: 14px;
+}

@@ -66,6 +66,7 @@ function PreviewSelector({
 			/>
 
 			<Picker
+				UNSAFE_menuClassName="cadmin"
 				aria-labelledBy={previewByLabelId}
 				as={TriggerLabel}
 				id={previewById}

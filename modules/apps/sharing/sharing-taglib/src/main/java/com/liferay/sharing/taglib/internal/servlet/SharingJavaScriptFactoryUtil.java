@@ -5,7 +5,7 @@
 
 package com.liferay.sharing.taglib.internal.servlet;
 
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 
 /**

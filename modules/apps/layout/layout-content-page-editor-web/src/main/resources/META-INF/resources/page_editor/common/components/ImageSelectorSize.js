@@ -225,9 +225,11 @@ export function ImageSelectorSize({
 					<ClayForm.FeedbackItem className="font-weight-normal text-2">
 						<ClayForm.FeedbackIndicator symbol="warning-full" />
 
-						{Liferay.Language.get(
-							'big-image-file-size-used-please-consider-configuring-adaptive-media-lazy-loading-or-reducing-the-image-size'
-						)}
+						{`${Liferay.Language.get(
+							'big-image-file-size-used'
+						)} ${Liferay.Language.get(
+							'please-consider-configuring-adaptive-media-lazy-loading-or-reducing-the-image-size'
+						)}`}
 					</ClayForm.FeedbackItem>
 				</ClayForm.FeedbackGroup>
 			) : null}

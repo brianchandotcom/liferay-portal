@@ -225,50 +225,143 @@
 										"pageElements": [
 											{
 												"definition": {
-													"fragment": {
-														"key": "DIALECT-dialect-text"
-													},
-													"fragmentConfig": {
-														"textType": "h1",
-														"truncateText": false
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"ar_SA": "MDF Claim",
-																		"ca_ES": "MDF Claim",
-																		"de_DE": "MDF Claim",
-																		"en_US": "MDF Claim",
-																		"es_ES": "MDF Claim",
-																		"fi_FI": "MDF Claim",
-																		"fr_FR": "MDF Claim",
-																		"hu_HU": "MDF Claim",
-																		"ja_JP": "MDF Claim",
-																		"nl_NL": "MDF Claim",
-																		"pt_BR": "MDF Claim",
-																		"sv_SE": "MDF Claim",
-																		"zh_CN": "MDF Claim"
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"contentDisplay": "FlexRow",
+														"justify": "SpaceBetween"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "dialect-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h1",
+																"truncateText": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "MDF Claim",
+																				"ca_ES": "MDF Claim",
+																				"de_DE": "MDF Claim",
+																				"en_US": "MDF Claim",
+																				"es_ES": "MDF Claim",
+																				"fi_FI": "MDF Claim",
+																				"fr_FR": "MDF Claim",
+																				"hu_HU": "MDF Claim",
+																				"ja_JP": "MDF Claim",
+																				"nl_NL": "MDF Claim",
+																				"pt_BR": "MDF Claim",
+																				"sv_SE": "MDF Claim",
+																				"zh_CN": "MDF Claim"
+																			}
+																		}
 																	}
 																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"borderRadius": "",
-														"fontWeight": "fontWeightBold",
-														"paddingBottom": "1",
-														"shadow": "",
-														"textAlign": "",
-														"textColor": "colorNeutral10"
+															],
+															"fragmentStyle": {
+																"borderRadius": "",
+																"fontWeight": "fontWeightBold",
+																"paddingBottom": "1",
+																"shadow": "",
+																"textAlign": "",
+																"textColor": "colorNeutral10"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
 													},
-													"indexed": true
-												},
-												"type": "Fragment"
+													{
+														"definition": {
+															"fragment": {
+																"key": "dialect-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h1",
+																"truncateText": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "-",
+																				"ca_ES": "-",
+																				"de_DE": "-",
+																				"en_US": "-",
+																				"es_ES": "-",
+																				"fi_FI": "-",
+																				"fr_FR": "-",
+																				"hu_HU": "-",
+																				"ja_JP": "-",
+																				"nl_NL": "-",
+																				"pt_BR": "-",
+																				"sv_SE": "-",
+																				"zh_CN": "-"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"borderRadius": "",
+																"fontWeight": "fontWeightBold",
+																"marginLeft": "2",
+																"marginRight": "2",
+																"shadow": "",
+																"textAlign": "",
+																"textColor": "colorNeutral10"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "dialect-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h1"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "ObjectEntry_objectEntryId",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontWeight": "fontWeightBold"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
 											},
 											{
 												"definition": {

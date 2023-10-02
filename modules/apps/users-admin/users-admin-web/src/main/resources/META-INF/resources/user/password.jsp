@@ -184,7 +184,8 @@ else {
 		if (reminderQueryQuestionSelect) {
 			reminderQueryQuestionSelect.addEventListener('change', (event) => {
 				var customQuestion =
-					event.currentTarget.value === '<%= UsersAdmin.CUSTOM_QUESTION %>';
+					event.currentTarget.value ===
+					'<%= UsersAdminUtil.CUSTOM_QUESTION %>';
 
 				var focusInput;
 

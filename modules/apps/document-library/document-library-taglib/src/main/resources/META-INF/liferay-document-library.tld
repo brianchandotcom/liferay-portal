@@ -48,4 +48,22 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<description>Creates a progress bar for items being uploaded.</description>
+		<name>upload-progress</name>
+		<tag-class>com.liferay.taglib.ui.UploadProgressTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>An ID for the component instance.</description>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A message to label the component.</description>
+			<name>message</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

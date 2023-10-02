@@ -185,7 +185,7 @@ describe('ImageSelectorSize', () => {
 
 		expect(
 			getByText(
-				'big-image-file-size-used-please-consider-configuring-adaptive-media-lazy-loading-or-reducing-the-image-size'
+				'big-image-file-size-used please-consider-configuring-adaptive-media-lazy-loading-or-reducing-the-image-size'
 			)
 		).toBeInTheDocument();
 	});

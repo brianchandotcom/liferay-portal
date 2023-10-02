@@ -200,6 +200,8 @@ public class CommerceOrderItemFDSDataProvider
 				stringJoiner.add(keyValuePair.getValue());
 			}
 
+			String unitOfMeasureKey = commerceOrderItem.getUnitOfMeasureKey();
+
 			orderItems.add(
 				new OrderItem(
 					commerceOrderItem.getDeliveryGroup(),
@@ -209,7 +211,7 @@ public class CommerceOrderItemFDSDataProvider
 						_cpInstanceUnitOfMeasureLocalService.
 							fetchCPInstanceUnitOfMeasure(
 								commerceOrderItem.getCPInstanceId(),
-								commerceOrderItem.getUnitOfMeasureKey()),
+								unitOfMeasureKey),
 						locale),
 					new ImageField(
 						name, "rounded", "lg", _getImage(commerceOrderItem)),
@@ -227,7 +229,8 @@ public class CommerceOrderItemFDSDataProvider
 						commerceOrderItem, httpServletRequest),
 					_getSubscriptionPeriod(
 						commerceOrderItem, httpServletRequest),
-					_getTotal(commerceOrderItemPrice, locale)));
+					_getTotal(commerceOrderItemPrice, locale),
+					unitOfMeasureKey));
 		}
 
 		return orderItems;

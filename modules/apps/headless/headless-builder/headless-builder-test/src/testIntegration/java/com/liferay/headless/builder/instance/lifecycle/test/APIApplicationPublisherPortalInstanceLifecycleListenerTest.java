@@ -5,6 +5,7 @@
 
 package com.liferay.headless.builder.instance.lifecycle.test;
 
+import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.headless.builder.util.APIApplicationTestUtil;
 import com.liferay.object.model.ObjectEntry;
@@ -111,9 +112,12 @@ public class APIApplicationPublisherPortalInstanceLifecycleListenerTest
 						"path",
 						StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
 					).put(
-						"retrieveType", "collection"
+						"retrieveType",
+						APIApplication.Endpoint.RetrieveType.COLLECTION.
+							getValue()
 					).put(
-						"scope", "company"
+						"scope",
+						APIApplication.Endpoint.Scope.COMPANY.getValue()
 					))
 			).put(
 				"apiApplicationToAPISchemas",

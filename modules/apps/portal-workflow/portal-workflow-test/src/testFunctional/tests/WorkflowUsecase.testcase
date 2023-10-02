@@ -466,7 +466,6 @@ definition {
 
 	@priority = 4
 	test AddWebContentWithCategorySpecificDefinition {
-		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

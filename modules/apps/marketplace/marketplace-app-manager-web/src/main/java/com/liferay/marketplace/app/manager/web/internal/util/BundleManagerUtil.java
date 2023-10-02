@@ -6,7 +6,7 @@
 package com.liferay.marketplace.app.manager.web.internal.util;
 
 import com.liferay.marketplace.bundle.BundleManager;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 

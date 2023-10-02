@@ -31,7 +31,8 @@ public class ObjectValidationRuleServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectValidationRule
 			addObjectValidationRule(
-				long objectDefinitionId, boolean active, String engine,
+				String externalReferenceCode, long objectDefinitionId,
+				boolean active, String engine,
 				java.util.Map<java.util.Locale, String> errorLabelMap,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String outputType, String script, boolean system,
@@ -41,8 +42,9 @@ public class ObjectValidationRuleServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectValidationRuleService.addObjectValidationRule(
-			objectDefinitionId, active, engine, errorLabelMap, nameMap,
-			outputType, script, system, objectValidationRuleSettings);
+			externalReferenceCode, objectDefinitionId, active, engine,
+			errorLabelMap, nameMap, outputType, script, system,
+			objectValidationRuleSettings);
 	}
 
 	@Override
@@ -76,7 +78,8 @@ public class ObjectValidationRuleServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectValidationRule
 			updateObjectValidationRule(
-				long objectValidationRuleId, boolean active, String engine,
+				String externalReferenceCode, long objectValidationRuleId,
+				boolean active, String engine,
 				java.util.Map<java.util.Locale, String> errorLabelMap,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String outputType, String script,
@@ -86,8 +89,9 @@ public class ObjectValidationRuleServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectValidationRuleService.updateObjectValidationRule(
-			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
-			outputType, script, objectValidationRuleSettings);
+			externalReferenceCode, objectValidationRuleId, active, engine,
+			errorLabelMap, nameMap, outputType, script,
+			objectValidationRuleSettings);
 	}
 
 	@Override

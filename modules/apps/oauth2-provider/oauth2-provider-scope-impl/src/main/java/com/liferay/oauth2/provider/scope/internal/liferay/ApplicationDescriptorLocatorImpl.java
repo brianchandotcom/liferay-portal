@@ -10,7 +10,7 @@ import com.liferay.oauth2.provider.scope.liferay.spi.ApplicationDescriptorLocato
 import com.liferay.oauth2.provider.scope.spi.application.descriptor.ApplicationDescriptor;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

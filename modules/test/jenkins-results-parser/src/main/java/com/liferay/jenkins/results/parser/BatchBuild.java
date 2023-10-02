@@ -34,10 +34,10 @@ import org.json.JSONObject;
 /**
  * @author Kevin Yen
  */
-public class BatchBuild extends BaseBuild {
+public class BatchBuild extends BaseParentBuild {
 
 	@Override
-	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+	public void addTimelineData(TimelineData timelineData) {
 		addDownstreamBuildsTimelineData(timelineData);
 	}
 
@@ -85,7 +85,7 @@ public class BatchBuild extends BaseBuild {
 	@Override
 	public Element getGitHubMessageElement() {
 		Collections.sort(
-			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
+			getDownstreamBuilds(), new BaseBuild.BuildDisplayNameComparator());
 
 		Element messageElement = super.getGitHubMessageElement();
 

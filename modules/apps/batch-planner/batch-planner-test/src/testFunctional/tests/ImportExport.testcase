@@ -1512,7 +1512,7 @@ definition {
 	@description = "Verify certain users can be granted permission to view specific templates."
 	@priority = 3
 	test CanShareTemplates {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a power user") {

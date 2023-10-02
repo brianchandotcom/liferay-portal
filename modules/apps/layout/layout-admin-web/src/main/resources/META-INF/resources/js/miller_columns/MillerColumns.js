@@ -61,6 +61,7 @@ const getItemsMap = (columns, oldItems = new Map()) => {
 const noop = () => {};
 
 const MillerColumns = ({
+	getItemActionsURL,
 	initialColumns = [],
 	isLayoutSetPrototype,
 	isPrivateLayoutsEnabled,
@@ -276,6 +277,7 @@ const MillerColumns = ({
 					<MillerColumnsColumn
 						columnItems={column.items}
 						columnsContainer={ref}
+						getItemActionsURL={getItemActionsURL}
 						isLayoutSetPrototype={isLayoutSetPrototype}
 						isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
 						items={items}

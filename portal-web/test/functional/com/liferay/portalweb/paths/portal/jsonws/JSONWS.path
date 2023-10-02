@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>USER_UPDATE_USER</td>
-	<td>//div[@id='apiServiceUserServiceImplPanelContent']/div/ul/li/a[normalize-space(text())='update-user']</td>
+	<td>//div[@class='panel-collapse']/div/ul/li/a[normalize-space(text())='update-user']</td>
 	<td></td>
 </tr>
 <tr>

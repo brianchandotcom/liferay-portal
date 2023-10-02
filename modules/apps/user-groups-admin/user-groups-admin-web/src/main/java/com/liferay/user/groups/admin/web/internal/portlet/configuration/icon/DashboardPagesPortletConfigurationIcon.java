@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
@@ -85,7 +85,7 @@ public class DashboardPagesPortletConfigurationIcon
 
 			Group group = userGroup.getGroup();
 
-			if (_groupPermission.contains(
+			if (GroupPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), group,
 					ActionKeys.VIEW) &&
 				(group.getPrivateLayoutsPageCount() > 0)) {
@@ -106,9 +106,6 @@ public class DashboardPagesPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DashboardPagesPortletConfigurationIcon.class);
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;

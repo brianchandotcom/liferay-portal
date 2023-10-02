@@ -13,9 +13,9 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.roles.admin.search.RoleSearch;
 import com.liferay.roles.admin.search.RoleSearchTerms;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;

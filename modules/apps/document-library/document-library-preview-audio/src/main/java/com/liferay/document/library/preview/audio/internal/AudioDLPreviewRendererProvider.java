@@ -53,7 +53,7 @@ public class AudioDLPreviewRendererProvider
 		FileVersion fileVersion) {
 
 		if (!_audioProcessor.hasAudio(fileVersion) &&
-			!_audioProcessor.isAudioSupported(fileVersion)) {
+			!_audioProcessor.isAudioSupported(fileVersion.getMimeType())) {
 
 			return null;
 		}
@@ -93,7 +93,8 @@ public class AudioDLPreviewRendererProvider
 
 		if (!_audioProcessor.hasAudio(fileVersion)) {
 			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
-				throw new DLPreviewSizeException();
+				throw new DLPreviewSizeException(
+					DLProcessorRegistryUtil.getPreviewableProcessorMaxSize());
 			}
 
 			throw new DLPreviewGenerationInProcessException();

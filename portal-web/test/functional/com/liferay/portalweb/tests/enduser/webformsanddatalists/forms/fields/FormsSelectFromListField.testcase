@@ -130,7 +130,7 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 
@@ -469,13 +469,9 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
-
-		Navigator.gotoNavItem(navItem = "Data Providers");
-
-		FormsAdminNavigator.gotoAddDataProvider();
+		FormsAdminNavigator.gotoRESTDataProvider();
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -561,13 +557,9 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
-
-		Navigator.gotoNavItem(navItem = "Data Providers");
-
-		FormsAdminNavigator.gotoAddDataProvider();
+		FormsAdminNavigator.gotoRESTDataProvider();
 
 		FormsAdmin.editDataProvider(
 			name = "Liferay Countries",
@@ -637,7 +629,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that Access Local Network and Trust Self Signed Certificates is enabled") {
-			FormsAdminNavigator.enableLocalNetworkDataProvider();
+			FormsAdmin.enableLocalNetworkDataProvider();
 
 			Click(
 				key_checkboxOption = "Trust Self Signed Certificates",
@@ -647,11 +639,11 @@ definition {
 		}
 
 		task ("and Given a REST data provider") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 			Navigator.gotoNavItem(navItem = "Data Providers");
 
-			FormsAdminNavigator.gotoAddDataProvider();
+			FormsAdminNavigator.gotoRESTDataProvider();
 
 			var portalURL = PropsUtil.get("portal.url");
 
@@ -764,7 +756,7 @@ definition {
 		}
 
 		task ("Then the entry is saved") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Select country");
 
@@ -793,7 +785,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that Access Local Network and Trust Self Signed Certificates is enabled") {
-			FormsAdminNavigator.enableLocalNetworkDataProvider();
+			FormsAdmin.enableLocalNetworkDataProvider();
 
 			Click(
 				key_checkboxOption = "Trust Self Signed Certificates",
@@ -803,11 +795,7 @@ definition {
 		}
 
 		task ("and Given a REST data provider") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
-
-			Navigator.gotoNavItem(navItem = "Data Providers");
-
-			FormsAdminNavigator.gotoAddDataProvider();
+			FormsAdminNavigator.gotoRESTDataProvider();
 
 			var portalURL = PropsUtil.get("portal.url");
 

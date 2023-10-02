@@ -491,9 +491,9 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
+	@priority = 5
 	test CreateNewCountry {
-		property portal.acceptance = "false";
-		property portal.upstream = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Settings",
@@ -551,11 +551,13 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
+	@description = "This is a test to check the instance currencies available"
 	@priority = 5
 	test ViewInstanceCurrenciesAvailable {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
+		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

@@ -26,6 +26,8 @@ import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -200,6 +202,28 @@ public class CommerceDiscountRelLocalServiceImpl
 
 	@Override
 	public List<CommerceDiscountRel> getCommerceDiscountRels(
+		long classNameId, long classPK) {
+
+		return commerceDiscountRelPersistence.findByCN_CPK(
+			classNameId, classPK);
+	}
+
+	@Override
+	public List<CommerceDiscountRel> getCommerceDiscountRels(
+		long classNameId, long classPK, String unitOfMeasureKey) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceDiscountRelTable.INSTANCE
+				).from(
+					CommerceDiscountRelTable.INSTANCE
+				),
+				classNameId, classPK, unitOfMeasureKey));
+	}
+
+	@Override
+	public List<CommerceDiscountRel> getCommerceDiscountRels(
 		long commerceDiscountId, String className) {
 
 		return commerceDiscountRelPersistence.findByCD_CN(
@@ -366,6 +390,23 @@ public class CommerceDiscountRelLocalServiceImpl
 				),
 				CPInstance.class.getName(), commerceDiscountId, sku,
 				CPInstanceTable.INSTANCE.sku));
+	}
+
+	private GroupByStep _getGroupByStep(
+		JoinStep joinStep, long classNameId, long classPK,
+		String unitOfMeasureKey) {
+
+		return joinStep.where(
+			CommerceDiscountRelTable.INSTANCE.classNameId.eq(
+				classNameId
+			).and(
+				CommerceDiscountRelTable.INSTANCE.classPK.eq(classPK)
+			).and(
+				CommerceDiscountRelTable.INSTANCE.typeSettings.like(
+					StringBundler.concat(
+						"%unitOfMeasureKey=", unitOfMeasureKey,
+						StringPool.PERCENT))
+			));
 	}
 
 	private GroupByStep _getGroupByStep(

@@ -7,10 +7,12 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -338,7 +340,14 @@ public class ResourceActionLocalServiceImpl
 	}
 
 	protected String encodeKey(String name, String actionId) {
-		return StringBundler.concat(name, StringPool.POUND, actionId);
+		String key = StringBundler.concat(name, StringPool.POUND, actionId);
+
+		if (DBPartition.isPartitionEnabled()) {
+			return StringBundler.concat(
+				key, StringPool.AT, DBPartitionUtil.getCurrentCompanyId());
+		}
+
+		return key;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

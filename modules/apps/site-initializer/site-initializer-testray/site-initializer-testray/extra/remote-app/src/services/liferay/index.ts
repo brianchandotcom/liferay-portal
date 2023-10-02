@@ -32,7 +32,27 @@ interface LiferayUtil {
 	}) => void;
 }
 
+type FetchType = (
+	input: RequestInfo | URL,
+	init?: RequestInit
+) => Promise<Response>;
+
+interface OAuth2Client {
+	FromUserAgentApplication: (
+		_userAgent: string
+	) => {
+		authorizeURL: string;
+		clientId: string;
+		encodedRedirectURL: string;
+		fetch: FetchType;
+		homePageURL: string;
+		redirectURIs: string[];
+		tokenURL: string;
+	};
+}
+
 interface ILiferay {
+	OAuth2Client: OAuth2Client;
 	ThemeDisplay: IThemeDisplay;
 	Util: LiferayUtil;
 	authToken: string;
@@ -45,6 +65,16 @@ declare global {
 }
 
 export const Liferay = window.Liferay || {
+	OAuth2Client: {
+		FromUserAgentApplication: (_userAgent: string) => ({
+			authorizeURL: '',
+			clientId: '',
+			encodedRedirectURL: '',
+			homePageURL: '',
+			redirectURIs: [''],
+			tokenURL: '',
+		}),
+	},
 	ThemeDisplay: {
 		getBCP47LanguageId: () => 'en-US',
 		getCompanyGroupId: () => 0,

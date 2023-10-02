@@ -14,17 +14,23 @@ import WarningModal from '../WarningModal';
 interface ModalDeleteObjectRelationshipProps {
 	handleOnClose: () => void;
 	objectRelationship: ObjectRelationship;
-	setObjectRelationship: (value: ObjectRelationship | null) => void;
+	onAfterSubmit?: () => void;
+	reload?: boolean;
+	setObjectRelationship?: (value: ObjectRelationship | null) => void;
 }
 
 export function ModalDeleteObjectRelationship({
 	handleOnClose,
 	objectRelationship,
+	onAfterSubmit,
+	reload = true,
 	setObjectRelationship,
 }: ModalDeleteObjectRelationshipProps) {
 	const {observer, onClose} = useModal({
 		onClose: () => {
-			setObjectRelationship(null);
+			if (setObjectRelationship) {
+				setObjectRelationship(null);
+			}
 			handleOnClose();
 		},
 	});
@@ -58,8 +64,15 @@ export function ModalDeleteObjectRelationship({
 					onClose={onClose}
 					onDelete={() => {
 						deleteRelationship(objectRelationship.id);
-						setTimeout(() => window.location.reload(), 1500);
 						onClose();
+
+						if (reload) {
+							setTimeout(() => window.location.reload(), 1500);
+						}
+
+						if (onAfterSubmit) {
+							setTimeout(() => onAfterSubmit(), 200);
+						}
 					}}
 					placeholder={Liferay.Language.get(
 						'confirm-relationship-name'

@@ -69,7 +69,7 @@ definition {
 	@description = "This is a test case for COMMERCE-10820. User with Category Manager role can access Categories from the site admin menu"
 	@priority = 3
 	test CanCategoryManagerAccessCategoriesAdminMenu {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site") {

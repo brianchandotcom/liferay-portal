@@ -31,10 +31,6 @@ public class ViewImportMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		if (!_featureFlagManager.isEnabled("LPS-174939")) {
-			return "/view_import_old.jsp";
-		}
-
 		return "/view_import.jsp";
 	}
 

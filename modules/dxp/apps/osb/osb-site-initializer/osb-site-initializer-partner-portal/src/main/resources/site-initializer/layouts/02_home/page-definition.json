@@ -1843,8 +1843,9 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
+													"properties": "route=revenue-chart"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-REVENUE-CHART$]"
+												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_partner_custom_element"
 											}
 										},
 										"type": "Widget"
@@ -1879,8 +1880,9 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
+													"properties": "route=deals-chart"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-DEALS-CHART$]"
+												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_partner_custom_element"
 											}
 										},
 										"type": "Widget"
@@ -1915,8 +1917,9 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
+													"properties": "route=mdf-requests-chart"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-MDF-REQUESTS-CHART$]"
+												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_partner_custom_element"
 											}
 										},
 										"type": "Widget"
@@ -1951,8 +1954,9 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
+													"properties": "route=level-chart"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-LEVEL-CHART$]"
+												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_partner_custom_element"
 											}
 										},
 										"type": "Widget"
@@ -1987,8 +1991,9 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
+													"properties": "route=renewals-chart"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-RENEWALS-CHART$]"
+												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_partner_custom_element"
 											}
 										},
 										"type": "Widget"

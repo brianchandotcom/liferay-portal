@@ -88,7 +88,7 @@ definition {
 	@description = "Verify users can add a minimum order amount rule that applies to order subtotals. Orders that have a subtotal less than the minimum cannot be checked out"
 	@priority = 5
 	test AddAnOrderRuleOfTypeMinimumOrderSubtotalAmount {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.acceptance = "true";
@@ -189,7 +189,7 @@ definition {
 	@description = "Verify buyers with the View Billing Address permission can set a new billing address during the checkout process."
 	@priority = 5
 	test ANewBillingAddressCanBeWrittenDuringCheckout {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
@@ -307,7 +307,7 @@ definition {
 	@description = "Verify buyers without the View Billing Address permission cannot view the billing address of pending and placed orders."
 	@priority = 5
 	test AssertBillingAddressIsNotVisibleToBuyerUserWithoutPermission {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
@@ -408,7 +408,7 @@ definition {
 	@description = "Verify buyers with the View Billing Address permission can view the billing address of an order at the order summary."
 	@priority = 5
 	test AssertBillingAddressIsVisibleToBuyerUserWithPermission {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
@@ -468,7 +468,7 @@ definition {
 	@description = "Verify buyers without the View Billing Address permission cannot set a new billing address during the checkout process or view the billing address at the order summary."
 	@priority = 5
 	test AssertDefaultBillingAddressIsNotVisibleToBuyerUserWithoutPermission {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
@@ -555,7 +555,7 @@ definition {
 	@description = "Verify an error message appears when a buyer tries placing an order without the View Billing Address permission if a default billing address is not set."
 	@priority = 5
 	test AssertErrorMessageWhenAnOrderIsPlacedByBuyerWithoutPermissionToViewBillingAddress {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
@@ -671,7 +671,7 @@ definition {
 	@description = "Verify a Sales Manager can limit who can see the billing address associated with an account"
 	@priority = 3
 	test AssertPermissionToViewBillingAddressIsPresent {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a buyer user") {
@@ -771,7 +771,7 @@ definition {
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9358"
 	@priority = 5
 	test CanButtonRetryPaymentDisappearIfThePaymentMethodIsDisabled {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given the Admin already created a Minium Site and a buyer account") {
@@ -977,7 +977,7 @@ definition {
 	@description = "This is a test for COMMERCE-11716. Can create orders using GoGo Shell command"
 	@priority = 3
 	test CanCreateOrdersUsingOrderGenerator {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1043,7 +1043,7 @@ definition {
 	@description = "This is a test for COMMERCE-8970. As admin, when I try to delete orders one by one, a pop-up confirmation message will appear before removing the order."
 	@priority = 3
 	test CanDeleteSingleOrderUponConfirmation {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		var orderIds = ListUtil.newList();
@@ -1136,7 +1136,7 @@ definition {
 	@description = "This is a test for bug COMMERCE-9467"
 	@priority = 5
 	test CanEditAddressOfAnOpenOrderWithAddressAlreadySet {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given the Admin already created a Minium Site and a buyer account") {
@@ -1351,7 +1351,7 @@ definition {
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9345"
 	@priority = 5
 	test CanReorderAFailedPayment {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given the Admin already created a Minium Site and a buyer account") {
@@ -1486,7 +1486,7 @@ definition {
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9338"
 	@priority = 5
 	test CanRetryAnIncompletePayment {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given the Admin already created a Minium Site and a buyer account") {
@@ -1584,7 +1584,7 @@ definition {
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9408"
 	@priority = 5
 	test CanRetryAnIncompletePaymentWithAnOpenOrder {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given the Admin already created a Minium Site and a buyer account") {
@@ -1676,7 +1676,7 @@ definition {
 	@description = "COMMERCE-10078. As a buyer user I can search an order using product name"
 	@priority = 3
 	test CanSearchAnOrderUsingProductName {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		var orderIds = ListUtil.newList();
@@ -1800,7 +1800,7 @@ definition {
 	@description = "COMMERCE-10078. As a buyer user I can search an order using SKU"
 	@priority = 3
 	test CanSearchAnOrderUsingSKU {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		var orderIds = ListUtil.newList();
@@ -1924,7 +1924,7 @@ definition {
 	@description = "COMMERCE-10078. As a buyer user I can search an order using translated product name"
 	@priority = 3
 	test CanSearchAnOrderUsingTranslatedProductName {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		var orderIds = ListUtil.newList();
@@ -2170,7 +2170,7 @@ definition {
 	@description = "This is a test for COMMERCE-10147 The orders can be sorted by Create/Order Date in Pending and Placed Orders Pages"
 	@priority = 3
 	test CanSortOrdersByCreationDateInPendingAndPlacedOrdersPages {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a buyer user") {
@@ -2630,7 +2630,7 @@ definition {
 	@description = "This is a test for COMMERCE-10829. As a user with permissions, I can add/edit Commerce Order Notes via API and verify the result in order notes section of the placed order's details page."
 	@priority = 5
 	test CanUserWithPermissionsAddCommerceOrderNotesViaAPI {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
@@ -2744,7 +2744,7 @@ definition {
 	@description = "This is a test for the COMMERCE-10895. As a buyer user, I can only view the order created by myself when I log in via headless API"
 	@priority = 3
 	test CanViewOrderOnlyCreatedByCurrentUsersViaAPI {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site is created") {
@@ -2853,7 +2853,7 @@ definition {
 	@description = "This is a test for COMMERCE-11815. Admin can view an order's quote label border is grey"
 	@priority = 3
 	test CanViewOrderQuoteLabelBorderIsGrey {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a buyer user") {
@@ -3054,7 +3054,7 @@ definition {
 	@description = "This is a test for COMMERCE-12025. If given a user with permissions that only view orders, then the user can just view the order, cannot add or edit order fields"
 	@priority = 5
 	test CanViewOrdersOnlyWhenGivenViewPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a business account and Money Order enabled is created") {
@@ -4052,7 +4052,7 @@ definition {
 	@description = ""
 	@priority = 5
 	test MakeAnOrderWithThreeActiveMinimumOrderAmountsWithDifferentPriority {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.acceptance = "true";

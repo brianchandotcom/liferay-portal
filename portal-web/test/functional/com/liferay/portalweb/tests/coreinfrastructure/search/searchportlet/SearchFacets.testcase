@@ -1090,6 +1090,85 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-171290 - When configuring the Category Facet with the vocabulary layout the different ordering options don't take effect."
+	@priority = 3
+	test CanChangeSortOrderOfCategoriesUsingVocabularyLayout {
+		task ("Create Vocabulary and Categories") {
+			JSONCategory.addVocabulary(
+				groupName = "Guest",
+				title = "Vocabulary Name");
+
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Guest",
+				title = "Sales",
+				vocabularyName = "Vocabulary Name");
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Guest",
+				title = "Community",
+				vocabularyName = "Vocabulary Name");
+			var categoryId3 = JSONCategory.addCategory(
+				groupName = "Guest",
+				title = "Product",
+				vocabularyName = "Vocabulary Name");
+			var categoryId4 = JSONCategory.addCategory(
+				groupName = "Guest",
+				title = "Engineering",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add Web Contents and categorize them") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1},${categoryId2},${categoryId3},${categoryId4}",
+				content = "WC Content",
+				groupName = "Guest",
+				title = "WC WebContent Title 1");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1},${categoryId3},${categoryId4}",
+				content = "WC Content",
+				groupName = "Guest",
+				title = "WC WebContent Title 2");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId3},${categoryId4}",
+				content = "WC Content",
+				groupName = "Guest",
+				title = "WC WebContent Title 3");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = ${categoryId4},
+				content = "WC Content",
+				groupName = "Guest",
+				title = "WC WebContent Title 4");
+		}
+
+		task ("Search for the Web Contents and configure the widget to use the 'Vocabulary Layout'") {
+			SearchPortlets.searchEmbedded(searchTerm = "test");
+
+			SearchFacetPortlet.updateFacetConfiguration(
+				displayTemplate = "Vocabulary Layout",
+				portletName = "Category Facet");
+
+			Refresh();
+		}
+
+		task ("Assert the sort order is changed from 'Term Frequency Descending' to 'Term Frequency Ascending'") {
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(
+				facetList = "Engineering,Product,Sales,Community",
+				portletName = "Category Facet");
+
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Category Facet",
+				sortOption = "Term Frequency Ascending");
+
+			Refresh();
+
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(
+				facetList = "Community,Sales,Product,Engineering",
+				portletName = "Category Facet");
+		}
+	}
+
 	@priority = 3
 	test CanOrderCategoryFacetTerms {
 		JSONCategory.addVocabulary(

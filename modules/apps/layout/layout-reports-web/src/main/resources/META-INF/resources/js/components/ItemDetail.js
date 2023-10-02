@@ -180,7 +180,7 @@ function List({ItemComponent, items}) {
 
 	return (
 		<>
-			<ClayList>
+			<ClayList className="c-mb-0">
 				{items.slice(0, shownItems).map((item, index) => (
 					<ItemComponent item={item} key={index} />
 				))}
@@ -278,7 +278,11 @@ function Warning({item}) {
 	return (
 		<ClayList.Item className="border-0 c-p-0">
 			<ClayAlert displayType="warning" role="none" variant="feedback">
-				{item}
+				<span className="c-mb-3 d-block text-weight-semi-bold">
+					{item.title}
+				</span>
+
+				<span>{item.description}</span>
 			</ClayAlert>
 		</ClayList.Item>
 	);

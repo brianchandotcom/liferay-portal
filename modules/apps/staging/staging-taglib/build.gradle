@@ -22,7 +22,6 @@ dependencies {
 	compileOnly project(":apps:portal-background-task:portal-background-task-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:staging:staging-api")
-	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:user:user-taglib")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

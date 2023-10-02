@@ -28,10 +28,56 @@ definition {
 		Button.clickSubmitButton();
 	}
 
+	macro editInventoryByWarehouse {
+		CommerceInventory.openInventoryAdmin();
+
+		CommerceNavigator.searchEntry(entryName = ${sku});
+
+		CommerceNavigator.gotoTableListEntry(
+			entryName = ${sku},
+			index = ${index});
+
+		for (var warehouse : list ${warehouse}) {
+			CommerceNavigator.gotoTableListEntry(entryName = ${warehouse});
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			if (isSet(quantityOnHand)) {
+				Type(
+					key_text = "Quantity on Hand",
+					locator1 = "TextInput#ANY",
+					value1 = ${quantityOnHand});
+			}
+
+			if (isSet(safetyStockQuantity)) {
+				Type(
+					key_text = "Safety Stock Quantity",
+					locator1 = "TextInput#ANY",
+					value1 = ${safetyStockQuantity});
+			}
+
+			Button.clickSave();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+		}
+	}
+
 	macro openInventoryAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet");
+	}
+
+	macro viewInventoryByWarehouse {
+		for (var warehouse : list ${warehouse}) {
+			AssertElementPresent(
+				key_entryTitle = ${warehouse},
+				key_index = ${index},
+				key_value = ${inventory},
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
 	}
 
 }

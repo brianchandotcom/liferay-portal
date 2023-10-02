@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleTable;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRoleTable;
 import com.liferay.portal.kernel.model.UserTable;
@@ -168,7 +169,11 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 							UserTable.INSTANCE.userId)
 					).where(
 						UserGroupRoleTable.INSTANCE.groupId.eq(
-							group.getGroupId())
+							group.getGroupId()
+						).and(
+							UserTable.INSTANCE.type.neq(
+								UserConstants.TYPE_ON_DEMAND_USER)
+						)
 					))) {
 
 			users.put(curUser.getUserId(), curUser);

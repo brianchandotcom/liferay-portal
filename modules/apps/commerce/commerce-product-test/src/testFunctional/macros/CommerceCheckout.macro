@@ -202,6 +202,10 @@ definition {
 			var total = ${total} + ${taxValue};
 		}
 
+		if (isSet(totalPrice)) {
+			var total = ${totalPrice};
+		}
+
 		if (isSet(setBillingAddress)) {
 			CommerceCheckout.setAddress(
 				guestEmail = ${guestEmail},

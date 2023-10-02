@@ -1541,24 +1541,17 @@ definition {
 	}
 
 	macro increaseDisplayDate {
-		var displayDate = selenium.getAttribute("//input[contains(@id,'displayDate')]@value");
-		var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
-		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
-
-		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
-
-		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
-		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
-
-		var displayDateMinuteFuture = ${displayDateMinute} + ${minuteIncrease};
-		var currentTime = "${displayDateHour}:${displayDateMinute} ${displayDateAmpm}";
-		var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";
+		var displayDate = DateTimeSchedule.getCurrentDisplayDate(field = "display");
+		var currentTime = DateTimeSchedule.getCurrentDisplayTime(field = "display");
+		var displayTime = DateTimeSchedule.increaseDisplayTime(
+			field = "display",
+			minuteIncreaseValue = ${minuteIncrease});
 
 		WebContent.editDisplayDate(
 			displayDate = ${displayDate},
 			displayTime = ${displayTime});
 
-		echo("Web Content display time increased ${minuteIncrease} minutes from: ${currentTime} to: ${displayTime}");
+		echo("Web Content display time increased ${minuteIncrease} minutes, changed from ${currentTime} to ${displayTime}");
 	}
 
 	macro moveArticlesToFolderCP {

@@ -6,8 +6,8 @@
 package com.liferay.dynamic.data.lists.web.internal.security.permission.resource;
 
 import com.liferay.dynamic.data.lists.constants.DDLConstants;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 

@@ -1,0 +1,18 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "priceModel == \"Free\"",
+		"externalReferenceCode": "MKT-DXP-FREE-EMAIL",
+		"label": {
+			"en_US": "DXP Free Email Template"
+		},
+		"name": "DXPFreeEmailMarketPlace",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterAdd",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:GetAppInformation$]",
+		"parameters": {
+			"notificationTemplateExternalReferenceCode": "MARKETPLACE-ACTION-DXP-FREE-EMAIL-TEMPLATE",
+			"type": "email"
+		}
+	}
+]

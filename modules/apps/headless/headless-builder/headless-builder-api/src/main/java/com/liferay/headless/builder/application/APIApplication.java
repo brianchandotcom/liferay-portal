@@ -8,6 +8,7 @@ package com.liferay.headless.builder.application;
 import com.liferay.portal.kernel.util.Http;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Alejandro Tardín
@@ -36,7 +37,7 @@ public interface APIApplication {
 
 		public String getPath();
 
-		public PathParameter getPathParameter();
+		public String getPathParameter();
 
 		public Schema getRequestSchema();
 
@@ -48,21 +49,55 @@ public interface APIApplication {
 
 		public Sort getSort();
 
-		public enum PathParameter {
-
-			EXTERNAL_REFERENCE_CODE, ID, NONE
-
-		}
-
 		public enum RetrieveType {
 
-			COLLECTION, SINGLE_ELEMENT
+			COLLECTION("collection"), SINGLE_ELEMENT("singleElement");
+
+			public static RetrieveType parse(String value) {
+				for (RetrieveType retrieveType : RetrieveType.values()) {
+					if (Objects.equals(retrieveType.getValue(), value)) {
+						return retrieveType;
+					}
+				}
+
+				throw new IllegalArgumentException("Invalid value " + value);
+			}
+
+			public String getValue() {
+				return _value;
+			}
+
+			private RetrieveType(String value) {
+				_value = value;
+			}
+
+			private final String _value;
 
 		}
 
 		public enum Scope {
 
-			COMPANY, GROUP
+			COMPANY("company"), GROUP("group");
+
+			public static Scope parse(String value) {
+				for (Scope scope : Scope.values()) {
+					if (Objects.equals(scope.getValue(), value)) {
+						return scope;
+					}
+				}
+
+				throw new IllegalArgumentException("Invalid value " + value);
+			}
+
+			public String getValue() {
+				return _value;
+			}
+
+			private Scope(String value) {
+				_value = value;
+			}
+
+			private final String _value;
 
 		}
 

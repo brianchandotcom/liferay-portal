@@ -8,10 +8,12 @@ import {
 	ExpressionBuilder,
 	SidebarCategory,
 } from '@liferay/object-js-components-web';
+import classNames from 'classnames';
 import React from 'react';
 
 interface ReadOnlyContainerProps {
 	disabled?: boolean;
+	modelBuilder?: boolean;
 	readOnlySidebarElements: SidebarCategory[];
 	requiredField: boolean;
 	setValues: (value: Partial<ObjectField>) => void;
@@ -20,6 +22,7 @@ interface ReadOnlyContainerProps {
 
 export function ReadOnlyContainer({
 	disabled,
+	modelBuilder = false,
 	readOnlySidebarElements,
 	requiredField,
 	setValues,
@@ -36,7 +39,12 @@ export function ReadOnlyContainer({
 	};
 
 	return (
-		<>
+		<div
+			className={classNames({
+				'lfr-objects__edit-object-field-card-content': !modelBuilder,
+				'lfr-objects__edit-object-field-model-builder-panel': modelBuilder,
+			})}
+		>
 			{values.readOnly && (
 				<>
 					<ClayRadioGroup defaultValue={values?.readOnly}>
@@ -107,6 +115,6 @@ export function ReadOnlyContainer({
 					)}
 				</>
 			)}
-		</>
+		</div>
 	);
 }

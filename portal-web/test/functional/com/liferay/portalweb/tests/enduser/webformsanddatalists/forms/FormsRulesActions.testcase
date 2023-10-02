@@ -1019,11 +1019,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Go to Content > Forms and add a Data Provider") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
-
-			Navigator.gotoNavItem(navItem = "Data Providers");
-
-			FormsAdminNavigator.gotoAddDataProvider();
+			FormsAdminNavigator.gotoRESTDataProvider();
 
 			FormsAdmin.editDataProvider(
 				inputParameterLabel = "zipcode",
@@ -1125,13 +1121,9 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
-
-		Navigator.gotoNavItem(navItem = "Data Providers");
-
-		FormsAdminNavigator.gotoAddDataProvider();
+		FormsAdminNavigator.gotoRESTDataProvider();
 
 		FormsAdmin.editDataProvider(
 			name = "Liferay Countries",

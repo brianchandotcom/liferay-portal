@@ -1,7 +1,9 @@
-html:not(#__):not(#___)
-	.cadmin
-	.dropdown-menu.fds-cell-renderers-dropdown-menu {
+html:not(#__):not(#___) .cadmin .dropdown-menu.fds-field-name-dropdown-menu {
 	max-height: 500px;
 	max-width: 550px;
 	width: 100%;
+}
+
+html:not(#__):not(#___) .cadmin .input-localized .form-group {
+	margin-bottom: 0;
 }

@@ -146,7 +146,8 @@ definition {
 			for (var productSKU : list ${productSKUs}) {
 				var discountId = CommerceJSONDiscountsAPI._addDiscountSku(
 					discountTitle = ${title},
-					productSKU = ${productSKU});
+					productSKU = ${productSKU},
+					unitOfMeasureKey = ${unitOfMeasureKey});
 			}
 		}
 	}
@@ -242,6 +243,22 @@ definition {
 			var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
 		}
 
+		if (isSet(unitOfMeasureKey)) {
+			var body = '''
+				-d {
+					"skuId": ${skuId},
+					"unitOfMeasureKey": "${unitOfMeasureKey}"
+				}
+			''';
+		}
+		else {
+			var body = '''
+				-d '{
+					"skuId": ${skuId}
+				}'
+			''';
+		}
+
 		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
@@ -250,10 +267,9 @@ definition {
 				-u ${userLoginInfo} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-				-d '{
-					"skuId": ${skuId}
-				}'
 		''';
+
+		var curl = StringUtil.add(${curl}, ${body}, " ");
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 
@@ -289,6 +305,30 @@ definition {
 		else {
 			echo("No Commerce Discounts to be deleted");
 		}
+	}
+
+	macro _deleteDiscountSkuUom {
+		Variables.assertDefined(parameterList = ${uomKey});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var responseBody = CommerceJSONDiscountsAPI._getCommerceDiscountSkuById(discountTitle = ${discountTitle});
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+
+		var discountSkuId = JSONUtil.getWithJSONPath(${responseBody}, "$..items[?(@['unitOfMeasureKey'] == '${uomKey}' && @['skuId'] == ${skuId})].['discountSkuId']");
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discount-skus/${discountSkuId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		JSONCurlUtil.delete(${curl});
 	}
 
 	macro _getCommerceDiscountById {
@@ -389,6 +429,30 @@ definition {
 		echo("The Commerce discounts count is: ${discountsCount}");
 
 		return ${discountsCount};
+	}
+
+	macro _getCommerceDiscountSkuById {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(discountId)) && isSet(discountTitle)) {
+			var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId}/discount-skus \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
 	}
 
 	macro _getDiscountId {

@@ -369,7 +369,7 @@ export default function EditAPISchema({
 			)
 		);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [localUIData]);
+	}, [fetchedSchemaData, localUIData]);
 
 	return (
 		<EditSchemaContext.Provider

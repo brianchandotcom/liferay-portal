@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.List;
 
@@ -23,13 +22,12 @@ public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 
 	public WebsiteContactInfoManager(
 		String className, long classPK, WebsiteLocalService websiteLocalService,
-		WebsiteService websiteService, UsersAdmin usersAdmin) {
+		WebsiteService websiteService) {
 
 		_className = className;
 		_classPK = classPK;
 		_websiteLocalService = websiteLocalService;
 		_websiteService = websiteService;
-		_usersAdmin = usersAdmin;
 	}
 
 	@Override
@@ -95,7 +93,6 @@ public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 
 	private final String _className;
 	private final long _classPK;
-	private final UsersAdmin _usersAdmin;
 	private final WebsiteLocalService _websiteLocalService;
 	private final WebsiteService _websiteService;
 

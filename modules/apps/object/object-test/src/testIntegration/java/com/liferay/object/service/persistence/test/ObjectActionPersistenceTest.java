@@ -153,6 +153,8 @@ public class ObjectActionPersistenceTest {
 
 		newObjectAction.setParameters(RandomTestUtil.randomString());
 
+		newObjectAction.setSystem(RandomTestUtil.randomBoolean());
+
 		newObjectAction.setStatus(RandomTestUtil.nextInt());
 
 		_objectActions.add(_persistence.update(newObjectAction));
@@ -211,6 +213,8 @@ public class ObjectActionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectAction.getParameters(),
 			newObjectAction.getParameters());
+		Assert.assertEquals(
+			existingObjectAction.isSystem(), newObjectAction.isSystem());
 		Assert.assertEquals(
 			existingObjectAction.getStatus(), newObjectAction.getStatus());
 	}
@@ -314,7 +318,7 @@ public class ObjectActionPersistenceTest {
 			"modifiedDate", true, "objectDefinitionId", true, "active", true,
 			"description", true, "errorMessage", true, "label", true, "name",
 			true, "objectActionExecutorKey", true, "objectActionTriggerKey",
-			true, "status", true);
+			true, "system", true, "status", true);
 	}
 
 	@Test
@@ -670,6 +674,8 @@ public class ObjectActionPersistenceTest {
 		objectAction.setObjectActionTriggerKey(RandomTestUtil.randomString());
 
 		objectAction.setParameters(RandomTestUtil.randomString());
+
+		objectAction.setSystem(RandomTestUtil.randomBoolean());
 
 		objectAction.setStatus(RandomTestUtil.nextInt());
 

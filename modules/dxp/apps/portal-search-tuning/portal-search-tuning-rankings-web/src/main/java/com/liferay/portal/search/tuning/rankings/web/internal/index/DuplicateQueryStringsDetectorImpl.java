@@ -121,9 +121,13 @@ public class DuplicateQueryStringsDetectorImpl
 				return;
 			}
 
+			_groupExternalReferenceCode =
+				criteriaImpl._groupExternalReferenceCode;
 			_index = criteriaImpl._index;
 			_queryStrings = new HashSet<>(criteriaImpl._queryStrings);
 			_rankingIndexName = criteriaImpl._rankingIndexName;
+			_sxpBlueprintExternalReferenceCode =
+				criteriaImpl._sxpBlueprintExternalReferenceCode;
 			_unlessRankingDocumentId = criteriaImpl._unlessRankingDocumentId;
 		}
 

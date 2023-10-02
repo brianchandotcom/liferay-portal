@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import {
 	API,
 	getLocalizableLabel,
@@ -10,7 +11,7 @@ import {
 } from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
-import {Node, isNode} from 'react-flow-renderer';
+import {Elements, Node, isNode} from 'react-flow-renderer';
 
 import {AccountRestrictionContainer} from '../../ObjectDetails/AccountRestrictionContainer';
 import {ConfigurationContainer} from '../../ObjectDetails/ConfigurationContainer';
@@ -56,15 +57,9 @@ export function RightSidebarObjectDefinitionDetails({
 	siteKeyValuePairs,
 }: RightSidebarObjectDefinitionDetailsProps) {
 	const [
-		{elements, selectedObjectFolder},
+		{elements, selectedObjectDefinitionNode, selectedObjectFolder},
 		dispatch,
 	] = useObjectFolderContext();
-
-	const selectedObjectDefinitionNode = elements.find((element) => {
-		if (isNode(element)) {
-			return (element as Node<ObjectDefinitionNodeData>).data?.selected;
-		}
-	}) as Node<ObjectDefinitionNodeData>;
 
 	const [
 		nonRelationshipObjectFieldsInfo,
@@ -138,9 +133,22 @@ export function RightSidebarObjectDefinitionDetails({
 				objectDefinition = setAccountRelationshipFieldMandatory(values);
 			}
 
-			const updatedObjectDefinitionResponse = await API.putObjectDefinitionByExternalReferenceCode(
-				objectDefinition
-			);
+			try {
+				await API.putObjectDefinitionByExternalReferenceCode(
+					objectDefinition
+				);
+				openToast({
+					message: Liferay.Language.get(
+						'the-object-was-saved-successfully'
+					),
+					type: 'success',
+				});
+			}
+			catch (error: unknown) {
+				const {message} = error as Error;
+
+				openToast({message, type: 'danger'});
+			}
 
 			let newObjectDefinition = {};
 
@@ -152,11 +160,7 @@ export function RightSidebarObjectDefinitionDetails({
 				) {
 					newObjectDefinition = {
 						...element.data,
-						label: getLocalizableLabel(
-							objectDefinition.defaultLanguageId!,
-							objectDefinition.label,
-							objectDefinition.name
-						),
+						label: objectDefinition.label,
 						name: objectDefinition.name,
 						pluralLabel: {
 							[objectDefinition.defaultLanguageId!]: objectDefinition.pluralLabel,
@@ -170,23 +174,7 @@ export function RightSidebarObjectDefinitionDetails({
 				}
 
 				return element;
-			});
-
-			if (!updatedObjectDefinitionResponse.ok) {
-				const {
-					title,
-				} = (await updatedObjectDefinitionResponse.json()) as {
-					status: string;
-					title: string;
-				};
-
-				openToast({
-					message: title,
-					type: 'danger',
-				});
-
-				return;
-			}
+			}) as Elements<ObjectDefinitionNodeData>;
 
 			dispatch({
 				payload: {
@@ -202,29 +190,39 @@ export function RightSidebarObjectDefinitionDetails({
 				},
 				type: TYPES.UPDATE_OBJECT_DEFINITION_NODE,
 			});
-
-			openToast({
-				message: Liferay.Language.get(
-					'the-object-was-saved-successfully'
-				),
-				type: 'success',
-			});
 		}
 	};
 
 	return (
-		<div onBlur={onSubmit}>
-			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-title">
-				<span>
-					{sub(
-						Liferay.Language.get('x-details'),
-						getLocalizableLabel(
-							values.defaultLanguageId as Liferay.Language.Locale,
-							values?.label,
-							values?.name
-						)
-					)}
-				</span>
+		<>
+			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-details">
+				<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-details-title">
+					<span>
+						{sub(
+							Liferay.Language.get('x-details'),
+							getLocalizableLabel(
+								values.defaultLanguageId as Liferay.Language.Locale,
+								values?.label,
+								values?.name
+							)
+						)}
+					</span>
+				</div>
+
+				<div className="lfr-objects__model-builder-right-sidebar-details-title-buttons-container">
+					<ClayButton
+						aria-label={Liferay.Language.get('save-definition')}
+						className="lfr-objects__model-builder-right-sidebar-object-definition-node-details-save-button"
+						disabled={
+							selectedObjectDefinitionNode?.data
+								?.linkedObjectDefinition
+						}
+						displayType="primary"
+						onClick={() => onSubmit()}
+					>
+						{Liferay.Language.get('save')}
+					</ClayButton>
+				</div>
 			</div>
 
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
@@ -311,6 +309,6 @@ export function RightSidebarObjectDefinitionDetails({
 					values={values as ObjectDefinition}
 				/>
 			</div>
-		</div>
+		</>
 	);
 }

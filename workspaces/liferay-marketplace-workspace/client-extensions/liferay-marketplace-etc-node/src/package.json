@@ -10,7 +10,7 @@
 		"winston": "3.8.2"
 	},
 	"license": "LGPL",
-	"name": "liferay-marketplace-etc-node",
+	"name": "@liferay/liferay-marketplace-etc-node",
 	"scripts": {
 		"start": "node app.js"
 	},

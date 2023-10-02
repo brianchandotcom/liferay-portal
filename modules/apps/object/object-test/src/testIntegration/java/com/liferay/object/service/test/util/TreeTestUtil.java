@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -71,11 +72,11 @@ public class TreeTestUtil {
 		throws PortalException {
 
 		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				"A", objectDefinitionLocalService);
 
 		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				"AA", objectDefinitionLocalService);
 
 		bind(
@@ -86,18 +87,56 @@ public class TreeTestUtil {
 					objectDefinitionAA),
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					objectRelationshipLocalService, objectDefinitionAA,
-					ObjectDefinitionTestUtil.addObjectDefinition(
+					ObjectDefinitionTestUtil.addCustomObjectDefinition(
 						"AAA", objectDefinitionLocalService)),
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					objectRelationshipLocalService, objectDefinitionAA,
-					ObjectDefinitionTestUtil.addObjectDefinition(
+					ObjectDefinitionTestUtil.addCustomObjectDefinition(
 						"AAB", objectDefinitionLocalService)),
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					objectRelationshipLocalService, objectDefinitionA,
-					ObjectDefinitionTestUtil.addObjectDefinition(
+					ObjectDefinitionTestUtil.addCustomObjectDefinition(
 						"AB", objectDefinitionLocalService))));
 
 		return treeFactory.create(objectDefinitionA.getObjectDefinitionId());
+	}
+
+	public static void deleteObjectDefinitionHierarchy(
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			String[] objectDefinitionNames)
+		throws Exception {
+
+		for (String objectDefinitionName : objectDefinitionNames) {
+			ObjectDefinition objectDefinition =
+				objectDefinitionLocalService.fetchObjectDefinition(
+					TestPropsValues.getCompanyId(), objectDefinitionName);
+
+			if (objectDefinition == null) {
+				continue;
+			}
+
+			if (objectDefinition.getRootObjectDefinitionId() != 0) {
+				unbind(objectDefinitionLocalService, objectDefinitionName);
+			}
+
+			objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition.getObjectDefinitionId());
+		}
+	}
+
+	public static void forEachNodeObjectDefinition(
+			Iterator<Node> iterator,
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
+		throws Exception {
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			unsafeConsumer.accept(
+				objectDefinitionLocalService.getObjectDefinition(
+					node.getObjectDefinitionId()));
+		}
 	}
 
 	public static ObjectRelationship getEdgeObjectRelationship(

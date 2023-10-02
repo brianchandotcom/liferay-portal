@@ -228,6 +228,56 @@ describe('ExperimentOverviewPage', () => {
 		);
 	});
 
+	it('renders publishabel and delete buttons to experiment to status FINISHED_WINNER', async () => {
+		const {container, findByRole} = render(
+			<WrappedComponent publishable status='FINISHED_WINNER' />
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		const publishButton = (await findByRole('link', {
+			name: /publish/i
+		})) as HTMLAnchorElement;
+		const deleteButton = (await findByRole('link', {
+			name: /delete/i
+		})) as HTMLAnchorElement;
+
+		expect(publishButton).toBeInTheDocument();
+		expect(publishButton.href).toEqual(
+			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=publish'
+		);
+
+		expect(deleteButton).toBeInTheDocument();
+		expect(deleteButton.href).toEqual(
+			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=delete'
+		);
+	});
+
+	it('renders publishabel and delete buttons to experiment to status FINISHED_NO_WINNER', async () => {
+		const {container, findByRole} = render(
+			<WrappedComponent publishable status='FINISHED_NO_WINNER' />
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		const publishButton = (await findByRole('link', {
+			name: /publish/i
+		})) as HTMLAnchorElement;
+		const deleteButton = (await findByRole('link', {
+			name: /delete/i
+		})) as HTMLAnchorElement;
+
+		expect(publishButton).toBeInTheDocument();
+		expect(publishButton.href).toEqual(
+			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=publish'
+		);
+
+		expect(deleteButton).toBeInTheDocument();
+		expect(deleteButton.href).toEqual(
+			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=delete'
+		);
+	});
+
 	it('renders delete button to experiment to status TERMINATED', async () => {
 		const {container, findByRole} = render(
 			<WrappedComponent status='TERMINATED' />

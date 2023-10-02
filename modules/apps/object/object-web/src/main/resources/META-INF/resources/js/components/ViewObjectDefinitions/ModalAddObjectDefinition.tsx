@@ -102,20 +102,13 @@ export function ModalAddObjectDefinition({
 			objectDefinition.objectFolderExternalReferenceCode = objectFolderExternalReferenceCode;
 		}
 
-		if (
-			Liferay.FeatureFlags['LPS-148856'] &&
-			objectFolderExternalReferenceCode
-		) {
-			objectDefinition.objectFolderExternalReferenceCode = objectFolderExternalReferenceCode;
-		}
-
 		if (Liferay.FeatureFlags['LPS-135430']) {
 			objectDefinition.storageType = storageType.value;
 		}
 		try {
-			const newObjectDefinition = await API.postObjectDefinition(
+			const newObjectDefinition = (await API.postObjectDefinition(
 				objectDefinition
-			);
+			)) as ObjectDefinition;
 
 			onClose();
 
@@ -176,7 +169,7 @@ export function ModalAddObjectDefinition({
 
 	return (
 		<ClayModalProvider>
-			<ClayModal observer={observer}>
+			<ClayModal center observer={observer}>
 				<ClayForm onSubmit={handleSubmit}>
 					<ClayModal.Header>
 						{Liferay.Language.get('new-custom-object')}

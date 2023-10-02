@@ -6,10 +6,10 @@
 package com.liferay.jethr0.job.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
+import com.liferay.jethr0.job.comparator.JobComparatorEntity;
 import com.liferay.jethr0.job.dalo.JobPrioritizerEntityDALO;
 import com.liferay.jethr0.job.dalo.JobPrioritizerToJobComparatorsEntityRelationshipDALO;
 import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
-import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntityFactory;
 
 import java.util.Objects;
 
@@ -52,20 +52,15 @@ public class JobPrioritizerEntityRepository
 
 	@Override
 	public void initializeRelationships() {
-		for (JobPrioritizerEntity jobPrioritizerEntity : getAll()) {
-			for (long jobComparatorEntityId :
-					_jobPrioritizerToJobComparatorsEntityRelationshipDALO.
-						getChildEntityIds(jobPrioritizerEntity)) {
+	}
 
-				if (jobComparatorEntityId == 0) {
-					continue;
-				}
+	public void relateJobPrioritizerToJobComparator(
+		JobPrioritizerEntity jobPrioritizerEntity,
+		JobComparatorEntity jobComparatorEntity) {
 
-				jobPrioritizerEntity.addJobComparatorEntity(
-					_jobComparatorEntityRepository.getById(
-						jobComparatorEntityId));
-			}
-		}
+		jobPrioritizerEntity.addJobComparatorEntity(jobComparatorEntity);
+
+		jobComparatorEntity.setJobPrioritizerEntity(jobPrioritizerEntity);
 	}
 
 	public void setJobComparatorEntityRepository(
@@ -74,13 +69,46 @@ public class JobPrioritizerEntityRepository
 		_jobComparatorEntityRepository = jobComparatorEntityRepository;
 	}
 
+	@Override
+	protected JobPrioritizerEntity updateRelationshipsFromDALO(
+		JobPrioritizerEntity jobPrioritizerEntity) {
+
+		return _updateJobPrioritizerToJobComparatorRelationshipsFromDALO(
+			jobPrioritizerEntity);
+	}
+
+	@Override
+	protected JobPrioritizerEntity updateRelationshipsToDALO(
+		JobPrioritizerEntity jobPrioritizerEntity) {
+
+		_jobPrioritizerToJobComparatorsEntityRelationshipDALO.
+			updateChildEntities(jobPrioritizerEntity);
+
+		return jobPrioritizerEntity;
+	}
+
+	private JobPrioritizerEntity
+		_updateJobPrioritizerToJobComparatorRelationshipsFromDALO(
+			JobPrioritizerEntity parentJobPrioritizerEntity) {
+
+		return updateParentToChildRelationshipsFromDALO(
+			parentJobPrioritizerEntity,
+			_jobPrioritizerToJobComparatorsEntityRelationshipDALO,
+			_jobComparatorEntityRepository,
+			(jobPrioritizerEntity, jobComparatorEntity) ->
+				relateJobPrioritizerToJobComparator(
+					jobPrioritizerEntity, jobComparatorEntity),
+			jobPrioritizerEntity ->
+				jobPrioritizerEntity.getJobComparatorEntities(),
+			(jobPrioritizerEntity, jobComparatorEntity) ->
+				jobPrioritizerEntity.removeJobComparatorEntity(
+					jobComparatorEntity));
+	}
+
 	private JobComparatorEntityRepository _jobComparatorEntityRepository;
 
 	@Autowired
 	private JobPrioritizerEntityDALO _jobPrioritizerEntityDALO;
-
-	@Autowired
-	private JobPrioritizerEntityFactory _jobPrioritizerEntityFactory;
 
 	@Autowired
 	private JobPrioritizerToJobComparatorsEntityRelationshipDALO

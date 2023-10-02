@@ -46,9 +46,10 @@ public interface ObjectValidationRuleService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectValidationRuleServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object validation rule remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectValidationRuleServiceUtil} if injection and service tracking are not available.
 	 */
 	public ObjectValidationRule addObjectValidationRule(
-			long objectDefinitionId, boolean active, String engine,
-			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String outputType, String script, boolean system,
+			String externalReferenceCode, long objectDefinitionId,
+			boolean active, String engine, Map<Locale, String> errorLabelMap,
+			Map<Locale, String> nameMap, String outputType, String script,
+			boolean system,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException;
 
@@ -69,9 +70,9 @@ public interface ObjectValidationRuleService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public ObjectValidationRule updateObjectValidationRule(
-			long objectValidationRuleId, boolean active, String engine,
-			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String outputType, String script,
+			String externalReferenceCode, long objectValidationRuleId,
+			boolean active, String engine, Map<Locale, String> errorLabelMap,
+			Map<Locale, String> nameMap, String outputType, String script,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException;
 

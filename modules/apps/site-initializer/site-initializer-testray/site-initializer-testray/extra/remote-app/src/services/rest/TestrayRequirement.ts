@@ -9,6 +9,7 @@ import yupSchema from '../../schema/yup';
 import {TestrayRequirement} from './types';
 
 type Requirement = typeof yupSchema.requirement.__outputType & {
+	components: string;
 	projectId: number;
 };
 
@@ -17,6 +18,7 @@ class TestrayRequirementsImpl extends Rest<Requirement, TestrayRequirement> {
 		super({
 			adapter: ({
 				componentId: r_componentToRequirements_c_componentId,
+				components,
 				description,
 				descriptionType,
 				key,
@@ -25,6 +27,7 @@ class TestrayRequirementsImpl extends Rest<Requirement, TestrayRequirement> {
 				projectId: r_projectToRequirements_c_projectId,
 				summary,
 			}) => ({
+				components,
 				description,
 				descriptionType,
 				key,
@@ -35,7 +38,7 @@ class TestrayRequirementsImpl extends Rest<Requirement, TestrayRequirement> {
 				summary,
 			}),
 			nestedFields:
-				'component, team, componentToRequirements.teamToComponents',
+				'component,team,componentToRequirements.teamToComponents',
 			transformData: (testrayRequirement) => ({
 				...testrayRequirement,
 				component: testrayRequirement.r_componentToRequirements_c_component

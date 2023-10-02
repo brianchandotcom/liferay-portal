@@ -259,32 +259,38 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 												cssClass="table-cell-expand table-cell-minw-200"
 												name="title"
 											>
-												<div class="table-title">
-													<liferay-document-library:mime-type-sticker
-														cssClass="sticker-secondary"
-														fileVersion="<%= latestFileVersion %>"
-													/>
+												<div class="autofit-row">
+													<div class="autofit-col pr-1">
+														<liferay-document-library:mime-type-sticker
+															cssClass="sticker-secondary"
+															fileVersion="<%= latestFileVersion %>"
+														/>
+													</div>
 
-													<clay:link
-														href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
-														label="<%= HtmlUtil.unescape(latestFileVersion.getTitle()) %>"
-													/>
-
-													<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-														<span class="inline-item inline-item-after state-icon">
-															<clay:icon
-																symbol="lock"
+													<div class="autofit-col autofit-col-expand pl-1">
+														<div class="table-title">
+															<clay:link
+																href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
+																label="<%= HtmlUtil.unescape(latestFileVersion.getTitle()) %>"
 															/>
-														</span>
-													</c:if>
 
-													<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
-														<span class="inline-item inline-item-after lfr-portal-tooltip state-icon" title="<%= LanguageUtil.get(request, "shared") %>">
-															<clay:icon
-																symbol="users"
-															/>
-														</span>
-													</c:if>
+															<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
+																<span class="inline-item inline-item-after state-icon">
+																	<clay:icon
+																		symbol="lock"
+																	/>
+																</span>
+															</c:if>
+
+															<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
+																<span class="inline-item inline-item-after lfr-portal-tooltip state-icon" title="<%= LanguageUtil.get(request, "shared") %>">
+																	<clay:icon
+																		symbol="users"
+																	/>
+																</span>
+															</c:if>
+														</div>
+													</div>
 												</div>
 
 												<c:if test="<%= fileShortcut != null %>">
@@ -462,7 +468,7 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 												name="name"
 											>
 												<div class="autofit-row">
-													<div class="autofit-col">
+													<div class="autofit-col pr-1">
 														<clay:sticker
 															cssClass="sticker-document"
 															displayType="secondary"
@@ -470,7 +476,7 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 														/>
 													</div>
 
-													<div class="autofit-col autofit-col-expand">
+													<div class="autofit-col autofit-col-expand pl-1">
 														<div class="table-title">
 															<clay:link
 																href='<%=

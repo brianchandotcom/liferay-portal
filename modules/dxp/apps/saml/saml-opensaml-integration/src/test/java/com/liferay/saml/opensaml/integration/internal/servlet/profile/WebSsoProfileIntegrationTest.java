@@ -159,7 +159,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		ReflectionTestUtil.invoke(
 			_relayStateHelperImpl, "activate", new Class<?>[0]);
 
-		_webSsoProfileImpl.activate(new HashMap<String, Object>());
+		_webSsoProfileImpl.activate(
+			SystemBundleUtil.getBundleContext(), new HashMap<String, Object>());
 
 		prepareServiceProvider(SP_ENTITY_ID);
 	}

@@ -182,7 +182,6 @@ definition {
 	}
 
 	@description = "This is a usecase for LPS-151178. Verify a category can be added to a document on a slave node."
-	@ignore = "true"
 	@priority = 3
 	test CanAddCategoryToDocumentOnSlaveNode {
 		property test.liferay.virtual.instance = "false";
@@ -304,6 +303,8 @@ definition {
 			mailDomain = "www.able.com",
 			virtualHost = "www.able.com",
 			webId = "www.able.com");
+
+		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 

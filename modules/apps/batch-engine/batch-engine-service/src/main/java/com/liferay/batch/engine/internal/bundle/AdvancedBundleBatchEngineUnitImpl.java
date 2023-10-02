@@ -6,8 +6,8 @@
 package com.liferay.batch.engine.internal.bundle;
 
 import com.liferay.batch.engine.internal.json.AdvancedJSONReader;
-import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
+import com.liferay.batch.engine.unit.BundleBatchEngineUnit;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -24,7 +24,8 @@ import org.osgi.framework.Bundle;
  * @author Raymond Augé
  * @author Igor Beslic
  */
-public class AdvancedBundleBatchEngineUnitImpl implements BatchEngineUnit {
+public class AdvancedBundleBatchEngineUnitImpl
+	implements BundleBatchEngineUnit {
 
 	public AdvancedBundleBatchEngineUnitImpl(Bundle bundle, URL url) {
 		_bundle = bundle;
@@ -42,6 +43,11 @@ public class AdvancedBundleBatchEngineUnitImpl implements BatchEngineUnit {
 			return advancedJSONReader.getObject(
 				"configuration", BatchEngineUnitConfiguration.class);
 		}
+	}
+
+	@Override
+	public Bundle getBundle() {
+		return _bundle;
 	}
 
 	@Override

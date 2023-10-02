@@ -154,7 +154,7 @@ public class CommerceDiscountLocalServiceTest {
 		List<CommerceDiscount> commerceDiscounts =
 			_commerceDiscountLocalService.getUnqualifiedCommerceDiscounts(
 				_group.getCompanyId(), cpDefinition.getCPDefinitionId(),
-				cpInstance.getCPInstanceId());
+				cpInstance.getCPInstanceId(), null);
 
 		Assert.assertEquals(
 			commerceDiscounts.toString(), 1, commerceDiscounts.size());
@@ -194,7 +194,7 @@ public class CommerceDiscountLocalServiceTest {
 		List<CommerceDiscount> commerceDiscounts =
 			_commerceDiscountLocalService.getUnqualifiedCommerceDiscounts(
 				_group.getCompanyId(), cpDefinition.getCPDefinitionId(),
-				cpInstance.getCPInstanceId());
+				cpInstance.getCPInstanceId(), null);
 
 		Assert.assertEquals(
 			commerceDiscounts.toString(), 1, commerceDiscounts.size());
@@ -715,7 +715,7 @@ public class CommerceDiscountLocalServiceTest {
 			_commerceDiscountLocalService.
 				getAccountAndChannelAndOrderTypeCommerceDiscounts(
 					commerceAccountId, commerceChannelId, 0, cpDefinitionId,
-					cpInstanceId);
+					cpInstanceId, null);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
@@ -724,7 +724,7 @@ public class CommerceDiscountLocalServiceTest {
 		commerceDiscounts =
 			_commerceDiscountLocalService.getAccountAndChannelCommerceDiscounts(
 				commerceAccountId, commerceChannelId, cpDefinitionId,
-				cpInstanceId);
+				cpInstanceId, null);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
@@ -732,7 +732,7 @@ public class CommerceDiscountLocalServiceTest {
 
 		commerceDiscounts =
 			_commerceDiscountLocalService.getAccountCommerceDiscounts(
-				commerceAccountId, cpDefinitionId, cpInstanceId);
+				commerceAccountId, cpDefinitionId, cpInstanceId, null);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
@@ -745,7 +745,7 @@ public class CommerceDiscountLocalServiceTest {
 			_commerceDiscountLocalService.
 				getAccountGroupAndChannelAndOrderTypeCommerceDiscount(
 					commerceAccountGroupIds, commerceChannelId, 0,
-					cpDefinitionId, cpInstanceId);
+					cpDefinitionId, cpInstanceId, null);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
@@ -755,7 +755,7 @@ public class CommerceDiscountLocalServiceTest {
 			_commerceDiscountLocalService.
 				getAccountGroupAndChannelCommerceDiscount(
 					commerceAccountGroupIds, commerceChannelId, cpDefinitionId,
-					cpInstanceId);
+					cpInstanceId, null);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
@@ -763,7 +763,7 @@ public class CommerceDiscountLocalServiceTest {
 
 		commerceDiscounts =
 			_commerceDiscountLocalService.getAccountGroupCommerceDiscount(
-				commerceAccountGroupIds, cpDefinitionId, cpInstanceId);
+				commerceAccountGroupIds, cpDefinitionId, cpInstanceId, null);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
@@ -772,7 +772,7 @@ public class CommerceDiscountLocalServiceTest {
 		commerceDiscounts =
 			_commerceDiscountLocalService.
 				getChannelAndOrderTypeCommerceDiscounts(
-					commerceChannelId, 0, cpDefinitionId, cpInstanceId);
+					commerceChannelId, 0, cpDefinitionId, cpInstanceId, null);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
@@ -780,7 +780,7 @@ public class CommerceDiscountLocalServiceTest {
 
 		commerceDiscounts =
 			_commerceDiscountLocalService.getOrderTypeCommerceDiscounts(
-				0, cpDefinitionId, cpInstanceId);
+				0, cpDefinitionId, cpInstanceId, null);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
@@ -788,14 +788,14 @@ public class CommerceDiscountLocalServiceTest {
 
 		commerceDiscounts =
 			_commerceDiscountLocalService.getChannelCommerceDiscounts(
-				commerceChannelId, cpDefinitionId, cpInstanceId);
+				commerceChannelId, cpDefinitionId, cpInstanceId, null);
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
 		}
 
 		return _commerceDiscountLocalService.getUnqualifiedCommerceDiscounts(
-			companyId, cpDefinitionId, cpInstanceId);
+			companyId, cpDefinitionId, cpInstanceId, null);
 	}
 
 	private void _orderAssertEquals(

@@ -9,6 +9,7 @@ import {IFDSTableProps} from '../../utils/fds';
 interface RelationshipsProps extends IFDSTableProps {
 	baseResourceURL: string;
 	isApproved: boolean;
+	objectDefinitionExternalReferenceCode: string;
 	objectRelationshipTypes: string[];
 	parameterRequired: boolean;
 }

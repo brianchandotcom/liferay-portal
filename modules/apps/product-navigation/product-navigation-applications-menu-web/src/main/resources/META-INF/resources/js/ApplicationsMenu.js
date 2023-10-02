@@ -207,7 +207,9 @@ const AppsPanel = ({
 	return (
 		<div className="applications-menu-wrapper">
 			<div className="applications-menu-header">
-				<ClayLayout.ContainerFluid>
+				<ClayLayout.ContainerFluid
+					size={Liferay?.FeatureFlags?.['LPS-184404'] ? false : 'xl'}
+				>
 					<ClayLayout.Row>
 						<ClayLayout.Col>
 							<ClayLayout.ContentRow verticalAlign="center">
@@ -254,16 +256,18 @@ const AppsPanel = ({
 			</div>
 
 			<div className="applications-menu-bg applications-menu-border-top applications-menu-content">
-				<ClayLayout.ContainerFluid>
+				<ClayLayout.ContainerFluid
+					size={Liferay?.FeatureFlags?.['LPS-184404'] ? false : 'xl'}
+				>
 					<ClayLayout.Row>
-						<ClayLayout.Col lg="9" md="8">
+						<ClayLayout.Col className="pr-0" md="9" xl="8">
 							<ClayTabs.Content activeIndex={activeTab}>
 								{categories.map(({childCategories}, index) => (
 									<ClayTabs.TabPane
 										aria-labelledby={`${portletNamespace}tab_${index}`}
 										key={`tabPane-${index}`}
 									>
-										<div className="applications-menu-nav-columns c-mt-md-3 c-my-2">
+										<div className="applications-menu-nav-columns c-pt-md-3 c-py-2">
 											{childCategories.map(
 												({key, label, panelApps}) => (
 													<NavigationSection
@@ -283,11 +287,7 @@ const AppsPanel = ({
 							</ClayTabs.Content>
 						</ClayLayout.Col>
 
-						<ClayLayout.Col
-							className="c-pl-md-2 c-px-0"
-							lg="3"
-							md="4"
-						>
+						<ClayLayout.Col className="px-0" md="3" xl="4">
 							<SitesPanel
 								portletNamespace={portletNamespace}
 								sites={sites}
@@ -299,9 +299,11 @@ const AppsPanel = ({
 			</div>
 
 			<div className="applications-menu-bg applications-menu-footer">
-				<ClayLayout.ContainerFluid>
+				<ClayLayout.ContainerFluid
+					size={Liferay?.FeatureFlags?.['LPS-184404'] ? false : 'xl'}
+				>
 					<ClayLayout.Row>
-						<ClayLayout.Col lg="9" md="8">
+						<ClayLayout.Col className="pr-3" md="9" xl="8">
 							<ClayLayout.ContentRow
 								className="applications-menu-border-top bg-white c-py-3"
 								verticalAlign="center"
@@ -329,9 +331,9 @@ const AppsPanel = ({
 						</ClayLayout.Col>
 
 						<ClayLayout.Col
-							className="c-pl-md-2 c-px-0 d-md-block d-none"
-							lg="3"
-							md="4"
+							className="d-md-block d-none px-0"
+							md="3"
+							xl="4"
 						>
 							<div className="applications-menu-sites"></div>
 						</ClayLayout.Col>

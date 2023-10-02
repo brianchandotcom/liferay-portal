@@ -5,6 +5,7 @@
 
 package com.liferay.site.admin.web.internal.initializer;
 
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -138,7 +139,8 @@ public class BlankSiteInitializer implements SiteInitializer {
 		UnicodeProperties typeSettingsUnicodeProperties =
 			draftLayout.getTypeSettingsProperties();
 
-		typeSettingsUnicodeProperties.put("published", Boolean.TRUE.toString());
+		typeSettingsUnicodeProperties.put(
+			LayoutTypeSettingsConstants.KEY_PUBLISHED, Boolean.TRUE.toString());
 
 		draftLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 

@@ -8,7 +8,7 @@ package com.liferay.frontend.taglib.internal.servlet;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryProvider;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryProvider;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationRegistry;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import javax.servlet.ServletContext;
 

@@ -5,13 +5,13 @@
 
 package com.liferay.portal.k8s.agent.internal.model.listener;
 
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
 import com.liferay.portal.k8s.agent.internal.util.CompanyConfigMapUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -2558,7 +2558,7 @@ definition {
 	@description = "This is a use case for LPS-176074. TC-2: Email verification notification template could be set to include user's first name."
 	@priority = 4
 	test ViewEmailVerificationNotificationTemplateUpdated {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=true${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property custom.properties = "company.security.strangers.verify=true${line.separator}jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
@@ -2959,7 +2959,7 @@ definition {
 	@description = "This is a use case for LPS-111136"
 	@priority = 4
 	test WelcomeEmailContainsVirtualHostSendToNewUser {
-		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";

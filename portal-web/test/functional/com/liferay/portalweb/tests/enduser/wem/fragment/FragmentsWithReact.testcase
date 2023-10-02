@@ -110,7 +110,19 @@ definition {
 		}
 
 		task ("Import the fragment collection into the new site") {
-			FragmentsAdmin.importCollectionFromTempFolder();
+			FragmentsAdminNavigator.gotoImportCollection();
+
+			WaitForPageLoad();
+
+			var collectionsZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "collections-*.zip");
+
+			UploadTempFile.uploadTempFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = ${collectionsZipFileName});
+
+			Button.clickImport();
+
+			Alert.viewInfoMessageSpecific(infoMessage = "No new items were imported.");
 		}
 
 		task ("Navigate to the fragment collection in the new site") {

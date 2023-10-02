@@ -8,11 +8,7 @@ package com.liferay.jethr0.job.repository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.job.comparator.JobComparatorEntity;
 import com.liferay.jethr0.job.dalo.JobComparatorEntityDALO;
-import com.liferay.jethr0.job.dalo.JobPrioritizerToJobComparatorsEntityRelationshipDALO;
 import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -43,37 +39,7 @@ public class JobComparatorEntityRepository
 			"value", value
 		);
 
-		JobComparatorEntity jobComparatorEntity = create(jsonObject);
-
-		jobComparatorEntity.setJobPrioritizerEntity(jobPrioritizerEntity);
-
-		jobPrioritizerEntity.addJobComparatorEntity(jobComparatorEntity);
-
-		return jobComparatorEntity;
-	}
-
-	public Set<JobComparatorEntity> getAll(
-		JobPrioritizerEntity jobPrioritizerEntity) {
-
-		Set<JobComparatorEntity> jobComparatorEntities = new HashSet<>();
-
-		Set<Long> jobComparatorIds =
-			_jobPrioritizerToJobComparatorsEntityRelationshipDALO.
-				getChildEntityIds(jobPrioritizerEntity);
-
-		for (JobComparatorEntity jobComparatorEntity : getAll()) {
-			if (!jobComparatorIds.contains(jobComparatorEntity.getId())) {
-				continue;
-			}
-
-			jobPrioritizerEntity.addJobComparatorEntity(jobComparatorEntity);
-
-			jobComparatorEntity.setJobPrioritizerEntity(jobPrioritizerEntity);
-
-			jobComparatorEntities.add(jobComparatorEntity);
-		}
-
-		return jobComparatorEntities;
+		return create(jsonObject);
 	}
 
 	@Override
@@ -83,19 +49,6 @@ public class JobComparatorEntityRepository
 
 	@Override
 	public void initializeRelationships() {
-		for (JobComparatorEntity jobComparatorEntity : getAll()) {
-			JobPrioritizerEntity jobPrioritizerEntity = null;
-
-			long jenkinsServerId =
-				jobComparatorEntity.getJobPrioritizerEntityId();
-
-			if (jenkinsServerId != 0) {
-				jobPrioritizerEntity = _jobPrioritizerEntityRepository.getById(
-					jenkinsServerId);
-			}
-
-			jobComparatorEntity.setJobPrioritizerEntity(jobPrioritizerEntity);
-		}
 	}
 
 	public void setJobPrioritizerEntityRepository(
@@ -104,13 +57,21 @@ public class JobComparatorEntityRepository
 		_jobPrioritizerEntityRepository = jobPrioritizerEntityRepository;
 	}
 
+	@Override
+	protected JobComparatorEntity updateRelationshipsFromDALO(
+		JobComparatorEntity jobComparatorEntity) {
+
+		_jobPrioritizerEntityRepository.relateJobPrioritizerToJobComparator(
+			_jobPrioritizerEntityRepository.getById(
+				jobComparatorEntity.getJobPrioritizerEntityId()),
+			jobComparatorEntity);
+
+		return jobComparatorEntity;
+	}
+
 	@Autowired
 	private JobComparatorEntityDALO _jobComparatorEntityDALO;
 
 	private JobPrioritizerEntityRepository _jobPrioritizerEntityRepository;
-
-	@Autowired
-	private JobPrioritizerToJobComparatorsEntityRelationshipDALO
-		_jobPrioritizerToJobComparatorsEntityRelationshipDALO;
 
 }

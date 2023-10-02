@@ -5,38 +5,13 @@
  */
 --%>
 
-<commerce-ui:panel
-	title='<%= LanguageUtil.get(request, "schedule") %>'
->
-	<div class="row">
-		<div class="col-6">
-			<aui:input formName="fm" label="publish-date" name="displayDate" />
-		</div>
-
-		<%
-		boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
-
-		if ((commercePriceEntry != null) && (commercePriceEntry.getExpirationDate() != null)) {
-			neverExpire = false;
-		}
-		%>
-
-		<div class="col-6">
-			<liferay-ui:error exception="<%= CommercePriceListExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
-
-			<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
-		</div>
-	</div>
-</commerce-ui:panel>
+<%
+boolean priceOnApplication = BeanParamUtil.getBoolean(commercePriceEntry, request, "priceOnApplication", false);
+%>
 
 <commerce-ui:panel
-	title='<%= LanguageUtil.get(request, "price") %>'
+	title='<%= LanguageUtil.get(request, "details") %>'
 >
-
-	<%
-	boolean priceOnApplication = BeanParamUtil.getBoolean(commercePriceEntry, request, "priceOnApplication", false);
-	%>
-
 	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11028") %>'>
 		<div class="row">
 			<div class="col-12">
@@ -45,7 +20,25 @@
 		</div>
 	</c:if>
 
-	<aui:fieldset collapsible="<%= false %>" cssClass='<%= "price-entry-price-settings " + (priceOnApplication ? "disabled" : StringPool.BLANK) %>' id='<%= liferayPortletResponse.getNamespace() + "price-entry-price-settings" %>' label="price-settings">
+	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11287") %>'>
+		<aui:select label="unit-of-measure" name="unitOfMeasureKey" showEmptyOption="<%= true %>">
+
+			<%
+			String unitOfMeasureKey = commercePriceEntry.getUnitOfMeasureKey();
+
+			for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure : commercePriceEntryDisplayContext.getCPInstanceUnitOfMeasures()) {
+			%>
+
+				<aui:option label="<%= cpInstanceUnitOfMeasure.getKey() %>" selected="<%= unitOfMeasureKey.equals(cpInstanceUnitOfMeasure.getKey()) %>" value="<%= cpInstanceUnitOfMeasure.getKey() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+	</c:if>
+
+	<aui:fieldset collapsible="<%= false %>" cssClass='<%= "price-entry-price-settings " + (priceOnApplication ? "disabled" : StringPool.BLANK) %>' id='<%= liferayPortletResponse.getNamespace() + "price-entry-price-settings" %>'>
 		<liferay-ui:error exception="<%= CommercePriceListMaxPriceValueException.class %>">
 			<liferay-ui:message arguments="<%= CommercePriceConstants.PRICE_VALUE_MAX %>" key="price-max-value-is-x" />
 		</liferay-ui:error>
@@ -125,13 +118,37 @@
 				</aui:input>
 			</div>
 		</div>
-
-		<div class="row">
-			<div class="col-12">
-				<%@ include file="/commerce_price_lists/commerce_price_entry/tier_price_entries.jspf" %>
-			</div>
-		</div>
 	</aui:fieldset>
+
+	<div class="row">
+		<div class="col-6">
+			<aui:input formName="fm" label="publish-date" name="displayDate" />
+		</div>
+
+		<%
+		boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
+
+		if ((commercePriceEntry != null) && (commercePriceEntry.getExpirationDate() != null)) {
+			neverExpire = false;
+		}
+		%>
+
+		<div class="col-6">
+			<liferay-ui:error exception="<%= CommercePriceListExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
+
+			<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
+		</div>
+	</div>
+</commerce-ui:panel>
+
+<commerce-ui:panel
+	title='<%= LanguageUtil.get(request, "tier-price") %>'
+>
+	<div class="row">
+		<div class="col-12">
+			<%@ include file="/commerce_price_lists/commerce_price_entry/tier_price_entries.jspf" %>
+		</div>
+	</div>
 </commerce-ui:panel>
 
 <liferay-frontend:component

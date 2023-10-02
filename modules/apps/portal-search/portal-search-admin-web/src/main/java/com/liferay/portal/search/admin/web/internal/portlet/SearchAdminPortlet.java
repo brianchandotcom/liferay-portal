@@ -5,9 +5,9 @@
 
 package com.liferay.portal.search.admin.web.internal.portlet;
 
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -20,11 +20,12 @@ import com.liferay.portal.search.admin.web.internal.display.context.builder.Fiel
 import com.liferay.portal.search.admin.web.internal.display.context.builder.IndexActionsDisplayContextBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchAdminDisplayContextBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchEngineDisplayContextBuilder;
-import com.liferay.portal.search.admin.web.internal.reindexer.IndexReindexerRegistryUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
+import com.liferay.portal.search.cluster.StatsInformationFactory;
 import com.liferay.portal.search.configuration.ReindexConfiguration;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexInformation;
+import com.liferay.portal.search.spi.reindexer.IndexReindexerRegistry;
 
 import java.io.IOException;
 
@@ -83,7 +84,7 @@ public class SearchAdminPortlet extends MVCPortlet {
 			_indexInformationSnapshot.get());
 
 		List<String> indexReindexerClassNames = ListUtil.fromCollection(
-			IndexReindexerRegistryUtil.getIndexReindexerClassNames());
+			_indexReindexerRegistry.getIndexReindexerClassNames());
 
 		Collections.sort(indexReindexerClassNames);
 
@@ -137,6 +138,9 @@ public class SearchAdminPortlet extends MVCPortlet {
 						_language, _portal, _reindexConfiguration,
 						renderRequest, _searchCapabilities);
 
+			indexActionsDisplayContextBuilder.setStatsInformationFactory(
+				_statsInformationFactorySnapshot.get());
+
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT,
 				indexActionsDisplayContextBuilder.build());
@@ -158,6 +162,13 @@ public class SearchAdminPortlet extends MVCPortlet {
 		_searchEngineInformationSnapshot = new Snapshot<>(
 			SearchAdminPortlet.class, SearchEngineInformation.class, null,
 			true);
+	private static final Snapshot<StatsInformationFactory>
+		_statsInformationFactorySnapshot = new Snapshot<>(
+			SearchAdminPortlet.class, StatsInformationFactory.class, null,
+			true);
+
+	@Reference
+	private IndexReindexerRegistry _indexReindexerRegistry;
 
 	@Reference
 	private Language _language;

@@ -260,7 +260,9 @@ definition {
 		}
 
 		task ("And clicks on Cancel button") {
-			Button.click(button = "Cancel");
+			Click(
+				key_text = "Cancel",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Then the Edit field modal is closed") {
@@ -458,7 +460,7 @@ definition {
 
 		task ("And change the Cell Renderer to "Label"") {
 			Click(
-				dropdownLabel = "Cell Renderer",
+				dropdownLabel = "Renderer",
 				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
 
 			MenuItem.click(menuItem = "Label");
@@ -470,7 +472,7 @@ definition {
 
 		task ("Then assert the "Label" is present from the column Cell Renderer") {
 			AssertElementPresent(
-				key_tableColumn = "Cell Renderer",
+				key_tableColumn = "Renderer",
 				key_tableRow = "Label",
 				locator1 = "DataSet#FIELDS_TABLE_AND_ROW");
 		}

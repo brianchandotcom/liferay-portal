@@ -11,7 +11,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")
 	compileOnly project(":apps:product-navigation:product-navigation-personal-menu-api")
-	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:user:user-taglib")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")

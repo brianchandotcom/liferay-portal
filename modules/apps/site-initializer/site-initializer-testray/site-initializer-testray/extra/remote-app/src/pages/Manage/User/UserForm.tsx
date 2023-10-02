@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {useCallback, useContext, useEffect, useMemo} from 'react';
 import {useForm} from 'react-hook-form';
@@ -22,6 +23,7 @@ import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 import {Liferay} from '../../../services/liferay';
 import {
+	JiraClientExtensionRestImpl,
 	UserAccount,
 	UserActions,
 	liferayUserAccountsImpl,
@@ -149,11 +151,21 @@ const UserForm = () => {
 
 		setValue('roles', rolesFiltered);
 	};
+
+	const onClickJiraAuthorize = async () => {
+		await JiraClientExtensionRestImpl.preauthorize();
+
+		window.open(
+			`${JiraClientExtensionRestImpl.oAuth2Client.homePageURL}/jira/authorize/${myUserAccount?.id}`
+		);
+	};
+
 	const inputProps = {
 		errors,
 		register,
 		required: true,
 	};
+
 	const hasDeletePermission =
 		myUserAccount?.id !== Number(userAccount?.id) &&
 		userAccount?.actions['delete-user-account'];
@@ -312,6 +324,42 @@ const UserForm = () => {
 							</ClayForm.Group>
 						</ClayLayout.Col>
 					</ClayLayout.Row>
+				)}
+
+				{myUserAccount && (
+					<>
+						<ClayLayout.Row justify="start">
+							<ClayLayout.Col size={3} sm={12} xl={3}>
+								<h5 className="font-weight-normal">
+									{i18n.translate('jira-authorization')}
+								</h5>
+							</ClayLayout.Col>
+
+							<ClayLayout.Col size={3} sm={12} xl={3}>
+								<ClayForm.Group className="align-items-center d-flex form-group-sm">
+									<ClayButton
+										className="align-items-center d-flex mr-4"
+										disabled={
+											myUserAccount?.jiraAuthorization
+										}
+										onClick={onClickJiraAuthorize}
+									>
+										{i18n.translate('jira-authorization')}
+									</ClayButton>
+
+									{myUserAccount.jiraAuthorization && (
+										<ClayIcon
+											className="mr-1"
+											color="green"
+											symbol="check-circle-full"
+										/>
+									)}
+								</ClayForm.Group>
+							</ClayLayout.Col>
+						</ClayLayout.Row>
+
+						<Form.Divider />
+					</>
 				)}
 
 				<Form.Footer

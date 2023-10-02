@@ -27,13 +27,49 @@ import {ModalDeleteObjectRelationship} from './ModalDeleteObjectRelationship';
 interface ItemData {
 	id: number;
 	reverse: boolean;
+	system?: boolean;
 }
 
 interface RelationshipsProps extends IFDSTableProps {
 	baseResourceURL: string;
 	isApproved: boolean;
+	objectDefinitionExternalReferenceCode: string;
 	objectRelationshipTypes: string[];
 	parameterRequired: boolean;
+}
+
+function ObjectFieldHierarchyDataRenderer({itemData}: {itemData: ItemData}) {
+	return (
+		<strong
+			className={classNames(
+				itemData.reverse ? 'label-info' : 'label-success',
+				'label'
+			)}
+		>
+			{itemData.reverse
+				? Liferay.Language.get('child')
+				: Liferay.Language.get('parent')}
+		</strong>
+	);
+}
+
+function ObjectRelationshipSourceDataRenderer({
+	itemData,
+}: {
+	itemData: ItemData;
+}) {
+	return (
+		<strong
+			className={classNames(
+				itemData.system ? 'label-info' : 'label-warning',
+				'label'
+			)}
+		>
+			{itemData.system
+				? Liferay.Language.get('system')
+				: Liferay.Language.get('custom')}
+		</strong>
+	);
 }
 
 export default function Relationships({
@@ -82,26 +118,7 @@ export default function Relationships({
 		makeFetch();
 	}, [objectDefinitionExternalReferenceCode]);
 
-	function ObjectFieldHierarchyDataRenderer({
-		itemData,
-	}: {
-		itemData: ItemData;
-	}) {
-		return (
-			<strong
-				className={classNames(
-					itemData.reverse ? 'label-info' : 'label-success',
-					'label'
-				)}
-			>
-				{itemData.reverse
-					? Liferay.Language.get('child')
-					: Liferay.Language.get('parent')}
-			</strong>
-		);
-	}
-
-	function objectFieldLabelDataRenderer({
+	function ObjectFieldLabelDataRenderer({
 		itemData,
 		openSidePanel,
 		value,
@@ -121,13 +138,58 @@ export default function Relationships({
 		);
 	}
 
+	const fdsFields = [
+		{
+			contentRenderer: 'ObjectFieldLabelDataRenderer',
+			expand: false,
+			fieldName: 'label',
+			label: Liferay.Language.get('label'),
+			localizeLabel: true,
+			sortable: true,
+		},
+		{
+			expand: false,
+			fieldName: 'objectDefinitionName2',
+			label: Liferay.Language.get('related-object'),
+			localizeLabel: true,
+			sortable: false,
+		},
+		{
+			expand: false,
+			fieldName: 'type',
+			label: Liferay.Language.get('type'),
+			localizeLabel: true,
+			sortable: false,
+		},
+		{
+			contentRenderer: 'ObjectFieldHierarchyDataRenderer',
+			expand: false,
+			fieldName: 'hierarchy',
+			label: Liferay.Language.get('hierarchy'),
+			localizeLabel: true,
+			sortable: false,
+		},
+	];
+
+	if (Liferay.FeatureFlags['LPS-193355']) {
+		fdsFields.push({
+			contentRenderer: 'ObjectRelationshipSourceDataRenderer',
+			expand: false,
+			fieldName: 'source',
+			label: Liferay.Language.get('source'),
+			localizeLabel: true,
+			sortable: false,
+		});
+	}
+
 	const dataSetProps = {
 		...defaultDataSetProps,
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
 			ObjectFieldHierarchyDataRenderer,
-			objectFieldLabelDataRenderer,
+			ObjectFieldLabelDataRenderer,
+			ObjectRelationshipSourceDataRenderer,
 		},
 		formName,
 		id,
@@ -168,38 +230,7 @@ export default function Relationships({
 				label: 'Table',
 				name: 'table',
 				schema: {
-					fields: [
-						{
-							contentRenderer: 'objectFieldLabelDataRenderer',
-							expand: false,
-							fieldName: 'label',
-							label: Liferay.Language.get('label'),
-							localizeLabel: true,
-							sortable: true,
-						},
-						{
-							expand: false,
-							fieldName: 'objectDefinitionName2',
-							label: Liferay.Language.get('related-object'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							expand: false,
-							fieldName: 'type',
-							label: Liferay.Language.get('type'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							contentRenderer: 'ObjectFieldHierarchyDataRenderer',
-							expand: false,
-							fieldName: 'hierarchy',
-							label: Liferay.Language.get('hierarchy'),
-							localizeLabel: true,
-							sortable: false,
-						},
-					],
+					fields: fdsFields,
 				},
 				thumbnail: 'table',
 			},
@@ -222,10 +253,10 @@ export default function Relationships({
 				<ModalAddObjectRelationship
 					baseResourceURL={baseResourceURL}
 					handleOnClose={() => setShowAddModal(false)}
-					objectDefinitionExternalReferenceCode={
+					objectDefinitionExternalReferenceCode1={
 						objectDefinitionExternalReferenceCode
 					}
-					parameterRequired={parameterRequired}
+					objectRelationshipParameterRequired={parameterRequired}
 				/>
 			)}
 

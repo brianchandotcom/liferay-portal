@@ -27,6 +27,8 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 	public void onAfterRemove(CTCollection ctCollection) {
 		_ctPreferencesLocalService.resetCTPreferences(
 			ctCollection.getCtCollectionId());
+
+		_deleteTickets(ctCollection);
 	}
 
 	@Override
@@ -35,12 +37,16 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 		throws ModelListenerException {
 
 		if (ctCollection.isShareable() ||
-			(ctCollection.isShareable() !=
+			(ctCollection.isShareable() ==
 				originalCTCollection.isShareable())) {
 
 			return;
 		}
 
+		_deleteTickets(ctCollection);
+	}
+
+	private void _deleteTickets(CTCollection ctCollection) {
 		for (Ticket ticket :
 				_ticketLocalService.getTickets(
 					ctCollection.getCompanyId(), CTCollection.class.getName(),

@@ -77,7 +77,13 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 						).put(
 							"typeOptions",
 							JSONUtil.put("enableSelectTemplate", true)
-						))))
+						))
+				).put(
+					"label",
+					_language.format(
+						fragmentRendererContext.getLocale(), "x-options",
+						"content-display", true)
+				))
 		).toString();
 	}
 

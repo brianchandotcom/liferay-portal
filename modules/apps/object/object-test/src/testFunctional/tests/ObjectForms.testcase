@@ -377,13 +377,9 @@ definition {
 			objectName = "CustomObject213",
 			value = "Entry Test");
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
-		PopulateObjectFormsConfiguration.openForm();
-
-		Navigator.gotoNavItem(navItem = "Data Providers");
-
-		FormsAdminNavigator.gotoAddDataProvider();
+		FormsAdminNavigator.gotoRESTDataProvider();
 
 		FormsAdmin.editDataProvider(
 			name = "Object Entries",
@@ -399,11 +395,7 @@ definition {
 
 		WaitForSPARefresh();
 
-		Navigator.openURL();
-
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -454,13 +446,9 @@ definition {
 			objectName = "CustomObject214",
 			value = "Entry Test");
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
-		PopulateObjectFormsConfiguration.openForm();
-
-		Navigator.gotoNavItem(navItem = "Data Providers");
-
-		FormsAdminNavigator.gotoAddDataProvider();
+		FormsAdminNavigator.gotoRESTDataProvider();
 
 		FormsAdmin.editDataProvider(
 			name = "Object Entries",
@@ -474,11 +462,7 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openURL();
-
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 

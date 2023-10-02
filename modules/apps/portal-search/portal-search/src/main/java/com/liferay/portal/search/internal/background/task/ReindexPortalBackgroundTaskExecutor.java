@@ -8,7 +8,6 @@ package com.liferay.portal.search.internal.background.task;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
@@ -55,15 +54,10 @@ public class ReindexPortalBackgroundTaskExecutor
 				companyIds);
 
 			if (_log.isInfoEnabled()) {
-				if (FeatureFlagManagerUtil.isEnabled("LPS-183661")) {
-					_log.info(
-						StringBundler.concat(
-							"Start reindexing company ", companyId,
-							" with execution mode ", executionMode));
-				}
-				else {
-					_log.info("Start reindexing company " + companyId);
-				}
+				_log.info(
+					StringBundler.concat(
+						"Start reindexing company ", companyId,
+						" with execution mode ", executionMode));
 			}
 
 			try {
@@ -84,15 +78,10 @@ public class ReindexPortalBackgroundTaskExecutor
 					companyIds);
 
 				if (_log.isInfoEnabled()) {
-					if (FeatureFlagManagerUtil.isEnabled("LPS-183661")) {
-						_log.info(
-							StringBundler.concat(
-								"Finished reindexing company ", companyId,
-								" with execution mode ", executionMode));
-					}
-					else {
-						_log.info("Finished reindexing company " + companyId);
-					}
+					_log.info(
+						StringBundler.concat(
+							"Finished reindexing company ", companyId,
+							" with execution mode ", executionMode));
 				}
 			}
 		}

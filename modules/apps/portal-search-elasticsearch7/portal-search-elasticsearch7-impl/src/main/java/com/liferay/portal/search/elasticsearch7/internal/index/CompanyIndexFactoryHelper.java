@@ -9,7 +9,6 @@ import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomize
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -95,9 +94,7 @@ public class CompanyIndexFactoryHelper {
 
 			SearchLogHelperUtil.logActionResponse(_log, actionResponse);
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-183661") &&
-				(companyId != CompanyConstants.SYSTEM)) {
-
+			if (companyId != CompanyConstants.SYSTEM) {
 				if (resetBothIndexNames) {
 					_companyLocalService.updateIndexNames(
 						companyId, null, null);

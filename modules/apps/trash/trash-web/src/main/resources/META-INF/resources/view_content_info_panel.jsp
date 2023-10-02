@@ -50,7 +50,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 		</clay:content-row>
 	</div>
 
-	<div class="sheet-row">
+	<div class="sheet-body">
 		<clay:tabs
 			tabsItems="<%= trashDisplayContext.getTabsItems() %>"
 		>

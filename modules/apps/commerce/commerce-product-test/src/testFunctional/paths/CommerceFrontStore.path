@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FS_PRODUCT_UOM_SELECT</td>
+	<td>//select[contains(@class,'unit-of-measure-selector')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FS_PRODUCT_BOOLEAN_OPTION</td>
 	<td>//div/label[text()='${key_optionName}']/..//input[@type='checkbox']</td>
 	<td></td>
@@ -212,7 +217,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_QUANTITY_OPTION</td>
-	<td>//header//h2[text()='${key_productName}']//..//following-sibling::div[4]//option[@value='${key_optionValue}']</td>
+	<td>//header//h2[text()='${key_productName}']//..//following-sibling::div[5]//option[@value='${key_optionValue}']</td>
 	<td></td>
 </tr>
 <tr>

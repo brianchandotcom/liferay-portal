@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ReindexConfiguration {
 
 	@Meta.AD(
-		deflt = "regular", description = "default-reindex-execution-mode-help",
+		deflt = "full", description = "default-reindex-execution-mode-help",
 		name = "default-reindex-execution-mode", required = false
 	)
 	public String defaultReindexExecutionMode();

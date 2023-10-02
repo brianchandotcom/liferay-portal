@@ -81,6 +81,24 @@ public class CommercePriceEntryTestUtil {
 			neverExpire, price, false, null, null, serviceContext);
 	}
 
+	public static CommercePriceEntry addCommercePriceEntry(
+			String externalReferenceCode, long cpProductId,
+			String cpInstanceUuid, long commercePriceListId, BigDecimal price,
+			String unitOfMeasureKey)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			CommercePriceListLocalServiceUtil.getCommercePriceList(
+				commercePriceListId);
+
+		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
+			externalReferenceCode, cpProductId, cpInstanceUuid,
+			commercePriceListId, price, false, BigDecimal.ZERO,
+			unitOfMeasureKey,
+			ServiceContextTestUtil.getServiceContext(
+				commercePriceList.getGroupId()));
+	}
+
 	public static CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, BigDecimal price, BigDecimal minQuantity,
 			boolean bulkPricing)

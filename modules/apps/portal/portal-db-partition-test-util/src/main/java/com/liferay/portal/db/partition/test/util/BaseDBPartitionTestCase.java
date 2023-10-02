@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
@@ -231,33 +233,86 @@ public abstract class BaseDBPartitionTestCase {
 		return _DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 	}
 
-	protected static void insertPartitionRequiredData() throws Exception {
+	protected static void insertPartitionData() throws Exception {
 		for (long companyId : COMPANY_IDS) {
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setWithSafeCloseable(companyId);
 				PreparedStatement preparedStatement1 =
 					connection.prepareStatement(
-						"insert into Company (companyId, webId) values (?, ?)");
+						"insert into Group_ (mvccVersion, ctCollectionId, " +
+							"companyId, groupId, classNameId, classPK) " +
+								"values (?, ?, ?, ?, ?, ?)");
 				PreparedStatement preparedStatement2 =
+					connection.prepareStatement(
+						"insert into PasswordPolicy (mvccVersion, " +
+							"passwordPolicyId, companyId, defaultPolicy) " +
+								"values (?, ?, ?, ?)");
+				PreparedStatement preparedStatement3 =
+					connection.prepareStatement(
+						"insert into Role_ (mvccVersion, ctCollectionId, " +
+							"roleId, companyId, name, type_) values (?, ?, " +
+								"?, ?, ?, ?)");
+				PreparedStatement preparedStatement4 =
 					connection.prepareStatement(
 						"insert into User_ (userId, companyId, screenName, " +
 							"emailAddress, languageId, timeZoneId, type_) " +
 								"values (?, ?, ?, ?, ?, ?, ?)")) {
 
-				preparedStatement1.setLong(1, companyId);
-				preparedStatement1.setString(2, "Test" + companyId);
+				preparedStatement1.setLong(1, 0);
+				preparedStatement1.setLong(2, 0);
+				preparedStatement1.setLong(3, companyId);
+				preparedStatement1.setInt(4, 1);
+				preparedStatement1.setLong(
+					5, ClassNameLocalServiceUtil.getClassNameId(Company.class));
+				preparedStatement1.setLong(6, companyId);
 
 				preparedStatement1.executeUpdate();
 
-				preparedStatement2.setLong(1, 1);
-				preparedStatement2.setLong(2, companyId);
-				preparedStatement2.setString(3, "Test");
-				preparedStatement2.setString(4, "test@test.com");
-				preparedStatement2.setString(5, "en_US");
-				preparedStatement2.setString(6, "UTC");
-				preparedStatement2.setInt(7, UserConstants.TYPE_GUEST);
+				preparedStatement2.setLong(1, 0);
+				preparedStatement2.setLong(2, 1);
+				preparedStatement2.setLong(3, companyId);
+				preparedStatement2.setInt(4, 1);
 
 				preparedStatement2.executeUpdate();
+
+				for (int i = 0; i < ROLE_NAMES.length; i++) {
+					preparedStatement3.setLong(1, 0);
+					preparedStatement3.setLong(2, 0);
+					preparedStatement3.setLong(3, i + 1);
+					preparedStatement3.setLong(4, companyId);
+					preparedStatement3.setString(5, ROLE_NAMES[i]);
+					preparedStatement3.setLong(6, 1);
+
+					preparedStatement3.executeUpdate();
+				}
+
+				preparedStatement4.setLong(1, 1);
+				preparedStatement4.setLong(2, companyId);
+				preparedStatement4.setString(3, "Test");
+				preparedStatement4.setString(4, "test@test.com");
+				preparedStatement4.setString(5, "en_US");
+				preparedStatement4.setString(6, "UTC");
+				preparedStatement4.setInt(7, UserConstants.TYPE_GUEST);
+
+				preparedStatement4.executeUpdate();
+			}
+		}
+	}
+
+	protected static void insertPartitionRequiredData() throws Exception {
+		for (long companyId : COMPANY_IDS) {
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(companyId);
+				PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"insert into Company (companyId, mx, webId) values " +
+							"(?, ?, ?)")) {
+
+				preparedStatement.setLong(1, companyId);
+				preparedStatement.setString(2, "liferay.com");
+				preparedStatement.setString(3, "Test" + companyId);
+
+				preparedStatement.executeUpdate();
 			}
 		}
 	}
@@ -321,6 +376,10 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected static final long[] COMPANY_IDS = {123456789L, 987654321L};
+
+	protected static final String[] ROLE_NAMES = {
+		"Administrator", "Owner", "User"
+	};
 
 	protected static final String TEST_CONTROL_TABLE_NAME = "TestControlTable";
 

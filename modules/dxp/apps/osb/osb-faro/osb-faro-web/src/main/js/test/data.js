@@ -293,6 +293,24 @@ export function mockChannel(seed = 1, permissionType = 0, data = {}) {
 	};
 }
 
+export function mockChannels() {
+	return {
+		disableSearch: false,
+		items: [
+			{
+				commerceChannelsCount: 5,
+				createTime: 1695241914644,
+				groupsCount: 6,
+				id: '643280225365059871',
+				name: 'Liferay DXP',
+				permissionType: 0,
+				tokenAuth: false
+			}
+		],
+		total: 1
+	};
+}
+
 export function generateCriterion(customValues) {
 	return {
 		operatorName: RelationalOperators.EQ,

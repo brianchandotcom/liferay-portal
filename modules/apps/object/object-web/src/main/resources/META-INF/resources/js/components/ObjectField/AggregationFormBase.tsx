@@ -15,15 +15,15 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {normalizeFieldSettings} from '../../utils/fieldSettings';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
-interface IAggregationSourcePropertyProps {
+interface AggregationSourcePropertyProps {
 	creationLanguageId2: Liferay.Language.Locale;
 	disabled?: boolean;
-	editingField?: boolean;
+	editingObjectField?: boolean;
 	errors: ObjectFieldErrors;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldSettings: ObjectFieldSetting[];
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
-	onRelationshipChange?: (
+	onObjectRelationshipChange?: (
 		objectDefinitionExternalReferenceCode2: string
 	) => void;
 	setValues: (values: Partial<ObjectField>) => void;
@@ -62,13 +62,13 @@ export function AggregationFormBase({
 	creationLanguageId2,
 	disabled,
 	errors,
-	editingField,
+	editingObjectField,
 	onAggregationFilterChange,
-	onRelationshipChange,
+	onObjectRelationshipChange,
 	objectDefinitionExternalReferenceCode,
 	objectFieldSettings = [],
 	setValues,
-}: IAggregationSourcePropertyProps) {
+}: AggregationSourcePropertyProps) {
 	const [relationshipsQuery, setRelationshipsQuery] = useState<string>('');
 	const [relationshipFieldsQuery, setRelationshipFieldsQuery] = useState<
 		string
@@ -134,7 +134,7 @@ export function AggregationFormBase({
 	}, [objectDefinitionExternalReferenceCode]);
 
 	useEffect(() => {
-		if (editingField && objectRelationships) {
+		if (editingObjectField && objectRelationships) {
 			const makeFetch = async () => {
 				const settings = normalizeFieldSettings(objectFieldSettings);
 
@@ -158,8 +158,8 @@ export function AggregationFormBase({
 							relatedField.name === settings.objectFieldName
 					) as ObjectField;
 
-					if (onRelationshipChange) {
-						onRelationshipChange(
+					if (onObjectRelationshipChange) {
+						onObjectRelationshipChange(
 							currentRelatedObjectRelationship.objectDefinitionExternalReferenceCode2
 						);
 					}
@@ -197,10 +197,10 @@ export function AggregationFormBase({
 		}
 	}, [
 		creationLanguageId2,
-		editingField,
+		editingObjectField,
 		objectRelationships,
 		objectFieldSettings,
-		onRelationshipChange,
+		onObjectRelationshipChange,
 	]);
 
 	const handleChangeRelatedObjectRelationship = async (
@@ -253,8 +253,8 @@ export function AggregationFormBase({
 			objectFieldSettings: newObjectFieldSettings,
 		});
 
-		if (onRelationshipChange) {
-			onRelationshipChange(
+		if (onObjectRelationshipChange) {
+			onObjectRelationshipChange(
 				objectRelationship.objectDefinitionExternalReferenceCode2
 			);
 		}

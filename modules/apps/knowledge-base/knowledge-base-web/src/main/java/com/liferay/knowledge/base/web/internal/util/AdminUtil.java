@@ -7,7 +7,7 @@ package com.liferay.knowledge.base.web.internal.util;
 
 import com.liferay.diff.DiffVersionsInfo;
 import com.liferay.knowledge.base.util.AdminHelper;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Lance Ji

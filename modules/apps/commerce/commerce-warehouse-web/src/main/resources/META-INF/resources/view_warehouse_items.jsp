@@ -1,6 +1,6 @@
 <%--
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
@@ -39,14 +39,20 @@ if (Validator.isNotNull(backURL)) {
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="commerceInventoryWarehouseId" type="hidden" />
 				<aui:input name="commerceInventoryWarehouseItemId" type="hidden" />
-				<aui:input name="sku" type="hidden" value="<%= cpInstance.getSku() %>" />
 				<aui:input name="quantity" type="hidden" />
+				<aui:input name="sku" type="hidden" value="<%= cpInstance.getSku() %>" />
+				<aui:input name="unitOfMeasureKey" type="hidden" />
 				<aui:input name="mvccVersion" type="hidden" />
 
 				<table class="show-quick-actions-on-hover table table-autofit table-list table-responsive-lg">
 					<thead>
 						<tr>
 							<th class="table-cell-expand"><liferay-ui:message key="warehouse" /></th>
+
+							<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11287") %>'>
+								<th><liferay-ui:message key="uom" /></th>
+							</c:if>
+
 							<th><liferay-ui:message key="quantity" /></th>
 							<th></th>
 						</tr>
@@ -55,41 +61,53 @@ if (Validator.isNotNull(backURL)) {
 					<tbody>
 
 						<%
-						for (CommerceInventoryWarehouse commerceInventoryWarehouse : commerceInventoryWarehouses) {
-							CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = commerceInventoryWarehouseItemsDisplayContext.getCommerceInventoryWarehouseItem(commerceInventoryWarehouse);
+						List<String> cpInstanceUnitOfMeasureKeys = commerceInventoryWarehouseItemsDisplayContext.getCPInstanceUnitOfMeasureKeys();
+						int curIndex = 0;
 
+						for (CommerceInventoryWarehouse commerceInventoryWarehouse : commerceInventoryWarehouses) {
 							long commerceInventoryWarehouseItemId = 0;
 							BigDecimal quantity = BigDecimal.ZERO;
 							long mvccVersion = 0;
+							CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = null;
 
-							if (commerceInventoryWarehouseItem != null) {
-								commerceInventoryWarehouseItemId = commerceInventoryWarehouseItem.getCommerceInventoryWarehouseItemId();
+							for (String cpInstanceUnitOfMeasureKey : cpInstanceUnitOfMeasureKeys) {
+								commerceInventoryWarehouseItem = commerceInventoryWarehouseItemsDisplayContext.getCommerceInventoryWarehouseItem(commerceInventoryWarehouse, cpInstanceUnitOfMeasureKey);
 
-								mvccVersion = commerceInventoryWarehouseItem.getMvccVersion();
+								if (commerceInventoryWarehouseItem != null) {
+									commerceInventoryWarehouseItemId = commerceInventoryWarehouseItem.getCommerceInventoryWarehouseItemId();
 
-								BigDecimal commerceInventoryWarehouseItemQuantity = commerceInventoryWarehouseItem.getQuantity();
+									mvccVersion = commerceInventoryWarehouseItem.getMvccVersion();
 
-								if (commerceInventoryWarehouseItemQuantity != null) {
-									quantity = commerceInventoryWarehouseItemQuantity;
+									BigDecimal commerceInventoryWarehouseItemQuantity = commerceInventoryWarehouseItem.getQuantity();
+
+									if (commerceInventoryWarehouseItemQuantity != null) {
+										quantity = commerceInventoryWarehouseItemQuantity;
+									}
 								}
-							}
-
-							int curIndex = commerceInventoryWarehouses.indexOf(commerceInventoryWarehouse);
 						%>
 
-							<tr data-commerce-inventory-warehouse-id="<%= commerceInventoryWarehouse.getCommerceInventoryWarehouseId() %>" data-commerce-inventory-warehouse-item-id="<%= commerceInventoryWarehouseItemId %>" data-index="<%= curIndex %>" data-mvcc-version="<%= mvccVersion %>">
-								<td>
-									<%= HtmlUtil.escape(commerceInventoryWarehouse.getName(locale)) %>
-								</td>
-								<td>
-									<aui:input id='<%= "commerceInventoryWarehouseItemQuantity" + curIndex %>' label="" name="commerceInventoryWarehouseItemQuantity" value="<%= quantity.intValue() %>" wrapperCssClass="m-0" />
-								</td>
-								<td class="text-center">
-									<aui:button cssClass="warehouse-save-btn" name='<%= "saveButton" + curIndex %>' primary="<%= true %>" value="save" />
-								</td>
-							</tr>
+								<tr data-commerce-inventory-warehouse-id="<%= commerceInventoryWarehouse.getCommerceInventoryWarehouseId() %>" data-commerce-inventory-warehouse-item-id="<%= commerceInventoryWarehouseItemId %>" data-commerce-inventory-warehouse-item-uom="<%= cpInstanceUnitOfMeasureKey %>" data-index="<%= curIndex %>" data-mvcc-version="<%= mvccVersion %>">
+									<td>
+										<%= HtmlUtil.escape(commerceInventoryWarehouse.getName(locale)) %>
+									</td>
+
+									<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11287") %>'>
+										<td>
+											<%= HtmlUtil.escape(cpInstanceUnitOfMeasureKey) %>
+										</td>
+									</c:if>
+
+									<td>
+										<aui:input id='<%= "commerceInventoryWarehouseItemQuantity" + curIndex %>' label="" min="0" name="commerceInventoryWarehouseItemQuantity" type="text" value="<%= quantity.intValue() %>" wrapperCssClass="mb-0" />
+									</td>
+									<td class="text-center">
+										<aui:button cssClass="warehouse-save-btn" name='<%= "saveButton" + curIndex %>' primary="<%= true %>" value="save" />
+									</td>
+								</tr>
 
 						<%
+								curIndex++;
+							}
 						}
 						%>
 

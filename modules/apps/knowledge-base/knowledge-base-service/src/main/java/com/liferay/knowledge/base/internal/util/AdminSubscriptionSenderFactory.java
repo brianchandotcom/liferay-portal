@@ -6,7 +6,7 @@
 package com.liferay.knowledge.base.internal.util;
 
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.SubscriptionSender;

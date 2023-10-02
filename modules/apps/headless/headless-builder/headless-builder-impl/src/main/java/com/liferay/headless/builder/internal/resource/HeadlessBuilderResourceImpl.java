@@ -11,9 +11,13 @@ import com.liferay.headless.builder.internal.application.endpoint.EndpointMatche
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.security.InvalidParameterException;
+
+import java.util.Objects;
 import java.util.function.Function;
 
 import javax.ws.rs.GET;
@@ -118,6 +122,14 @@ public class HeadlessBuilderResourceImpl {
 			return Response.status(
 				Response.Status.NOT_FOUND
 			).build();
+		}
+
+		if (Validator.isBlank(endpoint.getPathParameter()) &&
+			Objects.equals(
+				endpoint.getRetrieveType(),
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
+
+			throw new InvalidParameterException("Path parameter is missing");
 		}
 
 		if (endpoint.getResponseSchema() == null) {

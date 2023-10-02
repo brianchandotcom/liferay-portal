@@ -38,6 +38,7 @@ public class ObjectValidationRuleWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("objectValidationRuleId", getObjectValidationRuleId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -68,6 +69,13 @@ public class ObjectValidationRuleWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long objectValidationRuleId = (Long)attributes.get(
@@ -290,6 +298,16 @@ public class ObjectValidationRuleWrapper
 	@Override
 	public Map<java.util.Locale, String> getErrorLabelMap() {
 		return model.getErrorLabelMap();
+	}
+
+	/**
+	 * Returns the external reference code of this object validation rule.
+	 *
+	 * @return the external reference code of this object validation rule
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -638,6 +656,16 @@ public class ObjectValidationRuleWrapper
 		java.util.Locale defaultLocale) {
 
 		model.setErrorLabelMap(errorLabelMap, defaultLocale);
+	}
+
+	/**
+	 * Sets the external reference code of this object validation rule.
+	 *
+	 * @param externalReferenceCode the external reference code of this object validation rule
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

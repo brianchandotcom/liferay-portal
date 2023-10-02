@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -61,8 +60,8 @@ public class WikiPageModelResourcePermissionWrapper
 						WikiPage::getResourcePrimKey));
 				consumer.accept(
 					new WorkflowedModelPermissionLogic<>(
-						_workflowPermission, modelResourcePermission,
-						_groupLocalService, WikiPage::getResourcePrimKey));
+						modelResourcePermission, _groupLocalService,
+						WikiPage::getResourcePrimKey));
 				consumer.accept(
 					(permissionChecker, name, page, actionId) -> {
 
@@ -99,9 +98,6 @@ public class WikiPageModelResourcePermissionWrapper
 
 	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
-
-	@Reference
-	private WorkflowPermission _workflowPermission;
 
 	private class RedirectPageDynamicInheritanceModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<WikiPage> {

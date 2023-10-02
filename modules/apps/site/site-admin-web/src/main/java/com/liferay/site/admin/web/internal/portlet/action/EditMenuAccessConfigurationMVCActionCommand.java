@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -48,7 +48,7 @@ public class EditMenuAccessConfigurationMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_groupPermission.check(
+		GroupPermissionUtil.check(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
 			ActionKeys.UPDATE);
 
@@ -69,9 +69,6 @@ public class EditMenuAccessConfigurationMVCActionCommand
 			themeDisplay.getScopeGroupId(), ArrayUtil.toStringArray(roleIds),
 			ParamUtil.getBoolean(actionRequest, "showControlMenuByRole"));
 	}
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private MenuAccessConfigurationManager _menuAccessConfigurationManager;

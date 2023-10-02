@@ -136,6 +136,8 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		return JSONUtil.put(
 			"deletionType", objectRelationship.getDeletionType()
 		).put(
+			"edge", objectRelationship.isEdge()
+		).put(
 			"id", Long.valueOf(objectRelationship.getObjectRelationshipId())
 		).put(
 			"label", objectRelationship.getLabelMap()
@@ -175,6 +177,8 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 			}
 		).put(
 			"reverse", objectRelationship.isReverse()
+		).put(
+			"system", objectRelationship.isSystem()
 		).put(
 			"type", objectRelationship.getType()
 		);

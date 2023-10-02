@@ -37,9 +37,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 import com.liferay.site.memberships.web.internal.display.context.SiteMembershipsDisplayContext;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 
@@ -255,11 +255,11 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			_userGroupRoleLocalService.getUserGroupRoles(
 				user.getUserId(), group.getGroupId());
 
-		userGroupRoles = _usersAdmin.filterUserGroupRoles(
+		userGroupRoles = UsersAdminUtil.filterUserGroupRoles(
 			themeDisplay.getPermissionChecker(), userGroupRoles);
 
 		List<Long> curRoleIds = ListUtil.toList(
-			userGroupRoles, UsersAdmin.USER_GROUP_ROLE_ID_ACCESSOR);
+			userGroupRoles, UsersAdminUtil.USER_GROUP_ROLE_ID_ACCESSOR);
 
 		List<Long> removeRoleIds = new ArrayList<>();
 
@@ -485,9 +485,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 	@Reference
 	private UserService _userService;

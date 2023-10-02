@@ -153,8 +153,13 @@ public class AutoCloseUtil {
 		List<AutoCloseRule> autoCloseRules = getAutoCloseRules(pullRequest);
 
 		for (AutoCloseRule autoCloseRule : autoCloseRules) {
-			List<Build> downstreamBuilds = topLevelBuild.getDownstreamBuilds(
-				null);
+			List<Build> downstreamBuilds = new ArrayList<>();
+
+			if (topLevelBuild instanceof ParentBuild) {
+				ParentBuild parentBuild = (ParentBuild)topLevelBuild;
+
+				downstreamBuilds.addAll(parentBuild.getDownstreamBuilds(null));
+			}
 
 			if (downstreamBuilds.isEmpty()) {
 				downstreamBuilds = new ArrayList<>();
@@ -301,7 +306,13 @@ public class AutoCloseUtil {
 		Build failedDownstreamBuild = null;
 		List<String> jenkinsJobFailureURLs = new ArrayList<>();
 
-		List<Build> downstreamBuilds = topLevelBuild.getDownstreamBuilds(null);
+		List<Build> downstreamBuilds = new ArrayList<>();
+
+		if (topLevelBuild instanceof ParentBuild) {
+			ParentBuild parentBuild = (ParentBuild)topLevelBuild;
+
+			downstreamBuilds.addAll(parentBuild.getDownstreamBuilds(null));
+		}
 
 		Properties localLiferayJenkinsEEBuildProperties =
 			JenkinsResultsParserUtil.getLocalLiferayJenkinsEEBuildProperties();

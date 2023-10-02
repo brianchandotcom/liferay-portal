@@ -310,6 +310,19 @@ public class CommerceDiscountRelLocalServiceUtil {
 	}
 
 	public static List<CommerceDiscountRel> getCommerceDiscountRels(
+		long classNameId, long classPK) {
+
+		return getService().getCommerceDiscountRels(classNameId, classPK);
+	}
+
+	public static List<CommerceDiscountRel> getCommerceDiscountRels(
+		long classNameId, long classPK, String unitOfMeasureKey) {
+
+		return getService().getCommerceDiscountRels(
+			classNameId, classPK, unitOfMeasureKey);
+	}
+
+	public static List<CommerceDiscountRel> getCommerceDiscountRels(
 		long commerceDiscountId, String className) {
 
 		return getService().getCommerceDiscountRels(

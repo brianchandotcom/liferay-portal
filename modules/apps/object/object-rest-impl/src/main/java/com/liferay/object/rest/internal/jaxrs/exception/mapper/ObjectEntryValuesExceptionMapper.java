@@ -6,6 +6,7 @@
 package com.liferay.object.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.jaxrs.exception.mapper.util.ObjectExceptionMapperUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
@@ -30,24 +31,12 @@ public class ObjectEntryValuesExceptionMapper
 	protected Problem getProblem(
 		ObjectEntryValuesException objectEntryValuesException) {
 
-		String messageKey = objectEntryValuesException.getMessageKey();
-
-		if (messageKey == null) {
-			messageKey = objectEntryValuesException.getMessage();
-		}
-
-		if (objectEntryValuesException.getArguments() == null) {
-			return new Problem(
-				Response.Status.BAD_REQUEST,
-				_language.get(
-					_acceptLanguage.getPreferredLocale(), messageKey));
-		}
-
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			_language.format(
-				_acceptLanguage.getPreferredLocale(), messageKey,
-				objectEntryValuesException.getArguments()));
+			ObjectExceptionMapperUtil.getTitle(
+				_acceptLanguage, objectEntryValuesException.getArguments(),
+				_language, objectEntryValuesException.getMessage(),
+				objectEntryValuesException.getMessageKey()));
 	}
 
 	@Context

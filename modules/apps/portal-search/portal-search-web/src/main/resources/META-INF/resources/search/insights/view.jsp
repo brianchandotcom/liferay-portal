@@ -10,10 +10,10 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -53,10 +53,18 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 				module="js/utils/initialize_clipboard"
 			/>
 
-			<clay:panel-group>
-				<clay:panel
-					displayTitle='<%= LanguageUtil.get(request, "request-string") %>'
-					expanded="<%= true %>"
+			<liferay-ui:panel-container
+				extended="<%= true %>"
+				id='<%= liferayPortletResponse.getNamespace() + "insightsPanelContainer" %>'
+				markupView="lexicon"
+				persistState="<%= true %>"
+			>
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					id='<%= liferayPortletResponse.getNamespace() + "insightsRequestPanel" %>'
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="request-string"
 				>
 					<clay:button
 						cssClass="search-insights-copy-to-clipboard"
@@ -79,11 +87,14 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 						%>'
 						module="js/components/CodeMirrorTextArea"
 					/>
-				</clay:panel>
+				</liferay-ui:panel>
 
-				<clay:panel
-					displayTitle='<%= LanguageUtil.get(request, "response-string") %>'
-					expanded="<%= true %>"
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					id='<%= liferayPortletResponse.getNamespace() + "insightsResponsePanel" %>'
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="response-string"
 				>
 					<clay:button
 						cssClass="search-insights-copy-to-clipboard"
@@ -106,8 +117,8 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 						%>'
 						module="js/components/CodeMirrorTextArea"
 					/>
-				</clay:panel>
-			</clay:panel-group>
+				</liferay-ui:panel>
+			</liferay-ui:panel-container>
 		</div>
 	</c:otherwise>
 </c:choose>

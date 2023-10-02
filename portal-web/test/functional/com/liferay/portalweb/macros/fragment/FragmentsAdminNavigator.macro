@@ -43,8 +43,6 @@ definition {
 		}
 
 		DropdownMenuItem.click(menuItem = "Import");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 	}
 
 	macro gotoSpecificScopeCollection {

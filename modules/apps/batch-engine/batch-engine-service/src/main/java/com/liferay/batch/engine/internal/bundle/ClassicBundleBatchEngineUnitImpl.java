@@ -7,8 +7,8 @@ package com.liferay.batch.engine.internal.bundle;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
+import com.liferay.batch.engine.unit.BundleBatchEngineUnit;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +24,7 @@ import org.osgi.framework.Bundle;
  * @author Raymond Augé
  * @author Igor Beslic
  */
-public class ClassicBundleBatchEngineUnitImpl implements BatchEngineUnit {
+public class ClassicBundleBatchEngineUnitImpl implements BundleBatchEngineUnit {
 
 	public ClassicBundleBatchEngineUnitImpl(Bundle bundle, List<URL> urls) {
 		_bundle = bundle;
@@ -54,6 +54,11 @@ public class ClassicBundleBatchEngineUnitImpl implements BatchEngineUnit {
 			return objectMapper.readValue(
 				inputStream, BatchEngineUnitConfiguration.class);
 		}
+	}
+
+	@Override
+	public Bundle getBundle() {
+		return _bundle;
 	}
 
 	@Override

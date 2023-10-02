@@ -142,6 +142,11 @@ public class EditRankingDisplayBuilder {
 		).put(
 			"fetchDocumentsVisibleUrl", _getVisibleResultRankingsResourceURL()
 		).put(
+			"fetchSiteByExternalReferenceCodeUrl",
+			_getSiteByExternalReferenceCodeResourceURL()
+		).put(
+			"fetchSitesUrl", _getSitesResourceURL()
+		).put(
 			"formName", _renderResponse.getNamespace() + _getFormName()
 		).put(
 			"initialAliases", _getAliases()
@@ -192,6 +197,25 @@ public class EditRankingDisplayBuilder {
 			"companyId", String.valueOf(_themeDisplay.getCompanyId()));
 		resourceURL.setParameter(Constants.CMD, "getSearchResultsJSONObject");
 		resourceURL.setResourceID("/result_rankings/get_results");
+
+		return resourceURL.toString();
+	}
+
+	private String _getSiteByExternalReferenceCodeResourceURL() {
+		ResourceURL resourceURL = _renderResponse.createResourceURL();
+
+		resourceURL.setParameter(
+			Constants.CMD, "getSiteByExternalReferenceCodeJSONObject");
+		resourceURL.setResourceID("/result_rankings/get_sites");
+
+		return resourceURL.toString();
+	}
+
+	private String _getSitesResourceURL() {
+		ResourceURL resourceURL = _renderResponse.createResourceURL();
+
+		resourceURL.setParameter(Constants.CMD, "getSitesJSONObject");
+		resourceURL.setResourceID("/result_rankings/get_sites");
 
 		return resourceURL.toString();
 	}

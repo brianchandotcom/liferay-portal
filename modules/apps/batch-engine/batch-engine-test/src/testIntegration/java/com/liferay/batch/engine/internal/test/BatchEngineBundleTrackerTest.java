@@ -6,8 +6,9 @@
 package com.liferay.batch.engine.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.engine.unit.BatchEngineUnit;
-import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
+import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -15,9 +16,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.BooleanWrapper;
 import com.liferay.portal.kernel.util.IntegerWrapper;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
@@ -29,7 +28,6 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Enumeration;
-import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -86,10 +84,7 @@ public class BatchEngineBundleTrackerTest {
 			String dirName, int expectedCount)
 		throws Exception {
 
-		Bundle bundle = _bundleContext.installBundle(
-			RandomTestUtil.randomString(), _toInputStream(dirName));
-
-		Class<?> clazz = _batchEngineUnitProcessor.getClass();
+		Class<?> clazz = _batchEngineImportTaskExecutor.getClass();
 
 		ComponentDescriptionDTO componentDescriptionDTO =
 			_serviceComponentRuntime.getComponentDescriptionDTO(
@@ -101,27 +96,34 @@ public class BatchEngineBundleTrackerTest {
 		promise.getValue();
 
 		IntegerWrapper actualCount = new IntegerWrapper();
-		BooleanWrapper processed = new BooleanWrapper();
 
-		ServiceRegistration<BatchEngineUnitProcessor> serviceRegistration =
+		ServiceRegistration<BatchEngineImportTaskExecutor> serviceRegistration =
 			_bundleContext.registerService(
-				BatchEngineUnitProcessor.class,
-				batchEngineUnits -> {
-					for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
-						if (batchEngineUnit.isValid() &&
-							StringUtil.startsWith(
-								batchEngineUnit.getDataFileName(),
-								"/" + dirName)) {
+				BatchEngineImportTaskExecutor.class,
+				new BatchEngineImportTaskExecutor() {
 
-							actualCount.increment();
-						}
+					@Override
+					public void execute(
+						BatchEngineImportTask batchEngineImportTask) {
+
+						actualCount.increment();
 					}
 
-					processed.setValue(true);
+					@Override
+					public void execute(
+						BatchEngineImportTask batchEngineImportTask,
+						BatchEngineTaskItemDelegate<?>
+							batchEngineTaskItemDelegate,
+						boolean checkPermissions) {
 
-					return CompletableFuture.completedFuture(null);
+						actualCount.increment();
+					}
+
 				},
 				null);
+
+		Bundle bundle = _bundleContext.installBundle(
+			RandomTestUtil.randomString(), _toInputStream(dirName));
 
 		try {
 			bundle.start();
@@ -129,9 +131,6 @@ public class BatchEngineBundleTrackerTest {
 			Thread.sleep(2000);
 
 			Assert.assertEquals(expectedCount, actualCount.getValue());
-			Assert.assertTrue(processed.getValue());
-
-			processed.setValue(false);
 
 			bundle.stop();
 
@@ -140,7 +139,6 @@ public class BatchEngineBundleTrackerTest {
 			Thread.sleep(2000);
 
 			Assert.assertEquals(expectedCount, actualCount.getValue());
-			Assert.assertFalse(processed.getValue());
 		}
 		finally {
 			bundle.uninstall();
@@ -187,7 +185,7 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	@Inject
-	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
+	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 
 	private Bundle _bundle;
 	private BundleContext _bundleContext;

@@ -67,8 +67,10 @@ public class StatsClusterRequestExecutorTest {
 			statsClusterRequestExecutorImpl.execute(statsClusterRequest);
 
 		Assert.assertNotNull(statsClusterResponse);
-
+		Assert.assertNotEquals(
+			0, statsClusterResponse.getAvailableSpaceInBytes());
 		Assert.assertNotNull(statsClusterResponse.getClusterHealthStatus());
+		Assert.assertNotEquals(0, statsClusterResponse.getUsedSpaceInBytes());
 	}
 
 	private static final String _NODE_ID = "liferay";

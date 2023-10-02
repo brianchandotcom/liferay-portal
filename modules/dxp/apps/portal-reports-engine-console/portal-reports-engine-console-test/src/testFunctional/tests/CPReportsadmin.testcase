@@ -249,7 +249,6 @@ definition {
 
 	@priority = 4
 	test DeliverReportToEmail {
-		property portal.upstream = "quarantine";
 		property test.assert.javascript.errors = "false";
 		property test.smtp.server.enabled = "true";
 

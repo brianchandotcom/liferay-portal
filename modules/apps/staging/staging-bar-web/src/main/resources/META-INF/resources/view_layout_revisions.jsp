@@ -55,7 +55,8 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 		<div class="layout-revision-container" id="<portlet:namespace />layoutRevisionsContainer">
 
 			<%
-			for (LayoutRevision rootLayoutRevision : rootLayoutRevisions) {
+			for (int i = 0; i < rootLayoutRevisions.size(); i++) {
+				LayoutRevision rootLayoutRevision = rootLayoutRevisions.get(i);
 			%>
 
 				<div class="layout-variation-container <%= (recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId()) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= rootLayoutRevision.getLayoutRevisionId() %>">
@@ -69,6 +70,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 					</c:if>
 
 					<liferay-ui:search-container
+						id="<%= liferayPortletResponse.getNamespace() + "layoutRevisionsSearchContainer_" + i %>"
 						total="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisionsCount(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getLayoutBranchId(), rootLayoutRevision.getPlid()) %>"
 					>
 						<liferay-ui:search-container-results

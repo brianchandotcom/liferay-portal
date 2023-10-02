@@ -40,9 +40,34 @@ definition {
 		MP2Configuration.marketplaceInitializersTearDown(doLogout = "true");
 	}
 
-	@description = "LPS-160952 | Assert the subject and body of the e-mail: (Liferay Marketplace - Invitation from %Admin User%)"
+	@description = "LPS-160952 | Assert the subject of the e-mail: (Liferay Marketplace - Invitation from %Admin User%)"
 	@priority = 4
 	test AssertTheDetailsOfTheEmail {
+		task ("Given that the user sends an invitation") {
+			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "Account Administrator",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+
+			User.logoutPG();
+		}
+
+		task ("When the user accesses the invitation email") {
+			MockMock._gotoMail();
+		}
+
+		task ("Then I should be able to assert the subject of the email") {
+			MockMock._viewMailFromInbox(
+				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				recipient = "test.mp@liferay.com",
+				sender = "da@administrator.com");
+		}
 	}
 
 	@description = "LPS-162211 | Publisher admin should be able to read invited user record details"
@@ -66,7 +91,9 @@ definition {
 		}
 
 		task ("And the user opens the details of the invited member") {
-			MP2Dashboards.clickOnTheInvitedUser(text = "Invited Member");
+			MP2Dashboards.clickOnTheInvitedUser(
+				label = "Role",
+				value = "Invited Member");
 		}
 
 		task ("Then I should be able to assert all user details") {
@@ -97,9 +124,23 @@ definition {
 		}
 
 		task ("Then I should be able to assert that the user has been invited") {
-			var userInvitedInfo = "Test QA,test.mp@liferay.com,Invited Member";
+			var table = '''
+				| Name    | Test QA             |
+				| Email   | test.mp@liferay.com |
+				| Role    | Invited Member      |
+			''';
 
-			MP2Utils.assertUserInfoAtTable(textList = ${userInvitedInfo});
+			var rawTable = TableUtil.newTable(${table});
+
+			for (var row : table ${rawTable}) {
+				var label = "${row[0]}";
+				var value = "${row[1]}";
+
+				AssertElementPresent(
+					key_label = ${label},
+					key_text = ${value},
+					locator1 = "MP2Dashboards#DASHBOARD_TABLE");
+			}
 		}
 	}
 
@@ -180,6 +221,54 @@ definition {
 	@description = "LPS-160952 | Verify that after accepting the invitation, the guest user role is listed in the members section of the editor account"
 	@priority = 3
 	test CanViewTheUserRoleInTheMemberList {
+		task ("Given the user accepts the invitation") {
+			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "App Editor",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+
+			User.logoutPG();
+
+			MockMock._gotoMail();
+		}
+
+		task ("And logs into the panel with the invited roles") {
+			MP2Utils.firstLoginMKT(
+				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				bodyLink = "Accept invitation",
+				recipient = "da@administrator.com",
+				userEmailAddress = "test.mp@liferay.com");
+		}
+
+		task ("When I go to the member page") {
+			MP2Navigator.gotoNavItem(navItem = "Members");
+		}
+
+		task ("Then I should be able to assert that the invited user's status is now Active") {
+			var table = '''
+				| Name    | Test QA             |
+				| Email   | test.mp@liferay.com |
+				| Role    | App Editor          |
+			''';
+
+			var rawTable = TableUtil.newTable(${table});
+
+			for (var row : table ${rawTable}) {
+				var label = "${row[0]}";
+				var value = "${row[1]}";
+
+				AssertElementPresent(
+					key_label = ${label},
+					key_text = ${value},
+					locator1 = "MP2Dashboards#DASHBOARD_TABLE");
+			}
+		}
 	}
 
 }

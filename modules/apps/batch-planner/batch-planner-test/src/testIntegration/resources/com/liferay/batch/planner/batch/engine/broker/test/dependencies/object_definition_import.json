@@ -1,0 +1,554 @@
+[
+	{
+		"accountEntryRestricted": false,
+		"accountEntryRestrictedObjectFieldName": "",
+		"actions": {
+			"delete": {
+				"href": "/headless-batch-engine/v1.0/object-definitions/35588",
+				"method": "DELETE"
+			},
+			"get": {
+				"href": "/headless-batch-engine/v1.0/object-definitions/35588",
+				"method": "GET"
+			},
+			"permissions": {
+				"href": "/headless-batch-engine/v1.0/object-definitions/35588",
+				"method": "PATCH"
+			},
+			"update": {
+				"href": "/headless-batch-engine/v1.0/object-definitions/35588",
+				"method": "PUT"
+			}
+		},
+		"active": true,
+		"dateCreated": "2023-09-19T13:11:46Z",
+		"dateModified": "2023-09-19T14:02:26Z",
+		"defaultLanguageId": "en_US",
+		"enableCategorization": true,
+		"enableComments": false,
+		"enableLocalization": true,
+		"enableObjectEntryHistory": false,
+		"externalReferenceCode": "TEST-OBJECT-DEFINITION-1",
+		"label": {
+			"en_US": "TestObject"
+		},
+		"modifiable": true,
+		"name": "TestObject",
+		"objectActions": [
+			{
+				"active": true,
+				"conditionExpression": "",
+				"dateCreated": "2023-09-19T13:44:14Z",
+				"dateModified": "2023-09-19T13:44:14Z",
+				"description": "",
+				"errorMessage": {
+					"en_US": "errorMessage"
+				},
+				"externalReferenceCode": "7a9da160-4bda-7f02-f2be-1ec2422420ba",
+				"id": 36480,
+				"label": {
+					"en_US": "actionLabel"
+				},
+				"name": "actionLabel",
+				"objectActionExecutorKey": "groovy",
+				"objectActionTriggerKey": "standalone",
+				"parameters": {
+				},
+				"status": {
+					"code": 0,
+					"label": "never-ran",
+					"label_i18n": "Never Ran"
+				}
+			}
+		],
+		"objectFields": [
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "0ec77137-26ff-508b-f8eb-6c735f5e3283",
+				"id": 35590,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Author"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "creator",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String"
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"externalReferenceCode": "d875bb00-d7b9-82c0-b9c2-1e764a5f53dd",
+				"id": 35592,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Create Date"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "createDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date"
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "481cb2d8-ac75-3c71-f307-c1fff0899a64",
+				"id": 35594,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "External Reference Code"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "externalReferenceCode",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String"
+			},
+			{
+				"DBType": "Long",
+				"businessType": "LongInteger",
+				"externalReferenceCode": "3329101e-dd4c-0487-7a29-2b2bb0509a1c",
+				"id": 35596,
+				"indexed": true,
+				"indexedAsKeyword": true,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "ID"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "id",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Long"
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"externalReferenceCode": "3af75c56-1f25-db68-c229-dcb6f4795f74",
+				"id": 35598,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Modified Date"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "modifiedDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date"
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "ed92f2b6-08f1-9d14-24de-8b8b66780810",
+				"id": 35600,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Status"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "status",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String"
+			},
+			{
+				"DBType": "Long",
+				"businessType": "Attachment",
+				"externalReferenceCode": "b8469dff-bdd2-3eb3-2a11-58eab2a5583a",
+				"id": 36498,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "en_US",
+				"label": {
+					"en_US": "testAttachmentField"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "testAttachmentField",
+				"objectFieldSettings": [
+					{
+						"name": "acceptedFileExtensions",
+						"value": "txt"
+					},
+					{
+						"name": "maximumFileSize",
+						"value": 100
+					},
+					{
+						"name": "fileSource",
+						"value": "userComputer"
+					},
+					{
+						"name": "showFilesInDocumentsAndMedia",
+						"value": false
+					}
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "Long"
+			},
+			{
+				"DBType": "Boolean",
+				"businessType": "Boolean",
+				"externalReferenceCode": "5c965ecb-617f-1010-9894-bf0d88fec886",
+				"id": 36515,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "testBooleanField"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "testBooleanField",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "Boolean"
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"externalReferenceCode": "39ebd722-7077-8269-1c1c-f0765959aa7c",
+				"id": 36518,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "testDateField"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "testDateField",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "Date"
+			},
+			{
+				"DBType": "DateTime",
+				"businessType": "DateTime",
+				"externalReferenceCode": "f0b7c3b4-c667-a3ed-ab99-ed86af4efb94",
+				"id": 36522,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "testDateTimeField"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "testDateTimeField",
+				"objectFieldSettings": [
+					{
+						"name": "timeStorage",
+						"value": "convertToUTC"
+					}
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "DateTime"
+			},
+			{
+				"DBType": "Double",
+				"businessType": "Decimal",
+				"externalReferenceCode": "51145f97-eb4f-7075-b8d2-92254e474cfb",
+				"id": 36527,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "testDecimalField"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "testDecimalField",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "Double"
+			},
+			{
+				"DBType": "Integer",
+				"businessType": "Integer",
+				"externalReferenceCode": "efbda12d-d00a-ba44-f8cd-77b0c26c926d",
+				"id": 36530,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "testIntegerField"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "testIntegerField",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "Integer"
+			},
+			{
+				"DBType": "Long",
+				"businessType": "LongInteger",
+				"externalReferenceCode": "7524323b-343d-c73c-af64-8f77f20bfed6",
+				"id": 36533,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "testLongIntegerField"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "testLongIntegerField",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "Long"
+			},
+			{
+				"DBType": "Clob",
+				"businessType": "LongText",
+				"externalReferenceCode": "ca8e8d5a-29eb-ba6b-c62a-d4803d07af26",
+				"id": 36537,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "en_US",
+				"label": {
+					"en_US": "testLongTextField"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "testLongTextField",
+				"objectFieldSettings": [
+					{
+						"name": "showCounter",
+						"value": false
+					}
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "Clob"
+			},
+			{
+				"DBType": "BigDecimal",
+				"businessType": "PrecisionDecimal",
+				"externalReferenceCode": "1f160397-a4af-f51a-7254-899b629aea1a",
+				"id": 36542,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "testPrecisionDecimalField"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "testPrecisionDecimalField",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "BigDecimal"
+			},
+			{
+				"DBType": "Clob",
+				"businessType": "RichText",
+				"externalReferenceCode": "cb4f1f9b-1759-93a5-833e-b4b66defb545",
+				"id": 36545,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "en_US",
+				"label": {
+					"en_US": "testRichTextField"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "testRichTextField",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "Clob"
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "74ad169a-6ed2-d875-aff8-a5afde81682d",
+				"id": 36548,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "en_US",
+				"label": {
+					"en_US": "testTextField"
+				},
+				"listTypeDefinitionId": 0,
+				"name": "testTextField",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "String"
+			}
+		],
+		"objectFolderExternalReferenceCode": "uncategorized",
+		"objectLayouts": [
+			{
+				"dateCreated": "2023-09-19T13:44:14Z",
+				"dateModified": "2023-09-19T13:44:14Z",
+				"defaultObjectLayout": false,
+				"id": 36482,
+				"name": {
+					"en_US": "Layout"
+				},
+				"objectDefinitionExternalReferenceCode": "TEST-OBJECT-DEFINITION-1",
+				"objectDefinitionId": 35588,
+				"objectLayoutTabs": [
+				]
+			}
+		],
+		"objectRelationships": [
+			{
+				"deletionType": "prevent",
+				"edge": false,
+				"id": 35639,
+				"label": {
+					"en_US": "relationship"
+				},
+				"name": "relationship",
+				"objectDefinitionExternalReferenceCode1": "TEST-OBJECT-DEFINITION-1",
+				"objectDefinitionExternalReferenceCode2": "TEST-OBJECT-DEFINITION-2",
+				"objectDefinitionModifiable2": true,
+				"objectDefinitionName2": "TestObject2",
+				"objectDefinitionSystem2": false,
+				"parameterObjectFieldId": 0,
+				"parameterObjectFieldName": "",
+				"reverse": false,
+				"type": "manyToMany"
+			}
+		],
+		"objectValidationRules": [
+			{
+				"active": false,
+				"dateCreated": "2023-09-19T14:02:26Z",
+				"dateModified": "2023-09-19T14:02:26Z",
+				"engine": "groovy",
+				"engineLabel": "Groovy",
+				"errorLabel": {
+				},
+				"id": 36597,
+				"name": {
+					"en_US": "testValidation"
+				},
+				"objectDefinitionExternalReferenceCode": "TEST-OBJECT-DEFINITION-1",
+				"objectDefinitionId": 35588,
+				"script": "script_placeholder"
+			}
+		],
+		"objectViews": [
+			{
+				"dateCreated": "2023-09-19T13:44:14Z",
+				"dateModified": "2023-09-19T13:44:14Z",
+				"defaultObjectView": false,
+				"id": 36490,
+				"name": {
+					"en_US": "testView"
+				},
+				"objectDefinitionExternalReferenceCode": "TEST-OBJECT-DEFINITION-1",
+				"objectDefinitionId": 35588,
+				"objectViewColumns": [
+				],
+				"objectViewFilterColumns": [
+				],
+				"objectViewSortColumns": [
+				]
+			}
+		],
+		"panelCategoryKey": "",
+		"parameterRequired": false,
+		"pluralLabel": {
+			"en_US": "TestObjects"
+		},
+		"portlet": true,
+		"restContextPath": "/o/c/testobjects",
+		"scope": "company",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		},
+		"storageType": "default",
+		"system": false,
+		"titleObjectFieldName": "id"
+	}
+]

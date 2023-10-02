@@ -7,7 +7,6 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
@@ -107,32 +106,14 @@ export default function EditObjectFolderHeader({
 						)}
 				</div>
 
-				{showChangesSaved && (
-					<span className="lfr-objects__model-builder-header-changes-saved">
-						{Liferay.Language.get('changes-saved')}
-						&nbsp;
-						<ClayIcon symbol="check-circle" />
-					</span>
-				)}
-
 				<div className="lfr-objects__model-builder-header-buttons-container">
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('toggle-sidebars')}
-						displayType="secondary"
-						symbol="view"
-						title={Liferay.Language.get('toggle-sidebars')}
-					/>
-
-					<ClayButton displayType="secondary">
-						{sub(
-							Liferay.Language.get('x-folder'),
-							Liferay.Language.get('create-new')
-						)}
-					</ClayButton>
-
-					<ClayButton displayType="secondary">
-						{Liferay.Language.get('export')}
-					</ClayButton>
+					{showChangesSaved && (
+						<span className="lfr-objects__model-builder-header-changes-saved">
+							{Liferay.Language.get('changes-saved')}
+							&nbsp;
+							<ClayIcon symbol="check-circle" />
+						</span>
+					)}
 
 					<ClayButton
 						disabled={!hasDraftObjectDefinitions}

@@ -5,15 +5,12 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,11 +25,6 @@ public class FutureDatesFunctionTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() throws Exception {
-		_setUpDateFormatFactoryUtil();
-	}
 
 	@Test
 	public void testApplyFalse() {
@@ -62,13 +54,6 @@ public class FutureDatesFunctionTest {
 			_futureDatesFunction.apply(null, _todayLocalDate.toString()));
 		Assert.assertFalse(
 			_futureDatesFunction.apply(_todayLocalDate.toString(), null));
-	}
-
-	private void _setUpDateFormatFactoryUtil() {
-		DateFormatFactoryUtil dateFormatFactoryUtil =
-			new DateFormatFactoryUtil();
-
-		dateFormatFactoryUtil.setDateFormatFactory(new DateFormatFactoryImpl());
 	}
 
 	private final FutureDatesFunction _futureDatesFunction =

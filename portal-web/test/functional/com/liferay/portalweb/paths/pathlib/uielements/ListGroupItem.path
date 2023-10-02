@@ -32,12 +32,12 @@
 </tr>
 <tr>
 	<td>SESSION_ACCESSED_URLS</td>
-	<td>//a[contains(@href,'sessionAccessedURLsPanelsContent')]</td>
+	<td>//button[contains(.,'Accessed URLs')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACCESSED_FRIENDLY_URLS</td>
-	<td>//div[contains(@aria-labelledby,'sessionAccessedURLsPanelsHeader') and contains(.,'${key_friendlyURL}')]</td>
+	<td>//div[@class="lfr-tooltip-scope"][contains(.,'Accessed URLs')]//dt[normalize-space(text())='${key_friendlyURL}']</td>
 	<td></td>
 </tr>
 </tbody>

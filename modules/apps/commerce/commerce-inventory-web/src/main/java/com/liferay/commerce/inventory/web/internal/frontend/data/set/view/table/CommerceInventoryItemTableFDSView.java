@@ -11,6 +11,7 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.util.Locale;
 
@@ -32,11 +33,16 @@ public class CommerceInventoryItemTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		return fdsTableSchemaBuilder.add(
+		fdsTableSchemaBuilder.add(
 			"sku", "sku",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"actionLink")
-		).add(
+				"actionLink"));
+
+		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
+			fdsTableSchemaBuilder.add("unitOfMeasureKey", "uom");
+		}
+
+		return fdsTableSchemaBuilder.add(
 			"stock", "on-hand"
 		).add(
 			"available", "available"

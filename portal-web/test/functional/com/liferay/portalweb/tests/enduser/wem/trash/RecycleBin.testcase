@@ -222,7 +222,7 @@ definition {
 	@description = "Assert scheduled clean up in recycle bin works."
 	@priority = 3
 	test RecycleBinScheduledCleanup {
-		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
+		property custom.properties = "trash.entries.max.age=1${line.separator}trash.entry.check.interval=1";
 
 		task ("Add a blogs widget to page and a blog entry") {
 			JSONLayout.addWidgetToPublicLayout(

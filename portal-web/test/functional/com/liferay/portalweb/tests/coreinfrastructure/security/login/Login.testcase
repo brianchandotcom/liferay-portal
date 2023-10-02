@@ -65,7 +65,7 @@ definition {
 	@description = "This is a use case for LPS-39744 and LPS-78508. Default landing page could be set by property and user is redirected to the changed landing page."
 	@priority = 5
 	test DefaultPortalLandingPageSetByProperty {
-		property custom.properties = "default.landing.page.path=/web/guest/landing${line.separator}company.default.home.url=";
+		property custom.properties = "company.default.home.url=${line.separator}default.landing.page.path=/web/guest/landing";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -444,7 +444,7 @@ definition {
 	@description = "This is a use case for LPS-150388 TC-1/5: Admin password need to be set on first startup if the default admin password property is not set."
 	@priority = 5
 	test UserSetNewPasswordWithoutPasswordProperty {
-		property custom.properties = "company.security.send.password.reset.link=true${line.separator}passwords.default.policy.change.required=false${line.separator}default.admin.password=${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "company.security.send.password.reset.link=true${line.separator}default.admin.password=${line.separator}jsonws.web.service.paths.excludes=${line.separator}passwords.default.policy.change.required=false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

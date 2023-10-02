@@ -35,7 +35,7 @@ public class ObjectFolderModelListener extends BaseModelListener<ObjectFolder> {
 
 		try {
 			ObjectFolder uncategorizedObjectFolder =
-				_objectFolderLocalService.addOrGetUncategorizedObjectFolder(
+				_objectFolderLocalService.getUncategorizedObjectFolder(
 					objectFolder.getCompanyId());
 
 			for (ObjectDefinition objectDefinition :

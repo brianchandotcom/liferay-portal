@@ -22,7 +22,7 @@ export function NoPaginationOptions({
 	displayAllItems,
 	handleConfigurationChanged,
 	initialNumberOfItems,
-	warningMessage = '',
+	warningMessage,
 }) {
 	const collectionNumberOfItemsId = useId();
 	const isMounted = useIsMounted();
@@ -133,8 +133,12 @@ export function NoPaginationOptions({
 				</ClayForm.Group>
 			)}
 
-			{warningMessage && (
-				<WarningMessage fontWeight="normal" message={warningMessage} />
+			{warningMessage && warningMessage.description && (
+				<WarningMessage
+					fontWeight="normal"
+					message={warningMessage.description}
+					title={warningMessage.title}
+				/>
 			)}
 		</ClayForm.Group>
 	);
@@ -145,5 +149,5 @@ NoPaginationOptions.propTypes = {
 	displayAllItems: PropTypes.bool.isRequired,
 	handleConfigurationChanged: PropTypes.func.isRequired,
 	initialNumberOfItems: PropTypes.number.isRequired,
-	warningMessage: PropTypes.string,
+	warningMessage: PropTypes.object,
 };

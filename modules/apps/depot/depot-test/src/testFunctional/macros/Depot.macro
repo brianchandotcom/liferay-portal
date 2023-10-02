@@ -1,7 +1,7 @@
 definition {
 
 	macro activateStaging {
-		Breadcrumb.viewActiveEntry(breadcrumbName = "Staging Configuration");
+		Breadcrumb.viewActiveEntry(breadcrumbName = "Staging");
 
 		if (${remoteStaging} == "true") {
 			Check.checkHiddenToggleSwitch(locator1 = "SiteSettingsStaging#STAGING_REMOTE_LIVE");

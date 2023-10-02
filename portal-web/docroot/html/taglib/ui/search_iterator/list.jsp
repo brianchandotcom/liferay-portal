@@ -230,6 +230,10 @@ if (fixedHeader) {
 					boolean rowIsChecked = false;
 					boolean rowIsDisabled = false;
 
+					String rowElementId = namespace + id + "_" + row.getRowId();
+
+					request.setAttribute("liferay-ui:search-container-row:rowElementId", rowElementId);
+
 					if (rowChecker != null) {
 						rowIsChecked = rowChecker.isChecked(row.getObject());
 						rowIsDisabled = rowChecker.isDisabled(row.getObject());
@@ -262,10 +266,6 @@ if (fixedHeader) {
 							row.setData(rowData);
 						}
 					}
-
-					String rowElementId = namespace + id + "_" + row.getRowId();
-
-					request.setAttribute("liferay-ui:search-container-row:rowElementId", rowElementId);
 
 					request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(row.getRowId())));
 

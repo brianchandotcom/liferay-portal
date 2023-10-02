@@ -1,0 +1,193 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.search.admin.web.internal.display.context;
+
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.search.admin.web.internal.display.context.builder.IndexActionsDisplayContextBuilder;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
+import com.liferay.portal.search.cluster.StatsInformation;
+import com.liferay.portal.search.cluster.StatsInformationFactory;
+import com.liferay.portal.search.configuration.ReindexConfiguration;
+import com.liferay.portal.search.index.IndexInformation;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
+
+import org.mockito.Mockito;
+
+/**
+ * @author Felipe Lorenz
+ */
+public class IndexActionsDisplayContextTest {
+
+	@ClassRule
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		_setUpIndexInformation();
+		_setUpLanguage();
+		_setUpPortalInstancesLocalServiceUtil();
+		_setUpPortalUtil();
+	}
+
+	@Test
+	public void testGetStatsInformation() {
+		IndexActionsDisplayContextBuilder indexActionsDisplayContextBuilder =
+			new IndexActionsDisplayContextBuilder(
+				_language, _portal, _reindexConfiguration,
+				new MockRenderRequest(), _searchCapabilities);
+
+		indexActionsDisplayContextBuilder.setStatsInformationFactory(
+			getStatsInformationFactory(100.0, 50.0, 80.0));
+
+		IndexActionsDisplayContext indexActionsDisplayContext =
+			indexActionsDisplayContextBuilder.build();
+
+		Assert.assertEquals(
+			100.0, indexActionsDisplayContext.getAvailableDiskSpace(), 0);
+		Assert.assertEquals(
+			80.0, indexActionsDisplayContext.getCurrentDiskSpaceUsed(), 0);
+
+		indexActionsDisplayContextBuilder.setStatsInformationFactory(
+			getStatsInformationFactory(16.0, 10.0, 10.0));
+
+		indexActionsDisplayContext = indexActionsDisplayContextBuilder.build();
+
+		Assert.assertFalse(indexActionsDisplayContext.isLowOnDiskSpace());
+
+		indexActionsDisplayContextBuilder.setStatsInformationFactory(
+			getStatsInformationFactory(14.0, 10.0, 10.0));
+
+		indexActionsDisplayContext = indexActionsDisplayContextBuilder.build();
+
+		Assert.assertTrue(indexActionsDisplayContext.isLowOnDiskSpace());
+	}
+
+	protected StatsInformationFactory getStatsInformationFactory(
+		double available, double largest, double used) {
+
+		StatsInformationFactory statsInformationFactory = Mockito.mock(
+			StatsInformationFactory.class);
+
+		StatsInformation statsInformation = Mockito.mock(
+			StatsInformation.class);
+
+		Mockito.when(
+			statsInformation.getAvailableDiskSpace()
+		).thenReturn(
+			available
+		);
+
+		Mockito.when(
+			statsInformation.getSizeOfLargestIndex()
+		).thenReturn(
+			largest
+		);
+
+		Mockito.when(
+			statsInformation.getUsedDiskSpace()
+		).thenReturn(
+			used
+		);
+
+		Mockito.when(
+			statsInformationFactory.getStatsInformation()
+		).thenReturn(
+			statsInformation
+		);
+
+		return statsInformationFactory;
+	}
+
+	private void _setUpIndexInformation() {
+		_indexInformation = Mockito.mock(IndexInformation.class);
+
+		Mockito.when(
+			_indexInformation.getIndexNames()
+		).thenReturn(
+			new String[] {"index1", "index2"}
+		);
+
+		Mockito.when(
+			_indexInformation.getCompanyIndexName(Mockito.anyLong())
+		).thenAnswer(
+			invocation -> "index" + invocation.getArguments()[0]
+		);
+	}
+
+	private void _setUpLanguage() {
+		_language = Mockito.mock(Language.class);
+
+		Mockito.doReturn(
+			"name"
+		).when(
+			_language
+		).get(
+			Mockito.any(HttpServletRequest.class), Mockito.anyString()
+		);
+	}
+
+	private void _setUpPortalInstancesLocalServiceUtil() {
+		PortalInstancesLocalService portalInstancesLocalService = Mockito.mock(
+			PortalInstancesLocalService.class);
+
+		Mockito.doReturn(
+			new long[0]
+		).when(
+			portalInstancesLocalService
+		).getCompanyIds();
+
+		PortalInstancesLocalServiceUtil.setService(portalInstancesLocalService);
+	}
+
+	private void _setUpPortalUtil() {
+		_portal = Mockito.mock(Portal.class);
+
+		Mockito.doAnswer(
+			invocation -> new String[] {
+				invocation.getArgument(0, String.class), StringPool.BLANK
+			}
+		).when(
+			_portal
+		).stripURLAnchor(
+			Mockito.anyString(), Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			Mockito.mock(HttpServletRequest.class)
+		).when(
+			_portal
+		).getHttpServletRequest(
+			Mockito.any()
+		);
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(_portal);
+	}
+
+	private IndexInformation _indexInformation;
+	private Language _language;
+	private Portal _portal;
+	private final ReindexConfiguration _reindexConfiguration = Mockito.mock(
+		ReindexConfiguration.class);
+	private final SearchCapabilities _searchCapabilities = Mockito.mock(
+		SearchCapabilities.class);
+
+}

@@ -17,6 +17,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import FDSSourceDataRenderer from '../FDSPropsTransformer/FDSSourceDataRenderer';
 
 interface ItemData {
 	id: number;
@@ -51,11 +52,34 @@ export default function StateManager({
 		);
 	}
 
+	const fdsSchemaFields = [
+		{
+			contentRenderer: 'objectStateManagerLabelDataRenderer',
+			expand: false,
+			fieldName: 'label',
+			label: Liferay.Language.get('label'),
+			localizeLabel: true,
+			sortable: true,
+		},
+	];
+
+	if (Liferay.FeatureFlags['LPS-193355']) {
+		fdsSchemaFields.push({
+			contentRenderer: 'FDSSourceDataRenderer',
+			expand: false,
+			fieldName: 'system',
+			label: Liferay.Language.get('source'),
+			localizeLabel: true,
+			sortable: false,
+		});
+	}
+
 	const dataSetProps = {
 		...defaultDataSetProps,
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
+			FDSSourceDataRenderer,
 			objectStateManagerLabelDataRenderer,
 		},
 		formName,
@@ -72,17 +96,7 @@ export default function StateManager({
 				label: 'Table',
 				name: 'table',
 				schema: {
-					fields: [
-						{
-							contentRenderer:
-								'objectStateManagerLabelDataRenderer',
-							expand: false,
-							fieldName: 'label',
-							label: Liferay.Language.get('label'),
-							localizeLabel: true,
-							sortable: true,
-						},
-					],
+					fields: fdsSchemaFields,
 				},
 				thumbnail: 'table',
 			},

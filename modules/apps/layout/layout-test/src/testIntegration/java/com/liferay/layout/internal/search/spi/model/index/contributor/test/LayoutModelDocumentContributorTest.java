@@ -6,9 +6,12 @@
 package com.liferay.layout.internal.search.spi.model.index.contributor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -21,13 +24,17 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -75,27 +82,63 @@ public class LayoutModelDocumentContributorTest {
 	public void testReindexPublishedDraftLayoutWithLayoutLocalization()
 		throws Exception {
 
-		String headingText = RandomTestUtil.randomString();
+		String elementText = RandomTestUtil.randomString();
+		String html =
+			"<h1 data-lfr-editable-id=\"element-text\" " +
+				"data-lfr-editable-type=\"text\">Heading Example</h1>";
 
-		Layout layout = _addTypeContentLayout(true, headingText);
+		Layout layout = _addTypeContentLayout(elementText, true);
 
-		_assertReindex(headingText, layout);
+		_assertReindex(elementText, layout);
 
-		Layout draftLayout = _addHeadingFragmentToLayout(
-			RandomTestUtil.randomString(), layout);
+		Layout draftLayout = _addFragmentToLayout(
+			RandomTestUtil.randomString(), html, layout);
 
 		_assertReindexDraftLayout(draftLayout);
 
-		_assertSearch(headingText, layout.getPlid());
+		_assertSearch(elementText, layout.getPlid());
+	}
+
+	@Test
+	public void testReindexPublishedLayoutWithFreemarkerErrors()
+		throws Exception {
+
+		String elementText = RandomTestUtil.randomString();
+
+		Layout layout = _addTypeContentLayout(elementText, true);
+
+		String html =
+			"[#if /#] <h1 data-lfr-editable-id=\"element-text\" " +
+				"data-lfr-editable-type=\"text\">Heading Example</h1>";
+
+		_addFragmentEntryLinkToLayout(
+			elementText, html, layout,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_reindexLogEntries(layout);
+
+		Document document = _layoutIndexerFixture.searchOnlyOne(
+			layout.getName(_locale), _locale);
+
+		Assert.assertNotNull(document);
+
+		String content = document.get(
+			Field.getLocalizedName(_locale, Field.CONTENT));
+
+		Assert.assertEquals(elementText, content);
+
+		Assert.assertEquals(
+			document.get(Field.ENTRY_CLASS_PK),
+			String.valueOf(layout.getPlid()));
 	}
 
 	@Test
 	public void testReindexPublishedLayoutWithLayoutLocalization()
 		throws Exception {
 
-		String headingText = RandomTestUtil.randomString();
+		String elementText = RandomTestUtil.randomString();
 
-		Layout layout = _addTypeContentLayout(true, headingText);
+		Layout layout = _addTypeContentLayout(elementText, true);
 
 		List<LayoutLocalization> layoutLocalizations1 =
 			_layoutLocalizationLocalService.getLayoutLocalizations(
@@ -104,7 +147,7 @@ public class LayoutModelDocumentContributorTest {
 		Assert.assertFalse(
 			layoutLocalizations1.toString(), layoutLocalizations1.isEmpty());
 
-		_assertReindex(headingText, layout);
+		_assertReindex(elementText, layout);
 
 		List<LayoutLocalization> layoutLocalizations2 =
 			_layoutLocalizationLocalService.getLayoutLocalizations(
@@ -119,9 +162,9 @@ public class LayoutModelDocumentContributorTest {
 	public void testReindexPublishedLayoutWithoutLayoutLocalization()
 		throws Exception {
 
-		String headingText = RandomTestUtil.randomString();
+		String elementText = RandomTestUtil.randomString();
 
-		Layout layout = _addTypeContentLayout(true, headingText);
+		Layout layout = _addTypeContentLayout(elementText, true);
 
 		_deleteLayoutLocalizations(layout.getPlid());
 
@@ -129,14 +172,14 @@ public class LayoutModelDocumentContributorTest {
 
 		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
-		_assertSearch(headingText, layout.getPlid());
+		_assertSearch(elementText, layout.getPlid());
 	}
 
 	@Test
 	public void testReindexUnpublishedDraftLayout() throws Exception {
-		String headingText = RandomTestUtil.randomString();
+		String elementText = RandomTestUtil.randomString();
 
-		Layout layout = _addTypeContentLayout(false, headingText);
+		Layout layout = _addTypeContentLayout(elementText, false);
 
 		List<LayoutLocalization> layoutLocalizations =
 			_layoutLocalizationLocalService.getLayoutLocalizations(
@@ -148,48 +191,63 @@ public class LayoutModelDocumentContributorTest {
 		_assertReindexDraftLayout(layout);
 	}
 
-	private Layout _addHeadingFragmentToLayout(
-			String headingText, Layout layout)
+	private void _addFragmentEntryLinkToLayout(
+			String elementText, String html, Layout layout,
+			ServiceContext serviceContext)
 		throws Exception {
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		Assert.assertNotNull(draftLayout);
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), null, serviceContext);
 
 		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorRegistry.getFragmentEntry(
-				"BASIC_COMPONENT-heading");
-
-		Assert.assertNotNull(fragmentEntry);
+			_fragmentEntryLocalService.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(), null,
+				RandomTestUtil.randomString(), null, html, null, false, null,
+				null, 0, FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			JSONUtil.put(
 				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				JSONUtil.put(
-					"element-text", JSONUtil.put(_languageId, headingText))
-			).put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put("headingLevel", "h1")
+					"element-text", JSONUtil.put(_languageId, elementText))
 			).toString(),
 			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), draftLayout,
-			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
-			0,
+			fragmentEntry.getJs(), layout, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getType(), null, 0,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid()));
+				layout.getPlid()));
+	}
+
+	private Layout _addFragmentToLayout(
+			String elementText, String html, Layout layout)
+		throws Exception {
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		_addFragmentEntryLinkToLayout(
+			elementText, html, draftLayout,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		return draftLayout;
 	}
 
-	private Layout _addTypeContentLayout(boolean publish, String headingText)
+	private Layout _addTypeContentLayout(String elementText, boolean publish)
 		throws Exception {
 
+		String html =
+			"<h1 data-lfr-editable-id=\"element-text\" " +
+				"data-lfr-editable-type=\"text\">Heading Example</h1>";
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		Layout draftLayout = _addHeadingFragmentToLayout(headingText, layout);
+		Layout draftLayout = _addFragmentToLayout(elementText, html, layout);
 
 		if (publish) {
 			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
@@ -292,8 +350,10 @@ public class LayoutModelDocumentContributorTest {
 			"LayoutModelDocumentContributor";
 
 	@Inject
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

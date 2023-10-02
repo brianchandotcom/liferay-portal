@@ -123,78 +123,76 @@ export function BasicInfo({
 						translations={values.errorLabel!}
 					/>
 
-					{Liferay.FeatureFlags['LPS-187846'] && (
-						<>
-							<RadioField
-								defaultValue={values.outputType}
-								inline={false}
-								label={Liferay.Language.get(
-									'output-validation-type'
-								)}
-								onChange={(value) => {
-									if (value === 'fullValidation') {
-										setValues({
-											objectValidationRuleSettings: [],
-											outputType: value as string,
-										});
-
-										return;
-									}
-
+					<>
+						<RadioField
+							defaultValue={values.outputType}
+							inline={false}
+							label={Liferay.Language.get(
+								'output-validation-type'
+							)}
+							onChange={(value) => {
+								if (value === 'fullValidation') {
 									setValues({
+										objectValidationRuleSettings: [],
 										outputType: value as string,
 									});
-								}}
-								options={outputValidationTypeArray}
-								popover={{
-									alignPosition: 'top',
-									content: Liferay.Language.get(
-										'map-the-error-message-to-be-displayed-next-to-the-validated-field'
-									),
-									header: Liferay.Language.get(
-										'message-location'
-									),
-								}}
-							/>
 
-							{values.outputType === 'partialValidation' && (
-								<AutoComplete<ObjectField>
-									emptyStateMessage={Liferay.Language.get(
-										'no-fields-were-found'
-									)}
-									error={errors.outputType}
-									items={filteredObjectFields ?? []}
-									label={Liferay.Language.get('fields')}
-									onChangeQuery={setQuery}
-									onSelectItem={(item) => {
-										setValues({
-											objectValidationRuleSettings: [
-												{
-													name: NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE,
-													value: item.externalReferenceCode as string,
-												},
-											],
-										});
-									}}
-									query={query}
-									required
-									value={getSelectedPartialValidationField()}
-								>
-									{({label, name}) => (
-										<div className="d-flex justify-content-between">
-											<div>
-												{getLocalizableLabel(
-													creationLanguageId,
-													label,
-													name
-												)}
-											</div>
+									return;
+								}
+
+								setValues({
+									outputType: value as string,
+								});
+							}}
+							options={outputValidationTypeArray}
+							popover={{
+								alignPosition: 'top',
+								content: Liferay.Language.get(
+									'map-the-error-message-to-be-displayed-next-to-the-validated-field'
+								),
+								header: Liferay.Language.get(
+									'message-location'
+								),
+							}}
+						/>
+
+						{values.outputType === 'partialValidation' && (
+							<AutoComplete<ObjectField>
+								emptyStateMessage={Liferay.Language.get(
+									'no-fields-were-found'
+								)}
+								error={errors.outputType}
+								items={filteredObjectFields ?? []}
+								label={Liferay.Language.get('fields')}
+								onChangeQuery={setQuery}
+								onSelectItem={(item) => {
+									setValues({
+										objectValidationRuleSettings: [
+											{
+												name: NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE,
+												value: item.externalReferenceCode as string,
+											},
+										],
+									});
+								}}
+								query={query}
+								required
+								value={getSelectedPartialValidationField()}
+							>
+								{({label, name}) => (
+									<div className="d-flex justify-content-between">
+										<div>
+											{getLocalizableLabel(
+												creationLanguageId,
+												label,
+												name
+											)}
 										</div>
-									)}
-								</AutoComplete>
-							)}
-						</>
-					)}
+									</div>
+								)}
+							</AutoComplete>
+						)}
+					</>
 				</Card>
 			)}
 		</>

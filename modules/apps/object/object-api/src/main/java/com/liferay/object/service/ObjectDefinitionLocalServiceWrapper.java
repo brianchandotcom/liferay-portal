@@ -540,6 +540,14 @@ public class ObjectDefinitionLocalServiceWrapper
 			objectFolderId);
 	}
 
+	@Override
+	public int getObjectFolderObjectDefinitionsCount(long objectFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.
+			getObjectFolderObjectDefinitionsCount(objectFolderId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -566,6 +574,14 @@ public class ObjectDefinitionLocalServiceWrapper
 		getSystemObjectDefinitions() {
 
 		return _objectDefinitionLocalService.getSystemObjectDefinitions();
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectDefinition>
+		getUnmodifiableSystemObjectDefinitions(long companyId) {
+
+		return _objectDefinitionLocalService.
+			getUnmodifiableSystemObjectDefinitions(companyId);
 	}
 
 	@Override

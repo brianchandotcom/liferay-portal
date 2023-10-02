@@ -298,22 +298,40 @@ function SelectVocabularies({
 						).then((response) => response.json())
 					)
 				)
-					.then((response) => {
+					.then((responses) => {
 						const ids = [];
 
 						setVocabularyTree(
-							response.map((vocabularies, index) => ({
+							responses.map((response, index) => ({
 								...itemsWithGlobalSite[index],
-								children: (vocabularies?.items || []).map(
-									({id, name}) => {
+								children: (response?.items || [])
+									.filter(({siteId}) => {
+
+										// Filter out global vocabularies for
+										// non-global sites.
+
+										const isGlobalSite =
+											itemsWithGlobalSite[index].id ===
+											Liferay.ThemeDisplay.getCompanyGroupId();
+
+										if (
+											!isGlobalSite &&
+											siteId?.toString() ===
+												Liferay.ThemeDisplay.getCompanyGroupId()
+										) {
+											return false;
+										}
+
+										return true;
+									})
+									.map(({id, name}) => {
 										ids.push(id.toString()); // Collect IDs for _isDisplayInfoSelectedVocabulariesHidden
 
 										return {
 											id: id.toString(),
 											name,
 										};
-									}
-								),
+									}),
 							}))
 						);
 

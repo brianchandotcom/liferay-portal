@@ -71,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SPECIFIC_CARD_THUMBNAIL</td>
+	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//img[contains(@src,'${key_imageFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CARD_TYPE_ASSET</td>
 	<td>//div[contains(@aria-label,'${key_card}') and contains(@class,'card-type-asset')]</td>
 	<td></td>

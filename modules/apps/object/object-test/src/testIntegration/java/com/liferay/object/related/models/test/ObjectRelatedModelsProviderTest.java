@@ -498,7 +498,7 @@ public class ObjectRelatedModelsProviderTest {
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0, deletionType,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), relationshipType);
+				StringUtil.randomId(), false, relationshipType);
 
 		if (!StringUtil.equals(
 				relationshipType,

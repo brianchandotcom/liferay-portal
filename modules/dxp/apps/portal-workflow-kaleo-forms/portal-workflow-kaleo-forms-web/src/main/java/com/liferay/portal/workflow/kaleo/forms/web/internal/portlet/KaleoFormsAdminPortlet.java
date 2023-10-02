@@ -9,7 +9,6 @@ import com.liferay.dynamic.data.lists.exporter.DDLExporter;
 import com.liferay.dynamic.data.lists.exporter.DDLExporterFactory;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
-import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -410,8 +409,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 		KaleoFormsAdminDisplayContext kaleoFormsAdminDisplayContext =
 			new KaleoFormsAdminDisplayContext(
-				_ddlRecordLocalService, _ddmDisplayRegistry,
-				_ddmStorageEngineManager, _htmlParser,
+				_ddlRecordLocalService, _ddmStorageEngineManager, _htmlParser,
 				_kaleoDefinitionVersionLocalService,
 				_kaleoFormsWebConfiguration, renderRequest, renderResponse);
 
@@ -424,9 +422,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
-
-	@Reference
-	private DDMDisplayRegistry _ddmDisplayRegistry;
 
 	@Reference
 	private DDMStorageEngineManager _ddmStorageEngineManager;

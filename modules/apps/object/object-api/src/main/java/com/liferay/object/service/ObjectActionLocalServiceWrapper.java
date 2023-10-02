@@ -54,14 +54,15 @@ public class ObjectActionLocalServiceWrapper
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			String objectActionExecutorKey, String objectActionTriggerKey,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				parametersUnicodeProperties)
+				parametersUnicodeProperties,
+			boolean system)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectActionLocalService.addObjectAction(
 			externalReferenceCode, userId, objectDefinitionId, active,
 			conditionExpression, description, errorMessageMap, labelMap, name,
 			objectActionExecutorKey, objectActionTriggerKey,
-			parametersUnicodeProperties);
+			parametersUnicodeProperties, system);
 	}
 
 	@Override
@@ -73,14 +74,15 @@ public class ObjectActionLocalServiceWrapper
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			String objectActionExecutorKey, String objectActionTriggerKey,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				parametersUnicodeProperties)
+				parametersUnicodeProperties,
+			boolean system)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectActionLocalService.addOrUpdateObjectAction(
 			externalReferenceCode, objectActionId, userId, objectDefinitionId,
 			active, conditionExpression, description, errorMessageMap, labelMap,
 			name, objectActionExecutorKey, objectActionTriggerKey,
-			parametersUnicodeProperties);
+			parametersUnicodeProperties, system);
 	}
 
 	/**
@@ -135,10 +137,12 @@ public class ObjectActionLocalServiceWrapper
 	 *
 	 * @param objectAction the object action
 	 * @return the object action that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.object.model.ObjectAction deleteObjectAction(
-		com.liferay.object.model.ObjectAction objectAction) {
+			com.liferay.object.model.ObjectAction objectAction)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectActionLocalService.deleteObjectAction(objectAction);
 	}
@@ -268,6 +272,14 @@ public class ObjectActionLocalServiceWrapper
 		long objectActionId) {
 
 		return _objectActionLocalService.fetchObjectAction(objectActionId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectAction fetchObjectAction(
+		String externalReferenceCode, long objectDefinitionId) {
+
+		return _objectActionLocalService.fetchObjectAction(
+			externalReferenceCode, objectDefinitionId);
 	}
 
 	/**

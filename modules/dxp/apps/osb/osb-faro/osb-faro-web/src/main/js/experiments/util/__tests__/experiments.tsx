@@ -473,13 +473,24 @@ describe('getActions', () => {
 	});
 
 	it('should return actions for FINISHED_NO_WINNER status and not able to publish', () => {
-		const onDelete = jest.fn();
-
-		expect(getActions('FINISHED_NO_WINNER', {onDelete})).toEqual([
+		expect(
+			getActions('FINISHED_NO_WINNER', {
+				id: '123',
+				pageURL: 'https://liferay.com',
+				publishable: true
+			})
+		).toEqual([
+			{
+				displayType: 'primary',
+				label: 'Publish',
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=publish'
+			},
 			{
 				displayType: 'secondary',
 				label: 'Delete',
-				onClick: onDelete
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=delete'
 			}
 		]);
 	});
@@ -508,13 +519,24 @@ describe('getActions', () => {
 	});
 
 	it('should return actions for FINISHED_WINNER status and not able to publish', () => {
-		const onDelete = jest.fn();
-
-		expect(getActions('FINISHED_WINNER', {onDelete})).toEqual([
+		expect(
+			getActions('FINISHED_WINNER', {
+				id: '123',
+				pageURL: 'https://liferay.com',
+				publishable: true
+			})
+		).toEqual([
+			{
+				displayType: 'primary',
+				label: 'Publish',
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=publish'
+			},
 			{
 				displayType: 'secondary',
 				label: 'Delete',
-				onClick: onDelete
+				redirectURL:
+					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=delete'
 			}
 		]);
 	});

@@ -243,6 +243,7 @@ const View: React.FC<IViewProps> = ({
 						<span className='header-action-buttons pl-3'>
 							<ClayButton
 								className='button-root mr-3'
+								data-testid='clear-data'
 								displayType='secondary'
 								onClick={() =>
 									open(modalTypes.DELETE_CONFIRMATION_MODAL, {
@@ -327,6 +328,7 @@ const View: React.FC<IViewProps> = ({
 
 							<ClayButton
 								className='button-root'
+								data-testid='delete'
 								displayType='secondary'
 								onClick={() => {
 									if (

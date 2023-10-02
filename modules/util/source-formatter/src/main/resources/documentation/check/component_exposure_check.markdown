@@ -30,7 +30,7 @@ public class CTCollectionPermission {
 Correct:
 
 ```java
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 public class CTCollectionPermission {
 

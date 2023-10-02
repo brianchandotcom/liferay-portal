@@ -26,11 +26,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESPONSIVE_TABLE</td>
-	<td>//div[@class='table-responsive']//td[contains(.,'${key_text}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SIGN_IN_BUTTON</td>
 	<td>//button[contains(.,'Sign In')] | //input[@value='Sign In']</td>
 	<td></td>

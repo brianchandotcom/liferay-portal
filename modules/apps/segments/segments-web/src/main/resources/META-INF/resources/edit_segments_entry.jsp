@@ -15,6 +15,7 @@ String backURL = editSegmentsEntryDisplayContext.getBackURL();
 if (Validator.isNotNull(backURL)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
+	portletDisplay.setURLBackTitle(editSegmentsEntryDisplayContext.getBackURLTitle());
 }
 
 renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));

@@ -49,6 +49,9 @@ public interface IndexRequestExecutor {
 	public RefreshIndexResponse executeIndexRequest(
 		RefreshIndexRequest refreshIndexRequest);
 
+	public StatsIndexResponse executeIndexRequest(
+		StatsIndexRequest statsIndexRequest);
+
 	public UpdateIndexSettingsIndexResponse executeIndexRequest(
 		UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest);
 

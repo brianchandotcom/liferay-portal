@@ -41,9 +41,8 @@ import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.related.models.ManyToOneObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
-import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -122,6 +121,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectLayoutLocalService objectLayoutLocalService,
 		ObjectLayoutTabLocalService objectLayoutTabLocalService,
+		ObjectRelatedModelsProviderRegistrarHelper
+			objectRelatedModelsProviderRegistrarHelper,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		ObjectViewLocalService objectViewLocalService,
@@ -152,6 +153,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectLayoutLocalService = objectLayoutLocalService;
 		_objectLayoutTabLocalService = objectLayoutTabLocalService;
+		_objectRelatedModelsProviderRegistrarHelper =
+			objectRelatedModelsProviderRegistrarHelper;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_objectViewLocalService = objectViewLocalService;
@@ -246,9 +249,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_accountEntryOrganizationRelLocalService,
 					_groupLocalService, objectDefinition.getClassName(),
 					_objectDefinitionLocalService, _objectEntryLocalService,
-					_objectFieldLocalService, portletResourcePermission,
-					_resourcePermissionLocalService,
-					_userGroupRoleLocalService),
+					_objectFieldLocalService, _objectRelationshipLocalService,
+					portletResourcePermission, _resourcePermissionLocalService,
+					_treeFactory, _userGroupRoleLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"com.liferay.object", "true"
 				).put(
@@ -279,27 +282,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ObjectRelatedModelsPredicateProvider.class,
 				new ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl(
 					objectDefinition, _objectFieldLocalService),
-				null),
-			_bundleContext.registerService(
-				ObjectRelatedModelsProvider.class,
-				new ObjectEntry1to1ObjectRelatedModelsProviderImpl(
-					objectDefinition, _objectEntryService,
-					_objectFieldLocalService, _objectRelationshipLocalService),
-				null),
-			_bundleContext.registerService(
-				new String[] {
-					ManyToOneObjectRelatedModelsProvider.class.getName(),
-					ObjectRelatedModelsProvider.class.getName()
-				},
-				new ObjectEntry1toMObjectRelatedModelsProviderImpl(
-					objectDefinition, _objectEntryService,
-					_objectFieldLocalService, _objectRelationshipLocalService),
-				null),
-			_bundleContext.registerService(
-				ObjectRelatedModelsProvider.class,
-				new ObjectEntryMtoMObjectRelatedModelsProviderImpl(
-					objectDefinition, _objectEntryService,
-					_objectRelationshipLocalService),
 				null),
 			_bundleContext.registerService(
 				PortletResourcePermission.class, portletResourcePermission,
@@ -350,7 +332,23 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						objectEntryModelIndexerWriterContributor);
 					modelSearchDefinition.setModelSummaryContributor(
 						objectEntryModelSummaryContributor);
-				}));
+				}),
+			_objectRelatedModelsProviderRegistrarHelper.register(
+				_bundleContext, objectDefinition,
+				new ObjectEntryMtoMObjectRelatedModelsProviderImpl(
+					objectDefinition, _objectEntryService,
+					_objectRelationshipLocalService)),
+			_objectRelatedModelsProviderRegistrarHelper.register(
+				_bundleContext, objectDefinition,
+				new ObjectEntry1toMObjectRelatedModelsProviderImpl(
+					objectDefinition, _objectEntryService,
+					_objectFieldLocalService, _objectRelationshipLocalService)),
+			_objectRelatedModelsProviderRegistrarHelper.register(
+				_bundleContext, objectDefinition,
+				new ObjectEntry1to1ObjectRelatedModelsProviderImpl(
+					objectDefinition, _objectEntryService,
+					_objectFieldLocalService,
+					_objectRelationshipLocalService)));
 
 		try {
 			for (Locale locale : LanguageUtil.getAvailableLocales()) {
@@ -509,6 +507,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectLayoutLocalService _objectLayoutLocalService;
 	private final ObjectLayoutTabLocalService _objectLayoutTabLocalService;
+	private final ObjectRelatedModelsProviderRegistrarHelper
+		_objectRelatedModelsProviderRegistrarHelper;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;

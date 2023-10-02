@@ -8,7 +8,6 @@ package com.liferay.jethr0.event.handler;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
-import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.util.StringUtil;
@@ -140,15 +139,12 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 	protected JenkinsNodeEntity getJenkinsNodeEntity() throws Exception {
 		JenkinsServerEntity jenkinsServerEntity = getJenkinsServerEntity();
 
-		JenkinsNodeEntityRepository jenkinsNodeEntityRepository =
-			getJenkinsNodeEntityRepository();
-
 		JSONObject computerJSONObject = getComputerJSONObject();
 
 		String computerName = computerJSONObject.getString("name");
 
 		for (JenkinsNodeEntity jenkinsNodeEntity :
-				jenkinsNodeEntityRepository.getAll()) {
+				jenkinsServerEntity.getJenkinsNodeEntities()) {
 
 			if (!Objects.equals(
 					jenkinsServerEntity,

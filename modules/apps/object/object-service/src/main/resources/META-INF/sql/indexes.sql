@@ -9,6 +9,7 @@ create index IX_384C6F1F on ObjectDefinition (companyId, active_, status);
 create index IX_5C293E0D on ObjectDefinition (companyId, active_, system_, status);
 create index IX_2A008543 on ObjectDefinition (companyId, className[$COLUMN_LENGTH:255$]);
 create unique index IX_F861636D on ObjectDefinition (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_C66B9DF8 on ObjectDefinition (companyId, modifiable, system_);
 create index IX_3E56F38F on ObjectDefinition (companyId, name[$COLUMN_LENGTH:75$]);
 create index IX_E5612EB6 on ObjectDefinition (companyId, status);
 create index IX_8D232754 on ObjectDefinition (objectFolderId);
@@ -88,6 +89,7 @@ create index IX_9C3FAB55 on ObjectStateTransition (sourceObjectStateId);
 create index IX_FB9AC71F on ObjectStateTransition (targetObjectStateId);
 create index IX_4D699221 on ObjectStateTransition (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create unique index IX_7BDE4AC6 on ObjectValidationRule (externalReferenceCode[$COLUMN_LENGTH:75$], companyId, objectDefinitionId);
 create index IX_C476B36E on ObjectValidationRule (objectDefinitionId, active_);
 create index IX_465D010A on ObjectValidationRule (objectDefinitionId, outputType[$COLUMN_LENGTH:75$]);
 create index IX_40F1E68E on ObjectValidationRule (uuid_[$COLUMN_LENGTH:75$], companyId);

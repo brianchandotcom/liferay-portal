@@ -9,7 +9,7 @@ import com.liferay.analytics.reports.info.action.provider.AnalyticsReportsConten
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemRegistry;
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
-import com.liferay.analytics.reports.web.internal.info.item.provider.AnalyticsReportsInfoItemObjectProviderRegistry;
+import com.liferay.analytics.reports.web.internal.info.item.provider.util.AnalyticsReportsInfoItemObjectProviderRegistryUtil;
 import com.liferay.analytics.reports.web.internal.item.action.AnalyticsReportsContentDashboardItemAction;
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
@@ -70,7 +70,7 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 		AnalyticsReportsInfoItemObjectProvider<Object>
 			analyticsReportsInfoItemObjectProvider =
 				(AnalyticsReportsInfoItemObjectProvider<Object>)
-					_analyticsReportsInfoItemObjectProviderRegistry.
+					AnalyticsReportsInfoItemObjectProviderRegistryUtil.
 						getAnalyticsReportsInfoItemObjectProvider(
 							infoItemReference.getClassName());
 
@@ -123,10 +123,6 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsReportsContentDashboardItemActionProviderImpl.class);
-
-	@Reference
-	private AnalyticsReportsInfoItemObjectProviderRegistry
-		_analyticsReportsInfoItemObjectProviderRegistry;
 
 	@Reference
 	private AnalyticsReportsInfoItemRegistry _analyticsReportsInfoItemRegistry;

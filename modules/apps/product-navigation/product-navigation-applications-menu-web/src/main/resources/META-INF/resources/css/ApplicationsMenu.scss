@@ -17,16 +17,6 @@ html#{$cadmin-selector} {
 				border-radius: 0;
 				box-shadow: none;
 			}
-
-			.tab-pane {
-				$footerHeight: 65px;
-				$headerHeight: 60px;
-
-				@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
-					max-height: calc(100vh - #{$footerHeight + $headerHeight});
-					overflow-y: auto;
-				}
-			}
 		}
 
 		.applications-menu-header {
@@ -48,14 +38,6 @@ html#{$cadmin-selector} {
 
 		.applications-menu-footer {
 			flex-shrink: 0;
-		}
-
-		.applications-menu-wrapper {
-			display: flex;
-			flex-direction: column;
-			height: -moz-available;
-			height: stretch;
-			max-height: 100vh;
 		}
 
 		.applications-menu-bg {
@@ -94,10 +76,6 @@ html#{$cadmin-selector} {
 			}
 
 			@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
-				column-count: 3;
-			}
-
-			@include media-breakpoint-up(lg, $cadmin-grid-breakpoints) {
 				column-count: 4;
 			}
 
@@ -138,9 +116,13 @@ html#{$cadmin-selector} {
 			font-weight: 600;
 
 			@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
+				border: 1px solid $cadmin-gray-400;
+				border-bottom-width: 0;
+				border-top-left-radius: $cadmin-rounded-border-radius;
+				border-top-right-radius: $cadmin-rounded-border-radius;
 				bottom: 100%;
-				left: 8px;
-				padding: 12px 24px;
+				left: 0;
+				padding: 10px 16px;
 				position: absolute;
 			}
 		}

@@ -14,10 +14,8 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.DateFormatFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import org.junit.BeforeClass;
@@ -39,7 +37,6 @@ public class DateDDMFormFieldValueValidatorTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_setUpDateDDMFormFieldValueValidator();
-		setUpDateFormatFactoryUtil();
 		setUpFastDateFormatFactoryUtil();
 	}
 
@@ -117,13 +114,6 @@ public class DateDDMFormFieldValueValidatorTest {
 
 		_dateDDMFormFieldValueValidator.validate(
 			ddmFormField, ddmFormFieldValue.getValue());
-	}
-
-	protected static void setUpDateFormatFactoryUtil() {
-		DateFormatFactoryUtil dateFormatFactoryUtil =
-			new DateFormatFactoryUtil();
-
-		dateFormatFactoryUtil.setDateFormatFactory(new DateFormatFactoryImpl());
 	}
 
 	protected static void setUpFastDateFormatFactoryUtil() {

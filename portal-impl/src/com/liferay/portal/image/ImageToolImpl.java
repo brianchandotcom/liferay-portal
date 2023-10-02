@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -456,6 +457,7 @@ public class ImageToolImpl implements ImageTool {
 
 		Image image = new ImageImpl();
 
+		image.setCompanyId(CompanyThreadLocal.getCompanyId());
 		image.setTextObj(bytes);
 		image.setType(imageBag.getType());
 		image.setHeight(renderedImage.getHeight());

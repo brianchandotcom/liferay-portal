@@ -612,7 +612,7 @@ definition {
 	@description = "This is a test for COMMERCE-8568. Verify multiple Price Entries can be set on the same Price List for the same SKU"
 	@priority = 5
 	test AllowMultiplePriceEntriesInTheSamePriceList {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommercePriceEntryConfiguration.config";
 		property osgi.module.configurations = "checkInterval=\"1\"";
 		property portal.acceptance = "true";
@@ -741,6 +741,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test AssertPriceEntriesAreProductsInTheSameCatalogAsPriceList {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
@@ -904,6 +905,7 @@ definition {
 		Button.clickPublish();
 	}
 
+	@priority = 3
 	test AssertPriceListCannotBeMovedToADifferentCatalog {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
@@ -951,6 +953,7 @@ definition {
 			locator1 = "Select#ANY_DISABLED");
 	}
 
+	@priority = 3
 	test AssertPriceListHaveRequiredNameAndCurrency {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
@@ -1884,6 +1887,69 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12371. Can view Sort By Price is working properly "
+	@priority = 5
+	test CanViewSortByPrice {
+		property portal.acceptance = "true";
+
+		task ("Given a minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a new price list is created") {
+			CommerceNavigator.goToPriceListAdmin();
+
+			Click(locator1 = "Button#PLUS");
+
+			CommerceEntry.addNewPriceListsEntry(
+				priceListCatalog = "Minium",
+				priceListCurrency = "USD",
+				priceListName = "pricelist1");
+
+			AssertClickNoError(
+				locator1 = "Button#SUBMIT",
+				value1 = "Submit");
+		}
+
+		task ("When a new entry is added to the new price list") {
+			SelectFrameTop();
+
+			CommerceNavigator.gotoEntry(entryName = "pricelist1");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "MIN00674",
+				title = "Add SKUs");
+
+			SelectFrameTop();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN00674");
+
+			CommercePriceLists.editPriceListEntryPrice(priceListEntryPrice = "150.00");
+
+			SelectFrameTop();
+		}
+
+		task ("Then the Sorty By is going to show the products in order based on the Base Price") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Price High to Low");
+
+			AssertTextEquals(
+				key_index = 1,
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+				value1 = "Cams");
+
+			AssertTextEquals.assertPartialText(
+				key_productName = "Cams",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "150.00");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6220. When creating a price list only catalogs for which the user has permission should be visible in the drop down"
 	@ignore = "true"
 	@priority = 3
@@ -2062,9 +2128,9 @@ definition {
 			priceListName = "Test Price List");
 	}
 
+	@priority = 3
 	test PriceListExistsOnlyInOneCatalog {
 		property portal.acceptance = "false";
-		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -2439,7 +2505,7 @@ definition {
 	@description = "This is a test for COMMERCE-6223. Tier Price Entry expiration management"
 	@priority = 3
 	test ViewExpiredTierPriceEntry {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommerceTierPriceEntryConfiguration.config";
 		property osgi.module.configurations = "checkInterval=\"1\"";
 		property portal.acceptance = "false";

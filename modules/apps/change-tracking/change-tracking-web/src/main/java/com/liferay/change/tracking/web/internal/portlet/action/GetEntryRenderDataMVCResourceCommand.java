@@ -1,6 +1,7 @@
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR
+ * LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.web.internal.portlet.action;
@@ -19,11 +20,13 @@ import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.diff.DiffHtml;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -47,8 +51,19 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.model.SegmentsExperienceModel;
+import com.liferay.segments.model.SegmentsExperienceTable;
+import com.liferay.segments.service.SegmentsEntryLocalService;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ResourceRequest;
@@ -637,17 +652,104 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 
 		if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
-			JSONArray localesJSONArray = _jsonFactory.createJSONArray();
+			JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 			for (String languageId : availableLanguageIds) {
-				localesJSONArray.put(_getLocaleJSONObject(languageId));
+				jsonArray.put(_getLocaleJSONObject(languageId));
 			}
 
 			jsonObject.put(
-				"locales", localesJSONArray
+				"locales", jsonArray
 			).put(
 				"localizedTitles", localizedTitlesJSONObject
 			);
+		}
+
+		if ((ctEntry.getModelClassNameId() ==
+				_classNameLocalService.getClassNameId(Layout.class)) &&
+			FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPS-187183")) {
+
+			JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+			List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
+				_segmentsExperienceLocalService.dslQuery(
+					DSLQueryFactoryUtil.select(
+						SegmentsExperienceTable.INSTANCE
+					).from(
+						SegmentsExperienceTable.INSTANCE
+					).where(
+						SegmentsExperienceTable.INSTANCE.plid.eq(
+							ctEntry.getModelClassPK())
+					)));
+
+			segmentsExperiences.sort(
+				Comparator.comparingInt(SegmentsExperienceModel::getPriority));
+
+			SegmentsExperience highestPrioritySegmentsExperience =
+				segmentsExperiences.get(segmentsExperiences.size() - 1);
+
+			long highestPrioritySegmentsExperienceId =
+				highestPrioritySegmentsExperience.getSegmentsExperienceId();
+
+			for (SegmentsExperience segmentsExperience : segmentsExperiences) {
+				jsonArray.put(
+					JSONUtil.put(
+						"active",
+						() -> {
+							if (segmentsExperience.getSegmentsExperienceId() ==
+									highestPrioritySegmentsExperienceId) {
+
+								return true;
+							}
+
+							return false;
+						}
+					).put(
+						"id", segmentsExperience.getSegmentsExperienceId()
+					).put(
+						"isDefault",
+						Objects.equals(
+							segmentsExperience.getSegmentsExperienceKey(),
+							SegmentsExperienceConstants.KEY_DEFAULT) &&
+						(segmentsExperience.getSegmentsEntryId() == 0)
+					).put(
+						"name",
+						segmentsExperience.getName(
+							httpServletRequest.getLocale())
+					).put(
+						"segmentName",
+						() -> {
+							if (Objects.equals(
+									segmentsExperience.
+										getSegmentsExperienceKey(),
+									SegmentsExperienceConstants.KEY_DEFAULT) &&
+								(segmentsExperience.getSegmentsEntryId() ==
+									0)) {
+
+								return _language.get(
+									httpServletRequest, "anyone");
+							}
+
+							SegmentsEntry segmentsEntry =
+								_segmentsEntryLocalService.getSegmentsEntry(
+									segmentsExperience.getSegmentsEntryId());
+
+							return segmentsEntry.getName(
+								httpServletRequest.getLocale());
+						}
+					));
+
+				if (segmentsExperience.getSegmentsExperienceId() ==
+						highestPrioritySegmentsExperienceId) {
+
+					jsonObject.put(
+						"activeSegmentsExperience",
+						jsonArray.get(jsonArray.length() - 1));
+				}
+			}
+
+			jsonObject.put("segmentsExperiences", jsonArray);
 		}
 
 		return jsonObject;
@@ -908,5 +1010,11 @@ public class GetEntryRenderDataMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

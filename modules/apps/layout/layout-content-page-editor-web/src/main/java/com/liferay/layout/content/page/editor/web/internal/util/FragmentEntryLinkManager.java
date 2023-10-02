@@ -345,8 +345,7 @@ public class FragmentEntryLinkManager {
 					"this-portlet-could-not-be-found.-please-redeploy-it-or-" +
 						"remove-it-from-the-page");
 
-				return "<div class=\"alert alert-info\">" + message +
-					"</div>";
+				return "<div class=\"alert alert-info\">" + message + "</div>";
 			}
 		}
 

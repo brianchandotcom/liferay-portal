@@ -23,7 +23,7 @@ import {
 
 interface EditObjectValidationProps {
 	creationLanguageId: Liferay.Language.Locale;
-	learnResources: object;
+	learnResources: ObjectWebLearnResources;
 	objectDefinitionId: number;
 	objectValidationRuleElements: SidebarCategory[];
 	objectValidationRuleId: number;
@@ -134,33 +134,22 @@ export default function EditObjectValidation({
 				ObjectValidation
 			>(objectValidationRuleId);
 
-			if (Liferay.FeatureFlags['LPS-187846']) {
-				const newObjectValidation: ObjectValidation = {
-					...validationResponseJSON,
-					script:
-						validationResponseJSON.script === 'script_placeholder'
-							? ''
-							: validationResponseJSON.script,
-				};
+			const newObjectValidation: ObjectValidation = {
+				...validationResponseJSON,
+				script:
+					validationResponseJSON.script === 'script_placeholder'
+						? ''
+						: validationResponseJSON.script,
+			};
 
-				const fieldsResponseJSON = await API.getObjectDefinitionObjectFields(
-					objectDefinitionId
-				);
+			const fieldsResponseJSON = await API.getObjectDefinitionObjectFields(
+				objectDefinitionId
+			);
 
-				setObjectFields(
-					fieldsResponseJSON.filter((field) => !field.system)
-				);
-				setValues(newObjectValidation);
-			}
-			else {
-				setValues({
-					...validationResponseJSON,
-					script:
-						validationResponseJSON.script === 'script_placeholder'
-							? ''
-							: validationResponseJSON.script,
-				});
-			}
+			setObjectFields(
+				fieldsResponseJSON.filter((field) => !field.system)
+			);
+			setValues(newObjectValidation);
 		};
 
 		makeFetch();

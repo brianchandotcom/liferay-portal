@@ -64,6 +64,14 @@ public class StatsClusterRequestExecutorImpl
 			JSONObject responseJSONObject = _jsonFactory.createJSONObject(
 				responseBody);
 
+			JSONObject nodesJSONObject = responseJSONObject.getJSONObject(
+				"nodes");
+
+			JSONObject fsJSONObject = nodesJSONObject.getJSONObject("fs");
+
+			long availableSpace = fsJSONObject.getLong("available_in_bytes");
+			long totalSpace = fsJSONObject.getLong("total_in_bytes");
+
 			String status = GetterUtil.getString(
 				responseJSONObject.get("status"));
 
@@ -74,7 +82,9 @@ public class StatsClusterRequestExecutorImpl
 					status);
 			}
 
-			return new StatsClusterResponse(clusterHealthStatus, responseBody);
+			return new StatsClusterResponse(
+				availableSpace, clusterHealthStatus, responseBody,
+				totalSpace - availableSpace);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

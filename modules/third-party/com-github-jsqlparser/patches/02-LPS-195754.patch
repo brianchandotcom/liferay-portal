@@ -1,0 +1,84 @@
+diff --git a/net/sf/jsqlparser/expression/BinaryExpression.java b/net/sf/jsqlparser/expression/BinaryExpression.java
+index f391549..5ce0554 100644
+--- a/net/sf/jsqlparser/expression/BinaryExpression.java
++++ b/net/sf/jsqlparser/expression/BinaryExpression.java
+@@ -12,6 +12,7 @@ package net.sf.jsqlparser.expression;
+ import java.util.Deque;
+ import java.util.LinkedList;
+ 
++import net.sf.jsqlparser.expression.internal.IrregularBinaryExpression;
+ import net.sf.jsqlparser.parser.ASTNodeAccessImpl;
+ 
+ /**
+@@ -65,7 +66,8 @@ public abstract class BinaryExpression extends ASTNodeAccessImpl implements Expr
+ 		Expression expression = getLeftExpression();
+ 
+ 		while(!deque.isEmpty()) {
+-			if (expression instanceof BinaryExpression) {
++			if ((expression instanceof BinaryExpression) &&
++				(!(expression instanceof IrregularBinaryExpression))) {
+ 				BinaryExpression binaryExpression =
+ 					(BinaryExpression)expression;
+ 
+diff --git a/net/sf/jsqlparser/expression/internal/IrregularBinaryExpression.java b/net/sf/jsqlparser/expression/internal/IrregularBinaryExpression.java
+new file mode 100644
+index 0000000..2c1271a
+--- /dev/null
++++ b/net/sf/jsqlparser/expression/internal/IrregularBinaryExpression.java
+@@ -0,0 +1,13 @@
++/**
++ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
++ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
++ */
++
++package net.sf.jsqlparser.expression.internal;
++
++/**
++ * @author Mariano Álvaro Sáiz
++ */
++public interface IrregularBinaryExpression {
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/net/sf/jsqlparser/expression/operators/relational/LikeExpression.java b/net/sf/jsqlparser/expression/operators/relational/LikeExpression.java
+index 9551351..8a5a389 100644
+--- a/net/sf/jsqlparser/expression/operators/relational/LikeExpression.java
++++ b/net/sf/jsqlparser/expression/operators/relational/LikeExpression.java
+@@ -11,8 +11,9 @@ package net.sf.jsqlparser.expression.operators.relational;
+ 
+ import net.sf.jsqlparser.expression.BinaryExpression;
+ import net.sf.jsqlparser.expression.ExpressionVisitor;
++import net.sf.jsqlparser.expression.internal.IrregularBinaryExpression;
+ 
+-public class LikeExpression extends BinaryExpression {
++public class LikeExpression extends BinaryExpression implements IrregularBinaryExpression {
+ 
+     private boolean not = false;
+     private String escape = null;
+@@ -62,3 +63,4 @@ public class LikeExpression extends BinaryExpression {
+         this.caseInsensitive = caseInsensitive;
+     }
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/net/sf/jsqlparser/expression/operators/relational/SimilarToExpression.java b/net/sf/jsqlparser/expression/operators/relational/SimilarToExpression.java
+index 234d001..d78719a 100644
+--- a/net/sf/jsqlparser/expression/operators/relational/SimilarToExpression.java
++++ b/net/sf/jsqlparser/expression/operators/relational/SimilarToExpression.java
+@@ -11,8 +11,9 @@ package net.sf.jsqlparser.expression.operators.relational;
+ 
+ import net.sf.jsqlparser.expression.BinaryExpression;
+ import net.sf.jsqlparser.expression.ExpressionVisitor;
++import net.sf.jsqlparser.expression.internal.IrregularBinaryExpression;
+ 
+-public class SimilarToExpression extends BinaryExpression {
++public class SimilarToExpression extends BinaryExpression implements IrregularBinaryExpression {
+ 
+     private boolean not = false;
+     private String escape = null;
+@@ -53,3 +54,4 @@ public class SimilarToExpression extends BinaryExpression {
+         this.escape = escape;
+     }
+ }
++/* @generated */
+\ No newline at end of file

@@ -23,7 +23,13 @@ export async function fetchJSON<T>({
 	return (await result.json()) as T;
 }
 
-export async function getAllItems<T>({url}: {url: string}) {
+export async function getAllItems<T>({
+	filter,
+	url,
+}: {
+	filter?: string;
+	url: string;
+}) {
 	let allItems: T[] = [];
 	let currentPage = 1;
 	let lastPage;
@@ -33,8 +39,11 @@ export async function getAllItems<T>({url}: {url: string}) {
 			items: T[];
 			lastPage: number;
 			page: number;
-		}>({input: url + `?page=${currentPage}`});
-
+		}>({
+			input: filter
+				? `${url}?filter=${filter}&?page=${currentPage}`
+				: `${url}?page=${currentPage}`,
+		});
 		allItems = [...allItems, ...items];
 		currentPage = page + 1;
 		lastPage = lastPageFromAPI;

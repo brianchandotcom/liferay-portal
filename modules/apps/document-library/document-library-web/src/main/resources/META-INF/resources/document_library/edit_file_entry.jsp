@@ -651,7 +651,7 @@ renderResponse.setTitle(headerTitle);
 		</div>
 	</aui:form>
 
-	<liferay-ui:upload-progress
+	<liferay-document-library:upload-progress
 		id="<%= uploadProgressId %>"
 		message="uploading"
 	/>

@@ -5,14 +5,22 @@
 
 package com.liferay.document.library.video.internal.preview;
 
+import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
+import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
+import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
+import com.liferay.document.library.preview.exception.DLPreviewSizeException;
+import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.video.renderer.DLVideoRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -44,7 +52,19 @@ public class DLVideoDLPreviewRendererProvider
 	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
 
+		if ((fileVersion != null) && !_videoProcessor.hasVideo(fileVersion) &&
+			!Objects.equals(
+				fileVersion.getMimeType(),
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML) &&
+			!_videoProcessor.isVideoSupported(fileVersion.getMimeType())) {
+
+			return null;
+		}
+
 		return (request, response) -> {
+			_checkForPreviewGenerationExceptions(fileVersion);
+
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/preview.jsp");
 
@@ -62,6 +82,37 @@ public class DLVideoDLPreviewRendererProvider
 
 		return null;
 	}
+
+	private void _checkForPreviewGenerationExceptions(FileVersion fileVersion)
+		throws PortalException {
+
+		if (Objects.equals(
+				fileVersion.getMimeType(),
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML)) {
+
+			return;
+		}
+
+		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+				DLFileVersionPreviewConstants.STATUS_FAILURE)) {
+
+			throw new DLFileEntryPreviewGenerationException();
+		}
+
+		if (!_videoProcessor.hasVideo(fileVersion)) {
+			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+				throw new DLPreviewSizeException(
+					DLProcessorRegistryUtil.getPreviewableProcessorMaxSize());
+			}
+
+			throw new DLPreviewGenerationInProcessException();
+		}
+	}
+
+	@Reference
+	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
 	@Reference
 	private DLVideoRenderer _dlVideoRenderer;

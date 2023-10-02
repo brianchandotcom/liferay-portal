@@ -7,29 +7,39 @@ import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {SetStateAction} from 'react';
 
 import './ObjectDefinitionNodeFooter.scss';
 
 interface ObjectDefinitionNodeFooterProps {
+	handleSelectObjectDefinitionNode: () => void;
 	isLinkedObjectDefinition: boolean;
 	setShowAllObjectFields: (value: boolean) => void;
+	setShowModal: (value: SetStateAction<Partial<ModelBuilderModals>>) => void;
 	showAllObjectFields: boolean;
 }
 
 export default function ObjectDefinitionNodeFooter({
+	handleSelectObjectDefinitionNode,
 	isLinkedObjectDefinition,
 	setShowAllObjectFields,
+	setShowModal,
 	showAllObjectFields,
 }: ObjectDefinitionNodeFooterProps) {
 	return (
 		<>
-			<div className="lfr-objects__model-builder-node-button-container">
+			<div
+				className="lfr-objects__model-builder-node-button-container"
+				onClick={handleSelectObjectDefinitionNode}
+			>
 				{!isLinkedObjectDefinition && (
 					<DropDown
 						alignmentPosition={4}
 						trigger={
-							<ClayButton displayType="secondary">
+							<ClayButton
+								displayType="secondary"
+								onClick={(event) => event.stopPropagation()}
+							>
 								<span>
 									{sub(
 										Liferay.Language.get('x-or-x'),
@@ -41,7 +51,14 @@ export default function ObjectDefinitionNodeFooter({
 						}
 					>
 						<DropDown.ItemList>
-							<DropDown.Item>
+							<DropDown.Item
+								onClick={() =>
+									setShowModal((prevState) => ({
+										...prevState,
+										addObjectField: true,
+									}))
+								}
+							>
 								<ClayIcon
 									className="c-mr-3 text-4"
 									symbol="custom-field"
@@ -50,7 +67,20 @@ export default function ObjectDefinitionNodeFooter({
 								{Liferay.Language.get('add-field')}
 							</DropDown.Item>
 
-							<DropDown.Item>
+							<DropDown.Item
+								onClick={() => {
+									setShowModal(
+										(
+											previousState: Partial<
+												ModelBuilderModals
+											>
+										) => ({
+											...previousState,
+											addObjectRelationship: true,
+										})
+									);
+								}}
+							>
 								<ClayIcon
 									className="c-mr-3 text-4"
 									symbol="nodes"

@@ -56,23 +56,6 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 		return create(jsonObject);
 	}
 
-	@Override
-	public JobEntity getById(long id) {
-		if (hasEntity(id)) {
-			return super.getById(id);
-		}
-
-		JobEntity jobEntity = _jobEntityDALO.get(id);
-
-		jobEntity.addBuildEntities(_buildEntityRepository.getAll(jobEntity));
-
-		for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
-			buildEntity.setJobEntity(jobEntity);
-		}
-
-		return add(jobEntity);
-	}
-
 	public Set<JobEntity> getByState(JobEntity.State... states) {
 		return addAll(_jobEntityDALO.getJobsByState(states));
 	}
@@ -88,16 +71,12 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 
 	@Override
 	public synchronized void initializeRelationships() {
-		if (_initializedRelationships) {
-			return;
-		}
+	}
 
-		for (JobEntity jobEntity : getAll()) {
-			jobEntity.addBuildEntities(
-				_buildEntityRepository.getAll(jobEntity));
-		}
+	public void relateJobToBuild(JobEntity jobEntity, BuildEntity buildEntity) {
+		jobEntity.addBuildEntity(buildEntity);
 
-		_initializedRelationships = true;
+		buildEntity.setJobEntity(jobEntity);
 	}
 
 	public void setBuildEntityRepository(
@@ -106,8 +85,32 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 		_buildEntityRepository = buildEntityRepository;
 	}
 
+	@Override
+	protected JobEntity updateRelationshipsFromDALO(JobEntity jobEntity) {
+		return _updateJobToBuildsRelationshipsFromDALO(jobEntity);
+	}
+
+	@Override
+	protected JobEntity updateRelationshipsToDALO(JobEntity jobEntity) {
+		_jobToBuildsEntityRelationshipDALO.updateChildEntities(jobEntity);
+
+		return jobEntity;
+	}
+
+	private JobEntity _updateJobToBuildsRelationshipsFromDALO(
+		JobEntity parentJobEntity) {
+
+		return updateParentToChildRelationshipsFromDALO(
+			parentJobEntity, _jobToBuildsEntityRelationshipDALO,
+			_buildEntityRepository,
+			(jobEntity, buildEntity) -> relateJobToBuild(
+				jobEntity, buildEntity),
+			jobEntity -> jobEntity.getBuildEntities(),
+			(jobEntity, buildEntity) -> jobEntity.removeBuildEntity(
+				buildEntity));
+	}
+
 	private BuildEntityRepository _buildEntityRepository;
-	private boolean _initializedRelationships;
 
 	@Autowired
 	private JobEntityDALO _jobEntityDALO;

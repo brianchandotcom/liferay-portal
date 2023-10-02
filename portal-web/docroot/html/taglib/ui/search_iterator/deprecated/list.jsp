@@ -224,6 +224,10 @@ if (iteratorURL != null) {
 
 			boolean rowIsChecked = false;
 
+			String rowElementId = namespace + id + "_" + row.getRowId();
+
+			request.setAttribute("liferay-ui:search-container-row:rowElementId", rowElementId);
+
 			if (rowChecker != null) {
 				rowIsChecked = rowChecker.isChecked(row.getObject());
 
@@ -241,10 +245,6 @@ if (iteratorURL != null) {
 
 				row.addSearchEntry(0, textSearchEntry);
 			}
-
-			String rowElementId = namespace + id + "_" + row.getRowId();
-
-			request.setAttribute("liferay-ui:search-container-row:rowElementId", rowElementId);
 
 			request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(row.getRowId())));
 

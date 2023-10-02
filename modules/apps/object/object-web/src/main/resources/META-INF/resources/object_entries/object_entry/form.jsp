@@ -175,15 +175,15 @@ portletDisplay.setURLBack(backURL);
 								values = Object.assign(
 									values,
 									{
-										['categoryIds']: <portlet:namespace />getInputValues(
+										['keywords']: <portlet:namespace />getInputValues(
 											categoriesContent,
-											'input[name^="<portlet:namespace />assetCategoryIds"]'
+											'input[name^="<portlet:namespace />assetTagNames"]'
 										),
 									},
 									{
-										['tagNames']: <portlet:namespace />getInputValues(
+										['taxonomyCategoryIds']: <portlet:namespace />getInputValues(
 											categoriesContent,
-											'input[name^="<portlet:namespace />assetTagNames"]'
+											'input[name^="<portlet:namespace />assetCategoryIds"]'
 										),
 									}
 								);
@@ -242,7 +242,7 @@ portletDisplay.setURLBack(backURL);
 									}
 								})
 								.then((response) => {
-									if (Liferay.FeatureFlags['LPS-187846']) {
+									if (response && response.detail) {
 										const errorMessageArray = JSON.parse(
 											response.detail
 										);
@@ -306,14 +306,13 @@ portletDisplay.setURLBack(backURL);
 										}
 										scroll(0, 0);
 									}
-									else {
-										if (response && response.title) {
-											Liferay.Util.openToast({
-												message: response.title,
-												type: 'danger',
-											});
-										}
+									else if (response && response.title) {
+										Liferay.Util.openToast({
+											message: response.title,
+											type: 'danger',
+										});
 									}
+
 									loadingElement.remove();
 								});
 						}

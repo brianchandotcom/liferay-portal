@@ -1691,6 +1691,15 @@ public class LanguageImpl implements Language, Serializable {
 
 		String languageId = LocaleUtil.toLanguageId(locale);
 
+		if (StringUtil.equals(
+				languageId,
+				CookiesManagerUtil.getCookieValue(
+					CookiesConstants.NAME_GUEST_LANGUAGE_ID, httpServletRequest,
+					false))) {
+
+			return;
+		}
+
 		Cookie languageIdCookie = new Cookie(
 			CookiesConstants.NAME_GUEST_LANGUAGE_ID, languageId);
 

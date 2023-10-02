@@ -1001,8 +1001,8 @@ definition {
 
 		task ("Then error message 'HTML element name is empty'") {
 			AssertElementPresent(
-				key_text = "The HTML Element Name field is required",
-				locator1 = "ClientExtensionEntry#WARNING_SPECIFIC");
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "Client extension name is required.");
 		}
 
 		task ("And Then Remote App is not added") {

@@ -126,7 +126,7 @@ const headers = new Headers({
 	'Content-Type': 'application/json',
 });
 
-async function deleteItem(url: string) {
+export async function deleteItem(url: string) {
 	const response = await fetch(url, {headers, method: 'DELETE'});
 
 	if (response.status === 401) {
@@ -333,7 +333,7 @@ export async function postListTypeEntry({
 export async function postObjectDefinition(
 	objectDefinition: Partial<ObjectDefinition>
 ) {
-	return await save({
+	return await save<ObjectDefinition>({
 		item: objectDefinition,
 		method: 'POST',
 		returnValue: true,
@@ -402,14 +402,14 @@ export async function putListTypeEntry({
 export async function putObjectRelationship({
 	id,
 	...others
-}: ObjectRelationship) {
+}: Partial<ObjectRelationship>) {
 	return await save({
 		item: others,
 		url: `/o/object-admin/v1.0/object-relationships/${id}`,
 	});
 }
 
-export async function save({
+export async function save<T>({
 	item,
 	method = 'PUT',
 	returnValue = false,
@@ -453,6 +453,6 @@ export async function save({
 	}
 
 	if (returnValue) {
-		return response.json();
+		return (await response.json()) as T;
 	}
 }

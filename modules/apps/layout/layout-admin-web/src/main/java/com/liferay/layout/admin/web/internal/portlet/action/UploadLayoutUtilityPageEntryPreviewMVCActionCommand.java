@@ -5,11 +5,21 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.upload.LayoutUtilityPageEntryPreviewImageEditorUploadFileEntryHandler;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.upload.BaseImageEditorUploadFileEntryHandler;
+import com.liferay.upload.UniqueFileNameProvider;
 import com.liferay.upload.UploadHandler;
 
 import javax.portlet.ActionRequest;
@@ -42,14 +52,64 @@ public class UploadLayoutUtilityPageEntryPreviewMVCActionCommand
 	}
 
 	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
 	private ItemSelectorUploadResponseHandler
 		_itemSelectorUploadResponseHandler;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.layout.utility.page.model.LayoutUtilityPageEntry)"
+	)
+	private ModelResourcePermission<LayoutUtilityPageEntry>
+		_layoutUtilityPageEntryModelResourcePermission;
+
+	private final LayoutUtilityPageEntryPreviewImageEditorUploadFileEntryHandler
+		_layoutUtilityPageEntryPreviewImageEditorUploadFileEntryHandler =
+			new LayoutUtilityPageEntryPreviewImageEditorUploadFileEntryHandler();
+
 	@Reference
-	private LayoutUtilityPageEntryPreviewImageEditorUploadFileEntryHandler
-		_layoutUtilityPageEntryPreviewImageEditorUploadFileEntryHandler;
+	private UniqueFileNameProvider _uniqueFileNameProvider;
 
 	@Reference
 	private UploadHandler _uploadHandler;
+
+	private class LayoutUtilityPageEntryPreviewImageEditorUploadFileEntryHandler
+		extends BaseImageEditorUploadFileEntryHandler {
+
+		@Override
+		protected void checkPermissions(
+				UploadPortletRequest uploadPortletRequest)
+			throws PortalException {
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)uploadPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			long layoutUtilityPageEntryId = ParamUtil.getLong(
+				uploadPortletRequest, "layoutUtilityPageEntryId");
+
+			_layoutUtilityPageEntryModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), layoutUtilityPageEntryId,
+				ActionKeys.UPDATE);
+		}
+
+		@Override
+		protected DLAppService getDLAppService() {
+			return _dlAppService;
+		}
+
+		@Override
+		protected String getFolderName() {
+			return LayoutUtilityPageEntryPreviewImageEditorUploadFileEntryHandler.class.
+				getName();
+		}
+
+		@Override
+		protected UniqueFileNameProvider getUniqueFileNameProvider() {
+			return _uniqueFileNameProvider;
+		}
+
+	}
 
 }

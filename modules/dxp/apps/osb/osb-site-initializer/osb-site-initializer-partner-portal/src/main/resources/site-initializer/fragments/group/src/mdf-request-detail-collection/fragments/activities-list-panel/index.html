@@ -39,7 +39,7 @@
 	[/#if]
 
 	[#if activity.manySeries?has_content]
-		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "How many in series?", "value": activity.manySeries}] /]
+		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "How many in series?", "value": (activity.manySeries)!"-"}] /]
 	[/#if]
 
 	[#if activity.assetsLiferayRequired?has_content]
@@ -47,11 +47,11 @@
 	[/#if]
 
 	[#if activity.assetsLiferayRequired == true]
-		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Please describe including specifications and due dates", "value": activity.assetsLiferayDescription}] /]
+		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Please describe including specifications and due dates", "value": (activity.assetsLiferayDescription)!"-"}] /]
 	[/#if]
 
 	[#if activity.usingCIABAssets?has_content]
-		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Are you using any CIAB assets?", "value": activity.usingCIABAssets?boolean?string("Yes", "No")}] /]
+		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Are you using any CIAB assets?", "value": activity.usingCIABAssets?boolean?string("Yes", "No")!"-"}] /]
 	[/#if]
 
 	[#return digital_marketing_fields /]
@@ -124,7 +124,7 @@
 [/#macro]
 
 [#macro leads_table activity]
-	[#assign items = [{"title": "Is a lead list an outcome of this activity?", "value": activity.leadGenerated?string("Yes", "No") }, { "title": "Target # of Leads", "value": (activity.targetOfLeads)!"-" }, { "title": "Lead Follow Up strategy", "value": (activity.leadFollowUpStrategies)!"-" }, { "title": "Details on Lead Follow Up", "value": (activity.detailsLeadFollowUp)!"-" }] /]
+	[#assign items = [{"title": "Is a lead list an outcome of this activity?", "value": activity.leadGenerated?string("Yes", "No")!"-" }, { "title": "Target # of Leads", "value": (activity.targetOfLeads)!"-" }, { "title": "Lead Follow Up strategy", "value": (activity.leadFollowUpStrategies)!"-" }, { "title": "Details on Lead Follow Up", "value": (activity.detailsLeadFollowUp)!"-" }] /]
 
 	[@table title="Lead List" items=items /]
 [/#macro]
@@ -134,7 +134,7 @@
 [/#macro]
 
 [#macro budgets_table budgets currency_key="USD"]
-	[#assign items = budgets?map(budget -> {"title": (budget.expense.name)!"-", "value": budget.cost?number?string["¤,##0.00;; currencyCode=${currency_key}"]}) /]
+	[#assign items = budgets?map(budget -> {"title": (budget.expense.name)!"-", "value": (budget.cost?number?string["¤,##0.00;; currencyCode=${currency_key}"])!"-"}) /]
 
 	[@table title="Budget Breakdown" items=items /]
 [/#macro]

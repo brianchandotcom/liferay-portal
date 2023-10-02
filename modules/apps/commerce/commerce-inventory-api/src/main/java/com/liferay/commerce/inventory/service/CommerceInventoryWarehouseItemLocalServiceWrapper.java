@@ -82,11 +82,9 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 	}
 
 	@Override
-	public int countItemsByCompanyId(
-		long companyId, String sku, String unitOfMeasureKey) {
-
+	public int countItemsByCompanyId(long companyId, String sku) {
 		return _commerceInventoryWarehouseItemLocalService.
-			countItemsByCompanyId(companyId, sku, unitOfMeasureKey);
+			countItemsByCompanyId(companyId, sku);
 	}
 
 	/**
@@ -559,12 +557,10 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.inventory.model.CIWarehouseItem>
-		getItemsByCompanyId(
-			long companyId, String sku, String unitOfMeasureKey, int start,
-			int end) {
+		getItemsByCompanyId(long companyId, String sku, int start, int end) {
 
 		return _commerceInventoryWarehouseItemLocalService.getItemsByCompanyId(
-			companyId, sku, unitOfMeasureKey, start, end);
+			companyId, sku, start, end);
 	}
 
 	/**

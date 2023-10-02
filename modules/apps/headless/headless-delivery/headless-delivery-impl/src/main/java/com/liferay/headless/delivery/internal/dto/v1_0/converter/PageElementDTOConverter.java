@@ -6,7 +6,6 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapperRegistry;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.PageElementUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -15,7 +14,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -64,13 +62,8 @@ public class PageElementDTOConverter
 			dtoConverterContext.getAttribute("saveMappingConfiguration"), true);
 
 		return PageElementUtil.toPageElement(
-			groupId, layoutStructure, layoutStructureItem,
-			_layoutStructureItemMapperRegistry, saveInlineContent,
+			groupId, layoutStructure, layoutStructureItem, saveInlineContent,
 			saveMappingConfiguration);
 	}
-
-	@Reference
-	private LayoutStructureItemMapperRegistry
-		_layoutStructureItemMapperRegistry;
 
 }

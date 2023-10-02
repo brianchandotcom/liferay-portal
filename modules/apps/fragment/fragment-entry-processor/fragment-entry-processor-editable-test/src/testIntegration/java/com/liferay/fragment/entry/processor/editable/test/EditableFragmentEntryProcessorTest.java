@@ -718,7 +718,8 @@ public class EditableFragmentEntryProcessorTest {
 			ObjectActionTriggerConstants.KEY_STANDALONE,
 			UnicodePropertiesBuilder.put(
 				"script", "println 'Action Executed'"
-			).build());
+			).build(),
+			false);
 
 		long classNameId = _portal.getClassNameId(
 			ObjectDefinition.class.getName() + "#" +

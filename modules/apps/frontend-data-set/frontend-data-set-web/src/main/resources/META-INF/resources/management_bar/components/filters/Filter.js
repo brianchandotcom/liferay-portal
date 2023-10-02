@@ -66,7 +66,7 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 
 	useEffect(() => {
 		if (moduleURL) {
-			if (type === 'client-extension') {
+			if (type === 'clientExtension') {
 				const getModule = async () => {
 					const cetModule = await import(
 						/* webpackIgnore: true */ moduleURL
@@ -97,7 +97,7 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 
 	return Component ? (
 		<div className="data-set-filter">
-			{type === 'client-extension' ? (
+			{type === 'clientExtension' ? (
 				<ClientExtension
 					args={{
 						filter: otherProps,

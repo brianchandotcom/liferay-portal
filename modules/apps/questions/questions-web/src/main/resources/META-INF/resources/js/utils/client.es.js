@@ -304,6 +304,10 @@ export const getThreadQuery = `
 				id
 				image
 				name
+				userGroupBriefs {
+					id
+					name
+				}
 			}
 			creatorStatistics {
 				joinDate
@@ -486,6 +490,10 @@ export const getSectionThreadsQuery = `
 					id
 					image
 					name
+					userGroupBriefs {
+						id
+						name
+					}
 				}
 				dateCreated
 				dateModified
@@ -542,6 +550,10 @@ export const getThreadsQuery = `
 					id
 					image
 					name
+					userGroupBriefs {
+						id
+						name
+					}
 				}
 				dateCreated
 				dateModified
@@ -757,6 +769,10 @@ export const getRelatedThreadsQuery = `
 					id
 					image
 					name
+					userGroupBriefs {
+						id
+						name
+					}
 				}
 				dateModified
 				friendlyUrlPath

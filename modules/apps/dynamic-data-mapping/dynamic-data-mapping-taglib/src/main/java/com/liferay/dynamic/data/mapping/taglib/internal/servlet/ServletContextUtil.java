@@ -6,7 +6,7 @@
 package com.liferay.dynamic.data.mapping.taglib.internal.servlet;
 
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import javax.servlet.ServletContext;
 

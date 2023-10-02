@@ -7,14 +7,16 @@
 
 interface ModalDeleteObjectFieldProps {
 	objectField: ObjectField;
+	onAfterSubmit: () => void;
 	setModalVisibility: (value: boolean) => void;
-	setObjectField: (values: ObjectField | null) => void;
-	showDeletionNotAllowedModal: boolean;
+	setObjectField?: (values: ObjectField | null) => void;
+	showObjectFieldDeletionNotAllowedModal: boolean;
 }
 export declare function ModalDeleteObjectField({
 	objectField,
+	onAfterSubmit,
 	setModalVisibility,
 	setObjectField,
-	showDeletionNotAllowedModal,
+	showObjectFieldDeletionNotAllowedModal,
 }: ModalDeleteObjectFieldProps): JSX.Element;
 export {};

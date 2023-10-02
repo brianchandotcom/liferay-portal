@@ -189,6 +189,28 @@ public class Creator implements Cloneable, Serializable {
 
 	protected String profileURL;
 
+	public UserGroupBrief[] getUserGroupBriefs() {
+		return userGroupBriefs;
+	}
+
+	public void setUserGroupBriefs(UserGroupBrief[] userGroupBriefs) {
+		this.userGroupBriefs = userGroupBriefs;
+	}
+
+	public void setUserGroupBriefs(
+		UnsafeSupplier<UserGroupBrief[], Exception>
+			userGroupBriefsUnsafeSupplier) {
+
+		try {
+			userGroupBriefs = userGroupBriefsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected UserGroupBrief[] userGroupBriefs;
+
 	@Override
 	public Creator clone() throws CloneNotSupportedException {
 		return (Creator)super.clone();

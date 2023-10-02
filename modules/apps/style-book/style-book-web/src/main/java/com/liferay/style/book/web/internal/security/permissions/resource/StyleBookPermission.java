@@ -5,7 +5,7 @@
 
 package com.liferay.style.book.web.internal.security.permissions.resource;
 
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.style.book.constants.StyleBookConstants;

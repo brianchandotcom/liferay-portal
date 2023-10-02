@@ -1360,7 +1360,6 @@
 		<check name="PoshiPauseUsageCheck">
 			<category name="Performance" />
 			<description name="Finds missing comment with JIRA project when using `Pause`." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="PoshiSmokeTestCheck">
 			<category name="Bug Prevention" />
@@ -1630,6 +1629,11 @@
 			<description name="Replaces with `compileInclude` the configuration attribute for dependencies in `build.gradle` that are listed at `Include-Resource` property at `bnd.bnd` associated file." />
 			<weight>2</weight>
 		</check>
+		<check name="UpgradeJavaAccountPortletKeysCheck">
+			<category name="Upgrade" />
+			<description name="Replace constants of CommerceAccountPortletKeys by constants of AccountPortletKeys" />
+			<weight>2</weight>
+		</check>
 		<check name="UpgradeJavaAddAddressMethodCheck">
 			<category name="Upgrade" />
 			<description name="Fill the new parameter of the method 'addAddress' of AddressLocalService, AddressLocalServiceUtil, AddressService and AddressServiceUtil" />
@@ -1713,6 +1717,10 @@
 			<description name="Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface" />
 			<weight>1</weight>
 		</check>
+		<check name="UpgradeJavaFetchAssetCategoryByExternalReferenceCodeCheck">
+			<category name="Upgrade" />
+			<description name="Adds a message about the breaking change made on method `fetchAssetCategoryByExternalReferenceCode` of `AssetCategoryLocalService` and `AssetCategoryLocalServiceUtil` classes." />
+		</check>
 		<check name="UpgradeJavaGetFileMethodCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of method from 'getFile' to 'getFileAsStream', and include a method 'FileUtil.createTempFile'" />
@@ -1726,6 +1734,10 @@
 			<category name="Upgrade" />
 			<description name="Replace getLayoutDisplayPageProvider by getLayoutDisplayPageProviderByClassName" />
 			<weight>2</weight>
+		</check>
+		<check name="UpgradeJavaGetLeftCategoryIdMethodCheck">
+			<category name="Upgrade" />
+			<description name="Replace the AssetCategory's method `getLeftCategoryId` by `getCategoryId` " />
 		</check>
 		<check name="UpgradeJavaIndexerCheck">
 			<category name="Upgrade" />

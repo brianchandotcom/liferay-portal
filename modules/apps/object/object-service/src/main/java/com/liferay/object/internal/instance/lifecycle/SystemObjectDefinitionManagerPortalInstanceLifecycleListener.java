@@ -19,7 +19,7 @@ import com.liferay.object.internal.related.models.SystemObjectMtoMObjectRelatedM
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
-import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
@@ -52,6 +52,8 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
+import java.util.function.Supplier;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -74,10 +76,29 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 			_log.debug("Registered portal instance " + company);
 		}
 
+		Supplier<ObjectFolder> objectFolderSupplier =
+			new Supplier<ObjectFolder>() {
+
+				@Override
+				public ObjectFolder get() {
+					if (_objectFolder == null) {
+						_objectFolder = _getUncategorizedObjectFolder(
+							company.getCompanyId());
+					}
+
+					return _objectFolder;
+				}
+
+				private ObjectFolder _objectFolder;
+
+			};
+
 		for (SystemObjectDefinitionManager systemObjectDefinitionManager :
 				_serviceTrackerList) {
 
-			_apply(company.getCompanyId(), systemObjectDefinitionManager);
+			_apply(
+				company.getCompanyId(), objectFolderSupplier,
+				systemObjectDefinitionManager);
 		}
 	}
 
@@ -114,7 +135,9 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					if (!_openingThreadLocal.get()) {
 						_companyLocalService.forEachCompanyId(
 							companyId -> _apply(
-								companyId, systemObjectDefinitionManager));
+								companyId,
+								() -> _getUncategorizedObjectFolder(companyId),
+								systemObjectDefinitionManager));
 					}
 
 					return systemObjectDefinitionManager;
@@ -149,7 +172,7 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 	}
 
 	private void _apply(
-		long companyId,
+		long companyId, Supplier<ObjectFolder> objectFolderSupplier,
 		SystemObjectDefinitionManager systemObjectDefinitionManager) {
 
 		if (_log.isDebugEnabled()) {
@@ -168,9 +191,7 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 				(objectDefinition.getVersion() !=
 					systemObjectDefinitionManager.getVersion())) {
 
-				ObjectFolder objectFolder =
-					_objectFolderLocalService.addOrGetUncategorizedObjectFolder(
-						companyId);
+				ObjectFolder objectFolder = objectFolderSupplier.get();
 
 				objectDefinition =
 					_objectDefinitionLocalService.
@@ -206,25 +227,6 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 				HashMapDictionaryBuilder.<String, Object>put(
 					"class.name", objectDefinition.getClassName()
 				).build());
-			_bundleContext.registerService(
-				ObjectRelatedModelsProvider.class,
-				new SystemObject1toMObjectRelatedModelsProviderImpl(
-					objectDefinition, _objectDefinitionLocalService,
-					_objectEntryLocalService, _objectFieldLocalService,
-					_objectRelationshipLocalService,
-					_persistedModelLocalServiceRegistry,
-					systemObjectDefinitionManager,
-					_systemObjectDefinitionManagerRegistry),
-				null);
-			_bundleContext.registerService(
-				ObjectRelatedModelsProvider.class,
-				new SystemObjectMtoMObjectRelatedModelsProviderImpl(
-					objectDefinition, _objectDefinitionLocalService,
-					_objectFieldLocalService, _objectRelationshipLocalService,
-					_persistedModelLocalServiceRegistry,
-					systemObjectDefinitionManager,
-					_systemObjectDefinitionManagerRegistry),
-				null);
 
 			JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 				systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
@@ -239,9 +241,44 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
 				).build());
+
+			_objectRelatedModelsProviderRegistrarHelper.register(
+				_bundleContext, objectDefinition,
+				new SystemObjectMtoMObjectRelatedModelsProviderImpl(
+					objectDefinition, _objectDefinitionLocalService,
+					_objectFieldLocalService, _objectRelationshipLocalService,
+					_persistedModelLocalServiceRegistry,
+					systemObjectDefinitionManager,
+					_systemObjectDefinitionManagerRegistry));
+			_objectRelatedModelsProviderRegistrarHelper.register(
+				_bundleContext, objectDefinition,
+				new SystemObject1toMObjectRelatedModelsProviderImpl(
+					objectDefinition, _objectDefinitionLocalService,
+					_objectEntryLocalService, _objectFieldLocalService,
+					_objectRelationshipLocalService,
+					_persistedModelLocalServiceRegistry,
+					systemObjectDefinitionManager,
+					_systemObjectDefinitionManagerRegistry));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
+		}
+	}
+
+	private ObjectFolder _getUncategorizedObjectFolder(long companyId) {
+		ObjectFolder objectFolder =
+			_objectFolderLocalService.fetchUncategorizedObjectFolder(companyId);
+
+		if (objectFolder != null) {
+			return objectFolder;
+		}
+
+		try {
+			return _objectFolderLocalService.addUncategorizedObjectFolder(
+				companyId);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -283,6 +320,10 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 	@Reference
 	private ObjectFolderLocalService _objectFolderLocalService;
+
+	@Reference
+	private ObjectRelatedModelsProviderRegistrarHelper
+		_objectRelatedModelsProviderRegistrarHelper;
 
 	@Reference
 	private ObjectRelatedModelsProviderRegistry

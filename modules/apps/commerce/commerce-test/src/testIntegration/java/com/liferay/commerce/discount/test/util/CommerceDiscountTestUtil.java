@@ -15,6 +15,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGrou
 import com.liferay.commerce.discount.service.CommerceDiscountLocalServiceUtil;
 import com.liferay.commerce.discount.service.CommerceDiscountRelLocalServiceUtil;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalServiceUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.math.BigDecimal;
 
@@ -315,6 +317,39 @@ public class CommerceDiscountTestUtil {
 	}
 
 	public static CommerceDiscount addFixedCommerceDiscount(
+			long groupId, BigDecimal discount, String target,
+			UnicodeProperties unicodeProperties, long... targetIds)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		User user = UserLocalServiceUtil.getGuestUser(
+			serviceContext.getCompanyId());
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
+
+		CommerceDiscount commerceDiscount =
+			CommerceDiscountLocalServiceUtil.addCommerceDiscount(
+				user.getUserId(), RandomTestUtil.randomString(), target, false,
+				null, false, BigDecimal.ZERO, discount, BigDecimal.ZERO,
+				BigDecimal.ZERO, BigDecimal.ZERO,
+				CommerceDiscountConstants.LIMITATION_TYPE_UNLIMITED, 0, true,
+				calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE), true, serviceContext);
+
+		_addTargetDetails(
+			groupId, commerceDiscount, target, unicodeProperties, targetIds);
+
+		return commerceDiscount;
+	}
+
+	public static CommerceDiscount addFixedCommerceDiscount(
 			long groupId, double amount, String target, long... targetIds)
 		throws Exception {
 
@@ -342,7 +377,7 @@ public class CommerceDiscountTestUtil {
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
 				calendar.get(Calendar.MINUTE), true, serviceContext);
 
-		_addTargetDetails(groupId, commerceDiscount, target, targetIds);
+		_addTargetDetails(groupId, commerceDiscount, target, null, targetIds);
 
 		return commerceDiscount;
 	}
@@ -374,7 +409,7 @@ public class CommerceDiscountTestUtil {
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
 				calendar.get(Calendar.MINUTE), true, serviceContext);
 
-		_addTargetDetails(groupId, commerceDiscount, target, targetIds);
+		_addTargetDetails(groupId, commerceDiscount, target, null, targetIds);
 
 		return commerceDiscount;
 	}
@@ -411,7 +446,7 @@ public class CommerceDiscountTestUtil {
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
 				calendar.get(Calendar.MINUTE), true, serviceContext);
 
-		_addTargetDetails(groupId, commerceDiscount, target, targetIds);
+		_addTargetDetails(groupId, commerceDiscount, target, null, targetIds);
 
 		return commerceDiscount;
 	}
@@ -444,9 +479,25 @@ public class CommerceDiscountTestUtil {
 		}
 	}
 
+	private static void _addDiscountSkuRel(
+			long groupId, CommerceDiscount commerceDiscount,
+			UnicodeProperties unicodeProperties, long... targetIds)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		for (long id : targetIds) {
+			CommerceDiscountRelLocalServiceUtil.addCommerceDiscountRel(
+				commerceDiscount.getCommerceDiscountId(),
+				CPInstance.class.getName(), id, unicodeProperties,
+				serviceContext);
+		}
+	}
+
 	private static void _addTargetDetails(
 			long groupId, CommerceDiscount commerceDiscount, String target,
-			long... targetIds)
+			UnicodeProperties unicodeProperties, long... targetIds)
 		throws Exception {
 
 		if (CommerceDiscountConstants.TARGET_CATEGORIES.equals(target)) {
@@ -455,6 +506,11 @@ public class CommerceDiscountTestUtil {
 
 		if (CommerceDiscountConstants.TARGET_PRODUCTS.equals(target)) {
 			_addDiscountProductRel(groupId, commerceDiscount, targetIds);
+		}
+
+		if (CommerceDiscountConstants.TARGET_SKUS.equals(target)) {
+			_addDiscountSkuRel(
+				groupId, commerceDiscount, unicodeProperties, targetIds);
 		}
 	}
 

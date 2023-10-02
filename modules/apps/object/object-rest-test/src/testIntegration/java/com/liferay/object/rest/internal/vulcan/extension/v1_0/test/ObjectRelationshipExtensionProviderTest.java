@@ -89,7 +89,7 @@ public class ObjectRelationshipExtensionProviderTest {
 				userSystemObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
+				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		ObjectRelationshipLocalServiceUtil.

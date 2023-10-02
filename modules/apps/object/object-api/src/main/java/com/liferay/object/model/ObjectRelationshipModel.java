@@ -442,6 +442,27 @@ public interface ObjectRelationshipModel
 	public void setReverse(boolean reverse);
 
 	/**
+	 * Returns the system of this object relationship.
+	 *
+	 * @return the system of this object relationship
+	 */
+	public boolean getSystem();
+
+	/**
+	 * Returns <code>true</code> if this object relationship is system.
+	 *
+	 * @return <code>true</code> if this object relationship is system; <code>false</code> otherwise
+	 */
+	public boolean isSystem();
+
+	/**
+	 * Sets whether this object relationship is system.
+	 *
+	 * @param system the system of this object relationship
+	 */
+	public void setSystem(boolean system);
+
+	/**
 	 * Returns the type of this object relationship.
 	 *
 	 * @return the type of this object relationship

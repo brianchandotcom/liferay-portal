@@ -13,18 +13,49 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DLPreviewSizeException extends PortalException {
 
 	public DLPreviewSizeException() {
+		this(0);
+	}
+
+	public DLPreviewSizeException(long maxFileSize) {
+		_maxFileSize = maxFileSize;
+	}
+
+	public DLPreviewSizeException(long maxFileSize, Throwable throwable) {
+		super(throwable);
+
+		_maxFileSize = maxFileSize;
 	}
 
 	public DLPreviewSizeException(String msg) {
+		this(msg, 0);
+	}
+
+	public DLPreviewSizeException(String msg, long maxFileSize) {
 		super(msg);
+
+		_maxFileSize = maxFileSize;
+	}
+
+	public DLPreviewSizeException(
+		String msg, long maxFileSize, Throwable throwable) {
+
+		super(msg, throwable);
+
+		_maxFileSize = maxFileSize;
 	}
 
 	public DLPreviewSizeException(String msg, Throwable throwable) {
-		super(msg, throwable);
+		this(msg, 0, throwable);
 	}
 
 	public DLPreviewSizeException(Throwable throwable) {
-		super(throwable);
+		this(0, throwable);
 	}
+
+	public long getMaxFileSize() {
+		return _maxFileSize;
+	}
+
+	private final long _maxFileSize;
 
 }

@@ -97,10 +97,6 @@ public class BuildFactory {
 			return new SourceFormatBuild(url, (TopLevelBuild)parentBuild);
 		}
 
-		if (jobName.contains("-source")) {
-			return new SourceBuild(url, parentBuild);
-		}
-
 		if (jobName.contains("-validation")) {
 			return new ValidationBuild(url, (TopLevelBuild)parentBuild);
 		}

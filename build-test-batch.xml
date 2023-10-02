@@ -5953,6 +5953,11 @@ information. Make sure to commit in all format-javadoc results.
 			<test-tear-down>
 				<tar destfile="${project.dir}/tmp/gradle_plugins.tar">
 					<tarfileset
+						dir="${project.dir}/modules/sdk/gradle-plugins-maven-plugin-builder"
+						includes="build/reports/**"
+						prefix="gradle-plugins-maven-plugin-builder"
+					/>
+					<tarfileset
 						dir="${project.dir}/modules/sdk/gradle-plugins-target-platform"
 						includes="build/reports/**"
 						prefix="gradle-plugins-target-platform"

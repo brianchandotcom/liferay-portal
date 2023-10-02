@@ -6,7 +6,7 @@
 package com.liferay.knowledge.base.web.internal.security.permission.resource;
 
 import com.liferay.knowledge.base.constants.KBConstants;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 

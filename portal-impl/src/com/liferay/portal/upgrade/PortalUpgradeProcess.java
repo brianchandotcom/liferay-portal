@@ -252,8 +252,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 				preparedStatement.setDate(2, new Date(buildDate.getTime()));
 			},
 			portalReleaseDTO -> new PortalReleaseDTO(
-				portalReleaseDTO._schemaVersion, portalReleaseDTO._state,
-				ReleaseInfo.getParentBuildNumber(),
+				portalReleaseDTO._schemaVersion,
+				ReleaseInfo.getParentBuildNumber(), portalReleaseDTO._state,
 				portalReleaseDTO._testString));
 	}
 
@@ -266,8 +266,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 			preparedStatement -> preparedStatement.setString(
 				1, newSchemaVersion.toString()),
 			portalReleaseDTO -> new PortalReleaseDTO(
-				newSchemaVersion, portalReleaseDTO._state,
-				portalReleaseDTO._buildNumber, portalReleaseDTO._testString));
+				newSchemaVersion, portalReleaseDTO._buildNumber,
+				portalReleaseDTO._state, portalReleaseDTO._testString));
 	}
 
 	public static void updateState(Connection connection, int state)
@@ -281,8 +281,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 				preparedStatement.setInt(2, state);
 			},
 			portalReleaseDTO -> new PortalReleaseDTO(
-				portalReleaseDTO._schemaVersion, state,
-				portalReleaseDTO._buildNumber, portalReleaseDTO._testString));
+				portalReleaseDTO._schemaVersion, portalReleaseDTO._buildNumber,
+				state, portalReleaseDTO._testString));
 	}
 
 	@Override
@@ -429,9 +429,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 
 				_currentPortalReleaseDTODCLSingleton.getSingleton(
 					() -> new PortalReleaseDTO(
-						_initialSchemaVersion, portalReleaseDTO._state,
-						portalReleaseDTO._buildNumber,
-						portalReleaseDTO._testString));
+						_initialSchemaVersion, portalReleaseDTO._buildNumber,
+						portalReleaseDTO._state, portalReleaseDTO._testString));
 			}
 		}
 	}

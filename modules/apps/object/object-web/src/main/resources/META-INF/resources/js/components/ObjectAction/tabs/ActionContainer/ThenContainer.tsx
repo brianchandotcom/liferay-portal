@@ -147,6 +147,7 @@ export function ThenContainer({
 		<Card title={Liferay.Language.get('then[object]')} viewMode="inline">
 			<div className="lfr-object__action-builder-then">
 				<SingleSelect
+					disabled={values.system}
 					error={errors.objectActionExecutorKey}
 					onChange={({value}) => {
 						if (values.objectActionExecutorKey !== value) {
@@ -174,6 +175,7 @@ export function ThenContainer({
 							aria-label={Liferay.Language.get(
 								'choose-an-object'
 							)}
+							disabled={values.system}
 							error={errors.objectDefinitionExternalReferenceCode}
 							items={objectsOptions}
 							onSelectChange={(label, value) => {
@@ -193,6 +195,7 @@ export function ThenContainer({
 										values.parameters
 											.relatedObjectEntries === true
 									}
+									disabled={values.system}
 									label={Liferay.Language.get(
 										'also-relate-entries'
 									)}
@@ -226,6 +229,7 @@ export function ThenContainer({
 				{values.objectActionExecutorKey === 'notification' && (
 					<SingleSelect<CustomItem<string>>
 						className="lfr-object__action-builder-notification-then"
+						disabled={values.system}
 						error={errors.objectActionExecutorKey}
 						onChange={({value}) => {
 							setValues({

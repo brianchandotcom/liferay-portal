@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.admin.web.internal.display.context.IndexActionsDisplayContext;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
+import com.liferay.portal.search.cluster.StatsInformation;
+import com.liferay.portal.search.cluster.StatsInformationFactory;
 import com.liferay.portal.search.configuration.ReindexConfiguration;
 
 import java.util.Map;
@@ -55,7 +57,27 @@ public class IndexActionsDisplayContextBuilder {
 
 		indexActionsDisplayContext.setData(getData());
 
+		if (_isStatsInformationAvailable()) {
+			StatsInformation statsInformation =
+				_statsInformationFactory.getStatsInformation();
+
+			indexActionsDisplayContext.setAvailableDiskSpace(
+				statsInformation.getAvailableDiskSpace());
+			indexActionsDisplayContext.setCurrentDiskSpaceUsed(
+				statsInformation.getUsedDiskSpace());
+			indexActionsDisplayContext.setIsLowOnDiskSpace(
+				_isLowOnDiskSpace(
+					statsInformation.getAvailableDiskSpace(),
+					statsInformation.getSizeOfLargestIndex()));
+		}
+
 		return indexActionsDisplayContext;
+	}
+
+	public void setStatsInformationFactory(
+		StatsInformationFactory statsInformationFactory) {
+
+		_statsInformationFactory = statsInformationFactory;
 	}
 
 	protected Map<String, Object> getData() {
@@ -125,6 +147,24 @@ public class IndexActionsDisplayContextBuilder {
 		return jsonArray;
 	}
 
+	private boolean _isLowOnDiskSpace(
+		double availableDiskSpace, double largestIndexSize) {
+
+		if (availableDiskSpace < (largestIndexSize * 1.5)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isStatsInformationAvailable() {
+		if (_statsInformationFactory != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexActionsDisplayContextBuilder.class);
 
@@ -134,5 +174,6 @@ public class IndexActionsDisplayContextBuilder {
 	private final ReindexConfiguration _reindexConfiguration;
 	private final RenderRequest _renderRequest;
 	private final SearchCapabilities _searchCapabilities;
+	private StatsInformationFactory _statsInformationFactory;
 
 }

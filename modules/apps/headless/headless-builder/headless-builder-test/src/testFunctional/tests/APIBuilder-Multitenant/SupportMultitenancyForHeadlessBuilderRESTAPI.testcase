@@ -1,0 +1,90 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given an published API application with endpoint and schema created in default instance") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				schemaName = "testSchema",
+				status = "published",
+				title = "My-app");
+
+			ApplicationAPI.setUpGlobalAPIApplicationId();
+		}
+
+		task ("And Given a virtual instance is created") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "liferay.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com",
+				virtualHostsURL = "http://www.able.com:8080");
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CannotSeeAppliationOfOtherInstanceUnderAPIBuilder {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I go to API Builder through Control Panel in the new virtual instance") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+		}
+
+		task ("Then no API application is present") {
+			AssertElementNotPresent(
+				key_name = "My-app",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 4
+	test CannotSeeApplicationOfOtherInstanceUnderRestApplications {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When I navigate to /o/api in virtual instance") {
+			APIExplorer.navigateToOpenAPI(virtualHost = "www.able.com");
+		}
+
+		task ("Then /c/{appInDefaultInstance} is not present under REST Applications") {
+			AssertElementNotPresent(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "c/my-app");
+		}
+	}
+
+}

@@ -214,7 +214,7 @@ export function SelectLayoutTree({
 	);
 
 	return filteredItems.length ? (
-		<div className="pt-3 px-3">
+		<div className="cadmin pt-3 px-3">
 			{multiSelection && (
 				<p
 					className="mb-4"
@@ -278,6 +278,7 @@ export function SelectLayoutTree({
 							{(item) => (
 								<ClayTreeView.Item
 									disabled={item.disabled}
+									expandable={item.hasChildren}
 									expanderDisabled={false}
 									onClick={(event) =>
 										onClick(event, item, selection)

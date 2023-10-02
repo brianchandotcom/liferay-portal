@@ -1,4 +1,5 @@
 dependencies {
 	testIntegrationImplementation project(":apps:on-demand-admin:on-demand-admin-api")
+	testIntegrationImplementation project(":apps:portal:portal-db-partition-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

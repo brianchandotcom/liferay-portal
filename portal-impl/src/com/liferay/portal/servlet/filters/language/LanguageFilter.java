@@ -28,10 +28,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletConfig;
 
@@ -67,8 +65,6 @@ public class LanguageFilter extends BasePortalFilter {
 			return;
 		}
 
-		_eTagValues.clear();
-
 		_portletConfig = PortletConfigFactoryUtil.create(
 			portlets.get(0), filterConfig.getServletContext());
 	}
@@ -79,18 +75,8 @@ public class LanguageFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		String ifNoneMatch = httpServletRequest.getHeader(
-			HttpHeaders.IF_NONE_MATCH);
-
-		String eTagKey = _getETagKey(httpServletRequest);
-
-		if ((ifNoneMatch != null) &&
-			ifNoneMatch.equals(_eTagValues.get(eTagKey))) {
-
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-
-			return;
-		}
+		httpServletResponse.setHeader(
+			HttpHeaders.CACHE_CONTROL, "private, no-cache");
 
 		BufferCacheServletResponse bufferCacheServletResponse =
 			new BufferCacheServletResponse(httpServletResponse);
@@ -107,20 +93,24 @@ public class LanguageFilter extends BasePortalFilter {
 			_log.debug("Translating response " + completeURL);
 		}
 
-		httpServletResponse.setHeader(
-			HttpHeaders.CACHE_CONTROL, "private, no-cache");
-
 		String content = bufferCacheServletResponse.getString();
 
 		content = translateResponse(httpServletRequest, content);
 
-		String eTagValue =
+		String eTag =
 			StringPool.QUOTE + DigesterUtil.digest("SHA-1", content) +
 				StringPool.QUOTE;
 
-		_eTagValues.put(eTagKey, eTagValue);
+		httpServletResponse.setHeader(HttpHeaders.ETAG, eTag);
 
-		httpServletResponse.setHeader(HttpHeaders.ETAG, eTagValue);
+		String ifNoneMatch = httpServletRequest.getHeader(
+			HttpHeaders.IF_NONE_MATCH);
+
+		if ((ifNoneMatch != null) && ifNoneMatch.equals(eTag)) {
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+
+			return;
+		}
 
 		ServletResponseUtil.write(httpServletResponse, content);
 	}
@@ -147,14 +137,8 @@ public class LanguageFilter extends BasePortalFilter {
 			locale, content);
 	}
 
-	private String _getETagKey(HttpServletRequest httpServletRequest) {
-		return LanguageUtil.getLanguageId(httpServletRequest) +
-			StringPool.POUND + httpServletRequest.getRequestURI();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(LanguageFilter.class);
 
-	private final Map<String, String> _eTagValues = new ConcurrentHashMap<>();
 	private PortletConfig _portletConfig;
 
 	private static class NoCacheHttpServletRequestWrapper

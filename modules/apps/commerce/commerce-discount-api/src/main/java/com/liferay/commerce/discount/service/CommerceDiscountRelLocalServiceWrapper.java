@@ -362,6 +362,25 @@ public class CommerceDiscountRelLocalServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.commerce.discount.model.CommerceDiscountRel>
+			getCommerceDiscountRels(long classNameId, long classPK) {
+
+		return _commerceDiscountRelLocalService.getCommerceDiscountRels(
+			classNameId, classPK);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.discount.model.CommerceDiscountRel>
+			getCommerceDiscountRels(
+				long classNameId, long classPK, String unitOfMeasureKey) {
+
+		return _commerceDiscountRelLocalService.getCommerceDiscountRels(
+			classNameId, classPK, unitOfMeasureKey);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.discount.model.CommerceDiscountRel>
 			getCommerceDiscountRels(long commerceDiscountId, String className) {
 
 		return _commerceDiscountRelLocalService.getCommerceDiscountRels(

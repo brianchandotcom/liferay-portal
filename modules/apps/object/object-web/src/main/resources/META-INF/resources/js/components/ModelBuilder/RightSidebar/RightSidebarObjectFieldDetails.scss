@@ -1,0 +1,41 @@
+.lfr-objects__model-builder-right-sidebar-definition-node {
+	&-content {
+		border-bottom: 1px solid #f1f2f5;
+		overflow-x: hidden;
+		padding: 1rem 1rem 0;
+	}
+
+	&-title {
+		align-items: center;
+		border-bottom: 1px solid #f1f2f5;
+		color: #272833;
+		display: flex;
+		font-size: 16px;
+		font-weight: 600;
+		height: 3.3rem;
+		justify-content: space-between;
+		line-height: 21px;
+		padding: 2rem 1rem;
+		width: auto;
+
+		&-buttons-container {
+			align-items: center;
+			display: flex;
+			gap: 10px;
+			justify-content: center;
+		}
+
+		&-delete-button {
+			height: 32px;
+			width: 32px;
+		}
+
+		&-save-button {
+			align-items: center;
+			display: flex;
+			height: 32px;
+			justify-content: center;
+			width: 57px;
+		}
+	}
+}

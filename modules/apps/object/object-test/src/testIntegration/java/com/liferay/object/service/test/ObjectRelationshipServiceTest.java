@@ -208,7 +208,7 @@ public class ObjectRelationshipServiceTest {
 			_objectDefinition2.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(),
+			StringUtil.randomId(), false,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 	}
 
@@ -232,7 +232,7 @@ public class ObjectRelationshipServiceTest {
 					ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
-					StringUtil.randomId(),
+					StringUtil.randomId(), false,
 					ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 		}
 		finally {

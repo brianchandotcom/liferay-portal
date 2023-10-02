@@ -15,7 +15,6 @@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -64,11 +63,19 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 			displayStyleGroupId="<%= modifiedFacetDisplayContext.getDisplayStyleGroupId() %>"
 			entries="<%= modifiedFacetDisplayContext.getBucketDisplayContexts() %>"
 		>
-			<clay:panel-group>
-				<clay:panel
-					collapseClassNames="search-facet"
-					displayTitle='<%= LanguageUtil.get(request, "last-modified") %>'
-					expanded="<%= true %>"
+			<liferay-ui:panel-container
+				extended="<%= true %>"
+				id='<%= liferayPortletResponse.getNamespace() + "facetModifiedPanelContainer" %>'
+				markupView="lexicon"
+				persistState="<%= true %>"
+			>
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					cssClass="search-facet"
+					id='<%= liferayPortletResponse.getNamespace() + "facetModifiedPanel" %>'
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="last-modified"
 				>
 					<c:if test="<%= !modifiedFacetDisplayContext.isNothingSelected() %>">
 						<clay:button
@@ -183,30 +190,30 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 							/>
 						</li>
 					</ul>
-
-					<aui:script use="liferay-search-modified-facet">
-						new Liferay.Search.ModifiedFacetFilter({
-							form: A.one('#<portlet:namespace />fm'),
-							fromInputDatePicker: Liferay.component(
-								'<portlet:namespace />fromInputDatePicker'
-							),
-							fromInputName: '<portlet:namespace />fromInput',
-							namespace: '<portlet:namespace />',
-							searchCustomRangeButton: A.one(
-								'#<portlet:namespace />searchCustomRangeButton'
-							),
-							toInputDatePicker: Liferay.component(
-								'<portlet:namespace />toInputDatePicker'
-							),
-							toInputName: '<portlet:namespace />toInput',
-						});
-
-						Liferay.Search.FacetUtil.enableInputs(
-							document.querySelectorAll('#<portlet:namespace />fm .facet-term')
-						);
-					</aui:script>
-				</clay:panel>
-			</clay:panel-group>
+				</liferay-ui:panel>
+			</liferay-ui:panel-container>
 		</liferay-ddm:template-renderer>
 	</aui:form>
+
+	<aui:script use="liferay-search-modified-facet">
+		new Liferay.Search.ModifiedFacetFilter({
+			form: A.one('#<portlet:namespace />fm'),
+			fromInputDatePicker: Liferay.component(
+				'<portlet:namespace />fromInputDatePicker'
+			),
+			fromInputName: '<portlet:namespace />fromInput',
+			namespace: '<portlet:namespace />',
+			searchCustomRangeButton: A.one(
+				'#<portlet:namespace />searchCustomRangeButton'
+			),
+			toInputDatePicker: Liferay.component(
+				'<portlet:namespace />toInputDatePicker'
+			),
+			toInputName: '<portlet:namespace />toInput',
+		});
+
+		Liferay.Search.FacetUtil.enableInputs(
+			document.querySelectorAll('#<portlet:namespace />fm .facet-term')
+		);
+	</aui:script>
 </c:if>

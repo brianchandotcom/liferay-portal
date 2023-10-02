@@ -7,15 +7,11 @@ package com.liferay.dynamic.data.mapping.form.web.internal.display.context.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.util.TimeZone;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,11 +27,6 @@ public class DDMFormInstanceExpirationStatusUtilTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@BeforeClass
-	public static void setUpClass() {
-		_setUpDateFormatFactory();
-	}
 
 	@Test
 	public void testFormExpired() throws Exception {
@@ -65,12 +56,6 @@ public class DDMFormInstanceExpirationStatusUtilTest {
 		Assert.assertFalse(
 			DDMFormInstanceExpirationStatusUtil.isFormExpired(
 				_mockDDMFormInstance(ddmFormInstanceSettings), null));
-	}
-
-	private static void _setUpDateFormatFactory() {
-		ReflectionTestUtil.setFieldValue(
-			DateFormatFactoryUtil.class, "_fastDateFormatFactory",
-			new DateFormatFactoryImpl());
 	}
 
 	private DDMFormInstance _mockDDMFormInstance(

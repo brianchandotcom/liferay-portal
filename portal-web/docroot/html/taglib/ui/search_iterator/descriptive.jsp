@@ -93,10 +93,6 @@
 					}
 				}
 
-				String rowElementId = namespace + id + "_" + row.getRowId();
-
-				request.setAttribute("liferay-ui:search-container-row:rowElementId", rowElementId);
-
 				request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(row.getRowId())));
 
 				Map<String, Object> data = row.getData();
@@ -104,6 +100,10 @@
 				if (data == null) {
 					data = new HashMap<String, Object>();
 				}
+
+				String rowElementId = namespace + id + "_" + row.getRowId();
+
+				request.setAttribute("liferay-ui:search-container-row:rowElementId", rowElementId);
 			%>
 
 				<dd class="list-group-item list-group-item-flex <%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %> <%= Validator.isNotNull(row.getState()) ? "list-group-item-" + row.getState() : StringPool.BLANK %>" data-qa-id="row" id="<%= rowElementId %>" <%= AUIUtil.buildData(data) %>>

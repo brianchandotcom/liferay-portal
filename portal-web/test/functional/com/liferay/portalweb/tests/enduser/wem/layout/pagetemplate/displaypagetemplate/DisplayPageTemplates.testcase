@@ -27,17 +27,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "User cannot delete a display page template with usage."
 	@priority = 4
 	@uitest
@@ -156,6 +145,54 @@ definition {
 			AssertElementPresent(
 				key_title = "Sitemap",
 				locator1 = "Header#H3_TITLE");
+		}
+	}
+
+	@description = "This is a test for LPS-193213. It is possible to access the configuration of an existing Display Page Template from the ellipsis menu of the card."
+	@priority = 4
+	test ConfigureDisplayPageTemplateInPageTemplatesAdmin {
+		property custom.properties = "feature.flag.LPS-195263=true";
+
+		task ("Given a user has a display page template") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user accesses to the Page Templates admin") {
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
+		}
+
+		task ("Then the user could configure display page template") {
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Configure");
+
+			Theme.configureLookAndFeelSpecificLook();
+
+			Theme.changeCurrentTheme(themeName = "Speedwell");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = 1,
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "font-size",
+				value1 = "40px");
+
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			PagesAdmin.viewCurrentTheme(themeName = "Speedwell");
 		}
 	}
 

@@ -360,7 +360,7 @@ definition {
 		}
 
 		task ("Then assert the entry fields are shown after clicking the form creates before via the view entry action") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 			FormsAdminNavigator.gotoViewEntries();
 

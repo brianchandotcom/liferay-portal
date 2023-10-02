@@ -21,6 +21,8 @@ class Testray extends HTMLElement {
 	connectedCallback() {
 		const properties = {
 			jiraBaseURL: this.getAttribute('jiraBaseURL') || '',
+			pusherKey: this.getAttribute('pusherKey') ?? '',
+			pusherRegion: this.getAttribute('pusherRegion') ?? '',
 		};
 
 		if (!this.root) {

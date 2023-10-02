@@ -29,7 +29,7 @@ import javax.ws.rs.core.Context;
  * @author Luis Miguel Barcos
  */
 @Path("/v1.0")
-public class BaseRelatedObjectEntryResourceImpl {
+public abstract class BaseRelatedObjectEntryResourceImpl {
 
 	@DELETE
 	@Path(

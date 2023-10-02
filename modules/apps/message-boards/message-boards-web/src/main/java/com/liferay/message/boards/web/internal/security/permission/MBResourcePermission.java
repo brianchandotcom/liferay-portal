@@ -6,7 +6,7 @@
 package com.liferay.message.boards.web.internal.security.permission;
 
 import com.liferay.message.boards.constants.MBConstants;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;

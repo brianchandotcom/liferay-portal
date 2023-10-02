@@ -6,12 +6,13 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.index;
 
 import com.liferay.json.storage.service.JSONStorageEntryLocalService;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
@@ -34,86 +35,88 @@ import org.osgi.service.component.annotations.Reference;
 public class SynonymSetIndexReindexer implements IndexReindexer {
 
 	@Override
-	public void reindex(long[] companyIds) throws Exception {
-		reindex(companyIds, null);
+	public void reindex(long companyId) throws Exception {
+		reindex(companyId, null);
 	}
 
 	@Override
-	public void reindex(long[] companyIds, String executionMode)
-		throws Exception {
-
+	public void reindex(long companyId, String executionMode) throws Exception {
 		if (!searchCapabilities.isSynonymsSupported()) {
 			return;
 		}
 
-		for (long companyId : companyIds) {
-			List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
-				companyId,
-				classNameLocalService.getClassNameId(SynonymSet.class),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
+			companyId, classNameLocalService.getClassNameId(SynonymSet.class),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			SynonymSetIndexName synonymSetIndexName =
-				synonymSetIndexNameBuilder.getSynonymSetIndexName(companyId);
+		SynonymSetIndexName synonymSetIndexName =
+			synonymSetIndexNameBuilder.getSynonymSetIndexName(companyId);
 
-			if (ListUtil.isEmpty(classPKs)) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Not reindexing ",
-							synonymSetIndexName.getIndexName(),
-							" because the database has no synonym set ",
-							"entries"));
-				}
-
-				continue;
+		if (ListUtil.isEmpty(classPKs)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Not reindexing ", synonymSetIndexName.getIndexName(),
+						" because the database has no synonym set ",
+						"entries"));
 			}
 
-			Date date = null;
+			return;
+		}
 
-			if (_isExecuteSyncReindex(executionMode)) {
-				date = new Date();
+		Date date = null;
 
-				Thread.sleep(1000);
-			}
-			else {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Deleting index " + synonymSetIndexName.getIndexName());
-				}
+		if (_isExecuteSyncReindex(executionMode)) {
+			date = new Date();
 
-				try {
-					synonymSetIndexCreator.delete(synonymSetIndexName);
-				}
-				catch (RuntimeException runtimeException) {
-					_log.error(
-						"Unable to delete index " +
-							synonymSetIndexName.getIndexName(),
-						runtimeException);
-				}
+			Thread.sleep(1000);
+		}
+		else {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Deleting index " + synonymSetIndexName.getIndexName());
 			}
 
-			if (!_isExecuteSyncReindex(executionMode)) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Creating index " + synonymSetIndexName.getIndexName());
-				}
+			try {
+				synonymSetIndexCreator.delete(synonymSetIndexName);
+			}
+			catch (RuntimeException runtimeException) {
+				_log.error(
+					"Unable to delete index " +
+						synonymSetIndexName.getIndexName(),
+					runtimeException);
+			}
+		}
 
-				synonymSetIndexCreator.create(synonymSetIndexName);
+		if (!_isExecuteSyncReindex(executionMode)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Creating index " + synonymSetIndexName.getIndexName());
 			}
 
-			for (long classPK : classPKs) {
-				synonymSetIndexWriter.create(
-					synonymSetIndexName, _buildSynonymSet(classPK));
-			}
+			synonymSetIndexCreator.create(synonymSetIndexName);
+		}
 
-			if (_isExecuteSyncReindex(executionMode)) {
-				SyncReindexManager syncReindexManager =
-					_syncReindexManagerSnapshot.get();
+		int sendStatusInterval = Math.max(100, classPKs.size() / 20);
 
-				syncReindexManager.deleteStaleDocuments(
-					synonymSetIndexName.getIndexName(), date,
-					Collections.emptySet());
+		for (int i = 0; i < classPKs.size(); i++) {
+			synonymSetIndexWriter.create(
+				synonymSetIndexName, _buildSynonymSet(classPKs.get(i)));
+
+			if ((i % sendStatusInterval) == 0) {
+				ReindexStatusMessageSenderUtil.sendStatusMessage(
+					SynonymSetIndexReindexer.class.getName(), i + 1,
+					classPKs.size());
 			}
+		}
+
+		if (_isExecuteSyncReindex(executionMode)) {
+			SyncReindexManager syncReindexManager =
+				_syncReindexManagerSnapshot.get();
+
+			syncReindexManager.deleteStaleDocuments(
+				synonymSetIndexName.getIndexName(), date,
+				Collections.emptySet());
 		}
 	}
 

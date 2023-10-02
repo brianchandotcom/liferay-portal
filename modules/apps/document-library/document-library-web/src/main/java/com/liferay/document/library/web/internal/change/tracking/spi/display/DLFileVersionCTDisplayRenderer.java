@@ -11,10 +11,12 @@ import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.AudioProcessor;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
@@ -64,7 +66,8 @@ public class DLFileVersionCTDisplayRenderer
 
 		return getDownloadInputStream(
 			_store, _audioProcessor, _dlAppLocalService, dlFileVersion,
-			_imageProcessor, key, _pdfProcessor, _videoProcessor);
+			(ImageProcessor)_imageDLProcessor, key,
+			(PDFProcessor)_pdfDLProcessor, _videoProcessor);
 	}
 
 	@Override
@@ -129,7 +132,9 @@ public class DLFileVersionCTDisplayRenderer
 			_dlPreviewRendererProvider.getMimeTypes();
 
 		if (documentMimeTypes.contains(mimeType)) {
-			if (!_pdfProcessor.isDocumentSupported(fileVersion) ||
+			PDFProcessor pdfProcessor = (PDFProcessor)_pdfDLProcessor;
+
+			if (!pdfProcessor.isDocumentSupported(fileVersion) ||
 				_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 					fileVersion.getFileEntryId(),
 					fileVersion.getFileVersionId(),
@@ -137,7 +142,7 @@ public class DLFileVersionCTDisplayRenderer
 
 				return null;
 			}
-			else if (!_pdfProcessor.hasImages(fileVersion)) {
+			else if (!pdfProcessor.hasImages(fileVersion)) {
 				if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
 					return null;
 				}
@@ -158,14 +163,16 @@ public class DLFileVersionCTDisplayRenderer
 				"<img src=\"",
 				displayContext.getDownloadURL(
 					_PDF_PREVIEW,
-					_pdfProcessor.getPreviewFileSize(fileVersion, 1), fileName),
+					pdfProcessor.getPreviewFileSize(fileVersion, 1), fileName),
 				"\" style=\"margin: auto; max-height:624px; max-width:100%;",
 				"\">");
 		}
 
-		if (_imageProcessor.isSupported(mimeType)) {
+		ImageProcessor imageProcessor = (ImageProcessor)_imageDLProcessor;
+
+		if (imageProcessor.isSupported(mimeType)) {
 			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion) ||
-				!_imageProcessor.hasImages(fileVersion) ||
+				!imageProcessor.hasImages(fileVersion) ||
 				_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 					fileVersion.getFileEntryId(),
 					fileVersion.getFileVersionId(),
@@ -176,13 +183,13 @@ public class DLFileVersionCTDisplayRenderer
 
 			fileName = StringBundler.concat(
 				FileUtil.stripExtension(fileName), StringPool.PERIOD,
-				_imageProcessor.getPreviewType(fileVersion));
+				imageProcessor.getPreviewType(fileVersion));
 
 			return StringBundler.concat(
 				"<img src=\"",
 				displayContext.getDownloadURL(
 					_IMAGE_PREVIEW,
-					_imageProcessor.getPreviewFileSize(fileVersion), fileName),
+					imageProcessor.getPreviewFileSize(fileVersion), fileName),
 				"\" style=\"margin: auto; max-height:624px; max-width:100%;",
 				"\">");
 		}
@@ -340,14 +347,20 @@ public class DLFileVersionCTDisplayRenderer
 	)
 	private DLPreviewRendererProvider _dlPreviewRendererProvider;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private ImageProcessor _imageProcessor;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")"
+	)
+	private DLProcessor _imageDLProcessor;
 
 	@Reference
 	private Language _language;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private PDFProcessor _pdfProcessor;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.PDF_PROCESSOR + ")"
+	)
+	private DLProcessor _pdfDLProcessor;
 
 	@Reference(target = "(default=true)")
 	private Store _store;

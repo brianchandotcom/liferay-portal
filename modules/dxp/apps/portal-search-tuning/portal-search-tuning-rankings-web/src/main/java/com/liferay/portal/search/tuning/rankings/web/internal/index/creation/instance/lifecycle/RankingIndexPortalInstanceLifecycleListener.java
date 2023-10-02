@@ -15,12 +15,7 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.importer.Sin
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
-import java.util.Map;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -55,14 +50,6 @@ public class RankingIndexPortalInstanceLifecycleListener
 		}
 
 		_rankingIndexCreator.delete(rankingIndexName);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		super.activate(bundleContext, properties);
 	}
 
 	@Override

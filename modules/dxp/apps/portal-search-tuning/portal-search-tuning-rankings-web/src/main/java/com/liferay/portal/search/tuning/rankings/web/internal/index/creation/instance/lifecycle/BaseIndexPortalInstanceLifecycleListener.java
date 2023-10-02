@@ -11,8 +11,8 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,7 +23,7 @@ import java.nio.ByteBuffer;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Activate;
 
 /**
  * @author Bryan Engler
@@ -31,32 +31,29 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseIndexPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
+	@Override
+	public long getLastModifiedTime() {
+		return _dataFile.lastModified();
+	}
+
+	@Activate
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_bundleContext = bundleContext;
+		boolean productionModeEnabled = GetterUtil.getBoolean(
+			properties.get("productionModeEnabled"));
 
-		if (_shouldCreateIndexes(
-				(boolean)properties.get("productionModeEnabled"))) {
+		Class<?> clazz = getClass();
 
-			_companyLocalService.forEachCompanyId(
-				companyId -> createIndex(companyId));
-		}
-	}
+		_dataFile = bundleContext.getDataFile(clazz.getSimpleName() + ".data");
 
-	protected abstract void createIndex(long companyId);
-
-	private boolean _shouldCreateIndexes(boolean productionModeEnabled) {
-		File dataFile = _bundleContext.getDataFile(
-			"elasticsearch_configuration_production_mode_enabled.data");
-
-		if (dataFile.exists() && !StartupHelperUtil.isDBNew()) {
+		if (_dataFile.exists() && !StartupHelperUtil.isDBNew()) {
 			try {
 				Deserializer deserializer = new Deserializer(
-					ByteBuffer.wrap(FileUtil.getBytes(dataFile)));
+					ByteBuffer.wrap(FileUtil.getBytes(_dataFile)));
 
 				if (deserializer.readBoolean() == productionModeEnabled) {
-					return false;
+					return;
 				}
 			}
 			catch (Exception exception) {
@@ -72,7 +69,7 @@ public abstract class BaseIndexPortalInstanceLifecycleListener
 
 		serializer.writeBoolean(productionModeEnabled);
 
-		try (OutputStream outputStream = new FileOutputStream(dataFile)) {
+		try (OutputStream outputStream = new FileOutputStream(_dataFile)) {
 			serializer.writeTo(outputStream);
 		}
 		catch (Exception exception) {
@@ -81,16 +78,13 @@ public abstract class BaseIndexPortalInstanceLifecycleListener
 					"Unable to update Elasticsearch configuration", exception);
 			}
 		}
-
-		return true;
 	}
+
+	protected abstract void createIndex(long companyId);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseIndexPortalInstanceLifecycleListener.class);
 
-	private volatile BundleContext _bundleContext;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
+	private File _dataFile;
 
 }

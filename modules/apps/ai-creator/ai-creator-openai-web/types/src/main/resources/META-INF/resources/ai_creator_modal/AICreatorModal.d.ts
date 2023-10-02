@@ -7,10 +7,22 @@
 
 interface Props {
 	getCompletionURL: string;
+	learnResources: AICreatorModalLearnResources;
 	portletNamespace: string;
 }
+declare type AICreatorModalLearnResources = {
+	'ai-creator-openai-web': {
+		general: {
+			[key: string]: {
+				message: string;
+				url: string;
+			};
+		};
+	};
+};
 export default function AICreatorModal({
 	getCompletionURL,
+	learnResources,
 	portletNamespace,
 }: Props): JSX.Element;
 export {};

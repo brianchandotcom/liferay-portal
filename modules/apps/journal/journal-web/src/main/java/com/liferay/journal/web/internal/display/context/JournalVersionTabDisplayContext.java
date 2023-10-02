@@ -14,12 +14,9 @@ import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleAction
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Clara Izquierdo
@@ -35,9 +32,6 @@ public class JournalVersionTabDisplayContext {
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
 		_article = article;
-
-		_httpServletRequest = PortalUtil.getHttpServletRequest(
-			liferayPortletRequest);
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -86,7 +80,6 @@ public class JournalVersionTabDisplayContext {
 	private final JournalArticle _article;
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final TrashHelper _trashHelper;

@@ -623,7 +623,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			return methodCall.substring(0, methodCall.indexOf(CharPool.PERIOD));
 		}
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	protected String getVariableTypeName(
@@ -657,7 +657,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		String variable = getVariableName(methodCall);
 
-		if (variable == null) {
+		if (variable.isEmpty()) {
 			return false;
 		}
 

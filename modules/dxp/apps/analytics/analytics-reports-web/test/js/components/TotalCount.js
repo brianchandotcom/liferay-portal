@@ -7,8 +7,11 @@ import {fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import TotalCount from '../../../src/main/resources/META-INF/resources/js/components/TotalCount';
+import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 
 import '@testing-library/jest-dom/extend-expect';
+
+const mockLanguageTag = 'en-US';
 
 describe('TotalCount', () => {
 	it('renders text, help text and total count number', async () => {
@@ -25,17 +28,19 @@ describe('TotalCount', () => {
 		};
 
 		const {getByRole, getByText} = render(
-			<TotalCount
-				dataProvider={testProps.dataProvider}
-				label={testProps.label}
-				popoverHeader={testProps.popoverHeader}
-				popoverMessage={testProps.popoverMessage}
-			/>
+			<StoreContextProvider value={{languageTag: mockLanguageTag}}>
+				<TotalCount
+					dataProvider={testProps.dataProvider}
+					label={testProps.label}
+					popoverHeader={testProps.popoverHeader}
+					popoverMessage={testProps.popoverMessage}
+				/>
+			</StoreContextProvider>
 		);
 
 		await waitFor(() => expect(mockDataProvider).toHaveBeenCalled());
 
-		const formatter = new Intl.NumberFormat();
+		const formatter = new Intl.NumberFormat(mockLanguageTag);
 		expect(getByText(formatter.format(9999))).toBeInTheDocument();
 
 		const label = getByText(testProps.label);

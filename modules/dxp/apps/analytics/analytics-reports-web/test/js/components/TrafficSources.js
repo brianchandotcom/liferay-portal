@@ -8,9 +8,11 @@ import {fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import TrafficSources from '../../../src/main/resources/META-INF/resources/js/components/TrafficSources';
+import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 import {numberFormat} from '../../../src/main/resources/META-INF/resources/js/utils/numberFormat';
 
 const noop = () => {};
+const mockLanguageTag = 'en-US';
 
 describe('TrafficSources', () => {
 	it('displays the traffic sources with buttons to view keywords', async () => {
@@ -36,11 +38,13 @@ describe('TrafficSources', () => {
 		);
 
 		const {getByText} = render(
-			<TrafficSources
-				dataProvider={mockTrafficSourcesDataProvider}
-				languageTag="en-US"
-				onTrafficSourceClick={noop}
-			/>
+			<StoreContextProvider value={{languageTag: mockLanguageTag}}>
+				<TrafficSources
+					dataProvider={mockTrafficSourcesDataProvider}
+					languageTag="en-US"
+					onTrafficSourceClick={noop}
+				/>
+			</StoreContextProvider>
 		);
 
 		await waitFor(() => {

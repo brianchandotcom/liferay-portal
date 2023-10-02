@@ -217,7 +217,7 @@ public abstract class BasePostalAddressResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/postal-addresses' -d $'{"addressCountry": ___, "addressCountry_i18n": ___, "addressLocality": ___, "addressRegion": ___, "addressType": ___, "id": ___, "name": ___, "postalCode": ___, "primary": ___, "streetAddressLine1": ___, "streetAddressLine2": ___, "streetAddressLine3": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Adds a postal address for the account"
+		description = "Adds a postal address for the account. County, Region and type must exist."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

@@ -2771,7 +2771,7 @@ paths:
             tags: ["PostalAddress"]
         post:
             description:
-                Adds a postal address for the account
+                Adds a postal address for the account. County, Region and type must exist.
             operationId: postAccountPostalAddress
             parameters:
                 - in: path

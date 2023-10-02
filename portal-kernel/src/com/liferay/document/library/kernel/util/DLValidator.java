@@ -29,6 +29,8 @@ public interface DLValidator {
 
 	public long getMaxAllowableSize(long groupId, String mimeType);
 
+	public long getMaxAllowableSize(long groupId, String mimeType, long limit);
+
 	public Map<String, Long> getMimeTypeSizeLimit(long groupId);
 
 	public boolean isValidName(String name);

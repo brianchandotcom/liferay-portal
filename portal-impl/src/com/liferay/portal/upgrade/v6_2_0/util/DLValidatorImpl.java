@@ -62,6 +62,11 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	@Override
+	public long getMaxAllowableSize(long groupId, String mimeType, long limit) {
+		return 104857600;
+	}
+
+	@Override
 	public Map<String, Long> getMimeTypeSizeLimit(long groupId) {
 		return Collections.emptyMap();
 	}

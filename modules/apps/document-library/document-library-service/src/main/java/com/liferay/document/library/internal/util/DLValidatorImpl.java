@@ -71,15 +71,22 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public long getMaxAllowableSize(long groupId, String mimeType) {
+		return getMaxAllowableSize(groupId, mimeType, 0);
+	}
+
+	@Override
+	public long getMaxAllowableSize(long groupId, String mimeType, long limit) {
 		long companyId = _getCompanyId(groupId);
 
 		return _min(
-			_getGlobalMaxAllowableSize(companyId, groupId),
+			limit,
 			_min(
-				_dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
-					companyId, mimeType),
-				_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
-					groupId, mimeType)));
+				_getGlobalMaxAllowableSize(companyId, groupId),
+				_min(
+					_dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
+						companyId, mimeType),
+					_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
+						groupId, mimeType))));
 	}
 
 	@Override
@@ -198,7 +205,7 @@ public final class DLValidatorImpl implements DLValidator {
 		if (bytes == null) {
 			throw new FileSizeException(
 				"File size is zero for " + fileName,
-				getMaxAllowableSize(groupId, mimeType));
+				getMaxAllowableSize(groupId, mimeType, 0));
 		}
 
 		validateFileSize(groupId, fileName, mimeType, bytes.length);
@@ -212,7 +219,7 @@ public final class DLValidatorImpl implements DLValidator {
 		if (file == null) {
 			throw new FileSizeException(
 				"File is null for " + fileName,
-				getMaxAllowableSize(groupId, mimeType));
+				getMaxAllowableSize(groupId, mimeType, 0));
 		}
 
 		validateFileSize(groupId, fileName, mimeType, file.length());
@@ -228,7 +235,7 @@ public final class DLValidatorImpl implements DLValidator {
 			if (inputStream == null) {
 				throw new FileSizeException(
 					"Input stream is null for " + fileName,
-					getMaxAllowableSize(groupId, mimeType));
+					getMaxAllowableSize(groupId, mimeType, 0));
 			}
 
 			validateFileSize(
@@ -244,7 +251,7 @@ public final class DLValidatorImpl implements DLValidator {
 			long groupId, String fileName, String mimeType, long size)
 		throws FileSizeException {
 
-		long maxSize = getMaxAllowableSize(groupId, mimeType);
+		long maxSize = getMaxAllowableSize(groupId, mimeType, 0);
 
 		if ((maxSize > 0) && (size > maxSize)) {
 			throw new FileSizeException(

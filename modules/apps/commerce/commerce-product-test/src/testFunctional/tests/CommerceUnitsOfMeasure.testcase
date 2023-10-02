@@ -440,6 +440,88 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12393. As a buyer I can view the UOMs sorted by priority on the UOM selector from the product details page."
+	@priority = 4
+	test CanAssertUOMsAreSortedByPriority {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And 4 UOMs with decreasing priority are created and assigned to a SKU (e.g. MIN93015)") {
+			for (var indexAndActivation : list "4:10:true,1:25:true,2:15:false,3:20:true") {
+				var index = StringUtil.extractFirst(${indexAndActivation}, ":");
+
+				var indexAndActivation = StringUtil.replaceFirst(${indexAndActivation}, "${index}:", "");
+
+				var price = StringUtil.extractFirst(${indexAndActivation}, ":");
+				var active = StringUtil.extractLast(${indexAndActivation}, ":");
+
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					active = ${active},
+					basePrice = ${price},
+					priority = ${index},
+					productSKU = "MIN93015",
+					uomKey = "uom${index}",
+					uomName = "UOM${index}");
+			}
+		}
+
+		task ("When the buyer user logs in ") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And the buyer goes to the product details page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("Then the buyer user can assert the UOMs are sorted by priority ") {
+			AssertSelectedLabel(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_UOM_SELECT",
+				value1 = "UOM1");
+
+			for (var indexAndUOMName : list "1:uom1,2:uom3,3:uom4") {
+				var index = StringUtil.extractFirst(${indexAndUOMName}, ":");
+				var uomName = StringUtil.extractLast(${indexAndUOMName}, ":");
+
+				AssertElementPresent(
+					index = ${index},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_UOM_SELECTOR_VALUE_BY_INDEX",
+					uomName = ${uomName});
+			}
+
+			AssertElementNotPresent(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_UOM_SELECTOR_VALUE",
+				uomName = "uom2");
+
+			FrontStore.assertProductDetails(
+				productListPrice = "25.00",
+				productName = "ABS Sensor",
+				productSKU = "MIN93015");
+		}
+	}
+
 	@description = "COMMERCE-12337. As admin, I can edit and delete the Units of Measure entries."
 	@priority = 5
 	test CanEditAndDeleteUOM {

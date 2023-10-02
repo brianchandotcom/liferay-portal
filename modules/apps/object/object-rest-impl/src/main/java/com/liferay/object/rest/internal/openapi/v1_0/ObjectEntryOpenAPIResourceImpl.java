@@ -210,10 +210,7 @@ public class ObjectEntryOpenAPIResourceImpl
 					 objectField.getBusinessType(),
 					 ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
-			return new DTOProperty(
-				null, objectField.getName(),
-				ObjectFieldConstants.DB_TYPE_STRING) {
-
+			return new DTOProperty(null, objectField.getName(), "String") {
 				{
 					setRequired(objectField.isRequired());
 				}

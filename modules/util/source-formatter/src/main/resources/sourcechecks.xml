@@ -613,10 +613,6 @@
 			<category name="Upgrade" />
 			<description name="Replace setGroupPermissions and setGuestPermissions by new implementation" />
 		</check>
-		<check name="JavaUpgradeOnAfterUpdateParameterCheck">
-			<category name="Upgrade" />
-			<description name="Add new parameter in method onAfterUpdate for classes extending the BaseModelListener" />
-		</check>
 		<check name="MethodCallsOrderCheck">
 			<category name="Styling" />
 			<description name="Sorts method calls for certain object (for example, `put` calls in `java.util.HashMap`)." />

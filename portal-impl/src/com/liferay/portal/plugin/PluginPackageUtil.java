@@ -255,61 +255,16 @@ public class PluginPackageUtil {
 			ServletContext servletContext)
 		throws DocumentException, IOException {
 
-		String servletContextName = servletContext.getServletContextName();
+		PluginPackage pluginPackage =
+			(PluginPackage)servletContext.getAttribute(
+				PluginPackage.class.getName());
 
-		if (_log.isDebugEnabled()) {
-			if (servletContextName == null) {
-				_log.debug("Reading plugin package for the root context");
-			}
-			else {
-				_log.debug("Reading plugin package for " + servletContextName);
-			}
+		if (pluginPackage == null) {
+			pluginPackage = _readPluginPackageServletContext(servletContext);
+
+			servletContext.setAttribute(
+				PluginPackage.class.getName(), pluginPackage);
 		}
-
-		PluginPackage pluginPackage = null;
-
-		String xml = StreamUtil.toString(
-			servletContext.getResourceAsStream(
-				"/WEB-INF/liferay-plugin-package.xml"));
-
-		if (xml != null) {
-			pluginPackage = readPluginPackageXml(xml);
-		}
-		else {
-			String propertiesString = StreamUtil.toString(
-				servletContext.getResourceAsStream(
-					"/WEB-INF/liferay-plugin-package.properties"));
-
-			if (propertiesString != null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Reading plugin package from " +
-							"liferay-plugin-package.properties");
-				}
-
-				Properties properties = PropertiesUtil.load(propertiesString);
-
-				String displayName = servletContextName;
-
-				if (displayName.startsWith(StringPool.SLASH)) {
-					displayName = displayName.substring(1);
-				}
-
-				pluginPackage = readPluginPackageProperties(
-					displayName, properties);
-			}
-
-			if (pluginPackage == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Reading plugin package from MANIFEST.MF");
-				}
-
-				pluginPackage = _readPluginPackageServletManifest(
-					servletContext);
-			}
-		}
-
-		pluginPackage.setContext(servletContextName);
 
 		return pluginPackage;
 	}
@@ -411,6 +366,69 @@ public class PluginPackageUtil {
 		}
 
 		return list;
+	}
+
+	private static PluginPackage _readPluginPackageServletContext(
+			ServletContext servletContext)
+		throws DocumentException, IOException {
+
+		String servletContextName = servletContext.getServletContextName();
+
+		if (_log.isDebugEnabled()) {
+			if (servletContextName == null) {
+				_log.debug("Reading plugin package for the root context");
+			}
+			else {
+				_log.debug("Reading plugin package for " + servletContextName);
+			}
+		}
+
+		PluginPackage pluginPackage = null;
+
+		String xml = StreamUtil.toString(
+			servletContext.getResourceAsStream(
+				"/WEB-INF/liferay-plugin-package.xml"));
+
+		if (xml != null) {
+			pluginPackage = readPluginPackageXml(xml);
+		}
+		else {
+			String propertiesString = StreamUtil.toString(
+				servletContext.getResourceAsStream(
+					"/WEB-INF/liferay-plugin-package.properties"));
+
+			if (propertiesString != null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Reading plugin package from " +
+							"liferay-plugin-package.properties");
+				}
+
+				Properties properties = PropertiesUtil.load(propertiesString);
+
+				String displayName = servletContextName;
+
+				if (displayName.startsWith(StringPool.SLASH)) {
+					displayName = displayName.substring(1);
+				}
+
+				pluginPackage = readPluginPackageProperties(
+					displayName, properties);
+			}
+
+			if (pluginPackage == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Reading plugin package from MANIFEST.MF");
+				}
+
+				pluginPackage = _readPluginPackageServletManifest(
+					servletContext);
+			}
+		}
+
+		pluginPackage.setContext(servletContextName);
+
+		return pluginPackage;
 	}
 
 	private static PluginPackage _readPluginPackageServletManifest(

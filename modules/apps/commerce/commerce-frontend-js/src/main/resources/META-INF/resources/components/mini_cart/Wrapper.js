@@ -23,7 +23,7 @@ function Wrapper() {
 		<div className="mini-cart-wrapper">
 			<CartViews.Header />
 
-			{Liferay.FeatureFlags['COMMERCE-8715'] && editedItem ? (
+			{Liferay.FeatureFlags['COMMERCE-9599'] && editedItem ? (
 				<CartViews.EditItem />
 			) : (
 				<>

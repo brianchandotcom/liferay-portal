@@ -170,7 +170,7 @@ function CartItem({
 
 	const getClassName = (className) => {
 		return classnames(className, {
-			'mini-cart-item-alignment': Liferay.FeatureFlags['COMMERCE-8715'],
+			'mini-cart-item-alignment': Liferay.FeatureFlags['COMMERCE-9599'],
 		});
 	};
 
@@ -178,11 +178,11 @@ function CartItem({
 		<div
 			className={classnames('mini-cart-item', {
 				'align-items-start':
-					Liferay.FeatureFlags['COMMERCE-8715'] && hasChildItems,
+					Liferay.FeatureFlags['COMMERCE-9599'] && hasChildItems,
 				'is-removed': isRemoved,
 			})}
 		>
-			{Liferay.FeatureFlags['COMMERCE-8715'] ? (
+			{Liferay.FeatureFlags['COMMERCE-9599'] ? (
 				<div className="mini-cart-item-details position-relative">
 					<a
 						className="h-100 mini-cart-item-anchor position-absolute w-100"
@@ -221,7 +221,11 @@ function CartItem({
 					</div>
 				</div>
 			) : (
-				<a className="mini-cart-item-details" href={productPageUrl}>
+				<a
+					className="mini-cart-item-details"
+					data-senna-off="true"
+					href={productPageUrl}
+				>
 					{!!adaptiveMediaImageHTMLTag && (
 						<div
 							className="mini-cart-item-thumbnail"
@@ -312,7 +316,7 @@ function CartItem({
 			</div>
 
 			<div className={getClassName('mini-cart-item-actions')}>
-				{Liferay.FeatureFlags['COMMERCE-8715'] && hasChildItems ? (
+				{Liferay.FeatureFlags['COMMERCE-9599'] && hasChildItems ? (
 					<ClayDropDown
 						closeOnClick
 						trigger={

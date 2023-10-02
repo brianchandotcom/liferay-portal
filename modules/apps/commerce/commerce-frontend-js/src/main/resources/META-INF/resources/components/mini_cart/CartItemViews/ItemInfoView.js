@@ -22,7 +22,7 @@ function ItemInfoViewOptions({options}) {
 function ItemInfoViewBundle({childItems}) {
 	const [expanded, setExpanded] = useState(false);
 
-	return Liferay.FeatureFlags['COMMERCE-8715'] ? (
+	return Liferay.FeatureFlags['COMMERCE-9599'] ? (
 		<ClayPanel
 			className="item-info-collapse mb-0"
 			collapsable

@@ -17,6 +17,12 @@ import com.liferay.asset.kernel.model.AssetEntryModel;
 import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntryModel;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRelModel;
+import com.liferay.asset.list.model.impl.AssetListEntryModelImpl;
+import com.liferay.asset.list.model.impl.AssetListEntrySegmentsEntryRelModelImpl;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
@@ -1059,6 +1065,78 @@ public class DataFactory {
 			wikiPageModel.getModifiedDate(), getClassNameId(WikiPage.class),
 			wikiPageModel.getResourcePrimKey(), wikiPageModel.getUuid(), 0,
 			true, true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
+	}
+
+	public AssetListEntryModel newAssetListEntryModel(long groupId) {
+		AssetListEntryModel assetListEntryModel = new AssetListEntryModelImpl();
+
+		// PK fields
+
+		assetListEntryModel.setAssetListEntryId(_counter.get());
+
+		// Group instance
+
+		assetListEntryModel.setGroupId(groupId);
+
+		// Audit fields
+
+		assetListEntryModel.setCompanyId(_companyId);
+		assetListEntryModel.setUserId(_guestUserId);
+		assetListEntryModel.setCreateDate(nextFutureDate());
+
+		// Other fields
+
+		assetListEntryModel.setAssetListEntryKey(StringUtil.randomId());
+		assetListEntryModel.setTitle("Blogs Collection");
+		assetListEntryModel.setType(AssetListEntryTypeConstants.TYPE_DYNAMIC);
+		assetListEntryModel.setAssetEntrySubtype(null);
+		assetListEntryModel.setAssetEntryType(BlogsEntry.class.getName());
+
+		return assetListEntryModel;
+	}
+
+	public AssetListEntrySegmentsEntryRelModel
+		newAssetListEntrySegmentsEntryRelModel(
+			AssetListEntryModel assetListEntryModel) {
+
+		AssetListEntrySegmentsEntryRelModel
+			assetListEntrySegmentsEntryRelModel =
+				new AssetListEntrySegmentsEntryRelModelImpl();
+
+		// PK fields
+
+		assetListEntrySegmentsEntryRelModel.setAssetListEntrySegmentsEntryRelId(
+			_counter.get());
+
+		// Group instance
+
+		assetListEntrySegmentsEntryRelModel.setGroupId(
+			assetListEntryModel.getGroupId());
+
+		// Audit fields
+
+		assetListEntrySegmentsEntryRelModel.setCompanyId(_companyId);
+		assetListEntrySegmentsEntryRelModel.setUserId(_guestUserId);
+		assetListEntrySegmentsEntryRelModel.setCreateDate(nextFutureDate());
+
+		// Other fields
+
+		assetListEntrySegmentsEntryRelModel.setAssetListEntryId(
+			assetListEntryModel.getAssetListEntryId());
+		assetListEntrySegmentsEntryRelModel.setPriority(0);
+		assetListEntrySegmentsEntryRelModel.setSegmentsEntryId(0);
+		assetListEntrySegmentsEntryRelModel.setTypeSettings(
+			StringUtil.replace(
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"anyAssetType", getBlogsEntryClassNameId()
+				).put(
+					"classNameIds", getBlogsEntryClassNameId()
+				).buildString(),
+				'\n', "\\n"));
+
+		return assetListEntrySegmentsEntryRelModel;
 	}
 
 	public List<PortletPreferencesModel>
@@ -5046,6 +5124,27 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
+		AssetListEntryModel assetListEntryModel) {
+
+		return newResourcePermissionModels(
+			AssetListEntry.class.getName(),
+			String.valueOf(assetListEntryModel.getAssetListEntryId()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		AssetListEntrySegmentsEntryRelModel
+			assetListEntrySegmentsEntryRelModel) {
+
+		return newResourcePermissionModels(
+			AssetListEntrySegmentsEntryRelModel.class.getName(),
+			String.valueOf(
+				assetListEntrySegmentsEntryRelModel.
+					getAssetListEntrySegmentsEntryRelId()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
 		AssetVocabularyModel assetVocabularyModel) {
 
 		if (assetVocabularyModel.getUserId() == _guestUserId) {
@@ -7054,6 +7153,9 @@ public class DataFactory {
 
 				if (name.endsWith(StringPool.UNDERLINE)) {
 					name = name.substring(0, name.length() - 1);
+				}
+				else if (name.equals("AlEntrySegmentsEntryRelId")) {
+					name = "AssetListEntrySegmentsEntryRelId";
 				}
 				else if (name.equals("CdnEnabled")) {
 					name = "CDNEnabled";

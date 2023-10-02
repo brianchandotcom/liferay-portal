@@ -55,20 +55,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		throws Exception {
 
 		for (long postalAddressesId : longs) {
-			Address realaddress = _addressLocalService.getAddress(
-				postalAddressesId);
-
-			if (!accountId.equals(realaddress.getClassPK())) {
-				throw new BadRequestException(
-					_language.format(
-						contextAcceptLanguage.getPreferredLocale(),
-						"account-entry-x-not-has-postal-address-y",
-						new String[] {
-							accountId.toString(),
-							String.valueOf(postalAddressesId)
-						}));
-			}
-
+			_validateAccountPostalAddres(accountId, postalAddressesId);
 			_addressLocalService.deleteAddress(postalAddressesId);
 		}
 	}
@@ -148,6 +135,58 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			Long accountId, PostalAddress postalAddress)
 		throws Exception {
 
+		Country country = _getCountryByTitle(postalAddress);
+
+		long regionId = _getRegionByTitleAndCountry(postalAddress, country);
+
+		ListType type = _getType(postalAddress);
+
+		Address address = _addressLocalService.addAddress(
+			null, contextUser.getUserId(), AccountEntry.class.getName(),
+			accountId, postalAddress.getName(), null,
+			postalAddress.getStreetAddressLine1(),
+			postalAddress.getStreetAddressLine2(),
+			postalAddress.getStreetAddressLine3(),
+			postalAddress.getAddressLocality(), postalAddress.getPostalCode(),
+			regionId, country.getCountryId(), type.getListTypeId(), false,
+			postalAddress.getPrimary(), null,
+			ServiceContextFactory.getInstance(contextHttpServletRequest));
+
+		return PostalAddressUtil.toPostalAddress(
+			contextAcceptLanguage.isAcceptAllLanguages(), address,
+			contextCompany.getCompanyId(),
+			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	@Override
+	public PostalAddress putAccountPostalAddress(
+			Long accountId, Long postalAddressId, PostalAddress postalAddress)
+		throws Exception {
+
+		Address address = _validateAccountPostalAddres(
+			accountId, postalAddressId);
+
+		Country country = _getCountryByTitle(postalAddress);
+
+		long regionId = _getRegionByTitleAndCountry(postalAddress, country);
+
+		ListType type = _getType(postalAddress);
+
+		_addressLocalService.updateAddress(
+			address.getAddressId(), postalAddress.getName(),
+			address.getDescription(), postalAddress.getStreetAddressLine1(),
+			postalAddress.getStreetAddressLine2(),
+			postalAddress.getStreetAddressLine3(),
+			postalAddress.getAddressLocality(), postalAddress.getPostalCode(),
+			regionId, country.getCountryId(), type.getListTypeId(),
+			address.isMailing(), postalAddress.getPrimary(),
+			address.getPhoneNumber());
+
+		return super.putAccountPostalAddress(
+			accountId, postalAddressId, postalAddress);
+	}
+
+	private Country _getCountryByTitle(PostalAddress postalAddress) {
 		List<Country> countries = _countryService.getCompanyCountries(
 			contextCompany.getCompanyId());
 
@@ -171,23 +210,32 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		}
 
 		if (!found) {
-			throw new BadRequestException(
-				_language.format(
-					contextAcceptLanguage.getPreferredLocale(),
-					"country-not-found-x",
-					new String[] {
-						postalAddress.getAddressCountry()
-					}));
+			throw new BadRequestException("Country not found");
+		}
+
+		return country;
+	}
+
+	private long _getRegionByTitleAndCountry(
+		PostalAddress postalAddress, Country country) {
+
+		if (postalAddress.getAddressType() == null) {
+			return 0;
 		}
 
 		List<Region> regions = _regionService.getRegions(
 			country.getCountryId());
 
+		if (regions.isEmpty()) {
+			return 0;
+		}
+
 		Iterator<Region> regionIterator = regions.iterator();
 
 		Region region = null;
+		String title = null;
 
-		found = false;
+		Boolean found = false;
 
 		while (regionIterator.hasNext() && !found) {
 			region = regionIterator.next();
@@ -201,44 +249,41 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		}
 
 		if (!found) {
-			throw new BadRequestException(
-				_language.format(
-					contextAcceptLanguage.getPreferredLocale(),
-					"region-not-found-x",
-					new String[] {
-						postalAddress.getAddressRegion()
-					}));
+			throw new BadRequestException("Region not found");
 		}
 
+		return region.getRegionId();
+	}
+
+	private ListType _getType(PostalAddress postalAddress) {
 		ListType type = _listTypeLocalService.getListType(
 			postalAddress.getAddressType(),
 			"com.liferay.account.model.AccountEntry.address");
 
 		if (type == null) {
+			throw new BadRequestException("Type not found");
+		}
+
+		return type;
+	}
+
+	private Address _validateAccountPostalAddres(
+			Long accountId, long postalAddressId)
+		throws Exception {
+
+		Address address = _addressLocalService.getAddress(postalAddressId);
+
+		if (!accountId.equals(address.getClassPK())) {
 			throw new BadRequestException(
 				_language.format(
 					contextAcceptLanguage.getPreferredLocale(),
-					"type-not-found-x",
+					"account-entry-x-not-has-postal-address-y",
 					new String[] {
-						postalAddress.getAddressType()
+						accountId.toString(), String.valueOf(postalAddressId)
 					}));
 		}
 
-		Address address = _addressLocalService.addAddress(
-			null, contextUser.getUserId(), AccountEntry.class.getName(),
-			accountId, postalAddress.getName(), null,
-			postalAddress.getStreetAddressLine1(),
-			postalAddress.getStreetAddressLine2(),
-			postalAddress.getStreetAddressLine3(),
-			postalAddress.getAddressLocality(), postalAddress.getPostalCode(),
-			region.getRegionId(), country.getCountryId(), type.getListTypeId(),
-			false, postalAddress.getPrimary(), null,
-			ServiceContextFactory.getInstance(contextHttpServletRequest));
-
-		return PostalAddressUtil.toPostalAddress(
-			contextAcceptLanguage.isAcceptAllLanguages(), address,
-			contextCompany.getCompanyId(),
-			contextAcceptLanguage.getPreferredLocale());
+		return address;
 	}
 
 	@Reference

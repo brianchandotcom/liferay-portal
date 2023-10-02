@@ -1093,6 +1093,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-164348. The kebab menu next to a segment must have icons next to the menu items."
+	@priority = 4
+	test CheckCollapseSection {
+		task ("Given web content with categories and tags") {
+			var audienceId = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subaudience_1",
+				vocabularyName = "Audience");
+			var stageId = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Substage_1",
+				vocabularyName = "Stage");
+			var topicId = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Subtopic_1",
+				vocabularyName = "Topic");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId},${stageId},${topicId}",
+				assetTagNames = "tagname",
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("When open the Info Panel in the Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.openInfoPanel(assetName = "Webcontent Title");
+		}
+
+		task ("Then it should be possible to view the collapsed panels of Categories and Tags in the Categorization tab.") {
+			Navigator.gotoNavTab(navTab = "Categorization");
+
+			for (var categorie : list "Public Categories,Internal Categories,Tags") {
+				AssertElementPresent(
+					key_panel = ${categorie},
+					locator1 = "Panel#PANEL_EXPANDED");
+			}
+		}
+	}
+
 	@description = "LPS-132597 When a web content is associated to a Display Page and its status is Approved, a display page icon is displayed"
 	@priority = 5
 	test CheckDisplayPageIconofApprovedWebContent {

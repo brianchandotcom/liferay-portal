@@ -14,7 +14,7 @@ import {fetch, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
-import EditTagsContext from './EditTagsContext.es';
+import EditTagsContext from './EditTagsContext';
 
 const URL_SELECTION = '/bulk/v1.0/bulk-selection';
 const URL_TAGS = '/bulk/v1.0/keywords/common';

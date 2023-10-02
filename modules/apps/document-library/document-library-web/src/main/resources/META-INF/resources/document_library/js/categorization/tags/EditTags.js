@@ -6,8 +6,8 @@
 import {useModal} from '@clayui/modal';
 import React, {useContext, useEffect, useState} from 'react';
 
-import EditTagsContext from './EditTagsContext.es';
-import EditTagsModal from './EditTagsModal.es';
+import EditTagsContext from './EditTagsContext';
+import EditTagsModal from './EditTagsModal';
 
 function EditTags(props) {
 	const [fileEntires, setFileEntries] = useState();

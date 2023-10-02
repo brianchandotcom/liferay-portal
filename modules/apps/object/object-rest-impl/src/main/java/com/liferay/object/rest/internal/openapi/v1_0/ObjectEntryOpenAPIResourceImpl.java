@@ -201,8 +201,24 @@ public class ObjectEntryOpenAPIResourceImpl
 				}
 			};
 		}
+		else if (Objects.equals(
+			objectField.getBusinessType(), ObjectFieldConstants.DB_TYPE_CLOB)) {
 
-		if (objectField.getListTypeDefinitionId() != 0) {
+			return new DTOProperty(
+				null, objectField.getName(),
+				objectField.getDBType()) {
+				{
+					setRequired(objectField.isRequired());
+				}
+			};
+		}
+
+		if (Objects.equals(
+			objectField.getBusinessType(),
+			ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
+			Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 			DTOProperty dtoProperty = new DTOProperty(
 				Collections.singletonMap("x-parent-map", "properties"),
 				objectField.getName(), ListEntry.class.getSimpleName());

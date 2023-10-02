@@ -1138,9 +1138,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				if (type.equals("Boolean")) {
 					schema.setType("boolean");
 				}
-				else if (type.equals("Clob")) {
-					schema.setType("string");
-				}
+
 				else if (type.equals("Date")) {
 					schema.setFormat("date");
 					schema.setType("string");

@@ -132,9 +132,7 @@ function getCommonStylesFields(
 ): Config['commonStylesFields'] {
 	const commonStylesFields: Config['commonStylesFields'] = {};
 
-	const fieldSets = Object.values(commonStyles);
-
-	fieldSets.forEach((fieldSet) => {
+	commonStyles.forEach((fieldSet) => {
 		fieldSet.styles.forEach((field) => {
 			commonStylesFields[field.name] = {
 				cssTemplate: field.cssTemplate,

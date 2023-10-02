@@ -55,7 +55,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		throws Exception {
 
 		for (long postalAddressesId : longs) {
-			_validateAccountPostalAddres(accountId, postalAddressesId);
+			_validateAccountPostalAddress(accountId, postalAddressesId);
 			_addressLocalService.deleteAddress(postalAddressesId);
 		}
 	}
@@ -135,7 +135,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			Long accountId, Long postalAddressId, PostalAddress postalAddress)
 		throws Exception {
 
-		Address address = _validateAccountPostalAddres(
+		Address address = _validateAccountPostalAddress(
 			accountId, postalAddressId);
 
 		Country country = _getCountryByTitle(postalAddress);
@@ -224,7 +224,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			Long accountId, Long postalAddressId, PostalAddress postalAddress)
 		throws Exception {
 
-		Address address = _validateAccountPostalAddres(
+		Address address = _validateAccountPostalAddress(
 			accountId, postalAddressId);
 
 		Country country = _getCountryByTitle(postalAddress);
@@ -330,7 +330,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		return type;
 	}
 
-	private Address _validateAccountPostalAddres(
+	private Address _validateAccountPostalAddress(
 			Long accountId, long postalAddressId)
 		throws Exception {
 

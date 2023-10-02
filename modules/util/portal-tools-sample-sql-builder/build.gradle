@@ -30,6 +30,8 @@ dependencies {
 	compileInclude project(":apps:account:account-api")
 	compileInclude project(":apps:account:account-service")
 	compileInclude project(":apps:asset:asset-entry-rel-service")
+	compileInclude project(":apps:asset:asset-list-api")
+	compileInclude project(":apps:asset:asset-list-service")
 	compileInclude project(":apps:blogs:blogs-api")
 	compileInclude project(":apps:blogs:blogs-service")
 	compileInclude project(":apps:commerce:commerce-api")

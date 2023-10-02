@@ -5,6 +5,8 @@
 
 package com.liferay.wiki.editor.configuration.internal;
 
+import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.constants.ItemSelectorCriterionConstants;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.wiki.configuration.WikiFileUploadConfiguration;
@@ -127,9 +130,20 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		WikiFileUploadConfiguration wikiFileUploadConfiguration =
 			getWikiFileUploadConfiguration();
 
+		String[] attachmentMimeTypes =
+			wikiFileUploadConfiguration.attachmentMimeTypes();
+
+		List<String> extensions = new ArrayList<>();
+
+		for (String attachmentMimeType : attachmentMimeTypes) {
+			extensions.addAll(MimeTypesUtil.getExtensions(attachmentMimeType));
+		}
+
 		return UploadItemSelectorCriterion.builder(
 		).desiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType()
+		).extensions(
+			extensions.toArray(new String[extensions.size()])
 		).maxFileSize(
 			wikiFileUploadConfiguration.attachmentMaxSize()
 		).mimeTypeRestriction(

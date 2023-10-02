@@ -5,7 +5,7 @@
 
 package com.liferay.announcements.web.internal.display.context;
 
-import com.liferay.announcements.kernel.util.AnnouncementsUtil;
+import com.liferay.announcements.web.internal.util.AnnouncementsUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;

@@ -39,6 +39,23 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 					</h2>
 				</clay:content-col>
 			</clay:content-row>
+
+			<clay:content-row
+				cssClass="sidebar-section"
+			>
+				<c:if test="<%= layoutPageTemplateEntry.isDefaultTemplate() %>">
+					<clay:label
+						displayType="info"
+						label='<%= LanguageUtil.get(request, "default") %>'
+					/>
+				</c:if>
+
+				<liferay-portal-workflow:status
+					showStatusLabel="<%= false %>"
+					status="<%= layoutPageTemplateEntry.getStatus() %>"
+					statusMessage="<%= WorkflowConstants.getStatusLabel(layoutPageTemplateEntry.getStatus()) %>"
+				/>
+			</clay:content-row>
 		</div>
 
 		<div class="sidebar-body">

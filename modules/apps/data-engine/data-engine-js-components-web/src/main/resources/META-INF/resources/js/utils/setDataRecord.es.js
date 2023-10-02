@@ -42,7 +42,8 @@ export default function setDataRecord(
 
 	if (localizable) {
 		const edited =
-			!!localizedValue?.[languageId] ||
+			(!!Array.isArray(localizedValue?.[languageId]) &&
+				!!localizedValue?.[languageId].length) ||
 			(localizedValueEdited && localizedValueEdited[languageId]);
 
 		if (

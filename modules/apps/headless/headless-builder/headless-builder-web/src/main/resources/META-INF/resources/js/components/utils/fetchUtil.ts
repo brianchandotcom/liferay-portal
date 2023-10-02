@@ -11,6 +11,34 @@ export const headers = new Headers({
 	'Content-Type': 'application/json',
 });
 
+export async function deleteData({
+	onError,
+	onSuccess,
+	url,
+}: {
+	onError: (error: string) => void;
+	onSuccess: voidReturn;
+	url: string;
+}) {
+	fetch(url, {
+		headers,
+		method: 'DELETE',
+	})
+		.then((response) => {
+			if (response.ok) {
+				onSuccess();
+			}
+			else {
+				throw response.json();
+			}
+		})
+		.catch((error) => {
+			error.then((response: {message: string; title: string}) => {
+				onError(response.title ?? response.message);
+			});
+		});
+}
+
 export async function fetchJSON<T>({
 	init,
 	input,
@@ -56,6 +84,40 @@ export async function getItems<T>({url}: {url: string}) {
 	const {items} = await fetchJSON<{items: T[]}>({input: url});
 
 	return items;
+}
+
+export async function postData<T>({
+	data,
+	onError,
+	onSuccess,
+	url,
+}: {
+	data: Partial<T>;
+	onError: (error: string) => void;
+	onSuccess: (responseJSON: T) => void;
+	url: string;
+}) {
+	fetch(url, {
+		body: JSON.stringify(data),
+		headers,
+		method: 'POST',
+	})
+		.then((response) => {
+			if (response.ok) {
+				return response.json();
+			}
+			else {
+				throw response.json();
+			}
+		})
+		.then((responseJSON) => {
+			onSuccess(responseJSON);
+		})
+		.catch((error) => {
+			error.then((response: {message: string; title: string}) => {
+				onError(response.title ?? response.message);
+			});
+		});
 }
 
 export async function updateData<T>({

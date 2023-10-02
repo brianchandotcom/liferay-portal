@@ -4,6 +4,15 @@
  */
 
 export declare const headers: Headers;
+export declare function deleteData({
+	onError,
+	onSuccess,
+	url,
+}: {
+	onError: (error: string) => void;
+	onSuccess: voidReturn;
+	url: string;
+}): Promise<void>;
 export declare function fetchJSON<T>({
 	init,
 	input,
@@ -19,6 +28,17 @@ export declare function getAllItems<T>({
 	url: string;
 }): Promise<T[]>;
 export declare function getItems<T>({url}: {url: string}): Promise<T[]>;
+export declare function postData<T>({
+	data,
+	onError,
+	onSuccess,
+	url,
+}: {
+	data: Partial<T>;
+	onError: (error: string) => void;
+	onSuccess: (responseJSON: T) => void;
+	url: string;
+}): Promise<void>;
 export declare function updateData<T>({
 	dataToUpdate,
 	method,

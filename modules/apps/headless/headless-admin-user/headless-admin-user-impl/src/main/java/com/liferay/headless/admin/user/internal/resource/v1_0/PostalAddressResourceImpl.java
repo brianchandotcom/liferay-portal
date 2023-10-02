@@ -146,7 +146,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		if (postalAddress.getAddressRegion() != null) {
 			address.setRegionId(
-				_getRegionByTitleAndCountry(postalAddress, country));
+				_getRegionId(postalAddress, country));
 		}
 
 		if (postalAddress.getAddressType() != null) {
@@ -198,7 +198,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		Country country = _getCountryByTitle(postalAddress);
 
-		long regionId = _getRegionByTitleAndCountry(postalAddress, country);
+		long regionId = _getRegionId(postalAddress, country);
 
 		ListType type = _getType(postalAddress);
 
@@ -229,7 +229,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		Country country = _getCountryByTitle(postalAddress);
 
-		long regionId = _getRegionByTitleAndCountry(postalAddress, country);
+		long regionId = _getRegionId(postalAddress, country);
 
 		ListType type = _getType(postalAddress);
 
@@ -279,7 +279,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		return country;
 	}
 
-	private long _getRegionByTitleAndCountry(
+	private long _getRegionId(
 		PostalAddress postalAddress, Country country) {
 
 		if (postalAddress.getAddressType() == null) {

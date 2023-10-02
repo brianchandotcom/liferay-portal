@@ -3,7 +3,7 @@
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
-			  padding-top: 10px;
+		padding-top: 10px;
 	}
 
 	.menu-container .menu-item a {
@@ -21,13 +21,13 @@
 	.menu-container .hvr-overline-from-center:before {
 		background-color: var(--color-brand-primary);
 		height: 2px;
-				display: unset;
-		  vertical-align: middle;
+		display: unset;
+		vertical-align: middle;
 	}
 
-		.menu-container .selected a{
-			display : inline-block;
-		}
+	.menu-container .selected a{
+		display : inline-block;
+	}
 </style>
 
 <#if entries?has_content>

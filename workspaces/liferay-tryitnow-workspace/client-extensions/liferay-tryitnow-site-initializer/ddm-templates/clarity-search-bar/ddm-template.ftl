@@ -20,40 +20,39 @@
 				name=htmlUtil.escape(searchBarPortletDisplayContext.getScopeParameterName())
 				title="scope"
 				useNamespace=false
-				wrapperCssClass="input-group-item input-group-item-shrink input-group-append search-bar-search-select-wrapper"
-			>
-				<@liferay_aui.option
-				label="this-site"
-				selected=searchBarPortletDisplayContext.isSelectedCurrentSiteSearchScope()
-				value=searchBarPortletDisplayContext.getCurrentSiteSearchScopeParameterString()
-				/>
-
-				<#if searchBarPortletDisplayContext.isAvailableEverythingSearchScope()>
+				wrapperCssClass="input-group-item input-group-item-shrink input-group-append search-bar-search-select-wrapper">
 					<@liferay_aui.option
-						label="everything"
-						selected=searchBarPortletDisplayContext.isSelectedEverythingSearchScope()
-						value=searchBarPortletDisplayContext.getEverythingSearchScopeParameterString()
+					label="this-site"
+					selected=searchBarPortletDisplayContext.isSelectedCurrentSiteSearchScope()
+					value=searchBarPortletDisplayContext.getCurrentSiteSearchScopeParameterString()
 					/>
-				</#if>
-			</@>
 
-			<#assign data = {
-				"test-id": "searchInput"
-			} />
+						<#if searchBarPortletDisplayContext.isAvailableEverythingSearchScope()>
+							<@liferay_aui.option
+								label="everything"
+								selected=searchBarPortletDisplayContext.isSelectedEverythingSearchScope()
+								value=searchBarPortletDisplayContext.getEverythingSearchScopeParameterString()
+							/>
+						</#if>
+					</@>
 
-			<@liferay_aui.input
-				autoFocus=true
-				cssClass="search-bar-keywords-input"
-				data=data
-				label=""
-				name=htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())
-				placeholder=searchBarPortletDisplayContext.getInputPlaceholder()
-				title=languageUtil.get(locale, "search")
-				type="text"
-				useNamespace=false
-				value=htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())
-				wrapperCssClass="input-group-item input-group-append search-bar-keywords-input-wrapper"
-			/>
+					<#assign data = {
+						"test-id": "searchInput"
+					} />
+
+					<@liferay_aui.input
+						autoFocus=true
+						cssClass="search-bar-keywords-input"
+						data=data
+						label=""
+						name=htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())
+						placeholder=searchBarPortletDisplayContext.getInputPlaceholder()
+						title=languageUtil.get(locale, "search")
+						type="text"
+						useNamespace=false
+						value=htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())
+						wrapperCssClass="input-group-item input-group-append search-bar-keywords-input-wrapper"
+					/>
 		<#else>
 			<div class="input-group-item search-bar-keywords-input-wrapper">
 				<input
@@ -74,8 +73,7 @@
 				/>
 
 				<div class="input-group-inset-item input-group-inset-item-after">
-					<button aria-label="${languageUtil.get(locale, "submit")}" class="btn btn-unstyled text-brand-primary
-" type="submit">
+					<button aria-label="${languageUtil.get(locale, "submit")}" class="btn btn-unstyled text-brand-primary" type="submit">
 						<@clay.icon symbol="search" />
 					</button>
 				</div>

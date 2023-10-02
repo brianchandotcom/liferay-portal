@@ -341,18 +341,13 @@ public class JournalArticleActionDropdownItemsProvider {
 		return dropdownItems;
 	}
 
-	public List<DropdownItem> getArticleVersionTabActionDropdownItems()
-		throws Exception {
-
-		UnsafeConsumer<DropdownItem, Exception> previewContentArticleAction =
-			_getPreviewArticleActionUnsafeConsumer();
-
-		String articleId =
-			_article.getArticleId() + JournalPortlet.VERSION_SEPARATOR +
-				_article.getVersion();
-
+	public List<DropdownItem> getArticleVersionTabActionDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
+				UnsafeConsumer<DropdownItem, Exception>
+					previewContentArticleAction =
+						_getPreviewArticleActionUnsafeConsumer();
+
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() ->
@@ -362,10 +357,15 @@ public class JournalArticleActionDropdownItemsProvider {
 							(previewContentArticleAction != null),
 						previewContentArticleAction
 					).build());
+
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
 			dropdownGroupItem -> {
+				String articleId =
+					_article.getArticleId() + JournalPortlet.VERSION_SEPARATOR +
+						_article.getVersion();
+
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() ->
@@ -378,6 +378,7 @@ public class JournalArticleActionDropdownItemsProvider {
 								 WorkflowConstants.STATUS_SCHEDULED)),
 						_getExpireArticleActionConsumer(articleId)
 					).build());
+
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();

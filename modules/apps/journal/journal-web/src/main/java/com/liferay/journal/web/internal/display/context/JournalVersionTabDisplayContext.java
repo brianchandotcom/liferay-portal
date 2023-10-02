@@ -36,8 +36,7 @@ public class JournalVersionTabDisplayContext {
 	}
 
 	public List<DropdownItem> getArticleHistoryActionDropdownItems(
-			JournalArticle article)
-		throws Exception {
+		JournalArticle article) {
 
 		JournalArticleActionDropdownItemsProvider
 			articleActionDropdownItemsProvider =

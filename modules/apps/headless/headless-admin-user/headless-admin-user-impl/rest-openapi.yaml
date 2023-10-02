@@ -2801,8 +2801,8 @@ paths:
     "/accounts/{accountId}/postal-addresses/{postalAddressId}":
         patch:
             description:
-                Updates the postal address of the Account with information sent in the request body. Only the provided fields are
-                updated.
+                Updates the postal address of the Account with information sent in the request body. Only the provided
+                fields are updated.
             operationId: patchAccountPostalAddress
             parameters:
                 - in: path
@@ -2834,7 +2834,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/PostalAddress"
-            tags: [ "PostalAddress" ]
+            tags: ["PostalAddress"]
         put:
             # @review
             description:

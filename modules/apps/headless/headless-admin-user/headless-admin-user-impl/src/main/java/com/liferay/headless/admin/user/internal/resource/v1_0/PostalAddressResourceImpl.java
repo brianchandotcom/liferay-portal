@@ -132,24 +132,26 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Override
 	public PostalAddress patchAccountPostalAddress(
-		Long accountId, Long postalAddressId, PostalAddress postalAddress)
+			Long accountId, Long postalAddressId, PostalAddress postalAddress)
 		throws Exception {
 
 		Address address = _validateAccountPostalAddres(
 			accountId, postalAddressId);
 
 		Country country = _getCountryByTitle(postalAddress);
-		if(postalAddress.getAddressCountry() != null) {
+
+		if (postalAddress.getAddressCountry() != null) {
 			address.setCountryId(country.getCountryId());
 		}
 
-		if(postalAddress.getAddressRegion() != null) {
-			long regionId = _getRegionByTitleAndCountry(postalAddress, country);
-			address.setRegionId(regionId);
+		if (postalAddress.getAddressRegion() != null) {
+			address.setRegionId(
+				_getRegionByTitleAndCountry(postalAddress, country));
 		}
 
 		if (postalAddress.getAddressType() != null) {
 			ListType type = _getType(postalAddress);
+
 			address.setListTypeId(type.getListTypeId());
 		}
 
@@ -181,13 +183,12 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			address.setStreet3(postalAddress.getStreetAddressLine3());
 		}
 
-		_addressLocalService.updateAddress(address);
+		address = _addressLocalService.updateAddress(address);
 
 		return PostalAddressUtil.toPostalAddress(
 			contextAcceptLanguage.isAcceptAllLanguages(), address,
 			contextCompany.getCompanyId(),
 			contextAcceptLanguage.getPreferredLocale());
-
 	}
 
 	@Override

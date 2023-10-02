@@ -51,6 +51,7 @@
 		_fragmentEntryLinkModels=dataFactory.newFragmentEntryLinkModels(homePageContentLayoutModels)
 		_layoutModels=homePageContentLayoutModels
 		_templateFileName="default-homepage-layout-definition.json"
+		_templateFolder="home_page_template"
 	/>
 
 	<#list dataFactory.newGroupLayoutModels(groupId) as groupLayoutModel>
@@ -68,4 +69,5 @@
 	_fragmentEntryLinkModels=dataFactory.newFragmentEntryLinkModels(defaultSiteHomePageContentLayoutModels)
 	_layoutModels=defaultSiteHomePageContentLayoutModels
 	_templateFileName="default-homepage-layout-definition.json"
+	_templateFolder="home_page_template"
 />

@@ -30,7 +30,26 @@ public class RankingIndexPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		createIndex(company.getCompanyId());
+		if (!_searchCapabilities.isResultRankingsSupported() ||
+			(company.getCompanyId() == CompanyConstants.SYSTEM)) {
+
+			return;
+		}
+
+		RankingIndexName rankingIndexName =
+			_rankingIndexNameBuilder.getRankingIndexName(
+				company.getCompanyId());
+
+		if (_rankingIndexReader.isExists(rankingIndexName)) {
+			return;
+		}
+
+		_rankingIndexCreator.create(rankingIndexName);
+
+		if (_singleIndexToMultipleIndexImporter.needImport()) {
+			_singleIndexToMultipleIndexImporter.importRankings(
+				company.getCompanyId());
+		}
 	}
 
 	@Override
@@ -50,28 +69,6 @@ public class RankingIndexPortalInstanceLifecycleListener
 		}
 
 		_rankingIndexCreator.delete(rankingIndexName);
-	}
-
-	@Override
-	protected void createIndex(long companyId) {
-		if (!_searchCapabilities.isResultRankingsSupported() ||
-			(companyId == CompanyConstants.SYSTEM)) {
-
-			return;
-		}
-
-		RankingIndexName rankingIndexName =
-			_rankingIndexNameBuilder.getRankingIndexName(companyId);
-
-		if (_rankingIndexReader.isExists(rankingIndexName)) {
-			return;
-		}
-
-		_rankingIndexCreator.create(rankingIndexName);
-
-		if (_singleIndexToMultipleIndexImporter.needImport()) {
-			_singleIndexToMultipleIndexImporter.importRankings(companyId);
-		}
 	}
 
 	@Reference

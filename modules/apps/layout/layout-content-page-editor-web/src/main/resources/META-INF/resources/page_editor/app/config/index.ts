@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {SidebarPanel} from '../../types/SidebarPanel';
 import {Config} from '../../types/config';
 import {LAYOUT_TYPES, LayoutType} from './constants/layoutTypes';
 
@@ -41,7 +42,7 @@ export function initializeConfig(backendConfig: Config) {
 
 	const augmentedPanels = augmentPanelData(
 		pluginsRootPath,
-		(sidebarPanels as unknown) as SidebarPanel[]
+		sidebarPanels as SidebarPanel[]
 	);
 
 	const syntheticItems: Partial<Config> = {
@@ -72,8 +73,6 @@ export function initializeConfig(backendConfig: Config) {
  * plugin names.
  */
 const SIDEBAR_PANEL_IDS_TO_PLUGINS: Record<string, string> = {};
-
-type SidebarPanel = Config['sidebarPanels'][keyof Config['sidebarPanels']];
 
 function augmentPanelData(
 	pluginsRootPath: string,
@@ -196,16 +195,18 @@ function isSeparator(panel: SidebarPanel) {
  * Instead of using fake panels with an ID of `separator`, partition the panels
  * array into an array of arrays; we'll draw a separator between each group.
  */
-function partitionPanels(panels: SidebarPanel[]): Config['sidebarPanels'] {
-	return panels.reduce<Record<SidebarPanel['sidebarPanelId'], SidebarPanel>>(
-		(map, panel) => {
-			const {sidebarPanelId} = panel;
-			if (!isSeparator(panel)) {
-				map[sidebarPanelId] = panel;
-			}
+type PartitionedSidebarPanels = Record<
+	SidebarPanel['sidebarPanelId'],
+	SidebarPanel
+>;
 
-			return map;
-		},
-		{}
-	);
+function partitionPanels(panels: SidebarPanel[]): PartitionedSidebarPanels {
+	return panels.reduce<PartitionedSidebarPanels>((map, panel) => {
+		const {sidebarPanelId} = panel;
+		if (!isSeparator(panel)) {
+			map[sidebarPanelId] = panel;
+		}
+
+		return map;
+	}, {});
 }

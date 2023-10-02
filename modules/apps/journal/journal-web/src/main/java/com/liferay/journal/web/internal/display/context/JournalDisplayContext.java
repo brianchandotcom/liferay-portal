@@ -600,25 +600,16 @@ public class JournalDisplayContext {
 	}
 
 	public List<TabsItem> getInfoPanelTabsItems(boolean journalArticle) {
-		if (journalArticle) {
-			return TabsItemListBuilder.add(
-				tabsItem -> {
-					tabsItem.setActive(true);
-					tabsItem.setLabel(
-						LanguageUtil.get(_httpServletRequest, "details"));
-				}
-			).add(
-				tabsItem -> tabsItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "versions"))
-			).build();
-		}
-
 		return TabsItemListBuilder.add(
 			tabsItem -> {
 				tabsItem.setActive(true);
 				tabsItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "details"));
 			}
+		).add(
+			() -> journalArticle,
+			tabsItem -> tabsItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "versions"))
 		).build();
 	}
 

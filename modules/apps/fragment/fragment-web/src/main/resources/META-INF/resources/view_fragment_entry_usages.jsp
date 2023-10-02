@@ -14,6 +14,7 @@ FragmentEntry fragmentEntry = fragmentEntryLinkDisplayContext.getFragmentEntry()
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(fragmentEntryLinkDisplayContext.getRedirect());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x", fragmentEntry.getName()));
 %>

@@ -4,13 +4,22 @@
  */
 
 import {useStateSafe} from '@liferay/frontend-js-react-web';
-import PropTypes from 'prop-types';
-import React, {useContext, useEffect} from 'react';
+import React, {ReactNode, useContext, useEffect} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import {numberFormat} from '../utils/numberFormat';
-import Hint from './Hint';
+import {Hint, Position} from './Hint';
+
+interface Props {
+	className: string;
+	dataProvider: () => Promise<string>;
+	label: string;
+	percentage?: boolean;
+	popoverHeader: string;
+	popoverMessage: string;
+	popoverPosition?: Position;
+}
 
 function TotalCount({
 	className,
@@ -20,7 +29,7 @@ function TotalCount({
 	popoverHeader,
 	popoverMessage,
 	popoverPosition,
-}) {
+}: Props) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	const [value, setValue] = useStateSafe('-');
@@ -40,15 +49,15 @@ function TotalCount({
 		}
 	}, [dispatch, dataProvider, setValue, validAnalyticsConnection]);
 
-	let displayValue = '-';
+	let displayValue: ReactNode = '-';
 
-	if (validAnalyticsConnection && !publishedToday) {
+	if (validAnalyticsConnection && languageTag && !publishedToday) {
 		displayValue =
 			value !== '-' ? (
 				percentage ? (
 					<span>{`${value}%`}</span>
 				) : (
-					numberFormat(languageTag, value)
+					numberFormat(languageTag, Number(value))
 				)
 			) : (
 				value
@@ -73,13 +82,5 @@ function TotalCount({
 		</div>
 	);
 }
-
-TotalCount.propTypes = {
-	dataProvider: PropTypes.func.isRequired,
-	label: PropTypes.string.isRequired,
-	percentage: PropTypes.bool,
-	popoverHeader: PropTypes.string.isRequired,
-	popoverMessage: PropTypes.string.isRequired,
-};
 
 export default TotalCount;

@@ -1,0 +1,14 @@
+{
+	"liferay-objects": {
+		"en_US": {
+			"message": "Liferay Objects",
+			"url": "https://learn.liferay.com/w/dxp/building-applications/objects/creating-and-managing-objects"
+		}
+	},
+	"since-7-3": {
+		"en_US": {
+			"message": "since 7.3",
+			"url": "https://learn.liferay.com/en/w/dxp/installation-and-upgrades/upgrading-liferay/reference/maintenance-mode-and-deprecations-in-7-3"
+		}
+	}
+}

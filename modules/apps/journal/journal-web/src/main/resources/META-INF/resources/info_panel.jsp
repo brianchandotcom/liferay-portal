@@ -202,7 +202,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						<div>
 							<clay:label
 								displayType="info"
-								label='<%= LanguageUtil.get(request, "version") + article.getVersion() %>'
+								label='<%= LanguageUtil.format(request, "version-x", article.getVersion(), false) %>'
 							/>
 						</div>
 					</clay:content-col>

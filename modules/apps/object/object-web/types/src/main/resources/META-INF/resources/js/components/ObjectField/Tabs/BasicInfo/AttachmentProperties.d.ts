@@ -10,10 +10,12 @@ interface IAttachmentPropertiesProps {
 	errors: ObjectFieldErrors;
 	objectFieldSettings: ObjectFieldSetting[];
 	onSettingsChange: (setting: ObjectFieldSetting) => void;
+	onSubmit?: () => void;
 }
 export declare function AttachmentProperties({
 	errors,
 	objectFieldSettings,
 	onSettingsChange,
+	onSubmit,
 }: IAttachmentPropertiesProps): JSX.Element;
 export {};

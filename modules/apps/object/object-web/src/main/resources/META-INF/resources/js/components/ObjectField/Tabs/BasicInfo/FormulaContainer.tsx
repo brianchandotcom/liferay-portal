@@ -18,8 +18,10 @@ interface FormulaContainerProps {
 	errors: ObjectFieldErrors;
 	modelBuilder?: boolean;
 	objectFieldSettings: ObjectFieldSetting[];
+	onSubmit?: (editedObjectField?: Partial<ObjectField>) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 	sidebarElements: SidebarCategory[];
+	values: Partial<ObjectField>;
 }
 
 const getNewObjectFieldSettings = (
@@ -41,8 +43,10 @@ export function FormulaContainer({
 	errors,
 	modelBuilder = false,
 	objectFieldSettings,
+	onSubmit,
 	setValues,
 	sidebarElements,
+	values,
 }: FormulaContainerProps) {
 	const currentScript = objectFieldSettings?.find(
 		(objectFieldSetting) => objectFieldSetting.name === 'script'
@@ -62,6 +66,13 @@ export function FormulaContainer({
 					'use-expressions-to-create-a-condition'
 				)}
 				label={Liferay.Language.get('formula-builder')}
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onChange={({target: {value}}) => {
 					setValues({
 						objectFieldSettings: getNewObjectFieldSettings(
@@ -83,6 +94,16 @@ export function FormulaContainer({
 									script
 								),
 							});
+
+							if (onSubmit) {
+								onSubmit({
+									...values,
+									objectFieldSettings: getNewObjectFieldSettings(
+										objectFieldSettings,
+										script
+									),
+								});
+							}
 						},
 						placeholder: `<#-- ${Liferay.Util.sub(
 							Liferay.Language.get(

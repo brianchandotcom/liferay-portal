@@ -26,12 +26,10 @@ import ListTypeDefaultValueSelect from '../../DefaultValueFields/ListTypeDefault
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 interface DefaultValueContainerProps {
 	creationLanguageId: Liferay.Language.Locale;
-	disabled?: boolean;
 	errors: ObjectFieldErrors;
 	learnResources: ObjectWebLearnResources;
 	modelBuilder?: boolean;
-	objectFieldBusinessType: ObjectFieldBusinessType;
-	objectFieldSettings: ObjectFieldSetting[];
+	onSubmit?: (values?: Partial<ObjectField>) => void;
 	setValues: (value: Partial<ObjectField>) => void;
 	sidebarElements: SidebarCategory[];
 	values: Partial<ObjectField>;
@@ -42,6 +40,7 @@ export interface InputAsValueFieldComponentProps {
 	defaultValue?: ObjectFieldSettingValue;
 	error?: string;
 	label: string;
+	onSubmit?: (values?: Partial<ObjectField>) => void;
 	placeholder?: string;
 	required?: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
@@ -61,6 +60,7 @@ export function DefaultValueContainer({
 	errors,
 	learnResources,
 	modelBuilder = false,
+	onSubmit,
 	setValues,
 	sidebarElements,
 	values,
@@ -94,6 +94,16 @@ export function DefaultValueContainer({
 					values
 				),
 			});
+
+			if (onSubmit) {
+				onSubmit({
+					...values,
+					objectFieldSettings: removeFieldSettings(
+						['defaultValueType', 'defaultValue'],
+						values
+					),
+				});
+			}
 		}
 		else {
 			setValues({
@@ -203,6 +213,7 @@ export function DefaultValueContainer({
 								? Liferay.Language.get('default-value')
 								: Liferay.Language.get('input-as-value')
 						}
+						onSubmit={onSubmit}
 						required
 						setValues={setValues}
 						values={values}
@@ -217,6 +228,13 @@ export function DefaultValueContainer({
 							'use-expressions-to-create-a-condition'
 						)}
 						label={Liferay.Language.get('default-value')}
+						onBlur={(event) => {
+							event.stopPropagation();
+
+							if (onSubmit) {
+								onSubmit();
+							}
+						}}
 						onChange={({target: {value}}) => {
 							setValues({
 								objectFieldSettings: getUpdatedDefaultValueFieldSettings(
@@ -241,6 +259,17 @@ export function DefaultValueContainer({
 												'expressionBuilder'
 											),
 										});
+
+										if (onSubmit) {
+											onSubmit({
+												...values,
+												objectFieldSettings: getUpdatedDefaultValueFieldSettings(
+													values,
+													script,
+													'expressionBuilder'
+												),
+											});
+										}
 									},
 									placeholder: `<#-- ${Liferay.Language.get(
 										'create-a-condition-to-set-the-default-value'

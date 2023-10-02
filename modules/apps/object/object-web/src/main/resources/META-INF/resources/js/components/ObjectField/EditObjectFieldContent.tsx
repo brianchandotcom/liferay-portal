@@ -28,6 +28,7 @@ interface EditObjectFieldContentProps
 	errors: ObjectFieldErrors;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	modelBuilder?: boolean;
+	onSubmit?: (editedObjectField?: Partial<ObjectField>) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 }
@@ -46,6 +47,7 @@ export function EditObjectFieldContent({
 	learnResources,
 	modelBuilder = false,
 	objectDefinitionExternalReferenceCode,
+	onSubmit,
 	readOnly,
 	setValues,
 	values,
@@ -143,6 +145,7 @@ export function EditObjectFieldContent({
 								}
 								objectFieldTypes={objectFieldTypes}
 								objectRelationshipId={objectRelationshipId}
+								onSubmit={onSubmit}
 								readOnly={readOnly}
 								setValues={setValues}
 								sidebarElements={sidebarElements}
@@ -165,6 +168,7 @@ export function EditObjectFieldContent({
 								isDefaultStorageType={isDefaultStorageType}
 								learnResources={learnResources}
 								modelBuilder={modelBuilder}
+								onSubmit={onSubmit}
 								readOnlySidebarElements={
 									readOnlySidebarElements
 								}
@@ -189,6 +193,7 @@ export function EditObjectFieldContent({
 					}
 					objectFieldTypes={objectFieldTypes}
 					objectRelationshipId={objectRelationshipId}
+					onSubmit={onSubmit}
 					readOnly={readOnly}
 					setValues={setValues}
 					sidebarElements={sidebarElements}

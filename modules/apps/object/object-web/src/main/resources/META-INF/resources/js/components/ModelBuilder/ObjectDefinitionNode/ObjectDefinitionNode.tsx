@@ -70,6 +70,7 @@ export function ObjectDefinitionNode({
 			editObjectDefinitionURL,
 			elements,
 			objectDefinitionPermissionsURL,
+			selectedObjectDefinitionNode,
 			selectedObjectFolder,
 		},
 		dispatch,
@@ -310,27 +311,30 @@ export function ObjectDefinitionNode({
 					onAfterSubmit={(newObjectField) => {
 						const {edges, nodes} = store.getState();
 
-						dispatch({
-							payload: {
-								newObjectField,
-								objectDefinitionExternalReferenceCode: externalReferenceCode,
-								objectDefinitionNodes: nodes,
-								objectRelationshipEdges: edges,
-							},
-							type: TYPES.ADD_OBJECT_FIELD,
-						});
+						if (selectedObjectDefinitionNode) {
+							dispatch({
+								payload: {
+									newObjectField,
+									objectDefinitionExternalReferenceCode: externalReferenceCode,
+									objectDefinitionNodes: nodes,
+									objectRelationshipEdges: edges,
+									selectedObjectDefinitionNode,
+								},
+								type: TYPES.ADD_OBJECT_FIELD,
+							});
 
-						openToast({
-							message: Liferay.Language.get(
-								'field-successfully-added'
-							),
-							type: 'success',
-						});
-						setShowModal((prevState) => ({
-							...prevState,
-							addObjectField: false,
-						}));
-						setShowAllObjectFields(true);
+							openToast({
+								message: Liferay.Language.get(
+									'field-successfully-added'
+								),
+								type: 'success',
+							});
+							setShowModal((prevState) => ({
+								...prevState,
+								addObjectField: false,
+							}));
+							setShowAllObjectFields(true);
+						}
 					}}
 					setVisibility={() =>
 						setShowModal((prevState) => ({

@@ -23,6 +23,7 @@ interface SearchableProps {
 	isApproved: boolean;
 	modelBuilder?: boolean;
 	objectField: Partial<ObjectField>;
+	onSubmit?: () => void;
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
 }
@@ -31,6 +32,7 @@ export function SearchableContainer({
 	isApproved,
 	modelBuilder,
 	objectField,
+	onSubmit,
 	readOnly,
 	setValues,
 }: SearchableProps) {
@@ -73,13 +75,28 @@ export function SearchableContainer({
 					}
 					label={Liferay.Language.get('searchable')}
 					name="indexed"
+					onBlur={(event) => {
+						event.stopPropagation();
+
+						if (onSubmit) {
+							onSubmit();
+						}
+					}}
 					onToggle={(indexed) => setValues({indexed})}
 					toggled={objectField.indexed}
 				/>
 			</ClayForm.Group>
 
 			{isSearchableString && (
-				<ClayForm.Group>
+				<ClayForm.Group
+					onBlur={(event) => {
+						event.stopPropagation();
+
+						if (onSubmit) {
+							onSubmit();
+						}
+					}}
+				>
 					<ClayRadioGroup
 						onChange={(selected: string | number) => {
 							const indexedAsKeyword = selected === 'true';
@@ -114,6 +131,13 @@ export function SearchableContainer({
 			{isSearchableString && !objectField.indexedAsKeyword && (
 				<SingleSelect
 					label={Liferay.Language.get('language')}
+					onBlur={(event) => {
+						event.stopPropagation();
+
+						if (onSubmit) {
+							onSubmit();
+						}
+					}}
 					onChange={(value) => {
 						const [indexedLanguageId] = Object.entries(
 							languages

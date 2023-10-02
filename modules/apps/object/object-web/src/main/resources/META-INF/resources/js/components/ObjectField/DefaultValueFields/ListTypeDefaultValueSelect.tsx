@@ -15,6 +15,7 @@ const ListTypeDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 	defaultValue,
 	error,
 	label,
+	onSubmit,
 	required,
 	setValues,
 	values,
@@ -23,13 +24,22 @@ const ListTypeDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 
 	const handleChange = (selected?: ListTypeEntry) => {
 		if (selected) {
+			const newObjectFieldSettings = getUpdatedDefaultValueFieldSettings(
+				values,
+				selected.key,
+				'inputAsValue'
+			);
+
 			setValues({
-				objectFieldSettings: getUpdatedDefaultValueFieldSettings(
-					values,
-					selected.key,
-					'inputAsValue'
-				),
+				objectFieldSettings: newObjectFieldSettings,
 			});
+
+			if (onSubmit) {
+				onSubmit({
+					...values,
+					objectFieldSettings: newObjectFieldSettings,
+				});
+			}
 		}
 	};
 

@@ -6,7 +6,7 @@
 import {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React from 'react';
+import React, {FocusEvent} from 'react';
 
 import './Toggle.scss';
 
@@ -14,6 +14,7 @@ interface ToggleProps {
 	disabled?: boolean;
 	label: string;
 	name?: string;
+	onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
 	onToggle?: (val: boolean) => void;
 	toggled?: boolean;
 	tooltip?: string;
@@ -24,6 +25,7 @@ export function Toggle({
 	disabled,
 	label,
 	name,
+	onBlur,
 	onToggle,
 	toggled,
 	tooltip,
@@ -35,6 +37,7 @@ export function Toggle({
 				disabled={disabled}
 				label={label}
 				name={name}
+				onBlur={onBlur}
 				onToggle={onToggle}
 				toggled={toggled}
 			/>

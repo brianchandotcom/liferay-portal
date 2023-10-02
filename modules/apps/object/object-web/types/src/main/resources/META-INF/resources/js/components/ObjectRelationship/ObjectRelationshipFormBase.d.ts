@@ -41,7 +41,9 @@ export declare function useObjectRelationshipForm({
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: React.FormEventHandler<HTMLFormElement>;
-	handleValidate: () => FormError<ObjectRelationship>;
+	handleValidate: (
+		editedValues?: Partial<ObjectRelationship> | undefined
+	) => FormError<ObjectRelationship>;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 	values: Partial<ObjectRelationship>;
 };

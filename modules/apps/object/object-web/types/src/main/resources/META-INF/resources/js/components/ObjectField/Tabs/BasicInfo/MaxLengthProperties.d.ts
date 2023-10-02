@@ -12,6 +12,7 @@ interface IMaxLengthPropertiesProps {
 	objectField: Partial<ObjectField>;
 	objectFieldSettings: ObjectFieldSetting[];
 	onSettingsChange: (setting: ObjectFieldSetting) => void;
+	onSubmit?: () => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 export declare function MaxLengthProperties({
@@ -20,6 +21,7 @@ export declare function MaxLengthProperties({
 	objectField,
 	objectFieldSettings,
 	onSettingsChange,
+	onSubmit,
 	setValues,
 }: IMaxLengthPropertiesProps): JSX.Element;
 export {};

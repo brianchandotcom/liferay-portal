@@ -16,6 +16,7 @@ export declare function ExpressionBuilder({
 	id,
 	label,
 	name,
+	onBlur,
 	onChange,
 	onInput,
 	onOpenModal,

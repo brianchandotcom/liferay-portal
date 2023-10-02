@@ -17,12 +17,14 @@ import './ObjectFieldFormBase.scss';
 interface UniqueValuesProps {
 	disabled?: boolean;
 	objectField: Partial<ObjectField>;
+	onSubmit?: () => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 
 export function UniqueValues({
 	disabled,
 	objectField: values,
+	onSubmit,
 	setValues,
 }: UniqueValuesProps) {
 	const isUniqueValue = values.objectFieldSettings?.some(
@@ -58,6 +60,13 @@ export function UniqueValues({
 					disabled={disabled}
 					label={Liferay.Language.get('accept-unique-values-only')}
 					name="enableUniqueValues"
+					onBlur={(event) => {
+						event.stopPropagation();
+
+						if (onSubmit) {
+							onSubmit();
+						}
+					}}
 					onToggle={handleUniqueValuesToggle}
 					toggled={isUniqueValue}
 					tooltip={Liferay.Language.get(

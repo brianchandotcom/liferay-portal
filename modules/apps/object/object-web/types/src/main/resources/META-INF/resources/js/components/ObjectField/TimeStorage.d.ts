@@ -9,11 +9,13 @@ import './ObjectFieldFormBase.scss';
 interface TimeStorageProps {
 	disabled?: boolean;
 	objectFieldSettings: ObjectFieldSetting[];
+	onSubmit?: () => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 export declare function TimeStorage({
 	disabled,
 	objectFieldSettings,
+	onSubmit,
 	setValues,
 }: TimeStorageProps): JSX.Element;
 export {};

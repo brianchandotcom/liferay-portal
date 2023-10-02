@@ -30,7 +30,7 @@ interface IUseForm<T, P = {}, K extends Partial<T> = Partial<T>> {
 	errors: FormError<T & P>;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: FormEventHandler<HTMLFormElement>;
-	handleValidate: () => FormError<T & P>;
+	handleValidate: (editedValues?: K) => FormError<T & P>;
 	setValues: (values: Partial<T>) => void;
 	validateSubmit: () => void;
 	values: K;
@@ -71,8 +71,8 @@ export function useForm<T, P = {}, K extends Partial<T> = Partial<T>>({
 		target: {name, value},
 	}) => setValues((values) => ({...values, [name]: value}));
 
-	const handleValidate = () => {
-		const errors = validate(values);
+	const handleValidate = (editedValues?: K) => {
+		const errors = validate(editedValues ?? values);
 
 		if (Object.keys(errors).length) {
 			setErrors(errors);

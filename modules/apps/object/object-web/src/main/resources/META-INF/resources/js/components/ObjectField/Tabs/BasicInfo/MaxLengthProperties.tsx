@@ -23,6 +23,7 @@ interface IMaxLengthPropertiesProps {
 	objectField: Partial<ObjectField>;
 	objectFieldSettings: ObjectFieldSetting[];
 	onSettingsChange: (setting: ObjectFieldSetting) => void;
+	onSubmit?: () => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 
@@ -32,6 +33,7 @@ export function MaxLengthProperties({
 	objectField,
 	objectFieldSettings,
 	onSettingsChange,
+	onSubmit,
 	setValues,
 }: IMaxLengthPropertiesProps) {
 	const [defaultMaxLength, defaultMaxLengthText] =
@@ -89,6 +91,13 @@ export function MaxLengthProperties({
 					disabled={disabled}
 					label={Liferay.Language.get('limit-characters')}
 					name="showCounter"
+					onBlur={(event) => {
+						event.stopPropagation();
+
+						if (onSubmit) {
+							onSubmit();
+						}
+					}}
 					onToggle={handleToggle}
 					toggled={!!settings.showCounter}
 					tooltip={Liferay.Language.get(
@@ -111,6 +120,13 @@ export function MaxLengthProperties({
 						label={Liferay.Language.get(
 							'maximum-number-of-characters'
 						)}
+						onBlur={(event) => {
+							event.stopPropagation();
+
+							if (onSubmit) {
+								onSubmit();
+							}
+						}}
 						onChange={({target: {value}}) =>
 							onSettingsChange({
 								name: 'maxLength',

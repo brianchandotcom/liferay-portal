@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/// <reference types="react" />
-
+import {FocusEvent} from 'react';
 import './Toggle.scss';
 interface ToggleProps {
 	disabled?: boolean;
 	label: string;
 	name?: string;
+	onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
 	onToggle?: (val: boolean) => void;
 	toggled?: boolean;
 	tooltip?: string;
@@ -19,6 +19,7 @@ export declare function Toggle({
 	disabled,
 	label,
 	name,
+	onBlur,
 	onToggle,
 	toggled,
 	tooltip,

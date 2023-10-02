@@ -43,6 +43,7 @@ export default function AutoComplete<T>({
 	items,
 	label,
 	onActive,
+	onBlur,
 	onChangeQuery,
 	onSelectEmptyStateItem,
 	onSelectItem,

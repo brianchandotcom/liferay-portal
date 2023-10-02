@@ -23,6 +23,7 @@ export function SingleSelect<
 >({
 	contentRight,
 	children,
+	onBlur,
 	onChange = () => {},
 	options,
 	...otherProps
@@ -41,6 +42,7 @@ export function SingleSelect<
 		<BaseSelect
 			contentRight={contentRight}
 			dropdownActive={dropdownActive}
+			onBlur={onBlur}
 			setDropdownActive={setDropdownActive}
 			{...otherProps}
 		>

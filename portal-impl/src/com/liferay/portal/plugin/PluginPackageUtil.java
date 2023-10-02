@@ -54,84 +54,19 @@ import javax.servlet.ServletContext;
 public class PluginPackageUtil {
 
 	public static void endPluginPackageInstallation(String preliminaryContext) {
-		_pluginPackageUtil._endPluginPackageInstallation(preliminaryContext);
-	}
-
-	public static PluginPackage getInstalledPluginPackage(String context) {
-		return _pluginPackageUtil._getInstalledPluginPackage(context);
-	}
-
-	public static List<PluginPackage> getInstalledPluginPackages() {
-		return _pluginPackageUtil._getInstalledPluginPackages();
-	}
-
-	public static boolean isCurrentVersionSupported(List<String> versions) {
-		return _pluginPackageUtil._isCurrentVersionSupported(versions);
-	}
-
-	public static boolean isInstalled(String context) {
-		return _pluginPackageUtil._isInstalled(context);
-	}
-
-	public static PluginPackage readPluginPackageProperties(
-		String displayName, Properties properties) {
-
-		return _pluginPackageUtil._readPluginPackageProperties(
-			displayName, properties);
-	}
-
-	public static PluginPackage readPluginPackageServletContext(
-			ServletContext servletContext)
-		throws DocumentException, IOException {
-
-		return _pluginPackageUtil._readPluginPackageServletContext(
-			servletContext);
-	}
-
-	public static PluginPackage readPluginPackageXml(String xml)
-		throws DocumentException {
-
-		return _pluginPackageUtil._readPluginPackageXml(xml);
-	}
-
-	public static void registerInstalledPluginPackage(
-			PluginPackage pluginPackage)
-		throws PortalException {
-
-		_pluginPackageUtil._registerInstalledPluginPackage(pluginPackage);
-	}
-
-	public static void unregisterInstalledPluginPackage(
-			PluginPackage pluginPackage)
-		throws PortalException {
-
-		_pluginPackageUtil._unregisterInstalledPluginPackage(pluginPackage);
-	}
-
-	public static void updateInstallingPluginPackage(
-		String preliminaryContext, PluginPackage pluginPackage) {
-
-		_pluginPackageUtil._updateInstallingPluginPackage(
-			preliminaryContext, pluginPackage);
-	}
-
-	private PluginPackageUtil() {
-	}
-
-	private void _endPluginPackageInstallation(String preliminaryContext) {
 		_installedPluginPackages.unregisterPluginPackageInstallation(
 			preliminaryContext);
 	}
 
-	private PluginPackage _getInstalledPluginPackage(String context) {
+	public static PluginPackage getInstalledPluginPackage(String context) {
 		return _installedPluginPackages.getPluginPackage(context);
 	}
 
-	private List<PluginPackage> _getInstalledPluginPackages() {
+	public static List<PluginPackage> getInstalledPluginPackages() {
 		return _installedPluginPackages.getSortedPluginPackages();
 	}
 
-	private boolean _isCurrentVersionSupported(List<String> versions) {
+	public static boolean isCurrentVersionSupported(List<String> versions) {
 		Version currentVersion = Version.getInstance(ReleaseInfo.getVersion());
 
 		for (String version : versions) {
@@ -145,7 +80,7 @@ public class PluginPackageUtil {
 		return false;
 	}
 
-	private boolean _isInstalled(String context) {
+	public static boolean isInstalled(String context) {
 		PluginPackage pluginPackage = _installedPluginPackages.getPluginPackage(
 			context);
 
@@ -156,73 +91,7 @@ public class PluginPackageUtil {
 		return false;
 	}
 
-	private Date _readDate(String text) {
-		if (Validator.isNotNull(text)) {
-			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				Time.RFC822_FORMAT, LocaleUtil.US);
-
-			try {
-				return dateFormat.parse(text);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to parse date " + text, exception);
-				}
-			}
-		}
-
-		return new Date();
-	}
-
-	private String _readHtml(String text) {
-		return GetterUtil.getString(text);
-	}
-
-	private List<License> _readLicenseList(Element parentElement, String name) {
-		List<License> licenses = new ArrayList<>();
-
-		for (Element licenseElement : parentElement.elements(name)) {
-			License license = new License();
-
-			license.setName(licenseElement.getText());
-
-			Attribute osiApproved = licenseElement.attribute("osi-approved");
-
-			if (osiApproved != null) {
-				license.setOsiApproved(
-					GetterUtil.getBoolean(osiApproved.getText()));
-			}
-
-			Attribute url = licenseElement.attribute("url");
-
-			if (url != null) {
-				license.setUrl(url.getText());
-			}
-
-			licenses.add(license);
-		}
-
-		return licenses;
-	}
-
-	private List<String> _readList(Element parentElement, String name) {
-		List<String> list = new ArrayList<>();
-
-		if (parentElement == null) {
-			return list;
-		}
-
-		for (Element element : parentElement.elements(name)) {
-			String text = StringUtil.toLowerCase(
-				StringUtil.trim(element.getText()));
-
-			list.add(text);
-		}
-
-		return list;
-	}
-
-	private PluginPackage _readPluginPackageProperties(
+	public static PluginPackage readPluginPackageProperties(
 		String displayName, Properties properties) {
 
 		int pos = displayName.indexOf("-portlet");
@@ -382,11 +251,7 @@ public class PluginPackageUtil {
 		return pluginPackage;
 	}
 
-	/**
-	 * @see com.liferay.portal.tools.deploy.BaseDeployer#readPluginPackage(
-	 *      java.io.File)
-	 */
-	private PluginPackage _readPluginPackageServletContext(
+	public static PluginPackage readPluginPackageServletContext(
 			ServletContext servletContext)
 		throws DocumentException, IOException {
 
@@ -408,7 +273,7 @@ public class PluginPackageUtil {
 				"/WEB-INF/liferay-plugin-package.xml"));
 
 		if (xml != null) {
-			pluginPackage = _readPluginPackageXml(xml);
+			pluginPackage = readPluginPackageXml(xml);
 		}
 		else {
 			String propertiesString = StreamUtil.toString(
@@ -430,7 +295,7 @@ public class PluginPackageUtil {
 					displayName = displayName.substring(1);
 				}
 
-				pluginPackage = _readPluginPackageProperties(
+				pluginPackage = readPluginPackageProperties(
 					displayName, properties);
 			}
 
@@ -449,7 +314,106 @@ public class PluginPackageUtil {
 		return pluginPackage;
 	}
 
-	private PluginPackage _readPluginPackageServletManifest(
+	public static PluginPackage readPluginPackageXml(String xml)
+		throws DocumentException {
+
+		Document document = SAXReaderUtil.read(xml);
+
+		return _readPluginPackageXml(document.getRootElement());
+	}
+
+	public static void registerInstalledPluginPackage(
+			PluginPackage pluginPackage)
+		throws PortalException {
+
+		_installedPluginPackages.addPluginPackage(pluginPackage);
+	}
+
+	public static void unregisterInstalledPluginPackage(
+			PluginPackage pluginPackage)
+		throws PortalException {
+
+		_installedPluginPackages.removePluginPackage(pluginPackage);
+	}
+
+	public static void updateInstallingPluginPackage(
+		String preliminaryContext, PluginPackage pluginPackage) {
+
+		_installedPluginPackages.unregisterPluginPackageInstallation(
+			preliminaryContext);
+		_installedPluginPackages.registerPluginPackageInstallation(
+			pluginPackage);
+	}
+
+	private static Date _readDate(String text) {
+		if (Validator.isNotNull(text)) {
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				Time.RFC822_FORMAT, LocaleUtil.US);
+
+			try {
+				return dateFormat.parse(text);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to parse date " + text, exception);
+				}
+			}
+		}
+
+		return new Date();
+	}
+
+	private static String _readHtml(String text) {
+		return GetterUtil.getString(text);
+	}
+
+	private static List<License> _readLicenseList(
+		Element parentElement, String name) {
+
+		List<License> licenses = new ArrayList<>();
+
+		for (Element licenseElement : parentElement.elements(name)) {
+			License license = new License();
+
+			license.setName(licenseElement.getText());
+
+			Attribute osiApproved = licenseElement.attribute("osi-approved");
+
+			if (osiApproved != null) {
+				license.setOsiApproved(
+					GetterUtil.getBoolean(osiApproved.getText()));
+			}
+
+			Attribute url = licenseElement.attribute("url");
+
+			if (url != null) {
+				license.setUrl(url.getText());
+			}
+
+			licenses.add(license);
+		}
+
+		return licenses;
+	}
+
+	private static List<String> _readList(Element parentElement, String name) {
+		List<String> list = new ArrayList<>();
+
+		if (parentElement == null) {
+			return list;
+		}
+
+		for (Element element : parentElement.elements(name)) {
+			String text = StringUtil.toLowerCase(
+				StringUtil.trim(element.getText()));
+
+			list.add(text);
+		}
+
+		return list;
+	}
+
+	private static PluginPackage _readPluginPackageServletManifest(
 			ServletContext servletContext)
 		throws IOException {
 
@@ -525,7 +489,9 @@ public class PluginPackageUtil {
 		return pluginPackage;
 	}
 
-	private PluginPackage _readPluginPackageXml(Element pluginPackageElement) {
+	private static PluginPackage _readPluginPackageXml(
+		Element pluginPackageElement) {
+
 		String name = pluginPackageElement.elementText("name");
 
 		if (_log.isDebugEnabled()) {
@@ -587,15 +553,9 @@ public class PluginPackageUtil {
 		return pluginPackage;
 	}
 
-	private PluginPackage _readPluginPackageXml(String xml)
-		throws DocumentException {
+	private static Properties _readProperties(
+		Element parentElement, String name) {
 
-		Document document = SAXReaderUtil.read(xml);
-
-		return _readPluginPackageXml(document.getRootElement());
-	}
-
-	private Properties _readProperties(Element parentElement, String name) {
 		Properties properties = new Properties();
 
 		if (parentElement == null) {
@@ -611,7 +571,7 @@ public class PluginPackageUtil {
 		return properties;
 	}
 
-	private List<Screenshot> _readScreenshots(Element parentElement) {
+	private static List<Screenshot> _readScreenshots(Element parentElement) {
 		List<Screenshot> screenshots = new ArrayList<>();
 
 		if (parentElement == null) {
@@ -632,29 +592,8 @@ public class PluginPackageUtil {
 		return screenshots;
 	}
 
-	private String _readText(String text) {
+	private static String _readText(String text) {
 		return HtmlParserUtil.extractText(GetterUtil.getString(text));
-	}
-
-	private void _registerInstalledPluginPackage(PluginPackage pluginPackage)
-		throws PortalException {
-
-		_installedPluginPackages.addPluginPackage(pluginPackage);
-	}
-
-	private void _unregisterInstalledPluginPackage(PluginPackage pluginPackage)
-		throws PortalException {
-
-		_installedPluginPackages.removePluginPackage(pluginPackage);
-	}
-
-	private void _updateInstallingPluginPackage(
-		String preliminaryContext, PluginPackage pluginPackage) {
-
-		_installedPluginPackages.unregisterPluginPackageInstallation(
-			preliminaryContext);
-		_installedPluginPackages.registerPluginPackageInstallation(
-			pluginPackage);
 	}
 
 	private static final String _TYPE_CLIENT_EXTENSION = "client-extension";
@@ -664,10 +603,7 @@ public class PluginPackageUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PluginPackageUtil.class);
 
-	private static final PluginPackageUtil _pluginPackageUtil =
-		new PluginPackageUtil();
-
-	private final LocalPluginPackageRepository _installedPluginPackages =
+	private static final LocalPluginPackageRepository _installedPluginPackages =
 		new LocalPluginPackageRepository();
 
 }

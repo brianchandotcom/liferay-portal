@@ -104,6 +104,22 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 										</span>
 									</h6>
 								</c:if>
+
+								<c:if test="<%= journalArticleItemSelectorViewDisplayContext.getStatus() == WorkflowConstants.STATUS_ANY %>">
+									<span class="text-default">
+										<c:if test="<%= !curArticle.isApproved() && curArticle.hasApprovedVersion() %>">
+											<clay:label
+												displayType="success"
+												label="approved"
+											/>
+										</c:if>
+
+										<clay:label
+											displayType="<%= WorkflowConstants.getStatusStyle(curArticle.getStatus()) %>"
+											label="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>"
+										/>
+									</span>
+								</c:if>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") %>'>
@@ -115,7 +131,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
 									disabled="<%= journalArticleItemSelectorViewDisplayContext.isRefererArticle(curArticle) %>"
-									verticalCard="<%= new JournalArticleItemSelectorVerticalCard(curArticle, renderRequest, journalArticleItemSelectorViewDisplayContext.isMultiSelection()) %>"
+									verticalCard="<%= new JournalArticleItemSelectorVerticalCard(curArticle, journalArticleItemSelectorViewDisplayContext, renderRequest, journalArticleItemSelectorViewDisplayContext.isMultiSelection()) %>"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
@@ -163,6 +179,25 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 								name="author"
 								value="<%= HtmlUtil.escape(PortalUtil.getUserName(curArticle)) %>"
 							/>
+
+							<c:if test="<%= journalArticleItemSelectorViewDisplayContext.getStatus() == WorkflowConstants.STATUS_ANY %>">
+								<liferay-ui:search-container-column-text
+									cssClass="text-nowrap"
+									name="status"
+								>
+									<c:if test="<%= !curArticle.isApproved() && curArticle.hasApprovedVersion() %>">
+										<clay:label
+											displayType="success"
+											label="approved"
+										/>
+									</c:if>
+
+									<clay:label
+										displayType="<%= WorkflowConstants.getStatusStyle(curArticle.getStatus()) %>"
+										label="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>"
+									/>
+								</liferay-ui:search-container-column-text>
+							</c:if>
 
 							<liferay-ui:search-container-column-date
 								cssClass="table-cell-expand-smallest table-cell-ws-nowrap"

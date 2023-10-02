@@ -404,6 +404,10 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return _articleSearchContainer;
 	}
 
+	public int getStatus() {
+		return _infoItemItemSelectorCriterion.getStatus();
+	}
+
 	public boolean isMultiSelection() {
 		return _infoItemItemSelectorCriterion.isMultiSelection();
 	}

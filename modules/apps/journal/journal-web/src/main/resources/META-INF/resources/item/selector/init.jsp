@@ -30,7 +30,8 @@ page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %>
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %>
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 
 <%@ page import="java.util.Date" %><%@
 page import="java.util.Objects" %>

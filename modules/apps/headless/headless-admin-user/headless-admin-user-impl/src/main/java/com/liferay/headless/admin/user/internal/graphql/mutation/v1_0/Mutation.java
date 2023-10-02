@@ -1280,7 +1280,9 @@ public class Mutation {
 					accountId, callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField(description = "Adds a postal address for the account")
+	@GraphQLField(
+		description = "Adds a postal address for the account. County, Region and type must exist."
+	)
 	public PostalAddress createAccountPostalAddress(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("postalAddress") PostalAddress postalAddress)

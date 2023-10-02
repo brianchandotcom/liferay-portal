@@ -602,35 +602,41 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 						addAction(
 							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
 							"postWorkflowTaskAssignToMe",
-							_workflowTaskModelResourcePermission)
+							_kaleoTaskInstanceTokenModelResourcePermission)
 					).put(
 						"assignToRole",
 						addAction(
 							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
 							"postWorkflowTaskAssignToRole",
-							_workflowTaskModelResourcePermission)
+							_kaleoTaskInstanceTokenModelResourcePermission)
 					).put(
 						"assignToUser",
 						addAction(
 							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
 							"postWorkflowTaskAssignToUser",
-							_workflowTaskModelResourcePermission)
+							_kaleoTaskInstanceTokenModelResourcePermission)
 					).put(
 						"changeTransition",
 						addAction(
 							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
 							"postWorkflowTaskChangeTransition",
-							_workflowTaskModelResourcePermission)
+							_kaleoTaskInstanceTokenModelResourcePermission)
 					).put(
 						"updateDueDate",
 						addAction(
 							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
 							"patchWorkflowTaskUpdateDueDate",
-							_workflowTaskModelResourcePermission)
+							_kaleoTaskInstanceTokenModelResourcePermission)
 					).build());
 			}
 		};
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken)"
+	)
+	private ModelResourcePermission<?>
+		_kaleoTaskInstanceTokenModelResourcePermission;
 
 	@Reference
 	private Language _language;
@@ -652,10 +658,5 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 
 	@Reference
 	private WorkflowTaskManager _workflowTaskManager;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken)"
-	)
-	private ModelResourcePermission<?> _workflowTaskModelResourcePermission;
 
 }

@@ -185,25 +185,25 @@ public class WorkflowInstanceResourceImpl
 							ActionKeys.UPDATE,
 							workflowInstance.getWorkflowInstanceId(),
 							"postWorkflowInstanceChangeTransition",
-							_workflowInstanceModelResourcePermission)
+							_kaleoInstanceModelResourcePermission)
 					).put(
 						"delete",
 						addAction(
 							ActionKeys.DELETE,
 							workflowInstance.getWorkflowInstanceId(),
 							"deleteWorkflowInstance",
-							_workflowInstanceModelResourcePermission)
+							_kaleoInstanceModelResourcePermission)
 					).build());
 			}
 		};
 	}
 
-	@Reference
-	private WorkflowInstanceManager _workflowInstanceManager;
-
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstance)"
 	)
-	private ModelResourcePermission<?> _workflowInstanceModelResourcePermission;
+	private ModelResourcePermission<?> _kaleoInstanceModelResourcePermission;
+
+	@Reference
+	private WorkflowInstanceManager _workflowInstanceManager;
 
 }

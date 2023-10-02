@@ -77,7 +77,12 @@ const AccountSubscriptionCard = ({
 		const isPurchased = SUBSCRIPTION_TYPES.Purchased.includes(
 			subscriptionType
 		);
+
 		if (isPurchasedAndProvisioned) {
+			if (PRODUCT_DISPLAY_EXCEPTION.blankProducts.includes(productName)) {
+				return DisplayOnCard.Blank;
+			}
+
 			return PRODUCT_DISPLAY_EXCEPTION.purchasedProduct.includes(
 				productName
 			)

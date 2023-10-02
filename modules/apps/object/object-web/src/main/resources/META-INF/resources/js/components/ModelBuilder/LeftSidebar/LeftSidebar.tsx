@@ -97,6 +97,7 @@ export default function LeftSidebar({setShowModal}: LeftSidebarProps) {
 		>
 			<div className="lfr-objects__model-builder-left-sidebar">
 				<ClayButton
+					aria-labelledby={Liferay.Language.get('create-new-object')}
 					className="lfr-objects__model-builder-left-sidebar-body-create-new-object-button"
 					onClick={() =>
 						setShowModal((previousState: ModelBuilderModals) => ({

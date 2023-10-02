@@ -37,6 +37,11 @@ export default function ObjectDefinitionNodeFooter({
 						alignmentPosition={4}
 						trigger={
 							<ClayButton
+								aria-labelledby={sub(
+									Liferay.Language.get('x-or-x'),
+									Liferay.Language.get('add-field'),
+									Liferay.Language.get('relationship')
+								)}
 								displayType="secondary"
 								onClick={(event) => event.stopPropagation()}
 							>
@@ -98,6 +103,17 @@ export default function ObjectDefinitionNodeFooter({
 
 			<div className="lfr-objects__model-builder-node-show-all-fields-container">
 				<ClayButton
+					aria-labelledby={
+						showAllObjectFields
+							? sub(
+									Liferay.Language.get('hide-x'),
+									Liferay.Language.get('fields')
+							  )
+							: sub(
+									Liferay.Language.get('show-all-x'),
+									Liferay.Language.get('fields')
+							  )
+					}
 					className="lfr-objects__model-builder-node-show-all-fields-button"
 					displayType="unstyled"
 					onClick={() => {

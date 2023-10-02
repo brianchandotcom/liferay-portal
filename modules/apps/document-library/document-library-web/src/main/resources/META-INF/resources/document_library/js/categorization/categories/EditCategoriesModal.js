@@ -14,7 +14,7 @@ import {fetch, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
-import EditCategoriesContext from './EditCategoriesContext.es';
+import EditCategoriesContext from './EditCategoriesContext';
 
 const URL_SELECTION = '/bulk/v1.0/bulk-selection';
 const URL_UPDATE_CATEGORIES = '/bulk/v1.0/taxonomy-categories/batch';

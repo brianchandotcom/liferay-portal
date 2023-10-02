@@ -6,8 +6,8 @@
 import {useModal} from '@clayui/modal';
 import React, {useContext, useEffect, useState} from 'react';
 
-import EditCategoriesContext from './EditCategoriesContext.es';
-import EditCategoriesModal from './EditCategoriesModal.es';
+import EditCategoriesContext from './EditCategoriesContext';
+import EditCategoriesModal from './EditCategoriesModal';
 
 function EditCategories(props) {
 	const [fileEntries, setFileEntries] = useState();

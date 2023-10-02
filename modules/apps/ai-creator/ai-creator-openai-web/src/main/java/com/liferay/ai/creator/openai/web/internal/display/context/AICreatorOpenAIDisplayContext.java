@@ -6,6 +6,7 @@
 package com.liferay.ai.creator.openai.web.internal.display.context;
 
 import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIPortletKeys;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
@@ -44,6 +45,9 @@ public class AICreatorOpenAIDisplayContext {
 					"/ai_creator_openai/get_completion"
 				).buildString();
 			}
+		).put(
+			"learnResources",
+			LearnMessageUtil.getReactDataJSONObject("ai-creator-openai-web")
 		).build();
 	}
 

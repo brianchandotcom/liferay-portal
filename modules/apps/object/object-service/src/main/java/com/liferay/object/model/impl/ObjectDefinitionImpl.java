@@ -180,6 +180,11 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
+	public boolean isNodeCandidate() {
+		return !isApproved() && !isUnmodifiableSystemObject();
+	}
+
+	@Override
 	public boolean isRootDescendantNode() {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
 			return false;

@@ -66,8 +66,8 @@ public class SaveLockedLayoutsInstanceSettingsMVCActionCommand
 				ParamUtil.getBoolean(
 					actionRequest, "allowAutomaticUnlockingProcess")
 			).put(
-				"timeWithoutAutosave",
-				ParamUtil.getInteger(actionRequest, "timeWithoutAutosave")
+				"autosaveMinutes",
+				ParamUtil.getInteger(actionRequest, "autosaveMinutes")
 			).build());
 
 		SessionMessages.add(actionRequest, "requestProcessed");

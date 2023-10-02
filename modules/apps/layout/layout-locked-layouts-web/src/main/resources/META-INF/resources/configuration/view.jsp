@@ -63,13 +63,13 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 		<clay:content-col
 			expand="<%= true %>"
 		>
-			<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "timeWithoutAutosaveHiddenDescription" %>' label="time-without-autosave" name="timeWithoutAutosave" required="<%= true %>" type="number" value="<%= lockedLayoutsConfigurationDisplayContext.getTimeWithoutAutosave() %>" wrapperCssClass="c-mb-1">
+			<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "autosaveMinutesHiddenDescription" %>' label="autosave-minutes" name="autosaveMinutes" required="<%= true %>" type="number" value="<%= lockedLayoutsConfigurationDisplayContext.getAutosaveMinutes() %>" wrapperCssClass="c-mb-1">
 				<aui:validator name="number" />
 				<aui:validator name="min">1</aui:validator>
 				<aui:validator name="max">99999</aui:validator>
 			</aui:input>
 
-			<p class="text-3 text-secondary" id="<portlet:namespace />timeWithoutAutosaveHiddenDescription"><liferay-ui:message key="set-a-value-in-minutes-between-1-and-99.999" /></p>
+			<p class="text-3 text-secondary" id="<portlet:namespace />autosaveMinutesHiddenDescription"><liferay-ui:message key="set-a-value-in-minutes-between-1-and-99.999" /></p>
 		</clay:content-col>
 	</clay:content-row>
 </clay:sheet-section>

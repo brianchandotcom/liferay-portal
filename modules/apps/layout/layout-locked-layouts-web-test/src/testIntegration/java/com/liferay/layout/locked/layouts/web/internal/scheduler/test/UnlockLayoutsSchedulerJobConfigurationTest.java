@@ -113,7 +113,7 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 
 	private void _testUnlockLayouts(
 			boolean allowAutomaticUnlockingProcess, Lock expectedLock,
-			int timeWithoutAutosave)
+			int autosaveMinutes)
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -124,7 +124,7 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 						"allowAutomaticUnlockingProcess",
 						allowAutomaticUnlockingProcess
 					).put(
-						"timeWithoutAutosave", timeWithoutAutosave
+						"autosaveMinutes", autosaveMinutes
 					).build())) {
 
 			UnsafeRunnable<Exception> unsafeRunnable =

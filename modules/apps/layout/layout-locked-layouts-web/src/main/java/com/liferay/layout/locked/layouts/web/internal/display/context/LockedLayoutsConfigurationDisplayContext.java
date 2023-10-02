@@ -10,7 +10,7 @@ package com.liferay.layout.locked.layouts.web.internal.display.context;
  */
 public interface LockedLayoutsConfigurationDisplayContext {
 
-	public int getTimeWithoutAutosave();
+	public int getAutosaveMinutes();
 
 	public boolean hasConfiguration();
 

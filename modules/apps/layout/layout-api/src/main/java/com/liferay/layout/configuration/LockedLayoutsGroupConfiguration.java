@@ -30,9 +30,9 @@ public interface LockedLayoutsGroupConfiguration {
 	public boolean allowAutomaticUnlockingProcess();
 
 	@Meta.AD(
-		deflt = "5", max = "99999", min = "1", name = "time-without-autosave",
+		deflt = "5", max = "99999", min = "1", name = "autosave-minutes",
 		required = false
 	)
-	public int timeWithoutAutosave();
+	public int autosaveMinutes();
 
 }

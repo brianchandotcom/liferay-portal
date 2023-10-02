@@ -171,7 +171,13 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		}
 
 		if (!found) {
-			throw new BadRequestException("Error country");
+			throw new BadRequestException(
+				_language.format(
+					contextAcceptLanguage.getPreferredLocale(),
+					"country-not-found-x",
+					new String[] {
+						postalAddress.getAddressCountry()
+					}));
 		}
 
 		List<Region> regions = _regionService.getRegions(
@@ -195,7 +201,13 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		}
 
 		if (!found) {
-			throw new BadRequestException("error region");
+			throw new BadRequestException(
+				_language.format(
+					contextAcceptLanguage.getPreferredLocale(),
+					"region-not-found-x",
+					new String[] {
+						postalAddress.getAddressRegion()
+					}));
 		}
 
 		ListType type = _listTypeLocalService.getListType(
@@ -203,7 +215,13 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			"com.liferay.account.model.AccountEntry.address");
 
 		if (type == null) {
-			throw new BadRequestException("error type");
+			throw new BadRequestException(
+				_language.format(
+					contextAcceptLanguage.getPreferredLocale(),
+					"type-not-found-x",
+					new String[] {
+						postalAddress.getAddressType()
+					}));
 		}
 
 		Address address = _addressLocalService.addAddress(

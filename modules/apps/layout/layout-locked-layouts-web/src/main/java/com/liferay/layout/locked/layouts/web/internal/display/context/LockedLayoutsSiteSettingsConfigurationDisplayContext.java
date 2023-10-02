@@ -22,8 +22,8 @@ public class LockedLayoutsSiteSettingsConfigurationDisplayContext
 	}
 
 	@Override
-	public int getTimeWithoutAutosave() {
-		return _lockedLayoutsGroupConfiguration.timeWithoutAutosave();
+	public int getAutosaveTime() {
+		return _lockedLayoutsGroupConfiguration.autosaveTime();
 	}
 
 	@Override

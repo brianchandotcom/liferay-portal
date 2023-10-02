@@ -301,7 +301,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	}
 
 	@Override
-	public void unlockLayouts(long companyId, long timeWithoutAutosave)
+	public void unlockLayouts(long companyId, long autosaveTime)
 		throws LockedLayoutException {
 
 		Map<Long, LockedLayoutsGroupConfiguration>
@@ -331,8 +331,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 									LayoutTable.INSTANCE.plid))
 						).and(
 							_getCreateDatePredicate(
-								lockedLayoutsGroupConfigurations,
-								timeWithoutAutosave)
+								lockedLayoutsGroupConfigurations, autosaveTime)
 						)
 					).where(
 						LayoutTable.INSTANCE.classPK.gt(
@@ -356,7 +355,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 						"LockedLayoutsTable", LockedLayoutsTable.INSTANCE
 					)
 				)),
-			timeWithoutAutosave);
+			autosaveTime);
 	}
 
 	@Override
@@ -411,7 +410,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	private Predicate _getCreateDatePredicate(
 		Map<Long, LockedLayoutsGroupConfiguration>
 			lockedLayoutsGroupConfigurations,
-		long timeWithoutAutosave) {
+		long autosaveTime) {
 
 		if (!lockedLayoutsGroupConfigurations.isEmpty()) {
 			return null;
@@ -419,14 +418,13 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 		return LockTable.INSTANCE.createDate.lt(
 			new Date(
-				System.currentTimeMillis() -
-					(timeWithoutAutosave * Time.MINUTE)));
+				System.currentTimeMillis() - (autosaveTime * Time.MINUTE)));
 	}
 
 	private Date _getLastAutosaveDate(
 		long groupId,
 		LockedLayoutsGroupConfiguration lockedLayoutsGroupConfiguration,
-		long timeWithoutAutosave) {
+		long autosaveTime) {
 
 		Date lastAutosaveDate = _lastAutosaveDateMap.get(groupId);
 
@@ -440,17 +438,16 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 			}
 
 			_lastAutoSaveDate = new Date(
-				System.currentTimeMillis() -
-					(timeWithoutAutosave * Time.MINUTE));
+				System.currentTimeMillis() - (autosaveTime * Time.MINUTE));
 
 			return _lastAutoSaveDate;
 		}
 
-		long timeWithoutAutosaveMillis =
-			lockedLayoutsGroupConfiguration.timeWithoutAutosave() * Time.MINUTE;
+		long autosaveTimeMillis =
+			lockedLayoutsGroupConfiguration.autosaveTime() * Time.MINUTE;
 
 		lastAutosaveDate = new Date(
-			System.currentTimeMillis() - timeWithoutAutosaveMillis);
+			System.currentTimeMillis() - autosaveTimeMillis);
 
 		_lastAutosaveDateMap.put(groupId, lastAutosaveDate);
 
@@ -754,7 +751,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	private void _unlockLockedLayouts(
 		Map<Long, LockedLayoutsGroupConfiguration>
 			lockedLayoutsGroupConfigurations,
-		List<Object[]> results, long timeWithoutAutosave) {
+		List<Object[]> results, long autosaveTime) {
 
 		if (ListUtil.isEmpty(results)) {
 			return;
@@ -786,7 +783,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 			}
 
 			Date lastAutoSave = _getLastAutosaveDate(
-				groupId, lockedLayoutsGroupConfiguration, timeWithoutAutosave);
+				groupId, lockedLayoutsGroupConfiguration, autosaveTime);
 
 			if (DateUtil.compareTo((Date)columns[0], lastAutoSave) <= 0) {
 				_lockManager.unlock(

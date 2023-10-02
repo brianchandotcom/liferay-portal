@@ -100,7 +100,7 @@ definition {
 
 		SignOut.signOut();
 
-		User.firstLoginUI(
+		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
@@ -481,7 +481,7 @@ definition {
 
 		SignOut.signOut();
 
-		User.firstLoginUI(
+		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "userea1@liferay.com");
 
@@ -547,7 +547,7 @@ definition {
 
 		SignOut.signOut();
 
-		User.firstLoginUI(
+		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
@@ -618,7 +618,7 @@ definition {
 
 		SignOut.signOut();
 
-		User.firstLoginUI(
+		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
@@ -680,7 +680,7 @@ definition {
 
 		SignOut.signOut();
 
-		User.firstLoginUI(
+		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 

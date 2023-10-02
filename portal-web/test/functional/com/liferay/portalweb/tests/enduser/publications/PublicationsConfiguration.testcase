@@ -76,7 +76,7 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginUI(
+		User.firstLoginPG(
 			password = "test",
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
@@ -180,7 +180,7 @@ definition {
 
 		SignOut.signOut();
 
-		User.firstLoginUI(
+		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 

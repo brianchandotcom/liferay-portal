@@ -313,7 +313,7 @@ definition {
 		task ("Log out from test user, log in with new user") {
 			SignOut.signOut();
 
-			User.firstLoginUI(
+			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "userea@liferay.com");
 		}

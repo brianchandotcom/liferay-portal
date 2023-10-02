@@ -20,7 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	factory = true,
 	id = "com.liferay.portal.vulcan.internal.configuration.VulcanCompanyConfiguration",
 	localization = "content/Language",
-	name = "headless-api-endpoint-configuration-name"
+	name = "headless-api-endpoint-company-configuration-name"
 )
 public interface VulcanCompanyConfiguration {
 

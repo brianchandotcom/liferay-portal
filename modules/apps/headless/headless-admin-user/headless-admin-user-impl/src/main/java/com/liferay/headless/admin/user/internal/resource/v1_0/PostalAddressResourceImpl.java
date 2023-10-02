@@ -199,7 +199,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			contextAcceptLanguage.isAcceptAllLanguages(), address,
 			contextCompany.getCompanyId(),
 			contextAcceptLanguage.getPreferredLocale());
-
 	}
 
 	@Override

@@ -289,7 +289,9 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		return country;
 	}
 
-	private long _getRegionId(PostalAddress postalAddress, Country country) {
+	private long _getRegionId(
+		PostalAddress postalAddress, Country country) {
+
 		if (postalAddress.getAddressType() == null) {
 			return 0;
 		}

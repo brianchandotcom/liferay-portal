@@ -80,7 +80,7 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"allowAutomaticUnlockingProcess", false
 			).put(
-				"timeWithoutAutosave", 1
+				"autosaveMinutes", 1
 			).build());
 
 		_testUnlockLayouts(true, _lock, 1);
@@ -95,7 +95,7 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"allowAutomaticUnlockingProcess", true
 			).put(
-				"timeWithoutAutosave", 1
+				"autosaveMinutes", 1
 			).build());
 
 		_testUnlockLayouts(true, null, 100);
@@ -110,7 +110,7 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"allowAutomaticUnlockingProcess", true
 			).put(
-				"timeWithoutAutosave", _LOCK_MINUTE_ADDITION + 1
+				"autosaveMinutes", _LOCK_MINUTE_ADDITION + 1
 			).build());
 
 		_testUnlockLayouts(true, _lock, 100);
@@ -125,7 +125,7 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"allowAutomaticUnlockingProcess", true
 			).put(
-				"timeWithoutAutosave", _LOCK_MINUTE_ADDITION - 1
+				"autosaveMinutes", _LOCK_MINUTE_ADDITION - 1
 			).build());
 
 		_testUnlockLayouts(true, null, 100);

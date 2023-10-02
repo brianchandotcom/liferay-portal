@@ -27,6 +27,7 @@ import com.liferay.object.exception.ObjectActionErrorMessageException;
 import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
+import com.liferay.object.exception.ObjectActionSystemException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
@@ -1336,6 +1337,33 @@ public class ObjectActionLocalServiceTest {
 		_objectFieldLocalService.deleteObjectField(objectField1);
 		_objectFieldLocalService.deleteObjectField(objectField2);
 		_objectFieldLocalService.deleteObjectField(objectField3);
+	}
+
+	@Test
+	public void testDeleteObjectAction() throws Exception {
+		ObjectAction systemObjectAction =
+			_objectActionLocalService.addObjectAction(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				"equals(firstName, \"John\")", "Able Description",
+				LocalizedMapUtil.getLocalizedMap("Able Error Message"),
+				LocalizedMapUtil.getLocalizedMap("Able Label"), "Able",
+				ObjectActionExecutorConstants.KEY_WEBHOOK,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				UnicodePropertiesBuilder.put(
+					"secret", "0123456789"
+				).put(
+					"url", "https://onafteradd.com"
+				).build(),
+				true);
+
+		AssertUtils.assertFailure(
+			ObjectActionSystemException.class, false,
+			"Only allowed bundles can delete system object actions",
+			() -> _objectActionLocalService.deleteObjectAction(
+				systemObjectAction));
+
+		_objectActionLocalService.deleteObjectAction(systemObjectAction);
 	}
 
 	@Test

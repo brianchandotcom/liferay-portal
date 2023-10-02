@@ -176,6 +176,7 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				label = Collections.singletonMap("en_US", "O" + finalName);
+				modifiable = !finalSystem;
 				name = "O" + finalName;
 				objectFields = new ObjectField[] {_createObjectField()};
 				panelAppOrder = StringUtil.toLowerCase(
@@ -193,14 +194,6 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 				titleObjectFieldName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 
-				setModifiable(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
-							return null;
-						}
-
-						return !finalSystem;
-					});
 				setStorageType(
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {

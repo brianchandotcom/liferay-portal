@@ -94,7 +94,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Luis Miguel Barcos
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
-@FeatureFlags({"LPS-167253", "LPS-178642"})
+@FeatureFlags("LPS-178642")
 public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@ClassRule

@@ -35,7 +35,7 @@ import org.osgi.util.promise.Promise;
 /**
  * @author Carlos Correa
  */
-@FeatureFlags({"LPS-167253", "LPS-178642"})
+@FeatureFlags("LPS-178642")
 public class APIApplicationPublisherPortalInstanceLifecycleListenerTest
 	extends BaseTestCase {
 

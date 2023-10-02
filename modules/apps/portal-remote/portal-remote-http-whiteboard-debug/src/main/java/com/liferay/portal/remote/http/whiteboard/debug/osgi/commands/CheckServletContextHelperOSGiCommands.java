@@ -7,6 +7,7 @@ package com.liferay.portal.remote.http.whiteboard.debug.osgi.commands;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.string.StringBundler;
 
 import java.util.List;
@@ -27,9 +28,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(
 	property = {"osgi.command.function=check", "osgi.command.scope=http"},
-	service = CheckServletContextHelperOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class CheckServletContextHelperOSGiCommands {
+public class CheckServletContextHelperOSGiCommands implements OSGiCommands {
 
 	public void check() {
 		for (List<ServiceReference<ServletContextHelper>> serviceReferences :

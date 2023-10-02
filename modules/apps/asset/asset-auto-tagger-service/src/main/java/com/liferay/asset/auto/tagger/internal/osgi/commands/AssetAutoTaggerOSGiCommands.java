@@ -13,6 +13,7 @@ import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,9 +38,9 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=tagAllUntagged",
 		"osgi.command.function=untagAll", "osgi.command.scope=assetAutoTagger"
 	},
-	service = AssetAutoTaggerOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class AssetAutoTaggerOSGiCommands {
+public class AssetAutoTaggerOSGiCommands implements OSGiCommands {
 
 	public void commitAutoTags(String companyId, String... classNames) {
 		_forEachAssetEntry(

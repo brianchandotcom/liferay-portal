@@ -6,6 +6,7 @@
 package com.liferay.osgi.log.service.extender.internal.activator;
 
 import com.liferay.osgi.log.service.extender.internal.osgi.commands.LoggingLevelsOSGiCommands;
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,13 +60,11 @@ public class OSGiLogServiceExtenderBundleActivator implements BundleActivator {
 
 	public static class Tracked
 		extends AbstractMap.SimpleEntry
-			<BundleTracker<LoggerContext>,
-			 ServiceRegistration<LoggingLevelsOSGiCommands>> {
+			<BundleTracker<LoggerContext>, ServiceRegistration<OSGiCommands>> {
 
 		public Tracked(
 			BundleTracker<LoggerContext> bundleTracker,
-			ServiceRegistration<LoggingLevelsOSGiCommands>
-				serviceRegistration) {
+			ServiceRegistration<OSGiCommands> serviceRegistration) {
 
 			super(bundleTracker, serviceRegistration);
 		}
@@ -157,9 +156,9 @@ public class OSGiLogServiceExtenderBundleActivator implements BundleActivator {
 			LoggingLevelsOSGiCommands loggingLevelsOSGiCommands =
 				new LoggingLevelsOSGiCommands(loggerAdmin);
 
-			ServiceRegistration<LoggingLevelsOSGiCommands> serviceRegistration =
+			ServiceRegistration<OSGiCommands> serviceRegistration =
 				_bundleContext.registerService(
-					LoggingLevelsOSGiCommands.class, loggingLevelsOSGiCommands,
+					OSGiCommands.class, loggingLevelsOSGiCommands,
 					HashMapDictionaryBuilder.<String, Object>put(
 						"osgi.command.function",
 						new String[] {"levels", "level"}
@@ -179,7 +178,7 @@ public class OSGiLogServiceExtenderBundleActivator implements BundleActivator {
 		public void removedService(
 			ServiceReference<LoggerAdmin> serviceReference, Tracked tracked) {
 
-			ServiceRegistration<LoggingLevelsOSGiCommands> serviceRegistration =
+			ServiceRegistration<OSGiCommands> serviceRegistration =
 				tracked.getValue();
 
 			serviceRegistration.unregister();

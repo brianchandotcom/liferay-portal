@@ -7,6 +7,7 @@ package com.liferay.knowledge.base.internal.osgi.commands;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBConstants;
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,9 +27,9 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=addImportArticlePermissions",
 		"osgi.command.scope=knowledgeBase"
 	},
-	service = KnowledgeBaseOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class KnowledgeBaseOSGiCommands {
+public class KnowledgeBaseOSGiCommands implements OSGiCommands {
 
 	public void addImportArticlePermissions() throws PortalException {
 		ResourceAction addKbArticleAction = _getAddKbArticleAction();

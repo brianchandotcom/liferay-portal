@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.internal.release.osgi.commands;
 
 import com.liferay.gogo.shell.logging.TeeLoggingUtil;
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -39,9 +40,9 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=execute", "osgi.command.function=executeAll",
 		"osgi.command.function=list", "osgi.command.scope=upgrade"
 	},
-	service = ReleaseManagerOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class ReleaseManagerOSGiCommands {
+public class ReleaseManagerOSGiCommands implements OSGiCommands {
 
 	@Descriptor("List pending upgrades")
 	public String check() {

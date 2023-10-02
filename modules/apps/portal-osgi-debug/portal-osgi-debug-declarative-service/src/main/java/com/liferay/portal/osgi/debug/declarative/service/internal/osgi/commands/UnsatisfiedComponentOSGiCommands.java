@@ -5,6 +5,7 @@
 
 package com.liferay.portal.osgi.debug.declarative.service.internal.osgi.commands;
 
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.portal.osgi.debug.declarative.service.internal.UnsatisfiedComponentUtil;
 
 import org.osgi.framework.BundleContext;
@@ -18,9 +19,9 @@ import org.osgi.service.component.runtime.ServiceComponentRuntime;
  */
 @Component(
 	property = {"osgi.command.function=unsatisfied", "osgi.command.scope=ds"},
-	service = UnsatisfiedComponentOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class UnsatisfiedComponentOSGiCommands {
+public class UnsatisfiedComponentOSGiCommands implements OSGiCommands {
 
 	public void unsatisfied() {
 		System.out.println(

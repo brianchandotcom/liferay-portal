@@ -9,6 +9,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategoryUtil;
@@ -32,9 +33,9 @@ import org.osgi.service.component.annotations.Deactivate;
 		"osgi.command.function=getPossibleConfigurations",
 		"osgi.command.scope=formNavigator"
 	},
-	service = FormNavigatorOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class FormNavigatorOSGiCommands {
+public class FormNavigatorOSGiCommands implements OSGiCommands {
 
 	public void getPossibleConfigurations() {
 		for (String formNavigatorId : _getAllFormNavigatorIds()) {

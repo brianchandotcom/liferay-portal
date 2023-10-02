@@ -6,6 +6,7 @@
 package com.liferay.document.library.internal.osgi.commands;
 
 import com.liferay.document.library.service.DLStorageQuotaLocalService;
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -20,9 +21,9 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osgi.command.function=update", "osgi.command.scope=documentLibrary"
 	},
-	service = DLStorageQuotaOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class DLStorageQuotaOSGiCommands {
+public class DLStorageQuotaOSGiCommands implements OSGiCommands {
 
 	public void update(String... companyIds) {
 		for (String companyId : companyIds) {

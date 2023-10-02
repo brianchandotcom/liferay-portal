@@ -152,15 +152,18 @@ public class EndpointHelper {
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		Object item = properties.get(relationshipsNames.remove(0));
+		Object relationshipNameValue = properties.get(
+			relationshipsNames.remove(0));
 
 		ObjectEntry[] relatedObjectEntries = null;
 
-		if (item instanceof ObjectEntry[]) {
-			relatedObjectEntries = (ObjectEntry[])item;
+		if (relationshipNameValue instanceof ObjectEntry[]) {
+			relatedObjectEntries = (ObjectEntry[])relationshipNameValue;
 		}
 		else {
-			relatedObjectEntries = new ObjectEntry[] {(ObjectEntry)item};
+			relatedObjectEntries = new ObjectEntry[] {
+				(ObjectEntry)relationshipNameValue
+			};
 		}
 
 		for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {

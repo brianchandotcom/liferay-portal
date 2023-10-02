@@ -555,8 +555,11 @@ public class ObjectDefinitionServiceTest {
 		}
 		finally {
 			if (objectDefinition != null) {
+				_objectDefinitionService.updateRootObjectDefinitionId(
+					objectDefinition.getObjectDefinitionId(), 0);
+
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition);
+					objectDefinition.getObjectDefinitionId());
 			}
 		}
 	}

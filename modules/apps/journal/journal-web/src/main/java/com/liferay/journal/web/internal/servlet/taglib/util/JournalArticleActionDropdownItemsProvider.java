@@ -378,8 +378,6 @@ public class JournalArticleActionDropdownItemsProvider {
 								 WorkflowConstants.STATUS_SCHEDULED)),
 						_getExpireArticleActionConsumer(articleId)
 					).build());
-
-				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
 	}

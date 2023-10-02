@@ -89,6 +89,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1368,10 +1369,10 @@ public class ObjectActionLocalServiceTest {
 
 	@Test
 	public void testUpdateObjectAction() throws Exception {
-		String externalReferenceCode = RandomTestUtil.randomString();
+		String externalReferenceCode1 = RandomTestUtil.randomString();
 
 		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
-			externalReferenceCode, TestPropsValues.getUserId(),
+			externalReferenceCode1, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true,
 			"equals(firstName, \"John\")", "Able Description",
 			LocalizedMapUtil.getLocalizedMap("Able Error Message"),
@@ -1399,7 +1400,7 @@ public class ObjectActionLocalServiceTest {
 			ObjectActionConstants.STATUS_NEVER_RAN);
 
 		objectAction = _objectActionLocalService.updateObjectAction(
-			externalReferenceCode, objectAction.getObjectActionId(), false,
+			externalReferenceCode1, objectAction.getObjectActionId(), false,
 			"equals(firstName, \"João\")", "Baker Description",
 			LocalizedMapUtil.getLocalizedMap("Baker Error Message"),
 			LocalizedMapUtil.getLocalizedMap("Baker Label"), "Baker",
@@ -1427,7 +1428,7 @@ public class ObjectActionLocalServiceTest {
 		_publishCustomObjectDefinition();
 
 		objectAction = _objectActionLocalService.updateObjectAction(
-			externalReferenceCode, objectAction.getObjectActionId(), true,
+			externalReferenceCode1, objectAction.getObjectActionId(), true,
 			"equals(firstName, \"John\")", "Charlie Description",
 			LocalizedMapUtil.getLocalizedMap("Charlie Error Message"),
 			LocalizedMapUtil.getLocalizedMap("Charlie Label"), "Charlie",
@@ -1451,6 +1452,90 @@ public class ObjectActionLocalServiceTest {
 				"url", "https://onafterdelete.com"
 			).build(),
 			ObjectActionConstants.STATUS_NEVER_RAN);
+
+		String externalReferenceCode2 = RandomTestUtil.randomString();
+
+		ObjectAction systemObjectAction =
+			_objectActionLocalService.addObjectAction(
+				externalReferenceCode2, TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				"equals(firstName, \"John\")", "Able Description",
+				LocalizedMapUtil.getLocalizedMap("Able Error Message"),
+				LocalizedMapUtil.getLocalizedMap("Able Label"), "Able",
+				ObjectActionExecutorConstants.KEY_WEBHOOK,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				UnicodePropertiesBuilder.put(
+					"secret", "0123456789"
+				).put(
+					"url", "https://onafteradd.com"
+				).build(),
+				true);
+
+		systemObjectAction = _objectActionLocalService.updateObjectAction(
+			externalReferenceCode2, systemObjectAction.getObjectActionId(),
+			false, "equals(firstName, \"João\")", "Baker Description",
+			LocalizedMapUtil.getLocalizedMap("Baker Error Message"),
+			LocalizedMapUtil.getLocalizedMap("Baker Label"), "Baker",
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
+			UnicodePropertiesBuilder.put(
+				"secret", "30624700"
+			).put(
+				"url", "https://onafterdelete.com"
+			).build());
+
+		_assertObjectAction(
+			false, "equals(firstName, \"João\")", "Baker Description",
+			LocalizedMapUtil.getLocalizedMap("Baker Error Message"),
+			LocalizedMapUtil.getLocalizedMap("Baker Label"), "Able",
+			systemObjectAction, ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"secret", "30624700"
+			).put(
+				"url", "https://onafterdelete.com"
+			).build(),
+			ObjectActionConstants.STATUS_NEVER_RAN);
+
+		// Requests from forbidden bundles can only update the label
+
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		SystemProperties.clear("liferay.mode");
+
+		try {
+			systemObjectAction = _objectActionLocalService.updateObjectAction(
+				externalReferenceCode2, systemObjectAction.getObjectActionId(),
+				false, "equals(firstName, \"John\")", "Charlie Description",
+				LocalizedMapUtil.getLocalizedMap("Charlie Error Message"),
+				LocalizedMapUtil.getLocalizedMap("Charlie Label"), "Able",
+				ObjectActionExecutorConstants.KEY_WEBHOOK,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
+				UnicodePropertiesBuilder.put(
+					"secret", "0123456789"
+				).put(
+					"url", "https://onafteradd.com"
+				).build());
+		}
+		finally {
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
+
+		_assertObjectAction(
+			false, "equals(firstName, \"João\")", "Baker Description",
+			LocalizedMapUtil.getLocalizedMap("Baker Error Message"),
+			LocalizedMapUtil.getLocalizedMap("Charlie Label"), "Able",
+			systemObjectAction, ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"secret", "30624700"
+			).put(
+				"url", "https://onafterdelete.com"
+			).build(),
+			ObjectActionConstants.STATUS_NEVER_RAN);
+
+		_objectActionLocalService.deleteObjectAction(objectAction);
+		_objectActionLocalService.deleteObjectAction(systemObjectAction);
 	}
 
 	private void _addModelResourcePermissions(

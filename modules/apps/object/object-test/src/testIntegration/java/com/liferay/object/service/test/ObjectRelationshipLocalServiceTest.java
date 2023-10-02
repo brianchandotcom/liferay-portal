@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -532,6 +533,52 @@ public class ObjectRelationshipLocalServiceTest {
 			objectRelationship6.getObjectFieldId2());
 
 		Assert.assertFalse(objectField2.isRequired());
+
+		ObjectRelationship systemObjectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap("Able"), StringUtil.randomId(),
+				true, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		systemObjectRelationship =
+			_objectRelationshipLocalService.updateObjectRelationship(
+				systemObjectRelationship.getObjectRelationshipId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
+				LocalizedMapUtil.getLocalizedMap("Able"));
+
+		Assert.assertEquals(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			systemObjectRelationship.getDeletionType());
+
+		// Requests from not-allowed bundles can only update the label
+
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		SystemProperties.clear("liferay.mode");
+
+		try {
+			systemObjectRelationship =
+				_objectRelationshipLocalService.updateObjectRelationship(
+					systemObjectRelationship.getObjectRelationshipId(), 0,
+					ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+					LocalizedMapUtil.getLocalizedMap("Baker"));
+		}
+		finally {
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
+
+		Assert.assertEquals(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			systemObjectRelationship.getDeletionType());
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Baker"),
+			systemObjectRelationship.getLabelMap());
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			systemObjectRelationship);
 	}
 
 	private static ObjectDefinition _addSystemObjectDefinition(

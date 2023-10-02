@@ -359,9 +359,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	private AddressService _addressService;
 
 	@Reference
-	private CommonPermission _commonPermission;
-
-	@Reference
 	private CountryService _countryService;
 
 	@Reference

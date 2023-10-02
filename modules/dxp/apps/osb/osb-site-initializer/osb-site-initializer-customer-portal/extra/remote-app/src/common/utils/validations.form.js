@@ -30,6 +30,14 @@ const isValidEmail = (value, bannedEmailDomains) => {
 	}
 };
 
+const isLiferayDomain = (liferayDomain) => {
+	if (liferayDomain) {
+		return i18n.translate(
+			'this-liferay-contact-does-not-exist-please-enter-a-correct-email-address'
+		);
+	}
+};
+
 const isValidEmailDomain = (bannedEmailDomains) => {
 	if (bannedEmailDomains.length) {
 		return i18n.translate('domain-not-allowed');
@@ -155,6 +163,7 @@ const validateEmailsArray = (emailArray, emailsAvailable) => {
 export {
 	isLowercaseAndNumbers,
 	isValidEmail,
+	isLiferayDomain,
 	isValidFriendlyURL,
 	isValidEmailDomain,
 	maxLength,

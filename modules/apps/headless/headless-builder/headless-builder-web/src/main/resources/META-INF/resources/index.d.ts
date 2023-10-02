@@ -10,7 +10,14 @@ interface APIApplicationItem extends BaseItem {
 	version: string;
 }
 
+interface APIEndpointFilter {
+	id: number;
+	oDataFilter: string;
+	r_apiEndpointToAPIFilters_c_apiEndpointId: number;
+}
+
 interface APIEndpointItem extends BaseItem {
+	apiEndpointToAPIFilters: APIEndpointFilter[];
 	httpMethod: APIListType;
 	path: string;
 	r_apiApplicationToAPIEndpoints_c_apiApplicationId: string;
@@ -256,6 +263,7 @@ type APIApplicationUIData = Pick<
 >;
 
 type APIEndpointUIData = {
+	apiEndpointToAPIFilters: Partial<APIEndpointFilter>[];
 	description: string;
 	httpMethod: APIListType;
 	path: string;

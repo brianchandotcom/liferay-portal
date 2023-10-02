@@ -26,6 +26,8 @@
 
 	<#include "blogs.ftl">
 
+	<#include "collection_page.ftl">
+
 	<#include "ddl.ftl">
 
 	<#include "journal_article.ftl">

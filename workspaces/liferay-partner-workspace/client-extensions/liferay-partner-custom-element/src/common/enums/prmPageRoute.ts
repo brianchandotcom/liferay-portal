@@ -13,7 +13,7 @@ export enum PRMPageRoute {
 	EDIT_DEAL_REGISTRATION = 'sales/deal-registrations/edit',
 	EDIT_MDF_CLAIM = 'marketing/mdf-claims/edit',
 	EDIT_MDF_REQUEST = 'marketing/mdf-requests/edit',
-	MDF_CLAIM_LISTING = 'marketing/mdf-claim',
+	MDF_CLAIM_LISTING = 'marketing/mdf-claims',
 	MDF_REQUESTS_LISTING = 'marketing/mdf-requests',
 	PARTNER_OPPORTUNITIES_LISTING = 'sales/partner-opportunities',
 }

@@ -43,18 +43,15 @@ public class ObjectRelationshipImpl extends ObjectRelationshipBaseImpl {
 			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
 				getObjectDefinitionId2());
 
-		if (Objects.equals(
-			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED) ||
-			Objects.equals(
-				objectDefinition2.getStatus(),
-				WorkflowConstants.STATUS_APPROVED)) {
+		if (isSelf() ||
+			!Objects.equals(
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, getType())) {
+
 			return false;
 		}
 
-		if (isSelf() ||
-			!Objects.equals(
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, getType()) ||
-			objectDefinition1.isUnmodifiableSystemObject()) {
+		if (!objectDefinition1.isNodeCandidate() ||
+			!objectDefinition2.isNodeCandidate()) {
 
 			return false;
 		}

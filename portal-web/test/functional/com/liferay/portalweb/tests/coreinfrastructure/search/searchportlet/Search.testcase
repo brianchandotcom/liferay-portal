@@ -388,20 +388,20 @@ definition {
 	@description = "This is a use case for LPS-179990"
 	@priority = 3
 	test CanRemoveSortFieldsAndDeactivateRelevanceInSortWidget {
-		task ("Add a new Sort Widget and open configuration") {
+		task ("Add a new Sort Widget to the default Search page") {
 			Search.openSearchPage();
 
 			SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
+		}
 
+		task ("Delete all indexed field names and disable relevance for the Sort portlet") {
 			Portlet.gotoPortletOptions(
 				portletName = "Sort",
 				portletOption = "Configuration");
 
 			SelectFrame(locator1 = "IFrame#CONFIGURATION");
-		}
 
-		task ("Delete all indexed field names and disable relevance") {
-			while ((IsElementPresent(locator1 = "Button#TRASH_ENABLED")) && (maxIterations = "50")) {
+			while ((IsElementPresent(locator1 = "Button#TRASH_ENABLED")) && (maxIterations = "20")) {
 				Click(locator1 = "Button#TRASH_ENABLED");
 			}
 
@@ -409,12 +409,12 @@ definition {
 				key_toggleSwitchLabel = "On",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		task ("Assert the the portlet is still available") {
 			PortletEntry.save();
 
 			Alert.viewSuccessMessage();
 
 			IFrame.closeFrame();
+		}
 
 		task ("Assert that the Search portlets are still available by performing a search") {
 			SearchPortlets.searchWidget(searchTerm = "test");

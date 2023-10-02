@@ -1,5 +1,4 @@
 <#assign
-	
 	myID =""
 	myTicket =""
 />

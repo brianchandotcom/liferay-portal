@@ -80,8 +80,6 @@ public abstract class BaseIndexPortalInstanceLifecycleListener
 		}
 	}
 
-	protected abstract void createIndex(long companyId);
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseIndexPortalInstanceLifecycleListener.class);
 

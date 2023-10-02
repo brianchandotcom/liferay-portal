@@ -623,6 +623,7 @@ public class EditFragmentEntryDisplayContext {
 
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(getRedirect());
+		portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 		FragmentEntry fragmentEntry = getFragmentEntry();
 

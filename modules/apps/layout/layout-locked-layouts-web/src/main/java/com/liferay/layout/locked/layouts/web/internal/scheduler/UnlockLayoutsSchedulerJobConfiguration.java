@@ -65,8 +65,7 @@ public class UnlockLayoutsSchedulerJobConfiguration
 			}
 
 			_layoutLockManager.unlockLayouts(
-				companyId,
-				lockedLayoutsCompanyConfiguration.timeWithoutAutosave());
+				companyId, lockedLayoutsCompanyConfiguration.autosaveMinutes());
 		};
 	}
 

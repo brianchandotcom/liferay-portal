@@ -46,7 +46,7 @@ public interface LayoutLockManager {
 
 	public void unlock(Layout layout, long userId);
 
-	public void unlockLayouts(long companyId, long timeWithoutAutosave)
+	public void unlockLayouts(long companyId, long autosaveMinutes)
 		throws LockedLayoutException;
 
 	public void unlockLayoutsByUserId(long companyId, long userId);

@@ -220,13 +220,12 @@ public class ObjectEntryOpenAPIResourceImpl
 				}
 			};
 		}
-
-		if (Objects.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
-			Objects.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
+				 Objects.equals(
+					 objectField.getBusinessType(),
+					 ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			DTOProperty dtoProperty = new DTOProperty(
 				Collections.singletonMap("x-parent-map", "properties"),

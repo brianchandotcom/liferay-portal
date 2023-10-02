@@ -14,16 +14,26 @@ import com.liferay.headless.admin.user.resource.v1_0.PostalAddressResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.AddressService;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
+
+import java.util.Iterator;
+import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 
@@ -53,7 +63,10 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 					_language.format(
 						contextAcceptLanguage.getPreferredLocale(),
 						"account-entry-x-not-has-postal-address-y",
-						new String[] {accountId.toString(),String.valueOf(postalAddressesId)}));
+						new String[] {
+							accountId.toString(),
+							String.valueOf(postalAddressesId)
+						}));
 			}
 
 			_addressLocalService.deleteAddress(postalAddressesId);
@@ -130,6 +143,86 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 					contextAcceptLanguage.getPreferredLocale())));
 	}
 
+	@Override
+	public PostalAddress postAccountPostalAddress(
+			Long accountId, PostalAddress postalAddress)
+		throws Exception {
+
+		List<Country> countries = _countryService.getCompanyCountries(
+			contextCompany.getCompanyId());
+
+		Iterator<Country> countryIterator = countries.iterator();
+
+		Boolean found = false;
+
+		String title = null;
+
+		Country country = null;
+
+		while (countryIterator.hasNext() && !found) {
+			country = countryIterator.next();
+
+			title = country.getTitle(
+				contextAcceptLanguage.getPreferredLocale());
+
+			if (title.equals(postalAddress.getAddressCountry())) {
+				found = true;
+			}
+		}
+
+		if (!found) {
+			throw new BadRequestException("Error country");
+		}
+
+		List<Region> regions = _regionService.getRegions(
+			country.getCountryId());
+
+		Iterator<Region> regionIterator = regions.iterator();
+
+		Region region = null;
+
+		found = false;
+
+		while (regionIterator.hasNext() && !found) {
+			region = regionIterator.next();
+
+			title = region.getTitle(
+				contextAcceptLanguage.getPreferredLanguageId());
+
+			if (title.equals(postalAddress.getAddressRegion())) {
+				found = true;
+			}
+		}
+
+		if (!found) {
+			throw new BadRequestException("error region");
+		}
+
+		ListType type = _listTypeLocalService.getListType(
+			postalAddress.getAddressType(),
+			"com.liferay.account.model.AccountEntry.address");
+
+		if (type == null) {
+			throw new BadRequestException("error type");
+		}
+
+		Address address = _addressLocalService.addAddress(
+			null, contextUser.getUserId(), AccountEntry.class.getName(),
+			accountId, postalAddress.getName(), null,
+			postalAddress.getStreetAddressLine1(),
+			postalAddress.getStreetAddressLine2(),
+			postalAddress.getStreetAddressLine3(),
+			postalAddress.getAddressLocality(), postalAddress.getPostalCode(),
+			region.getRegionId(), country.getCountryId(), type.getListTypeId(),
+			false, postalAddress.getPrimary(), null,
+			ServiceContextFactory.getInstance(contextHttpServletRequest));
+
+		return PostalAddressUtil.toPostalAddress(
+			contextAcceptLanguage.isAcceptAllLanguages(), address,
+			contextCompany.getCompanyId(),
+			contextAcceptLanguage.getPreferredLocale());
+	}
+
 	@Reference
 	private AccountEntryService _accountEntryService;
 
@@ -143,7 +236,13 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	private CommonPermission _commonPermission;
 
 	@Reference
+	private CountryService _countryService;
+
+	@Reference
 	private Language _language;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference(
 		target = DTOConverterConstants.ORGANIZATION_RESOURCE_DTO_CONVERTER
@@ -151,6 +250,9 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	private DTOConverter
 		<Organization, com.liferay.headless.admin.user.dto.v1_0.Organization>
 			_organizationResourceDTOConverter;
+
+	@Reference
+	private RegionService _regionService;
 
 	@Reference
 	private UserService _userService;

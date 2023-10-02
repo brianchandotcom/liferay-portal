@@ -131,6 +131,66 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	}
 
 	@Override
+	public PostalAddress patchAccountPostalAddress(
+		Long accountId, Long postalAddressId, PostalAddress postalAddress)
+		throws Exception {
+
+		Address address = _validateAccountPostalAddres(
+			accountId, postalAddressId);
+
+		Country country = _getCountryByTitle(postalAddress);
+		if(postalAddress.getAddressCountry() != null) {
+			address.setCountryId(country.getCountryId());
+		}
+
+		if(postalAddress.getAddressRegion() != null) {
+			long regionId = _getRegionByTitleAndCountry(postalAddress, country);
+			address.setRegionId(regionId);
+		}
+
+		if (postalAddress.getAddressType() != null) {
+			ListType type = _getType(postalAddress);
+			address.setListTypeId(type.getListTypeId());
+		}
+
+		if (postalAddress.getAddressLocality() != null) {
+			address.setCity(postalAddress.getAddressLocality());
+		}
+
+		if (postalAddress.getName() != null) {
+			address.setName(postalAddress.getName());
+		}
+
+		if (postalAddress.getPostalCode() != null) {
+			address.setZip(postalAddress.getPostalCode());
+		}
+
+		if (postalAddress.getPrimary() != null) {
+			address.setPrimary(postalAddress.getPrimary());
+		}
+
+		if (postalAddress.getStreetAddressLine1() != null) {
+			address.setStreet1(postalAddress.getStreetAddressLine1());
+		}
+
+		if (postalAddress.getStreetAddressLine2() != null) {
+			address.setStreet2(postalAddress.getStreetAddressLine2());
+		}
+
+		if (postalAddress.getStreetAddressLine3() != null) {
+			address.setStreet3(postalAddress.getStreetAddressLine3());
+		}
+
+		_addressLocalService.updateAddress(address);
+
+		return PostalAddressUtil.toPostalAddress(
+			contextAcceptLanguage.isAcceptAllLanguages(), address,
+			contextCompany.getCompanyId(),
+			contextAcceptLanguage.getPreferredLocale());
+
+	}
+
+	@Override
 	public PostalAddress postAccountPostalAddress(
 			Long accountId, PostalAddress postalAddress)
 		throws Exception {

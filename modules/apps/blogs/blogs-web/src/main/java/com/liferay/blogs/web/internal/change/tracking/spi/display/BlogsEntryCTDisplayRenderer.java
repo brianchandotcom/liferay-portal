@@ -12,6 +12,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -27,7 +28,6 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,15 +38,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = CTDisplayRenderer.class)
 public class BlogsEntryCTDisplayRenderer
 	extends BaseCTDisplayRenderer<BlogsEntry> {
-
-	@Override
-	public String getContent(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Locale locale,
-		BlogsEntry blogsEntry) {
-
-		return blogsEntry.getContent();
-	}
 
 	@Override
 	public String getEditURL(
@@ -86,6 +77,15 @@ public class BlogsEntryCTDisplayRenderer
 	@Override
 	public String getTitle(Locale locale, BlogsEntry blogsEntry) {
 		return blogsEntry.getTitle();
+	}
+
+	@Override
+	public String renderPreview(DisplayContext<BlogsEntry> displayContext)
+		throws Exception {
+
+		BlogsEntry blogsEntry = displayContext.getModel();
+
+		return blogsEntry.getContent();
 	}
 
 	@Override

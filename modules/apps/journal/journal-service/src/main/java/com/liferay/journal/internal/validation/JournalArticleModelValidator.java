@@ -445,7 +445,9 @@ public class JournalArticleModelValidator
 			int smallImageSource, String content)
 		throws PortalException {
 
-		_journalFolderLocalService.getFolder(folderId);
+		if (folderId != 0) {
+			_journalFolderLocalService.getFolder(folderId);
+		}
 
 		_ddmStructureLocalService.getDDMStructure(ddmStructureId);
 

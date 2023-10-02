@@ -202,11 +202,13 @@ public class ObjectEntryOpenAPIResourceImpl
 			};
 		}
 		else if (Objects.equals(
-			objectField.getBusinessType(), ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
 
 			return new DTOProperty(
 				null, objectField.getName(),
 				ObjectFieldConstants.DB_TYPE_STRING) {
+
 				{
 					setRequired(objectField.isRequired());
 				}
@@ -214,11 +216,12 @@ public class ObjectEntryOpenAPIResourceImpl
 		}
 
 		if (Objects.equals(
-			objectField.getBusinessType(),
-			ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
 			Objects.equals(
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
 			DTOProperty dtoProperty = new DTOProperty(
 				Collections.singletonMap("x-parent-map", "properties"),
 				objectField.getName(), ListEntry.class.getSimpleName());

@@ -335,7 +335,7 @@ const EditCategoriesModal = ({
 							</ClayButton>
 						</ClayButton.Group>
 					}
-				></ClayModal.Footer>
+				/>
 			</ClayForm>
 		</ClayModal>
 	);

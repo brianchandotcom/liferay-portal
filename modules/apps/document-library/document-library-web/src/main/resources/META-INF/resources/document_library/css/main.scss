@@ -821,4 +821,10 @@ html#{$cadmin-selector} .cadmin {
 			max-height: 445px;
 		}
 	}
+
+	.modal-footer {
+		bottom: 0;
+		position: absolute;
+		width: 100%;
+	}
 }

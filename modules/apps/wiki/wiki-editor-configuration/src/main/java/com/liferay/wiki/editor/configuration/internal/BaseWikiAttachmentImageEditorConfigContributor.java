@@ -6,7 +6,7 @@
 package com.liferay.wiki.editor.configuration.internal;
 
 import com.liferay.document.library.kernel.util.DLValidator;
-import com.liferay.document.library.kernel.util.DLValidatorUtil;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.constants.ItemSelectorCriterionConstants;
@@ -16,6 +16,7 @@ import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCrite
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -34,6 +35,10 @@ import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriter
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -106,6 +111,13 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		wikiFileUploadConfiguration = ConfigurableUtil.createConfigurable(
+			WikiFileUploadConfiguration.class, properties);
+	}
+
 	protected ItemSelectorCriterion getImageItemSelectorCriterion(
 		ItemSelectorReturnType... desiredItemSelectorReturnTypes) {
 
@@ -127,9 +139,6 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		long wikiPageResourcePrimKey, ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		WikiFileUploadConfiguration wikiFileUploadConfiguration =
-			getWikiFileUploadConfiguration();
-
 		String[] attachmentMimeTypes =
 			wikiFileUploadConfiguration.attachmentMimeTypes();
 
@@ -143,9 +152,11 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		).desiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType()
 		).extensions(
-			extensions.toArray(new String[extensions.size()])
+			extensions.toArray(new String[0])
 		).maxFileSize(
-			wikiFileUploadConfiguration.attachmentMaxSize()
+			dlValidator.getMaxAllowableSize(
+				themeDisplay.getScopeGroupId(), null,
+				wikiFileUploadConfiguration.attachmentMaxSize())
 		).mimeTypeRestriction(
 			ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE
 		).portletId(
@@ -190,15 +201,17 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		return itemSelectorCriterion;
 	}
 
-	protected abstract WikiFileUploadConfiguration
-		getWikiFileUploadConfiguration();
+	@Reference
+	protected DLValidator dlValidator;
+
+	@Reference
+	protected ItemSelector itemSelector;
+
+	protected volatile WikiFileUploadConfiguration wikiFileUploadConfiguration;
 
 	private String[] _getMimeTypes() {
 		String[] dlFileEntryPreviewImageMimeTypes =
 			PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES;
-
-		WikiFileUploadConfiguration wikiFileUploadConfiguration =
-			getWikiFileUploadConfiguration();
 
 		List<String> wikiAttachmentMimeTypes = ListUtil.fromArray(
 			wikiFileUploadConfiguration.attachmentMimeTypes());

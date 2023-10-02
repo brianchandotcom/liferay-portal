@@ -309,18 +309,9 @@ export function ObjectRelationshipFormBase({
 			)!;
 
 			const objectDefinitions = items.filter(
-				({modifiable, parameterRequired, storageType, system}) => {
-					if (Liferay.FeatureFlags['LPS-167253']) {
-						return (
-							(objectDefinition.modifiable || modifiable) &&
-							(!Liferay.FeatureFlags['LPS-135430'] ||
-								storageType === 'default') &&
-							!parameterRequired
-						);
-					}
-
+				({modifiable, parameterRequired, storageType}) => {
 					return (
-						(!objectDefinition.system || !system) &&
+						(objectDefinition.modifiable || modifiable) &&
 						(!Liferay.FeatureFlags['LPS-135430'] ||
 							storageType === 'default') &&
 						!parameterRequired

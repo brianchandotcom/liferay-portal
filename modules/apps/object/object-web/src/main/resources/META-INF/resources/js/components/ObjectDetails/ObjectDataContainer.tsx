@@ -35,9 +35,7 @@ export function ObjectDataContainer({
 		Liferay.Language.Locale
 	>(defaultLanguageId);
 
-	const isReadOnly = Liferay.FeatureFlags['LPS-167253']
-		? !values.modifiable && values.system
-		: values.system;
+	const isReadOnly = !values.modifiable && values.system;
 
 	const noPermissionOrLinked =
 		!hasUpdateObjectDefinitionPermission || isLinkedObjectDefinition;

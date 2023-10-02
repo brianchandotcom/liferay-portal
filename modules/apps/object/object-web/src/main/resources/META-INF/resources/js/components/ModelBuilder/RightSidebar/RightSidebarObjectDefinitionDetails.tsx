@@ -274,9 +274,7 @@ export function RightSidebarObjectDefinitionDetails({
 				/>
 			</div>
 
-			{(Liferay.FeatureFlags['LPS-167253']
-				? values?.modifiable
-				: !values?.system) && (
+			{values?.modifiable && (
 				<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 					<AccountRestrictionContainer
 						errors={errors}

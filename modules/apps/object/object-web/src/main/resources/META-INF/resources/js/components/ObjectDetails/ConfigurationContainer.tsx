@@ -22,9 +22,7 @@ export function ConfigurationContainer({
 	setValues,
 	values,
 }: ConfigurationContainerProps) {
-	const isReadOnly = Liferay.FeatureFlags['LPS-167253']
-		? !values.modifiable && values.system
-		: values.system;
+	const isReadOnly = !values.modifiable && values.system;
 
 	const disabled =
 		!hasUpdateObjectDefinitionPermission ||

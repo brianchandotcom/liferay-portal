@@ -315,9 +315,7 @@ export default function EditObjectDetails({
 						</ClayPanel.Body>
 					</ClayPanel>
 
-					{(Liferay.FeatureFlags['LPS-167253']
-						? values.modifiable
-						: !values.system) && (
+					{values.modifiable && (
 						<ClayPanel
 							collapsable
 							defaultExpanded

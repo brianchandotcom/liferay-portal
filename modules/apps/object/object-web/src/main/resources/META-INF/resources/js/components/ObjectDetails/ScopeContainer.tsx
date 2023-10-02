@@ -123,9 +123,7 @@ export function ScopeContainer({
 
 			<AutoComplete<KeyValuePair>
 				disabled={
-					(Liferay.FeatureFlags['LPS-167253']
-						? !values.modifiable && values.system
-						: values.system) ||
+					(!values.modifiable && values.system) ||
 					!hasUpdateObjectDefinitionPermission ||
 					isRootDescendantNode ||
 					isLinkedObjectDefinition

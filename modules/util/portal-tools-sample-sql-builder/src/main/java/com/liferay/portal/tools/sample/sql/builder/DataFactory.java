@@ -4615,6 +4615,38 @@ public class DataFactory {
 				LayoutModel layoutModel,
 				LayoutPageTemplateStructureModel
 					layoutPageTemplateStructureModel,
+				AssetListEntryModel assetListEntryModel,
+				List<FragmentEntryLinkModel> fragmentEntryLinkModels,
+				String templateFileName, String templateFolder)
+		throws Exception {
+
+		LayoutPageTemplateStructureRelModel
+			layoutPageTemplateStructureRelModel =
+				newLayoutPageTemplateStructureRelModel(
+					layoutModel, layoutPageTemplateStructureModel,
+					fragmentEntryLinkModels, templateFileName, templateFolder);
+
+		layoutPageTemplateStructureRelModel.setData(
+			StringUtil.replace(
+				layoutPageTemplateStructureRelModel.getData(),
+				new String[] {
+					"${assetListEntryClassNameId}", "${assetListEntryClassPK}",
+					"${assetListEntryTitle}"
+				},
+				new String[] {
+					String.valueOf(getClassNameId(AssetListEntry.class)),
+					String.valueOf(assetListEntryModel.getAssetListEntryId()),
+					String.valueOf(assetListEntryModel.getTitle())
+				}));
+
+		return layoutPageTemplateStructureRelModel;
+	}
+
+	public LayoutPageTemplateStructureRelModel
+			newLayoutPageTemplateStructureRelModel(
+				LayoutModel layoutModel,
+				LayoutPageTemplateStructureModel
+					layoutPageTemplateStructureModel,
 				FragmentEntryLinkModel fragmentEntryLinkModel)
 		throws Exception {
 

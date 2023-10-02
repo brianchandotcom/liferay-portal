@@ -14,7 +14,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateR
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
-import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.helper.AddFormInstanceRecordMVCCommandHelper;
+import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.AddFormInstanceRecordMVCCommandUtil;
 import com.liferay.dynamic.data.mapping.form.web.internal.util.DDMLayoutUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -102,9 +102,9 @@ public class AddFormInstanceRecordMVCActionCommand
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceService.getFormInstance(formInstanceId);
 
-		_addFormInstanceMVCCommandHelper.validateExpirationStatus(
+		AddFormInstanceRecordMVCCommandUtil.validateExpirationStatus(
 			ddmFormInstance, actionRequest);
-		_addFormInstanceMVCCommandHelper.validateSubmissionLimitStatus(
+		AddFormInstanceRecordMVCCommandUtil.validateSubmissionLimitStatus(
 			ddmFormInstance, _ddmFormInstanceRecordVersionLocalService,
 			actionRequest);
 
@@ -143,14 +143,14 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
-		_addFormInstanceMVCCommandHelper.updateNonevaluableDDMFormFields(
+		AddFormInstanceRecordMVCCommandUtil.updateNonevaluableDDMFormFields(
 			ddmForm.getDDMFormFieldsMap(true),
 			ddmFormEvaluatorEvaluateResponse.getDDMFormFieldsPropertyChanges(),
 			ddmFormValues.getDDMFormFieldValuesMap(true),
 			ddmStructure.getDDMFormLayout(),
 			ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes());
 
-		_addFormInstanceMVCCommandHelper.updateReadOnlyDDMFormFields(
+		AddFormInstanceRecordMVCCommandUtil.updateReadOnlyDDMFormFields(
 			ddmForm.getDDMFormFieldsMap(true),
 			ddmFormEvaluatorEvaluateResponse.getDDMFormFieldsPropertyChanges());
 
@@ -315,10 +315,6 @@ public class AddFormInstanceRecordMVCActionCommand
 					" is not published");
 		}
 	}
-
-	@Reference
-	private AddFormInstanceRecordMVCCommandHelper
-		_addFormInstanceMVCCommandHelper;
 
 	@Reference
 	private DDMFormEvaluator _ddmFormEvaluator;

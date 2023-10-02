@@ -10,7 +10,7 @@ import com.liferay.dynamic.data.mapping.exception.FormInstanceExpiredException;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceSubmissionLimitException;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializer;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializerRequest;
-import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.helper.AddFormInstanceRecordMVCCommandHelper;
+import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.AddFormInstanceRecordMVCCommandUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
@@ -106,12 +106,11 @@ public class AddFormInstanceRecordMVCResourceCommand
 			_ddmFormInstanceService.getFormInstance(formInstanceId);
 
 		try {
-			_addFormInstanceRecordMVCCommandHelper.validateExpirationStatus(
+			AddFormInstanceRecordMVCCommandUtil.validateExpirationStatus(
 				ddmFormInstance, resourceRequest);
-			_addFormInstanceRecordMVCCommandHelper.
-				validateSubmissionLimitStatus(
-					ddmFormInstance, _ddmFormInstanceRecordVersionLocalService,
-					resourceRequest);
+			AddFormInstanceRecordMVCCommandUtil.validateSubmissionLimitStatus(
+				ddmFormInstance, _ddmFormInstanceRecordVersionLocalService,
+				resourceRequest);
 		}
 		catch (FormInstanceExpiredException formInstanceExpiredException) {
 			if (_log.isDebugEnabled()) {
@@ -182,10 +181,6 @@ public class AddFormInstanceRecordMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddFormInstanceRecordMVCResourceCommand.class);
-
-	@Reference
-	private AddFormInstanceRecordMVCCommandHelper
-		_addFormInstanceRecordMVCCommandHelper;
 
 	@Reference(
 		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=formValues)"

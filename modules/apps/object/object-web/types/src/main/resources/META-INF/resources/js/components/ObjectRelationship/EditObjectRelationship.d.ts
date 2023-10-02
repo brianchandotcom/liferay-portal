@@ -5,7 +5,7 @@
 
 /// <reference types="react" />
 
-interface EditRelationshipProps {
+interface EditObjectRelationshipProps {
 	baseResourceURL: string;
 	deletionTypes: LabelValueObject[];
 	hasUpdateObjectDefinitionPermission: boolean;
@@ -14,7 +14,7 @@ interface EditRelationshipProps {
 	parameterRequired: boolean;
 	restContextPath: string;
 }
-export default function EditRelationship({
+export default function EditObjectRelationship({
 	baseResourceURL,
 	deletionTypes,
 	hasUpdateObjectDefinitionPermission,
@@ -22,5 +22,5 @@ export default function EditRelationship({
 	objectRelationship: initialValues,
 	parameterRequired,
 	restContextPath,
-}: EditRelationshipProps): JSX.Element;
+}: EditObjectRelationshipProps): JSX.Element;
 export {};

@@ -16,7 +16,7 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
 
 <react:component
-	module="js/components/ObjectRelationship/EditRelationship"
+	module="js/components/ObjectRelationship/EditObjectRelationship"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"baseResourceURL", String.valueOf(baseResourceURL)

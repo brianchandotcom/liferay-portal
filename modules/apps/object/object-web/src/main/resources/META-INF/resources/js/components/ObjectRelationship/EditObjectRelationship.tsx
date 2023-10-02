@@ -24,7 +24,7 @@ import {
 } from './ObjectRelationshipFormBase';
 import SelectObjectRelationship from './SelectObjectRelationship';
 
-interface EditRelationshipProps {
+interface EditObjectRelationshipProps {
 	baseResourceURL: string;
 	deletionTypes: LabelValueObject[];
 	hasUpdateObjectDefinitionPermission: boolean;
@@ -34,7 +34,7 @@ interface EditRelationshipProps {
 	restContextPath: string;
 }
 
-export default function EditRelationship({
+export default function EditObjectRelationship({
 	baseResourceURL,
 	deletionTypes,
 	hasUpdateObjectDefinitionPermission,
@@ -42,7 +42,7 @@ export default function EditRelationship({
 	objectRelationship: initialValues,
 	parameterRequired,
 	restContextPath,
-}: EditRelationshipProps) {
+}: EditObjectRelationshipProps) {
 	const onSubmit = async (objectRelationship: ObjectRelationship) => {
 		try {
 			if (!Liferay.FeatureFlags['LPS-187142']) {

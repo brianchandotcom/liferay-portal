@@ -1,9 +1,0 @@
-#set ($records = $ddlDisplayTemplateHelper.getRecords($reserved_record_set_id))
-
-#if (!$records.isEmpty())
-	#foreach ($cur_record in $records)
-
-		<div class="ddl-record">$ddlDisplayTemplateHelper.renderRecordFieldValue($cur_record.getDDMFormFieldValues("Name").get(0), $locale)</div>
-
-	#end
-#end

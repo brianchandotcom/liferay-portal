@@ -172,7 +172,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		ListType type = _getType(postalAddress);
 
-		_addressLocalService.updateAddress(
+		address = _addressLocalService.updateAddress(
 			address.getAddressId(), postalAddress.getName(),
 			address.getDescription(), postalAddress.getStreetAddressLine1(),
 			postalAddress.getStreetAddressLine2(),
@@ -182,8 +182,10 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			address.isMailing(), postalAddress.getPrimary(),
 			address.getPhoneNumber());
 
-		return super.putAccountPostalAddress(
-			accountId, postalAddressId, postalAddress);
+		return PostalAddressUtil.toPostalAddress(
+			contextAcceptLanguage.isAcceptAllLanguages(), address,
+			contextCompany.getCompanyId(),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private Country _getCountryByTitle(PostalAddress postalAddress) {

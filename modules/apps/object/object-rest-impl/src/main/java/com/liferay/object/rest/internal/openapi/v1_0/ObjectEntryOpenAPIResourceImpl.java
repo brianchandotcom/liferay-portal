@@ -203,7 +203,13 @@ public class ObjectEntryOpenAPIResourceImpl
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
+					ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED) ||
+				 Objects.equals(
+					 objectField.getBusinessType(),
+					 ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT) ||
+				 Objects.equals(
+					 objectField.getBusinessType(),
+					 ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
 			return new DTOProperty(
 				null, objectField.getName(),

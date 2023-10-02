@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DecimalFormat;
@@ -65,6 +66,10 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 	public void appendChild(TemplateNode templateNode) {
 		_childTemplateNodes.put(templateNode.getName(), templateNode);
+
+		if (Objects.equals(templateNode.getName(), "name")) {
+			put(_RANDOM_ID + "name", getName());
+		}
 
 		put(templateNode.getName(), templateNode);
 	}
@@ -194,6 +199,10 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	public String getName() {
+		if (super.containsKey(_RANDOM_ID + "name")) {
+			return (String)get(_RANDOM_ID + "name");
+		}
+
 		Object name = get("name");
 
 		if ((name == null) || (name instanceof String)) {
@@ -472,6 +481,8 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 		return decimalFormat.format(GetterUtil.getDouble(data));
 	}
+
+	private static final String _RANDOM_ID = StringUtil.randomId();
 
 	private static final Log _log = LogFactoryUtil.getLog(TemplateNode.class);
 

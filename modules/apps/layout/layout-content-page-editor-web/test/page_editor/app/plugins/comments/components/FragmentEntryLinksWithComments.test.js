@@ -34,7 +34,7 @@ jest.mock(
 );
 
 const NO_COMMENTS_STATE = {
-	layoutData: {items: {}},
+	layoutData: {deletedItems: [], items: {}},
 };
 
 const COMMENTS_STATE = {
@@ -59,6 +59,7 @@ const COMMENTS_STATE = {
 	},
 
 	layoutData: {
+		deletedItems: [],
 		items: {
 			'sandro-item': {
 				config: {fragmentEntryLinkId: 'sandro-fragment'},

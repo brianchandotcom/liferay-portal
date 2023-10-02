@@ -5774,12 +5774,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Authenticate against the User_ table
 
-		boolean skipLiferayCheck = false;
-
 		if (authResult == Authenticator.SKIP_LIFERAY_CHECK) {
 			authResult = Authenticator.SUCCESS;
-
-			skipLiferayCheck = true;
 		}
 		else if ((authResult == Authenticator.SUCCESS) &&
 				 PropsValues.AUTH_PIPELINE_ENABLE_LIFERAY_CHECK) {

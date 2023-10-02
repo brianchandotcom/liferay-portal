@@ -1,4 +1,4 @@
-#if (!(${liferayVersion.startsWith("7.0")} && ${liferayVersion.startsWith("7.1")} && ${liferayVersion.startsWith("7.2")}) && ${reactTemplate.equals("true")})
+#if (!(${liferayVersion.startsWith("7.0")} && ${liferayVersion.startsWith("7.1")} && ${liferayVersion.startsWith("7.2")}))
 import React from 'react';
 import {FieldBase} from 'dynamic-data-mapping-form-field-type/FieldBase/ReactFieldBase.es';
 import {useSyncValue} from 'dynamic-data-mapping-form-field-type/hooks/useSyncValue.es';
@@ -9,12 +9,12 @@ import templates from './${artifactId}.soy.js';
 import {Config} from 'metal-state';
 #end
 
-#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")} || !${reactTemplate.equals("true")})
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 #end
 
-#if (!(${liferayVersion.startsWith("7.0")} && ${liferayVersion.startsWith("7.1")} && ${liferayVersion.startsWith("7.2")}) && ${reactTemplate.equals("true")})
+#if (!(${liferayVersion.startsWith("7.0")} && ${liferayVersion.startsWith("7.1")} && ${liferayVersion.startsWith("7.2")}))
 const ${className} = ({name, onChange, predefinedValue, readOnly, value}) =>
 		<input
 			className="ddm-field-${artifactId} form-control ${artifactId}"
@@ -116,6 +116,6 @@ ${className}.STATE = {
 Soy.register(${className}, templates);
 #end
 
-#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")} || !${reactTemplate.equals("true")})
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
 export default ${className};
 #end

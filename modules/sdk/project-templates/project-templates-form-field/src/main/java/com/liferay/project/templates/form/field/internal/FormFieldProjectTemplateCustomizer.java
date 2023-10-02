@@ -156,13 +156,6 @@ public class FormFieldProjectTemplateCustomizer
 			ProjectTemplatesArgs projectTemplatesArgs,
 			ArchetypeGenerationRequest archetypeGenerationRequest)
 		throws Exception {
-
-		setProperty(
-			archetypeGenerationRequest.getProperties(), "reactTemplate",
-			String.valueOf(
-				_isReactFramework(
-					(FormFieldProjectTemplatesArgs)
-						projectTemplatesArgs.getProjectTemplatesArgsExt())));
 	}
 
 	private boolean _isReactFramework(

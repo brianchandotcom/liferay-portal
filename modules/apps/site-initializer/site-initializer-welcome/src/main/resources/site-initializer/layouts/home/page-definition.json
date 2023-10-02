@@ -130,10 +130,9 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "BASIC_COMPONENT-heading"
+														"key": "BASIC_COMPONENT-paragraph"
 													},
 													"fragmentConfig": {
-														"headingLevel": "h1"
 													},
 													"fragmentFields": [
 														{
@@ -144,9 +143,6 @@
 																	}
 																},
 																"text": {
-																	"value": {
-																		"title": "Welcome to Liferay Portal"
-																	},
 																	"value_i18n": {
 																		"ar_SA": "أهلا بكم في Liferay",
 																		"ca_ES": "Benvingut, benvinguda a Liferay",
@@ -167,6 +163,8 @@
 														}
 													],
 													"fragmentStyle": {
+														"fontSize": "h1FontSize",
+														"fontWeight": "fontWeightBold",
 														"marginBottom": "3",
 														"opacity": "100"
 													},

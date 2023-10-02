@@ -160,6 +160,8 @@ export function ObjectDefinitionNode({
 	const updateModelBuilderStructure = async (
 		newObjectRelationshipId: number
 	) => {
+		const {edges, nodes} = store.getState();
+
 		const payload = await getUpdatedModelBuilderStructurePayload(
 			selectedObjectFolder.name
 		);
@@ -171,6 +173,15 @@ export function ObjectDefinitionNode({
 				selectedObjectRelationshipEdgeId: newObjectRelationshipId,
 			},
 			type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
+		});
+
+		dispatch({
+			payload: {
+				objectDefinitionNodes: nodes,
+				objectRelationshipEdges: edges,
+				selectedObjectRelationshipId: newObjectRelationshipId,
+			},
+			type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
 		});
 	};
 

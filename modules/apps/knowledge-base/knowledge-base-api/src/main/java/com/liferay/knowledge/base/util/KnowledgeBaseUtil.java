@@ -11,6 +11,10 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.json.JSONException;
@@ -109,13 +113,15 @@ public class KnowledgeBaseUtil {
 			return null;
 		}
 
-		if (params.length <= _SQL_DATA_MAX_PARAMETERS) {
+		int databaseMaxParameters = _getDatabaseMaxParameters();
+
+		if (params.length <= databaseMaxParameters) {
 			return new Long[][] {new Long[0], params};
 		}
 
 		return new Long[][] {
-			ArrayUtil.subset(params, _SQL_DATA_MAX_PARAMETERS, params.length),
-			ArrayUtil.subset(params, 0, _SQL_DATA_MAX_PARAMETERS)
+			ArrayUtil.subset(params, databaseMaxParameters, params.length),
+			ArrayUtil.subset(params, 0, databaseMaxParameters)
 		};
 	}
 
@@ -231,12 +237,28 @@ public class KnowledgeBaseUtil {
 		return s.substring(x);
 	}
 
-	private static final int _SQL_DATA_MAX_PARAMETERS = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.SQL_DATA_MAX_PARAMETERS));
+	private static int _getDatabaseMaxParameters() {
+		if (_databaseMaxParameters != 0) {
+			return _databaseMaxParameters;
+		}
+
+		DB db = DBManagerUtil.getDB();
+
+		DBType dbType = db.getDBType();
+
+		_databaseMaxParameters = GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.DATABASE_MAX_PARAMETERS,
+				new Filter(dbType.getName())),
+			Integer.MAX_VALUE);
+
+		return _databaseMaxParameters;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KnowledgeBaseUtil.class);
 
+	private static int _databaseMaxParameters;
 	private static final Pattern _validFriendlyUrlPattern = Pattern.compile(
 		"/[a-z0-9_-]+");
 

@@ -13,6 +13,10 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.base.JournalFolderServiceBaseImpl;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -21,10 +25,12 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -45,6 +51,18 @@ import org.osgi.service.component.annotations.Reference;
 	service = AopService.class
 )
 public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
+
+	public JournalFolderServiceImpl() {
+		DB db = DBManagerUtil.getDB();
+
+		DBType dbType = db.getDBType();
+
+		_databaseMaxParameters = GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.DATABASE_MAX_PARAMETERS,
+				new Filter(dbType.getName())),
+			Integer.MAX_VALUE);
+	}
 
 	@Override
 	public JournalFolder addFolder(
@@ -256,13 +274,13 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status);
 
-		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
+		if (folderIds.size() <= _databaseMaxParameters) {
 			return _journalArticleFinder.filterCountByG_F(
 				groupId, folderIds, queryDefinition);
 		}
 
 		int start = 0;
-		int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
+		int end = _databaseMaxParameters;
 
 		int articlesCount = _journalArticleFinder.filterCountByG_F(
 			groupId, folderIds.subList(start, end), queryDefinition);
@@ -552,6 +570,8 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	private final int _databaseMaxParameters;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"

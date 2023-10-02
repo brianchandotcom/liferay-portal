@@ -5,8 +5,8 @@
 
 import ClayForm from '@clayui/form';
 import {Container} from '@clayui/layout';
-import ClayLink from '@clayui/link';
 import classNames from 'classnames';
+import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {FormEvent, useEffect, useRef, useState} from 'react';
 
@@ -18,8 +18,20 @@ import {TextContent} from './TextContent';
 
 interface Props {
 	getCompletionURL: string;
+	learnResources: AICreatorModalLearnResources;
 	portletNamespace: string;
 }
+
+type AICreatorModalLearnResources = {
+	'ai-creator-openai-web': {
+		general: {
+			[key: string]: {
+				message: string;
+				url: string;
+			};
+		};
+	};
+};
 
 type RequestStatus =
 	| {type: 'idle'}
@@ -28,6 +40,7 @@ type RequestStatus =
 
 export default function AICreatorModal({
 	getCompletionURL,
+	learnResources,
 	portletNamespace,
 }: Props) {
 	const closeModal = () => {
@@ -130,12 +143,15 @@ export default function AICreatorModal({
 							/>
 						) : null}
 
-						<ClayForm.Group className="c-mb-0 d-none">
-							<ClayLink href="#">
-								{Liferay.Language.get(
-									'learn-more-about-openai-integration'
-								)}
-							</ClayLink>
+						<ClayForm.Group className="c-mb-0">
+							<LearnResourcesContext.Provider
+								value={learnResources}
+							>
+								<LearnMessage
+									resource="ai-creator-openai-web"
+									resourceKey="general"
+								/>
+							</LearnResourcesContext.Provider>
 						</ClayForm.Group>
 					</Container>
 

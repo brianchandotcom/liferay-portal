@@ -416,9 +416,12 @@ definition {
 
 			IFrame.closeFrame();
 
-			AssertElementPresent(
-				key_portletName = "Sort",
-				locator1 = "Portlet#SPECIFIC_PORTLET_SECTION");
+		task ("Assert that the Search portlets are still available by performing a search") {
+			SearchPortlets.searchWidget(searchTerm = "test");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Test Test",
+				searchAssetType = "User");
 		}
 	}
 

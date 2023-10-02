@@ -9,6 +9,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Plugin;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,6 +30,7 @@ import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletExceptio
 import com.liferay.portal.osgi.web.wab.extender.internal.registration.FilterRegistrationImpl;
 import com.liferay.portal.osgi.web.wab.extender.internal.registration.ListenerServiceRegistrationComparator;
 import com.liferay.portal.osgi.web.wab.extender.internal.registration.ServletRegistrationImpl;
+import com.liferay.portal.plugin.PluginPackageUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -44,6 +47,7 @@ import java.lang.reflect.Modifier;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -537,6 +541,13 @@ public class WabBundleProcessor {
 
 		boolean registeredPortletContextLoaderListener = false;
 
+		PluginPackage pluginPackage =
+			PluginPackageUtil.readPluginPackageServletContext(servletContext);
+
+		if (_themeTypes.equals(pluginPackage.getTypes())) {
+			registeredPortletContextLoaderListener = true;
+		}
+
 		for (ListenerDefinition listenerDefinition : listenerDefinitions) {
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -891,6 +902,9 @@ public class WabBundleProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WabBundleProcessor.class);
+
+	private static final List<String> _themeTypes = Arrays.asList(
+		Plugin.TYPE_THEME);
 
 	private final Bundle _bundle;
 	private final ClassLoader _bundleClassLoader;

@@ -331,6 +331,11 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
+	public void testPatchAccountPostalAddress() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPutAccountPostalAddress() throws Exception {
 		PostalAddress postPostalAddress =
 			testPutAccountPostalAddress_addPostalAddress();

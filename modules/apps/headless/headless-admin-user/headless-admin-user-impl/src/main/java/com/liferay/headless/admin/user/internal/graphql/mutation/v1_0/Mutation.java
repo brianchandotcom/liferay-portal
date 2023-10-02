@@ -1312,6 +1312,23 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Updates the postal address of the Account with information sent in the request body. Only the provided fields are updated."
+	)
+	public PostalAddress patchAccountPostalAddress(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("postalAddressId") Long postalAddressId,
+			@GraphQLName("postalAddress") PostalAddress postalAddress)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource ->
+				postalAddressResource.patchAccountPostalAddress(
+					accountId, postalAddressId, postalAddress));
+	}
+
+	@GraphQLField(
 		description = "Replaces the Postal Address with information sent in the request body. Any missing fields are deleted unless they are required."
 	)
 	public PostalAddress updateAccountPostalAddress(

@@ -166,7 +166,7 @@ export function RightSidebarObjectFieldDetails() {
 
 				<div className="lfr-objects__model-builder-right-sidebar-definition-node-title-buttons-container">
 					<ClayButton
-						aria-label="Save"
+						aria-labelledby={Liferay.Language.get('save')}
 						className="lfr-objects__model-builder-right-sidebar-definition-node-title-save-button"
 						displayType="primary"
 						onClick={() => onSubmit()}
@@ -177,14 +177,14 @@ export function RightSidebarObjectFieldDetails() {
 					{!values.system &&
 						values.businessType !== 'Relationship' && (
 							<ClayButtonWithIcon
-								aria-label="Delete"
+								aria-label={Liferay.Language.get('delete')}
 								className="lfr-objects__model-builder-right-sidebar-definition-node-title-delete-button"
 								displayType="secondary"
 								onClick={() =>
 									handleTriggerDeleteObjectFieldModal()
 								}
 								symbol="trash"
-								title="Delete"
+								title={Liferay.Language.get('delete')}
 							/>
 						)}
 				</div>

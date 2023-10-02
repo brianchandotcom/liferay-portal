@@ -130,6 +130,7 @@ export default function EditObjectFolderHeader({
 					)}
 
 					<ClayButton
+						aria-labelledby={Liferay.Language.get('publish')}
 						disabled={!hasDraftObjectDefinitions}
 						displayType="primary"
 						onClick={() => {

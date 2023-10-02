@@ -243,6 +243,9 @@ export default function LeftSidebarTreeView({
 									<ClayTooltipProvider>
 										<div className="lfr-objects__model-builder-left-sidebar-go-to-folder-button">
 											<ClayButton
+												aria-label={Liferay.Language.get(
+													'go-to-folder'
+												)}
 												data-tooltip-align="bottom"
 												displayType={null}
 												onClick={() =>
@@ -319,6 +322,9 @@ export default function LeftSidebarTreeView({
 													]}
 													trigger={
 														<ClayButton
+															aria-label={Liferay.Language.get(
+																'actions'
+															)}
 															displayType={null}
 															monospaced
 														>

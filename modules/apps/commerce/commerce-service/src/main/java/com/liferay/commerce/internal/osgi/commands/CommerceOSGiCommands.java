@@ -7,6 +7,7 @@ package com.liferay.commerce.internal.osgi.commands;
 
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.commerce.subscription.CommerceSubscriptionEntryHelper;
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -19,9 +20,9 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=checkSubscriptionEntriesStatus",
 		"osgi.command.scope=commerce"
 	},
-	service = CommerceOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class CommerceOSGiCommands {
+public class CommerceOSGiCommands implements OSGiCommands {
 
 	public void renewSubscriptionEntries() throws Exception {
 		_commerceSubscriptionEntryHelper.checkSubscriptionEntriesStatus(

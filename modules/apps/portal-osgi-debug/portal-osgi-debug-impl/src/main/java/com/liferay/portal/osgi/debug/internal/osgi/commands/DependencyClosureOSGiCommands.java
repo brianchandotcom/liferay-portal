@@ -5,6 +5,8 @@
 
 package com.liferay.portal.osgi.debug.internal.osgi.commands;
 
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -29,9 +31,9 @@ import org.osgi.service.component.annotations.Component;
 		"osgi.command.function=dc", "osgi.command.function=idc",
 		"osgi.command.scope=system"
 	},
-	service = DependencyClosureOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class DependencyClosureOSGiCommands {
+public class DependencyClosureOSGiCommands implements OSGiCommands {
 
 	public void dc(long bundleId, long... additionalBundleIds) {
 		List<Bundle> bundles = new ArrayList<>();

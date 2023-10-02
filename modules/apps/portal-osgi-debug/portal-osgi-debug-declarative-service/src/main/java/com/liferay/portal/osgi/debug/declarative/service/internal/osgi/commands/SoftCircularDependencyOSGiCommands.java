@@ -5,6 +5,7 @@
 
 package com.liferay.portal.osgi.debug.declarative.service.internal.osgi.commands;
 
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.portal.osgi.debug.declarative.service.internal.SoftCircularDependencyUtil;
 
 import org.osgi.framework.BundleContext;
@@ -20,9 +21,9 @@ import org.osgi.service.component.runtime.ServiceComponentRuntime;
 	property = {
 		"osgi.command.function=softCircularDependency", "osgi.command.scope=ds"
 	},
-	service = SoftCircularDependencyOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class SoftCircularDependencyOSGiCommands {
+public class SoftCircularDependencyOSGiCommands implements OSGiCommands {
 
 	public void softCircularDependency() {
 		System.out.println(

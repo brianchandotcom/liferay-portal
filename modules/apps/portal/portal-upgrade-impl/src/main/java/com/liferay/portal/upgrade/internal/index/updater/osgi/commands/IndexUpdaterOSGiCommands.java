@@ -5,6 +5,7 @@
 
 package com.liferay.portal.upgrade.internal.index.updater.osgi.commands;
 
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.kernel.module.util.BundleUtil;
@@ -24,9 +25,9 @@ import org.osgi.service.component.annotations.Component;
 		"osgi.command.function=updateIndexes",
 		"osgi.command.function=updateIndexesAll", "osgi.command.scope=upgrade"
 	},
-	service = IndexUpdaterOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class IndexUpdaterOSGiCommands {
+public class IndexUpdaterOSGiCommands implements OSGiCommands {
 
 	@Descriptor("Update database indexes for a specific module via bundle ID")
 	public String updateIndexes(long bundleId) throws Exception {

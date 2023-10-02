@@ -9,6 +9,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.serializer.LayoutStructureItemJSONSerializer;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -26,9 +27,9 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osgi.command.function=exportAsJSON", "osgi.command.scope=layout"
 	},
-	service = LayoutOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class LayoutOSGiCommands {
+public class LayoutOSGiCommands implements OSGiCommands {
 
 	@Descriptor("Get page definition JSON for a given layout by its PLID")
 	public String exportAsJSON(long plid) throws PortalException {

@@ -11,5 +11,6 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-theme-minium:commerce-theme-minium-api")
 	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:site:site-api")
+	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":dxp:apps:commerce:commerce-machine-learning-api")
 }

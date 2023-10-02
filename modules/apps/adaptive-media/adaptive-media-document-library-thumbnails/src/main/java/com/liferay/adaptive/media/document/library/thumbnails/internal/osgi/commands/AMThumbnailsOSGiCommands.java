@@ -14,6 +14,7 @@ import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,9 +52,9 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=check", "osgi.command.function=cleanUp",
 		"osgi.command.function=migrate", "osgi.command.scope=thumbnails"
 	},
-	service = AMThumbnailsOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class AMThumbnailsOSGiCommands {
+public class AMThumbnailsOSGiCommands implements OSGiCommands {
 
 	public void check(String... companyIds) {
 		System.out.println("Company ID\t# of thumbnails pending migration");

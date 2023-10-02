@@ -5,6 +5,7 @@
 
 package com.liferay.portal.osgi.debug.internal.osgi.commands;
 
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.portal.kernel.util.SystemCheckerUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -14,9 +15,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {"osgi.command.function=check", "osgi.command.scope=system"},
-	service = SystemCheckOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class SystemCheckOSGiCommands {
+public class SystemCheckOSGiCommands implements OSGiCommands {
 
 	public void check() {
 		SystemCheckerUtil.runSystemCheckers(

@@ -8,6 +8,7 @@ package com.liferay.commerce.theme.minium.full.site.initializer.internal.osgi.co
 import com.liferay.commerce.theme.minium.SiteInitializerDependencyResolver;
 import com.liferay.commerce.theme.minium.full.site.initializer.internal.importer.CommerceMLForecastImporter;
 import com.liferay.commerce.theme.minium.full.site.initializer.internal.importer.CommerceMLRecommendationImporter;
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Company;
@@ -38,9 +39,9 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=importRecommendations",
 		"osgi.command.scope=commerce"
 	},
-	service = CommerceOSGiCommands.class
+	service = OSGiCommands.class
 )
-public class CommerceOSGiCommands {
+public class CommerceOSGiCommands implements OSGiCommands {
 
 	public void importForecasts(long siteId) throws Exception {
 		User user = _getImportUserByGroupId(siteId);

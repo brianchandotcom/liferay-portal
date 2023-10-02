@@ -461,6 +461,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).put(
 					"javax.portlet.name", objectDefinition.getPortletId()
 				).put(
+					"javax.portlet.security-role-ref",
+					() -> {
+						if (objectDefinition.isRootDescendantNode()) {
+							return StringPool.BLANK;
+						}
+
+						return null;
+					}
+				).put(
 					"javax.portlet.version", "3.0"
 				).build()),
 			_bundleContext.registerService(

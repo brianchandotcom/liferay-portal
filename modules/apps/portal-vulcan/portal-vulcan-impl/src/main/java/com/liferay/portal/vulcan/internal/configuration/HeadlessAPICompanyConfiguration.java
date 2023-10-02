@@ -17,8 +17,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration",
-	localization = "content/Language",
-	name = "headless-api-configuration-name"
+	localization = "content/Language", name = "headless-api-configuration-name"
 )
 public interface HeadlessAPICompanyConfiguration {
 

@@ -116,6 +116,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FS_PRODUCT_UOM_SELECTOR_VALUE</td>
+	<td>//select[contains(@class,'unit-of-measure-selector')]//option[contains(@value,'${uomName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_UOM_SELECTOR_VALUE_BY_INDEX</td>
+	<td>//select[contains(@class,'unit-of-measure-selector')]//option[${index}][contains(@value,'${uomName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FS_PRODUCT_BOOLEAN_OPTION</td>
 	<td>//div/label[text()='${key_optionName}']/..//input[@type='checkbox']</td>
 	<td></td>

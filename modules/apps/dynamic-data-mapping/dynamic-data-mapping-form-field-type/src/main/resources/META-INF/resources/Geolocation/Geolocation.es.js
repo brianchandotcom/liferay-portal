@@ -114,7 +114,11 @@ const Main = ({
 			instanceId={instanceId}
 			mapProviderKey={mapProviderKey}
 			name={name}
-			onChange={(value) => onChange({}, value)}
+			onChange={(value) => {
+				if (value !== '{"lat":0,"lng":0}') {
+					onChange({}, value);
+				}
+			}}
 			value={value}
 			viewMode={viewMode}
 		/>

@@ -202,11 +202,11 @@ public class ObjectEntryOpenAPIResourceImpl
 			};
 		}
 		else if (Objects.equals(
-			objectField.getBusinessType(), ObjectFieldConstants.DB_TYPE_CLOB)) {
+			objectField.getBusinessType(), ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
 
 			return new DTOProperty(
 				null, objectField.getName(),
-				objectField.getDBType()) {
+				ObjectFieldConstants.DB_TYPE_STRING) {
 				{
 					setRequired(objectField.isRequired());
 				}

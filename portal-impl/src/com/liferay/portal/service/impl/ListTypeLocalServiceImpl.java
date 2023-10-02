@@ -10,10 +10,10 @@ import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ListType;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.base.ListTypeLocalServiceBaseImpl;
+import com.liferay.portal.util.PortalInstances;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +26,7 @@ public class ListTypeLocalServiceImpl extends ListTypeLocalServiceBaseImpl {
 	@Override
 	public ListType addListType(String name, String type) {
 		ListType listType = listTypePersistence.fetchByC_N_T(
-			CompanyThreadLocal.getCompanyId(), name, type);
+			PortalInstances.getCurrentCompanyId(), name, type);
 
 		if (listType != null) {
 			return listType;
@@ -56,13 +56,13 @@ public class ListTypeLocalServiceImpl extends ListTypeLocalServiceBaseImpl {
 	@Override
 	public ListType getListType(String name, String type) {
 		return listTypePersistence.fetchByC_N_T(
-			CompanyThreadLocal.getCompanyId(), name, type);
+			PortalInstances.getCurrentCompanyId(), name, type);
 	}
 
 	@Override
 	public List<ListType> getListTypes(String type) {
 		return listTypePersistence.findByC_T(
-			CompanyThreadLocal.getCompanyId(), type);
+			PortalInstances.getCurrentCompanyId(), type);
 	}
 
 	@Override

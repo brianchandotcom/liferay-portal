@@ -181,7 +181,7 @@ export default function DefaultObjectRelationshipEdge({
 						payload: {
 							objectDefinitionNodes: nodes,
 							objectRelationshipEdges: edges,
-							selectedObjectRelationshipId: objectRelationshipId.toString(),
+							selectedObjectRelationshipId: objectRelationshipId,
 						},
 						type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
 					});

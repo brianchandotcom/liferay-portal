@@ -843,13 +843,20 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				selectedObjectRelationshipId,
 			} = action.payload;
 
+			const selectedObjectRelationshipEdge = objectRelationshipEdges.find(
+				(objectRelationshipEdge) =>
+					objectRelationshipEdge.data?.objectRelationshipId ===
+					selectedObjectRelationshipId
+			);
+
 			const newObjectRelationshipEdges = objectRelationshipEdges.map(
 				(objectRelationshipEdge) => ({
 					...objectRelationshipEdge,
 					data: {
 						...objectRelationshipEdge.data,
 						selected:
-							objectRelationshipEdge.data?.objectRelationshipId.toString() ===
+							objectRelationshipEdge.data
+								?.objectRelationshipId ===
 							selectedObjectRelationshipId,
 					},
 				})
@@ -889,6 +896,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				],
 				rightSidebarType: 'objectRelationshipDetails',
 				selectedObjectField: undefined,
+				selectedObjectRelationship: selectedObjectRelationshipEdge,
 			};
 		}
 

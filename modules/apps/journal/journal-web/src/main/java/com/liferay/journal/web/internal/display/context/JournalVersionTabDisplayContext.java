@@ -8,8 +8,6 @@ package com.liferay.journal.web.internal.display.context;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleServiceUtil;
-import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -32,7 +30,6 @@ public class JournalVersionTabDisplayContext {
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
 		_article = article;
-
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_trashHelper = trashHelper;
@@ -50,17 +47,6 @@ public class JournalVersionTabDisplayContext {
 
 		return articleActionDropdownItemsProvider.
 			getArticleVersionTabActionDropdownItems();
-	}
-
-	public List<JournalArticle> getJournalArticlesLatestVersions() {
-		return JournalArticleServiceUtil.getArticlesByArticleId(
-			_article.getGroupId(), _article.getArticleId(), 0, 10,
-			new ArticleVersionComparator());
-	}
-
-	public int getJournalArticlesVersionsCount() {
-		return JournalArticleServiceUtil.getArticlesCountByArticleId(
-			_article.getGroupId(), _article.getArticleId());
 	}
 
 	public String getViewMoreURL() {

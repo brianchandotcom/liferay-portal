@@ -215,8 +215,6 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 
 				<%
 				JournalVersionTabDisplayContext journalVersionTabDisplayContext = new JournalVersionTabDisplayContext(assetDisplayPageFriendlyURLProvider, article, liferayPortletRequest, liferayPortletResponse, trashHelper);
-
-				List<JournalArticle> versionsList = journalVersionTabDisplayContext.getJournalArticlesLatestVersions();
 				%>
 
 				<clay:tabs
@@ -323,7 +321,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						<ul class="list-group sidebar-list-group">
 
 							<%
-							for (JournalArticle articleVersion : versionsList) {
+							for (JournalArticle articleVersion : JournalArticleServiceUtil.getArticlesByArticleId(article.getGroupId(), article.getArticleId(), 0, 10, new ArticleVersionComparator())) {
 							%>
 
 								<li class="list-group-item list-group-item-flex p-0">
@@ -366,7 +364,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 
 						</ul>
 
-						<c:if test="<%= journalVersionTabDisplayContext.getJournalArticlesVersionsCount() > 10 %>">
+						<c:if test="<%= JournalArticleServiceUtil.getArticlesCountByArticleId(article.getGroupId(), article.getArticleId()) > 10 %>">
 							<div class="c-mt-3 d-flex justify-content-center">
 								<clay:link
 									displayType="secondary"

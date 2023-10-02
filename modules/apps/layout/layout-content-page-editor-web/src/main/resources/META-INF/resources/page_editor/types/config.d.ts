@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import type {LayoutType} from "../app/config/constants/layoutTypes";
+import type {LayoutType} from '../app/config/constants/layoutTypes';
 
 export interface Config {
 	actionableInfoItemSelectorURL: string;
@@ -68,10 +68,13 @@ export interface Config {
 		}>;
 	}>;
 
-	commonStylesFields: Record<string, {
-		cssTemplate: string,
-		defaultValue: string | object,
-	}>;
+	commonStylesFields: Record<
+		string,
+		{
+			cssTemplate: string;
+			defaultValue: string | object;
+		}
+	>;
 
 	contentPagePersonalizationLearnURL: string;
 	createLayoutPageTemplateEntryURL: string;

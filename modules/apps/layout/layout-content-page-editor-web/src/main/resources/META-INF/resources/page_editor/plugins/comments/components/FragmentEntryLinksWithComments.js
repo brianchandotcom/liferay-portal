@@ -12,6 +12,7 @@ import {
 	useSelectItem,
 } from '../../../app/contexts/ControlsContext';
 import {useSelector} from '../../../app/contexts/StoreContext';
+import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDeleted';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import NoCommentsMessage from './NoCommentsMessage';
 import ResolvedCommentsToggle from './ResolvedCommentsToggle';
@@ -19,7 +20,11 @@ import ResolvedCommentsToggle from './ResolvedCommentsToggle';
 export default function FragmentEntryLinksWithComments() {
 	const itemsWithComments = useSelector((state) =>
 		Object.values(state.layoutData.items)
-			.filter((item) => item.type === LAYOUT_DATA_ITEM_TYPES.fragment)
+			.filter(
+				(item) =>
+					item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
+					!isLayoutDataItemDeleted(state.layoutData, item.itemId)
+			)
 			.map((item) => [
 				item,
 				state.fragmentEntryLinks[item.config.fragmentEntryLinkId],

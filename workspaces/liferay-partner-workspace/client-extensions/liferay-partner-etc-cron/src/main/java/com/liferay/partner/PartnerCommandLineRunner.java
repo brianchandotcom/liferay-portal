@@ -24,6 +24,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriBuilder;
 
@@ -195,8 +196,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 	private JSONObject _get(Function<UriBuilder, URI> uriFunction) {
 		return new JSONObject(
-			WebClient.create(
-				_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+			_getWebClient(
 			).get(
 			).uri(
 				uriBuilder -> uriFunction.apply(uriBuilder)
@@ -211,9 +211,23 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 			).block());
 	}
 
-	private void _put(String bodyValue, String path) {
-		WebClient.create(
+	private WebClient _getWebClient() {
+		return WebClient.builder(
+		).baseUrl(
 			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+		).exchangeStrategies(
+			ExchangeStrategies.builder(
+			).codecs(
+				configurer -> configurer.defaultCodecs(
+				).maxInMemorySize(
+					5 * 1024 * 1024
+				)
+			).build()
+		).build();
+	}
+
+	private void _put(String bodyValue, String path) {
+		_getWebClient(
 		).put(
 		).uri(
 			uriBuilder -> uriBuilder.path(

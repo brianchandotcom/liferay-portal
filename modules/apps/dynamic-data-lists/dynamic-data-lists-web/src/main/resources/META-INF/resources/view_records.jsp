@@ -54,6 +54,8 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 	sortingURL="<%= ddlViewRecordsDisplayContext.getSortingURL() %>"
 />
 
+<%@ include file="/deprecated_warning.jspf" %>
+
 <clay:container-fluid
 	cssClass="view-records-container"
 	id='<%= liferayPortletResponse.getNamespace() + "formContainer" %>'

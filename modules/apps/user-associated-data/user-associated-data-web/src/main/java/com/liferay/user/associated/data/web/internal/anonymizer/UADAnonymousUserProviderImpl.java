@@ -173,9 +173,7 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 					"userId", anonymousUser.getUserId()
 				).build());
 
-			_updateStatus(anonymousUser);
-
-			return anonymousUser;
+			return _updateStatus(anonymousUser);
 		}
 
 		Dictionary<String, Object> properties = configuration.getProperties();
@@ -197,13 +195,11 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 
 		configuration.update(properties);
 
-		_updateStatus(anonymousUser);
-
-		return anonymousUser;
+		return _updateStatus(anonymousUser);
 	}
 
-	private void _updateStatus(User anonymousUser) throws Exception {
-		_userLocalService.updateStatus(
+	private User _updateStatus(User anonymousUser) throws Exception {
+		return _userLocalService.updateStatus(
 			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
 			new ServiceContext());
 	}

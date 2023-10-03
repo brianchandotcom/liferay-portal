@@ -14,6 +14,7 @@ interface ScopeContainerProps {
 	isApproved: boolean;
 	isLinkedObjectDefinition?: boolean;
 	isRootDescendantNode: boolean;
+	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	siteKeyValuePairs: KeyValuePair[];
 	values: Partial<ObjectDefinition>;
@@ -25,6 +26,7 @@ export declare function ScopeContainer({
 	isApproved,
 	isLinkedObjectDefinition,
 	isRootDescendantNode,
+	onSubmit,
 	setValues,
 	siteKeyValuePairs,
 	values,

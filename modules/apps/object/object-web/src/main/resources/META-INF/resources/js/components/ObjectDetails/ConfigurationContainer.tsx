@@ -11,6 +11,7 @@ interface ConfigurationContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
 	isLinkedObjectDefinition?: boolean;
 	isRootDescendantNode: boolean;
+	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
@@ -19,6 +20,7 @@ export function ConfigurationContainer({
 	hasUpdateObjectDefinitionPermission,
 	isLinkedObjectDefinition,
 	isRootDescendantNode,
+	onSubmit,
 	setValues,
 	values,
 }: ConfigurationContainerProps) {
@@ -38,6 +40,13 @@ export function ConfigurationContainer({
 					Liferay.Language.get('page-builder')
 				)}
 				name="showWidget"
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onToggle={() => setValues({portlet: !values.portlet})}
 				toggled={values.portlet}
 			/>
@@ -49,6 +58,13 @@ export function ConfigurationContainer({
 					Liferay.Language.get('categorization-of-object-entries')
 				)}
 				name="enableCategorization"
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onToggle={() =>
 					setValues({
 						enableCategorization: !values.enableCategorization,
@@ -64,6 +80,13 @@ export function ConfigurationContainer({
 					Liferay.Language.get('comments-in-page-builder')
 				)}
 				name="enableComments"
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onToggle={() =>
 					setValues({
 						enableComments: !values.enableComments,
@@ -79,6 +102,13 @@ export function ConfigurationContainer({
 					Liferay.Language.get('entry-history-in-audit-framework')
 				)}
 				name="enableEntryHistory"
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onToggle={() =>
 					setValues({
 						enableObjectEntryHistory: !values.enableObjectEntryHistory,
@@ -96,6 +126,13 @@ export function ConfigurationContainer({
 						'allow-users-to-save-entries-as-draft'
 					)}
 					name="enableObjectEntryDraft"
+					onBlur={(event) => {
+						event.stopPropagation();
+
+						if (onSubmit) {
+							onSubmit();
+						}
+					}}
 					onToggle={() =>
 						setValues({
 							enableObjectEntryDraft: !values.enableObjectEntryDraft,

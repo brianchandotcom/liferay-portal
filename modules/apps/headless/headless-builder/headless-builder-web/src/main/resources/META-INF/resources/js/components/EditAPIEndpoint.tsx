@@ -81,6 +81,9 @@ export default function EditAPIEndpoint({
 				...(response.apiEndpointToAPIFilters?.length && {
 					apiEndpointToAPIFilters: response.apiEndpointToAPIFilters,
 				}),
+				...(response.apiEndpointToAPISorts?.length && {
+					apiEndpointToAPISorts: response.apiEndpointToAPISorts,
+				}),
 				...(response.description && {
 					description: response.description,
 				}),

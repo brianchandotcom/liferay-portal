@@ -216,9 +216,6 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 			actionRequest, "price", BigDecimal.ZERO);
 		boolean priceOnApplication = ParamUtil.getBoolean(
 			actionRequest, "priceOnApplication");
-		String unitOfMeasureKey = ParamUtil.getString(
-			actionRequest, "unitOfMeasureKey",
-			commercePriceEntry.getUnitOfMeasureKey());
 
 		if (priceOnApplication) {
 			bulkPricing = commercePriceEntry.isBulkPricing();
@@ -236,7 +233,8 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, price, priceOnApplication, unitOfMeasureKey,
+			neverExpire, price, priceOnApplication,
+			commercePriceEntry.getUnitOfMeasureKey(),
 			ServiceContextFactory.getInstance(
 				CommercePriceEntry.class.getName(), actionRequest));
 	}

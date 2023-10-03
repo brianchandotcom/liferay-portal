@@ -820,7 +820,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				PortletURLBuilder.createActionURL(
 					_liferayPortletResponse
 				).setActionName(
-					"/journal/publish_article"
+					"/journal/publish_articles"
 				).setBackURL(
 					_getRedirect()
 				).setParameter(

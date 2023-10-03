@@ -10,6 +10,10 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNotNull(redirect)) {
+	portletDisplay.setURLBack(redirect);
+}
+
 User user2 = (User)request.getAttribute(WebKeys.FORGOT_PASSWORD_REMINDER_USER);
 
 if (Validator.isNull(authType)) {
@@ -22,10 +26,6 @@ Integer reminderAttempts = (Integer)portletSession.getAttribute(WebKeys.FORGOT_P
 
 if (reminderAttempts == null) {
 	reminderAttempts = 0;
-}
-
-if (Validator.isNotNull(redirect)) {
-	portletDisplay.setURLBack(redirect);
 }
 
 renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));

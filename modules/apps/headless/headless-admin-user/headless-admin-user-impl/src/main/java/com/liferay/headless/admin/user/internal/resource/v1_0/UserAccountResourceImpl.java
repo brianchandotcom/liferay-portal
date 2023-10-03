@@ -402,17 +402,17 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			Sort[] sorts)
 		throws Exception {
 
-		Integer workflowStatus = null;
+		Integer statusInteger = null;
 
 		if (StringUtil.equalsIgnoreCase(
 				UserAccount.Status.ACTIVE.getValue(), status)) {
 
-			workflowStatus = WorkflowConstants.STATUS_APPROVED;
+			statusInteger = WorkflowConstants.STATUS_APPROVED;
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					UserAccount.Status.INACTIVE.getValue(), status)) {
 
-			workflowStatus = WorkflowConstants.STATUS_INACTIVE;
+			statusInteger = WorkflowConstants.STATUS_INACTIVE;
 		}
 		else {
 			throw new BadRequestException("Status is invalid");
@@ -449,7 +449,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 					new TermFilter("userName", StringPool.BLANK),
 					BooleanClauseOccur.MUST_NOT);
 			},
-			filter, search, pagination, sorts, workflowStatus);
+			filter, search, pagination, sorts, statusInteger);
 	}
 
 	@Override

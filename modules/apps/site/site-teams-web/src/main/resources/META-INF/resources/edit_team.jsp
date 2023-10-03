@@ -22,6 +22,7 @@ Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle((team == null) ? LanguageUtil.get(request, "new-team") : team.getName());
 %>

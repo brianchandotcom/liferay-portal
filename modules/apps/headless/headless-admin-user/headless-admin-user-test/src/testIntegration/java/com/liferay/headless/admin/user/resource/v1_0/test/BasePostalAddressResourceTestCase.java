@@ -353,7 +353,8 @@ public abstract class BasePostalAddressResourceTestCase {
 		assertValid(putPostalAddress);
 
 		PostalAddress getPostalAddress =
-			postalAddressResource.getPostalAddress(
+			postalAddressResource.getAccountPostalAddress(
+				testPutAccountPostalAddress_getAccountId(),
 				putPostalAddress.getId());
 
 		assertEquals(randomPostalAddress, getPostalAddress);

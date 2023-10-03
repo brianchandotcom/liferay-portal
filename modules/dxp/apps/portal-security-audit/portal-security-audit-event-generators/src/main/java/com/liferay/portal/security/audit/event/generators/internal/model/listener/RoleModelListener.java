@@ -137,10 +137,9 @@ public class RoleModelListener extends BaseModelListener<Role> {
 
 				Group group = _groupLocalService.getGroup(groupId);
 
-				long classNameId = group.getClassNameId();
-
-				if (classNameId == _classNameService.getClassNameId(
-						Organization.class.getName())) {
+				if (group.getClassNameId() ==
+						_classNameService.getClassNameId(
+							Organization.class.getName())) {
 
 					Organization organization =
 						_organizationService.getOrganization(
@@ -152,8 +151,9 @@ public class RoleModelListener extends BaseModelListener<Role> {
 						"organizationName", organization.getName()
 					);
 				}
-				else if (classNameId == _classNameService.getClassNameId(
-							UserGroup.class.getName())) {
+				else if (group.getClassNameId() ==
+						 _classNameService.getClassNameId(
+							 UserGroup.class.getName())) {
 
 					UserGroup userGroup = _userGroupService.getUserGroup(
 						group.getClassPK());

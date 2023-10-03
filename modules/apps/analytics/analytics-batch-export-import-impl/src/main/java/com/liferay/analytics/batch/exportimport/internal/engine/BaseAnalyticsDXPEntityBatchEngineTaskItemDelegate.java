@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -124,18 +123,6 @@ public abstract class BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		}
 
 		return predicate;
-	}
-
-	protected void getSearchContext(SearchUtil.SearchContext searchContext) {
-		searchContext.setCompanyId(contextCompany.getCompanyId());
-		searchContext.setGroupIds(new long[] {0});
-
-		if (contextUser.getLocale() != null) {
-			searchContext.setLocale(contextUser.getLocale());
-		}
-
-		searchContext.setUserId(0);
-		searchContext.setVulcanCheckPermissions(false);
 	}
 
 	private static final EntityModel _entityModel =

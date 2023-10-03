@@ -6,7 +6,9 @@
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_ITEM,
+	ADD_RULE,
 	DELETE_ITEM,
+	DELETE_RULE,
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
 	UPDATE_COLLECTION_DISPLAY_COLLECTION,
@@ -17,11 +19,13 @@ import {
 	UPDATE_ITEM_LOCAL_CONFIG,
 	UPDATE_PREVIEW_IMAGE,
 	UPDATE_ROW_COLUMNS,
+	UPDATE_RULE,
 } from '../actions/types';
 import {setIn} from '../utils/setIn';
 
 export const INITIAL_STATE = {
 	items: {},
+	rules: [],
 };
 
 export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
@@ -30,11 +34,14 @@ export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 		case UPDATE_COLLECTION_DISPLAY_COLLECTION:
 		case ADD_FRAGMENT_ENTRY_LINKS:
 		case ADD_ITEM:
+		case ADD_RULE:
 		case DELETE_ITEM:
+		case DELETE_RULE:
 		case DUPLICATE_ITEM:
 		case MOVE_ITEM:
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION:
 		case UPDATE_ROW_COLUMNS:
+		case UPDATE_RULE:
 			return action.layoutData;
 
 		case UPDATE_FORM_ITEM_CONFIG:

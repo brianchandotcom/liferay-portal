@@ -211,7 +211,9 @@ public class ObjectEntryOpenAPIResourceImpl
 					 objectField.getBusinessType(),
 					 ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
-			return new DTOProperty(null, objectField.getName(), "String") {
+			return new DTOProperty(
+				Collections.singletonMap("x-parent-map", "properties"),
+				objectField.getName(), "String") {
 				{
 					setRequired(objectField.isRequired());
 				}

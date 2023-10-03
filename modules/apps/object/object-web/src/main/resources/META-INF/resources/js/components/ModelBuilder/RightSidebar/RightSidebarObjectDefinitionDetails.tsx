@@ -212,7 +212,7 @@ export function RightSidebarObjectDefinitionDetails({
 				<div className="lfr-objects__model-builder-right-sidebar-details-title-buttons-container">
 					<ClayButton
 						aria-label={Liferay.Language.get('save-definition')}
-						className="lfr-objects__model-builder-right-sidebar-object-definition-node-details-save-button"
+						className="lfr-objects__model-builder-right-sidebar-object-definition-node-details-title-save-button"
 						disabled={
 							selectedObjectDefinitionNode?.data
 								?.linkedObjectDefinition

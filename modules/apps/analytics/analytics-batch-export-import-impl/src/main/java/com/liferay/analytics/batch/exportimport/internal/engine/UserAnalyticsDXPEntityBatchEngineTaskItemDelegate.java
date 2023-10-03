@@ -109,7 +109,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		return joinStep.where(
 			buildPredicate(
-				companyId,
+				UserTable.INSTANCE, companyId,
 				UserTable.INSTANCE.screenName.neq(
 					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN
 				).and(
@@ -166,7 +166,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		return joinStep.where(
 			buildPredicate(
-				companyId,
+				UserTable.INSTANCE, companyId,
 				UserTable.INSTANCE.screenName.neq(
 					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN
 				).and(

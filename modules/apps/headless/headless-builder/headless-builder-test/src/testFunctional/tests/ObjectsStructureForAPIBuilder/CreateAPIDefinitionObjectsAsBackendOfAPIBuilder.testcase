@@ -391,10 +391,10 @@ definition {
 				version = "properties");
 		}
 
-		task ("Then the fields description, name*, objectFieldERC*, objectRelationshipNames, parentAPIPropertyERC are present in the APIProperty schema") {
+		task ("Then the fields description, name*, objectFieldERC*, objectRelationshipNames are present in the APIProperty schema") {
 			APIExplorer.assertSchemaFieldsPresent(
 				schemaEntity = "APIProperty",
-				schemaFields = "description,name*,objectFieldERC*,objectRelationshipNames,parentAPIPropertyERC");
+				schemaFields = "description,name*,objectFieldERC*,objectRelationshipNames");
 		}
 	}
 

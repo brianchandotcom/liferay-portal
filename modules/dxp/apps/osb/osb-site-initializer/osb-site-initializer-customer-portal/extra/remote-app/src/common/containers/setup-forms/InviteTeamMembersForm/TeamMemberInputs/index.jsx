@@ -10,7 +10,7 @@ import i18n from '../../../../I18n';
 import {Input, Select} from '../../../../components';
 import useBannedDomains from '../../../../hooks/useBannedDomains';
 import {ROLE_TYPES} from '../../../../utils/constants/';
-import LiferayDomainsList from '../../../../utils/constants/liferaysDomainList';
+import {liferayDomains} from '../../../../utils/constants/liferayDomains';
 import {
 	isLiferayDomain,
 	isValidEmail,
@@ -35,33 +35,25 @@ const TeamMemberInputs = ({
 		FETCH_DELAY_AFTER_TYPING
 	);
 
-	const extractDomain = (email) => {
-		const domain = email.split('@')[1];
-
-		return domain;
-	};
-
 	const validateEmail = useMemo(async () => {
+		const [, domain] = invite?.email.split('@');
+
 		if (isValidEmail(invite?.email, bannedDomains)) {
 			return isValidEmail(invite?.email, bannedDomains);
 		}
 
-		const hasLiferayDomain = LiferayDomainsList.includes(
-			extractDomain(invite?.email)
-		);
+		const hasLiferayDomain = liferayDomains.includes(domain);
 
 		if (hasLiferayDomain) {
-			const doesEmailExistInOkta = await provisioningService.getUserInOkta(
+			const emailExistsInOkta = await provisioningService.getUserInOkta(
 				invite?.email
 			);
-			if (!doesEmailExistInOkta) {
+			if (!emailExistsInOkta) {
 				return isLiferayDomain(invite?.email);
 			}
 
 			return false;
 		}
-
-		return false;
 	}, [bannedDomains, invite?.email, provisioningService]);
 
 	const isAdministratorOrRequestorRoleSelected =

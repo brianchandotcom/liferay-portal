@@ -106,8 +106,7 @@ class ProvisioningLicenseKeys {
 	}
 
 	public async getUserInOkta(contactEmailAddress: string) {
-		return this.fetcher(`/contacts/${contactEmailAddress}/validate
-		`);
+		return this.fetcher(`/contacts/${contactEmailAddress}/validate`);
 	}
 
 	public async putDeactivateKeys(licenseKeyIds: string) {

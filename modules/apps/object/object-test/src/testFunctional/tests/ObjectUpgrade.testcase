@@ -140,6 +140,7 @@ definition {
 
 	@priority = 5
 	test ViewObjectDefinitionDetailsAfterUpgrade7413U33 {
+		property custom.properties = "feature.flag.LPS-181663=true";
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
@@ -170,6 +171,10 @@ definition {
 				value1 = "Site Administration > Content & Data");
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
 		task ("Edit an Object Definition Details after Upgrade") {

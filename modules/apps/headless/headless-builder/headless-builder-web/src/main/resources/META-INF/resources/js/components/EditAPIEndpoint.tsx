@@ -21,7 +21,7 @@ import EditEndpointConfiguration from './EditEndpointConfiguration';
 import BaseAPIEndpointFields from './baseComponents/BaseAPIEndpointFields';
 import {CancelEditAPIApplicationModalContent} from './modals/CancelEditAPIApplicationModalContent';
 import {hasEndpointDataChanged} from './utils/dataUtils';
-import {fetchJSON, updateData} from './utils/fetchUtil';
+import {deleteData, fetchJSON, postData, updateData} from './utils/fetchUtil';
 
 import '../../css/main.scss';
 import {beginStringWithForwardSlash} from './utils/string';
@@ -138,6 +138,7 @@ export default function EditAPIEndpoint({
 				Object.keys(localUIData).length &&
 				isDataValid
 			) {
+				handleModifyEndpointFilters();
 				updateData<APIEndpointItem>({
 					dataToUpdate: {
 						description: localUIData.description,
@@ -160,6 +161,12 @@ export default function EditAPIEndpoint({
 							...previous,
 							apiEndpoint: {
 								...responseJSON,
+								...(previous.apiEndpoint
+									?.apiEndpointToAPIFilters?.length && {
+									apiEndpointToAPIFilters:
+										previous.apiEndpoint
+											.apiEndpointToAPIFilters,
+								}),
 							},
 						}));
 						openToast({
@@ -175,6 +182,109 @@ export default function EditAPIEndpoint({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[localUIData]
 	);
+
+	async function handleModifyEndpointFilters() {
+		if (
+			fetchedData.apiEndpoint?.apiEndpointToAPIFilters &&
+			!fetchedData.apiEndpoint.apiEndpointToAPIFilters.length &&
+			localUIData.apiEndpointToAPIFilters?.[0]?.oDataFilter
+		) {
+			postData<APIEndpointFilter>({
+				data: {
+					oDataFilter:
+						localUIData.apiEndpointToAPIFilters[0].oDataFilter,
+					r_apiEndpointToAPIFilters_c_apiEndpointId:
+						fetchedData.apiEndpoint.id,
+				},
+				onError: (error: string) => {
+					openToast({
+						message: error,
+						type: 'danger',
+					});
+				},
+				onSuccess: (responseJSON) => {
+					setFetchedData((previous) => ({
+						...previous,
+						apiEndpoint: {
+							...previous.apiEndpoint!,
+							apiEndpointToAPIFilters: [responseJSON],
+						},
+					}));
+					openToast({
+						message: Liferay.Language.get('the-filter-was-created'),
+						type: 'success',
+					});
+				},
+				url: apiURLPaths.filters,
+			});
+		}
+		else if (
+			fetchedData.apiEndpoint?.apiEndpointToAPIFilters?.[0]
+				?.oDataFilter &&
+			localUIData.apiEndpointToAPIFilters?.[0]?.oDataFilter
+		) {
+			updateData<APIEndpointFilter>({
+				dataToUpdate: {
+					oDataFilter:
+						localUIData.apiEndpointToAPIFilters[0].oDataFilter,
+				},
+				method: 'PATCH',
+				onError: (error: string) => {
+					openToast({
+						message: error,
+						type: 'danger',
+					});
+				},
+				onSuccess: (responseJSON) => {
+					setFetchedData((previous) => ({
+						...previous,
+						apiEndpoint: {
+							...previous.apiEndpoint!,
+							apiEndpointToAPIFilters: [responseJSON],
+						},
+					}));
+					openToast({
+						message: Liferay.Language.get('the-filter-was-updated'),
+						type: 'success',
+					});
+				},
+				url:
+					apiURLPaths.filters +
+					fetchedData.apiEndpoint.apiEndpointToAPIFilters[0].id,
+			});
+		}
+		else if (
+			localUIData.apiEndpointToAPIFilters &&
+			fetchedData.apiEndpoint?.apiEndpointToAPIFilters &&
+			fetchedData.apiEndpoint.apiEndpointToAPIFilters.length !==
+				localUIData.apiEndpointToAPIFilters.length
+		) {
+			deleteData({
+				onError: (error: string) => {
+					openToast({
+						message: error,
+						type: 'danger',
+					});
+				},
+				onSuccess: () => {
+					setFetchedData((previous) => ({
+						...previous,
+						apiEndpoint: {
+							...previous.apiEndpoint!,
+							apiEndpointToAPIFilters: [],
+						},
+					}));
+					openToast({
+						message: Liferay.Language.get('the-filter-was-deleted'),
+						type: 'success',
+					});
+				},
+				url:
+					apiURLPaths.filters +
+					fetchedData.apiEndpoint.apiEndpointToAPIFilters[0].id,
+			});
+		}
+	}
 
 	const handlePublish = ({successMessage}: {successMessage: string}) => {
 		const isDataValid = validateData();

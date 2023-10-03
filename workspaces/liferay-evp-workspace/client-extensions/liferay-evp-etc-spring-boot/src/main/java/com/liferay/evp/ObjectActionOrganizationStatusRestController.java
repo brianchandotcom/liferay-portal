@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Elvison Victor
  */
-@RequestMapping("/object/action/organization/status")
+@RequestMapping("/object/action/organization/status/update")
 @RestController
 public class ObjectActionOrganizationStatusRestController
 	extends BaseRestController {
@@ -31,88 +31,74 @@ public class ObjectActionOrganizationStatusRestController
 	public ResponseEntity<String> post(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
-		JSONObject evpOrganizationJSONObject1 = new JSONObject(json);
+		JSONObject evpOrganizationJSONObject = new JSONObject(json);
 
-		JSONObject originalObjectEntryDTOEVPOrganizationJSONObject =
-			evpOrganizationJSONObject1.getJSONObject(
-				"originalObjectEntryDTOEVPOrganization");
+		JSONObject objectEntryDTOEVPOrganizationJSONObject =
+			evpOrganizationJSONObject.getJSONObject(
+				"objectEntryDTOEVPOrganization");
+
+		JSONObject propertiesJSONObject =
+			objectEntryDTOEVPOrganizationJSONObject.getJSONObject("properties");
+
+		JSONObject evpOrganizationStatusJSONObject =
+			propertiesJSONObject.getJSONObject("organizationStatus");
 
 		long evpOrganizationId =
-			originalObjectEntryDTOEVPOrganizationJSONObject.getLong("id");
+			objectEntryDTOEVPOrganizationJSONObject.getLong("id");
 
 		get(
-			response1 -> {
-				JSONObject evpOrganizationJSONObject2 = new JSONObject(
-					response1);
+			response -> {
+				JSONObject evpRequestsJSONObject = new JSONObject(response);
 
-				JSONObject evpOrganizationStatusJSONObject =
-					evpOrganizationJSONObject2.getJSONObject(
-						"organizationStatus");
+				if (evpRequestsJSONObject.getInt("totalCount") < 0) {
+					return;
+				}
 
-				get(
-					response2 -> {
-						JSONObject evpRequestsJSONObject = new JSONObject(
-							response2);
+				JSONArray itemsJSONArray = evpRequestsJSONObject.getJSONArray(
+					"items");
 
-						if (evpRequestsJSONObject.getInt("totalCount") < 0) {
-							return;
-						}
+				for (int i = 0; i < itemsJSONArray.length(); i++) {
+					JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-						JSONArray itemsJSONArray =
-							evpRequestsJSONObject.getJSONArray("items");
+					JSONObject evpRequestsStatusJSONObject =
+						itemJSONObject.getJSONObject("requestStatus");
 
-						_checkStatusOrganization(
-							evpOrganizationStatusJSONObject, itemsJSONArray);
+					if (evpOrganizationStatusJSONObject.getString(
+							"key"
+						).equals(
+							"verified"
+						)) {
 
-						put(
-							itemsJSONArray.toString(), jwt,
-							"/o/c/evprequests/batch");
-					},
-					jwt,
-					StringBundler.concat(
-						"/o/c/evprequests?filter=",
-						"r_organization_c_evpOrganizationId eq '",
-						evpOrganizationId, "'"));
+						JSONObject evpRequestTypeJSONObject =
+							itemJSONObject.getJSONObject("requestType");
+
+						_setRequestStatus(
+							evpRequestsStatusJSONObject,
+							evpRequestTypeJSONObject);
+					}
+					else if (evpOrganizationStatusJSONObject.getString(
+								"key"
+							).equals(
+								"rejected"
+							)) {
+
+						evpRequestsStatusJSONObject.put(
+							"key", "rejected"
+						).put(
+							"name", "Rejected"
+						);
+					}
+				}
+
+				put(itemsJSONArray.toString(), jwt, "/o/c/evprequests/batch");
 			},
-			jwt, "/o/c/evporganizations/" + evpOrganizationId);
+			jwt,
+			StringBundler.concat(
+				"/o/c/evprequests?filter=",
+				"r_organization_c_evpOrganizationId eq '", evpOrganizationId,
+				"'"));
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
-	}
-
-	private void _checkStatusOrganization(
-		JSONObject evpOrganizationStatusJSONObject, JSONArray itemsJSONArray) {
-
-		for (int i = 0; i < itemsJSONArray.length(); i++) {
-			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
-
-			JSONObject evpRequestsStatusJSONObject =
-				itemJSONObject.getJSONObject("requestStatus");
-
-			if (evpOrganizationStatusJSONObject.getString(
-					"key"
-				).equals(
-					"verified"
-				)) {
-
-				JSONObject evpRequestTypeJSONObject =
-					itemJSONObject.getJSONObject("requestType");
-
-				_setRequestStatus(
-					evpRequestsStatusJSONObject, evpRequestTypeJSONObject);
-			}
-			else if (evpOrganizationStatusJSONObject.getString(
-						"key"
-					).equals(
-						"rejected"
-					)) {
-
-				evpRequestsStatusJSONObject.put(
-					"key", "rejected"
-				).put(
-					"name", "Rejected"
-				);
-			}
-		}
 	}
 
 	private void _setRequestStatus(
@@ -130,14 +116,15 @@ public class ObjectActionOrganizationStatusRestController
 			).put(
 				"name", "Awaiting Approval On EVP"
 			);
+
+			return;
 		}
-		else {
-			evpRequestsStatusJSONObject.put(
-				"key", "awaitingApprovalOnManager"
-			).put(
-				"name", "Awaiting Approval on Manager"
-			);
-		}
+
+		evpRequestsStatusJSONObject.put(
+			"key", "awaitingApprovalOnManager"
+		).put(
+			"name", "Awaiting Approval on Manager"
+		);
 	}
 
 }

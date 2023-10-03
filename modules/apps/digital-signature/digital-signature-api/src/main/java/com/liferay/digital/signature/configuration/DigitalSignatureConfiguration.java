@@ -29,6 +29,8 @@ public interface DigitalSignatureConfiguration {
 
 	public String apiAccountId();
 
+	public String environment();
+
 	public String accountBaseURI();
 
 	public String integrationKey();

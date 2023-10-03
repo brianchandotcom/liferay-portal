@@ -70,6 +70,8 @@ public class SaveCompanyConfigurationMVCActionCommand
 			).put(
 				"enabled", ParamUtil.getBoolean(actionRequest, "enabled")
 			).put(
+				"environment", ParamUtil.getString(actionRequest, "environment")
+			).put(
 				"integrationKey",
 				ParamUtil.getString(actionRequest, "integrationKey")
 			).put(

@@ -22,6 +22,9 @@ public class DigitalSignatureWebKeys {
 	public static final String DIGITAL_SIGNATURE_ENABLED =
 		"DIGITAL_SIGNATURE_ENABLED";
 
+	public static final String DIGITAL_SIGNATURE_ENVIRONMENT =
+		"DIGITAL_SIGNATURE_ENVIRONMENT";
+
 	public static final String DIGITAL_SIGNATURE_FILE_ENTRIES =
 		"DIGITAL_SIGNATURE_FILE_ENTRIES";
 

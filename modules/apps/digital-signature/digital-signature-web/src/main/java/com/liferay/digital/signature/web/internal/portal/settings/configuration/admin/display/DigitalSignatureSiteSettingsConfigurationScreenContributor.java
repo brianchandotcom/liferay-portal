@@ -95,6 +95,9 @@ public class DigitalSignatureSiteSettingsConfigurationScreenContributor
 			DigitalSignatureWebKeys.DIGITAL_SIGNATURE_ENABLED,
 			digitalSignatureConfiguration.enabled());
 		httpServletRequest.setAttribute(
+			DigitalSignatureWebKeys.DIGITAL_SIGNATURE_ENVIRONMENT,
+			digitalSignatureConfiguration.environment());
+		httpServletRequest.setAttribute(
 			DigitalSignatureWebKeys.DIGITAL_SIGNATURE_INTEGRATION_KEY,
 			digitalSignatureConfiguration.integrationKey());
 		httpServletRequest.setAttribute(

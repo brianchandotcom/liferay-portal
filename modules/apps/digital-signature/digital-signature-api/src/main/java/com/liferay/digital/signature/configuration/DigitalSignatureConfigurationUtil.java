@@ -55,6 +55,8 @@ public class DigitalSignatureConfigurationUtil {
 					Validator.isNotNull(
 						groupDigitalSignatureConfiguration.accountBaseURI()) &&
 					Validator.isNotNull(
+						groupDigitalSignatureConfiguration.environment()) &&
+					Validator.isNotNull(
 						groupDigitalSignatureConfiguration.integrationKey()) &&
 					Validator.isNotNull(
 						groupDigitalSignatureConfiguration.rsaPrivateKey())) {

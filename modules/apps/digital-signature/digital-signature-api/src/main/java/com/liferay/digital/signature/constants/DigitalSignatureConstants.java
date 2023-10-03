@@ -17,6 +17,8 @@ public class DigitalSignatureConstants {
 		"xlsm", "xlsx", "xps"
 	};
 
+	public static final String[] ENVIRONMENTS = {"production", "sandbox"};
+
 	public static final String[] SITE_SETTINGS_STRATEGIES = {
 		"always-inherit", "always-override", "inherit-or-override"
 	};

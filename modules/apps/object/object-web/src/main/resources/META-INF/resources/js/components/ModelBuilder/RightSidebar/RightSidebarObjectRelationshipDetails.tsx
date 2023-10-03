@@ -238,6 +238,7 @@ export function RightSidebarObjectRelationshipDetails({
 
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('delete-relationship')}
+						className="lfr-objects__model-builder-right-sidebar-object-relationship-title-delete-button"
 						displayType="secondary"
 						onClick={() =>
 							setShowModal({

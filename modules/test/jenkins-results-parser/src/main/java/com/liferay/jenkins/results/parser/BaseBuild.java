@@ -53,8 +53,7 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public boolean applyReinvokeRules() {
 		if ((isCompleted() && !isFailing()) || !isCompleted() ||
-			isFromArchive() ||
-			(badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX)) {
+			isFromArchive() || (getInvocationCount() >= INVOCATION_COUNT_MAX)) {
 
 			return false;
 		}
@@ -1391,7 +1390,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void reinvoke(ReinvokeRule reinvokeRule) {
-		if (badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX) {
+		if (getInvocationCount() >= INVOCATION_COUNT_MAX) {
 			return;
 		}
 
@@ -2346,6 +2345,10 @@ public abstract class BaseBuild implements Build {
 		return getGitHubMessageJobResultsElement();
 	}
 
+	protected int getInvocationCount() {
+		return _invocations.size();
+	}
+
 	protected List<Element> getJenkinsReportBuildDurationsElements() {
 		return new ArrayList<>();
 	}
@@ -3165,9 +3168,9 @@ public abstract class BaseBuild implements Build {
 			JenkinsResultsParserUtil.redact(replaceBuildURL(content)));
 	}
 
-	protected static final int PIXELS_WIDTH_INDENT = 35;
+	protected static final int INVOCATION_COUNT_MAX = 2;
 
-	protected static final int REINVOCATIONS_SIZE_MAX = 1;
+	protected static final int PIXELS_WIDTH_INDENT = 35;
 
 	protected static final String URL_BASE_FAILURES_JOB_UPSTREAM =
 		"https://test-1-0.liferay.com/userContent/testResults/";

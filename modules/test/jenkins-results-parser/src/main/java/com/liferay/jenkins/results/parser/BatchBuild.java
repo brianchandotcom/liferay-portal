@@ -43,7 +43,7 @@ public class BatchBuild extends BaseParentBuild {
 
 	@Override
 	public boolean applyReinvokeRules() {
-		if (badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX) {
+		if (getInvocationCount() >= INVOCATION_COUNT_MAX) {
 			return false;
 		}
 

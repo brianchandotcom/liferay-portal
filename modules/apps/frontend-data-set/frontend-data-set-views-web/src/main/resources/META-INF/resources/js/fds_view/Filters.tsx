@@ -86,13 +86,6 @@ function AddFDSFilterModalContent({
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
 		fdsFilterLabelTranslations
 	);
-	const [includeMode, setIncludeMode] = useState<string>(
-		filter
-			? (filter as ISelectionFilter)?.include
-				? 'include'
-				: 'exclude'
-			: 'include'
-	);
 	const [isValidDateRange, setIsValidDateRange] = useState<boolean>(true);
 	const [multiple, setMultiple] = useState<boolean>(
 		(filter as ISelectionFilter)?.multiple ?? true
@@ -130,6 +123,18 @@ function AddFDSFilterModalContent({
 			}
 		});
 	}, [filter]);
+
+	const [includeMode, setIncludeMode] = useState<string>(() => {
+		if (preselectedValues?.length === 0) {
+			return 'include';
+		}
+
+		return filter
+			? (filter as ISelectionFilter)?.include
+				? 'include'
+				: 'exclude'
+			: 'include';
+	});
 
 	const handleFilterSave = async () => {
 		setSaveButtonDisabled(true);
@@ -291,6 +296,12 @@ function AddFDSFilterModalContent({
 			</ClayDropDown>
 		);
 	};
+
+	useEffect(() => {
+		if (preselectedValues?.length === 0) {
+			setIncludeMode('include');
+		}
+	}, [preselectedValues]);
 
 	return (
 		<>

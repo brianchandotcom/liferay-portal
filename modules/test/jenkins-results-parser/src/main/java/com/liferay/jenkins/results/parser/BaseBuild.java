@@ -176,7 +176,10 @@ public abstract class BaseBuild implements Build {
 			sb.append("/");
 		}
 
-		sb.append(_jenkinsMaster.getName());
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
+		sb.append(jenkinsMaster.getName());
+
 		sb.append("/");
 		sb.append(getJobName());
 		sb.append("/");
@@ -404,8 +407,12 @@ public abstract class BaseBuild implements Build {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("http[s]*:\\/\\/");
+
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
 		sb.append(
-			JenkinsResultsParserUtil.getRegexLiteral(_jenkinsMaster.getName()));
+			JenkinsResultsParserUtil.getRegexLiteral(jenkinsMaster.getName()));
+
 		sb.append("[^\\/]*");
 		sb.append("[\\/]+job[\\/]+");
 
@@ -738,8 +745,9 @@ public abstract class BaseBuild implements Build {
 		}
 
 		String buildURL = getBuildURL();
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 
-		if ((buildURL == null) || (_jenkinsMaster == null)) {
+		if ((buildURL == null) || (jenkinsMaster == null)) {
 			return null;
 		}
 
@@ -751,7 +759,7 @@ public abstract class BaseBuild implements Build {
 			slaveName = "master";
 		}
 
-		_jenkinsSlave = _jenkinsMaster.getJenkinsSlave(slaveName);
+		_jenkinsSlave = jenkinsMaster.getJenkinsSlave(slaveName);
 
 		return _jenkinsSlave;
 	}
@@ -774,19 +782,20 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getJobURL() {
-		if ((_jenkinsMaster == null) || (_jobName == null)) {
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
+		if ((jenkinsMaster == null) || (_jobName == null)) {
 			return null;
 		}
 
 		if (fromArchive) {
 			return JenkinsResultsParserUtil.combine(
 				Build.DEPENDENCIES_URL_TOKEN, "/", getArchiveName(), "/",
-				_jenkinsMaster.getName(), "/", _jobName);
+				jenkinsMaster.getName(), "/", _jobName);
 		}
 
 		String jobURL = JenkinsResultsParserUtil.combine(
-			"https://", _jenkinsMaster.getName(), ".liferay.com/job/",
-			_jobName);
+			"https://", jenkinsMaster.getName(), ".liferay.com/job/", _jobName);
 
 		try {
 			return JenkinsResultsParserUtil.encode(jobURL);
@@ -1498,6 +1507,7 @@ public abstract class BaseBuild implements Build {
 		}
 
 		JenkinsSlave jenkinsSlave = getJenkinsSlave();
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 
 		String slaveOfflineRuleString = slaveOfflineRule.toString();
 
@@ -1507,7 +1517,7 @@ public abstract class BaseBuild implements Build {
 			pinnedMessage, slaveOfflineRule.getName(), " failure detected at ",
 			getBuildURL(), ". ", jenkinsSlave.getName(),
 			" will be taken offline.\n\n", slaveOfflineRuleString,
-			"\n\n\nOffline Slave URL: https://", _jenkinsMaster.getName(),
+			"\n\n\nOffline Slave URL: https://", jenkinsMaster.getName(),
 			".liferay.com/computer/", jenkinsSlave.getName(), "\n");
 
 		System.out.println(message);
@@ -3463,10 +3473,12 @@ public abstract class BaseBuild implements Build {
 	}
 
 	private JSONArray _getQueueItemsJSONArray() {
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
 		try {
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.combine(
-					"http://", _jenkinsMaster.getName(),
+					"http://", jenkinsMaster.getName(),
 					"/queue/api/json?tree=items[actions[parameters",
 					"[name,value]],task[name,url]]"),
 				false);

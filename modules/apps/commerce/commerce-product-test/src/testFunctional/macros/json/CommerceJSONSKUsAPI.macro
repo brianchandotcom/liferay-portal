@@ -10,7 +10,7 @@ definition {
 		}
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(incrementalOrderQuantity))) {
@@ -70,7 +70,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var uomCount = CommerceJSONSKUsAPI._getCommerceUOMCountBySKUId(productSKU = ${productSKU});
@@ -103,7 +103,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var skuUomId = CommerceJSONSKUsAPI._getCommerceSkuUomIdByKey(
@@ -136,7 +136,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
@@ -159,7 +159,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
@@ -184,7 +184,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});

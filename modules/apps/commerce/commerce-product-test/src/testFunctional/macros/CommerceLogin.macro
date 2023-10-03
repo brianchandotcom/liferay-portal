@@ -117,7 +117,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var specificURL = "${baseURL}/${urlAppend}";
@@ -147,7 +147,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var specificURL = "${baseURL}/${urlAppend}";

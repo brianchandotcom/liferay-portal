@@ -660,7 +660,7 @@ definition {
 
 		echo("value name ${valueName}");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		var larFileName = RegexUtil.replace(${valueName}, "${portalURL}/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*", 1);
 
@@ -793,7 +793,7 @@ definition {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		Open(locator1 = "${baseURL}/group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
@@ -804,7 +804,7 @@ definition {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		Open(locator1 = "${baseURL}/group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
@@ -817,7 +817,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		Open(locator1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
@@ -830,7 +830,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		Open(locator1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");

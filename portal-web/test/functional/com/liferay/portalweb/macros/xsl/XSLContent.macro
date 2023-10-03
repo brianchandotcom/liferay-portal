@@ -3,7 +3,7 @@ definition {
 	macro configureConfigurationAdminXSL {
 		Type(
 			locator1 = "TextArea#URL",
-			value1 = "@portlet_context_url@,@portal_url@");
+			value1 = "@portlet_context_url@,@JSONCompany.getPortalURL();@");
 
 		FormFields.enableCheckbox(fieldName = "xml.doctype.declaration.allowed");
 

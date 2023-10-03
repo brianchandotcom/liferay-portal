@@ -6,7 +6,7 @@ definition {
 		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(priority))) {
@@ -43,7 +43,7 @@ definition {
 		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${priceListName});
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (isSet(unitOfMeasureKey)) {
@@ -91,7 +91,7 @@ definition {
 		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${priceListName});
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(active))) {
@@ -129,7 +129,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var categoryId = CommerceJSONProductsAPI.getProductField(
@@ -160,7 +160,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var priceModifierId = CommerceJSONPriceListsAndPromotionsAPI._getPriceModifierIdByTitle(
@@ -189,7 +189,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(responseBody))) {
@@ -224,7 +224,7 @@ definition {
 		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(priority))) {
@@ -261,7 +261,7 @@ definition {
 		var promotionId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${promotionName});
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var userLoginInfo = JSONUtil2.formatJSONUser();
@@ -289,7 +289,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(active))) {
@@ -332,7 +332,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var priceListAndPromotionIds = CommerceJSONPriceListsAndPromotionsAPI._getCommerceNoMasterPriceListsAndPromotions();
@@ -361,7 +361,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${priceListName});
@@ -380,7 +380,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (isSet(priceListAndPromotionCount)) {
@@ -409,7 +409,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (isSet(priceListAndPromotionCount)) {
@@ -476,7 +476,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (isSet(priceModifierCount)) {
@@ -510,7 +510,7 @@ definition {
 		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${priceListName});
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (isSet(active)) {

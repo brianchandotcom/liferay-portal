@@ -10,7 +10,7 @@ definition {
 		}
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(accountId))) {
@@ -51,7 +51,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var channelsCount = CommerceJSONChannelsAPI._getCommerceChannelsCount();
@@ -82,7 +82,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var channelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
@@ -105,7 +105,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (isSet(channelCount)) {
@@ -132,7 +132,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (isSet(channelCount)) {
@@ -159,7 +159,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var userLoginInfo = JSONUtil2.formatJSONUser();
@@ -185,7 +185,7 @@ definition {
 		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (isSet(accountId)) {

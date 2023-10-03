@@ -232,7 +232,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&_com_liferay_adaptive_media_web_portlet_AMPortlet_mvcRenderCommandName=%2Fadaptive_media%2Fedit_image_configuration_entry&_com_liferay_adaptive_media_web_portlet_AMPortlet_redirect=${baseURL}/group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&_com_liferay_adaptive_media_web_portlet_AMPortlet_mvcRenderCommandName=%2Fadaptive_media%2Fedit_image_configuration_entry");

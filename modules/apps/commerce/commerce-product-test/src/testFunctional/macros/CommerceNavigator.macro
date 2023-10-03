@@ -63,7 +63,7 @@ definition {
 	}
 
 	macro gotoFrontStoreProductPage {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 		var productName = StringUtil.replace(${productName}, " ", "-");
 
 		var productName = StringUtil.lowerCase(${productName});

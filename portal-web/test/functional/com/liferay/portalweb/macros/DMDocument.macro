@@ -1532,7 +1532,7 @@ definition {
 	}
 
 	macro downloadViaURL {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(siteURLKey)) {
 			var key_siteURLKey = ${siteURLKey};
@@ -1545,7 +1545,7 @@ definition {
 	}
 
 	macro downloadWithDirectoryIndexing {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteURLKey}/");
 
@@ -2139,7 +2139,7 @@ definition {
 
 		DMDocument.expandInfo();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 		var dmLatestVersionURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
 
 		var dmDocumentURL = StringUtil.extractLast(${dmLatestVersionURL}, ${portalURL});
@@ -3911,7 +3911,7 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_URL",
 			value1 = "Latest Version URL");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(remoteStaging)) {
 			var portalURL = StringUtil.replace(${portalURL}, ":8080", ":9080");
@@ -4609,7 +4609,7 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_WEBDAV_URL",
 			value1 = "WebDAV URL");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(remoteStaging)) {
 			var portalURL = StringUtil.replace(${portalURL}, ":8080", ":9080");

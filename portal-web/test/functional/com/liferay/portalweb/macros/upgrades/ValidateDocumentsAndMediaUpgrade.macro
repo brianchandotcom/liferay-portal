@@ -130,7 +130,7 @@ definition {
 	}
 
 	macro viewDocuments {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");

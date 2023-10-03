@@ -2,7 +2,7 @@ definition {
 
 	macro openToConfigInInstanceSettings {
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		if (${portlet} == "Auto Login") {

@@ -236,7 +236,7 @@ definition {
 
 	macro getCategoryId {
 		var messageBoardsCategoryURL = selenium.getLocation();
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		var categoryId = StringUtil.replace(${messageBoardsCategoryURL}, "${portalURL}/web/guest/message-boards-page/-/message_boards/category/", "");
 
@@ -267,7 +267,7 @@ definition {
 
 	macro getmessageId {
 		var messageBoardsThreadURL = selenium.getLocation();
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		var messageId = StringUtil.replace(${messageBoardsThreadURL}, "${portalURL}/web/guest/message-boards-page/-/message_boards/message/", "");
 

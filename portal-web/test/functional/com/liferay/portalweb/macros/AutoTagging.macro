@@ -183,7 +183,7 @@ definition {
 	}
 
 	macro openToAssetAutoTagging {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 
 		if (${configurationScope} == "System Settings") {
 			var pid = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerSystemConfiguration";
@@ -210,13 +210,13 @@ definition {
 	}
 
 	macro openToOpenNLP {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 
 		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTaggerCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
 	macro openToTensorFlow {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 
 		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}

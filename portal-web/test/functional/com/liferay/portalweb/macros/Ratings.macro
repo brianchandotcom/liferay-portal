@@ -1,7 +1,7 @@
 definition {
 
 	macro _openToConfigInSiteSettings {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 
 		if (${portlet} == "Ratings") {
 			var portletKey = "site-configuration-ratings";
@@ -49,7 +49,7 @@ definition {
 	}
 
 	macro openToConfigInInstanceSettings {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 
 		if (${portlet} == "Ratings") {
 			var portletKey = "social-ratings";

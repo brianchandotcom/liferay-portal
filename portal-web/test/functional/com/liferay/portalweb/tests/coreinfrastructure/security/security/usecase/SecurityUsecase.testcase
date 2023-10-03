@@ -211,7 +211,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	test ValidateCannotOverwriteOSGiServiceIdentifier {
 		property portal.acceptance = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		var url = "${portalURL}/c/portal/json_service?serviceClassName=com.liferay.portal.kernel.service.AccountServiceUtil&serviceMethodName=getOSGiServiceIdentifier&p_auth=";
 
@@ -379,7 +379,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Assert test widget page not present") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = "${portalURL}/web/guest/test-widget-page/?p_p_id=asdf&p_p_lifecycle=0&p_p_state=maximized&_asdf_mvcPath=/html/portlet/portal_settings/edit_company.jsp");
 

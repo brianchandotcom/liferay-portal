@@ -1849,7 +1849,7 @@ definition {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userScreenName}");
 		}
@@ -2058,7 +2058,7 @@ definition {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userScreenName}");
 		}
 		else {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userScreenName}");
 		}
@@ -2088,7 +2088,7 @@ definition {
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
@@ -2297,7 +2297,7 @@ definition {
 
 	@description = "Log out of Liferay Portal via URL."
 	macro logoutViaURL {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 
 		Open(locator1 = "${baseURL}/c/portal/logout");
 	}

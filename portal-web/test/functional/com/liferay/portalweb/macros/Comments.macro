@@ -210,7 +210,7 @@ definition {
 	}
 
 	macro openToCommentsConfiguration {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 
 		if (${configurationScope} == "Instance Settings") {
 			var portlet = "InstanceSettingsPortlet";

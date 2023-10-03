@@ -707,7 +707,7 @@ definition {
 	}
 
 	macro openToConfigInSystemSettings {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 
 		if (${portlet} == "Message Boards Moderation Workflow") {
 			var portletId = "com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration";
@@ -1047,7 +1047,7 @@ definition {
 	}
 
 	macro viewQuestionPage {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 
 		AssertLocation(value1 = "${baseURL}/web/guest/questions-page/questions/${topicName}");
 	}

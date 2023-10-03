@@ -4,7 +4,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var commerceAvailabilityEstimateIds = CommerceJSONAvailableEstimatesAPI._getCommerceAvailableEstimates();
@@ -48,7 +48,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 		}
 
 		var companyId = JSONCompany.getCompanyId();

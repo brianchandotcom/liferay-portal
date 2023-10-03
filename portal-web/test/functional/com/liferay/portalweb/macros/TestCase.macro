@@ -109,7 +109,7 @@ definition {
 
 		if ((${siteName} == "Liferay") || !(isSet(siteName))) {
 			if (${testLiferayVirtualInstance} == "true") {
-				var portalURL = PropsUtil.get("portal.url");
+				var portalURL = JSONCompany.getPortalURL();
 
 				var portalURL = Regex.removeHTTP(url = ${portalURL});
 
@@ -164,7 +164,7 @@ definition {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 

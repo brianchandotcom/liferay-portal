@@ -140,6 +140,7 @@ export function hasEndpointDataChanged({
 		fetchedEndpointData.apiEndpointToAPIFilters[0].oDataFilter !==
 			localUIData.apiEndpointToAPIFilters[0].oDataFilter
 	);
+
 	const pathChanged = path !== beginStringWithForwardSlash(uiPath);
 
 	const schemaIdChanged =
@@ -154,13 +155,29 @@ export function hasEndpointDataChanged({
 
 	const scopeKeyChanged = scope.key !== uiScope?.key;
 
+	const sortsArrayLengthChanged = !!(
+		localUIData.apiEndpointToAPISorts &&
+		fetchedEndpointData.apiEndpointToAPISorts &&
+		fetchedEndpointData.apiEndpointToAPISorts.length !==
+			localUIData.apiEndpointToAPISorts.length
+	);
+
+	const sortsContentChanged = !!(
+		localUIData.apiEndpointToAPISorts?.length &&
+		fetchedEndpointData.apiEndpointToAPISorts?.length &&
+		fetchedEndpointData.apiEndpointToAPISorts[0].oDataSort !==
+			localUIData.apiEndpointToAPISorts[0].oDataSort
+	);
+
 	if (
 		descriptionChanged ||
 		filtersArrayLengthChanged ||
 		filtersContentChanged ||
 		pathChanged ||
 		schemaIdChanged ||
-		scopeKeyChanged
+		scopeKeyChanged ||
+		sortsArrayLengthChanged ||
+		sortsContentChanged
 	) {
 		return true;
 	}

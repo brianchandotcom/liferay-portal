@@ -7,10 +7,12 @@
 
 import './TranslationsContainer.scss';
 interface TranslationsContainerProps {
+	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
 export declare function TranslationsContainer({
+	onSubmit,
 	setValues,
 	values,
 }: TranslationsContainerProps): JSX.Element;

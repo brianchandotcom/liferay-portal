@@ -9,11 +9,13 @@ import React from 'react';
 import './TranslationsContainer.scss';
 
 interface TranslationsContainerProps {
+	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
 
 export function TranslationsContainer({
+	onSubmit,
 	setValues,
 	values,
 }: TranslationsContainerProps) {
@@ -22,6 +24,13 @@ export function TranslationsContainer({
 			<Toggle
 				disabled={values.active}
 				label={Liferay.Language.get('enable-entry-translations')}
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onToggle={() =>
 					setValues({
 						enableLocalization: !values.enableLocalization,

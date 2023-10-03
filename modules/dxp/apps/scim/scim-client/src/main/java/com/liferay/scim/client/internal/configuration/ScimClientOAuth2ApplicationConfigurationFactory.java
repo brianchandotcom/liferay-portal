@@ -54,10 +54,6 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 			return;
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Activate " + properties);
-		}
-
 		ConfigurationFactoryUtil.executeAsCompany(
 			_companyLocalService, properties,
 			companyId -> {
@@ -69,10 +65,6 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 
 				_oAuth2Application = _getOrAddOAuth2Application(
 					companyId, scimClientOAuth2ApplicationConfiguration);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("OAuth 2 application " + _oAuth2Application);
-				}
 
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					_localOAuthClient.requestTokens(
@@ -100,12 +92,13 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 			return;
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Deactivating " + _oAuth2Application);
-		}
-
 		_oAuth2ApplicationLocalService.deleteOAuth2Application(
 			_oAuth2Application);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Removed OAuth2Application: " + _oAuth2Application.getName());
+		}
 	}
 
 	@Reference
@@ -149,6 +142,12 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 					scimClientOAuth2ApplicationConfiguration.applicationName(),
 					null, Collections.emptyList(), false, true, null,
 					new ServiceContext());
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Created OAuth2Application: " +
+						oAuth2Application.getName());
+			}
 		}
 
 		return _oAuth2ApplicationLocalService.updateScopeAliases(

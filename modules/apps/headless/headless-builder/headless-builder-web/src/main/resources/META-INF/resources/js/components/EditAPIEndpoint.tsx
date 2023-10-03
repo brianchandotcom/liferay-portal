@@ -141,7 +141,32 @@ export default function EditAPIEndpoint({
 				Object.keys(localUIData).length &&
 				isDataValid
 			) {
-				handleModifyEndpointFilters();
+				handleModifyODataFields({
+					deleteSuccessMessage: Liferay.Language.get(
+						'the-filter-was-deleted'
+					),
+					fieldKey: 'Filter',
+					postSuccessMessage: Liferay.Language.get(
+						'the-filter-was-created'
+					),
+					updateSuccessMessage: Liferay.Language.get(
+						'the-filter-was-updated'
+					),
+				});
+
+				handleModifyODataFields({
+					deleteSuccessMessage: Liferay.Language.get(
+						'the-sort-was-deleted'
+					),
+					fieldKey: 'Sort',
+					postSuccessMessage: Liferay.Language.get(
+						'the-sort-was-created'
+					),
+					updateSuccessMessage: Liferay.Language.get(
+						'the-sort-was-updated'
+					),
+				});
+
 				updateData<APIEndpointItem>({
 					dataToUpdate: {
 						description: localUIData.description,
@@ -192,18 +217,40 @@ export default function EditAPIEndpoint({
 		[localUIData]
 	);
 
-	async function handleModifyEndpointFilters() {
+	async function handleModifyODataFields({
+		deleteSuccessMessage,
+		fieldKey,
+		postSuccessMessage,
+		updateSuccessMessage,
+	}: {
+		deleteSuccessMessage: string;
+		fieldKey: 'Filter' | 'Sort';
+		postSuccessMessage: string;
+		updateSuccessMessage: string;
+	}) {
 		if (
-			fetchedData.apiEndpoint?.apiEndpointToAPIFilters &&
-			!fetchedData.apiEndpoint.apiEndpointToAPIFilters.length &&
-			localUIData.apiEndpointToAPIFilters?.[0]?.oDataFilter
+			fetchedData.apiEndpoint?.[`apiEndpointToAPI${fieldKey}s`] &&
+			!fetchedData.apiEndpoint[`apiEndpointToAPI${fieldKey}s`].length &&
+			(fieldKey === 'Filter'
+				? localUIData[`apiEndpointToAPI${fieldKey}s`]?.[0]?.[
+						`oData${fieldKey}` as keyof APIEndpointFilter
+				  ]
+				: localUIData[`apiEndpointToAPI${fieldKey}s`]?.[0]?.[
+						`oData${fieldKey}` as keyof APIEndpointSort
+				  ])
 		) {
-			postData<APIEndpointFilter>({
+			postData<APIEndpointFilter | APIEndpointSort>({
 				data: {
-					oDataFilter:
-						localUIData.apiEndpointToAPIFilters[0].oDataFilter,
-					r_apiEndpointToAPIFilters_c_apiEndpointId:
-						fetchedData.apiEndpoint.id,
+					[`oData${fieldKey}`]:
+						fieldKey === 'Filter'
+							? localUIData[`apiEndpointToAPIFilters`]?.[0][
+									`oData${fieldKey}`
+							  ]
+							: localUIData[`apiEndpointToAPISorts`]?.[0][
+									`oData${fieldKey}`
+							  ],
+					[`r_apiEndpointToAPI${fieldKey}s_c_apiEndpointId`]: fetchedData
+						.apiEndpoint.id,
 				},
 				onError: (error: string) => {
 					openToast({
@@ -216,26 +263,50 @@ export default function EditAPIEndpoint({
 						...previous,
 						apiEndpoint: {
 							...previous.apiEndpoint!,
-							apiEndpointToAPIFilters: [responseJSON],
+							[`apiEndpointToAPI${fieldKey}s`]: [responseJSON],
 						},
 					}));
 					openToast({
-						message: Liferay.Language.get('the-filter-was-created'),
+						message: postSuccessMessage,
 						type: 'success',
 					});
 				},
-				url: apiURLPaths.filters,
+				url:
+					apiURLPaths[
+						`${fieldKey.toLocaleLowerCase()}s` as keyof APIURLPaths
+					],
 			});
 		}
 		else if (
-			fetchedData.apiEndpoint?.apiEndpointToAPIFilters?.[0]
-				?.oDataFilter &&
-			localUIData.apiEndpointToAPIFilters?.[0]?.oDataFilter
+			(fieldKey === 'Filter'
+				? fetchedData.apiEndpoint?.[`apiEndpointToAPI${fieldKey}s`][0][
+						`oData${fieldKey}` as keyof APIEndpointFilter
+				  ]
+				: fetchedData.apiEndpoint?.[`apiEndpointToAPI${fieldKey}s`][0][
+						`oData${fieldKey}` as keyof APIEndpointSort
+				  ]) &&
+			(fieldKey === 'Filter'
+				? localUIData[`apiEndpointToAPI${fieldKey}s`]?.[0]?.[
+						`oData${fieldKey}` as keyof APIEndpointFilter
+				  ]
+				: localUIData[`apiEndpointToAPI${fieldKey}s`]?.[0]?.[
+						`oData${fieldKey}` as keyof APIEndpointSort
+				  ])
 		) {
-			updateData<APIEndpointFilter>({
+			updateData<APIEndpointFilter | APIEndpointSort>({
 				dataToUpdate: {
-					oDataFilter:
-						localUIData.apiEndpointToAPIFilters[0].oDataFilter,
+					[`oData${fieldKey}`]:
+						fieldKey === 'Filter'
+							? localUIData[
+									`apiEndpointToAPI${fieldKey}s`
+							  ]?.[0]?.[
+									`oData${fieldKey}` as keyof APIEndpointFilter
+							  ]
+							: localUIData[
+									`apiEndpointToAPI${fieldKey}s`
+							  ]?.[0]?.[
+									`oData${fieldKey}` as keyof APIEndpointSort
+							  ],
 				},
 				method: 'PATCH',
 				onError: (error: string) => {
@@ -249,24 +320,27 @@ export default function EditAPIEndpoint({
 						...previous,
 						apiEndpoint: {
 							...previous.apiEndpoint!,
-							apiEndpointToAPIFilters: [responseJSON],
+							[`apiEndpointToAPI${fieldKey}s`]: [responseJSON],
 						},
 					}));
 					openToast({
-						message: Liferay.Language.get('the-filter-was-updated'),
+						message: updateSuccessMessage,
 						type: 'success',
 					});
 				},
 				url:
-					apiURLPaths.filters +
-					fetchedData.apiEndpoint.apiEndpointToAPIFilters[0].id,
+					apiURLPaths[
+						`${fieldKey.toLocaleLowerCase()}s` as keyof APIURLPaths
+					] +
+					fetchedData.apiEndpoint?.[`apiEndpointToAPI${fieldKey}s`][0]
+						.id,
 			});
 		}
 		else if (
-			localUIData.apiEndpointToAPIFilters &&
-			fetchedData.apiEndpoint?.apiEndpointToAPIFilters &&
-			fetchedData.apiEndpoint.apiEndpointToAPIFilters.length !==
-				localUIData.apiEndpointToAPIFilters.length
+			localUIData[`apiEndpointToAPI${fieldKey}s`] &&
+			fetchedData.apiEndpoint?.[`apiEndpointToAPI${fieldKey}s`] &&
+			fetchedData.apiEndpoint[`apiEndpointToAPI${fieldKey}s`].length !==
+				localUIData[`apiEndpointToAPI${fieldKey}s`]?.length
 		) {
 			deleteData({
 				onError: (error: string) => {
@@ -280,17 +354,20 @@ export default function EditAPIEndpoint({
 						...previous,
 						apiEndpoint: {
 							...previous.apiEndpoint!,
-							apiEndpointToAPIFilters: [],
+							[`apiEndpointToAPI${fieldKey}s`]: [],
 						},
 					}));
 					openToast({
-						message: Liferay.Language.get('the-filter-was-deleted'),
+						message: deleteSuccessMessage,
 						type: 'success',
 					});
 				},
 				url:
-					apiURLPaths.filters +
-					fetchedData.apiEndpoint.apiEndpointToAPIFilters[0].id,
+					apiURLPaths[
+						`${fieldKey.toLocaleLowerCase()}s` as keyof APIURLPaths
+					] +
+					fetchedData.apiEndpoint[`apiEndpointToAPI${fieldKey}s`][0]
+						.id,
 			});
 		}
 	}

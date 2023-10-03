@@ -133,7 +133,7 @@ definition {
 			layoutName = "Search Page",
 			searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar");
 
-		SearchPage.addWidgetsViaUI(searchPortletList = "Sort");
+		SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -364,7 +364,7 @@ definition {
 	test AssertSortWidgetNoXSS {
 		SearchPage.openSearchPage();
 
-		SearchPage.addWidgetsViaUI(searchPortletList = "Sort");
+		SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Sort",
@@ -451,7 +451,7 @@ definition {
 		}
 
 		task ("Add each search widget via the UI and assert no error is present for each") {
-			SearchPage.addWidgetsViaUI(searchPortletList = "Blueprints Options,Category Facet,Custom Facet,Custom Filter,Elasticsearch Monitoring,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
+			SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Blueprints Options,Category Facet,Custom Facet,Custom Filter,Elasticsearch Monitoring,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
 		}
 	}
 
@@ -1194,7 +1194,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Apple");
 
-		SearchPage.addWidgetsViaUI(searchPortletList = "Sort");
+		SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
 
 		Refresh();
 
@@ -2541,7 +2541,7 @@ definition {
 		task ("Search for the created articles, add the Sort widget to the search page, and navigate to the Sort widget configuration") {
 			SearchPage.searchEmbedded(searchTerm = "Fruit");
 
-			SearchPage.addWidgetsViaUI(searchPortletList = "Sort");
+			SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
 
 			Portlet.gotoPortletOptions(
 				portletName = "Sort",
@@ -2732,7 +2732,7 @@ definition {
 		}
 
 		task ("Add the Sort Widget to the search page") {
-			SearchPage.addWidgetsViaUI(searchPortletList = "Sort");
+			SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
 		}
 
 		task ("Within the Sort Widget configuration, add a sort option to sort by the custom object's 'title' field in ascending order") {
@@ -2829,7 +2829,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPage.addWidgetsViaUI(searchPortletList = "Sort");
+		SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Search Results");
 
@@ -3177,7 +3177,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Fruit");
 
-		SearchPage.addWidgetsViaUI(searchPortletList = "Sort");
+		SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
 
 		Refresh();
 
@@ -3200,7 +3200,7 @@ definition {
 		task ("Execute a search to populate the search widgets and add the Sort widget") {
 			SearchPage.openSearchPage(searchTerm = "test");
 
-			SearchPage.addWidgetsViaUI(searchPortletList = "Sort");
+			SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
 		}
 
 		task ("Confirm the Sort configuration uses the new view by default") {

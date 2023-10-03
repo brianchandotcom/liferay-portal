@@ -1326,7 +1326,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPage.addWidgetsViaUI(searchPortletList = "Sort");
+		SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Search Results");
 
@@ -1498,7 +1498,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Content");
 
-		SearchPage.addWidgetsViaUI(searchPortletList = "Sort");
+		SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
 
 		Refresh();
 

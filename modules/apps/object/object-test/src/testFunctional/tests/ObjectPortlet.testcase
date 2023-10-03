@@ -797,9 +797,21 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject246");
 
-		ObjectPortlet.viewEntry(entry = "Test text");
+		Click(
+			key_entry = "Test text",
+			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 
-		ObjectPortlet.deleteEntry(entry = "Test text");
+		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Delete Entry");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "It may affect many records. Are you sure you want to delete this entry?");
+
+		Button.clickDelete();
 
 		ObjectPortlet.assertEntryNotPresent(entry = "Test text");
 	}

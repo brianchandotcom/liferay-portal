@@ -5,18 +5,22 @@
 
 import React from 'react';
 
+import {useSelector} from '../../../app/contexts/StoreContext';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import RulesEmptyState from './RulesEmptyState';
+import RulesList from './RulesList';
 
 export default function RulesSidebar() {
+	const rules = useSelector((state) => state.layoutData.rules || []);
+
 	return (
 		<>
 			<SidebarPanelHeader>
 				{Liferay.Language.get('page-rules')}
 			</SidebarPanelHeader>
 
-			<div className="d-flex flex-column">
-				<RulesEmptyState />
+			<div className="p-3">
+				{rules.length ? <RulesList /> : <RulesEmptyState />}
 			</div>
 		</>
 	);

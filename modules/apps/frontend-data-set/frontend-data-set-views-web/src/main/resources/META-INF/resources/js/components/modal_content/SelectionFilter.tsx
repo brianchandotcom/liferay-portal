@@ -217,36 +217,41 @@ function Body({
 							</ClayForm.FeedbackGroup>
 						)}
 					</ClayForm.Group>
-					<ClayForm.Group>
-						<label htmlFor={includeModeFormElementId}>
-							{Liferay.Language.get('filter-mode')}
 
-							<span
-								className="label-icon lfr-portal-tooltip ml-2"
-								title={Liferay.Language.get(
-									'include-returns-only-the-selected-values.-exclude-returns-all-except-the-selected-ones'
-								)}
+					{preselectedValues?.length > 0 && (
+						<ClayForm.Group>
+							<label htmlFor={includeModeFormElementId}>
+								{Liferay.Language.get('filter-mode')}
+
+								<span
+									className="label-icon lfr-portal-tooltip ml-2"
+									title={Liferay.Language.get(
+										'include-returns-only-the-selected-values.-exclude-returns-all-except-the-selected-ones'
+									)}
+								>
+									<ClayIcon symbol="question-circle-full" />
+								</span>
+							</label>
+
+							<ClayRadioGroup
+								name={includeModeFormElementId}
+								onChange={(val: any) =>
+									onIncludeModeChange(val)
+								}
+								value={includeMode}
 							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</label>
+								<ClayRadio
+									label={Liferay.Language.get('include')}
+									value="include"
+								/>
 
-						<ClayRadioGroup
-							name={includeModeFormElementId}
-							onChange={(val: any) => onIncludeModeChange(val)}
-							value={includeMode}
-						>
-							<ClayRadio
-								label={Liferay.Language.get('include')}
-								value="include"
-							/>
-
-							<ClayRadio
-								label={Liferay.Language.get('exclude')}
-								value="exclude"
-							/>
-						</ClayRadioGroup>
-					</ClayForm.Group>
+								<ClayRadio
+									label={Liferay.Language.get('exclude')}
+									value="exclude"
+								/>
+							</ClayRadioGroup>
+						</ClayForm.Group>
+					)}
 				</>
 			)}
 		</>

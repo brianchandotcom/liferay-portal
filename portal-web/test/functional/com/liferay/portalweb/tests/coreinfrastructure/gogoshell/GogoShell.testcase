@@ -47,6 +47,19 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-189944. Verify no errors are thrown when running the disconnect command from Gogo Shell."
+	@priority = 3
+	test CanRunDisconnectCommandViaTelnet {
+		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		GogoShell.executeCommandViaTelnet(
+			command = "disconnect",
+			expectedOutput = "Connection closed by foreign host",
+			nodePort = 8080);
+	}
+
 	@description = "This is a use case for LPS-83660."
 	@priority = 3
 	test GogoShellCommandDisconnectNotSupported {

@@ -57,7 +57,6 @@
 	_fragmentEntryLinkModels
 	_layoutModels
 	_templateFileName
-	_templateFolder
 >
 	<#list _fragmentEntryLinkModels as fragmentEntryLinkModel>
 		${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
@@ -72,7 +71,7 @@
 
 		${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
-		<#local layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(layoutModel, layoutPageTemplateStructureModel, _fragmentEntryLinkModels, _templateFileName, _templateFolder)>
+		<#local layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(layoutModel, layoutPageTemplateStructureModel, _fragmentEntryLinkModels, _templateFileName)>
 
 		${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
 	</#list>

@@ -422,6 +422,23 @@ public abstract class BaseTopLevelBuild
 	}
 
 	@Override
+	public JenkinsCohort getJenkinsCohort() {
+		if (_jenkinsCohort != null) {
+			return _jenkinsCohort;
+		}
+
+		String cohortName = JenkinsResultsParserUtil.getCohortName();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(cohortName)) {
+			_jenkinsCohort = JenkinsCohort.getInstance(cohortName);
+
+			return _jenkinsCohort;
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getJenkinsReport() {
 		try {
 			return JenkinsResultsParserUtil.toString(
@@ -863,14 +880,6 @@ public abstract class BaseTopLevelBuild
 		}
 
 		_findDownstreamBuildsInConsoleText();
-
-		String consoleText = getConsoleText();
-
-		for (Build downstreamBuild : getDownstreamBuilds()) {
-			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
-
-			downstreamBaseBuild.checkForReinvocation(consoleText);
-		}
 	}
 
 	@Override
@@ -2291,7 +2300,6 @@ public abstract class BaseTopLevelBuild
 
 	private String _getStatusSummary() {
 		return JenkinsResultsParserUtil.combine(
-			String.valueOf(getDownstreamBuildCount("invoking")), " Invoking / ",
 			String.valueOf(getDownstreamBuildCount("starting")), " Starting / ",
 			String.valueOf(getDownstreamBuildCount("missing")), " Missing / ",
 			String.valueOf(getDownstreamBuildCount("queued")), " Queued / ",
@@ -2353,6 +2361,7 @@ public abstract class BaseTopLevelBuild
 	private final Map<String, BatchBuild> _downstreamBatchBuilds =
 		new ConcurrentHashMap<>();
 	private boolean _downstreamBatchBuildsPopulated;
+	private JenkinsCohort _jenkinsCohort;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
 	private String _metricsHostName;
 	private int _metricsHostPort;

@@ -439,6 +439,16 @@ definition {
 		}
 	}
 
+	test CanAddSearchWidgetsViaUIOnContentPage {
+		task ("Add a content page and navigate to said page") {
+			ContentPages.addPage(pageName = "Test Content Page");
+		}
+
+		task ("Add each search widget via the UI and assert no error is present for each") {
+			SearchPage.addWidgetsViaContentPageUI(searchPortletList = "Blueprints Options,Category Facet,Custom Facet,Custom Filter,Elasticsearch Monitoring,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
+		}
+	}
+
 	test CanAddSearchWidgetsViaUIOnWidgetPage {
 		task ("Add a widget page and navigate to said page") {
 			PagesAdmin.addPage(

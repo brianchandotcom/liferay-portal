@@ -172,6 +172,27 @@ public class PostalAddress implements Cloneable, Serializable {
 
 	protected String name;
 
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void setPhoneNumber(
+		UnsafeSupplier<String, Exception> phoneNumberUnsafeSupplier) {
+
+		try {
+			phoneNumber = phoneNumberUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String phoneNumber;
+
 	public String getPostalCode() {
 		return postalCode;
 	}

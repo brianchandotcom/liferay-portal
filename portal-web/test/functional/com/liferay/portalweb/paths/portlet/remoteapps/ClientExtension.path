@@ -196,6 +196,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLIENT_EXTENSIONS_FIELDS</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/..//input[@value="${key_text}"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_ELLIPSIS_BUTTON</td>
 	<td>//div[contains(@class,'dnd-tbody') and contains(., '${key_entryName}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>

@@ -37,6 +37,11 @@
 		visibility: hidden;
 	}
 
+	&-item {
+		border: 3px solid #80acff;
+		border-radius: 8px;
+	}
+
 	&-item-linked.treeview-link {
 		background-color: transparent;
 		color: #6b6c7e80;

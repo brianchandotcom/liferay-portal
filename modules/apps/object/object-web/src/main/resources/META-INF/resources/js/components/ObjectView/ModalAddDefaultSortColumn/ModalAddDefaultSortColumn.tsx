@@ -135,6 +135,7 @@ export function ModalAddDefaultSortColumn({
 							emptyStateMessage={Liferay.Language.get(
 								'there-are-no-columns-added-in-this-view-yet'
 							)}
+							id="objectViewModalAddDefaultSortColumn"
 							items={filteredObjectSortColumn}
 							label={Liferay.Language.get('columns')}
 							onActive={(item) =>

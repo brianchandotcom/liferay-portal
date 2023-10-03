@@ -162,6 +162,7 @@ export function BasicInfo({
 									'no-fields-were-found'
 								)}
 								error={errors.outputType}
+								id="objectValidationBasicInfo"
 								items={filteredObjectFields ?? []}
 								label={Liferay.Language.get('fields')}
 								onChangeQuery={setQuery}

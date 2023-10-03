@@ -464,6 +464,7 @@ export function ModalAddFilter({
 							'there-are-no-columns-available'
 						)}
 						error={errors.selectedFilterBy}
+						id="modalAddFilterBy"
 						items={filteredAvailableFields}
 						label={Liferay.Language.get('filter-by')}
 						onActive={(item) =>

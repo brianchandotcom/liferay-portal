@@ -68,6 +68,7 @@ export default function SelectObjectDefinition({
 			disabled={disabled}
 			emptyStateMessage={Liferay.Language.get('no-objects-were-found')}
 			error={error}
+			id="objectRelationshipSelectObjectDefinition"
 			items={filteredRelationships}
 			label={label ?? ''}
 			onActive={(item) => item.name === selectedObjectDefinition?.name}

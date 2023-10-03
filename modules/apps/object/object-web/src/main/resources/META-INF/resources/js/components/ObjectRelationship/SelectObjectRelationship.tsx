@@ -99,6 +99,7 @@ export default function SelectRelationship({
 		<AutoComplete<LabelNameObject>
 			emptyStateMessage={Liferay.Language.get('no-parameters-were-found')}
 			error={error}
+			id="objectRelationshipSelectObjectRelationship"
 			items={filteredOptions ?? []}
 			label={Liferay.Language.get('parameter')}
 			onActive={(item) => item.name === selectedValue?.name}

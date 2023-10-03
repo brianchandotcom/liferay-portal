@@ -65,6 +65,11 @@ public class FeatureFlagsBagProviderImpl
 	implements AopService, FeatureFlagsBagProvider, IdentifiableOSGiService {
 
 	@Override
+	public void clearCache() {
+		_featureFlagsBagMap.clear();
+	}
+
+	@Override
 	public FeatureFlagsBag getOrCreateFeatureFlagsBag(long companyId) {
 		FeatureFlagsBag featureFlagsBag = _featureFlagsBagMap.get(companyId);
 

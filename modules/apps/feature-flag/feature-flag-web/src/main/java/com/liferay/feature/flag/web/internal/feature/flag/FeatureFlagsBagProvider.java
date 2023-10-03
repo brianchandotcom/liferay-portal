@@ -12,6 +12,8 @@ import java.util.function.Function;
  */
 public interface FeatureFlagsBagProvider {
 
+	public void clearCache();
+
 	public FeatureFlagsBag getOrCreateFeatureFlagsBag(long companyId);
 
 	public void setEnabled(long companyId, String key, boolean enabled);

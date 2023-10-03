@@ -74,17 +74,21 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 				<liferay-ui:message key="content-type" />
 			</p>
 
-			<p class="sidebar-dd text-secondary">
-				<%= displayPageTemplateInfoPanelDisplayContext.getTypeLabel(layoutPageTemplateEntry) %>
-			</p>
+			<clay:label
+				displayType="secondary"
+				label="<%= displayPageTemplateInfoPanelDisplayContext.getTypeLabel(layoutPageTemplateEntry) %>"
+			/>
 
-			<p class="sidebar-dt">
-				<liferay-ui:message key="subtype" />
-			</p>
+			<c:if test="<%= !displayPageTemplateInfoPanelDisplayContext.getSubtypeLabel(layoutPageTemplateEntry).isEmpty() %>">
+				<p class="sidebar-dt">
+					<liferay-ui:message key="subtype" />
+				</p>
 
-			<p class="sidebar-dd text-secondary">
-				<%= displayPageTemplateInfoPanelDisplayContext.getSubtypeLabel(layoutPageTemplateEntry) %>
-			</p>
+				<clay:label
+					displayType="secondary"
+					label="<%= displayPageTemplateInfoPanelDisplayContext.getSubtypeLabel(layoutPageTemplateEntry) %>"
+				/>
+			</c:if>
 
 			<p class="sidebar-dt">
 				<liferay-ui:message key="created" />

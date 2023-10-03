@@ -83,6 +83,10 @@ export default function EditEndpointConfiguration({
 		'type-any-filter-using-odata-language'
 	);
 
+	const endpointSortInstruction = Liferay.Language.get(
+		'type-any-sort-using-odata-language'
+	);
+
 	return (
 		<ClayForm>
 			<ClayForm.Group>
@@ -158,6 +162,64 @@ export default function EditEndpointConfiguration({
 					}
 					placeholder={endpointFiltersInstruction}
 					value={data.apiEndpointToAPIFilters?.[0]?.oDataFilter}
+				/>
+			</ClayForm.Group>
+
+			<ClayForm.Group>
+				<label htmlFor="endpointSortingField">
+					{Liferay.Language.get('sorting')}
+
+					<ClayTooltipProvider>
+						<span
+							data-tooltip-align="top"
+							title={`${Liferay.Language.get(
+								'there-is-a-limit-of-1000-characters-in-odata-language'
+							)} ${sub(
+								Liferay.Language.get(
+									'remember-not-to-include-the-x'
+								),
+								'?sort='
+							)}`}
+						>
+							&nbsp;
+							<ClayIcon symbol="question-circle-full" />
+						</span>
+					</ClayTooltipProvider>
+				</label>
+
+				<Text as="p" id="hostTextPreview" size={2} weight="lighter">
+					/?sort=
+				</Text>
+
+				<textarea
+					aria-label={endpointSortInstruction}
+					autoComplete="off"
+					className="form-control"
+					id="endpointSortingField"
+					onChange={({target: {value}}) =>
+						setData((previousData) => ({
+							...previousData,
+							...(value !== ''
+								? {
+										apiEndpointToAPISorts: [
+											{
+												...(previousData
+													.apiEndpointToAPISorts?.[0]
+													?.id && {
+													id:
+														previousData
+															.apiEndpointToAPISorts?.[0]
+															.id,
+												}),
+												oDataSort: value,
+											},
+										],
+								  }
+								: {apiEndpointToAPISorts: []}),
+						}))
+					}
+					placeholder={endpointSortInstruction}
+					value={data.apiEndpointToAPISorts?.[0]?.oDataSort}
 				/>
 			</ClayForm.Group>
 		</ClayForm>

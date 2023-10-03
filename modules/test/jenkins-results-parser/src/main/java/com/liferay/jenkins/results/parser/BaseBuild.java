@@ -1495,7 +1495,8 @@ public abstract class BaseBuild implements Build {
 		}
 
 		JenkinsSlave jenkinsSlave = getJenkinsSlave();
-		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
+		JenkinsMaster jenkinsMaster = jenkinsSlave.getJenkinsMaster();
 
 		String slaveOfflineRuleString = slaveOfflineRule.toString();
 

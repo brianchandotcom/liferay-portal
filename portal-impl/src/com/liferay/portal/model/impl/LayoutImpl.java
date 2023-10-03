@@ -1518,7 +1518,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isUnlocked(String mode, long userId) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
+		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPS-180328") ||
 			!Objects.equals(mode, Constants.EDIT) || !isDraftLayout()) {
 
 			return true;

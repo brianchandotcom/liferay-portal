@@ -36,7 +36,7 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		if (_isStoreAreaSupported()) {
+		if (_isStoreAreaSupported(companyId)) {
 			StoreArea.withStoreArea(
 				StoreArea.NEW,
 				() -> store.addFile(
@@ -55,7 +55,7 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		if (_isStoreAreaSupported()) {
+		if (_isStoreAreaSupported(companyId)) {
 			StoreAreaProcessor storeAreaProcessor =
 				_storeAreaProcessorSupplier.get();
 
@@ -81,7 +81,7 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		if (_isStoreAreaSupported()) {
+		if (_isStoreAreaSupported(companyId)) {
 			StoreAreaProcessor storeAreaProcessor =
 				_storeAreaProcessorSupplier.get();
 
@@ -113,7 +113,7 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		if (_isStoreAreaSupported()) {
+		if (_isStoreAreaSupported(companyId)) {
 			return StoreArea.tryGetWithStoreAreas(
 				() -> store.getFileAsStream(
 					companyId, repositoryId, fileName, versionLabel),
@@ -142,7 +142,7 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		if (_isStoreAreaSupported()) {
+		if (_isStoreAreaSupported(companyId)) {
 			return StoreArea.tryGetWithStoreAreas(
 				() -> store.getFileSize(
 					companyId, repositoryId, fileName, versionLabel),
@@ -170,7 +170,7 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		if (_isStoreAreaSupported()) {
+		if (_isStoreAreaSupported(companyId)) {
 			return StoreArea.tryGetWithStoreAreas(
 				() -> store.hasFile(
 					companyId, repositoryId, fileName, versionLabel),
@@ -186,7 +186,7 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		if (_isStoreAreaSupported()) {
+		if (_isStoreAreaSupported(companyId)) {
 			String[] fileNames = StoreArea.mergeWithStoreAreas(
 				() -> store.getFileNames(companyId, repositoryId, dirName),
 				storeAreas);
@@ -205,7 +205,7 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		if (_isStoreAreaSupported()) {
+		if (_isStoreAreaSupported(companyId)) {
 			String[] fileVersions = StoreArea.mergeWithStoreAreas(
 				() -> store.getFileVersions(companyId, repositoryId, fileName),
 				storeAreas);
@@ -218,8 +218,8 @@ public class StoreAreaAwareStoreWrapper implements Store {
 		return store.getFileVersions(companyId, repositoryId, fileName);
 	}
 
-	private boolean _isStoreAreaSupported() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+	private boolean _isStoreAreaSupported(long companyId) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPS-174816")) {
 			return false;
 		}
 

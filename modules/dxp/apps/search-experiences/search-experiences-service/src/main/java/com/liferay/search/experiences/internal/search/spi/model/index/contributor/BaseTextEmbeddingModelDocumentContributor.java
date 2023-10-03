@@ -42,7 +42,7 @@ public abstract class BaseTextEmbeddingModelDocumentContributor
 		long companyId, Document document) {
 
 		EmbeddingProviderConfiguration embeddingProviderConfiguration =
-			_getEmbeddingProviderConfiguration(baseModel);
+			_getEmbeddingProviderConfiguration(baseModel, companyId);
 
 		if (embeddingProviderConfiguration == null) {
 			return;
@@ -77,7 +77,7 @@ public abstract class BaseTextEmbeddingModelDocumentContributor
 		long companyId, Document document) {
 
 		EmbeddingProviderConfiguration embeddingProviderConfiguration =
-			_getEmbeddingProviderConfiguration(baseModel);
+			_getEmbeddingProviderConfiguration(baseModel, companyId);
 
 		if (embeddingProviderConfiguration == null) {
 			return;
@@ -144,13 +144,13 @@ public abstract class BaseTextEmbeddingModelDocumentContributor
 	}
 
 	private EmbeddingProviderConfiguration _getEmbeddingProviderConfiguration(
-		T baseModel) {
+		T baseModel, long companyId) {
 
 		SemanticSearchConfiguration semanticSearchConfiguration =
 			semanticSearchConfigurationProvider.getCompanyConfiguration(
 				getCompanyId(baseModel));
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-122920") ||
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPS-122920") ||
 			!semanticSearchConfiguration.textEmbeddingsEnabled() ||
 			!_isIndexableStatus(baseModel)) {
 

@@ -38,7 +38,8 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			DDMStructure originalDDMStructure, DDMStructure ddmStructure)
 		throws ModelListenerException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-184255") ||
+		if (!FeatureFlagManagerUtil.isEnabled(
+				ddmStructure.getCompanyId(), "LPS-184255") ||
 			(ddmStructure.getClassNameId() !=
 				_getJournalArticleClassNameId()) ||
 			Objects.equals(

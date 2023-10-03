@@ -24,7 +24,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterUpdate(Layout originalLayout, Layout layout) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
+		if (!FeatureFlagManagerUtil.isEnabled(
+				layout.getCompanyId(), "LPS-180328") ||
 			!layout.isDraftLayout() ||
 			Objects.equals(layout.getStatus(), originalLayout.getStatus()) ||
 			!Objects.equals(

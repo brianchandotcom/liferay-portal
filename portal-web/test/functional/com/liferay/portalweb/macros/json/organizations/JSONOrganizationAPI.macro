@@ -41,6 +41,7 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONUser();
+		var statusListTypeId = JSONOrganizationAPI._getOrganizationStatusListTypeId();
 
 		var curl = '''
 			${portalURL}/api/jsonws/organization/add-organization \
@@ -51,7 +52,7 @@ definition {
 				-d type=${organizationType} \
 				-d regionId=${regionId} \
 				-d countryId=${countryId} \
-				-d statusListTypeId=12017 \
+				-d statusListTypeId=${statusListTypeId} \
 				-d comments= \
 				-d site=${organizationSite}
 		''';
@@ -158,6 +159,24 @@ definition {
 		var organizationIds = JSONCurlUtil.post(${curl}, "$..['organizationId']");
 
 		return ${organizationIds};
+	}
+
+	macro _getOrganizationStatusListTypeId {
+		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/api/jsonws/listtype/get-list-type \
+				-u ${userLoginInfo} \
+				-d name=full-member \
+				-d type=com.liferay.portal.kernel.model.Organization.status
+		''';
+
+		var listType = JSONCurlUtil.post(${curl});
+
+		var listTypeId = JSONUtil.getWithJSONPath(${listType}, "$..listTypeId");
+
+		return ${listTypeId};
 	}
 
 }

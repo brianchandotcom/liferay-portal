@@ -396,31 +396,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getBuildURL() {
-		String jobURL = getJobURL();
-		int buildNumber = getBuildNumber();
-
-		if ((jobURL == null) || (buildNumber == -1)) {
-			return null;
-		}
-
-		if (fromArchive) {
-			return jobURL + "/" + buildNumber + "/";
-		}
-
-		try {
-			jobURL = JenkinsResultsParserUtil.decode(jobURL);
-
-			return JenkinsResultsParserUtil.encode(
-				jobURL + "/" + buildNumber + "/");
-		}
-		catch (MalformedURLException | URISyntaxException exception) {
-			throw new RuntimeException("Unable to encode build URL", exception);
-		}
-		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			throw new RuntimeException(
-				"Unable to decode job URL " + jobURL,
-				unsupportedEncodingException);
-		}
+		return _getBuildURL(_getLatestInvocation());
 	}
 
 	@Override
@@ -3315,6 +3291,38 @@ public abstract class BaseBuild implements Build {
 		_archive(null, false, "testReport/api/json");
 	}
 
+	private String _getBuildURL(Invocation invocation) {
+		if (invocation == null) {
+			return null;
+		}
+
+		JenkinsMaster jenkinsMaster = invocation.getJenkinsMaster();
+		int buildNumber = invocation.getBuildNumber();
+
+		if ((jenkinsMaster == null) || (buildNumber <= 0)) {
+			return null;
+		}
+
+		String jobURL = JenkinsResultsParserUtil.combine(
+			"https://", jenkinsMaster.getName(), ".liferay.com/job/",
+			getJobName());
+
+		try {
+			jobURL = JenkinsResultsParserUtil.decode(jobURL);
+
+			return JenkinsResultsParserUtil.encode(
+				jobURL + "/" + buildNumber + "/");
+		}
+		catch (MalformedURLException | URISyntaxException exception) {
+			throw new RuntimeException("Unable to encode build URL", exception);
+		}
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new RuntimeException(
+				"Unable to decode job URL " + jobURL,
+				unsupportedEncodingException);
+		}
+	}
+
 	private Map<String, String> _getDefaultJobParameters() {
 		JSONObject jobJSONObject = null;
 
@@ -3389,6 +3397,14 @@ public abstract class BaseBuild implements Build {
 		return _INVOKED_BATCH_SIZE_DEFAULT;
 	}
 
+	private Invocation _getLatestInvocation() {
+		if (_invocations.isEmpty()) {
+			return null;
+		}
+
+		return _invocations.get(_invocations.size() - 1);
+	}
+
 	private int _getMaximumSlavesPerHost() {
 		String maximumSlavesPerHost = getParameterValue(
 			"MAXIMUM_SLAVES_PER_HOST");
@@ -3408,6 +3424,18 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return _MINIMUM_SLAVE_RAM_DEFAULT;
+	}
+
+	private String _getPreviousBuildURL() {
+		return _getBuildURL(_getPreviousInvocation());
+	}
+
+	private Invocation _getPreviousInvocation() {
+		if (_invocations.size() <= 1) {
+			return null;
+		}
+
+		return _invocations.get(_invocations.size() - 2);
 	}
 
 	private JSONObject _getQueueItemJSONObject() {

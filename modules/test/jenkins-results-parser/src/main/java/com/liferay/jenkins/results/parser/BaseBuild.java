@@ -2121,16 +2121,7 @@ public abstract class BaseBuild implements Build {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Build \"");
-
-			if (this instanceof DownstreamBuild) {
-				DownstreamBuild downstreamBuild = (DownstreamBuild)this;
-
-				sb.append(downstreamBuild.getAxisName());
-			}
-			else {
-				sb.append(_jobName);
-			}
-
+			sb.append(getBuildName());
 			sb.append("\"");
 
 			if (status.equals("completed")) {

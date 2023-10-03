@@ -5,7 +5,7 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record" />
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true" />
 	<property name="net.sf.jasperreports.default.font.name" value="Sans Serif" />
-	<style fontName="arial" fontSize="14" isDefault="true" name="Sans_Normal" />
+	<style fontName="ipaexm" fontSize="14" isDefault="true" name="Sans_Normal" />
 	<style fontName="Times New Roman" mode="Transparent" name="Row" pdfFontName="Times-Roman">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>

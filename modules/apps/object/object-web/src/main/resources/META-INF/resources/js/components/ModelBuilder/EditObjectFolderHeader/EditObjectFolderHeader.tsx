@@ -120,15 +120,15 @@ export default function EditObjectFolderHeader({
 						)}
 				</div>
 
-				<div className="lfr-objects__model-builder-header-buttons-container">
-					{showChangesSaved && (
-						<span className="lfr-objects__model-builder-header-changes-saved">
-							{Liferay.Language.get('changes-saved')}
-							&nbsp;
-							<ClayIcon symbol="check-circle" />
-						</span>
-					)}
+				{showChangesSaved && (
+					<span className="lfr-objects__model-builder-header-changes-saved">
+						{Liferay.Language.get('changes-saved')}
+						&nbsp;
+						<ClayIcon symbol="check-circle" />
+					</span>
+				)}
 
+				<div className="lfr-objects__model-builder-header-buttons-container">
 					<ClayButton
 						disabled={!hasDraftObjectDefinitions}
 						displayType="primary"

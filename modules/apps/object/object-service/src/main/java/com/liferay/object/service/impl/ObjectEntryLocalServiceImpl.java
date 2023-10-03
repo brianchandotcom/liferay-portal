@@ -807,11 +807,24 @@ public class ObjectEntryLocalServiceImpl
 			groupId, objectDefinitionId, status, start, end);
 	}
 
+	@Override
+	public int getObjectEntriesCount(long groupId, long objectDefinitionId) {
+		return objectEntryPersistence.countByG_ODI(groupId, objectDefinitionId);
+	}
+
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public long getObjectEntriesCount(
-		long groupId, DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
-		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable,
-		String objectDefinitionScope, Predicate predicate) {
+			long groupId, ObjectDefinition objectDefinition,
+			Predicate predicate)
+		throws PortalException {
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			_getDynamicObjectDefinitionTable(
+				objectDefinition.getObjectDefinitionId());
+
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
+			_getExtensionDynamicObjectDefinitionTable(
+				objectDefinition.getObjectDefinitionId());
 
 		JoinStep joinStep = DSLQueryFactoryUtil.countDistinct(
 			dynamicObjectDefinitionTable.getPrimaryKeyColumn()
@@ -825,7 +838,7 @@ public class ObjectEntryLocalServiceImpl
 			)
 		);
 
-		if (!StringUtil.equals(objectDefinitionScope, "site")) {
+		if (!StringUtil.equals(objectDefinition.getScope(), "site")) {
 			return dslQueryCount(joinStep.where(predicate));
 		}
 
@@ -844,11 +857,6 @@ public class ObjectEntryLocalServiceImpl
 						return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
 					})
 			));
-	}
-
-	@Override
-	public int getObjectEntriesCount(long groupId, long objectDefinitionId) {
-		return objectEntryPersistence.countByG_ODI(groupId, objectDefinitionId);
 	}
 
 	@Override

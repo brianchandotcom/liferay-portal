@@ -12,7 +12,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
-import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -22,6 +21,8 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mateus Santana
  */
 @Component(service = ObjectValidationRuleEngine.class)
-public class UniqueComposedKeyObjectValidationRuleEngineImpl
+public class UniqueCompositeKeyObjectValidationRuleEngineImpl
 	implements ObjectValidationRuleEngine {
 
 	@Override
@@ -75,20 +76,21 @@ public class UniqueComposedKeyObjectValidationRuleEngineImpl
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				objectValidationRule.getObjectDefinitionId());
 
-		long objectEntriesCount =
-			_objectEntryLocalService.getObjectEntriesCount(
-				GetterUtil.getLong(baseModel.get("groupId")),
-				new DynamicObjectDefinitionTable(
-					objectDefinition, objectFields,
-					objectDefinition.getDBTableName()),
-				new DynamicObjectDefinitionTable(
-					objectDefinition, objectFields,
-					objectDefinition.getExtensionDBTableName()),
-				objectDefinition.getScope(),
+		long objectEntriesCount = 0;
+
+		try {
+			objectEntriesCount = _objectEntryLocalService.getObjectEntriesCount(
+				GetterUtil.getLong(baseModel.get("groupId")), objectDefinition,
 				_getPredicate(
 					(Map<String, Object>)entryDTO.get("properties"),
 					objectValidationRule.getObjectDefinitionId(),
 					objectFields));
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			results.put("validationCriteriaMet", false);
+		}
 
 		if (objectEntriesCount > 0) {
 			results.put("validationCriteriaMet", false);
@@ -148,6 +150,9 @@ public class UniqueComposedKeyObjectValidationRuleEngineImpl
 
 		return predicate;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UniqueCompositeKeyObjectValidationRuleEngineImpl.class);
 
 	@Reference
 	private Language _language;

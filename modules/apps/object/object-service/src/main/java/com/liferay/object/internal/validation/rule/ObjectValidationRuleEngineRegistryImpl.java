@@ -113,7 +113,7 @@ public class ObjectValidationRuleEngineRegistryImpl
 				}
 
 				if (!(objectValidationRuleEngine instanceof
-						UniqueComposedKeyObjectValidationRuleEngineImpl) ||
+						UniqueCompositeKeyObjectValidationRuleEngineImpl) ||
 					FeatureFlagManagerUtil.isEnabled("LPS-187854")) {
 
 					emitter.emit(key);

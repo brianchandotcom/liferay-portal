@@ -20,7 +20,7 @@ import com.liferay.object.exception.ObjectValidationRuleSettingValueException;
 import com.liferay.object.exception.ObjectValidationRuleSystemException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.internal.validation.rule.FunctionObjectValidationRuleEngineImpl;
-import com.liferay.object.internal.validation.rule.UniqueComposedKeyObjectValidationRuleEngineImpl;
+import com.liferay.object.internal.validation.rule.UniqueCompositeKeyObjectValidationRuleEngineImpl;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectValidationRule;
@@ -525,7 +525,7 @@ public class ObjectValidationRuleLocalServiceImpl
 			!(objectValidationRuleEngine instanceof
 				FunctionObjectValidationRuleEngineImpl ||
 			  objectValidationRuleEngine instanceof
-				  UniqueComposedKeyObjectValidationRuleEngineImpl)) {
+				  UniqueCompositeKeyObjectValidationRuleEngineImpl)) {
 
 			throw new ObjectValidationRuleScriptException(
 				"The script is required", "required");

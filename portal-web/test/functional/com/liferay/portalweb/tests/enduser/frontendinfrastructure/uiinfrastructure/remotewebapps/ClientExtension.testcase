@@ -316,6 +316,62 @@ definition {
 	test CanCloseUpdateExistingClientExtension {
 	}
 
+	@description = "LPS-181549 Verify if is possible to deploy a client extension and confirm the fields"
+	@priority = 4
+	test CanDeployAClientExtension {
+		property osgi.modules.includes = "liferay-sample-fds-cell-renderer";
+		property test.liferay.virtual.instance = "false";
+		property test.name.skip.portal.instance = "ClientExtension#CanDeployAClientExtension";
+
+		task ("Given the Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("And there are no entries") {
+			AssertElementNotPresent(
+				key_entryName = "Liferay Sample Frontend Data Set Cell Renderer",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+		}
+
+		task ("When a client extension zip file deployed") {
+			FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-cell-renderer.zip");
+
+			WaitForConsoleTextPresent(value1 = "STARTED liferaysamplefdscellrenderer_7.4.13");
+		}
+
+		task ("And the user goes to Client Extension admin page") {
+			while ((IsElementNotPresent(key_entryName = "Liferay Sample Frontend Data Set Cell Renderer", locator1 = "CommerceEntry#TABLE_LIST_TITLE")) && (maxIterations = "50")) {
+				Refresh();
+			}
+		}
+
+		task ("Then the Liferay Sample Frontend Data Set Cell Renderer entry is present on the page") {
+			AssertElementPresent(
+				key_entryName = "Liferay Sample Frontend Data Set Cell Renderer",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+		}
+
+		task ("When the user clicks on the Liferay Sample Frontend Data Set Cell Renderer entry") {
+			Click.clickNoMouseOver(
+				key_entryName = "Liferay Sample Frontend Data Set Cell Renderer",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+		}
+
+		task ("Then the Type field is Frontend Data Set Cell Renderer ") {
+			AssertElementPresent(
+				key_fieldName = "Type",
+				key_text = "Frontend Data Set Cell Renderer",
+				locator1 = "ClientExtension#CLIENT_EXTENSIONS_FIELDS");
+		}
+
+		task ("And the URL field is /o/liferay-sample-fds-cell-renderer/index.js") {
+			AssertElementPresent(
+				key_fieldName = "URL",
+				key_text = "/o/liferay-sample-fds-cell-renderer/index.js",
+				locator1 = "ClientExtension#CLIENT_EXTENSIONS_FIELDS");
+		}
+	}
+
 	@description = "LPS-182184. Verify the option to export a client extension is displayed."
 	@priority = 4
 	test CanExportCustomElement {

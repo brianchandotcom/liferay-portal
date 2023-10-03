@@ -1,8 +1,12 @@
-<div class="numeric-input">
-	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-numeric-input-label">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+[#assign readOnly = input.attributes.readOnly?? && input.attributes.readOnly]
 
-	<input aria-describedby="${fragmentEntryLinkNamespace}-numeric-input-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-numeric-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-numeric-input-error-message[/#if]" class="form-control" data-validation-message-text="${languageUtil.get(locale, "enter-a-valid-value.-the-value-has-too-many-decimals")}" id="${fragmentEntryLinkNamespace}-numeric-input" [#if input.attributes.max??]max="${input.attributes.max}"[/#if] [#if input.attributes.min??]min="${input.attributes.min}"[/#if] name="${input.name}" [#if input.required]required[/#if] [#if input.attributes.dataType?? && input.attributes.dataType="decimal" && input.attributes.step??]step="${input.attributes.step}"[/#if] placeholder="${configuration.placeholder}" type="number" [#if input.value??]value="${input.value}"[/#if] />
+<div class="numeric-input">
+	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-numeric-input-label">
+			${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+		</label>
+
+		<input aria-describedby="${fragmentEntryLinkNamespace}-numeric-input-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-numeric-input-label [#if input.errorMessage?has_content]${fragmentEntryLinkNamespace}-numeric-input-error-message[/#if]" class="form-control" data-validation-message-text="${languageUtil.get(locale, "enter-a-valid-value.-the-value-has-too-many-decimals")}" id="${fragmentEntryLinkNamespace}-numeric-input" [#if input.attributes.max??]max="${input.attributes.max}"[/#if] [#if input.attributes.min??]min="${input.attributes.min}"[/#if] name="${input.name}" [#if readOnly]readonly[/#if] ${input.required?then('required', '')} [#if input.attributes.dataType?? && input.attributes.dataType="decimal" && input.attributes.step??]step="${input.attributes.step}"[/#if] placeholder="${configuration.placeholder}" type="number" [#if input.value??]value="${input.value}"[/#if] />
 
 		[#if input.errorMessage?has_content]
 			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentEntryLinkNamespace}-numeric-input-error-message">

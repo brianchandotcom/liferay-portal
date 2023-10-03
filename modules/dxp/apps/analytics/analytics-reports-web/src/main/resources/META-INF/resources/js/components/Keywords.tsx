@@ -21,7 +21,32 @@ const KEYWORD_VALUE_TYPE = [
 	{label: Liferay.Language.get('position'), name: 'position'},
 ];
 
-export default function Keywords({currentPage}) {
+type CountryKeyworks = {
+	countryCode: string;
+	countryName: string;
+	keywords: {
+		keyword: string;
+		position: number;
+		searchVolume: number;
+		traffic: number;
+	}[];
+};
+
+interface Props {
+	currentPage: {
+		data: {
+			countrySearchKeywords: CountryKeyworks[];
+			helpMessage: string;
+			name: string;
+			share: number;
+			title: string;
+			value: number;
+		};
+		view: string;
+	};
+}
+
+export default function Keywords({currentPage}: Props) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 	const [keywordValueType, setKeywordValueType] = useState(
@@ -30,7 +55,10 @@ export default function Keywords({currentPage}) {
 
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
-	const countries = useMemo(() => {
+	const countries: Array<{
+		countryCode: string;
+		countryName: string;
+	}> = useMemo(() => {
 		const dataKeys = new Set();
 
 		return currentPage.data.countrySearchKeywords.reduce(
@@ -43,7 +71,7 @@ export default function Keywords({currentPage}) {
 
 				return acc.concat({countryCode, countryName});
 			},
-			[]
+			[] as {countryCode: string; countryName: string}[]
 		);
 	}, [currentPage.data.countrySearchKeywords]);
 
@@ -58,21 +86,26 @@ export default function Keywords({currentPage}) {
 				return country.countryCode === currentCountry;
 			});
 
-		return countryKeywords?.keywords ?? [];
+		return countryKeywords ? countryKeywords.keywords : [];
 	}, [currentPage.data.countrySearchKeywords, currentCountry]);
 
-	const handleCountrySelection = (event) => {
+	const handleCountrySelection: React.ChangeEventHandler<HTMLSelectElement> = (
+		event
+	) => {
 		const country = event.target.value;
 		setCurrentCountry(country);
 	};
 
-	const handleKeywordValueType = (valueTypeName) => {
+	const handleKeywordValueType = (valueTypeName: string) => {
 		const newKeywordValueType = KEYWORD_VALUE_TYPE.find(
 			(keywordValueType) => {
 				return keywordValueType.name === valueTypeName;
 			}
 		);
-		setKeywordValueType(newKeywordValueType);
+
+		if (newKeywordValueType) {
+			setKeywordValueType(newKeywordValueType);
+		}
 	};
 
 	return (
@@ -171,57 +204,62 @@ export default function Keywords({currentPage}) {
 					</ClayList.ItemField>
 				</ClayList.Item>
 
-				{!publishedToday &&
-					keywords.map(
-						({keyword, position, searchVolume, traffic}) => {
-							return (
-								<ClayList.Item flex key={keyword}>
-									<ClayList.ItemField expand>
-										<ClayList.ItemText>
-											<span
-												className="text-truncate-inline"
-												data-tooltip-align="top"
-												title={keyword}
-											>
-												<span className="text-secondary text-truncate">
-													{keyword}
+				<>
+					{!publishedToday &&
+						keywords.map(
+							({keyword, position, searchVolume, traffic}) => {
+								return (
+									<ClayList.Item flex key={keyword}>
+										<ClayList.ItemField expand>
+											<ClayList.ItemText>
+												<span
+													className="text-truncate-inline"
+													data-tooltip-align="top"
+													title={keyword}
+												>
+													<span className="text-secondary text-truncate">
+														{keyword}
+													</span>
 												</span>
+											</ClayList.ItemText>
+										</ClayList.ItemField>
+
+										<ClayList.ItemField expand>
+											<span className="align-self-end font-weight-semi-bold text-dark">
+												{!languageTag
+													? ''
+													: numberFormat(
+															languageTag,
+															keywordValueType.name ===
+																'traffic'
+																? traffic
+																: keywordValueType.name ===
+																  'volume'
+																? searchVolume
+																: position
+													  )}
 											</span>
-										</ClayList.ItemText>
-									</ClayList.ItemField>
-
-									<ClayList.ItemField expand>
-										<span className="align-self-end font-weight-semi-bold text-dark">
-											{numberFormat(
-												languageTag,
-												keywordValueType.name ===
-													'traffic'
-													? traffic
-													: keywordValueType.name ===
-													  'volume'
-													? searchVolume
-													: position
-											)}
-										</span>
-									</ClayList.ItemField>
-								</ClayList.Item>
-							);
-						}
+										</ClayList.ItemField>
+									</ClayList.Item>
+								);
+							}
+						)}
+				</>
+				<>
+					{(publishedToday || !keywords.length) && (
+						<ClayList.Item flex>
+							<ClayList.ItemField expand>
+								<ClayList.ItemText>
+									<span className="text-secondary">
+										{Liferay.Language.get(
+											'there-are-no-best-keywords-yet'
+										)}
+									</span>
+								</ClayList.ItemText>
+							</ClayList.ItemField>
+						</ClayList.Item>
 					)}
-
-				{(publishedToday || !keywords.length) && (
-					<ClayList.Item flex>
-						<ClayList.ItemField expand>
-							<ClayList.ItemText>
-								<span className="text-secondary">
-									{Liferay.Language.get(
-										'there-are-no-best-keywords-yet'
-									)}
-								</span>
-							</ClayList.ItemText>
-						</ClayList.ItemField>
-					</ClayList.Item>
-				)}
+				</>
 			</ClayList>
 		</>
 	);

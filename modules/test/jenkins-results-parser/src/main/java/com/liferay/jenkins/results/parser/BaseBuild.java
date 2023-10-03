@@ -206,14 +206,16 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public List<String> getBadBuildURLs() {
+		if (_invocations.size() <= 1) {
+			return Collections.emptyList();
+		}
+
 		List<String> badBuildURLs = new ArrayList<>();
 
-		String jobURL = getJobURL();
+		for (Invocation invocation :
+				_invocations.subList(0, _invocations.size() - 2)) {
 
-		for (Integer badBuildNumber : badBuildNumbers) {
-			badBuildURLs.add(
-				JenkinsResultsParserUtil.combine(
-					jobURL, "/", String.valueOf(badBuildNumber), "/"));
+			badBuildURLs.add(_getBuildURL(invocation));
 		}
 
 		return badBuildURLs;
@@ -2190,12 +2192,13 @@ public abstract class BaseBuild implements Build {
 			}
 
 			if (status.equals("running")) {
-				if (!badBuildNumbers.isEmpty()) {
-					sb.append(" ");
+				if (_invocations.size() > 1) {
+					String previousBuildURL = _getPreviousBuildURL();
 
-					List<String> badBuildURLs = getBadBuildURLs();
-
-					sb.append(badBuildURLs.get(badBuildNumbers.size() - 1));
+					if (JenkinsResultsParserUtil.isURL(previousBuildURL)) {
+						sb.append(" ");
+						sb.append(previousBuildURL);
+					}
 
 					sb.append(" restarted at ");
 				}
@@ -2895,8 +2898,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void reset() {
-		badBuildNumbers.add(getBuildNumber());
-
 		setResult(null);
 	}
 
@@ -3125,7 +3126,6 @@ public abstract class BaseBuild implements Build {
 	protected static final SimpleDateFormat stopWatchTimestampSimpleDateFormat =
 		new SimpleDateFormat("MM-dd-yyyy HH:mm:ss:SSS z");
 
-	protected List<Integer> badBuildNumbers = new ArrayList<>();
 	protected int consoleReadCursor;
 	protected boolean fromArchive;
 	protected boolean fromCompletedBuild;
@@ -3362,48 +3362,57 @@ public abstract class BaseBuild implements Build {
 	}
 
 	private JSONObject _getQueueItemJSONObject() {
-		JSONArray queueItemsJSONArray = _getQueueItemsJSONArray();
+		try {
+			Invocation latestInvocation = _getLatestInvocation();
 
-		for (int i = 0; i < queueItemsJSONArray.length(); i++) {
-			JSONObject queueItemJSONObject = queueItemsJSONArray.getJSONObject(
-				i);
-
-			JSONObject taskJSONObject = queueItemJSONObject.getJSONObject(
-				"task");
-
-			String queueItemName = taskJSONObject.getString("name");
-
-			if (!queueItemName.equals(_jobName)) {
-				continue;
+			if (latestInvocation == null) {
+				return null;
 			}
 
-			if (_parameters.equals(getParameters(queueItemJSONObject))) {
-				return queueItemJSONObject;
+			JenkinsMaster jenkinsMaster = latestInvocation.getJenkinsMaster();
+
+			if (jenkinsMaster == null) {
+				return null;
 			}
+
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.combine(
+					"http://", jenkinsMaster.getName(),
+					"/queue/api/json?tree=items[id]"),
+				false);
+
+			JSONArray queueItemsJSONArray = jsonObject.getJSONArray("items");
+
+			if (queueItemsJSONArray == null) {
+				return null;
+			}
+
+			for (int i = 0; i < queueItemsJSONArray.length(); i++) {
+				JSONObject queueItemJSONObject =
+					queueItemsJSONArray.getJSONObject(i);
+
+				if (Objects.equals(
+						queueItemJSONObject.getLong("id"),
+						latestInvocation.getQueueId())) {
+
+					return queueItemJSONObject;
+				}
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		return null;
 	}
 
-	private JSONArray _getQueueItemsJSONArray() {
-		JenkinsMaster jenkinsMaster = getJenkinsMaster();
-
-		try {
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.combine(
-					"http://", jenkinsMaster.getName(),
-					"/queue/api/json?tree=items[actions[parameters",
-					"[name,value]],task[name,url]]"),
-				false);
-
-			return jsonObject.getJSONArray("items");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
 	private JSONObject _getRunningBuildJSONObject() {
+		Invocation latestInvocation = _getLatestInvocation();
+
+		if (latestInvocation == null) {
+			return null;
+		}
+
 		int page = 0;
 
 		while (true) {
@@ -3417,11 +3426,9 @@ public abstract class BaseBuild implements Build {
 				JSONObject runningBuildJSONObject =
 					runningBuildsJSONArray.getJSONObject(i);
 
-				Map<String, String> parameters = getParameters();
-
-				if (parameters.equals(getParameters(runningBuildJSONObject)) &&
-					!badBuildNumbers.contains(
-						runningBuildJSONObject.getInt("number"))) {
+				if (Objects.equals(
+						runningBuildJSONObject.getLong("queueId"),
+						latestInvocation.getQueueId())) {
 
 					return runningBuildJSONObject;
 				}
@@ -3441,9 +3448,9 @@ public abstract class BaseBuild implements Build {
 			public JSONArray execute() {
 				String url = JenkinsResultsParserUtil.getLocalURL(
 					JenkinsResultsParserUtil.combine(
-						getJobURL(), "/api/json?tree=allBuilds[actions[",
-						"parameters[name,type,value]],building,duration,",
-						"number,result,url]{", String.valueOf(page * 100), ",",
+						getJobURL(), "/api/json?tree=",
+						"allBuilds[number,queueId]{",
+						String.valueOf(page * 100), ",",
 						String.valueOf((page + 1) * 100), "}"));
 
 				try {

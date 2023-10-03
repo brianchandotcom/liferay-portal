@@ -227,11 +227,15 @@ export default function LeftSidebarTreeView({
 					<TreeView.ItemStack>
 						<div className="lfr-objects__model-builder-left-sidebar-current-object-folder-container">
 							<div className="lfr-objects__model-builder-left-sidebar-current-object-folder-content">
-								<Icon
-									symbol={
-										TYPES_TO_SYMBOLS[leftSidebarItem.type]
-									}
-								/>
+								<div>
+									<Icon
+										symbol={
+											TYPES_TO_SYMBOLS[
+												leftSidebarItem.type
+											]
+										}
+									/>
+								</div>
 
 								<div className="lfr-objects__model-builder-left-sidebar-current-object-folder-content-title">
 									<Text weight="semi-bold">

@@ -1,0 +1,22 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+--%>
+
+<clay:alert
+	displayType="warning"
+>
+	<liferay-learn:message
+		key="dynamic-data-lists-is-deprecated-and-replaced-by-objects"
+		resource="dynamic-data-lists-web"
+	/>
+
+	<liferay-ui:message key="ddl-will-be-removed-in-2024" />
+
+	<liferay-learn:message
+		key="please-migrate-your-data-to-objects-before-then"
+		resource="dynamic-data-lists-web"
+	/>
+</clay:alert>

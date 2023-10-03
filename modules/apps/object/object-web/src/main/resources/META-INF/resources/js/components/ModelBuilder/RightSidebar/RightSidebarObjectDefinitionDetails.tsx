@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
 import {
 	API,
 	getLocalizableLabel,
@@ -19,12 +18,14 @@ import {KeyValuePair} from '../../ObjectDetails/EditObjectDetails';
 import {EntryDisplayContainer} from '../../ObjectDetails/EntryDisplayContainer';
 import {ObjectDataContainer} from '../../ObjectDetails/ObjectDataContainer';
 import {ScopeContainer} from '../../ObjectDetails/ScopeContainer';
+import {TranslationsContainer} from '../../ObjectDetails/TranslationsContainer';
 import {useObjectDetailsForm} from '../../ObjectDetails/useObjectDetailsForm';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {nonRelationshipObjectFieldsInfo} from '../types';
 
 import './RightSidebarObjectDefinitionDetails.scss';
+
 interface RightSidebarObjectDefinitionDetailsProps {
 	companyKeyValuePairs: KeyValuePair[];
 	siteKeyValuePairs: KeyValuePair[];
@@ -147,10 +148,10 @@ export function RightSidebarObjectDefinitionDetails({
 
 				dispatch({
 					payload: {
-						updatedShowChangesSaved: true
+						updatedShowChangesSaved: true,
 					},
-					type: TYPES.SET_SHOW_CHANGES_SAVED 
-				})
+					type: TYPES.SET_SHOW_CHANGES_SAVED,
+				});
 			}
 			catch (error: unknown) {
 				const {message} = error as Error;
@@ -303,6 +304,14 @@ export function RightSidebarObjectDefinitionDetails({
 					onSubmit={onSubmit}
 					setValues={setValues}
 					values={values as ObjectDefinition}
+				/>
+			</div>
+
+			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
+				<TranslationsContainer
+					onSubmit={onSubmit}
+					setValues={setValues}
+					values={values}
 				/>
 			</div>
 		</>

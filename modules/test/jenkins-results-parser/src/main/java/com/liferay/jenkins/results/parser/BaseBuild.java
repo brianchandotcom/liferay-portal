@@ -2906,25 +2906,6 @@ public abstract class BaseBuild implements Build {
 		badBuildNumbers.add(getBuildNumber());
 
 		setResult(null);
-
-		setBuildNumber(-1);
-	}
-
-	protected void setBuildNumber(int buildNumber) {
-		if (_buildNumber != buildNumber) {
-			int previousBuildNumber = _buildNumber;
-
-			_buildNumber = buildNumber;
-
-			consoleReadCursor = 0;
-
-			if (_buildNumber == -1) {
-				setStatus("starting");
-			}
-			else if (!badBuildNumbers.contains(previousBuildNumber)) {
-				setStatus("running");
-			}
-		}
 	}
 
 	protected void setBuildURL(String buildURL) {
@@ -2975,8 +2956,7 @@ public abstract class BaseBuild implements Build {
 		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
 			matcher.group("master"));
 
-		_buildNumber = Integer.parseInt(matcher.group("buildNumber"));
-		setJenkinsMaster(jenkinsMaster);
+		int buildNumber = Integer.parseInt(matcher.group("buildNumber"));
 		setJobName(matcher.group("jobName"));
 
 		loadParametersFromBuildJSONObject();
@@ -2990,9 +2970,7 @@ public abstract class BaseBuild implements Build {
 		Invocation invocation = new Invocation(
 			jenkinsMaster, buildJSONObject.getLong("queueId"));
 
-		invocation.setBuildNumber(_buildNumber);
-
-		setBuildNumber(_buildNumber);
+		invocation.setBuildNumber(buildNumber);
 
 		_invocations.add(invocation);
 
@@ -3024,7 +3002,6 @@ public abstract class BaseBuild implements Build {
 			invocationURLMatcher.group("master"));
 
 		setJobName(invocationURLMatcher.group("jobName"));
-		setJenkinsMaster(jenkinsMaster);
 
 		loadParametersFromQueryString(invocationURL);
 
@@ -3041,10 +3018,6 @@ public abstract class BaseBuild implements Build {
 		_invocations.add(invocation);
 
 		setStatus("queued");
-	}
-
-	protected void setJenkinsMaster(JenkinsMaster jenkinsMaster) {
-		_jenkinsMaster = jenkinsMaster;
 	}
 
 	protected void setJobName(String jobName) {
@@ -3087,9 +3060,7 @@ public abstract class BaseBuild implements Build {
 				_previousStatus,
 				_statusModifiedTime - previousStatusModifiedTime);
 
-			if (isParentBuildRoot() &&
-				!badBuildNumbers.contains(_buildNumber)) {
-
+			if (isParentBuildRoot()) {
 				System.out.println(getBuildMessage());
 			}
 		}
@@ -3517,8 +3488,6 @@ public abstract class BaseBuild implements Build {
 					!badBuildNumbers.contains(
 						runningBuildJSONObject.getInt("number"))) {
 
-					setBuildNumber(runningBuildJSONObject.getInt("number"));
-
 					return runningBuildJSONObject;
 				}
 			}
@@ -3858,13 +3827,11 @@ public abstract class BaseBuild implements Build {
 	private String _branchName;
 	private String _buildDescription;
 	private Boolean _buildDurationsEnabled;
-	private int _buildNumber = -1;
 	private Long _duration;
 	private final List<Invocation> _invocations = new ArrayList<>();
 	private int _invokedBatchSize;
 	private JenkinsCohort _jenkinsCohort;
 	private JenkinsConsoleTextLoader _jenkinsConsoleTextLoader;
-	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;
 	private Job _job;
 	private String _jobName;

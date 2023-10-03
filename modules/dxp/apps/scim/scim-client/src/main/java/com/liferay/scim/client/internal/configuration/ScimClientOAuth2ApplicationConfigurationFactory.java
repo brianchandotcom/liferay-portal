@@ -14,6 +14,7 @@ import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -45,6 +46,10 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-96845")) {
+			return;
+		}
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Activate " + properties);
 		}
@@ -69,8 +74,9 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 
 	@Deactivate
 	protected void deactivate(Integer reason) throws PortalException {
-		if (reason !=
-				ComponentConstants.DEACTIVATION_REASON_CONFIGURATION_DELETED) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-96845") ||
+			(reason !=
+				ComponentConstants.DEACTIVATION_REASON_CONFIGURATION_DELETED)) {
 
 			return;
 		}

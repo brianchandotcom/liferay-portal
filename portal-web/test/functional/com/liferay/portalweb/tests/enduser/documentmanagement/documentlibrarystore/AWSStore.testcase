@@ -7,6 +7,7 @@ definition {
 	property portal.upstream = "true";
 	property test.assert.warning.exceptions = "true";
 	property testray.main.component.name = "Document Library Stores";
+	property user.time.zone = "GMT";
 
 	setUp {
 		TestCase.setUpPortalInstance();

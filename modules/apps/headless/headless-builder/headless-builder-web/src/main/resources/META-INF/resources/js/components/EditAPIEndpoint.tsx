@@ -78,6 +78,9 @@ export default function EditAPIEndpoint({
 			}));
 
 			setLocalUIData({
+				...(response.apiEndpointToAPIFilters?.length && {
+					apiEndpointToAPIFilters: response.apiEndpointToAPIFilters,
+				}),
 				...(response.description && {
 					description: response.description,
 				}),

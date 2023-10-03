@@ -735,6 +735,13 @@ public class ContentManager {
 					getLayoutDisplayPageProviderByClassName(
 						layoutClassedModelUsage.getClassName());
 
+			if (layoutDisplayPageProvider == null) {
+				_layoutClassedModelUsageLocalService.
+					deleteLayoutClassedModelUsage(layoutClassedModelUsage);
+
+				continue;
+			}
+
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 					_getInfoItemIdentifier(

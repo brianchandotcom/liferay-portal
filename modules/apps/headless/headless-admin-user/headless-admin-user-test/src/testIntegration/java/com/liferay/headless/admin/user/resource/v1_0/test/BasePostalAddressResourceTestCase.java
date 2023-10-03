@@ -174,6 +174,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		postalAddress.setAddressRegion(regex);
 		postalAddress.setAddressType(regex);
 		postalAddress.setName(regex);
+		postalAddress.setPhoneNumber(regex);
 		postalAddress.setPostalCode(regex);
 		postalAddress.setStreetAddressLine1(regex);
 		postalAddress.setStreetAddressLine2(regex);
@@ -190,6 +191,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		Assert.assertEquals(regex, postalAddress.getAddressRegion());
 		Assert.assertEquals(regex, postalAddress.getAddressType());
 		Assert.assertEquals(regex, postalAddress.getName());
+		Assert.assertEquals(regex, postalAddress.getPhoneNumber());
 		Assert.assertEquals(regex, postalAddress.getPostalCode());
 		Assert.assertEquals(regex, postalAddress.getStreetAddressLine1());
 		Assert.assertEquals(regex, postalAddress.getStreetAddressLine2());
@@ -351,7 +353,8 @@ public abstract class BasePostalAddressResourceTestCase {
 		assertValid(putPostalAddress);
 
 		PostalAddress getPostalAddress =
-			postalAddressResource.getPostalAddress(
+			postalAddressResource.getAccountPostalAddress(
+				testPutAccountPostalAddress_getAccountId(),
 				putPostalAddress.getId());
 
 		assertEquals(randomPostalAddress, getPostalAddress);
@@ -752,6 +755,14 @@ public abstract class BasePostalAddressResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("phoneNumber", additionalAssertFieldName)) {
+				if (postalAddress.getPhoneNumber() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("postalCode", additionalAssertFieldName)) {
 				if (postalAddress.getPostalCode() == null) {
 					valid = false;
@@ -987,6 +998,17 @@ public abstract class BasePostalAddressResourceTestCase {
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						postalAddress1.getName(), postalAddress2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("phoneNumber", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						postalAddress1.getPhoneNumber(),
+						postalAddress2.getPhoneNumber())) {
 
 					return false;
 				}
@@ -1398,6 +1420,52 @@ public abstract class BasePostalAddressResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("phoneNumber")) {
+			Object object = postalAddress.getPhoneNumber();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("postalCode")) {
 			Object object = postalAddress.getPostalCode();
 
@@ -1641,6 +1709,8 @@ public abstract class BasePostalAddressResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				phoneNumber = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				postalCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				primary = RandomTestUtil.randomBoolean();

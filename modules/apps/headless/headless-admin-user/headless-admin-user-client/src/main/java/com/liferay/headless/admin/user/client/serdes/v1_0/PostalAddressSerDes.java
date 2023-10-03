@@ -136,6 +136,20 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 		}
 
+		if (postalAddress.getPhoneNumber() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"phoneNumber\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(postalAddress.getPhoneNumber()));
+
+			sb.append("\"");
+		}
+
 		if (postalAddress.getPostalCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -279,6 +293,14 @@ public class PostalAddressSerDes {
 			map.put("name", String.valueOf(postalAddress.getName()));
 		}
 
+		if (postalAddress.getPhoneNumber() == null) {
+			map.put("phoneNumber", null);
+		}
+		else {
+			map.put(
+				"phoneNumber", String.valueOf(postalAddress.getPhoneNumber()));
+		}
+
 		if (postalAddress.getPostalCode() == null) {
 			map.put("postalCode", null);
 		}
@@ -383,6 +405,11 @@ public class PostalAddressSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					postalAddress.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "phoneNumber")) {
+				if (jsonParserFieldValue != null) {
+					postalAddress.setPhoneNumber((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "postalCode")) {

@@ -2764,6 +2764,62 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testUpdateObjectEntryHierarchyWithAccountEntryRestricted()
+		throws Exception {
+
+		// Root account entry restricted must be inherited
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+
+		Map<Long, ObjectEntry> objectEntries =
+			_addObjectEntryHierarchyWithAccountEntry(accountEntry1, _tree);
+
+		_addResourcePermission(
+			_rootObjectDefinition, ActionKeys.VIEW, _accountAdministratorRole);
+
+		_user = _addUser();
+
+		_assignAccountEntryRole(
+			accountEntry1, _accountAdministratorRole, _user);
+
+		ObjectEntry contextObjectEntry = objectEntries.get(
+			_rootObjectDefinition.getObjectDefinitionId());
+
+		TreeTestUtil.forEachNodeObjectDefinition(
+			_tree.iterator(), objectDefinitionLocalService,
+			objectDefinition -> {
+				ObjectEntry objectEntry = objectEntries.get(
+					objectDefinition.getObjectDefinitionId());
+
+				AssertUtils.assertFailure(
+					PrincipalException.MustHavePermission.class,
+					StringBundler.concat(
+						"User ", _user.getUserId(),
+						" must have UPDATE permission for ",
+						_rootObjectDefinition.getClassName(), StringPool.SPACE,
+						contextObjectEntry.getId()),
+					() -> _defaultObjectEntryManager.updateObjectEntry(
+						_simpleDTOConverterContext, objectDefinition,
+						objectEntry.getId(), objectEntry));
+			});
+
+		_addResourcePermission(
+			_rootObjectDefinition, ActionKeys.UPDATE,
+			_accountAdministratorRole);
+
+		TreeTestUtil.forEachNodeObjectDefinition(
+			_tree.iterator(), objectDefinitionLocalService,
+			objectDefinition -> {
+				ObjectEntry objectEntry = objectEntries.get(
+					objectDefinition.getObjectDefinitionId());
+
+				_defaultObjectEntryManager.updateObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					objectEntry.getId(), objectEntry);
+			});
+	}
+
+	@Test
 	public void testUpdateObjectEntryWithAccountEntryRestricted()
 		throws Exception {
 

@@ -125,9 +125,22 @@ export function hasEndpointDataChanged({
 		scope: uiScope,
 	} = localUIData;
 
-	const pathChanged = path !== beginStringWithForwardSlash(uiPath);
-	const scopeKeyChanged = scope.key !== uiScope?.key;
 	const descriptionChanged = description !== uiDescription;
+
+	const filtersArrayLengthChanged = !!(
+		localUIData.apiEndpointToAPIFilters &&
+		fetchedEndpointData.apiEndpointToAPIFilters &&
+		fetchedEndpointData.apiEndpointToAPIFilters.length !==
+			localUIData.apiEndpointToAPIFilters.length
+	);
+
+	const filtersContentChanged = !!(
+		localUIData.apiEndpointToAPIFilters?.length &&
+		fetchedEndpointData.apiEndpointToAPIFilters?.length &&
+		fetchedEndpointData.apiEndpointToAPIFilters[0].oDataFilter !==
+			localUIData.apiEndpointToAPIFilters[0].oDataFilter
+	);
+	const pathChanged = path !== beginStringWithForwardSlash(uiPath);
 
 	const schemaIdChanged =
 		((r_responseAPISchemaToAPIEndpoints_c_apiSchemaId === 0 &&
@@ -139,11 +152,15 @@ export function hasEndpointDataChanged({
 			!uiR_responseAPISchemaToAPIEndpoints_c_apiSchemaId
 		);
 
+	const scopeKeyChanged = scope.key !== uiScope?.key;
+
 	if (
-		pathChanged ||
-		scopeKeyChanged ||
 		descriptionChanged ||
-		schemaIdChanged
+		filtersArrayLengthChanged ||
+		filtersContentChanged ||
+		pathChanged ||
+		schemaIdChanged ||
+		scopeKeyChanged
 	) {
 		return true;
 	}

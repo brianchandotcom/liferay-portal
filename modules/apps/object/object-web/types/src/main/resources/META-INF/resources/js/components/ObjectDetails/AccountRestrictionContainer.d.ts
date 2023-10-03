@@ -12,6 +12,7 @@ interface AccountRestrictionContainerProps {
 	isLinkedObjectDefinition?: boolean;
 	isRootDescendantNode: boolean;
 	objectFields: ObjectField[];
+	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
@@ -21,6 +22,7 @@ export declare function AccountRestrictionContainer({
 	isLinkedObjectDefinition,
 	isRootDescendantNode,
 	objectFields,
+	onSubmit,
 	setValues,
 	values,
 }: AccountRestrictionContainerProps): JSX.Element;

@@ -19,6 +19,7 @@ interface AccountRestrictionContainerProps {
 	isLinkedObjectDefinition?: boolean;
 	isRootDescendantNode: boolean;
 	objectFields: ObjectField[];
+	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
@@ -29,6 +30,7 @@ export function AccountRestrictionContainer({
 	isLinkedObjectDefinition,
 	isRootDescendantNode,
 	objectFields,
+	onSubmit,
 	setValues,
 	values,
 }: AccountRestrictionContainerProps) {
@@ -126,6 +128,13 @@ export function AccountRestrictionContainer({
 					Liferay.Language.get('account-restriction')
 				)}
 				name="accountEntryRestricted"
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onToggle={() =>
 					setValues({
 						accountEntryRestricted: !values.accountEntryRestricted,
@@ -150,6 +159,13 @@ export function AccountRestrictionContainer({
 				label={Liferay.Language.get(
 					'account-entry-restricted-object-field-id'
 				)}
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onChange={({value}) => {
 					setValues({
 						accountEntryRestrictedObjectFieldName: value,

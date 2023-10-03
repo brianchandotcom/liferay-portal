@@ -8,7 +8,7 @@ import {
 	SingleSelect,
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 
 interface EntryDisplayContainerProps {
 	errors: FormError<ObjectDefinition>;
@@ -18,6 +18,7 @@ interface EntryDisplayContainerProps {
 		name: string;
 	}[];
 	objectFields: ObjectField[];
+	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
@@ -27,13 +28,10 @@ export function EntryDisplayContainer({
 	isLinkedObjectDefinition,
 	nonRelationshipObjectFieldsInfo,
 	objectFields,
+	onSubmit,
 	setValues,
 	values,
 }: EntryDisplayContainerProps) {
-	const [selectedObjectField, setSelectedObjectField] = useState<
-		ObjectField
-	>();
-
 	const titleFieldOptions = useMemo(() => {
 		return nonRelationshipObjectFieldsInfo?.map(({label, name}) => {
 			return {
@@ -47,24 +45,29 @@ export function EntryDisplayContainer({
 		});
 	}, [nonRelationshipObjectFieldsInfo, values.defaultLanguageId]);
 
-	useEffect(() => {
-		if (values.titleObjectFieldName) {
-			const titleObjectField = objectFields.find(
-				(objectField) =>
-					objectField.name === values.titleObjectFieldName
+	const getEntryTitleObjectFieldValue = () => {
+		const titleObjectField = objectFields.find(
+			(objectField) => objectField.name === values.titleObjectFieldName
+		);
+
+		if (titleFieldOptions) {
+			return getLocalizableLabel(
+				values.defaultLanguageId as Liferay.Language.Locale,
+				titleObjectField?.label,
+				titleObjectField?.name
 			);
-
-			setSelectedObjectField(titleObjectField);
-
-			return;
 		}
 
 		const idField = objectFields.find((field) => field.name === 'id');
 
 		setValues({titleObjectFieldName: idField?.name});
-		setSelectedObjectField(idField);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.titleObjectFieldName, objectFields]);
+
+		return getLocalizableLabel(
+			values.defaultLanguageId as Liferay.Language.Locale,
+			idField?.label,
+			idField?.name
+		);
+	};
 
 	return (
 		<SingleSelect<{label: string; name: string}>
@@ -76,18 +79,19 @@ export function EntryDisplayContainer({
 					({name}) => name === target.name
 				);
 
-				setSelectedObjectField(field);
-
 				setValues({
 					titleObjectFieldName: field?.name,
 				});
+
+				if (onSubmit) {
+					onSubmit({
+						...values,
+						titleObjectFieldName: field?.name,
+					});
+				}
 			}}
 			options={titleFieldOptions}
-			value={getLocalizableLabel(
-				values.defaultLanguageId as Liferay.Language.Locale,
-				selectedObjectField?.label,
-				selectedObjectField?.name
-			)}
+			value={getEntryTitleObjectFieldValue()}
 		/>
 	);
 }

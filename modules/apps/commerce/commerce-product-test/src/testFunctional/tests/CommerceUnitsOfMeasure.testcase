@@ -747,6 +747,170 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12405. It is possible for the buyer user to view information about UOM and quantity for each order item."
+	@priority = 5
+	test CanBuyerViewOrderItemUOMAndQuantity {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And 2 UOMs are added for MIN93016A (uom1 and uom2), 1 UOM for MIN93016B (uom3) all with precision 1 (this last one with incremental order quantity of 0.6)") {
+			for (var index : list "1,2") {
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					basePrice = ${index},
+					productSKU = "MIN93016A",
+					uomKey = "uom${index}",
+					uomName = "UOM${index}");
+			}
+
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 3,
+				incrementalOrderQuantity = "0.6",
+				productSKU = "MIN93016B",
+				uomKey = "uom3",
+				uomName = "UOM3");
+		}
+
+		task ("And Brake Fluid's Multiple Order Quantity is set to 0.1") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				multipleOrderQuantity = "0.1",
+				productName = "Brake Fluid");
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And adds to cart MIN93016A/uom1 with quantity 2, MIN93016A/uom2 with quantity 3, MIN93016B/uom3 with quantity 1.2, MIN93016C with quantity 1") {
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test City",
+				countryISOCode = "US",
+				name = "Test Address",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+
+			CommerceJSONDeliveryCart._addCommerceCart(
+				accountEntryName = "Commerce Account",
+				billingAddressName = "Test Address",
+				cartItems = "MIN93016A:2:uom1,MIN93016A:3:uom2,MIN93016C:1,MIN93016B:1.2:uom3",
+				shippingAddressName = "Test Address",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("And views the order from Pending Order Minium page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Button.click(button = "View");
+		}
+
+		task ("Then the UOMs keys and quantities are all correct") {
+			for (var rowList : list "MIN93016A:2.0,MIN93016A:3.0,MIN93016B:1.2,MIN93016C:1") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var quantity = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entryTitle = ${sku},
+					key_index = 7,
+					key_value = ${quantity},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+
+			for (var rowList : list "MIN93016A:uom1,MIN93016A:uom2,MIN93016B:uom3,MIN93016C:") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var uomKey = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entryTitle = ${sku},
+					key_index = 8,
+					key_value = ${uomKey},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+		}
+
+		task ("When the buyer starts the checkout of the order") {
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.setAddress(selectedAddressName = "Test Address");
+
+			Click(locator1 = "Button#CONTINUE");
+
+			CommerceCheckout.setStandardShippingOption();
+		}
+
+		task ("Then on the order summary page the quantities and UOMs are correct for each order item") {
+			for (var quantity : list "2.0,3.0,1,1.2") {
+				AssertTextEquals(
+					key_productQuantity = ${quantity},
+					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_QUANTITY",
+					value1 = ${quantity});
+			}
+
+			for (var rowList : list "1:uom1,2:uom2,3:,4:uom3") {
+				var key_row = StringUtil.extractFirst(${rowList}, ":");
+				var key_uom = StringUtil.extractLast(${rowList}, ":");
+
+				AssertTextEquals(
+					key_row = ${key_row},
+					key_uom = ${key_uom},
+					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_UOM",
+					value1 = ${key_uom});
+			}
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("When navigates to the order from Placed Order Minium page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			Button.click(button = "View");
+		}
+
+		task ("Then the UOMs keys and quantities are shown correctly") {
+			for (var rowList : list "MIN93016A:2.0,MIN93016A:3.0,MIN93016B:1.2,MIN93016C:1") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var quantity = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entryTitle = ${sku},
+					key_index = 7,
+					key_value = ${quantity},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+
+			for (var rowList : list "MIN93016A:uom1,MIN93016A:uom2,MIN93016B:uom3,MIN93016C:") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var uomKey = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entryTitle = ${sku},
+					key_index = 8,
+					key_value = ${uomKey},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+		}
+	}
+
 	@description = "COMMERCE-12337. As admin, I can edit and delete the Units of Measure entries."
 	@priority = 5
 	test CanEditAndDeleteUOM {
@@ -863,6 +1027,463 @@ definition {
 				key_firstRowValue = "UOM",
 				key_secondRowValue = "Liter",
 				locator1 = "CommerceEntry#GENERIC_TABLE_ROW_VALUE");
+		}
+	}
+
+	@description = "COMMERCE-12531. It is possible for the order manager to view information about UOM and quantity for each order item."
+	@priority = 5
+	test CanOrderManagerViewOrderItemUOMAndQuantity {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a business account") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Commerce Account",
+				accountType = "Business");
+		}
+
+		task ("And 2 UOMs are added for MIN93016A (uom1 and uom2), 1 UOM for MIN93016B (uom3) all with precision 1 (this last one with incremental order quantity of 0.6)") {
+			for (var index : list "1,2") {
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					basePrice = ${index},
+					productSKU = "MIN93016A",
+					uomKey = "uom${index}",
+					uomName = "UOM${index}");
+			}
+
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 3,
+				incrementalOrderQuantity = "0.6",
+				productSKU = "MIN93016B",
+				uomKey = "uom3",
+				uomName = "UOM3");
+		}
+
+		task ("And Brake Fluid's Multiple Order Quantity is set to 0.1") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				multipleOrderQuantity = "0.1",
+				productName = "Brake Fluid");
+		}
+
+		task ("And MIN93016A/uom1 with quantity 2, MIN93016A/uom2 with quantity 3, MIN93016B/uom3 with quantity 1.2, MIN93016C with quantity 1 are added to cart") {
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test City",
+				countryISOCode = "US",
+				name = "Test Address",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+
+			CommerceJSONDeliveryCart._addCommerceCart(
+				accountEntryName = "Commerce Account",
+				billingAddressName = "Test Address",
+				cartItems = "MIN93016A:2:uom1,MIN93016A:3:uom2,MIN93016C:1,MIN93016B:1.2:uom3",
+				shippingAddressName = "Test Address",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("When navigating to the order from the admin order page") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Open");
+		}
+
+		task ("Then the UOMs keys and quantities are all correct") {
+			for (var rowList : list "MIN93016A:2.0,MIN93016A:3.0,MIN93016B:1.2,MIN93016C:1") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var quantity = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entryTitle = ${sku},
+					key_index = 9,
+					key_value = ${quantity},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+
+			for (var rowList : list "MIN93016A:uom1,MIN93016A:uom2,MIN93016B:uom3,MIN93016C:") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var uomKey = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entryTitle = ${sku},
+					key_index = 10,
+					key_value = ${uomKey},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+		}
+
+		task ("When updating the precision of uom3 to be 3") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 3,
+				incrementalOrderQuantity = "0.6",
+				precision = 3,
+				productSKU = "MIN93016B",
+				uomKey = "uom3",
+				uomName = "UOM3");
+		}
+
+		task ("Then the order item quantity is updated to be 1.200") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Open");
+
+			AssertElementPresent(
+				key_entryTitle = "MIN93016B",
+				key_index = 9,
+				key_value = "1.200",
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+
+			AssertElementPresent(
+				key_entryTitle = "MIN93016B",
+				key_index = 10,
+				key_value = "uom3",
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+
+		task ("When navigating to the order from the Minium pending order page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Button.click(button = "View");
+		}
+
+		task ("Then the order item quantity is updated to be 1.200") {
+			AssertElementPresent(
+				key_entryTitle = "MIN93016B",
+				key_index = 7,
+				key_value = "1.200",
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+
+			AssertElementPresent(
+				key_entryTitle = "MIN93016B",
+				key_index = 8,
+				key_value = "uom3",
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+
+		task ("When completing checkout of the order") {
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
+
+			CommerceJSONDeliveryCart._postCommerceCartCheckout(cartId = ${orderId});
+		}
+
+		task ("And navigating to the order from the Minium placed order page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			Button.click(button = "View");
+		}
+
+		task ("Then the order item quantity is updated to be 1.200") {
+			AssertElementPresent(
+				key_entryTitle = "MIN93016B",
+				key_index = 7,
+				key_value = "1.200",
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+
+			AssertElementPresent(
+				key_entryTitle = "MIN93016B",
+				key_index = 8,
+				key_value = "uom3",
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12539. It is possible for the order manager to view information about UOM and quantity for each order item during the shipping process."
+	@priority = 5
+	test CanOrderManagerViewOrderItemUOMAndQuantityDuringShippingProcess {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a business account") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Commerce Account",
+				accountType = "Business");
+		}
+
+		task ("And 2 UOMs for MIN93016A and 1 for MIN93016B are created") {
+			for (var rowList : list "0.2:1,0.7:2") {
+				var incrementalOrderQuantity = StringUtil.extractFirst(${rowList}, ":");
+				var uomKeyIndex = StringUtil.extractLast(${rowList}, ":");
+
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					basePrice = 10,
+					incrementalOrderQuantity = ${incrementalOrderQuantity},
+					productSKU = "MIN93016A",
+					uomKey = "uom${uomKeyIndex}",
+					uomName = "UOM${uomKeyIndex}");
+			}
+
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 10,
+				incrementalOrderQuantity = "1.3",
+				productSKU = "MIN93016B",
+				uomKey = "uom3",
+				uomName = "UOM3");
+		}
+
+		task ("And Brake Fluid's Multiple Order Quantity is set to 0.1") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				multipleOrderQuantity = "0.1",
+				productName = "Brake Fluid");
+		}
+
+		task ("And some quantity is added to MIN93016A/uom2 in the inventory") {
+			CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+				productSku = "MIN93016A",
+				quantity = 10,
+				uomKey = "uom2",
+				warehouseName = "Italy");
+		}
+
+		task ("And MIN93016A, MIN93016B and MIN93016C are added to the cart in different quantities with different uoms") {
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test City",
+				countryISOCode = "US",
+				name = "Test Address",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+
+			CommerceJSONDeliveryCart._addCommerceCart(
+				accountEntryName = "Commerce Account",
+				billingAddressName = "Test Address",
+				cartItems = "MIN93016A:1.2:uom1,MIN93016A:1.4:uom2,MIN93016B:2.6:uom3,MIN93016C:2",
+				shippingAddressName = "Test Address",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("And the order checkout is completed") {
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
+
+			CommerceJSONDeliveryCart._postCommerceCartCheckout(cartId = ${orderId});
+		}
+
+		task ("And the order is accepted") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And a shipment process is started") {
+			Click(
+				key_index = "Create Shipment",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+		}
+
+		task ("When the plus button is clicked in order to add order items to the shiment") {
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then on the modal the UOM and column quantities display the right values") {
+			for (var rowList : list "MIN93016A:1.2:uom1,MIN93016A:1.4:uom2,MIN93016B:2.6:uom3,MIN93016C:2:") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+
+				var rowList = StringUtil.replaceFirst(${rowList}, "${sku}:", "");
+
+				var outstandingQuantity = StringUtil.extractFirst(${rowList}, ":");
+				var uomKey = StringUtil.extractLast(${rowList}, ":");
+
+				AssertTextEquals(
+					key_cellName1 = ${sku},
+					key_cellName2 = ${uomKey},
+					key_columnNumber = 3,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = ${outstandingQuantity});
+			}
+		}
+
+		task ("When all 4 order items are added to the shipment") {
+			Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("And each order item is edited to set the quantity in shipment (e.g. until outstanding quantity reaches 0 using Italy warehouse) and using the quantity arrows for MIN93016A/uom1") {
+			Click(
+				key_entryName = "MIN93016A",
+				key_uom = "uom1",
+				locator1 = "CommerceNavigation#ENTRY_NAME_WITH_UOM");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(
+				key_warehouseName = "Italy",
+				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE");
+
+			KeyPress(
+				key_warehouseName = "Italy",
+				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+				value1 = "\UP");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			AssertTextEquals(
+				key_warehouseName = "Italy",
+				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+				value1 = "0.2");
+
+			for (var index : list "1,2,3,4,5") {
+				KeyPress(
+					key_warehouseName = "Italy",
+					locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+					value1 = "\UP");
+			}
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+
+			for (var rowList : list "MIN93016A:1.4:uom2,MIN93016B:2.6:uom3,MIN93016C:2:") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+
+				var rowList = StringUtil.replaceFirst(${rowList}, "${sku}:", "");
+
+				var outstandingQuantity = StringUtil.extractFirst(${rowList}, ":");
+				var uomKey = StringUtil.extractLast(${rowList}, ":");
+
+				Click(
+					key_entryName = ${sku},
+					key_uom = ${uomKey},
+					locator1 = "CommerceNavigation#ENTRY_NAME_WITH_UOM");
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				Type(
+					key_warehouseName = "Italy",
+					locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+					value1 = ${outstandingQuantity});
+
+				Button.clickSave();
+
+				Alert.viewSuccessMessage();
+
+				Click(locator1 = "Icon#CLOSE");
+
+				SelectFrameTop();
+			}
+		}
+
+		task ("Then the outstanding quantity column displays 0 for each item") {
+			for (var rowList : list "MIN93016A:uom1,MIN93016A:uom2,MIN93016B:uom3,MIN93016C:") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var uomKey = StringUtil.extractLast(${rowList}, ":");
+
+				AssertTextEquals(
+					key_cellName1 = ${sku},
+					key_cellName2 = ${uomKey},
+					key_columnNumber = 5,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = 0);
+			}
+		}
+
+		task ("When clicking on 'Finish Processing' button") {
+			Click(
+				key_index = "Finish Processing",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+		}
+
+		task ("Then the table keeps showing the right quantities and UOMs") {
+			for (var rowList : list "MIN93016A:1.2,MIN93016A:1.4,MIN93016B:2.6,MIN93016C:2") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var quantity = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entryTitle = ${sku},
+					key_index = 6,
+					key_value = ${quantity},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+
+			for (var rowList : list "MIN93016A:uom1,MIN93016A:uom2,MIN93016B:uom3,MIN93016C:") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var uomKey = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entryTitle = ${sku},
+					key_index = 7,
+					key_value = ${uomKey},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+		}
+
+		task ("When clicking on 'Ship' button") {
+			Click(
+				key_index = "Ship",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+		}
+
+		task ("Then the table keeps showing the right quantities and UOMs") {
+			for (var rowList : list "MIN93016A:1.2,MIN93016A:1.4,MIN93016B:2.6,MIN93016C:2") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var quantity = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entryTitle = ${sku},
+					key_index = 5,
+					key_value = ${quantity},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+
+			for (var rowList : list "MIN93016A:uom1,MIN93016A:uom2,MIN93016B:uom3,MIN93016C:") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var uomKey = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entryTitle = ${sku},
+					key_index = 6,
+					key_value = ${uomKey},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+		}
+
+		task ("When clicking on 'Deliver' button") {
+			Click(
+				key_index = "Deliver",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+		}
+
+		task ("Then the table keeps showing the right quantities and UOMs") {
+			for (var rowList : list "MIN93016A:1.2,MIN93016A:1.4,MIN93016B:2.6,MIN93016C:2") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var quantity = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entryTitle = ${sku},
+					key_index = 5,
+					key_value = ${quantity},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+
+			for (var rowList : list "MIN93016A:uom1,MIN93016A:uom2,MIN93016B:uom3,MIN93016C:") {
+				var sku = StringUtil.extractFirst(${rowList}, ":");
+				var uomKey = StringUtil.extractLast(${rowList}, ":");
+
+				AssertElementPresent(
+					key_entryTitle = ${sku},
+					key_index = 6,
+					key_value = ${uomKey},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
 		}
 	}
 

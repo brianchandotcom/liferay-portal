@@ -81,7 +81,23 @@ public class JavaSourceUtil extends SourceUtil {
 		sb.append(StringPool.NEW_LINE);
 		sb.append(indent);
 		sb.append(StringPool.TAB);
-		sb.append(StringUtil.merge(parameterList, StringPool.COMMA_AND_SPACE));
+		sb.append(parameterList.get(0));
+
+		for (int i = 1; i < parameterList.size(); i++) {
+			if ((i % 4) == 0) {
+				sb.append(StringPool.COMMA);
+				sb.append(StringPool.NEW_LINE);
+				sb.append(indent);
+				sb.append(StringPool.TAB);
+				sb.append(parameterList.get(i));
+
+				continue;
+			}
+
+			sb.append(StringPool.COMMA_AND_SPACE);
+			sb.append(parameterList.get(i));
+		}
+
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();

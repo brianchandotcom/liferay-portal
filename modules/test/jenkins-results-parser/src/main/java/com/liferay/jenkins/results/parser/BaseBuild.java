@@ -369,7 +369,13 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public int getBuildNumber() {
-		return _buildNumber;
+		Invocation latestInvocation = _getLatestInvocation();
+
+		if (latestInvocation == null) {
+			return -1;
+		}
+
+		return latestInvocation.getBuildNumber();
 	}
 
 	@Override
@@ -735,7 +741,13 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public JenkinsMaster getJenkinsMaster() {
-		return _jenkinsMaster;
+		Invocation latestInvocation = _getLatestInvocation();
+
+		if (latestInvocation != null) {
+			return latestInvocation.getJenkinsMaster();
+		}
+
+		return null;
 	}
 
 	@Override

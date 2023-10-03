@@ -69,7 +69,7 @@
 								<#if productAttachments?has_content>
 									<#list productAttachments as attachmentFields>
 										<#list attachmentFields.customFields as field>
-											<#if (field.name=="App Icon" ) && (field.customValue.data[0].equals(lower_case, "Yes")?lower_case)>
+											<#if (field.name=="App Icon" ) && (stringUtil.equals(field.customValue.data[0]?lower_case, "yes"))>
 												<#assign srcName = "/o/" + attachmentFields.src?keep_after("/o/") />
 
 												<img

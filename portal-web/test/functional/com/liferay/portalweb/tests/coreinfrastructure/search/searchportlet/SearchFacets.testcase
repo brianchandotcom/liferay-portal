@@ -949,9 +949,9 @@ definition {
 		}
 
 		task ("Search for the Web Contents and configure the widget to use the 'Vocabulary Layout'") {
-			SearchPortlets.searchEmbedded(searchTerm = "test");
+			SearchPage.searchEmbedded(searchTerm = "test");
 
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				displayTemplate = "Vocabulary Layout",
 				portletName = "Category Facet");
 
@@ -959,19 +959,19 @@ definition {
 		}
 
 		task ("Assert the sort order is changed from 'Term Frequency Descending' to 'Term Frequency Ascending'") {
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(
-				facetList = "Engineering,Product,Sales,Community",
-				portletName = "Category Facet");
+			SearchFacets.viewFacetTermsSpecificOrder(
+				facetName = "Category Facet",
+				termList = "Engineering,Product,Sales,Community");
 
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Category Facet",
 				sortOption = "Term Frequency Ascending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(
-				facetList = "Community,Sales,Product,Engineering",
-				portletName = "Category Facet");
+			SearchFacets.viewFacetTermsSpecificOrder(
+				facetName = "Category Facet",
+				termList = "Community,Sales,Product,Engineering");
 		}
 	}
 

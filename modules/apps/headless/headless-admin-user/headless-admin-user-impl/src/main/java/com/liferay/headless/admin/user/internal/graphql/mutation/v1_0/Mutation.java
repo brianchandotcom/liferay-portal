@@ -1874,7 +1874,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Updates the user account with information sent in the request body. Only the provided fields are updated."
+		description = "Updates the user account with information sent in the request body. Only the provided fields are updated. Important - To change the status of the users, in case you have the workflow active for the user, you must use the workflow Headless API (headless-admin-workflow)"
 	)
 	public UserAccount patchUserAccount(
 			@GraphQLName("userAccountId") Long userAccountId,
@@ -1889,7 +1889,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Replaces the user account with information sent in the request body. Any missing fields are deleted unless they are required."
+		description = "Replaces the user account with information sent in the request body. Any missing fields are deleted unless they are required. Important - To change the status of the users, in case you have the workflow active for the user, you must use the workflow Headless API (headless-admin-workflow)"
 	)
 	public UserAccount updateUserAccount(
 			@GraphQLName("userAccountId") Long userAccountId,

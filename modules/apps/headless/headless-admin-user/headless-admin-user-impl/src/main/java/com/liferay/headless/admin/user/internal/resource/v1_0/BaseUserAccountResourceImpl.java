@@ -1723,7 +1723,7 @@ public abstract class BaseUserAccountResourceImpl
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "familyName": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "jobTitle": ___, "password": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Updates the user account with information sent in the request body. Only the provided fields are updated."
+		description = "Updates the user account with information sent in the request body. Only the provided fields are updated. Important - To change the status of the users, in case you have the workflow active for the user, you must use the workflow Headless API (headless-admin-workflow)"
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1817,7 +1817,7 @@ public abstract class BaseUserAccountResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "familyName": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "jobTitle": ___, "password": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Replaces the user account with information sent in the request body. Any missing fields are deleted unless they are required."
+		description = "Replaces the user account with information sent in the request body. Any missing fields are deleted unless they are required. Important - To change the status of the users, in case you have the workflow active for the user, you must use the workflow Headless API (headless-admin-workflow)"
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

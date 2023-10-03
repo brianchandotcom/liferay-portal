@@ -623,4 +623,49 @@ definition {
 		}
 	}
 
+	@description = "LPS-189969 - Verify if when the user changes the name of one view, the table will be sorted by the modified date"
+	@priority = 3
+	test ViewsSortedByModifiedDate {
+		task ("And Add a 4 views") {
+			DataSetAdmin.createDataSetView(
+				description = "Description Test",
+				key_name = "View Test 1,View Test 2,View Test 3,View Test 4");
+		}
+
+		task ("Then confirm the order that the views are displayed") {
+			AssertElementPresent(
+				key_viewName = "View Test 1",
+				key_viewRow = 4,
+				locator1 = "DataSet#VIEW_BY_ROW");
+
+			AssertElementPresent(
+				key_viewName = "View Test 2",
+				key_viewRow = 3,
+				locator1 = "DataSet#VIEW_BY_ROW");
+
+			AssertElementPresent(
+				key_viewName = "View Test 3",
+				key_viewRow = 2,
+				locator1 = "DataSet#VIEW_BY_ROW");
+
+			AssertElementPresent(
+				key_viewName = "View Test 4",
+				key_viewRow = 1,
+				locator1 = "DataSet#VIEW_BY_ROW");
+		}
+
+		task ("When change the name of one of the views") {
+			DataSetAdmin.editView(
+				key_newName = "View Test edited",
+				key_oldName = "View Test 2");
+		}
+
+		task ("Then Confirm that the modified view is at the top of the list") {
+			AssertElementPresent(
+				key_viewName = "View Test edited",
+				key_viewRow = 1,
+				locator1 = "DataSet#VIEW_BY_ROW");
+		}
+	}
+
 }

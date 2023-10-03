@@ -139,6 +139,16 @@ public class LayoutPageTemplateCollectionServiceWrapper
 
 	@Override
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
+			long layoutPageTemplateCollectionId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateCollectionService.
+			updateLayoutPageTemplateCollection(
+				layoutPageTemplateCollectionId, name);
+	}
+
+	@Override
+	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name,
 			String description)
 		throws com.liferay.portal.kernel.exception.PortalException {

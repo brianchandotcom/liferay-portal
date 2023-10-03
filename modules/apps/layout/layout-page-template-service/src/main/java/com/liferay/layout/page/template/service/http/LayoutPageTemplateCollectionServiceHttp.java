@@ -486,6 +486,51 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		}
 	}
 
+	public static
+		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
+				updateLayoutPageTemplateCollection(
+					HttpPrincipal httpPrincipal,
+					long layoutPageTemplateCollectionId, String name)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutPageTemplateCollectionServiceUtil.class,
+				"updateLayoutPageTemplateCollection",
+				_updateLayoutPageTemplateCollectionParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, layoutPageTemplateCollectionId, name);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.layout.page.template.model.
+				LayoutPageTemplateCollection)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateCollectionServiceHttp.class);
 
@@ -535,6 +580,10 @@ public class LayoutPageTemplateCollectionServiceHttp {
 	private static final Class<?>[]
 		_updateLayoutPageTemplateCollectionParameterTypes10 = new Class[] {
 			long.class, String.class, String.class
+		};
+	private static final Class<?>[]
+		_updateLayoutPageTemplateCollectionParameterTypes11 = new Class[] {
+			long.class, String.class
 		};
 
 }

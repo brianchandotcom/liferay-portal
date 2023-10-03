@@ -11,11 +11,13 @@ export declare const ADD_ITEM = 'ADD_ITEM';
 export declare const ADD_MAPPED_INFO_ITEM = 'ADD_MAPPED_INFO_ITEM';
 export declare const ADD_MAPPING_FIELDS = 'ADD_MAPPING_FIELDS';
 export declare const ADD_REDO_ACTION = 'ADD_REDO_ACTION';
+export declare const ADD_RULE = 'ADD_RULE';
 export declare const ADD_UNDO_ACTION = 'ADD_UNDO_ACTION';
 export declare const CHANGE_MASTER_LAYOUT = 'CHANGE_MASTER_LAYOUT';
 export declare const DELETE_FRAGMENT_ENTRY_LINK_COMMENT =
 	'DELETE_FRAGMENT_ENTRY_LINK_COMMENT';
 export declare const DELETE_ITEM = 'DELETE_ITEM';
+export declare const DELETE_RULE = 'DELETE_RULE';
 export declare const DUPLICATE_ITEM = 'DUPLICATE_ITEM';
 export declare const EDIT_FRAGMENT_ENTRY_LINK_COMMENT =
 	'EDIT_FRAGMENT_ENTRY_LINK_COMMENT';
@@ -51,4 +53,5 @@ export declare const UPDATE_ROW_COLUMNS = 'UPDATE_ROW_COLUMNS';
 export declare const UPDATE_UNDO_ACTIONS = 'UPDATE_UNDO_ACTIONS';
 export declare const UPDATE_PAGE_CONTENTS = 'UPDATE_PAGE_CONTENTS';
 export declare const UPDATE_PREVIEW_IMAGE = 'UPDATE_PREVIEW_IMAGE';
+export declare const UPDATE_RULE = 'UPDATE_RULE';
 export declare const UPDATE_WIDGETS = 'UPDATE_WIDGETS';

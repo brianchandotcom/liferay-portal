@@ -7,7 +7,6 @@ package com.liferay.login.web.internal.servlet.taglib.include;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.include.PageInclude;
 import com.liferay.taglib.portlet.RenderURLTag;
@@ -22,7 +21,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -63,8 +61,6 @@ public class ForgetPasswordNavigationPostPageInclude implements PageInclude {
 
 		renderURLTag.addParam("saveLastPath", Boolean.FALSE.toString());
 		renderURLTag.addParam("mvcRenderCommandName", "/login/forgot_password");
-		renderURLTag.addParam(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
 		renderURLTag.setVar("forgotPasswordURL");
 		renderURLTag.setWindowState(WindowState.MAXIMIZED.toString());
 
@@ -81,8 +77,5 @@ public class ForgetPasswordNavigationPostPageInclude implements PageInclude {
 
 		iconTag.doTag(pageContext);
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

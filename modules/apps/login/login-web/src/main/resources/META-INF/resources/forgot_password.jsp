@@ -8,12 +8,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-if (Validator.isNotNull(redirect)) {
-	portletDisplay.setURLBack(redirect);
-}
-
 User user2 = (User)request.getAttribute(WebKeys.FORGOT_PASSWORD_REMINDER_USER);
 
 if (Validator.isNull(authType)) {

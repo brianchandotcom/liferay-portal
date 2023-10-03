@@ -1915,8 +1915,6 @@ public class PortalImpl implements Portal {
 					PortletRequest.RENDER_PHASE)
 			).setMVCRenderCommandName(
 				"/login/create_account"
-			).setRedirect(
-				httpServletRequest.getAttribute(WebKeys.REDIRECT)
 			).setParameter(
 				"saveLastPath", false
 			).setPortletMode(

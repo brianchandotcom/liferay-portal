@@ -52,6 +52,12 @@ public class RankingSearchRequestContributor
 
 		SearchContext searchContext = _getSearchContext(searchRequest);
 
+		if (GetterUtil.getBoolean(
+				searchContext.getAttribute("rankings.admin.search"))) {
+
+			return searchRequest;
+		}
+
 		List<Ranking> rankings = rankingIndexReader.fetch(
 			_getGroupExternalReferenceCode(searchContext.getGroupIds()),
 			searchRequest.getQueryString(), rankingIndexName,

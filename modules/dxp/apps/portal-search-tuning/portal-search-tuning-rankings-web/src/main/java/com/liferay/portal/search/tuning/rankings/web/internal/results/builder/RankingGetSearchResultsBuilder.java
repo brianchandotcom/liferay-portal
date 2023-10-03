@@ -96,7 +96,9 @@ public class RankingGetSearchResultsBuilder {
 				_complexQueryPartBuilderFactory, _groupLocalService, _queries,
 				_searchRequestBuilderFactory);
 
-		return rankingSearchRequestBuilder.companyId(
+		return rankingSearchRequestBuilder.adminSearch(
+			true
+		).companyId(
 			_companyId
 		).from(
 			_from

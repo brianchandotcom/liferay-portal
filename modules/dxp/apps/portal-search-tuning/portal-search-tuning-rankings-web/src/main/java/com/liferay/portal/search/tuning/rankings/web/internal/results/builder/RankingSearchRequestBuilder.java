@@ -34,6 +34,12 @@ public class RankingSearchRequestBuilder {
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
 
+	public RankingSearchRequestBuilder adminSearch(boolean adminSearch) {
+		_adminSearch = adminSearch;
+
+		return this;
+	}
+
 	public SearchRequestBuilder build() {
 		return _searchRequestBuilderFactory.builder(
 		).addComplexQueryPart(
@@ -53,6 +59,8 @@ public class RankingSearchRequestBuilder {
 			_size
 		).withSearchContext(
 			searchContext -> {
+				searchContext.setAttribute(
+					"rankings.admin.search", _adminSearch);
 				searchContext.setCompanyId(_companyId);
 
 				if (!Validator.isBlank(_sxpBlueprintExternalReferenceCode)) {
@@ -133,6 +141,7 @@ public class RankingSearchRequestBuilder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RankingSearchRequestBuilder.class);
 
+	private boolean _adminSearch;
 	private long _companyId;
 	private final ComplexQueryPartBuilderFactory
 		_complexQueryPartBuilderFactory;

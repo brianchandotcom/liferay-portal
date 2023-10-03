@@ -220,7 +220,13 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var warehouseItemId = JSONCurlUtil.get(${curl}, "$..items[?(@['sku'] == '${productSku}')]['id']");
+		if (!(isSet(uomKey))) {
+			var warehouseItemId = JSONCurlUtil.get(${curl}, "$..items[?(@['sku'] == '${productSku}')]['id']");
+		}
+
+		if (isSet(uomKey)) {
+			var warehouseItemId = JSONCurlUtil.get(${curl}, "$..items[?(@['sku'] == '${productSku}' && @['unitOfMeasureKey'] == '${uomKey}')]['id']");
+		}
 
 		return ${warehouseItemId};
 	}
@@ -253,6 +259,17 @@ definition {
 			ListUtil.add(${fieldsList}, ${sku});
 		}
 
+		if (isSet(uomKey)) {
+			var unitOfMeasureKey = '''"unitOfMeasureKey": "${uomKey}"''';
+
+			ListUtil.add(${fieldsList}, ${unitOfMeasureKey});
+
+			var warehouseItemId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseItemId(
+				productSku = ${productSku},
+				uomKey = ${uomKey},
+				warehouseName = ${warehouseName});
+		}
+
 		if (isSet(warehouseName)) {
 			var warehouseId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseId(warehouseName = ${warehouseName});
 
@@ -264,9 +281,13 @@ definition {
 		var fieldsList = ListUtil.toString(${fieldsList});
 
 		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = ${fieldsList});
-		var warehouseItemId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseItemId(
-			productSku = ${productSku},
-			warehouseName = ${warehouseName});
+
+		if (!(isSet(uomKey))) {
+			var warehouseItemId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseItemId(
+				productSku = ${productSku},
+				warehouseName = ${warehouseName});
+		}
+
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''

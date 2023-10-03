@@ -29,8 +29,18 @@ definition {
 
 		if (isSet(cartItems)) {
 			for (var cartItem : list ${cartItems}) {
-				var itemSku = StringUtil.extractFirst(${cartItem}, ":");
-				var itemQuantity = StringUtil.extractLast(${cartItem}, ":");
+				var cartItemList = ListUtil.newListFromString(${cartItem}, ":");
+
+				var size = ListUtil.size(${cartItemList});
+				var itemSku = ListUtil.get(${cartItemList}, 0);
+				var itemQuantity = ListUtil.get(${cartItemList}, 1);
+
+				if (${size} == 2) {
+					var uomKey = "";
+				}
+				else if (${size} == 3) {
+					var uomKey = ListUtil.get(${cartItemList}, 2);
+				}
 
 				if (${itemSku} != "") {
 					var itemSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${itemSku});
@@ -50,7 +60,10 @@ definition {
 						${cartItemsList}${comma}
 						{
 							"quantity": "${itemQuantity}",
-      						"skuId": "${itemSkuId}"
+      						"skuId": "${itemSkuId}",
+							"skuUnitOfMeasure": {
+								"key": "${uomKey}"
+						    }
 						}
 				''';
 			}

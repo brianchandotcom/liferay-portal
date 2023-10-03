@@ -6,19 +6,18 @@
 export default function ProductNavigationControlMenu({namespace}) {
 	const controlMenu = document.getElementById(`${namespace}controlMenu`);
 
-	const eventHandler = () => {
-		Liferay.fire('initLayout');
-	};
-
 	if (controlMenu) {
 		Liferay.Util.toggleControls(controlMenu);
 
-		['focus', 'mousemove', 'touchstart'].forEach((event) =>
-			controlMenu.addEventListener(event, eventHandler)
-		);
+		const eventHandler = () => {
+			Liferay.fire('initLayout');
+			['focus', 'mousemove', 'touchstart'].forEach((event) =>
+				controlMenu.removeEventListener(event, eventHandler)
+			);
+		};
 
 		['focus', 'mousemove', 'touchstart'].forEach((event) =>
-			controlMenu.removeEventListener(event, eventHandler)
+			controlMenu.addEventListener(event, eventHandler)
 		);
 	}
 

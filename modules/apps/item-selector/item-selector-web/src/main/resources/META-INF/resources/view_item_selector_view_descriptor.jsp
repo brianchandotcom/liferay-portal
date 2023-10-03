@@ -200,7 +200,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 		HashMapBuilder.<String, Object>put(
 			"itemSelectorReturnType", itemSelectorViewDescriptorRendererDisplayContext.getReturnType()
 		).put(
-			"itemSelectorSelectedEvent", itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName()
+			"itemSelectorSelectedEvent", HtmlUtil.escapeJS(itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName())
 		).build()
 	%>'
 	module='<%= itemSelectorViewDescriptorRendererDisplayContext.isMultipleSelection() ? "js/ViewItemSelectorViewDescriptorMultiple" : "js/ViewItemSelectorViewDescriptor" %>'

@@ -112,13 +112,11 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 	protected UserLocalService userLocalService;
 
 	private String _generateClientId(String applicationName) {
-		String lowerCaseApplicationName = StringUtil.toLowerCase(
-			applicationName);
+		String clientId = StringUtil.replace(
+			StringUtil.toLowerCase(applicationName), CharPool.SPACE,
+			CharPool.DASH);
 
-		String dashSeparatedLowerCaseApplicationName = StringUtil.replace(
-			lowerCaseApplicationName, CharPool.SPACE, CharPool.DASH);
-
-		return "scim-" + dashSeparatedLowerCaseApplicationName;
+		return "scim-" + clientId;
 	}
 
 	private OAuth2Application _getOrAddOAuth2Application(

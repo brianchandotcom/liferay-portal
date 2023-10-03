@@ -56,15 +56,15 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		return Page.of(
 			TransformUtil.transform(
 				_userLocalService.<List<User>>dslQuery(
-					_createSelectDLSQuery(
+					_createSelectDSLQuery(
 						contextCompany.getCompanyId(), filter, pagination)),
 				user -> _dxpEntityDTOConverter.toDTO(user)),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_userLocalService.<Integer>dslQuery(
-				_createCountDLSQuery(contextCompany.getCompanyId(), filter)));
+				_createCountDSLQuery(contextCompany.getCompanyId(), filter)));
 	}
 
-	private DSLQuery _createCountDLSQuery(long companyId, Filter filter) {
+	private DSLQuery _createCountDSLQuery(long companyId, Filter filter) {
 		JoinStep joinStep = DSLQueryFactoryUtil.count(
 		).from(
 			UserTable.INSTANCE
@@ -119,7 +119,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				filter));
 	}
 
-	private DSLQuery _createSelectDLSQuery(
+	private DSLQuery _createSelectDSLQuery(
 		long companyId, Filter filter, Pagination pagination) {
 
 		JoinStep joinStep = DSLQueryFactoryUtil.select(

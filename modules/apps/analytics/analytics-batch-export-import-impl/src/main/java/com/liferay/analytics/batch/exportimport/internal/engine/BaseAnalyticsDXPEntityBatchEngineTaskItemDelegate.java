@@ -109,7 +109,7 @@ public abstract class BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate
 					if ((upperTerm != null) && Validator.isNumber(upperTerm)) {
 						predicate = predicate.and(
 							UserTable.INSTANCE.modifiedDate.lte(
-								new Date(GetterUtil.getLong(lowerTerm))));
+								new Date(GetterUtil.getLong(upperTerm))));
 					}
 				}
 			}

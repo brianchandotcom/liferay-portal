@@ -8,10 +8,11 @@ package com.liferay.analytics.batch.exportimport.internal.engine;
 import com.liferay.analytics.batch.exportimport.internal.odata.entity.AnalyticsDXPEntityEntityModel;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -81,9 +82,13 @@ public abstract class BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate
 	}
 
 	protected Predicate buildPredicate(
-		long companyId, Predicate predicate, Filter filter) {
+		BaseTable<?> baseTable, long companyId, Predicate predicate,
+		Filter filter) {
 
-		predicate = predicate.and(UserTable.INSTANCE.companyId.eq(companyId));
+		Column<?, Long> companyIdColumn = (Column<?, Long>)baseTable.getColumn(
+			"companyId");
+
+		predicate = predicate.and(companyIdColumn.eq(companyId));
 
 		if (filter instanceof QueryFilter) {
 			QueryFilter queryFilter = (QueryFilter)filter;
@@ -96,11 +101,14 @@ public abstract class BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				if (StringUtil.startsWith(
 						termRangeQuery.getField(), "modified")) {
 
+					Column<?, Date> modifiedDateColumn =
+						(Column<?, Date>)baseTable.getColumn("modifiedDate");
+
 					String lowerTerm = termRangeQuery.getLowerTerm();
 
 					if ((lowerTerm != null) && Validator.isNumber(lowerTerm)) {
 						predicate = predicate.and(
-							UserTable.INSTANCE.modifiedDate.gt(
+							modifiedDateColumn.gt(
 								new Date(GetterUtil.getLong(lowerTerm))));
 					}
 
@@ -108,7 +116,7 @@ public abstract class BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 					if ((upperTerm != null) && Validator.isNumber(upperTerm)) {
 						predicate = predicate.and(
-							UserTable.INSTANCE.modifiedDate.lte(
+							modifiedDateColumn.lte(
 								new Date(GetterUtil.getLong(upperTerm))));
 					}
 				}

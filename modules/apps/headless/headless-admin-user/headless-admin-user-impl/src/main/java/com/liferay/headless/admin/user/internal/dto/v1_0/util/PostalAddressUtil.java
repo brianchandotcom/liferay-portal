@@ -34,6 +34,7 @@ public class PostalAddressUtil {
 				addressType = listType.getName();
 				id = address.getAddressId();
 				name = address.getName();
+				phoneNumber = address.getPhoneNumber();
 				postalCode = address.getZip();
 				primary = address.isPrimary();
 				streetAddressLine1 = address.getStreet1();

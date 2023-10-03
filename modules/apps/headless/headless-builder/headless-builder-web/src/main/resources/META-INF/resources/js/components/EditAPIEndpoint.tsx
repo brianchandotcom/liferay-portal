@@ -170,6 +170,12 @@ export default function EditAPIEndpoint({
 										previous.apiEndpoint
 											.apiEndpointToAPIFilters,
 								}),
+								...(previous.apiEndpoint?.apiEndpointToAPISorts
+									?.length && {
+									apiEndpointToAPISorts:
+										previous.apiEndpoint
+											.apiEndpointToAPISorts,
+								}),
 							},
 						}));
 						openToast({

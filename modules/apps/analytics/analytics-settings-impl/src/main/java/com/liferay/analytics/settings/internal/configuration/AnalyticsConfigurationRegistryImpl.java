@@ -185,7 +185,8 @@ public class AnalyticsConfigurationRegistryImpl
 			bundleContext,
 			(Class<AnalyticsEntityModel<?>>)
 				(Class<?>)AnalyticsEntityModel.class,
-			null, new AnalyticsEntityModelServiceReferenceMapper());
+			null,
+			new AnalyticsEntityModelServiceReferenceMapper(bundleContext));
 	}
 
 	@Deactivate
@@ -1168,6 +1169,12 @@ public class AnalyticsConfigurationRegistryImpl
 		<T extends BaseModel<T>>
 			implements ServiceReferenceMapper<String, AnalyticsEntityModel<T>> {
 
+		public AnalyticsEntityModelServiceReferenceMapper(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
+		}
+
 		@Override
 		public void map(
 			ServiceReference<AnalyticsEntityModel<T>> serviceReference,
@@ -1196,7 +1203,7 @@ public class AnalyticsConfigurationRegistryImpl
 			return (Class<?>)types[0];
 		}
 
-		private BundleContext _bundleContext;
+		private final BundleContext _bundleContext;
 
 	}
 

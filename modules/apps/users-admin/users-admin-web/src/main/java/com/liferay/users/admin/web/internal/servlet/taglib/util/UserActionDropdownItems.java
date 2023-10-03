@@ -59,21 +59,18 @@ public class UserActionDropdownItems {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		boolean hasUpdatePermission = UserPermissionUtil.contains(
-			_themeDisplay.getPermissionChecker(), _user.getUserId(),
-			ActionKeys.UPDATE);
-
-		boolean hasDeletePermission = UserPermissionUtil.contains(
-			_themeDisplay.getPermissionChecker(), _user.getUserId(),
-			ActionKeys.DELETE);
-
 		boolean hasActivatePermission = UserPermissionUtil.contains(
 			_themeDisplay.getPermissionChecker(), _user.getUserId(),
 			ActionKeys.ACTIVATE);
-
 		boolean hasDeactivatePermission = UserPermissionUtil.contains(
 			_themeDisplay.getPermissionChecker(), _user.getUserId(),
 			ActionKeys.DEACTIVATE);
+		boolean hasDeletePermission = UserPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), _user.getUserId(),
+			ActionKeys.DELETE);
+		boolean hasUpdatePermission = UserPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), _user.getUserId(),
+			ActionKeys.UPDATE);
 
 		UserActionDisplayContext userActionDisplayContext =
 			new UserActionDisplayContext(

@@ -248,6 +248,25 @@ public class ObjectEntryInfoItemExceptionRequestHandler {
 				infoFieldUniqueId);
 		}
 
+		if (exception instanceof
+				ObjectEntryValuesException.UniqueValueConstraintViolation) {
+
+			ObjectEntryValuesException.UniqueValueConstraintViolation
+				objectEntryValuesException =
+					(ObjectEntryValuesException.UniqueValueConstraintViolation)
+						exception;
+
+			List<Object> arguments = objectEntryValuesException.getArguments();
+
+			if (ListUtil.isEmpty(arguments) || (arguments.size() > 1)) {
+				throw new InfoFormException();
+			}
+
+			throw new InfoFormValidationException.
+				UniqueValueConstraintViolation(
+					String.valueOf(arguments.get(0)));
+		}
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(exception);
 		}

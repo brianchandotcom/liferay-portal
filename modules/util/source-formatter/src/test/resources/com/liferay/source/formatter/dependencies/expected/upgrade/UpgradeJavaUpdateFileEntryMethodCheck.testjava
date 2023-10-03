@@ -11,10 +11,16 @@ public class UpgradeJavaUpdateFileEntryMethodCheck {
 		boolean majorVersion, byte[] bytes, ServiceContext serviceContext) {
 
 		_dlAppLocalService.updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, null, description, changeLog, dlVersionNumberIncrease, bytes, null, null, serviceContext);
+			userId, fileEntryId, sourceFileName, mimeType,
+			title, null, description, changeLog,
+			dlVersionNumberIncrease, bytes, null, null,
+			serviceContext);
 
 		DLAppLocalServiceUtil.updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, null, description, changeLog, dlVersionNumberIncrease, bytes, null, null, serviceContext);
+			userId, fileEntryId, sourceFileName, mimeType,
+			title, null, description, changeLog,
+			dlVersionNumberIncrease, bytes, null, null,
+			serviceContext);
 
 		DLAppLocalServiceUtil.updateFileEntry(
 			12345, 54321, test, mimeType, title, description, changeLog,
@@ -28,10 +34,16 @@ public class UpgradeJavaUpdateFileEntryMethodCheck {
 		ServiceContext serviceContext) {
 
 		_dlAppLocalService.updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, null, description, changeLog, dlVersionNumberIncrease, bytes, null, null, serviceContext);
+			userId, fileEntryId, sourceFileName, mimeType,
+			title, null, description, changeLog,
+			dlVersionNumberIncrease, bytes, null, null,
+			serviceContext);
 
 		DLAppLocalServiceUtil.updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, null, description, changeLog, dlVersionNumberIncrease, bytes, null, null, serviceContext);
+			userId, fileEntryId, sourceFileName, mimeType,
+			title, null, description, changeLog,
+			dlVersionNumberIncrease, bytes, null, null,
+			serviceContext);
 
 		DLAppLocalServiceUtil.updateFileEntry(
 			12345, 54321, test, mimeType, title, description, changeLog,

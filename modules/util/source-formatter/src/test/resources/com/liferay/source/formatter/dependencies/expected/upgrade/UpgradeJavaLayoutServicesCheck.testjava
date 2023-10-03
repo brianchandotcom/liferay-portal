@@ -24,12 +24,20 @@ public class UpgradeJavaLayoutServicesCheck {
 		// Test LayoutLocalServiceUtil
 
 		LayoutLocalServiceUtil.addLayout(
-			userId, groupId, privateLayout, parentLayoutId, classNameId, classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden, system, friendlyURLMap, 0, serviceContext);
+			userId, groupId, privateLayout, parentLayoutId,
+			classNameId, classPK, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap, type,
+			typeSettings, hidden, system, friendlyURLMap,
+			0, serviceContext);
 
 		// Test LayoutLocalService
 
 		_layoutLocalService.addLayout(
-			userId, groupId, privateLayout, parentLayoutId, classNameId, classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden, system, friendlyURLMap, 0, serviceContext);
+			userId, groupId, privateLayout, parentLayoutId,
+			classNameId, classPK, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap, type,
+			typeSettings, hidden, system, friendlyURLMap,
+			0, serviceContext);
 	}
 
 	public void updateLayoutMethod(
@@ -45,22 +53,38 @@ public class UpgradeJavaLayoutServicesCheck {
 		// Test LayoutLocalServiceUtil
 
 		LayoutLocalServiceUtil.updateLayout(
-			groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden, friendlyURLMap, hasIconImage, iconBytes, 0, 0, 0, serviceContext);
+			groupId, privateLayout, layoutId, parentLayoutId,
+			nameMap, titleMap, descriptionMap, keywordsMap,
+			robotsMap, type, hidden, friendlyURLMap,
+			hasIconImage, iconBytes, 0, 0,
+			0, serviceContext);
 
 		// Test LayoutLocalService
 
 		_layoutLocalService.updateLayout(
-			groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden, friendlyURLMap, hasIconImage, iconBytes, 0, 0, 0, serviceContext);
+			groupId, privateLayout, layoutId, parentLayoutId,
+			nameMap, titleMap, descriptionMap, keywordsMap,
+			robotsMap, type, hidden, friendlyURLMap,
+			hasIconImage, iconBytes, 0, 0,
+			0, serviceContext);
 
 		// Test LayoutService
 
 		_layoutService.updateLayout(
-			groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden, friendlyURLMap, hasIconImage, iconBytes, 0, 0, 0, serviceContext);
+			groupId, privateLayout, layoutId, parentLayoutId,
+			nameMap, titleMap, descriptionMap, keywordsMap,
+			robotsMap, type, hidden, friendlyURLMap,
+			hasIconImage, iconBytes, 0, 0,
+			0, serviceContext);
 
 		// Test LayoutServiceUtil
 
 		LayoutServiceUtil.updateLayout(
-			groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden, friendlyURLMap, hasIconImage, iconBytes, 0, 0, 0, serviceContext);
+			groupId, privateLayout, layoutId, parentLayoutId,
+			nameMap, titleMap, descriptionMap, keywordsMap,
+			robotsMap, type, hidden, friendlyURLMap,
+			hasIconImage, iconBytes, 0, 0,
+			0, serviceContext);
 
 		// Test scenario when it is not possible to validate parameter types
 

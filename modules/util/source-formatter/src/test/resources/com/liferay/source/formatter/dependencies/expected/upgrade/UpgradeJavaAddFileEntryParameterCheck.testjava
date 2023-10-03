@@ -9,10 +9,16 @@ public class UpgradeJavaAddFileEntryParameterCheck {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext){
 
 		_dlAppLocalService.addFileEntry(
-			null, userId, repositoryId, folderId, sourceFileName, mimeType, title, null, description, changeLog, bytes, null, null, serviceContext);
+			null, userId, repositoryId, folderId,
+			sourceFileName, mimeType, title, null,
+			description, changeLog, bytes, null,
+			null, serviceContext);
 
 		DLAppLocalServiceUtil.addFileEntry(
-			null, userId, repositoryId, folderId, sourceFileName, mimeType, title, null, description, changeLog, bytes, null, null, serviceContext);
+			null, userId, repositoryId, folderId,
+			sourceFileName, mimeType, title, null,
+			description, changeLog, bytes, null,
+			null, serviceContext);
 
 		DLAppLocalServiceUtil.addFileEntry(
 			1234, repositoryId, folderId, sourceFileName, mimeType,

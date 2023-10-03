@@ -1,0 +1,20 @@
+assemble:
+    - fromTask: bootJar
+liferay-clarity-etc-spring-boot-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Clarity Etc Spring Boot OAuth Application User Agent
+    scopes:
+        - Liferay.Headless.Admin.User.everything
+        - Liferay.Headless.Admin.Workflow.everything
+    type: oAuthApplicationUserAgent
+liferay-clarity-etc-spring-boot-object-action-account:
+    name: Liferay Clarity Etc Spring Boot Object Action Account
+    oAuth2ApplicationExternalReferenceCode: liferay-clarity-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /object/action/account
+    type: objectAction
+liferay-clarity-etc-spring-boot-workflow-action-application:
+    name: Liferay Clarity Etc Spring Boot Workflow Action Application
+    oAuth2ApplicationExternalReferenceCode: liferay-clarity-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /workflow/action/application
+    type: workflowAction

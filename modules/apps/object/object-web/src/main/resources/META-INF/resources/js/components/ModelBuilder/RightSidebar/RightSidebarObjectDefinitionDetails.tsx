@@ -19,12 +19,12 @@ import {KeyValuePair} from '../../ObjectDetails/EditObjectDetails';
 import {EntryDisplayContainer} from '../../ObjectDetails/EntryDisplayContainer';
 import {ObjectDataContainer} from '../../ObjectDetails/ObjectDataContainer';
 import {ScopeContainer} from '../../ObjectDetails/ScopeContainer';
-import {nonRelationshipObjectFieldsInfo} from '../types';
-
-import './RightSidebarObjectDefinitionDetails.scss';
 import {useObjectDetailsForm} from '../../ObjectDetails/useObjectDetailsForm';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
+import {nonRelationshipObjectFieldsInfo} from '../types';
+
+import './RightSidebarObjectDefinitionDetails.scss';
 interface RightSidebarObjectDefinitionDetailsProps {
 	companyKeyValuePairs: KeyValuePair[];
 	siteKeyValuePairs: KeyValuePair[];
@@ -80,6 +80,7 @@ export function RightSidebarObjectDefinitionDetails({
 			label: {},
 			name: '',
 			pluralLabel: {},
+			titleObjectFieldName: '',
 		},
 		onSubmit: () => {},
 	});
@@ -116,33 +117,40 @@ export function RightSidebarObjectDefinitionDetails({
 
 		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedObjectDefinitionNode]);
+	}, []);
 
-	const onSubmit = async () => {
-		const validationErrors = handleValidate();
+	const onSubmit = async (
+		editedObjectDefinition?: Partial<ObjectDefinition>
+	) => {
+		const validationErrors = handleValidate(
+			editedObjectDefinition ?? values
+		);
 
 		if (!Object.keys(validationErrors).length) {
-			delete values.objectRelationships;
-			delete values.objectActions;
-			delete values.objectLayouts;
-			delete values.objectViews;
+			let objectDefinition = editedObjectDefinition ?? values;
 
-			let objectDefinition = values;
+			delete objectDefinition.objectRelationships;
+			delete objectDefinition.objectActions;
+			delete objectDefinition.objectLayouts;
+			delete objectDefinition.objectViews;
 
-			if (values.accountEntryRestricted) {
-				objectDefinition = setAccountRelationshipFieldMandatory(values);
+			if (objectDefinition.accountEntryRestricted) {
+				objectDefinition = setAccountRelationshipFieldMandatory(
+					objectDefinition
+				);
 			}
 
 			try {
 				await API.putObjectDefinitionByExternalReferenceCode(
 					objectDefinition
 				);
-				openToast({
-					message: Liferay.Language.get(
-						'the-object-was-saved-successfully'
-					),
-					type: 'success',
-				});
+
+				dispatch({
+					payload: {
+						updatedShowChangesSaved: true
+					},
+					type: TYPES.SET_SHOW_CHANGES_SAVED 
+				})
 			}
 			catch (error: unknown) {
 				const {message} = error as Error;
@@ -208,21 +216,6 @@ export function RightSidebarObjectDefinitionDetails({
 						)}
 					</span>
 				</div>
-
-				<div className="lfr-objects__model-builder-right-sidebar-details-title-buttons-container">
-					<ClayButton
-						aria-label={Liferay.Language.get('save-definition')}
-						className="lfr-objects__model-builder-right-sidebar-object-definition-node-details-title-save-button"
-						disabled={
-							selectedObjectDefinitionNode?.data
-								?.linkedObjectDefinition
-						}
-						displayType="primary"
-						onClick={() => onSubmit()}
-					>
-						{Liferay.Language.get('save')}
-					</ClayButton>
-				</div>
 			</div>
 
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
@@ -238,6 +231,7 @@ export function RightSidebarObjectDefinitionDetails({
 						selectedObjectDefinitionNode?.data
 							?.linkedObjectDefinition ?? false
 					}
+					onSubmit={onSubmit}
 					setValues={setValues}
 					values={values as ObjectDefinition}
 				/>
@@ -254,6 +248,7 @@ export function RightSidebarObjectDefinitionDetails({
 						nonRelationshipObjectFieldsInfo ?? []
 					}
 					objectFields={values.objectFields ?? []}
+					onSubmit={onSubmit}
 					setValues={setValues}
 					values={values as ObjectDefinition}
 				/>
@@ -268,6 +263,7 @@ export function RightSidebarObjectDefinitionDetails({
 							?.linkedObjectDefinition ?? false
 					}
 					isRootDescendantNode={isRootDescendantNode}
+					onSubmit={onSubmit}
 					setValues={setValues}
 					siteKeyValuePairs={siteKeyValuePairs}
 					values={values as ObjectDefinition}
@@ -289,6 +285,7 @@ export function RightSidebarObjectDefinitionDetails({
 						objectFields={
 							(values?.objectFields as ObjectField[]) ?? []
 						}
+						onSubmit={onSubmit}
 						setValues={setValues}
 						values={values as ObjectDefinition}
 					/>
@@ -305,6 +302,7 @@ export function RightSidebarObjectDefinitionDetails({
 							?.linkedObjectDefinition ?? false
 					}
 					isRootDescendantNode={isRootDescendantNode}
+					onSubmit={onSubmit}
 					setValues={setValues}
 					values={values as ObjectDefinition}
 				/>

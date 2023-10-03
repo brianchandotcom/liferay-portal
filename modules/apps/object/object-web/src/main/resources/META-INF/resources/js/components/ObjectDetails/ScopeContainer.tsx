@@ -31,6 +31,7 @@ interface ScopeContainerProps {
 	isApproved: boolean;
 	isLinkedObjectDefinition?: boolean;
 	isRootDescendantNode: boolean;
+	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	siteKeyValuePairs: KeyValuePair[];
 	values: Partial<ObjectDefinition>;
@@ -43,6 +44,7 @@ export function ScopeContainer({
 	isApproved,
 	isLinkedObjectDefinition,
 	isRootDescendantNode,
+	onSubmit,
 	setValues,
 	siteKeyValuePairs,
 	values,
@@ -111,6 +113,15 @@ export function ScopeContainer({
 						panelCategoryKey: '',
 						scope: value,
 					});
+
+					if (onSubmit) {
+						onSubmit({
+							...values,
+							panelCategoryKey: '',
+							scope: value,
+						});
+					}
+
 					setSelectedPanelCategoryKey('');
 				}}
 				options={SCOPE_OPTIONS}
@@ -142,6 +153,13 @@ export function ScopeContainer({
 					setValues({
 						panelCategoryKey: key,
 					});
+
+					if (onSubmit) {
+						onSubmit({
+							...values,
+							panelCategoryKey: key,
+						});
+					}
 
 					setSelectedPanelCategoryKey(value);
 				}}

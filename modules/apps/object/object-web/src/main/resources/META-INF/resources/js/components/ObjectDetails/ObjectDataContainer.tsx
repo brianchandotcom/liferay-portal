@@ -17,6 +17,7 @@ interface ObjectDataContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
 	isLinkedObjectDefinition?: boolean;
+	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
@@ -28,6 +29,7 @@ export function ObjectDataContainer({
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
 	isLinkedObjectDefinition,
+	onSubmit,
 	setValues,
 	values,
 }: ObjectDataContainerProps) {
@@ -49,6 +51,13 @@ export function ObjectDataContainer({
 				error={errors.name}
 				label={Liferay.Language.get('name')}
 				name="name"
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onChange={handleChange}
 				required
 				value={values.name}
@@ -58,6 +67,13 @@ export function ObjectDataContainer({
 				disabled={isReadOnly || noPermissionOrLinked}
 				error={errors.label}
 				label={Liferay.Language.get('label')}
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onChange={(label) => setValues({label})}
 				onSelectedLocaleChange={setSelectedLocale}
 				required
@@ -69,6 +85,13 @@ export function ObjectDataContainer({
 				disabled={isReadOnly || noPermissionOrLinked}
 				error={errors.pluralLabel}
 				label={Liferay.Language.get('plural-label')}
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onChange={(pluralLabel) => setValues({pluralLabel})}
 				onSelectedLocaleChange={setSelectedLocale}
 				required
@@ -90,6 +113,13 @@ export function ObjectDataContainer({
 					Liferay.Language.get('object')
 				)}
 				name="active"
+				onBlur={(event) => {
+					event.stopPropagation();
+
+					if (onSubmit) {
+						onSubmit();
+					}
+				}}
 				onToggle={() => setValues({active: !values.active})}
 				toggled={values.active}
 			/>

@@ -14,6 +14,7 @@ interface EntryDisplayContainerProps {
 		name: string;
 	}[];
 	objectFields: ObjectField[];
+	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
@@ -22,6 +23,7 @@ export declare function EntryDisplayContainer({
 	isLinkedObjectDefinition,
 	nonRelationshipObjectFieldsInfo,
 	objectFields,
+	onSubmit,
 	setValues,
 	values,
 }: EntryDisplayContainerProps): JSX.Element;

@@ -1565,9 +1565,6 @@ public abstract class BaseBuild implements Build {
 		if (status.equals("completed")) {
 			_runCompleted();
 		}
-		else if (status.equals("invoking")) {
-			_runInvoking();
-		}
 		else if (status.equals("missing")) {
 			_runMissing();
 		}
@@ -2188,14 +2185,6 @@ public abstract class BaseBuild implements Build {
 				sb.append(getBuildURL());
 				sb.append(". ");
 				sb.append(getResult());
-
-				return sb.toString();
-			}
-
-			if (status.equals("invoking")) {
-				sb.append(" invoking at ");
-				sb.append(getJobURL());
-				sb.append(".");
 
 				return sb.toString();
 			}
@@ -3770,14 +3759,6 @@ public abstract class BaseBuild implements Build {
 		setStatus("completed");
 	}
 
-	private void _runInvoking() {
-		setStatus("invoking");
-
-		invoke();
-
-		_runStarting();
-	}
-
 	private void _runMissing() {
 		setStatus("missing");
 
@@ -3793,7 +3774,7 @@ public abstract class BaseBuild implements Build {
 			return;
 		}
 
-		setStatus("invoking");
+		setStatus("starting");
 	}
 
 	private void _runQueued() {

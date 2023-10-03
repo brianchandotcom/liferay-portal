@@ -116,7 +116,7 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 			StringUtil.toLowerCase(applicationName), CharPool.SPACE,
 			CharPool.DASH);
 
-		return "scim-" + clientId;
+		return "SCIM_" + clientId;
 	}
 
 	private OAuth2Application _getOrAddOAuth2Application(

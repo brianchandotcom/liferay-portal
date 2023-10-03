@@ -43,10 +43,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Olivér Kecskeméty
  */
 @Component(
-	configurationPid = "com.liferay.scim.client.internal.configuration.ScimClientOAuth2ApplicationConfiguration",
+	configurationPid = "com.liferay.scim.client.internal.configuration.SCIMClientOAuth2ApplicationConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
-public class ScimClientOAuth2ApplicationConfigurationFactory {
+public class SCIMClientOAuth2ApplicationConfigurationFactory {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
@@ -57,10 +57,10 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 		ConfigurationFactoryUtil.executeAsCompany(
 			_companyLocalService, properties,
 			companyId -> {
-				ScimClientOAuth2ApplicationConfiguration
+				SCIMClientOAuth2ApplicationConfiguration
 					scimClientOAuth2ApplicationConfiguration =
 						ConfigurableUtil.createConfigurable(
-							ScimClientOAuth2ApplicationConfiguration.class,
+							SCIMClientOAuth2ApplicationConfiguration.class,
 							properties);
 
 				_oAuth2Application = _getOrAddOAuth2Application(
@@ -114,7 +114,7 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 
 	private OAuth2Application _getOrAddOAuth2Application(
 			long companyId,
-			ScimClientOAuth2ApplicationConfiguration
+			SCIMClientOAuth2ApplicationConfiguration
 				scimClientOAuth2ApplicationConfiguration)
 		throws Exception {
 
@@ -157,7 +157,7 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ScimClientOAuth2ApplicationConfigurationFactory.class);
+		SCIMClientOAuth2ApplicationConfigurationFactory.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

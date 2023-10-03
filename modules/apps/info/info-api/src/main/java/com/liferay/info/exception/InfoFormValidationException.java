@@ -299,6 +299,29 @@ public class InfoFormValidationException extends InfoFormException {
 
 	}
 
+	public static class UniqueValueConstraintViolation
+		extends InfoFormValidationException {
+
+		public UniqueValueConstraintViolation(String infoFieldLabel) {
+			_infoFieldLabel = infoFieldLabel;
+		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.format(
+				locale, "the-x-is-already-in-use-please-enter-a-unique-x",
+				new String[] {_infoFieldLabel, _infoFieldLabel}, false);
+		}
+
+		@Override
+		public String getLocalizedMessage(String fieldLabel, Locale locale) {
+			return super.getLocalizedMessage(locale);
+		}
+
+		private final String _infoFieldLabel;
+
+	}
+
 	private final String _infoFieldUniqueId;
 
 }

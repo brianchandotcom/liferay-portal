@@ -935,14 +935,6 @@ public class DownstreamBuild extends BaseBuild {
 		return testResultGitHubElements;
 	}
 
-	protected void setResult(String result) {
-		this.result = result;
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(result)) {
-			setStatus("running");
-		}
-	}
-
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 	{
 		new ModulesCompilationFailureMessageGenerator(),

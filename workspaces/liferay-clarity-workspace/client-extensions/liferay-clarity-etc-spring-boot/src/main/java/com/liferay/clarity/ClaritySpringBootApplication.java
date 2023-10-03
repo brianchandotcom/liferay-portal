@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.delectable.bonsai;
+package com.liferay.clarity;
 
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
 
@@ -18,11 +18,11 @@ import org.springframework.context.annotation.Import;
  */
 @Import(ClientExtensionUtilSpringBootComponentScan.class)
 @SpringBootApplication
-public class DelectableBonsaiSpringBootApplication {
+public class ClaritySpringBootApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(
-			DelectableBonsaiSpringBootApplication.class, args);
+			ClaritySpringBootApplication.class, args);
 	}
 
 }

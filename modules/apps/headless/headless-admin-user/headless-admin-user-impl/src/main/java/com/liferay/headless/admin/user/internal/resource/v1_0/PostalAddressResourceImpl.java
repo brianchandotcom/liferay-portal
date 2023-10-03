@@ -145,8 +145,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		}
 
 		if (postalAddress.getAddressRegion() != null) {
-			address.setRegionId(
-				_getRegionId(postalAddress, country));
+			address.setRegionId(_getRegionId(postalAddress, country));
 		}
 
 		if (postalAddress.getAddressType() != null) {
@@ -161,6 +160,12 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		if (postalAddress.getName() != null) {
 			address.setName(postalAddress.getName());
+		}
+
+		String phoneNumber = address.getPhoneNumber();
+
+		if (postalAddress.getPhoneNumber() != null) {
+			phoneNumber = postalAddress.getPhoneNumber();
 		}
 
 		if (postalAddress.getPostalCode() != null) {
@@ -183,7 +188,12 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			address.setStreet3(postalAddress.getStreetAddressLine3());
 		}
 
-		address = _addressLocalService.updateAddress(address);
+		address = _addressLocalService.updateAddress(
+			address.getAddressId(), address.getName(), address.getDescription(),
+			address.getStreet1(), address.getStreet2(), address.getStreet3(),
+			address.getCity(), address.getZip(), address.getRegionId(),
+			address.getCountryId(), address.getListTypeId(),
+			address.isMailing(), address.isPrimary(), phoneNumber);
 
 		return PostalAddressUtil.toPostalAddress(
 			contextAcceptLanguage.isAcceptAllLanguages(), address,
@@ -210,7 +220,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			postalAddress.getStreetAddressLine3(),
 			postalAddress.getAddressLocality(), postalAddress.getPostalCode(),
 			regionId, country.getCountryId(), type.getListTypeId(), false,
-			postalAddress.getPrimary(), null,
+			postalAddress.getPrimary(), postalAddress.getPhoneNumber(),
 			ServiceContextFactory.getInstance(contextHttpServletRequest));
 
 		return PostalAddressUtil.toPostalAddress(
@@ -241,7 +251,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			postalAddress.getAddressLocality(), postalAddress.getPostalCode(),
 			regionId, country.getCountryId(), type.getListTypeId(),
 			address.isMailing(), postalAddress.getPrimary(),
-			address.getPhoneNumber());
+			postalAddress.getPhoneNumber());
 
 		return PostalAddressUtil.toPostalAddress(
 			contextAcceptLanguage.isAcceptAllLanguages(), address,
@@ -279,9 +289,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		return country;
 	}
 
-	private long _getRegionId(
-		PostalAddress postalAddress, Country country) {
-
+	private long _getRegionId(PostalAddress postalAddress, Country country) {
 		if (postalAddress.getAddressType() == null) {
 			return 0;
 		}

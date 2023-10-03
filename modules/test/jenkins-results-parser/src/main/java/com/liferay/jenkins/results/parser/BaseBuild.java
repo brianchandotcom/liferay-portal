@@ -1273,7 +1273,7 @@ public abstract class BaseBuild implements Build {
 
 		JenkinsMaster jenkinsMaster =
 			jenkinsCohort.getMostAvailableJenkinsMaster(
-				_getInvokedBatchSize(), _getMinimumRAM(),
+				_getInvokedBatchSize(), _getMinimumSlaveRAM(),
 				_getMaximumSlavesPerHost());
 
 		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
@@ -3048,6 +3048,10 @@ public abstract class BaseBuild implements Build {
 
 		loadParametersFromQueryString(invocationURL);
 
+		_invokedBatchSize = _getInvokedBatchSize();
+		_maximumSlavesPerHost = _getMaximumSlavesPerHost();
+		_minimumSlaveRAM = _getMinimumSlaveRAM();
+
 		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
 			jenkinsMaster, getJobName(), getParameters());
 
@@ -3391,20 +3395,29 @@ public abstract class BaseBuild implements Build {
 	}
 
 	private int _getInvokedBatchSize() {
+		if (_invokedBatchSize > 0) {
+			return _invokedBatchSize;
+		}
+
 		String invokedJobBatchSize = getParameterValue(
 			"INVOKED_JOB_BATCH_SIZE");
 
 		if (JenkinsResultsParserUtil.isInteger(invokedJobBatchSize)) {
-			return Integer.parseInt(invokedJobBatchSize);
+			_invokedBatchSize = Integer.parseInt(invokedJobBatchSize);
+
+			return _invokedBatchSize;
 		}
 
 		String testBatchSize = getParameterValue("TEST_BATCH_SIZE");
 
 		if (JenkinsResultsParserUtil.isInteger(testBatchSize)) {
-			return Integer.parseInt(testBatchSize);
+			_invokedBatchSize = Integer.parseInt(testBatchSize);
+		}
+		else {
+			_invokedBatchSize = _INVOKED_BATCH_SIZE_DEFAULT;
 		}
 
-		return _INVOKED_BATCH_SIZE_DEFAULT;
+		return _invokedBatchSize;
 	}
 
 	private Invocation _getLatestInvocation() {
@@ -3416,24 +3429,38 @@ public abstract class BaseBuild implements Build {
 	}
 
 	private int _getMaximumSlavesPerHost() {
+		if (_maximumSlavesPerHost > 0) {
+			return _maximumSlavesPerHost;
+		}
+
 		String maximumSlavesPerHost = getParameterValue(
 			"MAXIMUM_SLAVES_PER_HOST");
 
 		if (JenkinsResultsParserUtil.isInteger(maximumSlavesPerHost)) {
-			return Integer.parseInt(maximumSlavesPerHost);
+			_maximumSlavesPerHost = Integer.parseInt(maximumSlavesPerHost);
+		}
+		else {
+			_maximumSlavesPerHost = _MAXIMUM_SLAVES_PER_HOST;
 		}
 
-		return _MAXIMUM_SLAVES_PER_HOST;
+		return _maximumSlavesPerHost;
 	}
 
-	private int _getMinimumRAM() {
+	private int _getMinimumSlaveRAM() {
+		if (_minimumSlaveRAM > 0) {
+			return _minimumSlaveRAM;
+		}
+
 		String minimumSlaveRAM = getParameterValue("MINIMUM_SLAVE_RAM");
 
 		if (JenkinsResultsParserUtil.isInteger(minimumSlaveRAM)) {
-			return Integer.parseInt(minimumSlaveRAM);
+			_minimumSlaveRAM = Integer.parseInt(minimumSlaveRAM);
+		}
+		else {
+			_minimumSlaveRAM = _MINIMUM_SLAVE_RAM_DEFAULT;
 		}
 
-		return _MINIMUM_SLAVE_RAM_DEFAULT;
+		return _minimumSlaveRAM;
 	}
 
 	private String _getPreviousBuildURL() {
@@ -3862,12 +3889,15 @@ public abstract class BaseBuild implements Build {
 	private int _buildNumber = -1;
 	private Long _duration;
 	private final List<Invocation> _invocations = new ArrayList<>();
+	private int _invokedBatchSize;
 	private JenkinsCohort _jenkinsCohort;
 	private JenkinsConsoleTextLoader _jenkinsConsoleTextLoader;
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;
 	private Job _job;
 	private String _jobName;
+	private int _maximumSlavesPerHost;
+	private int _minimumSlaveRAM;
 	private Map<String, String> _parameters = new HashMap<>();
 	private final Build _parentBuild;
 	private String _previousStatus;

@@ -40,14 +40,14 @@ definition {
 	}
 
 	macro createAPISchema {
-		Variables.assertDefined(parameterList = "${mainObjectDefinitionERC},${name},${apiApplicationId}");
+		Variables.assertDefined(parameterList = "${mainObjectDefinitionERC},${name},${externalReferenceCode}");
 
 		var curl = SchemaAPI._curlAPISchema(virtualHost = ${virtualHost});
 		var body = '''
 			-d {
 				"mainObjectDefinitionERC": "${mainObjectDefinitionERC}",
 				"name": "${name}",
-				"r_apiApplicationToAPISchemas_c_apiApplicationId": ${apiApplicationId}
+				"r_apiApplicationToAPISchemas_c_apiApplicationERC": "${externalReferenceCode}"
 			}
 		''';
 
@@ -59,7 +59,7 @@ definition {
 	}
 
 	macro createNAPISchemas {
-		Variables.assertDefined(parameterList = "${numberOfSchemas},${mainObjectDefinitionERC},${name},${apiApplicationId}");
+		Variables.assertDefined(parameterList = "${numberOfSchemas},${mainObjectDefinitionERC},${name},${externalReferenceCode}");
 
 		var i = 0;
 
@@ -67,7 +67,7 @@ definition {
 			var i = ${i} + 1;
 
 			SchemaAPI.createAPISchema(
-				apiApplicationId = ${apiApplicationId},
+				externalReferenceCode = ${externalReferenceCode},
 				mainObjectDefinitionERC = ${mainObjectDefinitionERC},
 				name = "${name}${i}");
 		}

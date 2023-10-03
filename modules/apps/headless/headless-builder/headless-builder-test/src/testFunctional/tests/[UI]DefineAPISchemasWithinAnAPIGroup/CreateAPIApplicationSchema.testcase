@@ -1,0 +1,194 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given New API Application created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				status = "unpublished",
+				title = "My-app");
+		}
+
+		task ("And Given I go to the Schemas tab of API Application edition") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		JSONObject.deleteAllCustomObjects(pageSize = 22);
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 5
+	test AllObjectDefinitionsAreAvailableInTheObjectMenu {
+		property portal.acceptance = "true";
+
+		task ("Given multiple custom object definitions created without publishing") {
+			ObjectDefinitionAPI.createNUnpublishedObjectDefinitions(
+				numberOfEndpoints = 8,
+				objectDefinitionName = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given all 20+ object deinifition entities available in Objects") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Objects");
+
+			AssertTextEquals(
+				locator1 = "Pagination#RESULTS",
+				value1 = "Showing 1 to 20 of 22 entries.");
+		}
+
+		task ("And Given one of object definitions on 2nd page") {
+			Click(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_NAVIGATE_NEXT");
+
+			AssertElementPresent(
+				key_name = "Student8",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+
+		task ("And Given I go to the Schemas tab of API Application edition") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+		}
+
+		task ("And Given I click Add New Schema") {
+			Click(locator1 = "APIBuilder#ADD_NEW_SCHEMA");
+		}
+
+		task ("When I click Object field") {
+			Click(locator1 = "APIBuilder#SELECT_AN_OBJECT_DEFINITION");
+		}
+
+		task ("Then all object deinifition entities from Objects are listed inluding the one placed on 2nd page of Objects") {
+			var list1 = "Address,AccountEntry,APISort,Bookmark,APIFilter,APIEndpoint,APIProperty,APISchema,APIApplication";
+			var list2 = "CommercePricingClass,CPDefinition,CommerceOrder,Organization,User,";
+			var list3 = "Student1,Student2,Student3,Student4,Student5,Student6,Student7,Student8";
+
+			for (var objectDefinitionName : list "${list1},${list2},${list3}") {
+				AssertElementPresent(
+					key_kebabOption = ${objectDefinitionName},
+					locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+			}
+		}
+	}
+
+	@priority = 5
+	test CanCreateMultipleSchemasInApplication {
+		property portal.acceptance = "true";
+
+		task ("And Given a Schema created in the API Application") {
+			SchemaAPI.createAPISchema(
+				externalReferenceCode = "My-app",
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "testSchema_1");
+		}
+
+		task ("When I click Add New Schema") {
+			APIBuilderUI.createAPISchema(
+				confirmCreation = "true",
+				name = "testSchema_2",
+				objectDefinitionName = "APIApplication");
+		}
+
+		task ("Then I'm able to create another schema for the API Application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+
+			APIBuilderUI.viewItemsInOrder(itemList = "testSchema_1,testSchema_2");
+		}
+	}
+
+	@priority = 4
+	test CanSeeInfoOfCreatedSchema {
+		property portal.acceptance = "true";
+
+		task ("When I create a schema with valid Name and Object") {
+			APIBuilderUI.createAPISchema(
+				confirmCreation = "true",
+				name = "testSchema",
+				objectDefinitionName = "APIApplication");
+		}
+
+		task ("Then I can see details info of the created schema") {
+			AssertTextEquals(
+				locator1 = "APIBuilder#ENTER_NAME",
+				value1 = "testSchema");
+
+			AssertTextEquals(
+				locator1 = "APIBuilder#SELECT_AN_OBJECT_DEFINITION",
+				objectDefinitionName = "APIApplication",
+				value1 = "APIApplication");
+		}
+	}
+
+	@priority = 5
+	test SchemaIsNotCreatedAfterClickingCancel {
+		property portal.acceptance = "true";
+
+		task ("And Given I fill in valid Name and Object fields") {
+			APIBuilderUI.createAPISchema(
+				name = "testSchema",
+				objectDefinitionName = "APIApplication");
+		}
+
+		task ("When I click Cancel button") {
+			Click(locator1 = "Button#CANCEL");
+		}
+
+		task ("Then no new schema on the list of schemas") {
+			AssertElementNotPresent(
+				key_name = "testSchema",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 5
+	test SchemaNameMustBeUnique {
+		property portal.acceptance = "true";
+
+		task ("And Given a Schema 'new' created in the API Application") {
+			SchemaAPI.createAPISchema(
+				externalReferenceCode = "My-app",
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "new");
+		}
+
+		task ("When I try creating another schema with name 'new'") {
+			APIBuilderUI.createAPISchema(
+				confirmCreation = "true",
+				name = "new",
+				objectDefinitionName = "APIApplication");
+		}
+
+		task ("Then an error message 'There is an API schema with the same name in the API application' blocks schema from being created") {
+			AssertElementPresent(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value = "There is an API schema with the same name in the API application.");
+		}
+	}
+
+}

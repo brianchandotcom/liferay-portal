@@ -17,8 +17,6 @@ definition {
 				baseURL = "my-app",
 				status = "unpublished",
 				title = "My-app");
-
-			ApplicationAPI.setUpGlobalAPIApplicationId();
 		}
 	}
 
@@ -63,7 +61,7 @@ definition {
 
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "My-app",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 		}
@@ -101,7 +99,7 @@ definition {
 
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "My-app",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 		}
@@ -133,7 +131,7 @@ definition {
 
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "My-app",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 		}
@@ -166,7 +164,7 @@ definition {
 
 		task ("And Given with postEndpointAPI to create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "My-app",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 		}
@@ -196,7 +194,7 @@ definition {
 
 		task ("And Given with postEndpointAPI to create two endpoints associate to the API application") {
 			EndpointAPI.createNAPIEndpoints(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "My-app",
 				name = "myEndpoint",
 				numberOfEndpoints = 2,
 				path = "/myEndpoint");
@@ -227,7 +225,7 @@ definition {
 
 		task ("And Given postAPIEndpoint to create 11 endpoints associate to the API application") {
 			EndpointAPI.createNAPIEndpoints(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "My-app",
 				name = "myEndpoint",
 				numberOfEndpoints = 11,
 				path = "/myEndpoint");
@@ -266,7 +264,7 @@ definition {
 
 		task ("And Given I create an edpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "My-app",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 		}
@@ -294,7 +292,7 @@ definition {
 
 		task ("When I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "My-app",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 		}

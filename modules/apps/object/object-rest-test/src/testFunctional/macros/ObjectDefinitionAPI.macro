@@ -624,6 +624,22 @@ definition {
 		return ${managerId};
 	}
 
+	macro createNUnpublishedObjectDefinitions {
+		Variables.assertDefined(parameterList = "${numberOfEndpoints},${objectDefinitionName},${requiredStringFieldName}");
+
+		var i = 0;
+
+		while (${i} != ${numberOfEndpoints}) {
+			var i = ${i} + 1;
+
+			ObjectDefinitionAPI.createObjectDefinition(
+				en_US_label = "${objectDefinitionName}${i}",
+				en_US_plural_label = "${objectDefinitionName}${i}s",
+				name = "${objectDefinitionName}${i}",
+				requiredStringFieldName = ${requiredStringFieldName});
+		}
+	}
+
 	macro createObjectDefinition {
 		Variables.assertDefined(parameterList = "${name},${en_US_plural_label}");
 

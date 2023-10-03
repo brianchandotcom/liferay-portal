@@ -20,8 +20,6 @@ definition {
 				schemaName = "testSchema",
 				status = "published",
 				title = "My-app");
-
-			ApplicationAPI.setUpGlobalAPIApplicationId();
 		}
 	}
 
@@ -87,7 +85,7 @@ definition {
 
 		task ("And Given create an API Endpoint in the Application") {
 			EndpointAPI.createAPIEndpoint(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "My-app",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 		}

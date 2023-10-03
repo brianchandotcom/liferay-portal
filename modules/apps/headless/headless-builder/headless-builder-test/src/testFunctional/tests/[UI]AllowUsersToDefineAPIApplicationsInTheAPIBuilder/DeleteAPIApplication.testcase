@@ -17,8 +17,6 @@ definition {
 				baseURL = "test",
 				status = "unpublished",
 				title = "test");
-
-			ApplicationAPI.setUpGlobalAPIApplicationId();
 		}
 	}
 
@@ -77,14 +75,14 @@ definition {
 
 		task ("And Given with postAPISchema to create a Schema associate to the API application") {
 			SchemaAPI.createAPISchema(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "test",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "mySchema");
 		}
 
 		task ("And Given with postAPIEndpoint to create an Endpoint associate to API application and Schema") {
 			EndpointAPI.createAPIEndpoint(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "test",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 		}
@@ -131,14 +129,14 @@ definition {
 
 		task ("And Given with postAPISchema to create a Schema associate to the API application") {
 			SchemaAPI.createAPISchema(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "test",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "mySchema");
 		}
 
 		task ("And Given with postAPIEndpoint to create an Endpoint associate to API application and Schema") {
 			EndpointAPI.createAPIEndpoint(
-				apiApplicationId = ${staticApplicationId},
+				externalReferenceCode = "test",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 		}

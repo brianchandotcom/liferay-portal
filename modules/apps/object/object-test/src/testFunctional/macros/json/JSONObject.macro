@@ -673,8 +673,15 @@ definition {
 			var userPassword = "test";
 		}
 
+		if (isSet(pageSize)) {
+			var url = "object-admin/v1.0/object-definitions?pageSize=${pageSize}";
+		}
+		else {
+			var url = "object-admin/v1.0/object-definitions";
+		}
+
 		var curl = '''
-			${portalURL}/o/object-admin/v1.0/object-definitions \
+			${portalURL}/o/${url} \
 				-u ${userEmailAddress}:${userPassword}
 		''';
 

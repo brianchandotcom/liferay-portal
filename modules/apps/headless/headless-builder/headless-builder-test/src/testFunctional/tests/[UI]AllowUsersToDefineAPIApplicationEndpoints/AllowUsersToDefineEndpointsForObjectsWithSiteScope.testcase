@@ -117,7 +117,7 @@ definition {
 			var apiApplicationId = JSONPathUtil.getIdValue(response = ${response});
 
 			EndpointAPI.createAPIEndpoint(
-				apiApplicationId = ${apiApplicationId},
+				externalReferenceCode = "My-app",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 		}
@@ -171,10 +171,8 @@ definition {
 				endpointId = ${endpointId1},
 				responseSchemaId = ${schemaId1});
 
-			var apiApplicationId = JSONPathUtil.getIdValue(response = ${responseFromApplication});
-
 			var responseFromEndpoint = EndpointAPI.createAPIEndpoint(
-				apiApplicationId = ${apiApplicationId},
+				externalReferenceCode = "My-app",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 

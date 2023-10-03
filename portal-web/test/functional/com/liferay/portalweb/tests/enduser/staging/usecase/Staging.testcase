@@ -1048,6 +1048,114 @@ definition {
 		Staging.deletePublishTemplate(publishTemplateName = "Publish Template Name");
 	}
 
+	@description = "This is a use case for LPS-194891. The name of multiple published Web Contents are NOT displayed in the Publication Summary even when the actions are different."
+	@priority = 4
+	test DifferentlyModifiedWebContentTitlesAreNotDisplayedInPublicationSummary {
+		property custom.properties = "feature.flag.LPS-165481=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		var randomSiteURLKey = "guest";
+		var randomSiteName = "Liferay DXP";
+
+		task ("Given: Replicate Individual Deletions is active, MULTIPLE (specifically two) Web Contents are created and Staging is enabled") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Export/Import, Staging",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Replicate Individual Deletions by Default");
+
+			for (var webContentTitle : list "Palpatine, Tyranus") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = ${randomSiteURLKey});
+
+				WebContentNavigator.gotoAddCP();
+
+				WebContent.addCP(
+					webContentContent = "Quality Content",
+					webContentTitle = ${webContentTitle});
+
+				PortletEntry.publish();
+			}
+
+			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
+
+			Staging.activateStagingCP(siteName = ${randomSiteName});
+		}
+
+		task ("When: One of the Web Contents is deleted, a new one is created and one is edited, then they are Published to Live") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+
+			WebContent.moveToRecycleBinCP(webContentTitle = "Tyranus");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Quality Content",
+				webContentTitle = "Vader");
+
+			PortletEntry.publish();
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Palpatine");
+
+			WebContent.editCP(webContentTitleEdit = "Sidious");
+
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Then: In the summary of the publishing process the titles of the Web Contents are NOT displayed just the action types and their numbers (Exported: 2, Deleted:1)") {
+			Staging.viewPublicationSummary(publicationTitle = "Untitled");
+		}
+	}
+
+	@description = "This is a use case for LPS-194891. The name of a Drafted Web Content is NOT displayed in the Publication Summary."
+	@priority = 4
+	test DraftedWebContentTitleIsNotDisplayedInPublicationSummary {
+		property custom.properties = "feature.flag.LPS-165481=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		var randomSiteURLKey = "guest";
+		var randomSiteName = "Liferay DXP";
+
+		task ("Given: Staging is enabled and a Web Content is SAVED AS DRAFT") {
+			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
+
+			Staging.activateStagingCP(siteName = ${randomSiteName});
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addDraft(
+				webContentContent = "Quality Content",
+				webContentTitle = "If you can see this in the Publication Summary, then something is wrong!");
+
+			PortletEntry.saveAsDraft();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+		}
+
+		task ("When: A new publication to Live is executed") {
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Then: In the summary of the publishing process the title of the DRAFTED Web Content is NOT displayed") {
+			Staging.viewPublicationSummary(publicationTitle = "Untitled");
+		}
+	}
+
 	@description = "This is a use case for LPS-100807."
 	@priority = 3
 	test EditWikiPageInLiveSiteWhenWikiNotStaged {
@@ -1258,6 +1366,45 @@ definition {
 
 		task ("And: Verify the new LAR does not contain adaptive-media folder") {
 			Staging.validateFolderNotExist();
+		}
+	}
+
+	@description = "This is a use case for LPS-194891. The name of multiple published Web Contents are NOT displayed in the Publication Summary."
+	@priority = 4
+	test MultipleWebContentTitlesAreNotDisplayedInPublicationSummary {
+		property custom.properties = "feature.flag.LPS-165481=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		var randomSiteURLKey = "guest";
+		var randomSiteName = "Liferay DXP";
+
+		task ("Given: Staging is enabled and MULTIPLE (specifically three) Web Contents are created") {
+			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
+
+			Staging.activateStagingCP(siteName = ${randomSiteName});
+
+			for (var webContentTitle : list "The Fellowship of the Ring,The Two Towers,The Return of the King") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+
+				WebContentNavigator.gotoAddCP();
+
+				WebContent.addCP(
+					webContentContent = "Quality Content",
+					webContentTitle = ${webContentTitle});
+
+				PortletEntry.publish();
+			}
+		}
+
+		task ("When: The new Web Contents are Published to Live") {
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Then: In the summary of the publishing process the titles of the Web Contents are NOT displayed") {
+			Staging.viewPublicationSummary(publicationTitle = "Untitled");
 		}
 	}
 
@@ -2387,6 +2534,88 @@ definition {
 		Staging.viewPublicationSummary(
 			contentList = "Documents and Media,Web Content",
 			publicationTitle = "Content Update");
+	}
+
+	@description = "This is a use case for LPS-194891. The name of a solely published Web Content that is inside of a Web Content Folder is displayed in the Publication Summary without the title of the folder."
+	@priority = 4
+	test SingleFolderedWebContentTitleIsProperlyDisplayedInPublicationSummary {
+		property custom.properties = "feature.flag.LPS-165481=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		var randomSiteURLKey = "guest";
+		var randomSiteName = "Liferay DXP";
+
+		task ("Given: Staging is enabled and ONE Web Content is created and moved into a Web Content Folder") {
+			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
+
+			Staging.activateStagingCP(siteName = ${randomSiteName});
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+
+			WebContentFolder.addCP(
+				folderDescription = "Back to the roots.",
+				folderName = "AC");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Quality Content",
+				webContentTitle = "Mirage");
+
+			PortletEntry.publish();
+
+			WebContent.moveToFolderCP(
+				folderName = "AC",
+				webContentTitle = "Mirage");
+		}
+
+		task ("When: The new Web Content (within the folder) is Published to Live") {
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Then: In the summary of the publishing process the title of the Web Content is displayed while the title of the folder is NOT") {
+			Staging.viewPublicationSummary(publicationTitle = "Untitled");
+		}
+	}
+
+	@description = "This is a use case for LPS-194891. The name of a solely published Web Content is displayed in the Publication Summary without any UI break."
+	@priority = 4
+	test SingleWebContentTitleIsProperlyDisplayedInPublicationSummary {
+		property custom.properties = "feature.flag.LPS-165481=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		var randomSiteURLKey = "guest";
+		var randomSiteName = "Liferay DXP";
+
+		task ("Given: Staging is enabled and ONE Web Content is created") {
+			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
+
+			Staging.activateStagingCP(siteName = ${randomSiteName});
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content - Content",
+				webContentTitle = "Web Content - Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("When: The new Web Content is Published to Live") {
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Then: In the summary of the publishing process the title of the Web Content is displayed") {
+			Staging.viewPublicationSummary(publicationTitle = "Untitled");
+		}
 	}
 
 	@priority = 3

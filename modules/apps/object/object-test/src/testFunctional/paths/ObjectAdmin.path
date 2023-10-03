@@ -237,7 +237,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT</td>
-		<td>//div[(@class='table-list-title') and contains (.,'${key_name}')]/../../div[contains(text(),'${key_system}')]</td>
+		<td>//div[contains(@class,'table-list-title') and contains (.,'${key_name}')]/../../div[contains(text(),'${key_system}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -372,7 +372,7 @@
 	</tr>
 	<tr>
 		<td>TABLE_LIST_TITLE</td>
-		<td>//div[(@class='table-list-title') and contains (.,'${key_name}')]</td>
+		<td>//div[contains(@class,'table-list-title') and contains (.,'${key_name}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -442,7 +442,7 @@
 	</tr>
 	<tr>
 		<td>BODY_VERTICAL_ELLIPSIS</td>
-		<td>//div[@class='table-list-title']/../../../*[contains(.,'${key_value}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+		<td>//div[contains(@class,'table-list-title')]/../../../*[contains(.,'${key_value}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 		<td></td>
 	</tr>
 	<tr>

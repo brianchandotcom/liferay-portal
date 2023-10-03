@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>APPLICATION_STATUS</td>
-	<td>//div[@class='table-list-title' and contains(.,'${key_title}')]/../..//div[contains(.,'${key_status}')]</td>
+	<td>//div[contains(@class,'table-list-title') and contains(.,'${key_title}')]/../..//div[contains(.,'${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>DROPDOWN_MENU</td>
-	<td>//div[@class='table-list-title' and contains(.,'${key_title}')]/../..//button[contains(.,'Action')]</td>
+	<td>//div[contains(@class,'table-list-title') and contains(.,'${key_title}')]/../..//button[contains(.,'Action')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>TABLE_LIST</td>
-	<td>xpath=(//div[(@class='table-list-title')])[${index}]</td>
+	<td>xpath=(//div[contains(@class,'table-list-title')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

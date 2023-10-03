@@ -10,7 +10,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginUI();
+		User.firstLoginPG();
 	}
 
 	tearDown {
@@ -109,7 +109,7 @@ definition {
 			APIBuilderUI.deleteAPIEndpoint(
 				applicationTitle = "My-app",
 				confirmDeletion = "true",
-				endpointPath = "/testEndpoint");
+				endpointPath = "testEndpoint");
 		}
 
 		task ("Then API Endpoint is not visible in the created API Application in API Explorer") {

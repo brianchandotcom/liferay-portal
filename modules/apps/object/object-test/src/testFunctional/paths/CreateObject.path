@@ -92,12 +92,12 @@
 	</tr>
 	<tr>
 		<td>OBJECT_NAME</td>
-		<td>//div[(@class='table-list-title') and contains(.,'${key_labelName}')]</td>
+		<td>//div[contains(@class,'table-list-title') and contains(.,'${key_labelName}')]</td>
 		<td></td>
 	</tr>
 		<tr>
 		<td>OBJECT_NAME_INDEX</td>
-		<td>xpath=(//div[(@class='table-list-title') and contains(.,'${key_labelName}')])[${key_index}]</td>
+		<td>xpath=(//div[contains(@class,'table-list-title') and contains(.,'${key_labelName}')])[${key_index}]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -10,7 +10,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginUI();
+		User.firstLoginPG();
 
 		task ("Given an API application is created") {
 			ApplicationAPI.createAPIApplication(
@@ -89,7 +89,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "TextInput#SEARCH",
-				value1 = "${portalURL}/o/my-app/myEndpoint/");
+				value1 = "${portalURL}/o/c/my-app/myEndpoint/");
 		}
 	}
 
@@ -308,7 +308,11 @@ definition {
 				locator1 = "APIBuilder#DND_TR_BUTTON",
 				value = "Last updated");
 
-			for (var value : list "Method,Path,Description") {
+			AssertElementPresent(
+				locator1 = "APIBuilder#DND_TR_BUTTON",
+				value = "Path");
+
+			for (var value : list "Method,Description") {
 				AssertElementPresent(
 					locator1 = "APIBuilder#DND_TR_WITH_TEXT",
 					text = ${value});

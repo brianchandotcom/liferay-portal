@@ -4,8 +4,8 @@
  */
 
 import React from 'react';
-import './LeftSidebar.scss';
 import {LeftSidebarItem} from '../types';
+import './LeftSidebar.scss';
 export default function LeftSidebarTreeView({
 	expandedKeys,
 	leftSidebarOtherObjectFoldersItems,

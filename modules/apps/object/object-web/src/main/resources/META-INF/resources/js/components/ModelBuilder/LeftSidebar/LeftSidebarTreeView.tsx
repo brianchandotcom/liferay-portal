@@ -14,11 +14,12 @@ import {openToast, sub} from 'frontend-js-web';
 import React from 'react';
 import {Node, useStoreState, useZoomPanHelper} from 'react-flow-renderer';
 
-import './LeftSidebar.scss';
 import {getUpdatedModelBuilderStructurePayload} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {LeftSidebarItem, LeftSidebarObjectDefinitionItem} from '../types';
+
+import './LeftSidebar.scss';
 
 const TYPES_TO_SYMBOLS = {
 	linkedObjectDefinition: 'link',

@@ -18,11 +18,18 @@ interface APIEndpointFilter {
 
 interface APIEndpointItem extends BaseItem {
 	apiEndpointToAPIFilters: APIEndpointFilter[];
+	apiEndpointToAPISorts: APIEndpointSort[];
 	httpMethod: APIListType;
 	path: string;
 	r_apiApplicationToAPIEndpoints_c_apiApplicationId: string;
 	r_responseAPISchemaToAPIEndpoints_c_apiSchemaId?: number;
 	scope: APIListType;
+}
+
+interface APIEndpointSort {
+	id: number;
+	oDataSort: string;
+	r_apiEndpointToAPISorts_c_apiEndpointId: number;
 }
 
 interface APIListType {
@@ -264,6 +271,7 @@ type APIApplicationUIData = Pick<
 
 type APIEndpointUIData = {
 	apiEndpointToAPIFilters: Partial<APIEndpointFilter>[];
+	apiEndpointToAPISorts: Partial<APIEndpointSort>[];
 	description: string;
 	httpMethod: APIListType;
 	path: string;

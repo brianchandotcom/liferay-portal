@@ -10,6 +10,34 @@ definition {
 			value1 = "Execute");
 	}
 
+	macro executeCommandViaTelnet {
+		if (!(isSet(nodePort))) {
+			var nodePort = 8080;
+		}
+
+		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
+
+		var bundleIndex = ${leadingPortNumber} - 8;
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		if (${bundleIndex} != 0) {
+			var liferayHome = "${liferayHome}-${bundleIndex}";
+		}
+
+		AntCommands.runCommand("build-test.xml", "execute-command-from-gogo-shell -Dbundle.index=${bundleIndex} -Dcommand=${command}");
+
+		if (isSet(expectedOutput)) {
+			var outputContent = FileUtil.read("${liferayHome}/gogo-output.txt");
+
+			if (contains(${outputContent}, ${expectedOutput})) {
+				echo("${expectedOutput} exists!");
+			}
+			else {
+				fail("${expectedOutput} does not exist!");
+			}
+		}
+	}
+
 	macro getModuleID {
 		GogoShell.listModuleStatus(moduleName = ${moduleName});
 

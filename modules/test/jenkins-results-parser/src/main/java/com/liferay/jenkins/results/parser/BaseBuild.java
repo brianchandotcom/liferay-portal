@@ -3663,7 +3663,7 @@ public abstract class BaseBuild implements Build {
 			return;
 		}
 
-		invoke();
+		_invoke(_getInvokedBatchSize(), 24, _getMaximumSlavesPerHost());
 
 		reset();
 

@@ -572,7 +572,6 @@ components:
                 id:
                     description:
                         The address's ID.
-                    readOnly: true
                     format: int64
                     readOnly: true
                     type: integer

@@ -30,11 +30,8 @@ import org.json.JSONObject;
  */
 public class BuildArchiverUtil {
 
-	public static final String OUTPUT_DIR =
-		"/opt/dev/projects/github/liferay-portal/tmp/jenkins";
-
 	public static void archive(
-		String startDateString, String endDateString, String outputDir) {
+		String startDateString, String endDateString, String outputDirPath) {
 
 		try {
 			Properties properties =
@@ -58,7 +55,7 @@ public class BuildArchiverUtil {
 			recordGroovyScriptResponses(
 				JenkinsResultsParserUtil.getJenkinsMasters(
 					properties, 12, 2, "test-1"),
-				groovyScript, outputDir);
+				groovyScript, new File(outputDirPath));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -81,7 +78,7 @@ public class BuildArchiverUtil {
 
 		archive(
 			startDateString, endDateString,
-			OUTPUT_DIR + "/" + startDateString + "/");
+			_OUTPUT_DIR_PATH + "/" + startDateString + "/");
 	}
 
 	public static boolean isValidJSON(String json) {
@@ -102,7 +99,7 @@ public class BuildArchiverUtil {
 
 	protected static void recordGroovyScriptResponses(
 		List<JenkinsMaster> jenkinsMasters, final String groovyScript,
-		final String outputDir) {
+		final File outputDir) {
 
 		List<Callable<Boolean>> callables = new ArrayList<>();
 
@@ -127,8 +124,8 @@ public class BuildArchiverUtil {
 						}
 
 						File file = new File(
-							outputDir + jenkinsMaster.getName() +
-								"_builds.json");
+							outputDir,
+							jenkinsMaster.getName() + "_builds.json");
 
 						if (file.exists()) {
 							String fileContent = JenkinsResultsParserUtil.read(
@@ -177,6 +174,9 @@ public class BuildArchiverUtil {
 
 		parallelExecutor.execute();
 	}
+
+	private static final String _OUTPUT_DIR_PATH =
+		"/opt/dev/projects/github/liferay-portal/tmp/jenkins";
 
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(8, true);

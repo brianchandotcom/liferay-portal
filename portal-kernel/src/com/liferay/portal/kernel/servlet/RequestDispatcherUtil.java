@@ -35,6 +35,12 @@ public class RequestDispatcherUtil {
 			new HttpServletRequestWrapper(httpServletRequest) {
 
 				@Override
+				public String getContextPath() {
+					return (String)getAttribute(
+						RequestDispatcher.INCLUDE_CONTEXT_PATH);
+				}
+
+				@Override
 				public long getDateHeader(String name) {
 					if (name.equals(HttpHeaders.IF_MODIFIED_SINCE)) {
 						return -1;
@@ -76,6 +82,24 @@ public class RequestDispatcherUtil {
 				public String getPathInfo() {
 					return (String)getAttribute(
 						RequestDispatcher.INCLUDE_PATH_INFO);
+				}
+
+				@Override
+				public String getQueryString() {
+					return (String)getAttribute(
+						RequestDispatcher.INCLUDE_QUERY_STRING);
+				}
+
+				@Override
+				public String getRequestURI() {
+					return (String)getAttribute(
+						RequestDispatcher.INCLUDE_REQUEST_URI);
+				}
+
+				@Override
+				public String getServletPath() {
+					return (String)getAttribute(
+						RequestDispatcher.INCLUDE_SERVLET_PATH);
 				}
 
 			},

@@ -2878,20 +2878,12 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void loadParametersFromQueryString(String queryString) {
-		Map<String, String> defaultJobParameters = _getDefaultJobParameters();
-
-		_parameters.putAll(defaultJobParameters);
-
 		for (String parameter : queryString.split("&")) {
 			if (!parameter.contains("=")) {
 				continue;
 			}
 
 			String[] nameValueArray = parameter.split("=");
-
-			if (!defaultJobParameters.containsKey(nameValueArray[0])) {
-				continue;
-			}
 
 			if (nameValueArray.length == 2) {
 				_parameters.put(nameValueArray[0], nameValueArray[1]);
@@ -3286,63 +3278,6 @@ public abstract class BaseBuild implements Build {
 				"Unable to decode job URL " + jobURL,
 				unsupportedEncodingException);
 		}
-	}
-
-	private Map<String, String> _getDefaultJobParameters() {
-		JSONObject jobJSONObject = null;
-
-		String jobURL = getJobURL();
-
-		if (JenkinsResultsParserUtil.isCINode()) {
-			jobURL = JenkinsResultsParserUtil.getLocalURL(jobURL);
-		}
-
-		try {
-			jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.combine(
-					jobURL, "/api/json?tree=actions[parameterDefinitions[",
-					"defaultParameterValue[value],name]]"));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		JSONObject actionsJSONObject = null;
-
-		JSONArray actionsJSONArray = jobJSONObject.getJSONArray("actions");
-
-		for (int i = 0; i < actionsJSONArray.length(); i++) {
-			JSONObject jsonObject = actionsJSONArray.getJSONObject(i);
-
-			if (jsonObject.has("parameterDefinitions")) {
-				actionsJSONObject = jsonObject;
-
-				break;
-			}
-		}
-
-		Map<String, String> jobParameters = new HashMap<>();
-
-		if (actionsJSONObject == null) {
-			return jobParameters;
-		}
-
-		JSONArray parameterDefinitionsJSONArray =
-			actionsJSONObject.getJSONArray("parameterDefinitions");
-
-		for (int i = 0; i < parameterDefinitionsJSONArray.length(); i++) {
-			JSONObject parameterJSONObject =
-				parameterDefinitionsJSONArray.getJSONObject(i);
-
-			JSONObject defaultParameterValueJSONObject =
-				parameterJSONObject.getJSONObject("defaultParameterValue");
-
-			jobParameters.put(
-				parameterJSONObject.getString("name"),
-				defaultParameterValueJSONObject.getString("value"));
-		}
-
-		return jobParameters;
 	}
 
 	private int _getInvokedBatchSize() {

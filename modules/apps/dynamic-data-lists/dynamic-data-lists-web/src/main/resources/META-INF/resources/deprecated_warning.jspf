@@ -1,0 +1,17 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+--%>
+
+<%
+LearnMessage liferayObjectsLearnMessage = LearnMessageUtil.getLearnMessage("liferay-objects", themeDisplay.getLanguageId(), "dynamic-data-lists-web");
+LearnMessage since73LearnMessage = LearnMessageUtil.getLearnMessage("since-7-3", themeDisplay.getLanguageId(), "dynamic-data-lists-web");
+%>
+
+<clay:alert
+	displayType="warning"
+>
+	<liferay-ui:message arguments="<%= new String[] {since73LearnMessage.getHTML(), liferayObjectsLearnMessage.getHTML()} %>" key="dynamic-data-lists-are-deprecated-x-and-will-be-discontinued-at-end-of-2024-please-move-your-data-to-x-by-then" translateArguments="<%= false %>" />
+</clay:alert>

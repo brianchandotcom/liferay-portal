@@ -284,6 +284,15 @@ public class ComboServlet extends HttpServlet {
 						httpServletResponse, modulePath, minifierType);
 				}
 
+				if (bytes == null) {
+					cacheEnabled = false;
+
+					bytes = _EMPTY_FILE_CONTENT_BAG._fileContent;
+
+					httpServletResponse.setHeader(
+						HttpHeaders.CACHE_CONTROL, "max-age=1, no-cache");
+				}
+
 				bytesArray[i] = bytes;
 			}
 
@@ -359,20 +368,19 @@ public class ComboServlet extends HttpServlet {
 				RequestDispatcherUtil.getBufferCacheServletResponse(
 					requestDispatcher, httpServletRequest, httpServletResponse);
 
-			String stringFileContent = StringPool.BLANK;
-
 			String cacheControl = GetterUtil.getString(
 				bufferCacheServletResponse.getHeader("Cache-Control"));
 			String contentType = GetterUtil.getString(
 				bufferCacheServletResponse.getContentType());
 			int status = bufferCacheServletResponse.getStatus();
 
-			if (cacheControl.contains("no-cache") ||
-				cacheControl.contains("no-store")) {
-
+			if (status != HttpServletResponse.SC_OK) {
 				_log.error(
-					"Skip " + modulePath +
-						" because it sent no-cache or no-store headers");
+					StringBundler.concat(
+						"Skip ", modulePath, " because it returns HTTP status ",
+						status));
+
+				return null;
 			}
 			else if (!contentType.startsWith("application/javascript") &&
 					 !contentType.startsWith("text/css") &&
@@ -381,16 +389,20 @@ public class ComboServlet extends HttpServlet {
 				_log.error(
 					"Skip " + modulePath +
 						" because its content type is not CSS or JavaScript");
+
+				return null;
 			}
-			else if (status != HttpServletResponse.SC_OK) {
+			else if (cacheControl.contains("no-cache") ||
+					 cacheControl.contains("no-store")) {
+
 				_log.error(
-					StringBundler.concat(
-						"Skip ", modulePath, " because it returns HTTP status ",
-						status));
+					"Skip " + modulePath +
+						" because it sent no-cache or no-store headers");
+
+				return null;
 			}
-			else {
-				stringFileContent = bufferCacheServletResponse.getString();
-			}
+
+			String stringFileContent = bufferCacheServletResponse.getString();
 
 			if (!StringUtil.endsWith(resourcePath, _CSS_MINIFIED_DASH_SUFFIX) &&
 				!StringUtil.endsWith(resourcePath, _CSS_MINIFIED_DOT_SUFFIX) &&

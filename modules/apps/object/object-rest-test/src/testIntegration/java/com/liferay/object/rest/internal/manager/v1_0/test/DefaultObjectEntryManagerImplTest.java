@@ -28,6 +28,9 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.definition.tree.Node;
+import com.liferay.object.definition.tree.Tree;
+import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
@@ -62,6 +65,7 @@ import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -139,6 +143,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -492,6 +497,35 @@ public class DefaultObjectEntryManagerImplTest
 							_objectDefinition1.getPKObjectFieldName(), "c_"),
 						"Id")),
 				null, null, null, null));
+
+		_tree = TreeTestUtil.createTree(
+			objectDefinitionLocalService, _objectRelationshipLocalService,
+			_treeFactory);
+
+		_rootObjectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				companyId, "C_A");
+
+		ObjectRelationship objectRelationship3 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				adminUser.getUserId(),
+				accountEntryObjectDefinition.getObjectDefinitionId(),
+				_rootObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"rootOneToManyRelationshipName", false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_rootObjectDefinition.setAccountEntryRestricted(true);
+		_rootObjectDefinition.setAccountEntryRestrictedObjectFieldId(
+			objectRelationship3.getObjectFieldId2());
+
+		objectDefinitionLocalService.updateObjectDefinition(
+			_rootObjectDefinition);
+
+		objectDefinitionLocalService.publishCustomObjectDefinition(
+			adminUser.getUserId(),
+			_rootObjectDefinition.getRootObjectDefinitionId());
 	}
 
 	@After
@@ -956,6 +990,45 @@ public class DefaultObjectEntryManagerImplTest
 			).put(
 				"name", listTypeEntry.getName(LocaleUtil.US)
 			).build());
+	}
+
+	@Test
+	public void testAddObjectEntryHierarchyWithAccountEntryRestricted()
+		throws Exception {
+
+		// Root account entry restricted must be inherited
+
+		_addResourcePermission(
+			_rootObjectDefinition, ObjectActionKeys.ADD_OBJECT_ENTRY,
+			_buyerRole);
+
+		_user = _addUser();
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+
+		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
+
+		_addObjectEntryHierarchyWithAccountEntry(accountEntry1, _tree);
+
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionAccountEntryRestrictedException.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(),
+				" does not have access to account entry ",
+				accountEntry2.getAccountEntryId()),
+			() -> _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, _rootObjectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"r_rootOneToManyRelationshipName_accountEntryId",
+							accountEntry2.getAccountEntryId()
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY));
 	}
 
 	@Test
@@ -2974,6 +3047,75 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
+	private Map<Long, ObjectEntry> _addObjectEntryHierarchyWithAccountEntry(
+			AccountEntry accountEntry, Tree tree)
+		throws Exception {
+
+		Iterator<Node> iterator = tree.iterator();
+
+		Node rootNode = iterator.next();
+
+		Map<Long, ObjectEntry> objectEntries =
+			HashMapBuilder.<Long, ObjectEntry>put(
+				rootNode.getObjectDefinitionId(),
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext,
+					objectDefinitionLocalService.getObjectDefinition(
+						rootNode.getObjectDefinitionId()),
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.<String, Object>put(
+								"r_rootOneToManyRelationshipName_" +
+									"accountEntryId",
+								accountEntry.getAccountEntryId()
+							).build();
+						}
+					},
+					ObjectDefinitionConstants.SCOPE_COMPANY)
+			).build();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			objectEntries.put(
+				node.getObjectDefinitionId(),
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext,
+					objectDefinitionLocalService.getObjectDefinition(
+						node.getObjectDefinitionId()),
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.<String, Object>put(
+								() -> {
+									ObjectRelationship objectRelationship =
+										_objectRelationshipLocalService.
+											getObjectRelationship(
+												node.getEdge(
+												).getObjectRelationshipId());
+
+									ObjectField objectField =
+										objectFieldLocalService.getObjectField(
+											objectRelationship.
+												getObjectFieldId2());
+
+									return objectField.getName();
+								},
+								() -> {
+									ObjectEntry objectEntry = objectEntries.get(
+										node.getParentNode(
+										).getObjectDefinitionId());
+
+									return objectEntry.getId();
+								}
+							).build();
+						}
+					},
+					ObjectDefinitionConstants.SCOPE_COMPANY));
+		}
+
+		return objectEntries;
+	}
+
 	private void _addRelatedObjectEntries(
 			ObjectDefinition objectDefinition1,
 			ObjectDefinition objectDefinition2,
@@ -3015,6 +3157,21 @@ public class DefaultObjectEntryManagerImplTest
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
+
+	private void _addResourcePermission(
+			ObjectDefinition objectDefinition, String actionId, Role role)
+		throws Exception {
+
+		String name = objectDefinition.getClassName();
+
+		if (Objects.equals(actionId, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+			name = objectDefinition.getResourceName();
+		}
+
+		_resourcePermissionLocalService.addResourcePermission(
+			companyId, name, ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			role.getRoleId(), actionId);
 	}
 
 	private void _addResourcePermission(String actionId, Role role)
@@ -3406,6 +3563,12 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	private ObjectDefinition _rootObjectDefinition;
+	private Tree _tree;
+
+	@Inject
+	private TreeFactory _treeFactory;
 
 	@DeleteAfterTestRun
 	private User _user;

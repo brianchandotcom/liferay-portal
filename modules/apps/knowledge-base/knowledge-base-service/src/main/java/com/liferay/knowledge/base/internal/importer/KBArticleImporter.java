@@ -10,12 +10,14 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
+import com.liferay.knowledge.base.internal.importer.util.KBArchiveFactoryUtil;
 import com.liferay.knowledge.base.internal.importer.util.KBArticleMarkdownConverter;
 import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,12 +46,11 @@ import java.util.Properties;
 public class KBArticleImporter {
 
 	public KBArticleImporter(
-		MarkdownConverter markdownConverter, KBArchiveFactory kbArchiveFactory,
+		MarkdownConverter markdownConverter,
 		KBArticleLocalService kbArticleLocalService, Portal portal,
 		DLURLHelper dlURLHelper, ZipReaderFactory zipReaderFactory) {
 
 		_markdownConverter = markdownConverter;
-		_kbArchiveFactory = kbArchiveFactory;
 		_kbArticleLocalService = kbArticleLocalService;
 		_portal = portal;
 		_dlURLHelper = dlURLHelper;
@@ -57,7 +58,8 @@ public class KBArticleImporter {
 	}
 
 	public int processZipFile(
-			long userId, long groupId, long parentKBFolderId,
+			ConfigurationProvider configurationProvider, long userId,
+			long groupId, long parentKBFolderId,
 			boolean prioritizeByNumericalPrefix, InputStream inputStream,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -70,8 +72,9 @@ public class KBArticleImporter {
 			ZipReader zipReader = _zipReaderFactory.getZipReader(inputStream);
 
 			return _processKBArticleFiles(
-				userId, groupId, parentKBFolderId, prioritizeByNumericalPrefix,
-				zipReader, _getMetadata(zipReader), serviceContext);
+				configurationProvider, userId, groupId, parentKBFolderId,
+				prioritizeByNumericalPrefix, zipReader, _getMetadata(zipReader),
+				serviceContext);
 		}
 		catch (IOException ioException) {
 			throw new KBArticleImportException(ioException);
@@ -222,15 +225,16 @@ public class KBArticleImporter {
 	}
 
 	private int _processKBArticleFiles(
-			long userId, long groupId, long parentKBFolderId,
+			ConfigurationProvider configurationProvider, long userId,
+			long groupId, long parentKBFolderId,
 			boolean prioritizeByNumericalPrefix, ZipReader zipReader,
 			Map<String, String> metadata, ServiceContext serviceContext)
 		throws PortalException {
 
 		int importedKBArticlesCount = 0;
 
-		KBArchive kbArchive = _kbArchiveFactory.createKBArchive(
-			groupId, zipReader);
+		KBArchive kbArchive = KBArchiveFactoryUtil.createKBArchive(
+			configurationProvider, groupId, zipReader);
 
 		Map<KBArchive.File, KBArticle> introFileNameKBArticleMap =
 			new HashMap<>();
@@ -328,7 +332,6 @@ public class KBArticleImporter {
 		KBArticleImporter.class);
 
 	private final DLURLHelper _dlURLHelper;
-	private final KBArchiveFactory _kbArchiveFactory;
 	private final KBArticleLocalService _kbArticleLocalService;
 	private final MarkdownConverter _markdownConverter;
 	private final Portal _portal;

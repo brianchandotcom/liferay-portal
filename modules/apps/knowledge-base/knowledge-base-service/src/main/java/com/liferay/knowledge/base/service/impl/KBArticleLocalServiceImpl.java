@@ -34,7 +34,6 @@ import com.liferay.knowledge.base.exception.KBArticleUrlTitleException;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.internal.configuration.KBServiceConfiguration;
 import com.liferay.knowledge.base.internal.helper.KBArticleLocalSiblingNavigationHelper;
-import com.liferay.knowledge.base.internal.importer.KBArchiveFactory;
 import com.liferay.knowledge.base.internal.importer.KBArticleImporter;
 import com.liferay.knowledge.base.internal.util.AdminSubscriptionSenderFactory;
 import com.liferay.knowledge.base.internal.util.KBArticleDiffUtil;
@@ -338,12 +337,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			WorkflowThreadLocal.setEnabled(false);
 
 			KBArticleImporter kbArticleImporter = new KBArticleImporter(
-				_markdownConverterFactory.create(), _kbArchiveFactory, this,
-				_portal, _dlURLHelper, _zipReaderFactory);
+				_markdownConverterFactory.create(), this, _portal, _dlURLHelper,
+				_zipReaderFactory);
 
 			return kbArticleImporter.processZipFile(
-				userId, groupId, parentKbFolderId, prioritizeByNumericalPrefix,
-				inputStream, serviceContext);
+				_configurationProvider, userId, groupId, parentKbFolderId,
+				prioritizeByNumericalPrefix, inputStream, serviceContext);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
@@ -3074,9 +3073,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
-
-	@Reference
-	private KBArchiveFactory _kbArchiveFactory;
 
 	@Reference
 	private KBCommentPersistence _kbCommentPersistence;

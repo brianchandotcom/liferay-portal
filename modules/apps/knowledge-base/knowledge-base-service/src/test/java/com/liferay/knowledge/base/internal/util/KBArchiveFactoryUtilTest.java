@@ -3,15 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.knowledge.base.internal.importer;
+package com.liferay.knowledge.base.internal.util;
 
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
+import com.liferay.knowledge.base.internal.importer.KBArchive;
+import com.liferay.knowledge.base.internal.importer.util.KBArchiveFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsLocator;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -31,7 +32,7 @@ import org.mockito.Mockito;
 /**
  * @author Adolfo Pérez
  */
-public class KBArchiveFactoryTest {
+public class KBArchiveFactoryUtilTest {
 
 	@ClassRule
 	@Rule
@@ -40,10 +41,6 @@ public class KBArchiveFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_kbArchiveFactory, "_configurationProvider",
-			_configurationProvider);
-
 		Mockito.doReturn(
 			_kbGroupServiceConfiguration
 		).when(
@@ -51,10 +48,6 @@ public class KBArchiveFactoryTest {
 		).getConfiguration(
 			Mockito.any(), Mockito.any(SettingsLocator.class)
 		);
-
-		ReflectionTestUtil.setFieldValue(
-			_kbArchiveFactory, "_configurationProvider",
-			_configurationProvider);
 
 		Mockito.when(
 			_configurationProvider.getConfiguration(
@@ -84,8 +77,8 @@ public class KBArchiveFactoryTest {
 			Collections.<String>emptyList()
 		);
 
-		KBArchive kbArchive = _kbArchiveFactory.createKBArchive(
-			1234L, _zipReader);
+		KBArchive kbArchive = KBArchiveFactoryUtil.createKBArchive(
+			_configurationProvider, 1234L, _zipReader);
 
 		Collection<KBArchive.Folder> folders = kbArchive.getFolders();
 
@@ -102,8 +95,8 @@ public class KBArchiveFactoryTest {
 			Arrays.asList("/intro.md")
 		);
 
-		KBArchive kbArchive = _kbArchiveFactory.createKBArchive(
-			1234L, _zipReader);
+		KBArchive kbArchive = KBArchiveFactoryUtil.createKBArchive(
+			_configurationProvider, 1234L, _zipReader);
 
 		Collection<KBArchive.Folder> folders = kbArchive.getFolders();
 
@@ -126,8 +119,8 @@ public class KBArchiveFactoryTest {
 			Arrays.asList("/intro.md", "/x/a.md", "/y/z/b.md", "/y/z/c.md")
 		);
 
-		KBArchive kbArchive = _kbArchiveFactory.createKBArchive(
-			1234L, _zipReader);
+		KBArchive kbArchive = KBArchiveFactoryUtil.createKBArchive(
+			_configurationProvider, 1234L, _zipReader);
 
 		Collection<KBArchive.Folder> folders = kbArchive.getFolders();
 
@@ -178,7 +171,8 @@ public class KBArchiveFactoryTest {
 			null
 		);
 
-		_kbArchiveFactory.createKBArchive(1234L, _zipReader);
+		KBArchiveFactoryUtil.createKBArchive(
+			_configurationProvider, 1234L, _zipReader);
 	}
 
 	@Test
@@ -189,8 +183,8 @@ public class KBArchiveFactoryTest {
 			Arrays.asList("/a.md", "/b.md")
 		);
 
-		KBArchive kbArchive = _kbArchiveFactory.createKBArchive(
-			1234L, _zipReader);
+		KBArchive kbArchive = KBArchiveFactoryUtil.createKBArchive(
+			_configurationProvider, 1234L, _zipReader);
 
 		Collection<KBArchive.Folder> folders = kbArchive.getFolders();
 
@@ -227,8 +221,8 @@ public class KBArchiveFactoryTest {
 			Arrays.asList("/a.txt", "/b.txt")
 		);
 
-		KBArchive kbArchive = _kbArchiveFactory.createKBArchive(
-			1234L, _zipReader);
+		KBArchive kbArchive = KBArchiveFactoryUtil.createKBArchive(
+			_configurationProvider, 1234L, _zipReader);
 
 		Collection<KBArchive.Folder> folders = kbArchive.getFolders();
 
@@ -239,7 +233,6 @@ public class KBArchiveFactoryTest {
 		ConfigurationProvider.class);
 	private final GroupServiceSettingsLocator _groupServiceSettingsLocator =
 		Mockito.mock(GroupServiceSettingsLocator.class);
-	private final KBArchiveFactory _kbArchiveFactory = new KBArchiveFactory();
 	private final KBGroupServiceConfiguration _kbGroupServiceConfiguration =
 		Mockito.mock(KBGroupServiceConfiguration.class);
 	private final ZipReader _zipReader = Mockito.mock(ZipReader.class);

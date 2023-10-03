@@ -1282,22 +1282,9 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public Invocation invoke() {
-		JenkinsCohort jenkinsCohort = getJenkinsCohort();
-
-		JenkinsMaster jenkinsMaster =
-			jenkinsCohort.getMostAvailableJenkinsMaster(
-				_getInvokedBatchSize(), _getMinimumSlaveRAM(),
-				_getMaximumSlavesPerHost());
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
-			jenkinsMaster, getJobName(), getParameters());
-
-		Invocation invocation = new Invocation(
-			jenkinsMaster, jsonObject.getLong("queueId"));
-
-		_invocations.add(invocation);
-
-		return invocation;
+		return _invoke(
+			_getInvokedBatchSize(), _getMinimumSlaveRAM(),
+			_getMaximumSlavesPerHost());
 	}
 
 	@Override
@@ -1438,19 +1425,7 @@ public abstract class BaseBuild implements Build {
 			}
 		}
 
-		String invocationURL = getInvocationURL();
-
-		try {
-			JenkinsResultsParserUtil.toString(
-				JenkinsResultsParserUtil.getLocalURL(invocationURL));
-
-			_jenkinsConsoleTextLoader = null;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		System.out.println(getReinvokedMessage());
+		_invoke(_getInvokedBatchSize(), 24, _getMaximumSlavesPerHost());
 
 		reset();
 	}
@@ -2587,10 +2562,6 @@ public abstract class BaseBuild implements Build {
 		return new HashMap<>();
 	}
 
-	protected String getReinvokedMessage() {
-		return "Reinvoked: " + getBuildURL();
-	}
-
 	protected String getStartPropertiesTempMapURL() {
 		if (fromArchive) {
 			return getBuildURL() + "/start.properties.json";
@@ -3626,6 +3597,28 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	private Invocation _invoke(
+		int invokedBatchSize, int minimumSlaveRAM, int maximumSlavesPerHost) {
+
+		JenkinsCohort jenkinsCohort = getJenkinsCohort();
+
+		JenkinsMaster jenkinsMaster =
+			jenkinsCohort.getMostAvailableJenkinsMaster(
+				invokedBatchSize, minimumSlaveRAM, maximumSlavesPerHost);
+
+		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
+			jenkinsMaster, getJobName(), getParameters());
+
+		Invocation invocation = new Invocation(
+			jenkinsMaster, jsonObject.getLong("queueId"));
+
+		_invocations.add(invocation);
+
+		reset();
+
+		return invocation;
+	}
+
 	private boolean _isDifferent(String newValue, String oldValue) {
 		if (oldValue == null) {
 			if (newValue != null) {
@@ -3661,7 +3654,17 @@ public abstract class BaseBuild implements Build {
 			return;
 		}
 
-		setStatus("starting");
+		if (getInvocationCount() >= INVOCATION_COUNT_MAX) {
+			_runReporting();
+
+			return;
+		}
+
+		invoke();
+
+		reset();
+
+		_runStarting();
 	}
 
 	private void _runQueued() {

@@ -598,36 +598,40 @@ public class MainServlet extends HttpServlet {
 	}
 
 	private void _checkBuildDate() {
+		if (_releaseManager == null) {
+			return;
+		}
+
 		try (Connection connection = DataAccess.getConnection()) {
 			Date currentBuildDate = PortalUpgradeProcess.getCurrentBuildDate(
 				connection);
 
-			if (currentBuildDate.before(ReleaseInfo.getBuildDate()) &&
-				(_releaseManager != null)) {
+			if (!currentBuildDate.before(ReleaseInfo.getBuildDate())) {
+				return;
+			}
 
-				if (_log.isWarnEnabled()) {
-					String message = _releaseManager.getShortStatusMessage(
-						true);
-
-					if (Validator.isNotNull(message)) {
-						_log.warn(message);
-
-						return;
-					}
-				}
-
-				String message = _releaseManager.getShortStatusMessage(false);
+			if (_log.isWarnEnabled()) {
+				String message = _releaseManager.getShortStatusMessage(
+					true);
 
 				if (Validator.isNotNull(message)) {
-					if (_log.isInfoEnabled()) {
-						_log.info(message);
-					}
+					_log.warn(message);
 
 					return;
 				}
-
-				PortalUpgradeProcess.updateBuildInfo(connection);
 			}
+
+			String message = _releaseManager.getShortStatusMessage(false);
+
+			if (Validator.isNotNull(message)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(message);
+				}
+
+				return;
+			}
+
+			PortalUpgradeProcess.updateBuildInfo(connection);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

@@ -16,11 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GLOBAL_SEARCH_SUGGESTION</td>
-	<td>//div[contains(@class,'commerce-suggestions__item ') and contains(.,'${key_entryName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CATEGORY_FACET_EXPAND_VOCABULARIES</td>
 	<td>//span[*[name()='svg'][contains(@class,'lexicon-icon-angle-right component-expanded-d-none')]]/../../..//div[contains(.,'${key_siteName}')]</td>
 	<td></td>
@@ -71,13 +66,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GLOBAL_SEARCH_SUGGESTIONS</td>
-	<td>//div[contains(@class, 'commerce-suggestions__item') and contains (.,'${key_suggestionName}')]</td>
+	<td>GLOBAL_SEARCH_SEARCH_ENTRY_IN_CONTENT</td>
+	<td>//a[contains(@class,'commerce-suggestions__item') and (text()='${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACCOUNT_SEARCH_SUGGESTION</td>
-	<td>//div[contains(@class,'commerce-item__content') and contains(.,'${key_entryName}')]</td>
+	<td>GLOBAL_SEARCH_SUGGESTION</td>
+	<td>//a[contains(@class,'commerce-suggestions__item')]//p[text()='${key_suggestionName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GLOBAL_SEARCH_SUGGESTION_PRODUCT_DESCRIPTION</td>
+	<td>//a[contains(@class,'commerce-suggestions__item')]//p[text()='${key_suggestionName}']/following-sibling::p[text()='${key_suggestionDescription}']</td>
 	<td></td>
 </tr>
 <tr>

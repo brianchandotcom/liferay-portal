@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Comparator;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -84,8 +85,12 @@ public class InfoCollectionProviderDisplayContext {
 				(List<?>)_infoItemServiceRegistry.getAllInfoItemServices(
 					InfoCollectionProvider.class);
 
-		return ListUtil.filter(
-			infoCollectionProviders, InfoCollectionProvider::isAvailable);
+		return ListUtil.sort(
+			ListUtil.filter(
+				infoCollectionProviders, InfoCollectionProvider::isAvailable),
+			Comparator.comparing(
+				infoCollectionProvider -> infoCollectionProvider.getLabel(
+					_themeDisplay.getLocale())));
 	}
 
 	private PortletURL _getPortletURL() {

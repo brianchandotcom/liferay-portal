@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.display.context.GroupDisplayContextHelper;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -194,30 +195,34 @@ public class SelectLayoutCollectionDisplayContext {
 				(List<?>)_infoItemServiceRegistry.getAllInfoItemServices(
 					InfoCollectionProvider.class);
 
-		return ListUtil.filter(
-			infoCollectionProviders,
-			infoCollectionProvider -> {
-				try {
-					if (Validator.isNotNull(
-							infoCollectionProvider.getLabel(
-								_themeDisplay.getLocale())) &&
-						infoCollectionProvider.isAvailable()) {
+		return ListUtil.sort(
+			ListUtil.filter(
+				infoCollectionProviders,
+				infoCollectionProvider -> {
+					try {
+						if (Validator.isNotNull(
+								infoCollectionProvider.getLabel(
+									_themeDisplay.getLocale())) &&
+							infoCollectionProvider.isAvailable()) {
 
-						return true;
+							return true;
+						}
+
+						return false;
 					}
+					catch (Exception exception) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to get info list provider label",
+								exception);
+						}
 
-					return false;
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to get info list provider label",
-							exception);
+						return false;
 					}
-
-					return false;
-				}
-			});
+				}),
+			Comparator.comparing(
+				infoCollectionProvider -> infoCollectionProvider.getLabel(
+					_themeDisplay.getLocale())));
 	}
 
 	private List<String> _getInfoItemFormProviderSearchClassNames() {

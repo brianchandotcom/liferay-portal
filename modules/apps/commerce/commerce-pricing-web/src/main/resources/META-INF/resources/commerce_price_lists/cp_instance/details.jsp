@@ -45,7 +45,7 @@ boolean priceOnApplication = BeanParamUtil.getBoolean(commercePriceEntry, reques
 				</c:if>
 
 				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11287") %>'>
-					<aui:select label="unit-of-measure" name="unitOfMeasureKey">
+					<aui:select disabled="<%= true %>" label="unit-of-measure" name="unitOfMeasureKey">
 
 						<%
 						String unitOfMeasureKey = commercePriceEntry.getUnitOfMeasureKey();

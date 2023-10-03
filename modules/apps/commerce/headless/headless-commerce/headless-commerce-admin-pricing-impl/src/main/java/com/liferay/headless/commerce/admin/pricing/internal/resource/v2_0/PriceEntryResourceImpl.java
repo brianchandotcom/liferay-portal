@@ -397,10 +397,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				GetterUtil.getBoolean(
 					priceEntry.getPriceOnApplication(),
 					commercePriceEntry.isPriceOnApplication()),
-				GetterUtil.get(
-					priceEntry.getUnitOfMeasureKey(),
-					commercePriceEntry.getUnitOfMeasureKey()),
-				serviceContext);
+				commercePriceEntry.getUnitOfMeasureKey(), serviceContext);
 
 		// Update nested resources
 

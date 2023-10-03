@@ -2767,9 +2767,16 @@ public abstract class BaseBuild implements Build {
 				return false;
 			}
 
+			Invocation latestInvocation = _getLatestInvocation();
+
+			latestInvocation.setBuildNumber(
+				runningBuildJSONObject.getInt("number"));
+
 			return true;
 		}
 		catch (Exception exception) {
+			exception.printStackTrace();
+
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"[", getBuildName(), "] Unable to get Build Item"));
@@ -2866,7 +2873,6 @@ public abstract class BaseBuild implements Build {
 		_jenkinsSlave = null;
 		_statusModifiedTime = 0;
 	}
-
 
 	protected void setBuildURL(String buildURL) {
 		try {

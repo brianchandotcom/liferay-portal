@@ -2869,7 +2869,10 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void reset() {
-		setResult(null);
+		consoleReadCursor = 0;
+		_jenkinsConsoleTextLoader = null;
+		_jenkinsSlave = null;
+		_statusModifiedTime = 0;
 	}
 
 	protected void setBuildURL(String buildURL) {

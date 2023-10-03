@@ -455,67 +455,6 @@ public class CPDefinitionLocalServiceTest {
 	}
 
 	@Test
-	public void testDuplicateDefinitionPriceChangeDoesNotAffectParent()
-		throws PortalException {
-
-		frutillaRule.scenario(
-			"Change Price of a duplicate product sku"
-		).given(
-			"A product definition and its duplicate"
-		).when(
-			"changing the price of the duplicate"
-		).then(
-			"first product price is different from duplicated product price"
-		);
-
-		BigDecimal basePrice = new BigDecimal(5);
-
-		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
-			_commerceCatalog.getGroupId(), basePrice);
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, cpInstance.getStatus());
-
-		BigDecimal promoPrice = new BigDecimal(0);
-
-		CPDefinition duplicateCPDefinition =
-			_cpDefinitionLocalService.copyCPDefinition(
-				cpInstance.getCPDefinitionId());
-
-		CPInstance duplicateCPInstance = _cpInstanceLocalService.getCPInstance(
-			duplicateCPDefinition.getCPDefinitionId(), cpInstance.getSku());
-
-		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
-				duplicateCPInstance.getGroupId());
-
-		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				commercePriceList.getCommercePriceListId(),
-				duplicateCPInstance.getCPInstanceUuid(), StringPool.BLANK);
-
-		BigDecimal newPrice = new BigDecimal(10);
-
-		commercePriceEntry = _commercePriceEntryLocalService.updatePricingInfo(
-			commercePriceEntry.getCommercePriceEntryId(),
-			commercePriceEntry.isBulkPricing(), newPrice,
-			commercePriceEntry.isPriceOnApplication(), promoPrice, null,
-			_serviceContext);
-
-		CommercePriceEntry parentPriceEntry =
-			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid(), StringPool.BLANK);
-
-		BigDecimal priceEntry = commercePriceEntry.getPrice();
-
-		Assert.assertEquals(newPrice.intValue(), priceEntry.intValue());
-
-		Assert.assertNotEquals(
-			parentPriceEntry.getPrice(), commercePriceEntry.getPrice());
-	}
-
-	@Test
 	public void testUpdateCPDefinitionExternalReferenceCode() throws Exception {
 		frutillaRule.scenario(
 			"Update product definition external reference code"

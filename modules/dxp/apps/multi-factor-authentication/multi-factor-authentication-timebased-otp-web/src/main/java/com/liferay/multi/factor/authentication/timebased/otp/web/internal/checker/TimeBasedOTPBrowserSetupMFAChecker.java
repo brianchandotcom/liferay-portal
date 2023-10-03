@@ -415,19 +415,18 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 		return true;
 	}
 
-	private boolean _verify(String timeBasedOtpValue, long userId) {
+	private boolean _verify(String mfaTimeBasedOTP, long userId) {
 		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
 			_mfaTimeBasedOTPEntryLocalService.fetchMFATimeBasedOTPEntryByUserId(
 				userId);
 
 		if (mfaTimeBasedOTPEntry != null) {
-			String lastValidTimeBasedOtpValue =
-				mfaTimeBasedOTPEntry.getLastValidTOTP();
+			String lastValidOTP = mfaTimeBasedOTPEntry.getLastValidTOTP();
 
-			if (!timeBasedOtpValue.equals(lastValidTimeBasedOtpValue)) {
+			if (!mfaTimeBasedOTP.equals(lastValidOTP)) {
 				return MFATimeBasedOTPUtil.verifyTimeBasedOTP(
 					_mfaTimeBasedOTPConfiguration.clockSkew(),
-					mfaTimeBasedOTPEntry.getSharedSecret(), timeBasedOtpValue);
+					mfaTimeBasedOTPEntry.getSharedSecret(), mfaTimeBasedOTP);
 			}
 		}
 

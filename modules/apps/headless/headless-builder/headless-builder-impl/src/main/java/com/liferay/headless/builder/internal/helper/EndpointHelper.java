@@ -150,12 +150,12 @@ public class EndpointHelper {
 
 		List<Object> values = new ArrayList<>();
 
+		ObjectEntry[] relatedObjectEntries = null;
+
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		Object relationshipNameValue = properties.get(
 			relationshipsNames.remove(0));
-
-		ObjectEntry[] relatedObjectEntries = null;
 
 		if (relationshipNameValue instanceof ObjectEntry[]) {
 			relatedObjectEntries = (ObjectEntry[])relationshipNameValue;

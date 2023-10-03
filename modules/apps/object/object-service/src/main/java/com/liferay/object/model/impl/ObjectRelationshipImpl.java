@@ -35,13 +35,6 @@ public class ObjectRelationshipImpl extends ObjectRelationshipBaseImpl {
 
 	@Override
 	public boolean isEdgeCandidate() throws PortalException {
-		ObjectDefinition objectDefinition1 =
-			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-				getObjectDefinitionId1());
-
-		ObjectDefinition objectDefinition2 =
-			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-				getObjectDefinitionId2());
 
 		if (isSelf() ||
 			!Objects.equals(
@@ -49,6 +42,14 @@ public class ObjectRelationshipImpl extends ObjectRelationshipBaseImpl {
 
 			return false;
 		}
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+				getObjectDefinitionId1());
+
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+				getObjectDefinitionId2());
 
 		if (!objectDefinition1.isNodeCandidate() ||
 			!objectDefinition2.isNodeCandidate()) {

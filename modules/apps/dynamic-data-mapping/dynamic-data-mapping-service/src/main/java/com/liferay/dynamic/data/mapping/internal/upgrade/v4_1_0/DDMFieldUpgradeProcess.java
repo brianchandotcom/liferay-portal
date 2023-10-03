@@ -412,18 +412,22 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 		return Collections.singletonList(ddmFieldAttributeInfo);
 	}
 
-	private DDMForm _getDDMForm(long structureId) throws Exception {
-		DDMForm ddmForm = _ddmForms.get(structureId);
+	private DDMForm _getDDMForm(long structureId, long structureVersionId)
+		throws Exception {
+
+		DDMForm ddmForm = _ddmForms.get(structureVersionId);
 
 		if (ddmForm != null) {
 			return ddmForm;
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select definition from DDMStructure where structureId = ? " +
-					"and ctCollectionId = 0")) {
+				"select definition from DDMStructureVersion where " +
+					"structureId = ? and structureVersionId = ? and " +
+						"ctCollectionId = 0")) {
 
 			preparedStatement.setLong(1, structureId);
+			preparedStatement.setLong(2, structureVersionId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
@@ -431,7 +435,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 						_jsonDDMFormJSONDeserializer,
 						resultSet.getString("definition"));
 
-					_ddmForms.put(structureId, ddmForm);
+					_ddmForms.put(structureVersionId, ddmForm);
 
 					return ddmForm;
 				}
@@ -440,34 +444,39 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 
 		throw new UpgradeException(
 			"Unable to find dynamic data mapping structure with ID " +
-				structureId);
+				structureVersionId);
 	}
 
-	private DDMForm _getFullHierarchyDDMForm(long structureId)
+	private DDMForm _getFullHierarchyDDMForm(
+			long structureId, long structureVersionId)
 		throws Exception {
 
-		DDMForm fullHierarchyDDMForm = _fullHierarchyDDMForms.get(structureId);
+		DDMForm fullHierarchyDDMForm = _fullHierarchyDDMForms.get(
+			structureVersionId);
 
 		if (fullHierarchyDDMForm != null) {
 			return fullHierarchyDDMForm;
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select parentStructureId from DDMStructure where " +
-					"structureId = ? and ctCollectionId = 0")) {
+				"select parentStructureId from DDMStructureVersion where " +
+					"structureId = ? and structureVersionId = ? and " +
+						"ctCollectionId = 0")) {
 
 			preparedStatement.setLong(1, structureId);
+			preparedStatement.setLong(2, structureVersionId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
 					long parentStructureId = resultSet.getLong(
 						"parentStructureId");
 
-					fullHierarchyDDMForm = _getDDMForm(structureId);
+					fullHierarchyDDMForm = _getDDMForm(
+						structureId, structureVersionId);
 
 					if (parentStructureId > 0) {
 						DDMForm parentDDMForm = _getFullHierarchyDDMForm(
-							parentStructureId);
+							parentStructureId, structureVersionId);
 
 						List<DDMFormField> ddmFormFields =
 							fullHierarchyDDMForm.getDDMFormFields();
@@ -476,7 +485,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 					}
 
 					_fullHierarchyDDMForms.put(
-						structureId, fullHierarchyDDMForm);
+						structureVersionId, fullHierarchyDDMForm);
 
 					return fullHierarchyDDMForm;
 				}
@@ -531,7 +540,8 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 			long structureId, long structureVersionId)
 		throws Exception {
 
-		DDMForm ddmForm = _getFullHierarchyDDMForm(structureId);
+		DDMForm ddmForm = _getFullHierarchyDDMForm(
+			structureId, structureVersionId);
 
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =

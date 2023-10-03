@@ -84,8 +84,8 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Access token for SCIM OAuth 2 application '",
-							_oAuth2Application.getName(), "' is: ",
+							"New Access token for SCIM OAuth 2 application ",
+							_oAuth2Application.getName(), " generated: ",
 							jsonObject.getString("access_token")));
 				}
 			});

@@ -4,6 +4,7 @@
  */
 
 import MultiselectPicklistDataRenderer from './FDSDataRenderers/MultiselectPicklistDataRenderer';
+import SourceDataRenderer from './FDSDataRenderers/SourceDataRenderer';
 
 export default function ViewListTypeDefinitionsFDSPropsTransformer({
 	...otherProps
@@ -12,6 +13,7 @@ export default function ViewListTypeDefinitionsFDSPropsTransformer({
 		...otherProps,
 		customDataRenderers: {
 			multiselectPicklistDataRenderer: MultiselectPicklistDataRenderer,
+			sourceDataRenderer: SourceDataRenderer,
 		},
 	};
 }

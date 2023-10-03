@@ -419,7 +419,7 @@ public class OrganizationLocalServiceImpl
 				null, null, true, serviceContext);
 		}
 
-		addUserOrganization(user.getUserId(), organizationId);
+		_userLocalService.addOrganizationUser(organizationId, user);
 
 		return user;
 	}

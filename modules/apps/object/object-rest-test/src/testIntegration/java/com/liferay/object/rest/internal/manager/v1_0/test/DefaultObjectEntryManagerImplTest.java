@@ -1936,6 +1936,42 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testGetObjectEntriesHierarchyWithAccountEntryRestricted()
+		throws Exception {
+
+		// Root account entry restricted must be inherited
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+
+		_addObjectEntryHierarchyWithAccountEntry(accountEntry1, _tree);
+
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		_addObjectEntryHierarchyWithAccountEntry(accountEntry2, _tree);
+
+		_user = _addUser();
+
+		TreeTestUtil.forEachNodeObjectDefinition(
+			_tree.iterator(), objectDefinitionLocalService,
+			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 0));
+
+		_addResourcePermission(
+			_rootObjectDefinition, ActionKeys.VIEW, _buyerRole);
+
+		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
+
+		TreeTestUtil.forEachNodeObjectDefinition(
+			_tree.iterator(), objectDefinitionLocalService,
+			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 1));
+
+		_assignAccountEntryRole(accountEntry2, _buyerRole, _user);
+
+		TreeTestUtil.forEachNodeObjectDefinition(
+			_tree.iterator(), objectDefinitionLocalService,
+			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 2));
+	}
+
+	@Test
 	public void testGetObjectEntriesWithAccountEntryRestricted()
 		throws Exception {
 
@@ -3316,6 +3352,23 @@ public class DefaultObjectEntryManagerImplTest
 	private void _assertObjectEntriesSize(long size) throws Exception {
 		Page<ObjectEntry> page = _defaultObjectEntryManager.getObjectEntries(
 			companyId, _objectDefinition3, null, null,
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), dtoConverterRegistry, null,
+				LocaleUtil.getDefault(), null, _user),
+			StringPool.BLANK, null, null, null);
+
+		Collection<ObjectEntry> objectEntries = page.getItems();
+
+		Assert.assertEquals(
+			objectEntries.toString(), size, objectEntries.size());
+	}
+
+	private void _assertObjectEntriesSize(
+			ObjectDefinition objectDefinition, long size)
+		throws Exception {
+
+		Page<ObjectEntry> page = _defaultObjectEntryManager.getObjectEntries(
+			companyId, objectDefinition, null, null,
 			new DefaultDTOConverterContext(
 				false, Collections.emptyMap(), dtoConverterRegistry, null,
 				LocaleUtil.getDefault(), null, _user),

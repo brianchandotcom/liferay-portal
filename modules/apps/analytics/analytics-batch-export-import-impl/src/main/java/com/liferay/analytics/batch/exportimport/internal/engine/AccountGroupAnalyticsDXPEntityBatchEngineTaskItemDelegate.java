@@ -6,22 +6,24 @@
 package com.liferay.analytics.batch.exportimport.internal.engine;
 
 import com.liferay.account.model.AccountGroup;
+import com.liferay.account.model.AccountGroupTable;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
-import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,26 +45,42 @@ public class AccountGroupAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		com.liferay.portal.vulcan.pagination.Pagination vulcanPagination =
-			com.liferay.portal.vulcan.pagination.Pagination.of(
-				pagination.getPage(), pagination.getPageSize());
-
-		com.liferay.portal.vulcan.pagination.Page<DXPEntity> page =
-			SearchUtil.search(
-				null, booleanQuery -> booleanQuery.getPreBooleanFilter(),
-				filter, AccountGroup.class.getName(), null, vulcanPagination,
-				queryConfig -> queryConfig.setSelectedFieldNames(
-					Field.ENTRY_CLASS_PK),
-				this::getSearchContext, null,
-				document -> _dxpEntityDTOConverter.toDTO(
-					_accountGroupLocalService.getAccountGroup(
-						GetterUtil.getLong(
-							document.get(Field.ENTRY_CLASS_PK)))));
-
 		return Page.of(
-			page.getItems(),
+			TransformUtil.transform(
+				_accountGroupLocalService.<List<AccountGroup>>dslQuery(
+					_createSelectDSLQuery(
+						contextCompany.getCompanyId(), filter, pagination)),
+				accountGroup -> _dxpEntityDTOConverter.toDTO(accountGroup)),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
-			page.getTotalCount());
+			_accountGroupLocalService.<Integer>dslQuery(
+				_createCountDSLQuery(contextCompany.getCompanyId(), filter)));
+	}
+
+	private DSLQuery _createCountDSLQuery(long companyId, Filter filter) {
+		return DSLQueryFactoryUtil.count(
+		).from(
+			AccountGroupTable.INSTANCE
+		).where(
+			buildPredicate(
+				AccountGroupTable.INSTANCE, companyId,
+				AccountGroupTable.INSTANCE.companyId.isNotNull(), filter)
+		);
+	}
+
+	private DSLQuery _createSelectDSLQuery(
+		long companyId, Filter filter, Pagination pagination) {
+
+		return DSLQueryFactoryUtil.select(
+		).from(
+			AccountGroupTable.INSTANCE
+		).where(
+			buildPredicate(
+				AccountGroupTable.INSTANCE, companyId,
+				AccountGroupTable.INSTANCE.companyId.isNotNull(), filter)
+		).limit(
+			pagination.getPage() * pagination.getPageSize(),
+			(pagination.getPage() + 1) * pagination.getPageSize()
+		);
 	}
 
 	@Reference

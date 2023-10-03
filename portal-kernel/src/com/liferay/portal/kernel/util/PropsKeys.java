@@ -2569,13 +2569,6 @@ public interface PropsKeys {
 		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_REGION_REGION_ID =
 			"sql.data.com.liferay.portal.kernel.model.Region.region.id";
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #DATABASE_MAX_PARAMETERS}
-	 */
-	@Deprecated
-	public static final String SQL_DATA_MAX_PARAMETERS =
-		"sql.data.max.parameters";
-
 	public static final String
 		STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL =
 			"staging.draft.export.import.configuration.check.interval";

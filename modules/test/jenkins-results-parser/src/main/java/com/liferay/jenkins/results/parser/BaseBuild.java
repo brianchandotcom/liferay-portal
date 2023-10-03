@@ -1980,30 +1980,6 @@ public abstract class BaseBuild implements Build {
 		return _buildDurationsEnabled;
 	}
 
-	protected void checkForReinvocation(String consoleText) {
-		if ((consoleText == null) || consoleText.isEmpty()) {
-			return;
-		}
-
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if ((topLevelBuild == null) || topLevelBuild.isFromArchive()) {
-			return;
-		}
-
-		int x = consoleText.indexOf("stop-current-job:");
-
-		if (x != -1) {
-			consoleText = consoleText.substring(0, x);
-		}
-
-		if (consoleText.contains(getReinvokedMessage())) {
-			reset();
-
-			update();
-		}
-	}
-
 	protected Pattern getArchiveBuildURLPattern() {
 		return Pattern.compile(
 			JenkinsResultsParserUtil.combine(

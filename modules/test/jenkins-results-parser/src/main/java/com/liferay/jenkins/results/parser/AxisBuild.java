@@ -534,10 +534,6 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	protected void checkForReinvocation(String consoleText) {
-	}
-
-	@Override
 	protected Pattern getArchiveBuildURLPattern() {
 		return archiveBuildURLPattern;
 	}

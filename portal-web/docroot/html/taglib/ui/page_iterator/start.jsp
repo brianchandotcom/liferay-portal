@@ -78,13 +78,15 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 	<div class="pagination-bar" data-qa-id="paginator" id="<%= namespace + id %>">
 
 		<%
-		String ariaPaginationResults = namespace + id + "_ariaPaginationResults";
+		String ariaPagination = namespace + id + "_ariaPagination";
 
 		String ariaPaginationPicker = namespace + id + "_ariaPaginationPicker";
+
+		String ariaPaginationResults = namespace + id + "_ariaPaginationResults";
 		%>
 
 		<c:if test="<%= deltaConfigurable %>">
-			<div class="dropdown pagination-items-per-page" id="<%= namespace %>">
+			<div class="dropdown pagination-items-per-page" id="<%= ariaPagination %>">
 				<button aria-describedby="<%= ariaPaginationResults %>" aria-expanded="false" aria-controls="<%= ariaPaginationPicker %>" aria-haspopup="listbox" class="dropdown-toggle page-link" data-attribute="<%= delta %>" data-toggle="liferay-dropdown" role="combobox">
 					<liferay-ui:message arguments="<%= delta %>" key="x-entries" /><span class="sr-only"><%= StringPool.NBSP %><liferay-ui:message key="per-page" /></span>
 
@@ -414,46 +416,58 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 <script data-senna-track="temporary" type="text/javascript">
 
-	var dropdown = document.getElementById("<%= namespace %>");
+	var dropdown = document.getElementById("<%= namespace + id %>_ariaPagination");
+
 	var button = dropdown.querySelector('.dropdown-toggle');
 	var list = dropdown.querySelector('.dropdown-menu');
+
 	var options = list.querySelectorAll('.dropdown-item');
 	var selectedItemValue = button.dataset.attribute;
 
 	function onButtonKeyDown(event) {
 		if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === 'Space') {
 			event.preventDefault();
+
 			list.classList.add('show');
 			button.setAttribute('aria-expanded', 'true');
-			var selectedOption = null;
 
 			Array.from(options).find(function(option) {
-				if (option.id == selectedItemValue) {
-					selectedOption = option;
+				var selectedOption = list.querySelector('.active')
+
+				if (selectedOption) {
+					selectedOption.focus();
 				}
 			});
 
-			if (selectedOption) {
-				selectedOption.focus();
-			}
 		}
 	}
 
 	button.addEventListener('keydown',onButtonKeyDown );
+
+	function onLeaveDropdown() {
+		list.classList.remove('show');
+		button.setAttribute('aria-expanded', 'false');
+	}
 
 	function handleKeyEvents(event) {
 		var currentIndex = Array.from(options).indexOf(document.activeElement);
 
 		if (event.key === 'ArrowDown') {
 			event.preventDefault();
+
 			if (currentIndex < options.length - 1) {
 				options[currentIndex + 1].focus();
 			}
 		} else if (event.key === 'ArrowUp') {
 			event.preventDefault();
+
 			if (currentIndex > 0) {
 				options[currentIndex - 1].focus();
 			}
+		} else if (event.key === 'Escape') {
+
+			onLeaveDropdown()
+
 		}
 	}
 
@@ -461,8 +475,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 	function dropdownFocusOut(event) {
 		if (!dropdown.contains(event.relatedTarget)) {
-			list.classList.remove('show');
-			button.setAttribute('aria-expanded', 'false');
+			onLeaveDropdown()
 		}
 	}
 
@@ -472,11 +485,9 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 		button.removeEventListener('keydown', onButtonKeyDown);
 		document.removeEventListener('focusout', dropdownFocusOut );
 		list.removeEventListener('keydown', handleKeyEvents);
-
-		Liferay.detach('beforeScreenFlip', destroyDropDownPagination);
 	};
 
-	Liferay.on('beforeScreenFlip', destroyDropDownPagination);
+	Liferay.once('beforeScreenFlip', destroyDropDownPagination);
 
 </script>
 

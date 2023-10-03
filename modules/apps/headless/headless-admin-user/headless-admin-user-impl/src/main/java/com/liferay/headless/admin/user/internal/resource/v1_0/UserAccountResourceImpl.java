@@ -415,7 +415,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			statusInteger = WorkflowConstants.STATUS_INACTIVE;
 		}
 		else {
-			throw new BadRequestException("Status is invalid");
+			throw new BadRequestException("Invalid status: " + status);
 		}
 
 		return _getUserAccountsPage(

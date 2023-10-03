@@ -5,6 +5,7 @@
 
 package com.liferay.scim.client.internal.configuration;
 
+import com.liferay.oauth.client.LocalOAuthClient;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
@@ -12,9 +13,12 @@ import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -68,6 +72,21 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("OAuth 2 application " + _oAuth2Application);
+				}
+
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					_localOAuthClient.requestTokens(
+						_oAuth2Application,
+						userLocalService.getGuestUser(
+							companyId
+						).getUserId()));
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Access token for SCIM OAuth 2 application '",
+							_oAuth2Application.getName(), "' is: ",
+							jsonObject.getString("access_token")));
 				}
 			});
 	}
@@ -145,6 +164,12 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LocalOAuthClient _localOAuthClient;
 
 	private volatile OAuth2Application _oAuth2Application;
 

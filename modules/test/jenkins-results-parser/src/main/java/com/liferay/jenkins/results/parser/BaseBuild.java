@@ -2875,6 +2875,7 @@ public abstract class BaseBuild implements Build {
 		_statusModifiedTime = 0;
 	}
 
+
 	protected void setBuildURL(String buildURL) {
 		try {
 			buildURL = JenkinsResultsParserUtil.decode(buildURL);
@@ -2923,7 +2924,13 @@ public abstract class BaseBuild implements Build {
 		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
 			matcher.group("master"));
 
-		int buildNumber = Integer.parseInt(matcher.group("buildNumber"));
+		Invocation invocation = new Invocation(jenkinsMaster);
+
+		invocation.setBuildNumber(
+			Integer.parseInt(matcher.group("buildNumber")));
+
+		_invocations.add(invocation);
+
 		setJobName(matcher.group("jobName"));
 
 		loadParametersFromBuildJSONObject();
@@ -2934,14 +2941,9 @@ public abstract class BaseBuild implements Build {
 
 		JSONObject buildJSONObject = getBuildJSONObject("queueId");
 
-		Invocation invocation = new Invocation(
-			jenkinsMaster, buildJSONObject.getLong("queueId"));
+		invocation.setQueueId(buildJSONObject.getLong("queueId"));
 
-		invocation.setBuildNumber(buildNumber);
-
-		_invocations.add(invocation);
-
-		setStatus("running");
+		setStatus("completed");
 	}
 
 	protected void setInvocationURL(String invocationURL) {
@@ -2968,7 +2970,11 @@ public abstract class BaseBuild implements Build {
 		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
 			invocationURLMatcher.group("master"));
 
+		Invocation invocation = new Invocation(jenkinsMaster);
+
 		setJobName(invocationURLMatcher.group("jobName"));
+
+		_invocations.add(invocation);
 
 		loadParametersFromQueryString(invocationURL);
 
@@ -2979,10 +2985,9 @@ public abstract class BaseBuild implements Build {
 		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
 			jenkinsMaster, getJobName(), getParameters());
 
-		Invocation invocation = new Invocation(
-			jenkinsMaster, jsonObject.getLong("queueId"));
+		invocation.setQueueId(jsonObject.getLong("queueId"));
 
-		_invocations.add(invocation);
+		reset();
 
 		setStatus("queued");
 	}

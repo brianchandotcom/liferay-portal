@@ -380,21 +380,6 @@
 					"state": false,
 					"system": true,
 					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "PARENT_API_PROPERTY_ERC",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Parent API Property ERC"
-					},
-					"name": "parentAPIPropertyERC",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
 				}
 			],
 			"objectRelationships": [

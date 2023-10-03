@@ -101,7 +101,13 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
-	public synchronized List<Build> getDownstreamBuilds() {
+	public List<Build> getDownstreamBuilds() {
+		if (_downstreamBuilds != null) {
+			return new ArrayList<>(_downstreamBuilds);
+		}
+
+		_downstreamBuilds = new ArrayList<>();
+
 		return new ArrayList<>(_downstreamBuilds);
 	}
 
@@ -402,6 +408,10 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	@Override
 	public void removeDownstreamBuild(Build build) {
+		if (_downstreamBuilds == null) {
+			getDownstreamBuilds();
+		}
+
 		_downstreamBuilds.remove(build);
 	}
 
@@ -471,6 +481,10 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		}
 
 		builds.removeAll(Collections.singleton(null));
+
+		if (_downstreamBuilds == null) {
+			getDownstreamBuilds();
+		}
 
 		_downstreamBuilds.addAll(builds);
 	}
@@ -624,6 +638,10 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	protected void reset() {
 		super.reset();
 
+		if (_downstreamBuilds == null) {
+			getDownstreamBuilds();
+		}
+
 		_downstreamBuilds.clear();
 	}
 
@@ -662,6 +680,6 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			_downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
 	}
 
-	private final List<Build> _downstreamBuilds = new ArrayList<>();
+	private List<Build> _downstreamBuilds;
 
 }

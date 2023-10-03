@@ -15,7 +15,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collection;
@@ -112,12 +111,7 @@ public class ObjectValidationRuleEngineRegistryImpl
 						key);
 				}
 
-				if (!(objectValidationRuleEngine instanceof
-						FunctionObjectValidationRuleEngineImpl) ||
-					FeatureFlagManagerUtil.isEnabled("LPS-188898")) {
-
-					emitter.emit(key);
-				}
+				emitter.emit(key);
 			});
 	}
 

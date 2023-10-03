@@ -27,7 +27,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_LABEL_VALIDATION</td>
-		<td>//div[@class='table-list-title' and contains(.,'${key_validationName}')]</td>
+		<td>//div[contains(@class,'table-list-title') and contains(.,'${key_validationName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

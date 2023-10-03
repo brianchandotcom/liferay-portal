@@ -10597,6 +10597,50 @@ org.apache.catalina.tribes.level = FINE]]>
 		</if>
 	</target>
 
+	<target name="execute-command-from-gogo-shell">
+		<set-app-server-properties
+			app.server.bundle.index="${bundle.index}"
+		/>
+
+		<delete file="${test.app.server.liferay.home}/execute-gogo-command.expect" />
+		<delete file="${test.app.server.liferay.home}/gogo-output.txt" />
+
+		<math
+			datatype="int"
+			operand1="${bundle.index}"
+			operand2="11312"
+			operation="+"
+			result="osgi.console.port"
+		/>
+
+		<echo file="${test.app.server.liferay.home}/execute-gogo-command.expect"><![CDATA[#!/usr/bin/expect -f
+log_user 0
+spawn telnet localhost ${osgi.console.port}
+expect "g!"
+
+set command ${command}
+
+send -- "$command\r"
+
+if { $command == "disconnect"} {
+expect "Disconnect from console? (y/n; default=y)"
+
+send -- "y\r"
+}
+
+expect "g!"
+send_user $expect_out(buffer)]]></echo>
+
+		<chmod
+			file="${test.app.server.liferay.home}/execute-gogo-command.expect"
+			perm="a+x"
+		/>
+
+		<exec executable="${test.app.server.liferay.home}/execute-gogo-command.expect" failonerror="true" logError="true" output="${test.app.server.liferay.home}/gogo-output.txt" />
+
+		<print-file file.name="${test.app.server.liferay.home}/gogo-output.txt" />
+	</target>
+
 	<target name="execute-groovy-script-from-gogo-shell">
 		<set-app-server-properties
 			app.server.bundle.index="${bundle.index}"

@@ -8,7 +8,7 @@
 <%@ include file="/adaptive_media/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = PortalUtil.escapeRedirect(ParamUtil.getString(request, "redirect"));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

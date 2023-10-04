@@ -157,6 +157,7 @@ const useSelectItem = () => {
 	const sidebarPanelId = useSelector((state) =>
 		state.sidebar?.open ? state.sidebar?.panelId : null
 	);
+	const sidebarHidden = useSelector((state) => state.sidebar?.hidden);
 	const storeDispatch = useDispatch();
 	const toControlsId = useToControlsId();
 
@@ -178,6 +179,7 @@ const useSelectItem = () => {
 			});
 
 			if (
+				!sidebarHidden &&
 				itemId &&
 				sidebarPanelId &&
 				!['browser', 'comments', 'page_content'].includes(
@@ -192,7 +194,13 @@ const useSelectItem = () => {
 				);
 			}
 		},
-		[activeDispatch, sidebarPanelId, storeDispatch, toControlsId]
+		[
+			activeDispatch,
+			sidebarHidden,
+			sidebarPanelId,
+			storeDispatch,
+			toControlsId,
+		]
 	);
 };
 

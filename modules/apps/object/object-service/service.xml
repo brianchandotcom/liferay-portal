@@ -802,6 +802,10 @@
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="active" />
 		</finder>
+		<finder name="ODI_E" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="engine" />
+		</finder>
 		<finder name="ODI_O" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="outputType" />

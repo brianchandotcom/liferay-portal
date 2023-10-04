@@ -611,8 +611,7 @@ public class MainServlet extends HttpServlet {
 			}
 
 			if (_log.isWarnEnabled()) {
-				String message = _releaseManager.getShortStatusMessage(
-					true);
+				String message = _releaseManager.getShortStatusMessage(true);
 
 				if (Validator.isNotNull(message)) {
 					_log.warn(message);

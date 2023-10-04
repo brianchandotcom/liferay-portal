@@ -3730,10 +3730,6 @@ public abstract class BaseBuild implements Build {
 		_runQueued();
 	}
 
-	private void _setDuration(Long duration) {
-		_duration = duration;
-	}
-
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{new GenericFailureMessageGenerator()};
 

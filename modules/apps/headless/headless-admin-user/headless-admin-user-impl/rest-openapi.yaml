@@ -2718,37 +2718,6 @@ paths:
                         application/xml: {}
             tags: ["Organization"]
     "/accounts/{accountId}/postal-addresses":
-        delete:
-            description:
-                Deletes from the account the postal addresses requested
-            operationId: deleteAccountPostalAddresses
-            parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            items:
-                                format: int64
-                                type: integer
-                            type: array
-                    application/xml:
-                        schema:
-                            items:
-                                format: int64
-                                type: integer
-                            type: array
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["PostalAddress"]
         get:
             description:
                 Retrieves the account's postal addresses.
@@ -4116,6 +4085,23 @@ paths:
                                 $ref: "#/components/schemas/Phone"
             tags: ["Phone"]
     "/postal-addresses/{postalAddressId}":
+        delete:
+            description:
+                Deletes the postal address
+            operationId: deleteAccountPostalAddress
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["PostalAddress"]
         get:
             description:
                 Retrieves the postal address.

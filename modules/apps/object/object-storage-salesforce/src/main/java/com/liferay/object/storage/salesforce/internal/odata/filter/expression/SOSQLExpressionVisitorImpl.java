@@ -133,14 +133,14 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		}
 
 		if (Objects.equals(
-				LiteralExpression.Type.DATE, literalExpression.getType())) {
+				LiteralExpression.Type.STRING, literalExpression.getType())) {
 
-			return literalExpression.getText();
+			return StringUtil.replace(
+				literalExpression.getText(), StringPool.DOUBLE_APOSTROPHE,
+				StringPool.APOSTROPHE);
 		}
 
-		return StringUtil.replace(
-			literalExpression.getText(), StringPool.DOUBLE_APOSTROPHE,
-			StringPool.APOSTROPHE);
+		return literalExpression.getText();
 	}
 
 	@Override

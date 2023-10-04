@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.restore-current-view=false",
 		"com.liferay.portlet.single-page-application=false",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Sign In",

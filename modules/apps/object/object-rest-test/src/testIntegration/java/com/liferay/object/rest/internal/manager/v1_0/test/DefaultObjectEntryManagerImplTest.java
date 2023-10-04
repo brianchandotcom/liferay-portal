@@ -2070,11 +2070,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship1.getObjectRelationshipId());
-
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship2.getObjectRelationshipId());
+		objectDefinitionLocalService.deleteObjectDefinition(
+			childObjectDefinition);
 	}
 
 	@Test

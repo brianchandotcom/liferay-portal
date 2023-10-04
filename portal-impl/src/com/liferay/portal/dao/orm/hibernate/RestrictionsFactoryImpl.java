@@ -5,18 +5,13 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
 import com.liferay.portal.kernel.dao.orm.Type;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Collection;
 import java.util.List;
@@ -30,13 +25,7 @@ import org.hibernate.criterion.Restrictions;
 public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
 	public void afterPropertiesSet() {
-		DBType dbType = DBManagerUtil.getDBType();
-
-		_databaseInMaxParameters = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.DATABASE_IN_MAX_PARAMETERS,
-				new Filter(dbType.getName())),
-			Integer.MAX_VALUE);
+		_databaseInMaxParameters = DBManagerUtil.getDBInMaxParameters();
 	}
 
 	@Override

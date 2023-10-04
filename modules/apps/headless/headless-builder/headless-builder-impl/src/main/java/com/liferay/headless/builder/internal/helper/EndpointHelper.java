@@ -9,6 +9,7 @@ import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -16,6 +17,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -138,14 +141,25 @@ public class EndpointHelper {
 	}
 
 	private Object _getRelatedObjectValue(
-		ObjectEntry objectEntry, APIApplication.Property property,
-		List<String> relationshipsNames) {
+			ObjectEntry objectEntry, APIApplication.Property property,
+			List<String> relationshipsNames)
+		throws Exception {
 
 		if (relationshipsNames.isEmpty()) {
 			Map<String, Object> objectEntryProperties =
 				objectEntry.getProperties();
 
-			return objectEntryProperties.get(property.getSourceFieldName());
+			Object object = objectEntryProperties.get(
+				property.getSourceFieldName());
+
+			if (object == null) {
+				Field declaredField = ReflectionUtil.getDeclaredField(
+					ObjectEntry.class, property.getSourceFieldName());
+
+				return declaredField.get(objectEntry);
+			}
+
+			return object;
 		}
 
 		List<Object> values = new ArrayList<>();
@@ -183,7 +197,8 @@ public class EndpointHelper {
 	}
 
 	private Map<String, Object> _getResponseEntityMap(
-		ObjectEntry objectEntry, APIApplication.Schema schema) {
+			ObjectEntry objectEntry, APIApplication.Schema schema)
+		throws Exception {
 
 		Map<String, Object> responseEntityMap = new HashMap<>();
 

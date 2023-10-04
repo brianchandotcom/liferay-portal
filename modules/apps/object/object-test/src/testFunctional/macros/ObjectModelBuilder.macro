@@ -1,0 +1,33 @@
+definition {
+
+	macro openObjectFolderInModelBuilder {
+		if (!(isSet(objectFolderName))) {
+			var objectFolderName = "Uncategorized";
+		}
+
+		Navigator.openWithAppendToBaseURL(
+			baseURL = ${baseURL},
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&p_p_auth=dShgR6Fp&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_mvcRenderCommandName=%2Fobject_definitions%2Fview_model_builder&objectFolderName=${objectFolderName}");
+	}
+
+	macro publishObjectDefinitions {
+		Button.clickPublish();
+
+		for (var objectDefinitionName : list ${objectDefinitionsList}) {
+			Check.checkNotVisible(
+				locator1 = "ObjectModelBuilder#CONFIRM_PUBLISHING_OBJECT_DEFINITION_INPUT",
+				objectDefinition = ${objectDefinitionName});
+		}
+
+		Click(
+			key_text = "Publish Objects",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+		WaitForElementPresent(
+			locator1 = "Icon#ANY",
+			value1 = "check");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+	}
+
+}

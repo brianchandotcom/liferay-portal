@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -167,10 +169,22 @@ public class EditSegmentsExperimentStatusMVCActionCommandTest {
 					defaultSegmentsExperienceId));
 
 			variantSegmentsExperience =
-				_segmentsExperienceRelLocalService.getSegmentsExperience(
+				_segmentsExperienceRelLocalService.fetchSegmentsExperience(
 					variantSegmentsExperience.getSegmentsExperienceId());
 
+			Assert.assertNotNull(variantSegmentsExperience);
 			Assert.assertTrue(variantSegmentsExperience.isActive());
+			Assert.assertEquals(0, variantSegmentsExperience.getPriority());
+			Assert.assertEquals(
+				SegmentsExperienceConstants.KEY_DEFAULT,
+				variantSegmentsExperience.getSegmentsExperienceKey());
+
+			UnicodeProperties unicodeProperties =
+				variantSegmentsExperience.getTypeSettingsUnicodeProperties();
+
+			Assert.assertFalse(
+				unicodeProperties.containsKey(
+					"segmentsExperimentSegmentsExperienceKey"));
 		}
 	}
 

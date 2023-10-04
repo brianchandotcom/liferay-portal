@@ -6,10 +6,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import DEFAULT_BALLOON_EDITOR_CONFIG from './config/DefaultBalloonEditorConfiguration';
-
-import '../css/main.scss';
 import BaseEditor from './BaseEditor';
+import DEFAULT_BALLOON_EDITOR_CONFIG from './config/DefaultBalloonEditorConfiguration';
 
 const EMPTY_OBJECT = {};
 

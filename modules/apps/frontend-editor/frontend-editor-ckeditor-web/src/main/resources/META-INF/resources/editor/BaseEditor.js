@@ -7,6 +7,8 @@ import CKEditor from 'ckeditor4-react';
 import PropTypes from 'prop-types';
 import React, {forwardRef, useCallback, useEffect, useRef} from 'react';
 
+import '../css/main.scss';
+
 const BASEPATH = '/o/frontend-editor-ckeditor-web/ckeditor/';
 const CONTEXT_URL = Liferay.ThemeDisplay.getPathContext();
 const CURRENT_PATH = CONTEXT_URL ? CONTEXT_URL + BASEPATH : BASEPATH;

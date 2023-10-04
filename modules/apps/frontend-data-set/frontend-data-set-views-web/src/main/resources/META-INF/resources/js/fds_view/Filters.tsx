@@ -12,7 +12,7 @@ import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {InputLocalized} from 'frontend-js-components-web';
 import {IClientExtensionRenderer, fetch, openModal, sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {FDSViewType} from '../FDSViews';
@@ -83,8 +83,18 @@ function AddFDSFilterModalContent({
 	const [from, setFrom] = useState<string>(
 		(filter as IDateFilter)?.from ?? ''
 	);
+	const getFilterIncludeMode = useCallback(() => {
+		return filter
+			? (filter as ISelectionFilter)?.include
+				? 'include'
+				: 'exclude'
+			: 'include';
+	}, [filter]);
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
 		fdsFilterLabelTranslations
+	);
+	const [includeMode, setIncludeMode] = useState<string>(() =>
+		getFilterIncludeMode()
 	);
 	const [isValidDateRange, setIsValidDateRange] = useState<boolean>(true);
 	const [multiple, setMultiple] = useState<boolean>(
@@ -123,18 +133,6 @@ function AddFDSFilterModalContent({
 			}
 		});
 	}, [filter]);
-
-	const [includeMode, setIncludeMode] = useState<string>(() => {
-		if (preselectedValues?.length === 0) {
-			return 'include';
-		}
-
-		return filter
-			? (filter as ISelectionFilter)?.include
-				? 'include'
-				: 'exclude'
-			: 'include';
-	});
 
 	const handleFilterSave = async () => {
 		setSaveButtonDisabled(true);
@@ -301,7 +299,10 @@ function AddFDSFilterModalContent({
 		if (preselectedValues?.length === 0) {
 			setIncludeMode('include');
 		}
-	}, [preselectedValues]);
+		else {
+			setIncludeMode(getFilterIncludeMode());
+		}
+	}, [preselectedValues, getFilterIncludeMode]);
 
 	return (
 		<>

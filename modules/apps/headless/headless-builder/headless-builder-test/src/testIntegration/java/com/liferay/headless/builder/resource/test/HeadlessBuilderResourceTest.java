@@ -41,6 +41,8 @@ import com.liferay.object.rest.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
@@ -1049,6 +1051,87 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
+	public void testGetWithRelatedModelProperty() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_API_ENDPOINT", TestPropsValues.getCompanyId());
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition.getObjectDefinitionId(), "externalReferenceCode");
+
+		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"applicationStatus", "published"
+			).put(
+				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
+
+		JSONObject apiEndpointJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"httpMethod", "get"
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"path", StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				apiApplicationJSONObject.getLong("id")
+			).put(
+				"responseAPISchemaToAPIEndpoints",
+				JSONUtil.put(
+					"apiSchemaToAPIProperties",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"description", RandomTestUtil.randomString()
+						).put(
+							"name", "APIEndpointsERC"
+						).put(
+							"objectFieldERC",
+							objectField.getExternalReferenceCode()
+						).put(
+							"objectRelationshipNames",
+							"apiApplicationToAPIEndpoints"
+						))
+				).put(
+					"description", RandomTestUtil.randomString()
+				).put(
+					"mainObjectDefinitionERC", "L_API_APPLICATION"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"r_apiApplicationToAPISchemas_c_apiApplicationId",
+					apiApplicationJSONObject.getLong("id")
+				)
+			).put(
+				"retrieveType", "collection"
+			).put(
+				"scope", "company"
+			).toString(),
+			"headless-builder/endpoints", Http.Method.POST);
+
+		JSONObject responseJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			"c/" + apiApplicationJSONObject.getString("baseURL") +
+				apiEndpointJSONObject.getString("path"),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
+
+		JSONObject firstItemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		JSONArray apiEndpointsERCJSONArray = firstItemJSONObject.getJSONArray(
+			"APIEndpointsERC");
+
+		Assert.assertNotEquals("", apiEndpointsERCJSONArray.getString(0));
+	}
+
+	@Test
 	public void testGetWithRequestFilter() throws Exception {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
@@ -2049,6 +2132,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition3;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;

@@ -476,95 +476,102 @@ const ItemActionForm = ({
 								/>
 							</ClayForm.Group>
 
-							<ClayLayout.Row>
-								<ClayLayout.Col size={8}>
-									<ClayForm.Group>
-										{Liferay.FeatureFlags['LPS-172017'] ? (
-											<InputLocalized
-												id={
-													confirmationMessageFormElementId
-												}
-												label={Liferay.Language.get(
-													'confirmation-message'
+							{activeTab === 0 &&
+								actionData.type === ACTION_TYPE.LINK && (
+									<ClayLayout.Row>
+										<ClayLayout.Col size={8}>
+											<ClayForm.Group>
+												{Liferay.FeatureFlags[
+													'LPS-172017'
+												] ? (
+													<InputLocalized
+														id={
+															confirmationMessageFormElementId
+														}
+														label={Liferay.Language.get(
+															'confirmation-message'
+														)}
+														onChange={
+															setConfirmationMessageTranslations
+														}
+														placeholder={Liferay.Language.get(
+															'add-a-message-here'
+														)}
+														tooltip={Liferay.Language.get(
+															'the-user-will-see-this-message-before-performing-the-action'
+														)}
+														translations={
+															confirmationMessageTranslations
+														}
+													/>
+												) : (
+													<>
+														<label
+															htmlFor={
+																confirmationMessageFormElementId
+															}
+														>
+															{Liferay.Language.get(
+																'confirmation-message'
+															)}
+														</label>
+
+														<ClayInput
+															id={
+																confirmationMessageFormElementId
+															}
+															onChange={(event) =>
+																setActionData({
+																	...actionData,
+																	confirmationMessage:
+																		event
+																			.target
+																			.value,
+																})
+															}
+															type="text"
+															value={
+																actionData.confirmationMessage
+															}
+														/>
+													</>
 												)}
-												onChange={
-													setConfirmationMessageTranslations
-												}
-												placeholder={Liferay.Language.get(
-													'add-a-message-here'
-												)}
-												tooltip={Liferay.Language.get(
-													'the-user-will-see-this-message-before-performing-the-action'
-												)}
-												translations={
-													confirmationMessageTranslations
-												}
-											/>
-										) : (
-											<>
+											</ClayForm.Group>
+										</ClayLayout.Col>
+
+										<ClayLayout.Col size={4}>
+											<ClayForm.Group>
 												<label
 													htmlFor={
-														confirmationMessageFormElementId
+														confirmationMessageTypeFormElementId
 													}
 												>
 													{Liferay.Language.get(
-														'confirmation-message'
+														'message-type'
 													)}
 												</label>
 
-												<ClayInput
+												<ClaySelectWithOption
 													id={
-														confirmationMessageFormElementId
+														confirmationMessageTypeFormElementId
 													}
 													onChange={(event) =>
 														setActionData({
 															...actionData,
-															confirmationMessage:
+															confirmationMessageType:
 																event.target
 																	.value,
 														})
 													}
-													type="text"
+													options={MESSAGE_TYPES}
 													value={
-														actionData.confirmationMessage
+														actionData.confirmationMessageType
 													}
 												/>
-											</>
-										)}
-									</ClayForm.Group>
-								</ClayLayout.Col>
-
-								<ClayLayout.Col size={4}>
-									<ClayForm.Group>
-										<label
-											htmlFor={
-												confirmationMessageTypeFormElementId
-											}
-										>
-											{Liferay.Language.get(
-												'message-type'
-											)}
-										</label>
-
-										<ClaySelectWithOption
-											id={
-												confirmationMessageTypeFormElementId
-											}
-											onChange={(event) =>
-												setActionData({
-													...actionData,
-													confirmationMessageType:
-														event.target.value,
-												})
-											}
-											options={MESSAGE_TYPES}
-											value={
-												actionData.confirmationMessageType
-											}
-										/>
-									</ClayForm.Group>
-								</ClayLayout.Col>
-							</ClayLayout.Row>
+											</ClayForm.Group>
+										</ClayLayout.Col>
+									</ClayLayout.Row>
+								)}
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 				</ClayPanel.Body>

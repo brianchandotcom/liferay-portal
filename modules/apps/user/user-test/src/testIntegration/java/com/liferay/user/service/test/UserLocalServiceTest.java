@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -70,6 +71,7 @@ import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Field;
@@ -234,10 +236,10 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testGetCompanyUsers() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
+		_company = CompanyTestUtil.addCompany();
 
 		List<User> companyUsers = _userLocalService.getCompanyUsers(
-			company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			_company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(companyUsers.toString(), 1, companyUsers.size());
 
@@ -865,6 +867,9 @@ public class UserLocalServiceTest {
 	private AuditMessageProcessor _auditMessageProcessor;
 	private BundleActivator _bundleActivator;
 	private BundleContext _bundleContext;
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

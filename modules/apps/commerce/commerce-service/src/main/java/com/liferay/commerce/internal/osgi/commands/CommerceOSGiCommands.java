@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CommerceOSGiCommands {
 
-	public void renewSubscriptionEntries() throws Exception {
+	public void checkSubscriptionEntriesStatus() throws Exception {
 		_commerceSubscriptionEntryHelper.checkSubscriptionEntriesStatus(
 			_commerceSubscriptionEntryLocalService.
 				getActiveCommerceSubscriptionEntries());

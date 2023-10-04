@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -39,10 +40,8 @@ import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,30 +61,18 @@ public class CommercePriceListIndexerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
 		_user = UserTestUtil.addUser(_company);
 
 		_indexer = _indexerRegistry.getIndexer(CommercePriceList.class);
-	}
 
-	@Before
-	public void setUp() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
-
-		PrincipalThreadLocal.setName(_user.getUserId());
+		_setUserToPermissionChecker(_user);
 
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), _user.getUserId(), 0);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_commercePriceListLocalService.deleteCommercePriceLists(
-			_company.getCompanyId());
 	}
 
 	@Test
@@ -118,13 +105,13 @@ public class CommercePriceListIndexerTest {
 			true,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		List<CommercePriceList> commercePriceLists =
+		_commercePriceLists =
 			_commercePriceListLocalService.getCommercePriceLists(
 				new long[] {commerceCatalog.getGroupId()},
 				_company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
-			commercePriceLists.toString(), 3, commercePriceLists.size());
+			_commercePriceLists.toString(), 3, _commercePriceLists.size());
 
 		SearchContext searchContext = new SearchContext();
 
@@ -141,17 +128,28 @@ public class CommercePriceListIndexerTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static Company _company;
-	private static Indexer<CommercePriceList> _indexer;
+	private void _setUserToPermissionChecker(User user) {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
 
-	@Inject
-	private static IndexerRegistry _indexerRegistry;
-
-	private static User _user;
+		PrincipalThreadLocal.setName(user.getUserId());
+	}
 
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
+	@DeleteAfterTestRun
+	private List<CommercePriceList> _commercePriceLists;
+
+	@DeleteAfterTestRun
+	private Company _company;
+
 	private Group _group;
+	private Indexer<CommercePriceList> _indexer;
+
+	@Inject
+	private IndexerRegistry _indexerRegistry;
+
+	private User _user;
 
 }

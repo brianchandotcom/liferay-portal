@@ -3,18 +3,31 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export default function buildNewCart(
-	billingAddress: BillingAddress,
-	channel: Channel,
-	email: string,
-	isFreeApp: boolean,
-	orderType: OrderType,
-	purchaseOrderNumber: string,
-	selectedPaymentMethod: PaymentMethodSelector,
-	sku: SKU,
-	product?: Product,
-	selectedAccount?: Account
-) {
+export default function buildNewCart({
+	billingAddress,
+	channel,
+	email,
+	isFreeApp,
+	orderType,
+	product,
+	purchaseOrderNumber,
+	selectedAccount,
+	selectedPaymentMethod,
+	selectedSKU,
+	sku,
+}: {
+	billingAddress: BillingAddress;
+	channel: Channel;
+	email: string;
+	isFreeApp: boolean;
+	orderType: OrderType;
+	product?: Product;
+	purchaseOrderNumber: string;
+	selectedAccount?: Account;
+	selectedPaymentMethod: PaymentMethodSelector;
+	selectedSKU?: SKU;
+	sku: SKU;
+}) {
 	const cart: Partial<Cart> = {
 		accountId: selectedAccount?.id as number,
 		cartItems: [
@@ -23,14 +36,14 @@ export default function buildNewCart(
 					currency: channel.currencyCode,
 					discount: 0,
 					finalPrice: product?.finalPrice,
-					price: product?.price,
+					price: product?.price as number,
 				},
 				productId: product?.productId,
 				quantity: 1,
 				settings: {
 					maxQuantity: 1,
 				},
-				skuId: sku?.id as number,
+				skuId: (selectedSKU?.id as number) || sku.id,
 			},
 		],
 		currencyCode: channel.currencyCode,
@@ -43,6 +56,10 @@ export default function buildNewCart(
 	}
 
 	const newCart = {
+		free: {
+			...cart,
+			billingAddress,
+		},
 		order: {
 			...cart,
 			author: email,

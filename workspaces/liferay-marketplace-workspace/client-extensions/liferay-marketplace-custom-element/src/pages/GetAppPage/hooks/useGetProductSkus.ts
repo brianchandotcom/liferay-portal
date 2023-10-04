@@ -23,16 +23,15 @@ const useGetProductSkus = (
 
 		if (product && product?.skus?.length > 1) {
 			const isTrial = !!product?.skus?.find(
-				({sku, skuOptions: [skuOption]}) =>
-					sku.endsWith('ts') && skuOption.value === 'yes'
+				({skuOptions: [skuOption]}) =>
+					skuOption?.key !== 'trial' && skuOption.value === 'yes'
 			);
 			setEnableTrialMethod(isTrial);
 
 			newSku = product?.skus?.find(
 				(sku: {price: number}) => sku.price !== 0
 			);
-		}
-		else {
+		} else {
 			newSku = product?.skus[0];
 		}
 

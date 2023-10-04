@@ -156,6 +156,7 @@ const ItemActionForm = ({
 			title,
 			type,
 			url,
+			variant,
 		} = actionData;
 
 		const relationShip =
@@ -171,6 +172,7 @@ const ItemActionForm = ({
 			[relationShip]: fdsView.id,
 			type,
 			url,
+			variant,
 		} as any;
 
 		if (Liferay.FeatureFlags['LPS-172017']) {

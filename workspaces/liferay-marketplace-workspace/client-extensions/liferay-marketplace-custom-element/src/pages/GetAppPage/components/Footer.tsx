@@ -14,14 +14,16 @@ import {StepType} from '../enums/stepType';
 interface ProductFooterProps {
 	addresses: BillingAddress[];
 	cartId?: number;
+	cartUtil: any;
 	enablePurchaseButton: boolean;
-	handleGetApp: () => void;
+	handleGetApp: (orderId?: number) => void;
 	isFreeApp: boolean;
+	licenseSelected: boolean;
 	sectionProperties: SectionPropertiesType;
 	selectedAccount?: Account;
 	selectedPaymentMethod: PaymentMethodSelector;
+	selectedSKU?: SKU;
 	setStep: (nextStep: StepType) => void;
-	sku: SKU;
 	step: StepType;
 }
 
@@ -34,14 +36,15 @@ type SectionPropertiesType = {
 
 const ProductFooter = ({
 	addresses,
+	cartUtil,
 	enablePurchaseButton,
 	handleGetApp,
 	isFreeApp,
+	licenseSelected,
 	sectionProperties,
 	selectedAccount,
 	selectedPaymentMethod,
 	setStep,
-	sku,
 	step,
 }: ProductFooterProps) => {
 	const getButtonText = () => {
@@ -60,13 +63,13 @@ const ProductFooter = ({
 			return 'Continue';
 		}
 		if (isPayMethodSelected) {
-			return `Pay $${sku?.price} Now`;
+			return `Pay ${cartUtil?.cart?.summary?.totalFormatted} Now`;
 		}
 		if (isTrialMethodSelected) {
 			return 'Start Free Trial';
 		}
 		if (isOrderMethodSelected) {
-			return `Create PO for $${sku.price}`;
+			return `Create PO for ${cartUtil?.cart?.summary?.totalFormatted}`;
 		}
 	};
 
@@ -93,25 +96,34 @@ const ProductFooter = ({
 
 		if (
 			(isFreeApp && selectedAccount) ||
-			(isPaymentStep && enablePurchaseButton && addresses)
+			(enablePurchaseButton && addresses && isPaymentStep)
 		) {
-			handleGetApp();
+			handleGetApp(cartUtil.cart.id);
 		}
 	};
 
 	return (
 		<div className="mt-5 pt-2 text-black-50">
 			<div className="d-flex justify-content-between">
-				<ClayButton displayType={null} onClick={() => onCancel()}>
+				<ClayButton
+					displayType={null}
+					onClick={() => {
+						cartUtil.cart?.id &&
+							cartUtil?.removeCart(cartUtil.cart?.id);
+						onCancel();
+					}}
+				>
 					Cancel
 				</ClayButton>
 				<div>
 					{sectionProperties[step].backStep !== step && (
 						<ClayButton
 							displayType="secondary"
-							onClick={() =>
-								onPrevious(sectionProperties[step].backStep)
-							}
+							onClick={() => {
+								cartUtil?.cart?.id &&
+									cartUtil?.removeCart(cartUtil?.cart?.id);
+								onPrevious(sectionProperties[step].backStep);
+							}}
 						>
 							Back
 						</ClayButton>
@@ -119,6 +131,13 @@ const ProductFooter = ({
 					{sectionProperties[step].nextStep && (
 						<ClayButton
 							className="ml-5"
+							disabled={
+								(step === StepType.ACCOUNT &&
+									!selectedAccount) ||
+								(step === StepType.LICENSES && !licenseSelected)
+									? true
+									: false
+							}
 							onClick={() => {
 								onContinue(sectionProperties[step].nextStep);
 							}}

@@ -55,6 +55,7 @@ const translationExists = ({translations}: {translations: any}) => {
 	return Boolean(Object.keys(translations).find((key) => translations[key]));
 };
 interface IFDSItemActionFormProps {
+	activeTab: number;
 	editing?: boolean;
 	fdsView: FDSViewType;
 	initialValues?: IFDSAction;
@@ -66,6 +67,7 @@ interface IFDSItemActionFormProps {
 }
 
 const ItemActionForm = ({
+	activeTab,
 	editing = false,
 	fdsView,
 	initialValues,
@@ -321,7 +323,11 @@ const ItemActionForm = ({
 											type: event.target.value,
 										})
 									}
-									options={TYPES}
+									options={
+										!activeTab
+											? ITEM_ACTION_TYPES
+											: CREATION_ACTION_TYPES
+									}
 									placeholder={Liferay.Language.get(
 										'please-select-an-option'
 									)}

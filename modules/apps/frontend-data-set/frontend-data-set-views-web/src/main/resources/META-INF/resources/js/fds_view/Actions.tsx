@@ -267,7 +267,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 		loadFDSActions();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [activeTab]);
 
 	if (loading) {
 		return <ClayLoadingIndicator />;
@@ -345,6 +345,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 				{(activeSection === SECTIONS.NEW_CREATION_ACTION ||
 					activeSection === SECTIONS.NEW_ITEM_ACTION) && (
 					<ItemActionForm
+						activeTab={activeTab}
 						fdsView={fdsView}
 						loadFDSActions={loadFDSActions}
 						namespace={namespace}
@@ -357,6 +358,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 				{(activeSection === SECTIONS.EDIT_CREATION_ACTION ||
 					activeSection === SECTIONS.EDIT_ITEM_ACTION) && (
 					<ItemActionForm
+						activeTab={activeTab}
 						editing
 						fdsView={fdsView}
 						initialValues={initialActionFormValues}

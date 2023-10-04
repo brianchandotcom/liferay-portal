@@ -59,7 +59,8 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 			Changeset changeset = _createChangesetForSingleArticle(
 				groupId, singlePublishArticleId);
 
-			_publishChangeset(actionRequest, actionResponse, changeset);
+			_exportImportChangesetMVCActionCommandHelper.publish(
+				actionRequest, actionResponse, changeset);
 
 			return;
 		}
@@ -70,7 +71,8 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 		Changeset changeset = _createChangesetForMultipleArticles(
 			groupId, articleIds);
 
-		_publishChangeset(actionRequest, actionResponse, changeset);
+		_exportImportChangesetMVCActionCommandHelper.publish(
+			actionRequest, actionResponse, changeset);
 	}
 
 	private Changeset _createChangesetForMultipleArticles(
@@ -172,15 +174,6 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 		return (StagedModelDataHandler<JournalArticle>)
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				JournalArticle.class.getName());
-	}
-
-	private void _publishChangeset(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			Changeset changeset)
-		throws Exception {
-
-		_exportImportChangesetMVCActionCommandHelper.publish(
-			actionRequest, actionResponse, changeset);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -25,6 +25,8 @@ String url = StringPool.BLANK;
 String urlAnchor = StringPool.BLANK;
 int pages = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:page-iterator:pages"));
 
+String ariaPagination = namespace + id + "_ariaPagination";
+
 int initialPages = 20;
 
 if (portletURL != null) {
@@ -78,8 +80,6 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 	<div class="pagination-bar" data-qa-id="paginator" id="<%= namespace + id %>">
 
 		<%
-		String ariaPagination = namespace + id + "_ariaPagination";
-
 		String ariaPaginationPicker = namespace + id + "_ariaPaginationPicker";
 
 		String ariaPaginationResults = namespace + id + "_ariaPaginationResults";
@@ -415,8 +415,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 </script>
 
 <script data-senna-track="temporary" type="text/javascript">
-
-	var dropdown = document.getElementById("<%= namespace + id %>_ariaPagination");
+	var dropdown = document.getElementById("<%= ariaPagination %>");
 
 	var button = dropdown.querySelector('.dropdown-toggle');
 	var list = dropdown.querySelector('.dropdown-menu');
@@ -431,14 +430,11 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			list.classList.add('show');
 			button.setAttribute('aria-expanded', 'true');
 
-			Array.from(options).find(function(option) {
-				var selectedOption = list.querySelector('.active')
+			var selectedOption = list.querySelector('.active');
 
-				if (selectedOption) {
-					selectedOption.focus();
-				}
-			});
-
+			if (selectedOption) {
+				selectedOption.focus();
+			}
 		}
 	}
 
@@ -465,9 +461,8 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 				options[currentIndex - 1].focus();
 			}
 		} else if (event.key === 'Escape') {
-
 			onLeaveDropdown()
-
+			button.focus()
 		}
 	}
 
@@ -488,7 +483,6 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 	};
 
 	Liferay.once('beforeScreenFlip', destroyDropDownPagination);
-
 </script>
 
 <%!

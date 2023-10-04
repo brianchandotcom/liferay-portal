@@ -1406,7 +1406,7 @@ public abstract class BaseBuild implements Build {
 
 		_invoke(_getInvokedBatchSize(), 24, _getMaximumSlavesPerHost());
 
-		reset();
+		setStatus("starting");
 	}
 
 	@Override
@@ -3617,7 +3617,7 @@ public abstract class BaseBuild implements Build {
 
 		_invocations.add(invocation);
 
-		reset();
+		setStatus("starting");
 
 		return invocation;
 	}
@@ -3675,9 +3675,7 @@ public abstract class BaseBuild implements Build {
 			return;
 		}
 
-		_invoke(_getInvokedBatchSize(), 24, _getMaximumSlavesPerHost());
-
-		reset();
+		invoke();
 
 		_runStarting();
 	}
@@ -3727,8 +3725,7 @@ public abstract class BaseBuild implements Build {
 	private void _runStarting() {
 		setStatus("starting");
 
-		_setDuration(null);
-		setResult(null);
+		reset();
 
 		_runQueued();
 	}

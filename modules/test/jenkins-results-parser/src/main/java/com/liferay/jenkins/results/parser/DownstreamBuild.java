@@ -515,14 +515,6 @@ public class DownstreamBuild extends BaseBuild {
 		return warningMessages;
 	}
 
-	public synchronized void update() {
-		super.update();
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(getResult())) {
-			setStatus("completed");
-		}
-	}
-
 	protected DownstreamBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
 	}

@@ -646,21 +646,6 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
-	protected void setResult(String result) {
-		this.result = result;
-
-		if ((result == null) ||
-			(getDownstreamBuildCount("completed") < getDownstreamBuildCount(
-				null))) {
-
-			setStatus("running");
-		}
-		else {
-			setStatus("completed");
-		}
-	}
-
-	@Override
 	protected boolean skipUpdate() {
 		if (isBuildModified() || hasModifiedDownstreamBuilds()) {
 			return false;

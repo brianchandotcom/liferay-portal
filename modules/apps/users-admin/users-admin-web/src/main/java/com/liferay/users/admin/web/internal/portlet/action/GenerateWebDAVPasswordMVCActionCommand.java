@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class GenerateWebdavPasswordMVCActionCommand
+public class GenerateWebDAVPasswordMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

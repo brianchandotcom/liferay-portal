@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class GenerateWebdavPasswordMVCRenderCommand
+public class GenerateWebDAVPasswordMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override

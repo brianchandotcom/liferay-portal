@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -402,10 +403,11 @@ public class SegmentsExperimentLocalServiceImpl
 
 		controlSegmentsExperience.setActive(false);
 
-		if (Objects.equals(
-				SegmentsExperienceConstants.KEY_DEFAULT,
-				controlSegmentsExperience.getSegmentsExperienceKey())) {
+		boolean controlSegmentsExperienceKeyDefault = Objects.equals(
+			SegmentsExperienceConstants.KEY_DEFAULT,
+			controlSegmentsExperience.getSegmentsExperienceKey());
 
+		if (controlSegmentsExperienceKeyDefault) {
 			_setSegmentsExperienceKeyProperty(controlSegmentsExperience);
 
 			controlSegmentsExperience.setSegmentsExperienceKey(
@@ -414,22 +416,41 @@ public class SegmentsExperimentLocalServiceImpl
 						SegmentsExperience.class.getName())));
 
 			_setSegmentsExperienceKeyProperty(variantSegmentsExperience);
-
-			variantSegmentsExperience.setSegmentsExperienceKey(
-				SegmentsExperienceConstants.KEY_DEFAULT);
 		}
 
 		_segmentsExperienceLocalService.updateSegmentsExperience(
 			controlSegmentsExperience);
 
-		_segmentsExperiencePersistence.flush();
-
-		variantSegmentsExperience.setPriority(
-			controlSegmentsExperiencePriority);
 		variantSegmentsExperience.setActive(true);
 
-		return _segmentsExperienceLocalService.updateSegmentsExperience(
-			variantSegmentsExperience);
+		variantSegmentsExperience =
+			_segmentsExperienceLocalService.updateSegmentsExperience(
+				variantSegmentsExperience);
+
+		long variantSegmentsExperienceId =
+			variantSegmentsExperience.getSegmentsExperienceId();
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				SegmentsExperience callBackVariantSegmentsExperience =
+					_segmentsExperienceLocalService.getSegmentsExperience(
+						variantSegmentsExperienceId);
+
+				if (controlSegmentsExperienceKeyDefault) {
+					callBackVariantSegmentsExperience.setSegmentsExperienceKey(
+						SegmentsExperienceConstants.KEY_DEFAULT);
+				}
+
+				callBackVariantSegmentsExperience.setPriority(
+					controlSegmentsExperiencePriority);
+
+				_segmentsExperienceLocalService.updateSegmentsExperience(
+					callBackVariantSegmentsExperience);
+
+				return null;
+			});
+
+		return variantSegmentsExperience;
 	}
 
 	private void _sendNotificationEvent(SegmentsExperiment segmentsExperiment)

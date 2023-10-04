@@ -4,10 +4,23 @@
  */
 
 import React from 'react';
-export declare const ConstantsContext: React.Context<{}>;
+export declare const initialState: {
+	isPanelStateOpen: boolean;
+	layoutReportsDataURL: string;
+	learnResources: {};
+};
+export declare const ConstantsContext: React.Context<{
+	isPanelStateOpen: boolean;
+	layoutReportsDataURL: string;
+	learnResources: {};
+}>;
 interface Props {
 	children: React.ReactNode;
-	constants: object;
+	constants: {
+		isPanelStateOpen: boolean;
+		layoutReportsDataURL: string;
+		learnResources: object;
+	};
 }
 export declare function ConstantsContextProvider({
 	children,

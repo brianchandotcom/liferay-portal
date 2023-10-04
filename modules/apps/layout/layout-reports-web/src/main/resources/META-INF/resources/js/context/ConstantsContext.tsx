@@ -5,11 +5,21 @@
 
 import React, {createContext} from 'react';
 
-export const ConstantsContext = createContext({});
+export const initialState = {
+	isPanelStateOpen: false,
+	layoutReportsDataURL: '',
+	learnResources: {},
+};
+
+export const ConstantsContext = createContext(initialState);
 
 interface Props {
 	children: React.ReactNode;
-	constants: object;
+	constants: {
+		isPanelStateOpen: boolean;
+		layoutReportsDataURL: string;
+		learnResources: object;
+	};
 }
 
 export function ConstantsContextProvider({children, constants}: Props) {

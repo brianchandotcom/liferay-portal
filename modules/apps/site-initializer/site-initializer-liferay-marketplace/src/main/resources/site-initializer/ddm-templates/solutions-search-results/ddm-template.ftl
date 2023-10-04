@@ -90,11 +90,11 @@
 						productSpecifications=product.productSpecifications![]
 						productURL=portalURL?replace("solutions-marketplace", "p" ) + "/" + product.urls.en_US />
 
-					<a class="solution-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 p-3 text-dark text-decoration-none" href=${productURL}>
-						<div class="align-items-center d-flex image-container justify-content-center rounded">
+					<a class="solution-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 rounded text-dark text-decoration-none" href=${productURL}>
+						<div class="align-items-center d-flex image-container justify-content-center">
 							<img
 								alt=${product.name.en_US}
-								class="h-100 mw-100"
+								class="h-100 mw-100 rounded"
 								src="${product.thumbnail}" />
 						</div>
 
@@ -116,7 +116,7 @@
 							</div>
 						</div>
 
-						<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between">
+						<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between p-2">
 							<div>
 								<div class="font-weight-normal mb-2">
 									${productDescription}
@@ -132,21 +132,21 @@
 												<#break>
 											</#if>
 										</#list>
-									</div>
 
-									<#if (productCategories?size> 1)>
-										<div class="category-label-remainder pl-2 position-relative text-primary">
-											+${productCategories?size - 1}
-											<div class="category-names font-size-paragraph-base p-4 position-absolute rounded text-white">
-												<#list productCategories as category>
-													<#if !category?is_first && category.vocabulary=='marketplace solution category'>
-														${category.name}
-														<#sep>, </#sep>
-													</#if>
-												</#list>
+										<#if (productCategories?size > 1)>
+											<div class="category-label-remainder pl-2 position-relative text-primary">
+												+${productCategories?size - 1}
+												<div class="category-names font-size-paragraph-base p-4 position-absolute rounded text-white">
+													<#list productCategories as category>
+														<#if !category?is_first && category.vocabulary == 'marketplace solution category'>
+															${category.name}
+															<#sep>, </#sep>
+														</#if>
+													</#list>
+												</div>
 											</div>
-										</div>
-									</#if>
+										</#if>
+									</div>
 								</#if>
 							</div>
 						</div>

@@ -6,9 +6,10 @@
 		box-sizing: border-box;
 		cursor: pointer;
 		display: flex;
+		gap: 8px;
 		height: 76px;
-		padding: 17px 12px;
-		width: 185.5px;
+		padding: 16px;
+		width: 173.33px;
 
 		&--selected {
 			background-color: #e6edfb;
@@ -27,23 +28,32 @@
 
 	&-button-description {
 		color: #54555f;
-		font-size: 12px;
+		font-size: 11px;
+	}
+
+	&-button-description-paid {
+		font-size: 13px;
 	}
 
 	&-button-icon {
 		height: 16px;
+		margin-top: 2px;
 		width: 16px;
 		filter: invert(21%) sepia(91%) saturate(3572%) hue-rotate(220deg)
 			brightness(100%) contrast(101%);
 	}
 
 	&-button-text {
-		font-size: 14px;
+		font-size: 15px;
 		font-weight: 600;
+
+		&.icon-right {
+			display: flex;
+			gap: 8px;
+		}
 	}
 
 	&-button-title {
 		font-size: 16px;
-		padding-left: 8px;
 	}
 }

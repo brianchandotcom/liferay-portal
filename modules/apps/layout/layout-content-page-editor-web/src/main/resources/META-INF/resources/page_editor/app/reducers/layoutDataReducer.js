@@ -30,8 +30,6 @@ export const INITIAL_STATE = {
 
 export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 	switch (action.type) {
-		case UPDATE_COL_SIZE:
-		case UPDATE_COLLECTION_DISPLAY_COLLECTION:
 		case ADD_FRAGMENT_ENTRY_LINKS:
 		case ADD_ITEM:
 		case ADD_RULE:
@@ -39,6 +37,8 @@ export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 		case DELETE_RULE:
 		case DUPLICATE_ITEM:
 		case MOVE_ITEM:
+		case UPDATE_COL_SIZE:
+		case UPDATE_COLLECTION_DISPLAY_COLLECTION:
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION:
 		case UPDATE_ROW_COLUMNS:
 		case UPDATE_RULE:

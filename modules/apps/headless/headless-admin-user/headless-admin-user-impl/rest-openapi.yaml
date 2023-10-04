@@ -4088,10 +4088,10 @@ paths:
         delete:
             description:
                 Deletes the postal address
-            operationId: deleteAccountPostalAddress
+            operationId: deletePostalAddress
             parameters:
                 - in: path
-                  name: accountId
+                  name: postalAddressId
                   required: true
                   schema:
                       format: int64
@@ -4127,7 +4127,7 @@ paths:
             description:
                 Updates the postal address of the Account with information sent in the request body. Only the provided
                 fields are updated.
-            operationId: patchAccountPostalAddress
+            operationId: patchPostalAddress
             parameters:
                 - in: path
                   name: postalAddressId
@@ -4158,7 +4158,7 @@ paths:
             description:
                 Replaces the Postal Address with information sent in the request body. Any missing fields are deleted
                 unless they are required.
-            operationId: putAccountPostalAddress
+            operationId: putPostalAddress
             parameters:
                 - in: path
                   name: postalAddressId

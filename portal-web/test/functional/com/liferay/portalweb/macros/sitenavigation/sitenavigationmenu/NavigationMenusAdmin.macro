@@ -644,13 +644,13 @@ definition {
 		Click(locator1 = "SiteNavigationMenu#SIDEBAR_COG");
 
 		if (${toggleValue} == "enable") {
-			Check(
-				checkboxName = "When creating a new page, the page will be automatically added to this menu unless the user deselects it.",
+			Check.checkNotVisible(
+				checkboxName = "When creating a new page, display an option to allow adding it to this navigation menu.",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 		else if (${toggleValue} == "disable") {
-			Uncheck(
-				checkboxName = "When creating a new page, the page will be automatically added to this menu unless the user deselects it.",
+			Uncheck.uncheckNotVisible(
+				checkboxName = "When creating a new page, display an option to allow adding it to this navigation menu.",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 		else {

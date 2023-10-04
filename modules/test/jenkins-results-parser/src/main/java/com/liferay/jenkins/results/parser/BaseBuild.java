@@ -2852,8 +2852,10 @@ public abstract class BaseBuild implements Build {
 
 	protected void reset() {
 		consoleReadCursor = 0;
+		_duration = null;
 		_jenkinsConsoleTextLoader = null;
 		_jenkinsSlave = null;
+		_result = null;
 		_statusModifiedTime = 0;
 	}
 

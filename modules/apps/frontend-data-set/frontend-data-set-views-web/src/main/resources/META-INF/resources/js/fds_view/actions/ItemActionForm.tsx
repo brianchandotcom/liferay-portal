@@ -127,6 +127,10 @@ const ItemActionForm = ({
 	);
 	const [labelValidationError, setLabelValidationError] = useState(false);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(!editing);
+	const [titleTranslations, setTitleTranslations] = useState(
+		initialValues?.title_i18n ?? {}
+	);
+	const [titleValidationError, setTitleValidationError] = useState(false);
 	const [urlValidationError, setURLValidationError] = useState(false);
 
 	const [actionData, setActionData] = useState({
@@ -136,6 +140,7 @@ const ItemActionForm = ({
 		iconSymbol: initialValues?.icon ?? '',
 		label: initialValues?.label ?? '',
 		permissionKey: initialValues?.permissionKey ?? '',
+		title: initialValues?.title ?? '',
 		type: initialValues?.type ?? 'link',
 		url: initialValues?.url ?? '',
 		variant: initialValues?.variant ?? '',
@@ -148,6 +153,7 @@ const ItemActionForm = ({
 			confirmationMessageType,
 			iconSymbol,
 			permissionKey,
+			title,
 			type,
 			url,
 		} = actionData;
@@ -167,8 +173,23 @@ const ItemActionForm = ({
 			url,
 		} as any;
 
-		if (Object.keys(confirmationMessageTranslations).length) {
-			body.confirmationMessageType = confirmationMessageType;
+		if (Liferay.FeatureFlags['LPS-172017']) {
+			body.confirmationMessage_i18n = confirmationMessageTranslations;
+			body.label_i18n = labelTranslations;
+			body.title_i18n = titleTranslations;
+
+			if (Object.keys(confirmationMessageTranslations).length) {
+				body.confirmationMessageType = confirmationMessageType;
+			}
+		}
+		else {
+			body.confirmationMessage = confirmationMessage;
+			body.label = label;
+			body.title = title;
+
+			if (confirmationMessage) {
+				body.confirmationMessageType = confirmationMessageType;
+			}
 		}
 
 		let fetchURL = API_URL.FDS_ACTIONS;
@@ -217,6 +238,28 @@ const ItemActionForm = ({
 			valid = false;
 		}
 
+		if (Liferay.FeatureFlags['LPS-172017']) {
+			if (
+				!translationExists({translations: labelTranslations}) ||
+				((actionData.type === ACTION_TYPE.MODAL ||
+					actionData.type === ACTION_TYPE.SIDEPANEL) &&
+					!translationExists({translations: titleTranslations}))
+			) {
+				valid = false;
+			}
+		}
+
+		if (!Liferay.FeatureFlags['LPS-172017']) {
+			if (
+				!actionData.label ||
+				((actionData.type === ACTION_TYPE.MODAL ||
+					actionData.type === ACTION_TYPE.SIDEPANEL) &&
+					!actionData.title)
+			) {
+				valid = false;
+			}
+		}
+
 		setSaveButtonDisabled(!valid);
 	};
 
@@ -255,6 +298,7 @@ const ItemActionForm = ({
 	const confirmationMessageTypeFormElementId = `${namespace}ConfirmationMessageType`;
 	const labelFormElementId = `${namespace}Label`;
 	const permissionKeyFormElementId = `${namespace}PermissionKey`;
+	const titleFormElementId = `${namespace}ModalTitle`;
 	const typeFormElementId = `${namespace}Type`;
 	const urlFormElementId = `${namespace}URL`;
 	const variantFormElementId = `${namespace}Variant`;
@@ -390,7 +434,6 @@ const ItemActionForm = ({
 									</label>
 
 									<ClaySelectWithOption
-										disabled={editing}
 										id={variantFormElementId}
 										onChange={(event) =>
 											setActionData({
@@ -408,6 +451,79 @@ const ItemActionForm = ({
 							</ClayLayout.Col>
 						)}
 					</ClayLayout.Row>
+
+					{activeTab === 1 &&
+						(actionData.type === ACTION_TYPE.MODAL ||
+							actionData.type === ACTION_TYPE.SIDEPANEL) && (
+							<ClayLayout.Row>
+								<ClayLayout.Col>
+									{Liferay.FeatureFlags['LPS-172017'] ? (
+										<InputLocalized
+											error={
+												titleValidationError
+													? Liferay.Language.get(
+															'this-field-is-required'
+													  )
+													: undefined
+											}
+											id={titleFormElementId}
+											label={Liferay.Language.get(
+												'title'
+											)}
+											onBlur={() => {
+												setTitleValidationError(
+													!translationExists({
+														translations: titleTranslations,
+													})
+												);
+
+												validateForm();
+											}}
+											onChange={setTitleTranslations}
+											placeholder={Liferay.Language.get(
+												'title-modal-placeholder'
+											)}
+											required
+											translations={titleTranslations}
+										/>
+									) : (
+										<ClayForm.Group
+											className={classNames({
+												'has-error': titleValidationError,
+											})}
+										>
+											<label htmlFor={titleFormElementId}>
+												{Liferay.Language.get('title')}
+											</label>
+
+											<ClayInput
+												id={titleFormElementId}
+												onBlur={() => {
+													setTitleValidationError(
+														!actionData.title
+													);
+
+													validateForm();
+												}}
+												onChange={(event) =>
+													setActionData({
+														...actionData,
+														title:
+															event.target.value,
+													})
+												}
+												type="text"
+												value={actionData.title}
+											/>
+
+											{labelValidationError && (
+												<ValidationFeedback />
+											)}
+										</ClayForm.Group>
+									)}
+								</ClayLayout.Col>
+							</ClayLayout.Row>
+						)}
 
 					<ClayLayout.Row justify="start">
 						<ClayLayout.Col lg>

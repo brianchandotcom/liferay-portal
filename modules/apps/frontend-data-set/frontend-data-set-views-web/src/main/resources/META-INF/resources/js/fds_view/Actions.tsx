@@ -35,9 +35,9 @@ interface IFDSAction {
 			method: string;
 		};
 	};
-	confirmationMessage: string;
-	confirmationMessageType: string;
-	confirmationMessage_i18n: {
+	confirmationMessage?: string;
+	confirmationMessageType?: string;
+	confirmationMessage_i18n?: {
 		[key: string]: string;
 	};
 	icon: string;
@@ -47,6 +47,10 @@ interface IFDSAction {
 		[key: string]: string;
 	};
 	permissionKey: string;
+	title?: string;
+	title_i18n?: {
+		[key: string]: string;
+	};
 	type: string;
 	url: string;
 	variant?: string;

@@ -181,7 +181,11 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public boolean isNodeCandidate() {
-		return !isApproved() && !isUnmodifiableSystemObject();
+		if (!isApproved() && !isUnmodifiableSystemObject()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

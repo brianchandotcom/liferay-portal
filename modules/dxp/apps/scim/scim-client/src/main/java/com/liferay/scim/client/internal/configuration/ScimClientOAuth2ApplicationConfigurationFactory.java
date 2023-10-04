@@ -13,7 +13,6 @@ import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenPro
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,9 +27,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.scim.client.configuration.ScimClientOAuth2ApplicationConfiguration;
 import com.liferay.scim.client.internal.spi.bearer.token.provider.ScimClientBearerTokenProvider;
+import com.liferay.scim.client.util.ScimClientUtil;
 
 import java.util.Collections;
 import java.util.Map;
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Olivér Kecskeméty
  */
 @Component(
-	configurationPid = "com.liferay.scim.client.internal.configuration.ScimClientOAuth2ApplicationConfiguration",
+	configurationPid = "com.liferay.scim.client.configuration.ScimClientOAuth2ApplicationConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class ScimClientOAuth2ApplicationConfigurationFactory {
@@ -127,14 +127,6 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 	@Reference
 	protected UserLocalService userLocalService;
 
-	private String _generateClientId(String applicationName) {
-		String clientId = StringUtil.replace(
-			StringUtil.toLowerCase(applicationName), CharPool.SPACE,
-			CharPool.DASH);
-
-		return "SCIM_" + clientId;
-	}
-
 	private OAuth2Application _getOrAddOAuth2Application(
 			long companyId,
 			ScimClientOAuth2ApplicationConfiguration
@@ -146,7 +138,7 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 		User clientCredentialUser = userLocalService.getUserByScreenName(
 			companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME);
 
-		String clientId = _generateClientId(
+		String clientId = ScimClientUtil.generateScimClientId(
 			scimClientOAuth2ApplicationConfiguration.applicationName());
 
 		OAuth2Application oAuth2Application =

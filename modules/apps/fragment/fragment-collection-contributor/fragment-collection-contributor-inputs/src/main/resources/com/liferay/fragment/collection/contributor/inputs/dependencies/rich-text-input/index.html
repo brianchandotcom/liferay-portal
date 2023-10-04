@@ -1,18 +1,22 @@
+[#assign
+	readOnly = input.attributes.readOnly?? && input.attributes.readOnly
+	showLabel = input.showLabel && input.label?has_content && (layoutMode == "edit" || readOnly)
+]
+
 <div class="rich-text-input [#if !input.showLabel || !input.label?has_content]rich-text-input--hidden-label[/#if]">
-	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0">
-		[#if layoutMode == "edit"]
-			[@liferay_editor["resources"] editorName="ckeditor" /]
+	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
+		<label class="[#if !showLabel]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-rich-text-input-label">
+			${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+		</label>
+
+		[#if readOnly]
+			<div aria-labelledby="${fragmentEntryLinkNamespace}-rich-text-input-label" aria-multiline="true" aria-readonly="true" [#if input.required]aria-required="true"[/#if] class="form-control" contenteditable="false" id="${fragmentEntryLinkNamespace}-rich-text-input" role="textbox" tabindex="0"></div>
+		[#elseif layoutMode == "edit"]
+			[@liferay_editor["resources"]editorName="ckeditor" /]
 
 			<link href="/o/frontend-editor-ckeditor-web/ckeditor/skins/moono-lexicon/editor_gecko.css" rel="stylesheet" />
 
 			<div role="presentation">
-				[#if input.showLabel && input.label?has_content]
-					<label role="presentation">
-						${htmlUtil.escape(input.label)}
-						[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
-					</label>
-				[/#if]
-
 				<div class="cke cke_chrome cke_reset cke_ltr">
 					<div class="cke_inner">
 						<div class="cke_top cke_reset_all">
@@ -20,43 +24,33 @@
 								<div class="cke_toolbar">
 									<div class="cke_toolgroup mb-0">
 										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__undo_icon"></div>
+										<div class="cke_button_icon cke_button__undo_icon"></div>
 										</a>
 
 										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__redo_icon"></div>
+										<div class="cke_button_icon cke_button__redo_icon" />
 										</a>
 									</div>
 								</div>
 
 								<div class="cke_toolbar">
 									<a class="cke_button cke_button_disabled">
-										<div class="cke_button_label cke_button__source_label text-muted">Styles</div>
+										<div class="cke_button_label cke_button__source_label text-muted">
+											Styles
+										</div>
 									</a>
 
 									<div class="cke_toolgroup mb-0">
 										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__bold_icon"></div>
+										<div class="cke_button_icon cke_button__bold_icon"></div>
 										</a>
 
 										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__italic_icon"></div>
+										<div class="cke_button_icon cke_button__italic_icon" />
 										</a>
 
 										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__underline_icon"></div>
-										</a>
-									</div>
-								</div>
-
-								<div class="cke_toolbar">
-									<div class="cke_toolgroup mb-0">
-										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__bulletedlist_icon"></div>
-										</a>
-
-										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__numberedlist_icon"></div>
+										<div class="cke_button_icon cke_button__underline_icon" />
 										</a>
 									</div>
 								</div>
@@ -64,27 +58,11 @@
 								<div class="cke_toolbar">
 									<div class="cke_toolgroup mb-0">
 										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__link_icon"></div>
+										<div class="cke_button_icon cke_button__bulletedlist_icon" />
 										</a>
 
 										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__unlink_icon"></div>
-										</a>
-									</div>
-								</div>
-
-								<div class="cke_toolbar">
-									<div class="cke_toolgroup mb-0">
-										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__table_icon"></div>
-										</a>
-
-										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__image_icon"></div>
-										</a>
-
-										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__videoselector_icon"></div>
+										<div class="cke_button_icon cke_button__numberedlist_icon" />
 										</a>
 									</div>
 								</div>
@@ -92,16 +70,46 @@
 								<div class="cke_toolbar">
 									<div class="cke_toolgroup mb-0">
 										<a class="cke_button cke_button_disabled">
-											<div class="cke_button_icon cke_button__source_icon"></div>
+										<div class="cke_button_icon cke_button__link_icon" />
+										</a>
 
-											<div class="cke_button_label cke_button__source_label text-muted">Source</div>
+										<a class="cke_button cke_button_disabled">
+										<div class="cke_button_icon cke_button__unlink_icon" />
+										</a>
+									</div>
+								</div>
+
+								<div class="cke_toolbar">
+									<div class="cke_toolgroup mb-0">
+										<a class="cke_button cke_button_disabled">
+										<div class="cke_button_icon cke_button__table_icon" />
+										</a>
+
+										<a class="cke_button cke_button_disabled">
+										<div class="cke_button_icon cke_button__image_icon" />
+										</a>
+
+										<a class="cke_button cke_button_disabled">
+										<div class="cke_button_icon cke_button__videoselector_icon" />
+										</a>
+									</div>
+								</div>
+
+								<div class="cke_toolbar">
+									<div class="cke_toolgroup mb-0">
+										<a class="cke_button cke_button_disabled">
+										<div class="cke_button_icon cke_button__source_icon" />
+
+											<div class="cke_button_label cke_button__source_label text-muted">
+												Source
+											</div>
 										</a>
 									</div>
 								</div>
 							</div>
 						</div>
 
-						<div class="cke_contents cke_editable" style="height: 200px"></div>
+					<div class="cke_contents cke_editable" style="height: 200px"></div>
 					</div>
 				</div>
 			</div>

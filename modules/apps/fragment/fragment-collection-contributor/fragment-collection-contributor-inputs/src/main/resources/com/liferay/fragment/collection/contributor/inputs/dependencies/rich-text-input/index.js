@@ -1,9 +1,14 @@
-if (layoutMode === 'edit') {
-	const input = document.getElementById(
-		`${fragmentNamespace}-rich-text-input`
-	);
+const inputElement = document.getElementById(
+	`${fragmentNamespace}-rich-text-input`
+);
 
-	if (input) {
-		input.setAttribute('disabled', true);
+if (input.attributes?.readOnly) {
+	if (inputElement) {
+		inputElement.innerHTML = input.value;
+	}
+}
+else if (layoutMode === 'edit') {
+	if (inputElement) {
+		inputElement.setAttribute('disabled', true);
 	}
 }

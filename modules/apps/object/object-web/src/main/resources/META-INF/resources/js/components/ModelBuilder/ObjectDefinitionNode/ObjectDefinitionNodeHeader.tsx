@@ -64,7 +64,7 @@ export default function ObjectDefinitionNodeHeader({
 								onClick={(event) => {
 									event?.stopPropagation();
 								}}
-								size="sm"
+								size="xs"
 								symbol="ellipsis-v"
 							/>
 						}

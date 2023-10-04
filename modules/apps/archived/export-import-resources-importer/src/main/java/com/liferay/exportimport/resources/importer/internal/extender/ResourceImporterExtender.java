@@ -5,12 +5,12 @@
 
 package com.liferay.exportimport.resources.importer.internal.extender;
 
+import com.liferay.exportimport.resources.importer.internal.messaging.DestinationNames;
 import com.liferay.exportimport.resources.importer.provider.ResourceImporterBundleProvider;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.plugin.PluginPackage;

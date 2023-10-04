@@ -60,8 +60,6 @@ public interface DestinationNames {
 
 	public static final String FLAGS = "liferay/flags";
 
-	public static final String HOT_DEPLOY = "liferay/hot_deploy";
-
 	public static final String LAYOUTS_LOCAL_PUBLISHER =
 		"liferay/layouts_local_publisher";
 

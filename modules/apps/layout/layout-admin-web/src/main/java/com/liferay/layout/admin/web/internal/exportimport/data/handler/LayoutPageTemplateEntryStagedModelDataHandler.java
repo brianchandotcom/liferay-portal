@@ -414,16 +414,6 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			return;
 		}
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (_layoutExportImportConfiguration.exportDraftLayout() &&
-			(draftLayout != null)) {
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layoutPageTemplateEntry, draftLayout,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
-
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, layoutPageTemplateEntry, layout,
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY);

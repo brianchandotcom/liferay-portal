@@ -41,6 +41,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.EntityExtension
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ObjectMapperContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.XmlMapperContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.dynamic.feature.StatusDynamicFeature;
+import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.DuplicateExternalReferenceCodeExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.ExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.IllegalArgumentExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidFilterExceptionMapper;
@@ -148,6 +149,8 @@ public class VulcanFeature implements Feature {
 				_roleLocalService, _getScopeChecker(), _sortParserProvider,
 				_vulcanBatchEngineExportTaskResourceFactory,
 				_vulcanBatchEngineImportTaskResourceFactory));
+		featureContext.register(
+			new DuplicateExternalReferenceCodeExceptionMapper(_language));
 		featureContext.register(
 			new EntityExtensionHandlerContextResolver(
 				_extensionProviderRegistry));

@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>ObjectModelBuilder</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ObjectModelBuilder</td></tr>
+</thead>
+
+<tbody>
+	<tr>
+		<td>CONFIRM_PUBLISHING_OBJECT_DEFINITION_INPUT</td>
+		<td>//*[contains(@class,'list-group-item') and contains(.,'${objectDefinition}')] //input</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_CARD_LABEL</td>
+		<td>//*[contains(@class,'objectDefinitionNode')][contains(.,'${objectDefinition}')] //*[contains(@class,'label-item')][normalize-space(text())='${labelText}']</td>
+		<td></td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>

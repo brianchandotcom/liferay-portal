@@ -1,0 +1,72 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-148856 - Verify multiple custom object definitions can be published"
+	@priority = 5
+	test CanPublishMultipleObjectDefinitions {
+		task ("Given three custom object definitions that contains long text fields") {
+			for (var letter : list "A,B,C") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "Custom Object 197932 ${letter}",
+					objectName = "CustomObject197932${letter}",
+					pluralLabelName = "Custom Objects 197932 ${letter}");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "LongText",
+					fieldLabelName = "Custom Field",
+					fieldName = "customObjectField",
+					fieldType = "Clob",
+					isRequired = "false",
+					objectName = "CustomObject197932${letter}");
+			}
+		}
+
+		task ("and Given the user is in the model builder view") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectModelBuilder.openObjectFolderInModelBuilder();
+		}
+
+		task ("When the user publishes two custom object definitions") {
+			ObjectModelBuilder.publishObjectDefinitions(objectDefinitionsList = "Custom Object 197932 A,Custom Object 197932 B");
+		}
+
+		task ("Then two object definitions are published and one remains in draft status") {
+			AssertVisible(
+				labelText = "approved",
+				locator1 = "ObjectModelBuilder#OBJECT_CARD_LABEL",
+				objectDefinition = "Custom Object 197932 A");
+
+			AssertVisible(
+				labelText = "approved",
+				locator1 = "ObjectModelBuilder#OBJECT_CARD_LABEL",
+				objectDefinition = "Custom Object 197932 B");
+
+			AssertVisible(
+				labelText = "draft",
+				locator1 = "ObjectModelBuilder#OBJECT_CARD_LABEL",
+				objectDefinition = "Custom Object 197932 C");
+		}
+	}
+
+}

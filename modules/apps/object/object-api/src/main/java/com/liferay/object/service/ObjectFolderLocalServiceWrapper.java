@@ -56,15 +56,6 @@ public class ObjectFolderLocalServiceWrapper
 			externalReferenceCode, userId, labelMap, name);
 	}
 
-	@Override
-	public com.liferay.object.model.ObjectFolder
-			addOrGetUncategorizedObjectFolder(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _objectFolderLocalService.addOrGetUncategorizedObjectFolder(
-			companyId);
-	}
-
 	/**
 	 * Creates a new object folder with the primary key. Does not add the object folder to the database.
 	 *
@@ -394,6 +385,15 @@ public class ObjectFolderLocalServiceWrapper
 	@Override
 	public int getObjectFoldersCount() {
 		return _objectFolderLocalService.getObjectFoldersCount();
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectFolder
+			getOrAddUncategorizedObjectFolder(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFolderLocalService.getOrAddUncategorizedObjectFolder(
+			companyId);
 	}
 
 	/**

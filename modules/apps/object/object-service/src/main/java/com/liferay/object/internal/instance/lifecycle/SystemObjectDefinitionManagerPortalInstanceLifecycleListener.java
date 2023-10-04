@@ -169,7 +169,7 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					systemObjectDefinitionManager.getVersion())) {
 
 				ObjectFolder objectFolder =
-					_objectFolderLocalService.addOrGetUncategorizedObjectFolder(
+					_objectFolderLocalService.getOrAddUncategorizedObjectFolder(
 						companyId);
 
 				objectDefinition =

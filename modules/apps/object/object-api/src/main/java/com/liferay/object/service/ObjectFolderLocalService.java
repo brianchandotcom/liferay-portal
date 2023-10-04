@@ -79,9 +79,6 @@ public interface ObjectFolderLocalService
 			Map<Locale, String> labelMap, String name)
 		throws PortalException;
 
-	public ObjectFolder addOrGetUncategorizedObjectFolder(long companyId)
-		throws PortalException;
-
 	/**
 	 * Creates a new object folder with the primary key. Does not add the object folder to the database.
 	 *
@@ -298,6 +295,10 @@ public interface ObjectFolderLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectFoldersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectFolder getOrAddUncategorizedObjectFolder(long companyId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

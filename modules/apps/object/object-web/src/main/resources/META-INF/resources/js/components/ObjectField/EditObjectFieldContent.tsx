@@ -64,8 +64,8 @@ export function EditObjectFieldContent({
 	);
 
 	if (
-		isDefaultStorageType ||
-		(values.businessType === 'Picklist' && TABS.length < 2)
+		(isDefaultStorageType || values.businessType === 'Picklist') &&
+		TABS.length < 2
 	) {
 		TABS.push(Liferay.Language.get('advanced'));
 	}

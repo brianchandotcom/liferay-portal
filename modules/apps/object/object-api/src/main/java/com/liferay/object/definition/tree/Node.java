@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class Node {
 
-	public Node(Edge edge, long objectDefinitionId, Node parentNode) {
+	public Node(Edge edge, long primaryKey, Node parentNode) {
 		_edge = edge;
-		_objectDefinitionId = objectDefinitionId;
+		_primaryKey = primaryKey;
 		_parentNode = parentNode;
 
 		_depth = (parentNode == null) ? 0 : parentNode._depth + 1;
@@ -32,12 +32,12 @@ public class Node {
 		return _edge;
 	}
 
-	public long getObjectDefinitionId() {
-		return _objectDefinitionId;
-	}
-
 	public Node getParentNode() {
 		return _parentNode;
+	}
+
+	public long getPrimaryKey() {
+		return _primaryKey;
 	}
 
 	public boolean isRoot() {
@@ -55,7 +55,7 @@ public class Node {
 	private List<Node> _childNodes;
 	private final int _depth;
 	private final Edge _edge;
-	private final long _objectDefinitionId;
 	private final Node _parentNode;
+	private final long _primaryKey;
 
 }

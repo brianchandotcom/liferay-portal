@@ -22,8 +22,8 @@ public class Tree {
 		this.rootNode = rootNode;
 	}
 
-	public List<Edge> getAncestorEdges(long objectDefinitionId) {
-		Node node = getNode(objectDefinitionId);
+	public List<Edge> getAncestorEdges(long primaryKey) {
+		Node node = getNode(primaryKey);
 
 		if (node.isRoot()) {
 			return Collections.emptyList();
@@ -44,7 +44,7 @@ public class Tree {
 		return edges;
 	}
 
-	public Node getNode(long objectDefinitionId) {
+	public Node getNode(long primaryKey) {
 		Iterator<Node> iterator = iterator();
 
 		Node node = null;
@@ -52,7 +52,7 @@ public class Tree {
 		while (iterator.hasNext()) {
 			node = iterator.next();
 
-			if (node.getObjectDefinitionId() == objectDefinitionId) {
+			if (node.getPrimaryKey() == primaryKey) {
 				break;
 			}
 		}
@@ -64,8 +64,8 @@ public class Tree {
 		return iterator(TreeConstants.ITERATOR_TYPE_BREADTH_FIRST);
 	}
 
-	public Iterator<Node> iterator(long objectDefinitionId) {
-		return new BreadthFirstIterator(getNode(objectDefinitionId));
+	public Iterator<Node> iterator(long primaryKey) {
+		return new BreadthFirstIterator(getNode(primaryKey));
 	}
 
 	public Iterator<Node> iterator(String iteratorType) {

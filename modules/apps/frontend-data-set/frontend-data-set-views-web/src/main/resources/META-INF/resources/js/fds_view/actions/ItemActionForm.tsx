@@ -19,7 +19,37 @@ import RequiredMark from '../../components/RequiredMark';
 import ValidationFeedback from '../../components/ValidationFeedback';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
-import {IFDSAction} from '../Actions';
+import {IFDSAction, SECTIONS} from '../Actions';
+
+const ACTION_TYPE = {
+	ASYNC: 'async',
+	HEADLESS: 'headless',
+	LINK: 'link',
+	MODAL: 'modal',
+	SIDEPANEL: 'sidePanel',
+};
+
+const ITEM_ACTION_TYPES = [
+	{
+		label: Liferay.Language.get('link'),
+		value: ACTION_TYPE.LINK,
+	},
+];
+
+const CREATION_ACTION_TYPES = [
+	{
+		label: Liferay.Language.get('link'),
+		value: ACTION_TYPE.LINK,
+	},
+	{
+		label: Liferay.Language.get('modal'),
+		value: ACTION_TYPE.MODAL,
+	},
+	{
+		label: Liferay.Language.get('side-panel'),
+		value: ACTION_TYPE.SIDEPANEL,
+	},
+];
 
 const MESSAGE_TYPES = [
 	{
@@ -44,10 +74,18 @@ const MESSAGE_TYPES = [
 	},
 ];
 
-const TYPES = [
+const MODAL_VARIANTS = [
 	{
-		label: Liferay.Language.get('link'),
-		value: 'link',
+		label: Liferay.Language.get('full-screen'),
+		value: 'full-screen',
+	},
+	{
+		label: Liferay.Language.get('lg'),
+		value: 'lg',
+	},
+	{
+		label: Liferay.Language.get('sm'),
+		value: 'sm',
 	},
 ];
 
@@ -100,6 +138,7 @@ const ItemActionForm = ({
 		permissionKey: initialValues?.permissionKey ?? '',
 		type: initialValues?.type ?? 'link',
 		url: initialValues?.url ?? '',
+		variant: initialValues?.variant ?? '',
 	});
 
 	const saveFDSAction = async () => {
@@ -211,11 +250,14 @@ const ItemActionForm = ({
 		getIcons();
 	}, [spritemap]);
 
-	const permissionKeyFormElementId = `${namespace}PermissionKey`;
 	const iconFormElementId = `${namespace}Icon`;
+	const confirmationMessageFormElementId = `${namespace}ConfirmationMessage`;
+	const confirmationMessageTypeFormElementId = `${namespace}ConfirmationMessageType`;
+	const labelFormElementId = `${namespace}Label`;
+	const permissionKeyFormElementId = `${namespace}PermissionKey`;
 	const typeFormElementId = `${namespace}Type`;
 	const urlFormElementId = `${namespace}URL`;
-	const confirmationMessageTypeFormElementId = `${namespace}ConfirmationMessageType`;
+	const variantFormElementId = `${namespace}Variant`;
 
 	return (
 		<>
@@ -335,6 +377,34 @@ const ItemActionForm = ({
 								/>
 							</ClayForm.Group>
 						</ClayLayout.Col>
+
+						{actionData.type === ACTION_TYPE.MODAL && (
+							<ClayLayout.Col size={4}>
+								<ClayForm.Group>
+									<label htmlFor={typeFormElementId}>
+										{Liferay.Language.get('variant')}
+
+										<RequiredMark />
+									</label>
+
+									<ClaySelectWithOption
+										disabled={editing}
+										id={variantFormElementId}
+										onChange={(event) =>
+											setActionData({
+												...actionData,
+												variant: event.target.value,
+											})
+										}
+										options={MODAL_VARIANTS}
+										placeholder={Liferay.Language.get(
+											'please-select-an-option'
+										)}
+										value={actionData.variant}
+									/>
+								</ClayForm.Group>
+							</ClayLayout.Col>
+						)}
 					</ClayLayout.Row>
 
 					<ClayLayout.Row justify="start">

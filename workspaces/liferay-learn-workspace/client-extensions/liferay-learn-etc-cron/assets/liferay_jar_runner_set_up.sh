@@ -168,7 +168,7 @@ function prepare_import {
 
 function replace_tokens {
 
-  local current_path="$PWD"
+local current_path="$PWD"
 
 	cd ~/liferay-learn/docs
 
@@ -210,11 +210,11 @@ function update_examples {
 
 	local current_path="$PWD"
 
-  cd ~/liferay-learn/docs
+cd ~/liferay-learn/docs
 
 	./update_examples.sh prod 2> ~/update_examples.err
 
-  cd $current_path
+cd $current_path
 
 	local exit_code=$?
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -38,9 +39,12 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.text.DateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -147,6 +151,20 @@ public class SalesforceObjectEntryManagerImplTest
 				Collections.emptyList());
 
 		ObjectFieldUtil.addCustomObjectField(
+			new DateObjectFieldBuilder(
+			).externalReferenceCode(
+				"Date__c"
+			).userId(
+				adminUser.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Date")
+			).name(
+				"date"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).build());
+
+		ObjectFieldUtil.addCustomObjectField(
 			new PicklistObjectFieldBuilder(
 			).externalReferenceCode(
 				"Status__c"
@@ -158,20 +176,6 @@ public class SalesforceObjectEntryManagerImplTest
 				listTypeDefinition.getListTypeDefinitionId()
 			).name(
 				"customStatus"
-			).objectDefinitionId(
-				_objectDefinition.getObjectDefinitionId()
-			).build());
-
-		ObjectFieldUtil.addCustomObjectField(
-			new DateObjectFieldBuilder(
-			).externalReferenceCode(
-				"Date__c"
-			).userId(
-				adminUser.getUserId()
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("Date")
-			).name(
-				"date"
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
 			).build());
@@ -226,7 +230,7 @@ public class SalesforceObjectEntryManagerImplTest
 	@Test
 	public void testAddObjectEntry() throws Exception {
 		ObjectEntry objectEntry = _addObjectEntry(
-			null, RandomTestUtil.randomString());
+			null, null, RandomTestUtil.randomString());
 
 		Assert.assertNotNull(objectEntry.getExternalReferenceCode());
 	}
@@ -234,7 +238,7 @@ public class SalesforceObjectEntryManagerImplTest
 	@Test
 	public void testAddOrUpdateObjectEntry() throws Exception {
 		ObjectEntry objectEntry = _addObjectEntry(
-			null, RandomTestUtil.randomString());
+			null, null, RandomTestUtil.randomString());
 
 		String title = RandomTestUtil.randomString();
 
@@ -256,20 +260,20 @@ public class SalesforceObjectEntryManagerImplTest
 
 	@Test
 	public void testGetObjectEntries() throws Exception {
-		String title1 = "a" + RandomTestUtil.randomString();
-		String title2 = "b" + RandomTestUtil.randomString();
-		String title3 = "c" + RandomTestUtil.randomString();
-		String title4 = "d" + RandomTestUtil.randomString();
-
 		Date date1 = RandomTestUtil.nextDate();
 		Date date2 = RandomTestUtil.nextDate();
 		Date date3 = RandomTestUtil.nextDate();
 		Date date4 = RandomTestUtil.nextDate();
 
-		ObjectEntry objectEntry1 = _addObjectEntry("queued", title1, date1);
-		ObjectEntry objectEntry2 = _addObjectEntry("started", title2, date2);
-		ObjectEntry objectEntry3 = _addObjectEntry("completed", title3, date3);
-		ObjectEntry objectEntry4 = _addObjectEntry("queued", title4, date4);
+		String title1 = "a" + RandomTestUtil.randomString();
+		String title2 = "b" + RandomTestUtil.randomString();
+		String title3 = "c" + RandomTestUtil.randomString();
+		String title4 = "d" + RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry1 = _addObjectEntry("queued", date1, title1);
+		ObjectEntry objectEntry2 = _addObjectEntry("started", date2, title2);
+		ObjectEntry objectEntry3 = _addObjectEntry("completed", date3, title3);
+		ObjectEntry objectEntry4 = _addObjectEntry("queued", date4, title4);
 
 		// And/or with equals/not equals expression
 
@@ -284,8 +288,8 @@ public class SalesforceObjectEntryManagerImplTest
 				StringBundler.concat(
 					filterString,
 					buildEqualsExpressionFilterString("customStatus", "queued"),
-					" and ", buildEqualsExpressionFilterString("title", title1),
-					" and ", buildEqualsExpressionFilterString("date", date1))
+					" and ", buildEqualsExpressionFilterString("date", date1),
+					" and ", buildEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry1);
 
@@ -297,9 +301,9 @@ public class SalesforceObjectEntryManagerImplTest
 					_buildNotEqualsExpressionFilterString(
 						"customStatus", "queued"),
 					" and ",
-					_buildNotEqualsExpressionFilterString("title", title1),
+					_buildNotEqualsExpressionFilterString("date", date1),
 					" and ",
-					_buildNotEqualsExpressionFilterString("date", date1))
+					_buildNotEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry2, objectEntry3);
 
@@ -309,8 +313,8 @@ public class SalesforceObjectEntryManagerImplTest
 				StringBundler.concat(
 					filterString,
 					buildEqualsExpressionFilterString("customStatus", "queued"),
-					" or ", buildEqualsExpressionFilterString("title", title1),
-					" or ", buildEqualsExpressionFilterString("date", date1))
+					" or ", buildEqualsExpressionFilterString("date", date1),
+					" or ", buildEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry1, objectEntry4);
 
@@ -322,9 +326,9 @@ public class SalesforceObjectEntryManagerImplTest
 					_buildNotEqualsExpressionFilterString(
 						"customStatus", "queued"),
 					" or ",
-					_buildNotEqualsExpressionFilterString("title", title1),
+					_buildNotEqualsExpressionFilterString("date", date1),
 					" or ",
-					_buildNotEqualsExpressionFilterString("date", date1))
+					_buildNotEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry2, objectEntry3, objectEntry4);
 
@@ -351,22 +355,6 @@ public class SalesforceObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				filterString.concat(
-					buildEqualsExpressionFilterString("title", title1))
-			).build(),
-			objectEntry1);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				filterString.concat(
-					_buildNotEqualsExpressionFilterString("title", title1))
-			).build(),
-			objectEntry2, objectEntry3, objectEntry4);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				filterString.concat(
 					buildEqualsExpressionFilterString("date", date1))
 			).build(),
 			objectEntry1);
@@ -378,13 +366,29 @@ public class SalesforceObjectEntryManagerImplTest
 					_buildNotEqualsExpressionFilterString("date", date1))
 			).build(),
 			objectEntry2, objectEntry3, objectEntry4);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				filterString.concat(
+					buildEqualsExpressionFilterString("title", title1))
+			).build(),
+			objectEntry1);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				filterString.concat(
+					_buildNotEqualsExpressionFilterString("title", title1))
+			).build(),
+			objectEntry2, objectEntry3, objectEntry4);
 	}
 
 	@Test
 	public void testGetObjectEntry() throws Exception {
 		String title = RandomTestUtil.randomString();
 
-		ObjectEntry objectEntry = _addObjectEntry(null, title);
+		ObjectEntry objectEntry = _addObjectEntry(null, null, title);
 
 		_assertObjectEntry(objectEntry.getExternalReferenceCode(), title);
 	}
@@ -392,7 +396,7 @@ public class SalesforceObjectEntryManagerImplTest
 	@Test
 	public void testPartialUpdateObjectEntry() throws Exception {
 		ObjectEntry objectEntry = _addObjectEntry(
-			null, RandomTestUtil.randomString());
+			null, null, RandomTestUtil.randomString());
 
 		_objectEntryManager.partialUpdateObjectEntry(
 			TestPropsValues.getCompanyId(), dtoConverterContext,
@@ -425,7 +429,7 @@ public class SalesforceObjectEntryManagerImplTest
 	}
 
 	private ObjectEntry _addObjectEntry(
-			String customStatus, String title, Date date)
+			String customStatus, Date date, String title)
 		throws Exception {
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(

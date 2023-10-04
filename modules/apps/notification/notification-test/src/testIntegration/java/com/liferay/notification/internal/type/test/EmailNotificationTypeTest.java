@@ -58,25 +58,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@Test
 	public void testSendNotification() throws Exception {
-		NotificationTemplate notificationTemplate = _addNotificationTemplate(
-			false);
-
-		ObjectAction objectAction = objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			childObjectDefinition.getObjectDefinitionId(), true,
-			StringPool.BLANK, RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_NOTIFICATION,
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-			UnicodePropertiesBuilder.put(
-				"notificationTemplateId",
-				notificationTemplate.getNotificationTemplateId()
-			).build(),
-			false);
-
-		_addObjectEntry();
+		_executeNotificationObjectAction(_addNotificationTemplate(false));
 
 		List<NotificationQueueEntry> notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationEntries(
@@ -97,22 +79,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		notificationQueueEntryLocalService.deleteNotificationQueueEntry(
 			notificationQueueEntries.get(0));
 
-		notificationTemplate = _addNotificationTemplate(true);
-
-		objectActionLocalService.updateObjectAction(
-			RandomTestUtil.randomString(), objectAction.getObjectActionId(),
-			true, StringPool.BLANK, RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_NOTIFICATION,
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-			UnicodePropertiesBuilder.put(
-				"notificationTemplateId",
-				notificationTemplate.getNotificationTemplateId()
-			).build());
-
-		_addObjectEntry();
+		_executeNotificationObjectAction(_addNotificationTemplate(true));
 
 		notificationQueueEntries = ListUtil.sort(
 			notificationQueueEntryLocalService.getNotificationEntries(
@@ -185,31 +152,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				NotificationConstants.TYPE_EMAIL));
 	}
 
-	private void _addObjectEntry() throws Exception {
-		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
-			dtoConverterContext, parentObjectDefinition,
-			new ObjectEntry() {
-				{
-					properties = parentObjectEntryValues;
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		objectEntryManager.addObjectEntry(
-			dtoConverterContext, childObjectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.putAll(
-						childObjectEntryValues
-					).put(
-						getObjectRelationshipObjectField2Name(),
-						objectEntry.getId()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-	}
-
 	private void _assertNotificationQueueEntry(
 		boolean expectedSingleRecipient, String expectedToEmailAddress,
 		NotificationQueueEntry notificationQueueEntry) {
@@ -258,6 +200,52 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		Assert.assertArrayEquals(
 			expectedToEmailAddressesArray, actualToEmailAddressesArray);
+	}
+
+	private void _executeNotificationObjectAction(
+			NotificationTemplate notificationTemplate)
+		throws Exception {
+
+		ObjectAction objectAction = objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			childObjectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"notificationTemplateId",
+				notificationTemplate.getNotificationTemplateId()
+			).build(),
+			false);
+
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			dtoConverterContext, parentObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = parentObjectEntryValues;
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		objectEntryManager.addObjectEntry(
+			dtoConverterContext, childObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.putAll(
+						childObjectEntryValues
+					).put(
+						getObjectRelationshipObjectField2Name(),
+						objectEntry.getId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		objectActionLocalService.deleteObjectAction(
+			objectAction.getObjectActionId());
 	}
 
 }

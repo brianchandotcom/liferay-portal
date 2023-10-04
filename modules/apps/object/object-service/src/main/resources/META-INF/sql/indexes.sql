@@ -92,6 +92,7 @@ create index IX_4D699221 on ObjectStateTransition (uuid_[$COLUMN_LENGTH:75$], co
 
 create unique index IX_7BDE4AC6 on ObjectValidationRule (externalReferenceCode[$COLUMN_LENGTH:75$], companyId, objectDefinitionId);
 create index IX_C476B36E on ObjectValidationRule (objectDefinitionId, active_);
+create index IX_EE533031 on ObjectValidationRule (objectDefinitionId, engine[$COLUMN_LENGTH:255$]);
 create index IX_465D010A on ObjectValidationRule (objectDefinitionId, outputType[$COLUMN_LENGTH:75$]);
 create index IX_40F1E68E on ObjectValidationRule (uuid_[$COLUMN_LENGTH:75$], companyId);
 

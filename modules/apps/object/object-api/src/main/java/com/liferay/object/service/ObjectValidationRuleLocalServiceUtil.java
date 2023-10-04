@@ -338,6 +338,13 @@ public class ObjectValidationRuleLocalServiceUtil {
 			objectDefinitionId, active);
 	}
 
+	public static List<ObjectValidationRule> getObjectValidationRulesByODI_E(
+		long objectDefinitionId, String engine) {
+
+		return getService().getObjectValidationRulesByODI_E(
+			objectDefinitionId, engine);
+	}
+
 	/**
 	 * Returns the number of object validation rules.
 	 *

@@ -183,6 +183,12 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 			return -1;
 		}
 
+		long result = GetterUtil.getLong(header, -1);
+
+		if (result > 0) {
+			return result;
+		}
+
 		Date date = GetterUtil.getDate(
 			header,
 			DateFormatFactoryUtil.getSimpleDateFormat(Time.RFC822_FORMAT),

@@ -32,6 +32,18 @@ public class DBManagerUtil {
 		return dbManager.getDB(dbManager.getDBType(dialect), dataSource);
 	}
 
+	public static int getDBInMaxParameters() {
+		DBManager dbManager = _dbManager;
+
+		return dbManager.getDBMaxParameters();
+	}
+
+	public static int getDBMaxParameters() {
+		DBManager dbManager = _dbManager;
+
+		return dbManager.getDBMaxParameters();
+	}
+
 	public static DBType getDBType() {
 		DBManager dbManager = _dbManager;
 

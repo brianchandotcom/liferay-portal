@@ -10,14 +10,18 @@ import com.liferay.portal.dao.jdbc.util.DBInfo;
 import com.liferay.portal.dao.jdbc.util.DBInfoUtil;
 import com.liferay.portal.dao.orm.hibernate.DialectImpl;
 import com.liferay.portal.dao.orm.hibernate.MariaDBDialect;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactory;
 import com.liferay.portal.kernel.dao.db.DBManager;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.EnumMap;
@@ -100,6 +104,40 @@ public class DBManagerImpl implements DBManager {
 	}
 
 	@Override
+	public int getDBInMaxParameters() {
+		if (_databaseInMaxParameters != 0) {
+			return _databaseInMaxParameters;
+		}
+
+		DBType dbType = getDBType();
+
+		_databaseInMaxParameters = GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.DATABASE_IN_MAX_PARAMETERS,
+				new Filter(dbType.getName())),
+			Integer.MAX_VALUE);
+
+		return _databaseInMaxParameters;
+	}
+
+	@Override
+	public int getDBMaxParameters() {
+		if (_databaseMaxParameters != 0) {
+			return _databaseMaxParameters;
+		}
+
+		DBType dbType = getDBType();
+
+		_databaseMaxParameters = GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.DATABASE_MAX_PARAMETERS,
+				new Filter(dbType.getName())),
+			Integer.MAX_VALUE);
+
+		return _databaseMaxParameters;
+	}
+
+	@Override
 	public DBType getDBType() {
 		if (_db == null) {
 			getDB();
@@ -178,6 +216,8 @@ public class DBManagerImpl implements DBManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(DBManagerImpl.class);
 
+	private int _databaseInMaxParameters;
+	private int _databaseMaxParameters;
 	private DB _db;
 	private final EnumMap<DBType, DBFactory> _dbFactories = new EnumMap<>(
 		DBType.class);

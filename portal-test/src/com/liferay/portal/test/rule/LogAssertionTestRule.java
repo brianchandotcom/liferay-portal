@@ -237,12 +237,10 @@ public class LogAssertionTestRule
 			for (ExpectedLog expectedLog : expectedLogs.expectedLogs()) {
 				ExpectedDBType expectedDBType = expectedLog.expectedDBType();
 
-				if (expectedDBType != ExpectedDBType.NONE) {
-					if (expectedDBType.getDBType() !=
-							DBManagerUtil.getDBType()) {
+				if ((expectedDBType != ExpectedDBType.NONE) &&
+					(expectedDBType.getDBType() != DBManagerUtil.getDBType())) {
 
-						continue;
-					}
+					continue;
 				}
 
 				ExpectedType expectedType = expectedLog.expectedType();

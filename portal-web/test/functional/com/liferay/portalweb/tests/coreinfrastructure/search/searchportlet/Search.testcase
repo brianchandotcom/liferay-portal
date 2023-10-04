@@ -2285,19 +2285,20 @@ definition {
 
 	@priority = 4
 	test SearchXSSAsset {
-		JSONMBMessage.addMessage(
+		JSONWiki.addWikiPage(
 			groupName = "Guest",
-			threadBody = '''<script>alert(123);</script>''',
-			threadSubject = "Thread Subject");
+			wikiNodeName = "Main",
+			wikiPageContent = "<script>alert(123);</script>",
+			wikiPageName = "Wiki Title");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Subject");
+		SearchPortlets.searchEmbedded(searchTerm = "Title");
 
 		AssertAlertNotPresent();
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = '''<script>alert(123);</script>''',
-			searchAssetTitle = "Thread Subject",
-			searchAssetType = "Message Boards Message");
+			searchAssetTitle = "Wiki Title",
+			searchAssetType = "Wiki Page");
 
 		var actualScript = '''<script>alert(123);</script>''';
 		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';

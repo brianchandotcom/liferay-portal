@@ -36,7 +36,7 @@ definition {
 			var companyId = JSONCompany.getCompanyId();
 
 			OSGiConfig.deployOSGiConfigFile(
-				osgiConfigFileName = "com.liferay.scim.client.internal.configuration.SCIMClientOAuth2ApplicationConfiguration.config",
+				osgiConfigFileName = "com.liferay.scim.client.configuration.ScimClientOAuth2ApplicationConfiguration.config",
 				osgiConfigs = "applicationName=\"Test Application Name\",companyId=L\"${companyId}\",matcherField=\"userName\"");
 
 			OSGiConfig.waitForOSGiConfig();
@@ -54,7 +54,7 @@ definition {
 
 		task ("And: Assert a new access token is generated in the log after modifying entries in config file") {
 			OSGiConfig.deployOSGiConfigFile(
-				osgiConfigFileName = "com.liferay.scim.client.internal.configuration.SCIMClientOAuth2ApplicationConfiguration.config",
+				osgiConfigFileName = "com.liferay.scim.client.configuration.ScimClientOAuth2ApplicationConfiguration.config",
 				osgiConfigs = "applicationName=\"Test Application Name\",companyId=L\"${companyId}\",matcherField=\"emailAddress\"");
 
 			OSGiConfig.waitForOSGiConfig();
@@ -69,7 +69,7 @@ definition {
 		}
 
 		task ("And: Assert SCIM client is removed after removing the config file") {
-			OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.scim.client.internal.configuration.SCIMClientOAuth2ApplicationConfiguration.config");
+			OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.scim.client.configuration.ScimClientOAuth2ApplicationConfiguration.config");
 
 			OSGiConfig.waitForOSGiConfig();
 
@@ -96,7 +96,7 @@ definition {
 
 		task ("When: Deploy the config file") {
 			OSGiConfig.deployOSGiConfigFile(
-				osgiConfigFileName = "com.liferay.scim.client.internal.configuration.SCIMClientOAuth2ApplicationConfiguration.config",
+				osgiConfigFileName = "com.liferay.scim.client.configuration.ScimClientOAuth2ApplicationConfiguration.config",
 				osgiConfigs = "applicationName=\"Test Application Name\",companyWebId=\"www.able.com\",matcherField=\"userName\"");
 
 			OSGiConfig.waitForOSGiConfig();

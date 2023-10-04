@@ -120,7 +120,10 @@ export default async function submitForm(
 		}
 		formikHelpers.setValues(values);
 
-		if (values.dateCreated && values.mdfRequestStatus.key !== Status.DRAFT.key) {	
+		if (
+			values.dateCreated &&
+			values.mdfRequestStatus.key !== Status.DRAFT.key
+		) {
 			Liferay.Util.navigate(
 				`${siteURL}/${PRMPageRoute.CONFIRMATION_MDF_REQUEST}`
 			);

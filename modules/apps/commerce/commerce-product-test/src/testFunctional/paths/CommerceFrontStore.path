@@ -31,6 +31,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_DETAILS_PRICE_TABLE_HEADER</td>
+	<td>//th//span[text()='${key_columnName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAILS_PRICE_TABLE_FIELD_ENTRY</td>
+	<td>//tbody//tr[@class][${key_index}]//td[text()='${key_fieldValue}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FS_IMAGE_GALLERY_ARROW_NEXT</td>
 	<td>//div[@class='arrow next']</td>
 	<td></td>

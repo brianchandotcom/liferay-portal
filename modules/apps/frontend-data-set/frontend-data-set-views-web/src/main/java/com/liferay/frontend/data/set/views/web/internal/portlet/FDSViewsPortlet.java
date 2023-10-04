@@ -532,8 +532,13 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "actions-order"),
-						"fdsActionsOrder", false),
+						_language.get(locale, "actions-creation-order"),
+						"fdsActionsCreationOrder", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "actions-item-order"),
+						"fdsActionsItemOrder", false),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,

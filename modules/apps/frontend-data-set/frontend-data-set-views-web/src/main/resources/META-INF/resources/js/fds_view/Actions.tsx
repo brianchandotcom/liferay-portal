@@ -168,6 +168,15 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 		setLoading(false);
 	};
 
+	const createFDSAction = () => {
+		const activeSection =
+			activeTab === 0
+				? SECTIONS.NEW_ITEM_ACTION
+				: SECTIONS.NEW_CREATION_ACTION;
+
+		setActiveSection(activeSection);
+	};
+
 	const deleteFDSAction = ({item}: {item: IFDSAction}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(

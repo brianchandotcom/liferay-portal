@@ -51,13 +51,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Override
-	public void deleteAccountPostalAddresses(Long accountId, Long[] longs)
-		throws Exception {
-
-		for (long postalAddressesId : longs) {
-			_validateAccountPostalAddress(accountId, postalAddressesId);
-			_addressLocalService.deleteAddress(postalAddressesId);
-		}
+	public void deletePostalAddress(Long postalAddressId) throws Exception {
+		_addressLocalService.deleteAddress(postalAddressId);
 	}
 
 	@Override
@@ -131,20 +126,25 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	}
 
 	@Override
-	public PostalAddress patchAccountPostalAddress(
-			Long accountId, Long postalAddressId, PostalAddress postalAddress)
+	public PostalAddress patchPostalAddress(
+			Long postalAddressId, PostalAddress postalAddress)
 		throws Exception {
 
-		Address address = _validateAccountPostalAddress(
-			accountId, postalAddressId);
-
-		Country country = _getCountryByTitle(postalAddress);
+		Address address = _addressLocalService.getAddress(postalAddressId);
+		Country country = null;
 
 		if (postalAddress.getAddressCountry() != null) {
+			country = _getCountryByTitle(postalAddress);
+
 			address.setCountryId(country.getCountryId());
 		}
 
 		if (postalAddress.getAddressRegion() != null) {
+			if (country == null) {
+				throw new BadRequestException(
+					"To change the Region the Country must be defined");
+			}
+
 			address.setRegionId(_getRegionId(postalAddress, country));
 		}
 
@@ -230,12 +230,11 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	}
 
 	@Override
-	public PostalAddress putAccountPostalAddress(
-			Long accountId, Long postalAddressId, PostalAddress postalAddress)
+	public PostalAddress putPostalAddress(
+			Long postalAddressId, PostalAddress postalAddress)
 		throws Exception {
 
-		Address address = _validateAccountPostalAddress(
-			accountId, postalAddressId);
+		Address address = _addressLocalService.getAddress(postalAddressId);
 
 		Country country = _getCountryByTitle(postalAddress);
 
@@ -336,25 +335,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		}
 
 		return type;
-	}
-
-	private Address _validateAccountPostalAddress(
-			Long accountId, long postalAddressId)
-		throws Exception {
-
-		Address address = _addressLocalService.getAddress(postalAddressId);
-
-		if (!accountId.equals(address.getClassPK())) {
-			throw new BadRequestException(
-				_language.format(
-					contextAcceptLanguage.getPreferredLocale(),
-					"account-entry-x-not-has-postal-address-y",
-					new String[] {
-						accountId.toString(), String.valueOf(postalAddressId)
-					}));
-		}
-
-		return address;
 	}
 
 	@Reference

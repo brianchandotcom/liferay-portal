@@ -9,8 +9,6 @@ Export-Package:\
 	com.liferay.object.constants,\
 	com.liferay.object.definition.notification.term.util,\
 	com.liferay.object.definition.security.permission.resource,\
-	com.liferay.object.definition.tree,\
-	com.liferay.object.definition.tree.constants,\
 	com.liferay.object.definition.util,\
 	com.liferay.object.deployer,\
 	com.liferay.object.display.context,\
@@ -38,6 +36,8 @@ Export-Package:\
 	com.liferay.object.service,\
 	com.liferay.object.service.persistence,\
 	com.liferay.object.system,\
+	com.liferay.object.tree,\
+	com.liferay.object.tree.constants,\
 	com.liferay.object.util.comparator,\
 	com.liferay.object.validation.rule,\
 	com.liferay.object.validation.rule.setting.builder

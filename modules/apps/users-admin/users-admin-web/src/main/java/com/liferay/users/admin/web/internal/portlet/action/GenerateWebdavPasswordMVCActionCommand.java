@@ -46,7 +46,7 @@ public class GenerateWebdavPasswordMVCActionCommand
 
 		_userLocalService.updateUser(user);
 
-		actionResponse.setRenderParameter("WEBDAV_PASSWORD", plainToken);
+		actionResponse.setRenderParameter("webDAVPassword", plainToken);
 	}
 
 	@Reference

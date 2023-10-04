@@ -12,9 +12,9 @@ import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {IFDSViewSectionProps} from '../FDSView';
-import OrderableTable from '../components/OrderableTable';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
+import ActionList from './actions/ActionList';
 import ItemActionForm from './actions/ItemActionForm';
 
 const SECTIONS = {
@@ -297,78 +297,37 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 									'actions'
 								)}
 							>
-								<OrderableTable
-									actions={[
-										{
-											icon: 'pencil',
-											label: Liferay.Language.get('edit'),
-											onClick: handleEdit,
-										},
-										{
-											icon: 'trash',
-											label: Liferay.Language.get(
-												'delete'
-											),
-											onClick: deleteFDSAction,
-										},
-									]}
-									className="mt-0 p-1"
-									creationMenuItems={[
-										{
-											label: Liferay.Language.get(
-												'add-action'
-											),
-											onClick: () =>
-												setActiveSection(
-													SECTIONS.NEW_ITEM_ACTION
-												),
-										},
-									]}
-									fields={[
-										{
-											label: Liferay.Language.get('icon'),
-											name: 'icon',
-										},
-										{
-											label: Liferay.Language.get(
-												'label'
-											),
-											name: 'label',
-										},
-										{
-											label: Liferay.Language.get('type'),
-											name: 'type',
-										},
-									]}
-									items={fdsActions}
+								<ActionList
+									createFDSAction={createFDSAction}
+									deleteFDSAction={deleteFDSAction}
+									editFDSAction={editFDSAction}
+									fdsActions={fdsActions}
 									noItemsButtonLabel={Liferay.Language.get(
-										'create-item-action'
+										'new-item-action'
 									)}
-									noItemsDescription={Liferay.Language.get(
-										'start-creating-an-action-to-interact-with-your-data'
-									)}
-									noItemsTitle={Liferay.Language.get(
-										'no-actions-were-created'
-									)}
-									onOrderChange={({
-										order,
-									}: {
-										order: string;
-									}) => {
-										updateFDSActionsOrder({
-											fdsActionsOrder: order,
-										});
-									}}
+									updateFDSActionsOrder={
+										updateFDSActionsOrder
+									}
 								/>
 							</ClayTabs.TabPane>
 
 							<ClayTabs.TabPane
 								aria-labelledby={Liferay.Language.get(
-									'new-item-action'
+									'new-creation-action'
 								)}
 							>
-								2. Proin efficitur imperdiet dolor, a iaculis
-								orci lacinia eu.
+								<ActionList
+									createFDSAction={createFDSAction}
+									deleteFDSAction={deleteFDSAction}
+									editFDSAction={editFDSAction}
+									fdsActions={fdsActions}
+									noItemsButtonLabel={Liferay.Language.get(
+										'new-creation-action'
+									)}
+									updateFDSActionsOrder={
+										updateFDSActionsOrder
+									}
+								/>
 							</ClayTabs.TabPane>
 						</ClayTabs.Content>
 					</>

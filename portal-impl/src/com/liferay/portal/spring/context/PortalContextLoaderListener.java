@@ -19,7 +19,6 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -144,9 +143,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			_log.error(exception);
 		}
 
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.HYPERSONIC) {
+		if (DBManagerUtil.getDBType() == DBType.HYPERSONIC) {
 			try (Connection connection = DataAccess.getConnection();
 				Statement statement = connection.createStatement()) {
 
@@ -463,9 +460,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			}
 		}
 
-		DB db = DBManagerUtil.getDB();
-
-		DBType dbType = db.getDBType();
+		DBType dbType = DBManagerUtil.getDBType();
 
 		if (dbType == DBType.MYSQL) {
 			try {

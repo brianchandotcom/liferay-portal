@@ -37,9 +37,7 @@ public abstract class BaseDBColumnSizeUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == _dbType) {
+		if (DBManagerUtil.getDBType() == _dbType) {
 			_upgradeTables();
 		}
 	}

@@ -7,7 +7,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -32,10 +31,8 @@ public class UpgradeMySQL extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		DB db = DBManagerUtil.getDB();
-
-		if ((db.getDBType() == DBType.MARIADB) ||
-			(db.getDBType() == DBType.MYSQL)) {
+		if ((DBManagerUtil.getDBType() == DBType.MARIADB) ||
+			(DBManagerUtil.getDBType() == DBType.MYSQL)) {
 
 			upgradeDatetimePrecision();
 			upgradeTableEngine();

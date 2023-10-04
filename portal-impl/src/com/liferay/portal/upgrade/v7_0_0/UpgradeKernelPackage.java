@@ -7,7 +7,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -117,9 +116,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			String[][] names, WildcardMode wildcardMode)
 		throws Exception {
 
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() != DBType.SYBASE) {
+		if (DBManagerUtil.getDBType() != DBType.SYBASE) {
 			upgradeTable(tableName, columnName, names, wildcardMode);
 
 			return;
@@ -237,9 +234,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 	}
 
 	private String _transformColumnName(String columnName) {
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.SQLSERVER) {
+		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
 			return "CAST_TEXT(" + columnName + ")";
 		}
 

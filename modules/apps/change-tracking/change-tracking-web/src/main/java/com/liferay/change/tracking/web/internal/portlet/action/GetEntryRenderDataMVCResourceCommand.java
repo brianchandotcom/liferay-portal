@@ -670,86 +670,7 @@ public class GetEntryRenderDataMVCResourceCommand
 			FeatureFlagManagerUtil.isEnabled(
 				themeDisplay.getCompanyId(), "LPS-187183")) {
 
-			JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-			List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
-				_segmentsExperienceLocalService.dslQuery(
-					DSLQueryFactoryUtil.select(
-						SegmentsExperienceTable.INSTANCE
-					).from(
-						SegmentsExperienceTable.INSTANCE
-					).where(
-						SegmentsExperienceTable.INSTANCE.plid.eq(
-							ctEntry.getModelClassPK())
-					)));
-
-			segmentsExperiences.sort(
-				Comparator.comparingInt(SegmentsExperienceModel::getPriority));
-
-			SegmentsExperience highestPrioritySegmentsExperience =
-				segmentsExperiences.get(segmentsExperiences.size() - 1);
-
-			long highestPrioritySegmentsExperienceId =
-				highestPrioritySegmentsExperience.getSegmentsExperienceId();
-
-			for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-				jsonArray.put(
-					JSONUtil.put(
-						"active",
-						() -> {
-							if (segmentsExperience.getSegmentsExperienceId() ==
-									highestPrioritySegmentsExperienceId) {
-
-								return true;
-							}
-
-							return false;
-						}
-					).put(
-						"id", segmentsExperience.getSegmentsExperienceId()
-					).put(
-						"isDefault",
-						Objects.equals(
-							segmentsExperience.getSegmentsExperienceKey(),
-							SegmentsExperienceConstants.KEY_DEFAULT) &&
-						(segmentsExperience.getSegmentsEntryId() == 0)
-					).put(
-						"name",
-						segmentsExperience.getName(
-							httpServletRequest.getLocale())
-					).put(
-						"segmentName",
-						() -> {
-							if (Objects.equals(
-									segmentsExperience.
-										getSegmentsExperienceKey(),
-									SegmentsExperienceConstants.KEY_DEFAULT) &&
-								(segmentsExperience.getSegmentsEntryId() ==
-									0)) {
-
-								return _language.get(
-									httpServletRequest, "anyone");
-							}
-
-							SegmentsEntry segmentsEntry =
-								_segmentsEntryLocalService.getSegmentsEntry(
-									segmentsExperience.getSegmentsEntryId());
-
-							return segmentsEntry.getName(
-								httpServletRequest.getLocale());
-						}
-					));
-
-				if (segmentsExperience.getSegmentsExperienceId() ==
-						highestPrioritySegmentsExperienceId) {
-
-					jsonObject.put(
-						"activeSegmentsExperience",
-						jsonArray.get(jsonArray.length() - 1));
-				}
-			}
-
-			jsonObject.put("segmentsExperiences", jsonArray);
+			_getSegmentExperiences(ctEntry, httpServletRequest, jsonObject);
 		}
 
 		return jsonObject;
@@ -979,6 +900,92 @@ public class GetEntryRenderDataMVCResourceCommand
 
 			return sb.toString();
 		}
+	}
+
+	private void _getSegmentExperiences(
+		CTEntry ctEntry, HttpServletRequest httpServletRequest,
+		JSONObject jsonObject) {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
+			_segmentsExperienceLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					SegmentsExperienceTable.INSTANCE
+				).from(
+					SegmentsExperienceTable.INSTANCE
+				).where(
+					SegmentsExperienceTable.INSTANCE.plid.eq(
+						ctEntry.getModelClassPK())
+				)));
+
+		if (segmentsExperiences.isEmpty()) {
+			return;
+		}
+
+		segmentsExperiences.sort(
+			Comparator.comparingInt(SegmentsExperienceModel::getPriority));
+
+		SegmentsExperience highestPrioritySegmentsExperience =
+			segmentsExperiences.get(segmentsExperiences.size() - 1);
+
+		long highestPrioritySegmentsExperienceId =
+			highestPrioritySegmentsExperience.getSegmentsExperienceId();
+
+		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
+			jsonArray.put(
+				JSONUtil.put(
+					"active",
+					() -> {
+						if (segmentsExperience.getSegmentsExperienceId() ==
+								highestPrioritySegmentsExperienceId) {
+
+							return true;
+						}
+
+						return false;
+					}
+				).put(
+					"id", segmentsExperience.getSegmentsExperienceId()
+				).put(
+					"isDefault",
+					Objects.equals(
+						segmentsExperience.getSegmentsExperienceKey(),
+						SegmentsExperienceConstants.KEY_DEFAULT) &&
+					(segmentsExperience.getSegmentsEntryId() == 0)
+				).put(
+					"name",
+					segmentsExperience.getName(httpServletRequest.getLocale())
+				).put(
+					"segmentName",
+					() -> {
+						if (Objects.equals(
+								segmentsExperience.getSegmentsExperienceKey(),
+								SegmentsExperienceConstants.KEY_DEFAULT) &&
+							(segmentsExperience.getSegmentsEntryId() == 0)) {
+
+							return _language.get(httpServletRequest, "anyone");
+						}
+
+						SegmentsEntry segmentsEntry =
+							_segmentsEntryLocalService.getSegmentsEntry(
+								segmentsExperience.getSegmentsEntryId());
+
+						return segmentsEntry.getName(
+							httpServletRequest.getLocale());
+					}
+				));
+
+			if (segmentsExperience.getSegmentsExperienceId() ==
+					highestPrioritySegmentsExperienceId) {
+
+				jsonObject.put(
+					"activeSegmentsExperience",
+					jsonArray.get(jsonArray.length() - 1));
+			}
+		}
+
+		jsonObject.put("segmentsExperiences", jsonArray);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

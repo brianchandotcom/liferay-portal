@@ -40,11 +40,6 @@
 			<bean class="com.liferay.portal.dao.orm.common.PortalCustomSQLImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.kernel.deploy.hot.HotDeployUtil" id="com.liferay.portal.kernel.deploy.hot.HotDeployUtil">
-		<property name="hotDeploy">
-			<bean class="com.liferay.portal.deploy.hot.HotDeployImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.image.ImageToolUtil" id="com.liferay.portal.kernel.image.ImageToolUtil">
 		<property name="imageTool" ref="com.liferay.portal.image.ImageToolImpl" />
 	</bean>

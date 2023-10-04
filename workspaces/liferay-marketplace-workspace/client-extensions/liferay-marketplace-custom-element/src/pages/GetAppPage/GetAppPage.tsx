@@ -41,10 +41,6 @@ export type GetAppForm = {
 	selectedSKU?: SKU;
 };
 
-type SpecificationKey = {
-	[key: string]: string;
-};
-
 const sectionProperties = {
 	[StepType.ACCOUNT]: {
 		backStep: StepType.ACCOUNT,
@@ -78,7 +74,6 @@ const GetAppFlow = () => {
 	const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
 		PaymentMethodSelector
 	>(paymentMethod.PAY);
-	const [specifications, setSpecifications] = useState<SpecificationKey>();
 	const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
 
 	const {getValues, setValue, watch} = useForm<GetAppForm>({
@@ -120,15 +115,13 @@ const GetAppFlow = () => {
 				Number(productId)
 			);
 
-			setSpecifications(productSpecificationValues);
+			const orderType = await getProductOrderTypes(
+				productSpecificationValues
+			);
 
-			if (specifications) {
-				const orderType = await getProductOrderTypes(specifications);
-
-				setOrderType(orderType);
-			}
+			setOrderType(orderType);
 		})();
-	}, [productId, specifications]);
+	}, [productId]);
 
 	async function handleGetApp(orderId?: number) {
 		const productSpecificationValues = await getProductSpecificationValues(
@@ -156,7 +149,7 @@ const GetAppFlow = () => {
 		});
 
 		const cartResponse = orderId
-			? await cartUtil.updateCart(orderId, {
+			? await cartUtil.updateCartItems(orderId, {
 					...cart,
 					cartItems: cartUtil.cartItems,
 			  })

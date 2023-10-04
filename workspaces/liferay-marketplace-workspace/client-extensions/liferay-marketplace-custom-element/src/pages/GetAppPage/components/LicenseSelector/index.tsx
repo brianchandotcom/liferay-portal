@@ -12,13 +12,14 @@ import './index.scss';
 
 import {UseFormGetValues, UseFormSetValue} from 'react-hook-form';
 
+import useCart from '../../../../hooks/useCart';
 import {GetAppForm} from '../../GetAppPage';
 import {paymentMethod} from '../../enums/paymentMethod';
 import {PaidTimeline} from './components/PaidTimeline';
 import {TrialTimeline} from './components/TrialTimeline';
 
 interface LicenseSelectorProps {
-	cart: Cart;
+	cart: ReturnType<typeof useCart>;
 	form: {
 		getValues: UseFormGetValues<GetAppForm>;
 		setValue: UseFormSetValue<GetAppForm>;

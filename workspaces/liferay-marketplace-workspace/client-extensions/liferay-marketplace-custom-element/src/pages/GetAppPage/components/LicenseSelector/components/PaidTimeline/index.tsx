@@ -5,11 +5,12 @@
 
 import {useEffect, useState} from 'react';
 
+import useCart from '../../../../../../hooks/useCart';
 import {getLicenseDescription, getTierPrice} from '../../../../../../utils/api';
 import LicenseSectorCard from '../../LicenseCard';
 
 interface PaidTimelineProps {
-	cart: Cart;
+	cart: ReturnType<typeof useCart>;
 	product?: Product;
 }
 

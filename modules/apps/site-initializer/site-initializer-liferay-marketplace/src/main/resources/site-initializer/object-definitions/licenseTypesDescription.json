@@ -1,0 +1,36 @@
+{
+	"label": {
+		"en_US": "License Types Description"
+	},
+	"name": "LicenseTypesDescription",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Developer"
+			},
+			"name": "developer",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Standard"
+			},
+			"name": "standard",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "License Types Description"
+	},
+	"scope": "company"
+}

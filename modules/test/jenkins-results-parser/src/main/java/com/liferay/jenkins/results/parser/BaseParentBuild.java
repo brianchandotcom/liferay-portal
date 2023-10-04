@@ -572,6 +572,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		List<Build> failedDownstreamBuilds = new ArrayList<>();
 
 		failedDownstreamBuilds.addAll(getDownstreamBuilds("ABORTED", null));
+		failedDownstreamBuilds.addAll(getDownstreamBuilds("MISSING", null));
 		failedDownstreamBuilds.addAll(getDownstreamBuilds("FAILURE", null));
 		failedDownstreamBuilds.addAll(getDownstreamBuilds("UNSTABLE", null));
 

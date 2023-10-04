@@ -1144,6 +1144,11 @@ public abstract class BaseTopLevelBuild
 			}
 		}
 
+		if (Objects.equals(result, "MISSING")) {
+			messageElement.add(
+				Dom4JUtil.toCodeSnippetElement("Build was missing"));
+		}
+
 		return messageElement;
 	}
 
@@ -1334,6 +1339,8 @@ public abstract class BaseTopLevelBuild
 				"ABORTED", "completed", "---- Aborted: "),
 			getJenkinsReportDownstreamTableElement(
 				"FAILURE", "completed", "---- Failure: "),
+			getJenkinsReportDownstreamTableElement(
+				"MISSING", "completed", "---- Missing: "),
 			getJenkinsReportDownstreamTableElement(
 				"UNSTABLE", "completed", "---- Unstable: "),
 			getJenkinsReportDownstreamTableElement(

@@ -100,6 +100,15 @@ public class DBManagerImpl implements DBManager {
 	}
 
 	@Override
+	public DBType getDBType() {
+		if (_db == null) {
+			getDB();
+		}
+
+		return _db.getDBType();
+	}
+
+	@Override
 	public DBType getDBType(Object dialect) {
 		if (dialect instanceof DialectImpl) {
 			DialectImpl dialectImpl = (DialectImpl)dialect;

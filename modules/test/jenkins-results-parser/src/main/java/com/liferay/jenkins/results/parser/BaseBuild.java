@@ -469,8 +469,7 @@ public abstract class BaseBuild implements Build {
 		if (duration == 0) {
 			long timestamp = buildJSONObject.getLong("timestamp");
 
-			duration =
-				JenkinsResultsParserUtil.getCurrentTimeMillis() - timestamp;
+			return JenkinsResultsParserUtil.getCurrentTimeMillis() - timestamp;
 		}
 
 		_duration = duration;

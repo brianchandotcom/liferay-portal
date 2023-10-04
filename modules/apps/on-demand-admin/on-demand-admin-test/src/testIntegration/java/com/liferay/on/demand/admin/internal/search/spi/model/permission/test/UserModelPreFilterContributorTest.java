@@ -15,11 +15,13 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.LinkedHashMap;
 
@@ -42,21 +44,22 @@ public class UserModelPreFilterContributorTest {
 
 	@Test
 	public void testSearchUsers() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
+		_company = CompanyTestUtil.addCompany();
 
-		OnDemandAdminTestUtil.addOnDemandAdminUser(company);
-		OnDemandAdminTestUtil.addOnDemandAdminUser(company);
-		UserTestUtil.addUser(company);
-		UserTestUtil.addUser(company);
+		OnDemandAdminTestUtil.addOnDemandAdminUser(_company);
+		OnDemandAdminTestUtil.addOnDemandAdminUser(_company);
+		UserTestUtil.addUser(_company);
+		UserTestUtil.addUser(_company);
 
 		BaseModelSearchResult<User> baseModelSearchResult =
 			_userLocalService.searchUsers(
-				company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+				_company.getCompanyId(), null,
+				WorkflowConstants.STATUS_APPROVED,
 				new LinkedHashMap<String, Object>(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new Sort("userId", false));
 
 		int companyUsersCount = _userLocalService.getCompanyUsersCount(
-			company.getCompanyId());
+			_company.getCompanyId());
 
 		Assert.assertEquals(
 			companyUsersCount - 2, baseModelSearchResult.getLength());
@@ -65,6 +68,9 @@ public class UserModelPreFilterContributorTest {
 			Assert.assertFalse(_onDemandAdminManager.isOnDemandAdminUser(user));
 		}
 	}
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@Inject
 	private OnDemandAdminManager _onDemandAdminManager;

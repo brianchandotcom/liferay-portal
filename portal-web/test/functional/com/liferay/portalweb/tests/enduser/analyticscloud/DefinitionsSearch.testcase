@@ -23,6 +23,15 @@ definition {
 
 		ACDefinitions.deleteAllSearchQuery();
 
+		ACUtils.tearDownDXP();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
 		//ACUtils.tearDownAC();
@@ -77,6 +86,82 @@ definition {
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
 		ACDefinitions.noViewAddSearchQueryButton(query = "Test Query 5");
+	}
+
+	@description = "Feature ID: LRAC-13934 | Automation ID: LRAC-14680 | Test Summary: Customized query string will still collect search term"
+	@priority = 4
+	test ViewKeywordSearchedNewStringParameter {
+		task ("Create a new query string parameter") {
+			ACDefinitions.addSearchQuerySuccessfully(query = "query");
+
+			ACDefinitions.goToDefinitionType(definitionType = "Search");
+
+			ACDefinitions.viewSearchQuery(query = "query");
+		}
+
+		task ("Connect DXP to Analytics Cloud") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+
+			ACUtils.addSiteAndPage();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Update keyword parameter on DXP") {
+			Navigator.openURL();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Search Page");
+
+			SearchPortlets.addWidgets(
+				layoutName = "Search Page",
+				searchPortletList = "Type Facet,Search Results,Search Bar");
+
+			Navigator.gotoPage(pageName = "Search Page");
+
+			SearchPortlets.configureSearchBarWidget(keywordsParameterName = "query");
+		}
+
+		task ("Use search bar") {
+			SearchPortlets.searchWidget(searchTerm = "test parameter");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Navigate to AC workspace") {
+			ACUtils.launchAC();
+		}
+
+		task ("Switch to new property in AC") {
+			ACProperties.switchProperty(propertyName = ${propertyName});
+		}
+
+		task ("Go to sites pages tab") {
+			ACNavigation.goToSites();
+
+			ACSites.viewSiteOverviewDashboardCards();
+		}
+
+		task ("View the new report") {
+			ACCards.viewCards(cardTitle = "Search Terms");
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "Search Terms");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Assert Keywords Searched") {
+			AssertElementPresent(
+				key_keyword = "test parameter",
+				locator1 = "ACSites#SEARCHED_KEYWORD");
+		}
 	}
 
 }

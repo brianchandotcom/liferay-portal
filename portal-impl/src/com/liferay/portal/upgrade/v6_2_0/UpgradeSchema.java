@@ -5,7 +5,6 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -23,9 +22,7 @@ public class UpgradeSchema extends UpgradeProcess {
 			"update-6.1.1-6.2.0-expando.sql", "update-6.1.1-6.2.0-group.sql",
 			"update-6.1.1-6.2.0-journal.sql", "update-6.1.1-6.2.0-wiki.sql");
 
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.POSTGRESQL) {
+		if (DBManagerUtil.getDBType() == DBType.POSTGRESQL) {
 			try (LoggingTimer loggingTimer = new LoggingTimer(
 					"_upgradeSchemaPostgreSQL")) {
 

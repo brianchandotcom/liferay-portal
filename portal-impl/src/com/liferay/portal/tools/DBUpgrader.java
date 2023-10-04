@@ -135,9 +135,7 @@ public class DBUpgrader {
 			return _upgradeDatabaseAutoRun;
 		}
 
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.HYPERSONIC) {
+		if (DBManagerUtil.getDBType() == DBType.HYPERSONIC) {
 			_upgradeDatabaseAutoRun = false;
 		}
 		else {

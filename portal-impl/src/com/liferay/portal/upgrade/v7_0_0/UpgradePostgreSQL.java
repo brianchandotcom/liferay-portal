@@ -6,7 +6,6 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.dao.db.PostgreSQLDB;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -25,9 +24,7 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() != DBType.POSTGRESQL) {
+		if (DBManagerUtil.getDBType() != DBType.POSTGRESQL) {
 			return;
 		}
 

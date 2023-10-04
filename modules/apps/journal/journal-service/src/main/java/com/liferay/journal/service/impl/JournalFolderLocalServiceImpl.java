@@ -32,7 +32,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -100,9 +99,7 @@ public class JournalFolderLocalServiceImpl
 	extends JournalFolderLocalServiceBaseImpl {
 
 	public JournalFolderLocalServiceImpl() {
-		DB db = DBManagerUtil.getDB();
-
-		DBType dbType = db.getDBType();
+		DBType dbType = DBManagerUtil.getDBType();
 
 		_databaseMaxParameters = GetterUtil.getInteger(
 			PropsUtil.get(

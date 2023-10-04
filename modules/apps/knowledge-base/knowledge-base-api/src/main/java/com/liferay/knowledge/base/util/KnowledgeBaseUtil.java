@@ -12,7 +12,6 @@ import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -242,9 +241,7 @@ public class KnowledgeBaseUtil {
 			return _databaseMaxParameters;
 		}
 
-		DB db = DBManagerUtil.getDB();
-
-		DBType dbType = db.getDBType();
+		DBType dbType = DBManagerUtil.getDBType();
 
 		_databaseMaxParameters = GetterUtil.getInteger(
 			PropsUtil.get(

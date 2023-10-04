@@ -8,7 +8,6 @@ package com.liferay.portal.verify.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -45,9 +44,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		DB db = DBManagerUtil.getDB();
-
-		DBType dbType = db.getDBType();
+		DBType dbType = DBManagerUtil.getDBType();
 
 		Assume.assumeTrue(
 			(dbType != DBType.DB2) && (dbType != DBType.HYPERSONIC));
@@ -197,9 +194,8 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			Exception exception, Map<DBType, String> expectedMessages)
 		throws Exception {
 
-		DB db = DBManagerUtil.getDB();
-
-		String expectedMessagePrefix = expectedMessages.get(db.getDBType());
+		String expectedMessagePrefix = expectedMessages.get(
+			DBManagerUtil.getDBType());
 
 		if (expectedMessagePrefix == null) {
 			throw exception;

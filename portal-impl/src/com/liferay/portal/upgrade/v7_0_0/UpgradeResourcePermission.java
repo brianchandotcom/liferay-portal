@@ -8,7 +8,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.model.PortletConstants;
@@ -106,9 +105,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 	}
 
 	private int _getPrimKeysSplitSize(int primKeysCount) {
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.ORACLE) {
+		if (DBManagerUtil.getDBType() == DBType.ORACLE) {
 			return 1000;
 		}
 

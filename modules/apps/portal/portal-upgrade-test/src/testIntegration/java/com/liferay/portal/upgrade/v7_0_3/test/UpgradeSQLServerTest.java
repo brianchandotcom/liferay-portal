@@ -6,7 +6,6 @@
 package com.liferay.portal.upgrade.v7_0_3.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -33,9 +32,7 @@ public class UpgradeSQLServerTest extends BaseUpgradeDBColumnSizeTestCase {
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		DB db = DBManagerUtil.getDB();
-
-		Assume.assumeTrue(db.getDBType() == DBType.SQLSERVER);
+		Assume.assumeTrue(DBManagerUtil.getDBType() == DBType.SQLSERVER);
 	}
 
 	@Override

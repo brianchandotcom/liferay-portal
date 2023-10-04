@@ -14,7 +14,6 @@ import com.liferay.journal.service.base.JournalFolderServiceBaseImpl;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -53,9 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	public JournalFolderServiceImpl() {
-		DB db = DBManagerUtil.getDB();
-
-		DBType dbType = db.getDBType();
+		DBType dbType = DBManagerUtil.getDBType();
 
 		_databaseMaxParameters = GetterUtil.getInteger(
 			PropsUtil.get(

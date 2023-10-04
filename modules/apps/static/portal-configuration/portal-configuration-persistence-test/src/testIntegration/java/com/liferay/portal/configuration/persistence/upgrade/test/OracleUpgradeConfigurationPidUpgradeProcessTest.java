@@ -52,9 +52,7 @@ public class OracleUpgradeConfigurationPidUpgradeProcessTest {
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		DB db = DBManagerUtil.getDB();
-
-		Assume.assumeTrue(db.getDBType() == DBType.ORACLE);
+		Assume.assumeTrue(DBManagerUtil.getDBType() == DBType.ORACLE);
 	}
 
 	@BeforeClass

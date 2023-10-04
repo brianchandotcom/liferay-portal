@@ -102,7 +102,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
@@ -3432,9 +3431,7 @@ public class ObjectEntryLocalServiceImpl
 				values.put(name, StringPool.BLANK);
 			}
 			else {
-				DB db = DBManagerUtil.getDB();
-
-				if (db.getDBType() == DBType.POSTGRESQL) {
+				if (DBManagerUtil.getDBType() == DBType.POSTGRESQL) {
 					values.put(name, (String)object);
 				}
 				else {
@@ -3584,9 +3581,7 @@ public class ObjectEntryLocalServiceImpl
 			preparedStatement.setBoolean(index, GetterUtil.getBoolean(value));
 		}
 		else if (sqlType == Types.CLOB) {
-			DB db = DBManagerUtil.getDB();
-
-			if (db.getDBType() == DBType.POSTGRESQL) {
+			if (DBManagerUtil.getDBType() == DBType.POSTGRESQL) {
 				preparedStatement.setString(index, String.valueOf(value));
 			}
 			else {

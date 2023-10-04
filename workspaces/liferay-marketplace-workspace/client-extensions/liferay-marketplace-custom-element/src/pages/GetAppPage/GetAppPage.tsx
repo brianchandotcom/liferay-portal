@@ -35,7 +35,7 @@ export type StepComponent = {
 	[key in StepType]?: JSX.Element;
 };
 
-export type getAppProps = {
+export type GetAppForm = {
 	product?: Product;
 	selectedAccount?: Account;
 	selectedSKU?: SKU;
@@ -64,22 +64,24 @@ const sectionProperties = {
 };
 
 const GetAppFlow = () => {
-	const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
+	const [billingAddress, setBillingAddress] = useState<BillingAddress>(
+		initialBillingAddress
+	);
+	const [email, setEmail] = useState<string>('');
 	const [enablePurchaseButton, setEnablePurchaseButton] = useState<boolean>(
 		false
 	);
-	const [email, setEmail] = useState<string>('');
+	const [enableTrialMethod, setEnableTrialMethod] = useState<boolean>(false);
+	const [licenseSelected, setLincenseSelected] = useState<boolean>(false);
+	const [orderType, setOrderType] = useState<OrderType>();
 	const [purchaseOrderNumber, setPurchaseOrderNumber] = useState<string>('');
 	const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
 		PaymentMethodSelector
 	>(paymentMethod.PAY);
-	const [enableTrialMethod, setEnableTrialMethod] = useState<boolean>(false);
-	const [billingAddress, setBillingAddress] = useState<BillingAddress>(
-		initialBillingAddress
-	);
-	const [licenseSelected, setLincenseSelected] = useState<boolean>(false);
+	const [specifications, setSpecifications] = useState<SpecificationKey>();
+	const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
 
-	const {getValues, setValue, watch} = useForm<getAppProps>({
+	const {getValues, setValue, watch} = useForm<GetAppForm>({
 		defaultValues: {
 			product: undefined,
 			selectedAccount: undefined,
@@ -98,8 +100,6 @@ const GetAppFlow = () => {
 	const {channel} = useGetChannelInfo();
 	const {addresses} = useGetAddresses(selectedAccount?.id);
 	const {isFreeApp, priceModel} = useProductPriceModel(product);
-	const [specifications, setSpecifications] = useState<SpecificationKey>();
-	const [orderType, setOrderType] = useState<OrderType>();
 
 	const cartUtil = useCart({
 		accountId: selectedAccount?.id!,
@@ -119,10 +119,12 @@ const GetAppFlow = () => {
 			const productSpecificationValues = await getProductSpecificationValues(
 				Number(productId)
 			);
+
 			setSpecifications(productSpecificationValues);
 
 			if (specifications) {
 				const orderType = await getProductOrderTypes(specifications);
+
 				setOrderType(orderType);
 			}
 		})();
@@ -162,27 +164,21 @@ const GetAppFlow = () => {
 
 		await postCheckoutCart({cartId: cartResponse.id});
 
-		const dashboardURL = getReplaceCurrentURL(
-			'get-app',
-			'customer-dashboard'
-		);
-
-		const emailAppInformation = {
-			dashboardLink: dashboardURL,
+		await postEmailAppInformation({
+			dashboardLink: getReplaceCurrentURL(
+				'get-app',
+				'customer-dashboard'
+			),
 			orderID: cartResponse.id,
 			priceModel,
 			productName,
 			productType,
-		};
-
-		await postEmailAppInformation(emailAppInformation);
-
-		const encodedOrderId = `${encodeURIComponent(cartResponse.id)}`;
+		});
 
 		const nextStepsCallbackURL = getReplaceCurrentURL(
 			'get-app',
 			'next-steps',
-			encodedOrderId
+			`${encodeURIComponent(cartResponse.id)}`
 		);
 
 		if (selectedPaymentMethod === paymentMethod.PAY) {
@@ -192,9 +188,11 @@ const GetAppFlow = () => {
 			);
 
 			window.location.href = paymentMethodURL;
-		} else {
-			window.location.href = nextStepsCallbackURL;
+
+			return;
 		}
+
+		window.location.href = nextStepsCallbackURL;
 	}
 
 	const StepFormComponent: StepComponent = {
@@ -241,7 +239,7 @@ const GetAppFlow = () => {
 	return (
 		<>
 			<ProductCard
-				cartinfo={cartUtil}
+				cartUtil={cartUtil}
 				productId={Number(getUrlParam('productId'))}
 				selectedAccount={watch('selectedAccount')}
 				setProductToForm={(product: Product) =>

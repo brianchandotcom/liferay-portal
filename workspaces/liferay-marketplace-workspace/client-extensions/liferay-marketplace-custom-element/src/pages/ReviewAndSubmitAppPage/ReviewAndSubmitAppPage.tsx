@@ -95,7 +95,7 @@ export function ReviewAndSubmitAppPage({
 			let licenseType = '';
 			let priceModel = '';
 
-			productSpecificationsResponse.map((specification) => {
+			productSpecificationsResponse.forEach((specification) => {
 				const {specificationKey, value} = specification;
 				const localizedValue = value['en_US'];
 

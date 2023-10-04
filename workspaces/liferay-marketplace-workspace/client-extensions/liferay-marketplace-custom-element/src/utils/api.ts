@@ -103,7 +103,7 @@ export async function getPriceEntrieListByPricelistId(priceListId: string) {
 		}
 	);
 
-	return await response.json();
+	return response.json();
 }
 
 export async function getTierPriceByPriceEntrieId(priceEntriId: string) {
@@ -115,7 +115,7 @@ export async function getTierPriceByPriceEntrieId(priceEntriId: string) {
 		}
 	);
 
-	return await response.json();
+	return response.json();
 }
 
 export async function getTierPrice(catalogName: string) {
@@ -164,9 +164,8 @@ export async function getLicenseDescription() {
 		headers,
 		method: 'GET',
 	});
-	const descriptions = await response.json();
 
-	return descriptions;
+	return response.json();
 }
 
 export async function createAppSKU({
@@ -353,10 +352,10 @@ export async function createCart({
 		}
 	);
 
-	return await response.json();
+	return response.json();
 }
 
-export async function updateCart(cartId: number, cart: any) {
+export async function updateCart(cartId: number, cart: Cart) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}`,
 		{
@@ -366,14 +365,17 @@ export async function updateCart(cartId: number, cart: any) {
 		}
 	);
 
-	return await response.json();
+	return response.json();
 }
 
 export async function deleteCart(cartId: number) {
-	fetch(`${baseURL}/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}`, {
-		headers,
-		method: 'DELETE',
-	});
+	await fetch(
+		`${baseURL}/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}`,
+		{
+			headers,
+			method: 'DELETE',
+		}
+	);
 }
 
 export async function getCart(cartId: number) {
@@ -400,7 +402,7 @@ export async function getCartByChannelAndAccountId(
 		}
 	);
 
-	return await cartResponse.json();
+	return cartResponse.json();
 }
 
 export async function getCartItems(cartId: number) {

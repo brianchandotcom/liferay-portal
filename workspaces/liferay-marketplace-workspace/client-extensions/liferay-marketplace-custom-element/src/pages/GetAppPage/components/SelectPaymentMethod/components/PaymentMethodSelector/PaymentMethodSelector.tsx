@@ -54,24 +54,22 @@ export function PaymentMethodSelector({
 
 	return (
 		<>
-			{paymentMethods.map((methodInfo) => {
-				return (
-					<CardButton
-						description={methodInfo.description}
-						disabled={methodInfo.disabled || false}
-						icon={methodInfo.icon}
-						key={methodInfo.method}
-						onClick={() => {
-							if (!methodInfo.disabled) {
-								setSelectedPaymentMethod(methodInfo.method);
-							}
-						}}
-						selected={methodInfo.method === selectedPaymentMethod}
-						step={step}
-						title={methodInfo.title}
-					/>
-				);
-			})}
+			{paymentMethods.map((methodInfo) => (
+				<CardButton
+					description={methodInfo.description}
+					disabled={methodInfo.disabled || false}
+					icon={methodInfo.icon}
+					key={methodInfo.method}
+					onClick={() => {
+						if (!methodInfo.disabled) {
+							setSelectedPaymentMethod(methodInfo.method);
+						}
+					}}
+					selected={methodInfo.method === selectedPaymentMethod}
+					step={step}
+					title={methodInfo.title}
+				/>
+			))}
 		</>
 	);
 }

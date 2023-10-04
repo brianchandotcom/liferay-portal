@@ -7,6 +7,7 @@ import ClayButton from '@clayui/button';
 
 import infoCircleIcon from '../../../assets/icons/info_circle_icon.svg';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
+import useCart from '../../../hooks/useCart';
 import {Liferay} from '../../../liferay/liferay';
 import {paymentMethod} from '../enums/paymentMethod';
 import {StepType} from '../enums/stepType';
@@ -14,7 +15,7 @@ import {StepType} from '../enums/stepType';
 interface ProductFooterProps {
 	addresses: BillingAddress[];
 	cartId?: number;
-	cartUtil: any;
+	cartUtil: ReturnType<typeof useCart>;
 	enablePurchaseButton: boolean;
 	handleGetApp: (orderId?: number) => void;
 	isFreeApp: boolean;
@@ -34,6 +35,10 @@ type SectionPropertiesType = {
 	};
 };
 
+const onCancel = () => {
+	Liferay.Util.navigate(getSiteURL());
+};
+
 const ProductFooter = ({
 	addresses,
 	cartUtil,
@@ -48,33 +53,25 @@ const ProductFooter = ({
 	step,
 }: ProductFooterProps) => {
 	const getButtonText = () => {
-		const isAccountOrLicenseStep =
-			step === StepType.ACCOUNT || step === StepType.LICENSES;
-		const isPayMethodSelected = selectedPaymentMethod === paymentMethod.PAY;
-		const isTrialMethodSelected =
-			selectedPaymentMethod === paymentMethod.TRIAL;
-		const isOrderMethodSelected =
-			selectedPaymentMethod === paymentMethod.ORDER;
-
 		if (isFreeApp) {
 			return 'Get This App';
 		}
-		if (isAccountOrLicenseStep) {
+
+		if ([StepType.ACCOUNT, StepType.LICENSES].includes(step)) {
 			return 'Continue';
 		}
-		if (isPayMethodSelected) {
+
+		if (selectedPaymentMethod === paymentMethod.PAY) {
 			return `Pay ${cartUtil?.cart?.summary?.totalFormatted} Now`;
 		}
-		if (isTrialMethodSelected) {
+
+		if (selectedPaymentMethod === paymentMethod.TRIAL) {
 			return 'Start Free Trial';
 		}
-		if (isOrderMethodSelected) {
+
+		if (selectedPaymentMethod === paymentMethod.ORDER) {
 			return `Create PO for ${cartUtil?.cart?.summary?.totalFormatted}`;
 		}
-	};
-
-	const onCancel = () => {
-		Liferay.Util.navigate(getSiteURL());
 	};
 
 	const onPrevious = async (previousStep: StepType) => {
@@ -85,7 +82,6 @@ const ProductFooter = ({
 
 	const onContinue = async (nextStep: StepType) => {
 		const isAccountStep = step === StepType.ACCOUNT;
-		const isPaymentStep = step === StepType.PAYMENT;
 		const isLicenseStep = step === StepType.LICENSES;
 
 		if ((!isFreeApp && isAccountStep && selectedAccount) || isLicenseStep) {
@@ -94,11 +90,13 @@ const ProductFooter = ({
 			return;
 		}
 
+		const isPaymentStep = step === StepType.PAYMENT;
+
 		if (
 			(isFreeApp && selectedAccount) ||
 			(enablePurchaseButton && addresses && isPaymentStep)
 		) {
-			handleGetApp(cartUtil.cart.id);
+			handleGetApp(cartUtil.cart?.id);
 		}
 	};
 
@@ -108,8 +106,10 @@ const ProductFooter = ({
 				<ClayButton
 					displayType={null}
 					onClick={() => {
-						cartUtil.cart?.id &&
-							cartUtil?.removeCart(cartUtil.cart?.id);
+						if (cartUtil?.cart?.id) {
+							cartUtil.removeCart(cartUtil.cart.id);
+						}
+
 						onCancel();
 					}}
 				>
@@ -120,8 +120,10 @@ const ProductFooter = ({
 						<ClayButton
 							displayType="secondary"
 							onClick={() => {
-								cartUtil?.cart?.id &&
-									cartUtil?.removeCart(cartUtil?.cart?.id);
+								if (cartUtil?.cart?.id) {
+									cartUtil.removeCart(cartUtil?.cart?.id);
+								}
+
 								onPrevious(sectionProperties[step].backStep);
 							}}
 						>
@@ -135,18 +137,17 @@ const ProductFooter = ({
 								(step === StepType.ACCOUNT &&
 									!selectedAccount) ||
 								(step === StepType.LICENSES && !licenseSelected)
-									? true
-									: false
 							}
-							onClick={() => {
-								onContinue(sectionProperties[step].nextStep);
-							}}
+							onClick={() =>
+								onContinue(sectionProperties[step].nextStep)
+							}
 						>
 							{getButtonText()}
 						</ClayButton>
 					)}
 				</div>
 			</div>
+
 			{!isFreeApp &&
 				step === StepType.PAYMENT &&
 				selectedPaymentMethod === paymentMethod.PAY && (

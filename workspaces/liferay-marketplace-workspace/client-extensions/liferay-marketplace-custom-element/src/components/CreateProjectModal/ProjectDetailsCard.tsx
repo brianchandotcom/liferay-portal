@@ -5,15 +5,15 @@
 
 import calendarIcon from '../../assets/icons/calendar_month_icon.svg';
 import githubIcon from '../../assets/icons/github_icon.svg';
-import guideIcon from '../../assets/icons/guide_icon.svg';
 import liferayIcon from '../../assets/icons/liferay_icon.svg';
 import listIcon from '../../assets/icons/list_alt_icon.svg';
 import serverIcon from '../../assets/icons/server_icon.svg';
+import sitesIcon from '../../assets/icons/sites_icon.svg';
 
 const projectDetailsCardValues = [
 	{
 		description: '1 Site',
-		icon: guideIcon,
+		icon: sitesIcon,
 		title: 'Sites',
 	},
 	{

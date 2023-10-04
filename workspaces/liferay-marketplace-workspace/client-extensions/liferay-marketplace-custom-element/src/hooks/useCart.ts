@@ -7,7 +7,7 @@ import {useEffect, useState} from 'react';
 
 import {createCart, deleteCart, updateCart} from '../utils/api';
 
-type cartItem = {
+type CartItem = {
 	productId: number;
 	quantity: number;
 	skuId: number;
@@ -24,34 +24,11 @@ const useCart = ({
 }) => {
 	const [cart, setCart] = useState<Cart>();
 
-	const [cartItems, setCartItems] = useState<cartItem[]>([]);
+	const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-	const addCart = async ({
-		accountId,
-		channelId,
-		orderTypeExternalReferenceCode,
-		orderTypeId,
-	}: {
-		accountId: number;
-		channelId: number;
-		orderTypeExternalReferenceCode: string;
-		orderTypeId: number;
-	}) => {
-		const cartData = await createCart({
-			accountId,
-			channelId,
-			orderTypeExternalReferenceCode,
-			orderTypeId,
-		});
-
-		setCart(cartData);
-
-		return cartData;
-	};
-
-	const addCartItem = async (productId: number, skuId: number) => {
+	const addCart = async (productId: number, skuId: number) => {
 		if (!cart?.id) {
-			const response = await addCart({
+			const response = await createCart({
 				accountId,
 				channelId: Number(channelId),
 				orderTypeExternalReferenceCode: orderType?.externalReferenceCode as string,
@@ -71,7 +48,8 @@ const useCart = ({
 						: item
 				)
 			);
-		} else {
+		}
+		else {
 			setCartItems((prevCart) => [
 				...prevCart,
 				{productId, quantity: 1, skuId},
@@ -117,7 +95,6 @@ const useCart = ({
 
 	return {
 		addCart,
-		addCartItem,
 		cart,
 		cartItems,
 		removeCart,

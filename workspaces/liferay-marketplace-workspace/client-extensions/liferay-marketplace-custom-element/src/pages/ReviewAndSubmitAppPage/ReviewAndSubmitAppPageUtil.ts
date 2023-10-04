@@ -5,8 +5,8 @@
 
 import documentationIcon from '../../assets/icons/documentation_icon.svg';
 import globeIcon from '../../assets/icons/globe_icon.svg';
-import guideIcon from '../../assets/icons/guide_icon.svg';
 import phoneIcon from '../../assets/icons/phone_icon.svg';
+import sitesIcon from '../../assets/icons/sites_icon.svg';
 import usageTermsIcon from '../../assets/icons/usage_terms_icon.svg';
 
 export type App = {
@@ -62,7 +62,7 @@ export const supportAndHelpMap = new Map<string, {icon: string; title: string}>(
 		[
 			'appinstallationguideurl',
 			{
-				icon: guideIcon,
+				icon: sitesIcon,
 				title: 'App installation guide URL',
 			},
 		],

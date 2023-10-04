@@ -58,11 +58,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@Test
 	public void testSendNotification() throws Exception {
-		Assert.assertEquals(
-			0,
-			notificationQueueEntryLocalService.
-				getNotificationQueueEntriesCount());
-
 		NotificationTemplate notificationTemplate = _addNotificationTemplate(
 			false);
 

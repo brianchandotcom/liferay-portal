@@ -18,13 +18,17 @@ import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 import ItemActionForm from './actions/ItemActionForm';
 
 const SECTIONS = {
-	ACTIONS: 'actions',
+	CREATION_ACTIONS: 'creation-actions',
+	EDIT_CREATION_ACTION: 'edit-creation-action',
 	EDIT_ITEM_ACTION: 'edit-item-action',
+	ITEM_ACTIONS: 'item-actions',
+	NEW_CREATION_ACTION: 'new-creation-action',
 	NEW_ITEM_ACTION: 'new-item-action',
 };
 
 interface IFDSAction {
-	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION]: any;
+	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_CREATION]?: any;
+	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ITEM]?: any;
 	actions: {
 		delete: {
 			href: string;
@@ -48,7 +52,7 @@ interface IFDSAction {
 }
 
 const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
-	const [activeSection, setActiveSection] = useState(SECTIONS.ACTIONS);
+	const [activeSection, setActiveSection] = useState(SECTIONS.ITEM_ACTIONS);
 	const [activeTab, setActiveTab] = useState(0);
 	const [fdsActions, setFDSActions] = useState<Array<IFDSAction>>([]);
 	const [loading, setLoading] = useState(true);
@@ -61,9 +65,17 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 			typeof ClayBreadcrumb
 		>['items'] = [
 			{
-				active: activeSection === SECTIONS.ACTIONS,
+				active:
+					activeSection === SECTIONS.ITEM_ACTIONS ||
+					activeSection === SECTIONS.CREATION_ACTIONS,
 				label: Liferay.Language.get('actions'),
-				onClick: () => setActiveSection(SECTIONS.ACTIONS),
+				onClick: () => {
+					const activeSection =
+						activeTab === 0
+							? SECTIONS.ITEM_ACTIONS
+							: SECTIONS.CREATION_ACTIONS;
+					setActiveSection(activeSection);
+				},
 			},
 		];
 
@@ -82,15 +94,31 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 			});
 		}
 
+		if (activeSection === SECTIONS.NEW_CREATION_ACTION) {
+			breadcrumbItems.push({
+				active: true,
+				label: Liferay.Language.get('new-creation-action'),
+				onClick: () => setActiveSection(SECTIONS.NEW_CREATION_ACTION),
+			});
+		}
+
 		return breadcrumbItems;
 	};
 
 	const loadFDSActions = async () => {
 		setLoading(true);
 
-		const response = await fetch(
-			`${API_URL.FDS_ACTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION}&sort=dateCreated:desc`
-		);
+		let url = '';
+		if (activeTab === 0) {
+			setActiveSection(SECTIONS.ITEM_ACTIONS);
+			url = `${API_URL.FDS_ACTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ITEM_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ITEM}&sort=dateCreated:desc`;
+		}
+		else if (activeTab === 1) {
+			setActiveSection(SECTIONS.CREATION_ACTIONS);
+			url = `${API_URL.FDS_ACTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_CREATION_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_CREATION}&sort=dateCreated:desc`;
+		}
+
+		const response = await fetch(url);
 
 		if (!response.ok) {
 			setLoading(false);
@@ -107,9 +135,16 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 		let ordered = storedFDSActions;
 		let notOrdered: IFDSAction[] = [];
 
+		const relationShip =
+			activeTab === 0
+				? OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ITEM
+				: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_CREATION;
+
+		const actionTypeOrder =
+			activeTab === 0 ? 'fdsActionsItemOrder' : 'fdsActionsCreationOrder';
+
 		const fdsActionsOrder =
-			storedFDSActions?.[0]?.[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION]
-				?.fdsActionsOrder;
+			storedFDSActions?.[0]?.[relationShip]?.[actionTypeOrder];
 
 		if (fdsActionsOrder) {
 			const fdsActionsOrderArray = fdsActionsOrder.split(',') as string[];
@@ -171,7 +206,12 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 	const handleEdit = ({item}: {item: IFDSAction}) => {
 		setInitialActionFormValues(item);
 
-		setActiveSection(SECTIONS.EDIT_ITEM_ACTION);
+		const actionType =
+			activeTab === 0
+				? SECTIONS.EDIT_ITEM_ACTION
+				: SECTIONS.EDIT_CREATION_ACTION;
+
+		setActiveSection(actionType);
 	};
 
 	const updateFDSActionsOrder = async ({
@@ -229,7 +269,8 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 			<ClayBreadcrumb className="my-2" items={getBreadcrumbItems()} />
 
 			<ClayLayout.ContainerFluid className="bg-white mb-4 p-0 rounded-sm">
-				{activeSection === SECTIONS.ACTIONS && (
+				{(activeSection === SECTIONS.ITEM_ACTIONS ||
+					activeSection === SECTIONS.CREATION_ACTIONS) && (
 					<>
 						<h2 className="mb-0 p-4">
 							{Liferay.Language.get('actions')}
@@ -333,7 +374,8 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 					</>
 				)}
 
-				{activeSection === SECTIONS.NEW_ITEM_ACTION && (
+				{(activeSection === SECTIONS.NEW_CREATION_ACTION ||
+					activeSection === SECTIONS.NEW_ITEM_ACTION) && (
 					<ItemActionForm
 						fdsView={fdsView}
 						loadFDSActions={loadFDSActions}
@@ -344,7 +386,8 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 					/>
 				)}
 
-				{activeSection === SECTIONS.EDIT_ITEM_ACTION && (
+				{(activeSection === SECTIONS.EDIT_CREATION_ACTION ||
+					activeSection === SECTIONS.EDIT_ITEM_ACTION) && (
 					<ItemActionForm
 						editing
 						fdsView={fdsView}
@@ -361,5 +404,5 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 	);
 };
 
-export {IFDSAction};
+export {IFDSAction, SECTIONS};
 export default Actions;

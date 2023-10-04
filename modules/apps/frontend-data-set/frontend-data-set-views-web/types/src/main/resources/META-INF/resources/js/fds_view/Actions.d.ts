@@ -7,8 +7,17 @@
 
 import {OBJECT_RELATIONSHIP} from '../Constants';
 import {IFDSViewSectionProps} from '../FDSView';
+declare const SECTIONS: {
+	CREATION_ACTIONS: string;
+	EDIT_CREATION_ACTION: string;
+	EDIT_ITEM_ACTION: string;
+	ITEM_ACTIONS: string;
+	NEW_CREATION_ACTION: string;
+	NEW_ITEM_ACTION: string;
+};
 interface IFDSAction {
-	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION]: any;
+	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_CREATION]?: any;
+	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ITEM]?: any;
 	actions: {
 		delete: {
 			href: string;
@@ -16,7 +25,8 @@ interface IFDSAction {
 		};
 	};
 	confirmationMessage: string;
-	confirmationMessageType: string;
+	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_CREATION]?: any;
+	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ITEM]?: any;
 	confirmationMessage_i18n: {
 		[key: string]: string;
 	};
@@ -35,5 +45,5 @@ declare const Actions: ({
 	namespace,
 	spritemap,
 }: IFDSViewSectionProps) => JSX.Element;
-export {IFDSAction};
+export {IFDSAction, SECTIONS};
 export default Actions;

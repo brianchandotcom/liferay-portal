@@ -13,11 +13,7 @@ interface IFDSItemActionFormProps {
 	initialValues?: IFDSAction;
 	loadFDSActions: () => void;
 	namespace: string;
-	sections: {
-		ACTIONS: string;
-		EDIT_ITEM_ACTION: string;
-		NEW_ITEM_ACTION: string;
-	};
+	sections: typeof SECTIONS;
 	setActiveSection: (arg: string) => void;
 	spritemap: string;
 }

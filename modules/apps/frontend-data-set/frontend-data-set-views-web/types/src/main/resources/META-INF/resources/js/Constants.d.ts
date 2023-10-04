@@ -20,8 +20,10 @@ declare const FUZZY_OPTIONS: {
 declare const OBJECT_RELATIONSHIP: {
 	readonly FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship';
 	readonly FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId';
-	readonly FDS_VIEW_FDS_ACTION: 'fdsViewFDSActionRelationship';
-	readonly FDS_VIEW_FDS_ACTION_ID: 'r_fdsViewFDSActionRelationship_c_fdsViewId';
+	readonly FDS_VIEW_FDS_ACTION_CREATION: 'fdsViewFDSActionCreationRelationship';
+	readonly FDS_VIEW_FDS_ACTION_CREATION_ID: 'r_fdsViewFDSActionCreationRelationship_c_fdsViewId';
+	readonly FDS_VIEW_FDS_ACTION_ITEM: 'fdsViewFDSActionItemRelationship';
+	readonly FDS_VIEW_FDS_ACTION_ITEM_ID: 'r_fdsViewFDSActionItemRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER: 'fdsViewFDSClientExtensionFilter';
 	readonly FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER_ID: 'r_fdsViewFDSClientExtensionFilter_c_fdsViewId';
 	readonly FDS_VIEW_FDS_DATE_FILTER: 'fdsViewFDSDateFilterRelationship';

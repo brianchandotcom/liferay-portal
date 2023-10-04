@@ -60,11 +60,7 @@ interface IFDSItemActionFormProps {
 	initialValues?: IFDSAction;
 	loadFDSActions: () => void;
 	namespace: string;
-	sections: {
-		ACTIONS: string;
-		EDIT_ITEM_ACTION: string;
-		NEW_ITEM_ACTION: string;
-	};
+	sections: typeof SECTIONS;
 	setActiveSection: (arg: string) => void;
 	spritemap: string;
 }
@@ -115,12 +111,17 @@ const ItemActionForm = ({
 			url,
 		} = actionData;
 
+		const relationShip =
+			activeTab === 0
+				? OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ITEM_ID
+				: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_CREATION_ID;
+
 		const body = {
-			[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ID]: fdsView.id,
 			confirmationMessage_i18n: confirmationMessageTranslations,
 			icon: iconSymbol,
 			label_i18n: labelTranslations,
 			permissionKey,
+			[relationShip]: fdsView.id,
 			type,
 			url,
 		} as any;
@@ -158,7 +159,9 @@ const ItemActionForm = ({
 
 		openDefaultSuccessToast();
 
-		setActiveSection(sections.ACTIONS);
+		const activeSection =
+			activeTab === 0 ? sections.ITEM_ACTIONS : sections.CREATION_ACTIONS;
+		setActiveSection(activeSection);
 
 		loadFDSActions();
 	};
@@ -464,7 +467,13 @@ const ItemActionForm = ({
 
 				<ClayButton
 					displayType="secondary"
-					onClick={() => setActiveSection(sections.ACTIONS)}
+					onClick={() => {
+						const activeSection =
+							activeTab === 0
+								? sections.ITEM_ACTIONS
+								: sections.CREATION_ACTIONS;
+						setActiveSection(activeSection);
+					}}
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>

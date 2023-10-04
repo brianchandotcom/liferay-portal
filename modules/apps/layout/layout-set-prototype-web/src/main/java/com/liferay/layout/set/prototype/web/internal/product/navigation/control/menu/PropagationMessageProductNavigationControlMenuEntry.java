@@ -5,6 +5,9 @@
 
 package com.liferay.layout.set.prototype.web.internal.product.navigation.control.menu;
 
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -67,7 +70,26 @@ public class PropagationMessageProductNavigationControlMenuEntry
 			_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
 				group.getClassPK());
 
-		if ((layoutSetPrototype == null) ||
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+		}
+
+		int layoutType = -1;
+
+		if (layoutPageTemplateEntry != null) {
+			layoutType = layoutPageTemplateEntry.getType();
+		}
+
+		if ((layoutSetPrototype == null) || layout.isTypeAssetDisplay() ||
+			(layoutType ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) ||
+			(layoutType == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) ||
 			!LayoutSetPrototypePermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				layoutSetPrototype.getLayoutSetPrototypeId(),
@@ -83,6 +105,10 @@ public class PropagationMessageProductNavigationControlMenuEntry
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

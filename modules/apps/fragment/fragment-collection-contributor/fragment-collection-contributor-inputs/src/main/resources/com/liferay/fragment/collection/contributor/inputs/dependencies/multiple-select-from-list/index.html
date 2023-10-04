@@ -1,7 +1,9 @@
+[#assign readOnly = input.attributes.readOnly?? && input.attributes.readOnly ]
+
 <div class="multiselect-list">
-	<div class="custom-checkbox custom-control [#if  input.errorMessage?has_content]has-error[/#if] mb-0">
+	<div class="custom-checkbox custom-control [#if input.errorMessage?has_content]has-error[/#if] mb-0">
 		<span class="font-weight-semi-bold mb-1 multiselect-list-label text-3 [#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-multiselect-list-label">
-			${htmlUtil.escape(input.label)} [#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+			${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 		</span>
 
 		<div aria-describedby="${fragmentEntryLinkNamespace}-multiselect-list-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-multiselect-list-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-multiselect-list-error-message[/#if]" class="multiselect-list-fieldset" role="group">
@@ -14,7 +16,7 @@
 				[/#if]
 
 				<div class="custom-control mb-0">
-					<input class="custom-control-input" [#if values?seq_contains(option.value)]checked[/#if] id="${fragmentEntryLinkNamespace}-checkbox-${option.value}" name="${input.name}" ${input.required?then('required', '')} type="checkbox" value="${option.value}" />
+					<input class="custom-control-input" [#if values?seq_contains(option.value)]checked[/#if] id="${fragmentEntryLinkNamespace}-checkbox-${option.value}" name="${input.name}" [#if readOnly]readonly[/#if] ${input.required?then('required', '')} type="checkbox" value="${option.value}" />
 
 					<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox-${option.value}">
 						<span class="custom-control-label-text">${htmlUtil.escape(option.label)}</span>

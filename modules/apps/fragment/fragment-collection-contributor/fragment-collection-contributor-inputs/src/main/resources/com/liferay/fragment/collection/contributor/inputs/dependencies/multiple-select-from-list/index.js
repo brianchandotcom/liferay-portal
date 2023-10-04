@@ -9,7 +9,12 @@ const allInputs = Array.from(
 	fragmentElement.querySelectorAll('.custom-control-input')
 );
 
-if (layoutMode === 'edit') {
+if (input.attributes?.readOnly) {
+	allInputs.forEach((input) => {
+		input.addEventListener('click', (event) => event.preventDefault());
+	});
+}
+else if (layoutMode === 'edit') {
 	allInputs.forEach((input) => {
 		input.setAttribute('disabled', true);
 	});

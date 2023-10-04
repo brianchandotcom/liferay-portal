@@ -141,6 +141,7 @@ export default function EditObjectFolderHeader({
 								})
 							);
 						}}
+						size="sm"
 					>
 						{Liferay.Language.get('publish')}
 					</ClayButton>

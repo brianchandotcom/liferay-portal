@@ -103,6 +103,7 @@ export default function LeftSidebar({setShowModal}: LeftSidebarProps) {
 							addObjectDefinition: true,
 						}))
 					}
+					size="sm"
 				>
 					{Liferay.Language.get('create-new-object')}
 				</ClayButton>

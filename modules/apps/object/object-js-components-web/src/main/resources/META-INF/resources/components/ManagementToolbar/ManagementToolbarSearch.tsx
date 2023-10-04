@@ -27,6 +27,7 @@ export function ManagementToolbarSearch({query, setQuery}: IProps) {
 							setQuery(target.value);
 						}}
 						placeholder={Liferay.Language.get('search')}
+						sizing="sm"
 						type="text"
 						value={query}
 					/>

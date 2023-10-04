@@ -372,6 +372,7 @@ export function ModalPublishObjectDefinitions({
 							onClick={() =>
 								handleSelectAllObjectDefinitions('checkAll')
 							}
+							size="sm"
 						>
 							{Liferay.Language.get('select-all')}
 						</ClayButton>
@@ -493,6 +494,7 @@ export function ModalPublishObjectDefinitions({
 								aria-labelledby={Liferay.Language.get('close')}
 								displayType="primary"
 								onClick={onClose}
+								size="sm"
 							>
 								{Liferay.Language.get('close')}
 							</ClayButton>
@@ -507,6 +509,7 @@ export function ModalPublishObjectDefinitions({
 									className="c-mr-sm-2"
 									displayType="secondary"
 									onClick={onClose}
+									size="sm"
 								>
 									{Liferay.Language.get('cancel')}
 								</ClayButton>
@@ -529,6 +532,7 @@ export function ModalPublishObjectDefinitions({
 									}
 									displayType="primary"
 									onClick={handleOnClickPublish}
+									size="sm"
 								>
 									{publishObjectDefinitionsStatus ===
 									STATUS.PENDING

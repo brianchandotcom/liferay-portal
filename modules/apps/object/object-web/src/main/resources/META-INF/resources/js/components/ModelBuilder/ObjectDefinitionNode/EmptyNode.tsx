@@ -40,6 +40,7 @@ export function EmptyNode({data: {setShowModal}}: NodeProps<EmptyNodeProps>) {
 							addObjectDefinition: true,
 						}))
 					}
+					size="sm"
 				>
 					<span>{Liferay.Language.get('create-new-object')}</span>
 				</ClayButton>

@@ -44,6 +44,7 @@ export default function ObjectDefinitionNodeFooter({
 								)}
 								displayType="secondary"
 								onClick={(event) => event.stopPropagation()}
+								size="sm"
 							>
 								<span>
 									{sub(
@@ -119,6 +120,7 @@ export default function ObjectDefinitionNodeFooter({
 					onClick={() => {
 						setShowAllObjectFields(!showAllObjectFields);
 					}}
+					size="sm"
 				>
 					{showAllObjectFields
 						? sub(

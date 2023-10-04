@@ -221,20 +221,6 @@
 					</li>
 				[/#if]
 			[/#if]
-
-			[#if mdfRequestStatusKey == 'draft']
-				[#if hasMarketingReviewAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('pendingMarketingReview')">
-						Pending Marketing Review
-					</li>
-				[/#if]
-
-				[#if hasMarketingDirectorReviewAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
-						Marketing Director Review
-					</li>
-				[/#if]
-			[/#if]
 		</ul>
 	[#else]
 		Status: ${mdfRequest.mdfRequestStatus.name}

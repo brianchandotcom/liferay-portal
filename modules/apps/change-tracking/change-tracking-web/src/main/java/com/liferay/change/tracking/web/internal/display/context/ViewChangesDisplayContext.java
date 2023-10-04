@@ -1183,6 +1183,8 @@ public class ViewChangesDisplayContext {
 				).buildString();
 			}
 		).put(
+			"showActionItems", !_user.isOnDemandUser()
+		).put(
 			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).put(
 			"statusLabel",

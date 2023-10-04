@@ -13,6 +13,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.ProductNavigationControlMenuEntryConstants;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -375,6 +376,10 @@ public class LayoutReportsProductNavigationControlMenuEntry
 								"/get_google_page_speed_data"),
 							"p_l_id", themeDisplay.getPlid());
 					}
+				).put(
+					"learnResources",
+					LearnMessageUtil.getReactDataJSONObject(
+						"frontend-js-components-web")
 				).build(),
 				httpServletRequest, jspWriter);
 

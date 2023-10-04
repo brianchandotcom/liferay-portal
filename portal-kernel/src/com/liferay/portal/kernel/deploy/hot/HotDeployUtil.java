@@ -34,7 +34,7 @@ import javax.servlet.ServletContext;
  */
 public class HotDeployUtil {
 
-	public synchronized void fireDeployEvent(
+	public static synchronized void fireDeployEvent(
 		final HotDeployEvent hotDeployEvent) {
 
 		ServletContext servletContext = hotDeployEvent.getServletContext();
@@ -70,7 +70,9 @@ public class HotDeployUtil {
 		}
 	}
 
-	public synchronized void fireUndeployEvent(HotDeployEvent hotDeployEvent) {
+	public static synchronized void fireUndeployEvent(
+		HotDeployEvent hotDeployEvent) {
+
 		for (int i = _hotDeployListeners.size() - 1; i >= 0; i--) {
 			HotDeployListener hotDeployListener = _hotDeployListeners.get(i);
 
@@ -92,7 +94,7 @@ public class HotDeployUtil {
 			hotDeployEvent.getServletContextName());
 	}
 
-	public boolean registerDependentPortalLifecycle(
+	public static synchronized boolean registerDependentPortalLifecycle(
 		String servletContextName, PortalLifecycle portalLifecycle) {
 
 		for (HotDeployEvent hotDeployEvent : _dependentHotDeployEvents) {
@@ -100,9 +102,7 @@ public class HotDeployUtil {
 					servletContextName,
 					hotDeployEvent.getServletContextName())) {
 
-				synchronized (this) {
-					hotDeployEvent.addPortalLifecycle(portalLifecycle);
-				}
+				hotDeployEvent.addPortalLifecycle(portalLifecycle);
 
 				return true;
 			}
@@ -111,36 +111,36 @@ public class HotDeployUtil {
 		return false;
 	}
 
-	public synchronized void registerListener(
+	public static synchronized void registerListener(
 		HotDeployListener hotDeployListener) {
 
 		_hotDeployListeners.add(hotDeployListener);
 	}
 
-	public synchronized void reset() {
+	public static synchronized void reset() {
 		_capturePrematureEvents = true;
 		_dependentHotDeployEvents.clear();
 		_deployedServletContextNames.clear();
 		_hotDeployListeners.clear();
 	}
 
-	public synchronized void setCapturePrematureEvents(
+	public static synchronized void setCapturePrematureEvents(
 		boolean capturePrematureEvents) {
 
 		_capturePrematureEvents = capturePrematureEvents;
 	}
 
-	public synchronized void unregisterListener(
+	public static synchronized void unregisterListener(
 		HotDeployListener hotDeployListener) {
 
 		_hotDeployListeners.remove(hotDeployListener);
 	}
 
-	public synchronized void unregisterListeners() {
+	public static synchronized void unregisterListeners() {
 		_hotDeployListeners.clear();
 	}
 
-	protected void doFireDeployEvent(HotDeployEvent hotDeployEvent) {
+	protected static void doFireDeployEvent(HotDeployEvent hotDeployEvent) {
 		String servletContextName = hotDeployEvent.getServletContextName();
 
 		if (_deployedServletContextNames.contains(servletContextName)) {
@@ -237,13 +237,13 @@ public class HotDeployUtil {
 		}
 	}
 
-	protected ClassLoader getContextClassLoader() {
+	protected static ClassLoader getContextClassLoader() {
 		Thread currentThread = Thread.currentThread();
 
 		return currentThread.getContextClassLoader();
 	}
 
-	protected String getRequiredServletContextNames(
+	protected static String getRequiredServletContextNames(
 		HotDeployEvent hotDeployEvent) {
 
 		List<String> requiredServletContextNames = new ArrayList<>();
@@ -263,7 +263,9 @@ public class HotDeployUtil {
 		return StringUtil.merge(requiredServletContextNames, ", ");
 	}
 
-	protected void setContextClassLoader(ClassLoader contextClassLoader) {
+	protected static void setContextClassLoader(
+		ClassLoader contextClassLoader) {
+
 		Thread currentThread = Thread.currentThread();
 
 		currentThread.setContextClassLoader(contextClassLoader);
@@ -271,11 +273,12 @@ public class HotDeployUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(HotDeployUtil.class);
 
-	private boolean _capturePrematureEvents = true;
-	private final Queue<HotDeployEvent> _dependentHotDeployEvents =
+	private static boolean _capturePrematureEvents = true;
+	private static final Queue<HotDeployEvent> _dependentHotDeployEvents =
 		new ConcurrentLinkedQueue<>();
-	private final Set<String> _deployedServletContextNames = new HashSet<>();
-	private final List<HotDeployListener> _hotDeployListeners =
+	private static final Set<String> _deployedServletContextNames =
+		new HashSet<>();
+	private static final List<HotDeployListener> _hotDeployListeners =
 		new ArrayList<>();
 
 }

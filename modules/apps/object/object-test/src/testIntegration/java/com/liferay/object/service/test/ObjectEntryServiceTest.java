@@ -13,11 +13,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.definition.tree.Edge;
-import com.liferay.object.definition.tree.Node;
-import com.liferay.object.definition.tree.Tree;
-import com.liferay.object.definition.tree.TreeFactory;
-import com.liferay.object.definition.tree.constants.TreeConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -30,6 +25,11 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
+import com.liferay.object.tree.Edge;
+import com.liferay.object.tree.Node;
+import com.liferay.object.tree.Tree;
+import com.liferay.object.tree.TreeFactory;
+import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -711,9 +711,9 @@ public class ObjectEntryServiceTest {
 
 		Map<Long, ObjectEntry> objectEntries =
 			HashMapBuilder.<Long, ObjectEntry>put(
-				rootNode.getObjectDefinitionId(),
+				rootNode.getPrimaryKey(),
 				_objectEntryLocalService.addObjectEntry(
-					_adminUser.getUserId(), 0, rootNode.getObjectDefinitionId(),
+					_adminUser.getUserId(), 0, rootNode.getPrimaryKey(),
 					Collections.emptyMap(),
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(), _adminUser.getUserId()))
@@ -723,9 +723,9 @@ public class ObjectEntryServiceTest {
 			Node node = iterator.next();
 
 			objectEntries.put(
-				node.getObjectDefinitionId(),
+				node.getPrimaryKey(),
 				_objectEntryLocalService.addObjectEntry(
-					_adminUser.getUserId(), 0, node.getObjectDefinitionId(),
+					_adminUser.getUserId(), 0, node.getPrimaryKey(),
 					HashMapBuilder.<String, Serializable>put(
 						() -> {
 							Edge edge = node.getEdge();
@@ -745,7 +745,7 @@ public class ObjectEntryServiceTest {
 							Node parentNode = node.getParentNode();
 
 							ObjectEntry objectEntry = objectEntries.get(
-								parentNode.getObjectDefinitionId());
+								parentNode.getPrimaryKey());
 
 							return objectEntry.getObjectEntryId();
 						}

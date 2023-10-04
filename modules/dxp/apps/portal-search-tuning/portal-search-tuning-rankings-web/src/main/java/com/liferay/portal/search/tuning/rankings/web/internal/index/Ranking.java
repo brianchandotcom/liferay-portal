@@ -97,7 +97,19 @@ public class Ranking {
 	}
 
 	public boolean isPinned(String documentId) {
-		return _pinnedDocumentIds.contains(documentId);
+		if (_pinnedDocumentIds.contains(documentId)) {
+			return true;
+		}
+
+		for (String pinnedDocumentId : _pinnedDocumentIds) {
+			if (documentId.equals(
+					RankingUtil.getDocumentId(pinnedDocumentId))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static class Pin {

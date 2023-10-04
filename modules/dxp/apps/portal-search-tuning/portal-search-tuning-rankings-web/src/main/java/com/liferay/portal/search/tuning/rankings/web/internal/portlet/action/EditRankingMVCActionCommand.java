@@ -566,7 +566,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			newStrings = Arrays.asList(addStrings);
 		}
 		else {
-			newStrings = new ArrayList<>(strings);
+			newStrings = RankingUtil.translateDocumentIds(strings);
 
 			Collections.addAll(newStrings, addStrings);
 		}

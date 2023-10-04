@@ -1,5 +1,68 @@
 definition {
 
+	macro addActions {
+		if (isSet(actionName)) {
+			var key_actionNameList = ${actionName};
+		}
+
+		if (isSet(icon)) {
+			var key_actionIcon = ${icon};
+		}
+
+		if (isSet(type)) {
+			var key_actionType = ${type};
+		}
+
+		if (isSet(messageType)) {
+			var key_actionMessageType = ${messageType};
+		}
+
+		for (var key_actionName : list ${key_actionNameList}) {
+			LexiconEntry.gotoAdd();
+
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = ${key_actionName});
+
+			Select(
+				key_fieldLabel = "Icon",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${key_actionIcon});
+
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${key_actionType});
+
+			Select(
+				key_fieldLabel = "Message Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${key_actionMessageType});
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = ${url});
+
+			if (isSet(headlessAction)) {
+				Type(
+					key_placeholder = "Add a value here.",
+					locator1 = "FrontendDataSet#PLACEHOLDER",
+					value1 = ${headlessAction});
+			}
+
+			if (isSet(confirmationMessage)) {
+				Type(
+					key_placeholder = "Add a message here.",
+					locator1 = "FrontendDataSet#PLACEHOLDER",
+					value1 = ${confirmationMessage});
+			}
+
+			PortletEntry.save();
+		}
+	}
+
 	macro addFields {
 		LexiconEntry.gotoAdd();
 

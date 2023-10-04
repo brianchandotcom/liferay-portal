@@ -53,13 +53,15 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 			newContent = JavaSourceUtil.addImports(newContent, newImports);
 		}
 		else if (fileName.endsWith(".jsp")) {
-			newContent = addNewImportsJSP(newContent, newImports);
+			newContent = addNewImportsJspHeader(newContent, newImports);
 		}
 
 		return newContent;
 	}
 
-	protected String addNewImportsJSP(String newContent, String[] newImports) {
+	protected String addNewImportsJspHeader(
+		String newContent, String[] newImports) {
+
 		Arrays.sort(newImports);
 
 		Matcher includesMatcher = _includesPattern.matcher(newContent);
@@ -69,7 +71,8 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 
 			return StringUtil.replaceFirst(
 				newContent, jspHeader,
-				getJspHeader(StringUtil.splitLines(jspHeader), newImports));
+				getNewImportsJspHeader(
+					StringUtil.splitLines(jspHeader), newImports));
 		}
 
 		Matcher copyrightMatcher = _copyrightPattern.matcher(newContent);
@@ -79,10 +82,10 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 
 			return StringUtil.replaceFirst(
 				newContent, jspHeader,
-				getJspHeader(new String[] {jspHeader}, newImports));
+				getNewImportsJspHeader(new String[] {jspHeader}, newImports));
 		}
 
-		return getJspHeader(new String[0], newImports) + newContent;
+		return getNewImportsJspHeader(new String[0], newImports) + newContent;
 	}
 
 	protected String afterFormat(
@@ -115,7 +118,13 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception;
 
-	protected String getJspHeader(String[] jspHeaders, String[] newImports) {
+	protected String[] getNewImports() {
+		return null;
+	}
+
+	protected String getNewImportsJspHeader(
+		String[] jspHeaders, String[] newImports) {
+
 		StringBundler sb = new StringBundler(4);
 
 		for (String jspHeader : jspHeaders) {
@@ -132,10 +141,6 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 		}
 
 		return sb.toString();
-	}
-
-	protected String[] getNewImports() {
-		return null;
 	}
 
 	protected String[] getValidExtensions() {

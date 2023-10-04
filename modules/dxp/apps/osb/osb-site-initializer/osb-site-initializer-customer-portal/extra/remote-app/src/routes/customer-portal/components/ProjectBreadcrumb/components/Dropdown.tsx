@@ -7,7 +7,7 @@ import {Button} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import DropdownChildren from './DropdownChildren';
 import ProjectNameTruncate from './ProjectNameTruncate';
 
@@ -41,6 +41,11 @@ const Dropdown: React.FC<DropdownProps> = ({
 	selectedKoroneikiAccount,
 }) => {
 	const [active, setActive] = useState(false);
+
+	const koroneikiAccountsItems = useMemo(
+		() => koroneikiAccounts?.items ?? [],
+		[koroneikiAccounts?.items]
+	);
 
 	const dropdownProjectsExceeded = initialTotalCount > MAX_ITEM_BEFORE_FILTER;
 
@@ -82,6 +87,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 				fetching={fetching}
 				initialTotalCount={initialTotalCount}
 				koroneikiAccounts={koroneikiAccounts}
+				koroneikiAccountsItems={koroneikiAccountsItems}
 				onIntersecting={onIntersecting}
 				onSearch={onSearch}
 				searching={searching}

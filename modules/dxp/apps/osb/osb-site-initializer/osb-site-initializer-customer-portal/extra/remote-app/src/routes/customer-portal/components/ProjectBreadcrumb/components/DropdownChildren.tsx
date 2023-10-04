@@ -4,7 +4,7 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
-import {useEffect, useMemo} from 'react';
+import {useEffect} from 'react';
 import i18n from '~/common/I18n';
 import useIntersectionObserver from '~/common/hooks/useIntersectionObserver';
 import DropdownItems from './DropdownItems';
@@ -15,6 +15,7 @@ const DropdownChildren = ({
 	fetching,
 	initialTotalCount,
 	koroneikiAccounts,
+	koroneikiAccountsItems,
 	onIntersecting,
 	onSearch,
 	searching,
@@ -22,16 +23,11 @@ const DropdownChildren = ({
 }: any) => {
 	const [trackedRef, isIntersecting] = useIntersectionObserver();
 
-	const koroneikiAccountsItems = useMemo(
-		() => koroneikiAccounts?.items ?? [],
-		[koroneikiAccounts?.items]
-	);
-
 	const isLastPage = koroneikiAccounts?.page === koroneikiAccounts?.lastPage;
 	const allowFetching = !isLastPage && !fetching;
 
 	useEffect(() => {
-		if (isIntersecting && allowFetching) {
+		if ((isIntersecting || searching) && allowFetching) {
 			onIntersecting(koroneikiAccounts?.page);
 		}
 	}, [
@@ -39,6 +35,7 @@ const DropdownChildren = ({
 		isIntersecting,
 		koroneikiAccounts?.page,
 		onIntersecting,
+		searching,
 	]);
 
 	return (
@@ -74,9 +71,11 @@ const DropdownChildren = ({
 						selectedKoroneikiAccount={selectedKoroneikiAccount}
 					/>
 
-					<ClayDropDown.Section className="px-3">
-						<div ref={trackedRef as any}>&nbsp;</div>
-					</ClayDropDown.Section>
+					{dropdownProjectsExceeded && !isLastPage && (
+						<ClayDropDown.Section className="px-3">
+							<div ref={trackedRef as any}>&nbsp;</div>
+						</ClayDropDown.Section>
+					)}
 				</ClayDropDown.ItemList>
 			)}
 		</>

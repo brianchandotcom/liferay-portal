@@ -117,8 +117,8 @@
 	}
 
 	ul {
-		height: 16.563rem !important;
-		overflow-y: scroll;
+		max-height: 16.563rem !important;
+		overflow-y: scroll !important;
 	}
 }
 

@@ -447,7 +447,7 @@ definition {
 			var optionIndex = 1;
 		}
 
-		Click.clickAtNotVisible(
+		Click.javaScriptClick(
 			fieldIndex = ${fieldIndex},
 			key_fieldLabel = ${fieldLabel},
 			key_optionValue = ${optionValue},

@@ -636,7 +636,7 @@ definition {
 				var webContentMultipleSelectionFieldLabel = "Multiple Selection";
 			}
 
-			Check.checkNotVisible(
+			Click.javaScriptClick(
 				key_fieldFieldLabel = ${webContentMultipleSelectionFieldLabel},
 				key_optionValue = ${webContentMultipleSelection},
 				locator1 = "WCEditWebContent#SELECTION_OPTION");

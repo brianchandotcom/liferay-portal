@@ -27,7 +27,7 @@ ProcessListDisplayContext processListDisplayContext = new ProcessListDisplayCont
 	/>
 
 	<liferay-ui:search-container
-		id='<%= ParamUtil.getString(request, "searchContainerId") %>'
+		id='<%= HtmlUtil.escapeJS(ParamUtil.getString(request, "searchContainerId")) %>'
 		searchContainer="<%= processListDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row

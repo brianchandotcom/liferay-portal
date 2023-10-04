@@ -21,6 +21,8 @@ public interface DBManager {
 
 	public DB getDB(DBType dbType, DataSource dataSource);
 
+	public DBType getDBType();
+
 	public DBType getDBType(Object dialect);
 
 	public Set<DBType> getDBTypes();

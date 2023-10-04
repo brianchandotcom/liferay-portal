@@ -5,9 +5,7 @@
 
 package com.liferay.users.admin.internal.search;
 
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -16,10 +14,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.spi.reindexer.BulkReindexer;
 
 import java.util.Collection;
@@ -63,13 +58,7 @@ public class UserBulkReindexer implements BulkReindexer {
 
 	@Activate
 	protected void activate() {
-		DBType dbType = DBManagerUtil.getDBType();
-
-		_databaseMaxParameters = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.DATABASE_MAX_PARAMETERS,
-				new Filter(dbType.getName())),
-			Integer.MAX_VALUE);
+		_databaseMaxParameters = DBManagerUtil.getDBMaxParameters();
 	}
 
 	@Reference(

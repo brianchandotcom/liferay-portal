@@ -225,7 +225,7 @@ function DiagramBuilder({
 				onConnect={onConnect}
 				onNodeDragStop={onNodeDragStop}
 			>
-				<Background size={1} />
+				<Background color="#C0C1C3" gap={18} size={1} />
 
 				{!isLoadingObjectFolder ? (
 					<>

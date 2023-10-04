@@ -336,6 +336,14 @@ public class ObjectRelationshipLocalServiceImpl
 
 			_objectFieldLocalService.deleteRelationshipTypeObjectField(
 				objectRelationship.getObjectFieldId2());
+
+			for (ObjectRelationship objectRelationshipByParameterObjectFieldId :
+					objectRelationshipPersistence.findByParameterObjectFieldId(
+						objectRelationship.getObjectFieldId2())) {
+
+				objectRelationshipLocalService.deleteObjectRelationship(
+					objectRelationshipByParameterObjectFieldId);
+			}
 		}
 		else if (Objects.equals(
 					objectRelationship.getType(),

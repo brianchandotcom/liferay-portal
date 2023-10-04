@@ -5,8 +5,12 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.util.ThemeFactory;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.model.impl.ThemeImpl;
 
 /**
  * @author Harrison Schueler
@@ -14,33 +18,27 @@ import com.liferay.portal.kernel.util.ThemeFactory;
 public class ThemeFactoryUtil {
 
 	public static Theme getDefaultRegularTheme(long companyId) {
-		return _themeFactory.getDefaultRegularTheme(companyId);
+		return new ThemeImpl(
+			getDefaultRegularThemeId(companyId), StringPool.BLANK);
 	}
 
 	public static String getDefaultRegularThemeId(long companyId) {
-		return _themeFactory.getDefaultRegularThemeId(companyId);
+		String defaultRegularThemeId = PrefsPropsUtil.getString(
+			companyId, PropsKeys.DEFAULT_REGULAR_THEME_ID);
+
+		return PortalUtil.getJsSafePortletId(defaultRegularThemeId);
 	}
 
 	public static Theme getTheme() {
-		return _themeFactory.getTheme();
+		return new ThemeImpl();
 	}
 
 	public static Theme getTheme(String themeId) {
-		return _themeFactory.getTheme(themeId);
+		return new ThemeImpl(themeId);
 	}
 
 	public static Theme getTheme(String themeId, String name) {
-		return _themeFactory.getTheme(themeId, name);
+		return new ThemeImpl(themeId, name);
 	}
-
-	public static ThemeFactory getThemeFactory() {
-		return _themeFactory;
-	}
-
-	public void setThemeFactory(ThemeFactory themeFactory) {
-		_themeFactory = themeFactory;
-	}
-
-	private static ThemeFactory _themeFactory;
 
 }

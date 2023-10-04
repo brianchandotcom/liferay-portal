@@ -115,14 +115,17 @@ definition {
 			Navigator.openURL();
 
 			JSONLayout.addPublicLayout(
-				groupName = "Guest",
+				groupName = "Site Name",
 				layoutName = "Search Page");
 
 			SearchPortlets.addWidgets(
+				groupName = "Site Name",
 				layoutName = "Search Page",
 				searchPortletList = "Type Facet,Search Results,Search Bar");
 
-			Navigator.gotoPage(pageName = "Search Page");
+			ACUtils.navigateToSitePage(
+				pageName = "Search Page",
+				siteName = "Site Name");
 
 			SearchPortlets.configureSearchBarWidget(keywordsParameterName = "query");
 		}

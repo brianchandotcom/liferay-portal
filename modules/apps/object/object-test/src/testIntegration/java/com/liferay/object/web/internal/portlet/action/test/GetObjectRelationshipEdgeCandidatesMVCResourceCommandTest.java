@@ -223,6 +223,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 	@Test
 	public void testIsEdgeCandidate() throws Exception {
+
 		// Child object definition published
 
 		ObjectDefinition childObjectDefinition1 =

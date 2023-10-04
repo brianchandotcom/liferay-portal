@@ -10,7 +10,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Objects;
 import java.util.Set;
@@ -35,7 +34,6 @@ public class ObjectRelationshipImpl extends ObjectRelationshipBaseImpl {
 
 	@Override
 	public boolean isEdgeCandidate() throws PortalException {
-
 		if (isSelf() ||
 			!Objects.equals(
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, getType())) {

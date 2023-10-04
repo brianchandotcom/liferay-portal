@@ -43,6 +43,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.model.ObjectStateTransition;
@@ -52,12 +53,17 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.object.service.ObjectStateTransitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.test.util.ObjectFieldTestUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.TreeTestUtil;
+import com.liferay.object.tree.Node;
+import com.liferay.object.tree.Tree;
+import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -136,6 +142,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -1153,6 +1160,8 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		_assertCount(3);
+
+		_testAddOrUpdateObjectEntryRootObjectEntryId();
 
 		// TODO Test where group ID is not 0
 
@@ -2771,6 +2780,145 @@ public class ObjectEntryLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
 	}
 
+	private void _testAddOrUpdateObjectEntryRootObjectEntryId()
+		throws Exception {
+
+		Tree tree = TreeTestUtil.createTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			_treeFactory);
+
+		Iterator<Node> iterator = tree.iterator();
+
+		Node rootNode = iterator.next();
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(), rootNode.getPrimaryKey());
+
+		ObjectEntry contextObjectEntry1 =
+			_objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0, rootNode.getPrimaryKey(),
+				Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext());
+
+		Map<Long, Long> objectEntriesId = HashMapBuilder.put(
+			rootNode.getPrimaryKey(), contextObjectEntry1.getObjectEntryId()
+		).build();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			ObjectEntry nodeObjectEntry =
+				_objectEntryLocalService.addObjectEntry(
+					TestPropsValues.getUserId(), 0, node.getPrimaryKey(),
+					HashMapBuilder.<String, Serializable>put(
+						() -> {
+							ObjectRelationship objectRelationship =
+								_objectRelationshipLocalService.
+									getObjectRelationship(
+										node.getEdge(
+										).getObjectRelationshipId());
+
+							ObjectField objectField =
+								_objectFieldLocalService.getObjectField(
+									objectRelationship.getObjectFieldId2());
+
+							return objectField.getName();
+						},
+						objectEntriesId.get(
+							node.getParentNode(
+							).getPrimaryKey())
+					).build(),
+					ServiceContextTestUtil.getServiceContext());
+
+			objectEntriesId.put(
+				node.getPrimaryKey(), nodeObjectEntry.getObjectEntryId());
+		}
+
+		TreeTestUtil.forEachNodeObjectDefinition(
+			tree.iterator(), _objectDefinitionLocalService,
+			objectDefinition -> {
+				ObjectEntry objectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						objectEntriesId.get(
+							objectDefinition.getObjectDefinitionId()));
+
+				Assert.assertEquals(
+					contextObjectEntry1.getObjectEntryId(),
+					objectEntry.getRootObjectEntryId());
+			});
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AA");
+
+		String objectFieldName = null;
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipLocalService.getObjectRelationships(
+					rootNode.getPrimaryKey(), true)) {
+
+			if (objectRelationship.getObjectDefinitionId2() ==
+					objectDefinition.getObjectDefinitionId()) {
+
+				ObjectField objectField =
+					_objectFieldLocalService.getObjectField(
+						objectRelationship.getObjectFieldId2());
+
+				objectFieldName = objectField.getName();
+
+				break;
+			}
+		}
+
+		ObjectEntry contextObjectEntry2 =
+			_objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0, rootNode.getPrimaryKey(),
+				Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntriesId.get(objectDefinition.getObjectDefinitionId()));
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		values.put(objectFieldName, contextObjectEntry2.getObjectEntryId());
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(), values,
+			ServiceContextTestUtil.getServiceContext());
+
+		List<String> objectDefinitionNames = ListUtil.fromArray("C_A", "C_AB");
+
+		for (Map.Entry<Long, Long> entry : objectEntriesId.entrySet()) {
+			Long objectDefinitionId = entry.getKey();
+			Long objectEntryId = entry.getValue();
+
+			ObjectDefinition nodeObjectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionId);
+
+			ObjectEntry nodeObjectEntry =
+				_objectEntryLocalService.getObjectEntry(objectEntryId);
+
+			if (objectDefinitionNames.contains(
+					nodeObjectDefinition.getName())) {
+
+				Assert.assertEquals(
+					contextObjectEntry1.getObjectEntryId(),
+					nodeObjectEntry.getRootObjectEntryId());
+			}
+			else {
+				Assert.assertEquals(
+					contextObjectEntry2.getObjectEntryId(),
+					nodeObjectEntry.getRootObjectEntryId());
+			}
+		}
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"});
+	}
+
 	private void _testScope(long groupId, String scope, boolean expectSuccess)
 		throws Exception {
 
@@ -3047,6 +3195,9 @@ public class ObjectEntryLocalServiceTest {
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
 	private ObjectStateFlowLocalService _objectStateFlowLocalService;
 
 	@Inject
@@ -3058,6 +3209,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
+
+	@Inject
+	private TreeFactory _treeFactory;
 
 	@Inject
 	private WorkflowDefinitionLinkLocalService

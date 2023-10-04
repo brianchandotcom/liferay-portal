@@ -17,33 +17,56 @@ import {
 	getValueFromSpecifications,
 } from '../../../utils/util';
 import {LicenseType} from '../enums/licenseType';
-import {Price} from '../enums/price';
 import {SkuOptions} from '../enums/skuOptions';
+import {StepType} from '../enums/stepType';
 
 interface ProductCardProps {
+	cartinfo: any;
 	productId: number | null;
 	selectedAccount?: Account;
 	setProductToForm: (product: Product) => void;
+	step: StepType;
 }
 
 const ProductCard = ({
+	cartinfo,
 	productId,
 	selectedAccount,
 	setProductToForm,
+	step,
 }: ProductCardProps) => {
 	const [product, setProduct] = useState<Product>();
 	const [hasTrial, setHasTrial] = useState<boolean>(false);
 	const [basePrice, setBasePrice] = useState<Number | undefined>(undefined);
 
-	const productHasTrialSKU = (skus: SKU[]) => {
-		skus.forEach((sku) => {
-			const licenseUsageType = sku.skuOptions.find(
-				(option) =>
-					option.key.toLowerCase() === 'dxp-license-usage-type'
+	const totalFormatted = () => {
+		if (step === StepType.LICENSES || step === StepType.PAYMENT) {
+			return (
+				<span className="paid-price-text">
+					{cartinfo?.cart?.id
+						? `${cartinfo?.cart?.summary?.totalFormatted}`
+						: `$0`}
+				</span>
 			);
+		}
+
+		if (basePrice && hasTrial) {
+			return <span>{`30-day trial or $${basePrice}`}</span>;
+		}
+	};
+
+	const productHasTrialSKU = (skus: SKU[]) => {
+		skus.forEach(async (sku) => {
+			const licenseUsageType = sku?.skuOptions.find((option) => {
+				return (
+					option?.key === 'trial' &&
+					option?.value === 'yes' &&
+					option?.key
+				);
+			});
 			if (
 				licenseUsageType &&
-				licenseUsageType.value.toLowerCase() ===
+				licenseUsageType?.key.toLowerCase() ===
 					SkuOptions.TRIAL.toLowerCase()
 			) {
 				setHasTrial(true);
@@ -51,16 +74,19 @@ const ProductCard = ({
 		});
 	};
 
-	const getProductBasePrice = (product: Product) => {
+	const getProductBasePrice = async (product: Product) => {
 		product &&
 			product.skus.forEach((sku) => {
-				const licenseUsageType = sku.skuOptions.find(
-					(option) =>
-						option.key.toLowerCase() === 'dxp-license-usage-type'
-				);
+				const licenseUsageType = sku?.skuOptions.find((option) => {
+					return (
+						option?.key === 'standard' &&
+						option?.value === 'yes' &&
+						option?.key
+					);
+				});
 				if (
 					licenseUsageType &&
-					licenseUsageType.value.toLowerCase() ===
+					licenseUsageType?.key.toLowerCase() ===
 						SkuOptions.STANDARD.toLowerCase()
 				) {
 					setBasePrice(sku.price);
@@ -73,7 +99,8 @@ const ProductCard = ({
 			const productResponse =
 				productId &&
 				(await getProductById({
-					nestedFields: 'attachments,productSpecifications,skus',
+					nestedFields:
+						'attachments,productSpecifications,skus,catalog',
 					productId,
 				}));
 
@@ -106,29 +133,6 @@ const ProductCard = ({
 		}
 	};
 
-	const getPriceText = (product: Product) => {
-		if (
-			getValueFromSpecifications(
-				product.productSpecifications,
-				'price-model'
-			).toLowerCase() === Price.PAID
-		) {
-			if (basePrice) {
-				return hasTrial
-					? `30-day trial or $${basePrice}`
-					: `$${basePrice}`;
-			}
-		}
-		else if (
-			getValueFromSpecifications(
-				product.productSpecifications,
-				'price-model'
-			).toLowerCase() === Price.FREE
-		) {
-			return 'Free';
-		}
-	};
-
 	return (
 		<>
 			{product && (
@@ -136,6 +140,7 @@ const ProductCard = ({
 					<div className="d-flex flex-row justify-content-between">
 						<div className="d-flex flex-row">
 							<img
+								alt=""
 								height="64px"
 								src={convertedIconURL}
 								width="64px"
@@ -160,9 +165,7 @@ const ProductCard = ({
 						</div>
 						<div className="align-items-end d-flex flex-column price-text">
 							<strong className="mr-1">Price</strong>
-							<div className="mr-1 py-2">
-								{getPriceText(product)}
-							</div>
+							<div className="mr-1 py-2">{totalFormatted()}</div>
 							<div className="license-tag px-2">
 								{getLicenseTagText(product)}
 							</div>

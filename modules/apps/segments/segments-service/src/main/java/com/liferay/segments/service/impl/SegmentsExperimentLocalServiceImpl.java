@@ -390,8 +390,7 @@ public class SegmentsExperimentLocalServiceImpl
 		SegmentsExperience controlSegmentsExperience,
 		SegmentsExperience variantSegmentsExperience) {
 
-		int controlSegmentsExperiencePriority =
-			controlSegmentsExperience.getPriority();
+		int originalPriority = controlSegmentsExperience.getPriority();
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperiencePersistence.fetchByG_P_Last(
@@ -439,8 +438,7 @@ public class SegmentsExperimentLocalServiceImpl
 						SegmentsExperienceConstants.KEY_DEFAULT);
 				}
 
-				callBackVariantSegmentsExperience.setPriority(
-					controlSegmentsExperiencePriority);
+				callBackVariantSegmentsExperience.setPriority(originalPriority);
 
 				_segmentsExperienceLocalService.updateSegmentsExperience(
 					callBackVariantSegmentsExperience);

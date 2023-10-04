@@ -71,7 +71,16 @@ export default function SelectRelationship({
 				setCreationLanguageId(objectDefinition.defaultLanguageId);
 
 				const objectFieldOptions = objectFields.filter(
-					({businessType}) => businessType === 'Relationship'
+					({objectFieldSettings}) => {
+						const objectDefinition1ShortName = objectFieldSettings?.find(
+							({name}) => name === 'objectDefinition1ShortName'
+						);
+
+						return (
+							objectDefinition1ShortName &&
+							objectDefinition1ShortName.value === 'AccountEntry'
+						);
+					}
 				);
 
 				setCreationLanguageId(objectDefinition.defaultLanguageId);

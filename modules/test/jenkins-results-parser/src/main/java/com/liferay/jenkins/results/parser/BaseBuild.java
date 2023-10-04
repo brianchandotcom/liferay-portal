@@ -843,22 +843,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getResult() {
-		if ((result == null) && (getBuildURL() != null)) {
-			JSONObject buildJSONObject = getBuildJSONObject("duration,result");
-
-			long duration = buildJSONObject.optLong("duration");
-			String result = buildJSONObject.optString("result");
-
-			if ((duration == 0) ||
-				JenkinsResultsParserUtil.isNullOrEmpty(result)) {
-
-				result = null;
-			}
-
-			setResult(result);
-		}
-
-		return result;
+		return _result;
 	}
 
 	@Override
@@ -889,10 +874,6 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getStatus() {
-		if ((_status == null) || !_status.equals("completed")) {
-			getResult();
-		}
-
 		return _status;
 	}
 
@@ -1301,9 +1282,8 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public boolean isCompleted() {
 		String result = getResult();
-		String status = getStatus();
 
-		if ((result == null) || (status == null)) {
+		if (result == null) {
 			return false;
 		}
 
@@ -2729,6 +2709,10 @@ public abstract class BaseBuild implements Build {
 	protected boolean isJenkinsBuildCompleted() {
 		JSONObject buildJSONObject = getBuildJSONObject("duration,result");
 
+		if (buildJSONObject == null) {
+			return false;
+		}
+
 		long duration = buildJSONObject.optLong("duration");
 		String result = buildJSONObject.optString("result");
 
@@ -3004,11 +2988,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setResult(String result) {
-		this.result = result;
-
-		if (result != null) {
-			setStatus("completed");
-		}
+		_result = result;
 	}
 
 	protected void setStatus(String status) {
@@ -3104,7 +3084,6 @@ public abstract class BaseBuild implements Build {
 	protected boolean fromCompletedBuild;
 	protected String gitRepositoryName;
 	protected Long invokedTime;
-	protected String result;
 	protected Long startTime;
 	protected Element upstreamJobFailureMessageElement;
 
@@ -3379,6 +3358,23 @@ public abstract class BaseBuild implements Build {
 		return null;
 	}
 
+	private String _getResultFromJenkins() {
+		JSONObject buildJSONObject = getBuildJSONObject("duration,result");
+
+		if (buildJSONObject == null) {
+			return null;
+		}
+
+		long duration = buildJSONObject.optLong("duration");
+		String result = buildJSONObject.optString("result");
+
+		if ((duration == 0) || JenkinsResultsParserUtil.isNullOrEmpty(result)) {
+			return null;
+		}
+
+		return result;
+	}
+
 	private JSONObject _getRunningBuildJSONObject() {
 		Invocation latestInvocation = _getLatestInvocation();
 
@@ -3638,6 +3634,18 @@ public abstract class BaseBuild implements Build {
 	}
 
 	private void _runCompleted() {
+		String result = getResult();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(result)) {
+			result = _getResultFromJenkins();
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(result)) {
+			result = "MISSING";
+		}
+
+		setResult(result);
+
 		setStatus("completed");
 	}
 
@@ -3687,6 +3695,8 @@ public abstract class BaseBuild implements Build {
 
 	private void _runReporting() {
 		setStatus("reporting");
+
+		setResult(_getResultFromJenkins());
 
 		isApplySlaveOfflineRules();
 
@@ -3787,6 +3797,7 @@ public abstract class BaseBuild implements Build {
 	private Map<String, String> _parameters = new HashMap<>();
 	private final Build _parentBuild;
 	private String _previousStatus;
+	private String _result;
 	private String _status;
 	private final Map<String, Long> _statusDurations = new HashMap<>();
 	private long _statusModifiedTime;

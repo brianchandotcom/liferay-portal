@@ -44,7 +44,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 	<aui:model-context bean="<%= (MembershipRequest)request.getAttribute(WebKeys.MEMBERSHIP_REQUEST) %>" model="<%= MembershipRequest.class %>" />
 
-	<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
+	<c:if test="<%= Validator.isNotNull(group.getDescription()) && Validator.isNotNull(group.getDescription(locale)) %>">
 		<div class="alert alert-info">
 			<%= HtmlUtil.escape(group.getDescription(locale)) %>
 		</div>

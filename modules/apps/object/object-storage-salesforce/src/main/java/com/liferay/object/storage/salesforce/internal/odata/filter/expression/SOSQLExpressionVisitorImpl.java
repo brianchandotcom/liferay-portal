@@ -125,9 +125,9 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		throws ExpressionVisitException {
 
 		if (!Objects.equals(
-				LiteralExpression.Type.STRING, literalExpression.getType()) &&
+				LiteralExpression.Type.DATE, literalExpression.getType()) &&
 			!Objects.equals(
-				LiteralExpression.Type.DATE, literalExpression.getType())) {
+				LiteralExpression.Type.STRING, literalExpression.getType())) {
 
 			throw new UnsupportedOperationException();
 		}

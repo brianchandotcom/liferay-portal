@@ -66,7 +66,7 @@ public class HotDeployUtil {
 
 			// Fire event
 
-			doFireDeployEvent(hotDeployEvent);
+			_fireDeployEvent(hotDeployEvent);
 		}
 	}
 
@@ -140,7 +140,7 @@ public class HotDeployUtil {
 		_hotDeployListeners.clear();
 	}
 
-	protected static void doFireDeployEvent(HotDeployEvent hotDeployEvent) {
+	private static void _fireDeployEvent(HotDeployEvent hotDeployEvent) {
 		String servletContextName = hotDeployEvent.getServletContextName();
 
 		if (_deployedServletContextNames.contains(servletContextName)) {
@@ -185,19 +185,19 @@ public class HotDeployUtil {
 
 			_dependentHotDeployEvents.remove(hotDeployEvent);
 
-			ClassLoader contextClassLoader = getContextClassLoader();
+			ClassLoader contextClassLoader = _getContextClassLoader();
 
 			try {
-				setContextClassLoader(PortalClassLoaderUtil.getClassLoader());
+				_setContextClassLoader(PortalClassLoaderUtil.getClassLoader());
 
 				List<HotDeployEvent> dependentEvents = new ArrayList<>(
 					_dependentHotDeployEvents);
 
 				for (HotDeployEvent dependentEvent : dependentEvents) {
-					setContextClassLoader(
+					_setContextClassLoader(
 						dependentEvent.getContextClassLoader());
 
-					doFireDeployEvent(dependentEvent);
+					_fireDeployEvent(dependentEvent);
 
 					if (!_dependentHotDeployEvents.contains(dependentEvent)) {
 						dependentEvent.flushInits();
@@ -205,7 +205,7 @@ public class HotDeployUtil {
 				}
 			}
 			finally {
-				setContextClassLoader(contextClassLoader);
+				_setContextClassLoader(contextClassLoader);
 			}
 		}
 		else {
@@ -215,7 +215,7 @@ public class HotDeployUtil {
 						StringBundler.concat(
 							"Queueing ", servletContextName,
 							" for deploy because it is missing ",
-							getRequiredServletContextNames(hotDeployEvent)));
+							_getRequiredServletContextNames(hotDeployEvent)));
 				}
 
 				_dependentHotDeployEvents.add(hotDeployEvent);
@@ -229,7 +229,7 @@ public class HotDeployUtil {
 							StringBundler.concat(
 								servletContextName,
 								" is still in queue because it is missing ",
-								getRequiredServletContextNames(
+								_getRequiredServletContextNames(
 									dependentHotDeployEvent)));
 					}
 				}
@@ -237,13 +237,13 @@ public class HotDeployUtil {
 		}
 	}
 
-	protected static ClassLoader getContextClassLoader() {
+	private static ClassLoader _getContextClassLoader() {
 		Thread currentThread = Thread.currentThread();
 
 		return currentThread.getContextClassLoader();
 	}
 
-	protected static String getRequiredServletContextNames(
+	private static String _getRequiredServletContextNames(
 		HotDeployEvent hotDeployEvent) {
 
 		List<String> requiredServletContextNames = new ArrayList<>();
@@ -263,9 +263,7 @@ public class HotDeployUtil {
 		return StringUtil.merge(requiredServletContextNames, ", ");
 	}
 
-	protected static void setContextClassLoader(
-		ClassLoader contextClassLoader) {
-
+	private static void _setContextClassLoader(ClassLoader contextClassLoader) {
 		Thread currentThread = Thread.currentThread();
 
 		currentThread.setContextClassLoader(contextClassLoader);

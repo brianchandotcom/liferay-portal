@@ -1,10 +1,10 @@
-@component-name = "portal-feature-flag"
+@component-name = "portal-frontend-infrastructure"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Feature Flag";
-	property testray.main.component.name = "Feature Flag";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
 
 	setUp {
 		TestCase.setUpPortalInstance();

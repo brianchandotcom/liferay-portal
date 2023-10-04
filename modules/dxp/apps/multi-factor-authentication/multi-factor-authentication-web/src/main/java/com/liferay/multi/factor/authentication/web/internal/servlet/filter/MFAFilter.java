@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=MFA Filter",
-		"url-pattern=/c/portal/update_password*"
+		"url-pattern=/c/portal/update_password"
 	},
 	service = Filter.class
 )

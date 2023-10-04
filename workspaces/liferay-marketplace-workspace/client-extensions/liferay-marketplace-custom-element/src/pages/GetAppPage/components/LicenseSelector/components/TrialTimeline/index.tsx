@@ -7,16 +7,16 @@ import ClayIcon from '@clayui/icon';
 
 import './index.scss';
 
-import {useState} from 'react';
+import {Dispatch, useState} from 'react';
 
 import {CardButton} from '../../../../../../components/CardButton/CardButton';
 
-interface TrialTimelineProps {
-	setLicenseSelected: (licenseSelected: boolean) => void;
-}
+type TrialTimelineProps = {
+	setLicenseSelected: Dispatch<boolean>;
+};
 
 export function TrialTimeline({setLicenseSelected}: TrialTimelineProps) {
-	const [selectedLicense, setSelectedLicense] = useState<boolean>(false);
+	const [selectedLicense, setSelectedLicense] = useState(false);
 
 	return (
 		<div className="d-flex flex-column trial-timeline">
@@ -29,6 +29,7 @@ export function TrialTimeline({setLicenseSelected}: TrialTimelineProps) {
 					</span>
 				</span>
 			</p>
+
 			<CardButton
 				description="Trial licenses are intended for you to try the app before you buy. Typical trials are 30 days."
 				disabled={false}

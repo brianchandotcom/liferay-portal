@@ -11,22 +11,22 @@ import timeline from '../../../../../../assets/images/timeline.png';
 
 import './TrialMethod.scss';
 
-export function TrialMethod() {
-	const months = [
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December',
-	];
+const months = [
+	'January',
+	'February',
+	'March',
+	'April',
+	'May',
+	'June',
+	'July',
+	'August',
+	'September',
+	'October',
+	'November',
+	'December',
+];
 
+export function TrialMethod() {
 	const date = new Date();
 
 	date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);

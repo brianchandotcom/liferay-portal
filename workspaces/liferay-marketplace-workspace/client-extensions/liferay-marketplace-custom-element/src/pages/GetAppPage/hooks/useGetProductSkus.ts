@@ -31,7 +31,8 @@ const useGetProductSkus = (
 			newSku = product?.skus?.find(
 				(sku: {price: number}) => sku.price !== 0
 			);
-		} else {
+		}
+		else {
 			newSku = product?.skus[0];
 		}
 

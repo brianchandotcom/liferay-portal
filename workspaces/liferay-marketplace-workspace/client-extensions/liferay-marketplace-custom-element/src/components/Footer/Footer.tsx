@@ -10,7 +10,8 @@ export function Footer() {
 		<footer className="footer-container">
 			<div className="footer-left-container">
 				<span className="footer-text">
-					© 2022 Liferay Inc. All Rights Reserved
+					© {new Date().getFullYear()} Liferay Inc. All Rights
+					Reserved
 				</span>
 
 				<a className="footer-text" href="#">

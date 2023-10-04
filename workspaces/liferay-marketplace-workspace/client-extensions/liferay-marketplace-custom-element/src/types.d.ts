@@ -113,6 +113,9 @@ type Cart = {
 	paymentMethod: string;
 	purchaseOrderNumber?: string;
 	shippingAddress: BillingAddress;
+	summary: {
+		totalFormatted: string;
+	};
 };
 
 type CartItem = {

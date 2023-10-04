@@ -11,8 +11,8 @@ import ClayButton from '@clayui/button';
 
 import infoCircleFullIcon from '../../../../../assets/icons/icon_info_circle_full.svg';
 
-const maxItem = 99;
-const minItem = 0;
+const MAX_ITEM = 99;
+const MIN_ITEM = 0;
 
 const LicenseSectorCard: React.FC<any> = ({
 	cart,
@@ -24,19 +24,9 @@ const LicenseSectorCard: React.FC<any> = ({
 }) => {
 	const count =
 		cart.cartItems.find((item: any) => item.skuId === sku.id)?.quantity ||
-		minItem;
+		MIN_ITEM;
 
 	const tiers = licensetiers[0];
-
-	const tierPrices = (tiers: any) => {
-		return tiers?.tierPrice?.map((tier: any, index: number) => {
-			return (
-				<span className="license__card__tier__price__text" key={index}>
-					{`${tier?.minimumQuantity} License: ${tier?.priceFormatted} each`}
-				</span>
-			);
-		});
-	};
 
 	return (
 		<div className="license__card p-3">
@@ -63,14 +53,14 @@ const LicenseSectorCard: React.FC<any> = ({
 				<div className="align-items-center d-flex justify-content-between license__card__buttons__container p-1">
 					<span>
 						<ClayButton
-							aria-label=""
+							aria-label="Remove from Cart"
 							className="align-items-center d-flex justify-content-center license__card__buttons p-2"
-							disabled={count === minItem}
+							disabled={count === MIN_ITEM}
 							displayType="primary"
 							onClick={() => cart.removeFromCart(sku.id)}
 						>
 							<ClayIcon
-								aria-label="123"
+								aria-label="Divider"
 								className="license__card__buttons__icon"
 								symbol="hr"
 							/>
@@ -81,16 +71,14 @@ const LicenseSectorCard: React.FC<any> = ({
 					</span>
 					<span>
 						<ClayButton
-							aria-label=""
+							aria-label="Add To Cart"
 							className="align-items-center d-flex justify-content-center license__card__buttons p-2"
-							disabled={count === maxItem}
+							disabled={count === MAX_ITEM}
 							displayType="primary"
-							onClick={() => {
-								cart.addCartItem(productId, sku.id);
-							}}
+							onClick={() => cart.addCart(productId, sku.id)}
 						>
 							<ClayIcon
-								aria-label="123"
+								aria-label="Plus Button"
 								className="license__card__buttons__icon"
 								symbol="plus"
 							/>
@@ -103,7 +91,15 @@ const LicenseSectorCard: React.FC<any> = ({
 				<div className="font-weight-bold license__card__tier__title mb-1">
 					License Prices
 				</div>
-				{tierPrices(tiers)}
+
+				{(tiers?.tierPrice as any[])?.map((tier: any, index) => (
+					<span
+						className="license__card__tier__price__text"
+						key={index}
+					>
+						{`${tier?.minimumQuantity} License: ${tier?.priceFormatted} each`}
+					</span>
+				))}
 			</div>
 		</div>
 	);

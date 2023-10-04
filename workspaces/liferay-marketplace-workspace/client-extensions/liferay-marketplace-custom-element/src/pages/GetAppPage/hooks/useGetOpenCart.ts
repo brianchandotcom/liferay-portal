@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { useEffect, useState } from "react";
+import {useEffect, useState} from 'react';
 
-import { getChannels } from "../../../utils/api";
+import {getChannels} from '../../../utils/api';
 
 const useGetOpenCartInfo = () => {
 	const [cart, setCart] = useState<any>();
@@ -14,8 +14,9 @@ const useGetOpenCartInfo = () => {
 		const getChannelInfo = async () => {
 			const channels = await getChannels();
 			const channel =
-				channels.find((channel) => channel.name === "Marketplace Channel") ||
-				channels[0];
+				channels.find(
+					(channel) => channel.name === 'Marketplace Channel'
+				) || channels[0];
 
 			setCart(channel);
 		};

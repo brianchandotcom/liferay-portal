@@ -42,10 +42,8 @@ export function SelectPaymentMethod({
 	setSelectedPaymentMethod,
 	step,
 }: SelectPaymentMethodProps) {
-	const [selectedAddress, setSelectedAddress] = useState<string>('');
-	const [showNewAddressButton, setShowNewAddressButton] = useState<boolean>(
-		true
-	);
+	const [selectedAddress, setSelectedAddress] = useState('');
+	const [showNewAddressButton, setShowNewAddressButton] = useState(true);
 
 	return (
 		<div className="select-payment-step">

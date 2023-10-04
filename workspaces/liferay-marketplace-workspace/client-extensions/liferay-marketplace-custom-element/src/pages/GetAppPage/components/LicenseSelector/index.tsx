@@ -12,16 +12,16 @@ import './index.scss';
 
 import {UseFormGetValues, UseFormSetValue} from 'react-hook-form';
 
-import {getAppProps} from '../../GetAppPage';
+import {GetAppForm} from '../../GetAppPage';
 import {paymentMethod} from '../../enums/paymentMethod';
 import {PaidTimeline} from './components/PaidTimeline';
 import {TrialTimeline} from './components/TrialTimeline';
 
 interface LicenseSelectorProps {
-	cart: any;
+	cart: Cart;
 	form: {
-		getValues: UseFormGetValues<getAppProps>;
-		setValue: UseFormSetValue<getAppProps>;
+		getValues: UseFormGetValues<GetAppForm>;
+		setValue: UseFormSetValue<GetAppForm>;
 	};
 	onSelectLicense: (sku?: SKU) => void;
 	selectedPaymentMethod: React.Dispatch<
@@ -34,7 +34,6 @@ interface LicenseSelectorProps {
 
 export function LicenseSelector({
 	cart,
-	form,
 	onSelectLicense,
 	selectedPaymentMethod,
 	selectedProduct,
@@ -109,11 +108,7 @@ export function LicenseSelector({
 							setLicenseSelected={handleLicenseSelect}
 						/>
 					) : (
-						<PaidTimeline
-							cart={cart}
-							form={form}
-							product={selectedProduct}
-						/>
+						<PaidTimeline cart={cart} product={selectedProduct} />
 					)}
 				</div>
 			)}

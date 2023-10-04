@@ -3,18 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import classNames from "classnames";
-import { MouseEvent, ReactNode } from "react";
+import classNames from 'classnames';
+import {MouseEvent, ReactNode} from 'react';
 
-import arrowLeft from "../../assets/icons/guide_icon.svg";
+import sitesIcon from '../../assets/icons/sites_icon.svg';
 
-import "./CardButton.scss";
-import { StepType } from "../../pages/GetAppPage/enums/stepType";
+import './CardButton.scss';
+import {StepType} from '../../pages/GetAppPage/enums/stepType';
 
 export function CardButton({
 	description,
 	disabled,
-	icon = "",
+	icon = '',
 	iconRight,
 	onClick,
 	selected,
@@ -32,28 +32,36 @@ export function CardButton({
 }) {
 	return (
 		<div
-			className={classNames("card-button d-flex", {
-				"card-button--disabled": disabled,
-				"card-button--selected": selected,
+			className={classNames('card-button d-flex', {
+				'card-button--disabled': disabled,
+				'card-button--selected': selected,
 			})}
 			onClick={onClick}
 		>
 			{step === StepType.PAYMENT ? (
-				<img alt="trial" className="card-button-icon" src={icon as string} />
+				<img
+					alt="trial"
+					className="card-button-icon"
+					src={icon as string}
+				/>
 			) : (
 				!iconRight &&
 				(icon ? (
 					icon
 				) : (
-					<img alt="trial" className="card-button-icon" src={arrowLeft} />
+					<img
+						alt="sites-icon"
+						className="card-button-icon"
+						src={sitesIcon}
+					/>
 				))
 			)}
 
 			<div className="card-button-info">
 				<div className="card-button-title">
 					<div
-						className={classNames("card-button-text", {
-							"icon-right": iconRight,
+						className={classNames('card-button-text', {
+							'icon-right': iconRight,
 						})}
 					>
 						{title}
@@ -62,8 +70,10 @@ export function CardButton({
 
 					<div
 						className={classNames({
-							"card-button-description": step === StepType.PAYMENT,
-							"card-button-description-paid": step === StepType.LICENSES,
+							'card-button-description':
+								step === StepType.PAYMENT,
+							'card-button-description-paid':
+								step === StepType.LICENSES,
 						})}
 					>
 						{description}

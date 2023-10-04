@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -56,10 +57,14 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 		if (Validator.isNotNull(singlePublishArticleId)) {
-			Changeset changeset = _createChangesetForSingleArticle(
-				groupId, singlePublishArticleId);
+			List<String> articleIds = ListUtil.fromArray(
+				singlePublishArticleId);
 
-			_publishChangeset(actionRequest, actionResponse, changeset);
+			Changeset changeset = _createChangesetForArticles(
+				groupId, articleIds);
+
+			_exportImportChangesetMVCActionCommandHelper.publish(
+				actionRequest, actionResponse, changeset);
 
 			return;
 		}
@@ -67,14 +72,17 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 		String[] articleIds = ParamUtil.getStringValues(
 			actionRequest, "rowIdsJournalArticle");
 
-		Changeset changeset = _createChangesetForMultipleArticles(
-			groupId, articleIds);
+		List<String> articleIdsAsList = ListUtil.fromArray(articleIds);
 
-		_publishChangeset(actionRequest, actionResponse, changeset);
+		Changeset changeset = _createChangesetForArticles(
+			groupId, articleIdsAsList);
+
+		_exportImportChangesetMVCActionCommandHelper.publish(
+			actionRequest, actionResponse, changeset);
 	}
 
-	private Changeset _createChangesetForMultipleArticles(
-		long groupId, String[] articleIds) {
+	private Changeset _createChangesetForArticles(
+		long groupId, List<String> articleIds) {
 
 		Changeset.Builder builder = Changeset.create();
 
@@ -89,17 +97,6 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return builder.build();
-	}
-
-	private Changeset _createChangesetForSingleArticle(
-		long groupId, String articleId) {
-
-		return Changeset.create(
-		).addStagedModel(
-			() -> _fetchArticle(groupId, articleId)
-		).addMultipleStagedModel(
-			() -> _getJournalArticleVersions(_fetchArticle(groupId, articleId))
-		).build();
 	}
 
 	private JournalArticle _fetchArticle(long groupId, String articleId) {
@@ -172,15 +169,6 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 		return (StagedModelDataHandler<JournalArticle>)
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				JournalArticle.class.getName());
-	}
-
-	private void _publishChangeset(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			Changeset changeset)
-		throws Exception {
-
-		_exportImportChangesetMVCActionCommandHelper.publish(
-			actionRequest, actionResponse, changeset);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -579,7 +579,7 @@
 															"federatedSearchKey": "",
 															"filterField": "assetCategoryIds",
 															"filterQueryType": "match",
-															"filterValue": "[$TAXONOMY_CATEGORY_ID:Solution$]",
+															"filterValue": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/company/marketplace-product-type/solution.json$]",
 															"immutable": "true",
 															"invisible": "true",
 															"occur": "must",

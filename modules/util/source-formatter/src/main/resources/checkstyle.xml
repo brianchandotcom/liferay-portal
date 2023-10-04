@@ -625,6 +625,13 @@
 			<property name="description" value="Verifies that when an operator has a literal string or a number as one of the operands, it is always on the right hand side." />
 			<message key="left.argument.literal.or.num" value="''{0}'' should be on the right hand side of the operator" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.OSGiCommandsCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Perform several checks on `*OSGiCommands` classes" />
+			<message key="bad.class.name" value="The names of clases that implement OSGi commands must end with ''OSGiCommands''" />
+			<message key="bad.osgi.reference" value="OSGi references to `*OSGiCommands` classes are not allowed" />
+			<message key="missing.command.function" value="OSGi command ''{0}'' is missing a method that implements it" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.OSGiResourceBuilderCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Avoid using *Resource.builder." />

@@ -2926,7 +2926,12 @@ public abstract class BaseBuild implements Build {
 
 		invocation.setQueueId(buildJSONObject.getLong("queueId"));
 
-		setStatus("completed");
+		if (isCompleted()) {
+			setStatus("completed");
+		}
+		else {
+			setStatus("running");
+		}
 	}
 
 	protected void setInvocationURL(String invocationURL) {
@@ -2970,9 +2975,7 @@ public abstract class BaseBuild implements Build {
 
 		invocation.setQueueId(jsonObject.getLong("queueId"));
 
-		reset();
-
-		setStatus("queued");
+		setStatus("starting");
 	}
 
 	protected void setJobName(String jobName) {

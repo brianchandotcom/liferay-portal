@@ -49,6 +49,7 @@ interface IFDSAction {
 	permissionKey: string;
 	type: string;
 	url: string;
+	variant?: string;
 }
 
 const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
@@ -212,7 +213,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 		});
 	};
 
-	const handleEdit = ({item}: {item: IFDSAction}) => {
+	const editFDSAction = ({item}: {item: IFDSAction}) => {
 		setInitialActionFormValues(item);
 
 		const actionType =
@@ -223,16 +224,15 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 		setActiveSection(actionType);
 	};
 
-	const updateFDSActionsOrder = async ({
-		fdsActionsOrder,
-	}: {
-		fdsActionsOrder: string;
-	}) => {
+	const updateFDSActionsOrder = async ({order}: {order: string}) => {
+		const actionTypeOrder =
+			activeTab === 0 ? 'fdsActionsItemOrder' : 'fdsActionsCreationOrder';
+
 		const response = await fetch(
 			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
 			{
 				body: JSON.stringify({
-					fdsActionsOrder,
+					[actionTypeOrder]: order,
 				}),
 				headers: {
 					'Accept': 'application/json',
@@ -250,12 +250,9 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 
 		const responseJSON = await response.json();
 
-		const storedFDSActionsOrder = responseJSON?.fdsActionsOrder;
+		const storedFDSActionsOrder = responseJSON?.[actionTypeOrder];
 
-		if (
-			storedFDSActionsOrder &&
-			storedFDSActionsOrder === fdsActionsOrder
-		) {
+		if (storedFDSActionsOrder && storedFDSActionsOrder === order) {
 			openDefaultSuccessToast();
 		}
 		else {

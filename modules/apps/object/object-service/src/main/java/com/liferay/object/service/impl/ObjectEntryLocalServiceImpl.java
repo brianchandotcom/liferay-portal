@@ -208,6 +208,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -3919,6 +3920,12 @@ public class ObjectEntryLocalServiceImpl
 		ObjectEntry parentObjectEntry = getObjectEntry(
 			MapUtil.getLong(values, objectField.getName()));
 
+		if (objectEntry.getRootObjectEntryId() != 0) {
+			_updateChildrenRootObjectEntryId(
+				objectEntry, parentObjectEntry.getRootObjectEntryId(),
+				treeFactory);
+		}
+
 		objectEntry.setRootObjectEntryId(
 			parentObjectEntry.getRootObjectEntryId());
 	}
@@ -3958,6 +3965,26 @@ public class ObjectEntryLocalServiceImpl
 		return StringUtil.replace(
 			value, value.charAt(NumberUtil.getDecimalSeparatorIndex(value)),
 			'.');
+	}
+
+	private void _updateChildrenRootObjectEntryId(
+			ObjectEntry objectEntry, long rootObjectEntryId,
+			TreeFactory treeFactory)
+		throws PortalException {
+
+		Tree tree = treeFactory.create(objectEntry.getObjectEntryId(), false);
+
+		Iterator<Node> iterator = tree.iterator();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			ObjectEntry nodeObjectEntry = getObjectEntry(node.getPrimaryKey());
+
+			nodeObjectEntry.setRootObjectEntryId(rootObjectEntryId);
+
+			updateObjectEntry(nodeObjectEntry);
+		}
 	}
 
 	private void _updateTable(

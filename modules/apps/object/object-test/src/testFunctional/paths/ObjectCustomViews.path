@@ -132,7 +132,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_AUTO_COMPLETE</td>
-		<td>//div[@class = 'custom-select__content form-control']//span[contains(text(),'Choose an Option')]</td>
+		<td>//div[contains(@class, 'select__content')]//span[contains(text(),'Choose an Option')]</td>
 		<td></td>
 	</tr>
 	<tr>

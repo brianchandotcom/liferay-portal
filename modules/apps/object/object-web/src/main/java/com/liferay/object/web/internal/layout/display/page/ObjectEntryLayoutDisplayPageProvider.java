@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -99,14 +100,19 @@ public class ObjectEntryLayoutDisplayPageProvider
 				return null;
 			}
 
+			long userId = serviceContext.getUserId();
+
+			if (userId == 0) {
+				userId = PrincipalThreadLocal.getUserId();
+			}
+
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 				_objectEntryManager.getObjectEntry(
 					serviceContext.getCompanyId(),
 					new DefaultDTOConverterContext(
 						false, null, null, null, null,
 						serviceContext.getLocale(), null,
-						_userLocalService.fetchUser(
-							serviceContext.getUserId())),
+						_userLocalService.fetchUser(userId)),
 					ercInfoItemIdentifier.getExternalReferenceCode(),
 					_objectDefinition, null);
 

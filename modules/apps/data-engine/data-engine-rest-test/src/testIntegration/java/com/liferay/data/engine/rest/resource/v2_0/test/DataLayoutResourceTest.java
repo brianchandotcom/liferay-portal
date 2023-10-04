@@ -322,7 +322,9 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 			Assert.assertEquals("text1", problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals("MustNotDuplicateFieldName", problem.getType());
+			Assert.assertEquals(
+				"DataLayoutValidationException.MustNotDuplicateFieldName",
+				problem.getType());
 		}
 		finally {
 			dataDefinitionResource.deleteDataDefinition(dataDefinition.getId());

@@ -481,11 +481,6 @@ public class ServletDataImpl implements ServletData {
 							PhoneResourceImpl.class,
 							"postUserAccountPhonesPageExportBatch"));
 					put(
-						"mutation#deleteAccountPostalAddresses",
-						new ObjectValuePair<>(
-							PostalAddressResourceImpl.class,
-							"deleteAccountPostalAddresses"));
-					put(
 						"mutation#createAccountPostalAddressesPageExportBatch",
 						new ObjectValuePair<>(
 							PostalAddressResourceImpl.class,
@@ -501,20 +496,35 @@ public class ServletDataImpl implements ServletData {
 							PostalAddressResourceImpl.class,
 							"postAccountPostalAddressBatch"));
 					put(
-						"mutation#patchAccountPostalAddress",
-						new ObjectValuePair<>(
-							PostalAddressResourceImpl.class,
-							"patchAccountPostalAddress"));
-					put(
-						"mutation#updateAccountPostalAddress",
-						new ObjectValuePair<>(
-							PostalAddressResourceImpl.class,
-							"putAccountPostalAddress"));
-					put(
 						"mutation#createOrganizationPostalAddressesPageExportBatch",
 						new ObjectValuePair<>(
 							PostalAddressResourceImpl.class,
 							"postOrganizationPostalAddressesPageExportBatch"));
+					put(
+						"mutation#deletePostalAddress",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"deletePostalAddress"));
+					put(
+						"mutation#deletePostalAddressBatch",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"deletePostalAddressBatch"));
+					put(
+						"mutation#patchPostalAddress",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"patchPostalAddress"));
+					put(
+						"mutation#updatePostalAddress",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"putPostalAddress"));
+					put(
+						"mutation#updatePostalAddressBatch",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"putPostalAddressBatch"));
 					put(
 						"mutation#createUserAccountPostalAddressesPageExportBatch",
 						new ObjectValuePair<>(

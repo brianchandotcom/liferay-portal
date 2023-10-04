@@ -47,9 +47,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PostalAddressResource {
 
-	public void deleteAccountPostalAddresses(Long accountId, Long[] longs)
-		throws Exception;
-
 	public Page<PostalAddress> getAccountPostalAddressesPage(Long accountId)
 		throws Exception;
 
@@ -66,14 +63,6 @@ public interface PostalAddressResource {
 			Long accountId, String callbackURL, Object object)
 		throws Exception;
 
-	public PostalAddress patchAccountPostalAddress(
-			Long accountId, Long postalAddressId, PostalAddress postalAddress)
-		throws Exception;
-
-	public PostalAddress putAccountPostalAddress(
-			Long accountId, Long postalAddressId, PostalAddress postalAddress)
-		throws Exception;
-
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
 			String organizationId)
 		throws Exception;
@@ -83,7 +72,23 @@ public interface PostalAddressResource {
 			String fieldNames)
 		throws Exception;
 
+	public void deletePostalAddress(Long postalAddressId) throws Exception;
+
+	public Response deletePostalAddressBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public PostalAddress getPostalAddress(Long postalAddressId)
+		throws Exception;
+
+	public PostalAddress patchPostalAddress(
+			Long postalAddressId, PostalAddress postalAddress)
+		throws Exception;
+
+	public PostalAddress putPostalAddress(
+			Long postalAddressId, PostalAddress postalAddress)
+		throws Exception;
+
+	public Response putPostalAddressBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Page<PostalAddress> getUserAccountPostalAddressesPage(

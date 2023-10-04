@@ -21,6 +21,7 @@ import com.liferay.headless.admin.user.client.serdes.v1_0.PostalAddressSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -199,32 +200,6 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountPostalAddresses() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PostalAddress postalAddress =
-			testDeleteAccountPostalAddresses_addPostalAddress();
-
-		assertHttpResponseStatusCode(
-			204,
-			postalAddressResource.deleteAccountPostalAddressesHttpResponse(
-				testDeleteAccountPostalAddresses_getAccountId(), null));
-	}
-
-	protected Long testDeleteAccountPostalAddresses_getAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected PostalAddress testDeleteAccountPostalAddresses_addPostalAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetAccountPostalAddressesPage() throws Exception {
 		Long accountId = testGetAccountPostalAddressesPage_getAccountId();
 		Long irrelevantAccountId =
@@ -272,6 +247,10 @@ public abstract class BasePostalAddressResourceTestCase {
 		assertValid(
 			page,
 			testGetAccountPostalAddressesPage_getExpectedActions(accountId));
+
+		postalAddressResource.deletePostalAddress(postalAddress1.getId());
+
+		postalAddressResource.deletePostalAddress(postalAddress2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -333,46 +312,6 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
-	public void testPatchAccountPostalAddress() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutAccountPostalAddress() throws Exception {
-		PostalAddress postPostalAddress =
-			testPutAccountPostalAddress_addPostalAddress();
-
-		PostalAddress randomPostalAddress = randomPostalAddress();
-
-		PostalAddress putPostalAddress =
-			postalAddressResource.putAccountPostalAddress(
-				testPutAccountPostalAddress_getAccountId(),
-				postPostalAddress.getId(), randomPostalAddress);
-
-		assertEquals(randomPostalAddress, putPostalAddress);
-		assertValid(putPostalAddress);
-
-		PostalAddress getPostalAddress =
-			postalAddressResource.getPostalAddress(
-				putPostalAddress.getId());
-
-		assertEquals(randomPostalAddress, getPostalAddress);
-		assertValid(getPostalAddress);
-	}
-
-	protected Long testPutAccountPostalAddress_getAccountId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected PostalAddress testPutAccountPostalAddress_addPostalAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetOrganizationPostalAddressesPage() throws Exception {
 		String organizationId =
 			testGetOrganizationPostalAddressesPage_getOrganizationId();
@@ -424,6 +363,10 @@ public abstract class BasePostalAddressResourceTestCase {
 			page,
 			testGetOrganizationPostalAddressesPage_getExpectedActions(
 				organizationId));
+
+		postalAddressResource.deletePostalAddress(postalAddress1.getId());
+
+		postalAddressResource.deletePostalAddress(postalAddress2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -457,6 +400,70 @@ public abstract class BasePostalAddressResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testDeletePostalAddress() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PostalAddress postalAddress =
+			testDeletePostalAddress_addPostalAddress();
+
+		assertHttpResponseStatusCode(
+			204,
+			postalAddressResource.deletePostalAddressHttpResponse(
+				postalAddress.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			postalAddressResource.getPostalAddressHttpResponse(
+				postalAddress.getId()));
+
+		assertHttpResponseStatusCode(
+			404, postalAddressResource.getPostalAddressHttpResponse(0L));
+	}
+
+	protected PostalAddress testDeletePostalAddress_addPostalAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeletePostalAddress() throws Exception {
+		PostalAddress postalAddress =
+			testGraphQLDeletePostalAddress_addPostalAddress();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePostalAddress",
+						new HashMap<String, Object>() {
+							{
+								put("postalAddressId", postalAddress.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePostalAddress"));
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"postalAddress",
+					new HashMap<String, Object>() {
+						{
+							put("postalAddressId", postalAddress.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected PostalAddress testGraphQLDeletePostalAddress_addPostalAddress()
+		throws Exception {
+
+		return testGraphQLPostalAddress_addPostalAddress();
 	}
 
 	@Test
@@ -531,6 +538,64 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
+	public void testPatchPostalAddress() throws Exception {
+		PostalAddress postPostalAddress =
+			testPatchPostalAddress_addPostalAddress();
+
+		PostalAddress randomPatchPostalAddress = randomPatchPostalAddress();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PostalAddress patchPostalAddress =
+			postalAddressResource.patchPostalAddress(
+				postPostalAddress.getId(), randomPatchPostalAddress);
+
+		PostalAddress expectedPatchPostalAddress = postPostalAddress.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchPostalAddress, expectedPatchPostalAddress);
+
+		PostalAddress getPostalAddress = postalAddressResource.getPostalAddress(
+			patchPostalAddress.getId());
+
+		assertEquals(expectedPatchPostalAddress, getPostalAddress);
+		assertValid(getPostalAddress);
+	}
+
+	protected PostalAddress testPatchPostalAddress_addPostalAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutPostalAddress() throws Exception {
+		PostalAddress postPostalAddress =
+			testPutPostalAddress_addPostalAddress();
+
+		PostalAddress randomPostalAddress = randomPostalAddress();
+
+		PostalAddress putPostalAddress = postalAddressResource.putPostalAddress(
+			postPostalAddress.getId(), randomPostalAddress);
+
+		assertEquals(randomPostalAddress, putPostalAddress);
+		assertValid(putPostalAddress);
+
+		PostalAddress getPostalAddress = postalAddressResource.getPostalAddress(
+			putPostalAddress.getId());
+
+		assertEquals(randomPostalAddress, getPostalAddress);
+		assertValid(getPostalAddress);
+	}
+
+	protected PostalAddress testPutPostalAddress_addPostalAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetUserAccountPostalAddressesPage() throws Exception {
 		Long userAccountId =
 			testGetUserAccountPostalAddressesPage_getUserAccountId();
@@ -582,6 +647,10 @@ public abstract class BasePostalAddressResourceTestCase {
 			page,
 			testGetUserAccountPostalAddressesPage_getExpectedActions(
 				userAccountId));
+
+		postalAddressResource.deletePostalAddress(postalAddress1.getId());
+
+		postalAddressResource.deletePostalAddress(postalAddress2.getId());
 	}
 
 	protected Map<String, Map<String, String>>

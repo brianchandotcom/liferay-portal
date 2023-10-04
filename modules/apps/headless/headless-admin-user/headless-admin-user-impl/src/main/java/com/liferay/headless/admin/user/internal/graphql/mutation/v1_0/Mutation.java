@@ -1246,24 +1246,6 @@ public class Mutation {
 				userAccountId, callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField(
-		description = "Deletes from the account the postal addresses requested"
-	)
-	public boolean deleteAccountPostalAddresses(
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("longs") Long[] longs)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_postalAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			postalAddressResource ->
-				postalAddressResource.deleteAccountPostalAddresses(
-					accountId, longs));
-
-		return true;
-	}
-
 	@GraphQLField
 	public Response createAccountPostalAddressesPageExportBatch(
 			@GraphQLName("accountId") Long accountId,
@@ -1311,40 +1293,6 @@ public class Mutation {
 					accountId, callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Updates the postal address of the Account with information sent in the request body. Only the provided fields are updated."
-	)
-	public PostalAddress patchAccountPostalAddress(
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("postalAddressId") Long postalAddressId,
-			@GraphQLName("postalAddress") PostalAddress postalAddress)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_postalAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			postalAddressResource ->
-				postalAddressResource.patchAccountPostalAddress(
-					accountId, postalAddressId, postalAddress));
-	}
-
-	@GraphQLField(
-		description = "Replaces the Postal Address with information sent in the request body. Any missing fields are deleted unless they are required."
-	)
-	public PostalAddress updateAccountPostalAddress(
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("postalAddressId") Long postalAddressId,
-			@GraphQLName("postalAddress") PostalAddress postalAddress)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_postalAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			postalAddressResource ->
-				postalAddressResource.putAccountPostalAddress(
-					accountId, postalAddressId, postalAddress));
-	}
-
 	@GraphQLField
 	public Response createOrganizationPostalAddressesPageExportBatch(
 			@GraphQLName("organizationId") String organizationId,
@@ -1360,6 +1308,78 @@ public class Mutation {
 				postalAddressResource.
 					postOrganizationPostalAddressesPageExportBatch(
 						organizationId, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(description = "Deletes the postal address")
+	public boolean deletePostalAddress(
+			@GraphQLName("postalAddressId") Long postalAddressId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource -> postalAddressResource.deletePostalAddress(
+				postalAddressId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deletePostalAddressBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource ->
+				postalAddressResource.deletePostalAddressBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Updates the postal address of the Account with information sent in the request body. Only the provided fields are updated."
+	)
+	public PostalAddress patchPostalAddress(
+			@GraphQLName("postalAddressId") Long postalAddressId,
+			@GraphQLName("postalAddress") PostalAddress postalAddress)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource -> postalAddressResource.patchPostalAddress(
+				postalAddressId, postalAddress));
+	}
+
+	@GraphQLField(
+		description = "Replaces the Postal Address with information sent in the request body. Any missing fields are deleted unless they are required."
+	)
+	public PostalAddress updatePostalAddress(
+			@GraphQLName("postalAddressId") Long postalAddressId,
+			@GraphQLName("postalAddress") PostalAddress postalAddress)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource -> postalAddressResource.putPostalAddress(
+				postalAddressId, postalAddress));
+	}
+
+	@GraphQLField
+	public Response updatePostalAddressBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource ->
+				postalAddressResource.putPostalAddressBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField

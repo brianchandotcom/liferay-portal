@@ -56,9 +56,10 @@ definition {
 		}
 
 		task ("And the user accesses the Feature Flag option") {
-			Click(
-				key_itemName = "Feature Flags",
-				locator1 = "ListGroupItem#ITEM_TEXT");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
 		}
 
 		task ("And enabled the Dataset management Feature Flag") {
@@ -97,9 +98,10 @@ definition {
 		}
 
 		task ("And the user accesses the Feature Flag option") {
-			Click(
-				key_itemName = "Feature Flags",
-				locator1 = "ListGroupItem#ITEM_TEXT");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
 		}
 
 		task ("And enabled the Dataset management Feature Flag") {
@@ -165,9 +167,10 @@ definition {
 		}
 
 		task ("And the user accesses the Feature Flag option") {
-			Click(
-				key_itemName = "Feature Flags",
-				locator1 = "ListGroupItem#ITEM_TEXT");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
 		}
 
 		task ("And enabled the Dataset management Feature Flag") {
@@ -208,9 +211,10 @@ definition {
 		}
 
 		task ("And the user accesses the Feature Flag option") {
-			Click(
-				key_itemName = "Feature Flags",
-				locator1 = "ListGroupItem#ITEM_TEXT");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
 		}
 
 		task ("And enabled the Dataset management Feature Flag") {
@@ -247,9 +251,10 @@ definition {
 		}
 
 		task ("When the user accesses the Feature Flag option") {
-			Click(
-				key_itemName = "Feature Flags",
-				locator1 = "ListGroupItem#ITEM_TEXT");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
 		}
 
 		task ("And The description of the feature is displayed") {
@@ -271,9 +276,10 @@ definition {
 		}
 
 		task ("And the user accesses the Feature Flag option") {
-			Click(
-				key_itemName = "Feature Flags",
-				locator1 = "ListGroupItem#ITEM_TEXT");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
 		}
 
 		task ("And enabled the Dataset management Feature Flag") {
@@ -316,9 +322,10 @@ definition {
 		}
 
 		task ("And the user accesses the Feature Flag option") {
-			Click(
-				key_itemName = "Feature Flags",
-				locator1 = "ListGroupItem#ITEM_TEXT");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
 		}
 
 		task ("And enabled the Dataset management Feature Flag") {
@@ -363,9 +370,10 @@ definition {
 		}
 
 		task ("And the user accesses the Feature Flag option") {
-			Click(
-				key_itemName = "Feature Flags",
-				locator1 = "ListGroupItem#ITEM_TEXT");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
 		}
 
 		task ("And enabled the Dataset management Feature Flag") {
@@ -404,9 +412,10 @@ definition {
 		}
 
 		task ("And the user accesses the Feature Flag option") {
-			Click(
-				key_itemName = "Feature Flags",
-				locator1 = "ListGroupItem#ITEM_TEXT");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
 		}
 
 		task ("And enabled the Dataset management Feature Flag") {

@@ -23,8 +23,12 @@ const FUZZY_OPTIONS = {
 const OBJECT_RELATIONSHIP = {
 	FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship',
 	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId',
-	FDS_VIEW_FDS_ACTION: 'fdsViewFDSActionRelationship',
-	FDS_VIEW_FDS_ACTION_ID: 'r_fdsViewFDSActionRelationship_c_fdsViewId',
+	FDS_VIEW_FDS_ACTION_CREATION: 'fdsViewFDSActionCreationRelationship',
+	FDS_VIEW_FDS_ACTION_CREATION_ID:
+		'r_fdsViewFDSActionCreationRelationship_c_fdsViewId',
+	FDS_VIEW_FDS_ACTION_ITEM: 'fdsViewFDSActionItemRelationship',
+	FDS_VIEW_FDS_ACTION_ITEM_ID:
+		'r_fdsViewFDSActionItemRelationship_c_fdsViewId',
 	FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER: 'fdsViewFDSClientExtensionFilter',
 	FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER_ID:
 		'r_fdsViewFDSClientExtensionFilter_c_fdsViewId',

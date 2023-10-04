@@ -421,20 +421,19 @@ public class DataFactory {
 			getClassNameId(JournalArticle.class), getClassNameId(WikiPage.class)
 		};
 
-		_dlDDMStructureContent = _readFile(
-			"ddm_structure/ddm_structure_basic_document.json");
+		_dlDDMStructureContent = _readFile("ddm_structure/basic_document.json");
 		_dlDDMStructureLayoutContent = _readFile(
-			"ddm_structure/ddm_structure_layout_basic_document.json");
+			"ddm_structure/layout_basic_document.json");
 		_journalDDMStructureContent = _readFile(
-			"ddm_structure/ddm_structure_basic_web_content.json");
+			"ddm_structure/basic_web_content.json");
 		_journalDDMStructureLayoutContent = _readFile(
-			"ddm_structure/ddm_structure_layout_basic_web_content.json");
+			"ddm_structure/layout_basic_web_content.json");
 		_layoutPageTemplateStructureRelData = _readFile(
-			"layout_page_template_structure_rel.json");
+			"layout_definition/web_content_page.json");
 
 		_defaultAssetPublisherPortletPreferencesImpl =
 			(PortletPreferencesImpl)_portletPreferencesFactory.fromDefaultXML(
-				_readFile("default_asset_publisher_preference.xml"));
+				_readFile("portlet_preference/asset_publisher.xml"));
 
 		initJournalArticleContent();
 
@@ -1354,12 +1353,10 @@ public class DataFactory {
 						_getFragmentComponentInputStream("paragraph", "html")),
 					_readFile(
 						"fragment_component" +
-							"/fragment_component_collection_paragraph_" +
-								"configuration.json"),
+							"/collection_paragraph_configuration.json"),
 					_readFile(
 						"fragment_component" +
-							"/fragment_component_collection_paragraph_" +
-								"editValue.json"),
+							"/collection_paragraph_editValue.json"),
 					0, paragraphRenderNamespace));
 		}
 
@@ -1745,8 +1742,7 @@ public class DataFactory {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			StringUtil.read(
-				getResourceInputStream("commerce/commerce_layouts.json")));
+			StringUtil.read(getResourceInputStream("commerce/layouts.json")));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -1800,8 +1796,7 @@ public class DataFactory {
 			new ArrayList<>();
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			StringUtil.read(
-				getResourceInputStream("commerce/commerce_layouts.json")));
+			StringUtil.read(getResourceInputStream("commerce/layouts.json")));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -1833,7 +1828,7 @@ public class DataFactory {
 				JSONFactoryUtil.createJSONArray(
 					StringUtil.read(
 						getResourceInputStream(
-							"commerce/commerce_portlet_settings.json")))));
+							"commerce/portlet_settings.json")))));
 
 		return portletPreferenceValueModels;
 	}
@@ -2299,7 +2294,7 @@ public class DataFactory {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringUtil.read(
 				getResourceInputStream(
-					"commerce/commerce_theme_portlet_settings.json")));
+					"commerce/theme_portlet_settings.json")));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -2339,7 +2334,7 @@ public class DataFactory {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringUtil.read(
 				getResourceInputStream(
-					"commerce/commerce_theme_portlet_settings.json")));
+					"commerce/theme_portlet_settings.json")));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -2365,7 +2360,7 @@ public class DataFactory {
 			JSONFactoryUtil.createJSONArray(
 				StringUtil.read(
 					getResourceInputStream(
-						"commerce/commerce_theme_portlet_settings.json"))));
+						"commerce/theme_portlet_settings.json"))));
 	}
 
 	public List<CompanyModel> newCompanyModels() {
@@ -4054,13 +4049,9 @@ public class DataFactory {
 						_getFragmentComponentInputStream("heading", "css")),
 					_readFile(
 						_getFragmentComponentInputStream("heading", "html")),
-					_readFile(
-						"fragment_component" +
-							"/fragment_component_heading_configuration.json"),
-					_readFile(
-						"fragment_component" +
-							"/fragment_component_heading_editValue.json"),
-					0, headingRenderNamespace));
+					_readFile("fragment_component/heading_configuration.json"),
+					_readFile("fragment_component/heading_editValue.json"), 0,
+					headingRenderNamespace));
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH,
@@ -4069,26 +4060,19 @@ public class DataFactory {
 					_readFile(
 						_getFragmentComponentInputStream("paragraph", "html")),
 					_readFile(
-						"fragment_component" +
-							"/fragment_component_paragraph_configuration.json"),
+						"fragment_component/paragraph_configuration.json"),
 					_replaceReleaseInfo(
 						_readFile(
-							"fragment_component" +
-								"/fragment_component_paragraph_editValue." +
-									"json")),
+							"fragment_component/paragraph_editValue.json")),
 					0, paragraphRenderNamespace));
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _FRAGMENT_COMPONENT_RENDER_KEY_IMAGE, "",
 					_readFile(
 						_getFragmentComponentInputStream("image", "html")),
-					_readFile(
-						"fragment_component" +
-							"/fragment_component_image_configuration.json"),
-					_readFile(
-						"fragment_component" +
-							"/fragment_component_image_editValue.json"),
-					0, imageRenderNamespace));
+					_readFile("fragment_component/image_configuration.json"),
+					_readFile("fragment_component/image_editValue.json"), 0,
+					imageRenderNamespace));
 		}
 
 		return fragmentEntryLinkModels;
@@ -4125,7 +4109,7 @@ public class DataFactory {
 		fragmentEntryModelImpl.setFragmentEntryKey("web_content");
 		fragmentEntryModelImpl.setName("web_content");
 		fragmentEntryModelImpl.setCss(StringPool.BLANK);
-		fragmentEntryModelImpl.setHtml(_readFile("web_content.html"));
+		fragmentEntryModelImpl.setHtml(_readFile("fragment/web_content.html"));
 		fragmentEntryModelImpl.setJs(StringPool.BLANK);
 		fragmentEntryModelImpl.setType(FragmentConstants.TYPE_COMPONENT);
 		fragmentEntryModelImpl.setStatus(WorkflowConstants.STATUS_APPROVED);

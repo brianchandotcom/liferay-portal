@@ -25,7 +25,7 @@ ${dataFactory.toInsertSQL(assetListEntrySegmentsEntryRelModel)}
 
 	${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
-	<#assign layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(collectionLayoutModel, layoutPageTemplateStructureModel, assetListEntryModelModel, fragmentEntryLinkModels, "collection_page_layout_definition.json") />
+	<#assign layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(collectionLayoutModel, layoutPageTemplateStructureModel, assetListEntryModelModel, fragmentEntryLinkModels, "collection_page.json") />
 
 	${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
 </#list>

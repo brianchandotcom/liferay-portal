@@ -6,8 +6,9 @@
 /// <reference types="react" />
 
 import {FDSViewType} from '../../FDSViews';
-import {IFDSAction} from '../Actions';
+import {IFDSAction, SECTIONS} from '../Actions';
 interface IFDSItemActionFormProps {
+	activeTab: number;
 	editing?: boolean;
 	fdsView: FDSViewType;
 	initialValues?: IFDSAction;
@@ -18,6 +19,7 @@ interface IFDSItemActionFormProps {
 	spritemap: string;
 }
 declare const ItemActionForm: ({
+	activeTab,
 	editing,
 	fdsView,
 	initialValues,

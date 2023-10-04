@@ -205,7 +205,7 @@ export default function FragmentList({
 									}
 								/>
 
-								<div className="page-audit__fragment__buttons">
+								<div className="p-2 page-audit__fragment__buttons">
 									<ClayButtonWithIcon
 										aria-label={sub(
 											Liferay.Language.get(

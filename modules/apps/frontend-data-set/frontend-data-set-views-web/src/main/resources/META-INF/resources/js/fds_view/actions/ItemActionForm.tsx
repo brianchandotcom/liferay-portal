@@ -444,6 +444,9 @@ const ItemActionForm = ({
 											})
 										}
 										options={MODAL_VARIANTS}
+										onBlur={() => {
+											validateForm();
+										}}
 										placeholder={Liferay.Language.get(
 											'please-select-an-option'
 										)}

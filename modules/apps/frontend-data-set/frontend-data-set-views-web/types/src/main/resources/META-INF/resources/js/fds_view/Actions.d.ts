@@ -25,8 +25,7 @@ interface IFDSAction {
 		};
 	};
 	confirmationMessage: string;
-	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_CREATION]?: any;
-	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ITEM]?: any;
+	confirmationMessageType: string;
 	confirmationMessage_i18n: {
 		[key: string]: string;
 	};
@@ -39,6 +38,7 @@ interface IFDSAction {
 	permissionKey: string;
 	type: string;
 	url: string;
+	variant?: string;
 }
 declare const Actions: ({
 	fdsView,

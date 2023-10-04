@@ -7,7 +7,6 @@ package com.liferay.portal.lock.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -490,9 +489,7 @@ public class LockLocalServiceTest {
 
 			Throwable throwable = runtimeException.getCause();
 
-			DB db = DBManagerUtil.getDB();
-
-			if ((db.getDBType() == DBType.SYBASE) &&
+			if ((DBManagerUtil.getDBType() == DBType.SYBASE) &&
 				(throwable instanceof GenericJDBCException)) {
 
 				throwable = throwable.getCause();

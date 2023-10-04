@@ -8,7 +8,6 @@ package com.liferay.portal.test.rule;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
@@ -239,9 +238,9 @@ public class LogAssertionTestRule
 				ExpectedDBType expectedDBType = expectedLog.expectedDBType();
 
 				if (expectedDBType != ExpectedDBType.NONE) {
-					DB db = DBManagerUtil.getDB();
+					if (expectedDBType.getDBType() !=
+							DBManagerUtil.getDBType()) {
 
-					if (expectedDBType.getDBType() != db.getDBType()) {
 						continue;
 					}
 				}

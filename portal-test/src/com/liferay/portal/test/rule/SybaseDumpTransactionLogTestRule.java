@@ -5,7 +5,6 @@
 
 package com.liferay.portal.test.rule;
 
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -106,9 +105,7 @@ public class SybaseDumpTransactionLogTestRule
 	}
 
 	private void _dumpTransactionLog() throws SQLException {
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() != DBType.SYBASE) {
+		if (DBManagerUtil.getDBType() != DBType.SYBASE) {
 			return;
 		}
 

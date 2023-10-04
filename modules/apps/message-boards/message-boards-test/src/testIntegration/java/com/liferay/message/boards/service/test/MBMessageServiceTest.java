@@ -15,7 +15,6 @@ import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.service.MBMessageServiceUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.model.Group;
@@ -154,9 +153,7 @@ public class MBMessageServiceTest {
 				doAsUserThread.join();
 			}
 
-			DB db = DBManagerUtil.getDB();
-
-			if (db.getDBType() == DBType.HYPERSONIC) {
+			if (DBManagerUtil.getDBType() == DBType.HYPERSONIC) {
 				for (LogEntry logEntry : logCapture2.getLogEntries()) {
 					String message = logEntry.getMessage();
 
@@ -173,7 +170,7 @@ public class MBMessageServiceTest {
 						message.startsWith("Unable to process message"));
 				}
 			}
-			else if (db.getDBType() == DBType.SYBASE) {
+			else if (DBManagerUtil.getDBType() == DBType.SYBASE) {
 				for (LogEntry logEntry : logCapture1.getLogEntries()) {
 					String message = logEntry.getMessage();
 

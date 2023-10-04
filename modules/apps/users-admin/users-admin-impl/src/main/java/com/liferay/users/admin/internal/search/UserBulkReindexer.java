@@ -6,7 +6,6 @@
 package com.liferay.users.admin.internal.search;
 
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -64,9 +63,7 @@ public class UserBulkReindexer implements BulkReindexer {
 
 	@Activate
 	protected void activate() {
-		DB db = DBManagerUtil.getDB();
-
-		DBType dbType = db.getDBType();
+		DBType dbType = DBManagerUtil.getDBType();
 
 		_databaseMaxParameters = GetterUtil.getInteger(
 			PropsUtil.get(

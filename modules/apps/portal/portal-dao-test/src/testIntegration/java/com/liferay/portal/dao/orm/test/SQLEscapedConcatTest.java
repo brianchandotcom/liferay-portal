@@ -41,11 +41,9 @@ public class SQLEscapedConcatTest {
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		DB db = DBManagerUtil.getDB();
-
 		Assume.assumeTrue(
-			(db.getDBType() == DBType.MYSQL) ||
-			(db.getDBType() == DBType.MARIADB));
+			(DBManagerUtil.getDBType() == DBType.MYSQL) ||
+			(DBManagerUtil.getDBType() == DBType.MARIADB));
 	}
 
 	@BeforeClass

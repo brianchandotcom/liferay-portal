@@ -275,21 +275,23 @@ const ItemActionForm = ({
 				<ClayPanel.Body>
 					<ClayLayout.Row>
 						<ClayLayout.Col size={8}>
-							<InputLocalized
-								error={
-									labelValidationError
-										? Liferay.Language.get(
-												'this-field-is-required'
-										  )
-										: undefined
-								}
-								label={Liferay.Language.get('label')}
-								onBlur={() => {
-									setLabelValidationError(
-										!translationExists({
-											translations: labelTranslations,
-										})
-									);
+							{Liferay.FeatureFlags['LPS-172017'] ? (
+								<InputLocalized
+									error={
+										labelValidationError
+											? Liferay.Language.get(
+													'this-field-is-required'
+											  )
+											: undefined
+									}
+									id={labelFormElementId}
+									label={Liferay.Language.get('label')}
+									onBlur={() => {
+										setLabelValidationError(
+											!translationExists({
+												translations: labelTranslations,
+											})
+										);
 
 									validateForm();
 								}}
@@ -477,23 +479,58 @@ const ItemActionForm = ({
 							<ClayLayout.Row>
 								<ClayLayout.Col size={8}>
 									<ClayForm.Group>
-										<InputLocalized
-											label={Liferay.Language.get(
-												'confirmation-message'
-											)}
-											onChange={
-												setConfirmationMessageTranslations
-											}
-											placeholder={Liferay.Language.get(
-												'add-a-message-here'
-											)}
-											tooltip={Liferay.Language.get(
-												'the-user-will-see-this-message-before-performing-the-action'
-											)}
-											translations={
-												confirmationMessageTranslations
-											}
-										/>
+										{Liferay.FeatureFlags['LPS-172017'] ? (
+											<InputLocalized
+												id={
+													confirmationMessageFormElementId
+												}
+												label={Liferay.Language.get(
+													'confirmation-message'
+												)}
+												onChange={
+													setConfirmationMessageTranslations
+												}
+												placeholder={Liferay.Language.get(
+													'add-a-message-here'
+												)}
+												tooltip={Liferay.Language.get(
+													'the-user-will-see-this-message-before-performing-the-action'
+												)}
+												translations={
+													confirmationMessageTranslations
+												}
+											/>
+										) : (
+											<>
+												<label
+													htmlFor={
+														confirmationMessageFormElementId
+													}
+												>
+													{Liferay.Language.get(
+														'confirmation-message'
+													)}
+												</label>
+
+												<ClayInput
+													id={
+														confirmationMessageFormElementId
+													}
+													onChange={(event) =>
+														setActionData({
+															...actionData,
+															confirmationMessage:
+																event.target
+																	.value,
+														})
+													}
+													type="text"
+													value={
+														actionData.confirmationMessage
+													}
+												/>
+											</>
+										)}
 									</ClayForm.Group>
 								</ClayLayout.Col>
 

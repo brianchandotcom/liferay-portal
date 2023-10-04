@@ -2803,80 +2803,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/PostalAddress"
             tags: ["PostalAddress"]
-    "/accounts/{accountId}/postal-addresses/{postalAddressId}":
-        patch:
-            description:
-                Updates the postal address of the Account with information sent in the request body. Only the provided
-                fields are updated.
-            operationId: patchAccountPostalAddress
-            parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: postalAddressId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/PostalAddress"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/PostalAddress"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/PostalAddress"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/PostalAddress"
-            tags: ["PostalAddress"]
-        put:
-            # @review
-            description:
-                Replaces the Postal Address with information sent in the request body. Any missing fields are deleted
-                unless they are required.
-            operationId: putAccountPostalAddress
-            parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: postalAddressId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/PostalAddress"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/PostalAddress"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/PostalAddress"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/PostalAddress"
-            tags: ["PostalAddress"]
     "/accounts/{accountId}/user-accounts":
         get:
             # @review
@@ -4201,6 +4127,67 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+            tags: ["PostalAddress"]
+        patch:
+            description:
+                Updates the postal address of the Account with information sent in the request body. Only the provided
+                fields are updated.
+            operationId: patchAccountPostalAddress
+            parameters:
+                - in: path
+                  name: postalAddressId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PostalAddress"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PostalAddress"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+            tags: ["PostalAddress"]
+        put:
+            # @review
+            description:
+                Replaces the Postal Address with information sent in the request body. Any missing fields are deleted
+                unless they are required.
+            operationId: putAccountPostalAddress
+            parameters:
+                - in: path
+                  name: postalAddressId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PostalAddress"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PostalAddress"
             responses:
                 200:
                     content:

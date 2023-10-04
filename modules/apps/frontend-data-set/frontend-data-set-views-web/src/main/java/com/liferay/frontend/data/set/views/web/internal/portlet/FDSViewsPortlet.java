@@ -204,8 +204,16 @@ public class FDSViewsPortlet extends MVCPortlet {
 			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
 			fdsActionObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap("FDSView FDSAction Relationship"),
-			"fdsViewFDSActionRelationship", false,
+			LocalizedMapUtil.getLocalizedMap("FDSView FDSActionCreation Relationship"),
+			"fdsViewFDSActionCreationRelationship", false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
+			fdsActionObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("FDSView FDSActionItem Relationship"),
+			"fdsViewFDSActionItemRelationship", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 

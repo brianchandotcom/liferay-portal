@@ -77,6 +77,7 @@ public class DSHttp {
 
 		JSONObject jsonObject = DSAccessTokenWebCacheItem.get(
 			digitalSignatureConfiguration.apiUsername(),
+			digitalSignatureConfiguration.environment(),
 			digitalSignatureConfiguration.integrationKey(),
 			digitalSignatureConfiguration.rsaPrivateKey());
 

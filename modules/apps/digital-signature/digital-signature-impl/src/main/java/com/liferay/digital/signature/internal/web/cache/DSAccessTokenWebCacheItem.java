@@ -35,7 +35,8 @@ import net.oauth.signature.pem.PKCS1EncodedKeySpec;
 public class DSAccessTokenWebCacheItem implements WebCacheItem {
 
 	public static JSONObject get(
-		String apiUsername, String integrationKey, String rsaPrivateKey) {
+		String apiUsername, String environment, String integrationKey,
+		String rsaPrivateKey) {
 
 		return (JSONObject)WebCachePoolUtil.get(
 			StringBundler.concat(
@@ -43,11 +44,19 @@ public class DSAccessTokenWebCacheItem implements WebCacheItem {
 				apiUsername, StringPool.POUND, integrationKey, StringPool.POUND,
 				rsaPrivateKey),
 			new DSAccessTokenWebCacheItem(
-				apiUsername, integrationKey, rsaPrivateKey));
+				apiUsername, environment, integrationKey, rsaPrivateKey));
 	}
 
 	public DSAccessTokenWebCacheItem(
-		String apiUsername, String integrationKey, String rsaPrivateKey) {
+		String apiUsername, String environment, String integrationKey,
+		String rsaPrivateKey) {
+
+		if (environment.equals("production")) {
+			_environmentBaseURI = "account.docusign.com";
+		}
+		else {
+			_environmentBaseURI = "account-d.docusign.com";
+		}
 
 		_apiUsername = apiUsername;
 		_integrationKey = integrationKey;
@@ -77,7 +86,8 @@ public class DSAccessTokenWebCacheItem implements WebCacheItem {
 				).put(
 					"grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer"
 				).build());
-			options.setLocation("https://account-d.docusign.com/oauth/token");
+			options.setLocation(
+				"https://" + _environmentBaseURI + "/oauth/token");
 			options.setPost(true);
 
 			return JSONFactoryUtil.createJSONObject(
@@ -119,7 +129,7 @@ public class DSAccessTokenWebCacheItem implements WebCacheItem {
 		long unixTime = System.currentTimeMillis() / Time.SECOND;
 
 		String bodyJSON = JSONUtil.put(
-			"aud", "account-d.docusign.com"
+			"aud", _environmentBaseURI
 		).put(
 			"exp", unixTime + 3600
 		).put(
@@ -158,6 +168,7 @@ public class DSAccessTokenWebCacheItem implements WebCacheItem {
 		DSAccessTokenWebCacheItem.class);
 
 	private final String _apiUsername;
+	private final String _environmentBaseURI;
 	private final String _integrationKey;
 	private final byte[] _rsaPrivateKeyBytes;
 

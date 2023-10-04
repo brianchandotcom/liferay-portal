@@ -570,6 +570,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_CART_ITEM_UOM_NAME</td>
+	<td>//div[@class='ml-2' and contains(.,'${key_uom}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_ITEM_NAME</td>
 	<td>//div[@class="mini-cart-item"]//h5[@class="item-name" and contains(.,'${key_cartItemName}')]</td>
 	<td></td>

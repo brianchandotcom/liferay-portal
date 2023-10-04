@@ -144,15 +144,19 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					_company.getCompanyId(), "C_Oapproved");
+				_objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						objectDefinition1.getExternalReferenceCode(),
+						_company.getCompanyId());
 
 		Assert.assertNotNull(serviceBuilderObjectDefinition);
 		Assert.assertTrue(serviceBuilderObjectDefinition.getActive());
 
 		serviceBuilderObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				_company.getCompanyId(), "C_Odraft");
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectDefinition2.getExternalReferenceCode(),
+					_company.getCompanyId());
 
 		Assert.assertNotNull(serviceBuilderObjectDefinition);
 		Assert.assertFalse(serviceBuilderObjectDefinition.getActive());
@@ -175,9 +179,9 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
-				label = Collections.singletonMap("en_US", "O" + finalName);
+				label = Collections.singletonMap("en_US", "Test" + finalName);
 				modifiable = !finalSystem;
-				name = "O" + finalName;
+				name = "Test" + finalName;
 				objectFields = new ObjectField[] {_createObjectField()};
 				panelAppOrder = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -185,7 +189,7 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 					RandomTestUtil.randomString());
 				parameterRequired = RandomTestUtil.randomBoolean();
 				pluralLabel = Collections.singletonMap(
-					"en_US", "O" + finalName + "s");
+					"en_US", "Test" + finalName + "s");
 				portlet = RandomTestUtil.randomBoolean();
 				restContextPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

@@ -386,7 +386,7 @@ public class PDFProcessorTest {
 	public void testShouldCreateNewPreviewOnAddWithCorrectNumberOfPagesConfiguration()
 		throws Exception {
 
-		_withPDFPreviewSystemConfiguration(
+		_withDLFileEntrySystemConfiguration(
 			10,
 			() -> {
 				FileEntry fileEntry = _dlAppService.addFileEntry(
@@ -410,7 +410,7 @@ public class PDFProcessorTest {
 	public void testShouldCreateNewPreviewOnAddWithCorrectNumberOfPagesLimitedByConfiguration()
 		throws Exception {
 
-		_withPDFPreviewSystemConfiguration(
+		_withDLFileEntrySystemConfiguration(
 			1,
 			() -> {
 				FileEntry fileEntry = _dlAppService.addFileEntry(
@@ -641,7 +641,7 @@ public class PDFProcessorTest {
 
 	}
 
-	private void _withPDFPreviewSystemConfiguration(
+	private void _withDLFileEntrySystemConfiguration(
 			int maxNumberOfPages, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -652,8 +652,8 @@ public class PDFProcessorTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					"com.liferay.document.library.preview.pdf.internal." +
-						"configuration.PDFPreviewConfiguration",
+					"com.liferay.document.library.configuration." +
+						"DLFileEntryConfiguration",
 					dictionary)) {
 
 			unsafeRunnable.run();

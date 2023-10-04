@@ -63,17 +63,6 @@ public abstract class BaseTopLevelBuild
 	extends BaseParentBuild implements TopLevelBuild {
 
 	@Override
-	public void addDownstreamBuilds(String... urls) {
-		super.addDownstreamBuilds(urls);
-
-		if (getDownstreamBuildCount("completed") < getDownstreamBuildCount(
-				null)) {
-
-			setResult(null);
-		}
-	}
-
-	@Override
 	public void addTimelineData(TimelineData timelineData) {
 		timelineData.addTimelineData(this);
 
@@ -539,23 +528,6 @@ public abstract class BaseTopLevelBuild
 	@Override
 	public List<String> getProjectNames() {
 		return Collections.emptyList();
-	}
-
-	@Override
-	public String getResult() {
-		if ((this.result == null) && (getBuildURL() != null)) {
-			JSONObject buildJSONObject = getBuildJSONObject("result");
-
-			String result = buildJSONObject.optString("result");
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(result)) {
-				result = null;
-			}
-
-			setResult(result);
-		}
-
-		return this.result;
 	}
 
 	@Override

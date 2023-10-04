@@ -28,10 +28,6 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.definition.tree.Node;
-import com.liferay.object.definition.tree.Tree;
-import com.liferay.object.definition.tree.TreeFactory;
-import com.liferay.object.definition.tree.constants.TreeConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
@@ -67,6 +63,10 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.TreeTestUtil;
+import com.liferay.object.tree.Node;
+import com.liferay.object.tree.Tree;
+import com.liferay.object.tree.TreeFactory;
+import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -535,7 +535,8 @@ public class DefaultObjectEntryManagerImplTest
 			_originalNestedFieldsContext);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			objectDefinitionLocalService);
+			objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"});
 	}
 
 	@Test
@@ -3207,11 +3208,11 @@ public class DefaultObjectEntryManagerImplTest
 
 		Map<Long, ObjectEntry> objectEntries =
 			HashMapBuilder.<Long, ObjectEntry>put(
-				rootNode.getObjectDefinitionId(),
+				rootNode.getPrimaryKey(),
 				_defaultObjectEntryManager.addObjectEntry(
 					_simpleDTOConverterContext,
 					objectDefinitionLocalService.getObjectDefinition(
-						rootNode.getObjectDefinitionId()),
+						rootNode.getPrimaryKey()),
 					new ObjectEntry() {
 						{
 							properties = HashMapBuilder.<String, Object>put(
@@ -3228,11 +3229,11 @@ public class DefaultObjectEntryManagerImplTest
 			Node node = iterator.next();
 
 			objectEntries.put(
-				node.getObjectDefinitionId(),
+				node.getPrimaryKey(),
 				_defaultObjectEntryManager.addObjectEntry(
 					_simpleDTOConverterContext,
 					objectDefinitionLocalService.getObjectDefinition(
-						node.getObjectDefinitionId()),
+						node.getPrimaryKey()),
 					new ObjectEntry() {
 						{
 							properties = HashMapBuilder.<String, Object>put(
@@ -3253,7 +3254,7 @@ public class DefaultObjectEntryManagerImplTest
 								() -> {
 									ObjectEntry objectEntry = objectEntries.get(
 										node.getParentNode(
-										).getObjectDefinitionId());
+										).getPrimaryKey());
 
 									return objectEntry.getId();
 								}

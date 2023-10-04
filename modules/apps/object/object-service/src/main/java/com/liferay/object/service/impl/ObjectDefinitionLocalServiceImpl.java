@@ -14,10 +14,6 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.definition.tree.Edge;
-import com.liferay.object.definition.tree.Node;
-import com.liferay.object.definition.tree.Tree;
-import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.deployer.InactiveObjectDefinitionDeployer;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
@@ -77,6 +73,10 @@ import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectFolderPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.object.tree.Edge;
+import com.liferay.object.tree.Node;
+import com.liferay.object.tree.Tree;
+import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -843,7 +843,7 @@ public class ObjectDefinitionLocalServiceImpl
 			Node node = iterator.next();
 
 			_publishObjectDefinition(
-				userId, getObjectDefinition(node.getObjectDefinitionId()));
+				userId, getObjectDefinition(node.getPrimaryKey()));
 		}
 
 		return getObjectDefinition(objectDefinitionId);
@@ -1004,7 +1004,7 @@ public class ObjectDefinitionLocalServiceImpl
 			Node node = iterator.next();
 
 			objectDefinitionLocalService.updateRootObjectDefinitionId(
-				node.getObjectDefinitionId(), 0);
+				node.getPrimaryKey(), 0);
 
 			if (node.isRoot()) {
 				continue;

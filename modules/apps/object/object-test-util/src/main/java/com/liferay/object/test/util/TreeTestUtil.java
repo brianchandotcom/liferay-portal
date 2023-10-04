@@ -5,14 +5,14 @@
 
 package com.liferay.object.test.util;
 
-import com.liferay.object.definition.tree.Edge;
-import com.liferay.object.definition.tree.Node;
-import com.liferay.object.definition.tree.Tree;
-import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.tree.Edge;
+import com.liferay.object.tree.Node;
+import com.liferay.object.tree.Tree;
+import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -135,7 +135,7 @@ public class TreeTestUtil {
 
 			unsafeConsumer.accept(
 				objectDefinitionLocalService.getObjectDefinition(
-					node.getObjectDefinitionId()));
+					node.getPrimaryKey()));
 		}
 	}
 
@@ -173,7 +173,7 @@ public class TreeTestUtil {
 
 		ObjectDefinition objectDefinition =
 			objectDefinitionLocalService.getObjectDefinition(
-				node.getObjectDefinitionId());
+				node.getPrimaryKey());
 
 		return objectDefinition.getShortName();
 	}

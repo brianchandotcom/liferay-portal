@@ -106,7 +106,7 @@ public class UserActionDropdownItems {
 						!PropsValues.PORTAL_JAAS_ENABLE &&
 						PropsValues.PORTAL_IMPERSONATION_ENABLE &&
 						(_user.getUserId() != _themeDisplay.getUserId()) &&
-						!_themeDisplay.isImpersonated() &&
+						_user.isActive() && !_themeDisplay.isImpersonated() &&
 						UserPermissionUtil.contains(
 							_themeDisplay.getPermissionChecker(),
 							_user.getUserId(), ActionKeys.IMPERSONATE),

@@ -6,7 +6,7 @@
 package com.liferay.product.navigation.applications.menu.web.internal.portlet.action;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.image.ImageTool;
+import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -55,7 +55,7 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 
 		String applicationsMenuDefaultLiferayLogo =
 			_getApplicationsMenuDefaultLiferayLogo();
-		ClassLoader classLoader = ImageTool.class.getClassLoader();
+		ClassLoader classLoader = ImageToolUtil.class.getClassLoader();
 		InputStream inputStream = null;
 
 		try {

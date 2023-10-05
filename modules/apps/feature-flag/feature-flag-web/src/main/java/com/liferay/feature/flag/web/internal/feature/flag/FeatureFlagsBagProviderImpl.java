@@ -168,7 +168,7 @@ public class FeatureFlagsBagProviderImpl
 	}
 
 	private FeatureFlagsBag _createFeatureFlagsBag(long companyId) {
-		Map<String, FeatureFlag> systemFeatureFlagMap = new HashMap<>();
+		Map<String, FeatureFlag> systemFeatureFlags = new HashMap<>();
 
 		if (companyId != CompanyConstants.SYSTEM) {
 			FeatureFlagsBag systemFeatureFlagsBag = getOrCreateFeatureFlagsBag(
@@ -177,27 +177,27 @@ public class FeatureFlagsBagProviderImpl
 			for (FeatureFlag featureFlag :
 					systemFeatureFlagsBag.getFeatureFlags(null)) {
 
-				systemFeatureFlagMap.put(featureFlag.getKey(), featureFlag);
+				systemFeatureFlags.put(featureFlag.getKey(), featureFlag);
 			}
 		}
 
-		Map<String, FeatureFlag> featureFlagsMap = new HashMap<>();
+		Map<String, FeatureFlag> featureFlags = new HashMap<>();
 
 		if (companyId == CompanyThreadLocal.getCompanyId()) {
 			_populateFeatureFlagsMap(
-				companyId, systemFeatureFlagMap, featureFlagsMap);
+				companyId, systemFeatureFlags, featureFlags);
 		}
 		else {
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
 				_populateFeatureFlagsMap(
-					companyId, systemFeatureFlagMap, featureFlagsMap);
+					companyId, systemFeatureFlags, featureFlags);
 			}
 		}
 
 		return new FeatureFlagsBag(
-			companyId, Collections.unmodifiableMap(featureFlagsMap));
+			companyId, Collections.unmodifiableMap(featureFlags));
 	}
 
 	private List<String> _getFeatureFlagKeys(
@@ -245,8 +245,8 @@ public class FeatureFlagsBagProviderImpl
 	}
 
 	private void _populateFeatureFlagsMap(
-		long companyId, Map<String, FeatureFlag> systemFeatureFlagMap,
-		Map<String, FeatureFlag> featureFlagsMap) {
+		long companyId, Map<String, FeatureFlag> systemFeatureFlags,
+		Map<String, FeatureFlag> featureFlags) {
 
 		Properties properties = PropsUtil.getProperties(
 			FeatureFlagConstants.FEATURE_FLAG + StringPool.PERIOD, true);
@@ -270,12 +270,12 @@ public class FeatureFlagsBagProviderImpl
 				featureFlag = new PreferenceAwareFeatureFlag(
 					companyId, featureFlag, _featureFlagPreferencesManager);
 
-				featureFlagsMap.put(featureFlag.getKey(), featureFlag);
+				featureFlags.put(featureFlag.getKey(), featureFlag);
 			}
 		}
 
 		for (Map.Entry<String, FeatureFlag> entry :
-				featureFlagsMap.entrySet()) {
+				featureFlags.entrySet()) {
 
 			List<FeatureFlag> dependencyFeatureFlags = new ArrayList<>();
 
@@ -307,11 +307,11 @@ public class FeatureFlagsBagProviderImpl
 					continue;
 				}
 
-				FeatureFlag dependencyFeatureFlag = featureFlagsMap.get(
+				FeatureFlag dependencyFeatureFlag = featureFlags.get(
 					dependencyKey);
 
 				if (dependencyFeatureFlag == null) {
-					dependencyFeatureFlag = systemFeatureFlagMap.get(
+					dependencyFeatureFlag = systemFeatureFlags.get(
 						dependencyKey);
 				}
 

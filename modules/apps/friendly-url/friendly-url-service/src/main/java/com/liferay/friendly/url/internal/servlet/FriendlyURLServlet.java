@@ -311,7 +311,7 @@ public class FriendlyURLServlet extends HttpServlet {
 						locale)) {
 
 					Locale originalLocale = _setAlternativeLayoutFriendlyURL(
-						httpServletRequest, layout,
+						companyId, httpServletRequest, layout,
 						layoutFriendlyURLSeparatorCompositeFriendlyURL,
 						alternativeSiteFriendlyURL);
 
@@ -929,6 +929,16 @@ public class FriendlyURLServlet extends HttpServlet {
 		return false;
 	}
 
+	private boolean _isShowAlternativeLayoutFriendlyURLMessage(long companyId) {
+		FriendlyURLRedirectionConfiguration
+			friendlyURLRedirectionConfiguration =
+				friendlyURLRedirectionConfigurationProvider.
+					getCompanyFriendlyURLRedirectionConfiguration(companyId);
+
+		return friendlyURLRedirectionConfiguration.
+			showAlternativeLayoutFriendlyURLMessage();
+	}
+
 	private boolean _isSkipRedirect(HttpServletRequest httpServletRequest) {
 		String refererURL = httpServletRequest.getHeader(HttpHeaders.REFERER);
 
@@ -966,7 +976,7 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	private Locale _setAlternativeLayoutFriendlyURL(
-		HttpServletRequest httpServletRequest, Layout layout,
+		long companyId, HttpServletRequest httpServletRequest, Layout layout,
 		String friendlyURL, SiteFriendlyURL siteFriendlyURL) {
 
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
@@ -998,13 +1008,15 @@ public class FriendlyURLServlet extends HttpServlet {
 		String alternativeLayoutFriendlyURL = portal.getLocalizedFriendlyURL(
 			httpServletRequest, layout, groupLocale, locale);
 
-		SessionMessages.add(
-			httpServletRequest, "alternativeLayoutFriendlyURL",
-			alternativeLayoutFriendlyURL);
+		if (_isShowAlternativeLayoutFriendlyURLMessage(companyId)) {
+			SessionMessages.add(
+				httpServletRequest, "alternativeLayoutFriendlyURL",
+				alternativeLayoutFriendlyURL);
 
-		PortalMessages.add(
-			httpServletRequest, PortalMessages.KEY_JSP_PATH,
-			"/html/common/themes/layout_friendly_url_redirect.jsp");
+			PortalMessages.add(
+				httpServletRequest, PortalMessages.KEY_JSP_PATH,
+				"/html/common/themes/layout_friendly_url_redirect.jsp");
+		}
 
 		return groupLocale;
 	}

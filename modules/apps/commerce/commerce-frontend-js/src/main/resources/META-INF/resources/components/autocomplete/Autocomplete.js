@@ -130,11 +130,42 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 	}, [props.infiniteScrollMode, query]);
 
 	useEffect(() => {
+		if (!props.autoload && (!query || query.trim().length <= 0)) {
+			return;
+		}
+
 		if (initialised && debouncedGetItems && !props.disabled) {
 			setLoading(true);
 
 			debouncedGetItems(props.apiUrl, query, page, pageSize)
 				.then((jsonResponse) => {
+					if (Array.isArray(jsonResponse)) {
+						const newJSONResponse = {
+							items: [],
+							lastPage: 1,
+							page: 1,
+							pageSize: 1,
+							totalCount: 0,
+						};
+						jsonResponse.forEach((response) => {
+							newJSONResponse.items = [
+								...newJSONResponse.items,
+								...response.items,
+							];
+							newJSONResponse.lastPage = Math.max(
+								newJSONResponse.lastPage,
+								response.lastPage
+							);
+							newJSONResponse.page = response.page;
+							newJSONResponse.pageSize = response.pageSize;
+							newJSONResponse.totalCount =
+								newJSONResponse.totalCount +
+								response.totalCount;
+						});
+
+						jsonResponse = newJSONResponse;
+					}
+
 					if (!isMounted()) {
 						return;
 					}
@@ -195,6 +226,7 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 		page,
 		pageSize,
 		props.apiUrl,
+		props.autoload,
 		props.disabled,
 		props.infiniteScrollMode,
 		props.initialValue,
@@ -241,6 +273,7 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 			page={page}
 			pageSize={pageSize}
 			totalCount={totalCount}
+			updateActive={setActive}
 			updatePage={setPage}
 			updatePageSize={setPageSize}
 			updateSelectedItem={setSelectedItem}
@@ -286,7 +319,7 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 						);
 					}
 				}}
-				scrollCompleted={!items || items.length === totalCount}
+				scrollCompleted={!items || items.length >= totalCount}
 			>
 				{results}
 			</InfiniteScroller>
@@ -344,21 +377,22 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 								}
 							/>
 
-							{!CustomView && !props.disabled && (
-								<ClayAutocomplete.DropDown
-									active={
-										active &&
-										((items && page === 1) || page > 1)
-									}
-								>
-									<div
-										className="autocomplete-items"
-										ref={dropdownNodeRef}
+							{(!CustomView || props.customViewInsideDropDown) &&
+								!props.disabled && (
+									<ClayAutocomplete.DropDown
+										active={
+											active &&
+											((items && page === 1) || page > 1)
+										}
 									>
-										{wrappedResults}
-									</div>
-								</ClayAutocomplete.DropDown>
-							)}
+										<div
+											className="autocomplete-items"
+											ref={dropdownNodeRef}
+										>
+											{wrappedResults}
+										</div>
+									</ClayAutocomplete.DropDown>
+								)}
 
 							{loading && <ClayAutocomplete.LoadingIndicator />}
 						</ClayAutocomplete>
@@ -384,6 +418,7 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 			</FocusScope>
 			{CustomView &&
 				!props.disabled &&
+				!props.customViewInsideDropDown &&
 				(props.contentWrapperRef
 					? props.contentWrapperRef.current && (
 							<ReactPortal
@@ -398,10 +433,15 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 }
 
 Autocomplete.propTypes = {
-	apiUrl: PropTypes.string.isRequired,
+	apiUrl: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.arrayOf(PropTypes.string),
+	]).isRequired,
 	autofill: PropTypes.bool,
+	autoload: PropTypes.bool,
 	contentWrapperRef: PropTypes.object,
 	customView: PropTypes.func,
+	customViewInsideDropDown: PropTypes.bool,
 	customViewModuleUrl: PropTypes.string,
 	disabled: PropTypes.bool,
 	fetchDataDebounce: PropTypes.number,
@@ -435,6 +475,8 @@ Autocomplete.propTypes = {
 
 Autocomplete.defaultProps = {
 	autofill: false,
+	autoload: true,
+	customViewInsideDropDown: false,
 	disabled: false,
 	fetchDataDebounce: 200,
 	infiniteScrollMode: false,

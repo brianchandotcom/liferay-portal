@@ -17,14 +17,8 @@ import javax.imageio.ImageIO;
  */
 public class ImageToolImpl implements ImageTool {
 
-	public static ImageTool getInstance() {
-		return _instance;
-	}
-
 	private ImageToolImpl() {
 		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
 	}
-
-	private static final ImageTool _instance = new ImageToolImpl();
 
 }

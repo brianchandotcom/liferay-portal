@@ -5,8 +5,7 @@
 
 package com.liferay.document.library.preview.pdf.internal;
 
-import com.liferay.portal.image.ImageToolImpl;
-import com.liferay.portal.kernel.image.ImageTool;
+import com.liferay.portal.image.ImageToolUtil;
 
 import java.awt.image.RenderedImage;
 
@@ -65,13 +64,11 @@ public class LiferayPDFBoxUtil {
 		RenderedImage renderedImage = pdfRenderer.renderImageWithDPI(
 			pageIndex, dpi, ImageType.RGB);
 
-		ImageTool imageTool = ImageToolImpl.getInstance();
-
 		if (height == 0) {
-			return imageTool.scale(renderedImage, width);
+			return ImageToolUtil.scale(renderedImage, width);
 		}
 
-		return imageTool.scale(renderedImage, height, width);
+		return ImageToolUtil.scale(renderedImage, height, width);
 	}
 
 }

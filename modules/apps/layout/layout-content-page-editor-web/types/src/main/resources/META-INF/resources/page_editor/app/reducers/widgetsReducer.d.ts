@@ -6,8 +6,8 @@
 import toggleWidgetHighlighted from '../actions/toggleWidgetHighlighted';
 import updateWidgets, {WidgetSet} from '../actions/updateWidgets';
 export default function widgetsReducer(
-	widgets: WidgetSet[] | undefined,
+	widgets: WidgetSet[] | null | undefined,
 	action:
 		| ReturnType<typeof toggleWidgetHighlighted>
 		| ReturnType<typeof updateWidgets>
-): WidgetSet[] | null;
+): WidgetSet[] | null | undefined;

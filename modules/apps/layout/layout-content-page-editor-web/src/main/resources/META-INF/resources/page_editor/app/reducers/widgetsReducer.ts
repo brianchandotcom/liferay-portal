@@ -8,8 +8,6 @@ import {TOGGLE_WIDGET_HIGHLIGHTED, UPDATE_WIDGETS} from '../actions/types';
 import updateWidgets, {Widget, WidgetSet} from '../actions/updateWidgets';
 import {HIGHLIGHTED_CATEGORY_ID} from '../config/constants/highlightedCategoryId';
 
-const DEFAULT_WIDGETS: WidgetSet[] = [];
-
 const DEFAULT_HIGHLIGHTED_CATEGORY = {
 	categories: [],
 	path: HIGHLIGHTED_CATEGORY_ID,
@@ -61,7 +59,7 @@ function markUsedCategories(
 }
 
 export default function widgetsReducer(
-	widgets = DEFAULT_WIDGETS,
+	widgets: WidgetSet[] | null = null,
 	action:
 		| ReturnType<typeof toggleWidgetHighlighted>
 		| ReturnType<typeof updateWidgets>
@@ -70,7 +68,7 @@ export default function widgetsReducer(
 		case TOGGLE_WIDGET_HIGHLIGHTED: {
 			const {highlighted, highlightedPortlets, portletId} = action;
 
-			const nextWidgets = widgets.reduce(
+			const nextWidgets = widgets?.reduce(
 				(categories: WidgetSet[], category) => {
 					if (category.path !== HIGHLIGHTED_CATEGORY_ID) {
 						categories.push({
@@ -88,7 +86,7 @@ export default function widgetsReducer(
 				[]
 			);
 
-			if (highlightedPortlets.length) {
+			if (nextWidgets && highlightedPortlets.length) {
 				nextWidgets.unshift({
 					...DEFAULT_HIGHLIGHTED_CATEGORY,
 					categories: [],

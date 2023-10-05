@@ -524,7 +524,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		).groupExternalReferenceCode(
 			editRankingMVCActionRequest.getGroupExternalReferenceCode()
 		).hiddenDocumentIds(
-			_update(
+			_updateHiddenIds(
 				ranking.getHiddenDocumentIds(), hiddenIdsAdded,
 				hiddenIdsRemoved)
 		).inactive(
@@ -557,23 +557,25 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			rankingBuilder.build(), getRankingIndexName());
 	}
 
-	private List<String> _update(
-		List<String> strings, String[] addStrings, String[] removeStrings) {
+	private List<String> _updateHiddenIds(
+		List<String> hiddenIdsCurrent, String[] hiddenIdsAdded,
+		String[] hiddenIdsRemoved) {
 
-		List<String> newStrings;
+		List<String> hiddenIdsUpdated;
 
-		if (ListUtil.isEmpty(strings)) {
-			newStrings = Arrays.asList(addStrings);
+		if (ListUtil.isEmpty(hiddenIdsCurrent)) {
+			hiddenIdsUpdated = Arrays.asList(hiddenIdsAdded);
 		}
 		else {
-			newStrings = RankingUtil.translateDocumentIds(strings);
+			hiddenIdsUpdated = RankingUtil.translateDocumentIds(
+				hiddenIdsCurrent);
 
-			Collections.addAll(newStrings, addStrings);
+			Collections.addAll(hiddenIdsUpdated, hiddenIdsAdded);
 		}
 
-		newStrings.removeAll(Arrays.asList(removeStrings));
+		hiddenIdsUpdated.removeAll(Arrays.asList(hiddenIdsRemoved));
 
-		return newStrings;
+		return hiddenIdsUpdated;
 	}
 
 	private static final String _UPDATE_SPECIAL = StringPool.GREATER_THAN;

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
@@ -17,6 +18,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -61,11 +63,17 @@ public class BatchEngineImportTaskItemReaderUtil {
 			}
 
 			if (field != null) {
+				JsonDeserialize[] jsonDeserializes = field.getAnnotationsByType(
+					JsonDeserialize.class);
+
 				field.setAccessible(true);
+
+				ObjectMapper objectMapper = _getObjectMapper(
+					field, jsonDeserializes);
 
 				field.set(
 					item,
-					_objectMapper.convertValue(
+					objectMapper.convertValue(
 						entry.getValue(), field.getType()));
 
 				continue;
@@ -135,6 +143,30 @@ public class BatchEngineImportTaskItemReaderUtil {
 		}
 
 		return targetFieldNameValueMap;
+	}
+
+	private static ObjectMapper _getObjectMapper(
+			Field field, JsonDeserialize[] jsonDeserializes)
+		throws IllegalAccessException, InstantiationException {
+
+		if (!ArrayUtil.isEmpty(jsonDeserializes)) {
+			JsonDeserialize jsonDeserialize = jsonDeserializes[0];
+
+			return new ObjectMapper() {
+				{
+					SimpleModule simpleModule = new SimpleModule();
+
+					simpleModule.addDeserializer(
+						field.getType(),
+						jsonDeserialize.using(
+						).newInstance());
+
+					registerModule(simpleModule);
+				}
+			};
+		}
+
+		return _objectMapper;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

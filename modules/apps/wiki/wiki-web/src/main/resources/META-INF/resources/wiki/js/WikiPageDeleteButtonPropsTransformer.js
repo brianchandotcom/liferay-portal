@@ -5,14 +5,12 @@
 
 import {openConfirmModal} from 'frontend-js-web';
 
-export default function propsTransformer(props) {
+export default function propsTransformer({additionalProps, ...props}) {
 	return {
 		...props,
 		onClick() {
-			const trashEnabled = props['data-trash-enabled'];
-
-			if (trashEnabled) {
-				submitForm(document.hrefFm, props['data-url']);
+			if (additionalProps.trashEnabled) {
+				submitForm(document.hrefFm, additionalProps.url);
 			}
 			else {
 				openConfirmModal({
@@ -21,7 +19,7 @@ export default function propsTransformer(props) {
 					),
 					onConfirm: (isConfirmed) => {
 						if (isConfirmed) {
-							submitForm(document.hrefFm, props['data-url']);
+							submitForm(document.hrefFm, additionalProps.url);
 						}
 					},
 				});

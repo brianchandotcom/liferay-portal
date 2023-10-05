@@ -21,7 +21,6 @@
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultFullNameValidator" id="com.liferay.portal.kernel.security.auth.DefaultFullNameValidator" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultScreenNameGenerator" id="com.liferay.portal.kernel.security.auth.DefaultScreenNameGenerator" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultScreenNameValidator" id="com.liferay.portal.kernel.security.auth.DefaultScreenNameValidator" />
-	<bean class="com.liferay.portal.kernel.security.auth.FamilyNameFirstFullNameGenerator" id="com.liferay.portal.kernel.security.auth.FamilyNameFirstFullNameGenerator" />
 	<bean class="com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory" id="com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory">
 		<property name="fullNameGenerator" ref="com.liferay.portal.kernel.security.auth.DefaultFullNameGenerator" />
 	</bean>

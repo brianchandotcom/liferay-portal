@@ -343,34 +343,34 @@ const ItemActionForm = ({
 											})
 										);
 
-									validateForm();
-								}}
-								onChange={setLabelTranslations}
-								placeholder={Liferay.Language.get(
-									'action-name'
-								)}
-								required
-								translations={labelTranslations}
-							/>)
-						:(
-							<ClayForm.Group>
-								<label htmlFor={labelFormElementId}>
-									{Liferay.Language.get('label')}
-								</label>
-
-								<ClayInput
-									id={labelFormElementId}
-									onChange={(event) =>
-										setActionData({
-											...actionData,
-											label: event.target.value,
-										})
-									}
-									type="text"
-									value={actionData.label}
+										validateForm();
+									}}
+									onChange={setLabelTranslations}
+									placeholder={Liferay.Language.get(
+										'action-name'
+									)}
+									required
+									translations={labelTranslations}
 								/>
-							</ClayForm.Group>
-						)}
+							) : (
+								<ClayForm.Group>
+									<label htmlFor={labelFormElementId}>
+										{Liferay.Language.get('label')}
+									</label>
+
+									<ClayInput
+										id={labelFormElementId}
+										onChange={(event) =>
+											setActionData({
+												...actionData,
+												label: event.target.value,
+											})
+										}
+										type="text"
+										value={actionData.label}
+									/>
+								</ClayForm.Group>
+							)}
 						</ClayLayout.Col>
 
 						<ClayLayout.Col
@@ -460,6 +460,9 @@ const ItemActionForm = ({
 
 									<ClaySelectWithOption
 										id={variantFormElementId}
+										onBlur={() => {
+											validateForm();
+										}}
 										onChange={(event) =>
 											setActionData({
 												...actionData,
@@ -467,9 +470,6 @@ const ItemActionForm = ({
 											})
 										}
 										options={MODAL_VARIANTS}
-										onBlur={() => {
-											validateForm();
-										}}
 										placeholder={Liferay.Language.get(
 											'please-select-an-option'
 										)}

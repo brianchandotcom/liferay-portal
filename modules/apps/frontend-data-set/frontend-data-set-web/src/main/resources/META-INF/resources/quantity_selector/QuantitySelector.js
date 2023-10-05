@@ -47,16 +47,6 @@ function QuantitySelector({
 		setPrevAvailable(currentQuantity - multipleQuantity >= minQuantity);
 	}, [currentQuantity, maxQuantity, minQuantity, multipleQuantity]);
 
-	function updateCurrentQuantity(newQuantity) {
-		if (
-			newQuantity >= minQuantity &&
-			newQuantity <= maxQuantity &&
-			newQuantity % multipleQuantity === 0
-		) {
-			setCurrentQuantity(newQuantity);
-		}
-	}
-
 	function increaseQuantity() {
 		if (nextAvailable) {
 			setCurrentQuantity(currentQuantity + multipleQuantity);
@@ -70,7 +60,7 @@ function QuantitySelector({
 	}
 
 	function handleInputChange(event) {
-		return updateCurrentQuantity(parseInt(event.target.value, 10));
+		return setCurrentQuantity(event.target.value);
 	}
 
 	function handleInputKeyUp(event) {

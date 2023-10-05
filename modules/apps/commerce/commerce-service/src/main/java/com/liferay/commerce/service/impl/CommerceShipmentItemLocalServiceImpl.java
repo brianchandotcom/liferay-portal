@@ -350,7 +350,7 @@ public class CommerceShipmentItemLocalServiceImpl
 	}
 
 	@Override
-	public int getCommerceShipmentOrderItemsQuantity(
+	public BigDecimal getCommerceShipmentOrderItemsQuantity(
 		long commerceShipmentId, long commerceOrderItemId) {
 
 		return commerceShipmentItemFinder.getCommerceShipmentOrderItemsQuantity(

@@ -232,7 +232,7 @@ public class CommerceShipmentItemServiceImpl
 	}
 
 	@Override
-	public int getCommerceShipmentOrderItemsQuantity(
+	public BigDecimal getCommerceShipmentOrderItemsQuantity(
 			long commerceShipmentId, long commerceOrderItemId)
 		throws PortalException {
 

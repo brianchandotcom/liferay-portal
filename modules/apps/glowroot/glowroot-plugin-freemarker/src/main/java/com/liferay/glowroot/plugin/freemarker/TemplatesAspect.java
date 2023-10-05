@@ -46,18 +46,15 @@ public class TemplatesAspect {
 			@BindParameter FragmentEntryProcessorContextShim
 				fragmentEntryProcessorContextShim) {
 
-			long companyId = fragmentEntryLinkShim.getCompanyId();
-			long siteGroupId = fragmentEntryLinkShim.getGroupId();
-
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Fragment Entry Link Template Parser ");
 			sb.append("Transform [fragmentEntryLinkId: ");
 			sb.append(fragmentEntryLinkShim.getFragmentEntryLinkId());
 			sb.append(", companyId: ");
-			sb.append(companyId);
+			sb.append(fragmentEntryLinkShim.getCompanyId());
 			sb.append(", siteGroupId: ");
-			sb.append(siteGroupId);
+			sb.append(fragmentEntryLinkShim.getGroupId());
 			sb.append("]");
 
 			TraceEntry traceEntry;
@@ -133,17 +130,14 @@ public class TemplatesAspect {
 			ThemeDisplayShim themeDisplayShim = (ThemeDisplayShim)parameters[9];
 			DDMTemplateShim dDMTemplateShim = (DDMTemplateShim)parameters[1];
 
-			long companyId = themeDisplayShim.getCompanyId();
-			long siteGroupId = themeDisplayShim.getSiteGroupId();
-
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Journal Template Parser Transform [templateId: ");
 			sb.append(dDMTemplateShim.getTemplateId());
 			sb.append(", companyId: ");
-			sb.append(companyId);
+			sb.append(themeDisplayShim.getCompanyId());
 			sb.append(", siteGroupId: ");
-			sb.append(siteGroupId);
+			sb.append(themeDisplayShim.getSiteGroupId());
 			sb.append("]");
 
 			TraceEntry traceEntry;
@@ -215,9 +209,6 @@ public class TemplatesAspect {
 			@BindParameter Map<String, Object> contextObjects,
 			@BindParameter String script, @BindParameter String type) {
 
-			long companyId = themeDisplayShim.getCompanyId();
-			long siteGroupId = themeDisplayShim.getSiteGroupId();
-
 			String templateId = String.valueOf(
 				contextObjects.get("template_id"));
 
@@ -226,9 +217,9 @@ public class TemplatesAspect {
 			sb.append("Template Parser Transform [templateId: ");
 			sb.append(templateId);
 			sb.append(", companyId: ");
-			sb.append(companyId);
+			sb.append(themeDisplayShim.getCompanyId());
 			sb.append(", siteGroupId: ");
-			sb.append(siteGroupId);
+			sb.append(themeDisplayShim.getSiteGroupId());
 			sb.append("]");
 
 			TraceEntry traceEntry;

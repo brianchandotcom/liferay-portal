@@ -5,13 +5,13 @@
 
 import {openModal} from 'frontend-js-web';
 
-export default function propsTransformer(props) {
+export default function propsTransformer({additionalProps, ...props}) {
 	return {
 		...props,
 		onClick() {
 			openModal({
 				title: props.title,
-				url: props['data-url'],
+				url: additionalProps.url,
 			});
 		},
 	};

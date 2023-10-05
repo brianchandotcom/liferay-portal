@@ -315,15 +315,17 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						/>
 
 						<clay:button
+							additionalProps='<%=
+								HashMapBuilder.<String, Object>put(
+									"url", permissionsURL
+								).build()
+							%>'
 							aria-label='<%= LanguageUtil.get(request, "permissions") %>'
-							borderless="<%= true %>"
-							data-url="<%= permissionsURL %>"
+							displayType="link"
 							icon="lock"
 							label="permissions"
 							propsTransformer="wiki/js/WikiPagePermissionsButtonPropsTransformer"
 							small="<%= true %>"
-							title="permissions"
-							type="button"
 						/>
 					</c:if>
 
@@ -405,15 +407,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						%>
 
 						<clay:button
+							additionalProps='<%=
+								HashMapBuilder.<String, Object>put(
+									"trashEnabled", trashHelper.isTrashEnabled(scopeGroupId)
+								).put(
+									"url", deletePageURL.toString()
+								).build()
+							%>'
 							aria-label='<%= LanguageUtil.get(request, "delete") %>'
-							borderless="<%= true %>"
-							data-url="<%= deletePageURL %>"
-							data-trash-enabled="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
+							displayType="link"
+							icon="trash"
 							label="delete"
 							propsTransformer="wiki/js/WikiPageDeleteButtonPropsTransformer"
 							small="<%= true %>"
-							title="delete"
-							type="button"
 						/>
 					</c:if>
 				</div>

@@ -68,7 +68,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		_childTemplateNodes.put(templateNode.getName(), templateNode);
 
 		if (Objects.equals(templateNode.getName(), "name")) {
-			put(_RANDOM_ID + "name", getName());
+			put(_RANDOM_ID + "Name", getName());
 		}
 
 		put(templateNode.getName(), templateNode);
@@ -199,8 +199,8 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	public String getName() {
-		if (super.containsKey(_RANDOM_ID + "name")) {
-			return (String)get(_RANDOM_ID + "name");
+		if (super.containsKey(_RANDOM_ID + "Name")) {
+			return (String)get(_RANDOM_ID + "Name");
 		}
 
 		Object name = get("name");

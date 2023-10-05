@@ -295,6 +295,10 @@ const ItemActionForm = ({
 		getIcons();
 	}, [spritemap]);
 
+	useEffect(() => {
+		validateForm();
+	});
+
 	const iconFormElementId = `${namespace}Icon`;
 	const confirmationMessageFormElementId = `${namespace}ConfirmationMessage`;
 	const confirmationMessageTypeFormElementId = `${namespace}ConfirmationMessageType`;

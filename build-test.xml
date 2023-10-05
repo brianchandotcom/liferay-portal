@@ -2141,6 +2141,9 @@ war.path=${app.server.portal.dir}/</echo>
 					<contains string="${env.JOB_NAME}" substring="release" />
 					<equals arg1="${env.TEST_PORTAL_BRANCH_NAME}" arg2="master" />
 					<matches pattern="\d{4}.q\d+.\d+" string="${env.TEST_PORTAL_RELEASE_VERSION}" />
+					<not>
+						<matches pattern="\d.+(-|.)(ga|u)\d+" string="${env.TEST_PORTAL_RELEASE_VERSION}" />
+					</not>
 				</and>
 				<then>
 					<property name="quarterly.release" value="true" />

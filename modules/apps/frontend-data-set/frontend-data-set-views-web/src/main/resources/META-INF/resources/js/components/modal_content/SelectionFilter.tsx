@@ -109,7 +109,6 @@ function Body({
 						{
 							disabled: true,
 							label: Liferay.Language.get('select'),
-							selected: true,
 							value: '',
 						},
 						...picklists.map((item) => ({
@@ -118,7 +117,7 @@ function Body({
 						})),
 					]}
 					title={Liferay.Language.get('source-options')}
-					value={selectedPicklist?.externalReferenceCode}
+					value={selectedPicklist?.externalReferenceCode || ''}
 				/>
 			</ClayForm.Group>
 

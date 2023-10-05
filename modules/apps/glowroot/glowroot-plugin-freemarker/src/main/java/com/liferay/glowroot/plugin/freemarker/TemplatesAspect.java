@@ -63,7 +63,7 @@ public class TemplatesAspect {
 			TraceEntry traceEntry;
 
 			if (_LEVEL_TRACE.equals(
-					TemplatesPluginProperties.templateInstrumentationLevel())) {
+					TemplatesPluginProperties.instrumentationLevel())) {
 
 				traceEntry = optionalThreadContext.startTransaction(
 					"Templates", sb.toString(),
@@ -74,8 +74,7 @@ public class TemplatesAspect {
 					"Fragment Entry Link html", html);
 			}
 			else if (_LEVEL_DEBUG.equals(
-						TemplatesPluginProperties.
-							templateInstrumentationLevel())) {
+						TemplatesPluginProperties.instrumentationLevel())) {
 
 				traceEntry = optionalThreadContext.startTransaction(
 					"Templates", sb.toString(),
@@ -150,7 +149,7 @@ public class TemplatesAspect {
 			TraceEntry traceEntry;
 
 			if (_LEVEL_TRACE.equals(
-					TemplatesPluginProperties.templateInstrumentationLevel())) {
+					TemplatesPluginProperties.instrumentationLevel())) {
 
 				traceEntry = optionalThreadContext.startTransaction(
 					"Templates", sb.toString(),
@@ -161,8 +160,7 @@ public class TemplatesAspect {
 					"Template script", dDMTemplateShim.getScript());
 			}
 			else if (_LEVEL_DEBUG.equals(
-						TemplatesPluginProperties.
-							templateInstrumentationLevel())) {
+						TemplatesPluginProperties.instrumentationLevel())) {
 
 				traceEntry = optionalThreadContext.startTransaction(
 					"Templates", sb.toString(),
@@ -236,7 +234,7 @@ public class TemplatesAspect {
 			TraceEntry traceEntry;
 
 			if (_LEVEL_TRACE.equals(
-					TemplatesPluginProperties.templateInstrumentationLevel())) {
+					TemplatesPluginProperties.instrumentationLevel())) {
 
 				traceEntry = optionalThreadContext.startTransaction(
 					"Templates", sb.toString(),
@@ -249,8 +247,7 @@ public class TemplatesAspect {
 					"Template script", script);
 			}
 			else if (_LEVEL_DEBUG.equals(
-						TemplatesPluginProperties.
-							templateInstrumentationLevel())) {
+						TemplatesPluginProperties.instrumentationLevel())) {
 
 				traceEntry = optionalThreadContext.startTransaction(
 					"Templates", sb.toString(),

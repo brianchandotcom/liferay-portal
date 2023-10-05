@@ -3,14 +3,14 @@
 		"com.liferay.glowroot.plugin.freemarker.TemplatesAspect"
 	],
 	"collocate": true,
-	"id": "liferay-templates-plugin",
-	"name": "Liferay Templates Plugin",
+	"id": "liferay-freemarker-templates-plugin",
+	"name": "Liferay Freemarker Templates Plugin",
 	"properties": [
 		{
 			"default": "INFO",
-			"description": "INFO: captures timer and trace entries in slow transactions with template IDs -- DEBUG: captures Freemarker transformations as individual transactions -- TRACE: captures the Freemarker scripts",
-			"label": "Freemarker template instrumentation level",
-			"name": "templateInstrumentationLevel",
+			"description": "Valid values are INFO, DEBUG, and TRACE. INFO captures timer and trace entries in slow transactions with template IDs. DEBUG captures Freemarker transformations as individual transactions. TRACE captures the Freemarker scripts.",
+			"label": "Instrumentation Level",
+			"name": "instrumentationLevel",
 			"type": "string"
 		}
 	]

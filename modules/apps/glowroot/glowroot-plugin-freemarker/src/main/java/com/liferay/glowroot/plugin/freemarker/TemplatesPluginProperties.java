@@ -14,25 +14,21 @@ import org.glowroot.agent.plugin.api.config.ConfigService;
  */
 public class TemplatesPluginProperties {
 
-	public static String templateInstrumentationLevel() {
-		return _templateInstrumentationLevel;
+	public static String instrumentationLevel() {
+		return _instrumentationLevel;
 	}
 
 	private static final ConfigService _configService = Agent.getConfigService(
-		"liferay-templates-plugin");
-	private static String _templateInstrumentationLevel;
+		"liferay-freemarker-templates-plugin");
+	private static String _instrumentationLevel;
 
 	private static class TemplatesPluginConfigListener
 		implements ConfigListener {
 
 		@Override
 		public void onChange() {
-			_recalculateProperties();
-		}
-
-		private void _recalculateProperties() {
-			_templateInstrumentationLevel = _configService.getStringProperty(
-				"templateInstrumentationLevel"
+			_instrumentationLevel = _configService.getStringProperty(
+				"instrumentationLevel"
 			).value();
 		}
 

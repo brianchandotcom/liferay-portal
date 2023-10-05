@@ -21,56 +21,65 @@ definition {
 		}
 	}
 
-	@description = "LPS-144474 - Verify that, when adding a new entry in the Object, the user only is able to submit the entry successfully if it passes for all validations from that Object"
-	@priority = 4
+	@description = "LPS-144474 - Verify a valid object entry can be added when the validation is set to full validation"
+	@priority = 5
 	test CanAddEntry {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 153556",
-			objectName = "CustomObject153556",
-			pluralLabelName = "Custom Objects 153556");
+		task ("Given a custom object definition with a decimal field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 192625",
+				objectName = "CustomObject192625",
+				pluralLabelName = "Custom Objects 192625");
 
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject153556");
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Decimal",
+				fieldLabelName = "Decimal",
+				fieldName = "decimal",
+				fieldType = "Double",
+				isRequired = "false",
+				objectName = "CustomObject192625");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153556");
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject192625");
+		}
 
-		ObjectAdmin.openObjectAdmin();
+		task ("and Given a groovy script validation set to full validation") {
+			ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153556");
+			ObjectPortlet.selectCustomObject(label = "Custom Object 192625");
 
-		ObjectAdmin.goToValidationsTab();
+			ObjectAdmin.goToValidationsTab();
 
-		ObjectCustomValidation.addObjectValidation(
-			validationName = "Custom Validation",
-			validationType = "Groovy");
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Groovy");
 
-		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
 
-		ObjectCustomValidation.activeValidation();
+			ObjectCustomValidation.activeValidation();
 
-		ObjectCustomValidation.gotoTab(tabName = "Conditions");
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField != 'Allowed Entry')");
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (decimal != 13.579)");
 
-		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
+			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not valid for decimal entry.");
 
-		PortletEntry.save();
+			PortletEntry.save();
+		}
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject153556");
+		task ("When the user creates a valid object entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "decimal",
+				objectName = "CustomObject192625",
+				value = "13.579");
+		}
 
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Allowed Entry");
+		task ("Then the object entry is added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject192625");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject153556");
-
-		ObjectPortlet.viewEntry(entry = "Allowed Entry");
+			ObjectPortlet.viewEntry(entry = "13.579");
+		}
 	}
 
 	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries added after the validation update"

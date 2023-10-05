@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -50,16 +50,12 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Samuel Trong Tran
  */
-@Component(service = UADSearchContainerBuilder.class)
-public class UADSearchContainerBuilder {
+public class UADSearchContainerBuilderUtil {
 
-	public SearchContainer<UADEntity<?>>
+	public static SearchContainer<UADEntity<?>>
 			getApplicationSummaryUADEntitySearchContainer(
 				LiferayPortletResponse liferayPortletResponse,
 				RenderRequest renderRequest, PortletURL currentURL,
@@ -99,12 +95,13 @@ public class UADSearchContainerBuilder {
 		return searchContainer;
 	}
 
-	public SearchContainer<UADEntity<?>> getHierarchyUADEntitySearchContainer(
-		LiferayPortletResponse liferayPortletResponse,
-		RenderRequest renderRequest, String applicationKey,
-		PortletURL currentURL, long[] groupIds, String parentContainerKey,
-		Serializable parentContainerId, User selectedUser,
-		UADHierarchyDisplay uadHierarchyDisplay) {
+	public static SearchContainer<UADEntity<?>>
+		getHierarchyUADEntitySearchContainer(
+			LiferayPortletResponse liferayPortletResponse,
+			RenderRequest renderRequest, String applicationKey,
+			PortletURL currentURL, long[] groupIds, String parentContainerKey,
+			Serializable parentContainerId, User selectedUser,
+			UADHierarchyDisplay uadHierarchyDisplay) {
 
 		SearchContainer<UADEntity<?>> searchContainer =
 			_constructSearchContainer(
@@ -132,7 +129,7 @@ public class UADSearchContainerBuilder {
 			}
 
 			LiferayPortletRequest liferayPortletRequest =
-				_portal.getLiferayPortletRequest(renderRequest);
+				PortalUtil.getLiferayPortletRequest(renderRequest);
 
 			searchContainer.setResultsAndTotal(
 				ListUtil.sort(
@@ -161,7 +158,7 @@ public class UADSearchContainerBuilder {
 		return searchContainer;
 	}
 
-	public SearchContainer<UADEntity<?>> getUADEntitySearchContainer(
+	public static SearchContainer<UADEntity<?>> getUADEntitySearchContainer(
 		LiferayPortletResponse liferayPortletResponse,
 		RenderRequest renderRequest, PortletURL currentURL, long[] groupIds,
 		User selectedUser, UADDisplay<Object> uadDisplay) {
@@ -181,7 +178,7 @@ public class UADSearchContainerBuilder {
 				searchContainer.getEnd());
 
 			LiferayPortletRequest liferayPortletRequest =
-				_portal.getLiferayPortletRequest(renderRequest);
+				PortalUtil.getLiferayPortletRequest(renderRequest);
 
 			List<UADEntity<?>> uadEntities = new ArrayList<>();
 
@@ -213,7 +210,7 @@ public class UADSearchContainerBuilder {
 		return searchContainer;
 	}
 
-	private <T> UADEntity<T> _constructApplicationSummaryUADEntity(
+	private static <T> UADEntity<T> _constructApplicationSummaryUADEntity(
 			LiferayPortletResponse liferayPortletResponse,
 			RenderRequest renderRequest, PortletURL currentURL,
 			UADApplicationSummaryDisplay uadApplicationSummaryDisplay)
@@ -243,7 +240,7 @@ public class UADSearchContainerBuilder {
 		return uadEntity;
 	}
 
-	private <T> UADEntity<T> _constructHierarchyUADEntity(
+	private static <T> UADEntity<T> _constructHierarchyUADEntity(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			String applicationKey, T entity, long selectedUserId,
@@ -274,7 +271,7 @@ public class UADSearchContainerBuilder {
 		return uadEntity;
 	}
 
-	private SearchContainer<UADEntity<?>> _constructSearchContainer(
+	private static SearchContainer<UADEntity<?>> _constructSearchContainer(
 		RenderRequest renderRequest, PortletURL currentURL,
 		String defaultOrderByCol, String[] sortingFieldNames) {
 
@@ -320,7 +317,7 @@ public class UADSearchContainerBuilder {
 		return searchContainer;
 	}
 
-	private UADEntity<?> _constructUADEntity(
+	private static UADEntity<?> _constructUADEntity(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, Object entity,
 			UADDisplay<Object> uadDisplay)
@@ -346,7 +343,7 @@ public class UADSearchContainerBuilder {
 		return uadEntity;
 	}
 
-	private Comparator<UADEntity<?>> _getComparator(
+	private static Comparator<UADEntity<?>> _getComparator(
 		String orderByColumn, String orderByType) {
 
 		Comparator<UADEntity<?>> comparator = Comparator.comparing(
@@ -385,9 +382,6 @@ public class UADSearchContainerBuilder {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UADSearchContainerBuilder.class);
-
-	@Reference
-	private Portal _portal;
+		UADSearchContainerBuilderUtil.class);
 
 }

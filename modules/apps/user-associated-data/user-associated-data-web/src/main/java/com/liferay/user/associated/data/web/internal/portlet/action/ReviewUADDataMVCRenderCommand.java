@@ -32,7 +32,7 @@ import com.liferay.user.associated.data.web.internal.helper.SelectedUserHelper;
 import com.liferay.user.associated.data.web.internal.helper.UADApplicationSummaryHelper;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.GroupUtil;
-import com.liferay.user.associated.data.web.internal.util.UADSearchContainerBuilder;
+import com.liferay.user.associated.data.web.internal.util.UADSearchContainerBuilderUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -200,14 +200,14 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			renderRequest, renderResponse);
 
 		if (applicationKey.equals(UADConstants.ALL_APPLICATIONS)) {
-			return _uadSearchContainerBuilder.
+			return UADSearchContainerBuilderUtil.
 				getApplicationSummaryUADEntitySearchContainer(
 					liferayPortletResponse, renderRequest, currentURL,
 					scopeDisplay.getUADApplicationSummaryDisplays());
 		}
 
 		if (uadHierarchyDisplay != null) {
-			return _uadSearchContainerBuilder.
+			return UADSearchContainerBuilderUtil.
 				getHierarchyUADEntitySearchContainer(
 					liferayPortletResponse, renderRequest, applicationKey,
 					currentURL, scopeDisplay.getGroupIds(),
@@ -215,7 +215,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 					uadHierarchyDisplay);
 		}
 
-		return _uadSearchContainerBuilder.getUADEntitySearchContainer(
+		return UADSearchContainerBuilderUtil.getUADEntitySearchContainer(
 			liferayPortletResponse, renderRequest, currentURL,
 			scopeDisplay.getGroupIds(), user, uadDisplay);
 	}
@@ -320,9 +320,6 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private UADRegistry _uadRegistry;
-
-	@Reference
-	private UADSearchContainerBuilder _uadSearchContainerBuilder;
 
 	@Reference
 	private SelectedUserHelper _userHelper;

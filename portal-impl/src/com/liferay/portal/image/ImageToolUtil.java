@@ -969,6 +969,10 @@ public class ImageToolUtil {
 	private static Image _defaultUserPortrait;
 	private static final FileImpl _fileImpl = FileImpl.getInstance();
 
+	static {
+		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
+	}
+
 	private static class CMYKImageToolHolder {
 
 		private static volatile CMYKImageTool _cmykImageTool =

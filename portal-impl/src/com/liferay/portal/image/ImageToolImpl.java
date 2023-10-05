@@ -6,9 +6,6 @@
 package com.liferay.portal.image;
 
 import com.liferay.portal.kernel.image.ImageTool;
-import com.liferay.portal.util.PropsValues;
-
-import javax.imageio.ImageIO;
 
 /**
  * @author Brian Wing Shun Chan
@@ -16,9 +13,4 @@ import javax.imageio.ImageIO;
  * @author Shuyang Zhou
  */
 public class ImageToolImpl implements ImageTool {
-
-	private ImageToolImpl() {
-		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
-	}
-
 }

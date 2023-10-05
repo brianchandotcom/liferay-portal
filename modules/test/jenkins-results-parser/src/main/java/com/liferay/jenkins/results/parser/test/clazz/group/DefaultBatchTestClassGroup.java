@@ -39,13 +39,4 @@ public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 		setSegmentTestClassGroups();
 	}
 
-	@Override
-	protected boolean ignore() {
-		if (!isStableTestSuiteBatch() && testRelevantJUnitTestsOnly) {
-			return true;
-		}
-
-		return false;
-	}
-
 }

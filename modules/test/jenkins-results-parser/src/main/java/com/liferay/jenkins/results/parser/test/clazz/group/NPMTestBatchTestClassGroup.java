@@ -158,15 +158,6 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		axisTestClassGroups.add(0, axisTestClassGroup);
 	}
 
-	@Override
-	protected boolean ignore() {
-		if (!isStableTestSuiteBatch() && testRelevantJUnitTestsOnly) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private static final String _TOKEN_CLASS_METHOD_SEPARATOR = "::";
 
 }

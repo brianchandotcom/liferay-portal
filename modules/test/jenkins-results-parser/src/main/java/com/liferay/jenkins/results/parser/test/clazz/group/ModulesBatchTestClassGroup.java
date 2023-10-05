@@ -229,15 +229,6 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 			includeGlobs.toArray(new String[0]));
 	}
 
-	@Override
-	protected boolean ignore() {
-		if (!isStableTestSuiteBatch() && testRelevantJUnitTestsOnly) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected abstract void setTestClasses() throws IOException;
 
 	protected Set<File> moduleDirsList = new HashSet<>();

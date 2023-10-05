@@ -484,6 +484,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	@Override
+	protected boolean ignore() {
+		return false;
+	}
+
+	@Override
 	protected void setAxisTestClassGroups() {
 		long targetAxisDuration = getTargetAxisDuration();
 

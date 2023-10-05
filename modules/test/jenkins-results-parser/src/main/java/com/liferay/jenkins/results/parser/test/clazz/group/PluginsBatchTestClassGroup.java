@@ -70,15 +70,6 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		setSegmentTestClassGroups();
 	}
 
-	@Override
-	protected boolean ignore() {
-		if (!isStableTestSuiteBatch() && testRelevantJUnitTestsOnly) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected void setTestClasses() {
 		final List<PathMatcher> includesPathMatchers = getPathMatchers(
 			_getIncludesJobProperties());

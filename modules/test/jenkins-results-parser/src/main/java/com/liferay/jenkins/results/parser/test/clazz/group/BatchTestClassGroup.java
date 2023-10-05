@@ -627,6 +627,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected boolean ignore() {
+		if (!isStableTestSuiteBatch() && testRelevantJUnitTestsOnly) {
+			return true;
+		}
+
 		return false;
 	}
 

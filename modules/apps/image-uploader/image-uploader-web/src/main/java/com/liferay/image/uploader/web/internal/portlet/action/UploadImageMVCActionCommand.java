@@ -15,11 +15,11 @@ import com.liferay.image.uploader.web.internal.constants.ImageUploaderPortletKey
 import com.liferay.image.uploader.web.internal.util.UploadImageUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -309,7 +309,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 			try (InputStream tempImageInputStream =
 					tempFileEntry.getContentStream()) {
 
-				ImageBag imageBag = _imageTool.read(tempImageInputStream);
+				ImageBag imageBag = ImageToolUtil.read(tempImageInputStream);
 
 				RenderedImage renderedImage = imageBag.getRenderedImage();
 
@@ -340,11 +340,11 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 						width = renderedImage.getWidth() - x;
 					}
 
-					renderedImage = _imageTool.crop(
+					renderedImage = ImageToolUtil.crop(
 						renderedImage, height, width, x, y);
 				}
 
-				byte[] bytes = _imageTool.getBytes(
+				byte[] bytes = ImageToolUtil.getBytes(
 					renderedImage, imageBag.getType());
 
 				ThemeDisplay themeDisplay =
@@ -391,9 +391,6 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		PropsValues.MIME_TYPES_WEB_IMAGES);
 
 	private volatile DLConfiguration _dlConfiguration;
-
-	@Reference
-	private ImageTool _imageTool;
 
 	@Reference
 	private JSONFactory _jsonFactory;

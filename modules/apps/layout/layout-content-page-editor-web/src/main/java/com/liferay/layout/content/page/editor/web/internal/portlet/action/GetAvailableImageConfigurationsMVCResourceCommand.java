@@ -19,7 +19,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.image.ImageTool;
+import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -79,7 +79,7 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 			).put(
 				"width",
 				() -> {
-					Image image = _imageTool.getImage(
+					Image image = ImageToolUtil.getImage(
 						fileEntry.getContentStream());
 
 					return image.getWidth();
@@ -167,9 +167,6 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 
 	@Reference
 	private DLAppService _dlAppService;
-
-	@Reference
-	private ImageTool _imageTool;
 
 	@Reference
 	private Language _language;

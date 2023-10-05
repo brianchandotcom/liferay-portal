@@ -8,8 +8,8 @@ package com.liferay.image.uploader.web.internal.portlet.action;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.image.uploader.web.internal.constants.ImageUploaderPortletKeys;
 import com.liferay.image.uploader.web.internal.util.UploadImageUtil;
+import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -27,7 +27,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -74,9 +73,9 @@ public class UploadImageMVCResourceCommand extends BaseMVCResourceCommand {
 			MimeResponse mimeResponse, InputStream tempImageInputStream)
 		throws Exception {
 
-		ImageBag imageBag = _imageTool.read(tempImageInputStream);
+		ImageBag imageBag = ImageToolUtil.read(tempImageInputStream);
 
-		byte[] bytes = _imageTool.getBytes(
+		byte[] bytes = ImageToolUtil.getBytes(
 			imageBag.getRenderedImage(), imageBag.getType());
 
 		mimeResponse.setContentType(
@@ -87,8 +86,5 @@ public class UploadImageMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UploadImageMVCResourceCommand.class);
-
-	@Reference
-	private ImageTool _imageTool;
 
 }

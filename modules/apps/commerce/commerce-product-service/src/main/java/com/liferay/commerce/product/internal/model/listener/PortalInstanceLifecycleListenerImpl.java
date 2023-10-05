@@ -10,10 +10,10 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.instance.lifecycle.InitialRequestPortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -104,7 +104,7 @@ public class PortalInstanceLifecycleListenerImpl
 					CPConstants.SERVICE_NAME_PRODUCT, new UnicodeProperties(),
 					true, serviceContext);
 
-				Image image = _imageTool.getDefaultCompanyLogo();
+				Image image = ImageToolUtil.getDefaultCompanyLogo();
 
 				File file = _file.createTempFile(image.getTextObj());
 
@@ -145,9 +145,6 @@ public class PortalInstanceLifecycleListenerImpl
 
 	@Reference
 	private com.liferay.portal.kernel.util.File _file;
-
-	@Reference
-	private ImageTool _imageTool;
 
 	@Reference
 	private Portal _portal;

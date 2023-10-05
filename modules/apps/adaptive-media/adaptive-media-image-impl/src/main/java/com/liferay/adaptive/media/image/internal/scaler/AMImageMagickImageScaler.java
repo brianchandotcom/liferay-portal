@@ -11,9 +11,9 @@ import com.liferay.adaptive.media.image.scaler.AMImageScaledImage;
 import com.liferay.adaptive.media.image.scaler.AMImageScaler;
 import com.liferay.image.ImageMagick;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.model.ImageConstants;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -69,12 +69,12 @@ public class AMImageMagickImageScaler implements AMImageScaler {
 					"Unable to scale image using ImageMagick");
 			}
 
-			ImageBag imageBag = _imageTool.read(scaledImageFile);
+			ImageBag imageBag = ImageToolUtil.read(scaledImageFile);
 
 			RenderedImage renderedImage = imageBag.getRenderedImage();
 
 			return new AMImageScaledImageImpl(
-				_imageTool.getBytes(renderedImage, imageBag.getType()),
+				ImageToolUtil.getBytes(renderedImage, imageBag.getType()),
 				renderedImage.getHeight(), ContentTypes.IMAGE_PNG,
 				renderedImage.getWidth());
 		}
@@ -124,8 +124,5 @@ public class AMImageMagickImageScaler implements AMImageScaler {
 
 	@Reference
 	private ImageMagick _imageMagick;
-
-	@Reference
-	private ImageTool _imageTool;
 
 }

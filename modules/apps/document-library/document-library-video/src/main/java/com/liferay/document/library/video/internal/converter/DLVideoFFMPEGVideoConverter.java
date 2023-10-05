@@ -11,7 +11,7 @@ import com.liferay.petra.io.AutoDeleteFileInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.image.ImageTool;
+import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,7 +40,6 @@ import java.util.concurrent.TimeUnit;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -108,7 +107,7 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 				try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 						new UnsyncByteArrayOutputStream()) {
 
-					_imageTool.write(
+					ImageToolUtil.write(
 						bufferedImage, format, unsyncByteArrayOutputStream);
 
 					return new ByteArrayInputStream(
@@ -231,8 +230,5 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 
 	private volatile DLVideoFFMPEGVideoConverterConfiguration
 		_dlVideoFFMPEGVideoConverterConfiguration;
-
-	@Reference
-	private ImageTool _imageTool;
 
 }

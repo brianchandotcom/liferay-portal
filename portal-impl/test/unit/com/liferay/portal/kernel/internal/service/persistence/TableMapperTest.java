@@ -1791,8 +1791,10 @@ public class TableMapperTest {
 				Mockito.any())
 		).thenAnswer(
 			invocation -> {
-				Object[] arguments =
-					((InterceptedInvocation)invocation).getRawArguments();
+				InterceptedInvocation interceptedInvocation =
+					(InterceptedInvocation)invocation;
+
+				Object[] arguments = interceptedInvocation.getRawArguments();
 
 				DataSource dataSource = (DataSource)arguments[0];
 				String sql = (String)arguments[1];
@@ -1845,8 +1847,10 @@ public class TableMapperTest {
 				Mockito.any(), Mockito.anyString(), Mockito.any())
 		).thenAnswer(
 			invocation -> {
-				Object[] arguments =
-					((InterceptedInvocation)invocation).getRawArguments();
+				InterceptedInvocation interceptedInvocation =
+					(InterceptedInvocation)invocation;
+
+				Object[] arguments = interceptedInvocation.getRawArguments();
 
 				DataSource dataSource = (DataSource)arguments[0];
 				String sql = (String)arguments[1];

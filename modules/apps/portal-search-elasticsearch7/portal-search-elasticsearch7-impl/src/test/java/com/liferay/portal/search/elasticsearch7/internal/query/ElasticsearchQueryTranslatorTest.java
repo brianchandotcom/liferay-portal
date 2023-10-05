@@ -93,8 +93,9 @@ public class ElasticsearchQueryTranslatorTest {
 		QueryBuilder queryBuilder = _elasticsearchQueryTranslator.translate(
 			booleanQuery);
 
-		List<QueryBuilder> mustQueryBuilders =
-			((BoolQueryBuilder)queryBuilder).must();
+		BoolQueryBuilder boolQueryBuilder = (BoolQueryBuilder)queryBuilder;
+
+		List<QueryBuilder> mustQueryBuilders = boolQueryBuilder.must();
 
 		QueryBuilder innerQueryBuilder = mustQueryBuilders.get(0);
 

@@ -85,8 +85,10 @@ public class APISchemaEntityModel implements EntityModel {
 				return null;
 			}
 
-			entityFieldsMap =
-				((ComplexEntityField)entityField).getEntityFieldsMap();
+			ComplexEntityField complexEntityField =
+				(ComplexEntityField)entityField;
+
+			entityFieldsMap = complexEntityField.getEntityFieldsMap();
 		}
 
 		return entityFieldsMap.get(property.getSourceFieldName());

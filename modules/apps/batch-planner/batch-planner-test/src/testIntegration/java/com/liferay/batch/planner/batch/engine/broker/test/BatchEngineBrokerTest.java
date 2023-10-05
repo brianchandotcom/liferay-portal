@@ -978,8 +978,9 @@ public class BatchEngineBrokerTest {
 			if (itemJsonNode.isObject() &&
 				_ignoredImportFields.containsKey(fieldName)) {
 
-				((ObjectNode)itemJsonNode).remove(
-					_ignoredImportFields.get(fieldName));
+				ObjectNode objectNode = (ObjectNode)itemJsonNode;
+
+				objectNode.remove(_ignoredImportFields.get(fieldName));
 			}
 		}
 

@@ -11,13 +11,18 @@ import com.liferay.headless.admin.workflow.client.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowDefinitionSerDes;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefinitionTestUtil;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
@@ -171,6 +176,27 @@ public class WorkflowDefinitionResourceTest
 			Arrays.asList(
 				WorkflowDefinitionSerDes.toDTOs(
 					workflowDefinitionsJSONObject.getString("items"))));
+	}
+
+	@Override
+	@Test
+	public void testPostWorkflowDefinition() throws Exception {
+		super.testPostWorkflowDefinition();
+
+		// content is in json format
+
+		assertValid(
+			_postWorkflowDefinition(
+				JSONFactoryUtil.createJSONObject(
+					_getWorkflowDefinitionString("workflow-definition.json"))));
+
+		// content is json string format
+
+		assertValid(
+			_postWorkflowDefinition(
+				JSONFactoryUtil.createJSONObject(
+					_getWorkflowDefinitionString(
+						"workflow-definition-json-string.json"))));
 	}
 
 	@Override
@@ -431,6 +457,28 @@ public class WorkflowDefinitionResourceTest
 		_workflowDefinitionManager.undeployWorkflowDefinition(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			workflowDefinitionName, workflowDefinitionVersion);
+	}
+
+	private String _getWorkflowDefinitionString(String templateName)
+		throws Exception {
+
+		return StreamUtil.toString(
+			getClass().getResourceAsStream(
+				StringBundler.concat(
+					"/com/liferay/headless/admin/workflow/resource/v1_0/test",
+					"/util/dependencies/", templateName)));
+	}
+
+	private WorkflowDefinition _postWorkflowDefinition(
+			JSONObject workflowDefinitionJSONObject)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			workflowDefinitionJSONObject.toString(),
+			"headless-admin-workflow/v1.0/workflow-definitions",
+			Http.Method.POST);
+
+		return WorkflowDefinition.toDTO(jsonObject.toString());
 	}
 
 	private static com.liferay.portal.kernel.workflow.WorkflowDefinition

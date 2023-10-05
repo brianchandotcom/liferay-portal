@@ -80,11 +80,6 @@
 			<bean class="com.liferay.portal.spring.hibernate.LastSessionRecorderHelperImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil" id="com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil">
-		<property name="upgradeTableFactory">
-			<bean class="com.liferay.portal.upgrade.util.DefaultUpgradeTableFactoryImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.util.CustomJspRegistryUtil" id="com.liferay.portal.kernel.util.CustomJspRegistryUtil">
 		<property name="customJspRegistry">
 			<bean class="com.liferay.portal.util.CustomJspRegistryImpl" />

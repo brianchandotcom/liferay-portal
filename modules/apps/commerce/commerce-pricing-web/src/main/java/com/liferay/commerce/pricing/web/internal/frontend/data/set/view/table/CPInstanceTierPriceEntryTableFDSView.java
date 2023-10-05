@@ -32,13 +32,19 @@ public class CPInstanceTierPriceEntryTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"price", "price",
+			"minQuantity", "quantity"
+		).add(
+			"price", "tier-price",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
 		).add(
-			"minQuantity", "min-quantity"
+			"createDateString", "publish-date"
 		).add(
-			"createDate", "create-date"
+			"endDateString", "expiration-date"
+		).add(
+			"override", "override-discount"
+		).add(
+			"discountLevels", "discount-levels"
 		).build();
 	}
 

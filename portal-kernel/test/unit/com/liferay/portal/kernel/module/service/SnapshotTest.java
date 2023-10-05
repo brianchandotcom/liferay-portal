@@ -189,6 +189,12 @@ public class SnapshotTest {
 
 	@Test
 	public void testInvalidFilter() throws InvalidSyntaxException {
+		Mockito.when(
+			FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			null
+		);
+
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		ServiceRegistration<?> serviceRegistration =

@@ -92,7 +92,10 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 			});
 		}
 
-		if (activeSection === SECTIONS.EDIT_ITEM_ACTION || activeSection === SECTIONS.EDIT_CREATION_ACTION) {
+		if (
+			activeSection === SECTIONS.EDIT_ITEM_ACTION ||
+			activeSection === SECTIONS.EDIT_CREATION_ACTION
+		) {
 			breadcrumbItems.push({
 				active: true,
 				label: initialActionFormValues?.label || '',

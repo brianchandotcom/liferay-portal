@@ -576,39 +576,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return relevantIntegrationUnitBatchNames;
 	}
 
-	protected List<PathMatcher>
-		getRelevantIntegrationUnitIncludePathMatchers() {
-
-		List<PathMatcher> relevantIntegrationUnitIncludePathMatchers =
-			new ArrayList<>();
-
-		for (String relevantIntegrationUnitBatchName :
-				getRelevantIntegrationUnitBatchNames()) {
-
-			JobProperty jobProperty = getJobProperty(
-				"test.batch.class.names.includes", getTestSuiteName(),
-				relevantIntegrationUnitBatchName,
-				JobProperty.Type.INCLUDE_GLOB);
-
-			if (!(jobProperty instanceof GlobJobProperty)) {
-				continue;
-			}
-
-			String jobPropertyValue = jobProperty.getValue();
-
-			if (jobPropertyValue == null) {
-				continue;
-			}
-
-			GlobJobProperty globJobProperty = (GlobJobProperty)jobProperty;
-
-			relevantIntegrationUnitIncludePathMatchers.addAll(
-				globJobProperty.getPathMatchers());
-		}
-
-		return relevantIntegrationUnitIncludePathMatchers;
-	}
-
 	protected List<File> getRequiredModuleDirs(List<File> moduleDirs) {
 		return _getRequiredModuleDirs(moduleDirs, new ArrayList<>(moduleDirs));
 	}
@@ -645,31 +612,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	protected String getTestSuiteName() {
 		return testSuiteName;
-	}
-
-	protected boolean isIntegrationUnitTestFileModifiedOnly() {
-		List<PathMatcher> relevantIntegrationUnitIncludePathMatchers =
-			getRelevantIntegrationUnitIncludePathMatchers();
-
-		List<File> modifiedFilesList =
-			portalGitWorkingDirectory.getModifiedFilesList();
-
-		if (relevantIntegrationUnitIncludePathMatchers.isEmpty() ||
-			modifiedFilesList.isEmpty()) {
-
-			return false;
-		}
-
-		for (File modifiedFile : modifiedFilesList) {
-			if (!JenkinsResultsParserUtil.isFileIncluded(
-					null, relevantIntegrationUnitIncludePathMatchers,
-					modifiedFile)) {
-
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	protected boolean isRootCauseAnalysis() {
@@ -1158,7 +1100,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	private void _setTestRelevantIntegrationUnitOnly() {
-		if (testRelevantChanges && isIntegrationUnitTestFileModifiedOnly()) {
+		Job job = getJob();
+
+		if (testRelevantChanges && job.isJUnitTestFileModifiedOnly()) {
 			testRelevantIntegrationUnitOnly = true;
 
 			return;

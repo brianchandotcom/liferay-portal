@@ -400,8 +400,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		_setTestHotfixChanges();
 		_setTestReleaseBundle();
 		_setTestRelevantChanges();
+		_setTestRelevantChangesInStable();
 
 		_setTestRelevantIntegrationUnitOnly();
+		_setTestRelevantIntegrationUnitOnlyInStable();
 
 		_setIncludeStableTestSuite();
 	}
@@ -733,7 +735,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected boolean testHotfixChanges;
 	protected boolean testReleaseBundle;
 	protected boolean testRelevantChanges;
+	protected boolean testRelevantChangesInStable;
 	protected boolean testRelevantIntegrationUnitOnly;
+	protected boolean testRelevantIntegrationUnitOnlyInStable;
 	protected final String testSuiteName;
 
 	protected static final class CSVReport {
@@ -1099,6 +1103,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		testRelevantChanges = job.testRelevantChanges();
 	}
 
+	private void _setTestRelevantChangesInStable() {
+		Job job = getJob();
+
+		testRelevantChangesInStable = job.testRelevantChangesInStable();
+	}
+
 	private void _setTestRelevantIntegrationUnitOnly() {
 		Job job = getJob();
 
@@ -1109,6 +1119,18 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		testRelevantIntegrationUnitOnly = false;
+	}
+
+	private void _setTestRelevantIntegrationUnitOnlyInStable() {
+		Job job = getJob();
+
+		if (testRelevantChangesInStable && job.isJUnitTestFileModifiedOnly()) {
+			testRelevantIntegrationUnitOnlyInStable = true;
+
+			return;
+		}
+
+		testRelevantIntegrationUnitOnlyInStable = false;
 	}
 
 	private static final int _SEGMENT_MAX_CHILDREN_DEFAULT = 25;

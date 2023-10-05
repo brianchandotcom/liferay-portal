@@ -752,6 +752,20 @@ public abstract class BaseJob implements Job {
 		return false;
 	}
 
+	@Override
+	public boolean testRelevantChangesInStable() {
+		JobProperty jobProperty = getJobProperty(
+			"test.relevant.changes.in.stable");
+
+		if (jobProperty != null) {
+			recordJobProperty(jobProperty);
+
+			return Boolean.parseBoolean(jobProperty.getValue());
+		}
+
+		return false;
+	}
+
 	protected BaseJob(BuildProfile buildProfile, String jobName) {
 		_buildProfile = buildProfile;
 		_jobName = jobName;

@@ -93,6 +93,8 @@ public interface Job {
 
 	public boolean testRelevantChanges();
 
+	public boolean testRelevantChangesInStable();
+
 	public static enum BuildProfile {
 
 		DXP("DXP", "dxp"), PORTAL("Portal", "portal");

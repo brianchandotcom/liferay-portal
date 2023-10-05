@@ -58,9 +58,9 @@ export function NextStepPage({
 
 	const orderId = urlParams.get('orderId');
 
-	const [accountLogo, setAccountLogo] = useState<string>("");
-	const [accountName, setAccountName] = useState<string>("");
-	const [appName, setAppName] = useState<string>("");
+	const [accountLogo, setAccountLogo] = useState<string>('');
+	const [accountName, setAccountName] = useState<string>('');
+	const [appName, setAppName] = useState<string>('');
 	const [appLogo, setAppLogo] = useState<string>('');
 	const [paymentStatus, setPaymentStatus] = useState<string>('');
 
@@ -81,7 +81,7 @@ export function NextStepPage({
 			const product = await getProductById({
 				nestedFields: 'attachments, productSpecifications',
 				productId,
-			});	
+			});
 
 			const appIcon = getThumbnailByProductAttachment(
 				product.attachments
@@ -110,8 +110,7 @@ export function NextStepPage({
 		[TypeLicense.PAID]: (
 			<Header
 				description={
-				
-						<>
+					<>
 						<p>
 							Congratulations on the purchase of <b>{appName}</b>.
 							You will need to create a license your app before
@@ -132,7 +131,6 @@ export function NextStepPage({
 							IP address, MAC address or hostname.
 						</p>
 					</>
-					
 				}
 				title="Next steps"
 			/>

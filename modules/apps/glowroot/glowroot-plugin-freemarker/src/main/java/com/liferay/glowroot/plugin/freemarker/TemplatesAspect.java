@@ -59,7 +59,7 @@ public class TemplatesAspect {
 
 			TraceEntry traceEntry;
 
-			if (_LEVEL_TRACE.equals(
+			if (_INSTRUMENTATION_LEVEL_TRACE.equals(
 					TemplatesPluginProperties.instrumentationLevel())) {
 
 				traceEntry = optionalThreadContext.startTransaction(
@@ -70,7 +70,7 @@ public class TemplatesAspect {
 				optionalThreadContext.addTransactionAttribute(
 					"Fragment Entry Link html", html);
 			}
-			else if (_LEVEL_DEBUG.equals(
+			else if (_INSTRUMENTATION_LEVEL_DEBUG.equals(
 						TemplatesPluginProperties.instrumentationLevel())) {
 
 				traceEntry = optionalThreadContext.startTransaction(
@@ -142,7 +142,7 @@ public class TemplatesAspect {
 
 			TraceEntry traceEntry;
 
-			if (_LEVEL_TRACE.equals(
+			if (_INSTRUMENTATION_LEVEL_TRACE.equals(
 					TemplatesPluginProperties.instrumentationLevel())) {
 
 				traceEntry = optionalThreadContext.startTransaction(
@@ -153,7 +153,7 @@ public class TemplatesAspect {
 				optionalThreadContext.addTransactionAttribute(
 					"Template script", dDMTemplateShim.getScript());
 			}
-			else if (_LEVEL_DEBUG.equals(
+			else if (_INSTRUMENTATION_LEVEL_DEBUG.equals(
 						TemplatesPluginProperties.instrumentationLevel())) {
 
 				traceEntry = optionalThreadContext.startTransaction(
@@ -224,7 +224,7 @@ public class TemplatesAspect {
 
 			TraceEntry traceEntry;
 
-			if (_LEVEL_TRACE.equals(
+			if (_INSTRUMENTATION_LEVEL_TRACE.equals(
 					TemplatesPluginProperties.instrumentationLevel())) {
 
 				traceEntry = optionalThreadContext.startTransaction(
@@ -237,7 +237,7 @@ public class TemplatesAspect {
 				optionalThreadContext.addTransactionAttribute(
 					"Template script", script);
 			}
-			else if (_LEVEL_DEBUG.equals(
+			else if (_INSTRUMENTATION_LEVEL_DEBUG.equals(
 						TemplatesPluginProperties.instrumentationLevel())) {
 
 				traceEntry = optionalThreadContext.startTransaction(
@@ -313,8 +313,8 @@ public class TemplatesAspect {
 
 	}
 
-	private static final String _LEVEL_DEBUG = "DEBUG";
+	private static final String _INSTRUMENTATION_LEVEL_DEBUG = "DEBUG";
 
-	private static final String _LEVEL_TRACE = "TRACE";
+	private static final String _INSTRUMENTATION_LEVEL_TRACE = "TRACE";
 
 }

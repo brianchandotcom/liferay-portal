@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -187,8 +187,8 @@ public class ImageToolUtil {
 
 			outputStream.write(0);
 			outputStream.write(0);
-			outputStream.write(toMultiByte(bufferedImage.getWidth()));
-			outputStream.write(toMultiByte(bufferedImage.getHeight()));
+			outputStream.write(_toMultiByte(bufferedImage.getWidth()));
+			outputStream.write(_toMultiByte(bufferedImage.getHeight()));
 
 			Raster data = bufferedImage.getData();
 
@@ -737,7 +737,7 @@ public class ImageToolUtil {
 
 		int scaledWidth = width;
 
-		return doScale(renderedImage, scaledHeight, scaledWidth);
+		return _scale(renderedImage, scaledHeight, scaledWidth);
 	}
 
 	/**
@@ -774,7 +774,7 @@ public class ImageToolUtil {
 		int scaledHeight = Math.max(1, (int)Math.round(factor * imageHeight));
 		int scaledWidth = Math.max(1, (int)Math.round(factor * imageWidth));
 
-		return doScale(renderedImage, scaledHeight, scaledWidth);
+		return _scale(renderedImage, scaledHeight, scaledWidth);
 	}
 
 	/**
@@ -833,7 +833,7 @@ public class ImageToolUtil {
 		_imageTool = imageTool;
 	}
 
-	protected static RenderedImage doScale(
+	private static RenderedImage _scale(
 		RenderedImage renderedImage, int scaledHeight, int scaledWidth) {
 
 		// See http://www.oracle.com/technetwork/java/index-137037.html
@@ -941,7 +941,7 @@ public class ImageToolUtil {
 		return scaledBufferedImage;
 	}
 
-	protected static byte[] toMultiByte(int intValue) {
+	private static byte[] _toMultiByte(int intValue) {
 		int numBits = 32;
 		int mask = 0x80000000;
 

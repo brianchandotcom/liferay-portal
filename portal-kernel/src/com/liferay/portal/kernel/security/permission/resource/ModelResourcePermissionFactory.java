@@ -91,25 +91,6 @@ public class ModelResourcePermissionFactory {
 	private static class DefaultModelResourcePermission<T extends GroupedModel>
 		implements ModelResourcePermission<T> {
 
-		public DefaultModelResourcePermission(
-			List<ModelResourcePermissionLogic<T>> modelResourcePermissionLogics,
-			Class<T> modelClass, ToLongFunction<T> primKeyToLongFunction,
-			UnsafeFunction<Long, T, ? extends PortalException>
-				getModelUnsafeFunction,
-			PortletResourcePermission portletResourcePermission,
-			UnaryOperator<String> actionIdMapper) {
-
-			_modelResourcePermissionLogics = modelResourcePermissionLogics;
-
-			_modelClass = Objects.requireNonNull(modelClass);
-			_primKeyToLongFunction = Objects.requireNonNull(
-				primKeyToLongFunction);
-			_getModelUnsafeFunction = Objects.requireNonNull(
-				getModelUnsafeFunction);
-			_portletResourcePermission = portletResourcePermission;
-			_actionIdMapper = Objects.requireNonNull(actionIdMapper);
-		}
-
 		@Override
 		public void check(
 				PermissionChecker permissionChecker, long primaryKey,
@@ -193,6 +174,25 @@ public class ModelResourcePermissionFactory {
 		@Override
 		public PortletResourcePermission getPortletResourcePermission() {
 			return _portletResourcePermission;
+		}
+
+		private DefaultModelResourcePermission(
+			List<ModelResourcePermissionLogic<T>> modelResourcePermissionLogics,
+			Class<T> modelClass, ToLongFunction<T> primKeyToLongFunction,
+			UnsafeFunction<Long, T, ? extends PortalException>
+				getModelUnsafeFunction,
+			PortletResourcePermission portletResourcePermission,
+			UnaryOperator<String> actionIdMapper) {
+
+			_modelResourcePermissionLogics = modelResourcePermissionLogics;
+
+			_modelClass = Objects.requireNonNull(modelClass);
+			_primKeyToLongFunction = Objects.requireNonNull(
+				primKeyToLongFunction);
+			_getModelUnsafeFunction = Objects.requireNonNull(
+				getModelUnsafeFunction);
+			_portletResourcePermission = portletResourcePermission;
+			_actionIdMapper = Objects.requireNonNull(actionIdMapper);
 		}
 
 		private boolean _contains(

@@ -34,7 +34,9 @@ import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
 export type GetAppForm = {
 	product?: Product;
 	selectedAccount?: Account;
+	selectedPaymentMethod: paymentMethod;
 	selectedSKU?: SKU;
+	selectedTimeline?: string;
 };
 
 const GetAppFlow = () => {
@@ -49,22 +51,26 @@ const GetAppFlow = () => {
 	const [licenseSelected, setLincenseSelected] = useState<boolean>(false);
 	const [orderType, setOrderType] = useState<OrderType>();
 	const [purchaseOrderNumber, setPurchaseOrderNumber] = useState<string>('');
-	const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
-		PaymentMethodSelector
-	>(paymentMethod.PAY);
 	const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
 
-	const {getValues, setValue, watch} = useForm<GetAppForm>({
+	const {setValue, watch} = useForm<GetAppForm>({
 		defaultValues: {
 			product: undefined,
 			selectedAccount: undefined,
+			selectedPaymentMethod: paymentMethod.PAY,
 			selectedSKU: undefined,
+			selectedTimeline: '',
 		},
 	});
 
 	const urlProductId = getUrlParam('productId');
 
-	const {product, selectedAccount, selectedSKU} = getValues();
+	const {
+		product,
+		selectedAccount,
+		selectedPaymentMethod,
+		selectedSKU,
+	} = watch();
 
 	const productId = product?.productId || urlProductId;
 	const productName = product?.name.en_US;
@@ -174,7 +180,7 @@ const GetAppFlow = () => {
 					onSelectAccount={(account: Account) => {
 						setValue('selectedAccount', account);
 					}}
-					selectedAccount={getValues('selectedAccount')}
+					selectedAccount={watch('selectedAccount')}
 				/>
 			),
 			nextStep: StepType.LICENSES,
@@ -185,14 +191,13 @@ const GetAppFlow = () => {
 			component: (
 				<LicenseSelector
 					cart={cartUtil}
-					form={{
-						getValues,
+					formUtils={{
 						setValue,
+						watch,
 					}}
 					onSelectLicense={(sku?: SKU) =>
 						setValue('selectedSKU', sku)
 					}
-					selectedPaymentMethod={setSelectedPaymentMethod}
 					selectedProduct={watch('product')}
 					setLicenseSelected={setLincenseSelected}
 					sku={sku}
@@ -209,13 +214,16 @@ const GetAppFlow = () => {
 					billingAddress={billingAddress}
 					email={email}
 					enableTrialMethod={enableTrialMethod}
+					form={{
+						setValue,
+						watch,
+					}}
 					purchaseOrderNumber={purchaseOrderNumber}
 					selectedPaymentMethod={selectedPaymentMethod}
 					setBillingAddress={setBillingAddress}
 					setEmail={setEmail}
 					setEnablePurchaseButton={setEnablePurchaseButton}
 					setPurchaseOrderNumber={setPurchaseOrderNumber}
-					setSelectedPaymentMethod={setSelectedPaymentMethod}
 					step={step}
 				/>
 			),

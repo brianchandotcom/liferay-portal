@@ -10,7 +10,7 @@ import {CardButton} from '../../../../components/CardButton/CardButton';
 
 import './index.scss';
 
-import {UseFormGetValues, UseFormSetValue} from 'react-hook-form';
+import {UseFormSetValue, UseFormWatch} from 'react-hook-form';
 
 import useCart from '../../../../hooks/useCart';
 import {GetAppForm} from '../../GetAppPage';
@@ -20,14 +20,11 @@ import {TrialTimeline} from './components/TrialTimeline';
 
 interface LicenseSelectorProps {
 	cart: ReturnType<typeof useCart>;
-	form: {
-		getValues: UseFormGetValues<GetAppForm>;
+	formUtils: {
 		setValue: UseFormSetValue<GetAppForm>;
+		watch: UseFormWatch<GetAppForm>;
 	};
 	onSelectLicense: (sku?: SKU) => void;
-	selectedPaymentMethod: React.Dispatch<
-		React.SetStateAction<PaymentMethodSelector>
-	>;
 	selectedProduct?: Product;
 	setLicenseSelected: (licenseSelected: boolean) => void;
 	sku: SKU;
@@ -35,13 +32,12 @@ interface LicenseSelectorProps {
 
 export function LicenseSelector({
 	cart,
+	formUtils,
 	onSelectLicense,
-	selectedPaymentMethod,
 	selectedProduct,
 	setLicenseSelected,
 	sku,
 }: LicenseSelectorProps) {
-	const [selectedTimeline, setSelectedTimeline] = useState('');
 	const [trialSKU, setTrialSKU] = useState<SKU>();
 	const [disabledButton, setDisabledButton] = useState<boolean>(false);
 
@@ -77,14 +73,20 @@ export function LicenseSelector({
 						</span>
 					}
 					onClick={() => {
-						selectedPaymentMethod(paymentMethod.TRIAL);
-						setSelectedTimeline('trial');
+						formUtils.setValue(
+							'selectedPaymentMethod',
+							paymentMethod.TRIAL
+						);
+						formUtils.setValue('selectedTimeline', 'trial');
 					}}
-					selected={selectedTimeline === 'trial'}
+					selected={formUtils.watch('selectedTimeline') === 'trial'}
 					title={
-						selectedTimeline === 'trial' ? '30-day Trial' : 'Trial'
+						formUtils.watch('selectedTimeline') === 'trial'
+							? '30-day Trial'
+							: 'Trial'
 					}
 				/>
+
 				<CardButton
 					description="Pay Today"
 					disabled={false}
@@ -94,17 +96,20 @@ export function LicenseSelector({
 						</span>
 					}
 					onClick={() => {
-						selectedPaymentMethod(paymentMethod.PAY);
-						setSelectedTimeline('paid');
+						formUtils.setValue('selectedTimeline', 'paid');
+						formUtils.setValue(
+							'selectedPaymentMethod',
+							paymentMethod.PAY
+						);
 					}}
-					selected={selectedTimeline === 'paid'}
+					selected={formUtils.watch('selectedTimeline') === 'paid'}
 					title="Paid"
 				/>
 			</div>
 
-			{selectedTimeline && (
+			{formUtils.watch('selectedTimeline') && (
 				<div className="timeline-container">
-					{selectedTimeline === 'trial' ? (
+					{formUtils.watch('selectedTimeline') === 'trial' ? (
 						<TrialTimeline
 							setLicenseSelected={handleLicenseSelect}
 						/>

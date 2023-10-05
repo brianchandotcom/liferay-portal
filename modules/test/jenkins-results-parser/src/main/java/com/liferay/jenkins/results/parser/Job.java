@@ -79,6 +79,8 @@ public interface Job {
 
 	public boolean isDownstreamEnabled();
 
+	public boolean isJUnitTestFileModifiedOnly();
+
 	public boolean isSegmentEnabled();
 
 	public boolean isValidationRequired();

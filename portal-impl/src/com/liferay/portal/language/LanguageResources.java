@@ -7,6 +7,7 @@ package com.liferay.portal.language;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
@@ -14,7 +15,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -164,7 +164,7 @@ public class LanguageResources {
 
 	private static ResourceBundle _getOverrideResourceBundle(Locale locale) {
 		LanguageOverrideProvider languageOverrideProvider =
-			_languageOverrideProvider;
+			_languageOverrideProviderSnapshot.get();
 
 		if (languageOverrideProvider == null) {
 			return null;
@@ -212,10 +212,9 @@ public class LanguageResources {
 	private static final Locale _blankLocale = new Locale(StringPool.BLANK);
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-	private static volatile LanguageOverrideProvider _languageOverrideProvider =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			LanguageOverrideProvider.class, LanguageResources.class,
-			"_languageOverrideProvider", false, true);
+	private static final Snapshot<LanguageOverrideProvider>
+		_languageOverrideProviderSnapshot = new Snapshot<>(
+			LanguageResources.class, LanguageOverrideProvider.class);
 	private static final Map<Locale, MapHolder> _mapHolders =
 		new ConcurrentHashMap<>();
 	private static final Locale _nullLocale = new Locale(StringPool.BLANK);

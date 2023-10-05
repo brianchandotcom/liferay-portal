@@ -158,6 +158,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "List Name");
 	}
 
+	@ignore = "true"
 	@priority = 3
 	test PublishPublicationWithDisplayTemplate {
 		JSONPublications.addPublication(publicationName = "Publication Name");

@@ -9,7 +9,6 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.util.AudioProcessor;
-import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.kernel.util.VideoProcessor;
@@ -105,6 +104,7 @@ import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
+import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.server.admin.web.internal.constants.ImageMagickResourceLimitConstants;
 import com.liferay.server.admin.web.internal.scripting.ServerScripting;
 

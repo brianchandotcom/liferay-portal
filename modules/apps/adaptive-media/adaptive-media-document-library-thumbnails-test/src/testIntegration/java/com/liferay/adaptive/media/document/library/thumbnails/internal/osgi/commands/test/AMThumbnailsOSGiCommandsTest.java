@@ -17,7 +17,6 @@ import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -61,6 +60,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 
 import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;

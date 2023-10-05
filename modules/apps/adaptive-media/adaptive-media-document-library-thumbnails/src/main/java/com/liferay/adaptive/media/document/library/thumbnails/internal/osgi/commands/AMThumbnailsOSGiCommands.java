@@ -13,7 +13,6 @@ import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 
 import java.awt.image.RenderedImage;
 

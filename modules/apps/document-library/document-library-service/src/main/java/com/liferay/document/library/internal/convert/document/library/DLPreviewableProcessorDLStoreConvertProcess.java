@@ -6,7 +6,6 @@
 package com.liferay.document.library.internal.convert.document.library;
 
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -15,6 +14,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.MaintenanceUtil;
+import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

@@ -533,7 +533,7 @@ public class CommerceShipmentItemLocalServiceWrapper
 	}
 
 	@Override
-	public int getCommerceShipmentOrderItemsQuantity(
+	public java.math.BigDecimal getCommerceShipmentOrderItemsQuantity(
 		long commerceShipmentId, long commerceOrderItemId) {
 
 		return _commerceShipmentItemLocalService.

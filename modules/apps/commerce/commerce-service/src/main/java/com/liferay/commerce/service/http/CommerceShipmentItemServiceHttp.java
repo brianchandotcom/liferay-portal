@@ -599,7 +599,7 @@ public class CommerceShipmentItemServiceHttp {
 		}
 	}
 
-	public static int getCommerceShipmentOrderItemsQuantity(
+	public static java.math.BigDecimal getCommerceShipmentOrderItemsQuantity(
 			HttpPrincipal httpPrincipal, long commerceShipmentId,
 			long commerceOrderItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -630,7 +630,7 @@ public class CommerceShipmentItemServiceHttp {
 					exception);
 			}
 
-			return ((Integer)returnObj).intValue();
+			return (java.math.BigDecimal)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {

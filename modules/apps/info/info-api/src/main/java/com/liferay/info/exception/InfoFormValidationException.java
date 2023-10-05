@@ -309,7 +309,7 @@ public class InfoFormValidationException extends InfoFormException {
 		@Override
 		public String getLocalizedMessage(Locale locale) {
 			return LanguageUtil.format(
-				locale, "the-x-is-already-in-use-please-enter-a-unique-x",
+				locale, "the-x-is-already-in-use",
 				new String[] {_infoFieldLabel, _infoFieldLabel}, false);
 		}
 

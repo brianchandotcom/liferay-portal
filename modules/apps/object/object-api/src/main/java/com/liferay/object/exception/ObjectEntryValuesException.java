@@ -332,7 +332,7 @@ public class ObjectEntryValuesException extends PortalException {
 				String.format(
 					"Unique value constraint violation for %s.%s with value %s",
 					tableName, columnName, columnValue),
-				"the-x-is-already-in-use-please-enter-a-unique-x", throwable);
+				"the-x-is-already-in-use", throwable);
 		}
 
 	}

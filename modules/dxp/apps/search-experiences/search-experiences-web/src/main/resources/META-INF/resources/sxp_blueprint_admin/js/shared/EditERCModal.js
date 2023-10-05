@@ -92,7 +92,7 @@ export function ERCModal({
 						setError(
 							sub(
 								Liferay.Language.get(
-									'the-x-is-already-in-use-please-enter-a-unique-x'
+									'the-x-is-already-in-use'
 								),
 								[
 									Liferay.Language.get(

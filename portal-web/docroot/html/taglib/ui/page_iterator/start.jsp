@@ -25,8 +25,6 @@ String url = StringPool.BLANK;
 String urlAnchor = StringPool.BLANK;
 int pages = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:page-iterator:pages"));
 
-String ariaPagination = namespace + id + "_ariaPagination";
-
 int initialPages = 20;
 
 if (portletURL != null) {
@@ -80,6 +78,8 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 	<div class="pagination-bar" data-qa-id="paginator" id="<%= namespace + id %>">
 
 		<%
+		String ariaPagination = namespace + id + "_ariaPagination";
+
 		String ariaPaginationPicker = namespace + id + "_ariaPaginationPicker";
 
 		String ariaPaginationResults = namespace + id + "_ariaPaginationResults";
@@ -116,6 +116,77 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 				</ul>
 			</div>
+
+			<script data-senna-track="temporary" type="text/javascript">
+				var dropdown = document.getElementById("<%= ariaPagination %>");
+
+				var button = dropdown.querySelector('.dropdown-toggle');
+				var list = dropdown.querySelector('.dropdown-menu');
+
+				var options = list.querySelectorAll('.dropdown-item');
+				var selectedItemValue = button.dataset.attribute;
+
+				function onButtonKeyDown(event) {
+					if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') {
+						event.preventDefault();
+
+						button.setAttribute('aria-expanded', 'true');
+						list.classList.add('show');
+
+						var selectedOption = list.querySelector('.active');
+
+						if (selectedOption) {
+							selectedOption.focus();
+						}
+					}
+				}
+
+				button.addEventListener('keydown', onButtonKeyDown );
+
+				function onLeaveDropdown() {
+					button.setAttribute('aria-expanded', 'false');
+					list.classList.remove('show');
+				}
+
+				function handleKeyEvents(event) {
+					var currentIndex = Array.from(options).indexOf(document.activeElement);
+
+					if (event.key === 'ArrowDown') {
+						event.preventDefault();
+
+						if (currentIndex < options.length - 1) {
+							options[currentIndex + 1].focus();
+						}
+					} else if (event.key === 'ArrowUp') {
+						event.preventDefault();
+
+						if (currentIndex > 0) {
+							options[currentIndex - 1].focus();
+						}
+					} else if (event.key === 'Escape') {
+						button.focus()
+						onLeaveDropdown()
+					}
+				}
+
+				list.addEventListener('keydown', handleKeyEvents);
+
+				function dropdownFocusOut(event) {
+					if (!dropdown.contains(event.relatedTarget)) {
+						onLeaveDropdown()
+					}
+				}
+
+				document.addEventListener('focusout', dropdownFocusOut );
+
+				var destroyDropDownPagination = function () {
+					button.removeEventListener('keydown', onButtonKeyDown);
+					document.removeEventListener('focusout', dropdownFocusOut );
+					list.removeEventListener('keydown', handleKeyEvents);
+				};
+
+				Liferay.once('beforeScreenFlip', destroyDropDownPagination);
+			</script>
 		</c:if>
 
 		<p aria-hidden="true" class="pagination-results" data-aria-hidden="true" id="<%= ariaPaginationResults %>">
@@ -412,77 +483,6 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			}
 		);
 	}
-</script>
-
-<script data-senna-track="temporary" type="text/javascript">
-	var dropdown = document.getElementById("<%= ariaPagination %>");
-
-	var button = dropdown.querySelector('.dropdown-toggle');
-	var list = dropdown.querySelector('.dropdown-menu');
-
-	var options = list.querySelectorAll('.dropdown-item');
-	var selectedItemValue = button.dataset.attribute;
-
-	function onButtonKeyDown(event) {
-		if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === 'Space') {
-			event.preventDefault();
-
-			list.classList.add('show');
-			button.setAttribute('aria-expanded', 'true');
-
-			var selectedOption = list.querySelector('.active');
-
-			if (selectedOption) {
-				selectedOption.focus();
-			}
-		}
-	}
-
-	button.addEventListener('keydown',onButtonKeyDown );
-
-	function onLeaveDropdown() {
-		list.classList.remove('show');
-		button.setAttribute('aria-expanded', 'false');
-	}
-
-	function handleKeyEvents(event) {
-		var currentIndex = Array.from(options).indexOf(document.activeElement);
-
-		if (event.key === 'ArrowDown') {
-			event.preventDefault();
-
-			if (currentIndex < options.length - 1) {
-				options[currentIndex + 1].focus();
-			}
-		} else if (event.key === 'ArrowUp') {
-			event.preventDefault();
-
-			if (currentIndex > 0) {
-				options[currentIndex - 1].focus();
-			}
-		} else if (event.key === 'Escape') {
-			onLeaveDropdown()
-			button.focus()
-		}
-	}
-
-	list.addEventListener('keydown', handleKeyEvents);
-
-	function dropdownFocusOut(event) {
-		if (!dropdown.contains(event.relatedTarget)) {
-			onLeaveDropdown()
-		}
-	}
-
-	document.addEventListener('focusout', dropdownFocusOut );
-
-	var destroyDropDownPagination = function () {
-		button.removeEventListener('keydown', onButtonKeyDown);
-		document.removeEventListener('focusout', dropdownFocusOut );
-		list.removeEventListener('keydown', handleKeyEvents);
-	};
-
-	Liferay.once('beforeScreenFlip', destroyDropDownPagination);
 </script>
 
 <%!

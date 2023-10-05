@@ -12,6 +12,7 @@ ViewRelatedEntriesDisplayContext viewRelatedEntriesDisplayContext = (ViewRelated
 
 portletDisplay.setURLBack(viewRelatedEntriesDisplayContext.getRedirectURL());
 
+portletDisplay.setBeta(true);
 portletDisplay.setShowBackIcon(true);
 
 renderResponse.setTitle(LanguageUtil.get(request, "move-changes"));

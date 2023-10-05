@@ -229,20 +229,23 @@ export function RightSidebarObjectDefinitionDetails({
 		}
 	};
 
+	const nodeDetailsTitle = sub(
+		Liferay.Language.get('x-details'),
+		getLocalizableLabel(
+			values.defaultLanguageId as Liferay.Language.Locale,
+			values?.label,
+			values?.name
+		)
+	);
+
 	return (
 		<>
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-details">
-				<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-details-title">
-					<span>
-						{sub(
-							Liferay.Language.get('x-details'),
-							getLocalizableLabel(
-								values.defaultLanguageId as Liferay.Language.Locale,
-								values?.label,
-								values?.name
-							)
-						)}
-					</span>
+				<div
+					className="lfr-objects__model-builder-right-sidebar-object-definition-node-details-title text-truncate"
+					title={nodeDetailsTitle}
+				>
+					<span>{nodeDetailsTitle}</span>
 				</div>
 			</div>
 

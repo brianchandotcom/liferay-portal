@@ -25,18 +25,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ImageTool {
 
-	public static final String TYPE_BMP = "bmp";
-
-	public static final String TYPE_GIF = "gif";
-
-	public static final String TYPE_JPEG = "jpg";
-
-	public static final String TYPE_NOT_AVAILABLE = "na";
-
-	public static final String TYPE_PNG = "png";
-
-	public static final String TYPE_TIFF = "tiff";
-
 	public BufferedImage convertImageType(BufferedImage sourceImage, int type);
 
 	public RenderedImage crop(

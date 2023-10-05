@@ -5,24 +5,21 @@
 
 package com.liferay.portal.kernel.model;
 
-import com.liferay.portal.kernel.image.ImageTool;
-
 /**
  * @author Alexander Chow
  */
 public class ImageConstants {
 
-	public static final String TYPE_BMP = ImageTool.TYPE_BMP;
+	public static final String TYPE_BMP = "bmp";
 
-	public static final String TYPE_GIF = ImageTool.TYPE_GIF;
+	public static final String TYPE_GIF = "gif";
 
-	public static final String TYPE_JPEG = ImageTool.TYPE_JPEG;
+	public static final String TYPE_JPEG = "jpg";
 
-	public static final String TYPE_NOT_AVAILABLE =
-		ImageTool.TYPE_NOT_AVAILABLE;
+	public static final String TYPE_NOT_AVAILABLE = "na";
 
-	public static final String TYPE_PNG = ImageTool.TYPE_PNG;
+	public static final String TYPE_PNG = "png";
 
-	public static final String TYPE_TIFF = ImageTool.TYPE_TIFF;
+	public static final String TYPE_TIFF = "tiff";
 
 }

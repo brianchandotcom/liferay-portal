@@ -80,7 +80,6 @@ if (notificationUnread) {
 					<clay:dropdown-actions
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= userNotificationEventActionDropdownItem.getActionDropdownItems(userNotificationEvent, userNotificationFeedEntry) %>"
-						propsTransformer="notifications/js/UserNotificationEventViewDefaultPropsTransformer"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:otherwise>

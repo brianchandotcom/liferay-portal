@@ -66,9 +66,7 @@ public class UserNotificationEventActionDropdownItem {
 				!userNotificationEvent.isActionRequired() &&
 				!userNotificationEvent.isArchived(),
 			dropdownItem -> {
-				dropdownItem.putData("action", "markNotificationAsRead");
-				dropdownItem.putData(
-					"markNotificationAsReadURL",
+				dropdownItem.setHref(
 					PortletURLBuilder.createActionURL(
 						_renderResponse
 					).setActionName(
@@ -87,9 +85,7 @@ public class UserNotificationEventActionDropdownItem {
 				!userNotificationEvent.isActionRequired() &&
 				userNotificationEvent.isArchived(),
 			dropdownItem -> {
-				dropdownItem.putData("action", "markNotificationAsUnread");
-				dropdownItem.putData(
-					"markNotificationAsUnreadURL",
+				dropdownItem.setHref(
 					PortletURLBuilder.createActionURL(
 						_renderResponse
 					).setActionName(
@@ -106,9 +102,7 @@ public class UserNotificationEventActionDropdownItem {
 		).add(
 			() -> finalSubscriptionId > 0,
 			dropdownItem -> {
-				dropdownItem.putData("action", "unsubscribe");
-				dropdownItem.putData(
-					"unsubscribeURL",
+				dropdownItem.setHref(
 					PortletURLBuilder.createActionURL(
 						_renderResponse
 					).setActionName(
@@ -129,9 +123,7 @@ public class UserNotificationEventActionDropdownItem {
 		).add(
 			() -> !userNotificationFeedEntry.isActionable(),
 			dropdownItem -> {
-				dropdownItem.putData("action", "delete");
-				dropdownItem.putData(
-					"deleteURL",
+				dropdownItem.setHref(
 					PortletURLBuilder.createActionURL(
 						_renderResponse
 					).setActionName(

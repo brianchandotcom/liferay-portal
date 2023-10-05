@@ -18,7 +18,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.nested.portlets.web.internal.constants.NestedPortletsWebKeys" %><%@
 page import="com.liferay.nested.portlets.web.internal.display.context.NestedPortletsDisplayContext" %><%@
-page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTemplate" %><%@
@@ -27,7 +26,8 @@ page import="com.liferay.portal.kernel.service.permission.LayoutPermissionUtil" 
 page import="com.liferay.portal.kernel.template.TemplateConstants" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %>
 
 <liferay-theme:defineObjects />
 

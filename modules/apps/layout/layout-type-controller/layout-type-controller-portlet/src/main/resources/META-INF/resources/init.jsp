@@ -14,7 +14,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ page import="com.liferay.layout.type.controller.portlet.internal.constants.PortletLayoutTypeControllerWebKeys" %><%@
 page import="com.liferay.layout.type.controller.portlet.internal.display.context.PortletLayoutDisplayContext" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTemplateConstants" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTypePortlet" %><%@
@@ -22,7 +21,8 @@ page import="com.liferay.portal.kernel.model.Theme" %><%@
 page import="com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %>
 
 <liferay-frontend:defineObjects />
 

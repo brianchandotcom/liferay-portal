@@ -43,6 +43,7 @@ if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getExpirationDat
 		<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceListId %>" />
 		<aui:input name="commerceTierPriceEntryId" type="hidden" value="<%= commerceTierPriceEntryId %>" />
 
+		<liferay-ui:error exception="<%= CommerceTierPriceEntryMinQuantityException.class %>" message="the-specified-quantity-is-not-allowed" />
 		<liferay-ui:error exception="<%= DuplicateCommerceTierPriceEntryException.class %>" message="there-is-already-a-tier-price-entry-with-the-same-minimum-quantity" />
 
 		<commerce-ui:panel

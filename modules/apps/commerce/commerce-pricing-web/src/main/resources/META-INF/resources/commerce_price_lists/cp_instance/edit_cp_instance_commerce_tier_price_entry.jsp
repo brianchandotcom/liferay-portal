@@ -29,6 +29,7 @@ CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInst
 		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 		<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstance.getCPInstanceId() %>" />
 
+		<liferay-ui:error exception="<%= CommerceTierPriceEntryMinQuantityException.class %>" message="the-specified-quantity-is-not-allowed" />
 		<liferay-ui:error exception="<%= DuplicateCommerceTierPriceEntryException.class %>" message="there-is-already-a-tier-price-entry-with-the-same-minimum-quantity" />
 
 		<div class="row">
@@ -39,6 +40,8 @@ CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInst
 
 				if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getMinQuantity() != null)) {
 					minQuantity = commerceTierPriceEntry.getMinQuantity();
+
+					minQuantity = minQuantity.stripTrailingZeros();
 				}
 
 				CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
@@ -60,8 +63,8 @@ CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInst
 				}
 				%>
 
-				<aui:input label='<%= LanguageUtil.get(request, "quantity") %>' name="minQuantity" required="<%= true %>" value="<%= minQuantity.intValue() %>">
-					<aui:validator name="min"><%= 1 %></aui:validator>
+				<aui:input label='<%= LanguageUtil.get(request, "quantity") %>' name="minQuantity" required="<%= true %>" value="<%= minQuantity.toString() %>">
+					<aui:validator name="min"><%= 0 %></aui:validator>
 				</aui:input>
 
 				<aui:model-context bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" />
@@ -72,6 +75,8 @@ CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInst
 				</aui:input>
 
 				<c:if test="<%= commercePriceEntry.isBulkPricing() %>">
+					<aui:input helpMessage="override-discount-help" ignoreRequestValue="<%= true %>" inlineLabel="right" label='<%= LanguageUtil.get(request, "override-discount") %>' labelCssClass="simple-toggle-switch" name="overrideDiscount" type="toggle-switch" value="<%= !discountDiscovery %>" />
+
 					<div class="<%= discountDiscovery ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />discountLevels">
 						<label class="control-label" for="<portlet:namespace />discountLevel1"><liferay-ui:message key="discount-levels" /></label>
 
@@ -101,8 +106,6 @@ CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInst
 							</aui:input>
 						</div>
 					</div>
-
-					<aui:input helpMessage="override-discount-help" ignoreRequestValue="<%= true %>" inlineLabel="right" label='<%= LanguageUtil.get(request, "override-discount") %>' labelCssClass="simple-toggle-switch" name="overrideDiscount" type="toggle-switch" value="<%= !discountDiscovery %>" />
 				</c:if>
 
 				<liferay-ui:error exception="<%= CommercePriceListExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />

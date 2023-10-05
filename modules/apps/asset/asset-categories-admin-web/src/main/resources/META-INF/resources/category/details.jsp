@@ -22,6 +22,7 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 String title = LanguageUtil.get(request, "add-new-category");
 

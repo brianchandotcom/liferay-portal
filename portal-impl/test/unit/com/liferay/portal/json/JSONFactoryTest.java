@@ -252,10 +252,11 @@ public class JSONFactoryTest {
 
 		Assert.assertTrue(object instanceof HashMap);
 
-		Assert.assertTrue(
-			((HashMap<?, ?>)object).get("enum") instanceof FooBean7);
+		HashMap<?, ?> hashMap = (HashMap<?, ?>)object;
 
-		Assert.assertSame(((HashMap<?, ?>)object).get("enum"), FooBean7.TEST_1);
+		Assert.assertTrue(hashMap.get("enum") instanceof FooBean7);
+
+		Assert.assertSame(hashMap.get("enum"), FooBean7.TEST_1);
 	}
 
 	@Test
@@ -270,9 +271,11 @@ public class JSONFactoryTest {
 
 		Assert.assertTrue(object instanceof Message);
 
-		Assert.assertTrue(((Message)object).get("enum") instanceof FooBean7);
+		message = (Message)object;
 
-		Assert.assertSame(((Message)object).get("enum"), FooBean7.TEST_1);
+		Assert.assertTrue(message.get("enum") instanceof FooBean7);
+
+		Assert.assertSame(message.get("enum"), FooBean7.TEST_1);
 	}
 
 	@Test

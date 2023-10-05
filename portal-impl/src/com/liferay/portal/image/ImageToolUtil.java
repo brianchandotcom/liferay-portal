@@ -3,9 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.kernel.image;
+package com.liferay.portal.image;
 
 import com.liferay.portal.kernel.exception.ImageResolutionException;
+import com.liferay.portal.kernel.image.CMYKImageTool;
+import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 

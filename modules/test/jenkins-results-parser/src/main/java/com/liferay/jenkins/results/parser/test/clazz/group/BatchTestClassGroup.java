@@ -631,6 +631,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return true;
 		}
 
+		if (isStableTestSuiteBatch() && testRelevantJUnitTestsOnlyInStable) {
+			return true;
+		}
+
 		return false;
 	}
 

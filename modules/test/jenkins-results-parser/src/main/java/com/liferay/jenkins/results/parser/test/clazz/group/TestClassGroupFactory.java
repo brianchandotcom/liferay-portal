@@ -243,9 +243,6 @@ public class TestClassGroupFactory {
 			}
 			else if (batchName.startsWith("integration-") ||
 					 batchName.startsWith("junit-test-") ||
-					 batchName.startsWith(
-						 "modules-integration-project-templates-") ||
-					 batchName.startsWith("modules-unit-project-templates-") ||
 					 batchName.startsWith("unit-")) {
 
 				if (jsonObject != null) {
@@ -255,6 +252,21 @@ public class TestClassGroupFactory {
 				else {
 					batchTestClassGroup = new JUnitBatchTestClassGroup(
 						batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith(
+						"modules-integration-project-templates-") ||
+					 batchName.startsWith("modules-unit-project-templates-")) {
+
+				if (jsonObject != null) {
+					batchTestClassGroup =
+						new ProjectTemplatesJUnitBatchTestClassGroup(
+							jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup =
+						new ProjectTemplatesJUnitBatchTestClassGroup(
+							batchName, portalTestClassJob);
 				}
 			}
 			else if (batchName.startsWith("js-test-") ||

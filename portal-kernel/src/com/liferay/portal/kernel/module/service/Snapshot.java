@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.module.service;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -55,9 +56,7 @@ public class Snapshot<T> {
 			Supplier<ServiceTracker<T, T>> serviceTrackerSupplier = () -> {
 				ServiceTracker<T, T> serviceTracker = null;
 
-				Bundle bundle = FrameworkUtil.getBundle(holderClass);
-
-				BundleContext bundleContext = bundle.getBundleContext();
+				BundleContext bundleContext = _getBundleContext(holderClass);
 
 				if (filterString == null) {
 					serviceTracker = new ServiceTracker<>(
@@ -109,9 +108,8 @@ public class Snapshot<T> {
 
 			_serivceSupplier = () -> serviceDCLSingleton.getSingleton(
 				() -> {
-					Bundle bundle = FrameworkUtil.getBundle(holderClass);
-
-					BundleContext bundleContext = bundle.getBundleContext();
+					BundleContext bundleContext = _getBundleContext(
+						holderClass);
 
 					ServiceReference<T> serviceReference = _getServiceReference(
 						bundleContext, serviceClass, filterString);
@@ -157,6 +155,16 @@ public class Snapshot<T> {
 
 	public T get() {
 		return _serivceSupplier.get();
+	}
+
+	private BundleContext _getBundleContext(Class<?> holderClass) {
+		Bundle bundle = FrameworkUtil.getBundle(holderClass);
+
+		if (bundle == null) {
+			return SystemBundleUtil.getBundleContext();
+		}
+
+		return bundle.getBundleContext();
 	}
 
 	private ServiceReference<T> _getServiceReference(

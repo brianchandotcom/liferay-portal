@@ -20,15 +20,15 @@ interface ProductFooterProps {
 	handleGetApp: (orderId?: number) => void;
 	isFreeApp: boolean;
 	licenseSelected: boolean;
-	sectionProperties: SectionPropertiesType;
 	selectedAccount?: Account;
 	selectedPaymentMethod: PaymentMethodSelector;
 	selectedSKU?: SKU;
 	setStep: (nextStep: StepType) => void;
 	step: StepType;
+	stepsNavigation: StepsNavigation;
 }
 
-type SectionPropertiesType = {
+type StepsNavigation = {
 	[key in StepType]: {
 		backStep: StepType;
 		nextStep: StepType;
@@ -46,11 +46,11 @@ const ProductFooter = ({
 	handleGetApp,
 	isFreeApp,
 	licenseSelected,
-	sectionProperties,
 	selectedAccount,
 	selectedPaymentMethod,
 	setStep,
 	step,
+	stepsNavigation,
 }: ProductFooterProps) => {
 	const getButtonText = () => {
 		if (isFreeApp) {
@@ -116,21 +116,17 @@ const ProductFooter = ({
 					Cancel
 				</ClayButton>
 				<div>
-					{sectionProperties[step].backStep !== step && (
+					{stepsNavigation[step].backStep !== step && (
 						<ClayButton
 							displayType="secondary"
-							onClick={() => {
-								if (cartUtil?.cart?.id) {
-									cartUtil.removeCart(cartUtil?.cart?.id);
-								}
-
-								onPrevious(sectionProperties[step].backStep);
-							}}
+							onClick={() =>
+								onPrevious(stepsNavigation[step].backStep)
+							}
 						>
 							Back
 						</ClayButton>
 					)}
-					{sectionProperties[step].nextStep && (
+					{stepsNavigation[step].nextStep && (
 						<ClayButton
 							className="ml-5"
 							disabled={
@@ -139,7 +135,7 @@ const ProductFooter = ({
 								(step === StepType.LICENSES && !licenseSelected)
 							}
 							onClick={() =>
-								onContinue(sectionProperties[step].nextStep)
+								onContinue(stepsNavigation[step].nextStep)
 							}
 						>
 							{getButtonText()}

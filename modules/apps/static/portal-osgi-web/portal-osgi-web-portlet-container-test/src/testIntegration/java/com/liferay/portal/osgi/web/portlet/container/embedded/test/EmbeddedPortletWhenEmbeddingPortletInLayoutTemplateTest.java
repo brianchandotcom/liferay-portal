@@ -7,7 +7,6 @@ package com.liferay.portal.osgi.web.portlet.container.embedded.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.osgi.web.portlet.container.test.BasePortletContainerTestCase;
 import com.liferay.portal.osgi.web.portlet.container.test.TestPortlet;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;

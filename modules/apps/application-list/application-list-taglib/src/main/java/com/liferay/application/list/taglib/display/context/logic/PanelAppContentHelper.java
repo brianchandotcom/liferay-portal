@@ -6,7 +6,6 @@
 package com.liferay.application.list.taglib.display.context.logic;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Theme;
@@ -18,6 +17,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.servlet.DynamicServletRequestUtil;
 import com.liferay.portlet.LiferayPortletUtil;
 

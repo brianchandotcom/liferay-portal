@@ -52,7 +52,6 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTemplate;
@@ -72,6 +71,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;

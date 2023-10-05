@@ -630,10 +630,27 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		if (checkSelfRegistration &&
 			serviceAttributeValue.matches(".*\\b" + className + "\\.class.*")) {
 
-			addMessage(
-				fileName,
-				"No need to register '" + className +
-					"' in @Component 'service' attribute");
+			List<String> allowedSelfRegistrationClassNames = getAttributeValues(
+				_ALLOWED_SELF_REGISTRATION_CLASS_NAMES_KEY, absolutePath);
+
+			boolean allowed = false;
+
+			for (String allowedSelfRegistrationClassName :
+					allowedSelfRegistrationClassNames) {
+
+				if (absolutePath.contains(allowedSelfRegistrationClassName)) {
+					allowed = true;
+
+					break;
+				}
+			}
+
+			if (!allowed) {
+				addMessage(
+					fileName,
+					"No need to register '" + className +
+						"' in @Component 'service' attribute");
+			}
 		}
 
 		if (checkHasMultipleServiceTypes) {
@@ -786,6 +803,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	private static final String
 		_ALLOWED_MULTIPLE_SERVICE_TYPES_CLASS_NAMES_KEY =
 			"allowedMultipleServiceTypesClassNames";
+
+	private static final String _ALLOWED_SELF_REGISTRATION_CLASS_NAMES_KEY =
+		"allowedSelfRegistrationClassNames";
 
 	private static final String _CHECK_CONFIGURATION_PID_ATTRIBUTE_KEY =
 		"checkConfigurationPidAttribute";

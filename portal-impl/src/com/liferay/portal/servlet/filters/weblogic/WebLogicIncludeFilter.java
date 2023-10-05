@@ -5,8 +5,8 @@
 
 package com.liferay.portal.servlet.filters.weblogic;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.servlet.WrapHttpServletResponseFilter;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class WebLogicIncludeFilter
 
 		WebLogicIncludeServletResponseFactory
 			webLogicIncludeServletResponseFactory =
-				_webLogicIncludeServletResponseFactory;
+				_webLogicIncludeServletResponseFactorySnapshot.get();
 
 		if (webLogicIncludeServletResponseFactory != null) {
 			return webLogicIncludeServletResponseFactory.create(
@@ -37,18 +37,16 @@ public class WebLogicIncludeFilter
 
 	@Override
 	public boolean isFilterEnabled() {
-		if (_webLogicIncludeServletResponseFactory == null) {
+		if (_webLogicIncludeServletResponseFactorySnapshot.get() == null) {
 			return false;
 		}
 
 		return true;
 	}
 
-	private static volatile WebLogicIncludeServletResponseFactory
-		_webLogicIncludeServletResponseFactory =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				WebLogicIncludeServletResponseFactory.class,
-				WebLogicIncludeFilter.class,
-				"_webLogicIncludeServletResponseFactory", false, true);
+	private static final Snapshot<WebLogicIncludeServletResponseFactory>
+		_webLogicIncludeServletResponseFactorySnapshot = new Snapshot<>(
+			WebLogicIncludeFilter.class,
+			WebLogicIncludeServletResponseFactory.class);
 
 }

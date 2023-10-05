@@ -24,6 +24,7 @@ if (!user.isOnDemandUser()) {
 	portletDisplay.setShowBackIcon(true);
 }
 else {
+	portletDisplay.setBeta(true);
 	portletDisplay.setShowBackIcon(false);
 }
 

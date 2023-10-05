@@ -11,8 +11,8 @@ import com.drew.metadata.exif.ExifIFD0Directory;
 
 import com.liferay.adaptive.media.exception.AMRuntimeException;
 import com.liferay.adaptive.media.image.internal.util.RenderedImageUtil;
+import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

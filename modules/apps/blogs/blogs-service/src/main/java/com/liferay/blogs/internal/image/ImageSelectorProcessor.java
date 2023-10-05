@@ -6,10 +6,10 @@
 package com.liferay.blogs.internal.image;
 
 import com.liferay.image.ImageMagick;
+import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageTool;
-import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;

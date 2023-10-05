@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.image.CMYKImageTool;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -292,7 +291,7 @@ public class ImageToolUtil {
 			return _defaultCompanyLogo;
 		}
 
-		ClassLoader classLoader = ImageTool.class.getClassLoader();
+		ClassLoader classLoader = ImageToolUtil.class.getClassLoader();
 
 		try {
 			InputStream inputStream = null;
@@ -358,7 +357,7 @@ public class ImageToolUtil {
 			return _defaultOrganizationLogo;
 		}
 
-		ClassLoader classLoader = ImageTool.class.getClassLoader();
+		ClassLoader classLoader = ImageToolUtil.class.getClassLoader();
 
 		try {
 			InputStream inputStream = classLoader.getResourceAsStream(
@@ -384,7 +383,7 @@ public class ImageToolUtil {
 			return _defaultSpacer;
 		}
 
-		ClassLoader classLoader = ImageTool.class.getClassLoader();
+		ClassLoader classLoader = ImageToolUtil.class.getClassLoader();
 
 		try {
 			InputStream inputStream = classLoader.getResourceAsStream(
@@ -410,7 +409,7 @@ public class ImageToolUtil {
 			return _defaultUserFemalePortrait;
 		}
 
-		ClassLoader classLoader = ImageTool.class.getClassLoader();
+		ClassLoader classLoader = ImageToolUtil.class.getClassLoader();
 
 		try {
 			InputStream inputStream = classLoader.getResourceAsStream(
@@ -436,7 +435,7 @@ public class ImageToolUtil {
 			return _defaultUserMalePortrait;
 		}
 
-		ClassLoader classLoader = ImageTool.class.getClassLoader();
+		ClassLoader classLoader = ImageToolUtil.class.getClassLoader();
 
 		try {
 			InputStream inputStream = classLoader.getResourceAsStream(
@@ -462,7 +461,7 @@ public class ImageToolUtil {
 			return _defaultUserPortrait;
 		}
 
-		ClassLoader classLoader = ImageTool.class.getClassLoader();
+		ClassLoader classLoader = ImageToolUtil.class.getClassLoader();
 
 		try {
 			InputStream inputStream = classLoader.getResourceAsStream(

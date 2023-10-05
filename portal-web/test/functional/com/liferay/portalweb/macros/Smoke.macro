@@ -152,7 +152,7 @@ definition {
 
 	macro viewWelcomeContentPage {
 		ContentPages.viewFragmentText(
-			fragmentName = "heading",
+			fragmentName = "paragraph",
 			id = "element-text",
 			text = "Welcome to Liferay");
 

@@ -5,7 +5,6 @@
 
 package com.liferay.notification.service.impl;
 
-import com.liferay.notification.exception.NoSuchNotificationRecipientSettingException;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.service.base.NotificationRecipientSettingLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -25,10 +24,9 @@ public class NotificationRecipientSettingLocalServiceImpl
 	extends NotificationRecipientSettingLocalServiceBaseImpl {
 
 	public NotificationRecipientSetting getNotificationRecipientSetting(
-			long notificationRecipientId, String name)
-		throws NoSuchNotificationRecipientSettingException {
+		long notificationRecipientId, String name) {
 
-		return notificationRecipientSettingPersistence.findByNRI_N(
+		return notificationRecipientSettingPersistence.fetchByNRI_N(
 			notificationRecipientId, name);
 	}
 

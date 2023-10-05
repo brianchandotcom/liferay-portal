@@ -18,6 +18,7 @@ import ProductFooter from './components/Footer';
 import {LicenseSelector} from './components/LicenseSelector';
 import ProductCard from './components/ProductCard';
 import {SelectPaymentMethod} from './components/SelectPaymentMethod/SelectPaymentMethod';
+import StepWizard from './components/StepWizard/StepWizard';
 import {initialBillingAddress} from './constants/initialBillingAddress';
 import {paymentMethod} from './enums/paymentMethod';
 import {StepType} from './enums/stepType';
@@ -90,6 +91,9 @@ const GetAppFlow = () => {
 		if (cartUtil?.cartItems?.length) {
 			setLincenseSelected(true);
 			setEnablePurchaseButton(true);
+		} else {
+			setEnablePurchaseButton(false);
+			setLincenseSelected(false);
 		}
 	}, [cartUtil?.cartItems?.length]);
 
@@ -184,6 +188,7 @@ const GetAppFlow = () => {
 				/>
 			),
 			nextStep: StepType.LICENSES,
+			stepTitle: 'Account',
 			title: 'Account Selection',
 		},
 		[StepType.LICENSES]: {
@@ -204,6 +209,7 @@ const GetAppFlow = () => {
 				/>
 			),
 			nextStep: StepType.PAYMENT,
+			stepTitle: 'Licenses',
 			title: 'License Selection',
 		},
 		[StepType.PAYMENT]: {
@@ -228,6 +234,7 @@ const GetAppFlow = () => {
 				/>
 			),
 			nextStep: StepType.PAYMENT,
+			stepTitle: 'Payment Method',
 			title: 'Payment Method',
 		},
 	};
@@ -246,6 +253,25 @@ const GetAppFlow = () => {
 
 			<div className="border d-flex flex-column mt-7 p-5 rounded">
 				<div className="d-flex flex-column">
+					{!isFreeApp && (
+						<div className="d-flex justify-content-center mb-6">
+							<StepWizard
+								className="col-8"
+								currentStep={step}
+								stepsInformation={StepsInformation}
+								wizardSteps={{
+									[StepType.ACCOUNT]:
+										step !== StepType.ACCOUNT &&
+										!!selectedAccount,
+									[StepType.LICENSES]:
+										step !== StepType.LICENSES &&
+										licenseSelected,
+									[StepType.PAYMENT]: false,
+								}}
+							/>
+						</div>
+					)}
+
 					<div className="align-self-center h1 mb-6">
 						{StepsInformation[step].title}
 					</div>

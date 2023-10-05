@@ -5,14 +5,13 @@
 
 package com.liferay.portal.upload.internal;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.util.DependenciesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
@@ -26,10 +25,18 @@ import java.nio.file.StandardCopyOption;
 
 import java.util.Set;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Manuel de la Peña
@@ -42,14 +49,23 @@ public class LiferayFileItemTest {
 
 	@BeforeClass
 	public static void setUpClass() throws IOException {
+		Mockito.when(
+			FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			_bundleContext.getBundle()
+		);
+
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			new FastDateFormatFactoryImpl());
 
-		ReflectionTestUtil.setFieldValue(
-			MimeTypesUtil.class, "_mimeTypes",
+		_liferayFileItemFactory = new LiferayFileItemFactory(
+			FileUtil.createTempFolder(), 0, "UTF-8");
+
+		_mimeTypesServiceRegistration = _bundleContext.registerService(
+			MimeTypes.class,
 			new MimeTypes() {
 
 				@Override
@@ -103,10 +119,17 @@ public class LiferayFileItemTest {
 					throw new UnsupportedOperationException();
 				}
 
-			});
+			},
+			null);
+	}
 
-		_liferayFileItemFactory = new LiferayFileItemFactory(
-			FileUtil.createTempFolder(), 0, "UTF-8");
+	@AfterClass
+	public static void tearDownClass() {
+		if (_mimeTypesServiceRegistration != null) {
+			_mimeTypesServiceRegistration.unregister();
+		}
+
+		_frameworkUtilMockedStatic.close();
 	}
 
 	@Test
@@ -195,6 +218,11 @@ public class LiferayFileItemTest {
 		Assert.assertEquals("", liferayFileItem.getString());
 	}
 
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static final MockedStatic<FrameworkUtil>
+		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 	private static LiferayFileItemFactory _liferayFileItemFactory;
+	private static ServiceRegistration<MimeTypes> _mimeTypesServiceRegistration;
 
 }

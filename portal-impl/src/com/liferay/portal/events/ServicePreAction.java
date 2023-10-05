@@ -907,12 +907,8 @@ public class ServicePreAction extends Action {
 			realUser = UserLocalServiceUtil.getUserById(realUserId.longValue());
 		}
 
-		if (!user.isActive()) {
-			user = company.getGuestUser();
-
-			if (realUser == null) {
-				httpSession.invalidate();
-			}
+		if (!user.isActive() && (realUserId == user.getUserId())) {
+			httpSession.invalidate();
 		}
 
 		boolean signedIn = !user.isGuestUser();

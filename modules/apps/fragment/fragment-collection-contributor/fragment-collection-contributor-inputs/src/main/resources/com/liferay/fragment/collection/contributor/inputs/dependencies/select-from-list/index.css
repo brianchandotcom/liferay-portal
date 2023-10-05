@@ -1,5 +1,6 @@
 .select-from-list__dropdown-menu {
 	left: 0;
+	max-height: 500px;
 	position: absolute;
 	top: 0;
 }

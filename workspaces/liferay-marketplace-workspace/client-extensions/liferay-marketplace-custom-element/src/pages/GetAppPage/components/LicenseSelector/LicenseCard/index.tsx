@@ -15,7 +15,7 @@ const MAX_ITEM = 99;
 const MIN_ITEM = 0;
 
 const LicenseSectorCard: React.FC<any> = ({
-	cart,
+	cartUtil,
 	licenseDescription,
 	licensetiers,
 	lisenceType,
@@ -23,8 +23,8 @@ const LicenseSectorCard: React.FC<any> = ({
 	sku,
 }) => {
 	const count =
-		cart.cartItems.find((item: any) => item.skuId === sku.id)?.quantity ||
-		MIN_ITEM;
+		cartUtil.cartItems.find((item: any) => item.skuId === sku.id)
+			?.quantity || MIN_ITEM;
 
 	const tiers = licensetiers[0];
 
@@ -57,7 +57,7 @@ const LicenseSectorCard: React.FC<any> = ({
 							className="align-items-center d-flex justify-content-center license__card__buttons p-2"
 							disabled={count === MIN_ITEM}
 							displayType="primary"
-							onClick={() => cart.removeFromCart(sku.id)}
+							onClick={() => cartUtil.removeFromCart(sku.id)}
 						>
 							<ClayIcon
 								aria-label="Divider"
@@ -75,7 +75,7 @@ const LicenseSectorCard: React.FC<any> = ({
 							className="align-items-center d-flex justify-content-center license__card__buttons p-2"
 							disabled={count === MAX_ITEM}
 							displayType="primary"
-							onClick={() => cart.addCart(productId, sku.id)}
+							onClick={() => cartUtil.addCart(productId, sku.id)}
 						>
 							<ClayIcon
 								aria-label="Plus Button"

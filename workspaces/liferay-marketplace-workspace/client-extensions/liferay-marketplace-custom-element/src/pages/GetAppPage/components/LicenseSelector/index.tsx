@@ -19,7 +19,7 @@ import {PaidTimeline} from './components/PaidTimeline';
 import {TrialTimeline} from './components/TrialTimeline';
 
 interface LicenseSelectorProps {
-	cart: ReturnType<typeof useCart>;
+	cartUtil: ReturnType<typeof useCart>;
 	formUtils: {
 		setValue: UseFormSetValue<GetAppForm>;
 		watch: UseFormWatch<GetAppForm>;
@@ -31,7 +31,7 @@ interface LicenseSelectorProps {
 }
 
 export function LicenseSelector({
-	cart,
+	cartUtil,
 	formUtils,
 	onSelectLicense,
 	selectedProduct,
@@ -73,6 +73,10 @@ export function LicenseSelector({
 						</span>
 					}
 					onClick={() => {
+						if (cartUtil?.cart?.id) {
+							cartUtil.removeCart(cartUtil?.cart?.id);
+						}
+
 						formUtils.setValue(
 							'selectedPaymentMethod',
 							paymentMethod.TRIAL
@@ -114,7 +118,10 @@ export function LicenseSelector({
 							setLicenseSelected={handleLicenseSelect}
 						/>
 					) : (
-						<PaidTimeline cart={cart} product={selectedProduct} />
+						<PaidTimeline
+							cartUtil={cartUtil}
+							product={selectedProduct}
+						/>
 					)}
 				</div>
 			)}

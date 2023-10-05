@@ -190,7 +190,7 @@ const GetAppFlow = () => {
 			backStep: StepType.ACCOUNT,
 			component: (
 				<LicenseSelector
-					cart={cartUtil}
+					cartUtil={cartUtil}
 					formUtils={{
 						setValue,
 						watch,

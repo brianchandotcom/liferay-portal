@@ -13,7 +13,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.image.ImageToolUtil;
+import com.liferay.portal.image.ImageToolUtil_IW;
 import com.liferay.portal.kernel.audit.AuditMessageFactoryUtil;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -520,7 +520,7 @@ public class TemplateContextHelper {
 		// Image tool util
 
 		try {
-			variables.put("imageToolUtil", ImageToolUtil.getImageTool());
+			variables.put("imageToolUtil", ImageToolUtil_IW.getInstance());
 		}
 		catch (SecurityException securityException) {
 			_log.error(securityException);

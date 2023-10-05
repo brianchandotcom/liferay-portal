@@ -530,10 +530,6 @@ public class ImageToolUtil {
 		return getImage(_fileImpl.getBytes(inputStream, -1, cleanUpStream));
 	}
 
-	public static ImageTool getImageTool() {
-		return _imageTool;
-	}
-
 	public static boolean isNullOrDefaultSpacer(byte[] bytes) {
 		if (ArrayUtil.isEmpty(bytes) ||
 			Arrays.equals(bytes, getDefaultSpacer().getTextObj())) {
@@ -972,7 +968,6 @@ public class ImageToolUtil {
 	private static Image _defaultUserMalePortrait;
 	private static Image _defaultUserPortrait;
 	private static final FileImpl _fileImpl = FileImpl.getInstance();
-	private static ImageTool _imageTool;
 
 	private static class CMYKImageToolHolder {
 

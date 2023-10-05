@@ -47,7 +47,8 @@ public class JIRAUtil {
 					"required JIRA project: ",
 					StringUtil.merge(projectNames, StringPool.COMMA_AND_SPACE),
 					". Please verify that the JIRA project keys are specified",
-					"in ci.properties in the liferay-portal repository."));
+					"in source-formatter.properties in the liferay-portal ",
+					"repository."));
 		}
 	}
 

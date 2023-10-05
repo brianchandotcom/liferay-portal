@@ -6,8 +6,8 @@
 /// <reference types="react" />
 
 interface Props {
-	createLayoutPageTemplateEntryURL: string;
-	getLayoutPageTemplateCollectionsURL: string;
+	createTemplateURL: string;
+	getCollectionsURL: string;
 	hasMultipleSegmentsExperienceIds: boolean;
 	layoutId: string;
 	namespace?: string;
@@ -15,8 +15,8 @@ interface Props {
 	segmentsExperienceId: string;
 }
 export default function PageTemplateModal({
-	createLayoutPageTemplateEntryURL,
-	getLayoutPageTemplateCollectionsURL,
+	createTemplateURL,
+	getCollectionsURL,
 	hasMultipleSegmentsExperienceIds,
 	layoutId,
 	namespace,

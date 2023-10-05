@@ -160,8 +160,8 @@ const noop = () => {};
 
 const MillerColumnsItem = ({
 	createTemplateURL,
-	getItemActionsURL,
 	getCollectionsURL,
+	getItemActionsURL,
 	isLayoutSetPrototype,
 	isPrivateLayoutsEnabled,
 	item: {
@@ -566,10 +566,8 @@ const MillerColumnsItem = ({
 
 					{openModal && (
 						<PageTemplateModal
-							createLayoutPageTemplateEntryURL={createTemplateURL}
-							getLayoutPageTemplateCollectionsURL={
-								getCollectionsURL
-							}
+							createTemplateURL={createTemplateURL}
+							getCollectionsURL={getCollectionsURL}
 							layoutId={itemId}
 							namespace={namespace}
 							onClose={onClose}

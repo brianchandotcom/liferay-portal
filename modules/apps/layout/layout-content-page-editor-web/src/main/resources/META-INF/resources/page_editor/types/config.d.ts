@@ -78,7 +78,7 @@ export interface Config {
 	>;
 
 	contentPagePersonalizationLearnURL: string;
-	createLayoutPageTemplateEntryURL: string;
+	createTemplateURL: string;
 
 	defaultEditorConfigurations: Record<
 		'comment' | 'rich-text' | 'text',
@@ -123,6 +123,7 @@ export interface Config {
 	getCollectionMappingFieldsURL: string;
 	getCollectionSupportedFiltersURL: string;
 	getCollectionWarningMessageURL: string;
+	getCollectionsURL: string;
 	getExperienceDataURL: string;
 	getFormConfigURL: string;
 	getIframeContentCssURL: string;
@@ -130,7 +131,6 @@ export interface Config {
 	getInfoItemActionErrorMessageURL: string;
 	getInfoItemFieldValueURL: string;
 	getLayoutFriendlyURL: string;
-	getLayoutPageTemplateCollectionsURL: string;
 	getPageContentsURL: string;
 	getPortletsURL: string;
 	imageSelectorURL: string;

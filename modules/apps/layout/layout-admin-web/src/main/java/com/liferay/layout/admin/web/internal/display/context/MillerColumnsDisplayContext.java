@@ -147,12 +147,11 @@ public class MillerColumnsDisplayContext {
 			).put(
 				"createTemplateURL", _getCreateLayoutPageTemplateEntryURL()
 			).put(
+				"getCollectionsURL", _getLayoutPageTemplateCollectionsURL()
+			).put(
 				"getItemActionsURL", getLayoutActionsURL()
 			).put(
 				"getItemChildrenURL", getLayoutChildrenURL()
-			).put(
-				"getLayoutPageTemplateCollectionsURL",
-				_getLayoutPageTemplateCollectionsURL()
 			).put(
 				"isLayoutSetPrototype",
 				() -> {

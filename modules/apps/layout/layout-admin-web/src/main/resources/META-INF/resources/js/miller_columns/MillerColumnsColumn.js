@@ -47,6 +47,8 @@ const isValidTarget = (sources, parent) =>
 	);
 
 const MillerColumnsColumn = ({
+	createTemplateURL,
+	getCollectionsURL,
 	getItemActionsURL,
 	columnItems = [],
 	columnsContainer,
@@ -104,6 +106,8 @@ const MillerColumnsColumn = ({
 		>
 			{columnItems.map((item, index) => (
 				<MillerColumnsItem
+					createTemplateURL={createTemplateURL}
+					getCollectionsURL={getCollectionsURL}
 					getItemActionsURL={getItemActionsURL}
 					isLayoutSetPrototype={isLayoutSetPrototype}
 					isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}

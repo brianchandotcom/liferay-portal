@@ -33,15 +33,6 @@ import org.json.JSONObject;
 public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
-	public int getAxisCount() {
-		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
-			return 0;
-		}
-
-		return super.getAxisCount();
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
 		if (jsonObject != null) {
 			return jsonObject;
@@ -77,6 +68,15 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		setAxisTestClassGroups();
 
 		setSegmentTestClassGroups();
+	}
+
+	@Override
+	protected boolean ignore() {
+		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void setTestClasses() {

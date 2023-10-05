@@ -45,6 +45,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
 	public int getAxisCount() {
+		if (ignore()) {
+			return 0;
+		}
+
 		int axisCount = super.getAxisCount();
 
 		if ((axisCount == 0) && _includeAutoBalanceTests) {

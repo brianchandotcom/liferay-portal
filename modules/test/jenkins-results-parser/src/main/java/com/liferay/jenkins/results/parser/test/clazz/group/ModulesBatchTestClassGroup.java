@@ -29,15 +29,6 @@ import org.json.JSONObject;
 public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
-	public int getAxisCount() {
-		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
-			return 0;
-		}
-
-		return super.getAxisCount();
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
 		if (jsonObject != null) {
 			return jsonObject;
@@ -236,6 +227,15 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 				JenkinsResultsParserUtil.getCanonicalPath(portalModulesBaseDir),
 				File.separator),
 			includeGlobs.toArray(new String[0]));
+	}
+
+	@Override
+	protected boolean ignore() {
+		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected abstract void setTestClasses() throws IOException;

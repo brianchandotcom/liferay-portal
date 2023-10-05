@@ -17,15 +17,6 @@ import org.json.JSONObject;
  */
 public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 
-	@Override
-	public int getAxisCount() {
-		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
-			return 0;
-		}
-
-		return super.getAxisCount();
-	}
-
 	protected DefaultBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
@@ -46,6 +37,15 @@ public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 		setAxisTestClassGroups();
 
 		setSegmentTestClassGroups();
+	}
+
+	@Override
+	protected boolean ignore() {
+		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

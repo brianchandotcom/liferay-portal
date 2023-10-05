@@ -27,15 +27,6 @@ import org.json.JSONObject;
 public class CompileModulesBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
-	@Override
-	public int getAxisCount() {
-		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
-			return 0;
-		}
-
-		return super.getAxisCount();
-	}
-
 	protected CompileModulesBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 

@@ -30,15 +30,6 @@ import org.json.JSONObject;
 public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
-	public int getAxisCount() {
-		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
-			return 0;
-		}
-
-		return super.getAxisCount();
-	}
-
-	@Override
 	public AxisTestClassGroup getAxisTestClassGroup(int axisId) {
 		if (axisId != 0) {
 			throw new IllegalArgumentException("axisId is not 0");
@@ -165,6 +156,15 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		axisTestClassGroups.add(0, axisTestClassGroup);
+	}
+
+	@Override
+	protected boolean ignore() {
+		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _TOKEN_CLASS_METHOD_SEPARATOR = "::";

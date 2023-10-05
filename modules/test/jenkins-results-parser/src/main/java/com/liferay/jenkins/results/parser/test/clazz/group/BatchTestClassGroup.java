@@ -99,6 +99,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public int getAxisCount() {
+		if (ignore()) {
+			return 0;
+		}
+
 		JobProperty jobProperty = getJobProperty("test.batch.axis.count");
 
 		String jobPropertyValue = jobProperty.getValue();
@@ -614,6 +618,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	protected String getTestSuiteName() {
 		return testSuiteName;
+	}
+
+	protected boolean ignore() {
+		return false;
 	}
 
 	protected boolean isRootCauseAnalysis() {

@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.jackson.databind.deser.JSONStringStdDeserializer;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -234,6 +236,10 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		)
 		<#if propertySchema.jsonMap>
 			@JsonAnySetter
+		</#if>
+		<#if propertySchema.jsonString>
+			@JsonDeserialize(using = JSONStringStdDeserializer.class)
+
 		</#if>
 		@JsonProperty(
 			<#if propertySchema.readOnly>

@@ -12,10 +12,10 @@ import com.liferay.portal.kernel.util.Time;
  */
 public enum TimeUnit {
 
-	DAY("day", Time.DAY), HOUR("hour", Time.DAY), MILLISECOND("millisecond", 1),
-	MINUTE("minute", Time.MINUTE), MONTH("month", Time.MONTH),
-	SECOND("second", Time.SECOND), WEEK("week", Time.WEEK),
-	YEAR("year", Time.YEAR);
+	DAY("day", Time.DAY), HOUR("hour", Time.HOUR),
+	MILLISECOND("millisecond", 1), MINUTE("minute", Time.MINUTE),
+	MONTH("month", Time.MONTH), SECOND("second", Time.SECOND),
+	WEEK("week", Time.WEEK), YEAR("year", Time.YEAR);
 
 	public String getValue() {
 		return _value;

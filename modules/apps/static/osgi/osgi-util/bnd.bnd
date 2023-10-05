@@ -5,4 +5,5 @@ Export-Package:\
 	com.liferay.osgi.util,\
 	com.liferay.osgi.util.bundle,\
 	com.liferay.osgi.util.configuration,\
+	com.liferay.osgi.util.osgi.commands,\
 	com.liferay.osgi.util.service

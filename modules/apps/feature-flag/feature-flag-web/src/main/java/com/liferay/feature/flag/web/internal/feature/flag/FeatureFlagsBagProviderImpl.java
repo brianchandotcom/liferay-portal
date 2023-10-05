@@ -203,8 +203,7 @@ public class FeatureFlagsBagProviderImpl
 	private List<String> _getFeatureFlagKeys(
 		ServiceReference<?> serviceReference) {
 
-		Object value = serviceReference.getProperty(
-			_FEATURE_FLAG_LISTENER_PROPERTY_KEY);
+		Object value = serviceReference.getProperty("featureFlagKey");
 
 		if (value == null) {
 			return null;
@@ -340,9 +339,6 @@ public class FeatureFlagsBagProviderImpl
 			}
 		}
 	}
-
-	private static final String _FEATURE_FLAG_LISTENER_PROPERTY_KEY =
-		"featureFlagKey";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FeatureFlagsBagProviderImpl.class);

@@ -7,7 +7,6 @@ package com.liferay.portal.upgrade.util;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactory;
 
 /**
  * @author Brian Wing Shun Chan
@@ -17,20 +16,7 @@ public class UpgradeTableFactoryUtil {
 	public static UpgradeTable getUpgradeTable(
 		String tableName, Object[][] columns, UpgradeColumn... upgradeColumns) {
 
-		return _upgradeTableFactory.getUpgradeTable(
-			tableName, columns, upgradeColumns);
+		return new DefaultUpgradeTableImpl(tableName, columns, upgradeColumns);
 	}
-
-	public static UpgradeTableFactory getUpgradeTableFactory() {
-		return _upgradeTableFactory;
-	}
-
-	public void setUpgradeTableFactory(
-		UpgradeTableFactory upgradeTableFactory) {
-
-		_upgradeTableFactory = upgradeTableFactory;
-	}
-
-	private static UpgradeTableFactory _upgradeTableFactory;
 
 }

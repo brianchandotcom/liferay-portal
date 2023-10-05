@@ -185,11 +185,11 @@ const ItemActionForm = ({
 			}
 		}
 		else {
-			body.confirmationMessage = confirmationMessage;
-			body.label = label;
+			body.confirmationMessage = actionData.confirmationMessage;
+			body.label = actionData.label;
 			body.title = title;
 
-			if (confirmationMessage) {
+			if (actionData.confirmationMessage) {
 				body.confirmationMessageType = confirmationMessageType;
 			}
 		}
@@ -347,7 +347,26 @@ const ItemActionForm = ({
 								)}
 								required
 								translations={labelTranslations}
-							/>
+							/>)
+						:(
+							<ClayForm.Group>
+								<label htmlFor={labelFormElementId}>
+									{Liferay.Language.get('label')}
+								</label>
+
+								<ClayInput
+									id={labelFormElementId}
+									onChange={(event) =>
+										setActionData({
+											...actionData,
+											label: event.target.value,
+										})
+									}
+									type="text"
+									value={actionData.label}
+								/>
+							</ClayForm.Group>
+						)}
 						</ClayLayout.Col>
 
 						<ClayLayout.Col

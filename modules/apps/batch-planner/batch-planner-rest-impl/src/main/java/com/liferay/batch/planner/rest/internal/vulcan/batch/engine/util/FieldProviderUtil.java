@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.batch.planner.rest.internal.vulcan.batch.engine;
+package com.liferay.batch.planner.rest.internal.vulcan.batch.engine.util;
 
 import com.liferay.batch.planner.batch.engine.task.TaskItemUtil;
 import com.liferay.batch.planner.rest.internal.vulcan.yaml.openapi.OpenAPIYAMLProvider;
@@ -25,16 +25,12 @@ import java.util.Objects;
 
 import javax.ws.rs.core.UriInfo;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Matija Petanjek
  */
-@Component(service = FieldProvider.class)
-public class FieldProvider {
+public class FieldProviderUtil {
 
-	public List<Field> filter(
+	public static List<Field> filter(
 		List<Field> fields, Field.AccessType ignoredAccessType) {
 
 		return ListUtil.filter(
@@ -54,14 +50,18 @@ public class FieldProvider {
 			});
 	}
 
-	public List<Field> getFields(
-			long companyId, String internalClassNameKey, UriInfo uriInfo)
+	public static List<Field> getFields(
+			long companyId, String internalClassNameKey,
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			ObjectEntryOpenAPIResourceProvider
+				objectEntryOpenAPIResourceProvider,
+			OpenAPIYAMLProvider openAPIYAMLProvider, UriInfo uriInfo)
 		throws Exception {
 
 		int index = internalClassNameKey.indexOf(StringPool.POUND);
 
 		if (index < 0) {
-			OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
+			OpenAPIYAML openAPIYAML = openAPIYAMLProvider.getOpenAPIYAML(
 				companyId, internalClassNameKey);
 
 			return ListUtil.fromMapValues(
@@ -71,12 +71,12 @@ public class FieldProvider {
 		}
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
+			objectDefinitionLocalService.fetchObjectDefinition(
 				companyId,
 				TaskItemUtil.getTaskItemDelegateName(internalClassNameKey));
 
 		ObjectEntryOpenAPIResource objectEntryOpenAPIResource =
-			_objectEntryOpenAPIResourceProvider.getObjectEntryOpenAPIResource(
+			objectEntryOpenAPIResourceProvider.getObjectEntryOpenAPIResource(
 				objectDefinition);
 
 		Map<String, Field> fields = objectEntryOpenAPIResource.getFields(
@@ -95,15 +95,5 @@ public class FieldProvider {
 				return field;
 			});
 	}
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryOpenAPIResourceProvider
-		_objectEntryOpenAPIResourceProvider;
-
-	@Reference
-	private OpenAPIYAMLProvider _openAPIYAMLProvider;
 
 }

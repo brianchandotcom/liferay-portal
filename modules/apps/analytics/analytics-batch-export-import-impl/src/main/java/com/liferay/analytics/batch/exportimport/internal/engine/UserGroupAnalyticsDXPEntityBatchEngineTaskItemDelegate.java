@@ -52,7 +52,7 @@ public class UserGroupAnalyticsDXPEntityBatchEngineTaskItemDelegate
 						contextCompany.getCompanyId(), filter, pagination)),
 				userGroup -> _dxpEntityDTOConverter.toDTO(userGroup)),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
-			_userGroupLocalService.<Integer>dslQuery(
+			_userGroupLocalService.dslQuery(
 				_createCountDSLQuery(contextCompany.getCompanyId(), filter)));
 	}
 

@@ -52,7 +52,7 @@ public class OrganizationAnalyticsDXPEntityBatchEngineTaskItemDelegate
 						contextCompany.getCompanyId(), filter, pagination)),
 				organization -> _dxpEntityDTOConverter.toDTO(organization)),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
-			_organizationLocalService.<Integer>dslQuery(
+			_organizationLocalService.dslQuery(
 				_createCountDSLQuery(contextCompany.getCompanyId(), filter)));
 	}
 

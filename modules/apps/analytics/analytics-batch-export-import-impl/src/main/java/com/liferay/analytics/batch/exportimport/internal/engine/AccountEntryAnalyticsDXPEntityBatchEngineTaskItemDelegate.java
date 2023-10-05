@@ -61,7 +61,7 @@ public class AccountEntryAnalyticsDXPEntityBatchEngineTaskItemDelegate
 						contextCompany.getCompanyId(), filter, pagination)),
 				accountEntry -> _dxpEntityDTOConverter.toDTO(accountEntry)),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
-			_accountEntryLocalService.<Integer>dslQuery(
+			_accountEntryLocalService.dslQuery(
 				_createCountDSLQuery(contextCompany.getCompanyId(), filter)));
 	}
 

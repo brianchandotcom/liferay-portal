@@ -160,7 +160,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
 	protected boolean ignore() {
-		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
+		if (!isStableTestSuiteBatch() && testRelevantJUnitTestsOnly) {
 			return true;
 		}
 

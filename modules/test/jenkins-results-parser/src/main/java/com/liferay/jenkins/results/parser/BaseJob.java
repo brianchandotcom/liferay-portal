@@ -633,7 +633,7 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
-	public boolean isJUnitTestFileModifiedOnly() {
+	public boolean isJUnitTestsModifiedOnly() {
 		if (_jUnitTestFileModifiedOnly != null) {
 			return _jUnitTestFileModifiedOnly;
 		}

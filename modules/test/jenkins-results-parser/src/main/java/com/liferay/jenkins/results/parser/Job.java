@@ -79,7 +79,7 @@ public interface Job {
 
 	public boolean isDownstreamEnabled();
 
-	public boolean isJUnitTestFileModifiedOnly();
+	public boolean isJUnitTestsModifiedOnly();
 
 	public boolean isSegmentEnabled();
 

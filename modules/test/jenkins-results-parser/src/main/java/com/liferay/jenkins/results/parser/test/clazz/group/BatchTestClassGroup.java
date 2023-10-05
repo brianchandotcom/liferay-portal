@@ -256,8 +256,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		).put(
 			"test_relevant_changes", testRelevantChanges
 		).put(
-			"test_relevant_integration_unit_only",
-			testRelevantIntegrationUnitOnly
+			"test_relevant_changes_in_stable", testRelevantChangesInStable
+		).put(
+			"test_relevant_junit_tests_only", testRelevantJUnitTestsOnly
+		).put(
+			"test_relevant_junit_tests_only_in_stable",
+			testRelevantJUnitTestsOnlyInStable
 		);
 
 		return jsonObject;
@@ -370,8 +374,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		testHotfixChanges = jsonObject.optBoolean("test_hotfix_changes");
 		testRelevantChanges = jsonObject.optBoolean("test_relevant_changes");
 		testReleaseBundle = jsonObject.optBoolean("test_release_bundle");
-		testRelevantIntegrationUnitOnly = jsonObject.optBoolean(
-			"test_relevant_integration_unit_only");
+		testRelevantJUnitTestsOnly = jsonObject.optBoolean(
+			"test_relevant_junit_tests_only");
+		testRelevantJUnitTestsOnlyInStable = jsonObject.optBoolean(
+			"test_relevant_junit_tests_only_in_stable");
 
 		if (portalTestClassJob instanceof TestSuiteJob) {
 			TestSuiteJob testSuiteJob = (TestSuiteJob)portalTestClassJob;
@@ -406,8 +412,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		_setTestRelevantChanges();
 		_setTestRelevantChangesInStable();
 
-		_setTestRelevantIntegrationUnitOnly();
-		_setTestRelevantIntegrationUnitOnlyInStable();
+		_setTestRelevantJUnitTestsOnly();
+		_setTestRelevantJUnitTestsOnlyInStable();
 
 		_setIncludeStableTestSuite();
 	}
@@ -744,8 +750,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected boolean testReleaseBundle;
 	protected boolean testRelevantChanges;
 	protected boolean testRelevantChangesInStable;
-	protected boolean testRelevantIntegrationUnitOnly;
-	protected boolean testRelevantIntegrationUnitOnlyInStable;
+	protected boolean testRelevantJUnitTestsOnly;
+	protected boolean testRelevantJUnitTestsOnlyInStable;
 	protected final String testSuiteName;
 
 	protected static final class CSVReport {
@@ -1117,28 +1123,28 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		testRelevantChangesInStable = job.testRelevantChangesInStable();
 	}
 
-	private void _setTestRelevantIntegrationUnitOnly() {
+	private void _setTestRelevantJUnitTestsOnly() {
 		Job job = getJob();
 
-		if (testRelevantChanges && job.isJUnitTestFileModifiedOnly()) {
-			testRelevantIntegrationUnitOnly = true;
+		if (testRelevantChanges && job.isJUnitTestsModifiedOnly()) {
+			testRelevantJUnitTestsOnly = true;
 
 			return;
 		}
 
-		testRelevantIntegrationUnitOnly = false;
+		testRelevantJUnitTestsOnly = false;
 	}
 
-	private void _setTestRelevantIntegrationUnitOnlyInStable() {
+	private void _setTestRelevantJUnitTestsOnlyInStable() {
 		Job job = getJob();
 
-		if (testRelevantChangesInStable && job.isJUnitTestFileModifiedOnly()) {
-			testRelevantIntegrationUnitOnlyInStable = true;
+		if (testRelevantChangesInStable && job.isJUnitTestsModifiedOnly()) {
+			testRelevantJUnitTestsOnlyInStable = true;
 
 			return;
 		}
 
-		testRelevantIntegrationUnitOnlyInStable = false;
+		testRelevantJUnitTestsOnlyInStable = false;
 	}
 
 	private static final int _SEGMENT_MAX_CHILDREN_DEFAULT = 25;

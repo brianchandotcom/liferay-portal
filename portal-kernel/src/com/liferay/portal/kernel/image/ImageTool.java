@@ -25,24 +25,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ImageTool {
 
-	public static final String ORIENTATION_VALUE_HORIZONTAL_NORMAL = "1";
-
-	public static final String ORIENTATION_VALUE_MIRROR_HORIZONTAL = "2";
-
-	public static final String
-		ORIENTATION_VALUE_MIRROR_HORIZONTAL_ROTATE_90_CW = "7";
-
-	public static final String
-		ORIENTATION_VALUE_MIRROR_HORIZONTAL_ROTATE_270_CW = "5";
-
-	public static final String ORIENTATION_VALUE_MIRROR_VERTICAL = "4";
-
-	public static final String ORIENTATION_VALUE_ROTATE_90_CW = "6";
-
-	public static final String ORIENTATION_VALUE_ROTATE_180 = "3";
-
-	public static final String ORIENTATION_VALUE_ROTATE_270_CW = "8";
-
 	public static final String TYPE_BMP = "bmp";
 
 	public static final String TYPE_GIF = "gif";

@@ -24,8 +24,8 @@
 			"name": "APISort",
 			"objectFields": [
 				{
-					"DBType": "String",
-					"businessType": "Text",
+					"DBType": "Clob",
+					"businessType": "LongText",
 					"externalReferenceCode": "ODATA_SORT",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -33,6 +33,16 @@
 						"en_US": "OData Sort"
 					},
 					"name": "oDataSort",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": true
+						},
+						{
+							"name": "maxLength",
+							"value": 1000
+						}
+					],
 					"required": true,
 					"state": false,
 					"system": true,
@@ -59,8 +69,8 @@
 			"name": "APIFilter",
 			"objectFields": [
 				{
-					"DBType": "String",
-					"businessType": "Text",
+					"DBType": "Clob",
+					"businessType": "LongText",
 					"externalReferenceCode": "ODATA_FILTER",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -68,6 +78,16 @@
 						"en_US": "OData Filter"
 					},
 					"name": "oDataFilter",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": true
+						},
+						{
+							"name": "maxLength",
+							"value": 1000
+						}
+					],
 					"required": true,
 					"state": false,
 					"system": true,

@@ -10,11 +10,11 @@ import {getLicenseDescription, getTierPrice} from '../../../../../../utils/api';
 import LicenseSectorCard from '../../LicenseCard';
 
 interface PaidTimelineProps {
-	cart: ReturnType<typeof useCart>;
+	cartUtil: ReturnType<typeof useCart>;
 	product?: Product;
 }
 
-export function PaidTimeline({cart, product}: PaidTimelineProps) {
+export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 	const [skuInfo, setSkuInfo] = useState<any>({});
 	const [tierPrice, setTierPrice] = useState<any>([]);
 	const productId = product?.id;
@@ -62,7 +62,7 @@ export function PaidTimeline({cart, product}: PaidTimelineProps) {
 					return (
 						<div className="mb-5" key={index}>
 							<LicenseSectorCard
-								cart={cart}
+								cartUtil={cartUtil}
 								licenseDescription={
 									skuInfo[
 										licenseTypeName?.key as keyof typeof skuInfo

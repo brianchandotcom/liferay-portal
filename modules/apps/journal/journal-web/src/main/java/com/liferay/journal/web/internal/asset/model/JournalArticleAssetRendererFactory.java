@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -80,6 +81,30 @@ public class JournalArticleAssetRendererFactory
 		setPortletId(JournalPortletKeys.JOURNAL);
 		setSearchable(true);
 		setSupportsClassTypes(true);
+	}
+
+	@Override
+	public AssetEntry getAssetEntry(JournalArticle journalArticle)
+		throws PortalException {
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			getClassName(), journalArticle.getId());
+
+		if (assetEntry != null) {
+			return assetEntry;
+		}
+
+		AssetRenderer<?> assetRenderer = getAssetRenderer(
+			journalArticle.getResourcePrimKey());
+
+		if ((assetRenderer == null) ||
+			!Objects.equals(journalArticle, assetRenderer.getAssetObject())) {
+
+			return null;
+		}
+
+		return _assetEntryLocalService.fetchEntry(
+			getClassName(), assetRenderer.getClassPK());
 	}
 
 	@Override

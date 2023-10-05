@@ -12,5 +12,5 @@
 <br /><br />
 
 <aui:input name="webDavUsername" type="resource" value="<%= user.getUserId() %>" />
-	
+
 <aui:input name="webDavPassword" type="resource" value='<%= renderRequest.getParameter("webDAVPassword") %>' />

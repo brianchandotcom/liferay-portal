@@ -16,8 +16,10 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl;
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.portal.aop.AopService;
@@ -35,7 +37,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.sql.Types;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -925,7 +930,9 @@ public class LayoutPageTemplateEntryServiceImpl
 				)
 			)
 		).as(
-			"tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable"
+			"tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable",
+			TempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable.
+				INSTANCE
 		);
 	}
 
@@ -956,5 +963,39 @@ public class LayoutPageTemplateEntryServiceImpl
 		target = "(component.name=com.liferay.layout.page.template.internal.security.permission.resource.LayoutPageTemplatePortletResourcePermission)"
 	)
 	private PortletResourcePermission _portletResourcePermission;
+
+	private static class
+		TempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable
+			extends BaseTable
+				<TempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable> {
+
+		public static final
+			TempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable
+				INSTANCE =
+					new TempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable();
+
+		public final Column
+			<TempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable,
+			 Date> createDateColumn = createColumn(
+				"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+		public final Column
+			<TempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable,
+			 Date> modifiedDateColumn = createColumn(
+				"modifiedDate", Date.class, Types.TIMESTAMP,
+				Column.FLAG_DEFAULT);
+		public final Column
+			<TempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable,
+			 String> nameColumn = createColumn(
+				"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+
+		private TempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable() {
+			super(
+				"TempLayoutPageTemplateCollection" +
+					"AndLayoutPageTemplateEntryTable",
+				TempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable::
+					new);
+		}
+
+	}
 
 }

@@ -109,6 +109,33 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			JSONCompareMode.LENIENT);
 	}
 
+	@Test
+	public void testPostSortOverExpressionLimit() throws Exception {
+		_addAPIApplication(
+			_objectDefinitionJSONObject.getString("externalReferenceCode"));
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"Object entry value exceeds the maximum length of 1000 " +
+					"characters for object field \"oDataSort\""
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"objectFieldERC", RandomTestUtil.randomString()
+				).put(
+					"oDataSort", RandomTestUtil.randomString(1001)
+				).put(
+					"r_apiEndpointToAPISorts_c_apiEndpointERC",
+					_API_ENDPOINT_ERC
+				).toString(),
+				"headless-builder/sorts", Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
 	private void _addAPIApplication(
 			String objectDefinitionExternalReferenceCode)
 		throws Exception {

@@ -49,10 +49,10 @@ public class TemplatesAspect {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Fragment Entry Link Template Parser ");
-			sb.append("Transform [fragmentEntryLinkId: ");
-			sb.append(fragmentEntryLinkShim.getFragmentEntryLinkId());
-			sb.append(", companyId: ");
+			sb.append("Transform [companyId: ");
 			sb.append(fragmentEntryLinkShim.getCompanyId());
+			sb.append(", fragmentEntryLinkId: ");
+			sb.append(fragmentEntryLinkShim.getFragmentEntryLinkId());
 			sb.append(", siteGroupId: ");
 			sb.append(fragmentEntryLinkShim.getGroupId());
 			sb.append("]");
@@ -132,12 +132,12 @@ public class TemplatesAspect {
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Journal Template Parser Transform [templateId: ");
-			sb.append(dDMTemplateShim.getTemplateId());
-			sb.append(", companyId: ");
+			sb.append("Journal Template Parser Transform [companyId: ");
 			sb.append(themeDisplayShim.getCompanyId());
 			sb.append(", siteGroupId: ");
 			sb.append(themeDisplayShim.getSiteGroupId());
+			sb.append(", templateId: ");
+			sb.append(dDMTemplateShim.getTemplateId());
 			sb.append("]");
 
 			TraceEntry traceEntry;
@@ -214,12 +214,12 @@ public class TemplatesAspect {
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Template Parser Transform [templateId: ");
-			sb.append(templateId);
-			sb.append(", companyId: ");
+			sb.append("Template Parser Transform [companyId: ");
 			sb.append(themeDisplayShim.getCompanyId());
 			sb.append(", siteGroupId: ");
 			sb.append(themeDisplayShim.getSiteGroupId());
+			sb.append(", templateId: ");
+			sb.append(templateId);
 			sb.append("]");
 
 			TraceEntry traceEntry;

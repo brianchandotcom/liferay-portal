@@ -35,6 +35,7 @@ interface IFDSAction {
 	label_i18n: {
 		[key: string]: string;
 	};
+	modalSize?: string;
 	permissionKey: string;
 	title?: string;
 	title_i18n?: {
@@ -42,7 +43,6 @@ interface IFDSAction {
 	};
 	type: string;
 	url: string;
-	variant?: string;
 }
 declare const Actions: ({
 	fdsView,

@@ -288,6 +288,18 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		return country;
 	}
 
+	private ListType _getListType(PostalAddress postalAddress) {
+		ListType listType = _listTypeLocalService.getListType(
+			postalAddress.getAddressType(),
+			"com.liferay.account.model.AccountEntry.address");
+
+		if (listType == null) {
+			throw new BadRequestException("Type not found");
+		}
+
+		return listType;
+	}
+
 	private long _getRegionId(PostalAddress postalAddress, Country country) {
 		if (postalAddress.getAddressType() == null) {
 			return 0;
@@ -323,18 +335,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		}
 
 		return region.getRegionId();
-	}
-
-	private ListType _getListType(PostalAddress postalAddress) {
-		ListType listType = _listTypeLocalService.getListType(
-			postalAddress.getAddressType(),
-			"com.liferay.account.model.AccountEntry.address");
-
-		if (listType == null) {
-			throw new BadRequestException("Type not found");
-		}
-
-		return listType;
 	}
 
 	@Reference

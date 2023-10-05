@@ -152,7 +152,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "An API Filter must be related to an API endpoint."
+				"title", "An API Filter must be related to an API Endpoint."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

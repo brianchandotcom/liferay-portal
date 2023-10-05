@@ -700,8 +700,8 @@ public class CommerceShipmentLocalServiceImpl
 		for (CommerceShipmentItem commerceShipmentItem :
 				commerceShipmentItems) {
 
-			if (BigDecimalUtil.lt(
-					commerceShipmentItem.getQuantity(), BigDecimal.ONE) ||
+			if (BigDecimalUtil.lte(
+					commerceShipmentItem.getQuantity(), BigDecimal.ZERO) ||
 				(commerceShipmentItem.getCommerceInventoryWarehouseId() <= 0)) {
 
 				throw new CommerceShipmentStatusException();

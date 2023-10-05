@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -153,13 +154,13 @@ public class SalesforceObjectEntryManagerImplTest
 		ObjectFieldUtil.addCustomObjectField(
 			new DateObjectFieldBuilder(
 			).externalReferenceCode(
-				"Date__c"
+				"Due_date__c"
 			).userId(
 				adminUser.getUserId()
 			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("Date")
+				LocalizedMapUtil.getLocalizedMap("Due Date")
 			).name(
-				"date"
+				"dueDate"
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
 			).build());
@@ -260,20 +261,19 @@ public class SalesforceObjectEntryManagerImplTest
 
 	@Test
 	public void testGetObjectEntries() throws Exception {
-		Date date1 = RandomTestUtil.nextDate();
-		Date date2 = RandomTestUtil.nextDate();
-		Date date3 = RandomTestUtil.nextDate();
-		Date date4 = RandomTestUtil.nextDate();
-
 		String title1 = "a" + RandomTestUtil.randomString();
 		String title2 = "b" + RandomTestUtil.randomString();
 		String title3 = "c" + RandomTestUtil.randomString();
 		String title4 = "d" + RandomTestUtil.randomString();
 
-		ObjectEntry objectEntry1 = _addObjectEntry("queued", date1, title1);
-		ObjectEntry objectEntry2 = _addObjectEntry("started", date2, title2);
-		ObjectEntry objectEntry3 = _addObjectEntry("completed", date3, title3);
-		ObjectEntry objectEntry4 = _addObjectEntry("queued", date4, title4);
+		Date date = RandomTestUtil.nextDate();
+
+		ObjectEntry objectEntry1 = _addObjectEntry("queued", date, title1);
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			"started", new Date(date.getTime() - Time.DAY), title2);
+		ObjectEntry objectEntry3 = _addObjectEntry(
+			"completed", new Date(date.getTime() + Time.DAY), title3);
+		ObjectEntry objectEntry4 = _addObjectEntry("queued", date, title4);
 
 		// And/or with equals/not equals expression
 
@@ -288,7 +288,7 @@ public class SalesforceObjectEntryManagerImplTest
 				StringBundler.concat(
 					filterString,
 					buildEqualsExpressionFilterString("customStatus", "queued"),
-					" and ", buildEqualsExpressionFilterString("date", date1),
+					" and ", buildEqualsExpressionFilterString("dueDate", date),
 					" and ", buildEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry1);
@@ -301,7 +301,7 @@ public class SalesforceObjectEntryManagerImplTest
 					_buildNotEqualsExpressionFilterString(
 						"customStatus", "queued"),
 					" and ",
-					_buildNotEqualsExpressionFilterString("date", date1),
+					_buildNotEqualsExpressionFilterString("dueDate", date),
 					" and ",
 					_buildNotEqualsExpressionFilterString("title", title1))
 			).build(),
@@ -313,7 +313,7 @@ public class SalesforceObjectEntryManagerImplTest
 				StringBundler.concat(
 					filterString,
 					buildEqualsExpressionFilterString("customStatus", "queued"),
-					" or ", buildEqualsExpressionFilterString("date", date1),
+					" or ", buildEqualsExpressionFilterString("dueDate", date),
 					" or ", buildEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry1, objectEntry4);
@@ -326,7 +326,7 @@ public class SalesforceObjectEntryManagerImplTest
 					_buildNotEqualsExpressionFilterString(
 						"customStatus", "queued"),
 					" or ",
-					_buildNotEqualsExpressionFilterString("date", date1),
+					_buildNotEqualsExpressionFilterString("dueDate", date),
 					" or ",
 					_buildNotEqualsExpressionFilterString("title", title1))
 			).build(),
@@ -355,17 +355,17 @@ public class SalesforceObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				filterString.concat(
-					buildEqualsExpressionFilterString("date", date1))
+					buildEqualsExpressionFilterString("dueDate", date))
 			).build(),
-			objectEntry1);
+			objectEntry1, objectEntry4);
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
 				filterString.concat(
-					_buildNotEqualsExpressionFilterString("date", date1))
+					_buildNotEqualsExpressionFilterString("dueDate", date))
 			).build(),
-			objectEntry2, objectEntry3, objectEntry4);
+			objectEntry2, objectEntry3);
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
@@ -442,7 +442,8 @@ public class SalesforceObjectEntryManagerImplTest
 					properties = HashMapBuilder.<String, Object>put(
 						"customStatus", customStatus
 					).put(
-						"date", dateFormat.format(date)
+						"dueDate",
+						(date != null) ? dateFormat.format(date) : null
 					).put(
 						"title", title
 					).build();

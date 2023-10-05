@@ -73,15 +73,17 @@ public class FeatureFlagsBagProviderImpl
 	public FeatureFlagsBag getOrCreateFeatureFlagsBag(long companyId) {
 		FeatureFlagsBag featureFlagsBag = _featureFlagsBagMap.get(companyId);
 
-		if (featureFlagsBag == null) {
-			featureFlagsBag = _createFeatureFlagsBag(companyId);
+		if (featureFlagsBag != null) {
+			return featureFlagsBag;
+		}
 
-			FeatureFlagsBag previousFeatureFlagsBag =
-				_featureFlagsBagMap.putIfAbsent(companyId, featureFlagsBag);
+		featureFlagsBag = _createFeatureFlagsBag(companyId);
 
-			if (previousFeatureFlagsBag != null) {
-				featureFlagsBag = previousFeatureFlagsBag;
-			}
+		FeatureFlagsBag previousFeatureFlagsBag =
+			_featureFlagsBagMap.putIfAbsent(companyId, featureFlagsBag);
+
+		if (previousFeatureFlagsBag != null) {
+			return previousFeatureFlagsBag;
 		}
 
 		return featureFlagsBag;

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -78,11 +79,20 @@ public class ValidationHelper {
 			String label = objectDefinition.getLabel(user.getLocale());
 
 			if (!isValidObjectEntry(apiEndpointId, "L_API_ENDPOINT")) {
+				ObjectDefinition apiEndpointObjectDefinition =
+					_objectDefinitionLocalService.
+						getObjectDefinitionByExternalReferenceCode(
+							"L_API_ENDPOINT", objectEntry.getCompanyId());
+
+				String apiEndpointObjectDefinitionLabel =
+					apiEndpointObjectDefinition.getLabel(user.getLocale());
+
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					Collections.singletonList(label),
+					Arrays.asList(label, apiEndpointObjectDefinitionLabel),
 					String.format(
-						"An %s must be related to an API endpoint", label),
-					"an-x-must-be-related-to-an-api-endpoint");
+						"An %s must be related to an %s", label,
+						apiEndpointObjectDefinitionLabel),
+					"an-x-must-be-related-to-an-x");
 			}
 
 			if (Validator.isNotNull(

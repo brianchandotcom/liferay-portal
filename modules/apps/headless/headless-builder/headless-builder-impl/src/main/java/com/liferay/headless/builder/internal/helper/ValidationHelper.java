@@ -9,6 +9,7 @@ import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.User;
@@ -19,6 +20,7 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,6 +30,35 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ValidationHelper.class)
 public class ValidationHelper {
+
+	public boolean isValidObjectEntry(
+			long objectEntryId, String externalReferenceCode)
+		throws Exception {
+
+		if (objectEntryId == 0) {
+			return false;
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			objectEntryId);
+
+		if (objectEntry == null) {
+			return false;
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		if (!Objects.equals(
+				objectDefinition.getExternalReferenceCode(),
+				externalReferenceCode)) {
+
+			return false;
+		}
+
+		return true;
+	}
 
 	public void validateAPIEndpointRelationship(
 		ObjectEntry objectEntry, String relationshipName) {
@@ -46,9 +77,7 @@ public class ValidationHelper {
 
 			String label = objectDefinition.getLabel(user.getLocale());
 
-			if (!_objectEntryHelper.isValidObjectEntry(
-					apiEndpointId, "L_API_ENDPOINT")) {
-
+			if (!isValidObjectEntry(apiEndpointId, "L_API_ENDPOINT")) {
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					Collections.singletonList(label),
 					String.format(
@@ -82,6 +111,9 @@ public class ValidationHelper {
 
 	@Reference
 	private ObjectEntryHelper _objectEntryHelper;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

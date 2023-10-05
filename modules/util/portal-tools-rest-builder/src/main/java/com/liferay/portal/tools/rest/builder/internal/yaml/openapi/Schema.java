@@ -110,6 +110,10 @@ public class Schema {
 		return _jsonMap;
 	}
 
+	public boolean isJsonString() {
+		return _jsonString;
+	}
+
 	public boolean isReadOnly() {
 		return _readOnly;
 	}
@@ -160,6 +164,10 @@ public class Schema {
 
 	public void setJsonMap(boolean jsonMap) {
 		_jsonMap = jsonMap;
+	}
+
+	public void setJsonString(boolean jsonString) {
+		_jsonString = jsonString;
 	}
 
 	public void setMaximum(Double maximum) {
@@ -227,6 +235,7 @@ public class Schema {
 	private String _format;
 	private Items _items;
 	private boolean _jsonMap;
+	private boolean _jsonString;
 	private Double _maximum;
 	private Integer _maxLength;
 	private Double _minimum;

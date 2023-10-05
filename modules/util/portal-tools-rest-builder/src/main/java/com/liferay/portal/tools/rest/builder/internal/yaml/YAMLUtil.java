@@ -174,6 +174,9 @@ public class YAMLUtil {
 			"x-json-map", boolean.class, "getJsonMap", "setJsonMap");
 
 		schemaTypeDescription.substituteProperty(
+			"x-json-string", boolean.class, "getJsonString", "setJsonString");
+
+		schemaTypeDescription.substituteProperty(
 			"xml", XML.class, "getXML", "setXML");
 
 		schemaTypeDescription.addPropertyParameters(

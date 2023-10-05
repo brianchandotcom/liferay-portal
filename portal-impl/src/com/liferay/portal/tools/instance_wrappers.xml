@@ -3,6 +3,10 @@
 <instance-wrappers>
 	<instance-wrapper
 		parent-dir="../portal-impl/src"
+		src-file="com/liferay/portal/image/ImageToolUtil.java"
+	/>
+	<instance-wrapper
+		parent-dir="../portal-impl/src"
 		src-file="com/liferay/portal/service/permission/CommonPermissionUtil.java"
 	/>
 	<instance-wrapper

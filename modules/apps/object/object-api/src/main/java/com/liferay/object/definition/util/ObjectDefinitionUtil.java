@@ -32,7 +32,7 @@ public class ObjectDefinitionUtil {
 	public static boolean isAllowedModifiableSystemObjectDefinitionName(
 		String name) {
 
-		if (PortalRunMode.isTestMode() && StringUtil.matches(name, "Test")) {
+		if (PortalRunMode.isTestMode() && StringUtil.startsWith(name, "Test")) {
 			return true;
 		}
 

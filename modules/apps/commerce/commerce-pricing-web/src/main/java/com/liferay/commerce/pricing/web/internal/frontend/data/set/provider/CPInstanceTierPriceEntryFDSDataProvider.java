@@ -18,12 +18,20 @@ import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.text.DateFormat;
+import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,6 +57,14 @@ public class CPInstanceTierPriceEntryFDSDataProvider
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+			DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
+			themeDisplay.getTimeZone());
 
 		List<InstanceTierPriceEntry> instanceTierPriceEntries =
 			new ArrayList<>();
@@ -91,6 +107,9 @@ public class CPInstanceTierPriceEntryFDSDataProvider
 					_language.format(
 						httpServletRequest, "x-ago", createDateDescription,
 						false),
+					_getDiscountLevels(commerceTierPriceEntry),
+					_getEndDate(commerceTierPriceEntry, dateTimeFormat),
+					_getOverride(commerceTierPriceEntry, httpServletRequest),
 					_commerceQuantityFormatter.format(
 						cpInstance, commerceTierPriceEntry.getMinQuantity(),
 						commercePriceEntry.getUnitOfMeasureKey()),
@@ -112,6 +131,42 @@ public class CPInstanceTierPriceEntryFDSDataProvider
 
 		return _commerceTierPriceEntryService.getCommerceTierPriceEntriesCount(
 			commercePriceEntryId);
+	}
+
+	private String _getDiscountLevels(
+		CommerceTierPriceEntry commerceTierPriceEntry) {
+
+		if (commerceTierPriceEntry.isDiscountDiscovery()) {
+			return StringPool.BLANK;
+		}
+
+		return StringBundler.concat(
+			commerceTierPriceEntry.getDiscountLevel1(), " - ",
+			commerceTierPriceEntry.getDiscountLevel2(), " - ",
+			commerceTierPriceEntry.getDiscountLevel3(), " - ",
+			commerceTierPriceEntry.getDiscountLevel4());
+	}
+
+	private String _getEndDate(
+		CommerceTierPriceEntry commerceTierPriceEntry, Format dateTimeFormat) {
+
+		if (commerceTierPriceEntry.getExpirationDate() == null) {
+			return StringPool.BLANK;
+		}
+
+		return dateTimeFormat.format(
+			commerceTierPriceEntry.getExpirationDate());
+	}
+
+	private String _getOverride(
+		CommerceTierPriceEntry commerceTierPriceEntry,
+		HttpServletRequest httpServletRequest) {
+
+		if (commerceTierPriceEntry.isDiscountDiscovery()) {
+			return _language.get(httpServletRequest, "no");
+		}
+
+		return _language.get(httpServletRequest, "yes");
 	}
 
 	@Reference

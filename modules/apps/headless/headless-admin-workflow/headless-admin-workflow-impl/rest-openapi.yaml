@@ -211,6 +211,7 @@ components:
                     type: boolean
                 content:
                     type: string
+                    x-json-string: true
                 dateCreated:
                     format: date-time
                     readOnly: true

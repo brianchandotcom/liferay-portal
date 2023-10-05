@@ -22,6 +22,24 @@ $btn-size: 28px;
 		bottom: $spacer;
 		position: absolute;
 		right: $spacer;
+
+		.btn.btn-secondary {
+			background-color: $white;
+		}
+
+		.btn-group {
+			.btn {
+				&:not(:first-child) {
+					border-bottom-left-radius: 0;
+					border-top-left-radius: 0;
+				}
+				&:not(:last-child) {
+					border-bottom-right-radius: 0;
+					border-right: 0;
+					border-top-right-radius: 0;
+				}
+			}
+		}
 	}
 
 	.svg-chart {
@@ -67,6 +85,23 @@ $btn-size: 28px;
 
 	.highlighted .chart-rect {
 		stroke: rgba($primary, 0.6);
+	}
+
+	.discovered {
+		.chart-rect {
+			fill: $dark;
+		}
+
+		.node-title,
+		.entity-icon,
+		.entity-description,
+		.node-menu-icon {
+			fill: $white !important;
+		}
+
+		.node-menu-wrapper:hover .node-menu-btn {
+			fill: #373843 !important;
+		}
 	}
 
 	.selected .chart-rect {
@@ -266,6 +301,27 @@ $btn-size: 28px;
 			transition: fill 0.2s ease-in;
 			x: 6;
 			y: 6;
+		}
+	}
+
+	.org-chart-result-helper {
+		background-color: #b3cdff;
+		line-height: 48px;
+		padding: 0 12px;
+	}
+}
+
+.org-chart-management-toolbar {
+	.navbar-nav {
+		padding: 0 12px;
+		width: 100%;
+	}
+
+	.search {
+		flex: 1;
+
+		.row {
+			width: 100%;
 		}
 	}
 }

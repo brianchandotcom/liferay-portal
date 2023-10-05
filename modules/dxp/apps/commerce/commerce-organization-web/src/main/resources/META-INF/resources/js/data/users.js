@@ -65,6 +65,15 @@ export function getAccountRoles(accountId) {
 	});
 }
 
+export function getUser(id) {
+	const url = new URL(
+		`${themeDisplay.getPathContext()}${USERS_ROOT_ENDPOINT}/${id}`,
+		themeDisplay.getPortalURL()
+	);
+
+	return fetchFromHeadless(url);
+}
+
 export function getUsers(query) {
 	const url = new URL(
 		`${themeDisplay.getPathContext()}${USERS_ROOT_ENDPOINT}`,

@@ -22,9 +22,9 @@ import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ImageConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileEntryWrapper;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -335,16 +335,16 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		String mimeType = fileVersion.getMimeType();
 
 		if (mimeType.equals(ContentTypes.IMAGE_BMP)) {
-			type = ImageTool.TYPE_BMP;
+			type = ImageConstants.TYPE_BMP;
 		}
 		else if (mimeType.equals(ContentTypes.IMAGE_GIF)) {
-			type = ImageTool.TYPE_GIF;
+			type = ImageConstants.TYPE_GIF;
 		}
 		else if (mimeType.equals(ContentTypes.IMAGE_JPEG)) {
-			type = ImageTool.TYPE_JPEG;
+			type = ImageConstants.TYPE_JPEG;
 		}
 		else if (mimeType.equals(ContentTypes.IMAGE_PNG)) {
-			type = ImageTool.TYPE_PNG;
+			type = ImageConstants.TYPE_PNG;
 		}
 		else if (!_previewGenerationRequired(fileVersion)) {
 			type = fileVersion.getExtension();

@@ -25,7 +25,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ImageConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.event.FileVersionPreviewEventListener;
@@ -738,16 +738,16 @@ public class AMThumbnailsOSGiCommandsTest {
 			String mimeType = fileVersion.getMimeType();
 
 			if (mimeType.equals(ContentTypes.IMAGE_BMP)) {
-				type = ImageTool.TYPE_BMP;
+				type = ImageConstants.TYPE_BMP;
 			}
 			else if (mimeType.equals(ContentTypes.IMAGE_GIF)) {
-				type = ImageTool.TYPE_GIF;
+				type = ImageConstants.TYPE_GIF;
 			}
 			else if (mimeType.equals(ContentTypes.IMAGE_JPEG)) {
-				type = ImageTool.TYPE_JPEG;
+				type = ImageConstants.TYPE_JPEG;
 			}
 			else if (mimeType.equals(ContentTypes.IMAGE_PNG)) {
-				type = ImageTool.TYPE_PNG;
+				type = ImageConstants.TYPE_PNG;
 			}
 			else if (!_previewGenerationRequired(fileVersion)) {
 				type = fileVersion.getExtension();

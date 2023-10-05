@@ -9,11 +9,11 @@ import com.liferay.image.ImageMagick;
 import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ImageConstants;
 
 import java.awt.image.RenderedImage;
 
@@ -72,7 +72,8 @@ public class ImageSelectorProcessor {
 		}
 
 		if ((bytes == null) && _imageMagick.isEnabled()) {
-			bytes = _imageMagick.scale(_bytes, ImageTool.TYPE_PNG, width, 0);
+			bytes = _imageMagick.scale(
+				_bytes, ImageConstants.TYPE_PNG, width, 0);
 		}
 
 		return bytes;

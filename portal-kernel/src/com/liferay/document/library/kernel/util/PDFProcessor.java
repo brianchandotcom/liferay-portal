@@ -6,7 +6,7 @@
 package com.liferay.document.library.kernel.util;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.image.ImageTool;
+import com.liferay.portal.kernel.model.ImageConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.xml.Element;
@@ -18,9 +18,9 @@ import java.io.InputStream;
  */
 public interface PDFProcessor {
 
-	public static final String PREVIEW_TYPE = ImageTool.TYPE_PNG;
+	public static final String PREVIEW_TYPE = ImageConstants.TYPE_PNG;
 
-	public static final String THUMBNAIL_TYPE = ImageTool.TYPE_PNG;
+	public static final String THUMBNAIL_TYPE = ImageConstants.TYPE_PNG;
 
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,

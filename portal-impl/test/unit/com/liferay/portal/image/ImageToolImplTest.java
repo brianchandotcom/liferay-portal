@@ -7,6 +7,7 @@ package com.liferay.portal.image;
 
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageTool;
+import com.liferay.portal.kernel.model.ImageConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -173,7 +174,7 @@ public class ImageToolImplTest {
 		String expectedType = FileUtil.getExtension(fileName);
 
 		if (expectedType.equals("jpeg")) {
-			expectedType = ImageTool.TYPE_JPEG;
+			expectedType = ImageConstants.TYPE_JPEG;
 		}
 
 		RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");

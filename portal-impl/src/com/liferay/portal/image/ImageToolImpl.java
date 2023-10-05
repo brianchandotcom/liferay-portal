@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.model.ImageConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -111,7 +112,7 @@ public class ImageToolImpl implements ImageTool {
 			RenderedImage renderedImage, OutputStream outputStream)
 		throws IOException {
 
-		ImageIO.write(renderedImage, TYPE_GIF, outputStream);
+		ImageIO.write(renderedImage, ImageConstants.TYPE_GIF, outputStream);
 	}
 
 	@Override
@@ -571,24 +572,24 @@ public class ImageToolImpl implements ImageTool {
 			}
 		}
 
-		String type = TYPE_JPEG;
+		String type = ImageConstants.TYPE_JPEG;
 
-		if (formatName.contains(TYPE_BMP)) {
-			type = TYPE_BMP;
+		if (formatName.contains(ImageConstants.TYPE_BMP)) {
+			type = ImageConstants.TYPE_BMP;
 		}
-		else if (formatName.contains(TYPE_GIF)) {
-			type = TYPE_GIF;
+		else if (formatName.contains(ImageConstants.TYPE_GIF)) {
+			type = ImageConstants.TYPE_GIF;
 		}
 		else if (formatName.contains("jpeg") ||
 				 StringUtil.equalsIgnoreCase(type, "jpeg")) {
 
-			type = TYPE_JPEG;
+			type = ImageConstants.TYPE_JPEG;
 		}
-		else if (formatName.contains(TYPE_PNG)) {
-			type = TYPE_PNG;
+		else if (formatName.contains(ImageConstants.TYPE_PNG)) {
+			type = ImageConstants.TYPE_PNG;
 		}
-		else if (formatName.contains(TYPE_TIFF)) {
-			type = TYPE_TIFF;
+		else if (formatName.contains(ImageConstants.TYPE_TIFF)) {
+			type = ImageConstants.TYPE_TIFF;
 		}
 		else {
 			throw new IllegalArgumentException(type + " is not supported");

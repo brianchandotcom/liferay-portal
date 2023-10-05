@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageTool;
+import com.liferay.portal.kernel.model.ImageConstants;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -113,7 +114,7 @@ public class AMImageMagickImageScaler implements AMImageScaler {
 
 		return _file.createTempFile(
 			_imageMagick.scale(
-				_file.getBytes(imageFile), ImageTool.TYPE_PNG,
+				_file.getBytes(imageFile), ImageConstants.TYPE_PNG,
 				GetterUtil.getInteger(properties.get("max-width")),
 				GetterUtil.getInteger(properties.get("max-height"))));
 	}

@@ -20,9 +20,9 @@ copyDLObjectsDisplayContext.setViewAttributes();
 			HashMapBuilder.<String, Object>put(
 				"copyActionURL", copyDLObjectsDisplayContext.getActionURL()
 			).put(
-				"entryIds", copyDLObjectsDisplayContext.getEntryIds()
+				"entryIds", copyDLObjectsDisplayContext.getDLObjectIds()
 			).put(
-				"entryName", copyDLObjectsDisplayContext.getEntryName()
+				"entryName", copyDLObjectsDisplayContext.getDLObjectName()
 			).put(
 				"redirect", copyDLObjectsDisplayContext.getRedirect()
 			).put(

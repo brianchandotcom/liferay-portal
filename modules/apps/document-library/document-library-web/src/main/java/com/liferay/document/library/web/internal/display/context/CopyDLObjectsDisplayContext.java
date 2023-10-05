@@ -56,51 +56,52 @@ public class CopyDLObjectsDisplayContext {
 		).buildString();
 	}
 
-	public long[] getEntryIds() {
-		if (ArrayUtil.isEmpty(_entryIds)) {
-			_entryIds = ParamUtil.getLongValues(
+	public long[] getDLObjectIds() {
+		if (ArrayUtil.isEmpty(_dlObjectIds)) {
+			_dlObjectIds = ParamUtil.getLongValues(
 				_httpServletRequest, "entryIds");
 		}
 
-		return _entryIds;
+		return _dlObjectIds;
 	}
 
-	public String getEntryName() throws PortalException {
-		if (_entryName != null) {
-			return _entryName;
+	public String getDLObjectName() throws PortalException {
+		if (_dlObjectName != null) {
+			return _dlObjectName;
 		}
 
-		long[] entryIds = getEntryIds();
+		long[] dlObjectIds = getDLObjectIds();
 
-		if (ArrayUtil.isEmpty(entryIds) || (entryIds.length > 1)) {
-			_entryName = StringPool.BLANK;
+		if (ArrayUtil.isEmpty(dlObjectIds) || (dlObjectIds.length > 1)) {
+			_dlObjectName = StringPool.BLANK;
 
-			return _entryName;
+			return _dlObjectName;
 		}
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(
-			entryIds[0]);
+			dlObjectIds[0]);
 
 		if (dlFileEntry != null) {
-			_entryName = dlFileEntry.getTitle();
+			_dlObjectName = dlFileEntry.getTitle();
 
-			return _entryName;
+			return _dlObjectName;
 		}
 
-		DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(entryIds[0]);
+		DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(
+			dlObjectIds[0]);
 
 		if (dlFolder != null) {
-			_entryName = dlFolder.getName();
+			_dlObjectName = dlFolder.getName();
 
-			return _entryName;
+			return _dlObjectName;
 		}
 
 		DLFileShortcut dlFileShortcut =
-			DLFileShortcutLocalServiceUtil.getDLFileShortcut(entryIds[0]);
+			DLFileShortcutLocalServiceUtil.getDLFileShortcut(dlObjectIds[0]);
 
-		_entryName = dlFileShortcut.getToTitle();
+		_dlObjectName = dlFileShortcut.getToTitle();
 
-		return _entryName;
+		return _dlObjectName;
 	}
 
 	public String getRedirect() {
@@ -198,8 +199,8 @@ public class CopyDLObjectsDisplayContext {
 		return _sourceFolderId;
 	}
 
-	private long[] _entryIds;
-	private String _entryName;
+	private long[] _dlObjectIds;
+	private String _dlObjectName;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;

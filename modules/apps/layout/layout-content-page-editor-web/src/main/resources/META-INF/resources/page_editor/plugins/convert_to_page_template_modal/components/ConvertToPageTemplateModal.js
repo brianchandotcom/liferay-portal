@@ -44,8 +44,8 @@ export default function ConvertToPageTemplateModal() {
 
 	return (
 		<PageTemplateModal
-			createTemplateURL={config.createTemplateURL}
-			getCollectionsURL={config.getCollectionsURL}
+			createTemplateURL={config.createLayoutPageTemplateEntryURL}
+			getCollectionsURL={config.getLayoutPageTemplateCollectionsURL}
 			hasMultipleSegmentsExperienceIds={hasMultipleSegmentsExperienceIds}
 			namespace={config.portletNamespace}
 			onClose={onClose}

@@ -159,8 +159,8 @@ function filterEmptyGroups(items) {
 const noop = () => {};
 
 const MillerColumnsItem = ({
-	createTemplateURL,
-	getCollectionsURL,
+	createPageTemplateURL,
+	getPageTemplateCollectionsURL,
 	getItemActionsURL,
 	isLayoutSetPrototype,
 	isPrivateLayoutsEnabled,
@@ -566,8 +566,8 @@ const MillerColumnsItem = ({
 
 					{openModal && (
 						<PageTemplateModal
-							createTemplateURL={createTemplateURL}
-							getCollectionsURL={getCollectionsURL}
+							createTemplateURL={createPageTemplateURL}
+							getCollectionsURL={getPageTemplateCollectionsURL}
 							layoutId={itemId}
 							namespace={namespace}
 							onClose={onClose}

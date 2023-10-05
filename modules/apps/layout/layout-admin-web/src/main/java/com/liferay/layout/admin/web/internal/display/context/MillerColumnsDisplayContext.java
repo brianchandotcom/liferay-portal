@@ -145,13 +145,15 @@ public class MillerColumnsDisplayContext {
 			HashMapBuilder.<String, Object>put(
 				"breadcrumbEntries", _getBreadcrumbEntriesJSONArray()
 			).put(
-				"createTemplateURL", _getCreateLayoutPageTemplateEntryURL()
-			).put(
-				"getCollectionsURL", _getLayoutPageTemplateCollectionsURL()
+				"createLayoutPageTemplateEntryURL",
+				_getCreateLayoutPageTemplateEntryURL()
 			).put(
 				"getItemActionsURL", getLayoutActionsURL()
 			).put(
 				"getItemChildrenURL", getLayoutChildrenURL()
+			).put(
+				"getLayoutPageTemplateCollectionsURL",
+				_getLayoutPageTemplateCollectionsURL()
 			).put(
 				"isLayoutSetPrototype",
 				() -> {

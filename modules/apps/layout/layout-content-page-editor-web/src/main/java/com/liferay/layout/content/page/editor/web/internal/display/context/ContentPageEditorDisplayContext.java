@@ -286,7 +286,7 @@ public class ContentPageEditorDisplayContext {
 					LanguageResources.getResourceBundle(
 						themeDisplay.getLocale()))
 			).put(
-				"createTemplateURL",
+				"createLayoutPageTemplateEntryURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor" +
 						"/create_layout_page_template_entry")
@@ -427,11 +427,6 @@ public class ContentPageEditorDisplayContext {
 					"/layout_content_page_editor" +
 						"/get_collection_supported_filters")
 			).put(
-				"getCollectionsURL",
-				_getResourceURL(
-					"/layout_content_page_editor" +
-						"/get_layout_page_template_collections")
-			).put(
 				"getCollectionVariationsURL",
 				_getResourceURL(
 					"/layout_content_page_editor/get_collection_variations")
@@ -501,6 +496,11 @@ public class ContentPageEditorDisplayContext {
 				"getLayoutFriendlyURL",
 				_getResourceURL(
 					"/layout_content_page_editor/get_layout_friendly_url")
+			).put(
+				"getLayoutPageTemplateCollectionsURL",
+				_getResourceURL(
+					"/layout_content_page_editor" +
+						"/get_layout_page_template_collections")
 			).put(
 				"getPageContentsURL",
 				_getResourceURL("/layout_content_page_editor/get_page_content")

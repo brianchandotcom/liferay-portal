@@ -31,32 +31,10 @@ import {getProductSpecificationValues} from './utils/getProductSpecificationValu
 import getReplaceCurrentURL from './utils/getReplaceCurrentURL';
 import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
 
-export type StepComponent = {
-	[key in StepType]?: JSX.Element;
-};
-
 export type GetAppForm = {
 	product?: Product;
 	selectedAccount?: Account;
 	selectedSKU?: SKU;
-};
-
-const sectionProperties = {
-	[StepType.ACCOUNT]: {
-		backStep: StepType.ACCOUNT,
-		nextStep: StepType.LICENSES,
-		title: 'Account Selection',
-	},
-	[StepType.LICENSES]: {
-		backStep: StepType.ACCOUNT,
-		nextStep: StepType.PAYMENT,
-		title: 'License Selection',
-	},
-	[StepType.PAYMENT]: {
-		backStep: StepType.LICENSES,
-		nextStep: StepType.PAYMENT,
-		title: 'Payment Method',
-	},
 };
 
 const GetAppFlow = () => {
@@ -188,45 +166,62 @@ const GetAppFlow = () => {
 		window.location.href = nextStepsCallbackURL;
 	}
 
-	const StepFormComponent: StepComponent = {
-		[StepType.ACCOUNT]: (
-			<AccountSelection
-				onSelectAccount={(account: Account) => {
-					setValue('selectedAccount', account);
-				}}
-				selectedAccount={getValues('selectedAccount')}
-			/>
-		),
-		[StepType.LICENSES]: (
-			<LicenseSelector
-				cart={cartUtil}
-				form={{
-					getValues,
-					setValue,
-				}}
-				onSelectLicense={(sku?: SKU) => setValue('selectedSKU', sku)}
-				selectedPaymentMethod={setSelectedPaymentMethod}
-				selectedProduct={getValues('product')}
-				setLicenseSelected={setLincenseSelected}
-				sku={sku}
-			/>
-		),
-		[StepType.PAYMENT]: (
-			<SelectPaymentMethod
-				addresses={addresses}
-				billingAddress={billingAddress}
-				email={email}
-				enableTrialMethod={enableTrialMethod}
-				purchaseOrderNumber={purchaseOrderNumber}
-				selectedPaymentMethod={selectedPaymentMethod}
-				setBillingAddress={setBillingAddress}
-				setEmail={setEmail}
-				setEnablePurchaseButton={setEnablePurchaseButton}
-				setPurchaseOrderNumber={setPurchaseOrderNumber}
-				setSelectedPaymentMethod={setSelectedPaymentMethod}
-				step={step}
-			/>
-		),
+	const StepsInformation = {
+		[StepType.ACCOUNT]: {
+			backStep: StepType.ACCOUNT,
+			component: (
+				<AccountSelection
+					onSelectAccount={(account: Account) => {
+						setValue('selectedAccount', account);
+					}}
+					selectedAccount={getValues('selectedAccount')}
+				/>
+			),
+			nextStep: StepType.LICENSES,
+			title: 'Account Selection',
+		},
+		[StepType.LICENSES]: {
+			backStep: StepType.ACCOUNT,
+			component: (
+				<LicenseSelector
+					cart={cartUtil}
+					form={{
+						getValues,
+						setValue,
+					}}
+					onSelectLicense={(sku?: SKU) =>
+						setValue('selectedSKU', sku)
+					}
+					selectedPaymentMethod={setSelectedPaymentMethod}
+					selectedProduct={watch('product')}
+					setLicenseSelected={setLincenseSelected}
+					sku={sku}
+				/>
+			),
+			nextStep: StepType.PAYMENT,
+			title: 'License Selection',
+		},
+		[StepType.PAYMENT]: {
+			backStep: StepType.LICENSES,
+			component: (
+				<SelectPaymentMethod
+					addresses={addresses}
+					billingAddress={billingAddress}
+					email={email}
+					enableTrialMethod={enableTrialMethod}
+					purchaseOrderNumber={purchaseOrderNumber}
+					selectedPaymentMethod={selectedPaymentMethod}
+					setBillingAddress={setBillingAddress}
+					setEmail={setEmail}
+					setEnablePurchaseButton={setEnablePurchaseButton}
+					setPurchaseOrderNumber={setPurchaseOrderNumber}
+					setSelectedPaymentMethod={setSelectedPaymentMethod}
+					step={step}
+				/>
+			),
+			nextStep: StepType.PAYMENT,
+			title: 'Payment Method',
+		},
 	};
 
 	return (
@@ -244,9 +239,10 @@ const GetAppFlow = () => {
 			<div className="border d-flex flex-column mt-7 p-5 rounded">
 				<div className="d-flex flex-column">
 					<div className="align-self-center h1 mb-6">
-						{sectionProperties[step].title}
+						{StepsInformation[step].title}
 					</div>
-					<div>{StepFormComponent[step]}</div>
+
+					<div>{StepsInformation[step].component}</div>
 				</div>
 
 				<ProductFooter
@@ -256,7 +252,7 @@ const GetAppFlow = () => {
 					handleGetApp={handleGetApp}
 					isFreeApp={isFreeApp}
 					licenseSelected={licenseSelected}
-					sectionProperties={sectionProperties}
+					sectionProperties={StepsInformation}
 					selectedAccount={selectedAccount}
 					selectedPaymentMethod={selectedPaymentMethod}
 					selectedSKU={selectedSKU}

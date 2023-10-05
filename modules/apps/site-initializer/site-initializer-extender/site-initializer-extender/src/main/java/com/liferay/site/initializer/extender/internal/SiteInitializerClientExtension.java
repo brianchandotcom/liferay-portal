@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.headless.site.dto.v1_0.Site;
 import com.liferay.headless.site.resource.v1_0.SiteResource;
 import com.liferay.layout.util.LayoutServiceContextHelper;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,6 +37,9 @@ import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.site.initializer.extender.SiteInitializerUtil;
 
+import java.io.File;
+import java.io.IOException;
+
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -43,6 +48,7 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import org.osgi.framework.Bundle;
@@ -68,7 +74,8 @@ public class SiteInitializerClientExtension
 			StringPool.BLANK);
 
 		if (Validator.isNull(
-				headers.get("Liferay-Client-Extension-Site-Initializer"))) {
+				headers.get("Liferay-Client-Extension-Site-Initializer")) ||
+			_isAlreadyProcessed(bundle)) {
 
 			return null;
 		}
@@ -210,6 +217,35 @@ public class SiteInitializerClientExtension
 
 			throw new Exception(throwable);
 		}
+	}
+
+	private boolean _isAlreadyProcessed(Bundle bundle) {
+		String lastModifiedString = String.valueOf(bundle.getLastModified());
+
+		File siteInitializerMarkerFile = bundle.getDataFile(
+			".liferay-client-extension-site-initializer");
+
+		try {
+			if ((siteInitializerMarkerFile != null) &&
+				siteInitializerMarkerFile.exists() &&
+				Objects.equals(
+					FileUtil.read(siteInitializerMarkerFile),
+					lastModifiedString)) {
+
+				return true;
+			}
+
+			if (!siteInitializerMarkerFile.exists()) {
+				siteInitializerMarkerFile.createNewFile();
+			}
+
+			FileUtil.write(siteInitializerMarkerFile, lastModifiedString, true);
+		}
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

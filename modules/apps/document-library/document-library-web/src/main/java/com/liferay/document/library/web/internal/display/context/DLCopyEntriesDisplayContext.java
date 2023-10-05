@@ -52,7 +52,7 @@ public class DLCopyEntriesDisplayContext {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
-			"/document_library/copy_entries"
+			"/document_library/copy_dl_objects"
 		).buildString();
 	}
 

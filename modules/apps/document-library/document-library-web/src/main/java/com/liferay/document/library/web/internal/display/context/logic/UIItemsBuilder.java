@@ -909,7 +909,7 @@ public class UIItemsBuilder {
 				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
-			"/document_library/copy_entries"
+			"/document_library/copy_dl_objects"
 		).setRedirect(
 			_getCurrentURL()
 		).setParameter(

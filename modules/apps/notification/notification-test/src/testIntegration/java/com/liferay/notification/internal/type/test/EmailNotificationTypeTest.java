@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -92,6 +93,62 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			StringBundler.concat(
 				user1.getEmailAddress(), StringPool.COMMA,
 				user2.getEmailAddress()));
+
+		// Multiples emails for each main recipients, comma and space separator
+
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					user1.getEmailAddress(), user2.getEmailAddress())),
+			StringBundler.concat(
+				user1.getEmailAddress(), StringPool.COMMA_AND_SPACE,
+				user2.getEmailAddress()));
+
+		// Multiples emails for each main recipients, semicolon separator
+
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					user1.getEmailAddress(), user2.getEmailAddress())),
+			StringBundler.concat(
+				user1.getEmailAddress(), StringPool.SEMICOLON,
+				user2.getEmailAddress()));
+
+		// Multiples emails for each main recipients, with terms and comma
+		// separator
+
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					user2.getEmailAddress(),
+					GetterUtil.getString(
+						childObjectEntryValues.get("emailTextObjectField")))),
+			"[%CURRENT_USER_EMAIL_ADDRESS%]," +
+				getTermName("emailTextObjectField"));
+
+		// Multiples emails for each main recipients, with terms and comma and
+		// space separator
+
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					user2.getEmailAddress(),
+					GetterUtil.getString(
+						childObjectEntryValues.get("emailTextObjectField")))),
+			"[%CURRENT_USER_EMAIL_ADDRESS%], " +
+				getTermName("emailTextObjectField"));
+
+		// Multiples emails for each main recipients, with terms and semicolon
+		// separator
+
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					user2.getEmailAddress(),
+					GetterUtil.getString(
+						childObjectEntryValues.get("emailTextObjectField")))),
+			"[%CURRENT_USER_EMAIL_ADDRESS%];" +
+				getTermName("emailTextObjectField"));
 	}
 
 	private NotificationTemplate _addNotificationTemplate(

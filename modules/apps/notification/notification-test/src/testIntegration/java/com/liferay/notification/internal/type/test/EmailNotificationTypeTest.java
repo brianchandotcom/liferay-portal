@@ -85,43 +85,13 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		// Multiples emails for each main recipients, comma separator
 
-		_executeNotificationObjectAction(_addNotificationTemplate(true));
-
-		notificationQueueEntries = ListUtil.sort(
-			notificationQueueEntryLocalService.getNotificationEntries(
-				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT),
-			Comparator.comparing(
-				notificationQueueEntry -> {
-					Map<String, Object> notificationRecipientSettingsMap =
-						NotificationRecipientSettingUtil.
-							getNotificationRecipientSettingsMap(
-								notificationQueueEntry);
-
-					return String.valueOf(
-						notificationRecipientSettingsMap.get("to"));
-				}));
-
-		Assert.assertEquals(
-			notificationQueueEntries.toString(), 2,
-			notificationQueueEntries.size());
-
-		List<String> expectedToEmailAddresses = ListUtil.sort(
-			Arrays.asList(user1.getEmailAddress(), user2.getEmailAddress()));
-
-		_assertNotificationQueueEntry(
-			true, expectedToEmailAddresses.get(0),
-			notificationQueueEntries.get(0));
-		_assertNotificationQueueEntry(
-			true, expectedToEmailAddresses.get(1),
-			notificationQueueEntries.get(1));
-
-		for (NotificationQueueEntry notificationQueueEntry :
-				notificationQueueEntries) {
-
-			notificationQueueEntryLocalService.deleteNotificationQueueEntry(
-				notificationQueueEntry);
-		}
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					user1.getEmailAddress(), user2.getEmailAddress())),
+			StringBundler.concat(
+				user1.getEmailAddress(), StringPool.COMMA,
+				user2.getEmailAddress()));
 	}
 
 	private NotificationTemplate _addNotificationTemplate(
@@ -259,6 +229,45 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		objectActionLocalService.deleteObjectAction(
 			objectAction.getObjectActionId());
+	}
+
+	private void _testSendNotification(List<String> expectedTo, String to)
+		throws Exception {
+
+		_executeNotificationObjectAction(
+			_addNotificationTemplate(
+				true, Collections.singletonMap(LocaleUtil.US, to)));
+
+		List<NotificationQueueEntry> notificationQueueEntries = ListUtil.sort(
+			notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT),
+			Comparator.comparing(
+				notificationQueueEntry -> {
+					Map<String, Object> notificationRecipientSettingsMap =
+						NotificationRecipientSettingUtil.
+							getNotificationRecipientSettingsMap(
+								notificationQueueEntry);
+
+					return String.valueOf(
+						notificationRecipientSettingsMap.get("to"));
+				}));
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 2,
+			notificationQueueEntries.size());
+
+		_assertNotificationQueueEntry(
+			true, expectedTo.get(0), notificationQueueEntries.get(0));
+		_assertNotificationQueueEntry(
+			true, expectedTo.get(1), notificationQueueEntries.get(1));
+
+		for (NotificationQueueEntry notificationQueueEntry :
+				notificationQueueEntries) {
+
+			notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+				notificationQueueEntry);
+		}
 	}
 
 }

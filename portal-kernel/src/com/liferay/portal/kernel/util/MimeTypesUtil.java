@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
+
 import java.io.File;
 import java.io.InputStream;
 
@@ -25,7 +27,9 @@ public class MimeTypesUtil {
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
 	public static String getContentType(File file) {
-		return _mimeTypes.getContentType(file);
+		MimeTypes mimeTypes = _mimeTypesSnapshot.get();
+
+		return mimeTypes.getContentType(file);
 	}
 
 	/**
@@ -38,7 +42,9 @@ public class MimeTypesUtil {
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
 	public static String getContentType(File file, String fileName) {
-		return _mimeTypes.getContentType(file, fileName);
+		MimeTypes mimeTypes = _mimeTypesSnapshot.get();
+
+		return mimeTypes.getContentType(file, fileName);
 	}
 
 	/**
@@ -60,7 +66,9 @@ public class MimeTypesUtil {
 	public static String getContentType(
 		InputStream inputStream, String fileName) {
 
-		return _mimeTypes.getContentType(inputStream, fileName);
+		MimeTypes mimeTypes = _mimeTypesSnapshot.get();
+
+		return mimeTypes.getContentType(inputStream, fileName);
 	}
 
 	/**
@@ -72,7 +80,9 @@ public class MimeTypesUtil {
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
 	public static String getContentType(String fileName) {
-		return _mimeTypes.getContentType(fileName);
+		MimeTypes mimeTypes = _mimeTypesSnapshot.get();
+
+		return mimeTypes.getContentType(fileName);
 	}
 
 	/**
@@ -83,7 +93,9 @@ public class MimeTypesUtil {
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
 	public static String getExtensionContentType(String extension) {
-		return _mimeTypes.getExtensionContentType(extension);
+		MimeTypes mimeTypes = _mimeTypesSnapshot.get();
+
+		return mimeTypes.getExtensionContentType(extension);
 	}
 
 	/**
@@ -94,15 +106,16 @@ public class MimeTypesUtil {
 	 *         set if it is an unknown content type
 	 */
 	public static Set<String> getExtensions(String contentType) {
-		return _mimeTypes.getExtensions(contentType);
+		MimeTypes mimeTypes = _mimeTypesSnapshot.get();
+
+		return mimeTypes.getExtensions(contentType);
 	}
 
 	public static MimeTypes getMimeTypes() {
-		return _mimeTypes;
+		return _mimeTypesSnapshot.get();
 	}
 
-	private static volatile MimeTypes _mimeTypes =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			MimeTypes.class, MimeTypesUtil.class, "_mimeTypes", true);
+	private static final Snapshot<MimeTypes> _mimeTypesSnapshot =
+		new Snapshot<>(MimeTypesUtil.class, MimeTypes.class);
 
 }

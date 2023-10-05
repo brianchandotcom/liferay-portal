@@ -222,6 +222,10 @@ public class EmailNotificationType extends BaseNotificationType {
 									getNotificationRecipientId(),
 								"singleRecipient");
 
+					if (notificationRecipientSetting == null) {
+						return Boolean.TRUE.toString();
+					}
+
 					return notificationRecipientSetting.getValue();
 				}
 			).put(

@@ -49,8 +49,6 @@ window.addEventListener('scroll', handleWindowResizeOrScroll, {
 	passive: true,
 });
 
-const MAX_ITEMS = 10;
-
 let lastSearchAbortController = new AbortController();
 let lastSearchQuery = input.value ? input.value : null;
 
@@ -427,11 +425,9 @@ function repositionDropdownElement() {
 function renderOptionList(options) {
 	optionListElement.innerHTML = '';
 
-	options
-		.slice(0, MAX_ITEMS)
-		.forEach((option) =>
-			optionListElement.appendChild(createOptionElement(option))
-		);
+	options.forEach((option) =>
+		optionListElement.appendChild(createOptionElement(option))
+	);
 }
 
 function debounce(fn, delay) {

@@ -501,9 +501,6 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 							listTypeEntries, themeDisplay.getLocale(),
 							MapUtil.getString(properties, "preselectedValues"));
 
-					boolean hasPreloadedData =
-						selectedItemsJSONArray.length() > 0;
-
 					return JSONUtil.put(
 						"autocompleteEnabled", true
 					).put(
@@ -529,22 +526,14 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					).put(
 						"preloadedData",
 						() -> {
-							if (!hasPreloadedData) {
+							if (JSONUtil.isEmpty(selectedItemsJSONArray)) {
 								return null;
 							}
 
 							return JSONUtil.put(
 								"exclude",
-								() -> {
-									Boolean include = (Boolean)properties.get(
-										"include");
-
-									if ((include != null) && !include) {
-										return true;
-									}
-
-									return false;
-								}
+								() -> Boolean.FALSE.equals(
+									(Boolean)properties.get("include"))
 							).put(
 								"selectedItems", selectedItemsJSONArray
 							);

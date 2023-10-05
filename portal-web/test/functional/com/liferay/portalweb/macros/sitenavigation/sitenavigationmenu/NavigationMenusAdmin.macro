@@ -645,12 +645,12 @@ definition {
 
 		if (${toggleValue} == "enable") {
 			Check.checkNotVisible(
-				checkboxName = "When creating a new page, display an option to allow adding it to this navigation menu.",
+				checkboxName = "When creating a new page, display an option to add it to this navigation menu.",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 		else if (${toggleValue} == "disable") {
 			Uncheck.uncheckNotVisible(
-				checkboxName = "When creating a new page, display an option to allow adding it to this navigation menu.",
+				checkboxName = "When creating a new page, display an option to add it to this navigation menu.",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 		else {

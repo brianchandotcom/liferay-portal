@@ -30,10 +30,10 @@ public enum TimeUnit {
 		return _value;
 	}
 
-	private TimeUnit(String value, long unitMills) {
+	private TimeUnit(String value, long unitMillis) {
 		_value = value;
 
-		_unitMillis = unitMills;
+		_unitMillis = unitMillis;
 	}
 
 	private final long _unitMillis;

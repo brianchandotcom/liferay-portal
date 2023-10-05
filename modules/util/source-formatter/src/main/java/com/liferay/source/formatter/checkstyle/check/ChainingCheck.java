@@ -49,6 +49,10 @@ public class ChainingCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.RPAREN) {
+			_checkChainingOnParentheses(detailAST);
+		}
+
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		if (parentDetailAST != null) {
@@ -90,6 +94,29 @@ public class ChainingCheck extends BaseCheck {
 			if (chainSize > 3) {
 				_checkChainOrder(methodCallDetailAST, chainedMethodNames);
 			}
+		}
+	}
+
+	private void _checkChainingOnParentheses(DetailAST detailAST) {
+		if (_isInsideConstructorThisCall(detailAST) ||
+			hasParentWithTokenType(detailAST, TokenTypes.SUPER_CTOR_CALL)) {
+
+			return;
+		}
+
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if (parentDetailAST.getType() != TokenTypes.DOT) {
+			return;
+		}
+
+		DetailAST previousSiblingDetailAST = detailAST.getPreviousSibling();
+
+		if (previousSiblingDetailAST.getType() != TokenTypes.TYPECAST) {
+			log(detailAST, _MSG_AVOID_PARENTHESES_CHAINING);
+		}
+		else if (isAttributeValue(_APPLY_TO_TYPE_CAST_KEY)) {
+			log(detailAST, _MSG_AVOID_TYPE_CAST_CHAINING);
 		}
 	}
 
@@ -323,6 +350,32 @@ public class ChainingCheck extends BaseCheck {
 
 		return _requiredChainingMethodNamesMap.get(fullyQualifiedClassName);
 	}
+
+	private boolean _isInsideConstructorThisCall(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		while (parentDetailAST != null) {
+			String parentDetailASTText = parentDetailAST.getText();
+
+			if ((parentDetailAST.getType() == TokenTypes.CTOR_CALL) &&
+				parentDetailASTText.equals("this")) {
+
+				return true;
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+		}
+
+		return false;
+	}
+
+	private static final String _APPLY_TO_TYPE_CAST_KEY = "applyToTypeCast";
+
+	private static final String _MSG_AVOID_PARENTHESES_CHAINING =
+		"chaining.avoid.parentheses";
+
+	private static final String _MSG_AVOID_TYPE_CAST_CHAINING =
+		"chaining.avoid.type.cast";
 
 	private static final String _MSG_REQUIRED_CHAINING = "chaining.required";
 

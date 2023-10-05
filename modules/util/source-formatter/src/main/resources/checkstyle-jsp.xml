@@ -182,8 +182,11 @@
 			<message key="starting.uppercase.required" value="''{0}'' should start with an uppercase character for {1} ''{2}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ChainingCheck">
+			<property name="applyToTypeCast" value="true" />
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks that method chaining can be used when possible." />
+			<message key="chaining.avoid.parentheses" value="Avoid chaining on expressions with parentheses" />
+			<message key="chaining.avoid.type.cast" value="Avoid chaining on Type Cast" />
 			<message key="chaining.required" value="Chaining on ''{0}'' is preferred" />
 			<message key="response.unsorted" value="Method calls between ''Response.status'' and ''Response.build'' should be sorted" />
 		</module>

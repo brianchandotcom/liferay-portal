@@ -131,6 +131,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -442,8 +443,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 	@Override
 	public void initialize(long groupId) throws InitializationException {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Commerce site initializer " + _commerceSiteInitializer);
-			_log.debug("OSB site initializer " + _osbSiteInitializer);
+			_log.debug(
+				"Commerce site initializer " +
+					_commerceSiteInitializerSnapshot.get());
+			_log.debug(
+				"OSB site initializer " + _osbSiteInitializerSnapshot.get());
 		}
 
 		long startTime = System.currentTimeMillis();
@@ -643,18 +647,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	protected void setCommerceSiteInitializer(
-		CommerceSiteInitializer commerceSiteInitializer) {
-
-		_commerceSiteInitializer = commerceSiteInitializer;
-	}
-
-	protected void setOSBSiteInitializer(
-		OSBSiteInitializer osbSiteInitializer) {
-
-		_osbSiteInitializer = osbSiteInitializer;
-	}
-
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
@@ -716,11 +708,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addAccountGroups(ServiceContext serviceContext)
 		throws Exception {
 
-		if (_commerceSiteInitializer == null) {
+		CommerceSiteInitializer commerceSiteInitializer =
+			_commerceSiteInitializerSnapshot.get();
+
+		if (commerceSiteInitializer == null) {
 			return;
 		}
 
-		_commerceSiteInitializer.addAccountGroups(
+		commerceSiteInitializer.addAccountGroups(
 			serviceContext, _servletContext);
 	}
 
@@ -850,11 +845,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
-		if (_commerceSiteInitializer == null) {
+		CommerceSiteInitializer commerceSiteInitializer =
+			_commerceSiteInitializerSnapshot.get();
+
+		if (commerceSiteInitializer == null) {
 			return;
 		}
 
-		_commerceSiteInitializer.addCPDefinitions(
+		commerceSiteInitializer.addCPDefinitions(
 			_bundle, serviceContext, _servletContext, stringUtilReplaceValues);
 	}
 
@@ -3647,11 +3645,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addOrUpdateSXPBlueprint(ServiceContext serviceContext)
 		throws Exception {
 
-		if (_osbSiteInitializer == null) {
+		OSBSiteInitializer osbSiteInitializer =
+			_osbSiteInitializerSnapshot.get();
+
+		if (osbSiteInitializer == null) {
 			return;
 		}
 
-		_osbSiteInitializer.addOrUpdateSXPBlueprint(
+		osbSiteInitializer.addOrUpdateSXPBlueprint(
 			serviceContext, _servletContext);
 	}
 
@@ -3855,11 +3856,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addPortletSettings(ServiceContext serviceContext)
 		throws Exception {
 
-		if (_commerceSiteInitializer == null) {
+		CommerceSiteInitializer commerceSiteInitializer =
+			_commerceSiteInitializerSnapshot.get();
+
+		if (commerceSiteInitializer == null) {
 			return;
 		}
 
-		_commerceSiteInitializer.addPortletSettings(
+		commerceSiteInitializer.addPortletSettings(
 			_classLoader, serviceContext, _servletContext);
 	}
 
@@ -4435,14 +4439,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				long typePK = 0;
 
-				if ((_commerceSiteInitializer != null) &&
+				CommerceSiteInitializer commerceSiteInitializer =
+					_commerceSiteInitializerSnapshot.get();
+
+				if ((commerceSiteInitializer != null) &&
 					StringUtil.equals(
 						className,
-						_commerceSiteInitializer.getCommerceOrderClassName())) {
+						commerceSiteInitializer.getCommerceOrderClassName())) {
 
-					groupId =
-						_commerceSiteInitializer.getCommerceChannelGroupId(
-							groupId);
+					groupId = commerceSiteInitializer.getCommerceChannelGroupId(
+						groupId);
 
 					typePK = propertiesJSONObject.getLong("typePK");
 				}
@@ -5004,7 +5010,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BundleSiteInitializer.class);
 
+	private static final Snapshot<CommerceSiteInitializer>
+		_commerceSiteInitializerSnapshot = new Snapshot<>(
+			BundleSiteInitializer.class, CommerceSiteInitializer.class);
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
+	private static final Snapshot<OSBSiteInitializer>
+		_osbSiteInitializerSnapshot = new Snapshot<>(
+			BundleSiteInitializer.class, OSBSiteInitializer.class);
 
 	private final AccountEntryLocalService _accountEntryLocalService;
 	private final AccountEntryOrganizationRelLocalService
@@ -5022,7 +5034,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final Map<String, String> _classNameIdStringUtilReplaceValues;
 	private final ClientExtensionEntryLocalService
 		_clientExtensionEntryLocalService;
-	private CommerceSiteInitializer _commerceSiteInitializer;
 	private final ConfigurationProvider _configurationProvider;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
@@ -5073,7 +5084,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectRelationshipResourceFactory;
 	private final OrganizationLocalService _organizationLocalService;
 	private final OrganizationResource.Factory _organizationResourceFactory;
-	private OSBSiteInitializer _osbSiteInitializer;
 	private final PLOEntryLocalService _ploEntryLocalService;
 	private final Portal _portal;
 	private final PortletPreferencesLocalService

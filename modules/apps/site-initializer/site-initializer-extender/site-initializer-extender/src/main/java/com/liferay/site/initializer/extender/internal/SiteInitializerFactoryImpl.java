@@ -76,8 +76,6 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerFactory;
-import com.liferay.site.initializer.extender.CommerceSiteInitializer;
-import com.liferay.site.initializer.extender.OSBSiteInitializer;
 import com.liferay.site.initializer.extender.internal.file.backed.osgi.FileBackedBundleDelegate;
 import com.liferay.site.initializer.extender.internal.file.backed.servlet.FileBackedServletContextDelegate;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -92,7 +90,6 @@ import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -159,26 +156,6 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_userGroupLocalService, _userLocalService,
 			_workflowDefinitionLinkLocalService,
 			_workflowDefinitionResourceFactory, _zipWriterFactory);
-
-		ServiceReference<CommerceSiteInitializer>
-			commerceSiteInitializerServiceReference =
-				_bundleContext.getServiceReference(
-					CommerceSiteInitializer.class);
-
-		if (commerceSiteInitializerServiceReference != null) {
-			bundleSiteInitializer.setCommerceSiteInitializer(
-				_bundleContext.getService(
-					commerceSiteInitializerServiceReference));
-		}
-
-		ServiceReference<OSBSiteInitializer>
-			osbSiteInitializerServiceReference =
-				_bundleContext.getServiceReference(OSBSiteInitializer.class);
-
-		if (osbSiteInitializerServiceReference != null) {
-			bundleSiteInitializer.setOSBSiteInitializer(
-				_bundleContext.getService(osbSiteInitializerServiceReference));
-		}
 
 		bundleSiteInitializer.setServletContext(
 			ProxyUtil.newDelegateProxyInstance(

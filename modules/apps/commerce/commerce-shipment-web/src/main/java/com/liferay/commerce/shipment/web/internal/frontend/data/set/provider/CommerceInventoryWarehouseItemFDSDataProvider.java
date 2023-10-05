@@ -148,6 +148,7 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 				BigDecimal quantity = BigDecimal.ZERO;
 				BigDecimal commerceInventoryWarehouseItemQuantity =
 					commerceInventoryWarehouseItem.getQuantity();
+				BigDecimal incrementalOrderQuantity = BigDecimal.ONE;
 
 				if (commerceInventoryWarehouseItemQuantity != null) {
 					quantity = commerceInventoryWarehouseItemQuantity;
@@ -157,6 +158,14 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 					maxShippableQuantity = quantity;
 				}
 
+				if (cpInstanceUnitOfMeasure != null) {
+					incrementalOrderQuantity =
+						_commerceQuantityFormatter.format(
+							cpInstanceUnitOfMeasure,
+							cpInstanceUnitOfMeasure.
+								getIncrementalOrderQuantity());
+				}
+
 				warehouses.add(
 					new Warehouse(
 						commerceInventoryWarehouseId,
@@ -164,7 +173,7 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 							inputName,
 							_commerceQuantityFormatter.format(
 								cpInstanceUnitOfMeasure, maxShippableQuantity),
-							BigDecimal.ZERO,
+							BigDecimal.ZERO, incrementalOrderQuantity,
 							_commerceQuantityFormatter.format(
 								cpInstanceUnitOfMeasure,
 								shipmentItemWarehouseItemQuantity)),
@@ -180,7 +189,8 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 						commerceInventoryWarehouseId,
 						new WarehouseItem(
 							inputName, shipmentItemWarehouseItemQuantity,
-							BigDecimal.ZERO, shipmentItemWarehouseItemQuantity),
+							BigDecimal.ZERO, BigDecimal.ZERO,
+							shipmentItemWarehouseItemQuantity),
 						BigDecimal.ZERO, StringPool.BLANK,
 						commerceInventoryWarehouse.getName(
 							_portal.getLocale(httpServletRequest))));

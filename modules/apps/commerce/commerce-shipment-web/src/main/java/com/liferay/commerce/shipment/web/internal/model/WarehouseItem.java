@@ -14,11 +14,12 @@ public class WarehouseItem {
 
 	public WarehouseItem(
 		String inputName, BigDecimal maxQuantity, BigDecimal minQuantity,
-		BigDecimal quantity) {
+		BigDecimal multipleQuantity, BigDecimal quantity) {
 
 		_inputName = inputName;
 		_maxQuantity = maxQuantity;
 		_minQuantity = minQuantity;
+		_multipleQuantity = multipleQuantity;
 		_quantity = quantity;
 	}
 
@@ -34,6 +35,10 @@ public class WarehouseItem {
 		return _minQuantity;
 	}
 
+	public BigDecimal getMultipleQuantity() {
+		return _multipleQuantity;
+	}
+
 	public BigDecimal getQuantity() {
 		return _quantity;
 	}
@@ -41,6 +46,7 @@ public class WarehouseItem {
 	private final String _inputName;
 	private final BigDecimal _maxQuantity;
 	private final BigDecimal _minQuantity;
+	private final BigDecimal _multipleQuantity;
 	private final BigDecimal _quantity;
 
 }

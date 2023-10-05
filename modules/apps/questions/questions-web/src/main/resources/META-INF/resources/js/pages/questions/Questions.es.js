@@ -112,7 +112,7 @@ export default withRouter(({history, location, match: {params}}) => {
 
 			const {
 				resultBar = filteredValues?.resultBar,
-				messageBoardSectionId = section.id,
+				messageBoardSectionId = section?.id,
 				search: _search = search,
 			} = params;
 
@@ -167,18 +167,18 @@ export default withRouter(({history, location, match: {params}}) => {
 			page,
 			pageSize,
 			search,
-			section.id,
+			section?.id,
 			siteKey,
 			subscribedTags,
 		]
 	);
 
 	useEffect(() => {
-		if ((section.id || ALL_SECTIONS_ENABLED) && !tagLoading) {
+		if ((section?.id || ALL_SECTIONS_ENABLED) && !tagLoading) {
 			getMbThreads({
 				fetchAllSections: ALL_SECTIONS_ENABLED,
 				filterBy,
-				messageBoardSectionId: section.id,
+				messageBoardSectionId: section?.id,
 				search,
 				selectedTags,
 				sortBy,
@@ -192,7 +192,7 @@ export default withRouter(({history, location, match: {params}}) => {
 		selectedTags,
 		taggedWith,
 		search,
-		section.id,
+		section?.id,
 		tagLoading,
 		ALL_SECTIONS_ENABLED,
 	]);

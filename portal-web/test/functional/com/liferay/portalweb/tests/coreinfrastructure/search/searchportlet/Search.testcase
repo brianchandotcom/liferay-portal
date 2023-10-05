@@ -599,9 +599,9 @@ definition {
 	@priority = 3
 	test CanRemoveSortFieldsAndDeactivateRelevanceInSortWidget {
 		task ("Add a new Sort Widget to the default Search page") {
-			Search.openSearchPage();
+			SearchPage.openSearchPage();
 
-			SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
+			SearchPage.addWidgetsViaUI(searchPortletList = "Sort");
 		}
 
 		task ("Delete all indexed field names and disable relevance for the Sort portlet") {
@@ -627,9 +627,9 @@ definition {
 		}
 
 		task ("Assert that the Search portlets are still available by performing a search") {
-			SearchPortlets.searchWidget(searchTerm = "test");
+			SearchPage.searchWidget(searchTerm = "test");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Test Test",
 				searchAssetType = "User");
 		}

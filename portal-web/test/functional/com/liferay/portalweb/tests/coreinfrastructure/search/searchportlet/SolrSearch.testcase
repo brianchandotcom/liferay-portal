@@ -1284,7 +1284,7 @@ definition {
 
 		AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 
-		SearchResultPortlet.configureSearchResults(disableHighlighting = "true");
+		SearchResults.configureSearchResults(disableHighlighting = "true");
 
 		Refresh();
 

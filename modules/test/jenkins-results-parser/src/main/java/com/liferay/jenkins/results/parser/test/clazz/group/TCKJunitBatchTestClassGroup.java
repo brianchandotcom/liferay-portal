@@ -59,6 +59,12 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
+		if (ignore()) {
+			_tckHomeDir = null;
+
+			return;
+		}
+
 		_tckHomeDir = _getTCKHomeDir();
 
 		setTestClasses();

@@ -157,6 +157,10 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
+		if (ignore()) {
+			return;
+		}
+
 		_setTestBatchRunPropertyQueries();
 
 		setAxisTestClassGroups();

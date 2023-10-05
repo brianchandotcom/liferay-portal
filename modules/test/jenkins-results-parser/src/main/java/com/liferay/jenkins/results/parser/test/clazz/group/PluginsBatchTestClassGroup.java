@@ -60,6 +60,12 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
+		if (ignore()) {
+			_pluginsGitWorkingDirectory = null;
+
+			return;
+		}
+
 		_pluginsGitWorkingDirectory =
 			portalGitWorkingDirectory.getPluginsGitWorkingDirectory();
 

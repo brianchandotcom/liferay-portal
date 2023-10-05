@@ -73,6 +73,10 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
+		if (ignore()) {
+			return;
+		}
+
 		try {
 			if (testRelevantChanges) {
 				moduleDirsList.addAll(

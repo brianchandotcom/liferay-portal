@@ -116,6 +116,10 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
+		if (ignore()) {
+			return;
+		}
+
 		List<File> moduleDirs;
 
 		try {

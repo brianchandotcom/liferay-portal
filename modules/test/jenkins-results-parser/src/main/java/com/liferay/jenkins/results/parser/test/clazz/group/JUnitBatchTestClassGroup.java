@@ -240,6 +240,12 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
+		if (ignore()) {
+			_includeUnstagedTestClassFiles = false;
+
+			return;
+		}
+
 		if (portalTestClassJob instanceof PortalAcceptancePullRequestJob) {
 			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
 				(PortalAcceptancePullRequestJob)portalTestClassJob;

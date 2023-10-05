@@ -28,6 +28,10 @@ public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
+		if (ignore()) {
+			return;
+		}
+
 		File buildTestBatchFile = new File(
 			portalGitWorkingDirectory.getWorkingDirectory(),
 			"build-test-batch.xml");

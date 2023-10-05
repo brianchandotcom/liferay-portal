@@ -302,7 +302,7 @@ const ChannelList: React.FC<IChannelListProps> = ({
 		{setFieldError, setSubmitting}: FormikActions<FormValues>
 	) => {
 		API.channels
-			.create({groupId, name: name.trim()})
+			.create({groupId, name: encodeURIComponent(name).trim()})
 			.then(({id, name}) => {
 				addAlert({
 					alertType: Alert.Types.Success,

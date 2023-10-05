@@ -274,9 +274,7 @@ public class FeatureFlagsBagProviderImpl
 			}
 		}
 
-		for (Map.Entry<String, FeatureFlag> entry :
-				featureFlags.entrySet()) {
-
+		for (Map.Entry<String, FeatureFlag> entry : featureFlags.entrySet()) {
 			List<FeatureFlag> dependencyFeatureFlags = new ArrayList<>();
 
 			FeatureFlag featureFlag = entry.getValue();
@@ -376,19 +374,18 @@ public class FeatureFlagsBagProviderImpl
 				featureFlagKeys.contains(featureFlag.getKey()) ||
 				featureFlagKeys.contains("*");
 
-			UnsafeConsumer<Long, Exception> unsafeConsumer =
-				companyId -> {
-					FeatureFlagsBag featureFlagsBag =
-						getOrCreateFeatureFlagsBag(companyId);
+			UnsafeConsumer<Long, Exception> unsafeConsumer = companyId -> {
+				FeatureFlagsBag featureFlagsBag = getOrCreateFeatureFlagsBag(
+					companyId);
 
-					for (FeatureFlag featureFlag :
-							featureFlagsBag.getFeatureFlags(predicate)) {
+				for (FeatureFlag featureFlag :
+						featureFlagsBag.getFeatureFlags(predicate)) {
 
-						featureFlagListener.onValue(
-							companyId, featureFlag.getKey(),
-							featureFlag.isEnabled());
-					}
-				};
+					featureFlagListener.onValue(
+						companyId, featureFlag.getKey(),
+						featureFlag.isEnabled());
+				}
+			};
 
 			try {
 				_companyLocalService.forEachCompanyId(unsafeConsumer);

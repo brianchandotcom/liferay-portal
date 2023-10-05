@@ -74,7 +74,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "An API sort must be related to an API endpoint."
+				"title", "An API Sort must be related to an API endpoint."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

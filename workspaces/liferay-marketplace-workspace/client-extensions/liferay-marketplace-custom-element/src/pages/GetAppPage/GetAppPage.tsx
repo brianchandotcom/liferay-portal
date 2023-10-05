@@ -260,12 +260,12 @@ const GetAppFlow = () => {
 					handleGetApp={handleGetApp}
 					isFreeApp={isFreeApp}
 					licenseSelected={licenseSelected}
-					sectionProperties={StepsInformation}
 					selectedAccount={selectedAccount}
 					selectedPaymentMethod={selectedPaymentMethod}
 					selectedSKU={selectedSKU}
 					setStep={setStep}
 					step={step}
+					stepsNavigation={StepsInformation}
 				/>
 			</div>
 		</>

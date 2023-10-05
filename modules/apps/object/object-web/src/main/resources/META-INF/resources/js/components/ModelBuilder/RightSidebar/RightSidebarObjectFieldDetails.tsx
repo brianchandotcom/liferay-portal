@@ -5,11 +5,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayPanel from '@clayui/panel';
-import {
-	API,
-	getLocalizableLabel,
-	openToast,
-} from '@liferay/object-js-components-web';
+import {API, openToast} from '@liferay/object-js-components-web';
 import {createResourceURL} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {useStore} from 'react-flow-renderer';
@@ -181,14 +177,7 @@ export function RightSidebarObjectFieldDetails() {
 	return (
 		<>
 			<div className="lfr-objects__model-builder-right-sidebar-definition-node-title">
-				<span>
-					{getLocalizableLabel(
-						selectedObjectDefinitionNode?.data
-							?.defaultLanguageId as Liferay.Language.Locale,
-						selectedObjectField?.label,
-						selectedObjectField?.name
-					)}
-				</span>
+				<span>{Liferay.Language.get('field-details')}</span>
 
 				<div className="lfr-objects__model-builder-right-sidebar-definition-node-title-buttons-container">
 					{!values.system &&

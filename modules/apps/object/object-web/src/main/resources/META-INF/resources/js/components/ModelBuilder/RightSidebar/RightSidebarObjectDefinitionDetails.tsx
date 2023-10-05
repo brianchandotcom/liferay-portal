@@ -229,7 +229,7 @@ export function RightSidebarObjectDefinitionDetails({
 		}
 	};
 
-	const nodeDetailsTitle = sub(
+	const objectDefinitionNodeDetailsTitle = sub(
 		Liferay.Language.get('x-details'),
 		getLocalizableLabel(
 			values.defaultLanguageId as Liferay.Language.Locale,
@@ -243,9 +243,9 @@ export function RightSidebarObjectDefinitionDetails({
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-details">
 				<div
 					className="lfr-objects__model-builder-right-sidebar-object-definition-node-details-title text-truncate"
-					title={nodeDetailsTitle}
+					title={objectDefinitionNodeDetailsTitle}
 				>
-					<span>{nodeDetailsTitle}</span>
+					<span>{objectDefinitionNodeDetailsTitle}</span>
 				</div>
 			</div>
 

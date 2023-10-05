@@ -372,7 +372,10 @@ export default function LeftSidebarTreeView({
 								>
 									<Icon symbol={TYPES_TO_SYMBOLS[type]} />
 
-									<span className="text-truncate" title={label}>
+									<span
+										className="text-truncate"
+										title={label}
+									>
 										{label}
 									</span>
 								</TreeView.Item>

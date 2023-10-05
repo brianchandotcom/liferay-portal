@@ -829,10 +829,6 @@ public class ImageToolUtil {
 		throw new IOException("No image writer is available for image type");
 	}
 
-	public void setImageTool(ImageTool imageTool) {
-		_imageTool = imageTool;
-	}
-
 	private static RenderedImage _scale(
 		RenderedImage renderedImage, int scaledHeight, int scaledWidth) {
 

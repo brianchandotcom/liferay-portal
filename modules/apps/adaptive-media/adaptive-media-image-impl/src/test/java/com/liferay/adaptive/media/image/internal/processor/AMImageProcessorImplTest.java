@@ -16,9 +16,7 @@ import com.liferay.adaptive.media.image.scaler.AMImageScaler;
 import com.liferay.adaptive.media.image.scaler.AMImageScalerRegistry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.image.validator.AMImageValidator;
-import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -60,10 +58,6 @@ public class AMImageProcessorImplTest {
 			_amImageScalerRegistry);
 		ReflectionTestUtil.setFieldValue(
 			_amImageAMProcessor, "_amImageValidator", _amImageValidator);
-
-		ImageToolUtil imageToolUtil = new ImageToolUtil();
-
-		imageToolUtil.setImageTool(_imageTool);
 	}
 
 	@Test
@@ -753,6 +747,5 @@ public class AMImageProcessorImplTest {
 		AMImageValidator.class);
 	private final FileEntry _fileEntry = Mockito.mock(FileEntry.class);
 	private final FileVersion _fileVersion = Mockito.mock(FileVersion.class);
-	private final ImageTool _imageTool = Mockito.mock(ImageTool.class);
 
 }

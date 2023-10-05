@@ -35,14 +35,13 @@ export function NewAppPageFooterButtons({
 
 			{continueButtonText && (
 				<button
-				className="new-app-page-footer-button-continue"
-				disabled={disableContinueButton}
-				onClick={() => onClickContinue()}
-			>
-				{continueButtonText ?? 'Continue'}
-			</button>
+					className="new-app-page-footer-button-continue"
+					disabled={disableContinueButton}
+					onClick={() => onClickContinue()}
+				>
+					{continueButtonText ?? 'Continue'}
+				</button>
 			)}
-			
 		</div>
 	);
 }

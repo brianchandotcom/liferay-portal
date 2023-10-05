@@ -26,7 +26,7 @@ import {
 } from '../../utils/util';
 
 import './NextStepPage.scss';
-import {TypeLicense} from '../GetAppPage/enums/TypeLicense';
+import {TypeLicense} from '../enums/TypeLicense';
 
 interface NextStepPageProps {
 	children?: ReactNode;
@@ -48,8 +48,6 @@ type TypeNextStepBody = {
 
 export function NextStepPage({
 	children,
-	continueButtonText,
-	linkText,
 	onClickContinue,
 	showBackButton,
 	size,
@@ -60,11 +58,9 @@ export function NextStepPage({
 
 	const orderId = urlParams.get('orderId');
 
-	const [accountLogo, setAccountLogo] = useState(urlParams.get('logoURL'));
-	const [accountName, setAccountName] = useState(
-		urlParams.get('accountName')
-	);
-	const [appName, setAppName] = useState(urlParams.get('appName'));
+	const [accountLogo, setAccountLogo] = useState<string>("");
+	const [accountName, setAccountName] = useState<string>("");
+	const [appName, setAppName] = useState<string>("");
 	const [appLogo, setAppLogo] = useState<string>('');
 	const [paymentStatus, setPaymentStatus] = useState<string>('');
 
@@ -83,9 +79,9 @@ export function NextStepPage({
 			const productId = item.productId;
 
 			const product = await getProductById({
-				nestedFields: 'attachments',
+				nestedFields: 'attachments, productSpecifications',
 				productId,
-			});
+			});	
 
 			const appIcon = getThumbnailByProductAttachment(
 				product.attachments
@@ -114,7 +110,8 @@ export function NextStepPage({
 		[TypeLicense.PAID]: (
 			<Header
 				description={
-					<>
+				
+						<>
 						<p>
 							Congratulations on the purchase of <b>{appName}</b>.
 							You will need to create a license your app before
@@ -135,6 +132,7 @@ export function NextStepPage({
 							IP address, MAC address or hostname.
 						</p>
 					</>
+					
 				}
 				title="Next steps"
 			/>
@@ -200,8 +198,7 @@ export function NextStepPage({
 							licensing the app. An invoice will be sent to the
 							email address listed in the order. Once payment is
 							processed, you will be notified as to the next steps
-							to license your app. Your <b>{appName}</b> app is
-							ready for download.
+							to license your app.
 						</p>
 						<p>
 							{orderId && (
@@ -251,16 +248,13 @@ export function NextStepPage({
 					)}
 
 					<div className="next-step-page-text">
-						<div className="border-bottom next-step-page-text">
+						<div className="next-step-page-text">
 							{nextStepBody[String(paymentStatus) || '']}
 						</div>
 					</div>
 
 					<NewAppPageFooterButtons
-						backButtonText="Go Back to Dashboard"
-						continueButtonText={
-							continueButtonText ?? 'Continue Configuration'
-						}
+						backButtonText="Go to Dashboard"
 						onClickBack={() => {
 							const customerDashboardCallbackURL = `${Liferay.ThemeDisplay.getCanonicalURL().replace(
 								`/next-steps`,
@@ -278,12 +272,6 @@ export function NextStepPage({
 						}
 						showBackButton={showBackButton}
 					/>
-
-					<div className="next-step-page-link">
-						<a>
-							{linkText ?? 'Learn more about App configuration'}
-						</a>
-					</div>
 				</div>
 			</div>
 		</>

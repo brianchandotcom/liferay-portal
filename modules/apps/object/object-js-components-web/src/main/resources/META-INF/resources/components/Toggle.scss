@@ -1,5 +1,9 @@
 @import 'atlas-variables';
 
-.lfr-objects__toggle-tooltip-icon {
-	color: $secondary-l1;
+.lfr-objects__toggle {
+	display: flex;
+
+	&-tooltip-icon {
+		color: $secondary-l1;
+	}
 }

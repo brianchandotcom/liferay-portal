@@ -32,7 +32,7 @@ export function Toggle({
 	tooltipAlign,
 }: ToggleProps) {
 	return (
-		<>
+		<div className="lfr-objects__toggle">
 			<ClayToggle
 				disabled={disabled}
 				label={label}
@@ -55,6 +55,6 @@ export function Toggle({
 					</ClayTooltipProvider>
 				</>
 			)}
-		</>
+		</div>
 	);
 }

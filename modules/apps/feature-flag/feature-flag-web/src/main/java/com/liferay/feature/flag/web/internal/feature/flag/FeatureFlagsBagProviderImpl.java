@@ -168,6 +168,8 @@ public class FeatureFlagsBagProviderImpl
 	}
 
 	private FeatureFlagsBag _createFeatureFlagsBag(long companyId) {
+		Map<String, FeatureFlag> featureFlags = new HashMap<>();
+
 		Map<String, FeatureFlag> systemFeatureFlags = new HashMap<>();
 
 		if (companyId != CompanyConstants.SYSTEM) {
@@ -180,8 +182,6 @@ public class FeatureFlagsBagProviderImpl
 				systemFeatureFlags.put(featureFlag.getKey(), featureFlag);
 			}
 		}
-
-		Map<String, FeatureFlag> featureFlags = new HashMap<>();
 
 		if (companyId == CompanyThreadLocal.getCompanyId()) {
 			_populateFeatureFlagsMap(

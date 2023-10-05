@@ -14,16 +14,13 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
-import com.liferay.portal.search.query.IdsQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
@@ -109,14 +106,6 @@ public class RankingGetHiddenResultsBuilder {
 				id -> _getDocument(
 					ranking.getIndexName(), id, LIFERAY_DOCUMENT_TYPE)),
 			this::translate, _log);
-	}
-
-	protected Query getIdsQuery(List<String> ids) {
-		IdsQuery idsQuery = _queries.ids();
-
-		idsQuery.addIds(ArrayUtil.toStringArray(ids));
-
-		return idsQuery;
 	}
 
 	protected JSONObject translate(Document document) {

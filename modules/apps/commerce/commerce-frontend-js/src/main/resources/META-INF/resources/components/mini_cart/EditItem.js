@@ -233,7 +233,7 @@ function EditItem() {
 
 						<PriceRow
 							priceName={Liferay.Language.get(
-								'price-as-configurated'
+								'price-as-configured'
 							)}
 						>
 							<span className="text-7">

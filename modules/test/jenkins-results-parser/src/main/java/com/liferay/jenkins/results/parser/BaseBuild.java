@@ -3697,9 +3697,8 @@ public abstract class BaseBuild implements Build {
 	}
 
 	private void _runReporting() {
-		setStatus("reporting");
-
 		setResult(_getResultFromJenkins());
+		setStatus("reporting");
 
 		isApplySlaveOfflineRules();
 

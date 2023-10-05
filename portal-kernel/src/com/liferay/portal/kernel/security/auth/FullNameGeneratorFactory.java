@@ -27,6 +27,6 @@ public class FullNameGeneratorFactory {
 	private static volatile FullNameGenerator _fullNameGenerator =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			FullNameGenerator.class, FullNameGeneratorFactory.class,
-			"_fullNameGenerator", true);
+			"_fullNameGenerator", false, true);
 
 }

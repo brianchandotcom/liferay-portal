@@ -18,8 +18,8 @@ import React, {useEffect, useState} from 'react';
 
 const DLFolderSelector = ({
 	copyActionURL,
-	entryIds,
-	entryName,
+	dlObjectIds,
+	dlObjectName,
 	portletNamespace,
 	redirect,
 	selectionModalURL,
@@ -84,7 +84,7 @@ const DLFolderSelector = ({
 		event.preventDefault();
 
 		const bodyContentObject = objectToFormData({
-			[`${portletNamespace}entryIds`]: entryIds,
+			[`${portletNamespace}dlObjectIds`]: dlObjectIds,
 			[`${portletNamespace}sourceRepositoryId`]: sourceRepositoryId,
 			[`${portletNamespace}destinationParentFolderId`]: destinationParentFolderId,
 			[`${portletNamespace}destinationRepositoryId`]: destinationRepositoryId,
@@ -135,7 +135,7 @@ const DLFolderSelector = ({
 					className="c-mb-3"
 					disabled
 					id={`${portletNamespace}copyFromInput`}
-					placeholder={entryName}
+					placeholder={dlObjectName}
 					type="text"
 				/>
 

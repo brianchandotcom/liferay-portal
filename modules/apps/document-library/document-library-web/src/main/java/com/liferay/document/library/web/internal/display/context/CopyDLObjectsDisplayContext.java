@@ -59,7 +59,7 @@ public class CopyDLObjectsDisplayContext {
 	public long[] getDLObjectIds() {
 		if (ArrayUtil.isEmpty(_dlObjectIds)) {
 			_dlObjectIds = ParamUtil.getLongValues(
-				_httpServletRequest, "entryIds");
+				_httpServletRequest, "dlObjectIds");
 		}
 
 		return _dlObjectIds;

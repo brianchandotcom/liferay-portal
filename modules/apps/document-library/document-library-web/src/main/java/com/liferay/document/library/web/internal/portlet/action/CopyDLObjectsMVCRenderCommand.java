@@ -57,9 +57,9 @@ public class CopyDLObjectsMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			_validateEntriesSize(renderRequest);
+			_validateDLObjectsSize(renderRequest);
 
-			return "/document_library/copy_entries.jsp";
+			return "/document_library/copy_dl_objects.jsp";
 		}
 		catch (EntrySizeLimitExceededException
 					entrySizeLimitExceededException) {
@@ -82,12 +82,12 @@ public class CopyDLObjectsMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
-	private long _getEntriesSize(long[] entryIds) throws PortalException {
+	private long _getDLObjectsSize(long[] dlObjectIds) throws PortalException {
 		long size = 0;
 
-		for (long entryId : entryIds) {
+		for (long dlObjectId : dlObjectIds) {
 			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
-				entryId);
+				dlObjectId);
 
 			if (dlFileEntry != null) {
 				size += dlFileEntry.getSize();
@@ -95,7 +95,7 @@ public class CopyDLObjectsMVCRenderCommand implements MVCRenderCommand {
 				continue;
 			}
 
-			DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(entryId);
+			DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(dlObjectId);
 
 			if (dlFolder != null) {
 				size += _dlFolderLocalService.getFolderSize(
@@ -106,7 +106,7 @@ public class CopyDLObjectsMVCRenderCommand implements MVCRenderCommand {
 			}
 
 			DLFileShortcut dlFileShortcut =
-				_dlFileShortcutLocalService.getDLFileShortcut(entryId);
+				_dlFileShortcutLocalService.getDLFileShortcut(dlObjectId);
 
 			DLFileEntry toDLFileEntry = _dlFileEntryLocalService.getDLFileEntry(
 				dlFileShortcut.getToFileEntryId());
@@ -133,14 +133,14 @@ public class CopyDLObjectsMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
-	private void _validateEntriesSize(PortletRequest portletRequest)
+	private void _validateDLObjectsSize(PortletRequest portletRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long size = _getEntriesSize(
-			ParamUtil.getLongValues(portletRequest, "entryIds"));
+		long size = _getDLObjectsSize(
+			ParamUtil.getLongValues(portletRequest, "dlObjectIds"));
 
 		if (!DLCopyValidationUtil.isCopyToAllowed(
 				_dlSizeLimitConfigurationProvider.getCompanyMaxSizeToCopy(

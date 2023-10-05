@@ -65,7 +65,7 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		List<String> errorMessages = _copyEntries(actionRequest);
+		List<String> errorMessages = _copyDLObjects(actionRequest);
 
 		if (!errorMessages.isEmpty()) {
 			JSONPortletResponseUtil.writeJSON(
@@ -114,7 +114,7 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private List<String> _copyEntries(ActionRequest actionRequest)
+	private List<String> _copyDLObjects(ActionRequest actionRequest)
 		throws Exception {
 
 		List<String> errorMessages = new ArrayList<>();
@@ -139,12 +139,13 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 
 		_checkDestinationGroup(group, groupIds, sourceGroup.getGroupId());
 
-		long[] entryIds = ParamUtil.getLongValues(actionRequest, "entryIds");
+		long[] dlObjectIds = ParamUtil.getLongValues(
+			actionRequest, "dlObjectIds");
 
-		for (long entryId : entryIds) {
+		for (long dlObjectId : dlObjectIds) {
 			try {
 				DLFileEntry dlFileEntry =
-					_dlFileEntryLocalService.fetchDLFileEntry(entryId);
+					_dlFileEntryLocalService.fetchDLFileEntry(dlObjectId);
 
 				if (dlFileEntry != null) {
 					_dlAppService.copyFileEntry(
@@ -161,7 +162,7 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 				}
 
 				DLFileShortcut dlFileShortcut =
-					_dlFileShortcutLocalService.fetchDLFileShortcut(entryId);
+					_dlFileShortcutLocalService.fetchDLFileShortcut(dlObjectId);
 
 				if (dlFileShortcut != null) {
 					_dlAppService.copyFileShortcut(
@@ -174,7 +175,7 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 				}
 
 				DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(
-					entryId);
+					dlObjectId);
 
 				if (dlFolder != null) {
 					_dlAppService.copyFolder(

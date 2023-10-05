@@ -380,7 +380,7 @@ public class FolderActionDisplayContext {
 		).setRedirect(
 			_dlRequestHelper.getCurrentURL()
 		).setParameter(
-			"entryIds", _getFolderId()
+			"dlObjectIds", _getFolderId()
 		).setParameter(
 			"sourceFolderId",
 			() -> {

@@ -913,7 +913,7 @@ public class UIItemsBuilder {
 		).setRedirect(
 			_getCurrentURL()
 		).setParameter(
-			"entryIds",
+			"dlObjectIds",
 			() -> {
 				if (_fileShortcut != null) {
 					return _fileShortcut.getFileShortcutId();

@@ -47,6 +47,10 @@ export function getOrganizations(pageSize) {
 		themeDisplay.getPortalURL()
 	);
 
+	url.searchParams.append(
+		'nestedFields',
+		`${ORGANIZATIONS_PROPERTY_NAME},${ACCOUNTS_PROPERTY_NAME},${USERS_PROPERTY_NAME_IN_ORGANIZATION}`
+	);
 	url.searchParams.append('pageSize', pageSize);
 
 	return fetchFromHeadless(url);

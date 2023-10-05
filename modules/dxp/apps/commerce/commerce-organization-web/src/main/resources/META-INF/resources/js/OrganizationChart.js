@@ -5,6 +5,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import classnames from 'classnames';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
@@ -18,13 +19,16 @@ import {VIEWS} from './utils/constants';
 
 import '../style/main.scss';
 function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
-	const [modalActive, setModalActive] = useState(false);
-	const [modalData, setModalData] = useState(null);
 	const [currentView, setCurrentView] = useState(VIEWS[0]);
 	const [expanded, setExpanded] = useState(false);
 	const [menuData, setMenuData] = useState(null);
 	const [menuParentData, setMenuParentData] = useState(null);
+	const [modalActive, setModalActive] = useState(false);
+	const [modalData, setModalData] = useState(null);
 	const [rootData, setRootData] = useState(null);
+	const [searchData, setSearchData] = useState(null);
+	const [searchDataCount, setSearchDataCount] = useState(0);
+
 	const clickedMenuButtonRef = useRef(null);
 	const chartSVGRef = useRef(null);
 	const chartInstanceRef = useRef(null);
@@ -72,7 +76,8 @@ function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
 						setMenuData(data);
 						setMenuParentData(parentData);
 					},
-				}
+				},
+				setSearchDataCount
 			);
 		}
 
@@ -87,16 +92,34 @@ function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
 				setCurrentView,
 			}}
 		>
-			<ManagementBar />
+			<ManagementBar
+				onSearchSelected={(id, name, type) => {
+					setSearchData(name);
+					if (chartInstanceRef && chartInstanceRef.current) {
+						chartInstanceRef.current.search(id, type);
+					}
+				}}
+			/>
 
 			<div className={classnames('org-chart-container', {expanded})}>
+				{searchData && !!searchData.length ? (
+					<div className="org-chart-result-helper">
+						{sub(Liferay.Language.get('x-result-for-x'), [
+							searchDataCount,
+							searchData,
+						])}
+					</div>
+				) : (
+					<></>
+				)}
+
 				<svg className="svg-chart" ref={chartSVGRef} />
 
 				<div className="zoom-controls">
 					<ClayButtonWithIcon
 						displayType="secondary"
 						onClick={() => setExpanded(!expanded)}
-						small
+						size="sm"
 						symbol="expand"
 					/>
 
@@ -104,14 +127,14 @@ function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
 						<ClayButtonWithIcon
 							displayType="secondary"
 							ref={zoomOutRef}
-							small
+							size="sm"
 							symbol="hr"
 						/>
 
 						<ClayButtonWithIcon
 							displayType="secondary"
 							ref={zoomInRef}
-							small
+							size="sm"
 							symbol="plus"
 						/>
 					</ClayButton.Group>

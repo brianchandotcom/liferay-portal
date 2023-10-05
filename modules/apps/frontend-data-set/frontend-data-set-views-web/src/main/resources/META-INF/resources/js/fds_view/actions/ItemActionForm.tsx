@@ -74,17 +74,17 @@ const MESSAGE_TYPES = [
 	},
 ];
 
-const MODAL_VARIANTS = [
+const MODAL_SIZES = [
 	{
 		label: Liferay.Language.get('full-screen'),
 		value: 'full-screen',
 	},
 	{
-		label: Liferay.Language.get('lg'),
+		label: Liferay.Language.get('large'),
 		value: 'lg',
 	},
 	{
-		label: Liferay.Language.get('sm'),
+		label: Liferay.Language.get('small'),
 		value: 'sm',
 	},
 ];
@@ -139,11 +139,11 @@ const ItemActionForm = ({
 			initialValues?.confirmationMessageType ?? 'warning',
 		iconSymbol: initialValues?.icon ?? '',
 		label: initialValues?.label ?? '',
+		modalSize: initialValues?.modalSize ?? '',
 		permissionKey: initialValues?.permissionKey ?? '',
 		title: initialValues?.title ?? '',
 		type: initialValues?.type ?? 'link',
 		url: initialValues?.url ?? '',
-		variant: initialValues?.variant ?? '',
 	});
 
 	const saveFDSAction = async () => {
@@ -152,11 +152,11 @@ const ItemActionForm = ({
 		const {
 			confirmationMessageType,
 			iconSymbol,
+			modalSize,
 			permissionKey,
 			title,
 			type,
 			url,
-			variant,
 		} = actionData;
 
 		const relationShip =
@@ -168,11 +168,11 @@ const ItemActionForm = ({
 			confirmationMessage_i18n: confirmationMessageTranslations,
 			icon: iconSymbol,
 			label_i18n: labelTranslations,
+			modalSize,
 			permissionKey,
 			[relationShip]: fdsView.id,
 			type,
 			url,
-			variant,
 		} as any;
 
 		if (Liferay.FeatureFlags['LPS-172017']) {
@@ -307,7 +307,7 @@ const ItemActionForm = ({
 	const titleFormElementId = `${namespace}ModalTitle`;
 	const typeFormElementId = `${namespace}Type`;
 	const urlFormElementId = `${namespace}URL`;
-	const variantFormElementId = `${namespace}Variant`;
+	const modalSizeFormElementId = `${namespace}ModalSize`;
 
 	return (
 		<>
@@ -459,21 +459,21 @@ const ItemActionForm = ({
 									</label>
 
 									<ClaySelectWithOption
-										id={variantFormElementId}
+										id={modalSizeFormElementId}
 										onBlur={() => {
 											validateForm();
 										}}
 										onChange={(event) =>
 											setActionData({
 												...actionData,
-												variant: event.target.value,
+												modalSize: event.target.value,
 											})
 										}
-										options={MODAL_VARIANTS}
+										options={MODAL_SIZES}
 										placeholder={Liferay.Language.get(
 											'please-select-an-option'
 										)}
-										value={actionData.variant}
+										value={actionData.modalSize}
 									/>
 								</ClayForm.Group>
 							</ClayLayout.Col>

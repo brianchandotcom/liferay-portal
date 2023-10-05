@@ -10,20 +10,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Jaime León Rosado
  */
-public class EntrySizeLimitExceededException extends PortalException {
+public class DLObjectSizeLimitExceededException extends PortalException {
 
-	public EntrySizeLimitExceededException() {
+	public DLObjectSizeLimitExceededException() {
 	}
 
-	public EntrySizeLimitExceededException(String msg) {
+	public DLObjectSizeLimitExceededException(String msg) {
 		super(msg);
 	}
 
-	public EntrySizeLimitExceededException(String msg, Throwable throwable) {
+	public DLObjectSizeLimitExceededException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public EntrySizeLimitExceededException(Throwable throwable) {
+	public DLObjectSizeLimitExceededException(Throwable throwable) {
 		super(throwable);
 	}
 

@@ -13,7 +13,7 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.document.library.web.internal.exception.EntrySizeLimitExceededException;
+import com.liferay.document.library.web.internal.exception.DLObjectSizeLimitExceededException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -61,8 +61,8 @@ public class CopyDLObjectsMVCRenderCommand implements MVCRenderCommand {
 
 			return "/document_library/copy_dl_objects.jsp";
 		}
-		catch (EntrySizeLimitExceededException
-					entrySizeLimitExceededException) {
+		catch (DLObjectSizeLimitExceededException
+					dlObjectSizeLimitExceededException) {
 
 			HttpServletRequest originalHttpServletRequest =
 				_portal.getOriginalServletRequest(
@@ -70,8 +70,8 @@ public class CopyDLObjectsMVCRenderCommand implements MVCRenderCommand {
 
 			SessionErrors.add(
 				originalHttpServletRequest.getSession(),
-				EntrySizeLimitExceededException.class,
-				entrySizeLimitExceededException);
+				DLObjectSizeLimitExceededException.class,
+				dlObjectSizeLimitExceededException);
 
 			_sendRedirect(renderRequest, renderResponse);
 
@@ -150,7 +150,7 @@ public class CopyDLObjectsMVCRenderCommand implements MVCRenderCommand {
 				_dlSizeLimitConfigurationProvider.getSystemMaxSizeToCopy(),
 				size)) {
 
-			throw new EntrySizeLimitExceededException(
+			throw new DLObjectSizeLimitExceededException(
 				_language.get(
 					themeDisplay.getLocale(),
 					DLCopyValidationUtil.getCopyToValidationMessage(

@@ -176,13 +176,13 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 						<liferay-ui:error exception="<%= FileEntryLockException.MustOwnLock.class %>" message="you-can-only-checkin-documents-you-have-checked-out-yourself" />
 						<liferay-ui:error key="externalServiceFailed" message="you-cannot-access-external-service-because-you-are-not-allowed-to-or-it-is-unavailable" />
 
-						<liferay-ui:error exception="<%= EntrySizeLimitExceededException.class %>">
+						<liferay-ui:error exception="<%= DLObjectSizeLimitExceededException.class %>">
 
 							<%
-							EntrySizeLimitExceededException entrySizeLimitExceededException = (EntrySizeLimitExceededException)errorException;
+							DLObjectSizeLimitExceededException dlObjectSizeLimitExceededException = (DLObjectSizeLimitExceededException)errorException;
 							%>
 
-							<liferay-ui:message key="<%= entrySizeLimitExceededException.getMessage() %>" />
+							<liferay-ui:message key="<%= dlObjectSizeLimitExceededException.getMessage() %>" />
 						</liferay-ui:error>
 
 						<c:if test='<%= SessionErrors.contains(renderRequest, "googleDriveFileMissing") %>'>

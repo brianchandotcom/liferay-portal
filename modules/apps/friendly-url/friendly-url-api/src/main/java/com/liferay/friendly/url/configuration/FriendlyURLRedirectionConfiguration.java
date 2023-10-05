@@ -24,6 +24,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface FriendlyURLRedirectionConfiguration {
 
 	@Meta.AD(
+		deflt = "true",
+		description = "show-alternative-layout-friendly-url-message-description",
+		name = "show-alternative-layout-friendly-url-message", required = false
+	)
+	public boolean showAlternativeLayoutFriendlyURLMessage();
+
+	@Meta.AD(
 		deflt = "temporary", description = "redirection-type-description",
 		name = "redirection-type-name",
 		optionLabels = {"permanent", "temporary"},

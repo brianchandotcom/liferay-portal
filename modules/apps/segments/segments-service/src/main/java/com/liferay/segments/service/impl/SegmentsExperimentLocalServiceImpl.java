@@ -414,8 +414,6 @@ public class SegmentsExperimentLocalServiceImpl
 				String.valueOf(
 					counterLocalService.increment(
 						SegmentsExperience.class.getName())));
-
-			_setSegmentsExperienceKeyProperty(variantSegmentsExperience);
 		}
 
 		_segmentsExperienceLocalService.updateSegmentsExperience(

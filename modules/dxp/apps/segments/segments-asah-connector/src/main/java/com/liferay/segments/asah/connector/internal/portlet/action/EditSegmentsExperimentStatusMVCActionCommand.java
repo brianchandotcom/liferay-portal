@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
@@ -35,7 +34,6 @@ import com.liferay.segments.asah.connector.internal.client.model.util.Experiment
 import com.liferay.segments.asah.connector.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -164,26 +162,6 @@ public class EditSegmentsExperimentStatusMVCActionCommand
 
 					_segmentsExperimentService.deleteSegmentsExperiment(
 						segmentsExperiment, false);
-
-					SegmentsExperience segmentsExperience =
-						_segmentsExperienceLocalService.getSegmentsExperience(
-							winnerSegmentsExperienceId);
-
-					UnicodeProperties typeSettingsUnicodeProperties =
-						segmentsExperience.getTypeSettingsUnicodeProperties();
-
-					if (typeSettingsUnicodeProperties.containsKey(
-							"segmentsExperimentSegmentsExperienceKey")) {
-
-						typeSettingsUnicodeProperties.remove(
-							"segmentsExperimentSegmentsExperienceKey");
-
-						segmentsExperience.setTypeSettingsUnicodeProperties(
-							typeSettingsUnicodeProperties);
-
-						_segmentsExperienceLocalService.
-							updateSegmentsExperience(segmentsExperience);
-					}
 
 					segmentsExperiment = null;
 				}

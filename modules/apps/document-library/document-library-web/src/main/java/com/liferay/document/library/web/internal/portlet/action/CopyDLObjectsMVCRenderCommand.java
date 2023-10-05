@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class CopyEntriesMVCRenderCommand implements MVCRenderCommand {
+public class CopyDLObjectsMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

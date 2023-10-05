@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class CopyEntriesMVCActionCommand extends BaseMVCActionCommand {
+public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -250,7 +250,7 @@ public class CopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CopyEntriesMVCActionCommand.class);
+		CopyDLObjectsMVCActionCommand.class);
 
 	@Reference
 	private DLAppService _dlAppService;

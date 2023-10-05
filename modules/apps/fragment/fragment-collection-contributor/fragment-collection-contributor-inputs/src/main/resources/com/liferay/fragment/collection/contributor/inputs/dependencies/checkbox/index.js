@@ -1,7 +1,12 @@
-if (layoutMode === 'edit') {
-	const input = document.getElementById(`${fragmentNamespace}-checkbox`);
+const inputElement = document.getElementById(`${fragmentNamespace}-checkbox`);
 
-	if (input) {
-		input.setAttribute('disabled', true);
+if (inputElement) {
+	if (input.attributes?.readOnly) {
+		inputElement.addEventListener('click', (event) =>
+			event.preventDefault()
+		);
+	}
+	else if (layoutMode === 'edit') {
+		inputElement.setAttribute('disabled', true);
 	}
 }

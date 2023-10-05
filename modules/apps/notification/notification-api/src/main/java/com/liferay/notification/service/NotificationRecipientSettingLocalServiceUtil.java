@@ -269,9 +269,7 @@ public class NotificationRecipientSettingLocalServiceUtil {
 	}
 
 	public static NotificationRecipientSetting getNotificationRecipientSetting(
-			long notificationRecipientId, String name)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationRecipientSettingException {
+		long notificationRecipientId, String name) {
 
 		return getService().getNotificationRecipientSetting(
 			notificationRecipientId, name);

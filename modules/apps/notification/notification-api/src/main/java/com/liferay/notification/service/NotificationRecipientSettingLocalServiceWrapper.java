@@ -306,10 +306,8 @@ public class NotificationRecipientSettingLocalServiceWrapper
 
 	@Override
 	public com.liferay.notification.model.NotificationRecipientSetting
-			getNotificationRecipientSetting(
-				long notificationRecipientId, String name)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationRecipientSettingException {
+		getNotificationRecipientSetting(
+			long notificationRecipientId, String name) {
 
 		return _notificationRecipientSettingLocalService.
 			getNotificationRecipientSetting(notificationRecipientId, name);

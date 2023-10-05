@@ -6,7 +6,9 @@
 package com.liferay.asset.kernel.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -35,6 +37,24 @@ public interface AssetRendererFactory<T> {
 
 	public AssetEntry getAssetEntry(String classNameId, long classPK)
 		throws PortalException;
+
+	public default AssetEntry getAssetEntry(T entry) throws PortalException {
+		if (entry instanceof ResourcedModel) {
+			ResourcedModel resourcedModel = (ResourcedModel)entry;
+
+			return getAssetEntry(
+				getClassName(), resourcedModel.getResourcePrimKey());
+		}
+
+		if (entry instanceof BaseModel<?>) {
+			BaseModel<?> baseModel = (BaseModel<?>)entry;
+
+			return getAssetEntry(
+				getClassName(), (Long)baseModel.getPrimaryKeyObj());
+		}
+
+		return null;
+	}
 
 	public AssetRenderer<T> getAssetRenderer(long classPK)
 		throws PortalException;

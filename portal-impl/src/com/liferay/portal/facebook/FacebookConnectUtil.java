@@ -7,7 +7,7 @@ package com.liferay.portal.facebook;
 
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import javax.portlet.PortletRequest;
 
@@ -21,62 +21,82 @@ public class FacebookConnectUtil {
 	public static String getAccessToken(
 		long companyId, String redirect, String code) {
 
-		return _facebookConnect.getAccessToken(companyId, redirect, code);
+		FacebookConnect facebookConnect = _facebookConnectSnapshot.get();
+
+		return facebookConnect.getAccessToken(companyId, redirect, code);
 	}
 
 	public static String getAccessTokenURL(long companyId) {
-		return _facebookConnect.getAccessTokenURL(companyId);
+		FacebookConnect facebookConnect = _facebookConnectSnapshot.get();
+
+		return facebookConnect.getAccessTokenURL(companyId);
 	}
 
 	public static String getAppId(long companyId) {
-		return _facebookConnect.getAppId(companyId);
+		FacebookConnect facebookConnect = _facebookConnectSnapshot.get();
+
+		return facebookConnect.getAppId(companyId);
 	}
 
 	public static String getAppSecret(long companyId) {
-		return _facebookConnect.getAppSecret(companyId);
+		FacebookConnect facebookConnect = _facebookConnectSnapshot.get();
+
+		return facebookConnect.getAppSecret(companyId);
 	}
 
 	public static String getAuthURL(long companyId) {
-		return _facebookConnect.getAuthURL(companyId);
+		FacebookConnect facebookConnect = _facebookConnectSnapshot.get();
+
+		return facebookConnect.getAuthURL(companyId);
 	}
 
 	public static FacebookConnect getFacebookConnect() {
-		return _facebookConnect;
+		return _facebookConnectSnapshot.get();
 	}
 
 	public static JSONObject getGraphResources(
 		long companyId, String path, String accessToken, String fields) {
 
-		return _facebookConnect.getGraphResources(
+		FacebookConnect facebookConnect = _facebookConnectSnapshot.get();
+
+		return facebookConnect.getGraphResources(
 			companyId, path, accessToken, fields);
 	}
 
 	public static String getGraphURL(long companyId) {
-		return _facebookConnect.getGraphURL(companyId);
+		FacebookConnect facebookConnect = _facebookConnectSnapshot.get();
+
+		return facebookConnect.getGraphURL(companyId);
 	}
 
 	public static String getProfileImageURL(PortletRequest portletRequest) {
-		return _facebookConnect.getProfileImageURL(portletRequest);
+		FacebookConnect facebookConnect = _facebookConnectSnapshot.get();
+
+		return facebookConnect.getProfileImageURL(portletRequest);
 	}
 
 	public static String getRedirectURL(long companyId) {
-		return _facebookConnect.getRedirectURL(companyId);
+		FacebookConnect facebookConnect = _facebookConnectSnapshot.get();
+
+		return facebookConnect.getRedirectURL(companyId);
 	}
 
 	public static boolean isEnabled(long companyId) {
-		return _facebookConnect.isEnabled(companyId);
+		FacebookConnect facebookConnect = _facebookConnectSnapshot.get();
+
+		return facebookConnect.isEnabled(companyId);
 	}
 
 	public static boolean isVerifiedAccountRequired(long companyId) {
-		return _facebookConnect.isVerifiedAccountRequired(companyId);
+		FacebookConnect facebookConnect = _facebookConnectSnapshot.get();
+
+		return facebookConnect.isVerifiedAccountRequired(companyId);
 	}
 
 	private FacebookConnectUtil() {
 	}
 
-	private static volatile FacebookConnect _facebookConnect =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			FacebookConnect.class, FacebookConnectUtil.class,
-			"_facebookConnect", false, true);
+	private static final Snapshot<FacebookConnect> _facebookConnectSnapshot =
+		new Snapshot<>(FacebookConnectUtil.class, FacebookConnect.class);
 
 }

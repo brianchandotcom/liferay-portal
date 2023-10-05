@@ -108,23 +108,19 @@ definition {
 
 			ACUtils.addSiteAndPage();
 
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Update keyword parameter on DXP") {
 			Navigator.openURL();
 
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Search Page");
-
 			SearchPortlets.addWidgets(
 				groupName = "Site Name",
-				layoutName = "Search Page",
+				layoutName = "AC Page",
 				searchPortletList = "Type Facet,Search Results,Search Bar");
 
 			ACUtils.navigateToSitePage(
-				pageName = "Search Page",
+				pageName = "AC Page",
 				siteName = "Site Name");
 
 			SearchPortlets.configureSearchBarWidget(keywordsParameterName = "query");
@@ -143,7 +139,7 @@ definition {
 		}
 
 		task ("Switch to new property in AC") {
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Go to sites pages tab") {

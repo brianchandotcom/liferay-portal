@@ -22,6 +22,7 @@ interface BaseProps {
 }
 
 interface ExperienceSelectorProps extends BaseProps {
+	className?: string;
 	disabled?: boolean;
 	label?: string;
 	onChangeExperience?: (key: React.Key) => void;

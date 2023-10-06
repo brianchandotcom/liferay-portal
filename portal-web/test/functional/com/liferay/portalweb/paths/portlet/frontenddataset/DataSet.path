@@ -216,6 +216,32 @@
 <!-- DATA SET FILTERS -->
 
 <tr>
+	<td>DATE_CALENDAR</td>
+	<td>//div[contains(label,'${key_label}')]//button[contains(@class,'date-picker-dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_CALENDAR_DAY</td>
+	<td>xpath=(//div[@class='date-picker-calendar-body']//div[@class='date-picker-col']/button[text()=${key_valueDay}])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YEAR_CALENDAR_FIELD</td>
+	<td>xpath=(//div[contains(@class, 'input-date-picker-year')])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YEAR_CALENDAR_OPTION</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//button[contains(@class, 'dropdown-item') and contains(., '${key_optionYear}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_FIELD</td>
+	<td>//input[contains(@name,'FDSViewsPortlet_${key_label}')]/following-sibling::input</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>FILTER_BY_DROPDOWN</td>
 	<td>//select[contains(@title, 'Filter By')]</td>
 	<td></td>

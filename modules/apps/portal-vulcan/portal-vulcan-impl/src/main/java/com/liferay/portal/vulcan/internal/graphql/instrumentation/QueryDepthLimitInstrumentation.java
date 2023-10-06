@@ -8,12 +8,9 @@ package com.liferay.portal.vulcan.internal.graphql.instrumentation;
 import com.liferay.portal.vulcan.internal.graphql.exception.QueryDepthLimitExceededException;
 
 import graphql.analysis.MaxQueryDepthInstrumentation;
-import graphql.analysis.QueryDepthInfo;
 
 import graphql.execution.AbortExecutionException;
 import graphql.execution.instrumentation.Instrumentation;
-
-import java.util.function.Function;
 
 /**
  * @author Carlos Correa
@@ -21,35 +18,15 @@ import java.util.function.Function;
 public class QueryDepthLimitInstrumentation
 	extends MaxQueryDepthInstrumentation implements Instrumentation {
 
-	public static QueryDepthLimitInstrumentation of(int queryDepthLimit) {
-		return new QueryDepthLimitInstrumentation(
-			queryDepthInfo ->
-				(queryDepthLimit > 0) &&
-				(queryDepthInfo.getDepth() > queryDepthLimit),
-			queryDepthLimit);
-	}
-
-	public Function<QueryDepthInfo, Boolean> getFunction() {
-		return _function;
+	public QueryDepthLimitInstrumentation(int queryDepthLimit) {
+		super(queryDepthLimit);
 	}
 
 	@Override
 	public AbortExecutionException mkAbortException(
 		int depth, int queryDepthLimit) {
 
-		throw new QueryDepthLimitExceededException(depth, _queryDepthLimit);
+		throw new QueryDepthLimitExceededException(depth, queryDepthLimit);
 	}
-
-	private QueryDepthLimitInstrumentation(
-		Function<QueryDepthInfo, Boolean> function, int queryDepthLimit) {
-
-		super(0, function);
-
-		_function = function;
-		_queryDepthLimit = queryDepthLimit;
-	}
-
-	private final Function<QueryDepthInfo, Boolean> _function;
-	private final int _queryDepthLimit;
 
 }

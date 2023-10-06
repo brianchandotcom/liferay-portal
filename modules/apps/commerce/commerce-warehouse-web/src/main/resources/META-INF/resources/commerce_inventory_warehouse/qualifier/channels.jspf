@@ -5,7 +5,7 @@
  */
 --%>
 
-<c:if test="<%= cIWarehouseQualifiersDisplayContext.hasPermission(ActionKeys.UPDATE) %>">
+<c:if test="<%= cIWarehouseQualifiersDisplayContext.hasPermission() %>">
 	<div id="item-finder-root-channel"></div>
 
 	<liferay-frontend:component

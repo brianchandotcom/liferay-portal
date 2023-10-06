@@ -6,6 +6,7 @@
 package com.liferay.commerce.warehouse.web.internal.display.context;
 
 import com.liferay.commerce.frontend.model.HeaderActionModel;
+import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
@@ -20,7 +21,10 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -125,29 +129,31 @@ public class CommerceInventoryWarehousesDisplayContext {
 	public List<HeaderActionModel> getHeaderActionModels() throws Exception {
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
-		LiferayPortletResponse liferayPortletResponse =
-			cpRequestHelper.getLiferayPortletResponse();
+		if (hasPermission()) {
+			LiferayPortletResponse liferayPortletResponse =
+				cpRequestHelper.getLiferayPortletResponse();
 
-		RenderResponse renderResponse = cpRequestHelper.getRenderResponse();
+			RenderResponse renderResponse = cpRequestHelper.getRenderResponse();
 
-		RenderURL cancelURL = renderResponse.createRenderURL();
+			RenderURL cancelURL = renderResponse.createRenderURL();
 
-		HeaderActionModel cancelHeaderActionModel = new HeaderActionModel(
-			null, cancelURL.toString(), null, "cancel");
+			HeaderActionModel cancelHeaderActionModel = new HeaderActionModel(
+				null, cancelURL.toString(), null, "cancel");
 
-		headerActionModels.add(cancelHeaderActionModel);
+			headerActionModels.add(cancelHeaderActionModel);
 
-		HeaderActionModel saveHeaderActionModel = new HeaderActionModel(
-			"btn-primary", liferayPortletResponse.getNamespace() + "fm",
-			PortletURLBuilder.createActionURL(
-				liferayPortletResponse
-			).setActionName(
-				"/commerce_inventory_warehouse" +
-					"/edit_commerce_inventory_warehouse"
-			).buildString(),
-			null, "save");
+			HeaderActionModel saveHeaderActionModel = new HeaderActionModel(
+				"btn-primary", liferayPortletResponse.getNamespace() + "fm",
+				PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/commerce_inventory_warehouse" +
+						"/edit_commerce_inventory_warehouse"
+				).buildString(),
+				null, "save");
 
-		headerActionModels.add(saveHeaderActionModel);
+			headerActionModels.add(saveHeaderActionModel);
+		}
 
 		return headerActionModels;
 	}
@@ -200,10 +206,10 @@ public class CommerceInventoryWarehousesDisplayContext {
 		).buildPortletURL();
 	}
 
-	public CreationMenu getWarehouseCreationMenu() {
+	public CreationMenu getWarehouseCreationMenu() throws PortalException {
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (hasManageCommerceInventoryWarehousePermission()) {
+		if (hasAddWarehousePermission()) {
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.setHref(getAddCommerceWarehouseRenderURL());
@@ -250,18 +256,35 @@ public class CommerceInventoryWarehousesDisplayContext {
 				"get", "permissions", "modal-permissions"));
 	}
 
+	public boolean hasAddWarehousePermission() {
+		PortletResourcePermission portletResourcePermission =
+			_commerceInventoryWarehouseModelResourcePermission.
+				getPortletResourcePermission();
+
+		if (portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), null,
+				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
+
+			return true;
+		}
+
+		return portletResourcePermission.contains(
+			cpRequestHelper.getPermissionChecker(), null,
+			CommerceInventoryActionKeys.ADD_WAREHOUSE);
+	}
+
 	public boolean hasManageCommerceInventoryWarehousePermission() {
 		return true;
 	}
 
-	public boolean hasPermission(String actionId) throws PortalException {
+	public boolean hasPermission() throws PortalException {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			getCommerceInventoryWarehouse();
 
 		return _commerceInventoryWarehouseModelResourcePermission.contains(
 			cpRequestHelper.getPermissionChecker(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			actionId);
+			ActionKeys.UPDATE);
 	}
 
 	protected CommerceChannelRelService commerceChannelRelService;

@@ -60,7 +60,7 @@ public class CommerceInventoryWarehouseDetailsScreenNavigationEntry
 					PermissionThreadLocal.getPermissionChecker(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					ActionKeys.UPDATE);
+					ActionKeys.VIEW);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

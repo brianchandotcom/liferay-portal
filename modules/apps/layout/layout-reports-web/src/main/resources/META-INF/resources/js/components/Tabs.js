@@ -4,7 +4,6 @@
  */
 
 import ClayTabs from '@clayui/tabs';
-import {ExperienceSelector} from '@liferay/layout-js-components-web';
 import React, {useState} from 'react';
 
 import LayoutReports from './layout_reports/LayoutReports';
@@ -17,19 +16,10 @@ const TAB_COMPONENTS = {
 
 export default function Tabs({segments, tabs}) {
 	const [activeTab, setActiveTab] = useState(0);
+	const {segmentsExperiences, selectedSegmentsExperience} = segments;
 
 	return (
 		<>
-			{segments.segmentsExperiences.length > 1 ? (
-				<ExperienceSelector
-					className="c-px-3 c-py-1 page-audit__experience-selector"
-					segmentsExperiences={segments.segmentsExperiences}
-					selectedSegmentsExperience={
-						segments.selectedSegmentsExperience
-					}
-				/>
-			) : null}
-
 			<ClayTabs
 				active={activeTab}
 				className="px-2"
@@ -51,6 +41,13 @@ export default function Tabs({segments, tabs}) {
 			<ClayTabs.Content activeIndex={activeTab} fade>
 				{tabs.map((tab, index) => {
 					const Component = TAB_COMPONENTS[tab.id];
+					const props = {
+						url: tab.url,
+						...(tab.id === 'performance' && {
+							segmentsExperiences,
+							selectedSegmentsExperience,
+						}),
+					};
 
 					return (
 						<ClayTabs.TabPane
@@ -59,7 +56,7 @@ export default function Tabs({segments, tabs}) {
 							id={`tabpanel-${index}`}
 							key={tab.id}
 						>
-							<Component url={tab.url} />
+							<Component {...props} />
 						</ClayTabs.TabPane>
 					);
 				})}

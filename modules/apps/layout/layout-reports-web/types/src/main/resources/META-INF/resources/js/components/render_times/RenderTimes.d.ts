@@ -5,4 +5,13 @@
 
 /// <reference types="react" />
 
-export default function RenderTimes({url}: {url: string}): JSX.Element;
+import {SegmentExperience} from '@liferay/layout-js-components-web';
+export default function RenderTimes({
+	segmentsExperiences,
+	selectedSegmentsExperience,
+	url,
+}: {
+	segmentsExperiences: SegmentExperience[];
+	selectedSegmentsExperience: SegmentExperience;
+	url: string;
+}): JSX.Element;

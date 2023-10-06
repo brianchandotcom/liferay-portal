@@ -5,7 +5,11 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayEmptyState from '@clayui/empty-state';
-import {SearchResultsMessage} from '@liferay/layout-js-components-web';
+import {
+	ExperienceSelector,
+	SearchResultsMessage,
+	SegmentExperience,
+} from '@liferay/layout-js-components-web';
 import {BetaButton} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
@@ -17,7 +21,15 @@ import FragmentList from './FragmentList';
 import ResultsBar from './ResultsBar';
 import getFragmentsByFilterValue from './getFragmentsByFilterValue';
 
-export default function RenderTimes({url}: {url: string}) {
+export default function RenderTimes({
+	segmentsExperiences,
+	selectedSegmentsExperience,
+	url,
+}: {
+	segmentsExperiences: SegmentExperience[];
+	selectedSegmentsExperience: SegmentExperience;
+	url: string;
+}) {
 	const [ascending, setAscending] = useState(false);
 	const [filters, setFilters] = useState<FragmentFilter>({
 		origin: null,
@@ -58,6 +70,15 @@ export default function RenderTimes({url}: {url: string}) {
 				learnResourceContext={learnResources}
 				tooltipAlign="top-left"
 			/>
+
+			{segmentsExperiences.length > 1 ? (
+				<ExperienceSelector
+					className="page-audit__experience-selector"
+					segmentsExperiences={segmentsExperiences}
+					selectedSegmentsExperience={selectedSegmentsExperience}
+				/>
+			) : null}
+
 			<Filter
 				filters={filters}
 				isAscendingSort={ascending}

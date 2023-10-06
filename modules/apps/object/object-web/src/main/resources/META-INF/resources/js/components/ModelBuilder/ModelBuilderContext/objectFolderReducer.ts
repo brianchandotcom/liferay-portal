@@ -113,6 +113,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 						businessType: objectField.businessType,
 						externalReferenceCode:
 							objectField.externalReferenceCode,
+						id: objectField.id,
 						label: objectField.label,
 						name: objectField.name,
 						primaryKey: objectField.name === 'id',

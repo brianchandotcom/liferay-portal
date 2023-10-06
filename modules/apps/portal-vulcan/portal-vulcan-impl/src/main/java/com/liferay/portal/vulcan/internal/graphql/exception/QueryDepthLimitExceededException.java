@@ -12,12 +12,12 @@ import graphql.execution.AbortExecutionException;
 /**
  * @author Carlos Correa
  */
-public class MaxQueryDepthExceededException extends AbortExecutionException {
+public class QueryDepthLimitExceededException extends AbortExecutionException {
 
-	public MaxQueryDepthExceededException(int depth, int maxQueryDepth) {
+	public QueryDepthLimitExceededException(int depth, int queryDepthLimit) {
 		super(
 			StringBundler.concat(
-				"Maximum query depth exceeded ", depth, " > ", maxQueryDepth));
+				"Query depth limit exceeded ", depth, " > ", queryDepthLimit));
 	}
 
 }

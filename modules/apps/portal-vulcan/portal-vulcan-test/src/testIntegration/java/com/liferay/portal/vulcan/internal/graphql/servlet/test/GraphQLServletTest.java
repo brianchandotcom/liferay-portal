@@ -125,7 +125,7 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 						"exception", JSONUtil.put("errno", 400)
 					)
 				).put(
-					"message", "Maximum query depth exceeded 2 > 1"
+					"message", "Query depth limit exceeded 2 > 1"
 				).toString(),
 				JSONUtil.getValueAsString(
 					jsonObject, "JSONArray/errors", "Object/0"),

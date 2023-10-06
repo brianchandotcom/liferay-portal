@@ -6,20 +6,15 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
-import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
+import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateCollectionExceptionRequestHandlerUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -59,57 +54,22 @@ public class UpdateLayoutPageTemplateCollectionMVCActionCommand
 
 			jsonObject.put(
 				"redirectURL", ParamUtil.getString(actionRequest, "redirect"));
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
 		}
 		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-
-			if (portalException instanceof
-					DuplicateLayoutPageTemplateCollectionException) {
-
-				jsonObject.put(
-					"error",
-					_language.get(
-						_portal.getHttpServletRequest(actionRequest),
-						"please-enter-a-unique-folder-name"));
-			}
-			else if (portalException instanceof
-						LayoutPageTemplateCollectionNameException) {
-
-				jsonObject.put(
-					"error",
-					_language.get(
-						_portal.getHttpServletRequest(actionRequest),
-						"please-enter-a-valid-folder-name"));
-			}
-			else {
-				jsonObject.put(
-					"error",
-					_language.get(
-						_portal.getHttpServletRequest(actionRequest),
-						"an-unexpected-error-occurred"));
-			}
+			LayoutPageTemplateCollectionExceptionRequestHandlerUtil.
+				handlePortalException(
+					actionRequest, actionResponse, portalException);
 		}
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpdateLayoutPageTemplateCollectionMVCActionCommand.class);
 
 	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private Language _language;
-
-	@Reference
 	private LayoutPageTemplateCollectionService
 		_layoutPageTemplateCollectionService;
-
-	@Reference
-	private Portal _portal;
 
 }

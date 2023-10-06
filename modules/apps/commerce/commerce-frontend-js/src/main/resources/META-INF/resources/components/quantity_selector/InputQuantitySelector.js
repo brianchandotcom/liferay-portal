@@ -118,6 +118,7 @@ const InputQuantitySelector = forwardRef(
 
 				onUpdate({
 					errors: getErrors(quantity, min, max, step, precision),
+					unitOfMeasure,
 					value: quantity,
 				});
 			};
@@ -231,6 +232,7 @@ const InputQuantitySelector = forwardRef(
 
 						onUpdate({
 							errors,
+							unitOfMeasure: inputProperties.currentUnitOfMeasure,
 							value: numValue,
 						});
 					}}

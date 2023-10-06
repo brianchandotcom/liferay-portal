@@ -9,6 +9,7 @@ import CartItem from '../CartItem';
 import CartItemsList from '../CartItemsList';
 import CartItemsListActions from '../CartItemsListActions';
 import EditItem from '../EditItem';
+import EditItemUnitOfMeasure from '../EditItemUnitOfMeasure';
 import Header from '../Header';
 import Opener from '../Opener';
 import OrderButton from '../OrderButton';
@@ -17,6 +18,7 @@ import Wrapper from '../Wrapper';
 import {
 	CART,
 	EDIT_ITEM,
+	EDIT_ITEM_UNIT_OF_MEASURE,
 	HEADER,
 	ITEM,
 	ITEMS_LIST,
@@ -30,6 +32,7 @@ import {
 export const DEFAULT_VIEWS = {
 	[CART]: {component: Wrapper},
 	[EDIT_ITEM]: {component: EditItem},
+	[EDIT_ITEM_UNIT_OF_MEASURE]: {component: EditItemUnitOfMeasure},
 	[HEADER]: {component: Header},
 	[ITEM]: {component: CartItem},
 	[ITEMS_LIST]: {component: CartItemsList},

@@ -49,6 +49,7 @@ export const REMOVAL_CANCELING_TIMEOUT = 700;
  */
 export const CART = 'Cart';
 export const EDIT_ITEM = 'EditItem';
+export const EDIT_ITEM_UNIT_OF_MEASURE = 'EditItemUnitOfMeasure';
 export const HEADER = 'Header';
 export const ITEM = 'Item';
 export const ITEMS_LIST = 'ItemsList';

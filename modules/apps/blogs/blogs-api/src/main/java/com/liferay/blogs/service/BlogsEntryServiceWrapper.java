@@ -59,6 +59,27 @@ public class BlogsEntryServiceWrapper
 	public BlogsEntry addEntry(
 			String externalReferenceCode, String title, String subtitle,
 			String urlTitle, String description, String content,
+			java.util.Date displayDate, boolean allowPingbacks,
+			boolean allowTrackbacks, String[] trackbacks,
+			String coverImageCaption,
+			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
+				coverImageImageSelector,
+			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
+				smallImageImageSelector,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _blogsEntryService.addEntry(
+			externalReferenceCode, title, subtitle, urlTitle, description,
+			content, displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
+	}
+
+	@Override
+	public BlogsEntry addEntry(
+			String externalReferenceCode, String title, String subtitle,
+			String urlTitle, String description, String content,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 			boolean allowTrackbacks, String[] trackbacks,
@@ -337,6 +358,26 @@ public class BlogsEntryServiceWrapper
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
+	}
+
+	@Override
+	public BlogsEntry updateEntry(
+			long entryId, String title, String subtitle, String urlTitle,
+			String description, String content, java.util.Date displayDate,
+			boolean allowPingbacks, boolean allowTrackbacks,
+			String[] trackbacks, String coverImageCaption,
+			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
+				coverImageImageSelector,
+			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
+				smallImageImageSelector,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _blogsEntryService.updateEntry(
+			entryId, title, subtitle, urlTitle, description, content,
+			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
 	}
 
 	@Override

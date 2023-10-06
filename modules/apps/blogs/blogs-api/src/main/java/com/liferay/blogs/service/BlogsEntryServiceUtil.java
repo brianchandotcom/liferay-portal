@@ -60,6 +60,26 @@ public class BlogsEntryServiceUtil {
 	public static BlogsEntry addEntry(
 			String externalReferenceCode, String title, String subtitle,
 			String urlTitle, String description, String content,
+			java.util.Date displayDate, boolean allowPingbacks,
+			boolean allowTrackbacks, String[] trackbacks,
+			String coverImageCaption,
+			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
+				coverImageImageSelector,
+			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
+				smallImageImageSelector,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addEntry(
+			externalReferenceCode, title, subtitle, urlTitle, description,
+			content, displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
+	}
+
+	public static BlogsEntry addEntry(
+			String externalReferenceCode, String title, String subtitle,
+			String urlTitle, String description, String content,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 			boolean allowTrackbacks, String[] trackbacks,
@@ -296,6 +316,25 @@ public class BlogsEntryServiceUtil {
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
+	}
+
+	public static BlogsEntry updateEntry(
+			long entryId, String title, String subtitle, String urlTitle,
+			String description, String content, java.util.Date displayDate,
+			boolean allowPingbacks, boolean allowTrackbacks,
+			String[] trackbacks, String coverImageCaption,
+			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
+				coverImageImageSelector,
+			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
+				smallImageImageSelector,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateEntry(
+			entryId, title, subtitle, urlTitle, description, content,
+			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
 	}
 
 	public static BlogsEntry updateEntry(

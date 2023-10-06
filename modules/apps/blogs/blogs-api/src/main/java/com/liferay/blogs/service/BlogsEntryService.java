@@ -65,6 +65,16 @@ public interface BlogsEntryService extends BaseService {
 	public BlogsEntry addEntry(
 			String externalReferenceCode, String title, String subtitle,
 			String urlTitle, String description, String content,
+			Date displayDate, boolean allowPingbacks, boolean allowTrackbacks,
+			String[] trackbacks, String coverImageCaption,
+			ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public BlogsEntry addEntry(
+			String externalReferenceCode, String title, String subtitle,
+			String urlTitle, String description, String content,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 			boolean allowTrackbacks, String[] trackbacks,
@@ -194,6 +204,16 @@ public interface BlogsEntryService extends BaseService {
 			long entryId, String title, String subtitle, String description,
 			String content, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
+			boolean allowPingbacks, boolean allowTrackbacks,
+			String[] trackbacks, String coverImageCaption,
+			ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public BlogsEntry updateEntry(
+			long entryId, String title, String subtitle, String urlTitle,
+			String description, String content, Date displayDate,
 			boolean allowPingbacks, boolean allowTrackbacks,
 			String[] trackbacks, String coverImageCaption,
 			ImageSelector coverImageImageSelector,

@@ -7,15 +7,18 @@ package com.liferay.portal.vulcan.internal.graphql.servlet.instrumentation;
 
 import com.liferay.portal.vulcan.internal.graphql.exception.QueryDepthLimitExceededException;
 
+import graphql.analysis.MaxQueryDepthInstrumentation;
+
 import graphql.execution.AbortExecutionException;
+import graphql.execution.instrumentation.Instrumentation;
 
 /**
  * @author Carlos Correa
  */
-public class MaxQueryDepthInstrumentation
-	extends graphql.analysis.MaxQueryDepthInstrumentation {
+public class QueryDepthLimitInstrumentation
+	extends MaxQueryDepthInstrumentation implements Instrumentation {
 
-	public MaxQueryDepthInstrumentation(int queryDepthLimit) {
+	public QueryDepthLimitInstrumentation(int queryDepthLimit) {
 		super(
 			0,
 			queryDepthInfo ->

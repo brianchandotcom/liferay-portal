@@ -47,7 +47,7 @@ import com.liferay.portal.vulcan.internal.graphql.data.fetcher.LiferayMethodData
 import com.liferay.portal.vulcan.internal.graphql.data.processor.GraphQLDTOContributorDataFetchingProcessor;
 import com.liferay.portal.vulcan.internal.graphql.data.processor.LiferayMethodDataFetchingProcessor;
 import com.liferay.portal.vulcan.internal.graphql.exception.QueryDepthLimitExceededException;
-import com.liferay.portal.vulcan.internal.graphql.servlet.instrumentation.MaxQueryDepthInstrumentation;
+import com.liferay.portal.vulcan.internal.graphql.servlet.instrumentation.QueryDepthLimitInstrumentation;
 import com.liferay.portal.vulcan.internal.graphql.util.GraphQLUtil;
 import com.liferay.portal.vulcan.internal.graphql.validation.GraphQLDTOContributorRequestContext;
 import com.liferay.portal.vulcan.internal.graphql.validation.ServletDataRequestContext;
@@ -942,7 +942,7 @@ public class GraphQLServletExtender {
 				).withExecutionStrategyProvider(
 					executionStrategyProvider
 				).withInstrumentation(
-					() -> _getMaxQueryDepthInstrumentation(companyId)
+					() -> _getQueryDepthLimitInstrumentation(companyId)
 				).build();
 
 			graphQLConfigurationBuilder.with(graphQLQueryInvoker);
@@ -1063,22 +1063,6 @@ public class GraphQLServletExtender {
 		return graphQLObjectTypeBuilder.build();
 	}
 
-	private MaxQueryDepthInstrumentation _getMaxQueryDepthInstrumentation(
-		long companyId) {
-
-		try {
-			HeadlessAPICompanyConfiguration headlessAPICompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					HeadlessAPICompanyConfiguration.class, companyId);
-
-			return new MaxQueryDepthInstrumentation(
-				headlessAPICompanyConfiguration.queryDepthLimit());
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
 	private GraphQLObjectType _getPageGraphQLObjectType(
 		GraphQLType facetGraphQLType, GraphQLType objectGraphQLType,
 		String name) {
@@ -1103,6 +1087,22 @@ public class GraphQLServletExtender {
 		graphQLObjectTypeBuilder.name(name + "Page");
 
 		return graphQLObjectTypeBuilder.build();
+	}
+
+	private QueryDepthLimitInstrumentation _getQueryDepthLimitInstrumentation(
+		long companyId) {
+
+		try {
+			HeadlessAPICompanyConfiguration headlessAPICompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					HeadlessAPICompanyConfiguration.class, companyId);
+
+			return new QueryDepthLimitInstrumentation(
+				headlessAPICompanyConfiguration.queryDepthLimit());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private Integer _getVersion(Method method) {

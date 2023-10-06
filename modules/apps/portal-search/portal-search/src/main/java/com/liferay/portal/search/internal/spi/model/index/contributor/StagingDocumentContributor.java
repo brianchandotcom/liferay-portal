@@ -40,7 +40,7 @@ public class StagingDocumentContributor implements DocumentContributor<Object> {
 
 		Indexer<?> indexer = indexerRegistry.getIndexer(className);
 
-		if (!indexer.isStagingAware()) {
+		if ((indexer == null) || !indexer.isStagingAware()) {
 			return;
 		}
 

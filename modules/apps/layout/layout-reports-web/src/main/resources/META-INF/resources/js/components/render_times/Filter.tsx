@@ -58,7 +58,7 @@ export default function Filter({
 	}));
 
 	return (
-		<div className="d-flex pt-3">
+		<div className="d-flex">
 			<SearchForm
 				className="flex-grow-1"
 				label={Liferay.Language.get('search-fragments')}

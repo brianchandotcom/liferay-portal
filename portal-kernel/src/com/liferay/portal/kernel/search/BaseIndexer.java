@@ -5,7 +5,9 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -1144,7 +1146,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		DocumentHelper documentHelper = new DocumentHelper(document);
 
-		documentHelper.setEntryKey(className, classPK);
+		documentHelper.setEntryKey(
+			className, _getEntryClassPK(baseModel, className, classPK));
 
 		document.addUID(className, classPK);
 
@@ -1459,6 +1462,33 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		}
 
 		return entryClassNameIndexerMap;
+	}
+
+	private <T> long _getEntryClassPK(T entry, String className, long classPK) {
+		AssetRendererFactory<T> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		if (assetRendererFactory == null) {
+			return classPK;
+		}
+
+		try {
+			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(entry);
+
+			if (assetEntry != null) {
+				return assetEntry.getClassPK();
+			}
+
+			return 0;
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return classPK;
 	}
 
 	private SearchResultPermissionFilter _getSearchResultPermissionFilter(

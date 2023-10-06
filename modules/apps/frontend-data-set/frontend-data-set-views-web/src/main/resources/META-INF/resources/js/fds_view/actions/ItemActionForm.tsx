@@ -167,7 +167,6 @@ const ItemActionForm = ({
 		let valid = true;
 
 		if (
-			!actionData.label ||
 			!actionData.url ||
 			!translationExists({translations: labelTranslations})
 		) {

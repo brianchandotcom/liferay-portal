@@ -424,13 +424,24 @@ public class DefaultObjectEntryManagerImplTest
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.singletonList(
+				ListUtil.fromArray(
 					new TextObjectFieldBuilder(
+					).indexed(
+						true
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						"textObjectFieldName"
+						"textObjectFieldName1"
+					).build(),
+					new TextObjectFieldBuilder(
+					).indexed(
+						true
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"textObjectFieldName2"
 					).build()));
 
 		ObjectDefinition accountEntryObjectDefinition =
@@ -1851,6 +1862,76 @@ public class DefaultObjectEntryManagerImplTest
 			accountEntryUserRel);
 
 		_assertObjectEntriesSize(0);
+
+		// Search
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+
+		AccountEntry accountEntry3 = _addAccountEntry();
+		AccountEntry accountEntry4 = _addAccountEntry();
+
+		_defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition3,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry3.getAccountEntryId()
+					).put(
+						"textObjectFieldName1", "Able"
+					).put(
+						"textObjectFieldName2", "Baker"
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition3,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry4.getAccountEntryId()
+					).put(
+						"textObjectFieldName1", "Charlie"
+					).put(
+						"textObjectFieldName2", "Delta"
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_assignAccountEntryRole(accountEntry3, _buyerRole, _addUser());
+
+		_assignAccountEntryRole(accountEntry4, _buyerRole, _addUser());
+
+		for (String value : ListUtil.fromArray("Able", "Baker")) {
+			Page<ObjectEntry> page =
+				_defaultObjectEntryManager.getObjectEntries(
+					companyId, _objectDefinition3, null, null,
+					dtoConverterContext, StringPool.BLANK, null, value, null);
+
+			Collection<ObjectEntry> objectEntries = page.getItems();
+
+			Assert.assertEquals(
+				objectEntries.toString(), 0, objectEntries.size());
+		}
+
+		for (String value : ListUtil.fromArray("Charlie", "Delta")) {
+			Page<ObjectEntry> page =
+				_defaultObjectEntryManager.getObjectEntries(
+					companyId, _objectDefinition3, null, null,
+					dtoConverterContext, StringPool.BLANK, null, value, null);
+
+			Collection<ObjectEntry> objectEntries = page.getItems();
+
+			Assert.assertEquals(
+				objectEntries.toString(), 1, objectEntries.size());
+		}
 
 		// User should be able to view object entries for account entry 1 and
 		// account entry 2 because he is a member of an organization that

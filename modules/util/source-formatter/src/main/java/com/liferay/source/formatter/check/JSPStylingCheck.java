@@ -302,7 +302,7 @@ public class JSPStylingCheck extends BaseStylingCheck {
 	private static final Pattern _incorrectLineBreakPattern6 = Pattern.compile(
 		"(\n(\t+)\\w+='<%=) (HashMapBuilder\\..*) *(%>')");
 	private static final Pattern _incorrectLineBreakPattern7 = Pattern.compile(
-		"\n(\t*)(<% )(.*)");
+		"\n(\t*<% .*)");
 	private static final Pattern _incorrectSingleLineJavaSourcePattern =
 		Pattern.compile("(\t*)(<% (.*) %>)\n");
 	private static final Pattern _jspExpressionTagPattern = Pattern.compile(

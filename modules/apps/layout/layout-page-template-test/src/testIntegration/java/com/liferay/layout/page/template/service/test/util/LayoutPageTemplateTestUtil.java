@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.service.test.util;
 
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -38,7 +39,7 @@ public class LayoutPageTemplateTestUtil {
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				RandomTestUtil.randomString(), StringPool.BLANK,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC,
 				serviceContext);
 	}
 

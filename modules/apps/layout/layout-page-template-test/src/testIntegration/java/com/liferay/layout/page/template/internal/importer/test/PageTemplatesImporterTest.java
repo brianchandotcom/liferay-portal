@@ -20,6 +20,7 @@ import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
@@ -167,7 +168,7 @@ public class PageTemplatesImporterTest {
 						LayoutPageTemplateConstants.
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						name, RandomTestUtil.randomString(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC,
 						serviceContext);
 
 			String layoutPageTemplateEntryName = RandomTestUtil.randomString();
@@ -544,7 +545,7 @@ public class PageTemplatesImporterTest {
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC,
 						serviceContext);
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -627,7 +628,7 @@ public class PageTemplatesImporterTest {
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC,
 						serviceContext);
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -713,7 +714,7 @@ public class PageTemplatesImporterTest {
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC,
 						serviceContext);
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -815,7 +816,7 @@ public class PageTemplatesImporterTest {
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC,
 						serviceContext);
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =

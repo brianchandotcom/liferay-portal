@@ -7,8 +7,8 @@ package com.liferay.layout.page.template.change.tracking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
@@ -46,7 +46,7 @@ public class LayoutPageTemplateCollectionTableReferenceDefinitionTest
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				RandomTestUtil.randomString(), StringPool.BLANK,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC,
 				ServiceContextTestUtil.getServiceContext());
 	}
 

@@ -7,6 +7,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.importer.LayoutsImportStrategy;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -93,7 +94,7 @@ public class ImportMVCResourceCommandTest {
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				"imported", StringPool.BLANK,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC,
 				_serviceContext);
 
 		_assertImportResultsJSONObject(
@@ -144,7 +145,7 @@ public class ImportMVCResourceCommandTest {
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				"imported", StringPool.BLANK,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC,
 				_serviceContext);
 
 		_assertImportResultsJSONObject(

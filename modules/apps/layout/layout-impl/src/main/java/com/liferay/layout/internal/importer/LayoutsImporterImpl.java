@@ -45,6 +45,7 @@ import com.liferay.layout.internal.importer.validator.PageDefinitionValidator;
 import com.liferay.layout.internal.importer.validator.PageTemplateCollectionValidator;
 import com.liferay.layout.internal.importer.validator.PageTemplateValidator;
 import com.liferay.layout.internal.importer.validator.UtilityPageTemplateValidator;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
@@ -566,7 +567,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						pageTemplateCollection.getName(),
 						pageTemplateCollection.getDescription(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC,
 						ServiceContextThreadLocal.getServiceContext());
 			}
 		}
@@ -584,7 +585,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 							groupId, pageTemplateCollection.getName(),
 							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC),
 					pageTemplateCollection.getDescription(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC,
 					ServiceContextThreadLocal.getServiceContext());
 		}
 		else if (Objects.equals(

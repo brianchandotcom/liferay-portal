@@ -497,7 +497,7 @@ definition {
 				field = "ID",
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
-				function = "Max",
+				functionType = "Max",
 				relationship = "Relationship");
 		}
 
@@ -937,7 +937,7 @@ definition {
 			ObjectAdmin.addObjectFieldViaUI(
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
-				function = "Count",
+				functionType = "Count",
 				relationship = "Relationship");
 		}
 
@@ -1104,7 +1104,7 @@ definition {
 				field = "Order Status",
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
-				function = "Max",
+				functionType = "Max",
 				relationship = "RelationshipCommerce");
 		}
 
@@ -2334,7 +2334,7 @@ definition {
 				field = "ID",
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
-				function = "Max",
+				functionType = "Max",
 				relationship = "RelationshipAccount");
 		}
 
@@ -4307,7 +4307,7 @@ definition {
 				field = "Custom Integer",
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
-				function = "Max",
+				functionType = "Max",
 				relationship = "Relationship");
 		}
 
@@ -4358,7 +4358,7 @@ definition {
 				field = "Custom Long Integer",
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
-				function = "Max",
+				functionType = "Max",
 				relationship = "Relationship");
 		}
 
@@ -4409,7 +4409,7 @@ definition {
 				field = "Custom Long Integer",
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
-				function = "Max",
+				functionType = "Max",
 				relationship = "Relationship");
 		}
 
@@ -4547,7 +4547,7 @@ definition {
 			ObjectAdmin.addObjectFieldViaUI(
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
-				function = "Count",
+				functionType = "Count",
 				relationship = "Relationship");
 		}
 

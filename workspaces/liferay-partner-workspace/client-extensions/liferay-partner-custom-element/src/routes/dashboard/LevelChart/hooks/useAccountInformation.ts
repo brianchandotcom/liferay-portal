@@ -10,14 +10,12 @@ import {PartnershipLevels} from '../../../../common/components/dashboard/enums/p
 import {partnerLevelProperties} from '../../../../common/components/dashboard/mock';
 import AccountEntry from '../../../../common/interfaces/accountEntry';
 import Opportunity from '../../../../common/interfaces/opportunity';
+import PartnerLevel from '../../../../common/interfaces/partnerLevel';
 import Role from '../../../../common/interfaces/role';
 import UserAccount from '../../../../common/interfaces/userAccount';
-import useGetAccountByERC from '../../../../common/services/liferay/accounts/useGetAccountByERC';
+import {LiferayAPIs} from '../../../../common/services/liferay/common/enums/apis';
 import LiferayItems from '../../../../common/services/liferay/common/interfaces/liferayItems';
-import useGetOpportunities from '../../../../common/services/liferay/object/oppportunities/useGetOpportunities';
-import useGetPartnerLevel from '../../../../common/services/liferay/object/partner-level/useGetPartnerLevel';
-import useGetAccountUserAccounts from '../../../../common/services/liferay/user-account/useGetAccountUserAccounts';
-import useGetMyUserAccount from '../../../../common/services/liferay/user-account/useGetMyUserAccount';
+import useGet from '../../../../common/services/liferay/object/useGet';
 
 export default function useAccountInformation() {
 	const [headcountAccumulator, setHeadcountAccumulator] = useState({
@@ -37,31 +35,36 @@ export default function useAccountInformation() {
 		solutionDeliveryCertification: false,
 	});
 
-	const {data: userAccount} = useGetMyUserAccount();
-
-	const {
-		data: account,
-		isValidating: isValidatingAccount,
-	} = useGetAccountByERC(
-		userAccount?.accountBriefs[0]?.externalReferenceCode
+	const {data: userAccount} = useGet<UserAccount>(
+		`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`
 	);
 
-	const {data: accountUserAccounts} = useGetAccountUserAccounts(
-		account?.externalReferenceCode
+	const {data: account, isValidating: isValidatingAccount} = useGet<
+		AccountEntry
+	>(
+		userAccount?.accountBriefs[0]?.externalReferenceCode &&
+			`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${userAccount.accountBriefs[0].externalReferenceCode}`
+	);
+
+	const {data: accountUserAccounts} = useGet<LiferayItems<UserAccount[]>>(
+		account?.externalReferenceCode &&
+			`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${account.externalReferenceCode}/user-accounts`
 	);
 
 	const {
 		data: opportunities,
 		isValidating: isValidatingOpportunities,
-	} = useGetOpportunities(
+	} = useGet<LiferayItems<Opportunity[]>>(
 		account?.name &&
-			`?pageSize=200&filter=accountName eq '${account?.name}'`
+			`/o/${LiferayAPIs.OBJECT}/opportunitysfs?pageSize=200&filter=accountName eq '${account.name}'`
 	);
 
-	const {
-		data: partnerLevel,
-		isValidating: isValidatingPartnerLevel,
-	} = useGetPartnerLevel(account?.r_prtLvlToAcc_c_partnerLevelERC);
+	const {data: partnerLevel, isValidating: isValidatingPartnerLevel} = useGet<
+		PartnerLevel
+	>(
+		account?.r_prtLvlToAcc_c_partnerLevelERC &&
+			`/o/${LiferayAPIs.OBJECT}/partnerlevels/by-external-reference-code/${account.r_prtLvlToAcc_c_partnerLevelERC}`
+	);
 
 	useEffect(() => {
 		const getARRValues = (

@@ -25,10 +25,13 @@ import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
 import usePermissionActions from '../../common/hooks/usePermissionActions';
+import MDFRequestDTO from '../../common/interfaces/dto/mdfRequestDTO';
 import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
-import useGetMDFRequests from '../../common/services/liferay/object/mdf-requests/useGetMDFRequests';
+import {LiferayAPIs} from '../../common/services/liferay/common/enums/apis';
+import LiferayItems from '../../common/services/liferay/common/interfaces/liferayItems';
+import useGet from '../../common/services/liferay/object/useGet';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useFilters from './hooks/useFilters';
@@ -46,13 +49,16 @@ const MDFRequestList = () => {
 
 	const {filters, filtersTerm, onFilter, setFilters} = useFilters();
 	const pagination = usePagination();
-	const {data, isValidating, mutate} = useGetMDFRequests(
-		pagination.activePage,
-		pagination.activeDelta,
-		filtersTerm
+
+	const {data, isValidating, mutate} = useGet<LiferayItems<MDFRequestDTO[]>>(
+		`/o/${LiferayAPIs.OBJECT}/mdfrequests?nestedFields=mdfReqToMDFClms&filter=${filtersTerm}&page=${pagination.activePage}&pageSize=${pagination.activeDelta}&sort=dateCreated:desc`
 	);
 
-	const {data: dataCSV} = useGetMDFRequests(1, -1, filtersTerm);
+	const {data: dataCSV} = useGet<LiferayItems<MDFRequestDTO[]>>(
+		`/o/${
+			LiferayAPIs.OBJECT
+		}/mdfrequests?nestedFields=mdfReqToMDFClms&filter=${filtersTerm}&page=${1}&pageSize=${-1}&sort=dateCreated:desc`
+	);
 
 	const mdfRequestItemsCSV = dataCSV?.items;
 	const mdfRequestListItemsCSV =

@@ -10,6 +10,7 @@ import DonutChart from '../../../common/components/dashboard/components/DonutCha
 import {revenueChartColumnColors} from '../../../common/components/dashboard/utils/constants/chartColumnsColors';
 import getRevenueChartColumns from '../../../common/components/dashboard/utils/getRevenueChartColumns';
 import {Liferay} from '../../../common/services/liferay';
+import {retry} from '../../../common/utils/retry';
 
 export default function () {
 	const [titleChart, setTitleChart] = useState('');
@@ -20,36 +21,42 @@ export default function () {
 
 	const getRevenueData = async () => {
 		setLoading(true);
-		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const growthRevenueResponseNewProject = await fetch(
-			"/o/c/opportunitysfs?pageSize=200&sort=closeDate:desc&filter=type eq 'New Project Existing Business' and stage eq 'Closed Won'",
-			{
-				headers: {
-					'accept': 'application/json',
-					'x-csrf-token': Liferay.authToken,
-				},
-			}
-		);
-
-		const growthRevenueResponseNewBusiness = await fetch(
-			"/o/c/opportunitysfs?pageSize=200&sort=closeDate:desc&filter=type eq 'New Business' and stage eq 'Closed Won'",
-			{
-				headers: {
-					'accept': 'application/json',
-					'x-csrf-token': Liferay.authToken,
-				},
-			}
-		);
 
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const renewalRevenueResponse = await fetch(
-			"/o/c/opportunitysfs?&pageSize=200&sort=closeDate:desc&filter=type ne 'New Business' and type ne 'New Project Existing Business' and stage ne 'Rejected' and stage ne 'Rolled into another opportunity' and stage ne 'Disqualified' and stage ne 'Closed Lost'",
-			{
-				headers: {
-					'accept': 'application/json',
-					'x-csrf-token': Liferay.authToken,
-				},
-			}
+		const growthRevenueResponseNewProject = await retry<Response>(() =>
+			fetch(
+				"/o/c/opportunitysfs?pageSize=200&sort=closeDate:desc&filter=type eq 'New Project Existing Business' and stage eq 'Closed Won'",
+				{
+					headers: {
+						'accept': 'application/json',
+						'x-csrf-token': Liferay.authToken,
+					},
+				}
+			)
+		);
+
+		const growthRevenueResponseNewBusiness = await retry<Response>(() =>
+			fetch(
+				"/o/c/opportunitysfs?pageSize=200&sort=closeDate:desc&filter=type eq 'New Business' and stage eq 'Closed Won'",
+				{
+					headers: {
+						'accept': 'application/json',
+						'x-csrf-token': Liferay.authToken,
+					},
+				}
+			)
+		);
+
+		const renewalRevenueResponse = await retry<Response>(() =>
+			fetch(
+				"/o/c/opportunitysfs?&pageSize=200&sort=closeDate:desc&filter=type ne 'New Business' and type ne 'New Project Existing Business' and stage ne 'Rejected' and stage ne 'Rolled into another opportunity' and stage ne 'Disqualified' and stage ne 'Closed Lost'",
+				{
+					headers: {
+						'accept': 'application/json',
+						'x-csrf-token': Liferay.authToken,
+					},
+				}
+			)
 		);
 
 		if (
@@ -79,10 +86,6 @@ export default function () {
 
 			return;
 		}
-		Liferay.Util.openToast({
-			message: 'An unexpected error occured.',
-			type: 'danger',
-		});
 	};
 
 	useEffect(() => {

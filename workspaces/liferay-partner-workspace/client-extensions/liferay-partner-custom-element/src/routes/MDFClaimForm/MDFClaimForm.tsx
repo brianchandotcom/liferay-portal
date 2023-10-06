@@ -15,10 +15,12 @@ import {PermissionActionType} from '../../common/enums/permissionActionType';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePermissionActions from '../../common/hooks/usePermissionActions';
 import MDFClaimDTO from '../../common/interfaces/dto/mdfClaimDTO';
+import MDFRequestDTO from '../../common/interfaces/dto/mdfRequestDTO';
+import LiferayDocumentFolder from '../../common/interfaces/liferayDocumentFolder';
 import {Liferay} from '../../common/services/liferay';
-import useGetDocumentFolder from '../../common/services/liferay/headless-delivery/useGetDocumentFolders';
-import useGetMDFClaimById from '../../common/services/liferay/object/mdf-claim/useGetMDFClaimById';
-import useGetMDFRequestById from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestById';
+import {LiferayAPIs} from '../../common/services/liferay/common/enums/apis';
+import LiferayItems from '../../common/services/liferay/common/interfaces/liferayItems';
+import useGet from '../../common/services/liferay/object/useGet';
 import {Status} from '../../common/utils/constants/status';
 import {getMDFClaimFromDTO} from '../../common/utils/dto/mdf-claim/getMDFClaimFromDTO';
 import MDFClaimPage from './components/MDFClaimPage';
@@ -34,22 +36,29 @@ const MDFClaimForm = () => {
 	const {
 		data: claimParentFolder,
 		isValidating: isValidatingClaimFolder,
-	} = useGetDocumentFolder(Liferay.ThemeDisplay.getScopeGroupId(), 'claim');
+	} = useGet<LiferayItems<LiferayDocumentFolder[]>>(
+		`/o/${
+			LiferayAPIs.HEADERLESS_DELIVERY
+		}/sites/${Liferay.ThemeDisplay.getScopeGroupId()}/document-folders/?filter=name eq 'claim'`
+	);
 
 	const claimParentFolderId = claimParentFolder?.items[0].id;
 
 	const mdfRequestId = useGetMDFRequestIdByHash(SECOND_POSITION_AFTER_HASH);
 	const mdfClaimId = useGetMDFRequestIdByHash(FOURTH_POSITION_AFTER_HASH);
+	const {data: mdfRequest, isValidating: isValidatingMDFRequestById} = useGet<
+		MDFRequestDTO
+	>(
+		mdfRequestId &&
+			`/o/${LiferayAPIs.OBJECT}/mdfrequests/${mdfRequestId}?nestedFields=accountEntry,mdfReqToActs,actToBgts,actToMDFClmActs,r_mdfClmToMDFClmActs_c_mdfClaimId,mdfReqToMDFClms&nestedFieldsDepth=5`
+	);
 
-	const {
-		data: mdfRequest,
-		isValidating: isValidatingMDFRequestById,
-	} = useGetMDFRequestById(Number(mdfRequestId));
-
-	const {
-		data: mdfClaimDTO,
-		isValidating: isValidatingMDFClaimById,
-	} = useGetMDFClaimById(Number(mdfClaimId));
+	const {data: mdfClaimDTO, isValidating: isValidatingMDFClaimById} = useGet<
+		MDFClaimDTO
+	>(
+		mdfClaimId &&
+			`/o/${LiferayAPIs.OBJECT}/mdfclaims/${mdfClaimId}?nestedFields=mdfClmToMDFClmActs,mdfClmActToMDFClmBgts,mdfClmActToMDFActDocs&nestedFieldsDepth=2`
+	);
 
 	const actions = usePermissionActions(ObjectActionName.MDF_CLAIM);
 

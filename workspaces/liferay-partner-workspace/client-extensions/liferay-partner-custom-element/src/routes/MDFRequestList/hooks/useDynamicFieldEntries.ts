@@ -6,15 +6,29 @@
 import {useMemo} from 'react';
 
 import {LiferayPicklistName} from '../../../common/enums/liferayPicklistName';
-import useGetListTypeDefinitions from '../../../common/services/liferay/list-type-definitions/useGetListTypeDefinitions';
-import useGetMyUserAccount from '../../../common/services/liferay/user-account/useGetMyUserAccount';
+import ListTypeDefinition from '../../../common/interfaces/listTypeDefinition';
+import UserAccount from '../../../common/interfaces/userAccount';
+import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
+import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
+import useGet from '../../../common/services/liferay/object/useGet';
 import getEntriesByListTypeDefinitions from '../../../common/utils/getEntriesByListTypeDefinitions';
 
 export default function useDynamicFieldEntries() {
-	const {data: userAccount} = useGetMyUserAccount();
-	const {data: listTypeDefinitions} = useGetListTypeDefinitions([
-		LiferayPicklistName.MDF_REQUEST_STATUS,
-	]);
+	const {data: userAccount} = useGet<UserAccount>(
+		`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`
+	);
+
+	const pickListNames = [LiferayPicklistName.MDF_REQUEST_STATUS];
+
+	const {data: listTypeDefinitions} = useGet<
+		LiferayItems<ListTypeDefinition[]>
+	>(
+		`/o/${
+			LiferayAPIs.HEADERLESS_ADMIN_LIST_TYPE
+		}/list-type-definitions?filter=name in ('${pickListNames.join(
+			"', '"
+		)}')`
+	);
 
 	const fieldEntries = useMemo(
 		() => getEntriesByListTypeDefinitions(listTypeDefinitions?.items),

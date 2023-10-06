@@ -6,7 +6,10 @@
 import {useMemo} from 'react';
 
 import {MDFClaimColumnKey} from '../../../common/enums/mdfClaimColumnKey';
-import useGetMDFClaim from '../../../common/services/liferay/object/mdf-claim/useGetMDFClaim';
+import MDFClaimDTO from '../../../common/interfaces/dto/mdfClaimDTO';
+import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
+import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
+import useGet from '../../../common/services/liferay/object/useGet';
 import {customFormatDateOptions} from '../../../common/utils/constants/customFormatDateOptions';
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
@@ -17,7 +20,9 @@ export default function useGetListItemsFromMDFClaims(
 	pageSize: number,
 	filtersTerm: string
 ) {
-	const swrResponse = useGetMDFClaim(page, pageSize, filtersTerm);
+	const swrResponse = useGet<LiferayItems<MDFClaimDTO[]>>(
+		`/o/${LiferayAPIs.OBJECT}/mdfclaims?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=dateCreated:desc`
+	);
 
 	const listItems = useMemo(
 		() =>

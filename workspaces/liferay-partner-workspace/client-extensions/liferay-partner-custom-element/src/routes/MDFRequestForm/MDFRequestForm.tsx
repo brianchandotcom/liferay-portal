@@ -18,9 +18,10 @@ import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePermissionActions from '../../common/hooks/usePermissionActions';
 import MDFRequestDTO from '../../common/interfaces/dto/mdfRequestDTO';
 import MDFRequest from '../../common/interfaces/mdfRequest';
+import UserAccount from '../../common/interfaces/userAccount';
 import {Liferay} from '../../common/services/liferay';
-import useGetMDFRequestById from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestById';
-import useGetMyUserAccount from '../../common/services/liferay/user-account/useGetMyUserAccount';
+import {LiferayAPIs} from '../../common/services/liferay/common/enums/apis';
+import useGet from '../../common/services/liferay/object/useGet';
 import {Status} from '../../common/utils/constants/status';
 import {getMDFRequestFromDTO} from '../../common/utils/dto/mdf-request/getMDFRequestFromDTO';
 import isObjectEmpty from '../../common/utils/isObjectEmpty';
@@ -63,12 +64,14 @@ const MDFRequestForm = () => {
 	const [step, setStep] = useState<StepType>(StepType.GOALS);
 	const siteURL = useLiferayNavigate();
 
-	const mdfRequestId = Number(
-		useGetMDFRequestIdByHash(FIRST_POSITION_AFTER_HASH)
+	const mdfRequestId = useGetMDFRequestIdByHash(FIRST_POSITION_AFTER_HASH);
+	const {data, isValidating} = useGet<MDFRequestDTO>(
+		mdfRequestId &&
+			`/o/${LiferayAPIs.OBJECT}/mdfrequests/${mdfRequestId}?nestedFields=accountEntry,mdfReqToActs,actToBgts,actToMDFClmActs,r_mdfClmToMDFClmActs_c_mdfClaimId,mdfReqToMDFClms&nestedFieldsDepth=5`
 	);
-
-	const {data, isValidating} = useGetMDFRequestById(mdfRequestId);
-	const {data: myUserAccountData} = useGetMyUserAccount();
+	const {data: userAccount} = useGet<UserAccount>(
+		`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`
+	);
 	const actions = usePermissionActions(ObjectActionName.MDF_REQUEST);
 
 	const hasPermissionToAccess = useMemo(
@@ -214,11 +217,7 @@ const MDFRequestForm = () => {
 		),
 	};
 
-	if (
-		((isValidating || !data) && mdfRequestId) ||
-		!myUserAccountData ||
-		!actions
-	) {
+	if (((isValidating || !data) && mdfRequestId) || !userAccount || !actions) {
 		return <ClayLoadingIndicator />;
 	}
 

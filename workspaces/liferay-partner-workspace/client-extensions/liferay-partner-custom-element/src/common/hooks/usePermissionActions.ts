@@ -5,10 +5,15 @@
 
 import {useMemo} from 'react';
 
-import useGetPermissionActions from '../services/liferay/object/permission-action/useGetPermissionActions';
+import PermissionAction from '../interfaces/permissionAction';
+import {LiferayAPIs} from '../services/liferay/common/enums/apis';
+import LiferayItems from '../services/liferay/common/interfaces/liferayItems';
+import useGet from '../services/liferay/object/useGet';
 
 export default function usePermissionActions(objectName: string) {
-	const response = useGetPermissionActions(objectName);
+	const response = useGet<LiferayItems<PermissionAction[]>>(
+		`/o/${LiferayAPIs.OBJECT}/permissionactions?filter=object eq '${objectName}'&pageSize=-1`
+	);
 
 	return useMemo(
 		() =>

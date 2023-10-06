@@ -13,7 +13,10 @@ import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfac
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
 import useCompanyOptions from '../../../../common/hooks/useCompanyOptions';
 import DealRegistration from '../../../../common/interfaces/dealRegistration';
-import useGetMDFActivity from '../../../../common/services/liferay/object/activity/useGetMDFActivity';
+import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
+import {LiferayAPIs} from '../../../../common/services/liferay/common/enums/apis';
+import LiferayItems from '../../../../common/services/liferay/common/interfaces/liferayItems';
+import useGet from '../../../../common/services/liferay/object/useGet';
 import getPicklistOptions from '../../../../common/utils/getPicklistOptions';
 import {StepType} from '../../enums/stepType';
 import useDynamicFieldEntries from '../../hooks/useDynamicFieldEntries';
@@ -44,8 +47,8 @@ const General = ({
 		)
 	);
 
-	const {data: mdfActivities} = useGetMDFActivity(
-		values.partnerAccount.externalReferenceCode
+	const {data: mdfActivities} = useGet<LiferayItems<MDFRequestActivity[]>>(
+		`/o/${LiferayAPIs.OBJECT}/activities?filter=r_accToActs_accountEntryERC eq '${values.partnerAccount.externalReferenceCode}' and submitted eq true and externalReferenceCodeSF ne ''`
 	);
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(

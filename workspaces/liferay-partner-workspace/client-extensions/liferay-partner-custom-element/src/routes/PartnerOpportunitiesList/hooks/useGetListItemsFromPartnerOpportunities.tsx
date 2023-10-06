@@ -6,8 +6,11 @@
 import {useMemo} from 'react';
 
 import {PartnerOpportunitiesColumnKey} from '../../../common/enums/partnerOpportunitiesColumnKey';
-import useGetDealRegistration from '../../../common/services/liferay/object/deal-registration/useGetDealRegistration';
+import DealRegistrationDTO from '../../../common/interfaces/dto/dealRegistrationDTO';
+import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
+import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
+import useGet from '../../../common/services/liferay/object/useGet';
 import getOpportunityAmount from '../utils/getOpportunityAmount';
 import getOpportunityDates from '../utils/getOpportunityDates';
 
@@ -15,16 +18,10 @@ export default function useGetListItemsFromPartnerOpportunities(
 	page: number,
 	pageSize: number,
 	filtersTerm: string,
-	sort: string,
-	opportunityFilter?: string
+	sort: string
 ) {
-	const swrResponse = useGetDealRegistration(
-		ResourceName.OPPORTUNITIES_SALESFORCE,
-		page,
-		pageSize,
-		filtersTerm,
-		opportunityFilter ? `&filter=${opportunityFilter}` : '',
-		sort
+	const swrResponse = useGet<LiferayItems<DealRegistrationDTO[]>>(
+		`/o/${LiferayAPIs.OBJECT}/${ResourceName.OPPORTUNITIES_SALESFORCE}?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}`
 	);
 
 	const listItems = useMemo(

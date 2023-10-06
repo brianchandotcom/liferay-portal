@@ -2,18 +2,18 @@
 
 [#if mdfClaimId?has_content]
 	[#assign permissionAction = restClient.get("/c/permissionactions?filter=object%20eq%20%27MDF%20Claim%27&pageSize=-1") /]
-	[#assign mdfClaim = restClient.get("/c/mdfclaims/${mdfClaimId}") /]
+	[#assign mdfClaim = (restClient.get("/c/mdfclaims/${mdfClaimId}"))! /]
 
-	[#assign hasMarketingReviewAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "MARKETING-REVIEW-STATUS-UPDATE")?has_content /]
-	[#assign hasApproveAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "APPROVE")?has_content /]
-	[#assign hasFinanceReviewAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "IN-FINANCE-REVIEW-STATUS")?has_content /]
-	[#assign hasRequestMoreInfoAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "REQUEST-MORE-INFO")?has_content /]
-	[#assign hasRejectAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "REJECT")?has_content /]
-	[#assign hasExpireAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "EXPIRE")?has_content /]
-	[#assign hasDirectorReviewAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "IN-DIRECTOR-REVIEW-STATUS")?has_content /]
-	[#assign hasClaimPaidAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "CLAIM-PAID-STATUS")?has_content /]
+	[#assign hasMarketingReviewAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "MARKETING-REVIEW-STATUS-UPDATE")?has_content)! /]
+	[#assign hasApproveAction = (permissionAction.items?filter(permissionAction -> permissionAction.action== "APPROVE")?has_content)! /]
+	[#assign hasFinanceReviewAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "IN-FINANCE-REVIEW-STATUS")?has_content)! /]
+	[#assign hasRequestMoreInfoAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "REQUEST-MORE-INFO")?has_content)! /]
+	[#assign hasRejectAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "REJECT")?has_content)! /]
+	[#assign hasExpireAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "EXPIRE")?has_content)! /]
+	[#assign hasDirectorReviewAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "IN-DIRECTOR-REVIEW-STATUS")?has_content)! /]
+	[#assign hasClaimPaidAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "CLAIM-PAID-STATUS")?has_content)! /]
 
-	[#assign mdfClaimStatusKey = mdfClaim.mdfClaimStatus.key /]
+	[#assign mdfClaimStatusKey = (mdfClaim.mdfClaimStatus.key)! /]
 
 	[#if mdfClaimStatusKey != 'claimPaid' && (hasMarketingReviewAction || hasFinanceReviewAction || hasRequestMoreInfoAction || hasExpireAction || hasRejectAction || hasApproveAction || hasDirectorReviewAction || hasClaimPaidAction)]
 		<script>
@@ -325,7 +325,7 @@
 			[/#if]
 		</ul>
 	[#else]
-		Status: ${mdfClaim.mdfClaimStatus.name}
+		Status: ${(mdfClaim.mdfClaimStatus.name)!}
 	[/#if]
 [#else]
 	<div class="alert alert-info">

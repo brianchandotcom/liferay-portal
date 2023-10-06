@@ -1,11 +1,11 @@
 [#assign mdfRequestId = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
 
 [#if mdfRequestId?has_content]
-	[#assign mdfRequest = restClient.get("/c/mdfrequests/${mdfRequestId}") /]
+	[#assign mdfRequest = (restClient.get("/c/mdfrequests/${mdfRequestId}"))! /]
 	[#assign permissionAction = restClient.get("/c/permissionactions?filter=object%20eq%20%27MDF%20Request%27&pageSize=-1") /]
-	[#assign hasCancelAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "CANCEL")?has_content /]
+	[#assign hasCancelAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "CANCEL")?has_content)! /]
 
-	[#assign mdfRequestStatusKey = mdfRequest.mdfRequestStatus.key /]
+	[#assign mdfRequestStatusKey = (mdfRequest.mdfRequestStatus.key)! /]
 
 	[#if hasCancelAction && mdfRequestStatusKey != 'canceled']
 		<script>

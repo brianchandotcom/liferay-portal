@@ -2,14 +2,14 @@
 [#assign siteURL = (themeDisplay.getURLCurrent()?keep_before("/l"))! /]
 
 [#if mdfClaimId?has_content]
-	[#assign mdfClaim = restClient.get("/c/mdfclaims/${mdfClaimId}") /]
+	[#assign mdfClaim = (restClient.get("/c/mdfclaims/${mdfClaimId}"))! /]
 	[#assign mdfRequestId = (mdfClaim.r_mdfReqToMDFClms_c_mdfRequestId)! /]
 
 	[#assign permissionAction = restClient.get("/c/permissionactions?filter=object%20eq%20%27MDF%20Claim%27&pageSize=-1") /]
 
-	[#assign hasDeleteAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "DELETE")?has_content /]
+	[#assign hasDeleteAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "DELETE")?has_content)! /]
 
-	[#if hasDeleteAction && mdfClaim.mdfClaimStatus.key == "draft"]
+	[#if hasDeleteAction && (mdfClaim.mdfClaimStatus.key)! == "draft"]
 		<a class="align-items-center btn btn-outline-danger d-flex mr-2 mt-2" onClick="callDeleteMDFClaimDetail()">
 			[@clay["icon"] symbol="trash"/] Delete
 		</a>

@@ -13,10 +13,10 @@
 [#function get_event_fields activity]
 	[#assign event_fields = [{ "title": "Activity Description", "value": (activity.description)!"-"}] /]
 
-	[#if activity.tactic.name != "Webinar"]
+	[#if (activity.tactic.name)! != "Webinar"]
 		[#assign event_fields = event_fields + [{ "title": "Activity Location", "value": (activity.location)!"-" }, { "title": "Venue Name", "value": (activity.venueName)!"-" }] /]
 	[/#if]
-	[#if activity.tactic.name = "Webinar"]
+	[#if (activity.tactic.name)! = "Webinar"]
 		[#assign event_fields = event_fields + [{ "title": "Webinar Topic", "value": (activity.webinarTopic)!"-" }, { "title": "Webinar Host/Platform", "value": (activity.webinarHostPlatform)!"-" }] /]
 	[/#if]
 
@@ -26,55 +26,55 @@
 [/#function]
 
 [#function get_digital_marketing_fields activity]
-	[#assign digital_marketing_fields = [{ "title": "Overall message, content or CTA", "value": (activity.overallMessageContentCTA)!"-"}] + [ {"title": "How will the Liferay brand be used in the campaign?", "value": (activity.howLiferayBrandUsed)}] /]
+	[#assign digital_marketing_fields = [{ "title": "Overall message, content or CTA", "value": (activity.overallMessageContentCTA)!"-"}] + [ {"title": "How will the Liferay brand be used in the campaign?", "value": (activity.howLiferayBrandUsed)!}] /]
 
-	[#if activity.tactic.name != "Email Campaign"]
+	[#if (activity.tactic.name)! != "Email Campaign"]
 		[#assign digital_marketing_fields = digital_marketing_fields + [ { "title": "Specific sites to be used", "value": (activity.specificSites)!"-" }, { "title": "Keywords for PPC campaigns", "value": (activity.keywordsForPPCCampaigns)!"-" }, { "title": "Ad (any size/type)", "value": (activity.ad)!"-" }] /]
-	[#elseif activity.tactic.name = "Email Campaign"]
+	[#elseif (activity.tactic.name)! = "Email Campaign"]
 		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Landing page copy", "value": (activity.landingPageCopy)!"-" }] /]
 	[/#if]
 
-	[#if activity.nurtureDripCampaign?has_content]
-		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Nurture or drip campaign?", "value": activity.nurtureDripCampaign?boolean?string("Yes", "No")!"-"}] /]
+	[#if (activity.nurtureDripCampaign?has_content)!false ]
+		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Nurture or drip campaign?", "value": (activity.nurtureDripCampaign?boolean?string("Yes", "No"))!"-"}] /]
 	[/#if]
 
-	[#if activity.manySeries?has_content]
-		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "How many in series?", "value": (activity.manySeries)!"-"}] /]
+	[#if (activity.manySeries?has_content)!false ]
+		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "How many in series", "value": (activity.manySeries)!}] /]
 	[/#if]
 
-	[#if activity.assetsLiferayRequired?has_content]
-		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Do you require any assets from Liferay?", "value": activity.assetsLiferayRequired?string("Yes", "No")!"-"}] /]
+	[#if (activity.assetsLiferayRequired?has_content)!false ]
+		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Do you require any assets from Liferay?", "value": (activity.assetsLiferayRequired?string("Yes", "No"))!"-"}] /]
 	[/#if]
 
-	[#if activity.assetsLiferayRequired == true]
-		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Please describe including specifications and due dates", "value": (activity.assetsLiferayDescription)!"-"}] /]
+	[#if (activity.assetsLiferayRequired)!false == true]
+		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Please describe including specifications and due dates", "value": (activity.assetsLiferayDescription)!}] /]
 	[/#if]
 
-	[#if activity.usingCIABAssets?has_content]
-		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Are you using any CIAB assets?", "value": activity.usingCIABAssets?boolean?string("Yes", "No")!"-"}] /]
+	[#if (activity.usingCIABAssets?has_content)!false ]
+		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Are you using any CIAB assets?", "value": (activity.usingCIABAssets?boolean?string("Yes", "No"))!}] /]
 	[/#if]
 
 	[#return digital_marketing_fields /]
 [/#function]
 
 [#function get_content_marketing_fields activity]
-	[#return [{ "title": "Will this content be gated and have a landing page?", "value": (activity.gatedLandingPage?string("Yes", "No"))!"-"}, { "title": "Primary theme or message of your content", "value": (activity.primaryThemeOrMessage)!"-" }, { "title": "Goal of Content", "value": (activity.goalOfContent)!"-" }, { "title": "Are you hiring an outside writer or agency to prepare the content?", "value": (activity.hiringOutsideWriterOrAgency?string("Yes", "No")!"-") }] /]
+	[#return [{ "title": "Will this content be gated and have a landing page?", "value": (activity.gatedLandingPage?string("Yes", "No"))!"-"}, { "title": "Primary theme or message of your content", "value": (activity.primaryThemeOrMessage)!"-" }, { "title": "Goal of Content", "value": (activity.goalOfContent)!"-" }, { "title": "Are you hiring an outside writer or agency to prepare the content?", "value": (activity.hiringOutsideWriterOrAgency?string("Yes", "No"))!"-" }] /]
 [/#function]
 
 [#function get_miscellaneous_marketing_fields activity]
 	[#assign miscellaneous_marketing_fields = [{ "title": "Marketing activity", "value": (activity.marketingActivity)!"-"}] /]
 
-	[#if activity.tactic.name = "Broadcast Advertising"]
+	[#if (activity.tactic.name)! = "Broadcast Advertising"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [ { "title": "Broadcast channel", "value": (activity.broadcastChannel)!"-" }, { "title": "CTA", "value": (activity.cta)!"-" }, { "title": "# of weeks/airing", "value": (activity.weeksAiring)!"-" }, { "title": "Guaranteed Impressions", "value": (activity.guaranteedImpressions!"-")}] /]
-	[#elseif activity.tactic.name = "Campaign with Industry Publication"]
+	[#elseif (activity.tactic.name)! = "Campaign with Industry Publication"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [ { "title": "Publication", "value": (activity.publication)!"-" }, { "title": "CTA", "value": (activity.cta)!"-" }, { "title": "Expected Impressions", "value": (activity.expectedImpressions)!"-" } ] /]
-	[#elseif activity.tactic.name = "Co-branded Merchandise"]
+	[#elseif (activity.tactic.name)! = "Co-branded Merchandise"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [{ "title": "What type of merchandise?", "value": (activity.typeMerchandise)!"-" },{ "title": "Quantity", "value": (activity.quantity)!"-" }] /]
-	[#elseif activity.tactic.name = "Direct Mail"]
+	[#elseif (activity.tactic.name)! = "Direct Mail"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [{ "title": "Target # of sends", "value": (activity.targetOfSends)!"-" },{ "title": "CTA", "value": (activity.cta)!"-" }] /]
-	[#elseif activity.tactic.name = "Print Advertising"]
+	[#elseif (activity.tactic.name)! = "Print Advertising"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [ { "title": "Publication", "value": (activity.publication)!"-" }, { "title": "CTA", "value": (activity.cta)!"-" }, { "title": "Expected Impressions", "value": (activity.expectedImpressions)!"-" } ] /]
-	[#elseif activity.tactic.name = "Outbound Telemarketing Sales"]
+	[#elseif (activity.tactic.name)! = "Outbound Telemarketing Sales"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [ { "title": "Audience Target", "value": (activity.audienceTarget)!"-" }, { "title": "Source and Size of call List", "value": (activity.sourceAndSizeOfCallList)!"-" }, { "title": "Resources necessary from Liferay", "value": (activity.resourcesNecessaryFromLiferay)!"-" } ] /]
 	[/#if]
 
@@ -108,12 +108,12 @@
 					<tr>
 						<td class="border-0 w-50">
 							<p class="text-neutral-10">
-								${item.title}
+								${(item.title)!}
 							</p>
 						</td>
 						<td class="border-0 text-neutral-10 w-50">
 							<p class="text-neutral-10">
-								${item.value}
+								${(item.value)!}
 							</p>
 						</td>
 					</tr>
@@ -124,7 +124,7 @@
 [/#macro]
 
 [#macro leads_table activity]
-	[#assign items = [{"title": "Is a lead list an outcome of this activity?", "value": activity.leadGenerated?string("Yes", "No")!"-" }, { "title": "Target # of Leads", "value": (activity.targetOfLeads)!"-" }, { "title": "Lead Follow Up strategy", "value": (activity.leadFollowUpStrategies)!"-" }, { "title": "Details on Lead Follow Up", "value": (activity.detailsLeadFollowUp)!"-" }] /]
+	[#assign items = [{"title": "Is a lead list an outcome of this activity?", "value": (activity.leadGenerated?string("Yes", "No"))! }, { "title": "Target # of Leads", "value": (activity.targetOfLeads)!"-" }, { "title": "Lead Follow Up strategy", "value": (activity.leadFollowUpStrategies)!"-" }, { "title": "Details on Lead Follow Up", "value": (activity.detailsLeadFollowUp)!"-" }] /]
 
 	[@table title="Lead List" items=items /]
 [/#macro]
@@ -134,7 +134,7 @@
 [/#macro]
 
 [#macro budgets_table budgets currency_key="USD"]
-	[#assign items = budgets?map(budget -> {"title": (budget.expense.name)!"-", "value": (budget.cost?number?string["¤,##0.00;; currencyCode=${currency_key}"])!"-"}) /]
+[#assign items = (budgets?map(budget -> {"title": (budget.expense.name)!"-", "value": (budget.cost?number?string["¤,##0.00;; currencyCode=${currency_key}"])!}))! /]
 
 	[@table title="Budget Breakdown" items=items /]
 [/#macro]
@@ -158,7 +158,7 @@
 		<p class="mb-0">
 			Request Status:
 			<span class="${request_status_style[activity_status.key]}">
-				${activity_status.name}
+				${(activity_status.name)!}
 			</span>
 			[#if end_date?has_content && activity_status.key == 'active']
 				[#assign request_date = days_difference_from_now(end_date) /]
@@ -178,9 +178,9 @@
 [/#macro]
 
 [#if mdf_request_id?has_content ]
-	[#assign activities = restClient.get("/c/mdfrequests/${mdf_request_id}/mdfReqToActs?nestedFields=actToBgts,actToMDFClmActs,r_mdfClmToMDFClmActs_c_mdfClaimId&nestedFieldsDepth=3").items /]
+	[#assign activities = (restClient.get("/c/mdfrequests/${mdf_request_id}/mdfReqToActs?nestedFields=actToBgts,actToMDFClmActs,r_mdfClmToMDFClmActs_c_mdfClaimId&nestedFieldsDepth=3").items)! /]
 
-	[#assign mdf_status = restClient.get("/c/mdfrequests/${mdf_request_id}").mdfRequestStatus.key /]
+	[#assign mdf_status = (restClient.get("/c/mdfrequests/${mdf_request_id}").mdfRequestStatus.key)! /]
 		[#list activities as activity]
 			<div class="border-brand-primary-lighten-4 panel" role="tablist">
 				<button aria-controls="mdfRequestActivitiesPanel-${activity.id}" aria-expanded="false" class="btn btn-unstyled collapse-icon collapse-icon-middle collapsed panel-header panel-header-link" data-target="#mdfRequestActivitiesPanel-${activity.id}" data-toggle="liferay-collapse" role="tab">
@@ -191,9 +191,9 @@
 
 						<h4 class="mb-1">${activity.name} (${activity.id})</h4>
 						[#if mdf_status != "draft"]
-							[@claim_status activity_claims=activity.actToMDFClmActs /]
+							[@claim_status activity_claims=(activity.actToMDFClmActs)! /]
 
-							[@request_status activity_status=activity.activityStatus end_date=(activity.endDate?date)! /]
+							[@request_status activity_status=(activity.activityStatus)! end_date=(activity.endDate?date)! /]
 						[#else]
 							[@clay.alert displayType="info" message="Pending MDF Request submission." title="Info" /]
 						[/#if]
@@ -204,7 +204,7 @@
 					<div class="panel-body">
 						[@campaign_table activity=activity /]
 
-						[@budgets_table budgets=activity.actToBgts currency_key=(activity.currency.key)!"USD" /]
+						[@budgets_table budgets=(activity.actToBgts)! currency_key=(activity.currency.key)!"USD" /]
 
 						[@leads_table activity=activity /]
 					</div>

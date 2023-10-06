@@ -2,7 +2,7 @@
 [#assign siteURL = (themeDisplay.getURLCurrent()?keep_before("/l"))! /]
 
 [#if mdfRequestId?has_content]
-	[#assign mdfRequest = restClient.get("/c/mdfrequests/${mdfRequestId}") /]
+	[#assign mdfRequest = (restClient.get("/c/mdfrequests/${mdfRequestId}"))! /]
 	[#assign permissionAction = restClient.get("/c/permissionactions?filter=object%20eq%20%27MDF%20Request%27&pageSize=-1") /]
 
 	[#assign hasDeleteAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "DELETE")?has_content /]

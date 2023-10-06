@@ -28,7 +28,7 @@
 
 		<div class="collapse panel-collapse" id="mdfClaimActivitiesPanel-${activity.id}" role="tabpanel">
 			<div class="panel-body pt-0">
-				[#if activity.listOfQualifiedLeads?has_content]
+				[#if (activity.listOfQualifiedLeads?has_content)!false != false]
 					<div class="py-3">
 						<h6 class="text-neutral-10">
 							List of Qualified Leads
@@ -47,19 +47,19 @@
 					</div>
 				[/#if]
 
-				[#if activity.telemarketingMetrics?has_content]
+				[#if (activity.telemarketingMetrics?has_content)!false ]
 					<div class="py-3">
 						<h6 class="text-neutral-10">
 							Telemarketing Metrics
 						</h6>
 
 						<div class="mx-2 text-neutral-10">
-							${activity.telemarketingMetrics}
+							${(activity.telemarketingMetrics)!}
 						</div>
 					</div>
 				[/#if]
 
-				[#if activity.telemarketingScript?has_content]
+				[#if (activity.telemarketingScript?has_content)!false ]
 					<div class="py-3">
 						<h6 class="text-neutral-10">Telemarketing Script</h6>
 
@@ -77,7 +77,7 @@
 					</div>
 				[/#if]
 
-				[#if activity.videoLink?has_content]
+				[#if (activity.videoLink?has_content)!false ]
 					<div class="py-3">
 						<h6 class="text-neutral-10">
 							Video Link
@@ -89,14 +89,14 @@
 					</div>
 				[/#if]
 
-				[#if activity.metrics?has_content]
+				[#if (activity.metrics?has_content)!false ]
 					<div class="py-3">
 						<h6 class="text-neutral-10">
 							Metrics
 						</h6>
 
 						<div class="mx-2 text-neutral-10">
-							${activity.metrics}
+							${(activity.metrics)!}
 						</div>
 					</div>
 				[/#if]
@@ -115,11 +115,11 @@
 						</thead>
 
 						<tbody>
-							[#list activity.mdfClmActToMDFClmBgts?filter(budget -> budget.selected == true) as budget]
+							[#list (activity.mdfClmActToMDFClmBgts?filter(budget -> budget.selected == true))![] as budget]
 								<tr>
 									<td class="border-0">
 										<div class="font-weight-bold text-neutral-10">
-											${budget.expenseName}
+											${(budget.expenseName)!}
 										</div>
 
 										<div class="text-neutral-10">
@@ -128,7 +128,7 @@
 										</div>
 									</td>
 									<td class="border-0">
-										[#if budget.invoice?has_content]
+										[#if (budget.invoice?has_content)!false ]
 											<a class="align-items-end d-flex text-decoration-none" href="${budget.invoice.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
@@ -159,14 +159,14 @@
 						</thead>
 
 						<tbody>
-							[#if activity.typeActivity.key == "prmtact001"]
+							[#if (activity.typeActivity.key)! == "prmtact001"]
 								<tr>
 									<td class="border-0">
 										<div class="font-weight-bold mb-3 text-neutral-10">
 											Event Program
 										</div>
 
-										[#if activity.eventProgram?has_content]
+										[#if (activity.eventProgram?has_content)!false ]
 											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${activity.eventProgram.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
@@ -185,7 +185,7 @@
 											Event Invitations
 										</div>
 
-										[#list activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "eventInvitations") as document]
+										[#list (activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "eventInvitations"))![] as document]
 											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.proofOfPerformanceFile.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
@@ -204,7 +204,7 @@
 											Event Photos
 										</div>
 
-										[#list activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "eventPhotos") as document]
+										[#list (activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "eventPhotos"))![] as document]
 											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.proofOfPerformanceFile.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
@@ -223,7 +223,7 @@
 											Event Collaterals
 										</div>
 
-										[#list activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "eventCollaterals") as document]
+										[#list (activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "eventCollaterals"))![] as document]
 											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.proofOfPerformanceFile.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
@@ -238,14 +238,14 @@
 								</tr>
 							[/#if]
 
-							[#if activity.typeActivity.key == "prmtact004"]
+							[#if (activity.typeActivity.key)! == "prmtact004"]
 								<tr>
 									<td class="border-0">
 										<div class="font-weight-bold mb-3 text-neutral-10">
 											Images
 										</div>
 
-										[#list activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "images") as document]
+										[#list (activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "images"))![] as document]
 											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.proofOfPerformanceFile.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
@@ -260,21 +260,21 @@
 								</tr>
 							[/#if]
 
-							[#if activity.typeActivity.key == "prmtact003" || activity.typeActivity.key == "prmtact002" || activity.typeActivity.key == "prmtact004"]
+							[#if (activity.typeActivity.key)! == "prmtact003" || (activity.typeActivity.key)! == "prmtact002" || (activity.typeActivity.key)! == "prmtact004"]
 								<tr>
 									<td class="border-0">
 										<div class="font-weight-bold mb-3 text-neutral-10">
 											All contents
 										</div>
 
-										[#list activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "allContents") as document]
+										[#list (activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "allContents"))![] as document]
 											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.proofOfPerformanceFile.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
 												</span>
 
 												<div class="text-neutral-9">
-													${document.proofOfPerformanceFile.name?keep_before("#")}
+														${document.proofOfPerformanceFile.name?keep_before("#")}
 												</div>
 											</a>
 										[/#list]
@@ -290,9 +290,9 @@
 [/#macro]
 
 [#if mdf_claim_id?has_content]
-	[#assign activities = restClient.get("/c/mdfclaims/${mdf_claim_id}/mdfClmToMDFClmActs?nestedFields=mdfClmActToMDFClmBgts,mdfClmActToMDFActDocs").items /]
+	[#assign activities = (restClient.get("/c/mdfclaims/${mdf_claim_id}/mdfClmToMDFClmActs?nestedFields=mdfClmActToMDFClmBgts,mdfClmActToMDFActDocs").items)! /]
 
-	[#list activities?filter(activity -> activity.selected == true) as activity]
+	[#list activities?filter(activity -> activity.selected == true)![] as activity]
 		[@activity_panel activity=activity /]
 	[/#list]
 [#else]

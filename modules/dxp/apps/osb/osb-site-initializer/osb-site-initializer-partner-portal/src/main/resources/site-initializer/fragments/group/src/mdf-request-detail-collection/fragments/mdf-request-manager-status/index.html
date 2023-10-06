@@ -2,16 +2,16 @@
 
 [#if mdfRequestId?has_content]
 	[#assign permissionAction = restClient.get("/c/permissionactions?filter=object%20eq%20%27MDF%20Request%27&pageSize=-1") /]
-	[#assign mdfRequest = restClient.get("/c/mdfrequests/${mdfRequestId}?nestedFields=mdfReqToActs") /]
+	[#assign mdfRequest = (restClient.get("/c/mdfrequests/${mdfRequestId}?nestedFields=mdfReqToActs"))! /]
 
-	[#assign hasMarketingReviewAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "MARKETING-REVIEW-STATUS-UPDATE")?has_content /]
-	[#assign hasMarketingDirectorReviewAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "MARKETING-DIRECTOR-REVIEW-STATUS-UPDATE")?has_content /]
+	[#assign hasMarketingReviewAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "MARKETING-REVIEW-STATUS-UPDATE")?has_content)! /]
+	[#assign hasMarketingDirectorReviewAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "MARKETING-DIRECTOR-REVIEW-STATUS-UPDATE")?has_content)! /]
 	[#assign hasRequestMoreInfoAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "REQUEST-MORE-INFO")?has_content /]
-	[#assign hasExpireAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "EXPIRE")?has_content /]
-	[#assign hasRejectAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "REJECT")?has_content /]
-	[#assign hasApproveAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "APPROVE")?has_content /]
+	[#assign hasExpireAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "EXPIRE")?has_content)! /]
+	[#assign hasRejectAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "REJECT")?has_content)! /]
+	[#assign hasApproveAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "APPROVE")?has_content)! /]
 
-	[#assign mdfRequestStatusKey = mdfRequest.mdfRequestStatus.key /]
+	[#assign mdfRequestStatusKey = (mdfRequest.mdfRequestStatus.key)! /]
 
 	[#if mdfRequestStatusKey != 'approved' && (hasMarketingReviewAction || hasMarketingDirectorReviewAction || hasRequestMoreInfoAction || hasExpireAction || hasRejectAction || hasApproveAction)]
 		<script>
@@ -116,7 +116,7 @@
 		</script>
 
 	<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" id="dropdownMDFRequestStatus" type="button">
-		${mdfRequest.mdfRequestStatus.name} [@clay.icon symbol="caret-bottom" /]
+		${(mdfRequest.mdfRequestStatus.name)!} [@clay.icon symbol="caret-bottom" /]
 	</button>
 
 	<ul aria-labelledby="dropdownMDFRequestStatus" class="dropdown-menu" x-placement="bottom-start">
@@ -237,7 +237,7 @@
 			[/#if]
 		</ul>
 	[#else]
-		Status: ${mdfRequest.mdfRequestStatus.name}
+		Status: ${(mdfRequest.mdfRequestStatus.name)!}
 	[/#if]
 [#else]
 	<div class="alert alert-info">

@@ -305,7 +305,7 @@ const ActionForm = ({
 	const confirmationMessageTypeFormElementId = `${namespace}ConfirmationMessageType`;
 	const labelFormElementId = `${namespace}Label`;
 	const permissionKeyFormElementId = `${namespace}PermissionKey`;
-	const titleFormElementId = `${namespace}ModalTitle`;
+	const titleFormElementId = `${namespace}Title`;
 	const typeFormElementId = `${namespace}Type`;
 	const urlFormElementId = `${namespace}URL`;
 	const modalSizeFormElementId = `${namespace}ModalSize`;
@@ -510,7 +510,10 @@ const ActionForm = ({
 											}}
 											onChange={setTitleTranslations}
 											placeholder={Liferay.Language.get(
-												'title-modal-placeholder'
+												actionData.type ===
+													ACTION_TYPE.MODAL
+													? 'action-modal-title-placeholder'
+													: 'action-side-panel-title-placeholder'
 											)}
 											required
 											translations={titleTranslations}

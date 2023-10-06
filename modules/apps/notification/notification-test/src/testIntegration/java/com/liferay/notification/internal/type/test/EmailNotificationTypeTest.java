@@ -97,8 +97,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				user1.getEmailAddress(), StringPool.SEMICOLON,
 				user2.getEmailAddress()));
 
-		// Multiples emails for each main recipient, with terms and comma
-		// separator
+		// Multiples emails for each main recipient, terms, comma separator
 
 		_testSendNotification(
 			2,
@@ -111,8 +110,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			"[%CURRENT_USER_EMAIL_ADDRESS%]," +
 				getTermName("emailTextObjectField"));
 
-		// Multiples emails for each main recipient, with terms and comma and
-		// space separator
+		// Multiples emails for each main recipient, terms, comma and space
+		// separator
 
 		_testSendNotification(
 			2,
@@ -125,8 +124,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			"[%CURRENT_USER_EMAIL_ADDRESS%], " +
 				getTermName("emailTextObjectField"));
 
-		// Multiples emails for each main recipient, with terms and semicolon
-		// separator
+		// Multiples emails for each main recipient, terms, semicolon separator
 
 		_testSendNotification(
 			2,
@@ -279,8 +277,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	private void _testSendNotification(
-			int expectedCount, List<String> expectedToEmailAddress,
-			boolean singleRecipient, String to)
+			int expectedNotificationQueueEntriesCount,
+			List<String> expectedToEmailAddresses, boolean singleRecipient,
+			String to)
 		throws Exception {
 
 		_executeNotificationObjectAction(
@@ -303,16 +302,17 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				}));
 
 		Assert.assertEquals(
-			notificationQueueEntries.toString(), expectedCount,
+			notificationQueueEntries.toString(),
+			expectedNotificationQueueEntriesCount,
 			notificationQueueEntries.size());
 
 		_assertNotificationQueueEntry(
-			singleRecipient, expectedToEmailAddress.get(0),
+			singleRecipient, expectedToEmailAddresses.get(0),
 			notificationQueueEntries.get(0));
 
 		if (singleRecipient) {
 			_assertNotificationQueueEntry(
-				singleRecipient, expectedToEmailAddress.get(1),
+				singleRecipient, expectedToEmailAddresses.get(1),
 				notificationQueueEntries.get(1));
 		}
 

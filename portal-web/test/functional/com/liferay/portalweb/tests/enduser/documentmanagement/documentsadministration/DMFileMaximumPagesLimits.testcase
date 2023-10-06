@@ -41,7 +41,7 @@ definition {
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = 60);
+			value1 = 2);
 
 		SystemSettings.saveConfiguration();
 
@@ -50,11 +50,11 @@ definition {
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = 100);
+			value1 = 3);
 
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL_TEXT",
-			value1 = "This limit is higher than the System Settings limit. Please enter a maximum number of pages no larger than 60.");
+			value1 = "This limit is higher than the System Settings limit. Please enter a maximum number of pages no larger than 2.");
 
 		SystemSettings.saveConfiguration();
 
@@ -63,7 +63,7 @@ definition {
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = 30);
+			value1 = 1);
 
 		SystemSettings.saveConfiguration();
 
@@ -90,7 +90,7 @@ definition {
 		AssertTextEquals.assertPartialText(
 			key_title = "Click to jump to a page.",
 			locator1 = "Button#ANY_TITLE",
-			value1 = 30);
+			value1 = "Page 1 / 1");
 	}
 
 	@description = "This test ensure that the max number of pages generated as preview for PDFs in Site Setting can limit by the configuration in Instance Setting."
@@ -111,7 +111,7 @@ definition {
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = 60);
+			value1 = 2);
 
 		SystemSettings.saveConfiguration();
 
@@ -124,11 +124,11 @@ definition {
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = 100);
+			value1 = 3);
 
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL_TEXT",
-			value1 = "This limit is higher than the Instance Settings limit. Please enter a maximum number of pages no larger than 60.");
+			value1 = "This limit is higher than the Instance Settings limit. Please enter a maximum number of pages no larger than 2.");
 
 		SystemSettings.saveConfiguration();
 
@@ -137,7 +137,7 @@ definition {
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = 30);
+			value1 = 1);
 
 		SystemSettings.saveConfiguration();
 
@@ -164,7 +164,7 @@ definition {
 		AssertTextEquals.assertPartialText(
 			key_title = "Click to jump to a page.",
 			locator1 = "Button#ANY_TITLE",
-			value1 = 30);
+			value1 = "Page 1 / 1");
 	}
 
 	@description = "This test ensures that a user can configure the max number of pages generated as preview for PDFs in System Setting."
@@ -204,7 +204,7 @@ definition {
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = 60);
+			value1 = 1);
 
 		SystemSettings.saveConfiguration();
 
@@ -231,7 +231,7 @@ definition {
 		AssertTextEquals.assertPartialText(
 			key_title = "Click to jump to a page.",
 			locator1 = "Button#ANY_TITLE",
-			value1 = 60);
+			value1 = "Page 1 / 1");
 	}
 
 }

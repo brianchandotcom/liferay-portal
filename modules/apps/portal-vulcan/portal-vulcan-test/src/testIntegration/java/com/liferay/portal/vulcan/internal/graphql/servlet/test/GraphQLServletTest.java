@@ -59,13 +59,12 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 		String testDTOSimpleClassName = StringUtil.lowerCaseFirstLetter(
 			TestDTO.class.getSimpleName());
 
-		GraphQLField graphQLField = new GraphQLField(
-			testDTOSimpleClassName, new GraphQLField("field"),
-			new GraphQLField("_id"));
-
 		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
-			invoke(graphQLField), "JSONObject/data",
-			"JSONObject/" + testDTOSimpleClassName);
+			invoke(
+				new GraphQLField(
+					testDTOSimpleClassName, new GraphQLField("field"),
+					new GraphQLField("_id"))),
+			"JSONObject/data", "JSONObject/" + testDTOSimpleClassName);
 
 		TestQuery testQuery = testServletData.getQuery();
 
@@ -105,14 +104,11 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 					"queryDepthLimit", 1
 				).build());
 
-			String testDTOSimpleClassName = StringUtil.lowerCaseFirstLetter(
-				TestDTO.class.getSimpleName());
-
-			GraphQLField graphQLField = new GraphQLField(
-				testDTOSimpleClassName, new GraphQLField("field"),
-				new GraphQLField("_id"));
-
-			JSONObject jsonObject = invoke(graphQLField);
+			JSONObject jsonObject = invoke(
+				new GraphQLField(
+					StringUtil.lowerCaseFirstLetter(
+						TestDTO.class.getSimpleName()),
+					new GraphQLField("field"), new GraphQLField("_id")));
 
 			Assert.assertNull(
 				JSONUtil.getValueAsJSONObject(jsonObject, "JSONObject/data"));

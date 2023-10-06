@@ -197,7 +197,7 @@ definition {
 		AssertTextEquals.assertPartialText(
 			key_title = "Click to jump to a page.",
 			locator1 = "Button#ANY_TITLE",
-			value1 = 120);
+			value1 = "Page 1 / 3");
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "PDF Preview");
 

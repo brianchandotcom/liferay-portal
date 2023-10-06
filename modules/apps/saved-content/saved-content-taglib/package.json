@@ -1,0 +1,20 @@
+{
+	"dependencies": {
+		"@clayui/button": "3.106.1",
+		"@clayui/icon": "3.106.1",
+		"@liferay/frontend-js-react-web": "*",
+		"classnames": "2.3.1",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
+		"react": "16.12.0",
+		"react-dom": "16.12.0"
+	},
+	"name": "@liferay/saved-content-taglib",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

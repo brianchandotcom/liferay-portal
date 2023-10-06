@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Saved Content Taglib
+Bundle-SymbolicName: com.liferay.saved.content.taglib
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/saved-content";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /saved-content-taglib

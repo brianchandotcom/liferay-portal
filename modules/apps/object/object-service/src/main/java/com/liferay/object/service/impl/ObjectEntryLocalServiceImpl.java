@@ -1882,7 +1882,11 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (predicate == null) {
-			return searchPredicate;
+			if (searchPredicate == null) {
+				return null;
+			}
+
+			return searchPredicate.withParentheses();
 		}
 
 		return predicate.and(searchPredicate.withParentheses());

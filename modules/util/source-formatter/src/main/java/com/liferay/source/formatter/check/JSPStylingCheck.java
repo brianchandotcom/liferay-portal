@@ -274,7 +274,7 @@ public class JSPStylingCheck extends BaseStylingCheck {
 			if (!line.endsWith("%>")) {
 				addMessage(
 					fileName, "There should be a line break after '<%'",
-					getLineNumber(content, matcher.start()));
+					lineNumber);
 			}
 		}
 

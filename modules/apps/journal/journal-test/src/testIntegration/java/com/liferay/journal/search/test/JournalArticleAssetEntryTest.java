@@ -69,7 +69,7 @@ import org.junit.runner.RunWith;
  * @author Lourdes Fernández Besada
  */
 @RunWith(Arquillian.class)
-public class JournalArticleAssetEntryReindexTest {
+public class JournalArticleAssetEntryTest {
 
 	@ClassRule
 	@Rule

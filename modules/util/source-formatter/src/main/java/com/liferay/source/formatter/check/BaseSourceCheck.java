@@ -826,7 +826,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		boolean includeArrayOrCollectionTypes) {
 
 		Pattern pattern = Pattern.compile(
-			"\\W(\\w+)\\s+" + variableName + "\\s*[;=),]");
+			"\\W(\\w+)\\s+" + variableName + "\\s*[;=),:]");
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -842,7 +842,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			return null;
 		}
 
-		pattern = Pattern.compile("[\\]>]\\s+" + variableName + "\\s*[;=),]");
+		pattern = Pattern.compile("[\\]>]\\s+" + variableName + "\\s*[;=),:]");
 
 		matcher = pattern.matcher(content);
 

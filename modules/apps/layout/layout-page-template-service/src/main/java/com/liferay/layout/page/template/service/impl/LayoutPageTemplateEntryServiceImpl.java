@@ -884,7 +884,7 @@ public class LayoutPageTemplateEntryServiceImpl
 				groupId
 			).and(
 				() -> {
-					if (layoutPageTemplateCollectionId != -1) {
+					if (layoutPageTemplateCollectionId >= 0) {
 						return LayoutPageTemplateEntryTable.INSTANCE.
 							layoutPageTemplateCollectionId.eq(
 								layoutPageTemplateCollectionId);
@@ -914,7 +914,7 @@ public class LayoutPageTemplateEntryServiceImpl
 					groupId
 				).and(
 					() -> {
-						if (layoutPageTemplateCollectionId != -1) {
+						if (layoutPageTemplateCollectionId >= 0) {
 							return LayoutPageTemplateCollectionTable.INSTANCE.
 								parentLayoutPageTemplateCollectionId.eq(
 									layoutPageTemplateCollectionId);

@@ -148,19 +148,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	private NotificationTemplate _addNotificationTemplate(
-			boolean singleRecipient)
-		throws Exception {
-
-		return _addNotificationTemplate(
-			singleRecipient,
-			Collections.singletonMap(
-				LocaleUtil.US,
-				StringBundler.concat(
-					user1.getEmailAddress(), StringPool.COMMA,
-					user2.getEmailAddress())));
-	}
-
-	private NotificationTemplate _addNotificationTemplate(
 			boolean singleRecipient, Map<Locale, String> to)
 		throws Exception {
 

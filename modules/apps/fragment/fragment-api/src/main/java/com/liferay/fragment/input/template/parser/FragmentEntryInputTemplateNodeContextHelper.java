@@ -164,9 +164,11 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			locale);
 
 		String name = "name";
+		boolean readOnly = false;
 
 		if (infoField != null) {
 			name = infoField.getName();
+			readOnly = infoField.isReadOnly();
 		}
 
 		boolean required = false;
@@ -198,8 +200,9 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 		if (infoField == null) {
 			return new InputTemplateNode(
-				errorMessage, inputHelpText, inputLabel, name, required,
-				inputShowHelpText, inputShowLabel, "type", StringPool.BLANK);
+				errorMessage, inputHelpText, inputLabel, name, readOnly,
+				required, inputShowHelpText, inputShowLabel, "type",
+				StringPool.BLANK);
 		}
 
 		InfoFieldType infoFieldType = infoField.getInfoFieldType();
@@ -263,7 +266,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		}
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
-			errorMessage, inputHelpText, inputLabel, name, required,
+			errorMessage, inputHelpText, inputLabel, name, readOnly, required,
 			inputShowHelpText, inputShowLabel, infoFieldType.getName(), value);
 
 		_addInputTemplateNodeAttributes(

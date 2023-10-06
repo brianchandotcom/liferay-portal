@@ -21,13 +21,14 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	public InputTemplateNode(
 		String errorMessage, String helpText, String label, String name,
-		boolean required, boolean showHelpText, boolean showLabel, String type,
-		String value) {
+		boolean readOnly, boolean required, boolean showHelpText,
+		boolean showLabel, String type, String value) {
 
 		_errorMessage = errorMessage;
 		_helpText = helpText;
 		_label = label;
 		_name = name;
+		_readOnly = readOnly;
 		_required = required;
 		_showHelpText = showHelpText;
 		_showLabel = showLabel;
@@ -38,6 +39,7 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		put("helpText", helpText);
 		put("label", label);
 		put("name", name);
+		put("readOnly", readOnly);
 		put("required", required);
 		put("showHelpText", showHelpText);
 		put("showLabel", showLabel);
@@ -77,6 +79,10 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		return _type;
 	}
 
+	public boolean isReadOnly() {
+		return _readOnly;
+	}
+
 	public boolean isRequired() {
 		return _required;
 	}
@@ -110,6 +116,8 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 			"label", HtmlUtil.escapeJS(_label)
 		).put(
 			"name", _name
+		).put(
+			"readOnly", _readOnly
 		).put(
 			"required", _required
 		).put(
@@ -157,6 +165,7 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 	private final String _helpText;
 	private final String _label;
 	private final String _name;
+	private final boolean _readOnly;
 	private final boolean _required;
 	private final boolean _showHelpText;
 	private final boolean _showLabel;

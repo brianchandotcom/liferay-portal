@@ -22,8 +22,8 @@ public class UpgradeVelocityVariableSetMigrationCheck
 
 		for (String line : lines) {
 			if (line.contains(VelocityMigrationConstants.VELOCITY_SET)) {
-				String newLine = line.replace(
-					VelocityMigrationConstants.VELOCITY_SET, "<#assign");
+				String newLine = StringUtil.replace(
+					line, VelocityMigrationConstants.VELOCITY_SET, "<#assign");
 
 				newLine = VelocityMigrationUtil.removeFirstParenthesis(newLine);
 				newLine = StringUtil.replaceLast(

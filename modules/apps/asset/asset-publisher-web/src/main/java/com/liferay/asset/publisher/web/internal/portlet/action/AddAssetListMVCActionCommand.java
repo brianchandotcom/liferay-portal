@@ -183,7 +183,7 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 					else {
 						if (part.startsWith("Group_")) {
 							long groupId = GetterUtil.getLong(
-								part.replace("Group_", StringPool.BLANK), -1);
+								StringUtil.replace(part, "Group_", StringPool.BLANK), -1);
 
 							if (groupId != -1) {
 								groupIds.add(groupId);

@@ -24,8 +24,8 @@ public class UpgradeVelocityCommentMigrationCheck
 					VelocityMigrationConstants.VELOCITY_COMMENT_LINE) &&
 				(line.length() != 2)) {
 
-				String newLineStart = line.replace(
-					VelocityMigrationConstants.VELOCITY_COMMENT_LINE,
+				String newLineStart = StringUtil.replace(
+					line, VelocityMigrationConstants.VELOCITY_COMMENT_LINE,
 					VelocityMigrationConstants.FREEMARKER_COMMENT_START);
 
 				String newLine =

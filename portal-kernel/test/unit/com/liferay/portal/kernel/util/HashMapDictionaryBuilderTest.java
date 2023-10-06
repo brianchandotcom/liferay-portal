@@ -107,11 +107,11 @@ public class HashMapDictionaryBuilderTest {
 		Dictionary<String, String> dictionary1 = new HashMapDictionary<>();
 
 		for (String s : list) {
-			dictionary1.put(s, StringUtil.trim(s.toLowerCase()));
+			dictionary1.put(s, StringUtil.trim(StringUtil.toLowerCase(s)));
 		}
 
 		Dictionary<String, String> dictionary2 = HashMapDictionaryBuilder.put(
-			list, s -> StringUtil.trim(s.toLowerCase())
+			list, s -> StringUtil.trim(StringUtil.toLowerCase(s))
 		).build();
 
 		Assert.assertEquals(dictionary1.toString(), dictionary2.toString());

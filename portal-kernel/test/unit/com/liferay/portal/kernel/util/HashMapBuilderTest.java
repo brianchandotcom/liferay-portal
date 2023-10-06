@@ -131,13 +131,13 @@ public class HashMapBuilderTest {
 		Map<String, String> map1 = new HashMap<>();
 
 		for (String s : list) {
-			map1.put(s, StringUtil.trim(s.toLowerCase()));
+			map1.put(s, StringUtil.trim(StringUtil.toLowerCase(s)));
 		}
 
 		Assert.assertEquals(
 			map1,
 			HashMapBuilder.put(
-				list, s -> StringUtil.trim(s.toLowerCase())
+				list, s -> StringUtil.trim(StringUtil.toLowerCase(s))
 			).build());
 	}
 

@@ -79,9 +79,11 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
+		TestServletData testServletData = new TestServletData();
+
 		ServiceRegistration<ServletData> serviceRegistration =
 			bundleContext.registerService(
-				ServletData.class, new TestServletData(), null);
+				ServletData.class, testServletData, null);
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			StringBundler.concat(
@@ -126,6 +128,30 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 				JSONUtil.getValueAsString(
 					jsonObject, "JSONArray/errors", "Object/0"),
 				JSONCompareMode.LENIENT);
+
+			// Hot configuration update
+
+			factoryConfiguration.update(
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", TestPropsValues.getCompanyId()
+				).put(
+					"queryDepthLimit", 2
+				).build());
+
+			String key = StringUtil.lowerCaseFirstLetter(
+				TestDTO.class.getSimpleName());
+
+			jsonObject = JSONUtil.getValueAsJSONObject(
+				invoke(
+					new GraphQLField(
+						key, new GraphQLField("field"),
+						new GraphQLField("_id"))),
+				"JSONObject/data", "JSONObject/" + key);
+
+			TestQuery testQuery = testServletData.getQuery();
+
+			Assert.assertEquals(jsonObject.get("field"), testQuery.getField());
+			Assert.assertEquals(jsonObject.get("_id"), testQuery.getId());
 
 			serviceRegistration.unregister();
 		}

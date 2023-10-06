@@ -68,7 +68,8 @@ export function ModalPublishObjectDefinitions({
 	>(
 		objectDefinitionNodes.filter(
 			(objectDefinitionNode) =>
-				objectDefinitionNode.data?.status?.code === STATUS.DRAFT
+				objectDefinitionNode.data?.status?.code === STATUS.DRAFT &&
+				!objectDefinitionNode.data.linkedObjectDefinition
 		)
 	);
 	const [modalHeaderMessage, setModalHeaderMessage] = useState<string>(

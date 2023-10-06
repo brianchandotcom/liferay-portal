@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_DELETE_ENTRY</td>
+	<td>//div//*[normalize-space(text())='It may affect many records. Are you sure you want to delete this entry?']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROLE</td>
 	<td>//*[contains(@class, 'text-truncate') and contains(text(), '${key_email}')]/following::p[contains(text(), '${key_role}')]</td>
 	<td></td>

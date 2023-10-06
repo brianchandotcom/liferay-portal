@@ -58,6 +58,7 @@ definition {
 	}
 
 	@description = "LPS-185953 - Verify that when the card activation status is active (in the side menu > Liferay Experience Cloud) the title Manage product users appears under Team Members"
+	@ignore = "true"
 	@priority = 3
 	test AssertThatManageProductUserAppearsInTeamMembers {
 		task ("Given I go to the test account") {

@@ -55,9 +55,10 @@ definition {
 		task ("Assert the signature card details") {
 			CustomerPortal.viewCardValue(
 				cardName = "Non-Production",
-				date = "04/01/2021 - 03/31/2022",
+				enddate = "Jan 31, 2024",
 				instanceSize = 1,
 				position = 2,
+				startdate = "Oct 01, 2021",
 				status = "Active");
 		}
 	}
@@ -73,7 +74,8 @@ definition {
 
 		task ("Assert if the Active status reflects the dates") {
 			CP2Subscription.assertTheDatesAndStatusOfTheCard(
-				dates = "10/01/2021 - 01/31/2024",
+				enddate = "Jan 31, 2024",
+				startdate = "Oct 01, 2021",
 				status = "Active");
 		}
 	}
@@ -93,7 +95,8 @@ definition {
 
 		task ("Then I claim that the Expired status reflects the dates") {
 			CP2Subscription.assertTheDatesAndStatusOfTheCard(
-				dates = "01/15/2021 - 03/14/2021",
+				enddate = "Mar 14, 2021",
+				startdate = "Jan 15, 2021",
 				status = "Expired");
 		}
 	}
@@ -111,7 +114,8 @@ definition {
 
 		task ("Then I claim that the Future status reflects the dates") {
 			CP2Subscription.assertTheDatesAndStatusOfTheCard(
-				dates = "01/15/2023 - 03/14/2026",
+				enddate = "Mar 14, 2026",
+				startdate = "Jan 15, 2023",
 				status = "Future");
 		}
 	}

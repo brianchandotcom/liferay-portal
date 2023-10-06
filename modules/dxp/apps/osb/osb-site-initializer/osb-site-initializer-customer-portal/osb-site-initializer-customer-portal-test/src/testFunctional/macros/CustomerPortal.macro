@@ -490,7 +490,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Account Flags");
 
-		ObjectPortlet.deleteEntry(entry = ${entry});
+		Click(
+			key_entry = ${entry},
+			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
+		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+		AssertElementPresent(locator1 = "CP2Utils#MODAL_DELETE_ENTRY");
 	}
 
 	macro enterOnProject {

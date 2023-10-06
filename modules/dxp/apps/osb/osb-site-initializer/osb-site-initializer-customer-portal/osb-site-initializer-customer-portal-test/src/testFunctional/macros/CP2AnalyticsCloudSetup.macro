@@ -68,7 +68,7 @@ definition {
 			value1 = "Sao Paulo, Brazil");
 
 		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
-			label = "workspaceURL",
+			label = "workspaceFriendlyUrl",
 			value = "/mytest");
 
 		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(

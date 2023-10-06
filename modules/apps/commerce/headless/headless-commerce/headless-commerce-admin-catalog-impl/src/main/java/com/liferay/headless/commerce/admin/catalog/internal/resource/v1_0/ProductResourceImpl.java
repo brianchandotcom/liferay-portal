@@ -44,6 +44,7 @@ import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
+import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramCPTypeConstants;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
@@ -848,6 +849,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			ProductConfigurationUtil.updateCPDefinitionInventory(
 				_cpDefinitionInventoryService, productConfiguration,
 				cpDefinition.getCPDefinitionId());
+
+			_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
+				0, cpDefinition.getCPDefinitionId(),
+				productConfiguration.getAvailabilityEstimateId(),
+				serviceContext);
 		}
 
 		// Product shipping configuration
@@ -1422,6 +1428,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+
+	@Reference
+	private CPDAvailabilityEstimateService _cpdAvailabilityEstimateService;
 
 	@Reference
 	private CPDefinitionInventoryService _cpDefinitionInventoryService;

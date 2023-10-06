@@ -9,11 +9,13 @@ import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
+import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -96,6 +98,11 @@ public class ProductConfigurationResourceImpl
 			_cpDefinitionInventoryService, productConfiguration,
 			cpDefinition.getCPDefinitionId());
 
+		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
+			0, cpDefinition.getCPDefinitionId(),
+			productConfiguration.getAvailabilityEstimateId(),
+			_serviceContextHelper.getServiceContext(cpDefinition.getGroupId()));
+
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
@@ -118,6 +125,11 @@ public class ProductConfigurationResourceImpl
 			_cpDefinitionInventoryService, productConfiguration,
 			cpDefinition.getCPDefinitionId());
 
+		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
+			0, cpDefinition.getCPDefinitionId(),
+			productConfiguration.getAvailabilityEstimateId(),
+			_serviceContextHelper.getServiceContext(cpDefinition.getGroupId()));
+
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
@@ -133,6 +145,9 @@ public class ProductConfigurationResourceImpl
 	}
 
 	@Reference
+	private CPDAvailabilityEstimateService _cpdAvailabilityEstimateService;
+
+	@Reference
 	private CPDefinitionInventoryService _cpDefinitionInventoryService;
 
 	@Reference
@@ -146,5 +161,8 @@ public class ProductConfigurationResourceImpl
 	)
 	private DTOConverter<CPDefinitionInventory, ProductConfiguration>
 		_productConfigurationDTOConverter;
+
+	@Reference
+	private ServiceContextHelper _serviceContextHelper;
 
 }

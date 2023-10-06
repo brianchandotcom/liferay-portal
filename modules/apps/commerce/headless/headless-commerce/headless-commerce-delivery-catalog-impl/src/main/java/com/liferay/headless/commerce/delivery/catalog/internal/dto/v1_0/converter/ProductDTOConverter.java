@@ -12,7 +12,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
@@ -22,10 +21,11 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,7 +59,7 @@ public class ProductDTOConverter
 
 		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
 
-		Product product = new Product() {
+		return new Product() {
 			{
 				createDate = cpDefinition.getCreateDate();
 				description = cpDefinition.getDescription(languageId);
@@ -89,6 +89,13 @@ public class ProductDTOConverter
 
 						return cProduct.getExternalReferenceCode();
 					});
+				setProductConfiguration(
+					() -> _productConfigurationDTOConverter.toDTO(
+						new DefaultDTOConverterContext(
+							_dtoConverterRegistry,
+							cpDefinition.getCPDefinitionId(),
+							productDTOConverterContext.getLocale(), null,
+							null)));
 				setUrlImage(
 					() -> {
 						Company company = _companyLocalService.getCompany(
@@ -109,38 +116,6 @@ public class ProductDTOConverter
 					});
 			}
 		};
-
-		CPDefinitionInventory cpDefinitionInventory =
-			_cpDefinitionInventoryLocalService.
-				fetchCPDefinitionInventoryByCPDefinitionId(
-					(Long)productDTOConverterContext.getId());
-
-		if (cpDefinitionInventory != null) {
-			ProductConfiguration productConfiguration =
-				new ProductConfiguration() {
-					{
-						allowBackOrder = cpDefinitionInventory.isBackOrders();
-						allowedOrderQuantities =
-							cpDefinitionInventory.
-								getAllowedOrderQuantitiesArray();
-						inventoryEngine =
-							cpDefinitionInventory.
-								getCPDefinitionInventoryEngine();
-						maxOrderQuantity = BigDecimalUtil.stripTrailingZeros(
-							cpDefinitionInventory.getMaxOrderQuantity());
-						minOrderQuantity = BigDecimalUtil.stripTrailingZeros(
-							cpDefinitionInventory.getMinOrderQuantity());
-						multipleOrderQuantity =
-							BigDecimalUtil.stripTrailingZeros(
-								cpDefinitionInventory.
-									getMultipleOrderQuantity());
-					}
-				};
-
-			product.setProductConfiguration(productConfiguration);
-		}
-
-		return product;
 	}
 
 	@Reference
@@ -153,16 +128,21 @@ public class ProductDTOConverter
 	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
-	private CPDefinitionInventoryLocalService
-		_cpDefinitionInventoryLocalService;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private Language _language;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.ProductConfigurationDTOConverter)"
+	)
+	private DTOConverter<CPDefinitionInventory, ProductConfiguration>
+		_productConfigurationDTOConverter;
 
 }

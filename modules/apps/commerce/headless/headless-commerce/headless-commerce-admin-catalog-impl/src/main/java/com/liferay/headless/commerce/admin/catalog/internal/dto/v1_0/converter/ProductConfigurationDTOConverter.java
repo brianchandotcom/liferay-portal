@@ -5,9 +5,13 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 
+import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.model.CommerceAvailabilityEstimate;
+import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
+import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -39,26 +43,105 @@ public class ProductConfigurationDTOConverter
 				fetchCPDefinitionInventoryByCPDefinitionId(
 					(Long)dtoConverterContext.getId());
 
-		if (cpDefinitionInventory == null) {
+		CPDAvailabilityEstimate cpdAvailabilityEstimate =
+			_cpdAvailabilityEstimateService.
+				fetchCPDAvailabilityEstimateByCPDefinitionId(
+					(Long)dtoConverterContext.getId());
+
+		if ((cpDefinitionInventory == null) &&
+			(cpdAvailabilityEstimate == null)) {
+
 			return new ProductConfiguration();
 		}
 
 		return new ProductConfiguration() {
 			{
-				allowBackOrder = cpDefinitionInventory.isBackOrders();
-				allowedOrderQuantities =
-					cpDefinitionInventory.getAllowedOrderQuantitiesArray();
-				inventoryEngine =
-					cpDefinitionInventory.getCPDefinitionInventoryEngine();
-				maxOrderQuantity = BigDecimalUtil.stripTrailingZeros(
-					cpDefinitionInventory.getMaxOrderQuantity());
-				minOrderQuantity = BigDecimalUtil.stripTrailingZeros(
-					cpDefinitionInventory.getMinOrderQuantity());
-				multipleOrderQuantity = BigDecimalUtil.stripTrailingZeros(
-					cpDefinitionInventory.getMultipleOrderQuantity());
+				setAllowBackOrder(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return cpDefinitionInventory.isBackOrders();
+					});
+				setAllowedOrderQuantities(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return cpDefinitionInventory.
+							getAllowedOrderQuantitiesArray();
+					});
+				setAvailabilityEstimateId(
+					() -> {
+						if (cpdAvailabilityEstimate == null) {
+							return null;
+						}
+
+						return cpdAvailabilityEstimate.
+							getCommerceAvailabilityEstimateId();
+					});
+				setAvailabilityEstimateName(
+					() -> {
+						if (cpdAvailabilityEstimate == null) {
+							return null;
+						}
+
+						CommerceAvailabilityEstimate
+							commerceAvailabilityEstimate =
+								cpdAvailabilityEstimate.
+									getCommerceAvailabilityEstimate();
+
+						if (commerceAvailabilityEstimate == null) {
+							return null;
+						}
+
+						return LanguageUtils.getLanguageIdMap(
+							commerceAvailabilityEstimate.getTitleMap());
+					});
+				setInventoryEngine(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return cpDefinitionInventory.
+							getCPDefinitionInventoryEngine();
+					});
+				setMaxOrderQuantity(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return BigDecimalUtil.stripTrailingZeros(
+							cpDefinitionInventory.getMaxOrderQuantity());
+					});
+				setMinOrderQuantity(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return BigDecimalUtil.stripTrailingZeros(
+							cpDefinitionInventory.getMinOrderQuantity());
+					});
+				setMultipleOrderQuantity(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return BigDecimalUtil.stripTrailingZeros(
+							cpDefinitionInventory.getMultipleOrderQuantity());
+					});
 			}
 		};
 	}
+
+	@Reference
+	private CPDAvailabilityEstimateService _cpdAvailabilityEstimateService;
 
 	@Reference
 	private CPDefinitionInventoryService _cpDefinitionInventoryService;

@@ -204,6 +204,12 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						return commercePriceConfiguration.
 							displayDiscountLevels();
 					});
+				setProductConfiguration(
+					() -> _productConfigurationDTOConverter.toDTO(
+						new DefaultDTOConverterContext(
+							_dtoConverterRegistry,
+							cpInstance.getCPDefinitionId(),
+							skuDTOConverterContext.getLocale(), null, null)));
 				setProductId(
 					() -> {
 						CPDefinition cpDefinition =

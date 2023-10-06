@@ -5,7 +5,12 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter;
 
+import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.model.CommerceAvailabilityEstimate;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.service.CPDAvailabilityEstimateLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
@@ -39,29 +44,115 @@ public class ProductConfigurationDTOConverter
 				fetchCPDefinitionInventoryByCPDefinitionId(
 					(Long)dtoConverterContext.getId());
 
-		if (cpDefinitionInventory == null) {
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			(Long)dtoConverterContext.getId());
+
+		CPDAvailabilityEstimate cpdAvailabilityEstimate =
+			_cpdAvailabilityEstimateLocalService.
+				fetchCPDAvailabilityEstimateByCProductId(
+					cpDefinition.getCProductId());
+
+		if ((cpDefinitionInventory == null) &&
+			(cpdAvailabilityEstimate == null)) {
+
 			return new ProductConfiguration();
 		}
 
 		return new ProductConfiguration() {
 			{
-				allowBackOrder = cpDefinitionInventory.isBackOrders();
-				allowedOrderQuantities =
-					cpDefinitionInventory.getAllowedOrderQuantitiesArray();
-				inventoryEngine =
-					cpDefinitionInventory.getCPDefinitionInventoryEngine();
-				maxOrderQuantity = BigDecimalUtil.stripTrailingZeros(
-					cpDefinitionInventory.getMaxOrderQuantity());
-				minOrderQuantity = BigDecimalUtil.stripTrailingZeros(
-					cpDefinitionInventory.getMinOrderQuantity());
-				multipleOrderQuantity = BigDecimalUtil.stripTrailingZeros(
-					cpDefinitionInventory.getMultipleOrderQuantity());
+				setAllowBackOrder(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return cpDefinitionInventory.isBackOrders();
+					});
+				setAllowedOrderQuantities(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return cpDefinitionInventory.
+							getAllowedOrderQuantitiesArray();
+					});
+				setAvailabilityEstimateId(
+					() -> {
+						if (cpdAvailabilityEstimate == null) {
+							return null;
+						}
+
+						return cpdAvailabilityEstimate.
+							getCommerceAvailabilityEstimateId();
+					});
+				setAvailabilityEstimateName(
+					() -> {
+						if (cpdAvailabilityEstimate == null) {
+							return null;
+						}
+
+						CommerceAvailabilityEstimate
+							commerceAvailabilityEstimate =
+								cpdAvailabilityEstimate.
+									getCommerceAvailabilityEstimate();
+
+						if (commerceAvailabilityEstimate == null) {
+							return null;
+						}
+
+						return commerceAvailabilityEstimate.getTitle(
+							dtoConverterContext.getLocale());
+					});
+				setInventoryEngine(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return cpDefinitionInventory.
+							getCPDefinitionInventoryEngine();
+					});
+				setMaxOrderQuantity(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return BigDecimalUtil.stripTrailingZeros(
+							cpDefinitionInventory.getMaxOrderQuantity());
+					});
+				setMinOrderQuantity(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return BigDecimalUtil.stripTrailingZeros(
+							cpDefinitionInventory.getMinOrderQuantity());
+					});
+				setMultipleOrderQuantity(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return BigDecimalUtil.stripTrailingZeros(
+							cpDefinitionInventory.getMultipleOrderQuantity());
+					});
 			}
 		};
 	}
 
 	@Reference
+	private CPDAvailabilityEstimateLocalService
+		_cpdAvailabilityEstimateLocalService;
+
+	@Reference
 	private CPDefinitionInventoryLocalService
 		_cpDefinitionInventoryLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 }

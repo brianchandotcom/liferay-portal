@@ -15,9 +15,9 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 	<clay:content-col
 		expand="<%= true %>"
 	>
-		<h4 class="sheet-tertiary-title">
+		<span class="sheet-tertiary-title">
 			<liferay-ui:message key="custom-fields" />
-		</h4>
+		</span>
 	</clay:content-col>
 
 	<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, PortletKeys.EXPANDO, ActionKeys.ACCESS_IN_CONTROL_PANEL) %>">

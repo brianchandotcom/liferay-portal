@@ -99,7 +99,7 @@ public class ObjectLayoutLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
 				_objectDefinitionLocalService,
-				Arrays.asList(
+				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
@@ -364,7 +364,7 @@ public class ObjectLayoutLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
 				_objectDefinitionLocalService,
-				Arrays.asList(
+				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
@@ -483,7 +483,7 @@ public class ObjectLayoutLocalServiceTest {
 
 		_objectLayoutLocalService.updateObjectLayout(
 			objectLayout.getObjectLayoutId(), false, objectLayout.getNameMap(),
-			Arrays.asList(objectLayoutTab1));
+			Collections.singletonList(objectLayoutTab1));
 
 		screenNavigationCategories =
 			ScreenNavigationRegistryUtil.getScreenNavigationCategories(
@@ -494,14 +494,12 @@ public class ObjectLayoutLocalServiceTest {
 	}
 
 	private long _addObjectField() throws Exception {
-		String name = RandomTestUtil.randomString();
-
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).userId(
 				TestPropsValues.getUserId()
 			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(name)
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(
 				StringUtil.randomId()
 			).objectDefinitionId(

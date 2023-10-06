@@ -17,7 +17,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,18 +46,27 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test
-	public void test() throws Exception {
+	@Before
+	public void setUp() {
 		Bundle bundle = FrameworkUtil.getBundle(GraphQLServletTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		TestServletData testServletData = new TestServletData();
 
-		ServiceRegistration<ServletData> serviceRegistration =
-			bundleContext.registerService(
-				ServletData.class, testServletData, null);
+		_serviceRegistration = bundleContext.registerService(
+			ServletData.class, testServletData, null);
 
+		_testQuery = testServletData.getQuery();
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
+	}
+
+	@Test
+	public void test() throws Exception {
 		String key = StringUtil.lowerCaseFirstLetter(
 			TestDTO.class.getSimpleName());
 
@@ -65,26 +76,12 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 					key, new GraphQLField("field"), new GraphQLField("_id"))),
 			"JSONObject/data", "JSONObject/" + key);
 
-		TestQuery testQuery = testServletData.getQuery();
-
-		Assert.assertEquals(jsonObject.get("field"), testQuery.getField());
-		Assert.assertEquals(jsonObject.get("_id"), testQuery.getId());
-
-		serviceRegistration.unregister();
+		Assert.assertEquals(jsonObject.get("field"), _testQuery.getField());
+		Assert.assertEquals(jsonObject.get("_id"), _testQuery.getId());
 	}
 
 	@Test
 	public void testQueryDepthLimit() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(GraphQLServletTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		TestServletData testServletData = new TestServletData();
-
-		ServiceRegistration<ServletData> serviceRegistration =
-			bundleContext.registerService(
-				ServletData.class, testServletData, null);
-
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			StringBundler.concat(
 				"(&(companyId=", TestPropsValues.getCompanyId(),
@@ -148,12 +145,8 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 						new GraphQLField("_id"))),
 				"JSONObject/data", "JSONObject/" + key);
 
-			TestQuery testQuery = testServletData.getQuery();
-
-			Assert.assertEquals(jsonObject.get("field"), testQuery.getField());
-			Assert.assertEquals(jsonObject.get("_id"), testQuery.getId());
-
-			serviceRegistration.unregister();
+			Assert.assertEquals(jsonObject.get("field"), _testQuery.getField());
+			Assert.assertEquals(jsonObject.get("_id"), _testQuery.getId());
 		}
 		finally {
 			if (configurations == null) {
@@ -169,5 +162,8 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
+
+	private ServiceRegistration<ServletData> _serviceRegistration;
+	private TestQuery _testQuery;
 
 }

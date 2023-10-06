@@ -5,6 +5,11 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";
 
+	static var deleteEntry = "";
+	static var tearDownFieldName = "";
+	static var tearDownObjectName = "";
+	static var tearDownEntryValue = "";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -28,6 +33,13 @@ definition {
 	}
 
 	tearDown {
+		if (${deleteEntry} == "true") {
+			JSONObject.deleteObjectEntryByERC(
+				fieldName = ${tearDownFieldName},
+				objectName = ${tearDownObjectName},
+				value = ${tearDownEntryValue});
+		}
+
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
@@ -122,6 +134,11 @@ definition {
 
 			PortletEntry.save();
 
+			var deleteEntry = "true";
+			var tearDownFieldName = "title";
+			var tearDownObjectName = "PoshiTest";
+			var tearDownEntryValue = "Entry Updated LPS-162131";
+
 			Navigator.gotoBack();
 
 			AssertElementPresent(
@@ -131,6 +148,8 @@ definition {
 
 		task ("And then the user is able to delete entries") {
 			ObjectPortlet.deleteEntry(entry = "Entry Updated LPS-162131");
+
+			var deleteEntry = "";
 
 			AssertElementNotPresent(
 				key_entry = "Entry Updated LPS-162131",
@@ -281,6 +300,11 @@ definition {
 
 			CreateObject.saveObject();
 
+			var deleteEntry = "true";
+			var tearDownFieldName = "lastName";
+			var tearDownObjectName = "contact";
+			var tearDownEntryValue = "Last Name Updated LPS-185429";
+
 			Navigator.gotoBack();
 
 			AssertElementPresent(
@@ -290,6 +314,8 @@ definition {
 
 		task ("And then the user is able to delete entries") {
 			ObjectPortlet.deleteEntry(entry = "Last Name Updated LPS-185429");
+
+			var deleteEntry = "";
 
 			AssertElementNotPresent(
 				key_entry = "Last Name Updated LPS-185429",
@@ -343,6 +369,11 @@ definition {
 				text = "Entry added on form container");
 
 			Button.clickSubmitButton();
+
+			var deleteEntry = "true";
+			var tearDownFieldName = "title";
+			var tearDownObjectName = "PoshiTest";
+			var tearDownEntryValue = "Entry added on form container";
 		}
 
 		task ("Then the entry is created") {
@@ -353,6 +384,8 @@ definition {
 
 		task ("and When the user deletes the entry") {
 			ObjectPortlet.deleteEntry(entry = "Entry added on form container");
+
+			var deleteEntry = "";
 		}
 
 		task ("Then the entry is deleted") {
@@ -412,6 +445,11 @@ definition {
 
 			PortletEntry.save();
 
+			var deleteEntry = "true";
+			var tearDownFieldName = "title";
+			var tearDownObjectName = "PoshiTest";
+			var tearDownEntryValue = "Entry Updated LPS-185427";
+
 			ObjectAdmin.goToCustomObject(objectName = "PoshiTest");
 
 			AssertElementPresent(
@@ -421,6 +459,8 @@ definition {
 
 		task ("And then the user is able to delete entries") {
 			ObjectPortlet.deleteEntry(entry = "Entry Updated LPS-185427");
+
+			var deleteEntry = "";
 
 			AssertElementNotPresent(
 				key_entry = "Entry Updated LPS-185427",
@@ -488,6 +528,11 @@ definition {
 
 			CreateObject.saveObject();
 
+			var deleteEntry = "true";
+			var tearDownFieldName = "lastName";
+			var tearDownObjectName = "contact";
+			var tearDownEntryValue = "Last Name Updated LPS-185428";
+
 			Navigator.gotoBack();
 
 			AssertElementPresent(
@@ -497,6 +542,8 @@ definition {
 
 		task ("And then the user is able to delete entries") {
 			ObjectPortlet.deleteEntry(entry = "Last Name Updated LPS-185428");
+
+			var deleteEntry = "";
 
 			AssertElementNotPresent(
 				key_entry = "Last Name Updated LPS-185428",

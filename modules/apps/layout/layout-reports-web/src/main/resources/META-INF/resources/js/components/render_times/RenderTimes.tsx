@@ -67,6 +67,7 @@ export default function RenderTimes({
 	return (
 		<>
 			<BetaButton
+				containerClassName="c-mb-3"
 				learnResourceContext={learnResources}
 				tooltipAlign="top-left"
 			/>

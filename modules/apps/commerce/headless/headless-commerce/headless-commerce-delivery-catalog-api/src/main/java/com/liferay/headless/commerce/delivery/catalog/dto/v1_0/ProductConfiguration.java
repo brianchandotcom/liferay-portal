@@ -30,6 +30,7 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -109,6 +110,65 @@ public class ProductConfiguration implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal[] allowedOrderQuantities;
+
+	@DecimalMin("0")
+	@Schema(example = "31130")
+	public Long getAvailabilityEstimateId() {
+		return availabilityEstimateId;
+	}
+
+	public void setAvailabilityEstimateId(Long availabilityEstimateId) {
+		this.availabilityEstimateId = availabilityEstimateId;
+	}
+
+	@JsonIgnore
+	public void setAvailabilityEstimateId(
+		UnsafeSupplier<Long, Exception> availabilityEstimateIdUnsafeSupplier) {
+
+		try {
+			availabilityEstimateId = availabilityEstimateIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long availabilityEstimateId;
+
+	@Schema
+	public String getAvailabilityEstimateName() {
+		return availabilityEstimateName;
+	}
+
+	public void setAvailabilityEstimateName(String availabilityEstimateName) {
+		this.availabilityEstimateName = availabilityEstimateName;
+	}
+
+	@JsonIgnore
+	public void setAvailabilityEstimateName(
+		UnsafeSupplier<String, Exception>
+			availabilityEstimateNameUnsafeSupplier) {
+
+		try {
+			availabilityEstimateName =
+				availabilityEstimateNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String availabilityEstimateName;
 
 	@Schema(example = "true")
 	public Boolean getDisplayAvailability() {
@@ -403,6 +463,30 @@ public class ProductConfiguration implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (availabilityEstimateId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"availabilityEstimateId\": ");
+
+			sb.append(availabilityEstimateId);
+		}
+
+		if (availabilityEstimateName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"availabilityEstimateName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(availabilityEstimateName));
+
+			sb.append("\"");
 		}
 
 		if (displayAvailability != null) {

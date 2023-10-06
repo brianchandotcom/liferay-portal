@@ -126,6 +126,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FS_PRODUCT_UOM_SELECT_DISABLED</td>
+	<td>//select[(@disabled)][contains(@class,'unit-of-measure-selector')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FS_PRODUCT_UOM_SELECTOR_VALUE</td>
 	<td>//select[contains(@class,'unit-of-measure-selector')]//option[contains(@value,'${uomName}')]</td>
 	<td></td>

@@ -197,16 +197,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 											<portlet:param name="title" value="<%= String.valueOf(wikiPage.getTitle()) %>" />
 										</portlet:actionURL>
 
-										<clay:button
+										<clay:link
 											aria-label='<%= LanguageUtil.get(request, "unsubscribe") %>'
-											borderless="<%= true %>"
-											data-url="<%= unsubscribeURL %>"
+											href="<%= unsubscribeURL %>"
 											icon="times-circle"
 											label="unsubscribe"
-											propsTransformer="wiki/js/WikiPageActionButtonPropsTransformer"
 											small="<%= true %>"
-											title="unsubscribe"
-											type="button"
 										/>
 									</td>
 								</c:when>
@@ -222,16 +218,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 											<portlet:param name="title" value="<%= String.valueOf(wikiPage.getTitle()) %>" />
 										</portlet:actionURL>
 
-										<clay:button
+										<clay:link
 											aria-label='<%= LanguageUtil.get(request, "subscribe") %>'
-											borderless="<%= true %>"
-											data-url="<%= subscribeURL %>"
+											href="<%= subscribeURL %>"
 											icon="check-circle-full"
 											label="subscribe"
-											propsTransformer="wiki/js/WikiPageActionButtonPropsTransformer"
 											small="<%= true %>"
-											title="subscribe"
-											type="button"
 										/>
 									</td>
 								</c:otherwise>
@@ -253,16 +245,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 											<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 										</portlet:actionURL>
 
-										<clay:button
+										<clay:link
 											aria-label='<%= LanguageUtil.get(request, "unsubscribe") %>'
-											borderless="<%= true %>"
-											data-url="<%= unsubscribeURL %>"
+											href="<%= unsubscribeURL %>"
 											icon="times-circle"
 											label="unsubscribe"
-											propsTransformer="wiki/js/WikiPageActionButtonPropsTransformer"
 											small="<%= true %>"
-											title="unsubscribe"
-											type="button"
 										/>
 									</td>
 								</c:when>
@@ -277,16 +265,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 											<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 										</portlet:actionURL>
 
-										<clay:button
+										<clay:link
 											aria-label='<%= LanguageUtil.get(request, "subscribe") %>'
-											borderless="<%= true %>"
-											data-url="<%= subscribeURL %>"
+											href="<%= subscribeURL %>"
 											icon="check-circle-full"
 											label="subscribe"
-											propsTransformer="wiki/js/WikiPageActionButtonPropsTransformer"
 											small="<%= true %>"
-											title="subscribe"
-											type="button"
 										/>
 									</td>
 								</c:otherwise>
@@ -332,8 +316,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 					<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
 						<clay:link
 							aria-label='<%= LanguageUtil.get(request, "copy") %>'
-							borderless="<%= true %>"
-							displayType="primary"
+							displayType="link"
 							href='<%=
 								PortletURLBuilder.create(
 									PortletURLUtil.clone(viewPageURL, renderResponse)
@@ -354,7 +337,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 							icon="paste"
 							label="copy"
 							small="<%= true %>"
-							title="copy"
 							type="button"
 						/>
 					</c:if>
@@ -362,8 +344,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 					<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
 						<clay:link
 							aria-label='<%= LanguageUtil.get(request, "move") %>'
-							borderless="<%= true %>"
-							displayType="primary"
+							displayType="link"
 							href='<%=
 								PortletURLBuilder.create(
 									PortletURLUtil.clone(viewPageURL, renderResponse)
@@ -376,7 +357,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 							icon="move"
 							label="move"
 							small="<%= true %>"
-							title='<%= LanguageUtil.get(request, "move") %>'
 							type="button"
 						/>
 					</c:if>

@@ -30,6 +30,7 @@ import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.option.CommerceOptionValueHelper;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -37,6 +38,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
+import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -140,13 +142,14 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			orderSummaryCheckoutStepDisplayContext =
 				new OrderSummaryCheckoutStepDisplayContext(
 					_commerceChannelLocalService, _commerceOrderHttpHelper,
+					_commerceOrderItemQuantityFormatter,
 					_commerceOrderPriceCalculation,
 					_commerceOrderValidatorRegistry, _commerceOptionValueHelper,
 					_commercePaymentEngine, _commerceProductPriceCalculation,
 					_commerceShippingEngineRegistry,
 					_commerceTermEntryLocalService, _cpInstanceHelper,
-					httpServletRequest, _percentageFormatter, _portal,
-					_portletResourcePermission);
+					_cpInstanceUnitOfMeasureLocalService, httpServletRequest,
+					_percentageFormatter, _portal, _portletResourcePermission);
 
 		CommerceOrder commerceOrder =
 			orderSummaryCheckoutStepDisplayContext.getCommerceOrder();
@@ -390,6 +393,10 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
+	private CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
+
+	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
@@ -424,6 +431,10 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

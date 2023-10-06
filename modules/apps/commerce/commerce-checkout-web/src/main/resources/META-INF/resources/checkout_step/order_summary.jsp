@@ -149,7 +149,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 							name="quantity"
 						>
 							<div class="quantity-section">
-								<span class="commerce-quantity"><%= commerceOrderItem.getQuantity() %></span><span class="inline-item-after">x</span>
+								<span class="commerce-quantity"><%= orderSummaryCheckoutStepDisplayContext.getCommerceOrderItemFormattedQuantity(commerceOrderItem) %></span><span class="inline-item-after">x</span>
 							</div>
 						</liferay-ui:search-container-column-text>
 

@@ -27,7 +27,7 @@ public interface CommerceOrderItemDecimalQuantityConfiguration {
 	@Meta.AD(deflt = "2", name = "maximum-fraction-digits", required = false)
 	public int maximumFractionDigits();
 
-	@Meta.AD(deflt = "2", name = "minimum-fraction-digits", required = false)
+	@Meta.AD(deflt = "0", name = "minimum-fraction-digits", required = false)
 	public int minimumFractionDigits();
 
 	@Meta.AD(deflt = "HALF_EVEN", name = "rounding-mode", required = false)

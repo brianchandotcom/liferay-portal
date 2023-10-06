@@ -240,7 +240,6 @@
 	<td>//input[contains(@name,'FDSViewsPortlet_${key_label}')]/following-sibling::input</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>FILTER_BY_DROPDOWN</td>
 	<td>//select[contains(@title, 'Filter By')]</td>

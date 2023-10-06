@@ -70,6 +70,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Represents either a site or a generic resource container.
@@ -1229,6 +1230,20 @@ public class GroupImpl extends GroupBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale) {
+		if (!Objects.equals(
+				LocaleUtil.toLanguageId(defaultLocale),
+				getDefaultLanguageId()) &&
+			(nameMap != null) && Validator.isNull(nameMap.get(defaultLocale)) &&
+			Validator.isNotNull(getName(getDefaultLanguageId()))) {
+
+			nameMap.put(defaultLocale, getName(getDefaultLanguageId()));
+		}
+
+		super.setNameMap(nameMap, defaultLocale);
 	}
 
 	@Override

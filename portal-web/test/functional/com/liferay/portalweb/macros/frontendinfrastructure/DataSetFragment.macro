@@ -24,4 +24,24 @@ definition {
 		}
 	}
 
+	macro setUpDataSetPage { 
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "${pageName}");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+
+			DataSetFragment.addDataSetView(dataSetViewName = "${dataSetViewName}");
+
+			SelectFrameTop();
+
+			Button.clickPublish();
+
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "${pageName}");
+	}
+
 }

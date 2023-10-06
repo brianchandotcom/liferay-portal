@@ -1,14 +1,19 @@
 import Alert, {AlertTypes} from 'shared/components/Alert';
 import React from 'react';
+import withCurrentUser from 'shared/hoc/WithCurrentUser';
 import {applyTimeZone} from 'shared/util/date';
+import {compose} from 'redux';
 import {connect} from 'react-redux';
+
 import {Map} from 'immutable';
 import {RootState} from 'shared/store';
 import {sub} from 'shared/util/lang';
+import {User} from 'shared/util/records';
 
 const TIME_ZONE_COUNTRY_REGEX = /\([^)]+.*/;
 
 interface ITimeZoneAlertProps {
+	currentUser: User;
 	displayTimeZone: string;
 	modifiedTime: number;
 	onClose: () => void;
@@ -17,6 +22,7 @@ interface ITimeZoneAlertProps {
 }
 
 const TimeZoneAlert: React.FC<ITimeZoneAlertProps> = ({
+	currentUser,
 	displayTimeZone,
 	modifiedTime,
 	onClose,
@@ -36,13 +42,17 @@ const TimeZoneAlert: React.FC<ITimeZoneAlertProps> = ({
 			),
 			[
 				displayTimeZone.replace(TIME_ZONE_COUNTRY_REGEX, ''),
-				applyTimeZone(modifiedTime, timeZoneId).fromNow()
+				applyTimeZone(
+					modifiedTime,
+					timeZoneId,
+					currentUser.languageId
+				).fromNow()
 			]
 		)}
 	</Alert>
 );
 
-export default connect((state: RootState, {groupId}: {groupId: string}) => {
+const connector = connect((state: RootState, {groupId}: {groupId: string}) => {
 	const timeZone = state.getIn(
 		['projects', groupId, 'data', 'timeZone'],
 		Map()
@@ -52,4 +62,6 @@ export default connect((state: RootState, {groupId}: {groupId: string}) => {
 		displayTimeZone: timeZone.get('displayTimeZone', ''),
 		timeZoneId: timeZone.get('timeZoneId', '')
 	};
-}, null)(TimeZoneAlert);
+}, null);
+
+export default compose<any>(connector, withCurrentUser)(TimeZoneAlert);

@@ -1,7 +1,11 @@
+import 'moment/locale/es';
+import 'moment/locale/ja';
+import 'moment/locale/pt-br';
 import moment from 'moment';
 import momentTimezone from 'moment-timezone';
 import {flow, get, head, last, rangeRight} from 'lodash/fp';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
+import {LanguageIds} from 'shared/util/constants';
 
 export const DEFAULT_DATE_FORMAT = 'YYYY-MM-DD';
 
@@ -49,9 +53,20 @@ export const WEEKDAYS = [
 	Liferay.Language.get('saturday')
 ];
 
+export const DEFAULT_LANGUAGE_ID = LanguageIds.English;
+
 export const DEFAULT_TIMEZONE_ID = 'UTC';
 
 export const DEFAULT_FORMAT = 'LL';
+
+const FORMATTED_LANGUAGE_IDS = {
+	[LanguageIds.English]: 'en',
+	[LanguageIds.Japanese]: 'ja',
+	[LanguageIds.Portuguese]: 'pt-br',
+	[LanguageIds.Spanish]: 'es'
+};
+
+moment.locale(FORMATTED_LANGUAGE_IDS[DEFAULT_LANGUAGE_ID]);
 
 /**
  * Formats unix timestamp to specified moment format
@@ -73,8 +88,15 @@ export const formatDateToTimeZone = (
 	timeZoneId = DEFAULT_TIMEZONE_ID
 ) => applyTimeZone(date, timeZoneId).format(format);
 
-export const applyTimeZone = (date, timeZoneId = DEFAULT_TIMEZONE_ID) =>
-	momentTimezone.utc(date).tz(timeZoneId);
+export const applyTimeZone = (
+	date,
+	timeZoneId = DEFAULT_TIMEZONE_ID,
+	languageId = LanguageIds.English
+) =>
+	momentTimezone
+		.utc(date)
+		.tz(timeZoneId)
+		.locale(FORMATTED_LANGUAGE_IDS[languageId]);
 
 export function generateDateRange(period = 30, interval = 'days') {
 	return rangeRight(0, period).map(cur =>

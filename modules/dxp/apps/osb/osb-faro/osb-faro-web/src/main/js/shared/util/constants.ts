@@ -42,24 +42,28 @@ export const ENABLE_LAST_ACCESS_DATE = false;
 
 export const ENABLE_SALESFORCE = false;
 
-/**
- * Languages
- */
+export enum LanguageIds {
+	English = 'en_US',
+	Japanese = 'ja_JP',
+	Portuguese = 'pt_BR',
+	Spanish = 'es_ES'
+}
+
 export const LANGUAGES = [
 	{
-		id: 'en_US',
+		id: LanguageIds.English,
 		label: Liferay.Language.get('english')
 	},
 	{
-		id: 'ja_JP',
+		id: LanguageIds.Japanese,
 		label: Liferay.Language.get('japanese')
 	},
 	{
-		id: 'pt_BR',
+		id: LanguageIds.Portuguese,
 		label: Liferay.Language.get('portuguese')
 	},
 	{
-		id: 'es_ES',
+		id: LanguageIds.Spanish,
 		label: Liferay.Language.get('spanish')
 	}
 ];

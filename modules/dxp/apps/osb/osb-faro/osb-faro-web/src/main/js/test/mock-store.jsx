@@ -14,7 +14,7 @@ import {
 } from 'shared/util/records';
 import {createStore} from 'redux';
 import {fromJS, List} from 'immutable';
-import {ProjectStates, UserRoleNames} from 'shared/util/constants';
+import {LanguageIds, ProjectStates, UserRoleNames} from 'shared/util/constants';
 import {Provider} from 'react-redux';
 import {shallow} from 'enzyme';
 
@@ -36,7 +36,10 @@ export const mockStoreData = fromJS({
 		card1: data.mockCardTemplate('card1'),
 		card2: data.mockCardTemplate('card2')
 	},
-	currentUser: new RemoteData({data: '23', loading: false}),
+	currentUser: new RemoteData({
+		data: '23',
+		loading: false
+	}),
 	dataSources: {
 		23: toRD(new DataSource(fromJS(data.mockLiferayDataSource(23)))),
 		24: toRD(new DataSource(fromJS(data.mockCSVDataSource(24)))),
@@ -132,16 +135,31 @@ export const mockStoreData = fromJS({
 		test: toRD(new Segment(data.mockSegment('test')))
 	},
 	users: {
-		23: toRD(new User(data.mockUser('23', {groupId: '23'}))),
+		23: toRD(
+			new User(
+				data.mockUser('23', {
+					groupId: '23',
+					languageId: LanguageIds.English
+				})
+			)
+		),
 		24: toRD(
 			new User(
 				data.mockUser('24', {
 					groupId: '23',
+					languageId: LanguageIds.English,
 					roleName: UserRoleNames.Member
 				})
 			)
 		),
-		26: toRD(new User(data.mockUser('26', {groupId: '26'})))
+		26: toRD(
+			new User(
+				data.mockUser('26', {
+					groupId: '26',
+					languageId: LanguageIds.English
+				})
+			)
+		)
 	}
 });
 

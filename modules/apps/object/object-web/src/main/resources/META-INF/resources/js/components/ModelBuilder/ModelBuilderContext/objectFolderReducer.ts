@@ -143,11 +143,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					hasObjectDefinitionUpdateResourcePermission: !!newObjectDefinition
 						.actions.update,
 					hasObjectDefinitionViewResourcePermission: false,
-					label: getLocalizableLabel(
-						newObjectDefinition.defaultLanguageId,
-						newObjectDefinition.label,
-						newObjectDefinition.name
-					),
+					label: newObjectDefinition.label,
 					linkedObjectDefinition: false,
 					objectFields: objectFieldsCustomSort(objectFields),
 					selected: true,

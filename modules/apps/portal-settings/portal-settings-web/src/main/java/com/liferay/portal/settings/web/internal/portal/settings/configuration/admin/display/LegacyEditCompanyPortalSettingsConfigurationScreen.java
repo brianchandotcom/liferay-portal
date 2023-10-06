@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
 public class LegacyEditCompanyPortalSettingsConfigurationScreen
-	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
+	implements PortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
@@ -40,6 +40,16 @@ public class LegacyEditCompanyPortalSettingsConfigurationScreen
 	@Override
 	public String getName(Locale locale) {
 		return _language.get(locale, "general");
+	}
+
+	@Override
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/edit_company";
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Reference

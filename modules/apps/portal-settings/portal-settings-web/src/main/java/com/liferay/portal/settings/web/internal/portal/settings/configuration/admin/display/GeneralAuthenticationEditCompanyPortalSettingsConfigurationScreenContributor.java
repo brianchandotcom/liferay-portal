@@ -9,7 +9,10 @@ import com.liferay.portal.settings.configuration.admin.display.PortalSettingsCon
 
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -17,7 +20,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
 public class
 	GeneralAuthenticationEditCompanyPortalSettingsConfigurationScreenContributor
-		extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
+		implements PortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
@@ -38,5 +41,20 @@ public class
 	public String getName(Locale locale) {
 		return "general";
 	}
+
+	@Override
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/edit_company";
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)"
+	)
+	private ServletContext _servletContext;
 
 }

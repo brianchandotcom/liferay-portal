@@ -11,17 +11,19 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author João Victor Torres
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
 public class DefaultPortletDecoratorPortalSettingsConfigurationScreenContributor
-	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
+	implements PortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
@@ -39,6 +41,16 @@ public class DefaultPortletDecoratorPortalSettingsConfigurationScreenContributor
 	}
 
 	@Override
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/edit_company";
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void setAttributes(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -53,5 +65,10 @@ public class DefaultPortletDecoratorPortalSettingsConfigurationScreenContributor
 				themeDisplay.getCompanyId(),
 				PropsKeys.DEFAULT_PORTLET_DECORATOR_ID));
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)"
+	)
+	private ServletContext _servletContext;
 
 }

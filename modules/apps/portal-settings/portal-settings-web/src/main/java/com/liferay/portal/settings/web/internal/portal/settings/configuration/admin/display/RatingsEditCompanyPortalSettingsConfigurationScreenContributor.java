@@ -12,14 +12,17 @@ import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionValues;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
 public class RatingsEditCompanyPortalSettingsConfigurationScreenContributor
-	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
+	implements PortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
@@ -42,6 +45,16 @@ public class RatingsEditCompanyPortalSettingsConfigurationScreenContributor
 	}
 
 	@Override
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/edit_company";
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public boolean isVisible() {
 		Map<String, PortletRatingsDefinitionValues>
 			portletRatingsDefinitionValuesMap =
@@ -54,5 +67,10 @@ public class RatingsEditCompanyPortalSettingsConfigurationScreenContributor
 
 		return true;
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)"
+	)
+	private ServletContext _servletContext;
 
 }

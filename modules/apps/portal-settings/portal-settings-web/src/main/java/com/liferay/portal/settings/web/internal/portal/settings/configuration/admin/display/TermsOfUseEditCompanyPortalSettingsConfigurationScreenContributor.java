@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.terms.of.use.TermsOfUseContentProvider;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.settings.web.internal.constants.PortalSettingsWebKeys;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
 public class TermsOfUseEditCompanyPortalSettingsConfigurationScreenContributor
-	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
+	implements PortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
@@ -38,6 +39,16 @@ public class TermsOfUseEditCompanyPortalSettingsConfigurationScreenContributor
 	}
 
 	@Override
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/edit_company";
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void setAttributes(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -46,6 +57,11 @@ public class TermsOfUseEditCompanyPortalSettingsConfigurationScreenContributor
 			PortalSettingsWebKeys.TERMS_OF_USE_CONTENT_PROVIDER,
 			_termsOfUseContentProvider);
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)"
+	)
+	private ServletContext _servletContext;
 
 	@Reference
 	private TermsOfUseContentProvider _termsOfUseContentProvider;

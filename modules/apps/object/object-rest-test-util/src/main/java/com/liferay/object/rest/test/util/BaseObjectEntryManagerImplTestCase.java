@@ -97,6 +97,17 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 		return StringBundler.concat(fieldName, " eq ", getValue(value));
 	}
 
+	protected String buildRangeExpression(
+		Date date1, Date date2, String fieldName, String pattern) {
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			pattern);
+
+		return StringBundler.concat(
+			"(( ", fieldName, " ge ", dateFormat.format(date1), ") and ( ",
+			fieldName, " le ", dateFormat.format(date2), "))");
+	}
+
 	protected Page<ObjectEntry> getObjectEntries(
 			Map<String, String> context, Sort[] sorts)
 		throws Exception {

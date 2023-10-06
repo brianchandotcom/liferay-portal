@@ -179,7 +179,7 @@ public class DefaultObjectEntryManagerImplTest
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 		_simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+			"yyyy-MM-dd");
 
 		adminUser = TestPropsValues.getUser();
 
@@ -578,10 +578,7 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinition1.getObjectDefinitionId(),
 			"countAggregationObjectFieldName1");
 
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd");
-
-		String currentDateString = dateFormat.format(new Date());
+		String currentDateString = _simpleDateFormat.format(new Date());
 
 		_objectFilterLocalService.addObjectFilter(
 			adminUser.getUserId(), objectField.getObjectFieldId(), "createDate",
@@ -1700,20 +1697,22 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Range expression
 
+		String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
-				_buildRangeExpression(
+				buildRangeExpression(
 					childObjectEntry1.getDateCreated(), new Date(),
-					"dateCreated")
+					"dateCreated", pattern)
 			).build(),
 			childObjectEntry1, childObjectEntry2);
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
-				_buildRangeExpression(
+				buildRangeExpression(
 					childObjectEntry1.getDateModified(), new Date(),
-					"dateModified")
+					"dateModified", pattern)
 			).build(),
 			childObjectEntry1, childObjectEntry2);
 
@@ -2079,16 +2078,13 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testPartialUpdateObjectEntry() throws Exception {
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd");
-
 		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
 						"dateObjectFieldName",
-						dateFormat.format(RandomTestUtil.nextDate())
+						_simpleDateFormat.format(RandomTestUtil.nextDate())
 					).put(
 						"decimalObjectFieldName", RandomTestUtil.randomDouble()
 					).put(
@@ -2978,15 +2974,6 @@ public class DefaultObjectEntryManagerImplTest
 		return StringBundler.concat(
 			"(", fieldName, "/any(x:",
 			StringUtil.merge(valuesList, includes ? " or " : " and "), "))");
-	}
-
-	private String _buildRangeExpression(
-		Date date1, Date date2, String fieldName) {
-
-		return StringBundler.concat(
-			"(( ", fieldName, " ge ", _simpleDateFormat.format(date1),
-			") and ( ", fieldName, " le ", _simpleDateFormat.format(date2),
-			"))");
 	}
 
 	private ObjectDefinition _createObjectDefinition(

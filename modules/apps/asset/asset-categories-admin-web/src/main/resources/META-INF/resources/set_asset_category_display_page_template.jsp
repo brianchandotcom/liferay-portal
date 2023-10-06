@@ -12,6 +12,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 long[] categoryIds = ParamUtil.getLongValues(request, "categoryIds");
 

@@ -396,7 +396,9 @@ class D3OrganizationChart {
 		this._root.x0 = DY / 2;
 		this._root.y0 = 0;
 
-		this.collapseAllNodes();
+		if (this._root.children.length > 1) {
+			this.collapseAllNodes();
+		}
 
 		this._storeDataTreeInfo(this._root.children, true);
 	}

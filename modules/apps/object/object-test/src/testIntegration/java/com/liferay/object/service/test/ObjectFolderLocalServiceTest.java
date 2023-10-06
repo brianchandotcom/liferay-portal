@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
@@ -148,6 +149,8 @@ public class ObjectFolderLocalServiceTest {
 			PermissionThreadLocal.getPermissionChecker();
 
 		Company company = CompanyTestUtil.addCompany();
+
+		PortalInstances.initCompany(company);
 
 		ObjectFolder objectFolder = null;
 

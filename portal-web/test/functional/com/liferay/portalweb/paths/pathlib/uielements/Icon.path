@@ -316,6 +316,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_ARROW_UP</td>
+	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow-up')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPENID_CONNECT</td>
 	<td>//a[@role='menuitem']/span[contains(.,'OpenId Connect')]</td>
 	<td></td>

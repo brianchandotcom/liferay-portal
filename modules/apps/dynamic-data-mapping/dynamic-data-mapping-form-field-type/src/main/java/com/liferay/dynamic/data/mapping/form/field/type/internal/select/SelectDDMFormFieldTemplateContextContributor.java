@@ -159,6 +159,9 @@ public class SelectDDMFormFieldTemplateContextContributor
 		String objectFieldName = GetterUtil.getString(
 			ddmFormField.getProperty("objectFieldName"));
 
+		boolean alphabeticalOrder = GetterUtil.getBoolean(
+			ddmFormField.getProperty("alphabeticalOrder"));
+
 		if ((objectDefinition != null) &&
 			Validator.isNotNull(objectFieldName)) {
 
@@ -166,7 +169,7 @@ public class SelectDDMFormFieldTemplateContextContributor
 				ddmFormFieldOptions, objectDefinition.getObjectDefinitionId(),
 				objectFieldName);
 
-			if (ListUtil.isNotEmpty(options)) {
+			if (ListUtil.isNotEmpty(options) && !alphabeticalOrder) {
 				return options;
 			}
 		}
@@ -194,9 +197,6 @@ public class SelectDDMFormFieldTemplateContextContributor
 					"value", optionValue
 				).build());
 		}
-
-		boolean alphabeticalOrder = GetterUtil.getBoolean(
-			ddmFormField.getProperty("alphabeticalOrder"));
 
 		if (alphabeticalOrder) {
 			Collator collator = CollatorUtil.getInstance(locale);

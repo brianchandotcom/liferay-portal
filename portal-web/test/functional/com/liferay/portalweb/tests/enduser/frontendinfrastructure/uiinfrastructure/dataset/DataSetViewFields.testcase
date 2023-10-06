@@ -87,6 +87,130 @@ definition {
 		}
 	}
 
+	@description = "LPS-176516 Confirm the success of the changes, and addition of the new language"
+	@priority = 5
+	test AssertTheSuccessMessageInField {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
+		}
+
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
+
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And clicks on language button") {
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("And add a pt-BR translate") {
+			Click(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "pt_BR");
+
+			Click(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit creator");
+
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "PT-BR");
+
+			Button.clickSave();
+		}
+
+		task ("Then confirm the success message") {
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	@description = "LPS-176516 Confirm that the language dropdown is displayed"
+	@priority = 5
+	test AssertTheTranslationModal {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
+		}
+
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
+
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And clicks on language button") {
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("Then confirm that the language dropdown is displayed") {
+			AssertElementPresent(
+				key_menuItem = "en_US",
+				locator1 = "CommerceNavigation#DROPDOWN_ITEM");
+		}
+	}
+
+	@description = "LPS-176516 Confirm the translated in language selected"
+	@priority = 5
+	test AssertTranslatedStatusIsDisplayes {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
+		}
+
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
+
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And clicks on language button") {
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("And select pt_BR language, and add a label in this translation") {
+			Click(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "pt_BR");
+
+			Click(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit creator");
+
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "PT-BR");
+
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("Then assert the translated status green in PT-BR language") {
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
+				tagName = "Translated");
+		}
+	}
+
 	@description = "LPS-185226. Confirm that the user can add a field"
 	@priority = 5
 	test CanAddField {
@@ -189,6 +313,188 @@ definition {
 			AssertElementPresent(
 				key_checkboxOption = "Sortable",
 				locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
+		}
+	}
+
+	@description = "LPS-176516 Confirm that when adding a field with translation, and adding pt to the page URL, the values change according to the translation"
+	@priority = 3
+	test CanAssertTranslationIsWorking {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
+		}
+
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
+
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And clicks on language button") {
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("And add a pt-BR translate") {
+			Click(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "pt_BR");
+
+			Click(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit creator");
+
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "PT-BR");
+
+			Button.clickSave();
+		}
+
+		task ("When the user adds a widget page and add a fragment Data Set") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Test");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And viewing the configuration menu of the portlet And selects View Fields Test") {
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "View Fields Test",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("And go to the page created, and put a "pt" in URL page") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Data Set Test");
+		}
+
+		task ("Then Confirm the page translation according to PT-BR") {
+			Navigator.openSpecificURL(url = "http://localhost:8080/pt/data-set-test");
+
+			AssertElementPresent(
+				key_column = "PT-BR",
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
+		}
+	}
+
+	@description = "LPS-176516 Confirm that when adding a field with translation and canceling it, and adding pt to the page URL, the values ​​do not change according to the translation"
+	@priority = 4
+	test CanCanAssertTranslationIsCanceled {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
+		}
+
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
+
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And clicks on language button") {
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("And add a pt-BR translate and click on cancel button") {
+			Click(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "pt_BR");
+
+			Click(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit creator");
+
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "PT-BR");
+
+			Button.clickCancel();
+		}
+
+		task ("When the user adds a widget page and add a fragment Data Set") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Test");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And viewing the configuration menu of the portlet And selects View Fields Test") {
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "View Fields Test",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("And go to the page created, and put a "pt" in URL page") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Data Set Test");
+		}
+
+		task ("Then the label of the field translated (but not saved) is displayed in the default language.") {
+			Navigator.openSpecificURL(url = "http://localhost:8080/pt/data-set-test");
+
+			AssertElementNotPresent(
+				key_column = "PT-BR",
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
+
+			AssertElementPresent(
+				key_column = "creator",
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
 		}
 	}
 
@@ -433,6 +739,124 @@ definition {
 			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
 				keyName = "id");
+		}
+	}
+
+	@description = "LPS-176516 Confirm that the indication of a translation in the field and stop with the cancel button"
+	@priority = 4
+	test CanCancelTranslationOnCancelButton {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
+		}
+
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
+
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And clicks on language button") {
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("And add a pt-BR translate") {
+			Click(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "pt_BR");
+
+			Click(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit creator");
+
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "PT-BR");
+
+			Button.clickCancel();
+		}
+
+		task ("And clicks on edit again, and localization button") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("Then the translations are not saved, in the language dropdown dont have the TRANSLATED green label") {
+			AssertElementNotPresent(
+				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
+				tagName = "Translated");
+		}
+	}
+
+	@description = "LPS-176516 Confirm that the indication of a translation in the field and stop with the close button "
+	@priority = 3
+	test CanCancelTranslationOnCloseButton {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
+		}
+
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
+
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And clicks on language button") {
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("And add a pt-BR translate") {
+			Click(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "pt_BR");
+
+			Click(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit creator");
+
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "PT-BR");
+
+			Click(locator1 = "Icon#CLOSE");
+		}
+
+		task ("And clicks on edit again, and localization button") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("Then the translations are not saved, in the language dropdown dont have the TRANSLATED green label") {
+			AssertElementNotPresent(
+				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
+				tagName = "Translated");
 		}
 	}
 

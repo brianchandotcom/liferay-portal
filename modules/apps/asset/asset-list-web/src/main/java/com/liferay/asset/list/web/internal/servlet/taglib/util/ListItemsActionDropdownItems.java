@@ -115,8 +115,10 @@ public class ListItemsActionDropdownItems {
 					className, new ClassPKInfoItemIdentifier(classPK)),
 				_themeDisplay);
 
-		return HttpComponentsUtil.setParameter(
-			viewDisplayPageURL, "p_l_back_url", _getRedirect());
+		return HttpComponentsUtil.addParameters(
+			viewDisplayPageURL, "p_l_back_url", _getRedirect(),
+			"p_l_back_url_title",
+			ParamUtil.getString(_httpServletRequest, "backURLTitle"));
 	}
 
 	private Object _getAssetEntryObject(AssetEntry assetEntry)

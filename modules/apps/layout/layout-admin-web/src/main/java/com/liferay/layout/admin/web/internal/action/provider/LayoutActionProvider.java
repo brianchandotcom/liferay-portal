@@ -601,6 +601,13 @@ public class LayoutActionProvider {
 				return redirect;
 			}
 		).setParameter(
+			"backURLTitle",
+			() -> {
+				Layout previousLayout = _themeDisplay.getLayout();
+
+				return previousLayout.getName(_themeDisplay.getLocale());
+			}
+		).setParameter(
 			"collectionPK", layout.getTypeSettingsProperty("collectionPK")
 		).setParameter(
 			"collectionType", layout.getTypeSettingsProperty("collectionType")

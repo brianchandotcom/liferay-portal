@@ -668,6 +668,8 @@ public class LayoutActionDropdownItemsProvider {
 
 		portletURL.setParameter(
 			"redirect", _layoutsAdminDisplayContext.getRedirect());
+		portletURL.setParameter(
+			"backURLTitle", LanguageUtil.get(_httpServletRequest, "pages"));
 		portletURL.setParameter("collectionPK", collectionPK);
 		portletURL.setParameter("collectionType", collectionType);
 		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));

@@ -12,6 +12,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -26,6 +27,10 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -51,8 +56,10 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -70,6 +77,42 @@ public class JournalArticleAssetEntryReindexTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
+			new CompanyServiceSettingsLocator(
+				TestPropsValues.getCompanyId(),
+				JournalServiceConfiguration.class.getName()));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		_originalIndexAllArticleVersionsEnabled = GetterUtil.getBoolean(
+			modifiableSettings.getValue(
+				"indexAllArticleVersionsEnabled", "true"));
+
+		modifiableSettings.setValue("indexAllArticleVersionsEnabled", "true");
+
+		modifiableSettings.store();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
+			new CompanyServiceSettingsLocator(
+				TestPropsValues.getCompanyId(),
+				JournalServiceConfiguration.class.getName()));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue(
+			"indexAllArticleVersionsEnabled",
+			String.valueOf(_originalIndexAllArticleVersionsEnabled));
+
+		modifiableSettings.store();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -400,6 +443,8 @@ public class JournalArticleAssetEntryReindexTest {
 			throw new RuntimeException(portalException);
 		}
 	}
+
+	private static boolean _originalIndexAllArticleVersionsEnabled;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;

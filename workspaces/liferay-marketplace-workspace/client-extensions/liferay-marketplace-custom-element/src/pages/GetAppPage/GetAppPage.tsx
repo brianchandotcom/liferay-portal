@@ -245,7 +245,7 @@ const GetAppFlow = () => {
 
 			<div className="border d-flex flex-column mt-7 p-5 rounded">
 				<div className="d-flex flex-column">
-					{!isFreeApp && (
+					{!isFreeApp && product && (
 						<div className="d-flex justify-content-center mb-6">
 							<StepWizard
 								className="col-8"

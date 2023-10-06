@@ -105,6 +105,10 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		return _builder._multivalued;
 	}
 
+	public boolean isReadOnly() {
+		return _builder._readOnly;
+	}
+
 	public boolean isRequired() {
 		return _builder._required;
 	}
@@ -140,6 +144,7 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		private boolean _multivalued;
 		private String _name;
 		private String _namespace;
+		private boolean _readOnly;
 		private boolean _required;
 		private String _uniqueId;
 
@@ -186,6 +191,12 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 
 		public FinalStep<T> multivalued(boolean multivalued) {
 			_builder._multivalued = multivalued;
+
+			return this;
+		}
+
+		public FinalStep<T> readOnly(boolean readOnly) {
+			_builder._readOnly = readOnly;
 
 			return this;
 		}

@@ -48,7 +48,7 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 			matcher.appendReplacement(
 				sb,
 				Matcher.quoteReplacement(
-					_formatJspExpressionTag(matcher.group(1))));
+					_formatJSPExpressionTag(matcher.group(1))));
 		}
 
 		if (sb.length() > 0) {
@@ -60,7 +60,7 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _formatJspExpressionTag(String expression) {
+	private String _formatJSPExpressionTag(String expression) {
 		List<String> operandList = new ArrayList<>();
 
 		int startPosition = 0;

@@ -25,7 +25,7 @@ public class JSPStylingCheck extends BaseStylingCheck {
 
 		content = _combineJavaSourceBlocks(fileName, content);
 
-		content = _formatJspExpressionTag(content);
+		content = _formatJSPExpressionTag(content);
 
 		content = _formatLineBreak(fileName, content);
 
@@ -197,7 +197,7 @@ public class JSPStylingCheck extends BaseStylingCheck {
 		return content;
 	}
 
-	private String _formatJspExpressionTag(String content) {
+	private String _formatJSPExpressionTag(String content) {
 		Matcher matcher = _jspExpressionTagPattern.matcher(content);
 
 		while (matcher.find()) {

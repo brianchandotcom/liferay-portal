@@ -53,13 +53,13 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 			newContent = JavaSourceUtil.addImports(newContent, newImports);
 		}
 		else if (fileName.endsWith(".jsp")) {
-			newContent = addNewImportsJspHeader(newContent, newImports);
+			newContent = addNewImportsJSPHeader(newContent, newImports);
 		}
 
 		return newContent;
 	}
 
-	protected String addNewImportsJspHeader(
+	protected String addNewImportsJSPHeader(
 		String newContent, String[] newImports) {
 
 		Arrays.sort(newImports);
@@ -71,7 +71,7 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 
 			return StringUtil.replaceFirst(
 				newContent, jspHeader,
-				getNewImportsJspHeader(
+				getNewImportsJSPHeader(
 					StringUtil.splitLines(jspHeader), newImports));
 		}
 
@@ -82,10 +82,10 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 
 			return StringUtil.replaceFirst(
 				newContent, jspHeader,
-				getNewImportsJspHeader(new String[] {jspHeader}, newImports));
+				getNewImportsJSPHeader(new String[] {jspHeader}, newImports));
 		}
 
-		return getNewImportsJspHeader(new String[0], newImports) + newContent;
+		return getNewImportsJSPHeader(new String[0], newImports) + newContent;
 	}
 
 	protected String afterFormat(
@@ -122,7 +122,7 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 		return null;
 	}
 
-	protected String getNewImportsJspHeader(
+	protected String getNewImportsJSPHeader(
 		String[] jspHeaders, String[] newImports) {
 
 		StringBundler sb = new StringBundler(4);

@@ -66,7 +66,7 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
-		String jspPath = _getJspPath(javaClass);
+		String jspPath = _getJSPPath(javaClass);
 
 		if (jspPath == null) {
 			return javaTerm.getContent();
@@ -130,7 +130,7 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 			bndSettings.getContent(), "Bundle-SymbolicName");
 	}
 
-	private String _getJspPath(JavaClass javaClass) {
+	private String _getJSPPath(JavaClass javaClass) {
 		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
 			if (!childJavaTerm.isJavaMethod()) {
 				continue;

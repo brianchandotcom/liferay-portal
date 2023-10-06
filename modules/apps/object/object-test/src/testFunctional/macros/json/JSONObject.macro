@@ -598,6 +598,55 @@ definition {
 		return ${objectEntryId};
 	}
 
+	macro addObjectValidation {
+		Variables.assertDefined(parameterList = "${objectName},${labelName},${script},${validationType}");
+
+		var portalURL = JSONCompany.getDefaultPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
+		var objectId = JSONObject.getObjectId(
+			objectName = ${objectName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(errorMessage))) {
+			var errorMessage = "Please enter a valid entry.";
+		}
+
+		var single_quote = "'";
+		var escape_quotes = "'\''";
+
+		var script = StringUtil.replace(${script}, ${single_quote}, ${escape_quotes});
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-validation-rules \
+				-u ${userLoginInfo} \
+				-H Content-Type: application/json \
+				-d '{
+					"active": "true",
+					"engine": "${validationType}",
+					"errorLabel": {
+						"en_US": "${errorMessage}"
+					},
+					"name": {
+						"en_US": "${labelName}"
+					},
+					"outputType": "fullValidation",
+					"script": "${script}",
+					"system": false
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	macro addPicklist {
 		Variables.assertDefined(parameterList = ${picklistName});
 

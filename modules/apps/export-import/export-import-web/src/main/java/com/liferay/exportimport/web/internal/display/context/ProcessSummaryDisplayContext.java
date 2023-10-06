@@ -56,22 +56,18 @@ public class ProcessSummaryDisplayContext {
 				_PORTLET_ID_JOURNAL_PORTLET
 			) && FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
 
-			Map<String, String> assetTitles =
-				(Map<String, String>)taskContextMap.get(
-					ExportImportBackgroundTaskContextMapConstants.ASSET_TITLES);
-
 			Map<String, LongWrapper> modelAdditionCounters =
 				(Map<String, LongWrapper>)taskContextMap.get(
 					ExportImportBackgroundTaskContextMapConstants.
 						MODEL_ADDITION_COUNTERS);
 
+			LongWrapper modelAdditionCounter = modelAdditionCounters.get(
+				_CLASS_NAME_JOURNAL_ARTICLE);
+
 			Map<String, LongWrapper> modelDeletionCounters =
 				(Map<String, LongWrapper>)taskContextMap.get(
 					ExportImportBackgroundTaskContextMapConstants.
 						MODEL_DELETION_COUNTERS);
-
-			LongWrapper modelAdditionCounter = modelAdditionCounters.get(
-				_CLASS_NAME_JOURNAL_ARTICLE);
 
 			LongWrapper modelDeletionCounter = modelDeletionCounters.get(
 				_CLASS_NAME_JOURNAL_ARTICLE);
@@ -87,6 +83,10 @@ public class ProcessSummaryDisplayContext {
 					return null;
 				}
 			}
+
+			Map<String, String> assetTitles =
+				(Map<String, String>)taskContextMap.get(
+					ExportImportBackgroundTaskContextMapConstants.ASSET_TITLES);
 
 			if ((assetTitles != null) &&
 				Validator.isNotNull(

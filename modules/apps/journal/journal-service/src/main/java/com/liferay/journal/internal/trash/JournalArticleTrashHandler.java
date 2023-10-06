@@ -72,12 +72,12 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 			String referrerClassName)
 		throws PortalException {
 
-		JournalArticle article = _journalArticleLocalService.getLatestArticle(
-			classPK);
-
 		JSONObject extraDataJSONObject = JSONUtil.put("inTrash", true);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
+			JournalArticle article =
+				_journalArticleLocalService.getLatestArticle(classPK);
+
 			extraDataJSONObject.put(
 				JournalArticleConstants.ASSET_TITLE,
 				article.getTitle(article.getDefaultLanguageId()));

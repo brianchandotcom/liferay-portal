@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
+import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFilterContributor;
 
 import java.util.List;
 

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
-import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
+import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFilterContributor;
 
 import java.util.List;
 import java.util.Map;

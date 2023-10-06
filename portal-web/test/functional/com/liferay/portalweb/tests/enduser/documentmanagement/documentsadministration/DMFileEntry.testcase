@@ -2405,7 +2405,7 @@ definition {
 		DMNavigator.openToConfigInSystemSettings(portlet = "File Entries");
 
 		Type(
-			key_fieldLabel = "Previewable Processor Maximum Size",
+			key_fieldLabel = "Maximum File Size",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = 1024);
 

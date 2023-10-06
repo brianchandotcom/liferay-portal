@@ -87,20 +87,22 @@ const LicenseSectorCard: React.FC<any> = ({
 				</div>
 			</div>
 
-			<div className="d-flex flex-column license__card__tier mt-4 p-4">
-				<div className="font-weight-bold license__card__tier__title mb-1">
-					License Prices
-				</div>
+			{tiers?.tierPrice.length && (
+				<div className="d-flex flex-column license__card__tier mt-4 p-4">
+					<div className="font-weight-bold license__card__tier__title mb-1">
+						License Prices
+					</div>
 
-				{(tiers?.tierPrice as any[])?.map((tier: any, index) => (
-					<span
-						className="license__card__tier__price__text"
-						key={index}
-					>
-						{`${tier?.minimumQuantity} License: ${tier?.priceFormatted} each`}
-					</span>
-				))}
-			</div>
+					{(tiers?.tierPrice as any[])?.map((tier: any, index) => (
+						<span
+							className="license__card__tier__price__text"
+							key={index}
+						>
+							{`${tier?.minimumQuantity} License: ${tier?.priceFormatted} each`}
+						</span>
+					))}
+				</div>
+			)}
 		</div>
 	);
 };

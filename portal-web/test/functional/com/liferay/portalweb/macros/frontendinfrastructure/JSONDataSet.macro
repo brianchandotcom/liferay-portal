@@ -63,8 +63,8 @@ definition {
 					-d {
 						"symbol": "catalog",
 						"description": "${dataSetViewDescription}",
-						"defaultItemsPerPage": 0,
-						"listOfItemsPerPage": "string",
+						"defaultItemsPerPage": ${defaultItemsPerPage},
+						"listOfItemsPerPage": "${listOfItemsPerPage}",
 						"label": "${dataSetViewName}",
 						"r_fdsEntryFDSViewRelationship_c_fdsEntryId": ${dataSetEntryId}
 					}

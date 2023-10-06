@@ -79,6 +79,10 @@ const SetupAnalyticsCloudPage = ({
 	const [removeHighPriorityContact, setRemoveHighPriorityContact] = useState(
 		[]
 	);
+	const [
+		currentHighPriorityContacts,
+		setCurrentHighPriorityContacts,
+	] = useState([]);
 	const [step, setStep] = useState(1);
 
 	const handlePreviousStep = () => {
@@ -151,6 +155,17 @@ const SetupAnalyticsCloudPage = ({
 
 		setBaseButtonDisabled(hasTouched || hasError);
 	}, [touched, errors]);
+
+	const emailsCriticalIncident = currentHighPriorityContacts
+		.concat(addHighPriorityContact)
+		.filter(
+			(contact) =>
+				!removeHighPriorityContact.some(
+					({email}) => email === contact.email
+				)
+		)
+		.map(({email}) => email)
+		.join(', ');
 
 	const handleSubmit = async () => {
 		setIsLoadingSubmitButton(true);
@@ -266,10 +281,6 @@ const SetupAnalyticsCloudPage = ({
 				}
 
 				if (featureFlags.includes('LPS-181031')) {
-					const emailIncidentReportContact = analyticsCloud?.incidentReportContact
-						?.map(({email}) => email)
-						.join(', ');
-
 					const notificationTemplateService = new NotificationQueueService(
 						client
 					);
@@ -284,7 +295,7 @@ const SetupAnalyticsCloudPage = ({
 								analyticsCloud.allowedEmailDomains ||
 								BLANK_TEXT,
 
-							'[%AC_INCIDENT_REPORT_CONTACT]': emailIncidentReportContact,
+							'[%AC_INCIDENT_REPORT_CONTACT]': emailsCriticalIncident,
 							'[%AC_OWNER_EMAIL]':
 								analyticsCloud.ownerEmailAddress,
 							'[%AC_TIME_ZONE]':
@@ -499,6 +510,9 @@ const SetupAnalyticsCloudPage = ({
 					<div>
 						<SetupHighPriorityContactForm
 							addContactList={setAddHighPriorityContact}
+							currentHighPriorityContacts={
+								setCurrentHighPriorityContacts
+							}
 							disableSubmit={updateMultiSelectEmpty}
 							filter={
 								HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident

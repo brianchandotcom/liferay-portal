@@ -72,6 +72,7 @@ const SetupHighPriorityContact = ({
 	filter,
 	isCriticalIncidentCard,
 	removedContactList,
+	setCurrentContact,
 }) => {
 	const [
 		currentHighPriorityContacts,
@@ -88,6 +89,7 @@ const SetupHighPriorityContact = ({
 		() => mapFilterToContactsCategory(filter),
 		[filter]
 	);
+
 	const project = useMemo(
 		() => projectPortal?.[0].project || projectOnboarding?.[0].project,
 		[projectOnboarding, projectPortal]
@@ -125,8 +127,8 @@ const SetupHighPriorityContact = ({
 					?.items ?? [],
 				highPriorityContactsCategory.contactsCategory.role
 			) ?? [];
-		setCurrentHighPriorityContacts(
-			highPriorityContacts.map((highPriorityContact, index) => ({
+		const currentCriticalIncidentContacts = highPriorityContacts.map(
+			(highPriorityContact, index) => ({
 				email: highPriorityContact?.email,
 				filter: highPriorityContact.role,
 				filterId: highPriorityContact.roleId,
@@ -135,13 +137,20 @@ const SetupHighPriorityContact = ({
 				label: highPriorityContact?.name,
 				labelRole: highPriorityContact?.labelRole,
 				value: (index + 1).toString(),
-			}))
+			})
 		);
+		setCurrentHighPriorityContacts(currentCriticalIncidentContacts);
+
+		if (setCurrentContact) {
+			setCurrentContact(currentCriticalIncidentContacts);
+		}
 	}, [
 		highPriorityContactsCategory.contactsCategory.role,
 		project,
 		userAccountsData,
 		highPriorityContactsCategory,
+		setCurrentContact,
+		currentHighPriorityContacts,
 	]);
 
 	const handleMetaErrorChange = (error, inputName) => {
@@ -167,9 +176,9 @@ const SetupHighPriorityContact = ({
 		</FieldArray>
 	);
 };
-
 const SetupHighPriorityContactForm = ({
 	addContactList,
+	currentHighPriorityContacts,
 	disableSubmit,
 	removedContactList,
 	...props
@@ -186,6 +195,7 @@ const SetupHighPriorityContactForm = ({
 				addContactList={addContactList}
 				disableSubmit={disableSubmit}
 				removedContactList={removedContactList}
+				setCurrentContact={currentHighPriorityContacts}
 				{...props}
 				{...formikProps}
 			/>

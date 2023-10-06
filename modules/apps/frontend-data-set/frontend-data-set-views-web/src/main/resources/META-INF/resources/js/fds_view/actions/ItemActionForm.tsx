@@ -206,12 +206,6 @@ const ItemActionForm = ({
 		getIcons();
 	}, [spritemap]);
 
-	useEffect(() => {
-		if (editing) {
-			validateForm();
-		}
-	});
-
 	const permissionKeyFormElementId = `${namespace}PermissionKey`;
 	const iconFormElementId = `${namespace}Icon`;
 	const typeFormElementId = `${namespace}Type`;

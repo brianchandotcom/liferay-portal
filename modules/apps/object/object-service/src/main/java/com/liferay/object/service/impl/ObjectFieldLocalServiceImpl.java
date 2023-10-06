@@ -781,44 +781,42 @@ public class ObjectFieldLocalServiceImpl
 			return objectField;
 		}
 
-		_addObjectFieldColumn(
-			objectDefinition.getLocalizationDBTableName(), localized,
-			dbTableName, dbType, objectField);
-
-		return objectField;
-	}
-
-	private void _addObjectFieldColumn(
-			String localizationDBTableName, boolean localized,
-			String dbTableName, String dbType, ObjectField objectField)
-		throws PortalException {
-
 		if (localized) {
-			runSQL(
-				DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
-					localizationDBTableName, objectField.getDBColumnName(),
-					dbType));
+			_addObjectFieldColumn(
+				objectDefinition.getLocalizationDBTableName(), objectField,
+				objectField.getDBColumnName(), "languageId");
 		}
 		else if (!objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
 				 !objectField.compareBusinessType(
 					 ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
-			runSQL(
-				DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
-					dbTableName, objectField.getDBColumnName(), dbType));
+			_addObjectFieldColumn(
+				dbTableName, objectField, objectField.getDBColumnName());
+		}
 
-			if (GetterUtil.getBoolean(
-					ObjectFieldSettingUtil.getValue(
-						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
-						objectField))) {
+		return objectField;
+	}
 
-				ObjectDBManagerUtil.createIndexMetadata(
-					objectField.getDBColumnName(),
-					_currentConnection.getConnection(
-						objectFieldPersistence.getDataSource()),
-					dbTableName, true);
-			}
+	private void _addObjectFieldColumn(
+			String dbTableName, ObjectField objectField,
+			String... dbColumnNames)
+		throws PortalException {
+
+		runSQL(
+			DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
+				dbTableName, objectField.getDBColumnName(),
+				objectField.getDBType()));
+
+		if (GetterUtil.getBoolean(
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
+					objectField))) {
+
+			ObjectDBManagerUtil.createIndexMetadata(
+				_currentConnection.getConnection(
+					objectFieldPersistence.getDataSource()),
+				dbTableName, true, dbColumnNames);
 		}
 	}
 

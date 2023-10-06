@@ -13,6 +13,7 @@ export function ShareFormModalBody({
 	autocompleteUserURL,
 	emailContent,
 	localizedName,
+	portletNamespace,
 	url,
 }) {
 	const [addresses, setAddresses] = useState([]);
@@ -50,6 +51,7 @@ export function ShareFormModalBody({
 						onMessageChanged={setMessage}
 						onMultiSelectItemsChanged={setAddresses}
 						onSubjectChanged={setSubject}
+						portletNamespace={portletNamespace}
 						subject={subject}
 					/>
 				</div>

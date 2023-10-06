@@ -372,6 +372,7 @@ export default function FormBuilder() {
 							autocompleteUserURL={autocompleteUserURL}
 							emailContent={emailContentRef}
 							localizedName={localizedName}
+							portletNamespace={portletNamespace}
 							url={url}
 						/>
 					),

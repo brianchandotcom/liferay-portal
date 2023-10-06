@@ -43,6 +43,7 @@ export function Modal({
 						autocompleteUserURL={autocompleteUserURL}
 						emailContent={emailContentRef}
 						localizedName={localizedName}
+						portletNamespace={portletNamespace}
 						url={url}
 					/>
 				</ClayModal.Body>

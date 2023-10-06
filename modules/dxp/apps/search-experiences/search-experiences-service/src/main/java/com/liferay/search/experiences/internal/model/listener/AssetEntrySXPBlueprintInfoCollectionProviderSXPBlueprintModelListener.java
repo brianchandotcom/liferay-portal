@@ -8,22 +8,34 @@ package com.liferay.search.experiences.internal.model.listener;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
-import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.search.experiences.internal.info.collection.provider.AssetEntrySXPBlueprintInfoCollectionProvider;
 import com.liferay.search.experiences.model.SXPBlueprint;
+import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Shuyang Zhou
  */
-@Component(enabled = false, service = ModelListener.class)
 public class
 	AssetEntrySXPBlueprintInfoCollectionProviderSXPBlueprintModelListener
 		extends InfoCollectionProviderSXPBlueprintModelListener {
+
+	public AssetEntrySXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
+		BundleContext bundleContext, CompanyLocalService companyLocalService,
+		SXPBlueprintLocalService sxpBlueprintLocalService,
+		AssetHelper assetHelper, Searcher searcher,
+		SearchRequestBuilderFactory searchRequestBuilderFactory) {
+
+		super(bundleContext, companyLocalService, sxpBlueprintLocalService);
+
+		_assetHelper = assetHelper;
+		_searcher = searcher;
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
+	}
 
 	@Override
 	protected InfoCollectionProvider<?> createInfoCollectionProvider(
@@ -39,13 +51,8 @@ public class
 		return AssetEntry.class.getName();
 	}
 
-	@Reference
-	private AssetHelper _assetHelper;
-
-	@Reference
-	private Searcher _searcher;
-
-	@Reference
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private final AssetHelper _assetHelper;
+	private final Searcher _searcher;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

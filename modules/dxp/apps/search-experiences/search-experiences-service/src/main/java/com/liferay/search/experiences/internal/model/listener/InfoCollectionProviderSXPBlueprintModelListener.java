@@ -18,15 +18,21 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
  */
 public abstract class InfoCollectionProviderSXPBlueprintModelListener
 	extends BaseModelListener<SXPBlueprint> {
+
+	public InfoCollectionProviderSXPBlueprintModelListener(
+		BundleContext bundleContext, CompanyLocalService companyLocalService,
+		SXPBlueprintLocalService sxpBlueprintLocalService) {
+
+		_bundleContext = bundleContext;
+		_companyLocalService = companyLocalService;
+		_sxpBlueprintLocalService = sxpBlueprintLocalService;
+	}
 
 	@Override
 	public void onAfterCreate(SXPBlueprint sxpBlueprint) {
@@ -56,14 +62,11 @@ public abstract class InfoCollectionProviderSXPBlueprintModelListener
 		}
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		companyLocalService.forEachCompanyId(
+	public void start() {
+		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				List<SXPBlueprint> sxpBlueprints =
-					sxpBlueprintLocalService.getSXPBlueprints(companyId);
+					_sxpBlueprintLocalService.getSXPBlueprints(companyId);
 
 				for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
 					onAfterCreate(sxpBlueprint);
@@ -71,11 +74,7 @@ public abstract class InfoCollectionProviderSXPBlueprintModelListener
 			});
 	}
 
-	protected abstract InfoCollectionProvider<?> createInfoCollectionProvider(
-		SXPBlueprint sxpBlueprint);
-
-	@Deactivate
-	protected void deactivate() {
+	public void stop() {
 		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations.values()) {
 
@@ -85,16 +84,15 @@ public abstract class InfoCollectionProviderSXPBlueprintModelListener
 		_serviceRegistrations.clear();
 	}
 
+	protected abstract InfoCollectionProvider<?> createInfoCollectionProvider(
+		SXPBlueprint sxpBlueprint);
+
 	protected abstract String getItemClassName();
 
-	@Reference
-	protected CompanyLocalService companyLocalService;
-
-	@Reference
-	protected SXPBlueprintLocalService sxpBlueprintLocalService;
-
-	private BundleContext _bundleContext;
+	private final BundleContext _bundleContext;
+	private final CompanyLocalService _companyLocalService;
 	private final Map<Long, ServiceRegistration<?>> _serviceRegistrations =
 		new ConcurrentHashMap<>();
+	private final SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 }

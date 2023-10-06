@@ -10,7 +10,7 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -19,17 +19,31 @@ import com.liferay.search.experiences.internal.info.collection.provider.JournalA
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration;
+import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Shuyang Zhou
  */
-@Component(enabled = false, service = ModelListener.class)
 public class
 	JournalArticleSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener
 		extends InfoCollectionProviderSXPBlueprintModelListener {
+
+	public JournalArticleSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
+		BundleContext bundleContext, CompanyLocalService companyLocalService,
+		SXPBlueprintLocalService sxpBlueprintLocalService,
+		AssetHelper assetHelper, JournalArticleService journalArticleService,
+		Searcher searcher,
+		SearchRequestBuilderFactory searchRequestBuilderFactory) {
+
+		super(bundleContext, companyLocalService, sxpBlueprintLocalService);
+
+		_assetHelper = assetHelper;
+		_journalArticleService = journalArticleService;
+		_searcher = searcher;
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
+	}
 
 	@Override
 	public void onAfterCreate(SXPBlueprint sxpBlueprint) {
@@ -82,16 +96,9 @@ public class
 		return searchableAssetTypes[0];
 	}
 
-	@Reference
-	private AssetHelper _assetHelper;
-
-	@Reference
-	private JournalArticleService _journalArticleService;
-
-	@Reference
-	private Searcher _searcher;
-
-	@Reference
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private final AssetHelper _assetHelper;
+	private final JournalArticleService _journalArticleService;
+	private final Searcher _searcher;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

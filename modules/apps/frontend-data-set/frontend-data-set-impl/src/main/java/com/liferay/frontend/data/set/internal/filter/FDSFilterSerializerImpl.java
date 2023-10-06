@@ -52,6 +52,10 @@ public class FDSFilterSerializerImpl implements FDSFilterSerializer {
 			"content.Language", locale, getClass());
 
 		for (FDSFilter fdsFilter : fdsFilters) {
+			if (!fdsFilter.isEnabled()) {
+				continue;
+			}
+
 			JSONObject jsonObject = JSONUtil.put(
 				"entityFieldType", fdsFilter.getEntityFieldType()
 			).put(

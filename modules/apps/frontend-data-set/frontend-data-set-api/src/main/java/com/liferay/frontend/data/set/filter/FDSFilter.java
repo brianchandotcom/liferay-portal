@@ -26,4 +26,8 @@ public interface FDSFilter {
 
 	public String getType();
 
+	public default boolean isEnabled() {
+		return true;
+	}
+
 }

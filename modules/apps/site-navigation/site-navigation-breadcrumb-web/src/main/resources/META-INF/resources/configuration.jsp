@@ -93,24 +93,20 @@
 		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showPortletBreadcrumb'
 	] = <%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>;
 
-	var selectDisplayStyle = document.getElementById(
-		'<portlet:namespace />displayStyle'
-	);
+	Liferay.on('templateSelector:changedTemplate', (event) => {
+		const displayStyle = event.value;
 
-	if (selectDisplayStyle) {
-		selectDisplayStyle.addEventListener('change', (event) => {
-			if (selectDisplayStyle.selectedIndex > -1) {
-				data[
-					'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_displayStyle'
-				] = selectDisplayStyle.value;
+		if (displayStyle) {
+			data[
+				'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_displayStyle'
+			] = displayStyle;
 
-				Liferay.Portlet.refresh(
-					'#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_',
-					data
-				);
-			}
-		});
-	}
+			Liferay.Portlet.refresh(
+				'#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_',
+				data
+			);
+		}
+	});
 
 	var checkBoxes = document.getElementById('<portlet:namespace />checkBoxes');
 

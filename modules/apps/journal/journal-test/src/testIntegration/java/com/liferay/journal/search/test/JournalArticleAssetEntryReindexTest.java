@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -144,6 +145,63 @@ public class JournalArticleAssetEntryReindexTest {
 			updatedAssetTagName, serviceContext);
 
 		_assertSearch(updatedAssetTagName, journalArticle);
+	}
+
+	@Test
+	public void testUpdateCategorizationInDraft() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory1.getCategoryId()});
+
+		Locale locale = _portal.getSiteDefaultLocale(_group);
+
+		JournalArticle approvedJournalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
+			true, RandomTestUtil.randomLocaleStringMap(locale),
+			RandomTestUtil.randomLocaleStringMap(locale),
+			RandomTestUtil.randomLocaleStringMap(locale), null, locale, null,
+			false, true, serviceContext);
+
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory2.getCategoryId()});
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		JournalArticle draftJournalArticle = JournalTestUtil.updateArticle(
+			approvedJournalArticle, approvedJournalArticle.getTitle(locale),
+			approvedJournalArticle.getContent(), false, false, serviceContext);
+
+		_assertSearchJournalArticleVersions(
+			_localization.getLocalizedName(
+				Field.ASSET_CATEGORY_TITLES, LocaleUtil.toLanguageId(locale)),
+			approvedJournalArticle,
+			HashMapBuilder.put(
+				approvedJournalArticle.getVersion(),
+				assetCategory1.getTitle(locale)
+			).put(
+				draftJournalArticle.getVersion(),
+				assetCategory2.getTitle(locale)
+			).build());
 	}
 
 	@Test

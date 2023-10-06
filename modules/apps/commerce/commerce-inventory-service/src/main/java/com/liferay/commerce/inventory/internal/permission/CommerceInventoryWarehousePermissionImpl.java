@@ -141,6 +141,11 @@ public class CommerceInventoryWarehousePermissionImpl
 		if (permissionChecker.isCompanyAdmin(
 				commerceInventoryWarehouse.getCompanyId()) ||
 			permissionChecker.isOmniadmin() ||
+			permissionChecker.hasOwnerPermission(
+				commerceInventoryWarehouse.getCompanyId(),
+				CommerceInventoryWarehouse.class.getName(),
+				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				commerceInventoryWarehouse.getUserId(), actionId) ||
 			_portletResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(), null,
 				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {

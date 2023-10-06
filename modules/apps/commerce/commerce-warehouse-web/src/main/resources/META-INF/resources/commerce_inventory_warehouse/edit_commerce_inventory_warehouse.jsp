@@ -32,7 +32,7 @@ else {
 	bean="<%= commerceInventoryWarehouse %>"
 	beanIdLabel="id"
 	externalReferenceCode="<%= commerceInventoryWarehouse.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= editCommerceInventoryWarehouseExternalReferenceCodeURL %>"
+	externalReferenceCodeEditUrl="<%= commerceInventoryWarehousesDisplayContext.hasPermission() ? editCommerceInventoryWarehouseExternalReferenceCodeURL : null %>"
 	model="<%= CommerceInventoryWarehouse.class %>"
 	title="<%= commerceInventoryWarehouse.getName(locale) %>"
 />

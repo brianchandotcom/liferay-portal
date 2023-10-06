@@ -90,7 +90,7 @@ const ItemActionForm = ({
 		initialValues?.label_i18n ?? {}
 	);
 	const [labelValidationError, setLabelValidationError] = useState(false);
-	const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
+	const [saveButtonDisabled, setSaveButtonDisabled] = useState(!editing);
 	const [urlValidationError, setURLValidationError] = useState(false);
 
 	const [actionData, setActionData] = useState({
@@ -205,12 +205,6 @@ const ItemActionForm = ({
 
 		getIcons();
 	}, [spritemap]);
-
-	useEffect(() => {
-		if (editing) {
-			validateForm();
-		}
-	});
 
 	const permissionKeyFormElementId = `${namespace}PermissionKey`;
 	const iconFormElementId = `${namespace}Icon`;

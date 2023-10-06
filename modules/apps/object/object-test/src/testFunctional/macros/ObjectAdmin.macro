@@ -236,7 +236,7 @@ definition {
 					locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
 
 				Click(
-					key_fieldType = ${function},
+					key_fieldType = ${functionType},
 					locator1 = "ObjectField#TYPE_OPTION");
 
 				if (isSet(field)) {

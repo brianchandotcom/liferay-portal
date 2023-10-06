@@ -1,0 +1,110 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "feature.flag.LPS-193005";
+	property osgi.modules.includes = "frontend-data-set-sample-web";
+	property portal.acceptance = "true";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Frontend Data Set sample portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page",
+				widgetName = "Frontend Data Set Sample");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page",
+				layoutTemplate = "1 Column");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page");
+		}
+	}
+
+	@description = "LPS-190924 - Verify that columns can be hidden."
+	@priority = 4
+	test ColumnsCanBeHidden {
+		task ("When access show/hide column drop-down menu") {
+			Click(locator1 = "FrontendDataSet#SELECT_FIELD");
+		}
+
+		task ("And select a column to be hidden") {
+			Click(
+				key_itemName = "Author",
+				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+		}
+
+		task ("Then assert that the columns can be hidden") {
+			AssertElementNotPresent(
+				key_type = "Author",
+				locator1 = "DataSet#FIELD_COLUMN_NAME");
+		}
+	}
+
+	@description = "LPS-190924 - Verify that columns can be resized."
+	@priority = 4
+	test ColumnsCanBeResized {
+		task ("When click and drag column borders horizontally") {
+			var default_position = TestUtils.getElementWidth();
+
+			DragAndDrop.dragAndDrop(
+				columnName = "ID",
+				locator1 = "ClayTable#COLUMN_RESIZER",
+				value1 = "200,0");
+		}
+
+		task ("Then assert columns can be resized") {
+			var position_after_resizing = TestUtils.getElementWidth();
+
+			TestUtils.isLessThan(
+				actual = ${default_position},
+				expected = ${position_after_resizing});
+		}
+	}
+
+	@description = "LPS-190924 - Verify that columns can be sorted."
+	@priority = 4
+	test ColumnsCanBeSorted {
+		task ("When click on sort icon in column header") {
+			Click(
+				columnName = "Title",
+				locator1 = "ClayTable#TABLE_COLUMN_NAME");
+		}
+
+		task ("Then assert that columns can be sorted") {
+			AssertElementPresent(locator1 = "Icon#ORDER_ARROW_UP");
+
+			AssertElementPresent(
+				key_field = "Sample1",
+				key_position = 1,
+				locator1 = "ClayTable#TABLE_ROW");
+
+			AssertElementPresent(
+				key_field = "Sample100",
+				key_position = 2,
+				locator1 = "ClayTable#TABLE_ROW");
+		}
+	}
+
+}

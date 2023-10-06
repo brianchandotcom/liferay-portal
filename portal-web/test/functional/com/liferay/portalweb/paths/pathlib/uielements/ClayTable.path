@@ -15,6 +15,16 @@
 	<td>//div[@class='table-responsive']//tbody//tr[${key_position}]//td[text()='${key_field}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COLUMN_RESIZER</td>
+	<td>//tr//th[contains(.,'${columnName}')]//*[@class="dnd-th-resizer is-allowed"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_COLUMN_NAME</td>
+	<td>//table//th[contains(text(),'${columnName}')] | //table//th//a[contains(.,'${columnName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

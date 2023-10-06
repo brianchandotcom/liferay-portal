@@ -91,16 +91,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COLUMN_RESIZER</td>
-	<td>//tr//th[contains(.,'${columnName}')]//*[@class="dnd-th-resizer is-allowed"]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TABLE_COLUMN_NAME</td>
-	<td>//table//th[contains(text(),'${columnName}')] | //table//th//a[contains(.,'${columnName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TABLE_CELL</td>
 	<td>xpath=(//div[@class='dnd-td' and position()='${key_columnIndex}'])[${key_valueIndex}]</td>
 	<td></td>

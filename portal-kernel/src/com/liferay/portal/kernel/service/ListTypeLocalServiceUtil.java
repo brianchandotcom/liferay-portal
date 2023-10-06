@@ -50,8 +50,10 @@ public class ListTypeLocalServiceUtil {
 		return getService().addListType(listType);
 	}
 
-	public static ListType addListType(String name, String type) {
-		return getService().addListType(name, type);
+	public static ListType addListType(
+		long companyId, String name, String type) {
+
+		return getService().addListType(companyId, name, type);
 	}
 
 	/**
@@ -232,8 +234,10 @@ public class ListTypeLocalServiceUtil {
 		return getService().getListType(listTypeId);
 	}
 
-	public static ListType getListType(String name, String type) {
-		return getService().getListType(name, type);
+	public static ListType getListType(
+		long companyId, String name, String type) {
+
+		return getService().getListType(companyId, name, type);
 	}
 
 	/**
@@ -251,8 +255,8 @@ public class ListTypeLocalServiceUtil {
 		return getService().getListTypes(start, end);
 	}
 
-	public static List<ListType> getListTypes(String type) {
-		return getService().getListTypes(type);
+	public static List<ListType> getListTypes(long companyId, String type) {
+		return getService().getListTypes(companyId, type);
 	}
 
 	/**

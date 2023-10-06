@@ -64,7 +64,7 @@ public interface ListTypeLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ListType addListType(ListType listType);
 
-	public ListType addListType(String name, String type);
+	public ListType addListType(long companyId, String name, String type);
 
 	/**
 	 * Creates a new list type with the primary key. Does not add the list type to the database.
@@ -209,7 +209,7 @@ public interface ListTypeLocalService
 	public ListType getListType(long listTypeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ListType getListType(String name, String type);
+	public ListType getListType(long companyId, String name, String type);
 
 	/**
 	 * Returns a range of all the list types.
@@ -226,7 +226,7 @@ public interface ListTypeLocalService
 	public List<ListType> getListTypes(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ListType> getListTypes(String type);
+	public List<ListType> getListTypes(long companyId, String type);
 
 	/**
 	 * Returns the number of list types.

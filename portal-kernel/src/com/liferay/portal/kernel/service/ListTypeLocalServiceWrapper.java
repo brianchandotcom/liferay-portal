@@ -46,9 +46,9 @@ public class ListTypeLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ListType addListType(
-		String name, String type) {
+		long companyId, String name, String type) {
 
-		return _listTypeLocalService.addListType(name, type);
+		return _listTypeLocalService.addListType(companyId, name, type);
 	}
 
 	/**
@@ -266,9 +266,9 @@ public class ListTypeLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ListType getListType(
-		String name, String type) {
+		long companyId, String name, String type) {
 
-		return _listTypeLocalService.getListType(name, type);
+		return _listTypeLocalService.getListType(companyId, name, type);
 	}
 
 	/**
@@ -291,9 +291,9 @@ public class ListTypeLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.ListType>
-		getListTypes(String type) {
+		getListTypes(long companyId, String type) {
 
-		return _listTypeLocalService.getListTypes(type);
+		return _listTypeLocalService.getListTypes(companyId, type);
 	}
 
 	/**

@@ -12,36 +12,6 @@ definition {
 		Button.clickSave();
 	}
 
-	macro editField {
-		Click(
-			key_fieldName = "${key_fieldItem}",
-			locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-		MenuItem.click(menuItem = "Edit");
-
-		if (${sortable}=="Check"){
-			Check.checkNotVisible(
-				checkboxName = "Sortable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		if (${sortable}=="Uncheck"){
-			Uncheck.uncheckNotVisible(
-				checkboxName = "Sortable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		if (isSet(key_newLabel)) {
-			Type(
-				key_text = "Label",
-				locator1 = "TextInput#ANY",
-				value1 = "${key_newLabel}");
-		}
-		Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro assertDataSetEntry {
 		for (var key_dataSetName : list ${key_dataSetNameList}) {
 			AssertElementPresent(
@@ -133,11 +103,11 @@ definition {
 			restSchema = ${restSchema});
 
 		DataSetAdmin.createFDSViewViaAPI(
-				defaultItemsPerPage = ${defaultItemsPerPage},
-				listOfItemsPerPage = ${listOfItemsPerPage},
-				dataSetName = ${dataSetName},
-				dataSetViewDescription = ${dataSetViewDescription},
-				key_dataSetViewNameList = ${dataSetViewName});
+			dataSetName = ${dataSetName},
+			dataSetViewDescription = ${dataSetViewDescription},
+			defaultItemsPerPage = ${defaultItemsPerPage},
+			key_dataSetViewNameList = ${dataSetViewName},
+			listOfItemsPerPage = ${listOfItemsPerPage});
 
 		DataSetAdmin.goToSpecificViewPage(
 			dataSetName = ${dataSetName},
@@ -227,11 +197,11 @@ definition {
 
 		for (var key_dataSetViewName : list ${key_dataSetViewNameList}) {
 			JSONDataSet._createFDSViewViaAPI(
-				defaultItemsPerPage = ${defaultItemsPerPage},
-				listOfItemsPerPage = ${listOfItemsPerPage},
 				dataSetName = ${dataSetName},
 				dataSetViewDescription = ${dataSetViewDescription},
-				dataSetViewName = ${key_dataSetViewName});
+				dataSetViewName = ${key_dataSetViewName},
+				defaultItemsPerPage = ${defaultItemsPerPage},
+				listOfItemsPerPage = ${listOfItemsPerPage});
 		}
 	}
 
@@ -340,6 +310,37 @@ definition {
 			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 
 		Button.click(button = "Delete");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro editField {
+		Click(
+			key_fieldName = ${key_fieldItem},
+			locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+		MenuItem.click(menuItem = "Edit");
+
+		if (${sortable} == "Check") {
+			Check.checkNotVisible(
+				checkboxName = "Sortable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (${sortable} == "Uncheck") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Sortable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (isSet(key_newLabel)) {
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = ${key_newLabel});
+		}
+
+		Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
 
 		Alert.viewSuccessMessage();
 	}

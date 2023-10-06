@@ -77,7 +77,6 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 			segmentsExperienceId =
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(plid);
-
 			sourceLayout = _layoutLocalService.getLayout(plid);
 		}
 

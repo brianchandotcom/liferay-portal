@@ -22,7 +22,7 @@ import {TabProps} from './useObjectValidationForm';
 export interface BasicInfoProps extends TabProps {
 	componentLabel: string;
 	creationLanguageId: Liferay.Language.Locale;
-	objectFields: ObjectField[];
+	customObjectFields: ObjectField[];
 }
 
 const outputValidationTypeArray = [
@@ -39,38 +39,39 @@ const outputValidationTypeArray = [
 export function BasicInfo({
 	componentLabel,
 	creationLanguageId,
+	customObjectFields,
 	disabled,
 	errors,
-	objectFields,
 	setValues,
 	values,
 }: BasicInfoProps) {
 	const [query, setQuery] = useState<string>('');
 
-	const filteredObjectFields = useMemo(() => {
-		if (objectFields) {
+	const searchedCustomObjectFields = useMemo(() => {
+		if (customObjectFields) {
 			return filterArrayByQuery({
-				array: objectFields,
+				array: customObjectFields,
 				query,
 				str: 'label',
 			});
 		}
-	}, [objectFields, query]);
+	}, [customObjectFields, query]);
 	const getSelectedPartialValidationField = () => {
 		if (values.objectValidationRuleSettings?.length) {
 			const [
 				partialValidationField,
 			] = values.objectValidationRuleSettings;
 
-			const objectField = objectFields.find(
-				(field) =>
-					field.externalReferenceCode === partialValidationField.value
+			const customObjectField = customObjectFields.find(
+				(currentCustomObjectField) =>
+					currentCustomObjectField.externalReferenceCode ===
+					partialValidationField.value
 			);
 
 			return getLocalizableLabel(
 				creationLanguageId,
-				objectField?.label,
-				objectField?.name
+				customObjectField?.label,
+				customObjectField?.name
 			);
 		}
 
@@ -165,7 +166,7 @@ export function BasicInfo({
 								)}
 								error={errors.outputType}
 								id="objectValidationBasicInfo"
-								items={filteredObjectFields ?? []}
+								items={searchedCustomObjectFields ?? []}
 								label={Liferay.Language.get('fields')}
 								onChangeQuery={setQuery}
 								onSelectItem={(item) => {

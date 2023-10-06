@@ -112,7 +112,9 @@ definition {
 		}
 
 		task ("Update keyword parameter on DXP") {
-			Navigator.openURL();
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 
 			SearchPortlets.addWidgets(
 				groupName = "Site Name",

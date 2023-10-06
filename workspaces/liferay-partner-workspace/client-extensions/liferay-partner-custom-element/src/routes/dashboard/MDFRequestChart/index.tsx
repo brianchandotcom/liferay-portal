@@ -13,6 +13,7 @@ import {mdfChartColumnColors} from '../../../common/components/dashboard/utils/c
 import getChartColumns from '../../../common/components/dashboard/utils/getChartColumns';
 import {siteURL} from '../../../common/components/dashboard/utils/siteURL';
 import {Liferay} from '../../../common/services/liferay';
+import {retry} from '../../../common/utils/retry';
 
 const MDFRequestChart = () => {
 	const [columnsMDFChart, setColumnsMDFChart] = useState([]);
@@ -26,14 +27,16 @@ const MDFRequestChart = () => {
 		setLoading(true);
 
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await fetch(
-			`/o/c/mdfrequests?nestedFields=accountEntry,mdfReqToActs,actToBgts,mdfReqToMDFClms&nestedFieldsDepth=2&pageSize=9999&filter=mdfRequestStatus ne 'draft'`,
-			{
-				headers: {
-					'accept': 'application/json',
-					'x-csrf-token': Liferay.authToken,
-				},
-			}
+		const response = await retry<Response>(() =>
+			fetch(
+				`/o/c/mdfrequests?nestedFields=accountEntry,mdfReqToActs,actToBgts,mdfReqToMDFClms&nestedFieldsDepth=2&pageSize=9999&filter=mdfRequestStatus ne 'draft'`,
+				{
+					headers: {
+						'accept': 'application/json',
+						'x-csrf-token': Liferay.authToken,
+					},
+				}
+			)
 		);
 
 		if (response.ok) {
@@ -55,10 +58,6 @@ const MDFRequestChart = () => {
 			return;
 		}
 
-		Liferay.Util.openToast({
-			message: 'An unexpected error occured.',
-			type: 'danger',
-		});
 		setLoading(false);
 	};
 

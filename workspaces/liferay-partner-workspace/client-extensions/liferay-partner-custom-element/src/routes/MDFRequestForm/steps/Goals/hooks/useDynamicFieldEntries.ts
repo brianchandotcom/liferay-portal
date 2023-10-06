@@ -6,21 +6,38 @@
 import {useMemo} from 'react';
 
 import {LiferayPicklistName} from '../../../../../common/enums/liferayPicklistName';
-import useGetListTypeDefinitions from '../../../../../common/services/liferay/list-type-definitions/useGetListTypeDefinitions';
-import useGetMyUserAccount from '../../../../../common/services/liferay/user-account/useGetMyUserAccount';
+import ListTypeDefinition from '../../../../../common/interfaces/listTypeDefinition';
+import UserAccount from '../../../../../common/interfaces/userAccount';
+import {LiferayAPIs} from '../../../../../common/services/liferay/common/enums/apis';
+import LiferayItems from '../../../../../common/services/liferay/common/interfaces/liferayItems';
+import useGet from '../../../../../common/services/liferay/object/useGet';
 import getEntriesByListTypeDefinitions from '../../../../../common/utils/getEntriesByListTypeDefinitions';
 
 export default function useDynamicFieldEntries(skipCompanies?: boolean) {
-	const {data: userAccount} = useGetMyUserAccount(skipCompanies);
+	const {data: userAccount} = useGet<UserAccount>(
+		skipCompanies
+			? ``
+			: `/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`
+	);
 
-	const {data: listTypeDefinitions} = useGetListTypeDefinitions([
+	const pickListNames = [
 		LiferayPicklistName.ADDITIONAL_OPTIONS,
 		LiferayPicklistName.COUNTRIES,
 		LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS,
 		LiferayPicklistName.TARGET_AUDIENCE_ROLES,
 		LiferayPicklistName.TARGET_MARKETS,
 		LiferayPicklistName.CURRENCIES,
-	]);
+	];
+
+	const {data: listTypeDefinitions} = useGet<
+		LiferayItems<ListTypeDefinition[]>
+	>(
+		`/o/${
+			LiferayAPIs.HEADERLESS_ADMIN_LIST_TYPE
+		}/list-type-definitions?filter=name in ('${pickListNames.join(
+			"', '"
+		)}')`
+	);
 
 	const companiesEntries = useMemo(
 		() =>

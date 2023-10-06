@@ -135,26 +135,16 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		// One email including all main recipients
 
-		_executeNotificationObjectAction(_addNotificationTemplate(false));
-
-		List<NotificationQueueEntry> notificationQueueEntries =
-			notificationQueueEntryLocalService.getNotificationEntries(
-				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT);
-
-		Assert.assertEquals(
-			notificationQueueEntries.toString(), 1,
-			notificationQueueEntries.size());
-
-		_assertNotificationQueueEntry(
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					StringBundler.concat(
+						user1.getEmailAddress(), StringPool.COMMA,
+						user2.getEmailAddress()))),
 			false,
 			StringBundler.concat(
 				user1.getEmailAddress(), StringPool.COMMA,
-				user2.getEmailAddress()),
-			notificationQueueEntries.get(0));
-
-		notificationQueueEntryLocalService.deleteNotificationQueueEntry(
-			notificationQueueEntries.get(0));
+				user2.getEmailAddress()));
 	}
 
 	private NotificationTemplate _addNotificationTemplate(
@@ -318,16 +308,25 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 						notificationRecipientSettingsMap.get("to"));
 				}));
 
+		int expectedCount = 1;
+
+		if (singleRecipient) {
+			expectedCount = 2;
+		}
+
 		Assert.assertEquals(
-			notificationQueueEntries.toString(), 2,
+			notificationQueueEntries.toString(), expectedCount,
 			notificationQueueEntries.size());
 
 		_assertNotificationQueueEntry(
 			singleRecipient, expectedToEmailAddress.get(0),
 			notificationQueueEntries.get(0));
-		_assertNotificationQueueEntry(
-			singleRecipient, expectedToEmailAddress.get(1),
-			notificationQueueEntries.get(1));
+
+		if (singleRecipient) {
+			_assertNotificationQueueEntry(
+				singleRecipient, expectedToEmailAddress.get(1),
+				notificationQueueEntries.get(1));
+		}
 
 		for (NotificationQueueEntry notificationQueueEntry :
 				notificationQueueEntries) {

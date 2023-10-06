@@ -268,6 +268,18 @@ definition {
 
 			AssertElementNotPresent(locator1 = "TextInput#FILE_PRESENT");
 		}
+		else if (isSet(fileExtensionMismatch)) {
+			Button.clickPublish();
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				key_alertMessage = "The file extension cannot be different from the file name extension.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "The file extension cannot be different from the file name extension.");
+
+			AssertElementNotPresent(locator1 = "TextInput#FILE_PRESENT");
+		}
 		else if (isSet(validateStorageQuota)) {
 			Button.clickPublish();
 

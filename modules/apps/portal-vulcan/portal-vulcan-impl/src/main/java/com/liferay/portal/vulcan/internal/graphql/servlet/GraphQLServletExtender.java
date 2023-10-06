@@ -46,7 +46,7 @@ import com.liferay.portal.vulcan.internal.graphql.data.fetcher.GraphQLDTOContrib
 import com.liferay.portal.vulcan.internal.graphql.data.fetcher.LiferayMethodDataFetcher;
 import com.liferay.portal.vulcan.internal.graphql.data.processor.GraphQLDTOContributorDataFetchingProcessor;
 import com.liferay.portal.vulcan.internal.graphql.data.processor.LiferayMethodDataFetchingProcessor;
-import com.liferay.portal.vulcan.internal.graphql.exception.MaxQueryDepthExceededException;
+import com.liferay.portal.vulcan.internal.graphql.exception.QueryDepthLimitExceededException;
 import com.liferay.portal.vulcan.internal.graphql.servlet.instrumentation.MaxQueryDepthInstrumentation;
 import com.liferay.portal.vulcan.internal.graphql.util.GraphQLUtil;
 import com.liferay.portal.vulcan.internal.graphql.validation.GraphQLDTOContributorRequestContext;
@@ -2209,7 +2209,7 @@ public class GraphQLServletExtender {
 					GraphQLError;
 			}
 
-			if (graphQLError instanceof MaxQueryDepthExceededException) {
+			if (graphQLError instanceof QueryDepthLimitExceededException) {
 				return true;
 			}
 

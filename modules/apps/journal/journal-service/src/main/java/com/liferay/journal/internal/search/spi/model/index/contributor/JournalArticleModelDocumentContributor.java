@@ -30,6 +30,7 @@ import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.trash.TrashHelper;
 
+import java.util.Date;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -94,6 +95,10 @@ public class JournalArticleModelDocumentContributor
 			}
 		}
 
+		if (!document.hasField(Field.CREATE_DATE)) {
+			document.addDate(Field.CREATE_DATE, journalArticle.getCreateDate());
+		}
+
 		String[] descriptionAvailableLanguageIds =
 			_localization.getAvailableLanguageIds(
 				journalArticle.getDescriptionMapAsXML());
@@ -115,6 +120,31 @@ public class JournalArticleModelDocumentContributor
 			Field.EXPIRATION_DATE, journalArticle.getExpirationDate());
 		document.addKeyword(Field.FOLDER_ID, journalArticle.getFolderId());
 		document.addKeyword(Field.LAYOUT_UUID, journalArticle.getLayoutUuid());
+
+		if (!document.hasField("localized_title")) {
+			document.addLocalizedKeyword(
+				"localized_title",
+				_localization.populateLocalizationMap(
+					journalArticle.getTitleMap(),
+					journalArticle.getDefaultLanguageId(),
+					journalArticle.getGroupId()),
+				true, true);
+		}
+
+		if (!document.hasField(Field.MODIFIED_DATE)) {
+			document.addDate(
+				Field.MODIFIED_DATE, journalArticle.getModifiedDate());
+		}
+
+		if (!document.hasField(Field.PUBLISH_DATE)) {
+			if (journalArticle.isApproved()) {
+				document.addDate(
+					Field.PUBLISH_DATE, journalArticle.getDisplayDate());
+			}
+			else {
+				document.addDate(Field.PUBLISH_DATE, new Date(0));
+			}
+		}
 
 		String[] titleAvailableLanguageIds =
 			_localization.getAvailableLanguageIds(

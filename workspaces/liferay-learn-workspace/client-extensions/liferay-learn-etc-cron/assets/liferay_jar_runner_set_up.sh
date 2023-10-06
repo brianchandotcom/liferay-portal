@@ -167,7 +167,7 @@ function prepare_import {
 }
 
 function replace_tokens {
-	pushd  ~/liferay-learn/docs
+	pushd ~/liferay-learn/docs
 
 	./replace_tokens.sh
 

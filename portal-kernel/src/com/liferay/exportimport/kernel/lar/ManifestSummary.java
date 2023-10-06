@@ -135,7 +135,6 @@ public class ManifestSummary implements Serializable {
 			_modelAdditionCounters);
 		manifestSummary._modelDeletionCounters = new HashMap<>(
 			_modelDeletionCounters);
-
 		manifestSummary._stagedModelAssetTitles = new HashMap<>(
 			_stagedModelAssetTitles);
 
@@ -262,7 +261,7 @@ public class ManifestSummary implements Serializable {
 
 	public String getStagedModelAssetTitle(String manifestSummaryKey) {
 		if (!_stagedModelAssetTitles.containsKey(manifestSummaryKey)) {
-			return "";
+			return StringPool.BLANK;
 		}
 
 		return _stagedModelAssetTitles.get(manifestSummaryKey);

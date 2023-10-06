@@ -98,6 +98,9 @@ public class SalesforceObjectEntryManagerImplTest
 				"username",
 				TestPropsUtil.get("object.storage.salesforce.username")
 			).build());
+
+		_simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd");
 	}
 
 	@AfterClass
@@ -382,6 +385,19 @@ public class SalesforceObjectEntryManagerImplTest
 					_buildNotEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry2, objectEntry3, objectEntry4);
+
+		// Range expression
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				buildRangeExpression(
+					_simpleDateFormat.parse(
+						MapUtil.getString(
+							objectEntry1.getProperties(), "dueDate")),
+					new Date(), "dueDate", "yyyy-MM-dd")
+			).build(),
+			objectEntry1, objectEntry4);
 	}
 
 	@Test
@@ -432,9 +448,6 @@ public class SalesforceObjectEntryManagerImplTest
 			String customStatus, Date date, String title)
 		throws Exception {
 
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd");
-
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition,
 			new ObjectEntry() {
@@ -443,7 +456,7 @@ public class SalesforceObjectEntryManagerImplTest
 						"customStatus", customStatus
 					).put(
 						"dueDate",
-						(date != null) ? dateFormat.format(date) : null
+						(date != null) ? _simpleDateFormat.format(date) : null
 					).put(
 						"title", title
 					).build();
@@ -475,6 +488,8 @@ public class SalesforceObjectEntryManagerImplTest
 
 	@Inject
 	private static ConfigurationProvider _configurationProvider;
+
+	private static DateFormat _simpleDateFormat;
 
 	private ObjectDefinition _objectDefinition;
 	private final List<ObjectEntry> _objectEntries = new ArrayList<>();

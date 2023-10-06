@@ -20,8 +20,8 @@ import java.sql.Connection;
 public class ObjectDBManagerUtil {
 
 	public static void createIndexMetadata(
-			String columnName, Connection connection, String tableName,
-			boolean unique)
+			Connection connection, String tableName, boolean unique,
+			String... columnNames)
 		throws PortalException {
 
 		try {
@@ -29,7 +29,7 @@ public class ObjectDBManagerUtil {
 
 			IndexMetadata indexMetadata =
 				IndexMetadataFactoryUtil.createIndexMetadata(
-					unique, tableName, columnName);
+					unique, tableName, columnNames);
 
 			if (dbInspector.hasIndex(tableName, indexMetadata.getIndexName())) {
 				return;

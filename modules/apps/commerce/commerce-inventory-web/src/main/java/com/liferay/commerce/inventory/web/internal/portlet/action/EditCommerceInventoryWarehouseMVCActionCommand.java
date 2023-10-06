@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -68,7 +69,8 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 				exception instanceof
 					DuplicateCommerceInventoryWarehouseItemException ||
 				exception instanceof MVCCException ||
-				exception instanceof NoSuchCPInstanceUnitOfMeasureException) {
+				exception instanceof NoSuchCPInstanceUnitOfMeasureException ||
+				exception instanceof PrincipalException.MustHavePermission) {
 
 				SessionErrors.add(actionRequest, exception.getClass());
 

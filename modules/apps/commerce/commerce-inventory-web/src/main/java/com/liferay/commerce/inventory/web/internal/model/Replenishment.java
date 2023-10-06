@@ -14,9 +14,11 @@ import java.math.BigDecimal;
 public class Replenishment {
 
 	public Replenishment(
+		long commerceInventoryWarehouseId,
 		long commerceInventoryReplenishmentItemId, String warehouse,
 		String date, BigDecimal quantity, String unitOfMeasureKey) {
 
+		_commerceInventoryWarehouseId = commerceInventoryWarehouseId;
 		_commerceInventoryReplenishmentItemId =
 			commerceInventoryReplenishmentItemId;
 		_warehouse = warehouse;
@@ -27,6 +29,10 @@ public class Replenishment {
 
 	public long getCommerceInventoryReplenishmentItemId() {
 		return _commerceInventoryReplenishmentItemId;
+	}
+
+	public long getCommerceInventoryWarehouseId() {
+		return _commerceInventoryWarehouseId;
 	}
 
 	public String getDate() {
@@ -46,6 +52,7 @@ public class Replenishment {
 	}
 
 	private final long _commerceInventoryReplenishmentItemId;
+	private final long _commerceInventoryWarehouseId;
 	private final String _date;
 	private final BigDecimal _quantity;
 	private final String _unitOfMeasureKey;

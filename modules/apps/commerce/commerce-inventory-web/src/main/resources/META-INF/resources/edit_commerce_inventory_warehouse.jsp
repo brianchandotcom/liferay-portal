@@ -27,6 +27,8 @@ CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = commerceInventor
 		<aui:input name="unitOfMeasureKey" type="hidden" value="<%= commerceInventoryDisplayContext.getUnitOfMeasureKey() %>" />
 		<aui:input name="mvccVersion" type="hidden" value="<%= (commerceInventoryWarehouseItem == null) ? 0 : commerceInventoryWarehouseItem.getMvccVersion() %>" />
 
+		<liferay-ui:error exception="<%= PrincipalException.MustHavePermission.class %>" message="you-do-not-have-the-required-permissions" />
+
 		<aui:model-context bean="<%= commerceInventoryWarehouseItem %>" model="<%= CommerceInventoryWarehouseItem.class %>" />
 
 		<aui:input name="quantity" required="<%= true %>" type="text">

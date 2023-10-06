@@ -101,6 +101,8 @@ public class CommerceInventoryWarehouseFDSDataProvider
 			warehouses.add(
 				new Warehouse(
 					commerceInventoryWarehouseItem.
+						getCommerceInventoryWarehouseId(),
+					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
 					commerceInventoryWarehouse.getName(
 						_portal.getLocale(httpServletRequest)),

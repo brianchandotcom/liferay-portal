@@ -22,6 +22,8 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 		<aui:input name="sku" type="hidden" value="<%= commerceInventoryDisplayContext.getSku() %>" />
 		<aui:input name="unitOfMeasureKey" type="hidden" value="<%= commerceInventoryDisplayContext.getUnitOfMeasureKey() %>" />
 
+		<liferay-ui:error exception="<%= PrincipalException.MustHavePermission.class %>" message="you-do-not-have-the-required-permissions" />
+
 		<aui:input label="quantity" name="quantity" required="<%= true %>" type="text">
 			<aui:validator name="min">1</aui:validator>
 		</aui:input>

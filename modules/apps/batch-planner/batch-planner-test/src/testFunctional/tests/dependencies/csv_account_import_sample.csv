@@ -1,2 +1,0 @@
-customFields,description,domains,defaultShippingAddressId,type,defaultBillingAddressId,logoURL,postalAddresses,externalReferenceCode,parentAccountId,organizationIds,taxId,name,accountUserAccounts,logoId,status
-array,string,array,integer,string,integer,string,array,string,integer,array,string,string,array,integer,integer

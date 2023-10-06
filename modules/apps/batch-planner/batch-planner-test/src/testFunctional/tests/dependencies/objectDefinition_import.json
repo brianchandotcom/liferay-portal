@@ -1,0 +1,72 @@
+[
+	{
+		"active": true,
+		"externalReferenceCode": "L_POSTAL_ADDRESS",
+		"name": "Address",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"externalReferenceCode": "L_ORGANIZATION",
+		"name": "Organization",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"externalReferenceCode": "L_ACCOUNT",
+		"name": "AccountEntry",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"externalReferenceCode": "L_USER",
+		"name": "User",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"externalReferenceCode": "L_COMMERCE_PRODUCT_GROUP",
+		"name": "CommercePricingClass",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"externalReferenceCode": "L_COMMERCE_PRODUCT_DEFINITION",
+		"name": "CPDefinition",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"externalReferenceCode": "L_COMMERCE_ORDER",
+		"name": "CommerceOrder",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	}
+]

@@ -1,0 +1,15 @@
+{"active":true,"label":{"en_US":"Postal Address"},"name":"Address"}
+{"active":true,"label":{"en_US":"Account"},"name":"AccountEntry"}
+{"active":true,"label":{"en_US":"Organization"},"name":"Organization"}
+{"active":true,"label":{"en_US":"User"},"name":"User"}
+{"active":true,"label":{"en_US":"Commerce Product Group"},"name":"CommercePricingClass"}
+{"active":true,"label":{"en_US":"Commerce Product"},"name":"CPDefinition"}
+{"active":true,"label":{"en_US":"Commerce Order"},"name":"CommerceOrder"}
+{"active":true,"label":{"en_US":"Bookmark"},"name":"Bookmark"}
+{"active":true,"label":{"en_US":"API Sort"},"name":"APISort"}
+{"active":true,"label":{"en_US":"API Filter"},"name":"APIFilter"}
+{"active":true,"label":{"en_US":"API Endpoint"},"name":"APIEndpoint"}
+{"active":true,"label":{"en_US":"API Property"},"name":"APIProperty"}
+{"active":true,"label":{"en_US":"API Schema"},"name":"APISchema"}
+{"active":true,"label":{"en_US":"API Application"},"name":"APIApplication"}
+{"active":true,"label":{"en_US":"TestOBJ"},"name":"TestOBJ"}

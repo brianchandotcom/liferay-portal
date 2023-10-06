@@ -1,1 +1,0 @@
-[{"description":"Test Business Account Description","externalReferenceCode":"101","name":"Test Business Account","type":"business"},{"description":"Test Guest Account Description","externalReferenceCode":"102","name":"Test Guest Account","type":"guest"},{"description":"Test Person Account Description","externalReferenceCode":"103","name":"Test Person Account","type":"person"}]

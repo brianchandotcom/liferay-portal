@@ -14,6 +14,10 @@ import React, {useState} from 'react';
 import {addRule} from '../../../app/actions/index';
 import updateRule from '../../../app/actions/updateRule';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
+import {
+	RuleBuilderActionSection,
+	RuleBuilderConditionSection,
+} from './RuleBuilderSection';
 
 export default function RulesModal({editingRule, onCloseModal}) {
 	const {observer, onClose} = useModal({onClose: () => onCloseModal()});
@@ -121,6 +125,16 @@ export default function RulesModal({editingRule, onCloseModal}) {
 						</ClayForm.FeedbackGroup>
 					)}
 				</ClayForm.Group>
+
+				<p className="py-3">
+					{Liferay.Language.get(
+						'add-at-least-one-condition-and-one-action-to-complete-the-rule'
+					)}
+				</p>
+
+				<RuleBuilderConditionSection />
+
+				<RuleBuilderActionSection />
 			</ClayModal.Body>
 
 			<ClayModal.Footer

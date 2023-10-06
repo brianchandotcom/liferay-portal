@@ -8,7 +8,6 @@ package com.liferay.portal.vulcan.internal.graphql.instrumentation;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.vulcan.internal.graphql.exception.QueryDepthLimitExceededException;
 
 import graphql.execution.AbortExecutionException;
 
@@ -36,25 +35,17 @@ public class QueryDepthLimitInstrumentationTest {
 
 		int depth = RandomTestUtil.randomInt();
 
-		try {
+		AbortExecutionException abortExecutionException =
 			queryDepthLimitInstrumentation.mkAbortException(
 				depth, queryDepthLimit);
 
-			Assert.fail();
-		}
-		catch (QueryDepthLimitExceededException
-					queryDepthLimitExceededException) {
-
-			Assert.assertTrue(
-				queryDepthLimitExceededException instanceof
-					AbortExecutionException);
-			Assert.assertEquals(
-				StringBundler.concat(
-					"Depth ", depth,
-					" is greater than the query depth limit of ",
-					queryDepthLimit),
-				queryDepthLimitExceededException.getMessage());
-		}
+		Assert.assertTrue(
+			abortExecutionException instanceof AbortExecutionException);
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Depth ", depth, " is greater than the query depth limit of ",
+				queryDepthLimit),
+			abortExecutionException.getMessage());
 	}
 
 }

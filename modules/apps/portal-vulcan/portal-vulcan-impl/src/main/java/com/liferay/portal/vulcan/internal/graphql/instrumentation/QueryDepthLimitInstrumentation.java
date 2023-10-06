@@ -26,7 +26,7 @@ public class QueryDepthLimitInstrumentation
 	public AbortExecutionException mkAbortException(
 		int depth, int queryDepthLimit) {
 
-		throw new QueryDepthLimitExceededException(depth, queryDepthLimit);
+		return new QueryDepthLimitExceededException(depth, queryDepthLimit);
 	}
 
 }

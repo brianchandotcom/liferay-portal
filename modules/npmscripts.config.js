@@ -869,6 +869,7 @@ module.exports = {
 			'youtube-web',
 		],
 		'allowed-non-global-dependencies': [
+			'd3',
 			'history',
 			'jest-fetch-mock',
 			'fetch-mock',

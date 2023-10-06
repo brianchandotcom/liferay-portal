@@ -124,10 +124,10 @@ public class PortalRelease {
 		String bundlesBaseURLString = bundleURLMatcher.group("bundlesBaseURL");
 
 		if (portalVersion == null) {
-			Matcher bundlesBaseURLMatcher = _bundlesBaseURLPattern.matcher(
+			Matcher bundlesBaseURLMatcher = _bundlesBaseURLPattern.find(
 				bundlesBaseURLString);
 
-			if (!bundlesBaseURLMatcher.find()) {
+			if (bundlesBaseURLMatcher == null) {
 				throw new RuntimeException(
 					"Invalid bundle file name " + bundleFileName);
 			}
@@ -136,6 +136,7 @@ public class PortalRelease {
 		}
 
 		_bundlesBaseURL = _getLocalURL(bundlesBaseURLString);
+
 		_portalVersion = portalVersion;
 
 		_initializeURLs();
@@ -675,10 +676,14 @@ public class PortalRelease {
 		"(?<portalVersion>\\d\\.([u\\d\\.]+)(-ee)?(-dxp-\\d+)?" +
 			"(\\-(ep|ga|rc|sp)\\d+)?)";
 
+	private static final String _QUARTERLY_RELEASE_VERSION_REGEX =
+		"(?<portalVersion>\\d+\\.([q\\d\\.]+))";
+
 	private static final Pattern _bundleFileNamePattern = Pattern.compile(
 		".+\\-" + _PORTAL_VERSION_REGEX + ".*\\.(7z|tar.gz|zip)");
-	private static final Pattern _bundlesBaseURLPattern = Pattern.compile(
-		"https?://.+/" + _PORTAL_VERSION_REGEX);
+	private static final MultiPattern _bundlesBaseURLPattern = new MultiPattern(
+		"https?://.+/" + _PORTAL_VERSION_REGEX,
+		"https?://.+/" + _QUARTERLY_RELEASE_VERSION_REGEX);
 	private static final Pattern _bundleURLPattern = Pattern.compile(
 		"(?<bundlesBaseURL>https?://.+)/(?<bundleFileName>[^\\/]+" +
 			"\\.(7z|tar.gz|zip))");

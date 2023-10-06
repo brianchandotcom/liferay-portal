@@ -57,11 +57,8 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 		if (Validator.isNotNull(singlePublishArticleId)) {
-			List<String> articleIds = ListUtil.fromArray(
-				singlePublishArticleId);
-
 			Changeset changeset = _createChangesetForArticles(
-				groupId, articleIds);
+				groupId, ListUtil.fromArray(singlePublishArticleId));
 
 			_exportImportChangesetMVCActionCommandHelper.publish(
 				actionRequest, actionResponse, changeset);
@@ -72,10 +69,8 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 		String[] articleIds = ParamUtil.getStringValues(
 			actionRequest, "rowIdsJournalArticle");
 
-		List<String> articleIdsAsList = ListUtil.fromArray(articleIds);
-
 		Changeset changeset = _createChangesetForArticles(
-			groupId, articleIdsAsList);
+			groupId, ListUtil.fromArray(articleIds));
 
 		_exportImportChangesetMVCActionCommandHelper.publish(
 			actionRequest, actionResponse, changeset);

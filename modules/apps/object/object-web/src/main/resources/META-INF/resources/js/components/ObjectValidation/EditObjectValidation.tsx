@@ -81,7 +81,9 @@ export default function EditObjectValidation({
 	const [errorMessage, setErrorMessage] = useState<ObjectValidationErrors>(
 		{}
 	);
-	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
+	const [customObjectFields, setCustomObjectFields] = useState<ObjectField[]>(
+		[]
+	);
 	const [
 		showUniqueCompositeKeyAlert,
 		setShowUniqueCompositeKeyAlert,
@@ -170,12 +172,14 @@ export default function EditObjectValidation({
 						: validationResponseJSON.script,
 			};
 
-			const fieldsResponseJSON = await API.getObjectDefinitionObjectFields(
+			const objectFieldsResponseJSON = await API.getObjectDefinitionObjectFields(
 				objectDefinitionId
 			);
 
-			setObjectFields(
-				fieldsResponseJSON.filter((field) => !field.system)
+			setCustomObjectFields(
+				objectFieldsResponseJSON.filter(
+					(objectField) => !objectField.system
+				)
 			);
 			setValues(newObjectValidation);
 		};
@@ -212,6 +216,7 @@ export default function EditObjectValidation({
 							<Component
 								componentLabel={label}
 								creationLanguageId={creationLanguageId}
+								customObjectFields={customObjectFields ?? []}
 								disabled={disabled}
 								errors={
 									Object.keys(errors).length !== 0
@@ -220,7 +225,6 @@ export default function EditObjectValidation({
 								}
 								handleChange={handleChange}
 								learnResources={learnResources}
-								objectFields={objectFields ?? []}
 								objectValidationRuleElements={
 									objectValidationRuleElements
 								}

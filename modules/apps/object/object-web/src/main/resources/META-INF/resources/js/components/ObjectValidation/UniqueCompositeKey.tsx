@@ -6,14 +6,20 @@
 import {
 	BuilderScreen,
 	Card,
+	MultipleSelect,
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
 import {TBuilderScreenItem} from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/components/BuilderScreen/BuilderScreen';
 import React, {useEffect, useState} from 'react';
 
+import {ErrorMessage} from './ErrorMessage';
+import {ObjectValidationErrors} from './useObjectValidationForm';
+
 export interface UniqueCompositeKeyProps {
 	creationLanguageId: Liferay.Language.Locale;
-	objectFields: ObjectField[];
+	customObjectFields: ObjectField[];
+	disabled: boolean;
+	errors: ObjectValidationErrors;
 	setShowUniqueCompositeKeyAlert: (value: boolean) => void;
 	setValues: (values: Partial<ObjectValidation>) => void;
 	showUniqueCompositeKeyAlert: boolean;
@@ -22,7 +28,9 @@ export interface UniqueCompositeKeyProps {
 
 export function UniqueCompositeKey({
 	creationLanguageId,
-	objectFields,
+	customObjectFields,
+	disabled,
+	errors,
 	setShowUniqueCompositeKeyAlert,
 	setValues,
 	showUniqueCompositeKeyAlert,
@@ -31,10 +39,13 @@ export function UniqueCompositeKey({
 	const [builderScreenItems, setBuilderScreenItems] = useState<
 		TBuilderScreenItem[]
 	>([]);
+	const [multipleSelectOptions, setMultipleSelectOptions] = useState<IItem[]>(
+		[]
+	);
 
-	const filteredObjectFields = objectFields.filter(
-		(objectField) =>
-			objectField.businessType === 'Integer' ||
+	const filteredCustomObjectFields = customObjectFields.filter(
+		(customObjectField) =>
+			customObjectField.businessType === 'Integer' ||
 			'Picklist' ||
 			'Relationship' ||
 			'Text'
@@ -47,10 +58,12 @@ export function UniqueCompositeKey({
 			getName: ({label, name}: ObjectField) =>
 				getLocalizableLabel(creationLanguageId, label, name),
 			header: Liferay.Language.get('add-fields-to-unique-composite-key'),
-			items: filteredObjectFields.map((filteredObjectField) => ({
-				...filteredObjectField,
-				checked: false,
-			})),
+			items: filteredCustomObjectFields.map(
+				(filteredCustomObjectField) => ({
+					...filteredCustomObjectField,
+					checked: false,
+				})
+			),
 			onSave: (selectedObjectFields: ObjectField[]) => {
 				const newObjectValidationRuleSettings = selectedObjectFields.map(
 					(selectedObjectField) => ({
@@ -71,10 +84,10 @@ export function UniqueCompositeKey({
 	useEffect(() => {
 		const newBuilderScreenItems = values?.objectValidationRuleSettings?.map(
 			(objectValidationRuleSetting) => {
-				const filteredObjectFieldsInValidationRuleSetting = filteredObjectFields.find(
-					(filteredObjectField) => {
+				const filteredCustomObjectFieldsInValidationRuleSetting = filteredCustomObjectFields.find(
+					(filteredCustomObjectField) => {
 						return (
-							filteredObjectField.externalReferenceCode ===
+							filteredCustomObjectField.externalReferenceCode ===
 							objectValidationRuleSetting.value
 						);
 					}
@@ -83,14 +96,15 @@ export function UniqueCompositeKey({
 				return {
 					fieldLabel: getLocalizableLabel(
 						creationLanguageId,
-						filteredObjectFieldsInValidationRuleSetting?.label,
-						filteredObjectFieldsInValidationRuleSetting?.name
+						filteredCustomObjectFieldsInValidationRuleSetting?.label,
+						filteredCustomObjectFieldsInValidationRuleSetting?.name
 					),
-					label: filteredObjectFieldsInValidationRuleSetting?.label,
+					label:
+						filteredCustomObjectFieldsInValidationRuleSetting?.label,
 					objectFieldBusinessType:
-						filteredObjectFieldsInValidationRuleSetting?.businessType,
+						filteredCustomObjectFieldsInValidationRuleSetting?.businessType,
 					objectFieldName:
-						filteredObjectFieldsInValidationRuleSetting?.name,
+						filteredCustomObjectFieldsInValidationRuleSetting?.name,
 				};
 			}
 		) as TBuilderScreenItem[];
@@ -134,6 +148,20 @@ export function UniqueCompositeKey({
 					secondColumnHeader={Liferay.Language.get('type')}
 				/>
 			</Card>
+
+			<ErrorMessage
+				disabled={disabled}
+				errors={errors}
+				setValues={setValues}
+				values={values}
+			>
+				<MultipleSelect
+					error={errors.errorLabel}
+					label={Liferay.Language.get('field')}
+					options={multipleSelectOptions}
+					setOptions={setMultipleSelectOptions}
+				/>
+			</ErrorMessage>
 		</>
 	);
 }

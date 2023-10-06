@@ -132,11 +132,7 @@ public class JournalArticleAssetEntryReindexTest {
 	}
 
 	private void _assertSearch(String keyword, JournalArticle journalArticle) {
-		Document[] documents = _indexerFixture.search(keyword);
-
-		Assert.assertEquals(documents.toString(), 1, documents.length);
-
-		Document document = documents[0];
+		Document document = _indexerFixture.searchOnlyOne(keyword);
 
 		String[] values = document.getValues(Field.ARTICLE_ID);
 

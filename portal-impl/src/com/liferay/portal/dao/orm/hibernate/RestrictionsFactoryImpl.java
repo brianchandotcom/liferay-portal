@@ -24,10 +24,6 @@ import org.hibernate.criterion.Restrictions;
  */
 public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
-	public void afterPropertiesSet() {
-		_databaseInMaxParameters = DBManagerUtil.getDBInMaxParameters();
-	}
-
 	@Override
 	public Criterion allEq(Map<String, Criterion> propertyNameValues) {
 		return new CriterionImpl(Restrictions.allEq(propertyNameValues));
@@ -101,9 +97,9 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 	public Criterion in(String propertyName, Collection<?> values) {
 		int size = values.size();
 
-		if (size > _databaseInMaxParameters) {
+		if (size > DBManagerUtil.getDBInMaxParameters()) {
 			Disjunction disjunction = disjunction();
-			int end = _databaseInMaxParameters;
+			int end = DBManagerUtil.getDBInMaxParameters();
 			List<?> list = ListUtil.fromCollection(values);
 			int start = 0;
 
@@ -113,8 +109,8 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 						Restrictions.in(
 							propertyName, ListUtil.subList(list, start, end))));
 
-				end += _databaseInMaxParameters;
-				start += _databaseInMaxParameters;
+				end += DBManagerUtil.getDBInMaxParameters();
+				start += DBManagerUtil.getDBInMaxParameters();
 			}
 
 			return disjunction;
@@ -259,7 +255,5 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 		return new CriterionImpl(
 			Restrictions.sqlRestriction(sql, values, hibernateTypes));
 	}
-
-	private int _databaseInMaxParameters;
 
 }

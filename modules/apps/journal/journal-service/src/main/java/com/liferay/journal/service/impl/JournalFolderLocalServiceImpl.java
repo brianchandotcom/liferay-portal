@@ -93,10 +93,6 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalFolderLocalServiceImpl
 	extends JournalFolderLocalServiceBaseImpl {
 
-	public JournalFolderLocalServiceImpl() {
-		_databaseMaxParameters = DBManagerUtil.getDBMaxParameters();
-	}
-
 	@Override
 	public JournalFolder addFolder(
 			String externalReferenceCode, long userId, long groupId,
@@ -450,13 +446,13 @@ public class JournalFolderLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status);
 
-		if (folderIds.size() <= _databaseMaxParameters) {
+		if (folderIds.size() <= DBManagerUtil.getDBMaxParameters()) {
 			return _journalArticleFinder.countByG_F(
 				groupId, folderIds, queryDefinition);
 		}
 
 		int start = 0;
-		int end = _databaseMaxParameters;
+		int end = DBManagerUtil.getDBMaxParameters();
 
 		int articlesCount = _journalArticleFinder.countByG_F(
 			groupId, folderIds.subList(start, end), queryDefinition);
@@ -1550,8 +1546,6 @@ public class JournalFolderLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	private final int _databaseMaxParameters;
 
 	@Reference
 	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;

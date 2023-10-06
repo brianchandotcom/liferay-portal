@@ -20,7 +20,6 @@ import com.liferay.portal.search.spi.reindexer.BulkReindexer;
 import java.util.Collection;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -37,7 +36,7 @@ public class UserBulkReindexer implements BulkReindexer {
 	public void reindex(long companyId, Collection<Long> classPKs) {
 		int size = classPKs.size();
 
-		if (size <= _databaseMaxParameters) {
+		if (size <= DBManagerUtil.getDBMaxParameters()) {
 			_reindex(companyId, classPKs);
 
 			return;
@@ -46,19 +45,14 @@ public class UserBulkReindexer implements BulkReindexer {
 		List<Long> classPKsList = ListUtil.fromCollection(classPKs);
 
 		int start = 0;
-		int end = _databaseMaxParameters;
+		int end = DBManagerUtil.getDBMaxParameters();
 
 		while (start < size) {
 			_reindex(companyId, ListUtil.subList(classPKsList, start, end));
 
-			end += _databaseMaxParameters;
-			start += _databaseMaxParameters;
+			end += DBManagerUtil.getDBMaxParameters();
+			start += DBManagerUtil.getDBMaxParameters();
 		}
-	}
-
-	@Activate
-	protected void activate() {
-		_databaseMaxParameters = DBManagerUtil.getDBMaxParameters();
 	}
 
 	@Reference(
@@ -104,7 +98,5 @@ public class UserBulkReindexer implements BulkReindexer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserBulkReindexer.class);
-
-	private int _databaseMaxParameters;
 
 }

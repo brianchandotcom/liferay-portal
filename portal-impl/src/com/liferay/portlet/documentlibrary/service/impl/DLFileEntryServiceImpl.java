@@ -64,10 +64,6 @@ import java.util.Map;
  */
 public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
-	public DLFileEntryServiceImpl() {
-		_databaseMaxParameters = DBManagerUtil.getDBMaxParameters();
-	}
-
 	@Override
 	public DLFileEntry addFileEntry(
 			String externalReferenceCode, long groupId, long repositoryId,
@@ -563,13 +559,13 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>(
 			status);
 
-		if (folderIds.size() <= _databaseMaxParameters) {
+		if (folderIds.size() <= DBManagerUtil.getDBMaxParameters()) {
 			return dlFileEntryFinder.filterCountByG_F(
 				groupId, folderIds, queryDefinition);
 		}
 
 		int start = 0;
-		int end = _databaseMaxParameters;
+		int end = DBManagerUtil.getDBMaxParameters();
 
 		int filesCount = dlFileEntryFinder.filterCountByG_F(
 			groupId, folderIds.subList(start, end), queryDefinition);
@@ -879,8 +875,6 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;
-
-	private final int _databaseMaxParameters;
 
 	@BeanReference(type = DLFileVersionLocalService.class)
 	private DLFileVersionLocalService _dlFileVersionLocalService;

@@ -107,15 +107,14 @@ public class KnowledgeBaseUtil {
 			return null;
 		}
 
-		int databaseMaxParameters = _getDatabaseMaxParameters();
-
-		if (params.length <= databaseMaxParameters) {
+		if (params.length <= DBManagerUtil.getDBMaxParameters()) {
 			return new Long[][] {new Long[0], params};
 		}
 
 		return new Long[][] {
-			ArrayUtil.subset(params, databaseMaxParameters, params.length),
-			ArrayUtil.subset(params, 0, databaseMaxParameters)
+			ArrayUtil.subset(
+				params, DBManagerUtil.getDBMaxParameters(), params.length),
+			ArrayUtil.subset(params, 0, DBManagerUtil.getDBMaxParameters())
 		};
 	}
 
@@ -231,20 +230,9 @@ public class KnowledgeBaseUtil {
 		return s.substring(x);
 	}
 
-	private static int _getDatabaseMaxParameters() {
-		if (_databaseMaxParameters != 0) {
-			return _databaseMaxParameters;
-		}
-
-		_databaseMaxParameters = DBManagerUtil.getDBMaxParameters();
-
-		return _databaseMaxParameters;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		KnowledgeBaseUtil.class);
 
-	private static int _databaseMaxParameters;
 	private static final Pattern _validFriendlyUrlPattern = Pattern.compile(
 		"/[a-z0-9_-]+");
 

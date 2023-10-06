@@ -46,10 +46,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
-	public JournalFolderServiceImpl() {
-		_databaseMaxParameters = DBManagerUtil.getDBMaxParameters();
-	}
-
 	@Override
 	public JournalFolder addFolder(
 			String externalReferenceCode, long groupId, long parentFolderId,
@@ -260,13 +256,13 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status);
 
-		if (folderIds.size() <= _databaseMaxParameters) {
+		if (folderIds.size() <= DBManagerUtil.getDBMaxParameters()) {
 			return _journalArticleFinder.filterCountByG_F(
 				groupId, folderIds, queryDefinition);
 		}
 
 		int start = 0;
-		int end = _databaseMaxParameters;
+		int end = DBManagerUtil.getDBMaxParameters();
 
 		int articlesCount = _journalArticleFinder.filterCountByG_F(
 			groupId, folderIds.subList(start, end), queryDefinition);
@@ -556,8 +552,6 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	private final int _databaseMaxParameters;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"

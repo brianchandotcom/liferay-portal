@@ -50,11 +50,10 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -313,8 +312,12 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 			String externalReferenceCode, long groupId, BlogPosting blogPosting)
 		throws Exception {
 
-		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			blogPosting.getDatePublished());
+		Date displayDate = blogPosting.getDatePublished();
+
+		if (displayDate == null) {
+			displayDate = new Date();
+		}
+
 		Image image = blogPosting.getImage();
 
 		return _toBlogPosting(
@@ -322,9 +325,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 				externalReferenceCode, blogPosting.getHeadline(),
 				blogPosting.getAlternativeHeadline(),
 				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
-				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
-				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), true, true,
+				blogPosting.getArticleBody(), displayDate, true, true,
 				new String[0], _getCaption(image), _getImageSelector(image),
 				null, _createServiceContext(blogPosting, groupId)));
 	}
@@ -442,8 +443,12 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 			BlogsEntry blogsEntry, BlogPosting blogPosting)
 		throws Exception {
 
-		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			blogPosting.getDatePublished());
+		Date displayDate = blogPosting.getDatePublished();
+
+		if (displayDate == null) {
+			displayDate = new Date();
+		}
+
 		Image image = blogPosting.getImage();
 
 		return _toBlogPosting(
@@ -451,9 +456,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 				blogsEntry.getEntryId(), blogPosting.getHeadline(),
 				blogPosting.getAlternativeHeadline(),
 				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
-				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
-				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), true, true,
+				blogPosting.getArticleBody(), displayDate, true, true,
 				new String[0], _getCaption(image), _getImageSelector(image),
 				null,
 				_createServiceContext(blogPosting, blogsEntry.getGroupId())));

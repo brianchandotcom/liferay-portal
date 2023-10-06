@@ -6,8 +6,11 @@
 import {useMemo} from 'react';
 
 import {DealRegistrationColumnKey} from '../../../common/enums/dealRegistrationColumnKey';
-import useGetDealRegistration from '../../../common/services/liferay/object/deal-registration/useGetDealRegistration';
+import DealRegistrationDTO from '../../../common/interfaces/dto/dealRegistrationDTO';
+import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
+import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
+import useGet from '../../../common/services/liferay/object/useGet';
 import getDealDates from '../utils/getDealDates';
 
 export default function useGetListItemsFromDealRegistration(
@@ -16,13 +19,9 @@ export default function useGetListItemsFromDealRegistration(
 	filtersTerm: string,
 	sort: string
 ) {
-	const swrResponse = useGetDealRegistration(
-		ResourceName.LEADS_SALESFORCE,
-		page,
-		pageSize,
-		filtersTerm,
-		'',
-		sort
+	const swrResponse = useGet<LiferayItems<DealRegistrationDTO[]>>(
+		`/o/${LiferayAPIs.OBJECT}/${ResourceName.LEADS_SALESFORCE}?${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}
+			 `
 	);
 
 	const listItems = useMemo(

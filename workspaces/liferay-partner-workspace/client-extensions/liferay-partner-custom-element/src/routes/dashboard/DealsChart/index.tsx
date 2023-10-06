@@ -17,6 +17,7 @@ import {siteURL} from '../../../common/components/dashboard/utils/siteURL';
 import {Liferay} from '../../../common/services/liferay';
 
 import './index.css';
+import {retry} from '../../../common/utils/retry';
 
 const DealsChart = () => {
 	const [opportunities, setOpportunities] = useState([]);
@@ -27,14 +28,16 @@ const DealsChart = () => {
 		setLoading(true);
 
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await fetch(
-			`/o/c/opportunitysfs?pageSize=200&filter=stage ne 'Closed Lost' and stage ne 'Disqualified' and stage ne 'Rolled into another opportunity'`,
-			{
-				headers: {
-					'accept': 'application/json',
-					'x-csrf-token': Liferay.authToken,
-				},
-			}
+		const response = await retry<Response>(() =>
+			fetch(
+				`/o/c/opportunitysfs?pageSize=200&filter=stage ne 'Closed Lost' and stage ne 'Disqualified' and stage ne 'Rolled into another opportunity'`,
+				{
+					headers: {
+						'accept': 'application/json',
+						'x-csrf-token': Liferay.authToken,
+					},
+				}
+			)
 		);
 
 		if (response.ok) {
@@ -44,11 +47,6 @@ const DealsChart = () => {
 			return;
 		}
 
-		Liferay.Util.openToast({
-			message: 'An unexpected error occured.',
-			type: 'danger',
-		});
-
 		setLoading(false);
 	};
 
@@ -56,12 +54,14 @@ const DealsChart = () => {
 		setLoading(true);
 
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await fetch('/o/c/leadsfs?pageSize=200', {
-			headers: {
-				'accept': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-		});
+		const response = await retry<Response>(() =>
+			fetch('/o/c/leadsfs?pageSize=200', {
+				headers: {
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+			})
+		);
 
 		if (response.ok) {
 			const data = await response.json();
@@ -69,11 +69,6 @@ const DealsChart = () => {
 
 			return;
 		}
-
-		Liferay.Util.openToast({
-			message: 'An unexpected error occured.',
-			type: 'danger',
-		});
 
 		setLoading(false);
 	};

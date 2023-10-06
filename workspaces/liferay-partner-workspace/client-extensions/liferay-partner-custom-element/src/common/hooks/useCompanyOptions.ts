@@ -5,10 +5,12 @@
 
 import {useEffect, useState} from 'react';
 
+import AccountEntry from '../interfaces/accountEntry';
 import LiferayAccountBrief from '../interfaces/liferayAccountBrief';
 import LiferayPicklist from '../interfaces/liferayPicklist';
-import useGetAccountByERC from '../services/liferay/accounts/useGetAccountByERC';
-import useGetPartnerLevel from '../services/liferay/object/partner-level/useGetPartnerLevel';
+import PartnerLevel from '../interfaces/partnerLevel';
+import {LiferayAPIs} from '../services/liferay/common/enums/apis';
+import useGet from '../services/liferay/object/useGet';
 import isObjectEmpty from '../utils/isObjectEmpty';
 
 export default function useCompanyOptions(
@@ -29,12 +31,14 @@ export default function useCompanyOptions(
 		LiferayAccountBrief | undefined
 	>(currentCompany);
 
-	const {data: account} = useGetAccountByERC(
-		selectedAccountBrief?.externalReferenceCode
+	const {data: account} = useGet<AccountEntry>(
+		selectedAccountBrief?.externalReferenceCode &&
+			`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${selectedAccountBrief.externalReferenceCode}`
 	);
 
-	const {data: partnerLevel} = useGetPartnerLevel(
-		account?.r_prtLvlToAcc_c_partnerLevelERC
+	const {data: partnerLevel} = useGet<PartnerLevel>(
+		account?.r_prtLvlToAcc_c_partnerLevelERC &&
+			`/o/${LiferayAPIs.OBJECT}/partnerlevels/by-external-reference-code/${account.r_prtLvlToAcc_c_partnerLevelERC}`
 	);
 
 	const currencyPicklist =

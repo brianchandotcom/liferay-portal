@@ -15,6 +15,7 @@ import {status} from '../../../common/components/dashboard/utils/constants/statu
 import getFilteredRenewals from '../../../common/components/dashboard/utils/getFilteredRenewalsData';
 import {siteURL} from '../../../common/components/dashboard/utils/siteURL';
 import {Liferay} from '../../../common/services/liferay';
+import {retry} from '../../../common/utils/retry';
 
 export default function () {
 	const [data, setData] = useState();
@@ -23,15 +24,15 @@ export default function () {
 	const getRenewalsData = async () => {
 		setIsLoading(true);
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await fetch(
-			'/o/c/opportunitysfs?pageSize=200&sort=closeDate:asc',
-			{
+		const response = await retry<Response>(() =>
+			fetch('/o/c/opportunitysfs?pageSize=200&sort=closeDate:asc', {
 				headers: {
 					'accept': 'application/json',
 					'x-csrf-token': Liferay.authToken,
 				},
-			}
+			})
 		);
+
 		if (response.ok) {
 			const renewalsData = await response.json();
 
@@ -40,11 +41,6 @@ export default function () {
 
 			return;
 		}
-
-		Liferay.Util.openToast({
-			message: 'An unexpected error occured.',
-			type: 'danger',
-		});
 	};
 
 	useEffect(() => {
@@ -56,11 +52,9 @@ export default function () {
 	const getCurrentStatusColor = (item: any) => {
 		if (item?.expirationDays <= 5) {
 			return status[5];
-		}
-		else if (item?.expirationDays <= 15) {
+		} else if (item?.expirationDays <= 15) {
 			return status[15];
-		}
-		else if (item?.expirationDays <= 30) {
+		} else if (item?.expirationDays <= 30) {
 			return status[30];
 		}
 	};

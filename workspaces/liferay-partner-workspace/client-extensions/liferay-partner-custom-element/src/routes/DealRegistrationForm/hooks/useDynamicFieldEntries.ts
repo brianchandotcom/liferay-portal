@@ -6,8 +6,11 @@
 import {useEffect, useMemo} from 'react';
 
 import {LiferayPicklistName} from '../../../common/enums/liferayPicklistName';
-import useGetListTypeDefinitions from '../../../common/services/liferay/list-type-definitions/useGetListTypeDefinitions';
-import useGetMyUserAccount from '../../../common/services/liferay/user-account/useGetMyUserAccount';
+import ListTypeDefinition from '../../../common/interfaces/listTypeDefinition';
+import UserAccount from '../../../common/interfaces/userAccount';
+import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
+import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
+import useGet from '../../../common/services/liferay/object/useGet';
 import getEntriesByListTypeDefinitions from '../../../common/utils/getEntriesByListTypeDefinitions';
 
 export default function useDynamicFieldEntries(
@@ -18,8 +21,11 @@ export default function useDynamicFieldEntries(
 		telephone?: string
 	) => void
 ) {
-	const {data: userAccount} = useGetMyUserAccount();
-	const {data: listTypeDefinitions} = useGetListTypeDefinitions([
+	const {data: userAccount} = useGet<UserAccount>(
+		`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`
+	);
+
+	const pickListNames = [
 		LiferayPicklistName.COUNTRIES,
 		LiferayPicklistName.STATES,
 		LiferayPicklistName.PROJECT_CATEGORIES,
@@ -29,7 +35,17 @@ export default function useDynamicFieldEntries(
 		LiferayPicklistName.INDUSTRIES,
 		LiferayPicklistName.STATES,
 		LiferayPicklistName.CURRENCIES,
-	]);
+	];
+
+	const {data: listTypeDefinitions} = useGet<
+		LiferayItems<ListTypeDefinition[]>
+	>(
+		`/o/${
+			LiferayAPIs.HEADERLESS_ADMIN_LIST_TYPE
+		}/list-type-definitions?filter=name in ('${pickListNames.join(
+			"', '"
+		)}')`
+	);
 
 	const companiesEntries = useMemo(
 		() =>

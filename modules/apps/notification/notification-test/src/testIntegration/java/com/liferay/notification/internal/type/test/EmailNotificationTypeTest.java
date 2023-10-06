@@ -67,6 +67,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			ListUtil.sort(
 				Arrays.asList(
 					user1.getEmailAddress(), user2.getEmailAddress())),
+			true,
 			StringBundler.concat(
 				user1.getEmailAddress(), StringPool.COMMA,
 				user2.getEmailAddress()));
@@ -77,6 +78,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			ListUtil.sort(
 				Arrays.asList(
 					user1.getEmailAddress(), user2.getEmailAddress())),
+			true,
 			StringBundler.concat(
 				user1.getEmailAddress(), StringPool.COMMA_AND_SPACE,
 				user2.getEmailAddress()));
@@ -87,6 +89,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			ListUtil.sort(
 				Arrays.asList(
 					user1.getEmailAddress(), user2.getEmailAddress())),
+			true,
 			StringBundler.concat(
 				user1.getEmailAddress(), StringPool.SEMICOLON,
 				user2.getEmailAddress()));
@@ -100,6 +103,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					user2.getEmailAddress(),
 					GetterUtil.getString(
 						childObjectEntryValues.get("emailTextObjectField")))),
+			true,
 			"[%CURRENT_USER_EMAIL_ADDRESS%]," +
 				getTermName("emailTextObjectField"));
 
@@ -112,6 +116,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					user2.getEmailAddress(),
 					GetterUtil.getString(
 						childObjectEntryValues.get("emailTextObjectField")))),
+			true,
 			"[%CURRENT_USER_EMAIL_ADDRESS%], " +
 				getTermName("emailTextObjectField"));
 
@@ -124,6 +129,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					user2.getEmailAddress(),
 					GetterUtil.getString(
 						childObjectEntryValues.get("emailTextObjectField")))),
+			true,
 			"[%CURRENT_USER_EMAIL_ADDRESS%];" +
 				getTermName("emailTextObjectField"));
 
@@ -289,12 +295,13 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	private void _testSendNotification(
-			List<String> expectedToEmailAddress, String to)
+			List<String> expectedToEmailAddress, boolean singleRecipient,
+			String to)
 		throws Exception {
 
 		_executeNotificationObjectAction(
 			_addNotificationTemplate(
-				true, Collections.singletonMap(LocaleUtil.US, to)));
+				singleRecipient, Collections.singletonMap(LocaleUtil.US, to)));
 
 		List<NotificationQueueEntry> notificationQueueEntries = ListUtil.sort(
 			notificationQueueEntryLocalService.getNotificationEntries(
@@ -316,10 +323,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.size());
 
 		_assertNotificationQueueEntry(
-			true, expectedToEmailAddress.get(0),
+			singleRecipient, expectedToEmailAddress.get(0),
 			notificationQueueEntries.get(0));
 		_assertNotificationQueueEntry(
-			true, expectedToEmailAddress.get(1),
+			singleRecipient, expectedToEmailAddress.get(1),
 			notificationQueueEntries.get(1));
 
 		for (NotificationQueueEntry notificationQueueEntry :

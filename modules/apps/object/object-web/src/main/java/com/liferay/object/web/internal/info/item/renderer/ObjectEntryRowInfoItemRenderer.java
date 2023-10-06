@@ -207,9 +207,11 @@ public class ObjectEntryRowInfoItemRenderer
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
+				ListTypeEntry listTypeEntry = (ListTypeEntry)value;
+
 				values.put(
 					objectField.getName(),
-					((ListTypeEntry)value).getName(themeDisplay.getLocale()));
+					listTypeEntry.getName(themeDisplay.getLocale()));
 			}
 			else {
 				values.put(objectField.getName(), (Serializable)value);

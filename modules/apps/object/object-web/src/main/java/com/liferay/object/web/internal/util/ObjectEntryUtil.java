@@ -135,9 +135,10 @@ public class ObjectEntryUtil {
 		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
+			ListEntry listEntry = (ListEntry)value;
+
 			return ListTypeEntryLocalServiceUtil.fetchListTypeEntry(
-				objectField.getListTypeDefinitionId(),
-				((ListEntry)value).getKey());
+				objectField.getListTypeDefinitionId(), listEntry.getKey());
 		}
 		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {

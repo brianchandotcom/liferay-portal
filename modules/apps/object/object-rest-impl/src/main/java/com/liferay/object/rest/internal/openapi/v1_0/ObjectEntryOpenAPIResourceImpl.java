@@ -388,7 +388,9 @@ public class ObjectEntryOpenAPIResourceImpl
 
 	private String _getRef(Schema schema) {
 		if (schema instanceof ArraySchema) {
-			Schema itemsSchema = ((ArraySchema)schema).getItems();
+			ArraySchema arraySchema = (ArraySchema)schema;
+
+			Schema itemsSchema = arraySchema.getItems();
 
 			return itemsSchema.get$ref();
 		}

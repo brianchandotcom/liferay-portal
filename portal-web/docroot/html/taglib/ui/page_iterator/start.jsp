@@ -116,76 +116,80 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 				</ul>
 			</div>
-
+	
 			<script data-senna-track="temporary" type="text/javascript">
-				var dropdown = document.getElementById("<%= ariaPagination %>");
+				(function() {
+					var dropdown = document.getElementById("<%= ariaPagination %>");
 
-				var button = dropdown.querySelector('.dropdown-toggle');
-				var list = dropdown.querySelector('.dropdown-menu');
+					var button = dropdown.querySelector('.dropdown-toggle');
+					var list = dropdown.querySelector('.dropdown-menu');
 
-				var options = list.querySelectorAll('.dropdown-item');
-				var selectedItemValue = button.dataset.attribute;
+					var options = list.querySelectorAll('.dropdown-item');
+					var selectedItemValue = button.dataset.attribute;
 
-				function onButtonKeyDown(event) {
-					if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') {
-						event.preventDefault();
+					function onButtonKeyDown(event) {
+						if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') {
+							event.preventDefault();
 
-						button.setAttribute('aria-expanded', 'true');
-						list.classList.add('show');
+							button.setAttribute('aria-expanded', 'true');
+							list.classList.add('show');
 
-						var selectedOption = list.querySelector('.active');
+							var selectedOption = list.querySelector('.active');
 
-						if (selectedOption) {
-							selectedOption.focus();
+							if (selectedOption) {
+								selectedOption.focus();
+							}
 						}
 					}
-				}
 
-				button.addEventListener('keydown', onButtonKeyDown );
+					button.addEventListener('keydown', onButtonKeyDown );
 
-				function onLeaveDropdown() {
-					button.setAttribute('aria-expanded', 'false');
-					list.classList.remove('show');
-				}
-
-				function handleKeyEvents(event) {
-					var currentIndex = Array.from(options).indexOf(document.activeElement);
-
-					if (event.key === 'ArrowDown') {
-						event.preventDefault();
-
-						if (currentIndex < options.length - 1) {
-							options[currentIndex + 1].focus();
-						}
-					} else if (event.key === 'ArrowUp') {
-						event.preventDefault();
-
-						if (currentIndex > 0) {
-							options[currentIndex - 1].focus();
-						}
-					} else if (event.key === 'Escape') {
-						button.focus()
-						onLeaveDropdown()
+					function onLeaveDropdown() {
+						button.setAttribute('aria-expanded', 'false');
+						list.classList.remove('show');
 					}
-				}
 
-				list.addEventListener('keydown', handleKeyEvents);
+					function handleKeyEvents(event) {
+						var currentIndex = Array.from(options).indexOf(document.activeElement);
 
-				function dropdownFocusOut(event) {
-					if (!dropdown.contains(event.relatedTarget)) {
-						onLeaveDropdown()
+						if (event.key === 'ArrowDown') {
+							event.preventDefault();
+
+							if (currentIndex < options.length - 1) {
+								options[currentIndex + 1].focus();
+							}
+						} 
+						else if (event.key === 'ArrowUp') {
+							event.preventDefault();
+
+							if (currentIndex > 0) {
+								options[currentIndex - 1].focus();
+							}
+						} 
+						else if (event.key === 'Escape') {
+							button.focus();
+							onLeaveDropdown();
+						}
 					}
-				}
 
-				document.addEventListener('focusout', dropdownFocusOut );
+					list.addEventListener('keydown', handleKeyEvents);
 
-				var destroyDropDownPagination = function () {
-					button.removeEventListener('keydown', onButtonKeyDown);
-					document.removeEventListener('focusout', dropdownFocusOut );
-					list.removeEventListener('keydown', handleKeyEvents);
-				};
+					function dropdownFocusOut(event) {
+						if (!dropdown.contains(event.relatedTarget)) {
+							onLeaveDropdown();
+						}
+					}
 
-				Liferay.once('beforeScreenFlip', destroyDropDownPagination);
+					document.addEventListener('focusout', dropdownFocusOut );
+
+					var destroyDropDownPagination = function () {
+						button.removeEventListener('keydown', onButtonKeyDown);
+						document.removeEventListener('focusout', dropdownFocusOut );
+						list.removeEventListener('keydown', handleKeyEvents);
+					};
+
+					Liferay.once('beforeScreenFlip', destroyDropDownPagination);
+				})();
 			</script>
 		</c:if>
 

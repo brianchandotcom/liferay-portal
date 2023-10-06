@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
 import com.liferay.commerce.inventory.web.internal.model.Replenishment;
@@ -20,10 +19,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -60,8 +58,12 @@ public class CommerceInventoryReplenishmentFDSActionProvider
 
 		Replenishment replenishment = (Replenishment)model;
 
+		long commerceInventoryWarehouseId =
+			replenishment.getCommerceInventoryWarehouseId();
+
 		return DropdownItemListBuilder.add(
-			() -> _hasPermission(),
+			() -> _hasPermission(
+				commerceInventoryWarehouseId, ActionKeys.UPDATE),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getReplenishmentEditURL(
@@ -72,7 +74,8 @@ public class CommerceInventoryReplenishmentFDSActionProvider
 				dropdownItem.setTarget("sidePanel");
 			}
 		).add(
-			() -> _hasPermission(),
+			() -> _hasPermission(
+				commerceInventoryWarehouseId, ActionKeys.DELETE),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getReplenishmentDeleteURL(
@@ -139,14 +142,13 @@ public class CommerceInventoryReplenishmentFDSActionProvider
 		return portletURL.toString();
 	}
 
-	private boolean _hasPermission() throws PrincipalException {
-		PortletResourcePermission portletResourcePermission =
-			_commerceInventoryWarehouseModelResourcePermission.
-				getPortletResourcePermission();
+	private boolean _hasPermission(
+			long commerceInventoryWarehouseId, String actionId)
+		throws PortalException {
 
-		return portletResourcePermission.contains(
-			PermissionThreadLocal.getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+		return _commerceInventoryWarehouseModelResourcePermission.contains(
+			PermissionThreadLocal.getPermissionChecker(),
+			commerceInventoryWarehouseId, actionId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

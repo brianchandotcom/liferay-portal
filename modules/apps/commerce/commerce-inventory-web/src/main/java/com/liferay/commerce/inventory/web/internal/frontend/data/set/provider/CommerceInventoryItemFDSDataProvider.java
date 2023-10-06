@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,24 +49,20 @@ public class CommerceInventoryItemFDSDataProvider
 			_commerceInventoryWarehouseModelResourcePermission.
 				getPortletResourcePermission();
 
-		if (portletResourcePermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), null,
-				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
-
-			return TransformUtil.transform(
-				_commerceInventoryWarehouseItemLocalService.getItemsByCompanyId(
-					_portal.getCompanyId(httpServletRequest),
-					fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
-					fdsPagination.getEndPosition()),
-				ciWarehouseItem -> new InventoryItem(
-					ciWarehouseItem.getSkuCode(),
-					ciWarehouseItem.getUnitOfMeasureKey(),
-					ciWarehouseItem.getBookedQuantity(),
-					ciWarehouseItem.getReplenishmentQuantity(),
-					ciWarehouseItem.getStockQuantity()));
-		}
-
-		return Collections.emptyList();
+		return TransformUtil.transform(
+			_commerceInventoryWarehouseItemLocalService.getItemsByCompanyId(
+				_portal.getCompanyId(httpServletRequest),
+				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition(),
+				!portletResourcePermission.contains(
+					PermissionThreadLocal.getPermissionChecker(), null,
+					CommerceInventoryActionKeys.MANAGE_INVENTORY)),
+			ciWarehouseItem -> new InventoryItem(
+				ciWarehouseItem.getSkuCode(),
+				ciWarehouseItem.getUnitOfMeasureKey(),
+				ciWarehouseItem.getBookedQuantity(),
+				ciWarehouseItem.getReplenishmentQuantity(),
+				ciWarehouseItem.getStockQuantity()));
 	}
 
 	@Override
@@ -79,14 +74,13 @@ public class CommerceInventoryItemFDSDataProvider
 			_commerceInventoryWarehouseModelResourcePermission.
 				getPortletResourcePermission();
 
-		portletResourcePermission.contains(
-			PermissionThreadLocal.getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
-
 		return _commerceInventoryWarehouseItemLocalService.
 			countItemsByCompanyId(
 				_portal.getCompanyId(httpServletRequest),
-				fdsKeywords.getKeywords());
+				fdsKeywords.getKeywords(),
+				!portletResourcePermission.contains(
+					PermissionThreadLocal.getPermissionChecker(), null,
+					CommerceInventoryActionKeys.MANAGE_INVENTORY));
 	}
 
 	@Reference

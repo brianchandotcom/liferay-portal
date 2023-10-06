@@ -175,25 +175,19 @@ public class CommerceInventoryDisplayContext {
 		).buildString();
 	}
 
-	public List<HeaderActionModel> getHeaderActionModels()
-		throws PrincipalException {
-
+	public List<HeaderActionModel> getHeaderActionModels() {
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
 		if (_sku == null) {
 			return headerActionModels;
 		}
 
-		if (_hasPermission()) {
-			RenderResponse renderResponse =
-				_cpRequestHelper.getRenderResponse();
+		RenderResponse renderResponse = _cpRequestHelper.getRenderResponse();
 
-			RenderURL cancelURL = renderResponse.createRenderURL();
+		RenderURL cancelURL = renderResponse.createRenderURL();
 
-			headerActionModels.add(
-				new HeaderActionModel(
-					null, cancelURL.toString(), null, "cancel"));
-		}
+		headerActionModels.add(
+			new HeaderActionModel(null, cancelURL.toString(), null, "cancel"));
 
 		return headerActionModels;
 	}
@@ -330,14 +324,21 @@ public class CommerceInventoryDisplayContext {
 		return creationMenu;
 	}
 
-	private boolean _hasPermission() throws PrincipalException {
+	private boolean _hasPermission() {
 		PortletResourcePermission portletResourcePermission =
 			_commerceInventoryWarehouseModelResourcePermission.
 				getPortletResourcePermission();
 
+		if (portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), null,
+				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
+
+			return true;
+		}
+
 		return portletResourcePermission.contains(
 			PermissionThreadLocal.getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+			CommerceInventoryActionKeys.ADD_WAREHOUSE);
 	}
 
 	private final CommerceInventoryReplenishmentItemService

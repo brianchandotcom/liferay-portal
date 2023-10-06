@@ -5,9 +5,15 @@
 
 package com.liferay.commerce.inventory.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.io.IOException;
 
@@ -34,6 +40,19 @@ public class CommerceInventoryBookedScreenNavigationEntry
 	}
 
 	@Override
+	public boolean isVisible(
+		User user, CommerceInventoryReplenishmentItem context) {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceInventoryWarehouseModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			PermissionThreadLocal.getPermissionChecker(), null,
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+	}
+
+	@Override
 	public void render(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -42,6 +61,12 @@ public class CommerceInventoryBookedScreenNavigationEntry
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse, "/details/booked.jsp");
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryWarehouse)"
+	)
+	private ModelResourcePermission<CommerceInventoryWarehouse>
+		_commerceInventoryWarehouseModelResourcePermission;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

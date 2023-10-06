@@ -16,9 +16,11 @@ import java.math.BigDecimal;
 public class Warehouse {
 
 	public Warehouse(
+		long commerceInventoryWarehouseId,
 		long commerceInventoryWarehouseItemId, String warehouse,
 		BigDecimal incoming, BigDecimal reserved, BigDecimal quantity) {
 
+		_commerceInventoryWarehouseId = commerceInventoryWarehouseId;
 		_commerceInventoryWarehouseItemId = commerceInventoryWarehouseItemId;
 		_warehouse = warehouse;
 		_incoming = incoming;
@@ -37,6 +39,10 @@ public class Warehouse {
 
 	public BigDecimal getAvailable() {
 		return _available;
+	}
+
+	public long getCommerceInventoryWarehouseId() {
+		return _commerceInventoryWarehouseId;
 	}
 
 	public long getCommerceInventoryWarehouseItemId() {
@@ -60,6 +66,7 @@ public class Warehouse {
 	}
 
 	private final BigDecimal _available;
+	private final long _commerceInventoryWarehouseId;
 	private final long _commerceInventoryWarehouseItemId;
 	private final BigDecimal _incoming;
 	private final BigDecimal _quantity;

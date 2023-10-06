@@ -28,6 +28,7 @@ page import="com.liferay.commerce.product.exception.CPInstanceUnitOfMeasureKeyEx
 page import="com.liferay.commerce.product.exception.NoSuchCPInstanceUnitOfMeasureException" %><%@
 page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@

@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -56,7 +55,6 @@ public class CommerceInventoryItemFDSActionProvider
 		InventoryItem inventoryItem = (InventoryItem)model;
 
 		return DropdownItemListBuilder.add(
-			() -> _hasPermission(),
 			dropdownItem -> {
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(
@@ -120,7 +118,7 @@ public class CommerceInventoryItemFDSActionProvider
 		).buildString();
 	}
 
-	private boolean _hasPermission() throws PrincipalException {
+	private boolean _hasPermission() {
 		PortletResourcePermission portletResourcePermission =
 			_commerceInventoryWarehouseModelResourcePermission.
 				getPortletResourcePermission();

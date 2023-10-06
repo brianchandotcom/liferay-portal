@@ -2136,19 +2136,40 @@ war.path=${app.server.portal.dir}/</echo>
 
 	<macrodef name="is-quarterly-release">
 		<sequential>
-			<if>
-				<and>
-					<contains string="${env.JOB_NAME}" substring="release" />
-					<equals arg1="${env.TEST_PORTAL_BRANCH_NAME}" arg2="master" />
-					<matches pattern="\d{4}.q\d+.\d+" string="${env.TEST_PORTAL_RELEASE_VERSION}" />
-					<not>
-						<matches pattern="\d.+(-|.)(ga|u)\d+" string="${env.TEST_PORTAL_RELEASE_VERSION}" />
-					</not>
-				</and>
-				<then>
-					<property name="quarterly.release" value="true" />
-				</then>
-			</if>
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.Build;
+					import com.liferay.jenkins.results.parser.BuildFactory;
+					import com.liferay.jenkins.results.parser.PortalRelease;
+					import com.liferay.jenkins.results.parser.PortalReleaseBuild;
+
+					public Build getTopLevelBuild() {
+						Build topLevelBuild = beanShellMap.get("topLevelBuild");
+
+						if (topLevelBuild == null) {
+							topLevelBuild = BuildFactory.newBuild(project.getProperty("env.BUILD_URL"), null);
+
+							beanShellMap.put("topLevelBuild", topLevelBuild);
+						}
+
+						return topLevelBuild;
+					}
+
+					Build topLevelBuild = getTopLevelBuild();
+
+					if ((topLevelBuild instanceof PortalReleaseBuild)) {
+						PortalReleaseBuild portalReleaseBuild = (PortalReleaseBuild)topLevelBuild;
+
+						PortalRelease portalRelease = portalReleaseBuild.getPortalRelease();
+
+						String portalVersion = project.getProperty("env.TEST_PORTAL_RELEASE_VERSION");
+
+						if (portalRelease.isQuarterlyRelease(portalVersion)){
+							project.setProperty("quarterly.release", quarterlyRelease);
+						}
+					}
+				]]>
+			</beanshell>
 		</sequential>
 	</macrodef>
 

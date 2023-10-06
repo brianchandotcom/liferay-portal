@@ -1179,7 +1179,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		}
 
 		return ServiceBuilderListTypeUtil.getServiceBuilderListTypeId(
-			ListTypeConstants.CONTACT_PREFIX, prefix);
+			contextCompany.getCompanyId(), ListTypeConstants.CONTACT_PREFIX,
+			prefix);
 	}
 
 	private List<com.liferay.portal.kernel.model.EmailAddress>
@@ -1204,7 +1205,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				emailAddresses,
 				emailAddress ->
 					ServiceBuilderEmailAddressUtil.toServiceBuilderEmailAddress(
-						emailAddress, ListTypeConstants.CONTACT_EMAIL_ADDRESS)),
+						contextCompany.getCompanyId(), emailAddress,
+						ListTypeConstants.CONTACT_EMAIL_ADDRESS)),
 			Objects::nonNull);
 	}
 
@@ -1228,7 +1230,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			transformToList(
 				phones,
 				telephone -> ServiceBuilderPhoneUtil.toServiceBuilderPhone(
-					telephone, ListTypeConstants.CONTACT_PHONE)),
+					contextCompany.getCompanyId(), telephone,
+					ListTypeConstants.CONTACT_PHONE)),
 			Objects::nonNull);
 	}
 
@@ -1240,7 +1243,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		}
 
 		return ServiceBuilderListTypeUtil.getServiceBuilderListTypeId(
-			ListTypeConstants.CONTACT_SUFFIX, honorificSuffix);
+			contextCompany.getCompanyId(), ListTypeConstants.CONTACT_SUFFIX,
+			honorificSuffix);
 	}
 
 	private Page<UserAccount> _getUserAccountsPage(
@@ -1283,6 +1287,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			transformToList(
 				webUrls,
 				webUrl -> ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
+					contextCompany.getCompanyId(),
 					ListTypeConstants.CONTACT_WEBSITE, webUrl)),
 			Objects::nonNull);
 	}

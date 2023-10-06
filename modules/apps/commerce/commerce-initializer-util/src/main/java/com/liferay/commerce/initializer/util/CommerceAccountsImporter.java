@@ -204,6 +204,7 @@ public class CommerceAccountsImporter {
 
 			if (organization == null) {
 				ListType listType = _listTypeLocalService.getListType(
+					serviceContext.getCompanyId(),
 					ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 					ListTypeConstants.ORGANIZATION_STATUS);
 

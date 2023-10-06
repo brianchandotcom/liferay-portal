@@ -122,7 +122,7 @@ public class AddressModelPreFilterContributor
 				className.getClassName() + ListTypeConstants.ADDRESS;
 
 			ListType listType = _listTypeLocalService.getListType(
-				typeNames[i], listTypeType);
+				searchContext.getCompanyId(), typeNames[i], listTypeType);
 
 			if (listType == null) {
 				if (_log.isDebugEnabled()) {

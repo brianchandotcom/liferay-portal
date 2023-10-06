@@ -134,9 +134,9 @@ public class BaseNotificationTypeTest {
 		user1 = TestPropsValues.getUser();
 
 		ListType prefixListType = _listTypeLocalService.getListType(
-			"dr", ListTypeConstants.CONTACT_PREFIX);
+			user1.getCompanyId(), "dr", ListTypeConstants.CONTACT_PREFIX);
 		ListType suffixListType = _listTypeLocalService.getListType(
-			"ii", ListTypeConstants.CONTACT_SUFFIX);
+			user1.getCompanyId(), "ii", ListTypeConstants.CONTACT_SUFFIX);
 
 		role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 

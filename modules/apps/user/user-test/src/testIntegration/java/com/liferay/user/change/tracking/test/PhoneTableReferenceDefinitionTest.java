@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -50,6 +51,7 @@ public class PhoneTableReferenceDefinitionTest
 		super.setUp();
 
 		List<ListType> listTypes = _listTypeLocalService.getListTypes(
+			TestPropsValues.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_PHONE);
 
 		_listType = listTypes.get(0);

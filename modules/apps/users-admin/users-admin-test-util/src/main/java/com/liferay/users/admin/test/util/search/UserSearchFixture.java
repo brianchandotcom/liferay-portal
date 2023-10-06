@@ -81,7 +81,7 @@ public class UserSearchFixture {
 
 	public Address addAddress(User user) throws PortalException {
 		List<ListType> listTypes = ListTypeServiceUtil.getListTypes(
-			ListTypeConstants.CONTACT_ADDRESS);
+			user.getCompanyId(), ListTypeConstants.CONTACT_ADDRESS);
 
 		ListType listType = listTypes.get(0);
 

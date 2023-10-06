@@ -238,8 +238,10 @@ public class OrganizationLocalServiceImpl
 
 		String[] types = getTypes();
 
+		User user = _userPersistence.findByPrimaryKey(userId);
+
 		ListType listType = _listTypeLocalService.getListType(
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			user.getCompanyId(), ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
 
 		return addOrganization(

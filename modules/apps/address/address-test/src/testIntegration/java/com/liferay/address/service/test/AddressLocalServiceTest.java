@@ -125,7 +125,8 @@ public class AddressLocalServiceTest {
 	@Test
 	public void testSearchAddressesWithInvalidTypeName() throws Exception {
 		ListType businessType = _listTypeLocalService.getListType(
-			"business", ListTypeConstants.CONTACT_ADDRESS);
+			TestPropsValues.getCompanyId(), "business",
+			ListTypeConstants.CONTACT_ADDRESS);
 
 		Address address = _addAddress(
 			RandomTestUtil.randomString(), businessType.getListTypeId(), null);
@@ -196,13 +197,15 @@ public class AddressLocalServiceTest {
 	@Test
 	public void testSearchAddressesWithParam() throws Exception {
 		ListType businessType = _listTypeLocalService.getListType(
-			"business", ListTypeConstants.CONTACT_ADDRESS);
+			TestPropsValues.getCompanyId(), "business",
+			ListTypeConstants.CONTACT_ADDRESS);
 
 		Address businessAddress = _addAddress(
 			RandomTestUtil.randomString(), businessType.getListTypeId(), null);
 
 		ListType personalType = _listTypeLocalService.getListType(
-			"personal", ListTypeConstants.CONTACT_ADDRESS);
+			TestPropsValues.getCompanyId(), "personal",
+			ListTypeConstants.CONTACT_ADDRESS);
 
 		Address personalAddress = _addAddress(
 			RandomTestUtil.randomString(), personalType.getListTypeId(), null);
@@ -263,7 +266,8 @@ public class AddressLocalServiceTest {
 
 		if (listTypeId < 0) {
 			ListType listType = _listTypeLocalService.getListType(
-				"personal", ListTypeConstants.CONTACT_ADDRESS);
+				user.getCompanyId(), "personal",
+				ListTypeConstants.CONTACT_ADDRESS);
 
 			listTypeId = listType.getListTypeId();
 		}

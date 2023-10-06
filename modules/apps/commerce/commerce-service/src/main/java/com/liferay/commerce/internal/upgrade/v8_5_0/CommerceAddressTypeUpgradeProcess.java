@@ -8,6 +8,7 @@ package com.liferay.commerce.internal.upgrade.v8_5_0;
 import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -24,28 +25,34 @@ public class CommerceAddressTypeUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
 		_setAddressListType(
 			_getListTypeId(
+				companyId,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING),
 			14000);
 		_setAddressListType(
 			_getListTypeId(
+				companyId,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING),
 			14002);
 		_setAddressListType(
 			_getListTypeId(
+				companyId,
 				AccountListTypeConstants.
 					ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING),
 			14001);
 	}
 
-	private long _getListTypeId(String name) {
+	private long _getListTypeId(long companyId, String name) {
 		ListType listType = _listTypeLocalService.getListType(
-			name, AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
+			companyId, name, AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 
 		if (listType == null) {
 			listType = _listTypeLocalService.addListType(
-				name, AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
+				companyId, name,
+				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 		}
 
 		return listType.getListTypeId();

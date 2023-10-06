@@ -225,7 +225,8 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 			User user = TestPropsValues.getUser();
 
 			ListType listType = _listTypeLocalService.getListType(
-				"personal", ListTypeConstants.CONTACT_ADDRESS);
+				testCompany.getCompanyId(), "personal",
+				ListTypeConstants.CONTACT_ADDRESS);
 
 			address = _addressLocalService.addAddress(
 				null, user.getUserId(), Contact.class.getName(),

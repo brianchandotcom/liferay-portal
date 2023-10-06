@@ -95,6 +95,7 @@ public class OrganizationFixture {
 		}
 
 		ListType listType = _listTypeService.getListType(
+			country.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
 

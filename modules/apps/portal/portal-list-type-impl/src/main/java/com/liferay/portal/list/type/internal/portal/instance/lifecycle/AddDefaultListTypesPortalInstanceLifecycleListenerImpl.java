@@ -50,6 +50,7 @@ public class AddDefaultListTypesPortalInstanceLifecycleListenerImpl
 
 				try {
 					_listTypeLocalService.addListType(
+						company.getCompanyId(),
 						listTypeJSONObject.getString("name"),
 						listTypeJSONObject.getString("type"));
 				}

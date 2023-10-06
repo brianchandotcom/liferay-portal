@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -82,7 +83,7 @@ public class AddressDisplay {
 		_city = StringPool.BLANK;
 
 		ListType listType = ListTypeLocalServiceUtil.getListType(
-			"billing-and-shipping",
+			CompanyThreadLocal.getCompanyId(), "billing-and-shipping",
 			AccountEntry.class.getName() + ListTypeConstants.ADDRESS);
 
 		_listTypeId = listType.getListTypeId();

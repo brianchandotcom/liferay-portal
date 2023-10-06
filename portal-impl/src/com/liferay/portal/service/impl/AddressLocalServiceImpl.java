@@ -103,7 +103,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		address = addressPersistence.update(address);
 
 		if (Validator.isNotNull(phoneNumber)) {
-			_addAddressPhone(addressId, phoneNumber);
+			_addAddressPhone(addressId, address.getCompanyId(), phoneNumber);
 		}
 
 		return address;
@@ -295,7 +295,8 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 				address.getCompanyId(), Address.class.getName(), addressId);
 
 			if (ListUtil.isEmpty(phones)) {
-				_addAddressPhone(addressId, phoneNumber);
+				_addAddressPhone(
+					addressId, address.getCompanyId(), phoneNumber);
 			}
 			else {
 				Phone phone = phones.get(0);
@@ -485,11 +486,12 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		validate(addressId, companyId, classNameId, classPK, mailing, primary);
 	}
 
-	private void _addAddressPhone(long addressId, String phoneNumber)
+	private void _addAddressPhone(
+			long addressId, long companyId, String phoneNumber)
 		throws PortalException {
 
 		ListType listType = _listTypeLocalService.getListType(
-			"phone-number", ListTypeConstants.ADDRESS_PHONE);
+			companyId, "phone-number", ListTypeConstants.ADDRESS_PHONE);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

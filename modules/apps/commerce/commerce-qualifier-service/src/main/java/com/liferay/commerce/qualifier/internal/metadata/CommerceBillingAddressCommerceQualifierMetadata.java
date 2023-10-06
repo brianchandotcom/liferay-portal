@@ -16,6 +16,7 @@ import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.AddressTable;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
@@ -45,11 +46,13 @@ public class CommerceBillingAddressCommerceQualifierMetadata
 	public Predicate getFilterPredicate() {
 		ListType accountEntryAddressTypeBillingAndShippingListType =
 			_listTypeLocalService.getListType(
+				CompanyThreadLocal.getCompanyId(),
 				AccountListTypeConstants.
 					ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 		ListType accountEntryAddressTypeBillingListType =
 			_listTypeLocalService.getListType(
+				CompanyThreadLocal.getCompanyId(),
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 

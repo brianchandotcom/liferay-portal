@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.util.Validator;
 public class ServiceBuilderPhoneUtil {
 
 	public static com.liferay.portal.kernel.model.Phone toServiceBuilderPhone(
-		Phone phone, String type) {
+		long companyId, Phone phone, String type) {
 
 		String number = phone.getPhoneNumber();
 		String extension = phone.getExtension();
@@ -33,7 +33,7 @@ public class ServiceBuilderPhoneUtil {
 		serviceBuilderPhone.setExtension(extension);
 		serviceBuilderPhone.setListTypeId(
 			ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
-				"other", phone.getPhoneType(), type));
+				companyId, "other", phone.getPhoneType(), type));
 		serviceBuilderPhone.setPrimary(
 			GetterUtil.getBoolean(phone.getPrimary()));
 

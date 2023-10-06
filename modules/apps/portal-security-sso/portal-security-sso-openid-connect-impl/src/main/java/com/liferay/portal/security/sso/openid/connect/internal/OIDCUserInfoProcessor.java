@@ -154,13 +154,14 @@ public class OIDCUserInfoProcessor {
 		}
 
 		ListType listType = _listTypeLocalService.getListType(
+			user.getCompanyId(),
 			_getClaimString(
 				"addressType", addressMapperJSONObject, userInfoJSONObject),
 			Contact.class.getName() + ".address");
 
 		if (listType == null) {
 			List<ListType> listTypes = _listTypeLocalService.getListTypes(
-				Contact.class.getName() + ".address");
+				user.getCompanyId(), Contact.class.getName() + ".address");
 
 			listType = listTypes.get(0);
 		}
@@ -208,13 +209,14 @@ public class OIDCUserInfoProcessor {
 		}
 
 		ListType listType = _listTypeLocalService.getListType(
+			user.getCompanyId(),
 			_getClaimString(
 				"phoneType", phoneMapperJSONObject, userInfoJSONObject),
 			Contact.class.getName() + ".phone");
 
 		if (listType == null) {
 			List<ListType> listTypes = _listTypeLocalService.getListTypes(
-				Contact.class.getName() + ".phone");
+				user.getCompanyId(), Contact.class.getName() + ".phone");
 
 			listType = listTypes.get(0);
 		}

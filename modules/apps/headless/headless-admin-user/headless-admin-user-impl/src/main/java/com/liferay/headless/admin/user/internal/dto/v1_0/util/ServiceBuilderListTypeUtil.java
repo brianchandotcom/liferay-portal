@@ -17,8 +17,11 @@ import java.util.Locale;
  */
 public class ServiceBuilderListTypeUtil {
 
-	public static long getServiceBuilderListTypeId(String type, String value) {
-		ListType listType = ListTypeLocalServiceUtil.addListType(value, type);
+	public static long getServiceBuilderListTypeId(
+		long companyId, String type, String value) {
+
+		ListType listType = ListTypeLocalServiceUtil.addListType(
+			companyId, value, type);
 
 		return listType.getListTypeId();
 	}
@@ -37,12 +40,14 @@ public class ServiceBuilderListTypeUtil {
 	}
 
 	public static long toServiceBuilderListTypeId(
-		String defaultName, String name, String type) {
+		long companyId, String defaultName, String name, String type) {
 
-		ListType listType = ListTypeLocalServiceUtil.getListType(name, type);
+		ListType listType = ListTypeLocalServiceUtil.getListType(
+			companyId, name, type);
 
 		if (listType == null) {
-			listType = ListTypeLocalServiceUtil.getListType(defaultName, type);
+			listType = ListTypeLocalServiceUtil.getListType(
+				companyId, defaultName, type);
 		}
 
 		if (listType != null) {

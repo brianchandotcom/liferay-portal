@@ -148,6 +148,7 @@ public class OrganizationODataRetrieverTest {
 		Region region = regions.get(0);
 
 		ListType listType = _listTypeLocalService.getListType(
+			country.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
 
@@ -195,6 +196,7 @@ public class OrganizationODataRetrieverTest {
 		Region region = regions.get(0);
 
 		ListType listType = _listTypeLocalService.getListType(
+			country.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
 

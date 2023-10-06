@@ -45,6 +45,7 @@ public class WebsiteLocalServiceTest {
 		_user = TestPropsValues.getUser();
 
 		List<ListType> listTypes = _listTypeLocalService.getListTypes(
+			_user.getCompanyId(),
 			"com.liferay.portal.kernel.model.Contact.website");
 
 		_listType = listTypes.get(0);

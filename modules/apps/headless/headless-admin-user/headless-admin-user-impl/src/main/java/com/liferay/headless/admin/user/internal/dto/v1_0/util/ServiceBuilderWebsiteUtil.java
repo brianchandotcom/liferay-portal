@@ -16,7 +16,9 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class ServiceBuilderWebsiteUtil {
 
-	public static Website toServiceBuilderWebsite(String type, WebUrl webUrl) {
+	public static Website toServiceBuilderWebsite(
+		long companyId, String type, WebUrl webUrl) {
+
 		String url = webUrl.getUrl();
 
 		if (Validator.isNull(url)) {
@@ -29,7 +31,7 @@ public class ServiceBuilderWebsiteUtil {
 		website.setUrl(url);
 		website.setListTypeId(
 			ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
-				"public", webUrl.getUrlType(), type));
+				companyId, "public", webUrl.getUrlType(), type));
 		website.setPrimary(GetterUtil.getBoolean(webUrl.getPrimary()));
 
 		return website;

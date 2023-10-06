@@ -44,8 +44,10 @@ public class OrganizationTestUtil {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.nextLong(),
 			RandomTestUtil.randomLong(),
-			_getListTypeId(ListTypeConstants.ORGANIZATION_ADDRESS), false,
-			false, null, new ServiceContext());
+			_getListTypeId(
+				organization.getCompanyId(),
+				ListTypeConstants.ORGANIZATION_ADDRESS),
+			false, false, null, new ServiceContext());
 	}
 
 	public static EmailAddress addEmailAddress(Organization organization)
@@ -54,8 +56,10 @@ public class OrganizationTestUtil {
 		return EmailAddressLocalServiceUtil.addEmailAddress(
 			organization.getUserId(), organization.getModelClassName(),
 			organization.getOrganizationId(), "test@liferay.com",
-			_getListTypeId(ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS), false,
-			new ServiceContext());
+			_getListTypeId(
+				organization.getCompanyId(),
+				ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS),
+			false, new ServiceContext());
 	}
 
 	public static Organization addOrganization() throws Exception {
@@ -80,6 +84,7 @@ public class OrganizationTestUtil {
 
 	public static Organization addOrganization(String type) throws Exception {
 		ListType listType = ListTypeServiceUtil.getListType(
+			TestPropsValues.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
 
@@ -95,7 +100,9 @@ public class OrganizationTestUtil {
 
 		return OrgLaborLocalServiceUtil.addOrgLabor(
 			organization.getOrganizationId(),
-			_getListTypeId(ListTypeConstants.ORGANIZATION_SERVICE),
+			_getListTypeId(
+				organization.getCompanyId(),
+				ListTypeConstants.ORGANIZATION_SERVICE),
 			RandomTestUtil.nextInt(), RandomTestUtil.nextInt(),
 			RandomTestUtil.nextInt(), RandomTestUtil.nextInt(),
 			RandomTestUtil.nextInt(), RandomTestUtil.nextInt(),
@@ -123,8 +130,10 @@ public class OrganizationTestUtil {
 		return PhoneLocalServiceUtil.addPhone(
 			organization.getUserId(), organization.getModelClassName(),
 			organization.getOrganizationId(), "0000000000", "000",
-			_getListTypeId(ListTypeConstants.ORGANIZATION_PHONE), false,
-			new ServiceContext());
+			_getListTypeId(
+				organization.getCompanyId(),
+				ListTypeConstants.ORGANIZATION_PHONE),
+			false, new ServiceContext());
 	}
 
 	public static Organization addSite(Organization organization)
@@ -145,8 +154,10 @@ public class OrganizationTestUtil {
 		return WebsiteLocalServiceUtil.addWebsite(
 			organization.getUserId(), organization.getModelClassName(),
 			organization.getOrganizationId(), "http://www.test.com",
-			_getListTypeId(ListTypeConstants.ORGANIZATION_WEBSITE), false,
-			new ServiceContext());
+			_getListTypeId(
+				organization.getCompanyId(),
+				ListTypeConstants.ORGANIZATION_WEBSITE),
+			false, new ServiceContext());
 	}
 
 	public static void updateAsset(
@@ -159,8 +170,11 @@ public class OrganizationTestUtil {
 			assetTagNames);
 	}
 
-	private static long _getListTypeId(String type) throws Exception {
-		List<ListType> listTypes = ListTypeServiceUtil.getListTypes(type);
+	private static long _getListTypeId(long companyId, String type)
+		throws Exception {
+
+		List<ListType> listTypes = ListTypeServiceUtil.getListTypes(
+			companyId, type);
 
 		ListType listType = listTypes.get(0);
 

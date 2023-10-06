@@ -40,7 +40,7 @@ public class ServiceBuilderAddressUtil {
 		address.setCountryId(countryId);
 		address.setListTypeId(
 			ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
-				"other", postalAddress.getAddressType(), type));
+				companyId, "other", postalAddress.getAddressType(), type));
 		address.setRegionId(
 			ServiceBuilderRegionUtil.getServiceBuilderRegionId(
 				postalAddress.getAddressRegion(), countryId));

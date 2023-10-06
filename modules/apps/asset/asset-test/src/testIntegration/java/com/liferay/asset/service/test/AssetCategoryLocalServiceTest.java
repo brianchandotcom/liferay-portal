@@ -261,6 +261,7 @@ public class AssetCategoryLocalServiceTest {
 			new long[] {assetCategory.getCategoryId()});
 
 		ListType listType = _listTypeLocalService.getListType(
+			assetCategory.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
 

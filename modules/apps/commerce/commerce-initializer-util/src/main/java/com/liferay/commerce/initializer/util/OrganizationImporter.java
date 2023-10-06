@@ -67,6 +67,7 @@ public class OrganizationImporter {
 			serviceContext.getCompanyId(), twoLetterISOCode);
 
 		ListType listType = _listTypeLocalService.getListType(
+			serviceContext.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
 

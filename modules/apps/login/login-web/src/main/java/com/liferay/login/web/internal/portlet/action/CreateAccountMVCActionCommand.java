@@ -464,14 +464,15 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private long _getListTypeId(
-			PortletRequest portletRequest, String parameterName, String type)
+			long companyId, PortletRequest portletRequest, String parameterName,
+			String type)
 		throws Exception {
 
 		String parameterValue = ParamUtil.getString(
 			portletRequest, parameterName);
 
 		ListType listType = _listTypeLocalService.addListType(
-			parameterValue, type);
+			companyId, parameterValue, type);
 
 		return listType.getListTypeId();
 	}
@@ -520,15 +521,17 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(
 			actionRequest);
 
+		long companyId = _portal.getCompanyId(actionRequest);
+
 		long prefixListTypeId = _getListTypeId(
-			actionRequest, "prefixListTypeValue",
+			companyId, actionRequest, "prefixListTypeValue",
 			ListTypeConstants.CONTACT_PREFIX);
 
 		dynamicActionRequest.setParameter(
 			"prefixListTypeId", String.valueOf(prefixListTypeId));
 
 		long suffixListTypeId = _getListTypeId(
-			actionRequest, "suffixListTypeValue",
+			companyId, actionRequest, "suffixListTypeValue",
 			ListTypeConstants.CONTACT_SUFFIX);
 
 		dynamicActionRequest.setParameter(

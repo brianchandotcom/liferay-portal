@@ -81,26 +81,29 @@ public class EditAccountUserMVCActionCommand
 
 		Contact accountUserContact = accountUser.getContact();
 
+		long companyId = _portal.getCompanyId(actionRequest);
+
 		accountUserContact.setPrefixListTypeId(
 			_getListTypeId(
-				actionRequest, "prefixListTypeValue",
+				companyId, actionRequest, "prefixListTypeValue",
 				ListTypeConstants.CONTACT_PREFIX));
 		accountUserContact.setSuffixListTypeId(
 			_getListTypeId(
-				actionRequest, "suffixListTypeValue",
+				companyId, actionRequest, "suffixListTypeValue",
 				ListTypeConstants.CONTACT_SUFFIX));
 
 		_contactLocalService.updateContact(accountUserContact);
 	}
 
 	private long _getListTypeId(
-		PortletRequest portletRequest, String parameterName, String type) {
+		long companyId, PortletRequest portletRequest, String parameterName,
+		String type) {
 
 		String parameterValue = ParamUtil.getString(
 			portletRequest, parameterName);
 
 		ListType listType = _listTypeLocalService.addListType(
-			parameterValue, type);
+			companyId, parameterValue, type);
 
 		return listType.getListTypeId();
 	}

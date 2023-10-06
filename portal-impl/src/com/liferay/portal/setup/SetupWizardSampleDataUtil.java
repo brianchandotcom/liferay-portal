@@ -246,6 +246,7 @@ public class SetupWizardSampleDataUtil {
 			String type = (String)organizationArray[3];
 
 			ListType listType = ListTypeServiceUtil.getListType(
+				country.getCompanyId(),
 				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 				ListTypeConstants.ORGANIZATION_STATUS);
 

@@ -1159,6 +1159,7 @@ public class OrganizationODataRetrieverCustomFieldsTest {
 			).build());
 
 		ListType listType = _listTypeLocalService.getListType(
+			TestPropsValues.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
 

@@ -132,6 +132,7 @@ public class PhoneResourceFactoryImplTest {
 				() -> {
 					List<ListType> listTypes =
 						_listTypeLocalService.getListTypes(
+							_organization.getCompanyId(),
 							ListTypeConstants.ORGANIZATION_PHONE);
 
 					ListType listType = listTypes.get(0);

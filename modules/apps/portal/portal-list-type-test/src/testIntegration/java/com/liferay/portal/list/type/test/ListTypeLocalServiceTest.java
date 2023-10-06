@@ -76,6 +76,7 @@ public class ListTypeLocalServiceTest {
 					listTypesJSONArray.getJSONObject(i);
 
 				ListType listType = _listTypeLocalService.getListType(
+					_company.getCompanyId(),
 					listTypeJSONObject.getString("name"),
 					listTypeJSONObject.getString("type"));
 
@@ -95,11 +96,11 @@ public class ListTypeLocalServiceTest {
 					_company.getCompanyId())) {
 
 			listType = _listTypeLocalService.addListType(
-				_LIST_TYPE_NAME, _LIST_TYPE_TYPE);
+				_company.getCompanyId(), _LIST_TYPE_NAME, _LIST_TYPE_TYPE);
 
 			Assert.assertNotNull(
 				_listTypeLocalService.getListType(
-					_LIST_TYPE_NAME, _LIST_TYPE_TYPE));
+					_company.getCompanyId(), _LIST_TYPE_NAME, _LIST_TYPE_TYPE));
 
 			try (SafeCloseable safeCloseable2 =
 					CompanyThreadLocal.setWithSafeCloseable(
@@ -107,7 +108,8 @@ public class ListTypeLocalServiceTest {
 
 				Assert.assertNull(
 					_listTypeLocalService.getListType(
-						_LIST_TYPE_NAME, _LIST_TYPE_TYPE));
+						PortalUtil.getDefaultCompanyId(), _LIST_TYPE_NAME,
+						_LIST_TYPE_TYPE));
 			}
 		}
 		finally {
@@ -131,10 +133,10 @@ public class ListTypeLocalServiceTest {
 					_company.getCompanyId())) {
 
 			listType = _listTypeLocalService.addListType(
-				_LIST_TYPE_NAME, _LIST_TYPE_TYPE);
+				_company.getCompanyId(), _LIST_TYPE_NAME, _LIST_TYPE_TYPE);
 
 			List<ListType> listTypes = _listTypeLocalService.getListTypes(
-				_LIST_TYPE_TYPE);
+				_company.getCompanyId(), _LIST_TYPE_TYPE);
 
 			Assert.assertEquals(
 				"listTypes should only have 1 element", 1, listTypes.size());
@@ -143,7 +145,8 @@ public class ListTypeLocalServiceTest {
 					CompanyThreadLocal.setWithSafeCloseable(
 						PortalUtil.getDefaultCompanyId())) {
 
-				listTypes = _listTypeLocalService.getListTypes(_LIST_TYPE_TYPE);
+				listTypes = _listTypeLocalService.getListTypes(
+					PortalUtil.getDefaultCompanyId(), _LIST_TYPE_TYPE);
 
 				Assert.assertEquals(
 					"listTypes should be empty", 0, listTypes.size());

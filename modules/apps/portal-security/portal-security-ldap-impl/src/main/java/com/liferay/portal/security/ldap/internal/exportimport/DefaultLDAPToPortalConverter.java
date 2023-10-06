@@ -178,12 +178,12 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		contact.setPrefixListTypeId(
 			_getListTypeId(
-				attributes, contactMappings, ContactConverterKeys.PREFIX,
-				ListTypeConstants.CONTACT_PREFIX));
+				attributes, companyId, contactMappings,
+				ContactConverterKeys.PREFIX, ListTypeConstants.CONTACT_PREFIX));
 		contact.setSuffixListTypeId(
 			_getListTypeId(
-				attributes, contactMappings, ContactConverterKeys.SUFFIX,
-				ListTypeConstants.CONTACT_SUFFIX));
+				attributes, companyId, contactMappings,
+				ContactConverterKeys.SUFFIX, ListTypeConstants.CONTACT_SUFFIX));
 
 		String gender = LDAPUtil.getAttributeString(
 			attributes, contactMappings, ContactConverterKeys.GENDER);
@@ -330,12 +330,12 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 	}
 
 	private long _getListTypeId(
-			Attributes attributes, Properties contactMappings,
+			Attributes attributes, long companyId, Properties contactMappings,
 			String contactMappingsKey, String listTypeType)
 		throws Exception {
 
 		List<ListType> contactPrefixListTypes = _listTypeService.getListTypes(
-			listTypeType);
+			companyId, listTypeType);
 
 		String name = LDAPUtil.getAttributeString(
 			attributes, contactMappings, contactMappingsKey);

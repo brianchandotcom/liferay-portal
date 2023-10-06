@@ -16,7 +16,8 @@ import com.liferay.portal.kernel.util.Validator;
 public class ServiceBuilderEmailAddressUtil {
 
 	public static com.liferay.portal.kernel.model.EmailAddress
-		toServiceBuilderEmailAddress(EmailAddress emailAddress, String type) {
+		toServiceBuilderEmailAddress(
+			long companyId, EmailAddress emailAddress, String type) {
 
 		String address = emailAddress.getEmailAddress();
 
@@ -32,7 +33,7 @@ public class ServiceBuilderEmailAddressUtil {
 		serviceBuilderEmailAddress.setAddress(address);
 		serviceBuilderEmailAddress.setListTypeId(
 			ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
-				"email-address", emailAddress.getType(), type));
+				companyId, "email-address", emailAddress.getType(), type));
 		serviceBuilderEmailAddress.setPrimary(
 			GetterUtil.getBoolean(emailAddress.getPrimary()));
 

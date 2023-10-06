@@ -117,7 +117,8 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 	}
 
 	private long _getListTypeId(String listTypeId) {
-		List<ListType> listTypes = ListTypeServiceUtil.getListTypes(listTypeId);
+		List<ListType> listTypes = ListTypeServiceUtil.getListTypes(
+			_user.getCompanyId(), listTypeId);
 
 		ListType listType = listTypes.get(0);
 

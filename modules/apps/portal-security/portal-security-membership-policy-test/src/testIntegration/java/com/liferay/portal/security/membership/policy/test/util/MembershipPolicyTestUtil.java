@@ -87,6 +87,7 @@ public class MembershipPolicyTestUtil {
 		String name = RandomTestUtil.randomString();
 
 		ListType listType = ListTypeServiceUtil.getListType(
+			TestPropsValues.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
 

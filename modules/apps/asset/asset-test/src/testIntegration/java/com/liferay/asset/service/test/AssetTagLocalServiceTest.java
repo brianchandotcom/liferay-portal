@@ -211,6 +211,7 @@ public class AssetTagLocalServiceTest {
 		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
 
 		ListType listType = _listTypeLocalService.getListType(
+			assetTag.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
 

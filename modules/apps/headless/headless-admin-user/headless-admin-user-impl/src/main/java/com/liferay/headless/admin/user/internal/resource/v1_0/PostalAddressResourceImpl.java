@@ -290,7 +290,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	private ListType _getListType(PostalAddress postalAddress) {
 		ListType listType = _listTypeLocalService.getListType(
-			postalAddress.getAddressType(),
+			contextCompany.getCompanyId(), postalAddress.getAddressType(),
 			"com.liferay.account.model.AccountEntry.address");
 
 		if (listType == null) {

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
@@ -237,7 +238,8 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 
 	private static long _getAddressTypeId(String name) {
 		ListType listType = ListTypeLocalServiceUtil.getListType(
-			name, AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
+			CompanyThreadLocal.getCompanyId(), name,
+			AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 
 		return listType.getListTypeId();
 	}

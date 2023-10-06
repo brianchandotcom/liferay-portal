@@ -466,7 +466,8 @@ public class AccountEntryLocalServiceTest {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		ListType listType = _listTypeLocalService.getListType(
-			"personal", ListTypeConstants.CONTACT_ADDRESS);
+			accountEntry.getCompanyId(), "personal",
+			ListTypeConstants.CONTACT_ADDRESS);
 
 		Address address = _addressLocalService.addAddress(
 			null, accountEntry.getUserId(), AccountEntry.class.getName(),

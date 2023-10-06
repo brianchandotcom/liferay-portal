@@ -347,6 +347,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 		long countryId = _getCountryId(organization);
 
 		ListType listType = _listTypeLocalService.getListType(
+			contextCompany.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
 
@@ -480,6 +481,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 		long countryId = _getCountryId(organization);
 
 		ListType listType = _listTypeLocalService.getListType(
+			contextCompany.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
 
@@ -693,7 +695,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 				emailAddresses,
 				emailAddress ->
 					ServiceBuilderEmailAddressUtil.toServiceBuilderEmailAddress(
-						emailAddress,
+						contextCompany.getCompanyId(), emailAddress,
 						ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS)),
 			Objects::nonNull);
 	}
@@ -778,7 +780,8 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			transformToList(
 				telephones,
 				telephone -> ServiceBuilderPhoneUtil.toServiceBuilderPhone(
-					telephone, ListTypeConstants.ORGANIZATION_PHONE)),
+					contextCompany.getCompanyId(), telephone,
+					ListTypeConstants.ORGANIZATION_PHONE)),
 			Objects::nonNull);
 	}
 
@@ -822,6 +825,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			transformToList(
 				webUrls,
 				webUrl -> ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
+					contextCompany.getCompanyId(),
 					ListTypeConstants.ORGANIZATION_WEBSITE, webUrl)),
 			Objects::nonNull);
 	}
@@ -863,8 +867,8 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 	private OrgLabor _toOrgLabor(Service service) {
 		long listTypeId = ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
-			"administrative", service.getServiceType(),
-			ListTypeConstants.ORGANIZATION_SERVICE);
+			contextCompany.getCompanyId(), "administrative",
+			service.getServiceType(), ListTypeConstants.ORGANIZATION_SERVICE);
 
 		if (listTypeId == -1) {
 			return null;

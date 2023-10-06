@@ -40,6 +40,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -424,8 +425,9 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				infoField, inputTemplateNode);
 		}
 
-		inputTemplateNode.addAttribute(
-			"readOnly", String.valueOf(infoField.isReadOnly()));
+		if (FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+			inputTemplateNode.addAttribute("readOnly", infoField.isReadOnly());
+		}
 	}
 
 	private void _addLongTextInfoFieldTypeInputTemplateNodeAttributes(

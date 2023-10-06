@@ -366,9 +366,7 @@ export default function ObjectFieldFormBase({
 
 	const applyFeatureFlag = () => {
 		return objectFieldTypes.filter((objectFieldType) => {
-			if (!Liferay.FeatureFlags['LPS-164948']) {
-				return objectFieldType.businessType !== 'Formula';
-			}
+			return objectFieldType.businessType !== 'Formula';
 		});
 	};
 
@@ -415,7 +413,7 @@ export default function ObjectFieldFormBase({
 				label={Liferay.Language.get('type')}
 				onChange={handleTypeChange}
 				options={
-					!Liferay.FeatureFlags['LPS-164948'] && !editingObjectField
+					!Liferay.FeatureFlags['LPS-164948']
 						? applyFeatureFlag()
 						: objectFieldTypes
 				}

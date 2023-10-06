@@ -22,8 +22,9 @@ public class UpgradeVelocityFileImportMigrationCheck
 
 		for (String line : lines) {
 			if (line.contains(VelocityMigrationConstants.VELOCITY_PARSE)) {
-				String newLine = line.replace(
-					VelocityMigrationConstants.VELOCITY_PARSE, "<#include");
+				String newLine = StringUtil.replace(
+					line, VelocityMigrationConstants.VELOCITY_PARSE,
+					"<#include");
 
 				newLine = VelocityMigrationUtil.removeFirstParenthesis(newLine);
 				newLine = StringUtil.replace(

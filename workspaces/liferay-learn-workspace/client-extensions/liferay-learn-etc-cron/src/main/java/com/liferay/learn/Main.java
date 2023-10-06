@@ -474,8 +474,8 @@ public class Main {
 			Matcher.quoteReplacement(File.separator));
 
 		for (String part : parts) {
-			if (part.equalsIgnoreCase("en") || part.equalsIgnoreCase("ja") ||
-				part.equalsIgnoreCase("latest")) {
+			if (StringUtil.equalsIgnoreCase(part, "en") || StringUtil.equalsIgnoreCase(part, "ja") ||
+				StringUtil.equalsIgnoreCase(part, "latest")) {
 
 				continue;
 			}

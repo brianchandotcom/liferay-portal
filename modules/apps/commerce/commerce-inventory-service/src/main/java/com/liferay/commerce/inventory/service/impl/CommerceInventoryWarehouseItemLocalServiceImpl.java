@@ -32,9 +32,11 @@ import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.sql.dsl.spi.query.QueryTable;
 import com.liferay.petra.string.StringPool;
@@ -42,6 +44,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -154,38 +157,67 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 	}
 
 	@Override
-	public int countItemsByCompanyId(long companyId, String sku) {
+	public int countItemsByCompanyId(
+		long companyId, String sku, boolean replacePermissionCheck) {
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			CommerceInventoryWarehouseItemTable.INSTANCE.sku,
+			CommerceInventoryWarehouseItemTable.INSTANCE.unitOfMeasureKey
+		).from(
+			CommerceInventoryWarehouseItemTable.INSTANCE
+		).leftJoinOn(
+			CommerceInventoryWarehouseTable.INSTANCE,
+			CommerceInventoryWarehouseItemTable.INSTANCE.
+				commerceInventoryWarehouseId.eq(
+					CommerceInventoryWarehouseTable.INSTANCE.
+						commerceInventoryWarehouseId)
+		).where(
+			CommerceInventoryWarehouseItemTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				() -> {
+					if (Validator.isNull(sku)) {
+						return null;
+					}
+
+					return DSLFunctionFactoryUtil.lower(
+						CommerceInventoryWarehouseItemTable.INSTANCE.sku
+					).like(
+						StringPool.PERCENT + StringUtil.toLowerCase(sku) +
+							StringPool.PERCENT
+					);
+				}
+			)
+		);
+
+		if (replacePermissionCheck) {
+			Column<?, Long> commerceInventoryWarehouseIdColumn =
+				CommerceInventoryWarehouseItemTable.INSTANCE.
+					commerceInventoryWarehouseId;
+
+			dslQuery = InlineSQLHelperUtil.replacePermissionCheck(
+				dslQuery, CommerceInventoryWarehouse.class,
+				commerceInventoryWarehouseIdColumn, 0);
+		}
+
+		Table<CommerceInventoryWarehouseItemTable> tempCIWarehouseItemTable =
+			dslQuery.as(
+				"tempCIWarehouseItem",
+				CommerceInventoryWarehouseItemTable.INSTANCE);
+
 		return dslQueryCount(
 			DSLQueryFactoryUtil.count(
 			).from(
 				DSLQueryFactoryUtil.select(
-					CommerceInventoryWarehouseItemTable.INSTANCE.sku,
-					CommerceInventoryWarehouseItemTable.INSTANCE.
-						unitOfMeasureKey
+					tempCIWarehouseItemTable.getColumn("sku", String.class),
+					tempCIWarehouseItemTable.getColumn(
+						"unitOfMeasureKey", String.class)
 				).from(
-					CommerceInventoryWarehouseItemTable.INSTANCE
-				).where(
-					CommerceInventoryWarehouseItemTable.INSTANCE.companyId.eq(
-						companyId
-					).and(
-						() -> {
-							if (Validator.isNull(sku)) {
-								return null;
-							}
-
-							return DSLFunctionFactoryUtil.lower(
-								CommerceInventoryWarehouseItemTable.INSTANCE.sku
-							).like(
-								StringPool.PERCENT +
-									StringUtil.toLowerCase(sku) +
-										StringPool.PERCENT
-							);
-						}
-					)
+					tempCIWarehouseItemTable
 				).groupBy(
-					CommerceInventoryWarehouseItemTable.INSTANCE.sku,
-					CommerceInventoryWarehouseItemTable.INSTANCE.
-						unitOfMeasureKey
+					tempCIWarehouseItemTable.getColumn("sku", String.class),
+					tempCIWarehouseItemTable.getColumn(
+						"unitOfMeasureKey", String.class)
 				).as(
 					"count_sku_uom"
 				)
@@ -257,10 +289,48 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 	public List<CommerceInventoryWarehouseItem>
 		getCommerceInventoryWarehouseItemsByCompanyIdSkuAndUnitOfMeasureKey(
 			long companyId, String sku, String unitOfMeasureKey, int start,
-			int end) {
+			int end, boolean replacePermissionCheck) {
 
-		return commerceInventoryWarehouseItemPersistence.findByC_S_U(
-			companyId, sku, unitOfMeasureKey, start, end);
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			CommerceInventoryWarehouseItemTable.INSTANCE
+		).from(
+			CommerceInventoryWarehouseItemTable.INSTANCE
+		).leftJoinOn(
+			CommerceInventoryWarehouseTable.INSTANCE,
+			CommerceInventoryWarehouseItemTable.INSTANCE.
+				commerceInventoryWarehouseId.eq(
+					CommerceInventoryWarehouseTable.INSTANCE.
+						commerceInventoryWarehouseId)
+		).where(
+			CommerceInventoryWarehouseItemTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				CommerceInventoryWarehouseItemTable.INSTANCE.sku.eq(sku)
+			).and(
+				() -> {
+					if (Validator.isNull(unitOfMeasureKey)) {
+						return null;
+					}
+
+					return CommerceInventoryWarehouseItemTable.INSTANCE.
+						unitOfMeasureKey.eq(unitOfMeasureKey);
+				}
+			)
+		).limit(
+			start, end
+		);
+
+		if (replacePermissionCheck) {
+			Column<?, Long> commerceInventoryWarehouseIdColumn =
+				CommerceInventoryWarehouseItemTable.INSTANCE.
+					commerceInventoryWarehouseId;
+
+			dslQuery = InlineSQLHelperUtil.replacePermissionCheck(
+				dslQuery, CommerceInventoryWarehouse.class,
+				commerceInventoryWarehouseIdColumn, 0);
+		}
+
+		return dslQuery(dslQuery);
 	}
 
 	@Override
@@ -356,10 +426,65 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 	@Override
 	public int getCommerceInventoryWarehouseItemsCount(
-		long companyId, String sku, String unitOfMeasureKey) {
+		long companyId, String sku, String unitOfMeasureKey,
+		boolean replacePermissionCheck) {
 
-		return commerceInventoryWarehouseItemPersistence.countByC_S_U(
-			companyId, sku, unitOfMeasureKey);
+		DSLQuery dslQuery = DSLQueryFactoryUtil.countDistinct(
+			CommerceInventoryWarehouseItemTable.INSTANCE.
+				commerceInventoryWarehouseItemId
+		).from(
+			CommerceInventoryWarehouseItemTable.INSTANCE
+		).leftJoinOn(
+			CommerceInventoryWarehouseTable.INSTANCE,
+			CommerceInventoryWarehouseItemTable.INSTANCE.
+				commerceInventoryWarehouseId.eq(
+					CommerceInventoryWarehouseTable.INSTANCE.
+						commerceInventoryWarehouseId)
+		).where(
+			CommerceInventoryWarehouseItemTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				() -> {
+					if (Validator.isNull(sku)) {
+						return null;
+					}
+
+					return DSLFunctionFactoryUtil.lower(
+						CommerceInventoryWarehouseItemTable.INSTANCE.sku
+					).like(
+						StringPool.PERCENT + StringUtil.toLowerCase(sku) +
+							StringPool.PERCENT
+					);
+				}
+			).and(
+				() -> {
+					if (Validator.isNull(unitOfMeasureKey)) {
+						return null;
+					}
+
+					return DSLFunctionFactoryUtil.lower(
+						CommerceInventoryWarehouseItemTable.INSTANCE.
+							unitOfMeasureKey
+					).like(
+						StringPool.PERCENT +
+							StringUtil.toLowerCase(unitOfMeasureKey) +
+								StringPool.PERCENT
+					);
+				}
+			)
+		);
+
+		if (replacePermissionCheck) {
+			Column<?, Long> commerceInventoryWarehouseIdColumn =
+				CommerceInventoryWarehouseItemTable.INSTANCE.
+					commerceInventoryWarehouseId;
+
+			dslQuery = InlineSQLHelperUtil.replacePermissionCheck(
+				dslQuery, CommerceInventoryWarehouse.class,
+				commerceInventoryWarehouseIdColumn, 0);
+		}
+
+		return dslQueryCount(dslQuery);
 	}
 
 	@Override
@@ -397,97 +522,113 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 	@Override
 	public List<CIWarehouseItem> getItemsByCompanyId(
-		long companyId, String sku, int start, int end) {
+		long companyId, String sku, int start, int end,
+		boolean replacePermissionCheck) {
 
-		List<Object[]> sumStocks = dslQuery(
-			DSLQueryFactoryUtil.select(
-				CommerceInventoryWarehouseItemTable.INSTANCE.sku,
-				CommerceInventoryWarehouseItemTable.INSTANCE.unitOfMeasureKey,
-				DSLFunctionFactoryUtil.sum(
-					CommerceInventoryWarehouseItemTable.INSTANCE.quantity
-				).as(
-					"SUM_STOCK"
-				),
-				DSLFunctionFactoryUtil.min(
-					BookedQuantityTable.INSTANCE.sumBookedColumn
-				).as(
-					BookedQuantityTable.INSTANCE.sumBookedColumn.getName()
-				),
-				DSLFunctionFactoryUtil.min(
-					ReplenishmentQuantityTable.INSTANCE.sumAwaitingColumn
-				).as(
-					ReplenishmentQuantityTable.INSTANCE.sumAwaitingColumn.
-						getName()
-				)
-			).from(
-				CommerceInventoryWarehouseItemTable.INSTANCE
-			).leftJoinOn(
-				BookedQuantityTable.INSTANCE.getQueryTable(companyId),
-				CommerceInventoryWarehouseItemTable.INSTANCE.sku.eq(
-					BookedQuantityTable.INSTANCE.skuColumn
-				).and(
-					Predicate.withParentheses(
-						CommerceInventoryWarehouseItemTable.INSTANCE.
-							unitOfMeasureKey.eq(
-								BookedQuantityTable.INSTANCE.
-									unitOfMeasureKeyColumn
-							).or(
-								Predicate.withParentheses(
-									CommerceInventoryWarehouseItemTable.
-										INSTANCE.unitOfMeasureKey.isNull(
-										).and(
-											BookedQuantityTable.INSTANCE.
-												unitOfMeasureKeyColumn.isNull()
-										))
-							))
-				)
-			).leftJoinOn(
-				ReplenishmentQuantityTable.INSTANCE.getQueryTable(companyId),
-				CommerceInventoryWarehouseItemTable.INSTANCE.sku.eq(
-					ReplenishmentQuantityTable.INSTANCE.skuColumn
-				).and(
-					Predicate.withParentheses(
-						CommerceInventoryWarehouseItemTable.INSTANCE.
-							unitOfMeasureKey.eq(
-								ReplenishmentQuantityTable.INSTANCE.
-									unitOfMeasureKeyColumn
-							).or(
-								Predicate.withParentheses(
-									CommerceInventoryWarehouseItemTable.
-										INSTANCE.unitOfMeasureKey.isNull(
-										).and(
-											ReplenishmentQuantityTable.INSTANCE.
-												unitOfMeasureKeyColumn.isNull()
-										))
-							))
-				)
-			).where(
-				CommerceInventoryWarehouseItemTable.INSTANCE.companyId.eq(
-					companyId
-				).and(
-					() -> {
-						if (Validator.isNull(sku)) {
-							return null;
-						}
-
-						return DSLFunctionFactoryUtil.lower(
-							CommerceInventoryWarehouseItemTable.INSTANCE.sku
-						).like(
-							StringPool.PERCENT + StringUtil.toLowerCase(sku) +
-								StringPool.PERCENT
-						);
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			CommerceInventoryWarehouseItemTable.INSTANCE.sku,
+			CommerceInventoryWarehouseItemTable.INSTANCE.unitOfMeasureKey,
+			DSLFunctionFactoryUtil.sum(
+				CommerceInventoryWarehouseItemTable.INSTANCE.quantity
+			).as(
+				"SUM_STOCK"
+			),
+			DSLFunctionFactoryUtil.min(
+				BookedQuantityTable.INSTANCE.sumBookedColumn
+			).as(
+				BookedQuantityTable.INSTANCE.sumBookedColumn.getName()
+			),
+			DSLFunctionFactoryUtil.min(
+				ReplenishmentQuantityTable.INSTANCE.sumAwaitingColumn
+			).as(
+				ReplenishmentQuantityTable.INSTANCE.sumAwaitingColumn.getName()
+			)
+		).from(
+			CommerceInventoryWarehouseItemTable.INSTANCE
+		).leftJoinOn(
+			CommerceInventoryWarehouseTable.INSTANCE,
+			CommerceInventoryWarehouseItemTable.INSTANCE.
+				commerceInventoryWarehouseId.eq(
+					CommerceInventoryWarehouseTable.INSTANCE.
+						commerceInventoryWarehouseId)
+		).leftJoinOn(
+			BookedQuantityTable.INSTANCE.getQueryTable(companyId),
+			CommerceInventoryWarehouseItemTable.INSTANCE.sku.eq(
+				BookedQuantityTable.INSTANCE.skuColumn
+			).and(
+				Predicate.withParentheses(
+					CommerceInventoryWarehouseItemTable.INSTANCE.
+						unitOfMeasureKey.eq(
+							BookedQuantityTable.INSTANCE.unitOfMeasureKeyColumn
+						).or(
+							Predicate.withParentheses(
+								CommerceInventoryWarehouseItemTable.INSTANCE.
+									unitOfMeasureKey.isNull(
+									).and(
+										BookedQuantityTable.INSTANCE.
+											unitOfMeasureKeyColumn.isNull()
+									))
+						))
+			)
+		).leftJoinOn(
+			ReplenishmentQuantityTable.INSTANCE.getQueryTable(companyId),
+			CommerceInventoryWarehouseItemTable.INSTANCE.sku.eq(
+				ReplenishmentQuantityTable.INSTANCE.skuColumn
+			).and(
+				Predicate.withParentheses(
+					CommerceInventoryWarehouseItemTable.INSTANCE.
+						unitOfMeasureKey.eq(
+							ReplenishmentQuantityTable.INSTANCE.
+								unitOfMeasureKeyColumn
+						).or(
+							Predicate.withParentheses(
+								CommerceInventoryWarehouseItemTable.INSTANCE.
+									unitOfMeasureKey.isNull(
+									).and(
+										ReplenishmentQuantityTable.INSTANCE.
+											unitOfMeasureKeyColumn.isNull()
+									))
+						))
+			)
+		).where(
+			CommerceInventoryWarehouseItemTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				() -> {
+					if (Validator.isNull(sku)) {
+						return null;
 					}
-				)
-			).groupBy(
-				CommerceInventoryWarehouseItemTable.INSTANCE.sku,
-				CommerceInventoryWarehouseItemTable.INSTANCE.unitOfMeasureKey
-			).orderBy(
-				CommerceInventoryWarehouseItemTable.INSTANCE.sku.ascending(),
-				CommerceInventoryWarehouseItemTable.INSTANCE.unitOfMeasureKey.
-					ascending()
-			).limit(
-				start, end
-			));
+
+					return DSLFunctionFactoryUtil.lower(
+						CommerceInventoryWarehouseItemTable.INSTANCE.sku
+					).like(
+						StringPool.PERCENT + StringUtil.toLowerCase(sku) +
+							StringPool.PERCENT
+					);
+				}
+			)
+		).groupBy(
+			CommerceInventoryWarehouseItemTable.INSTANCE.sku,
+			CommerceInventoryWarehouseItemTable.INSTANCE.unitOfMeasureKey
+		).orderBy(
+			CommerceInventoryWarehouseItemTable.INSTANCE.sku.ascending(),
+			CommerceInventoryWarehouseItemTable.INSTANCE.unitOfMeasureKey.
+				ascending()
+		).limit(
+			start, end
+		);
+
+		if (replacePermissionCheck) {
+			Column<?, Long> commerceInventoryWarehouseIdColumn =
+				CommerceInventoryWarehouseItemTable.INSTANCE.
+					commerceInventoryWarehouseId;
+
+			dslQuery = InlineSQLHelperUtil.replacePermissionCheck(
+				dslQuery, CommerceInventoryWarehouse.class,
+				commerceInventoryWarehouseIdColumn, 0);
+		}
+
+		List<Object[]> sumStocks = dslQuery(dslQuery);
 
 		List<CIWarehouseItem> ciWarehouseItems = new ArrayList<>();
 

@@ -10,7 +10,13 @@ import com.liferay.commerce.inventory.exception.CommerceInventoryReplenishmentSk
 import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryReplenishmentItemException;
 import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
+import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItemTable;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseTable;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryReplenishmentItemLocalServiceBaseImpl;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -18,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -118,14 +125,51 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 				commerceInventoryWarehouseId, start, end);
 	}
 
-	@Override
 	public List<CommerceInventoryReplenishmentItem>
 		getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
 			long companyId, String sku, String unitOfMeasureKey, int start,
-			int end) {
+			int end, boolean replacePermissionCheck) {
 
-		return commerceInventoryReplenishmentItemPersistence.findByC_S_U(
-			companyId, sku, unitOfMeasureKey, start, end);
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			CommerceInventoryReplenishmentItemTable.INSTANCE
+		).from(
+			CommerceInventoryReplenishmentItemTable.INSTANCE
+		).leftJoinOn(
+			CommerceInventoryWarehouseTable.INSTANCE,
+			CommerceInventoryReplenishmentItemTable.INSTANCE.
+				commerceInventoryWarehouseId.eq(
+					CommerceInventoryWarehouseTable.INSTANCE.
+						commerceInventoryWarehouseId)
+		).where(
+			CommerceInventoryReplenishmentItemTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				CommerceInventoryReplenishmentItemTable.INSTANCE.sku.eq(sku)
+			).and(
+				() -> {
+					if (Validator.isNull(unitOfMeasureKey)) {
+						return null;
+					}
+
+					return CommerceInventoryReplenishmentItemTable.INSTANCE.
+						unitOfMeasureKey.eq(unitOfMeasureKey);
+				}
+			)
+		).limit(
+			start, end
+		);
+
+		if (replacePermissionCheck) {
+			Column<?, Long> commerceInventoryWarehouseIdColumn =
+				CommerceInventoryReplenishmentItemTable.INSTANCE.
+					commerceInventoryWarehouseId;
+
+			dslQuery = InlineSQLHelperUtil.replacePermissionCheck(
+				dslQuery, CommerceInventoryWarehouse.class,
+				commerceInventoryWarehouseIdColumn, 0);
+		}
+
+		return dslQuery(dslQuery);
 	}
 
 	@Override

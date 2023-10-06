@@ -209,7 +209,7 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 		long companyId, boolean active, int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 
-		return commerceInventoryWarehousePersistence.findByC_A(
+		return commerceInventoryWarehousePersistence.filterFindByC_A(
 			companyId, active, start, end, orderByComparator);
 	}
 

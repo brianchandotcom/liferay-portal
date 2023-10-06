@@ -71,7 +71,7 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 				getPermissionChecker(),
 				commerceInventoryReplenishmentItem.
 					getCommerceInventoryWarehouseId(),
-				ActionKeys.UPDATE);
+				ActionKeys.DELETE);
 		}
 
 		commerceInventoryReplenishmentItemLocalService.
@@ -165,13 +165,14 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 			_commerceInventoryWarehouseModelResourcePermission.
 				getPortletResourcePermission();
 
-		portletResourcePermission.check(
+		boolean replacePermissionCheck = !portletResourcePermission.contains(
 			getPermissionChecker(), null,
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryReplenishmentItemLocalService.
 			getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
-				companyId, sku, unitOfMeasureKey, start, end);
+				companyId, sku, unitOfMeasureKey, start, end,
+				replacePermissionCheck);
 	}
 
 	@Override
@@ -209,14 +210,6 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 			getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey(
 				long companyId, String sku, String unitOfMeasureKey)
 		throws PortalException {
-
-		PortletResourcePermission portletResourcePermission =
-			_commerceInventoryWarehouseModelResourcePermission.
-				getPortletResourcePermission();
-
-		portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryReplenishmentItemLocalService.
 			getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey(

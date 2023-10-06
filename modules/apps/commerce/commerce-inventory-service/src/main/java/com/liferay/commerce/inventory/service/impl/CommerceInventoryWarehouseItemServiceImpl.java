@@ -87,7 +87,7 @@ public class CommerceInventoryWarehouseItemServiceImpl
 				getPermissionChecker(),
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseId(),
-				ActionKeys.UPDATE);
+				ActionKeys.DELETE);
 		}
 
 		commerceInventoryWarehouseItemLocalService.
@@ -228,13 +228,14 @@ public class CommerceInventoryWarehouseItemServiceImpl
 			_commerceInventoryWarehouseModelResourcePermission.
 				getPortletResourcePermission();
 
-		portletResourcePermission.check(
+		boolean replacePermissionCheck = !portletResourcePermission.contains(
 			getPermissionChecker(), null,
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryWarehouseItemLocalService.
 			getCommerceInventoryWarehouseItemsByCompanyIdSkuAndUnitOfMeasureKey(
-				companyId, sku, unitOfMeasureKey, start, end);
+				companyId, sku, unitOfMeasureKey, start, end,
+				replacePermissionCheck);
 	}
 
 	@Override
@@ -278,13 +279,13 @@ public class CommerceInventoryWarehouseItemServiceImpl
 			_commerceInventoryWarehouseModelResourcePermission.
 				getPortletResourcePermission();
 
-		portletResourcePermission.check(
+		boolean replacePermissionCheck = !portletResourcePermission.contains(
 			getPermissionChecker(), null,
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryWarehouseItemLocalService.
 			getCommerceInventoryWarehouseItemsCount(
-				companyId, sku, unitOfMeasureKey);
+				companyId, sku, unitOfMeasureKey, replacePermissionCheck);
 	}
 
 	@Override

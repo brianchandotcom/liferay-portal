@@ -147,14 +147,6 @@ public class CommerceInventoryWarehouseServiceImpl
 			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws PrincipalException {
 
-		PortletResourcePermission portletResourcePermission =
-			_commerceInventoryWarehouseModelResourcePermission.
-				getPortletResourcePermission();
-
-		portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
-
 		return commerceInventoryWarehouseLocalService.
 			getCommerceInventoryWarehouses(
 				companyId, active, start, end, orderByComparator);

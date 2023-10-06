@@ -76,6 +76,9 @@ import java.io.InputStream;
 
 import java.text.SimpleDateFormat;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -721,6 +724,41 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(
 			Double.valueOf(0.0), postStructuredContent3.getPriority());
 		assertValid(postStructuredContent3);
+
+		// Structured content created by user with non default user timezone
+
+		User user = _userLocalService.fetchUserByEmailAddress(
+			testCompany.getCompanyId(), "test@liferay.com");
+
+		String timeZoneId = user.getTimeZoneId();
+
+		user.setTimeZoneId("Europe/Madrid");
+
+		user = _userLocalService.updateUser(user);
+
+		try {
+			StructuredContent structuredContent3 = randomStructuredContent();
+
+			Date date = new Date();
+
+			structuredContent3.setDatePublished(date);
+
+			StructuredContent structuredContent4 =
+				structuredContentResource.postSiteStructuredContent(
+					testGetSiteStructuredContentsPage_getSiteId(),
+					structuredContent3);
+
+			Instant instant = date.toInstant();
+
+			Assert.assertEquals(
+				Date.from(instant.truncatedTo(ChronoUnit.SECONDS)),
+				structuredContent4.getDatePublished());
+		}
+		finally {
+			user.setTimeZoneId(timeZoneId);
+
+			_userLocalService.updateUser(user);
+		}
 	}
 
 	@Override

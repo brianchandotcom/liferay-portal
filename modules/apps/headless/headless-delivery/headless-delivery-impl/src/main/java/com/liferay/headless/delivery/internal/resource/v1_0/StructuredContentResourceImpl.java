@@ -114,15 +114,13 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
-import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
-import java.time.LocalDateTime;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -509,9 +507,11 @@ public class StructuredContentResourceImpl
 		_validateContentFields(
 			structuredContent.getContentFields(), ddmStructure);
 
-		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			structuredContent.getDatePublished(),
-			journalArticle.getDisplayDate());
+		Date displayDate = structuredContent.getDatePublished();
+
+		if (displayDate == null) {
+			displayDate = journalArticle.getDisplayDate();
+		}
 
 		return _toStructuredContent(
 			_journalArticleService.updateArticle(
@@ -538,12 +538,8 @@ public class StructuredContentResourceImpl
 						structuredContent.getContentFields(), journalArticle),
 					journalArticle.getGroupId()),
 				_getDDMTemplateKey(ddmStructure),
-				journalArticle.getLayoutUuid(),
-				localDateTime.getMonthValue() - 1,
-				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
-				0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
-				null, null,
+				journalArticle.getLayoutUuid(), displayDate, null, null, true,
+				false, 0, 0, null, null, null, null,
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
 					_getAssetLinkEntryIds(journalArticle, structuredContent),
@@ -715,8 +711,11 @@ public class StructuredContentResourceImpl
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(
 			structuredContent.getContentStructureId());
 
-		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			structuredContent.getDatePublished());
+		Date displayDate = structuredContent.getDatePublished();
+
+		if (displayDate == null) {
+			displayDate = new Date();
+		}
 
 		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
@@ -767,10 +766,7 @@ public class StructuredContentResourceImpl
 					_jsonDDMFormValuesSerializer, _ddmFormValuesValidator,
 					ddmStructure, _journalConverter),
 				ddmStructure.getStructureId(), _getDDMTemplateKey(ddmStructure),
-				null, localDateTime.getMonthValue() - 1,
-				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
-				0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
+				null, displayDate, null, null, true, false, 0, 0, null, null,
 				null, null,
 				_createServiceContext(
 					structuredContent.getTaxonomyCategoryIds(),
@@ -1304,9 +1300,11 @@ public class StructuredContentResourceImpl
 		_validateContentFields(
 			structuredContent.getContentFields(), ddmStructure);
 
-		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			structuredContent.getDatePublished(),
-			journalArticle.getDisplayDate());
+		Date displayDate = structuredContent.getDatePublished();
+
+		if (displayDate == null) {
+			displayDate = journalArticle.getDisplayDate();
+		}
 
 		return _toStructuredContent(
 			_journalArticleService.updateArticle(
@@ -1320,12 +1318,8 @@ public class StructuredContentResourceImpl
 						journalArticle),
 					journalArticle.getGroupId()),
 				_getDDMTemplateKey(ddmStructure),
-				journalArticle.getLayoutUuid(),
-				localDateTime.getMonthValue() - 1,
-				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
-				0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
-				null, null,
+				journalArticle.getLayoutUuid(), displayDate, null, null, true,
+				false, 0, 0, null, null, null, null,
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
 					_getAssetLinkEntryIds(journalArticle, structuredContent),

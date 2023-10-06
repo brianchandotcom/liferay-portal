@@ -67,13 +67,11 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.EntityExtensionUtil;
-import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.time.LocalDateTime;
-
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -277,8 +275,11 @@ public class StructuredContentResourceImpl
 		_validateContentFields(
 			structuredContent.getContentFields(), ddmStructure);
 
-		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			structuredContent.getDatePublished());
+		Date displayDate = structuredContent.getDatePublished();
+
+		if (displayDate == null) {
+			displayDate = new Date();
+		}
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			siteId, contextHttpServletRequest,
@@ -317,10 +318,7 @@ public class StructuredContentResourceImpl
 					_jsonDDMFormValuesSerializer, _ddmFormValuesValidator,
 					ddmStructure, _journalConverter),
 				ddmStructure.getStructureId(), _getDDMTemplateKey(ddmStructure),
-				null, localDateTime.getMonthValue() - 1,
-				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
-				0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
+				null, displayDate, null, null, true, false, 0, 0, null, null,
 				null, null, serviceContext));
 	}
 

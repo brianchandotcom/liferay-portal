@@ -22,13 +22,13 @@ public class ListTypeServiceImpl extends ListTypeServiceBaseImpl {
 	}
 
 	@Override
-	public ListType getListType(String name, String type) {
-		return listTypeLocalService.getListType(name, type);
+	public ListType getListType(long companyId, String name, String type) {
+		return listTypeLocalService.getListType(companyId, name, type);
 	}
 
 	@Override
-	public List<ListType> getListTypes(String type) {
-		return listTypeLocalService.getListTypes(type);
+	public List<ListType> getListTypes(long companyId, String type) {
+		return listTypeLocalService.getListTypes(companyId, type);
 	}
 
 	@Override

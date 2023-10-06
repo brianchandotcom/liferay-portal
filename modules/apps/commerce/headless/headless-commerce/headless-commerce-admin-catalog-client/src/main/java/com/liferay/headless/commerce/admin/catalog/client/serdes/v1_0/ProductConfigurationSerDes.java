@@ -84,6 +84,27 @@ public class ProductConfigurationSerDes {
 			sb.append("]");
 		}
 
+		if (productConfiguration.getAvailabilityEstimateId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"availabilityEstimateId\": ");
+
+			sb.append(productConfiguration.getAvailabilityEstimateId());
+		}
+
+		if (productConfiguration.getAvailabilityEstimateName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"availabilityEstimateName\": ");
+
+			sb.append(
+				_toJSON(productConfiguration.getAvailabilityEstimateName()));
+		}
+
 		if (productConfiguration.getDisplayAvailability() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -212,6 +233,26 @@ public class ProductConfigurationSerDes {
 					productConfiguration.getAllowedOrderQuantities()));
 		}
 
+		if (productConfiguration.getAvailabilityEstimateId() == null) {
+			map.put("availabilityEstimateId", null);
+		}
+		else {
+			map.put(
+				"availabilityEstimateId",
+				String.valueOf(
+					productConfiguration.getAvailabilityEstimateId()));
+		}
+
+		if (productConfiguration.getAvailabilityEstimateName() == null) {
+			map.put("availabilityEstimateName", null);
+		}
+		else {
+			map.put(
+				"availabilityEstimateName",
+				String.valueOf(
+					productConfiguration.getAvailabilityEstimateName()));
+		}
+
 		if (productConfiguration.getDisplayAvailability() == null) {
 			map.put("displayAvailability", null);
 		}
@@ -318,6 +359,23 @@ public class ProductConfigurationSerDes {
 				if (jsonParserFieldValue != null) {
 					productConfiguration.setAllowedOrderQuantities(
 						toBigDecimals((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "availabilityEstimateId")) {
+
+				if (jsonParserFieldValue != null) {
+					productConfiguration.setAvailabilityEstimateId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "availabilityEstimateName")) {
+
+				if (jsonParserFieldValue != null) {
+					productConfiguration.setAvailabilityEstimateName(
+						(Map)ProductConfigurationSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

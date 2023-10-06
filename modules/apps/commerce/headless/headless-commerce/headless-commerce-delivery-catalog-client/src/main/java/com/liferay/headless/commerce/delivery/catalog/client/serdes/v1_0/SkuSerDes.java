@@ -295,6 +295,16 @@ public class SkuSerDes {
 			sb.append(String.valueOf(sku.getPrice()));
 		}
 
+		if (sku.getProductConfiguration() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productConfiguration\": ");
+
+			sb.append(String.valueOf(sku.getProductConfiguration()));
+		}
+
 		if (sku.getProductId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -624,6 +634,15 @@ public class SkuSerDes {
 			map.put("price", String.valueOf(sku.getPrice()));
 		}
 
+		if (sku.getProductConfiguration() == null) {
+			map.put("productConfiguration", null);
+		}
+		else {
+			map.put(
+				"productConfiguration",
+				String.valueOf(sku.getProductConfiguration()));
+		}
+
 		if (sku.getProductId() == null) {
 			map.put("productId", null);
 		}
@@ -850,6 +869,15 @@ public class SkuSerDes {
 				if (jsonParserFieldValue != null) {
 					sku.setPrice(
 						PriceSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "productConfiguration")) {
+
+				if (jsonParserFieldValue != null) {
+					sku.setProductConfiguration(
+						ProductConfigurationSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "productId")) {

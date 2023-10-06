@@ -70,6 +70,50 @@ public class ProductConfiguration implements Cloneable, Serializable {
 
 	protected BigDecimal[] allowedOrderQuantities;
 
+	public Long getAvailabilityEstimateId() {
+		return availabilityEstimateId;
+	}
+
+	public void setAvailabilityEstimateId(Long availabilityEstimateId) {
+		this.availabilityEstimateId = availabilityEstimateId;
+	}
+
+	public void setAvailabilityEstimateId(
+		UnsafeSupplier<Long, Exception> availabilityEstimateIdUnsafeSupplier) {
+
+		try {
+			availabilityEstimateId = availabilityEstimateIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long availabilityEstimateId;
+
+	public String getAvailabilityEstimateName() {
+		return availabilityEstimateName;
+	}
+
+	public void setAvailabilityEstimateName(String availabilityEstimateName) {
+		this.availabilityEstimateName = availabilityEstimateName;
+	}
+
+	public void setAvailabilityEstimateName(
+		UnsafeSupplier<String, Exception>
+			availabilityEstimateNameUnsafeSupplier) {
+
+		try {
+			availabilityEstimateName =
+				availabilityEstimateNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String availabilityEstimateName;
+
 	public Boolean getDisplayAvailability() {
 		return displayAvailability;
 	}

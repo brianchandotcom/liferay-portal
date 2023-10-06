@@ -86,7 +86,7 @@ public abstract class BaseProductConfigurationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/configuration' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "displayAvailability": ___, "displayStockQuantity": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/configuration' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -159,7 +159,7 @@ public abstract class BaseProductConfigurationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/configuration' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "displayAvailability": ___, "displayStockQuantity": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/configuration' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

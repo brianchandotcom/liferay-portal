@@ -346,6 +346,28 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"availabilityEstimateId", additionalAssertFieldName)) {
+
+				if (productConfiguration.getAvailabilityEstimateId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"availabilityEstimateName", additionalAssertFieldName)) {
+
+				if (productConfiguration.getAvailabilityEstimateName() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"displayAvailability", additionalAssertFieldName)) {
 
 				if (productConfiguration.getDisplayAvailability() == null) {
@@ -561,6 +583,35 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"availabilityEstimateId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productConfiguration1.getAvailabilityEstimateId(),
+						productConfiguration2.getAvailabilityEstimateId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"availabilityEstimateName", additionalAssertFieldName)) {
+
+				if (!equals(
+						(Map)
+							productConfiguration1.getAvailabilityEstimateName(),
+						(Map)
+							productConfiguration2.
+								getAvailabilityEstimateName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"displayAvailability", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
@@ -768,6 +819,16 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("availabilityEstimateId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("availabilityEstimateName")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("displayAvailability")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -937,6 +998,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		return new ProductConfiguration() {
 			{
 				allowBackOrder = RandomTestUtil.randomBoolean();
+				availabilityEstimateId = RandomTestUtil.randomLong();
 				displayAvailability = RandomTestUtil.randomBoolean();
 				displayStockQuantity = RandomTestUtil.randomBoolean();
 				inventoryEngine = StringUtil.toLowerCase(

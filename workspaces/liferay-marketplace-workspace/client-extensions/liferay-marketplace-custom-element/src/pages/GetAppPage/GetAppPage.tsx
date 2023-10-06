@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 import useCart from '../../hooks/useCart';
@@ -12,7 +12,6 @@ import {
 	postCheckoutCart,
 	postEmailAppInformation,
 } from '../../utils/api';
-import {getUrlParam} from '../../utils/getUrlParam';
 import AccountSelection from './components/AccountSelection';
 import ProductFooter from './components/Footer';
 import {LicenseSelector} from './components/LicenseSelector';
@@ -24,6 +23,7 @@ import {paymentMethod} from './enums/paymentMethod';
 import {StepType} from './enums/stepType';
 import useGetAddresses from './hooks/useGetAddresses';
 import useGetChannelInfo from './hooks/useGetChannelInfo';
+import useGetProduct from './hooks/useGetProduct';
 import useGetProductSkus from './hooks/useGetProductSkus';
 import useProductPriceModel from './hooks/useProductPriceModel';
 import buildNewCart from './utils/buildNewCart';
@@ -33,8 +33,8 @@ import getReplaceCurrentURL from './utils/getReplaceCurrentURL';
 import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
 
 export type GetAppForm = {
+	account?: Account;
 	product?: Product;
-	selectedAccount?: Account;
 	selectedPaymentMethod: paymentMethod;
 	selectedSKU?: SKU;
 	selectedTimeline?: string;
@@ -56,33 +56,26 @@ const GetAppFlow = () => {
 
 	const {setValue, watch} = useForm<GetAppForm>({
 		defaultValues: {
+			account: undefined,
 			product: undefined,
-			selectedAccount: undefined,
 			selectedPaymentMethod: paymentMethod.PAY,
 			selectedSKU: undefined,
 			selectedTimeline: '',
 		},
 	});
 
-	const urlProductId = getUrlParam('productId');
+	const {account, product, selectedPaymentMethod, selectedSKU} = watch();
 
-	const {
+	const {productId} = useGetProduct(
 		product,
-		selectedAccount,
-		selectedPaymentMethod,
-		selectedSKU,
-	} = watch();
-
-	const productId = product?.productId || urlProductId;
-	const productName = product?.name.en_US;
-
+		useCallback((value: Product) => setValue('product', value), [setValue])
+	);
 	const {sku} = useGetProductSkus(setEnableTrialMethod, product);
 	const {channel} = useGetChannelInfo();
-	const {addresses} = useGetAddresses(selectedAccount?.id);
+	const {addresses} = useGetAddresses(account?.id);
 	const {isFreeApp, priceModel} = useProductPriceModel(product);
-
 	const cartUtil = useCart({
-		accountId: selectedAccount?.id!,
+		accountId: account?.id!,
 		channelId: channel?.id,
 		orderType,
 	});
@@ -99,15 +92,17 @@ const GetAppFlow = () => {
 
 	useEffect(() => {
 		(async () => {
-			const productSpecificationValues = await getProductSpecificationValues(
-				Number(productId)
-			);
+			if (productId) {
+				const productSpecificationValues = await getProductSpecificationValues(
+					Number(productId)
+				);
 
-			const orderType = await getProductOrderTypes(
-				productSpecificationValues
-			);
+				const orderType = await getProductOrderTypes(
+					productSpecificationValues
+				);
 
-			setOrderType(orderType);
+				setOrderType(orderType);
+			}
 		})();
 	}, [productId]);
 
@@ -130,7 +125,7 @@ const GetAppFlow = () => {
 			orderType,
 			product,
 			purchaseOrderNumber,
-			selectedAccount,
+			selectedAccount: account,
 			selectedPaymentMethod,
 			selectedSKU,
 			sku,
@@ -152,7 +147,7 @@ const GetAppFlow = () => {
 			),
 			orderID: cartResponse.id,
 			priceModel,
-			productName,
+			productName: product?.name.en_US,
 			productType,
 		});
 
@@ -182,9 +177,9 @@ const GetAppFlow = () => {
 			component: (
 				<AccountSelection
 					onSelectAccount={(account: Account) => {
-						setValue('selectedAccount', account);
+						setValue('account', account);
 					}}
-					selectedAccount={watch('selectedAccount')}
+					selectedAccount={account}
 				/>
 			),
 			nextStep: StepType.LICENSES,
@@ -203,7 +198,7 @@ const GetAppFlow = () => {
 					onSelectLicense={(sku?: SKU) =>
 						setValue('selectedSKU', sku)
 					}
-					selectedProduct={watch('product')}
+					selectedProduct={product}
 					setLicenseSelected={setLincenseSelected}
 					sku={sku}
 				/>
@@ -243,11 +238,8 @@ const GetAppFlow = () => {
 		<>
 			<ProductCard
 				cartUtil={cartUtil}
-				productId={Number(getUrlParam('productId'))}
-				selectedAccount={watch('selectedAccount')}
-				setProductToForm={(product: Product) =>
-					setValue('product', product)
-				}
+				product={product}
+				selectedAccount={account}
 				step={step}
 			/>
 
@@ -261,8 +253,7 @@ const GetAppFlow = () => {
 								stepsInformation={StepsInformation}
 								wizardSteps={{
 									[StepType.ACCOUNT]:
-										step !== StepType.ACCOUNT &&
-										!!selectedAccount,
+										step !== StepType.ACCOUNT && !!account,
 									[StepType.LICENSES]:
 										step !== StepType.LICENSES &&
 										licenseSelected,
@@ -286,7 +277,7 @@ const GetAppFlow = () => {
 					handleGetApp={handleGetApp}
 					isFreeApp={isFreeApp}
 					licenseSelected={licenseSelected}
-					selectedAccount={selectedAccount}
+					selectedAccount={account}
 					selectedPaymentMethod={selectedPaymentMethod}
 					selectedSKU={selectedSKU}
 					setStep={setStep}

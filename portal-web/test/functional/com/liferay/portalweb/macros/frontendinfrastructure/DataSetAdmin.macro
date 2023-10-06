@@ -219,6 +219,84 @@ definition {
 		}
 	}
 
+	macro createDateFilter {
+		Click(locator1 = "Button#PLUS");
+		
+		DropdownMenuItem.click(menuItem = "Date Range");
+
+			PortletEntry.inputName(name = ${filterName});
+
+			Click(
+				dropdownLabel = "Select",
+				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+			
+			DropdownMenuItem.click(menuItem = ${filterBy});
+
+			Click(
+					key_label = "From",
+					locator1 = "DataSet#DATE_CALENDAR");
+
+				Click(
+					key_index = 1,
+					locator1 = "DataSet#YEAR_CALENDAR_FIELD");
+
+				Click(
+					key_index = 1,
+					key_optionYear = ${valueYearFrom},
+					locator1 = "DataSet#YEAR_CALENDAR_OPTION");
+
+				Select(
+					key_number = 1,
+					locator1 = "DataSet#SELECT_MONTH",
+					value1 = "${valueMonthFrom}");
+
+				Click.clickNoMouseOver(
+					key_index = 1,
+					key_valueDay = ${valueDayFrom},
+					locator1 = "DataSet#DATE_CALENDAR_DAY");
+
+				AssertTextEquals(
+					key_label = "From",
+					locator1 = "DataSet#DATE_FIELD",
+					value1 = ${fieldValueFrom});
+
+				Click(
+					key_label = "To",
+					locator1 = "DataSet#DATE_CALENDAR");
+
+				Click(
+					key_index = 2,
+					locator1 = "DataSet#YEAR_CALENDAR_FIELD");
+
+				Click(
+					key_index = 2,
+					key_optionYear = ${valueYearTo},
+					locator1 = "DataSet#YEAR_CALENDAR_OPTION");
+
+				Select(
+					key_number = 2,
+					locator1 = "DataSet#SELECT_MONTH",
+					value1 = "${valueMonthTo}");
+
+				Click.clickNoMouseOver(
+					key_index = 2,
+					key_valueDay = ${valueDayTo},
+					locator1 = "DataSet#DATE_CALENDAR_DAY");
+
+				AssertTextEquals(
+					key_label = "To",
+					locator1 = "DataSet#DATE_FIELD",
+					value1 = ${fieldValueTo});
+
+			if (${button} == "Cancel") {
+				Button.clickCancel();
+			}else{
+				Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
+			}
+
+			Alert.viewSuccessMessage();
+	}
+
 	macro deleteAllDataSetEntries {
 		DataSetAdmin.goToDataSetAdminPage();
 

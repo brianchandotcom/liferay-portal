@@ -64,6 +64,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		// Multiples emails for each main recipient, comma separator
 
 		_testSendNotification(
+			2,
 			ListUtil.sort(
 				Arrays.asList(
 					user1.getEmailAddress(), user2.getEmailAddress())),
@@ -75,6 +76,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		// Multiples emails for each main recipient, comma and space separator
 
 		_testSendNotification(
+			2,
 			ListUtil.sort(
 				Arrays.asList(
 					user1.getEmailAddress(), user2.getEmailAddress())),
@@ -86,6 +88,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		// Multiples emails for each main recipient, semicolon separator
 
 		_testSendNotification(
+			2,
 			ListUtil.sort(
 				Arrays.asList(
 					user1.getEmailAddress(), user2.getEmailAddress())),
@@ -98,6 +101,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		// separator
 
 		_testSendNotification(
+			2,
 			ListUtil.sort(
 				Arrays.asList(
 					user2.getEmailAddress(),
@@ -111,6 +115,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		// space separator
 
 		_testSendNotification(
+			2,
 			ListUtil.sort(
 				Arrays.asList(
 					user2.getEmailAddress(),
@@ -124,6 +129,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		// separator
 
 		_testSendNotification(
+			2,
 			ListUtil.sort(
 				Arrays.asList(
 					user2.getEmailAddress(),
@@ -136,6 +142,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		// One email including all main recipients
 
 		_testSendNotification(
+			1,
 			ListUtil.sort(
 				Arrays.asList(
 					StringBundler.concat(
@@ -272,8 +279,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	private void _testSendNotification(
-			List<String> expectedToEmailAddress, boolean singleRecipient,
-			String to)
+			int expectedCount, List<String> expectedToEmailAddress,
+			boolean singleRecipient, String to)
 		throws Exception {
 
 		_executeNotificationObjectAction(
@@ -294,12 +301,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					return String.valueOf(
 						notificationRecipientSettingsMap.get("to"));
 				}));
-
-		int expectedCount = 1;
-
-		if (singleRecipient) {
-			expectedCount = 2;
-		}
 
 		Assert.assertEquals(
 			notificationQueueEntries.toString(), expectedCount,

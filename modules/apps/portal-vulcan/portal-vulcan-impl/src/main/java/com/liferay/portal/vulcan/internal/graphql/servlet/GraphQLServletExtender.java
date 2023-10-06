@@ -1097,7 +1097,7 @@ public class GraphQLServletExtender {
 				_configurationProvider.getCompanyConfiguration(
 					HeadlessAPICompanyConfiguration.class, companyId);
 
-			return new QueryDepthLimitInstrumentation(
+			return QueryDepthLimitInstrumentation.of(
 				headlessAPICompanyConfiguration.queryDepthLimit());
 		}
 		catch (Exception exception) {

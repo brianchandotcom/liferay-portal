@@ -6,7 +6,6 @@
 package com.liferay.portal.vulcan.internal.graphql.instrumentation;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.internal.graphql.exception.QueryDepthLimitExceededException;
@@ -37,7 +36,7 @@ public class QueryDepthLimitInstrumentationTest {
 		int maxDepthLimit = RandomTestUtil.randomInt();
 
 		QueryDepthLimitInstrumentation queryDepthLimitInstrumentation =
-			new QueryDepthLimitInstrumentation(maxDepthLimit);
+			QueryDepthLimitInstrumentation.of(maxDepthLimit);
 
 		int limit = RandomTestUtil.randomInt();
 
@@ -66,10 +65,10 @@ public class QueryDepthLimitInstrumentationTest {
 		int maxDepthLimit = RandomTestUtil.randomInt();
 
 		QueryDepthLimitInstrumentation queryDepthLimitInstrumentation =
-			new QueryDepthLimitInstrumentation(maxDepthLimit);
+			QueryDepthLimitInstrumentation.of(maxDepthLimit);
 
-		Function<QueryDepthInfo, Boolean> function = _getFunction(
-			queryDepthLimitInstrumentation);
+		Function<QueryDepthInfo, Boolean> function =
+			queryDepthLimitInstrumentation.getFunction();
 
 		Assert.assertFalse(
 			function.apply(_createQueryDepthInfo(maxDepthLimit - 1)));
@@ -82,10 +81,10 @@ public class QueryDepthLimitInstrumentationTest {
 	@Test
 	public void testQueryDepthUnlimited() {
 		QueryDepthLimitInstrumentation queryDepthLimitInstrumentation =
-			new QueryDepthLimitInstrumentation(-1);
+			QueryDepthLimitInstrumentation.of(-1);
 
-		Function<QueryDepthInfo, Boolean> function = _getFunction(
-			queryDepthLimitInstrumentation);
+		Function<QueryDepthInfo, Boolean> function =
+			queryDepthLimitInstrumentation.getFunction();
 
 		Assert.assertFalse(
 			function.apply(_createQueryDepthInfo(Integer.MAX_VALUE)));
@@ -96,13 +95,6 @@ public class QueryDepthLimitInstrumentationTest {
 		).depth(
 			depth
 		).build();
-	}
-
-	private Function<QueryDepthInfo, Boolean> _getFunction(
-		QueryDepthLimitInstrumentation queryDepthLimitInstrumentation) {
-
-		return ReflectionTestUtil.getFieldValue(
-			queryDepthLimitInstrumentation, "maxQueryDepthExceededFunction");
 	}
 
 }

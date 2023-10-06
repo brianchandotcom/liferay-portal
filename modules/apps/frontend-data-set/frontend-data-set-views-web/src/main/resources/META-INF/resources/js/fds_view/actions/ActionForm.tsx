@@ -92,7 +92,8 @@ const MODAL_SIZES = [
 const translationExists = ({translations}: {translations: any}) => {
 	return Boolean(Object.keys(translations).find((key) => translations[key]));
 };
-interface IFDSItemActionFormProps {
+
+interface IFDSActionFormProps {
 	activeTab: number;
 	editing?: boolean;
 	fdsView: FDSViewType;
@@ -104,7 +105,7 @@ interface IFDSItemActionFormProps {
 	spritemap: string;
 }
 
-const ItemActionForm = ({
+const ActionForm = ({
 	activeTab,
 	editing = false,
 	fdsView,
@@ -114,7 +115,7 @@ const ItemActionForm = ({
 	sections,
 	setActiveSection,
 	spritemap,
-}: IFDSItemActionFormProps) => {
+}: IFDSActionFormProps) => {
 	const [availableIconSymbols, setAvailableIconSymbols] = useState<
 		Array<{label: string; value: string}>
 	>([]);
@@ -746,4 +747,4 @@ const ItemActionForm = ({
 	);
 };
 
-export default ItemActionForm;
+export default ActionForm;

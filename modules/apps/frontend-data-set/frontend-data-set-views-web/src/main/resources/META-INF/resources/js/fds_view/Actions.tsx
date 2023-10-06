@@ -14,8 +14,8 @@ import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {IFDSViewSectionProps} from '../FDSView';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
+import ActionForm from './actions/ActionForm';
 import ActionList from './actions/ActionList';
-import ItemActionForm from './actions/ItemActionForm';
 
 const SECTIONS = {
 	CREATION_ACTIONS: 'creation-actions',
@@ -348,7 +348,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 
 				{(activeSection === SECTIONS.NEW_CREATION_ACTION ||
 					activeSection === SECTIONS.NEW_ITEM_ACTION) && (
-					<ItemActionForm
+					<ActionForm
 						activeTab={activeTab}
 						fdsView={fdsView}
 						loadFDSActions={loadFDSActions}
@@ -361,7 +361,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 
 				{(activeSection === SECTIONS.EDIT_CREATION_ACTION ||
 					activeSection === SECTIONS.EDIT_ITEM_ACTION) && (
-					<ItemActionForm
+					<ActionForm
 						activeTab={activeTab}
 						editing
 						fdsView={fdsView}

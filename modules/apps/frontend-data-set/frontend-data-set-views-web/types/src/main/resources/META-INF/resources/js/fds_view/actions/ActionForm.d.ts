@@ -7,7 +7,7 @@
 
 import {FDSViewType} from '../../FDSViews';
 import {IFDSAction, SECTIONS} from '../Actions';
-interface IFDSItemActionFormProps {
+interface IFDSActionFormProps {
 	activeTab: number;
 	editing?: boolean;
 	fdsView: FDSViewType;
@@ -18,7 +18,7 @@ interface IFDSItemActionFormProps {
 	setActiveSection: (arg: string) => void;
 	spritemap: string;
 }
-declare const ItemActionForm: ({
+declare const ActionForm: ({
 	activeTab,
 	editing,
 	fdsView,
@@ -28,5 +28,5 @@ declare const ItemActionForm: ({
 	sections,
 	setActiveSection,
 	spritemap,
-}: IFDSItemActionFormProps) => JSX.Element;
-export default ItemActionForm;
+}: IFDSActionFormProps) => JSX.Element;
+export default ActionForm;

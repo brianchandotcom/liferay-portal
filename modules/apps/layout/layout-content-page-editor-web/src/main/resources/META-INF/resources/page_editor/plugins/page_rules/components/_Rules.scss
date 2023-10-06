@@ -1,0 +1,53 @@
+@import 'cadmin-variables';
+
+html#{$cadmin-selector} .cadmin {
+	.page-editor__rule-builder-item {
+		border: 1px solid $cadmin-gray-300;
+		border-radius: 0.25rem;
+		height: 50px;
+
+		.page-editor__rule-builder-delete-button {
+			opacity: 0;
+		}
+
+		&:hover .page-editor__rule-builder-delete-button,
+		.page-editor__rule-builder-delete-button:focus-visible {
+			opacity: 1;
+		}
+
+		&.page-editor__rule-builder-item--action {
+			border-left: 4px solid $purple;
+		}
+
+		&.page-editor__rule-builder-item--condition {
+			border-left: 4px solid $cadmin-warning-l1;
+		}
+	}
+
+	.page-editor__rule-builder-select {
+		max-width: 180px;
+	}
+
+	.page-editor__rule-builder-section {
+		.panel-header {
+			background-color: $cadmin-gray-100;
+			border-bottom: none;
+		}
+
+		.panel-header:not(.collapsed) {
+			border-bottom: 1px solid $cadmin-gray-300;
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+
+		.page-editor__rule-builder-section-title {
+			background-color: $cadmin-gray-100;
+			border-bottom: 1px solid $cadmin-gray-300;
+
+			.arrow-icon {
+				color: $cadmin-warning-l1;
+				transform: rotate(-90deg);
+			}
+		}
+	}
+}

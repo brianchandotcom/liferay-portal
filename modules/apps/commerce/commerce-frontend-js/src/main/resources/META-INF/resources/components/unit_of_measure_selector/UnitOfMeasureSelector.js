@@ -13,6 +13,7 @@ import ServiceProvider from '../../ServiceProvider/index';
 import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import {
 	CP_INSTANCE_CHANGED,
+	CP_QUANTITY_SELECTOR_CHANGED,
 	CP_UNIT_OF_MEASURE_SELECTOR_CHANGED,
 } from '../../utilities/eventsDefinitions';
 import {getMinQuantity} from '../../utilities/quantities';
@@ -23,18 +24,22 @@ const UnitOfMeasureSelector = forwardRef(
 		channelId,
 		cpInstanceId,
 		disabled,
+		loadFinalPrice,
 		name,
 		namespace,
+		options,
 		productConfiguration,
 		productId,
+		resetQuantity,
 		size,
+		value,
 	}) => {
 		const [inputProperties, setInputProperties] = useState({
 			fireEvent: false,
 			quantity: getMinQuantity(productConfiguration?.minOrderQuantity, 1),
-			resetQuantity: false,
+			resetQuantity,
 			unitOfMeasures: [],
-			value: null,
+			value,
 		});
 		const [skuId, setSkuId] = useState(cpInstanceId);
 		const [skuOptionsAtomState] = useLiferayState(skuOptionsAtom);
@@ -51,9 +56,10 @@ const UnitOfMeasureSelector = forwardRef(
 					accountId,
 					inputProperties.quantity,
 					skuUnitOfMeasureKey,
-					skuOptionsAtomState.skuOptions
+					options || skuOptionsAtomState.skuOptions
 				).then((cpInstance) => {
-					cpInstance.skuOptions = skuOptionsAtomState.skuOptions;
+					cpInstance.skuOptions =
+						options || skuOptionsAtomState.skuOptions;
 					cpInstance.skuId = parseInt(cpInstance.id, 10);
 
 					const dispatchedPayload = {
@@ -68,11 +74,11 @@ const UnitOfMeasureSelector = forwardRef(
 				});
 			},
 			// eslint-disable-next-line react-hooks/exhaustive-deps
-			[skuOptionsAtomState]
+			[accountId, channelId, options, productId, skuOptionsAtomState]
 		);
 
 		useEffect(() => {
-			if (cpInstanceId) {
+			if (channelId && cpInstanceId && productId) {
 				DeliveryCatalogAPIServiceProvider.getChannelProductSku(
 					channelId,
 					productId,
@@ -82,28 +88,39 @@ const UnitOfMeasureSelector = forwardRef(
 					const skuUnitOfMeasures =
 						cpInstance.skuUnitOfMeasures || [];
 
+					let skuUnitOfMeasure = skuUnitOfMeasures[0];
+
+					if (inputProperties.value) {
+						skuUnitOfMeasure = skuUnitOfMeasures.find(
+							(skuUnitOfMeasure) =>
+								inputProperties.value === skuUnitOfMeasure.key
+						);
+
+						if (!skuUnitOfMeasure) {
+							skuUnitOfMeasure = skuUnitOfMeasures[0];
+						}
+					}
+
 					setInputProperties((inputProperties) => ({
 						...inputProperties,
 						fireEvent: true,
 						quantity: getMinQuantity(
 							productConfiguration?.minOrderQuantity,
-							skuUnitOfMeasures[0]?.incrementalOrderQuantity || 1,
-							skuUnitOfMeasures[0]?.precision || 0
+							skuUnitOfMeasure?.incrementalOrderQuantity || 1,
+							skuUnitOfMeasure?.precision || 0
 						),
-						resetQuantity: true,
+						resetQuantity,
 						unitOfMeasures: skuUnitOfMeasures,
-						value: skuUnitOfMeasures[0]?.key || '',
+						value: skuUnitOfMeasure?.key || '',
 					}));
 
-					if (skuUnitOfMeasures[0]?.key) {
-						postChannelProductSkuBySkuOption(
-							skuUnitOfMeasures[0]?.key
-						);
+					if (skuUnitOfMeasure?.key) {
+						postChannelProductSkuBySkuOption(skuUnitOfMeasure?.key);
 					}
 				});
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, []);
+		}, [accountId, channelId, cpInstanceId, resetQuantity, productId]);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		const handleCPInstanceChanged = ({cpInstance}) => {
@@ -124,18 +141,39 @@ const UnitOfMeasureSelector = forwardRef(
 		};
 
 		useEffect(() => {
+			const handleCPQuantitySelectorChanged = function ({quantity}) {
+				setInputProperties((inputProperties) => ({
+					...inputProperties,
+					quantity,
+				}));
+			};
+
 			Liferay.on(
 				`${namespace}${CP_INSTANCE_CHANGED}`,
 				handleCPInstanceChanged
 			);
+
+			if (loadFinalPrice) {
+				Liferay.on(
+					`${namespace}${CP_QUANTITY_SELECTOR_CHANGED}`,
+					handleCPQuantitySelectorChanged
+				);
+			}
 
 			return () => {
 				Liferay.detach(
 					`${namespace}${CP_INSTANCE_CHANGED}`,
 					handleCPInstanceChanged
 				);
+
+				if (loadFinalPrice) {
+					Liferay.detach(
+						`${namespace}${CP_QUANTITY_SELECTOR_CHANGED}`,
+						handleCPQuantitySelectorChanged
+					);
+				}
 			};
-		}, [handleCPInstanceChanged, namespace]);
+		}, [loadFinalPrice, handleCPInstanceChanged, namespace]);
 
 		const fireSelectorChangedEvent = useCallback(() => {
 			Liferay.fire(`${namespace}${CP_UNIT_OF_MEASURE_SELECTOR_CHANGED}`, {
@@ -196,6 +234,8 @@ const UnitOfMeasureSelector = forwardRef(
 
 UnitOfMeasureSelector.defaultProps = {
 	disabled: false,
+	loadFinalPrice: false,
+	resetQuantity: true,
 	size: 'lg',
 };
 
@@ -204,6 +244,7 @@ UnitOfMeasureSelector.propTypes = {
 	channelId: PropTypes.number.isRequired,
 	cpInstanceId: PropTypes.number.isRequired,
 	disabled: PropTypes.bool,
+	loadFinalPrice: PropTypes.bool,
 	name: PropTypes.string,
 	namespace: PropTypes.string,
 	productConfiguration: PropTypes.shape({
@@ -213,7 +254,9 @@ UnitOfMeasureSelector.propTypes = {
 		multipleOrderQuantity: PropTypes.number,
 	}),
 	productId: PropTypes.number.isRequired,
+	resetQuantity: PropTypes.bool,
 	size: PropTypes.oneOf(['lg', 'md', 'sm']),
+	value: PropTypes.string,
 };
 
 export default UnitOfMeasureSelector;

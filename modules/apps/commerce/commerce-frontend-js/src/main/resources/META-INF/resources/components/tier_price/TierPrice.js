@@ -11,7 +11,14 @@ import React, {useEffect, useRef, useState} from 'react';
 import ServiceProvider from '../../ServiceProvider/index';
 import {CP_INSTANCE_CHANGED} from '../../utilities/eventsDefinitions';
 
-function TierPrice({accountId, channelId, cpInstanceId, namespace, productId}) {
+function TierPrice({
+	accountId,
+	autoload,
+	channelId,
+	cpInstanceId,
+	namespace,
+	productId,
+}) {
 	const [columns, setColumns] = useState([]);
 	const [rows, setRows] = useState([]);
 	const [isExpanded, setIsExpanded] = useState(false);
@@ -128,7 +135,7 @@ function TierPrice({accountId, channelId, cpInstanceId, namespace, productId}) {
 	};
 
 	useEffect(() => {
-		if (cpInstanceId) {
+		if (autoload && cpInstanceId) {
 			DeliveryCatalogAPIServiceProviderRef.current
 				.getChannelProductSku(
 					channelId,
@@ -140,7 +147,7 @@ function TierPrice({accountId, channelId, cpInstanceId, namespace, productId}) {
 					handleCPInstanceChanged({cpInstance});
 				});
 		}
-	}, [accountId, channelId, cpInstanceId, productId]);
+	}, [accountId, autoload, channelId, cpInstanceId, productId]);
 
 	useEffect(() => {
 		Liferay.on(
@@ -230,8 +237,13 @@ function TierPrice({accountId, channelId, cpInstanceId, namespace, productId}) {
 	);
 }
 
+TierPrice.defaultProps = {
+	autoload: true,
+};
+
 TierPrice.propTypes = {
 	accountId: PropTypes.number,
+	autoload: PropTypes.bool,
 	channelId: PropTypes.number.isRequired,
 	cpInstanceId: PropTypes.number.isRequired,
 	namespace: PropTypes.string,

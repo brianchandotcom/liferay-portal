@@ -206,7 +206,7 @@ function MiniCart({
 						<>
 							<div
 								className="mini-cart-overlay"
-								onClick={() => setIsOpen(false)}
+								onClick={() => closeCart()}
 							/>
 
 							<CartViews.Opener />

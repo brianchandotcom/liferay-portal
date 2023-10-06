@@ -1783,11 +1783,8 @@ definition {
 			Click(locator1 = "Button#SUBMIT");
 		}
 
-		task ("Then an alert message is shown under the quantity field") {
-			AssertTextEquals.assertText(
-				key_alertMessage = "Please enter a value greater than or equal to 1.",
-				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
-				value1 = "Please enter a value greater than or equal to 1.");
+		task ("Then an alert message is shown on the modal") {
+			Alert.viewErrorMessage(errorMessage = "Error:The specified quantity is not allowed.");
 		}
 
 		task ("And the Tier Price is not saved") {

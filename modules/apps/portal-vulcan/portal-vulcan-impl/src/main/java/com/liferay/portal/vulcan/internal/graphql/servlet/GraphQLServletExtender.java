@@ -47,7 +47,7 @@ import com.liferay.portal.vulcan.internal.graphql.data.fetcher.LiferayMethodData
 import com.liferay.portal.vulcan.internal.graphql.data.processor.GraphQLDTOContributorDataFetchingProcessor;
 import com.liferay.portal.vulcan.internal.graphql.data.processor.LiferayMethodDataFetchingProcessor;
 import com.liferay.portal.vulcan.internal.graphql.exception.QueryDepthLimitExceededException;
-import com.liferay.portal.vulcan.internal.graphql.servlet.instrumentation.QueryDepthLimitInstrumentation;
+import com.liferay.portal.vulcan.internal.graphql.instrumentation.QueryDepthLimitInstrumentation;
 import com.liferay.portal.vulcan.internal.graphql.util.GraphQLUtil;
 import com.liferay.portal.vulcan.internal.graphql.validation.GraphQLDTOContributorRequestContext;
 import com.liferay.portal.vulcan.internal.graphql.validation.ServletDataRequestContext;

@@ -13,6 +13,8 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
@@ -100,6 +102,11 @@ public class EditAccountEntryMVCActionCommand
 				hideDefaultSuccessMessage(actionRequest);
 
 				sendRedirect(actionRequest, actionResponse);
+			}
+			else if ((exception instanceof ModelListenerException) &&
+					 (exception.getCause() instanceof PortalException)) {
+
+				throw (PortalException)exception.getCause();
 			}
 
 			throw new PortletException(exception);

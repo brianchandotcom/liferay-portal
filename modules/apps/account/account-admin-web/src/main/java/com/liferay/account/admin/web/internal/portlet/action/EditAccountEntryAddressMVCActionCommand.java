@@ -9,6 +9,8 @@ import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -56,46 +58,58 @@ public class EditAccountEntryAddressMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		Address accountEntryAddress = null;
+		try {
+			Address accountEntryAddress = null;
 
-		if (cmd.equals(Constants.ADD)) {
-			accountEntryAddress = _addAccountEntryAddress(actionRequest);
-		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			_updateAccountEntryAddress(actionRequest);
-		}
-
-		String defaultType = ParamUtil.getString(actionRequest, "defaultType");
-
-		if (Objects.equals(defaultType, "billing") ||
-			Objects.equals(defaultType, "shipping")) {
-
-			long accountEntryId = ParamUtil.getLong(
-				actionRequest, "accountEntryId");
-
-			AccountEntry accountEntry = _accountEntryService.getAccountEntry(
-				accountEntryId);
-
-			long addressId = 0;
-
-			if (accountEntryAddress != null) {
-				addressId = accountEntryAddress.getAddressId();
+			if (cmd.equals(Constants.ADD)) {
+				accountEntryAddress = _addAccountEntryAddress(actionRequest);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				_updateAccountEntryAddress(actionRequest);
 			}
 
-			if (Objects.equals(defaultType, "billing")) {
-				accountEntry.setDefaultBillingAddressId(addressId);
-			}
-			else if (Objects.equals(defaultType, "shipping")) {
-				accountEntry.setDefaultShippingAddressId(addressId);
+			String defaultType = ParamUtil.getString(
+				actionRequest, "defaultType");
+
+			if (Objects.equals(defaultType, "billing") ||
+				Objects.equals(defaultType, "shipping")) {
+
+				long accountEntryId = ParamUtil.getLong(
+					actionRequest, "accountEntryId");
+
+				AccountEntry accountEntry =
+					_accountEntryService.getAccountEntry(accountEntryId);
+
+				long addressId = 0;
+
+				if (accountEntryAddress != null) {
+					addressId = accountEntryAddress.getAddressId();
+				}
+
+				if (Objects.equals(defaultType, "billing")) {
+					accountEntry.setDefaultBillingAddressId(addressId);
+				}
+				else if (Objects.equals(defaultType, "shipping")) {
+					accountEntry.setDefaultShippingAddressId(addressId);
+				}
+
+				_accountEntryService.updateAccountEntry(accountEntry);
 			}
 
-			_accountEntryService.updateAccountEntry(accountEntry);
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 		}
+		catch (Exception exception) {
+			if ((exception instanceof ModelListenerException) &&
+				(exception.getCause() instanceof PortalException)) {
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
+				throw (PortalException)exception.getCause();
+			}
 
-		if (Validator.isNotNull(redirect)) {
-			sendRedirect(actionRequest, actionResponse, redirect);
+			throw exception;
 		}
 	}
 

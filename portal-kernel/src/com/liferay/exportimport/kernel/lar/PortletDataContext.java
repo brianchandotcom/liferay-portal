@@ -354,6 +354,10 @@ public interface PortletDataContext extends Serializable {
 
 	public boolean isModelCounted(String className, Serializable classPK);
 
+	public default boolean isOriginalPrivateLayout() {
+		return false;
+	}
+
 	public boolean isPathExportedInScope(String path);
 
 	public boolean isPathNotProcessed(String path);
@@ -402,6 +406,8 @@ public interface PortletDataContext extends Serializable {
 	public void setMissingReferencesElement(Element missingReferencesElement);
 
 	public void setNewLayouts(List<Layout> newLayouts);
+
+	public void setOriginalPrivateLayout(boolean originalPrivateLayout);
 
 	public void setParameterMap(Map<String, String[]> parameterMap);
 

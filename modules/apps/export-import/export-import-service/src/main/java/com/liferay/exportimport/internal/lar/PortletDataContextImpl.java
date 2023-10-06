@@ -1561,6 +1561,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public boolean isOriginalPrivateLayout() {
+		return _originalPrivateLayout;
+	}
+
+	@Override
 	public boolean isPathExportedInScope(String path) {
 		return addScopedPrimaryKey(String.class, path);
 	}
@@ -1705,6 +1710,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public void setNewLayouts(List<Layout> newLayouts) {
 		_newLayouts = newLayouts;
+	}
+
+	public void setOriginalPrivateLayout(boolean originalPrivateLayout) {
+		_originalPrivateLayout = originalPrivateLayout;
 	}
 
 	@Override
@@ -2765,6 +2774,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private final Map<String, Map<?, ?>> _newPrimaryKeysMaps = new HashMap<>();
 	private final Set<String> _notUniquePerLayout = new HashSet<>();
 	private final Map<String, Object> _objectsMap = new HashMap<>();
+	private boolean _originalPrivateLayout;
 	private Map<String, String[]> _parameterMap;
 	private final Map<String, List<KeyValuePair>> _permissionsMap =
 		new HashMap<>();

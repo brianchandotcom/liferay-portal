@@ -11,7 +11,6 @@ import {WebDAV} from './common/context/WebDAV';
 import {AppRouteType} from './common/enums/appRouteType';
 import {PartnerOpportunitiesColumnKey} from './common/enums/partnerOpportunitiesColumnKey';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
-import handleError from './common/utils/handleError';
 import DealRegistrationForm from './routes/DealRegistrationForm';
 import DealRegistrationList from './routes/DealRegistrationList';
 import MDFClaimForm from './routes/MDFClaimForm';
@@ -75,7 +74,7 @@ const appRoutes: AppRouteComponent = {
 			]}
 			name="Renewal Opportunities"
 			newButtonDeal={false}
-			opportunityFilter="stage ne 'Closed Lost' and type eq 'Existing Business'"
+			renewalOpportunitiesFilter="stage ne 'Closed Lost' and type eq 'Existing Business'"
 			sort="closeDate:asc"
 		/>
 	),
@@ -90,10 +89,9 @@ const PartnerPortalApp = ({liferayWebDAV, route}: IProps) => {
 	return (
 		<SWRConfig
 			value={{
-				onError: (error) => handleError(error),
 				revalidateOnFocus: false,
 				revalidateOnReconnect: false,
-				shouldRetryOnError: false,
+				shouldRetryOnError: true,
 			}}
 		>
 			<WebDAV value={liferayWebDAV}>

@@ -1,0 +1,370 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-188645=true";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
+
+	var pageName = "Data Set Test Page";
+
+	setUp {
+		var portalURL = PropsUtil.get("portal.url");
+
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "${pageName}");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DataSetAdmin.deleteAllDataSetEntries();
+		}
+	}
+
+	@description = "LPS-191295. Confirm that after created a filter is displayed in the fragment and it is also possible to apply it. "
+	@priority = 5
+	test CanAppliedFilter {
+        task ("Given a new Object entity") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Date Object",
+				objectName = "DateObject",
+				pluralLabelName = "Date Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Date Field",
+				fieldName = "dateField",
+				fieldType = "Date",
+				isRequired = "false",
+				objectName = "DateObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "DateObject");
+		}
+
+	    task ("And new entries in the new Object entity") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-06-06"); 
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-02-02");
+			
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-03-03");
+		}
+
+		task ("And creating a Data Set entry, view and fields") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Custom Data Set Entry",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Date filters view",
+				key_fieldList = "dateField,id,dateCreated",
+				restApplication = "/c/dateobjects",
+				restEndpoint = "/",
+				restSchema = "DateObject");
+		}
+
+		task ("and add date filter to view") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+			DataSetAdmin.createDateFilter(
+			filterName = "Date Filter 1",
+			filterBy = "dateField",
+			fieldValueFrom = "2023-01-02",
+			valueDayFrom = 1,
+			valueMonthFrom = "January",
+			valueYearFrom = 2023,
+            fieldValueTo = "2023-03-10",
+			valueDayTo = 10,
+			valueMonthTo = "March",
+			valueYearTo = 2023);
+		}
+        task ("And adds the data set Fragment portlet in the page") {
+			DataSetFragment.setUpDataSetPage(
+				pageName = "${pageName}",
+				dataSetViewName = "Date filters view");
+		}
+
+        task ("And the filter is removed"){
+            FrontendDataSetFilters.removeFilter(key_filter = "Date Filter 1");
+            
+            FrontendDataSetFilters.openFilters();
+        }
+
+        task ("Then Confirm that only data within the filter range is shown") {
+            AssertElementPresent(
+				key_labelName = "2023-02-02T00:00:00Z",
+				key_rowPosition = 1,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+            
+            AssertElementPresent(
+				key_labelName = "2023-03-03T00:00:00Z",
+				key_rowPosition = 2,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+
+            AssertElementPresent(
+				key_labelName = "2023-06-06T00:00:00Z",
+				key_rowPosition = 3,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+        }
+    }
+
+    @description = "LPS-191295. An empty filter list is displayed when there is no filter created"
+	@priority = 4
+	test ConfirmEmptyListOfFilters {
+        task ("Given a new Object entity") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Date Object",
+				objectName = "DateObject",
+				pluralLabelName = "Date Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Date Field",
+				fieldName = "dateField",
+				fieldType = "Date",
+				isRequired = "false",
+				objectName = "DateObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "DateObject");
+		}
+
+	    task ("And new entries in the new Object entity") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-06-06"); 
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-02-02");
+			
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-03-03");
+		}
+
+		task ("And creating a Data Set entry, view and fields") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Custom Data Set Entry",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Date filters view",
+				key_fieldList = "dateField,id,dateCreated",
+				restApplication = "/c/dateobjects",
+				restEndpoint = "/",
+				restSchema = "DateObject");
+		}
+
+        task ("And adds the data set Fragment portlet in the page") {
+			DataSetFragment.setUpDataSetPage(
+				pageName = "${pageName}",
+				dataSetViewName = "Date filters view");
+		}
+
+        task ("Then confirm that the Filters button is not shown") {
+            AssertElementNotPresent(locator1 = "FrontendDataSet#FILTER_DROPDOWN");
+        }
+    }
+
+    @description = "LPS-191295. An empty filter list is displayed when we cancel the creation of a filter"
+	@priority = 4
+	test EmptyListFiltersAfterCancellingFilterCreation {
+        task ("Given a new Object entity") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Date Object",
+				objectName = "DateObject",
+				pluralLabelName = "Date Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Date Field",
+				fieldName = "dateField",
+				fieldType = "Date",
+				isRequired = "false",
+				objectName = "DateObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "DateObject");
+		}
+
+	    task ("And new entries in the new Object entity") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-06-06"); 
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-02-02");
+			
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-03-03");
+		}
+
+		task ("And creating a Data Set entry, view and fields") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Custom Data Set Entry",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Date filters view",
+				key_fieldList = "dateField,id,dateCreated",
+				restApplication = "/c/dateobjects",
+				restEndpoint = "/",
+				restSchema = "DateObject");
+		}
+
+		task ("and add date filter to view") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+			DataSetAdmin.createDateFilter(
+			    filterName = "Date Filter 1",
+			    filterBy = "dateField",
+			    fieldValueFrom = "2023-01-02",
+			    valueDayFrom = 1,
+                valueMonthFrom = "January",
+                valueYearFrom = 2023,
+                fieldValueTo = "2023-03-10",
+                valueDayTo = 10,
+                valueMonthTo = "March",
+                valueYearTo = 2023,
+                button = "Cancel");
+		}
+
+        task ("And adds the data set Fragment portlet in the page") {
+			DataSetFragment.setUpDataSetPage(
+				pageName = "${pageName}",
+				dataSetViewName = "Date filters view");
+		}
+
+        task ("And open the menu of filters"){
+            FrontendDataSetFilters.openFilters();
+        }
+
+        task ("Then confirm that the Filters button is not shown") {
+            AssertElementPresent(locator1 = "FrontendDataSet#EMPTY_FDS_TABLE_MESSAGE");
+        }
+    }
+
+    @description = "LPS-191295. It's possible to remove a filter from the fragment"
+	@priority = 4
+	test CanRemoveFilter {
+        task ("Given a new Object entity") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Date Object",
+				objectName = "DateObject",
+				pluralLabelName = "Date Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Date Field",
+				fieldName = "dateField",
+				fieldType = "Date",
+				isRequired = "false",
+				objectName = "DateObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "DateObject");
+		}
+
+	    task ("And new entries in the new Object entity") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-06-06"); 
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-02-02");
+			
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-03-03");
+		}
+
+		task ("And creating a Data Set entry, view and fields") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Custom Data Set Entry",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Date filters view",
+				key_fieldList = "dateField,id,dateCreated",
+				restApplication = "/c/dateobjects",
+				restEndpoint = "/",
+				restSchema = "DateObject");
+		}
+
+		task ("and add date filter to view") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+			DataSetAdmin.createDateFilter(
+			filterName = "Date Filter 1",
+			filterBy = "dateField",
+			fieldValueFrom = "2023-01-02",
+			valueDayFrom = 1,
+			valueMonthFrom = "January",
+			valueYearFrom = 2023,
+            fieldValueTo = "2023-03-10",
+			valueDayTo = 10,
+			valueMonthTo = "March",
+			valueYearTo = 2023);
+		}
+        task ("And adds the data set Fragment portlet in the page") {
+			DataSetFragment.setUpDataSetPage(
+				pageName = "${pageName}",
+				dataSetViewName = "Date filters view");
+		}
+
+        task ("And open the menu of filters"){
+            FrontendDataSetFilters.removeFilter(key_filter = "Date Filter 1");
+        }
+
+        task ("Then Confirm that filter 1 is not applied") {
+            FrontendDataSetCustomView.assertFilterSummaryLabel(key_filter = "Date Filter 1");
+        }
+
+        task ("Then Confirm that only data within the filter range is shown") {
+            AssertElementPresent(
+				key_labelName = "2023-02-02T00:00:00Z",
+				key_rowPosition = 1,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+            
+            AssertElementPresent(
+				key_labelName = "2023-03-03T00:00:00Z",
+				key_rowPosition = 1,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+        }
+        
+        task ("Then Confirm that the name of the created filter is shown.") {
+            AssertElementNotPresent(
+				key_filter = "Date Filter 1",
+				locator1 = "FrontendDataSet#FILTER_OPTION");
+        }
+    }
+
+    @description = "Blocked by LPS-198444 | LPS-191295. Confirm that after created a filter is displayed in the fragment and it is also possible to apply it. "
+	@ignore = "true"
+    @priority = 4
+	test CanChangeFilters {
+        // TODO LPS-191295 CanChangeFilters pending implementation
+    }
+}

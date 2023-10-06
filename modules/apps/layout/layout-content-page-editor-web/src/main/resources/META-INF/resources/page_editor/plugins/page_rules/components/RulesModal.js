@@ -77,7 +77,11 @@ export default function RulesModal({editingRule, onCloseModal}) {
 		: Liferay.Language.get('new-rule');
 
 	return (
-		<ClayModal observer={observer} size="lg">
+		<ClayModal
+			containerProps={{className: 'cadmin'}}
+			observer={observer}
+			size="lg"
+		>
 			<ClayModal.Header>{title}</ClayModal.Header>
 
 			<ClayModal.Body>

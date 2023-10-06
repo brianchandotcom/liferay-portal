@@ -424,13 +424,24 @@ public class DefaultObjectEntryManagerImplTest
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.singletonList(
+				ListUtil.fromArray(
 					new TextObjectFieldBuilder(
+					).indexed(
+						true
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						"textObjectFieldName"
+						"textObjectFieldName1"
+					).build(),
+					new TextObjectFieldBuilder(
+					).indexed(
+						true
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"textObjectFieldName2"
 					).build()));
 
 		ObjectDefinition accountEntryObjectDefinition =
@@ -1852,6 +1863,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assertObjectEntriesSize(0);
 
+		_testGetObjectEntriesWithAccountEntryRestrictedAndSearch();
+
 		// User should be able to view object entries for account entry 1 and
 		// account entry 2 because he is a member of an organization that
 		// contains account entry 1 and account entry 2.
@@ -2743,6 +2756,27 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
+	private ObjectEntry _addObjectEntry(
+			AccountEntry accountEntry, String value1, String value2)
+		throws Exception {
+
+		return _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition3,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry.getAccountEntryId()
+					).put(
+						"textObjectFieldName1", value1
+					).put(
+						"textObjectFieldName2", value2
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
+
 	private void _addRelatedObjectEntries(
 			ObjectDefinition objectDefinition1,
 			ObjectDefinition objectDefinition2,
@@ -3031,6 +3065,14 @@ public class DefaultObjectEntryManagerImplTest
 		return dlFileEntry.getFileEntryId();
 	}
 
+	private Page<ObjectEntry> _getObjectEntries(Map<String, String> context)
+		throws Exception {
+
+		return _defaultObjectEntryManager.getObjectEntries(
+			companyId, _objectDefinition3, null, null, dtoConverterContext,
+			StringPool.BLANK, null, context.get("search"), null);
+	}
+
 	private void _removeResourcePermission(String actionId, Role role)
 		throws Exception {
 
@@ -3073,6 +3115,53 @@ public class DefaultObjectEntryManagerImplTest
 
 		_removeResourcePermission(
 			ObjectActionKeys.ADD_OBJECT_ENTRY, _buyerRole);
+	}
+
+	private void _testGetObjectEntriesWithAccountEntryRestrictedAndSearch()
+		throws Exception {
+
+		_addResourcePermission(ObjectActionKeys.ADD_OBJECT_ENTRY, _buyerRole);
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+
+		_addObjectEntry(accountEntry1, "Able", "Baker");
+
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		_addObjectEntry(accountEntry2, "Charlie", "Delta");
+
+		_assignAccountEntryRole(accountEntry1, _buyerRole, _addUser());
+
+		_assignAccountEntryRole(accountEntry2, _buyerRole, _addUser());
+
+		for (String value : ListUtil.fromArray("Able", "Baker")) {
+			Page<ObjectEntry> page = _getObjectEntries(
+				HashMapBuilder.put(
+					"search", value
+				).build());
+
+			Collection<ObjectEntry> objectEntries = page.getItems();
+
+			Assert.assertEquals(
+				objectEntries.toString(), 0, objectEntries.size());
+		}
+
+		for (String value : ListUtil.fromArray("Charlie", "Delta")) {
+			Page<ObjectEntry> page = _getObjectEntries(
+				HashMapBuilder.put(
+					"search", value
+				).build());
+
+			Collection<ObjectEntry> objectEntries = page.getItems();
+
+			Assert.assertEquals(
+				objectEntries.toString(), 1, objectEntries.size());
+		}
 	}
 
 	private void _updateLocalizedObjectEntryValues(

@@ -61,6 +61,72 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	@Test
 	public void testSendNotification() throws Exception {
 
+		// Multiples emails for each main recipient, comma separator
+
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					user1.getEmailAddress(), user2.getEmailAddress())),
+			StringBundler.concat(
+				user1.getEmailAddress(), StringPool.COMMA,
+				user2.getEmailAddress()));
+
+		// Multiples emails for each main recipient, comma and space separator
+
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					user1.getEmailAddress(), user2.getEmailAddress())),
+			StringBundler.concat(
+				user1.getEmailAddress(), StringPool.COMMA_AND_SPACE,
+				user2.getEmailAddress()));
+
+		// Multiples emails for each main recipient, semicolon separator
+
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					user1.getEmailAddress(), user2.getEmailAddress())),
+			StringBundler.concat(
+				user1.getEmailAddress(), StringPool.SEMICOLON,
+				user2.getEmailAddress()));
+
+		// Multiples emails for each main recipient, with terms and comma
+		// separator
+
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					user2.getEmailAddress(),
+					GetterUtil.getString(
+						childObjectEntryValues.get("emailTextObjectField")))),
+			"[%CURRENT_USER_EMAIL_ADDRESS%]," +
+				getTermName("emailTextObjectField"));
+
+		// Multiples emails for each main recipient, with terms and comma and
+		// space separator
+
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					user2.getEmailAddress(),
+					GetterUtil.getString(
+						childObjectEntryValues.get("emailTextObjectField")))),
+			"[%CURRENT_USER_EMAIL_ADDRESS%], " +
+				getTermName("emailTextObjectField"));
+
+		// Multiples emails for each main recipient, with terms and semicolon
+		// separator
+
+		_testSendNotification(
+			ListUtil.sort(
+				Arrays.asList(
+					user2.getEmailAddress(),
+					GetterUtil.getString(
+						childObjectEntryValues.get("emailTextObjectField")))),
+			"[%CURRENT_USER_EMAIL_ADDRESS%];" +
+				getTermName("emailTextObjectField"));
+
 		// One email including all main recipients
 
 		_executeNotificationObjectAction(_addNotificationTemplate(false));
@@ -83,72 +149,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		notificationQueueEntryLocalService.deleteNotificationQueueEntry(
 			notificationQueueEntries.get(0));
-
-		// Multiples emails for each main recipients, comma separator
-
-		_testSendNotification(
-			ListUtil.sort(
-				Arrays.asList(
-					user1.getEmailAddress(), user2.getEmailAddress())),
-			StringBundler.concat(
-				user1.getEmailAddress(), StringPool.COMMA,
-				user2.getEmailAddress()));
-
-		// Multiples emails for each main recipients, comma and space separator
-
-		_testSendNotification(
-			ListUtil.sort(
-				Arrays.asList(
-					user1.getEmailAddress(), user2.getEmailAddress())),
-			StringBundler.concat(
-				user1.getEmailAddress(), StringPool.COMMA_AND_SPACE,
-				user2.getEmailAddress()));
-
-		// Multiples emails for each main recipients, semicolon separator
-
-		_testSendNotification(
-			ListUtil.sort(
-				Arrays.asList(
-					user1.getEmailAddress(), user2.getEmailAddress())),
-			StringBundler.concat(
-				user1.getEmailAddress(), StringPool.SEMICOLON,
-				user2.getEmailAddress()));
-
-		// Multiples emails for each main recipients, with terms and comma
-		// separator
-
-		_testSendNotification(
-			ListUtil.sort(
-				Arrays.asList(
-					user2.getEmailAddress(),
-					GetterUtil.getString(
-						childObjectEntryValues.get("emailTextObjectField")))),
-			"[%CURRENT_USER_EMAIL_ADDRESS%]," +
-				getTermName("emailTextObjectField"));
-
-		// Multiples emails for each main recipients, with terms and comma and
-		// space separator
-
-		_testSendNotification(
-			ListUtil.sort(
-				Arrays.asList(
-					user2.getEmailAddress(),
-					GetterUtil.getString(
-						childObjectEntryValues.get("emailTextObjectField")))),
-			"[%CURRENT_USER_EMAIL_ADDRESS%], " +
-				getTermName("emailTextObjectField"));
-
-		// Multiples emails for each main recipients, with terms and semicolon
-		// separator
-
-		_testSendNotification(
-			ListUtil.sort(
-				Arrays.asList(
-					user2.getEmailAddress(),
-					GetterUtil.getString(
-						childObjectEntryValues.get("emailTextObjectField")))),
-			"[%CURRENT_USER_EMAIL_ADDRESS%];" +
-				getTermName("emailTextObjectField"));
 	}
 
 	private NotificationTemplate _addNotificationTemplate(
@@ -288,7 +288,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			objectAction.getObjectActionId());
 	}
 
-	private void _testSendNotification(List<String> expectedTo, String to)
+	private void _testSendNotification(
+			List<String> expectedToEmailAddress, String to)
 		throws Exception {
 
 		_executeNotificationObjectAction(
@@ -315,9 +316,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.size());
 
 		_assertNotificationQueueEntry(
-			true, expectedTo.get(0), notificationQueueEntries.get(0));
+			true, expectedToEmailAddress.get(0),
+			notificationQueueEntries.get(0));
 		_assertNotificationQueueEntry(
-			true, expectedTo.get(1), notificationQueueEntries.get(1));
+			true, expectedToEmailAddress.get(1),
+			notificationQueueEntries.get(1));
 
 		for (NotificationQueueEntry notificationQueueEntry :
 				notificationQueueEntries) {

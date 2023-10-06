@@ -8,7 +8,7 @@ import {
 	getLocalizableLabel,
 	openToast,
 } from '@liferay/object-js-components-web';
-import {sub} from 'frontend-js-web';
+import {createResourceURL, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {Elements, Node, isNode} from 'react-flow-renderer';
 
@@ -58,14 +58,23 @@ export function RightSidebarObjectDefinitionDetails({
 	siteKeyValuePairs,
 }: RightSidebarObjectDefinitionDetailsProps) {
 	const [
-		{elements, selectedObjectDefinitionNode, selectedObjectFolder},
-		dispatch,
-	] = useObjectFolderContext();
-
-	const [
 		nonRelationshipObjectFieldsInfo,
 		setNonRelationshipObjectFieldsInfo,
 	] = useState<nonRelationshipObjectFieldsInfo[]>();
+	const [
+		objectDefinitionDBTableName,
+		setObjectDefinitionDBTableName,
+	] = useState('');
+
+	const [
+		{
+			baseResourceURL,
+			elements,
+			selectedObjectDefinitionNode,
+			selectedObjectFolder,
+		},
+		dispatch,
+	] = useObjectFolderContext();
 
 	const {
 		errors,
@@ -97,6 +106,24 @@ export function RightSidebarObjectDefinitionDetails({
 				const selectedObjectDefinition = await API.getObjectDefinitionByExternalReferenceCode(
 					selectedObjectDefinitionNode.data
 						?.externalReferenceCode as string
+				);
+
+				const objectDefinitionInfoURL = createResourceURL(
+					baseResourceURL,
+					{
+						objectDefinitionId:
+							selectedObjectDefinitionNode.data?.id,
+						p_p_resource_id:
+							'/object_definitions/get_object_definition_info',
+					}
+				).href;
+
+				const objectDefinitionInfoResponse = await API.fetchJSON<{
+					tableName: string;
+				}>(objectDefinitionInfoURL);
+
+				setObjectDefinitionDBTableName(
+					objectDefinitionInfoResponse.tableName
 				);
 
 				const newNonRelationshipObjectFieldsInfo = selectedObjectDefinition.objectFields
@@ -221,7 +248,7 @@ export function RightSidebarObjectDefinitionDetails({
 
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<ObjectDataContainer
-					dbTableName=""
+					dbTableName={objectDefinitionDBTableName}
 					errors={errors}
 					handleChange={handleChange}
 					hasUpdateObjectDefinitionPermission={

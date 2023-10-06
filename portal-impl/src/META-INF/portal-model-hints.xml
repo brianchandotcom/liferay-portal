@@ -1115,6 +1115,16 @@
 		<field name="createDate" type="Date" />
 		<field name="password" type="String" />
 	</model>
+	<model name="com.liferay.portal.kernel.model.PermissionPropagation">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="permissionPropagationId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="propagate" type="boolean" />
+	</model>
 	<model name="com.liferay.portal.kernel.model.Phone">
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />

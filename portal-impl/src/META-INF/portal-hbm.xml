@@ -46,6 +46,7 @@
 	<import class="com.liferay.portal.kernel.model.PasswordPolicy" />
 	<import class="com.liferay.portal.kernel.model.PasswordPolicyRel" />
 	<import class="com.liferay.portal.kernel.model.PasswordTracker" />
+	<import class="com.liferay.portal.kernel.model.PermissionPropagation" />
 	<import class="com.liferay.portal.kernel.model.Phone" />
 	<import class="com.liferay.portal.kernel.model.PluginSetting" />
 	<import class="com.liferay.portal.kernel.model.PortalPreferences" />
@@ -623,6 +624,18 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="password_" name="password" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.portal.model.impl.PermissionPropagationImpl" table="PermissionPropagation">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="permissionPropagationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="propagate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.portal.model.impl.PhoneImpl" table="Phone">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="phoneId" type="long">

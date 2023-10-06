@@ -550,7 +550,6 @@ public class GraphQLServletExtender {
 				});
 		_graphQLRequestContextValidators = ServiceTrackerListFactory.open(
 			bundleContext, GraphQLRequestContextValidator.class);
-
 		_servletContextHelperServiceRegistration =
 			bundleContext.registerService(
 				ServletContextHelper.class,

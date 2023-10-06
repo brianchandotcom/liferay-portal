@@ -7,7 +7,7 @@ package com.liferay.sharing.search.internal.permission;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.search.spi.model.permission.SearchPermissionFieldContributor;
+import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFieldContributor;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 

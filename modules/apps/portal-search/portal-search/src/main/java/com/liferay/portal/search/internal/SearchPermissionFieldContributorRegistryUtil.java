@@ -7,7 +7,7 @@ package com.liferay.portal.search.internal;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.portal.search.spi.model.permission.SearchPermissionFieldContributor;
+import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFieldContributor;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;

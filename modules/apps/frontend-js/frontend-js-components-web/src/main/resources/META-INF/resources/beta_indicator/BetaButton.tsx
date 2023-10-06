@@ -7,6 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayPopover, {ALIGN_POSITIONS} from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import classNames from 'classnames';
 import React, {useState} from 'react';
 
 import useId from '../hooks/useId';
@@ -16,9 +17,11 @@ import LearnMessage, {
 import BetaBadge, {betaClassNames} from './BetaBadge';
 
 export default function BetaButton({
+	containerClassName,
 	learnResourceContext,
 	tooltipAlign = 'top',
 }: {
+	containerClassName?: string;
 	learnResourceContext: object;
 	tooltipAlign: typeof ALIGN_POSITIONS[number];
 }) {
@@ -30,7 +33,10 @@ export default function BetaButton({
 		<LearnResourcesContext.Provider value={learnResourceContext}>
 			<ClayTooltipProvider>
 				<div
-					className="tooltip-container"
+					className={classNames(
+						'tooltip-container',
+						containerClassName
+					)}
 					data-tooltip-align={tooltipAlign}
 					title={Liferay.Language.get('open-beta-definition')}
 				>

@@ -207,7 +207,9 @@ const ItemActionForm = ({
 	}, [spritemap]);
 
 	useEffect(() => {
-		validateForm();
+		if (editing) {
+			validateForm();
+		}
 	});
 
 	const permissionKeyFormElementId = `${namespace}PermissionKey`;

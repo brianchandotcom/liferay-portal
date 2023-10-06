@@ -33,13 +33,14 @@ const ACTIONS = {
 
 	updateLayoutPageTemplateCollection(
 		{
+			dialogTitle,
 			layoutPageTemplateCollectionName,
 			updateLayoutPageTemplateCollectionURL,
 		},
 		portletNamespace
 	) {
 		openSimpleInputModal({
-			dialogTitle: Liferay.Language.get('rename-display-page-template'),
+			dialogTitle,
 			formSubmitURL: updateLayoutPageTemplateCollectionURL,
 			mainFieldLabel: Liferay.Language.get('name'),
 			mainFieldName: 'name',

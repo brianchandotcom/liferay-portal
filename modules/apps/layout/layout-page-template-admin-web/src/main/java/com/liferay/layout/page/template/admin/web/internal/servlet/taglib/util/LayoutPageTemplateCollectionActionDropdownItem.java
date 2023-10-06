@@ -8,6 +8,7 @@ package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -73,6 +74,11 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "updateLayoutPageTemplateCollection");
+							dropdownItem.putData(
+								"dialogTitle",
+								_getRenameDialogTitle(
+									_httpServletRequest,
+									layoutPageTemplateCollection));
 							dropdownItem.putData(
 								"layoutPageTemplateCollectionName",
 								layoutPageTemplateCollection.getName());
@@ -190,6 +196,20 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId()),
 			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+	}
+
+	private String _getRenameDialogTitle(
+		HttpServletRequest httpServletRequest,
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+
+		if (layoutPageTemplateCollection.getType() ==
+				LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC) {
+
+			return LanguageUtil.get(
+				httpServletRequest, "rename-page-template-set");
+		}
+
+		return LanguageUtil.get(httpServletRequest, "rename-folder");
 	}
 
 	private String _getUpdateLayoutPageTemplateCollectionURL(

@@ -2799,6 +2799,114 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_END_DATE");
 	}
 
+	@description = "LPS-98517 - Verify that tasks can be assigned to more than one user and listed with commas"
+	@priority = 3
+	test TaskReassignedToMultipleUsers {
+		task ("Given a primary user who creates a secondary Power user with a membership") {
+			WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
+
+			JSONUser.addUser(
+				userEmailAddress = "tester@liferay.com",
+				userFirstName = "tester",
+				userLastName = "tester",
+				userScreenName = "tester");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "tester@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "tester@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "tester@liferay.com");
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "People",
+				panel = "Site Administration",
+				portlet = "Memberships");
+
+			Site.assignUserAsMemberCP(
+				userFirstName = "tester",
+				userLastName = "tester",
+				userScreenName = "tester");
+		}
+
+		task ("and Given a multi task process configured to an asset") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
+
+			Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
+
+			ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "multi-task-process-workflow-definition.xml");
+
+			ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+			Button.clickPublish();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
+
+			Navigator.gotoNavItem(navItem = "Configuration");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Multi Task Process",
+				workflowResourceValue = "Blogs Entry");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("When tasks are assigned to the Power user") {
+			WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
+
+			WorkflowMetrics.goToReassignTask();
+
+			WorkflowMetrics.selectReassignTasks(taskList = "task1,task2");
+
+			AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
+
+			AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
+
+			WorkflowMetrics.selectNewAssignee(
+				nameOfAssignee = "tester tester",
+				taskList = "task1,task2");
+		}
+
+		task ("and When a task is assigned to Primary user") {
+			WorkflowMetrics.goToReassignTask();
+
+			WorkflowMetrics.selectReassignTasks(taskList = "task3");
+
+			AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
+
+			AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
+
+			WorkflowMetrics.selectNewAssignee(
+				nameOfAssignee = "Test Test",
+				taskList = "task3");
+		}
+
+		task ("Then the tasks are reassigned to multiple users, separated by commas") {
+			Refresh();
+
+			AssertElementPresent(
+				key_workflowInstanceAssignee = "Test Test, tester tester",
+				key_workflowInstanceName = "Blogs Entry: Blogs Entry Title",
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+		}
+	}
+
 	@description = "LPS-86652 - Verify that hovering the cursor on the process step, when it contains more than 1 option, the toolip will display a bullet list"
 	@priority = 3
 	test TooltipDisplaysStepsListWhenMultipleItems {
@@ -3027,14 +3135,6 @@ definition {
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
 
 		MouseOver.mouseOverNotVisible(locator1 = "WorkflowAllItems#WORKFLOW_DROPDOWN_DISABLED");
-	}
-
-	@description = "LPS-98517 - Verify that the usernames in the result table are separated by a comma when there is more than one assignee per item"
-	@priority = 3
-	test UsernamesAreSeparatedByComma {
-
-		// TODO LRQA-67751 UsernamesAreSeparatedByComma pending implementation
-
 	}
 
 	@description = "LPS-98517 - Verify that, in the item detail modal, the usernames are separated by a comma when there is more than one assignee per item under the Process Details section"

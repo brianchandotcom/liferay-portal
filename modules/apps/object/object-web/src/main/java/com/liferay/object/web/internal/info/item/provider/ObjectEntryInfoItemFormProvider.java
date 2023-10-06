@@ -676,6 +676,15 @@ public class ObjectEntryInfoItemFormProvider
 						}
 					}
 
+					boolean readOnly = false;
+
+					if (Objects.equals(
+							objectField.getReadOnly(),
+							ObjectFieldConstants.READ_ONLY_TRUE)) {
+
+						readOnly = true;
+					}
+
 					unsafeConsumer.accept(
 						_addAttributes(
 							InfoField.builder(
@@ -696,6 +705,8 @@ public class ObjectEntryInfoItemFormProvider
 								).values(
 									objectField.getLabelMap()
 								).build()
+							).readOnly(
+								readOnly
 							).required(
 								objectField.isRequired()
 							),

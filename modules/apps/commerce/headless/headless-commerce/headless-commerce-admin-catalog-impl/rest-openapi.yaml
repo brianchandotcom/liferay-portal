@@ -1108,6 +1108,18 @@ components:
                         format: bigdecimal
                         type: number
                     type: array
+                availabilityEstimateId:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                availabilityEstimateName:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: 3-5 Days
+                        it_IT: 3-5 Giorni
+                    type: object
                 displayAvailability:
                     example: true
                     type: boolean

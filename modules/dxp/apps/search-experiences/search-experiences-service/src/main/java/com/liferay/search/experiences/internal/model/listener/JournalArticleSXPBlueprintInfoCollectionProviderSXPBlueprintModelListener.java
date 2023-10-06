@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.search.experiences.internal.info.collection.provider.JournalArticleSXPBlueprintInfoCollectionProvider;
@@ -34,16 +33,13 @@ public class
 
 	@Override
 	public void onAfterCreate(SXPBlueprint sxpBlueprint) {
-		String singleSearchableAssetType = _getSingleSearchableAssetType(
-			sxpBlueprint);
-
-		if (Validator.isBlank(singleSearchableAssetType)) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-193551")) {
 			return;
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-193551") &&
-			StringUtil.equals(
-				singleSearchableAssetType, JournalArticle.class.getName())) {
+		if (StringUtil.equals(
+				_getSingleSearchableAssetType(sxpBlueprint),
+				JournalArticle.class.getName())) {
 
 			super.onAfterCreate(sxpBlueprint);
 		}

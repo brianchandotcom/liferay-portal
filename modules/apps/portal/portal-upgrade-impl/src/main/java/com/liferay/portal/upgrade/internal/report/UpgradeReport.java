@@ -458,18 +458,18 @@ public class UpgradeReport {
 		if (!Validator.isBlank(PropsValues.UPGRADE_REPORT_DIRECTORY)) {
 			reportsDir = new File(PropsValues.UPGRADE_REPORT_DIRECTORY);
 
-			if ((reportsDir != null) && !reportsDir.exists() &&
-				!reportsDir.mkdir()) {
+			if (!reportsDir.exists() && !reportsDir.mkdir()) {
+				reportsDir = null;
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Failed to generate report at " +
+						"Failed to generate the upgrade report at " +
 							PropsValues.UPGRADE_REPORT_DIRECTORY);
 				}
 			}
 		}
 
-		if ((reportsDir != null) && !reportsDir.exists()) {
+		if (reportsDir == null) {
 			if (DBUpgrader.isUpgradeClient()) {
 				reportsDir = new File(".", "reports");
 			}
@@ -477,7 +477,7 @@ public class UpgradeReport {
 				reportsDir = new File(PropsValues.LIFERAY_HOME, "reports");
 			}
 
-			if ((reportsDir != null) && !reportsDir.exists()) {
+			if (!reportsDir.exists()) {
 				reportsDir.mkdirs();
 			}
 		}

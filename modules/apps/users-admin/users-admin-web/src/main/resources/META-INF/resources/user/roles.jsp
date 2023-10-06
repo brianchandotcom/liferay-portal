@@ -186,7 +186,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 	</c:if>
 
 	<c:if test="<%= !roleGroups.isEmpty() %>">
-		<h4 class="sheet-tertiary-title"><liferay-ui:message key="inherited-regular-roles" /></h4>
+		<span class="sheet-tertiary-title"><liferay-ui:message key="inherited-regular-roles" /></span>
 
 		<liferay-ui:search-container
 			cssClass="lfr-search-container-inherited-regular-roles"
@@ -728,7 +728,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 	</c:if>
 
 	<c:if test="<%= !inheritedSiteRoles.isEmpty() %>">
-		<h4 class="sheet-tertiary-title"><liferay-ui:message key="inherited-site-roles" /></h4>
+		<span class="sheet-tertiary-title"><liferay-ui:message key="inherited-site-roles" /></span>
 
 		<liferay-ui:search-container
 			cssClass="lfr-search-container-inherited-site-roles"

@@ -20,6 +20,7 @@ AssetListEntryUsagesDisplayContext assetListEntryUsagesDisplayContext = new Asse
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 %>

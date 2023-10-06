@@ -62,6 +62,28 @@ import org.json.JSONObject;
 public abstract class BaseTopLevelBuild
 	extends BaseParentBuild implements TopLevelBuild {
 
+	public static String getReleaseRepositoryName() {
+		String portalBranchName = System.getenv("TEST_PORTAL_BRANCH_NAME");
+
+		String portalReleaseVersion = System.getenv(
+			"TEST_PORTAL_RELEASE_VERSION");
+
+		if ((portalBranchName.equals("master") &&
+			 !portalReleaseVersion.matches("\\d.+(-|.)(ga|u)\\d+")) ||
+			!portalBranchName.equals("master")) {
+
+			return "liferay-portal-ee";
+		}
+
+		return "liferay-portal";
+	}
+
+	public static boolean isReleaseBuild() {
+		String jobName = System.getenv("JOB_NAME");
+
+		return jobName.equals("test-portal-release");
+	}
+
 	@Override
 	public void addTimelineData(TimelineData timelineData) {
 		timelineData.addTimelineData(this);
@@ -758,9 +780,18 @@ public abstract class BaseTopLevelBuild
 
 		@Override
 		public RemoteGitRef getSenderRemoteGitRef() {
-			String remoteURL = JenkinsResultsParserUtil.combine(
-				"git@github.com:", getSenderUsername(), "/",
-				getRepositoryName(), ".git");
+			String remoteURL;
+
+			if (isReleaseBuild()) {
+				remoteURL = JenkinsResultsParserUtil.combine(
+					"git@github.com:", getSenderUsername(), "/",
+					getReleaseRepositoryName(), ".git");
+			}
+			else {
+				remoteURL = JenkinsResultsParserUtil.combine(
+					"git@github.com:", getSenderUsername(), "/",
+					getRepositoryName(), ".git");
+			}
 
 			return GitUtil.getRemoteGitRef(
 				getSenderBranchName(), new File("."), remoteURL);
@@ -1301,11 +1332,19 @@ public abstract class BaseTopLevelBuild
 		String senderBranchSHA =
 			workspaceBranchInformation.getSenderBranchSHA();
 
-		GitHubRemoteGitCommit gitHubRemoteGitCommit =
-			GitCommitFactory.newGitHubRemoteGitCommit(
+		GitHubRemoteGitCommit gitHubRemoteGitCommit;
+
+		if (isReleaseBuild()) {
+			gitHubRemoteGitCommit = GitCommitFactory.newGitHubRemoteGitCommit(
+				workspaceBranchInformation.getSenderUsername(),
+				getReleaseRepositoryName(), senderBranchSHA);
+		}
+		else {
+			gitHubRemoteGitCommit = GitCommitFactory.newGitHubRemoteGitCommit(
 				workspaceBranchInformation.getSenderUsername(),
 				workspaceBranchInformation.getRepositoryName(),
 				senderBranchSHA);
+		}
 
 		return Dom4JUtil.getNewElement(
 			"div", null,

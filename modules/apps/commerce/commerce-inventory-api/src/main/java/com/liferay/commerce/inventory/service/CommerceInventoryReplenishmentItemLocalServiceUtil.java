@@ -362,11 +362,12 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	public static List<CommerceInventoryReplenishmentItem>
 		getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
 			long companyId, String sku, String unitOfMeasureKey, int start,
-			int end) {
+			int end, boolean replacePermissionCheck) {
 
 		return getService().
 			getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
-				companyId, sku, unitOfMeasureKey, start, end);
+				companyId, sku, unitOfMeasureKey, start, end,
+				replacePermissionCheck);
 	}
 
 	/**

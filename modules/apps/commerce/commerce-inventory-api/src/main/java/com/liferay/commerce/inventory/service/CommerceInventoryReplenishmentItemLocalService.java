@@ -305,7 +305,7 @@ public interface CommerceInventoryReplenishmentItemLocalService
 	public List<CommerceInventoryReplenishmentItem>
 		getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
 			long companyId, String sku, String unitOfMeasureKey, int start,
-			int end);
+			int end, boolean replacePermissionCheck);
 
 	/**
 	 * Returns the number of commerce inventory replenishment items.

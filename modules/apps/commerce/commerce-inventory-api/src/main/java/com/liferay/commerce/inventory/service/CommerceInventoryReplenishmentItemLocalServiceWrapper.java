@@ -435,11 +435,12 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 			CommerceInventoryReplenishmentItem>
 				getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
 					long companyId, String sku, String unitOfMeasureKey,
-					int start, int end) {
+					int start, int end, boolean replacePermissionCheck) {
 
 		return _commerceInventoryReplenishmentItemLocalService.
 			getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
-				companyId, sku, unitOfMeasureKey, start, end);
+				companyId, sku, unitOfMeasureKey, start, end,
+				replacePermissionCheck);
 	}
 
 	/**

@@ -175,39 +175,39 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(DateFormat.MEDIUM,
 
 						<%= StringUtil.merge(displayPageTemplateInfoPanelDisplayContext.getLayoutPageTemplateCollectionPath(layoutPageTemplateCollection.getParentLayoutPageTemplateCollectionId()), " > ") %>
 					</p>
+				</div>
 
-			</div>
-
-			<div class="mb-4">
-				<p class="font-weight-semi-bold mb-0 text-3">
-					<liferay-ui:message key="created" />
-				</p>
-
-				<p class="sidebar-dd text-secondary">
-					<%= dateTimeFormat.format(layoutPageTemplateCollection.getCreateDate()) %>
-				</p>
-			</div>
-
-			<div class="mb-4">
-				<p class="font-weight-semi-bold mb-0 text-3">
-					<liferay-ui:message key="modified" />
-				</p>
-
-				<p class="sidebar-dd text-secondary">
-					<liferay-ui:message arguments="<%= new Object[] {dateTimeFormat.format(layoutPageTemplateCollection.getCreateDate()), HtmlUtil.escape(layoutPageTemplateCollection.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
-				</p>
-			</div>
-
-			<div class="mb-4">
-				<c:if test="<%= !layoutPageTemplateCollection.getDescription().isEmpty() %>">
+				<div class="mb-4">
 					<p class="font-weight-semi-bold mb-0 text-3">
-						<liferay-ui:message key="description" />
+						<liferay-ui:message key="created" />
 					</p>
 
 					<p class="sidebar-dd text-secondary">
-						<%= HtmlUtil.escape(layoutPageTemplateCollection.getDescription()) %>
+						<%= dateTimeFormat.format(layoutPageTemplateCollection.getCreateDate()) %>
 					</p>
-				</c:if>
+				</div>
+
+				<div class="mb-4">
+					<p class="font-weight-semi-bold mb-0 text-3">
+						<liferay-ui:message key="modified" />
+					</p>
+
+					<p class="sidebar-dd text-secondary">
+						<liferay-ui:message arguments="<%= new Object[] {dateTimeFormat.format(layoutPageTemplateCollection.getCreateDate()), HtmlUtil.escape(layoutPageTemplateCollection.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
+					</p>
+				</div>
+
+				<div class="mb-4">
+					<c:if test="<%= !layoutPageTemplateCollection.getDescription().isEmpty() %>">
+						<p class="font-weight-semi-bold mb-0 text-3">
+							<liferay-ui:message key="description" />
+						</p>
+
+						<p class="sidebar-dd text-secondary">
+							<%= HtmlUtil.escape(layoutPageTemplateCollection.getDescription()) %>
+						</p>
+					</c:if>
+				</div>
 			</c:if>
 		</div>
 	</c:when>

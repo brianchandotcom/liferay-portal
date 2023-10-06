@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -79,8 +78,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -343,29 +342,13 @@ public class CPFileImporterImpl implements CPFileImporter {
 		content = _getNormalizedContent(
 			content, classLoader, dependenciesFilePath, serviceContext);
 
-		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		int displayDateMonth = displayCalendar.get(Calendar.MONTH);
-		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH);
-		int displayDateYear = displayCalendar.get(Calendar.YEAR);
-		int displayDateHour = displayCalendar.get(Calendar.HOUR);
-		int displayDateMinute = displayCalendar.get(Calendar.MINUTE);
-		int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);
-
-		if (displayDateAmPm == Calendar.PM) {
-			displayDateHour += 12;
-		}
-
 		journalArticle = _journalArticleLocalService.addArticle(
 			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			0L, JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0L, articleId,
 			false, 1, titleMap, descriptionMap, titleMap, content,
 			ddmStructure.getStructureId(), ddmTemplateKey, StringPool.BLANK,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true,
-			false, 0, 0, StringPool.BLANK, null, null, StringPool.BLANK,
-			serviceContext);
+			new Date(), null, null, true, false, 0, 0, StringPool.BLANK, null,
+			null, StringPool.BLANK, serviceContext);
 
 		JSONArray permissionsJSONArray = jsonObject.getJSONArray("permissions");
 

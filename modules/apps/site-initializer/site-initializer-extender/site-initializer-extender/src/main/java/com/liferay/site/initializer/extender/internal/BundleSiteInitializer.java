@@ -152,7 +152,6 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.settings.ArchivedSettingsFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -209,8 +208,8 @@ import java.net.URLConnection;
 import java.text.DateFormat;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -2078,9 +2077,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(DDMStructure.class), ddmTemplateKey);
 
-			Calendar calendar = CalendarFactoryUtil.getCalendar(
-				serviceContext.getTimeZone());
-
 			serviceContext.setAssetCategoryIds(
 				_getAssetCategoryIds(
 					serviceContext.getScopeGroupId(),
@@ -2108,13 +2104,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 							_servletContext),
 						stringUtilReplaceValues),
 					ddmStructure.getStructureId(), ddmTemplateKey, null,
-					calendar.get(Calendar.MONTH),
-					calendar.get(Calendar.DAY_OF_MONTH),
-					calendar.get(Calendar.YEAR),
-					calendar.get(Calendar.HOUR_OF_DAY),
-					calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0,
-					0, 0, true, true, false, 0, 0, null, null, null, null,
-					serviceContext);
+					new Date(), null, null, true, false, 0, 0, null, null, null,
+					null, serviceContext);
 			}
 			else {
 				journalArticle = _journalArticleLocalService.updateArticle(
@@ -2127,13 +2118,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 							_replace(resourcePath, ".json", ".xml"),
 							_servletContext),
 						stringUtilReplaceValues),
-					ddmTemplateKey, null, calendar.get(Calendar.MONTH),
-					calendar.get(Calendar.DAY_OF_MONTH),
-					calendar.get(Calendar.YEAR),
-					calendar.get(Calendar.HOUR_OF_DAY),
-					calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0,
-					0, 0, true, true, false, 0, 0, null, null, null, null,
-					serviceContext);
+					ddmTemplateKey, null, new Date(), null, null, true, false,
+					0, 0, null, null, null, null, serviceContext);
 			}
 
 			JournalArticle finalJournalArticle = journalArticle;

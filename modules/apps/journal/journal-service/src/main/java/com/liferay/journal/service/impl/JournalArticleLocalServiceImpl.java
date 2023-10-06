@@ -162,7 +162,6 @@ import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -209,7 +208,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -634,24 +632,12 @@ public class JournalArticleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
-
-		int displayDateMonth = calendar.get(Calendar.MONTH);
-		int displayDateDay = calendar.get(Calendar.DAY_OF_MONTH);
-		int displayDateYear = calendar.get(Calendar.YEAR);
-		int displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
-		int displayDateMinute = calendar.get(Calendar.MINUTE);
-
 		return journalArticleLocalService.addArticle(
 			externalReferenceCode, userId, groupId, folderId,
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0, StringPool.BLANK,
 			true, 1, titleMap, descriptionMap, titleMap, content,
-			ddmStructureId, ddmTemplateKey, null, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null,
-			null, null, null, serviceContext);
+			ddmStructureId, ddmTemplateKey, null, new Date(), null, null, true,
+			false, 0, 0, null, null, null, null, serviceContext);
 	}
 
 	@Override
@@ -5020,103 +5006,17 @@ public class JournalArticleLocalServiceImpl
 			String layoutUuid, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
-
-		Date displayDate = article.getDisplayDate();
-
-		int displayDateMonth = 0;
-		int displayDateDay = 0;
-		int displayDateYear = 0;
-		int displayDateHour = 0;
-		int displayDateMinute = 0;
-
-		if (displayDate != null) {
-			Calendar displayCal = CalendarFactoryUtil.getCalendar(
-				user.getTimeZone());
-
-			displayCal.setTime(displayDate);
-
-			displayDateMonth = displayCal.get(Calendar.MONTH);
-			displayDateDay = displayCal.get(Calendar.DATE);
-			displayDateYear = displayCal.get(Calendar.YEAR);
-			displayDateHour = displayCal.get(Calendar.HOUR);
-			displayDateMinute = displayCal.get(Calendar.MINUTE);
-
-			if (displayCal.get(Calendar.AM_PM) == Calendar.PM) {
-				displayDateHour += 12;
-			}
-		}
-
-		Date expirationDate = article.getExpirationDate();
-
-		int expirationDateMonth = 0;
-		int expirationDateDay = 0;
-		int expirationDateYear = 0;
-		int expirationDateHour = 0;
-		int expirationDateMinute = 0;
-		boolean neverExpire = true;
-
-		if (expirationDate != null) {
-			Calendar expirationCal = CalendarFactoryUtil.getCalendar(
-				user.getTimeZone());
-
-			expirationCal.setTime(expirationDate);
-
-			expirationDateMonth = expirationCal.get(Calendar.MONTH);
-			expirationDateDay = expirationCal.get(Calendar.DATE);
-			expirationDateYear = expirationCal.get(Calendar.YEAR);
-			expirationDateHour = expirationCal.get(Calendar.HOUR);
-			expirationDateMinute = expirationCal.get(Calendar.MINUTE);
-
-			neverExpire = false;
-
-			if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
-				expirationDateHour += 12;
-			}
-		}
-
-		Date reviewDate = article.getReviewDate();
-
-		int reviewDateMonth = 0;
-		int reviewDateDay = 0;
-		int reviewDateYear = 0;
-		int reviewDateHour = 0;
-		int reviewDateMinute = 0;
-		boolean neverReview = true;
-
-		if (reviewDate != null) {
-			Calendar reviewCal = CalendarFactoryUtil.getCalendar(
-				user.getTimeZone());
-
-			reviewCal.setTime(reviewDate);
-
-			reviewDateMonth = reviewCal.get(Calendar.MONTH);
-			reviewDateDay = reviewCal.get(Calendar.DATE);
-			reviewDateYear = reviewCal.get(Calendar.YEAR);
-			reviewDateHour = reviewCal.get(Calendar.HOUR);
-			reviewDateMinute = reviewCal.get(Calendar.MINUTE);
-
-			neverReview = false;
-
-			if (reviewCal.get(Calendar.AM_PM) == Calendar.PM) {
-				reviewDateHour += 12;
-			}
-		}
 
 		return journalArticleLocalService.updateArticle(
 			userId, groupId, folderId, articleId, version, titleMap,
 			descriptionMap, null, content, article.getDDMTemplateKey(),
-			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, reviewDateMonth, reviewDateDay,
-			reviewDateYear, reviewDateHour, reviewDateMinute, neverReview,
-			article.isIndexable(), article.isSmallImage(),
-			article.getSmallImageId(), article.getSmallImageSource(),
-			article.getSmallImageURL(), null, null, null, serviceContext);
+			layoutUuid, article.getDisplayDate(), article.getExpirationDate(),
+			article.getReviewDate(), article.isIndexable(),
+			article.isSmallImage(), article.getSmallImageId(),
+			article.getSmallImageSource(), article.getSmallImageURL(), null,
+			null, null, serviceContext);
 	}
 
 	/**

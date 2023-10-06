@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -76,7 +75,6 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -97,7 +95,6 @@ import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import java.io.File;
 import java.io.InputStream;
 
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -618,8 +615,6 @@ public class JournalArticleStagedModelDataHandler
 			userId = authorId;
 		}
 
-		User user = _userLocalService.getUser(userId);
-
 		Map<Long, Long> folderIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				JournalFolder.class);
@@ -667,87 +662,6 @@ public class JournalArticleStagedModelDataHandler
 
 		String content = portletDataContext.getZipEntryAsString(
 			ExportImportPathUtil.getModelPath(article, "journal-content-path"));
-
-		Date displayDate = article.getDisplayDate();
-
-		int displayDateMonth = 0;
-		int displayDateDay = 0;
-		int displayDateYear = 0;
-		int displayDateHour = 0;
-		int displayDateMinute = 0;
-
-		if (displayDate != null) {
-			Calendar displayCal = CalendarFactoryUtil.getCalendar(
-				user.getTimeZone());
-
-			displayCal.setTime(displayDate);
-
-			displayDateMonth = displayCal.get(Calendar.MONTH);
-			displayDateDay = displayCal.get(Calendar.DATE);
-			displayDateYear = displayCal.get(Calendar.YEAR);
-			displayDateHour = displayCal.get(Calendar.HOUR);
-			displayDateMinute = displayCal.get(Calendar.MINUTE);
-
-			if (displayCal.get(Calendar.AM_PM) == Calendar.PM) {
-				displayDateHour += 12;
-			}
-		}
-
-		Date expirationDate = article.getExpirationDate();
-
-		int expirationDateMonth = 0;
-		int expirationDateDay = 0;
-		int expirationDateYear = 0;
-		int expirationDateHour = 0;
-		int expirationDateMinute = 0;
-		boolean neverExpire = true;
-
-		if (expirationDate != null) {
-			Calendar expirationCal = CalendarFactoryUtil.getCalendar(
-				user.getTimeZone());
-
-			expirationCal.setTime(expirationDate);
-
-			expirationDateMonth = expirationCal.get(Calendar.MONTH);
-			expirationDateDay = expirationCal.get(Calendar.DATE);
-			expirationDateYear = expirationCal.get(Calendar.YEAR);
-			expirationDateHour = expirationCal.get(Calendar.HOUR);
-			expirationDateMinute = expirationCal.get(Calendar.MINUTE);
-
-			neverExpire = false;
-
-			if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
-				expirationDateHour += 12;
-			}
-		}
-
-		Date reviewDate = article.getReviewDate();
-
-		int reviewDateMonth = 0;
-		int reviewDateDay = 0;
-		int reviewDateYear = 0;
-		int reviewDateHour = 0;
-		int reviewDateMinute = 0;
-		boolean neverReview = true;
-
-		if (reviewDate != null) {
-			Calendar reviewCal = CalendarFactoryUtil.getCalendar(
-				user.getTimeZone());
-
-			reviewCal.setTime(reviewDate);
-
-			reviewDateMonth = reviewCal.get(Calendar.MONTH);
-			reviewDateDay = reviewCal.get(Calendar.DATE);
-			reviewDateYear = reviewCal.get(Calendar.YEAR);
-			reviewDateHour = reviewCal.get(Calendar.HOUR);
-			reviewDateMinute = reviewCal.get(Calendar.MINUTE);
-
-			neverReview = false;
-
-			if (reviewCal.get(Calendar.AM_PM) == Calendar.PM) {
-				reviewDateHour += 12;
-			}
-		}
 
 		long classPK = 0;
 
@@ -895,6 +809,8 @@ public class JournalArticleStagedModelDataHandler
 			ServiceContext serviceContext =
 				portletDataContext.createServiceContext(article);
 
+			Date expirationDate = article.getExpirationDate();
+
 			if ((expirationDate != null) && expirationDate.before(new Date())) {
 				article.setStatus(WorkflowConstants.STATUS_EXPIRED);
 			}
@@ -949,13 +865,8 @@ public class JournalArticleStagedModelDataHandler
 						autoArticleId, article.getVersion(),
 						article.getTitleMap(), article.getDescriptionMap(),
 						friendlyURLMap, content, ddmStructureId, ddmTemplateKey,
-						article.getLayoutUuid(), displayDateMonth,
-						displayDateDay, displayDateYear, displayDateHour,
-						displayDateMinute, expirationDateMonth,
-						expirationDateDay, expirationDateYear,
-						expirationDateHour, expirationDateMinute, neverExpire,
-						reviewDateMonth, reviewDateDay, reviewDateYear,
-						reviewDateHour, reviewDateMinute, neverReview,
+						article.getLayoutUuid(), article.getDisplayDate(),
+						article.getExpirationDate(), article.getReviewDate(),
 						article.isIndexable(), article.isSmallImage(),
 						article.getSmallImageId(),
 						article.getSmallImageSource(),
@@ -968,13 +879,8 @@ public class JournalArticleStagedModelDataHandler
 						existingArticle.getArticleId(), article.getVersion(),
 						article.getTitleMap(), article.getDescriptionMap(),
 						friendlyURLMap, content, ddmTemplateKey,
-						article.getLayoutUuid(), displayDateMonth,
-						displayDateDay, displayDateYear, displayDateHour,
-						displayDateMinute, expirationDateMonth,
-						expirationDateDay, expirationDateYear,
-						expirationDateHour, expirationDateMinute, neverExpire,
-						reviewDateMonth, reviewDateDay, reviewDateYear,
-						reviewDateHour, reviewDateMinute, neverReview,
+						article.getLayoutUuid(), article.getDisplayDate(),
+						article.getExpirationDate(), article.getReviewDate(),
 						article.isIndexable(), article.isSmallImage(),
 						article.getSmallImageId(),
 						article.getSmallImageSource(),
@@ -1012,13 +918,8 @@ public class JournalArticleStagedModelDataHandler
 						autoArticleId, article.getVersion(),
 						article.getTitleMap(), article.getDescriptionMap(),
 						friendlyURLMap, content, ddmStructureId, ddmTemplateKey,
-						article.getLayoutUuid(), displayDateMonth,
-						displayDateDay, displayDateYear, displayDateHour,
-						displayDateMinute, expirationDateMonth,
-						expirationDateDay, expirationDateYear,
-						expirationDateHour, expirationDateMinute, neverExpire,
-						reviewDateMonth, reviewDateDay, reviewDateYear,
-						reviewDateHour, reviewDateMinute, neverReview,
+						article.getLayoutUuid(), article.getDisplayDate(),
+						article.getExpirationDate(), article.getReviewDate(),
 						article.isIndexable(), article.isSmallImage(), 0,
 						article.getSmallImageSource(),
 						article.getSmallImageURL(), smallFile, null, articleURL,
@@ -1030,14 +931,9 @@ public class JournalArticleStagedModelDataHandler
 						articleId, article.getVersion(), article.getTitleMap(),
 						article.getDescriptionMap(), friendlyURLMap, content,
 						ddmTemplateKey, article.getLayoutUuid(),
-						displayDateMonth, displayDateDay, displayDateYear,
-						displayDateHour, displayDateMinute, expirationDateMonth,
-						expirationDateDay, expirationDateYear,
-						expirationDateHour, expirationDateMinute, neverExpire,
-						reviewDateMonth, reviewDateDay, reviewDateYear,
-						reviewDateHour, reviewDateMinute, neverReview,
-						article.isIndexable(), article.isSmallImage(),
-						article.getSmallImageId(),
+						article.getDisplayDate(), article.getExpirationDate(),
+						article.getReviewDate(), article.isIndexable(),
+						article.isSmallImage(), article.getSmallImageId(),
 						article.getSmallImageSource(),
 						article.getSmallImageURL(), smallFile, null, articleURL,
 						serviceContext);
@@ -1081,12 +977,8 @@ public class JournalArticleStagedModelDataHandler
 					importedArticle.getArticleId(), article.getVersion(),
 					article.getTitleMap(), article.getDescriptionMap(),
 					friendlyURLMap, replacedContent, ddmTemplateKey,
-					article.getLayoutUuid(), displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					reviewDateMonth, reviewDateDay, reviewDateYear,
-					reviewDateHour, reviewDateMinute, neverReview,
+					article.getLayoutUuid(), article.getDisplayDate(),
+					article.getExpirationDate(), article.getReviewDate(),
 					article.isIndexable(), article.isSmallImage(),
 					article.getSmallImageId(), article.getSmallImageSource(),
 					article.getSmallImageURL(), smallFile, null, articleURL,

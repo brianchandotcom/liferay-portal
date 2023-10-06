@@ -1003,27 +1003,6 @@ public class JournalTestUtil {
 			displayDate = article.getDisplayDate();
 		}
 
-		int displayDateMonth = 0;
-		int displayDateDay = 0;
-		int displayDateYear = 0;
-		int displayDateHour = 0;
-		int displayDateMinute = 0;
-
-		if (displayDate != null) {
-			User user = TestPropsValues.getUser();
-
-			Calendar displayCal = CalendarFactoryUtil.getCalendar(
-				user.getTimeZone());
-
-			displayCal.setTime(displayDate);
-
-			displayDateMonth = displayCal.get(Calendar.MONTH);
-			displayDateDay = displayCal.get(Calendar.DATE);
-			displayDateYear = displayCal.get(Calendar.YEAR);
-			displayDateHour = displayCal.get(Calendar.HOUR_OF_DAY);
-			displayDateMinute = displayCal.get(Calendar.MINUTE);
-		}
-
 		serviceContext.setCommand(Constants.UPDATE);
 		serviceContext.setLayoutFullURL("http://localhost");
 
@@ -1031,10 +1010,8 @@ public class JournalTestUtil {
 			userId, article.getGroupId(), article.getFolderId(),
 			article.getArticleId(), article.getVersion(), titleMap,
 			article.getDescriptionMap(), null, content,
-			article.getDDMTemplateKey(), article.getLayoutUuid(),
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,
-			article.isIndexable(), article.isSmallImage(), 0,
+			article.getDDMTemplateKey(), article.getLayoutUuid(), displayDate,
+			null, null, article.isIndexable(), article.isSmallImage(), 0,
 			article.getSmallImageSource(), article.getSmallImageURL(), null,
 			null, null, serviceContext);
 	}

@@ -41,6 +41,7 @@ config = {
 				'fs',
 				'path',
 				'process',
+				'webpack',
 				'~',
 			],
 		],

@@ -1427,7 +1427,6 @@ com.liferay.portlet.documentlibrary.util.AudioProcessor=com.liferay.document.lib
 com.liferay.portlet.documentlibrary.util.AudioProcessorUtil=com.liferay.document.library.kernel.util.AudioProcessorUtil
 com.liferay.portlet.documentlibrary.util.DL=com.liferay.document.library.kernel.util.DL
 com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal=com.liferay.document.library.kernel.util.DLAppHelperThreadLocal
-com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor=com.liferay.document.library.kernel.util.DLPreviewableProcessor
 com.liferay.portlet.documentlibrary.util.DLProcessor=com.liferay.document.library.kernel.util.DLProcessor
 com.liferay.portlet.documentlibrary.util.DLProcessorRegistry=com.liferay.document.library.kernel.util.DLProcessorRegistry
 com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil=com.liferay.document.library.kernel.util.DLProcessorRegistryUtil

@@ -14,6 +14,8 @@ String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
 
 Ticket ticket = (Ticket)request.getAttribute(WebKeys.TICKET);
 
+String ticketId = ParamUtil.getString(request, "ticketId");
+
 String ticketKey = ParamUtil.getString(request, "ticketKey");
 
 if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") && Validator.isNotNull(ticketKey)) {
@@ -49,7 +51,7 @@ if (Validator.isNull(titlePage)) {
 			<c:when test="<%= !themeDisplay.isSignedIn() && (ticket == null) %>">
 				<div class="alert alert-warning">
 					<c:choose>
-						<c:when test='<%= (ticket == null) && (ticketKey != null) && (ticketKey.indexOf("_") == -1) %>'>
+						<c:when test="<%= (ticket == null) && (ticketKey != null) && Validator.isNull(ticketId) %>">
 							<liferay-ui:message key="this-link-format-is-no-longer-recognized-please-request-a-new-link" />
 						</c:when>
 						<c:otherwise>
@@ -93,6 +95,7 @@ if (Validator.isNull(titlePage)) {
 					<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 					<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
+					<aui:input name="ticketId" type="hidden" value="<%= ticketId %>" />
 					<aui:input name="ticketKey" type="hidden" value="<%= ticketKey %>" />
 
 					<c:if test="<%= !SessionErrors.isEmpty(request) %>">

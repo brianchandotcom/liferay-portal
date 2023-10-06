@@ -3948,8 +3948,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String passwordResetURL = StringBundler.concat(
 			serviceContext.getPortalURL(), serviceContext.getPathMain(),
 			"/portal/update_password?p_l_id=", serviceContext.getPlid(),
-			"&ticketKey=", ticket.getTicketId(), StringPool.UNDERLINE,
-			ticket.getKey());
+			"&ticketId=", ticket.getTicketId(), "&ticketKey=", ticket.getKey());
 
 		ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));
 

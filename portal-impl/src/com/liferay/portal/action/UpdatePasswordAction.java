@@ -6,7 +6,6 @@
 package com.liferay.portal.action;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
@@ -152,31 +151,23 @@ public class UpdatePasswordAction implements Action {
 	protected Ticket getTicket(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		String ticketParam = ParamUtil.getString(
-			httpServletRequest, "ticketKey");
+		String ticketId = ParamUtil.getString(httpServletRequest, "ticketId");
 
-		if (Validator.isNull(ticketParam)) {
+		String ticketKey = ParamUtil.getString(httpServletRequest, "ticketKey");
+
+		if (Validator.isNull(ticketKey) || Validator.isNull(ticketId)) {
 			return null;
 		}
 
 		try {
-			String[] ticketParts = ticketParam.split(StringPool.UNDERLINE);
-
-			if (ticketParts.length != 2) {
-				return null;
-			}
-
-			long ticketId = Long.parseLong(ticketParts[0]);
-
-			Ticket ticket = TicketLocalServiceUtil.fetchTicket(ticketId);
+			Ticket ticket = TicketLocalServiceUtil.fetchTicket(
+				Long.parseLong(ticketId));
 
 			if ((ticket == null) ||
 				(ticket.getType() != TicketConstants.TYPE_PASSWORD)) {
 
 				return null;
 			}
-
-			String ticketKey = ticketParts[1];
 
 			String encryptedTicketKey = PasswordEncryptorUtil.encrypt(
 				ticketKey, ticket.getKey());

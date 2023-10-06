@@ -80,19 +80,12 @@ public class CTEntryModelDocumentContributor
 		return locales.toArray(new Locale[0]);
 	}
 
-	private Map<Locale, String> _getChangeTypeLabeleMap(
-		Locale[] locales, long changeType) {
+	private Map<Locale, String> _getChangeTypeLabelMap(
+		Locale[] locales, int changeType) {
 
 		Map<Locale, String> map = new HashMap<>();
 
-		String changeTypeLabel = "modified";
-
-		if (changeType == CTConstants.CT_CHANGE_TYPE_ADDITION) {
-			changeTypeLabel = "added";
-		}
-		else if (changeType == CTConstants.CT_CHANGE_TYPE_DELETION) {
-			changeTypeLabel = "deleted";
-		}
+		String changeTypeLabel = CTConstants.getCTChangeTypeLabel(changeType);
 
 		for (Locale locale : locales) {
 			map.put(locale, _language.get(locale, changeTypeLabel));
@@ -155,7 +148,7 @@ public class CTEntryModelDocumentContributor
 				ctEntry.getModelClassNameId()));
 
 		document.addLocalizedText(
-			"changeTypeLabel", _getChangeTypeLabeleMap(locales, changeType),
+			"changeTypeLabel", _getChangeTypeLabelMap(locales, changeType),
 			true);
 
 		document.addLocalizedText(

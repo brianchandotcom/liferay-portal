@@ -54,24 +54,6 @@ public class CTEntryDTOConverter
 		return _toCTEntry(dtoConverterContext, ctEntry);
 	}
 
-	private <T extends BaseModel<T>> String _getChangeTypeLabel(
-		Locale locale, com.liferay.change.tracking.model.CTEntry ctEntry,
-		T model) {
-
-		int changeType = _ctDisplayRendererRegistry.getChangeType(
-			ctEntry, model);
-
-		if (changeType == CTConstants.CT_CHANGE_TYPE_ADDITION) {
-			return _language.get(locale, "added");
-		}
-
-		if (changeType == CTConstants.CT_CHANGE_TYPE_DELETION) {
-			return _language.get(locale, "deleted");
-		}
-
-		return _language.get(locale, "modified");
-	}
-
 	private Long _getSiteId(BaseModel<?> model) {
 		if (model instanceof GroupedModel) {
 			GroupedModel groupedModel = (GroupedModel)model;
@@ -120,8 +102,11 @@ public class CTEntryDTOConverter
 		return new CTEntry() {
 			{
 				actions = dtoConverterContext.getActions();
-				changeType = _getChangeTypeLabel(
-					dtoConverterContext.getLocale(), ctEntry, model);
+				changeType = _language.get(
+					dtoConverterContext.getLocale(),
+					CTConstants.getCTChangeTypeLabel(
+						_ctDisplayRendererRegistry.getChangeType(
+							ctEntry, model)));
 				ctCollectionId = ctEntry.getCtCollectionId();
 				dateCreated = ctEntry.getCreateDate();
 				dateModified = ctEntry.getModifiedDate();

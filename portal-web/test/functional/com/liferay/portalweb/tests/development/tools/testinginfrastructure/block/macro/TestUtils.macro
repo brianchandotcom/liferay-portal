@@ -132,6 +132,22 @@ return element.textContent;
 		return ${textContent};
 	}
 
+	macro getElementWidth {
+		var javascript = '''
+		let element = document.querySelector('.content-renderer-actionLink');
+
+		let width = element.offsetWidth;
+
+		let element_width = Math.round(width).toString();
+
+		return element_width;
+		''';
+
+		var element_width = selenium.getEval(${javascript});
+
+		return ${element_width};
+	}
+
 	macro getScreenHeight {
 		WaitForSPARefresh();
 

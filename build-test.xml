@@ -2134,9 +2134,9 @@ war.path=${app.server.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="is-quarterly-release">
+	<macrodef name="is-quarterly-release ">
 		<sequential>
-			<beanshell>
+			<beanshell mapId="invoke.job">
 				<![CDATA[
 					import com.liferay.jenkins.results.parser.Build;
 					import com.liferay.jenkins.results.parser.BuildFactory;

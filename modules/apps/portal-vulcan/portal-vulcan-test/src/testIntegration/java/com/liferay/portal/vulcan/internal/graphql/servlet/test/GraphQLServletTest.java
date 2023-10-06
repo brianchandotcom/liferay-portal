@@ -62,8 +62,7 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
 			invoke(
 				new GraphQLField(
-					key, new GraphQLField("field"),
-					new GraphQLField("_id"))),
+					key, new GraphQLField("field"), new GraphQLField("_id"))),
 			"JSONObject/data", "JSONObject/" + key);
 
 		TestQuery testQuery = testServletData.getQuery();
@@ -121,7 +120,8 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 						"exception", JSONUtil.put("errno", 400)
 					)
 				).put(
-					"message", "Depth 2 is greater than the query depth limit of 1"
+					"message",
+					"Depth 2 is greater than the query depth limit of 1"
 				).toString(),
 				JSONUtil.getValueAsString(
 					jsonObject, "JSONArray/errors", "Object/0"),

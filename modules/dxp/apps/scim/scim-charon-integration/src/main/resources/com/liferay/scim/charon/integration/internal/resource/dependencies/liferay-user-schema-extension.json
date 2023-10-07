@@ -1,0 +1,54 @@
+[
+	{
+		"attributeName": "birthday",
+		"attributeURI": "urn:ietf:params:scim:schemas:extension:liferay:2.0:User:birthday",
+		"canonicalValues": [
+		],
+		"caseExact": "false",
+		"dataType": "string",
+		"description": "User's birthday",
+		"multiValued": "false",
+		"mutability": "readWrite",
+		"referenceTypes": [
+		],
+		"required": "false",
+		"returned": "default",
+		"subAttributes": "null",
+		"uniqueness": "none"
+	},
+	{
+		"attributeName": "male",
+		"attributeURI": "urn:ietf:params:scim:schemas:extension:liferay:2.0:User:male",
+		"canonicalValues": [
+		],
+		"caseExact": "false",
+		"dataType": "boolean",
+		"description": "User's gender",
+		"multiValued": "false",
+		"mutability": "readWrite",
+		"referenceTypes": [
+		],
+		"required": "false",
+		"returned": "default",
+		"subAttributes": "null",
+		"uniqueness": "none"
+	},
+	{
+		"attributeName": "urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
+		"attributeURI": "urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
+		"canonicalValues": [
+		],
+		"caseExact": "false",
+		"dataType": "complex",
+		"description": "Liferay's User Schema Extension",
+		"multiValued": "false",
+		"mutability": "readWrite",
+		"referenceTypes": [
+			"external"
+		],
+		"required": "false",
+		"returned": "default",
+		"subAttributes": "birthday male",
+		"uniqueness": "none"
+	}
+]

@@ -4,4 +4,5 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.scim.client.configuration,\
 	com.liferay.scim.client.util,\
-	com.liferay.scim.resource
+	com.liferay.scim.resource,\
+	com.liferay.scim.user.manager

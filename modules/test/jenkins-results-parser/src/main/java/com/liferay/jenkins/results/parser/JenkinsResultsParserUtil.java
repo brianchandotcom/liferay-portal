@@ -1449,6 +1449,12 @@ public class JenkinsResultsParserUtil {
 		return getBuildProperty(true, propertyName);
 	}
 
+	public static String getBuildProperty(String propertyName, String... opts)
+		throws IOException {
+
+		return getProperty(getBuildProperties(true), propertyName, opts);
+	}
+
 	public static List<String> getBuildPropertyAsList(
 			boolean checkCache, String key)
 		throws IOException {
@@ -4499,6 +4505,14 @@ public class JenkinsResultsParserUtil {
 						}
 					}
 
+					if (url.contains("/o/oauth2/token")) {
+						httpURLConnection.setRequestProperty(
+							"accept", "application/json");
+						httpURLConnection.setRequestProperty(
+							"Content-Type",
+							"application/x-www-form-urlencoded");
+					}
+
 					if (postContent != null) {
 						if (httpRequestMethod == null) {
 							httpURLConnection.setRequestMethod("POST");
@@ -4867,6 +4881,17 @@ public class JenkinsResultsParserUtil {
 			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, httpRequestMethod,
 			postContent, _SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT,
 			null, false);
+	}
+
+	public static String toString(
+			String url, boolean checkCache, HttpRequestMethod httpRequestMethod,
+			String postContent, HTTPAuthorization httpAuthorizationHeader)
+		throws IOException {
+
+		return toString(
+			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, httpRequestMethod,
+			postContent, _SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT,
+			httpAuthorizationHeader, false);
 	}
 
 	public static String toString(String url, boolean checkCache, int timeout)

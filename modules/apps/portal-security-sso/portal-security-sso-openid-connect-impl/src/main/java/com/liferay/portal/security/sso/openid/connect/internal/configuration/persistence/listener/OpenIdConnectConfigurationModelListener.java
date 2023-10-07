@@ -33,7 +33,7 @@ public class OpenIdConnectConfigurationModelListener
 
 		if (tokenRefreshOffset < 30) {
 			throw new ConfigurationModelListenerException(
-				"Token refresh offset needs to be at least 30 seconds",
+				"Token refresh offset is less than 30 seconds",
 				OpenIdConnectConfiguration.class,
 				OpenIdConnectConfigurationModelListener.class, properties);
 		}

@@ -5,6 +5,7 @@
 
 package com.liferay.scim.charon.integration.internal.user.manager;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -72,8 +73,15 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public void deleteUser(String userId) throws NotImplementedException {
-		throw new NotImplementedException();
+	public void deleteUser(String userId) throws CharonException {
+		try {
+			_scimUserManager.deleteSCIMUser(
+				CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(userId));
+		}
+		catch (PortalException portalException) {
+			throw new CharonException(
+				"Unable to delete user with id " + userId, portalException);
+		}
 	}
 
 	@Override

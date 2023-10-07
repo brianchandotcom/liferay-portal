@@ -18,6 +18,9 @@ public interface SCIMUserManager {
 	public SCIMUser addOrUpdateSCIMUser(SCIMUser scimUser)
 		throws PortalException;
 
+	public void deleteSCIMUser(long companyId, long userId)
+		throws PortalException;
+
 	public SCIMUser fetchSCIMUser(long companyId, long userId);
 
 }

@@ -5,7 +5,7 @@
 
 package com.liferay.scim.internal.resource;
 
-import com.liferay.scim.resource.UserResource;
+import com.liferay.scim.resource.SCIMUserResource;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -34,63 +34,63 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.SCIM.Application)",
 		"osgi.jaxrs.resource=true"
 	},
-	service = UserResource.class
+	service = SCIMUserResource.class
 )
 @OpenAPIDefinition(
 	info = @Info(description = "SCIM 2.0 /Users endpoint", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0"), title = "/Users Endpoint Swagger Definition", version = "1.0")
 )
 @Path("/v2/Users")
-public class UserResourceImpl implements UserResource {
+public class SCIMUserResourceImpl implements SCIMUserResource {
 
 	@Consumes("application/scim+json")
 	@POST
 	@Produces({MediaType.APPLICATION_JSON, "application/scim+json"})
-	public Response createUser(String resourceString) {
-		return _userResource.createUser(resourceString);
+	public Response addSCIMUser(String resourceString) {
+		return _scimUserResource.addSCIMUser(resourceString);
 	}
 
 	@DELETE
 	@Path("/{id}")
 	@Produces({MediaType.APPLICATION_JSON, "application/scim+json"})
-	public Response deleteUser(@PathParam("id") String id) {
-		return _userResource.deleteUser(id);
+	public Response deleteSCIMUser(@PathParam("id") String id) {
+		return _scimUserResource.deleteSCIMUser(id);
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces({MediaType.APPLICATION_JSON, "application/scim+json"})
-	public Response getUser(@PathParam("id") String id) {
-		return _userResource.getUser(id);
+	public Response getSCIMUser(@PathParam("id") String id) {
+		return _scimUserResource.getSCIMUser(id);
 	}
 
 	@GET
 	@Produces({MediaType.APPLICATION_JSON, "application/scim+json"})
-	public Response listUsers(
+	public Response getSCIMUsers(
 		@QueryParam("count") int count,
 		@QueryParam("startIndex") int startIndex) {
 
-		return _userResource.listUsers(count, startIndex);
+		return _scimUserResource.getSCIMUsers(count, startIndex);
 	}
 
 	@Consumes("application/scim+json")
 	@Path("/.search")
 	@POST
 	@Produces({MediaType.APPLICATION_JSON, "application/scim+json"})
-	public Response searchUser(String resourceString) {
-		return _userResource.searchUser(resourceString);
+	public Response getSCIMUsers(String resourceString) {
+		return _scimUserResource.getSCIMUsers(resourceString);
 	}
 
 	@Consumes("application/scim+json")
 	@Path("/{id}")
 	@Produces({MediaType.APPLICATION_JSON, "application/scim+json"})
 	@PUT
-	public Response updateUser(
+	public Response updateSCIMUser(
 		@PathParam("id") String id, String resourceString) {
 
-		return _userResource.updateUser(id, resourceString);
+		return _scimUserResource.updateSCIMUser(id, resourceString);
 	}
 
 	@Reference
-	private UserResource _userResource;
+	private SCIMUserResource _scimUserResource;
 
 }

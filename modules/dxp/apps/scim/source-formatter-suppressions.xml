@@ -4,6 +4,6 @@
 	<source-check>
 		<suppress checks="JavaLongLinesCheck" files="scim-impl/src/main/java/com/liferay/scim/internal/jaxrs/application/GroupResource\.java" />
 		<suppress checks="JavaLongLinesCheck" files="scim-impl/src/main/java/com/liferay/scim/internal/jaxrs/application/ServiceProviderResource\.java" />
-		<suppress checks="JavaLongLinesCheck" files="scim-impl/src/main/java/com/liferay/scim/internal/jaxrs/application/UserResource\.java" />
+		<suppress checks="JavaLongLinesCheck" files="scim-impl/src/main/java/com/liferay/scim/internal/resource/UserResourceImpl\.java" />
 	</source-check>
 </suppressions>

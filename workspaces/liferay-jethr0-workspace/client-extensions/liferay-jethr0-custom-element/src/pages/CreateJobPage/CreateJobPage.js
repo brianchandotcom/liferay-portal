@@ -21,7 +21,8 @@ function CreateJobPage() {
 	const [jobPriority, setJobPriority] = useState(4);
 	const [jobTypeKey, setJobTypeKey] = useState('portalPullRequestSF');
 	const [jobTypes, setJobTypes] = useState(null);
-	const [pullRequestURL, setPullRequestURL] = useState(null);
+	const [portalPullRequestURL, setPortalPullRequestURL] = useState(null);
+	const [testSuiteName, setTestSuiteName] = useState('sf');
 
 	function redirectToJobPage(data) {
 		const json = JSON.parse(data);
@@ -71,8 +72,9 @@ function CreateJobPage() {
 		jenkinsGitHubURL,
 		name: jobName,
 		priority: jobPriority,
-		pullRequestURL,
+		portalPullRequestURL,
 		state: 'opened',
+		testSuiteName,
 		type: jobTypeKey,
 	};
 
@@ -144,15 +146,29 @@ function CreateJobPage() {
 				</ClayForm.Group>
 
 				<ClayForm.Group>
-					<label htmlFor="pullRequestURL">Pull Request URL</label>
+					<label htmlFor="portalPullRequestURL">Portal Pull Request URL</label>
 
 					<ClayInput
-						id="pullRequestURL"
+						id="portalPullRequestURL"
 						onChange={(event) => {
-							setPullRequestURL(event.target.value);
+							setPortalPullRequestURL(event.target.value);
 						}}
-						placeholder="Insert your Pull Request URL here"
+						placeholder="Insert your Portal Pull Request URL here"
 						type="text"
+					/>
+				</ClayForm.Group>
+
+				<ClayForm.Group>
+					<label htmlFor="testSuiteName">Test Suite Name</label>
+
+					<ClayInput
+						id="testSuiteName"
+						onChange={(event) => {
+							setTestSuiteName(event.target.value);
+						}}
+						placeholder="Insert your Test Suite Name here"
+						type="text"
+						value={testSuiteName}
 					/>
 				</ClayForm.Group>
 

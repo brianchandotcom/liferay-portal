@@ -24,8 +24,11 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		JobEntity.Type jobEntityType = JobEntity.Type.getByKey(
 			typeJSONObject.getString("key"));
 
-		if (jobEntityType == JobEntity.Type.PORTAL_PULL_REQUEST_SF) {
-			return new PortalPullRequestSFJobEntity(jsonObject);
+		if (jobEntityType == JobEntity.Type.PORTAL_PULL_REQUEST) {
+			return new DefaultPortalPullRequestJobEntity(jsonObject);
+		}
+		else if (jobEntityType == JobEntity.Type.PORTAL_PULL_REQUEST_SF) {
+			return new SFPortalPullRequestJobEntity(jsonObject);
 		}
 
 		return new DefaultJobEntity(jsonObject);

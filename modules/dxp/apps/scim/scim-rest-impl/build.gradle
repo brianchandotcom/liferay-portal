@@ -13,4 +13,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:scim:scim-rest-api")
+	compileOnly project(":dxp:apps:scim:scim-api")
 }

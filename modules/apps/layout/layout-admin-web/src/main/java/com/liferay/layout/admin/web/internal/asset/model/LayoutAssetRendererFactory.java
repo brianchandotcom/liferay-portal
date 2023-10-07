@@ -43,16 +43,7 @@ public class LayoutAssetRendererFactory
 	}
 
 	@Override
-	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException {
-		return getAssetEntry(getClassName(), assetEntryId);
-	}
-
-	@Override
-	public AssetEntry getAssetEntry(String className, long classPK)
-		throws PortalException {
-
-		Layout layout = _layoutLocalService.getLayout(classPK);
-
+	public AssetEntry getAssetEntry(Layout layout) throws PortalException {
 		User user = _userLocalService.fetchUser(layout.getUserId());
 
 		if (user == null) {
@@ -60,7 +51,7 @@ public class LayoutAssetRendererFactory
 		}
 
 		AssetEntry assetEntry = _assetEntryLocalService.createAssetEntry(
-			classPK);
+			layout.getPlid());
 
 		assetEntry.setGroupId(layout.getGroupId());
 		assetEntry.setCompanyId(user.getCompanyId());
@@ -73,6 +64,18 @@ public class LayoutAssetRendererFactory
 		assetEntry.setTitle(layout.getHTMLTitle(LocaleUtil.getSiteDefault()));
 
 		return assetEntry;
+	}
+
+	@Override
+	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException {
+		return getAssetEntry(getClassName(), assetEntryId);
+	}
+
+	@Override
+	public AssetEntry getAssetEntry(String className, long classPK)
+		throws PortalException {
+
+		return getAssetEntry(_layoutLocalService.getLayout(classPK));
 	}
 
 	@Override

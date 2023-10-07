@@ -53,13 +53,18 @@ public class KBArticleAssetRendererFactory
 	}
 
 	@Override
+	public AssetEntry getAssetEntry(KBArticle kbArticle)
+		throws PortalException {
+
+		return super.getAssetEntry(getClassName(), kbArticle.getClassPK());
+	}
+
+	@Override
 	public AssetEntry getAssetEntry(String className, long classPK)
 		throws PortalException {
 
-		KBArticle kbArticle = _getKBArticle(
-			classPK, WorkflowConstants.STATUS_ANY);
-
-		return super.getAssetEntry(className, kbArticle.getClassPK());
+		return getAssetEntry(
+			_getKBArticle(classPK, WorkflowConstants.STATUS_ANY));
 	}
 
 	@Override

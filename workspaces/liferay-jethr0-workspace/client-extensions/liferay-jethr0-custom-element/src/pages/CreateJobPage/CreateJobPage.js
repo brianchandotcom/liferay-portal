@@ -71,8 +71,8 @@ function CreateJobPage() {
 	const jobData = {
 		jenkinsGitHubURL,
 		name: jobName,
-		priority: jobPriority,
 		portalPullRequestURL,
+		priority: jobPriority,
 		state: 'opened',
 		testSuiteName,
 		type: jobTypeKey,
@@ -146,7 +146,9 @@ function CreateJobPage() {
 				</ClayForm.Group>
 
 				<ClayForm.Group>
-					<label htmlFor="portalPullRequestURL">Portal Pull Request URL</label>
+					<label htmlFor="portalPullRequestURL">
+						Portal Pull Request URL
+					</label>
 
 					<ClayInput
 						id="portalPullRequestURL"

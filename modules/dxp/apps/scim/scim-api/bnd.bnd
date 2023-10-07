@@ -1,0 +1,4 @@
+Bundle-Name: Liferay SCIM API
+Bundle-SymbolicName: com.liferay.scim.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.scim.resource

@@ -33,9 +33,7 @@ public class DefaultPortalPullRequestJobEntity
 	protected DefaultPortalPullRequestJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
-
-		_portalPullRequestURL = jsonObject.optString(
-			"portalPullRequestURL");
+		_portalPullRequestURL = jsonObject.optString("portalPullRequestURL");
 
 		_testSuiteName = jsonObject.optString("testSuiteName");
 	}
@@ -66,8 +64,7 @@ public class DefaultPortalPullRequestJobEntity
 			return _pullRequestNumber;
 		}
 
-		Matcher matcher = _pullRequestURLPattern.matcher(
-			_portalPullRequestURL);
+		Matcher matcher = _pullRequestURLPattern.matcher(_portalPullRequestURL);
 
 		if (matcher.find()) {
 			_pullRequestNumber = Long.valueOf(matcher.group("number"));
@@ -83,8 +80,7 @@ public class DefaultPortalPullRequestJobEntity
 			return _receiverUserName;
 		}
 
-		Matcher matcher = _pullRequestURLPattern.matcher(
-			_portalPullRequestURL);
+		Matcher matcher = _pullRequestURLPattern.matcher(_portalPullRequestURL);
 
 		if (matcher.find()) {
 			_receiverUserName = matcher.group("receiverUserName");
@@ -96,10 +92,12 @@ public class DefaultPortalPullRequestJobEntity
 	}
 
 	private static final Pattern _pullRequestURLPattern = Pattern.compile(
-		"https://github.com/(?<receiverUserName>[^/]+)/liferay-portal/pull/(?<number>\\d+)");
+		StringUtil.combine(
+			"https://github.com/(?<receiverUserName>[^/]+)/liferay-portal",
+			"/pull/(?<number>\\d+)"));
 
-	private long _pullRequestNumber;
 	private final String _portalPullRequestURL;
+	private long _pullRequestNumber;
 	private String _receiverUserName;
 	private String _testSuiteName;
 

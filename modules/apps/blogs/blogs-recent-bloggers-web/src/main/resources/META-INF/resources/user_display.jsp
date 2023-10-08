@@ -35,6 +35,6 @@ BlogsStatsUser statsUser = (BlogsStatsUser)objArray[0];
 	</div>
 
 	<div class="blogger-date">
-		<span><liferay-ui:message key="date" />:</span> <%= dateFormatDate.format(statsUser.getLastPostDate()) %>
+		<span><liferay-ui:message key="date" />:</span> <%= dateFormat.format(statsUser.getLastPostDate()) %>
 	</div>
 </liferay-user:user-display>

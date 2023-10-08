@@ -87,7 +87,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 						<clay:col
 							md="6"
 						>
-							<%= dateFormatDateTime.format(batchPlannerPlanDisplay.getCreateDate()) %>
+							<%= dateTimeFormat.format(batchPlannerPlanDisplay.getCreateDate()) %>
 						</clay:col>
 					</clay:row>
 
@@ -101,7 +101,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 						<clay:col
 							md="6"
 						>
-							<%= dateFormatDateTime.format(batchPlannerPlanDisplay.getModifiedDate()) %>
+							<%= dateTimeFormat.format(batchPlannerPlanDisplay.getModifiedDate()) %>
 						</clay:col>
 					</clay:row>
 

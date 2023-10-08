@@ -61,7 +61,7 @@ BatchPlannerPlanTemplateManagementToolbarDisplayContext batchPlannerPlanTemplate
 
 				<liferay-ui:search-container-column-text
 					name="create-date"
-					value="<%= dateFormatDateTime.format(batchPlannerPlanTemplateDisplay.getCreateDate()) %>"
+					value="<%= dateTimeFormat.format(batchPlannerPlanTemplateDisplay.getCreateDate()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

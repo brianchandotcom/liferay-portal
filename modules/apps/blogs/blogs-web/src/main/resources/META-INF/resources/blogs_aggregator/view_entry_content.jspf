@@ -44,7 +44,7 @@
 
 								<span> - </span>
 								<span class="hide-accessible sr-only"><liferay-ui:message key="published-date" /></span>
-								<%= dateFormatDate.format(entry.getDisplayDate()) %>
+								<%= dateFormat.format(entry.getDisplayDate()) %>
 							</small>
 						</div>
 					</c:when>
@@ -55,7 +55,7 @@
 
 								<span> - </span>
 								<span class="hide-accessible sr-only"><liferay-ui:message key="published-date" /></span>
-								<%= dateFormatDate.format(entry.getDisplayDate()) %>
+								<%= dateFormat.format(entry.getDisplayDate()) %>
 							</small>
 						</div>
 					</c:otherwise>

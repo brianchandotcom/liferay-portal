@@ -64,7 +64,7 @@ SearchContainer<BatchPlannerPlanDisplay> batchPlannerPlanDisplaySearchContainer 
 
 			<liferay-ui:search-container-column-text
 				name="creation-date"
-				value="<%= dateFormatDateTime.format(batchPlannerPlanDisplay.getCreateDate()) %>"
+				value="<%= dateTimeFormat.format(batchPlannerPlanDisplay.getCreateDate()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

@@ -121,7 +121,7 @@ User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 
 					<c:if test="<%= !message.isAnonymous() %>">
 						<span class="h5 text-default">
-							<span><liferay-ui:message key="join-date" />:</span> <%= dateFormatDate.format(messageUser.getCreateDate()) %>
+							<span><liferay-ui:message key="join-date" />:</span> <%= dateFormat.format(messageUser.getCreateDate()) %>
 						</span>
 					</c:if>
 

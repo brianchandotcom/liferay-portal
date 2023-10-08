@@ -214,7 +214,7 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 							String displayDateString = StringPool.BLANK;
 
 							if (kbArticle.getDisplayDate() != null) {
-								displayDateString = dateFormatDateTime.format(kbArticle.getDisplayDate());
+								displayDateString = dateTimeFormat.format(kbArticle.getDisplayDate());
 							}
 							%>
 
@@ -226,7 +226,7 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 							String expirationDateString = StringPool.BLANK;
 
 							if (kbArticle.getExpirationDate() != null) {
-								expirationDateString = dateFormatDateTime.format(kbArticle.getExpirationDate());
+								expirationDateString = dateTimeFormat.format(kbArticle.getExpirationDate());
 							}
 							%>
 

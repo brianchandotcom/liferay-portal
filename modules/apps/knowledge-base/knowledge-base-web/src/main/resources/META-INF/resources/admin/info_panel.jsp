@@ -222,13 +222,13 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 							<liferay-ui:message key="create-date" />
 						</dt>
 						<dd class="sidebar-dd">
-							<%= dateFormatDateTime.format(kbArticle.getCreateDate()) %>
+							<%= dateTimeFormat.format(kbArticle.getCreateDate()) %>
 						</dd>
 						<dt class="sidebar-dt">
 							<liferay-ui:message key="modified-date" />
 						</dt>
 						<dd class="sidebar-dd">
-							<%= dateFormatDateTime.format(kbArticle.getModifiedDate()) %>
+							<%= dateTimeFormat.format(kbArticle.getModifiedDate()) %>
 						</dd>
 						<dt class="sidebar-dt">
 							<liferay-ui:message key="expiration-date" />
@@ -236,7 +236,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 						<dd class="sidebar-dd">
 							<c:choose>
 								<c:when test="<%= kbArticle.getExpirationDate() != null %>">
-									<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(kbArticle.getExpirationDate()), HtmlUtil.escape(kbArticle.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= new Object[] {dateTimeFormat.format(kbArticle.getExpirationDate()), HtmlUtil.escape(kbArticle.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
 								</c:when>
 								<c:otherwise>
 									<liferay-ui:message key="never-expire" />
@@ -249,7 +249,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 						<dd class="sidebar-dd">
 							<c:choose>
 								<c:when test="<%= kbArticle.getReviewDate() != null %>">
-									<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(kbArticle.getReviewDate()), HtmlUtil.escape(kbArticle.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= new Object[] {dateTimeFormat.format(kbArticle.getReviewDate()), HtmlUtil.escape(kbArticle.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
 								</c:when>
 								<c:otherwise>
 									<liferay-ui:message key="never-review" />

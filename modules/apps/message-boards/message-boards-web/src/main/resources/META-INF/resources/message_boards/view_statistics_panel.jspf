@@ -115,11 +115,11 @@
 					</p>
 
 					<p class="list-group-subtitle">
-						<liferay-ui:message key="join-date" />: <%= dateFormatDate.format(topUser.getCreateDate()) %>
+						<liferay-ui:message key="join-date" />: <%= dateFormat.format(topUser.getCreateDate()) %>
 					</p>
 
 					<p class="list-group-subtitle">
-						<liferay-ui:message key="last-post-date" />: <%= dateFormatDate.format(lastPostDate) %>
+						<liferay-ui:message key="last-post-date" />: <%= dateFormat.format(lastPostDate) %>
 					</p>
 				</liferay-ui:search-container-column-text>
 			</c:if>

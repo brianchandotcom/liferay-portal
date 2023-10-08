@@ -33,7 +33,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 				</div>
 
 				<div class="list-group-subtitle">
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(curKBArticle.getUserName()), dateFormatDateTime.format(curKBArticle.getModifiedDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(curKBArticle.getUserName()), dateTimeFormat.format(curKBArticle.getModifiedDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 				</div>
 			</div>
 

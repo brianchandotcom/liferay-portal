@@ -98,7 +98,7 @@ if (threadFlag != null) {
 			</a>
 		</td>
 		<td class="table-cell" style="white-space: nowrap;">
-			<a href="<%= rowHREF %>"><%= dateFormatDateTime.format(message.getModifiedDate()) %></a>
+			<a href="<%= rowHREF %>"><%= dateTimeFormat.format(message.getModifiedDate()) %></a>
 		</td>
 	</tr>
 </c:if>

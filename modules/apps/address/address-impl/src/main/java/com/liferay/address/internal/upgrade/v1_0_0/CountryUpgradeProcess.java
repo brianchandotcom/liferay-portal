@@ -178,17 +178,6 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _updateRegionCounter() throws Exception {
-		try (Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(
-				"select max(regionId) from Region")) {
-
-			if (resultSet.next()) {
-				increment(Region.class.getName(), (int)resultSet.getLong(1));
-			}
-		}
-	}
-
 	private JSONArray _getJSONArray(String path) throws Exception {
 		return JSONFactoryUtil.createJSONArray(
 			StringUtil.read(_classLoader, path, false));
@@ -336,6 +325,17 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 			JSONObject regionJSONObject = regionsJSONArray.getJSONObject(i);
 
 			_addRegion(company, countryId, regionJSONObject);
+		}
+	}
+
+	private void _updateRegionCounter() throws Exception {
+		try (Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+				"select max(regionId) from Region")) {
+
+			if (resultSet.next()) {
+				increment(Region.class.getName(), (int)resultSet.getLong(1));
+			}
 		}
 	}
 

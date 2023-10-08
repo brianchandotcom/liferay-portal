@@ -48,7 +48,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_defineRegionCounter();
+		_updateRegionCounter();
 
 		_companyLocalService.forEachCompany(
 			company -> {
@@ -178,7 +178,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _defineRegionCounter() throws Exception {
+	private void _updateRegionCounter() throws Exception {
 		try (Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
 				"select max(regionId) from Region")) {

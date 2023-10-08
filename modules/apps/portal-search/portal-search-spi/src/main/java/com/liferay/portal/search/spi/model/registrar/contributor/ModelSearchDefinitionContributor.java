@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.spi.model.registrar.contributor;
 
-import com.liferay.portal.search.spi.model.registrar.ModelSearchDefinition;
+import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
 /**
  * @author André de Oliveira
@@ -13,6 +13,6 @@ import com.liferay.portal.search.spi.model.registrar.ModelSearchDefinition;
 @FunctionalInterface
 public interface ModelSearchDefinitionContributor {
 
-	public void contribute(ModelSearchDefinition modelSearchDefinition);
+	public void contribute(ModelSearchConfigurator<?> modelSearchConfigurator);
 
 }

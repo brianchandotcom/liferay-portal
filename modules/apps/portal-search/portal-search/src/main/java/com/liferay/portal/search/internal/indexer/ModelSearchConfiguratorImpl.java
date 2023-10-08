@@ -18,26 +18,18 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityCon
 public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 	implements ModelSearchConfigurator<T> {
 
-	public ModelSearchConfiguratorImpl(
-		ModelIndexerWriterContributor<T> modelIndexerWriterContributor,
-		ModelVisibilityContributor modelVisibilityContributor,
-		ModelSearchSettings modelSearchSettings,
-		ModelSummaryContributor modelSummaryContributor) {
-
-		_modelIndexerWriterContributor = modelIndexerWriterContributor;
-		_modelVisibilityContributor = modelVisibilityContributor;
-		_modelSearchSettings = modelSearchSettings;
-		_modelSummaryContributor = modelSummaryContributor;
+	public ModelSearchConfiguratorImpl(String className) {
+		_modelSearchSettingsImpl = new ModelSearchSettingsImpl(className);
 	}
 
 	@Override
 	public ModelIndexerWriterContributor<T> getModelIndexerWriterContributor() {
-		return _modelIndexerWriterContributor;
+		return (ModelIndexerWriterContributor<T>)_modelIndexerWriterContributor;
 	}
 
 	@Override
 	public ModelSearchSettings getModelSearchSettings() {
-		return _modelSearchSettings;
+		return _modelSearchSettingsImpl;
 	}
 
 	@Override
@@ -50,10 +42,69 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 		return _modelVisibilityContributor;
 	}
 
-	private final ModelIndexerWriterContributor<T>
-		_modelIndexerWriterContributor;
-	private final ModelSearchSettings _modelSearchSettings;
-	private final ModelSummaryContributor _modelSummaryContributor;
-	private final ModelVisibilityContributor _modelVisibilityContributor;
+	@Override
+	public void setDefaultSelectedFieldNames(
+		String... defaultSelectedFieldNames) {
+
+		_modelSearchSettingsImpl.setDefaultSelectedFieldNames(
+			defaultSelectedFieldNames);
+	}
+
+	@Override
+	public void setDefaultSelectedLocalizedFieldNames(
+		String... defaultSelectedLocalizedFieldNames) {
+
+		_modelSearchSettingsImpl.setDefaultSelectedLocalizedFieldNames(
+			defaultSelectedLocalizedFieldNames);
+	}
+
+	@Override
+	public void setModelIndexWriteContributor(
+		ModelIndexerWriterContributor<?> modelIndexWriterContributor) {
+
+		_modelIndexerWriterContributor = modelIndexWriterContributor;
+	}
+
+	@Override
+	public void setModelSummaryContributor(
+		ModelSummaryContributor modelSummaryContributor) {
+
+		_modelSummaryContributor = modelSummaryContributor;
+	}
+
+	@Override
+	public void setModelVisibilityContributor(
+		ModelVisibilityContributor modelVisibilityContributor) {
+
+		_modelVisibilityContributor = modelVisibilityContributor;
+	}
+
+	@Override
+	public void setPermissionAware(boolean permissionAware) {
+		_modelSearchSettingsImpl.setPermissionAware(permissionAware);
+	}
+
+	@Override
+	public void setSearchResultPermissionFilterSuppressed(
+		boolean searchResultPermissionFilterSuppressed) {
+
+		_modelSearchSettingsImpl.setSearchResultPermissionFilterSuppressed(
+			searchResultPermissionFilterSuppressed);
+	}
+
+	@Override
+	public void setSelectAllLocales(boolean selectAllLocales) {
+		_modelSearchSettingsImpl.setSelectAllLocales(selectAllLocales);
+	}
+
+	@Override
+	public void setStagingAware(boolean stagingAware) {
+		_modelSearchSettingsImpl.setStagingAware(stagingAware);
+	}
+
+	private ModelIndexerWriterContributor<?> _modelIndexerWriterContributor;
+	private final ModelSearchSettingsImpl _modelSearchSettingsImpl;
+	private ModelSummaryContributor _modelSummaryContributor;
+	private ModelVisibilityContributor _modelVisibilityContributor;
 
 }

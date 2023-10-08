@@ -283,12 +283,12 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 						"regionLocalizationId, companyId, regionId, ",
 						"languageId, title) values (?, ?, ?, ?, ?, ?)"))) {
 
+			_countryPreparedStatement = countryPreparedStatement;
 			_countryLocalizationPreparedStatement =
 				countryLocalizationPreparedStatement;
-			_countryPreparedStatement = countryPreparedStatement;
+			_regionPreparedStatement = regionPreparedStatement;
 			_regionLocalizationPreparedStatement =
 				regionLocalizationPreparedStatement;
-			_regionPreparedStatement = regionPreparedStatement;
 
 			for (int i = 0; i < countriesJSONArray.length(); i++) {
 				JSONObject countryJSONObject = countriesJSONArray.getJSONObject(
@@ -298,8 +298,11 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 			}
 
 			_countryPreparedStatement.executeBatch();
+
 			_countryLocalizationPreparedStatement.executeBatch();
+
 			_regionPreparedStatement.executeBatch();
+
 			_regionLocalizationPreparedStatement.executeBatch();
 		}
 	}

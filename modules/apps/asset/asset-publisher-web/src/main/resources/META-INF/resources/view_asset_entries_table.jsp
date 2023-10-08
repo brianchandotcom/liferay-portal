@@ -156,17 +156,17 @@ if (stageableGroup.isLayout()) {
 										String value = null;
 
 										if (Objects.equals(metadataField, "create-date")) {
-											value = dateFormatDate.format(assetEntry.getCreateDate());
+											value = dateFormat.format(assetEntry.getCreateDate());
 										}
 										else if (Objects.equals(metadataField, "modified-date")) {
-											value = dateFormatDate.format(assetEntry.getModifiedDate());
+											value = dateFormat.format(assetEntry.getModifiedDate());
 										}
 										else if (Objects.equals(metadataField, "publish-date")) {
 											if (assetEntry.getPublishDate() == null) {
 												value = StringPool.BLANK;
 											}
 											else {
-												value = dateFormatDate.format(assetEntry.getPublishDate());
+												value = dateFormat.format(assetEntry.getPublishDate());
 											}
 										}
 										else if (Objects.equals(metadataField, "expiration-date")) {
@@ -174,7 +174,7 @@ if (stageableGroup.isLayout()) {
 												value = StringPool.BLANK;
 											}
 											else {
-												value = dateFormatDate.format(assetEntry.getExpirationDate());
+												value = dateFormat.format(assetEntry.getExpirationDate());
 											}
 										}
 										else if (Objects.equals(metadataField, "priority")) {

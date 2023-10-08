@@ -33,9 +33,9 @@ AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.
 	String publishDateString = StringPool.BLANK;
 
 	if (assetEntry.getPublishDate() != null) {
-		Format displayFormatDate = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMM d, yyyy", locale, timeZone);
+		Format displayDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMM d, yyyy", locale, timeZone);
 
-		publishDateString = CharPool.OPEN_PARENTHESIS + displayFormatDate.format(assetEntry.getPublishDate()) + CharPool.CLOSE_PARENTHESIS;
+		publishDateString = CharPool.OPEN_PARENTHESIS + displayDateFormat.format(assetEntry.getPublishDate()) + CharPool.CLOSE_PARENTHESIS;
 	}
 	%>
 

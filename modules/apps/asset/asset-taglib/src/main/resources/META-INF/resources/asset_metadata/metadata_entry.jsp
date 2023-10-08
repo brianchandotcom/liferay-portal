@@ -34,18 +34,18 @@ else if (metadataField.equals("categories")) {
 	}
 }
 else if (metadataField.equals("create-date")) {
-	value = dateFormatDate.format(assetEntry.getCreateDate());
+	value = dateFormat.format(assetEntry.getCreateDate());
 }
 else if (metadataField.equals("expiration-date")) {
 	if (assetEntry.getExpirationDate() == null) {
 		value = StringPool.BLANK;
 	}
 	else {
-		value = dateFormatDate.format(assetEntry.getExpirationDate());
+		value = dateFormat.format(assetEntry.getExpirationDate());
 	}
 }
 else if (metadataField.equals("modified-date")) {
-	value = dateFormatDate.format(assetEntry.getModifiedDate());
+	value = dateFormat.format(assetEntry.getModifiedDate());
 }
 else if (metadataField.equals("priority")) {
 	value = LanguageUtil.get(resourceBundle, "priority") + StringPool.COLON + StringPool.SPACE + assetEntry.getPriority();
@@ -55,7 +55,7 @@ else if (metadataField.equals("publish-date")) {
 		value = StringPool.BLANK;
 	}
 	else {
-		value = dateFormatDate.format(assetEntry.getPublishDate());
+		value = dateFormat.format(assetEntry.getPublishDate());
 	}
 }
 else if (metadataField.equals("tags")) {

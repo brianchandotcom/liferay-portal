@@ -44,5 +44,5 @@ page import="java.util.Objects" %>
 <portlet:defineObjects />
 
 <%
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+Format dateFormat = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

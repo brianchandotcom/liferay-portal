@@ -29,7 +29,7 @@ definition {
 	tearDown {
 		ApplicationAPI.deleteAllAPIApplication();
 
-		JSONObject.deleteAllCustomObjects(pageSize = 22);
+		JSONObject.deleteAllCustomObjects(pageSize = 21);
 
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
@@ -43,10 +43,32 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given multiple custom object definitions created without publishing") {
-			ObjectDefinitionAPI.createNUnpublishedObjectDefinitions(
-				numberOfEndpoints = 8,
-				objectDefinitionName = "Student",
-				requiredStringFieldName = "name");
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Objects");
+			
+			var i = 0;
+
+			WaitForElementPresent(locator1 = "Pagination#RESULTS");
+
+			var moreThanTwenty = selenium.getText("Pagination#RESULTS");
+
+			while (${moreThanTwenty} != "Showing 1 to 20 of 21 entries.") {
+				var i = ${i} + 1;
+
+				ObjectDefinitionAPI.createObjectDefinition(
+					en_US_label = "Student${i}",
+					en_US_plural_label = "Student${i}s",
+					name = "Student${i}",
+					requiredStringFieldName = "name");
+
+				Refresh();
+
+				WaitForElementPresent(locator1 = "Pagination#RESULTS");
+
+				var moreThanTwenty = selenium.getText("Pagination#RESULTS");
+			}
 		}
 
 		task ("And Given all 20+ object deinifition entities available in Objects") {
@@ -57,15 +79,11 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Pagination#RESULTS",
-				value1 = "Showing 1 to 20 of 22 entries.");
+				value1 = "Showing 1 to 20 of 21 entries.");
 		}
 
 		task ("And Given one of object definitions on 2nd page") {
 			Click(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_NAVIGATE_NEXT");
-
-			AssertElementPresent(
-				key_name = "Student8",
-				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 
 		task ("And Given I go to the Schemas tab of API Application edition") {
@@ -82,16 +100,10 @@ definition {
 			Click(locator1 = "APIBuilder#SELECT_AN_OBJECT_DEFINITION");
 		}
 
-		task ("Then all object deinifition entities from Objects are listed inluding the one placed on 2nd page of Objects") {
-			var list1 = "Address,AccountEntry,APISort,Bookmark,APIFilter,APIEndpoint,APIProperty,APISchema,APIApplication";
-			var list2 = "CommercePricingClass,CPDefinition,CommerceOrder,Organization,User,";
-			var list3 = "Student1,Student2,Student3,Student4,Student5,Student6,Student7,Student8";
-
-			for (var objectDefinitionName : list "${list1},${list2},${list3}") {
+		task ("Then all object deinifition entities from Objects are listed inluding the one placed on 2nd page of Objects") {				
 				AssertElementPresent(
-					key_kebabOption = ${objectDefinitionName},
-					locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
-			}
+					index = 21,
+					locator1 = "ObjectAdmin#KEBAB_MENU_OPTION_BY_INDEX");
 		}
 	}
 

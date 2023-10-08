@@ -441,6 +441,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>KEBAB_MENU_OPTION_BY_INDEX</td>
+		<td>xpath=(//*[@class='dropdown-menu show']//*[(@class='dropdown-item' and @role='menuitem')])[${index}]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>BODY_VERTICAL_ELLIPSIS</td>
 		<td>//div[contains(@class,'table-list-title')]/../../../*[contains(.,'${key_value}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 		<td></td>

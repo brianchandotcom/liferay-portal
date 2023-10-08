@@ -50,7 +50,6 @@ public class ModelSearchRegistrarHelperImpl
 		return bundleContext.registerService(
 			ModelSearchConfigurator.class,
 			new ModelSearchConfiguratorImpl<>(
-				bundleContext,
 				modelSearchDefinitionImpl._modelIndexWriterContributor,
 				modelSearchDefinitionImpl._modelVisibilityContributor,
 				modelSearchDefinitionImpl._modelSearchSettingsImpl,

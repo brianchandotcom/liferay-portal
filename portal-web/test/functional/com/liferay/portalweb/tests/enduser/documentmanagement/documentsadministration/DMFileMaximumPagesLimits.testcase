@@ -53,8 +53,8 @@ definition {
 			value1 = 3);
 
 		AssertTextEquals(
-			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL_TEXT",
-			value1 = "This limit is higher than the System Settings limit. Please enter a maximum number of pages no larger than 2.");
+			locator1 = "Message#ERROR",
+			value1 = "This limit is higher than the System Settings limit. Please enter a maximum value no larger than 2.");
 
 		SystemSettings.saveConfiguration();
 
@@ -88,8 +88,8 @@ definition {
 		}
 
 		AssertTextEquals.assertPartialText(
-			key_title = "Click to jump to a page.",
-			locator1 = "Button#ANY_TITLE",
+			key_text = "Page 1 / 1",
+			locator1 = "Button#ANY",
 			value1 = "Page 1 / 1");
 	}
 
@@ -127,8 +127,8 @@ definition {
 			value1 = 3);
 
 		AssertTextEquals(
-			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL_TEXT",
-			value1 = "This limit is higher than the Instance Settings limit. Please enter a maximum number of pages no larger than 2.");
+			locator1 = "Message#ERROR",
+			value1 = "This limit is higher than the System Settings limit. Please enter a maximum value no larger than 2.");
 
 		SystemSettings.saveConfiguration();
 
@@ -162,8 +162,8 @@ definition {
 		}
 
 		AssertTextEquals.assertPartialText(
-			key_title = "Click to jump to a page.",
-			locator1 = "Button#ANY_TITLE",
+			key_text = "Page 1 / 1",
+			locator1 = "Button#ANY",
 			value1 = "Page 1 / 1");
 	}
 
@@ -229,8 +229,8 @@ definition {
 		}
 
 		AssertTextEquals.assertPartialText(
-			key_title = "Click to jump to a page.",
-			locator1 = "Button#ANY_TITLE",
+			key_text = "Page 1 / 1",
+			locator1 = "Button#ANY",
 			value1 = "Page 1 / 1");
 	}
 

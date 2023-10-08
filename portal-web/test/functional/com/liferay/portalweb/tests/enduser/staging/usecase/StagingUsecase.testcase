@@ -1191,8 +1191,10 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-190360. TC-3: User can publish WC to live directly from the portlet and can see Staging recommendation."
 	@priority = 4
 	test PublishPortlet {
+		property custom.properties = "feature.flag.LPS-190129=true";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -1208,8 +1210,26 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Then: User add can publish it directly from the portlet") {
-			Staging.publishToLiveNowViaPortletCP();
+		task ("Then: User can publish it directly from the portlet") {
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
+
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+			AssertTextEquals(
+				locator1 = "Message#WARNING",
+				value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
+
+			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
+
+			Confirm(value1 = "Are you sure you want to publish to live and update the existing application data?");
+
+			WaitForElementPresent(locator1 = "Staging#STAGING_STATUS_PORTLET");
+
+			AssertTextEquals(
+				locator1 = "Staging#STAGING_STATUS_PORTLET",
+				value1 = "Successful");
+
+			IFrame.closeFrame();
 		}
 	}
 

@@ -278,7 +278,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							<p class="sidebar-dt"><liferay-ui:message key="display-date" /></p>
 
 							<p class="sidebar-dd">
-								<%= dateFormatDateTime.format(article.getDisplayDate()) %>
+								<%= dateTimeFormat.format(article.getDisplayDate()) %>
 							</p>
 						</c:if>
 
@@ -291,7 +291,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						<p class="sidebar-dd">
 							<c:choose>
 								<c:when test="<%= expirationDate != null %>">
-									<%= dateFormatDateTime.format(expirationDate) %>
+									<%= dateTimeFormat.format(expirationDate) %>
 								</c:when>
 								<c:otherwise>
 									<liferay-ui:message key="never-expire" />
@@ -308,7 +308,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						<p class="sidebar-dd">
 							<c:choose>
 								<c:when test="<%= reviewDate != null %>">
-									<%= dateFormatDateTime.format(reviewDate) %>
+									<%= dateTimeFormat.format(reviewDate) %>
 								</c:when>
 								<c:otherwise>
 									<liferay-ui:message key="never-review" />
@@ -333,7 +333,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 										</div>
 
 										<div class="list-group-subtitle">
-											<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(articleVersion.getUserName()), dateFormatDateTime.format(articleVersion.getStatusDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
+											<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(articleVersion.getUserName()), dateTimeFormat.format(articleVersion.getStatusDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 										</div>
 
 										<div>
@@ -457,7 +457,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						<p class="sidebar-dt"><liferay-ui:message key="display-date" /></p>
 
 						<p class="sidebar-dd">
-							<%= dateFormatDateTime.format(article.getDisplayDate()) %>
+							<%= dateTimeFormat.format(article.getDisplayDate()) %>
 						</p>
 					</c:if>
 
@@ -470,7 +470,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 					<p class="sidebar-dd">
 						<c:choose>
 							<c:when test="<%= expirationDate != null %>">
-								<%= dateFormatDateTime.format(expirationDate) %>
+								<%= dateTimeFormat.format(expirationDate) %>
 							</c:when>
 							<c:otherwise>
 								<liferay-ui:message key="never-expire" />
@@ -487,7 +487,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 					<p class="sidebar-dd">
 						<c:choose>
 							<c:when test="<%= reviewDate != null %>">
-								<%= dateFormatDateTime.format(reviewDate) %>
+								<%= dateTimeFormat.format(reviewDate) %>
 							</c:when>
 							<c:otherwise>
 								<liferay-ui:message key="never-review" />

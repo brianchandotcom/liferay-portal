@@ -38,18 +38,18 @@ String range = MapUtil.getString(parameterMap, "range");
 		<c:when test="<%= range.equals(ExportImportDateUtil.RANGE_DATE_RANGE) %>">
 
 			<%
-			Format displayFormatDate = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.FULL, FastDateFormatConstants.SHORT, locale, timeZone);
+			Format displayDateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.FULL, FastDateFormatConstants.SHORT, locale, timeZone);
 
 			DateRange dateRange = ExportImportDateUtil.getDateRange(exportImportConfigurationId);
 
-			String startDateString = displayFormatDate.format(dateRange.getStartDate());
+			String startDateString = displayDateTimeFormat.format(dateRange.getStartDate());
 			%>
 
 			<div><liferay-ui:message key="modified-or-created-between" />:</div>
 
 			<div>
 				<%= startDateString + StringPool.SPACE + LanguageUtil.get(request, "and") %><br />
-				<%= displayFormatDate.format(dateRange.getEndDate()) %>
+				<%= displayDateTimeFormat.format(dateRange.getEndDate()) %>
 			</div>
 		</c:when>
 	</c:choose>

@@ -137,7 +137,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 						>
 							<c:choose>
 								<c:when test="<%= article.isScheduled() %>">
-									<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(article.getTitle(locale)), dateFormatDateTime.format(article.getDisplayDate())} %>" key="x-is-scheduled-and-will-be-displayed-on-x" />
+									<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(article.getTitle(locale)), dateTimeFormat.format(article.getDisplayDate())} %>" key="x-is-scheduled-and-will-be-displayed-on-x" />
 								</c:when>
 								<c:otherwise>
 									<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />

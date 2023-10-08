@@ -27,12 +27,12 @@ public class TranslationEntrySearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 			TranslationEntry.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.CONTENT, Field.GROUP_ID,
 					Field.MODIFIED_DATE, Field.UID);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
 			});
 	}

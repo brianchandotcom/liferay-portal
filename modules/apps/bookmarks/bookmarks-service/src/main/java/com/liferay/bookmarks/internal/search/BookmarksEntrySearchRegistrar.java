@@ -28,15 +28,15 @@ public class BookmarksEntrySearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 			BookmarksEntry.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					Field.ASSET_TAG_NAMES, Field.COMPANY_ID,
 					Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 					Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
 					Field.TITLE, Field.UID, Field.URL);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
-				modelSearchDefinition.setModelSummaryContributor(
+				modelSearchConfigurator.setModelSummaryContributor(
 					modelSummaryContributor);
 			});
 	}

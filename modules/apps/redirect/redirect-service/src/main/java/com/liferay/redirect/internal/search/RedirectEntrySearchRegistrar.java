@@ -27,11 +27,11 @@ public class RedirectEntrySearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = _modelSearchRegistrarHelper.register(
 			RedirectEntry.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					Field.COMPANY_ID, Field.GROUP_ID, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.MODIFIED_DATE, Field.UID);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					_modelIndexWriterContributor);
 			});
 	}

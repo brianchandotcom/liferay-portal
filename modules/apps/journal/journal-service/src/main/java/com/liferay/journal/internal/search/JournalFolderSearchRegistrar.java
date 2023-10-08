@@ -28,17 +28,17 @@ public class JournalFolderSearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 			JournalFolder.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.UID);
-				modelSearchDefinition.setDefaultSelectedLocalizedFieldNames(
+				modelSearchConfigurator.setDefaultSelectedLocalizedFieldNames(
 					Field.DESCRIPTION, Field.TITLE);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
-				modelSearchDefinition.setModelSummaryContributor(
+				modelSearchConfigurator.setModelSummaryContributor(
 					modelSummaryContributor);
-				modelSearchDefinition.setSelectAllLocales(true);
+				modelSearchConfigurator.setSelectAllLocales(true);
 			});
 	}
 

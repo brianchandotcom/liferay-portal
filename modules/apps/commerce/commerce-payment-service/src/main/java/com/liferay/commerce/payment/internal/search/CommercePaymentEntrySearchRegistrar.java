@@ -27,13 +27,13 @@ public class CommercePaymentEntrySearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = _modelSearchRegistrarHelper.register(
 			CommercePaymentEntry.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setModelIndexWriteContributor(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					_modelIndexWriterContributor);
-				modelSearchDefinition.setModelSummaryContributor(
+				modelSearchConfigurator.setModelSummaryContributor(
 					_modelSummaryContributor);
-				modelSearchDefinition.setSearchResultPermissionFilterSuppressed(
-					true);
+				modelSearchConfigurator.
+					setSearchResultPermissionFilterSuppressed(true);
 			});
 	}
 

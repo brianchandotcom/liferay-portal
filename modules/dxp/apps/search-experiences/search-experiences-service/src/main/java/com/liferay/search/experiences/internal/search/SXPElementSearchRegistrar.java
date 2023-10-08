@@ -28,17 +28,17 @@ public class SXPElementSearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 			SXPElement.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.HIDDEN,
 					Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID, Field.UID,
 					"readOnly");
-				modelSearchDefinition.setDefaultSelectedLocalizedFieldNames(
+				modelSearchConfigurator.setDefaultSelectedLocalizedFieldNames(
 					Field.DESCRIPTION, Field.TITLE);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
-				modelSearchDefinition.setModelSummaryContributor(
+				modelSearchConfigurator.setModelSummaryContributor(
 					modelSummaryContributor);
 			});
 	}

@@ -27,10 +27,10 @@ public class CommercePaymentEntryAuditSearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = _modelSearchRegistrarHelper.register(
 			CommercePaymentEntryAudit.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setModelIndexWriteContributor(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					_modelIndexWriterContributor);
-				modelSearchDefinition.setModelSummaryContributor(
+				modelSearchConfigurator.setModelSummaryContributor(
 					_modelSummaryContributor);
 			});
 	}

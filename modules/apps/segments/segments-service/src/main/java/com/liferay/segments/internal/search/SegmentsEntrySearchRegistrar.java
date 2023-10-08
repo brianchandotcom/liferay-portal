@@ -29,16 +29,16 @@ public class SegmentsEntrySearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 			SegmentsEntry.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
 					Field.SCOPE_GROUP_ID, Field.UID, SegmentsEntryField.ACTIVE);
-				modelSearchDefinition.setDefaultSelectedLocalizedFieldNames(
+				modelSearchConfigurator.setDefaultSelectedLocalizedFieldNames(
 					Field.DESCRIPTION, Field.NAME);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
-				modelSearchDefinition.setModelSummaryContributor(
+				modelSearchConfigurator.setModelSummaryContributor(
 					modelSummaryContributor);
 			});
 	}

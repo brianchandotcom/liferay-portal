@@ -29,17 +29,17 @@ public class DLFileEntrySearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 			DLFileEntry.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					Field.ASSET_TAG_NAMES, Field.COMPANY_ID, Field.CONTENT,
 					Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 					Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
 					Field.TITLE, Field.UID);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
-				modelSearchDefinition.setModelVisibilityContributor(
+				modelSearchConfigurator.setModelVisibilityContributor(
 					modelVisibilityContributor);
-				modelSearchDefinition.setModelSummaryContributor(
+				modelSearchConfigurator.setModelSummaryContributor(
 					modelSummaryContributor);
 			});
 	}

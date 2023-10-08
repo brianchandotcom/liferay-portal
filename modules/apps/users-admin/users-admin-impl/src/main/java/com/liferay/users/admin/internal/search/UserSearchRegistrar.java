@@ -28,18 +28,18 @@ public class UserSearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 			User.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					Field.ASSET_TAG_NAMES, Field.COMPANY_ID,
 					Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 					Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
 					Field.UID, Field.USER_ID);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
-				modelSearchDefinition.setModelSummaryContributor(
+				modelSearchConfigurator.setModelSummaryContributor(
 					modelSummaryContributor);
-				modelSearchDefinition.setSearchResultPermissionFilterSuppressed(
-					true);
+				modelSearchConfigurator.
+					setSearchResultPermissionFilterSuppressed(true);
 			});
 	}
 

@@ -27,16 +27,16 @@ public class KaleoTaskInstanceTokenSearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 			KaleoTaskInstanceToken.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.UID);
-				modelSearchDefinition.setDefaultSelectedLocalizedFieldNames(
+				modelSearchConfigurator.setDefaultSelectedLocalizedFieldNames(
 					KaleoTaskInstanceTokenField.ASSET_DESCRIPTION,
 					KaleoTaskInstanceTokenField.ASSET_TITLE);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
-				modelSearchDefinition.setPermissionAware(false);
+				modelSearchConfigurator.setPermissionAware(false);
 			});
 	}
 

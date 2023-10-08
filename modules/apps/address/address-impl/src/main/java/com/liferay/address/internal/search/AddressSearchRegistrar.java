@@ -27,15 +27,15 @@ public class AddressSearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 			Address.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.MODIFIED_DATE, Field.NAME,
 					Field.TYPE, Field.UID);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
-				modelSearchDefinition.setSearchResultPermissionFilterSuppressed(
-					true);
+				modelSearchConfigurator.
+					setSearchResultPermissionFilterSuppressed(true);
 			});
 	}
 

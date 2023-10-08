@@ -29,8 +29,8 @@ public class CPDefinitionSearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = _modelSearchRegistrarHelper.register(
 			CPDefinition.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					CPField.DEFAULT_IMAGE_FILE_URL,
 					CPField.DEFAULT_IMAGE_FILE_URL, CPField.DEPTH,
 					CPField.HEIGHT, CPField.IS_IGNORE_SKU_COMBINATIONS,
@@ -38,15 +38,15 @@ public class CPDefinitionSearchRegistrar {
 					Field.COMPANY_ID, Field.DESCRIPTION, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
 					Field.NAME, Field.SCOPE_GROUP_ID, Field.UID, Field.URL);
-				modelSearchDefinition.setDefaultSelectedLocalizedFieldNames(
+				modelSearchConfigurator.setDefaultSelectedLocalizedFieldNames(
 					Field.NAME);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					_modelIndexWriterContributor);
-				modelSearchDefinition.setModelSummaryContributor(
+				modelSearchConfigurator.setModelSummaryContributor(
 					_modelSummaryContributor);
-				modelSearchDefinition.setPermissionAware(false);
-				modelSearchDefinition.setSearchResultPermissionFilterSuppressed(
-					true);
+				modelSearchConfigurator.setPermissionAware(false);
+				modelSearchConfigurator.
+					setSearchResultPermissionFilterSuppressed(true);
 			});
 	}
 

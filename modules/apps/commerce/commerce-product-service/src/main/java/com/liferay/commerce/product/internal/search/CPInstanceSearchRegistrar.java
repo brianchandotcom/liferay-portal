@@ -29,17 +29,17 @@ public class CPInstanceSearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = _modelSearchRegistrarHelper.register(
 			CPInstance.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					CPField.SKU, Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
 					Field.SCOPE_GROUP_ID, Field.UID);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					_modelIndexWriterContributor);
-				modelSearchDefinition.setModelSummaryContributor(
+				modelSearchConfigurator.setModelSummaryContributor(
 					_modelSummaryContributor);
-				modelSearchDefinition.setSearchResultPermissionFilterSuppressed(
-					true);
+				modelSearchConfigurator.
+					setSearchResultPermissionFilterSuppressed(true);
 			});
 	}
 

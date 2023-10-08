@@ -27,11 +27,11 @@ public class MBThreadSearcherRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 			MBThread.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					Field.CLASS_NAME_ID, Field.CLASS_PK, Field.COMPANY_ID,
 					Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
 			});
 	}

@@ -7,9 +7,7 @@ package com.liferay.contacts.internal.search;
 
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.registrar.ModelSearchDefinition;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
-import com.liferay.portal.search.spi.model.registrar.contributor.ModelSearchDefinitionContributor;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import org.osgi.framework.BundleContext;
@@ -29,18 +27,11 @@ public class ContactSearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 			Contact.class, bundleContext,
-			new ModelSearchDefinitionContributor() {
-
-				@Override
-				public void contribute(
-					ModelSearchDefinition modelSearchDefinition) {
-
-					modelSearchDefinition.setModelIndexWriteContributor(
-						modelIndexWriterContributor);
-					modelSearchDefinition.setModelSummaryContributor(
-						modelSummaryContributor);
-				}
-
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setModelIndexWriteContributor(
+					modelIndexWriterContributor);
+				modelSearchConfigurator.setModelSummaryContributor(
+					modelSummaryContributor);
 			});
 	}
 

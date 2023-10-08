@@ -28,15 +28,15 @@ public class AccountGroupSearchRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 			AccountGroup.class, bundleContext,
-			modelSearchDefinition -> {
-				modelSearchDefinition.setDefaultSelectedFieldNames(
+			modelSearchConfigurator -> {
+				modelSearchConfigurator.setDefaultSelectedFieldNames(
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.UID);
-				modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
-				modelSearchDefinition.setSearchResultPermissionFilterSuppressed(
-					true);
-				modelSearchDefinition.setModelSummaryContributor(
+				modelSearchConfigurator.
+					setSearchResultPermissionFilterSuppressed(true);
+				modelSearchConfigurator.setModelSummaryContributor(
 					_modelSummaryContributor);
 			});
 	}

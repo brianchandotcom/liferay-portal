@@ -327,10 +327,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()),
 			_modelSearchRegistrarHelper.register(
 				objectDefinition.getClassName(), _bundleContext,
-				modelSearchDefinition -> {
-					modelSearchDefinition.setModelIndexWriteContributor(
+				modelSearchConfigurator -> {
+					modelSearchConfigurator.setModelIndexWriteContributor(
 						objectEntryModelIndexerWriterContributor);
-					modelSearchDefinition.setModelSummaryContributor(
+					modelSearchConfigurator.setModelSummaryContributor(
 						objectEntryModelSummaryContributor);
 				}),
 			_objectRelatedModelsProviderRegistrarHelper.register(

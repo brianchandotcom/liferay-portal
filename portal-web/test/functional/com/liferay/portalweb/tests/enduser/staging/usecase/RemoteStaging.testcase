@@ -37,9 +37,10 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPP-8122. Verify that when remote publishing, the child pages are not published when they are unselected."
+	@description = "This is a use case for LPP-8122 and LPS-190360 TC-2. Verify that when remote publishing, the child pages are not published when they are unselected."
 	@priority = 3
 	test AssertCannotPublishChildPageWhenUnselected {
+		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}feature.flag.LPS-190129=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -59,7 +60,15 @@ definition {
 
 			Staging.gotoPublishToLive();
 
+			AssertTextEquals(
+				locator1 = "Message#WARNING",
+				value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
+
 			Staging.configurePublishToLive(uncheckChildPagesNameList = "Test Child Page 1,Test Child Page 2");
+
+			AssertTextEquals(
+				locator1 = "Message#WARNING",
+				value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
 
 			Staging.publishToLive(remoteStaging = "true");
 		}
@@ -559,9 +568,10 @@ definition {
 			assetTitle = "DM Document Type Title");
 	}
 
-	@description = "Web contents are only published if their content date is in correspondence with the content data range of the publish configuration."
+	@description = "This is a use case for LRQA-7589 and LPS-190360 TC-6. Web contents are only published if their content date is in correspondence with the content data range of the publish configuration."
 	@priority = 3
 	test StagingRemoteLiveWebContent {
+		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}feature.flag.LPS-190129=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -625,6 +635,10 @@ definition {
 
 		Staging.addCustomPublication();
 
+		AssertTextEquals(
+			locator1 = "Message#WARNING",
+			value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
+
 		Staging.configurePublishToLive(
 			contentDateRange = "Date Range",
 			dateRangeEndDate = '''10/12/2019''',
@@ -674,9 +688,10 @@ definition {
 			structureName = "Structure Name");
 	}
 
-	@description = "This is a use case for LPS-82839. Web contents can be published on remote staging."
+	@description = "This is a use case for LPS-82839 and LPS-190360 TC-4. Web contents can be published on remote staging."
 	@priority = 3
 	test StagingRemoteLiveWebContentViaPortletCP {
+		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}feature.flag.LPS-190129=true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -695,7 +710,25 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		Staging.publishToLiveNowViaPortletCP();
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertTextEquals(
+			locator1 = "Message#WARNING",
+			value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
+
+		ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
+
+		Confirm(value1 = "Are you sure you want to publish to live and update the existing application data?");
+
+		WaitForElementPresent(locator1 = "Staging#STAGING_STATUS_PORTLET");
+
+		AssertTextEquals(
+			locator1 = "Staging#STAGING_STATUS_PORTLET",
+			value1 = "Successful");
+
+		IFrame.closeFrame();
 
 		User.logoutPG();
 

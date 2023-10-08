@@ -920,10 +920,10 @@ definition {
 			selectedAsset = "Web Content Article");
 	}
 
-	@description = "This is a use case for LPS-189191. TC-1: Verify that the admin could configure staging to ignore previews and thumbnails during the local staging publish process."
+	@description = "This is a use case for LPS-189191 and LPS-190360. TC-1: Verify that the admin could configure staging to ignore previews and thumbnails during the local staging publish process."
 	@priority = 3
 	test ConfigureIgnorePreviewsAndThumbnails {
-		property custom.properties = "feature.flag.LPS-189187=true";
+		property custom.properties = "feature.flag.LPS-189187=true${line.separator}feature.flag.LPS-190129=true";
 		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Verify that the checkbox Include Thumbnails And Previews During Staging is checked by default") {
@@ -961,12 +961,20 @@ definition {
 				siteName = "Site Name");
 
 			Staging.gotoPublishToLive();
+
+			AssertTextEquals(
+				locator1 = "Message#WARNING",
+				value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
 		}
 
 		task ("Then: Assert the Previews and Thumbnails are displayed under DM item") {
 			Staging.configurePublishToLive(
 				checkContentNameList = "Documents and Media",
 				includeThumbnailsAndPreviewsDuringStaging = "true");
+
+			AssertTextEquals(
+				locator1 = "Message#WARNING",
+				value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
 
 			Staging.publishToLive();
 
@@ -2943,9 +2951,10 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This is a use case for LPS-110838."
+	@description = "This is a use case for LPS-110838 and LPS-190360 TC-5."
 	@priority = 3
 	test StagingWithReplicateIndividualDeletionsByDefault {
+		property custom.properties = "feature.flag.LPS-190129=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -2996,6 +3005,10 @@ definition {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.addCustomPublication();
+
+		AssertTextEquals(
+			locator1 = "Message#WARNING",
+			value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
 
 		Staging.viewDefaultConfiguration(configurationNameList = "Replicate Individual Deletions");
 

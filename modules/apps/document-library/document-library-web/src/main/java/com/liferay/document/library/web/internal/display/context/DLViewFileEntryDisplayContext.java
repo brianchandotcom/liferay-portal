@@ -188,7 +188,7 @@ public class DLViewFileEntryDisplayContext {
 		if (!fileEntry.hasLock()) {
 			Lock lock = _getLock();
 
-			Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+			Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
 				locale, _themeDisplay.getTimeZone());
 
 			return _language.format(
@@ -200,7 +200,7 @@ public class DLViewFileEntryDisplayContext {
 						_portal.getUserName(
 							lock.getUserId(),
 							String.valueOf(lock.getUserId()))),
-					dateFormatDateTime.format(lock.getCreateDate())
+					dateTimeFormat.format(lock.getCreateDate())
 				},
 				false);
 		}

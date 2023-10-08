@@ -944,7 +944,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			timeZone = TimeZone.getTimeZone(StringPool.UTC);
 		}
 
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(), timeZone);
 
 		return StringUtil.replace(
@@ -955,9 +955,9 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			},
 			new String[] {
 				calendarBooking.getDescription(themeDisplay.getLocale()),
-				dateFormatDateTime.format(calendarBooking.getEndTime()),
+				dateTimeFormat.format(calendarBooking.getEndTime()),
 				calendarBooking.getLocation(),
-				dateFormatDateTime.format(calendarBooking.getStartTime()),
+				dateTimeFormat.format(calendarBooking.getStartTime()),
 				calendarBooking.getTitle(themeDisplay.getLocale())
 			});
 	}

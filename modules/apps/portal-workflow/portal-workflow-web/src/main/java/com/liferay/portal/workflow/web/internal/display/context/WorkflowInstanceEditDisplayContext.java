@@ -196,7 +196,7 @@ public class WorkflowInstanceEditDisplayContext
 				workflowInstanceRequestHelper.getRequest(), "never");
 		}
 
-		return dateFormatDateTime.format(workflowTask.getDueDate());
+		return dateTimeFormat.format(workflowTask.getDueDate());
 	}
 
 	public Object getTaskInitiallyAssignedMessageArguments(
@@ -249,7 +249,7 @@ public class WorkflowInstanceEditDisplayContext
 				workflowInstanceRequestHelper.getRequest(), "never");
 		}
 
-		return dateFormatDateTime.format(workflowInstance.getEndDate());
+		return dateTimeFormat.format(workflowInstance.getEndDate());
 	}
 
 	public String getWorkflowLogComment(WorkflowLog workflowLog) {
@@ -260,7 +260,7 @@ public class WorkflowInstanceEditDisplayContext
 	}
 
 	public String getWorkflowLogCreateDate(WorkflowLog workflowLog) {
-		return dateFormatDateTime.format(workflowLog.getCreateDate());
+		return dateTimeFormat.format(workflowLog.getCreateDate());
 	}
 
 	public List<WorkflowLog> getWorkflowLogs() throws WorkflowException {

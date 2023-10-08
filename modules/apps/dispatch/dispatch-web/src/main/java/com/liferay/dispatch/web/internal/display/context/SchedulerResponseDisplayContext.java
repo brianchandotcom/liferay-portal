@@ -38,7 +38,7 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 
 		_schedulerResponseManager = schedulerResponseManager;
 
-		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+		_dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
 			dispatchRequestHelper.getLocale());
 	}
 
@@ -50,7 +50,7 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 			schedulerResponse.getStorageType());
 
 		if (nextFireDate != null) {
-			return _dateFormatDateTime.format(nextFireDate);
+			return _dateTimeFormat.format(nextFireDate);
 		}
 
 		return StringPool.BLANK;
@@ -145,7 +145,7 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 			schedulerResponse.getStorageType());
 	}
 
-	private final Format _dateFormatDateTime;
+	private final Format _dateTimeFormat;
 	private String _orderByCol;
 	private String _orderByType;
 	private final SchedulerResponseManager _schedulerResponseManager;

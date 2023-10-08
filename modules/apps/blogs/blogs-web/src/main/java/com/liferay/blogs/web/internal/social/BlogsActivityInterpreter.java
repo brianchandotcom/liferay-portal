@@ -70,12 +70,11 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 			link = null;
 
-			Format dateFormatDate =
-				FastDateFormatFactoryUtil.getSimpleDateFormat(
-					"MMMM d", serviceContext.getLocale(),
-					serviceContext.getTimeZone());
+			Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+				"MMMM d", serviceContext.getLocale(),
+				serviceContext.getTimeZone());
 
-			displayDate = dateFormatDate.format(entry.getDisplayDate());
+			displayDate = dateFormat.format(entry.getDisplayDate());
 		}
 
 		return new Object[] {

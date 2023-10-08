@@ -103,7 +103,7 @@ public class WorkflowTaskDisplayContext {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+		_dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 		_workflowTaskRequestHelper = new WorkflowTaskRequestHelper(
@@ -203,11 +203,11 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public String getCreateDateString(WorkflowLog workflowLog) {
-		return _dateFormatDateTime.format(workflowLog.getCreateDate());
+		return _dateTimeFormat.format(workflowLog.getCreateDate());
 	}
 
 	public String getCreateDateString(WorkflowTask workflowTask) {
-		return _dateFormatDateTime.format(workflowTask.getCreateDate());
+		return _dateTimeFormat.format(workflowTask.getCreateDate());
 	}
 
 	public String getCurrentURL() {
@@ -240,7 +240,7 @@ public class WorkflowTaskDisplayContext {
 				_workflowTaskRequestHelper.getRequest(), "never");
 		}
 
-		return _dateFormatDateTime.format(workflowTask.getDueDate());
+		return _dateTimeFormat.format(workflowTask.getDueDate());
 	}
 
 	public DropdownItemList getFilterOptions() {
@@ -1038,7 +1038,7 @@ public class WorkflowTaskDisplayContext {
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
-	private final Format _dateFormatDateTime;
+	private final Format _dateTimeFormat;
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;

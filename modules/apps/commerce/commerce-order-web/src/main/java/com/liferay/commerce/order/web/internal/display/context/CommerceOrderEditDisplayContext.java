@@ -142,10 +142,9 @@ public class CommerceOrderEditDisplayContext {
 		ThemeDisplay themeDisplay =
 			_commerceOrderRequestHelper.getThemeDisplay();
 
-		_commerceOrderDateFormatDateTime =
-			FastDateFormatFactoryUtil.getDateTime(
-				DateFormat.SHORT, DateFormat.SHORT, themeDisplay.getLocale(),
-				themeDisplay.getTimeZone());
+		_commerceOrderDateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+			DateFormat.SHORT, DateFormat.SHORT, themeDisplay.getLocale(),
+			themeDisplay.getTimeZone());
 	}
 
 	public String getCommerceAccountThumbnailURL() throws PortalException {
@@ -259,7 +258,7 @@ public class CommerceOrderEditDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return _commerceOrderDateFormatDateTime.format(date);
+		return _commerceOrderDateTimeFormat.format(date);
 	}
 
 	public long getCommerceOrderId() {
@@ -820,7 +819,7 @@ public class CommerceOrderEditDisplayContext {
 	private final CommerceNotificationQueueEntryLocalService
 		_commerceNotificationQueueEntryLocalService;
 	private final CommerceOrder _commerceOrder;
-	private final Format _commerceOrderDateFormatDateTime;
+	private final Format _commerceOrderDateTimeFormat;
 	private final CommerceOrderEngine _commerceOrderEngine;
 	private CommerceOrderItem _commerceOrderItem;
 	private final CommerceOrderItemDecimalQuantityConfiguration

@@ -23,10 +23,9 @@ public class DateInfoTextFormatter implements InfoTextFormatter<Date> {
 
 	@Override
 	public String format(Date date, Locale locale) {
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			locale);
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale);
 
-		return dateFormatDateTime.format(date);
+		return dateTimeFormat.format(date);
 	}
 
 }

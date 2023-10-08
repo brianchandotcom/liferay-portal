@@ -483,10 +483,9 @@ public class DDMFormInstanceRecordExporterImplTest {
 		Assert.assertEquals(
 			LocaleUtil.US.toString(), valuesMap.get("languageId"));
 
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			locale);
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale);
 
-		String modifiedDate = dateFormatDateTime.format(statusDate);
+		String modifiedDate = dateTimeFormat.format(statusDate);
 
 		Assert.assertEquals(modifiedDate, valuesMap.get("modifiedDate"));
 

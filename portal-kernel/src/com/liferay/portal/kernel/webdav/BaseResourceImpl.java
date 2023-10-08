@@ -95,7 +95,7 @@ public class BaseResourceImpl implements Resource {
 
 	@Override
 	public String getCreateDateString() {
-		return _createDateFormatter.format(_createDate);
+		return _createDateFormat.format(_createDate);
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class BaseResourceImpl implements Resource {
 
 	@Override
 	public String getModifiedDate() {
-		return _modifiedDateFormatter.format(_modifiedDate);
+		return _modifiedDateFormat.format(_modifiedDate);
 	}
 
 	@Override
@@ -158,10 +158,10 @@ public class BaseResourceImpl implements Resource {
 		_primaryKey = primaryKey;
 	}
 
-	private static final Format _createDateFormatter =
+	private static final Format _createDateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'", LocaleUtil.US, TimeZoneUtil.GMT);
-	private static final Format _modifiedDateFormatter =
+	private static final Format _modifiedDateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss zzz", LocaleUtil.US, TimeZoneUtil.GMT);
 

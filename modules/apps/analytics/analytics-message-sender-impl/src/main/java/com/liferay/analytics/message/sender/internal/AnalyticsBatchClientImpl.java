@@ -72,7 +72,7 @@ public class AnalyticsBatchClientImpl
 
 			httpGet.setHeader(
 				"If-Modified-Since",
-				_modifiedSinceHeaderDateFormatter.format(
+				_modifiedSinceHeaderDateFormat.format(
 					resourceLastModifiedDate));
 
 			CloseableHttpResponse closeableHttpResponse =
@@ -187,7 +187,7 @@ public class AnalyticsBatchClientImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsBatchClientImpl.class);
 
-	private static final Format _modifiedSinceHeaderDateFormatter =
+	private static final Format _modifiedSinceHeaderDateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss zzz");
 

@@ -462,10 +462,9 @@ public class LayoutSetBranchLocalServiceImpl
 
 		Locale locale = serviceContext.getLocale();
 
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			locale);
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale);
 
-		String nowString = dateFormatDateTime.format(new Date());
+		String nowString = dateTimeFormat.format(new Date());
 
 		serviceContext.setWorkflowAction(WorkflowConstants.STATUS_DRAFT);
 

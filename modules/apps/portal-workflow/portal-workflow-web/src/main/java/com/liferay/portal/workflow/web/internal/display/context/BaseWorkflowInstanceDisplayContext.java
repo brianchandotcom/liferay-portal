@@ -48,7 +48,7 @@ public abstract class BaseWorkflowInstanceDisplayContext {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+		dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 		workflowInstanceRequestHelper = new WorkflowInstanceRequestHelper(
@@ -81,7 +81,7 @@ public abstract class BaseWorkflowInstanceDisplayContext {
 		return sb.toString();
 	}
 
-	protected final Format dateFormatDateTime;
+	protected final Format dateTimeFormat;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;

@@ -27,7 +27,7 @@ public interface AnnouncementsDisplayContext extends DisplayContext {
 	public LinkedHashMap<Long, long[]> getAnnouncementScopes()
 		throws PortalException;
 
-	public Format getDateFormatDate();
+	public Format getDateFormat();
 
 	public List<Group> getGroups() throws PortalException;
 

@@ -63,10 +63,10 @@ public class CommerceShipmentContentDisplayContext {
 		ThemeDisplay themeDisplay =
 			_commerceShipmentContentRequestHelper.getThemeDisplay();
 
-		_commerceShipmentDateFormatDate = FastDateFormatFactoryUtil.getDate(
+		_commerceShipmentDateFormat = FastDateFormatFactoryUtil.getDate(
 			DateFormat.MEDIUM, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
-		_commerceShipmentDateFormatTime = FastDateFormatFactoryUtil.getTime(
+		_commerceShipmentTimeFormat = FastDateFormatFactoryUtil.getTime(
 			DateFormat.MEDIUM, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
 
@@ -126,7 +126,7 @@ public class CommerceShipmentContentDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return _commerceShipmentDateFormatDate.format(
+		return _commerceShipmentDateFormat.format(
 			commerceShipment.getExpectedDate());
 	}
 
@@ -137,7 +137,7 @@ public class CommerceShipmentContentDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return _commerceShipmentDateFormatTime.format(
+		return _commerceShipmentTimeFormat.format(
 			commerceShipment.getExpectedDate());
 	}
 
@@ -171,7 +171,7 @@ public class CommerceShipmentContentDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return _commerceShipmentDateFormatDate.format(
+		return _commerceShipmentDateFormat.format(
 			commerceShipment.getShippingDate());
 	}
 
@@ -197,7 +197,7 @@ public class CommerceShipmentContentDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return _commerceShipmentDateFormatTime.format(
+		return _commerceShipmentTimeFormat.format(
 			commerceShipment.getShippingDate());
 	}
 
@@ -276,14 +276,14 @@ public class CommerceShipmentContentDisplayContext {
 	private CommerceShipment _commerceShipment;
 	private final CommerceShipmentContentRequestHelper
 		_commerceShipmentContentRequestHelper;
-	private final Format _commerceShipmentDateFormatDate;
-	private final Format _commerceShipmentDateFormatTime;
+	private final Format _commerceShipmentDateFormat;
 	private final long _commerceShipmentId;
 	private final CommerceShipmentItemLocalService
 		_commerceShipmentItemLocalService;
 	private SearchContainer<CommerceShipmentItem>
 		_commerceShipmentItemSearchContainer;
 	private final CommerceShipmentLocalService _commerceShipmentLocalService;
+	private final Format _commerceShipmentTimeFormat;
 	private final CommerceShippingEngineRegistry
 		_commerceShippingEngineRegistry;
 	private SearchContainer<CommerceShipment> _searchContainer;

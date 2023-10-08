@@ -181,7 +181,7 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
-	public Format getDateFormatDate() {
+	public Format getDateFormat() {
 		ThemeDisplay themeDisplay =
 			_announcementsRequestHelper.getThemeDisplay();
 

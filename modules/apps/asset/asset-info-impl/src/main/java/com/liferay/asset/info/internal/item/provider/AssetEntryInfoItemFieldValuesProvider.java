@@ -109,10 +109,9 @@ public class AssetEntryInfoItemFieldValuesProvider
 
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			locale);
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale);
 
-		return dateFormatDateTime.format(date);
+		return dateTimeFormat.format(date);
 	}
 
 	private String _getDisplayPageURL(AssetEntry assetEntry) {

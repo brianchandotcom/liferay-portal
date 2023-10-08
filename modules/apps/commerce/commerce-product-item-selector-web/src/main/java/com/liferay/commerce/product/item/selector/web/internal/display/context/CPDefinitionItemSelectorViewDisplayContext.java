@@ -66,10 +66,10 @@ public class CPDefinitionItemSelectorViewDisplayContext
 	public String getModifiedDate(
 		CPDefinition cpDefinition, ThemeDisplay themeDisplay) {
 
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
-		return dateFormatDateTime.format(cpDefinition.getModifiedDate());
+		return dateTimeFormat.format(cpDefinition.getModifiedDate());
 	}
 
 	@Override

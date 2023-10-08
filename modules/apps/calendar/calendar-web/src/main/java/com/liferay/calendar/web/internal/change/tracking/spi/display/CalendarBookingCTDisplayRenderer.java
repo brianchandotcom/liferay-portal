@@ -118,7 +118,7 @@ public class CalendarBookingCTDisplayRenderer
 			timeZone = TimeZone.getTimeZone(StringPool.UTC);
 		}
 
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
 			displayBuilder.getLocale(), timeZone);
 
 		displayBuilder.display(
@@ -129,9 +129,9 @@ public class CalendarBookingCTDisplayRenderer
 		).display(
 			"status", calendarBooking.getStatus()
 		).display(
-			"starts", dateFormatDateTime.format(calendarBooking.getStartTime())
+			"starts", dateTimeFormat.format(calendarBooking.getStartTime())
 		).display(
-			"ends", dateFormatDateTime.format(calendarBooking.getEndTime())
+			"ends", dateTimeFormat.format(calendarBooking.getEndTime())
 		).display(
 			"location",
 			() -> {

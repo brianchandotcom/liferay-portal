@@ -38,12 +38,12 @@ public class DateSearchEntry extends TextSearchEntry {
 
 			Locale locale = (Locale)localeAndTimeZone[0];
 
-			Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+			Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
 				locale, (TimeZone)localeAndTimeZone[1]);
 
 			return StringBundler.concat(
 				"<span class=\"lfr-portal-tooltip\" title=\"",
-				dateFormatDateTime.format(_date), "\">",
+				dateTimeFormat.format(_date), "\">",
 				LanguageUtil.format(
 					locale, _getMessageKey(),
 					new Object[] {

@@ -63,8 +63,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		int type = ParamUtil.getInteger(
-			actionRequest, "type",
-			LayoutPageTemplateEntryTypeConstants.BASIC);
+			actionRequest, "type", LayoutPageTemplateEntryTypeConstants.BASIC);
 		long masterLayoutPlid = ParamUtil.getLong(
 			actionRequest, "masterLayoutPlid");
 

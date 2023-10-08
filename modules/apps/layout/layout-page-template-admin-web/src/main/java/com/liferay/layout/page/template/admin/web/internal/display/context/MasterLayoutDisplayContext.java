@@ -124,9 +124,8 @@ public class MasterLayoutDisplayContext {
 			layoutPageTemplateEntries.addAll(
 				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 					_themeDisplay.getScopeGroupId(),
-					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
-					start, end,
-					masterLayoutsSearchContainer.getOrderByComparator()));
+					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, start,
+					end, masterLayoutsSearchContainer.getOrderByComparator()));
 
 			int layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.

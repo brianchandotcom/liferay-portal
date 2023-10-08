@@ -134,8 +134,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					"userId, userName, createDate from ",
 					"LayoutPageTemplateEntry where type_ in (",
 					LayoutPageTemplateEntryTypeConstants.BASIC, ", ",
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
-					")"))) {
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, ")"))) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {

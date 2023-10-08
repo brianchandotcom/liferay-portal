@@ -2264,8 +2264,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					classNameId, classTypeId, _groupId, 0,
 					_layoutsImportStrategy, displayPageTemplate.getName(),
 					_displayPageTemplateEntry.getPageDefinition(),
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
-					_userId, _displayPageTemplateEntry.getThumbnailZipEntry(),
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, _userId,
+					_displayPageTemplateEntry.getThumbnailZipEntry(),
 					_displayPageTemplateEntry.getZipPath(), _zipFile);
 
 			boolean defaultTemplate = GetterUtil.getBoolean(
@@ -2353,8 +2353,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			_processLayoutPageTemplateEntry(
 				0, 0, _groupId, 0, _layoutsImportStrategy, masterPage.getName(),
 				_masterPageEntry.getPageDefinition(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
-				_userId, _masterPageEntry.getThumbnailZipEntry(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, _userId,
+				_masterPageEntry.getThumbnailZipEntry(),
 				_masterPageEntry.getZipPath(), _zipFile);
 
 			return null;

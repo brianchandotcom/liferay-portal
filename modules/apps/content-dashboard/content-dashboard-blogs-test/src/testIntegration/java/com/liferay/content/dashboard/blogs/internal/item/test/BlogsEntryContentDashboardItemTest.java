@@ -432,8 +432,8 @@ public class BlogsEntryContentDashboardItemTest {
 				_group.getCreatorUserId(), blogsEntry.getGroupId(), 0,
 				_portal.getClassNameId(BlogsEntry.class.getName()), 0,
 				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true,
-				0, 0, 0, 0, _serviceContext);
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
+				0, 0, 0, _serviceContext);
 
 		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 			blogsEntry.getUserId(), blogsEntry.getGroupId(),

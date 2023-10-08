@@ -114,8 +114,7 @@ public class DisplayPageTemplateResourceImpl
 				"companyId", contextCompany.getCompanyId()));
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"type",
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
+				"type", LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
 				"status", WorkflowConstants.STATUS_APPROVED));

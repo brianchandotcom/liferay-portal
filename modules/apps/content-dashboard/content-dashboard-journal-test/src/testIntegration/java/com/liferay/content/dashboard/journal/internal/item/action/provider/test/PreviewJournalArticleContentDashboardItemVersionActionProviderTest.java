@@ -93,8 +93,8 @@ public class
 					_portal.getClassNameId(JournalArticle.class.getName()),
 					ddmStructure.getStructureId(),
 					RandomTestUtil.randomString(),
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-					true, 0, 0, 0, 0, serviceContext);
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true,
+					0, 0, 0, 0, serviceContext);
 
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 				journalArticle.getUserId(), _group.getGroupId(),
@@ -224,8 +224,8 @@ public class
 					_portal.getClassNameId(JournalArticle.class.getName()),
 					ddmStructure.getStructureId(),
 					RandomTestUtil.randomString(),
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-					true, 0, 0, 0, 0, serviceContext);
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true,
+					0, 0, 0, 0, serviceContext);
 
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 				journalArticle.getUserId(), _group.getGroupId(),

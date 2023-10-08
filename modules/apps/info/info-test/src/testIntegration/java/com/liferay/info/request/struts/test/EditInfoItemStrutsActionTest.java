@@ -257,8 +257,8 @@ public class EditInfoItemStrutsActionTest {
 				_group.getCreatorUserId(), _group.getGroupId(), 0,
 				_portal.getClassNameId(_objectDefinition.getClassName()), 0,
 				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-				false, 0, 0, 0, WorkflowConstants.STATUS_APPROVED,
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		InfoItemFormProvider<?> infoItemFormProvider =

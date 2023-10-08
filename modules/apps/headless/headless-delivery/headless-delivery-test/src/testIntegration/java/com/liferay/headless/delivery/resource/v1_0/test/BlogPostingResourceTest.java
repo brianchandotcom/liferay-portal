@@ -87,8 +87,8 @@ public class BlogPostingResourceTest extends BaseBlogPostingResourceTestCase {
 				testGroup.getCreatorUserId(), testGroup.getGroupId(), 0,
 				_portal.getClassNameId(FileEntry.class.getName()), 0,
 				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-				false, 0, 0, 0, WorkflowConstants.STATUS_APPROVED,
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId()));
 

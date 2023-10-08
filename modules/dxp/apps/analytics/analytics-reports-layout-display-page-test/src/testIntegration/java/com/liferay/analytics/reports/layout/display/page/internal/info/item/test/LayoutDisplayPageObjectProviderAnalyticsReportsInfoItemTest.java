@@ -196,8 +196,8 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemTest {
 					_group.getCreatorUserId(), _group.getGroupId(), 0,
 					_className.getClassNameId(), 0,
 					RandomTestUtil.randomString(),
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-					true, 0, 0, 0, 0,
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true,
+					0, 0, 0, 0,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId()));
 
@@ -334,8 +334,8 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemTest {
 					_group.getCreatorUserId(), _group.getGroupId(), 0,
 					_className.getClassNameId(), 0,
 					RandomTestUtil.randomString(),
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-					true, 0, 0, 0, 0,
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true,
+					0, 0, 0, 0,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId()));
 

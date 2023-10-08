@@ -73,8 +73,8 @@ public class LayoutPageTemplateEntryServiceImpl
 		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			getUserId(), groupId, layoutPageTemplateCollectionId, classNameId,
 			classTypeId, name,
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
-			masterLayoutPlid, status, serviceContext);
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, masterLayoutPlid,
+			status, serviceContext);
 	}
 
 	@Override

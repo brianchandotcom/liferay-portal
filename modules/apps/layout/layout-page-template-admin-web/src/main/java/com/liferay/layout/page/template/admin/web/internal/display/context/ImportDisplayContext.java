@@ -301,14 +301,10 @@ public class ImportDisplayContext {
 		if (type == LayoutPageTemplateEntryTypeConstants.BASIC) {
 			return "page-template";
 		}
-		else if (type ==
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
-
+		else if (type == LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 			return "display-page-template";
 		}
-		else if (type ==
-					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
-
+		else if (type == LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
 			return "master-page";
 		}
 

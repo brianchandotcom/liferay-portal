@@ -170,10 +170,10 @@ public class CommerceOrderContentDisplayContext {
 
 		_themeDisplay = _cpRequestHelper.getThemeDisplay();
 
-		_commerceOrderDateFormatDate = FastDateFormatFactoryUtil.getDate(
+		_commerceOrderDateFormat = FastDateFormatFactoryUtil.getDate(
 			DateFormat.MEDIUM, _themeDisplay.getLocale(),
 			_themeDisplay.getTimeZone());
-		_commerceOrderDateFormatTime = FastDateFormatFactoryUtil.getTime(
+		_commerceOrderTimeFormat = FastDateFormatFactoryUtil.getTime(
 			DateFormat.MEDIUM, _themeDisplay.getLocale(),
 			_themeDisplay.getTimeZone());
 
@@ -196,7 +196,7 @@ public class CommerceOrderContentDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return _commerceOrderDateFormatDate.format(date);
+		return _commerceOrderDateFormat.format(date);
 	}
 
 	public AccountEntry getAccountEntry() {
@@ -302,7 +302,7 @@ public class CommerceOrderContentDisplayContext {
 			orderDate = commerceOrder.getOrderDate();
 		}
 
-		return _commerceOrderDateFormatDate.format(orderDate);
+		return _commerceOrderDateFormat.format(orderDate);
 	}
 
 	public long getCommerceOrderId() {
@@ -383,7 +383,7 @@ public class CommerceOrderContentDisplayContext {
 			orderDate = commerceOrder.getOrderDate();
 		}
 
-		return _commerceOrderDateFormatTime.format(orderDate);
+		return _commerceOrderTimeFormat.format(orderDate);
 	}
 
 	public String getCommerceOrderTypeName(String languageId)
@@ -1349,8 +1349,7 @@ public class CommerceOrderContentDisplayContext {
 	private final CommerceAddressService _commerceAddressService;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private final CommerceContext _commerceContext;
-	private final Format _commerceOrderDateFormatDate;
-	private final Format _commerceOrderDateFormatTime;
+	private final Format _commerceOrderDateFormat;
 	private final CommerceOrderEngine _commerceOrderEngine;
 	private CommerceOrderFieldsConfiguration _commerceOrderFieldsConfiguration;
 	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
@@ -1362,6 +1361,7 @@ public class CommerceOrderContentDisplayContext {
 	private final CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 	private final CommerceOrderService _commerceOrderService;
 	private final CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
+	private final Format _commerceOrderTimeFormat;
 	private final CommerceOrderTypeService _commerceOrderTypeService;
 	private final CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;

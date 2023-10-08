@@ -47,7 +47,7 @@ definition {
 				category = "Object",
 				panel = "Control Panel",
 				portlet = "Objects");
-			
+
 			var i = 0;
 
 			WaitForElementPresent(locator1 = "Pagination#RESULTS");
@@ -100,10 +100,10 @@ definition {
 			Click(locator1 = "APIBuilder#SELECT_AN_OBJECT_DEFINITION");
 		}
 
-		task ("Then all object deinifition entities from Objects are listed inluding the one placed on 2nd page of Objects") {				
-				AssertElementPresent(
-					index = 21,
-					locator1 = "ObjectAdmin#KEBAB_MENU_OPTION_BY_INDEX");
+		task ("Then all object deinifition entities from Objects are listed inluding the one placed on 2nd page of Objects") {
+			AssertElementPresent(
+				index = 21,
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION_BY_INDEX");
 		}
 	}
 

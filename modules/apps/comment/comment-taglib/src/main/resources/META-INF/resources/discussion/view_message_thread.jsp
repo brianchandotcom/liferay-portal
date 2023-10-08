@@ -24,7 +24,7 @@ DiscussionComment rootDiscussionComment = discussion.getRootDiscussionComment();
 
 CommentTreeDisplayContext commentTreeDisplayContext = CommentDisplayContextProviderUtil.getCommentTreeDisplayContext(request, response, DiscussionPermissionUtil.getDiscussionPermission(), discussionComment);
 
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <c:if test="<%= commentTreeDisplayContext.isDiscussionVisible() %>">
@@ -115,7 +115,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							</div>
 
 							<div class="text-secondary">
-								<span class="lfr-portal-tooltip" title="<%= dateFormatDateTime.format(createDate) %>"><liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" /></span>
+								<span class="lfr-portal-tooltip" title="<%= dateTimeFormat.format(createDate) %>"><liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" /></span>
 
 								<%
 								Date modifiedDate = discussionComment.getModifiedDate();
@@ -123,7 +123,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 								<c:if test="<%= createDate.before(modifiedDate) %>">
 									-
-									<strong class="lfr-portal-tooltip" title="<%= dateFormatDateTime.format(modifiedDate) %>">
+									<strong class="lfr-portal-tooltip" title="<%= dateTimeFormat.format(modifiedDate) %>">
 										<liferay-ui:message key="edited" />
 									</strong>
 								</c:if>

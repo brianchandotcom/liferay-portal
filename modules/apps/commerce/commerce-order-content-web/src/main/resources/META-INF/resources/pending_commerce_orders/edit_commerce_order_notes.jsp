@@ -67,7 +67,7 @@ boolean manageRestrictedNotesPermission = commerceOrderContentDisplayContext.has
 		</c:if>
 
 		<%
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
 		for (CommerceOrderNote commerceOrderNote : commerceOrderContentDisplayContext.getCommerceOrderNotes(commerceOrder)) {
 		%>
@@ -112,7 +112,7 @@ boolean manageRestrictedNotesPermission = commerceOrderContentDisplayContext.has
 												<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 
 												<c:if test="<%= createDate.before(commerceOrderNote.getModifiedDate()) %>">
-													<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(dateFormatDateTime.format(commerceOrderNote.getModifiedDate())) %>');">
+													<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(dateTimeFormat.format(commerceOrderNote.getModifiedDate())) %>');">
 														- <liferay-ui:message key="edited" />
 													</strong>
 												</c:if>

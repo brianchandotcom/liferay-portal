@@ -227,8 +227,8 @@ DLTrashHelper dlTrashHelper = (DLTrashHelper)request.getAttribute(DLWebKeys.DOCU
 DLDisplayContextProvider dlDisplayContextProvider = DLWebComponentProvider.getDLDisplayContextProvider();
 IGDisplayContextProvider igDisplayContextProvider = DLWebComponentProvider.getIGDisplayContextProvider();
 
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+Format dateFormat = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <%@ include file="/init-ext.jsp" %>

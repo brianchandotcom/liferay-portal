@@ -135,10 +135,10 @@ else {
 								<li class="sidebar-dd">
 
 									<%
-									Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+									Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 									%>
 
-									<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(recordVersion.getUserName()), dateFormatDateTime.format(recordVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(recordVersion.getUserName()), dateTimeFormat.format(recordVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 								</li>
 							</ul>
 						</div>

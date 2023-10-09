@@ -187,6 +187,6 @@ KBGroupServiceConfiguration kbGroupServiceConfiguration = ConfigurationProviderU
 
 KBSectionPortletInstanceConfiguration kbSectionPortletInstanceConfiguration = ConfigurationProviderUtil.getPortletInstanceConfiguration(KBSectionPortletInstanceConfiguration.class, themeDisplay);
 
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(FastDateFormatConstants.LONG, locale, timeZone);
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.LONG, FastDateFormatConstants.SHORT, locale, timeZone);
+Format dateFormat = FastDateFormatFactoryUtil.getDate(FastDateFormatConstants.LONG, locale, timeZone);
+Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.LONG, FastDateFormatConstants.SHORT, locale, timeZone);
 %>

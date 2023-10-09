@@ -10,6 +10,7 @@ import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CPDAvailabilityEstimateLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
@@ -61,10 +62,12 @@ public class CPDefinitionInventoryEngineImpl
 	public String getAvailabilityEstimate(CPInstance cpInstance, Locale locale)
 		throws PortalException {
 
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
 		CPDAvailabilityEstimate cpDefinitionAvailabilityEstimate =
 			_cpdAvailabilityEstimateLocalService.
-				fetchCPDAvailabilityEstimateByCPDefinitionId(
-					cpInstance.getCPDefinitionId());
+				fetchCPDAvailabilityEstimateByCProductId(
+					cpDefinition.getCProductId());
 
 		if (cpDefinitionAvailabilityEstimate == null) {
 			return StringPool.BLANK;

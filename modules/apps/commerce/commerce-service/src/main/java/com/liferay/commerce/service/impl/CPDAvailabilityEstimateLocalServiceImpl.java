@@ -8,7 +8,6 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.exception.NoSuchAvailabilityEstimateException;
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.service.base.CPDAvailabilityEstimateLocalServiceBaseImpl;
 import com.liferay.commerce.service.persistence.CommerceAvailabilityEstimatePersistence;
@@ -56,24 +55,6 @@ public class CPDAvailabilityEstimateLocalServiceImpl
 			deleteCPDAvailabilityEstimate(cpdAvailabilityEstimate);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public void deleteCPDAvailabilityEstimateByCPDefinitionId(
-		long cpDefinitionId) {
-
-		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
-			cpDefinitionId);
-
-		if (cpDefinition != null) {
-			cpdAvailabilityEstimateLocalService.
-				deleteCPDAvailabilityEstimateByCProductId(
-					cpDefinition.getCProductId());
-		}
-	}
-
 	@Override
 	public void deleteCPDAvailabilityEstimateByCProductId(long cProductId) {
 		CPDAvailabilityEstimate cpdAvailabilityEstimate =
@@ -95,50 +76,11 @@ public class CPDAvailabilityEstimateLocalServiceImpl
 				commerceAvailabilityEstimateId);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDAvailabilityEstimate fetchCPDAvailabilityEstimateByCPDefinitionId(
-		long cpDefinitionId) {
-
-		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
-			cpDefinitionId);
-
-		if (cpDefinition == null) {
-			return null;
-		}
-
-		return cpdAvailabilityEstimateLocalService.
-			fetchCPDAvailabilityEstimateByCProductId(
-				cpDefinition.getCProductId());
-	}
-
 	@Override
 	public CPDAvailabilityEstimate fetchCPDAvailabilityEstimateByCProductId(
 		long cProductId) {
 
 		return cpdAvailabilityEstimatePersistence.fetchByCProductId(cProductId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDAvailabilityEstimate updateCPDAvailabilityEstimate(
-			long cpdAvailabilityEstimateId, long cpDefinitionId,
-			long commerceAvailabilityEstimateId, ServiceContext serviceContext)
-		throws PortalException {
-
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
-			cpDefinitionId);
-
-		return cpdAvailabilityEstimateLocalService.
-			updateCPDAvailabilityEstimateByCProductId(
-				cpdAvailabilityEstimateId, cpDefinition.getCProductId(),
-				commerceAvailabilityEstimateId, serviceContext);
 	}
 
 	@Override

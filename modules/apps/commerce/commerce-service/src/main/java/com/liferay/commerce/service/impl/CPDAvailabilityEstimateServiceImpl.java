@@ -42,8 +42,12 @@ public class CPDAvailabilityEstimateServiceImpl
 
 		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
 
+		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionId);
+
 		return cpdAvailabilityEstimateLocalService.
-			fetchCPDAvailabilityEstimateByCPDefinitionId(cpDefinitionId);
+			fetchCPDAvailabilityEstimateByCProductId(
+				cpDefinition.getCProductId());
 	}
 
 	@Override

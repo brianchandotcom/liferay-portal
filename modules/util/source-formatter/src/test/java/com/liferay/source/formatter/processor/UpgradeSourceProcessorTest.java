@@ -7,6 +7,7 @@ package com.liferay.source.formatter.processor;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.SourceFormatterArgs;
+import com.liferay.source.formatter.check.UpgradeCatchAllCheck;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +45,14 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testUpgradeCatchAllCheck() throws Exception {
+		UpgradeCatchAllCheck.setTestMode(true);
+
 		test(
 			"upgrade/UpgradeCatchAllCheck.testjava",
 			"See LPS-189866, AssetVocabularyLocalService" +
 				"/AssetVocabularyService#searchVocabularies");
+
+		UpgradeCatchAllCheck.setTestMode(false);
 	}
 
 	@Test

@@ -1452,6 +1452,19 @@
 	<td></td>
 </tr>
 
+<!--SKU-->
+
+<tr>
+	<td>ADMIN_PRODUCT_UOM_SELECT</td>
+	<td>//select[contains(@name,'unitOfMeasureKey') and contains(@class,"disabled")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRICE_ENTRY_WITH_UOM</td>
+	<td>//div[contains(@class,'dnd-tr')]//a[contains(.,"${key_pricing}")]/../../..//div[contains(.,"${key_uomkey}")]/..//a</td>
+	<td></td>
+</tr>
+
 <!--WAREHOUSES-->
 
 <tr>

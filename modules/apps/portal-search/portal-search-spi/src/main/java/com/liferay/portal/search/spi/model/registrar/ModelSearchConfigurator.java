@@ -58,40 +58,4 @@ public interface ModelSearchConfigurator<T extends BaseModel<?>> {
 		return true;
 	}
 
-	public default void setDefaultSelectedFieldNames(
-		String... defaultSelectedFieldNames) {
-	}
-
-	public default void setDefaultSelectedLocalizedFieldNames(
-		String... defaultSelectedLocalizedFieldNames) {
-	}
-
-	public default void setModelIndexWriteContributor(
-		ModelIndexerWriterContributor<?> modelIndexWriterContributor) {
-	}
-
-	public default void setModelSummaryContributor(
-		ModelSummaryContributor modelSummaryContributor) {
-	}
-
-	public default void setModelVisibilityContributor(
-		ModelVisibilityContributor modelVisibilityContributor) {
-	}
-
-	/**
-	 * See LPS-192313.
-	 */
-	public default void setPermissionAware(boolean permissionAware) {
-	}
-
-	public default void setSearchResultPermissionFilterSuppressed(
-		boolean searchResultPermissionFilterSuppressed) {
-	}
-
-	public default void setSelectAllLocales(boolean selectAllLocales) {
-	}
-
-	public default void setStagingAware(boolean stagingAware) {
-	}
-
 }

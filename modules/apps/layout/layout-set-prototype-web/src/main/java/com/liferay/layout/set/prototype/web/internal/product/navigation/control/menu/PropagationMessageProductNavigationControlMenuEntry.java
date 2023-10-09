@@ -56,7 +56,7 @@ public class PropagationMessageProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
+		if (layout.isTypeControlPanel() || layout.isTypeAssetDisplay()) {
 			return false;
 		}
 
@@ -69,6 +69,10 @@ public class PropagationMessageProductNavigationControlMenuEntry
 		LayoutSetPrototype layoutSetPrototype =
 			_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
 				group.getClassPK());
+
+		if (layoutSetPrototype == null) {
+			return false;
+		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
@@ -86,8 +90,7 @@ public class PropagationMessageProductNavigationControlMenuEntry
 			layoutType = layoutPageTemplateEntry.getType();
 		}
 
-		if ((layoutSetPrototype == null) || layout.isTypeAssetDisplay() ||
-			(layoutType ==
+		if ((layoutType ==
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) ||
 			(layoutType == LayoutPageTemplateEntryTypeConstants.BASIC) ||
 			!LayoutSetPrototypePermissionUtil.contains(

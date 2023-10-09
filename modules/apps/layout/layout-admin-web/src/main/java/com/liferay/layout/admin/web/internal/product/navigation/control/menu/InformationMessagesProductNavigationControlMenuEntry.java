@@ -106,6 +106,10 @@ public class InformationMessagesProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
+		if (layout.isTypeControlPanel() || layout.isTypeAssetDisplay()) {
+			return false;
+		}
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
@@ -122,8 +126,7 @@ public class InformationMessagesProductNavigationControlMenuEntry
 			layoutType = layoutPageTemplateEntry.getType();
 		}
 
-		if (layout.isTypeControlPanel() || layout.isTypeAssetDisplay() ||
-			(layoutType ==
+		if ((layoutType ==
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) ||
 			(layoutType == LayoutPageTemplateEntryTypeConstants.BASIC) ||
 			(!_isLinkedLayout(themeDisplay) &&

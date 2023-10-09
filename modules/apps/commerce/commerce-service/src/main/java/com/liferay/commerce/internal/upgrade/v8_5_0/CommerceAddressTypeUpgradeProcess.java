@@ -25,21 +25,19 @@ public class CommerceAddressTypeUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
 		_setAddressListType(
 			_getListTypeId(
-				companyId,
+				CompanyThreadLocal.getCompanyId(),
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING),
 			14000);
 		_setAddressListType(
 			_getListTypeId(
-				companyId,
+				CompanyThreadLocal.getCompanyId(),
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING),
 			14002);
 		_setAddressListType(
 			_getListTypeId(
-				companyId,
+				CompanyThreadLocal.getCompanyId(),
 				AccountListTypeConstants.
 					ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING),
 			14001);

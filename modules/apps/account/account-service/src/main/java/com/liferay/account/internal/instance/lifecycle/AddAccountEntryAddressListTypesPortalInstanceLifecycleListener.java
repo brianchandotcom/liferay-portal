@@ -24,50 +24,48 @@ public class AddAccountEntryAddressListTypesPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		long companyId = company.getCompanyId();
-
 		if (!_hasListType(
-				companyId,
+				company.getCompanyId(),
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS)) {
 
 			_listTypeLocalService.addListType(
-				companyId,
+				company.getCompanyId(),
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 		}
 
 		if (!_hasListType(
-				companyId,
+				company.getCompanyId(),
 				AccountListTypeConstants.
 					ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS)) {
 
 			_listTypeLocalService.addListType(
-				companyId,
+				company.getCompanyId(),
 				AccountListTypeConstants.
 					ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 		}
 
 		if (!_hasListType(
-				companyId,
+				company.getCompanyId(),
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS)) {
 
 			_listTypeLocalService.addListType(
-				companyId,
+				company.getCompanyId(),
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 		}
 
 		if (!_hasListType(
-				companyId,
+				company.getCompanyId(),
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS)) {
 
 			_listTypeLocalService.addListType(
-				companyId,
+				company.getCompanyId(),
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 		}

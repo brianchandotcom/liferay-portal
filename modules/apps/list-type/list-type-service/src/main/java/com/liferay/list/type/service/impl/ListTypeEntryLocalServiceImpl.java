@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -148,6 +149,15 @@ public class ListTypeEntryLocalServiceImpl
 
 		return listTypeEntryPersistence.findByListTypeDefinitionId(
 			listTypeDefinitionId, start, end);
+	}
+
+	@Override
+	public List<ListTypeEntry> getListTypeEntries(
+		long listTypeDefinitionId, int start, int end,
+		OrderByComparator<ListTypeEntry> orderByComparator) {
+
+		return listTypeEntryPersistence.findByListTypeDefinitionId(
+			listTypeDefinitionId, start, end, orderByComparator);
 	}
 
 	@Override

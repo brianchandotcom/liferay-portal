@@ -7,6 +7,8 @@ package com.liferay.portal.dao.orm.hibernate.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.dao.orm.hibernate.RestrictionsFactoryImpl;
+import com.liferay.portal.kernel.dao.db.DBManager;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -101,38 +103,48 @@ public class DynamicQueryTest {
 	public void testInRestrictionCriterionWithMoreThanDatabaseInMaxParametersValue() {
 		RestrictionsFactory restrictionsFactory = new RestrictionsFactoryImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			restrictionsFactory, "_databaseInMaxParameters",
-			_DATABASE_IN_MAX_PARAMETERS);
+		DBManager dbManager = (DBManager)ReflectionTestUtil.getFieldValue(
+			DBManagerUtil.class, "_dbManager");
 
-		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
+		int databaseInMaxParameters = ReflectionTestUtil.getAndSetFieldValue(
+			dbManager, "_databaseInMaxParameters", _DATABASE_IN_MAX_PARAMETERS);
 
-		List<Long> values = new ArrayList<>(_DATABASE_IN_MAX_PARAMETERS + 1);
+		try {
+			DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 
-		ClassName className1 = _allClassNames.get(1);
-		ClassName className2 = _allClassNames.get(2);
+			List<Long> values = new ArrayList<>(
+				_DATABASE_IN_MAX_PARAMETERS + 1);
 
-		values.add(className1.getClassNameId());
+			ClassName className1 = _allClassNames.get(1);
+			ClassName className2 = _allClassNames.get(2);
 
-		for (long i = 1; i < _DATABASE_IN_MAX_PARAMETERS; i++) {
-			values.add(-i);
+			values.add(className1.getClassNameId());
+
+			for (long i = 1; i < _DATABASE_IN_MAX_PARAMETERS; i++) {
+				values.add(-i);
+			}
+
+			values.add(className2.getClassNameId());
+
+			Assert.assertEquals(
+				values.toString(), _DATABASE_IN_MAX_PARAMETERS + 1,
+				values.size());
+
+			dynamicQuery.add(restrictionsFactory.in("classNameId", values));
+
+			List<ClassName> classNames = _classNameLocalService.dynamicQuery(
+				dynamicQuery);
+
+			Assert.assertEquals(classNames.toString(), 2, classNames.size());
+			Assert.assertTrue(
+				classNames.toString(), classNames.contains(className1));
+			Assert.assertTrue(
+				classNames.toString(), classNames.contains(className2));
 		}
-
-		values.add(className2.getClassNameId());
-
-		Assert.assertEquals(
-			values.toString(), _DATABASE_IN_MAX_PARAMETERS + 1, values.size());
-
-		dynamicQuery.add(restrictionsFactory.in("classNameId", values));
-
-		List<ClassName> classNames = _classNameLocalService.dynamicQuery(
-			dynamicQuery);
-
-		Assert.assertEquals(classNames.toString(), 2, classNames.size());
-		Assert.assertTrue(
-			classNames.toString(), classNames.contains(className1));
-		Assert.assertTrue(
-			classNames.toString(), classNames.contains(className2));
+		finally {
+			ReflectionTestUtil.getAndSetFieldValue(
+				dbManager, "_databaseInMaxParameters", databaseInMaxParameters);
+		}
 	}
 
 	@Test

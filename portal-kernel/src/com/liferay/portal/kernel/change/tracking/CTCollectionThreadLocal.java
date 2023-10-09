@@ -7,7 +7,7 @@ package com.liferay.portal.kernel.change.tracking;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Preston Crary
@@ -43,7 +43,8 @@ public class CTCollectionThreadLocal {
 	}
 
 	private static long _getCTCollectionId() {
-		CTCollectionIdSupplier ctCollectionIdSupplier = _ctCollectionIdSupplier;
+		CTCollectionIdSupplier ctCollectionIdSupplier =
+			_ctCollectionIdSupplierSnapshot.get();
 
 		if (ctCollectionIdSupplier == null) {
 			return CT_COLLECTION_ID_PRODUCTION;
@@ -59,9 +60,8 @@ public class CTCollectionThreadLocal {
 		new CentralizedThreadLocal<>(
 			CTCollectionThreadLocal.class + "._ctCollectionId",
 			CTCollectionThreadLocal::_getCTCollectionId);
-	private static volatile CTCollectionIdSupplier _ctCollectionIdSupplier =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			CTCollectionIdSupplier.class, CTCollectionThreadLocal.class,
-			"_ctCollectionIdSupplier", false, true);
+	private static final Snapshot<CTCollectionIdSupplier>
+		_ctCollectionIdSupplierSnapshot = new Snapshot<>(
+			CTCollectionThreadLocal.class, CTCollectionIdSupplier.class);
 
 }

@@ -4288,6 +4288,8 @@ definition {
 
 			DMDocument.expandInfo();
 
+			Panel.expandPanel(panel = "Custom Fields");
+
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaDocument#CUSTOM_FIELD_NAME",
 				value1 = ${customFieldName});

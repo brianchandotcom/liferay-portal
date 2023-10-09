@@ -32,7 +32,6 @@ public enum TimeUnit {
 
 	private TimeUnit(String value, long unitMillis) {
 		_value = value;
-
 		_unitMillis = unitMillis;
 	}
 

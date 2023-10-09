@@ -205,7 +205,13 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 							<p class="mb-0 ml-3 text-3">
 								<span id="<portlet:namespace />fileEntryNameInput"><a><%= (fileEntry != null) ? fileEntry.getFileName() : "" %></a></span>
 								<span class="<%= (fileEntry != null) ? "" : "hide" %>" id="<portlet:namespace />fileEntryRemoveIcon" role="button">
-									<aui:icon cssClass="icon-monospaced" image="times-circle-full" markupView="lexicon" />
+									<clay:button
+										aria-label='<%= LanguageUtil.format(locale, "remove-x", "file") %>'
+										cssClass="lfr-portal-tooltip"
+										displayType="unstyled"
+										icon="times-circle-full"
+										title="remove"
+									/>
 								</span>
 							</p>
 						</div>

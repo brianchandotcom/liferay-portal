@@ -95,8 +95,8 @@ public class AvailabilityCommerceOrderValidatorImpl
 		BigDecimal quantity = commerceOrderItem.getQuantity();
 
 		if (!_cpAvailabilityChecker.isAvailable(
-				commerceOrderItem.getGroupId(), cpInstance, StringPool.BLANK,
-				quantity) &&
+				commerceOrderItem.getGroupId(), cpInstance,
+				commerceOrderItem.getUnitOfMeasureKey(), quantity) &&
 			(commerceInventoryBookedQuantity == null)) {
 
 			return new CommerceOrderValidatorResult(

@@ -1419,6 +1419,8 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceProductPrice.getDiscountValueWithTaxAmount(), true);
 		}
 
+		_validate(serviceContext.getLocale(), commerceOrderItem, true);
+
 		return commerceOrderItem;
 	}
 
@@ -2327,6 +2329,8 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceProductPrice.getDiscountValueWithTaxAmount(), true);
 		}
 
+		_validate(serviceContext.getLocale(), commerceOrderItem, true);
+
 		return commerceOrderItem;
 	}
 
@@ -2381,6 +2385,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
 
+		_validate(serviceContext.getLocale(), commerceOrderItem, true);
+
 		commerceOrderItem = commerceOrderItemPersistence.update(
 			commerceOrderItem);
 
@@ -2420,6 +2426,8 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setJson(json);
 		commerceOrderItem.setQuantity(quantity);
 		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
+
+		_validate(serviceContext.getLocale(), commerceOrderItem, true);
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
@@ -2501,6 +2509,23 @@ public class CommerceOrderItemLocalServiceImpl
 			List<CommerceOrderValidatorResult> commerceCartValidatorResults =
 				_commerceOrderValidatorRegistry.validate(
 					locale, commerceOrder, cpInstance, quantity);
+
+			if (!commerceCartValidatorResults.isEmpty()) {
+				throw new CommerceOrderValidatorException(
+					commerceCartValidatorResults);
+			}
+		}
+	}
+
+	private void _validate(
+			Locale locale, CommerceOrderItem commerceOrderItem,
+			boolean validateOrder)
+		throws PortalException {
+
+		if (!ExportImportThreadLocal.isImportInProcess() && validateOrder) {
+			List<CommerceOrderValidatorResult> commerceCartValidatorResults =
+				_commerceOrderValidatorRegistry.validate(
+					locale, commerceOrderItem);
 
 			if (!commerceCartValidatorResults.isEmpty()) {
 				throw new CommerceOrderValidatorException(

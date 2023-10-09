@@ -20,49 +20,78 @@ public interface ModelSearchConfigurator<T extends BaseModel<?>> {
 
 	public String getClassName();
 
-	public String[] getDefaultSelectedFieldNames();
+	public default String[] getDefaultSelectedFieldNames() {
+		return null;
+	}
 
-	public String[] getDefaultSelectedLocalizedFieldNames();
+	public default String[] getDefaultSelectedLocalizedFieldNames() {
+		return null;
+	}
 
-	public ModelIndexerWriterContributor<T> getModelIndexerWriterContributor();
+	public default ModelIndexerWriterContributor<T>
+		getModelIndexerWriterContributor() {
 
-	public ModelSummaryContributor getModelSummaryBuilder();
+		return null;
+	}
 
-	public ModelVisibilityContributor getModelVisibilityContributor();
+	public default ModelSummaryContributor getModelSummaryBuilder() {
+		return null;
+	}
 
-	public boolean isPermissionAware();
+	public default ModelVisibilityContributor getModelVisibilityContributor() {
+		return null;
+	}
 
-	public boolean isSearchResultPermissionFilterSuppressed();
+	public default boolean isPermissionAware() {
+		return true;
+	}
 
-	public boolean isSelectAllLocales();
+	public default boolean isSearchResultPermissionFilterSuppressed() {
+		return false;
+	}
 
-	public boolean isStagingAware();
+	public default boolean isSelectAllLocales() {
+		return false;
+	}
 
-	public void setDefaultSelectedFieldNames(
-		String... defaultSelectedFieldNames);
+	public default boolean isStagingAware() {
+		return true;
+	}
 
-	public void setDefaultSelectedLocalizedFieldNames(
-		String... defaultSelectedLocalizedFieldNames);
+	public default void setDefaultSelectedFieldNames(
+		String... defaultSelectedFieldNames) {
+	}
 
-	public void setModelIndexWriteContributor(
-		ModelIndexerWriterContributor<?> modelIndexWriterContributor);
+	public default void setDefaultSelectedLocalizedFieldNames(
+		String... defaultSelectedLocalizedFieldNames) {
+	}
 
-	public void setModelSummaryContributor(
-		ModelSummaryContributor modelSummaryContributor);
+	public default void setModelIndexWriteContributor(
+		ModelIndexerWriterContributor<?> modelIndexWriterContributor) {
+	}
 
-	public void setModelVisibilityContributor(
-		ModelVisibilityContributor modelVisibilityContributor);
+	public default void setModelSummaryContributor(
+		ModelSummaryContributor modelSummaryContributor) {
+	}
+
+	public default void setModelVisibilityContributor(
+		ModelVisibilityContributor modelVisibilityContributor) {
+	}
 
 	/**
 	 * See LPS-192313.
 	 */
-	public void setPermissionAware(boolean permissionAware);
+	public default void setPermissionAware(boolean permissionAware) {
+	}
 
-	public void setSearchResultPermissionFilterSuppressed(
-		boolean searchResultPermissionFilterSuppressed);
+	public default void setSearchResultPermissionFilterSuppressed(
+		boolean searchResultPermissionFilterSuppressed) {
+	}
 
-	public void setSelectAllLocales(boolean selectAllLocales);
+	public default void setSelectAllLocales(boolean selectAllLocales) {
+	}
 
-	public void setStagingAware(boolean stagingAware);
+	public default void setStagingAware(boolean stagingAware) {
+	}
 
 }

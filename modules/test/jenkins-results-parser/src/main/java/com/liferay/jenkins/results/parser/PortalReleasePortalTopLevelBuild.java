@@ -202,7 +202,14 @@ public class PortalReleasePortalTopLevelBuild
 		sb.append(portalBranchUsername);
 		sb.append("/liferay-portal");
 
-		if (!branchName.equals("master")) {
+		String portalReleaseVersion = getParameterValue(
+			"TEST_PORTAL_RELEASE_VERSION");
+
+		PortalRelease portalRelease = getPortalRelease();
+
+		if (portalRelease.isQuarterlyRelease(portalReleaseVersion) ||
+			!branchName.equals("master")) {
+
 			sb.append("-ee");
 		}
 

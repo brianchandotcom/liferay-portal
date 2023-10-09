@@ -36,7 +36,6 @@ import com.liferay.petra.string.StringPool;
 import groovy.lang.Closure;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
 import java.nio.file.FileVisitResult;
@@ -998,7 +997,7 @@ public class ClientExtensionProjectConfigurator
 			return _yamlObjectMapper.createObjectNode();
 		}
 
-		try (FileReader fileReader = new FileReader(file)) {
+		try {
 			return _yamlObjectMapper.readTree(file);
 		}
 		catch (IOException ioException) {

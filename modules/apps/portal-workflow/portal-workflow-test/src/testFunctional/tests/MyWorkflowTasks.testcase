@@ -765,6 +765,12 @@ definition {
 
 		Notifications.goToFilterValues(filterValues = "Due Date");
 
+		if (IsElementPresent(key_text = "order-list-down", locator1 = "ManagementBar#ANY_ICON")) {
+			Click(
+				key_text = "order-list-down",
+				locator1 = "ManagementBar#ANY_ICON");
+		}
+
 		MyWorkflowTasks.viewMyWorkflowTaskItemPosition(
 			rowPosition = 2,
 			title = "Blogs Entry 1");

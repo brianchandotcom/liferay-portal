@@ -34,9 +34,13 @@ export default function PredefinedValuesTable({
 
 	const items = useMemo(() => {
 		const updatePredefinedValues = (name: string, value: string) => {
-			const updatedPredefinedValues = predefinedValues.map((field) => {
-				return field.name === name ? {...field, value} : field;
-			});
+			const updatedPredefinedValues = predefinedValues.map(
+				(objectField) => {
+					return objectField.name === name
+						? {...objectField, value}
+						: objectField;
+				}
+			);
 
 			return updatedPredefinedValues;
 		};
@@ -64,13 +68,13 @@ export default function PredefinedValuesTable({
 								label={Liferay.Language.get('input-as-a-value')}
 								onChange={({target: {checked}}) => {
 									const newPredefinedValues = predefinedValues.map(
-										(field) => {
-											return field.name === name
+										(objectField) => {
+											return objectField.name === name
 												? {
-														...field,
+														...objectField,
 														inputAsValue: checked,
 												  }
-												: field;
+												: objectField;
 										}
 									);
 									setValues({
@@ -211,20 +215,24 @@ export default function PredefinedValuesTable({
 	]);
 
 	useEffect(() => {
-		const getSelectedFields = () => {
+		const getSelectedObjectFields = () => {
 			const objectFields: ObjectField[] = [];
 
 			predefinedValues?.forEach(({name}) => {
 				if (objectFieldsMap.has(name)) {
-					const field = objectFieldsMap.get(name);
-					objectFields.push(field as ObjectField);
+					const objectField = objectFieldsMap.get(name);
+					objectFields.push(objectField as ObjectField);
 				}
 			});
 
 			return objectFields;
 		};
 
-		const deletePredefinedValueField = ({itemData}: {itemData: Item}) => {
+		const deletePredefinedValueObjectField = ({
+			itemData,
+		}: {
+			itemData: Item;
+		}) => {
 			const {name} = itemData;
 
 			if (objectFieldsMap.get(name)?.required) {
@@ -239,7 +247,7 @@ export default function PredefinedValuesTable({
 			}
 
 			const newPredefinedValues = predefinedValues?.filter(
-				(field) => field.name !== name
+				(objectField) => objectField.name !== name
 			);
 
 			setValues({
@@ -250,7 +258,7 @@ export default function PredefinedValuesTable({
 			});
 		};
 
-		const handleAddFields = () => {
+		const handleAddObjectFields = () => {
 			const parentWindow = Liferay.Util.getOpener();
 
 			parentWindow.Liferay.fire('openModalSelectObjectFields', {
@@ -269,8 +277,8 @@ export default function PredefinedValuesTable({
 						PredefinedValue
 					>();
 
-					predefinedValues.forEach((field) => {
-						predefinedValuesMap.set(field.name, field);
+					predefinedValues.forEach((objectField) => {
+						predefinedValuesMap.set(objectField.name, objectField);
 					});
 
 					const newPredefinedValues = items.map(
@@ -297,17 +305,20 @@ export default function PredefinedValuesTable({
 						},
 					});
 				},
-				selected: getSelectedFields(),
+				selected: getSelectedObjectFields(),
 				title: Liferay.Language.get('select-the-fields'),
 			});
 		};
 
-		Liferay.on('deletePredefinedValueField', deletePredefinedValueField);
-		Liferay.on('handleAddFields', handleAddFields);
+		Liferay.on(
+			'deletePredefinedValueObjectField',
+			deletePredefinedValueObjectField
+		);
+		Liferay.on('handleAddObjectFields', handleAddObjectFields);
 
 		return () => {
-			Liferay.detach('deletePredefinedValueField');
-			Liferay.detach('handleAddFields');
+			Liferay.detach('deletePredefinedValueObjectField');
+			Liferay.detach('handleAddObjectFields');
 		};
 	}, [
 		creationLanguageId,
@@ -332,8 +343,8 @@ export default function PredefinedValuesTable({
 							primaryItems: !values.system
 								? [
 										{
-											href: 'handleAddFields',
-											id: 'handleAddFields',
+											href: 'handleAddObjectFields',
+											id: 'handleAddObjectFields',
 											label: Liferay.Language.get(
 												'add-fields'
 											),
@@ -348,9 +359,11 @@ export default function PredefinedValuesTable({
 							!values.system
 								? [
 										{
-											href: 'deletePredefinedValueField',
+											href:
+												'deletePredefinedValueObjectField',
 											icon: 'trash',
-											id: 'deletePredefinedValueField',
+											id:
+												'deletePredefinedValueObjectField',
 											label: Liferay.Language.get(
 												'delete'
 											),

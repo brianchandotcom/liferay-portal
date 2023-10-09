@@ -13,18 +13,6 @@ import java.util.Map;
  */
 public class JMSFactory {
 
-	public static JMSConnection newJMSConnection(String jmsBrokerURL) {
-		JMSConnection jmsConnection = _jmsConnections.get(jmsBrokerURL);
-
-		if (jmsConnection == null) {
-			jmsConnection = new JMSConnection(jmsBrokerURL);
-
-			_jmsConnections.put(jmsBrokerURL, jmsConnection);
-		}
-
-		return jmsConnection;
-	}
-
 	public static JMSQueue newJMSQueue(
 		String jmsBrokerURL, String queueName) {
 
@@ -41,23 +29,6 @@ public class JMSFactory {
 		return _jmsQueues.get(key);
 	}
 
-	public static JMSTopic newJMSTopic(
-		JMSConnection jmsConnection, String topicName) {
-
-		JMSTopic jmsTopic = _jmsTopics.get(topicName);
-
-		if (jmsTopic == null) {
-			jmsTopic = new JMSTopic(jmsConnection.getConnection(), topicName);
-
-			_jmsTopics.put(topicName, jmsTopic);
-		}
-
-		return jmsTopic;
-	}
-
-	private static final Map<String, JMSConnection> _jmsConnections =
-		new HashMap<>();
 	private static final Map<String, JMSQueue> _jmsQueues = new HashMap<>();
-	private static final Map<String, JMSTopic> _jmsTopics = new HashMap<>();
 
 }

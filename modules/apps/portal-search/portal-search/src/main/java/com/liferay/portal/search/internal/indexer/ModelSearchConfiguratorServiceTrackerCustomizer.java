@@ -320,7 +320,8 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 
 		IndexerSummaryBuilder indexerSummaryBuilder =
 			new IndexerSummaryBuilderImpl(
-				modelSearchConfigurator.getModelSummaryBuilder(), className);
+				modelSearchConfigurator.getModelSummaryContributor(),
+				className);
 
 		serviceRegistrationHolder.setIndexerSummaryBuilderServiceRegistration(
 			_bundleContext.registerService(

@@ -35,6 +35,11 @@ public abstract class InfoCollectionProviderSXPBlueprintModelListener
 	}
 
 	@Override
+	public Class<?> getModelClass() {
+		return SXPBlueprint.class;
+	}
+
+	@Override
 	public void onAfterCreate(SXPBlueprint sxpBlueprint) {
 		ServiceRegistration<?> serviceRegistration = _serviceRegistrations.put(
 			sxpBlueprint.getSXPBlueprintId(),

@@ -176,10 +176,10 @@ if (portletTitleBasedNavigation) {
 					<div class="alert alert-info">
 
 						<%
-						Format dateFormatDate = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+						Format messageDateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 						%>
 
-						<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(wikiPage.getUserName()), dateFormatDate.format(wikiPage.getModifiedDate())} %>" key="this-page-cannot-be-edited-because-user-x-is-modifying-it-and-the-results-have-not-been-published-yet" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(wikiPage.getUserName()), messageDateTimeFormat.format(wikiPage.getModifiedDate())} %>" key="this-page-cannot-be-edited-because-user-x-is-modifying-it-and-the-results-have-not-been-published-yet" translateArguments="<%= false %>" />
 					</div>
 				</c:if>
 			</c:when>

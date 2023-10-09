@@ -114,13 +114,13 @@ WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = new WikiNodeIn
 					<liferay-ui:message key="last-modified" />
 				</dt>
 				<dd class="sidebar-dd">
-					<%= dateFormatDateTime.format(node.getModifiedDate()) %>
+					<%= dateTimeFormat.format(node.getModifiedDate()) %>
 				</dd>
 				<dt class="sidebar-dt">
 					<liferay-ui:message key="create-date" />
 				</dt>
 				<dd class="sidebar-dd">
-					<%= dateFormatDateTime.format(node.getModifiedDate()) %>
+					<%= dateTimeFormat.format(node.getModifiedDate()) %>
 				</dd>
 			</c:when>
 			<c:when test="<%= wikiNodeInfoPanelDisplayContext.isMultipleNodeSelection() %>">

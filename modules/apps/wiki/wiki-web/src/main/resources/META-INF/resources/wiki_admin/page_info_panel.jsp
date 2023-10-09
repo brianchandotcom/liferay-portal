@@ -136,13 +136,13 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 							<liferay-ui:message key="create-date" />
 						</dt>
 						<dd class="sidebar-dd">
-							<%= dateFormatDateTime.format(wikiPage.getCreateDate()) %>
+							<%= dateTimeFormat.format(wikiPage.getCreateDate()) %>
 						</dd>
 						<dt class="sidebar-dt">
 							<liferay-ui:message key="last-modified" />
 						</dt>
 						<dd class="sidebar-dd">
-							<%= dateFormatDateTime.format(wikiPage.getModifiedDate()) %>
+							<%= dateTimeFormat.format(wikiPage.getModifiedDate()) %>
 						</dd>
 						<dt class="sidebar-dt">
 							<liferay-ui:message key="attachments" />
@@ -245,7 +245,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 								</div>
 
 								<div class="h6 sidebar-caption">
-									<liferay-ui:message arguments='<%= new Object[] {HtmlUtil.escape(Validator.isNotNull(curPage.getUserName()) ? curPage.getUserName() : "Liferay"), dateFormatDateTime.format(curPage.getStatusDate())} %>' key="by-x-on-x" />
+									<liferay-ui:message arguments='<%= new Object[] {HtmlUtil.escape(Validator.isNotNull(curPage.getUserName()) ? curPage.getUserName() : "Liferay"), dateTimeFormat.format(curPage.getStatusDate())} %>' key="by-x-on-x" />
 								</div>
 							</div>
 
@@ -289,7 +289,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 								</div>
 
 								<div class="h6 sidebar-caption">
-									<%= dateFormatDateTime.format(socialActivity.getCreateDate()) %>
+									<%= dateTimeFormat.format(socialActivity.getCreateDate()) %>
 								</div>
 							</div>
 

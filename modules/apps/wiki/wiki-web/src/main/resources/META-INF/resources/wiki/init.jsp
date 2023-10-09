@@ -74,7 +74,7 @@ WikiWebComponentProvider wikiWebComponentProvider = WikiWebComponentProvider.get
 
 WikiGroupServiceConfiguration wikiGroupServiceConfiguration = wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <%@ include file="/wiki/init-ext.jsp" %>

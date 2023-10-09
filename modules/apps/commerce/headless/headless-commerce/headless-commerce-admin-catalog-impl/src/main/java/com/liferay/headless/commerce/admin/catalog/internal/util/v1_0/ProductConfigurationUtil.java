@@ -5,7 +5,9 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 
+import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,6 +20,29 @@ import com.liferay.portal.kernel.util.StringUtil;
  * @author Igor Beslic
  */
 public class ProductConfigurationUtil {
+
+	public static void updateCPDAvailabilityEstimate(
+			CPDAvailabilityEstimateService cpdAvailabilityEstimateService,
+			ProductConfiguration productConfiguration, long cpDefinitionId)
+		throws PortalException {
+
+		long commerceAvailabilityEstimateId = 0;
+
+		CPDAvailabilityEstimate cpdAvailabilityEstimate =
+			cpdAvailabilityEstimateService.
+				fetchCPDAvailabilityEstimateByCPDefinitionId(cpDefinitionId);
+
+		if (cpdAvailabilityEstimate != null) {
+			commerceAvailabilityEstimateId =
+				cpdAvailabilityEstimate.getCommerceAvailabilityEstimateId();
+		}
+
+		cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
+			0, cpDefinitionId,
+			GetterUtil.get(
+				productConfiguration.getAvailabilityEstimateId(),
+				commerceAvailabilityEstimateId));
+	}
 
 	public static CPDefinitionInventory updateCPDefinitionInventory(
 			CPDefinitionInventoryService cpDefinitionInventoryService,

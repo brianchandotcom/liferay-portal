@@ -1123,13 +1123,19 @@ public class JournalArticleLocalServiceImpl
 
 		// Asset
 
-		long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
-			JournalArticle.class.getName(), sourceArticle.getResourcePrimKey());
-		String[] assetTagNames = _assetTagLocalService.getTagNames(
-			JournalArticle.class.getName(), sourceArticle.getResourcePrimKey());
+		AssetEntry oldAssetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), sourceArticle.getId());
 
-		AssetEntry oldAssetEntry = _assetEntryLocalService.getEntry(
-			JournalArticle.class.getName(), sourceArticle.getResourcePrimKey());
+		if (oldAssetEntry == null) {
+			oldAssetEntry = _assetEntryLocalService.getEntry(
+				JournalArticle.class.getName(),
+				sourceArticle.getResourcePrimKey());
+		}
+
+		long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
+			JournalArticle.class.getName(), oldAssetEntry.getClassPK());
+		String[] assetTagNames = _assetTagLocalService.getTagNames(
+			JournalArticle.class.getName(), oldAssetEntry.getClassPK());
 
 		List<AssetLink> assetLinks = _assetLinkLocalService.getDirectLinks(
 			oldAssetEntry.getEntryId(), false);

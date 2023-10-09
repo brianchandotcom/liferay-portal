@@ -1,0 +1,26 @@
+{
+	"active": true,
+	"emails": [
+		{
+			"primary": true,
+			"type": "work",
+			"value": "bjensen@example.com"
+		}
+	],
+	"externalId": "2819c223-7f76-453a-413861904646",
+	"name": {
+		"familyName": "Jensens",
+		"givenName": "Barbara",
+		"middleName": "Jane"
+	},
+	"schemas": [
+		"urn:ietf:params:scim:schemas:core:2.0:User",
+		"urn:ietf:params:scim:schemas:extension:liferay:2.0:User"
+	],
+	"title": "Software Engineer",
+	"urn:ietf:params:scim:schemas:extension:liferay:2.0:User": {
+		"birthday": "1987-08-28",
+		"male": false
+	},
+	"userName": "bjensen"
+}

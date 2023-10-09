@@ -59,7 +59,10 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 										</aui:a>
 
 										<c:if test="<%= commerceOrderNote.isRestricted() %>">
-											<aui:icon image="lock" markupView="lexicon" message="private" />
+											<clay:icon
+												cssClass="d-block"
+												symbol="lock"
+											/>
 										</c:if>
 
 										<%

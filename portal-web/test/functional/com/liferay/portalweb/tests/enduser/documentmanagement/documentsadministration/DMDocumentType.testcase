@@ -385,7 +385,8 @@ definition {
 
 		DMDocument.viewDocumentTypePG(
 			fieldFieldLabel = "Photo",
-			imageName = "Document_2.jpg");
+			imageName = "Document_2.jpg",
+			panelName = "DM Document Type Name Edit");
 	}
 
 	@description = "This ensures that the user can create a document using edited text field inside document type."
@@ -435,6 +436,7 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
 
 		DMDocument.viewDocumentTypePG(
+			panelName = "DM Document Type Name Edit",
 			textContent = "Liferay",
 			textFieldLabel = "Company");
 	}
@@ -491,6 +493,7 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
 
 		DMDocument.viewDocumentTypePG(
+			panelName = "DM Document Type Name Edit",
 			uploadFieldLabel = "Resume",
 			uploadFile = "Document_1.doc");
 	}

@@ -569,7 +569,9 @@ definition {
 			dmDocumentType = "DM Document Type Name",
 			previewImage = "Image_1.jpg");
 
-		DMDocument.viewDocumentTypePG(imageName = "Document_1.jpg");
+		DMDocument.viewDocumentTypePG(
+			imageName = "Document_1.jpg",
+			panelName = "DM Document Type Name");
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name-staging");
 
@@ -608,7 +610,8 @@ definition {
 
 		DMDocument.viewDocumentTypePG(
 			fieldFieldLabel = "Photo",
-			imageName = "Document_2.jpg");
+			imageName = "Document_2.jpg",
+			panelName = "DM Document Type Name Edit");
 	}
 
 	@description = "This ensures that the document using custom document type and custom metadataset can be edited and republished."

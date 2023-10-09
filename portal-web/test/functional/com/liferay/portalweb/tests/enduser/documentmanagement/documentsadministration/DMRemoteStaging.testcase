@@ -194,7 +194,9 @@ definition {
 			dmDocumentType = "DM Document Type Name",
 			previewImage = "Image_1.jpg");
 
-		DMDocument.viewDocumentTypePG(imageName = "document_1");
+		DMDocument.viewDocumentTypePG(
+			imageName = "document_1",
+			panelName = "DM Document Type Name");
 
 		User.loginPG(
 			nodePort = 8080,
@@ -248,7 +250,8 @@ definition {
 
 		DMDocument.viewDocumentTypePG(
 			fieldFieldLabel = "Photo",
-			imageName = "document_2");
+			imageName = "document_2",
+			panelName = "DM Document Type Name Edit");
 	}
 
 	@description = "This ensures that the document using custom document type and custom metadataset can be edited and republished."

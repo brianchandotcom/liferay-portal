@@ -41,11 +41,6 @@ public class DDMFormDDMDataProviderDisplay implements DDMDataProviderDisplay {
 	}
 
 	@Override
-	public String getPortletId() {
-		return DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN;
-	}
-
-	@Override
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());

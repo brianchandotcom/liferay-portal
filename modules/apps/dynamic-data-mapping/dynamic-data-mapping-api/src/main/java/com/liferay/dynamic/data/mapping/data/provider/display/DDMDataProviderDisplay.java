@@ -22,8 +22,6 @@ public interface DDMDataProviderDisplay {
 
 	public DDMDisplayTabItem getDefaultDDMDisplayTabItem();
 
-	public String getPortletId();
-
 	public String getTitle(Locale locale);
 
 }

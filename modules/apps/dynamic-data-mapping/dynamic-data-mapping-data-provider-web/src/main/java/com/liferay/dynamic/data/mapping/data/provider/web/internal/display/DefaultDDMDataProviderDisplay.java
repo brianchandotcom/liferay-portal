@@ -60,11 +60,6 @@ public class DefaultDDMDataProviderDisplay implements DDMDataProviderDisplay {
 	}
 
 	@Override
-	public String getPortletId() {
-		return DDMPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER;
-	}
-
-	@Override
 	public String getTitle(Locale locale) {
 		return _language.get(locale, "data-providers");
 	}

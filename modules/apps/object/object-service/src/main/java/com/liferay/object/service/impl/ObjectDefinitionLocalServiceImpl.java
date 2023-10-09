@@ -138,7 +138,6 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
-import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -877,11 +876,10 @@ public class ObjectDefinitionLocalServiceImpl
 				_accountEntryOrganizationRelLocalService,
 				_assetEntryLocalService, _bundleContext,
 				_dynamicQueryBatchIndexingActionableFactory, _groupLocalService,
-				_listTypeLocalService, _modelSearchRegistrarHelper,
-				_objectActionLocalService, objectDefinitionLocalService,
-				_objectEntryLocalService, _objectEntryService,
-				_objectFieldLocalService, _objectLayoutLocalService,
-				_objectLayoutTabLocalService,
+				_listTypeLocalService, _objectActionLocalService,
+				objectDefinitionLocalService, _objectEntryLocalService,
+				_objectEntryService, _objectFieldLocalService,
+				_objectLayoutLocalService, _objectLayoutTabLocalService,
 				_objectRelatedModelsProviderRegistrarHelper,
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				_objectViewLocalService, _organizationLocalService,
@@ -2397,9 +2395,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;
-
-	@Reference
-	private ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
 
 	@Reference
 	private MultiVMPool _multiVMPool;

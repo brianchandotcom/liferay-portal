@@ -125,6 +125,8 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpg");
 
+		SetWindowSize.maximizeWindow();
+
 		Comments.addPG(entryComment = "This is a comment");
 
 		Comments.delete(entryComment = "This is a comment");
@@ -174,6 +176,8 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpg");
+
+		SetWindowSize.maximizeWindow();
 
 		Comments.addPG(entryComment = "This is a comment");
 

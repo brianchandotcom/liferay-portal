@@ -176,8 +176,8 @@ export default function getMDFListColumns(
 			label: 'Amout Claimed',
 		},
 		{
-			columnKey: MDFColumnKey.PAID,
-			label: 'Paid',
+			columnKey: MDFColumnKey.AMOUNT_PAID,
+			label: 'Amount Paid',
 		},
 		{
 			columnKey: MDFColumnKey.DATE_SUBMITTTED,

@@ -20,13 +20,23 @@ public interface ModelSearchConfigurator<T extends BaseModel<?>> {
 
 	public String getClassName();
 
-	public ModelIndexerWriterContributor<T> getModelIndexerWriterContributor();
+	public String[] getDefaultSelectedFieldNames();
 
-	public ModelSearchSettings getModelSearchSettings();
+	public String[] getDefaultSelectedLocalizedFieldNames();
+
+	public ModelIndexerWriterContributor<T> getModelIndexerWriterContributor();
 
 	public ModelSummaryContributor getModelSummaryBuilder();
 
 	public ModelVisibilityContributor getModelVisibilityContributor();
+
+	public boolean isPermissionAware();
+
+	public boolean isSearchResultPermissionFilterSuppressed();
+
+	public boolean isSelectAllLocales();
+
+	public boolean isStagingAware();
 
 	public void setDefaultSelectedFieldNames(
 		String... defaultSelectedFieldNames);

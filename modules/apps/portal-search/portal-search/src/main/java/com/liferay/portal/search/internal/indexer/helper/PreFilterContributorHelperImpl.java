@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.search.internal.indexer.IndexerProvidedClausesUtil;
 import com.liferay.portal.search.internal.indexer.ModelPreFilterContributorsRegistry;
+import com.liferay.portal.search.internal.indexer.ModelSearchConfiguratorImpl;
 import com.liferay.portal.search.internal.indexer.ModelSearchSettingsImpl;
 import com.liferay.portal.search.internal.indexer.QueryPreFilterContributorsRegistry;
 import com.liferay.portal.search.internal.util.SearchStringUtil;
 import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
+import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 import java.util.Arrays;
@@ -213,12 +215,12 @@ public class PreFilterContributorHelperImpl
 	}
 
 	private ModelSearchSettings _getModelSearchSettings(Indexer<?> indexer) {
-		ModelSearchSettingsImpl modelSearchSettingsImpl =
-			new ModelSearchSettingsImpl(indexer.getClassName());
+		ModelSearchConfigurator<?> modelSearchConfigurator =
+			new ModelSearchConfiguratorImpl<>(indexer.getClassName());
 
-		modelSearchSettingsImpl.setStagingAware(indexer.isStagingAware());
+		modelSearchConfigurator.setStagingAware(indexer.isStagingAware());
 
-		return modelSearchSettingsImpl;
+		return new ModelSearchSettingsImpl(modelSearchConfigurator);
 	}
 
 	private String _getParentEntryClassName(String entryClassName) {

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal.indexer;
 
+import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 /**
@@ -12,10 +13,22 @@ import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
  */
 public class ModelSearchSettingsImpl implements ModelSearchSettings {
 
-	public ModelSearchSettingsImpl(String className) {
-		_className = className;
+	public ModelSearchSettingsImpl(
+		ModelSearchConfigurator<?> modelSearchConfigurator) {
 
-		_searchClassNames = new String[] {className};
+		_className = modelSearchConfigurator.getClassName();
+
+		_searchClassNames = new String[] {_className};
+
+		_defaultSelectedFieldNames =
+			modelSearchConfigurator.getDefaultSelectedFieldNames();
+		_defaultSelectedLocalizedFieldNames =
+			modelSearchConfigurator.getDefaultSelectedLocalizedFieldNames();
+		_permissionAware = modelSearchConfigurator.isPermissionAware();
+		_searchResultPermissionFilterSuppressed =
+			modelSearchConfigurator.isSearchResultPermissionFilterSuppressed();
+		_selectAllLocales = modelSearchConfigurator.isSelectAllLocales();
+		_stagingAware = modelSearchConfigurator.isStagingAware();
 	}
 
 	@Override
@@ -58,45 +71,13 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 		return _stagingAware;
 	}
 
-	public void setDefaultSelectedFieldNames(
-		String... defaultSelectedFieldNames) {
-
-		_defaultSelectedFieldNames = defaultSelectedFieldNames;
-	}
-
-	public void setDefaultSelectedLocalizedFieldNames(
-		String... defaultSelectedLocalizedFieldNames) {
-
-		_defaultSelectedLocalizedFieldNames =
-			defaultSelectedLocalizedFieldNames;
-	}
-
-	public void setPermissionAware(boolean permissionAware) {
-		_permissionAware = permissionAware;
-	}
-
-	public void setSearchResultPermissionFilterSuppressed(
-		boolean searchResultPermissionFilterSuppressed) {
-
-		_searchResultPermissionFilterSuppressed =
-			searchResultPermissionFilterSuppressed;
-	}
-
-	public void setSelectAllLocales(boolean selectAllLocales) {
-		_selectAllLocales = selectAllLocales;
-	}
-
-	public void setStagingAware(boolean stagingAware) {
-		_stagingAware = stagingAware;
-	}
-
 	private final String _className;
-	private String[] _defaultSelectedFieldNames;
-	private String[] _defaultSelectedLocalizedFieldNames;
-	private boolean _permissionAware = true;
+	private final String[] _defaultSelectedFieldNames;
+	private final String[] _defaultSelectedLocalizedFieldNames;
+	private final boolean _permissionAware;
 	private final String[] _searchClassNames;
-	private boolean _searchResultPermissionFilterSuppressed;
-	private boolean _selectAllLocales;
-	private boolean _stagingAware = true;
+	private final boolean _searchResultPermissionFilterSuppressed;
+	private final boolean _selectAllLocales;
+	private final boolean _stagingAware;
 
 }

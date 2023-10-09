@@ -81,7 +81,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 							<dt class="sidebar-dt"><liferay-ui:message key="removed-date" /></dt>
 
 							<dd class="sidebar-dd">
-								<%= dateFormatDateTime.format(trashEntry.getCreateDate()) %>
+								<%= dateTimeFormat.format(trashEntry.getCreateDate()) %>
 							</dd>
 							<dt class="sidebar-dt"><liferay-ui:message key="removed-by" /></dt>
 

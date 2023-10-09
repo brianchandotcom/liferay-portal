@@ -12,5 +12,5 @@ Date date = (Date)request.getAttribute("liferay-staging:process-date:date");
 String labelKey = GetterUtil.getString(request.getAttribute("liferay-staging:process-date:labelKey"));
 boolean listView = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-date:listView"));
 
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.MEDIUM, FastDateFormatConstants.SHORT, locale, timeZone);
+Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.MEDIUM, FastDateFormatConstants.SHORT, locale, timeZone);
 %>

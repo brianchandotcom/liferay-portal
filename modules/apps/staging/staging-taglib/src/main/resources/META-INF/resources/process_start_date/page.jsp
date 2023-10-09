@@ -9,9 +9,9 @@
 
 <c:choose>
 	<c:when test="<%= listView %>">
-		<span class="process-date"><%= dateFormatDateTime.format(backgroundTask.getCreateDate()) %></span>
+		<span class="process-date"><%= dateTimeFormat.format(backgroundTask.getCreateDate()) %></span>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:message key="start-date" />: <%= dateFormatDateTime.format(backgroundTask.getCreateDate()) %>
+		<liferay-ui:message key="start-date" />: <%= dateTimeFormat.format(backgroundTask.getCreateDate()) %>
 	</c:otherwise>
 </c:choose>

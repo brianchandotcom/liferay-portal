@@ -12,5 +12,5 @@ BackgroundTask backgroundTask = (BackgroundTask)request.getAttribute("liferay-st
 
 boolean listView = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-start-date:listView"));
 
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.MEDIUM, FastDateFormatConstants.SHORT, locale, timeZone);
+Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.MEDIUM, FastDateFormatConstants.SHORT, locale, timeZone);
 %>

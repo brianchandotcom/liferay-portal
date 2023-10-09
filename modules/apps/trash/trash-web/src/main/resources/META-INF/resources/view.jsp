@@ -149,7 +149,7 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 								colspan="<%= 2 %>"
 							>
 								<h6 class="text-default">
-									<liferay-ui:message arguments="<%= dateFormatDateTime.format(trashEntry.getCreateDate()) %>" key="removed-x" />
+									<liferay-ui:message arguments="<%= dateTimeFormat.format(trashEntry.getCreateDate()) %>" key="removed-x" />
 								</h6>
 
 								<h5>

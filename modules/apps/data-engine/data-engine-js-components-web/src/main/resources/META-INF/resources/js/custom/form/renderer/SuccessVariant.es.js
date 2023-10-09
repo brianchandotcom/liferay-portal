@@ -78,12 +78,16 @@ export function Page({page: {successPageSettings}}) {
 	const {initialBody, initialTitle} = {
 		initialBody:
 			(successPageSettings.body &&
-				(successPageSettings.body[editingLanguageId] ||
+				(successPageSettings.body[
+					Liferay.ThemeDisplay.getLanguageId()
+				] ||
 					successPageSettings.body[defaultLanguageId])) ||
 			'',
 		initialTitle:
 			(successPageSettings.title &&
-				(successPageSettings.title[editingLanguageId] ||
+				(successPageSettings.title[
+					Liferay.ThemeDisplay.getLanguageId()
+				] ||
 					successPageSettings.title[defaultLanguageId])) ||
 			'',
 	};

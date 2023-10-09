@@ -166,7 +166,7 @@ definition {
 				CommerceOrders.viewOrdersEntry(
 					productListPrice = "5.00",
 					productName = "Simple Product",
-					productQuantity = "3.00",
+					productQuantity = 3,
 					productSku = "TESTSKU",
 					productTotalPrice = "5.00");
 			}
@@ -211,7 +211,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = "6.00",
+				productQuantity = 6,
 				productSku = "TESTSKU",
 				productTotalPrice = "5.00");
 
@@ -226,7 +226,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = "3.00",
+				productQuantity = 3,
 				productSku = "TESTSKU",
 				productTotalPrice = "5.00");
 		}
@@ -2169,7 +2169,7 @@ definition {
 				productListPrice = "50.00",
 				productName = "U-Joint",
 				productOptions = "value2",
-				productQuantity = "2.00 meters",
+				productQuantity = "2 meters",
 				productSku = "VALUE2",
 				productTotalPrice = "50.00");
 

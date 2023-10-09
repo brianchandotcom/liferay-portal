@@ -1324,7 +1324,7 @@ definition {
 				addressZipCode = "Test Zip Code",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = "1.00 grams",
+				productQuantity = "1 grams",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -1342,7 +1342,7 @@ definition {
 				addressZipCode = "Test Zip Code",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = "1.00 meters",
+				productQuantity = "1 meters",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -2161,7 +2161,7 @@ definition {
 				addressZipCode = "Test Zip Code",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = "1.20",
+				productQuantity = "1.2",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -3467,7 +3467,7 @@ definition {
 			paymentMethod = "Money Order",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "4.00",
+			productQuantity = 4,
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
@@ -3538,7 +3538,7 @@ definition {
 			paymentMethod = "Money Order",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "4.00",
+			productQuantity = 4,
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}

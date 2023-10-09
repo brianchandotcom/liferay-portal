@@ -63,9 +63,7 @@ export default function LeftSidebar({setShowModal}: LeftSidebarProps) {
 	const leftSidebarOtherObjectFoldersItems = filteredLeftSidebarItems.filter(
 		(filteredLeftSidebarItem) =>
 			filteredLeftSidebarItem.objectFolderName !==
-				selectedObjectFolder.name &&
-			filteredLeftSidebarItem.leftSidebarObjectDefinitionItems?.length !==
-				0
+			selectedObjectFolder.name
 	);
 
 	leftSidebarOtherObjectFoldersItems.sort((a, b) =>

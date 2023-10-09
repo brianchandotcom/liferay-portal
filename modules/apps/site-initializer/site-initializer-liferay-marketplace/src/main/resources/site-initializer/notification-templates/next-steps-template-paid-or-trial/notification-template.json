@@ -18,7 +18,7 @@
 		}
 	],
 	"subject": {
-		"en_US": "Next steps on [%GETAPPINFORMATION_PROJECTNAME%] purchase"
+		"en_US": "Next steps on [%GETAPPINFORMATION_PRODUCTNAME%] purchase"
 	},
 	"type": "email"
 }

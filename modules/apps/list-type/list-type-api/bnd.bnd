@@ -7,4 +7,5 @@ Export-Package:\
 	com.liferay.list.type.exception,\
 	com.liferay.list.type.model,\
 	com.liferay.list.type.service,\
-	com.liferay.list.type.service.persistence
+	com.liferay.list.type.service.persistence,\
+	com.liferay.list.type.util.comparator

@@ -461,6 +461,10 @@ definition {
 					var quantityConfigurationText = "Quantity must be a multiple of ";
 				}
 				else {
+					if (isSet(quantityConfigurationDecimalText)) {
+						var quantityConfigurationDecimalText = "Quantity allows for ${quantityConfigurationDecimalText} decimal places ";
+					}
+
 					TestUtils.fail(message = "Selected quantity configuration is not valid.");
 				}
 			}

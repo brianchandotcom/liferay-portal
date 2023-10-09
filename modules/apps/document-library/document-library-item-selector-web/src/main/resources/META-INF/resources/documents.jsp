@@ -19,7 +19,7 @@ DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext = (DLItemSelec
 	folderId="<%= dlItemSelectorViewDisplayContext.getFolderId() %>"
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	itemSelectorReturnTypeResolver="<%= dlItemSelectorViewDisplayContext.getItemSelectorReturnTypeResolver() %>"
-	maxFileSize="<%= DLValidatorUtil.getMaxAllowableSize(themeDisplay.getScopeGroupId(), null) %>"
+	maxFileSize="<%= dlItemSelectorViewDisplayContext.getMaxFileSize() %>"
 	mimeTypeRestriction="<%= dlItemSelectorViewDisplayContext.getMimeTypeRestriction() %>"
 	portletURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(liferayPortletResponse) %>"
 	repositoryEntries="<%= dlItemSelectorViewDisplayContext.getRepositoryEntries() %>"

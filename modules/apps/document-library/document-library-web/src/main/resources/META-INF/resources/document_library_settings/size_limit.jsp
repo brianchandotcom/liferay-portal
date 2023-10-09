@@ -23,6 +23,12 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 			</h2>
 		</clay:sheet-header>
 
+		<clay:alert
+			dismissible="<%= true %>"
+			displayType="info"
+			message="changes-will-only-apply-to-new-documents-uploaded"
+		/>
+
 		<clay:sheet-section>
 			<p class="c-mb-4 text-3 text-secondary">
 				<liferay-ui:message arguments="<%= dlSizeLimitConfigurationDisplayContext.getFileMaxSizeHelpArguments() %>" key="file-max-size-help" />

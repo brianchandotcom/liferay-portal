@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 
 import java.util.Dictionary;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
@@ -42,6 +43,10 @@ public class DLFileEntryConfigurationHelper {
 			_getCompanyDLFileEntryConfiguration(companyId);
 
 		return dlFileEntryConfiguration.previewableProcessorMaxSize();
+	}
+
+	public Set<Long> getGroupIds() {
+		return _groupConfigurationBeans.keySet();
 	}
 
 	public int getGroupMaxNumberOfPages(long groupId) {

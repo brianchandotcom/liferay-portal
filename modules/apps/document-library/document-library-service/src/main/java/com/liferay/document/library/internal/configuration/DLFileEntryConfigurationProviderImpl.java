@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -78,6 +80,28 @@ public class DLFileEntryConfigurationProviderImpl
 				getCompanyPreviewableProcessorMaxSize(group.getCompanyId()),
 			_dlFileEntryConfigurationHelper.
 				getSystemPreviewableProcessorMaxSize());
+	}
+
+	@Override
+	public Map<Long, Long> getGroupPreviewableProcessorMaxSizeMap() {
+		Map<Long, Long> map = new HashMap<>();
+
+		for (long groupId : _dlFileEntryConfigurationHelper.getGroupIds()) {
+			long previewableProcessorMaxSize =
+				getGroupPreviewableProcessorMaxSize(groupId);
+
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if ((group != null) &&
+				(previewableProcessorMaxSize !=
+					getCompanyPreviewableProcessorMaxSize(
+						group.getCompanyId()))) {
+
+				map.put(groupId, previewableProcessorMaxSize);
+			}
+		}
+
+		return map;
 	}
 
 	@Override

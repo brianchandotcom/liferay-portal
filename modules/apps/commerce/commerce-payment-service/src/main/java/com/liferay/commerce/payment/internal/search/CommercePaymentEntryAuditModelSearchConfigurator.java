@@ -7,37 +7,34 @@ package com.liferay.commerce.payment.internal.search;
 
 import com.liferay.commerce.payment.model.CommercePaymentEntryAudit;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
+import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
  */
-@Component(service = {})
-public class CommercePaymentEntryAuditSearchRegistrar {
+@Component(service = ModelSearchConfigurator.class)
+public class CommercePaymentEntryAuditModelSearchConfigurator
+	implements ModelSearchConfigurator<CommercePaymentEntryAudit> {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = _modelSearchRegistrarHelper.register(
-			CommercePaymentEntryAudit.class, bundleContext,
-			modelSearchConfigurator -> {
-				modelSearchConfigurator.setModelIndexWriteContributor(
-					_modelIndexWriterContributor);
-				modelSearchConfigurator.setModelSummaryContributor(
-					_modelSummaryContributor);
-			});
+	@Override
+	public String getClassName() {
+		return CommercePaymentEntryAudit.class.getName();
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_serviceRegistration.unregister();
+	@Override
+	public ModelIndexerWriterContributor<CommercePaymentEntryAudit>
+		getModelIndexerWriterContributor() {
+
+		return _modelIndexWriterContributor;
+	}
+
+	@Override
+	public ModelSummaryContributor getModelSummaryContributor() {
+		return _modelSummaryContributor;
 	}
 
 	@Reference(
@@ -46,14 +43,9 @@ public class CommercePaymentEntryAuditSearchRegistrar {
 	private ModelIndexerWriterContributor<CommercePaymentEntryAudit>
 		_modelIndexWriterContributor;
 
-	@Reference
-	private ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
-
 	@Reference(
 		target = "(indexer.class.name=com.liferay.commerce.payment.model.CommercePaymentEntryAudit)"
 	)
 	private ModelSummaryContributor _modelSummaryContributor;
-
-	private ServiceRegistration<?> _serviceRegistration;
 
 }

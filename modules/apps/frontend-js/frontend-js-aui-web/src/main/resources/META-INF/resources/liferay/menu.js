@@ -608,7 +608,7 @@ AUI.add(
 					);
 
 					Liferay.once('beforeScreenFlip', () => {
-						menuInstance._focusManager = null;
+						menuInstance._focusManagerMap = null;
 
 						menuInstance._trigger = null;
 					});

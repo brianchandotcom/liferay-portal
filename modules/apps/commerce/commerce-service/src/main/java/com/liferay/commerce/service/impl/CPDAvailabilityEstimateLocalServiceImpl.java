@@ -15,7 +15,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 
@@ -85,8 +84,8 @@ public class CPDAvailabilityEstimateLocalServiceImpl
 
 	@Override
 	public CPDAvailabilityEstimate updateCPDAvailabilityEstimateByCProductId(
-			long cpdAvailabilityEstimateId, long cProductId,
-			long commerceAvailabilityEstimateId, ServiceContext serviceContext)
+			long userId, long cpdAvailabilityEstimateId, long cProductId,
+			long commerceAvailabilityEstimateId)
 		throws PortalException {
 
 		_validate(commerceAvailabilityEstimateId);
@@ -115,15 +114,14 @@ public class CPDAvailabilityEstimateLocalServiceImpl
 		}
 
 		return _addCPDAvailabilityEstimateByCProductId(
-			cProductId, commerceAvailabilityEstimateId, serviceContext);
+			userId, cProductId, commerceAvailabilityEstimateId);
 	}
 
 	private CPDAvailabilityEstimate _addCPDAvailabilityEstimateByCProductId(
-			long cProductId, long commerceAvailabilityEstimateId,
-			ServiceContext serviceContext)
+			long userId, long cProductId, long commerceAvailabilityEstimateId)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(userId);
 
 		long cpdAvailabilityEstimateId = counterLocalService.increment();
 

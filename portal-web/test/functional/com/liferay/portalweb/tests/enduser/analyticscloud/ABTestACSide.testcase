@@ -293,6 +293,20 @@ definition {
 				text = "Heading Example");
 		}
 
+		task ("Now edit the variant and add a widget to the page and then click save") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("Assert if the page is published with the modifications") {
+			PageEditor.viewFragment(fragmentName = "Button");
+		}
+
 		task ("Go to AC > Tests") {
 			ACUtils.launchAC();
 

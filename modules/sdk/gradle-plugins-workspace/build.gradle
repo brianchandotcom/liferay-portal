@@ -216,16 +216,21 @@ eclipse.classpath.file {
 }
 
 gradleTest {
-	dependsOn copyBundle
-	dependsOn copyDistBundleZipPluginsSdk
 	dependsOn copyGradleTestDependencies
 	dependsOn copyGradleTestProjects
-	dependsOn copyHotFixZip
 	dependsOn copyRepo
 	dependsOn copyWorkspacesSamples
 	dependsOn jar
 
+	if (!project.hasProperty("testLightExecution")) {
+		dependsOn copyBundle
+		dependsOn copyDistBundleZipPluginsSdk
+		dependsOn copyHotFixZip
+	}
+
 	deprecationMessagesAreFailures = false
+
+	excludes = ["**/*_base*"]
 
 	gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(gradleTestDependenciesDir)}"
@@ -234,6 +239,14 @@ gradleTest {
 
 	beforeTest {
 		println "  ${it.name}"
+	}
+
+	if (project.hasProperty("testDebug")) {
+		debug true
+		debugTests true
+	}
+	if (project.hasProperty("testShowOutput")) {
+		testLogging.showStandardStreams = true
 	}
 }
 

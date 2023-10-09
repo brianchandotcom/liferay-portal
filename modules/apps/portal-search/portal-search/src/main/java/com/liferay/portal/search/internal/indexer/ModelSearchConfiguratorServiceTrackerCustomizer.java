@@ -46,7 +46,6 @@ import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContrib
 import com.liferay.portal.search.spi.model.query.contributor.QueryConfigContributor;
 import com.liferay.portal.search.spi.model.query.contributor.SearchContextContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
-import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 import java.util.Collections;
 import java.util.Dictionary;
@@ -264,14 +263,14 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 				IndexerDocumentBuilder.class, indexerDocumentBuilder,
 				serviceProperties));
 
-		ModelSearchSettings modelSearchSettings =
-			modelSearchConfigurator.getModelSearchSettings();
+		ModelSearchSettingsImpl modelSearchSettingsImpl =
+			new ModelSearchSettingsImpl(modelSearchConfigurator);
 
 		IndexerQueryBuilderImpl indexerQueryBuilderImpl =
 			new IndexerQueryBuilderImpl<>(
 				addSearchKeywordsQueryContributorHelper,
 				expandoQueryContributorHelper, indexerRegistry,
-				modelSearchSettings,
+				modelSearchSettingsImpl,
 				new ModelKeywordQueryContributorsRegistryImpl(
 					serviceRegistrationHolder.getKeywordQueryContributors()),
 				serviceRegistrationHolder.getSearchContextContributors(),
@@ -297,7 +296,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 					indexerPermissionPostFilter, serviceProperties));
 
 		IndexerSearcher indexerSearcher = new IndexerSearcherImpl<>(
-			modelSearchSettings,
+			modelSearchSettingsImpl,
 			serviceRegistrationHolder.getQueryConfigContributors(),
 			indexerPermissionPostFilter, indexerQueryBuilderImpl,
 			hitsProcessorRegistry, indexSearcherHelper,
@@ -308,7 +307,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 				IndexerSearcher.class, indexerSearcher, serviceProperties));
 
 		IndexerWriter<?> indexerWriter = new IndexerWriterImpl<>(
-			modelSearchSettings, baseModelRetriever, batchIndexingHelper,
+			modelSearchSettingsImpl, baseModelRetriever, batchIndexingHelper,
 			modelSearchConfigurator.getModelIndexerWriterContributor(),
 			indexerDocumentBuilder, searchPermissionIndexWriter,
 			updateDocumentIndexWriter, indexStatusManager, indexWriterHelper,
@@ -329,7 +328,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 				serviceProperties));
 
 		return new DefaultIndexer<>(
-			modelSearchSettings, indexerDocumentBuilder, indexerSearcher,
+			modelSearchSettingsImpl, indexerDocumentBuilder, indexerSearcher,
 			indexerWriter, indexerPermissionPostFilter, indexerQueryBuilderImpl,
 			indexerSummaryBuilder, className);
 	}

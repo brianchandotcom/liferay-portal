@@ -8,7 +8,6 @@ package com.liferay.portal.search.internal.indexer;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
-import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor;
 
@@ -20,8 +19,6 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 
 	public ModelSearchConfiguratorImpl(String className) {
 		_className = className;
-
-		_modelSearchSettingsImpl = new ModelSearchSettingsImpl(className);
 	}
 
 	@Override
@@ -30,13 +27,18 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 	}
 
 	@Override
-	public ModelIndexerWriterContributor<T> getModelIndexerWriterContributor() {
-		return (ModelIndexerWriterContributor<T>)_modelIndexerWriterContributor;
+	public String[] getDefaultSelectedFieldNames() {
+		return _defaultSelectedFieldNames;
 	}
 
 	@Override
-	public ModelSearchSettings getModelSearchSettings() {
-		return _modelSearchSettingsImpl;
+	public String[] getDefaultSelectedLocalizedFieldNames() {
+		return _defaultSelectedLocalizedFieldNames;
+	}
+
+	@Override
+	public ModelIndexerWriterContributor<T> getModelIndexerWriterContributor() {
+		return (ModelIndexerWriterContributor<T>)_modelIndexerWriterContributor;
 	}
 
 	@Override
@@ -50,19 +52,38 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 	}
 
 	@Override
+	public boolean isPermissionAware() {
+		return _permissionAware;
+	}
+
+	@Override
+	public boolean isSearchResultPermissionFilterSuppressed() {
+		return _searchResultPermissionFilterSuppressed;
+	}
+
+	@Override
+	public boolean isSelectAllLocales() {
+		return _selectAllLocales;
+	}
+
+	@Override
+	public boolean isStagingAware() {
+		return _stagingAware;
+	}
+
+	@Override
 	public void setDefaultSelectedFieldNames(
 		String... defaultSelectedFieldNames) {
 
-		_modelSearchSettingsImpl.setDefaultSelectedFieldNames(
-			defaultSelectedFieldNames);
+		_defaultSelectedFieldNames = defaultSelectedFieldNames;
 	}
 
 	@Override
 	public void setDefaultSelectedLocalizedFieldNames(
 		String... defaultSelectedLocalizedFieldNames) {
 
-		_modelSearchSettingsImpl.setDefaultSelectedLocalizedFieldNames(
-			defaultSelectedLocalizedFieldNames);
+		_defaultSelectedLocalizedFieldNames =
+			defaultSelectedLocalizedFieldNames;
 	}
 
 	@Override
@@ -88,31 +109,36 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 
 	@Override
 	public void setPermissionAware(boolean permissionAware) {
-		_modelSearchSettingsImpl.setPermissionAware(permissionAware);
+		_permissionAware = permissionAware;
 	}
 
 	@Override
 	public void setSearchResultPermissionFilterSuppressed(
 		boolean searchResultPermissionFilterSuppressed) {
 
-		_modelSearchSettingsImpl.setSearchResultPermissionFilterSuppressed(
-			searchResultPermissionFilterSuppressed);
+		_searchResultPermissionFilterSuppressed =
+			searchResultPermissionFilterSuppressed;
 	}
 
 	@Override
 	public void setSelectAllLocales(boolean selectAllLocales) {
-		_modelSearchSettingsImpl.setSelectAllLocales(selectAllLocales);
+		_selectAllLocales = selectAllLocales;
 	}
 
 	@Override
 	public void setStagingAware(boolean stagingAware) {
-		_modelSearchSettingsImpl.setStagingAware(stagingAware);
+		_stagingAware = stagingAware;
 	}
 
 	private final String _className;
+	private String[] _defaultSelectedFieldNames;
+	private String[] _defaultSelectedLocalizedFieldNames;
 	private ModelIndexerWriterContributor<?> _modelIndexerWriterContributor;
-	private final ModelSearchSettingsImpl _modelSearchSettingsImpl;
 	private ModelSummaryContributor _modelSummaryContributor;
 	private ModelVisibilityContributor _modelVisibilityContributor;
+	private boolean _permissionAware = true;
+	private boolean _searchResultPermissionFilterSuppressed;
+	private boolean _selectAllLocales;
+	private boolean _stagingAware = true;
 
 }

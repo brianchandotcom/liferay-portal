@@ -129,17 +129,12 @@ definition {
 	@priority = 3
 	test JSPFragmentModuleStillResolvedAfterRemovingStateFolderOnLPKGBundle {
 		property license.required = "true";
+		property osgi.modules.includes = "adaptive-media-blogs-web-fragment";
 		property portal.upstream = "false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var moduleBaseDir = "modules/apps/adaptive-media/adaptive-media-blogs-web-fragment";
-		var projectDir = PropsUtil.get("project.dir");
-
-		AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=${moduleBaseDir}");
-
-		WaitForConsoleTextPresent(value1 = "STOPPED com.liferay.blogs.web_");
+		AssertConsoleTextPresent(value1 = "STOPPED com.liferay.blogs.web_");
 
 		GogoShell.openGogoShellAdmin();
 

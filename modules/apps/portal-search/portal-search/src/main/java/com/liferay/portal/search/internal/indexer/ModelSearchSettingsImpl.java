@@ -75,10 +75,6 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 		_permissionAware = permissionAware;
 	}
 
-	public void setSearchClassNames(String... searchClassNames) {
-		_searchClassNames = searchClassNames;
-	}
-
 	public void setSearchResultPermissionFilterSuppressed(
 		boolean searchResultPermissionFilterSuppressed) {
 
@@ -98,7 +94,7 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 	private String[] _defaultSelectedFieldNames;
 	private String[] _defaultSelectedLocalizedFieldNames;
 	private boolean _permissionAware = true;
-	private String[] _searchClassNames;
+	private final String[] _searchClassNames;
 	private boolean _searchResultPermissionFilterSuppressed;
 	private boolean _selectAllLocales;
 	private boolean _stagingAware = true;

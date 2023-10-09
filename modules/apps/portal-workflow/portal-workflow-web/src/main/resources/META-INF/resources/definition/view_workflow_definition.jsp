@@ -62,13 +62,13 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 				<span>
 					<c:choose>
 						<c:when test="<%= userName == null %>">
-							<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
+							<%= displayDateFormat.format(workflowDefinition.getModifiedDate()) %>
 						</c:when>
 						<c:when test="<%= previewBeforeRestore %>">
-							<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= new String[] {displayDateFormat.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x,-by-x" translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= new String[] {displayDateFormat.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x,-by-x" translateArguments="<%= false %>" />
 						</c:otherwise>
 					</c:choose>
 				</span>

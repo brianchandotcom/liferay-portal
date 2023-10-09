@@ -34,7 +34,7 @@
 									symbol="calendar"
 								/>
 
-								<span><%= dateFormatDateTime.format(syndFeed.getPublishedDate()) %></span>
+								<span><%= dateTimeFormat.format(syndFeed.getPublishedDate()) %></span>
 							</div>
 						</c:if>
 
@@ -72,7 +72,7 @@
 												symbol="calendar"
 											/>
 
-											<span><%= dateFormatDateTime.format(syndFeed.getPublishedDate()) %></span>
+											<span><%= dateTimeFormat.format(syndFeed.getPublishedDate()) %></span>
 										</div>
 									</c:if>
 

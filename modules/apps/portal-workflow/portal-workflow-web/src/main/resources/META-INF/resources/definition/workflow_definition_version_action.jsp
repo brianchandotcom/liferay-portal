@@ -57,7 +57,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 
 <aui:script use="liferay-workflow-web">
 	var title =
-		'<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(workflowDefinitionDisplayContext.getUserName(workflowDefinition))} %>" key="preview" translateArguments="<%= false %>" />';
+		'<liferay-ui:message arguments="<%= new String[] {displayDateFormat.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(workflowDefinitionDisplayContext.getUserName(workflowDefinition))} %>" key="preview" translateArguments="<%= false %>" />';
 
 	var previewBeforeRevertDialog = A.rbind(
 		'previewBeforeRevertDialog',

@@ -13,9 +13,9 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -101,12 +102,11 @@ public class AddObjectFieldKeyCandidatesMVCResourceCommand
 		String status = "success";
 
 		if (!objectFieldLabels.isEmpty()) {
-			errorLabel = StringBundler.concat(
-				"The selected field(s) [",
-				StringUtil.merge(objectFieldLabels, ", "),
-				"] cannot be added to the Unique Composite Key as they ",
-				"already contain stored data. Modifying the composite key in ",
-				"this manner would impact the existing data integrity.");
+			errorLabel = _language.format(
+				_portal.getHttpServletRequest(resourceRequest),
+				"the-selected-fields-x-cannot-be-added-to-the-unique-" +
+					"composite-key",
+				StringUtil.merge(objectFieldLabels, ", "), false);
 			status = "error";
 		}
 
@@ -120,6 +120,9 @@ public class AddObjectFieldKeyCandidatesMVCResourceCommand
 	}
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
@@ -127,6 +130,9 @@ public class AddObjectFieldKeyCandidatesMVCResourceCommand
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

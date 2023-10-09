@@ -26,7 +26,8 @@ import {
 } from '../../utils/util';
 
 import './NextStepPage.scss';
-import {TypeLicense} from '../enums/TypeLicense';
+import {PaymentStatus} from '../GetAppPage/enums/PaymentStatus';
+import useProductPriceModel from '../GetAppPage/hooks/useProductPriceModel';
 
 interface NextStepPageProps {
 	children?: ReactNode;
@@ -63,6 +64,8 @@ export function NextStepPage({
 	const [appName, setAppName] = useState<string>('');
 	const [appLogo, setAppLogo] = useState<string>('');
 	const [paymentStatus, setPaymentStatus] = useState<string>('');
+	const [product, setProduct] = useState<Product>();
+	const [isTrial, setIsTrial] = useState<boolean>(false);
 
 	let cart;
 	let cartItems;
@@ -74,14 +77,20 @@ export function NextStepPage({
 
 			const item = cartItems.items[0];
 
+			if (item.sku.endsWith('ts')) {
+				setIsTrial(true);
+			}
+
 			setPaymentStatus(cart.paymentStatusLabel);
 
 			const productId = item.productId;
 
 			const product = await getProductById({
-				nestedFields: 'attachments, productSpecifications',
+				nestedFields: 'attachments,productSpecifications',
 				productId,
 			});
+
+			setProduct(product);
 
 			const appIcon = getThumbnailByProductAttachment(
 				product.attachments
@@ -106,106 +115,109 @@ export function NextStepPage({
 
 	getCartInfo();
 
+	const {isPaidApp} = useProductPriceModel(product);
+
 	const nextStepBody: TypeNextStepBody = {
-		[TypeLicense.PAID]: (
+		[PaymentStatus.PAID]: (
 			<Header
 				description={
-					<>
-						<p>
-							Congratulations on the purchase of <b>{appName}</b>.
-							You will need to create a license your app before
-							deploying to your DXP instance.
-						</p>
-						<p>
-							{orderId && (
-								<span>
-									Your Order ID is: <strong>{orderId}</strong>
-								</span>
-							)}
-						</p>
-						<p>
-							To license your app, you can click Continue
-							Configuration below. Find your Order ID and choose
-							Create License Key. To create a license, you must
-							have at least one your instance details available -
-							IP address, MAC address or hostname.
-						</p>
-					</>
+					isPaidApp ? (
+						<>
+							<p>
+								Congratulations on the purchase of{' '}
+								<strong>{appName}</strong>. You will need to
+								create a license your app before deploying to
+								your DXP instance.
+							</p>
+							<p>
+								{orderId && (
+									<span>
+										Your Order ID is:{' '}
+										<strong>{orderId}</strong>
+									</span>
+								)}
+							</p>
+							<p>
+								To license your app, you can click Continue
+								Configuration below. Find your Order ID and
+								choose Create License Key. To create a license,
+								you must have at least one your instance details
+								available - IP address, MAC address or hostname.
+							</p>
+						</>
+					) : (
+						<>
+							<p>
+								Your <strong>{appName}</strong> app is ready for
+								download.
+							</p>
+							<p>
+								{orderId && (
+									<span>
+										Your Order ID is:{' '}
+										<strong>{orderId}</strong>
+									</span>
+								)}
+							</p>
+							<p>
+								To download your app, you can click Continue
+								Configuration below. To find your app download,
+								find your Order ID and choose Manage → Download
+								LPKG.
+							</p>
+						</>
+					)
 				}
 				title="Next steps"
 			/>
 		),
-		[TypeLicense.FREE]: (
+		[PaymentStatus.PAYMENT_PENDING]: (
 			<Header
 				description={
-					<>
-						<p>
-							Your <b>{appName}</b> app is ready for download.
-						</p>
-						<p>
-							{orderId && (
-								<span>
-									Your Order ID is: <strong>{orderId}</strong>
-								</span>
-							)}
-						</p>
-						<p>
-							To download your app, you can click Continue
-							Configuration below. To find your app download, find
-							your Order ID and choose Manage → Download LPKG.
-						</p>
-					</>
-				}
-				title="Next steps"
-			/>
-		),
-		[TypeLicense.TRIAL]: (
-			<Header
-				description={
-					<>
-						<p>
-							You will need to create a license for your app
-							before deploying it to your DXP instance.
-						</p>
-						<p>
-							{orderId && (
-								<span>
-									Your Order ID is: <strong>{orderId}</strong>
-								</span>
-							)}
-						</p>
-						<p>
-							To license your app, you can click Continue
-							Configuration below. Find your Order ID and choose
-							Create License Key. To create a license, you must
-							have at least one your instance details available -
-							IP address, MAC address or hostname.
-						</p>
-					</>
-				}
-				title="Next steps"
-			/>
-		),
-		[TypeLicense.PAYMENT_PENDING]: (
-			<Header
-				description={
-					<>
-						<p>
-							Congratulations on agreeing to purchase{' '}
-							<b>{appName}</b>. Payment is required before
-							licensing the app. An invoice will be sent to the
-							email address listed in the order. Once payment is
-							processed, you will be notified as to the next steps
-							to license your app.
-						</p>
-						<p>
-							{orderId && (
-								<span>
-									Your Order ID is: <strong>{orderId}</strong>
-								</span>
-							)}
-						</p>
-					</>
+					isTrial ? (
+						<>
+							<p>
+								You will need to create a license for your app
+								before deploying it to your DXP instance.
+							</p>
+							<p>
+								{orderId && (
+									<span>
+										Your Order ID is:{' '}
+										<strong>{orderId}</strong>
+									</span>
+								)}
+							</p>
+							<p>
+								To license your app, you can click Continue
+								Configuration below. Find your Order ID and
+								choose Create License Key. To create a license,
+								you must have at least one your instance details
+								available - IP address, MAC address or hostname.
+							</p>
+						</>
+					) : (
+						<>
+							<p>
+								Congratulations on agreeing to purchase{' '}
+								<strong>{appName}</strong>. Payment is required
+								before licensing the app. An invoice will be
+								sent to the email address listed in the order.
+								Once payment is processed, you will be notified
+								as to the next steps to license your app. Your{' '}
+								<strong>{appName}</strong> app is ready for
+								download.
+							</p>
+							<p>
+								{orderId && (
+									<span>
+										Your Order ID is:{' '}
+										<strong>{orderId}</strong>
+									</span>
+								)}
+							</p>
+						</>
+					)
 				}
 				title="Next steps"
 			/>

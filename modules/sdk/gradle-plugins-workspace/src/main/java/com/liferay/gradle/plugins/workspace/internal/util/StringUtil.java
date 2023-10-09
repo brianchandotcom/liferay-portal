@@ -48,6 +48,10 @@ public class StringUtil {
 		return dockerSafeName.toLowerCase();
 	}
 
+	public static String quote(Object object) {
+		return "\"" + object + "\"";
+	}
+
 	public static String read(InputStream inputStream) throws IOException {
 		byte[] buffer = new byte[8192];
 		int offset = 0;

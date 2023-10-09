@@ -35,7 +35,6 @@ import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -73,6 +72,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		_lcpJsonFile = _addTaskOutputFile("LCP.json");
 		_pluginPackagePropertiesFile = _addTaskOutputFile(
 			_PLUGIN_PACKAGE_PROPERTIES_PATH);
+		_siteInitializerJsonFile = _addTaskOutputFile(
+			_SITE_INITIALIZER_JSON_PATH);
 	}
 
 	public void addClientExtension(ClientExtension clientExtension) {
@@ -96,10 +97,24 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		jsonMap.put(":configurator:policy", "force");
 
+		String batchType = null;
+
 		for (ClientExtension clientExtension : _clientExtensions) {
-			if (Objects.equals(clientExtension.classification, "batch")) {
+			if (clientExtension.type.equals("batch")) {
 				pluginPackageProperties.put(
 					"Liferay-Client-Extension-Batch", "batch/");
+
+				batchType = "batch";
+			}
+
+			if (clientExtension.type.equals("siteInitializer")) {
+				pluginPackageProperties.put(
+					"Liferay-Client-Extension-Site-Initializer",
+					"site-initializer/");
+
+				batchType = StringUtil.getDockerSafeName(clientExtension.type);
+
+				_createSiteInitializerJsonFile(clientExtension);
 			}
 
 			if (Objects.equals(clientExtension.classification, "frontend")) {
@@ -121,26 +136,23 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			}
 		}
 
-		Stream<ClientExtension> stream = _clientExtensions.stream();
+		Map<String, String> substitutionMap = new HashMap<>();
 
-		Map<String, String> substitutionMap = stream.flatMap(
-			clientExtension -> {
-				Set<Map.Entry<String, Object>> entrySet =
-					clientExtension.typeSettings.entrySet();
+		for (ClientExtension clientExtension : _clientExtensions) {
+			for (Map.Entry<String, Object> entry :
+					clientExtension.typeSettings.entrySet()) {
 
-				Stream<Map.Entry<String, Object>> entrySetStream =
-					entrySet.stream();
+				String newKey = String.format(
+					"__%s.%s__", _getIdOrBatchType(clientExtension),
+					entry.getKey());
 
-				return entrySetStream.map(
-					entry -> new AbstractMap.SimpleEntry<>(
-						StringBundler.concat(
-							"__", _getIdOrBatch(clientExtension), ".",
-							entry.getKey(), "__"),
-						String.valueOf(entry.getValue())));
+				substitutionMap.put(newKey, String.valueOf(entry.getValue()));
 			}
-		).collect(
-			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-		);
+		}
+
+		if (batchType != null) {
+			substitutionMap.put("__BATCH_TYPE__", batchType);
+		}
 
 		String projectId = StringUtil.toAlphaNumericLowerCase(
 			_project.getName());
@@ -203,6 +215,11 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	@InputFiles
 	public File getPluginPackagePropertiesFile() {
 		return GradleUtil.toFile(_project, _pluginPackagePropertiesFile);
+	}
+
+	@InputFiles
+	public File getSiteInitializerJsonFile() {
+		return GradleUtil.toFile(_project, _siteInitializerJsonFile);
 	}
 
 	@Input
@@ -288,6 +305,43 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		}
 	}
 
+	private void _createSiteInitializerJsonFile(
+		ClientExtension clientExtension) {
+
+		Map<String, Object> typeSettings = clientExtension.typeSettings;
+
+		File siteInitializerJsonFile = getSiteInitializerJsonFile();
+
+		try {
+			HashMap<String, Object> jsonMap = new HashMap<>();
+
+			for (Map.Entry<String, Object> entry : typeSettings.entrySet()) {
+				String jsonMapKey =
+					_typeSettingsToSiteInitializerJsonKeyMap.get(
+						entry.getKey());
+
+				if (jsonMapKey != null) {
+					jsonMap.put(jsonMapKey, entry.getValue());
+				}
+			}
+
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(
+				SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
+
+			ObjectWriter objectWriter =
+				objectMapper.writerWithDefaultPrettyPrinter();
+
+			String json = objectWriter.writeValueAsString(jsonMap);
+
+			Files.write(siteInitializerJsonFile.toPath(), json.getBytes());
+		}
+		catch (Exception exception) {
+			throw new GradleException(exception.getMessage(), exception);
+		}
+	}
+
 	private void _expandWildcards(Map<String, Object> typeSettings) {
 		File clientExtensionBuildDir = new File(
 			_project.getBuildDir(),
@@ -342,10 +396,10 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		return null;
 	}
 
-	private String _getIdOrBatch(ClientExtension clientExtension) {
+	private String _getIdOrBatchType(ClientExtension clientExtension) {
 		String id = clientExtension.id;
 
-		if (Objects.equals(clientExtension.type, "batch")) {
+		if (Objects.equals(clientExtension.classification, "batch")) {
 			id = "batch";
 		}
 
@@ -450,16 +504,29 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		if (_groupBatch.containsAll(classifications)) {
 			Stream<ClientExtension> stream = clientExtensions.stream();
 
-			List<ClientExtension> batches = stream.filter(
-				clientExtension -> Objects.equals(clientExtension.type, "batch")
-			).collect(
-				Collectors.toList()
-			);
+			Map<String, Long> typeCountMap = stream.collect(
+				Collectors.groupingBy(
+					clientExtension -> clientExtension.type,
+					Collectors.counting()));
 
-			if (batches.size() > 1) {
+			long batchTypeCount = typeCountMap.getOrDefault("batch", 0L);
+			long siteInitializerTypeCount = typeCountMap.getOrDefault(
+				"siteInitializer", 0L);
+
+			if ((batchTypeCount + siteInitializerTypeCount) > 1) {
 				throw new GradleException(
 					"A client extension project must not contain more than " +
-						"one batch type client extension");
+						"one batch or siteInitializer type client extension");
+			}
+
+			Long oAuthApplicationHeadlessServerTypeCount =
+				typeCountMap.getOrDefault("oAuthApplicationHeadlessServer", 0L);
+
+			if (oAuthApplicationHeadlessServerTypeCount != 1) {
+				throw new GradleException(
+					"A batch or siteInitializer type client extension " +
+						"requires exactly one oAuthApplicationHeadlessServer " +
+							"type client extension");
 			}
 
 			return "batch";
@@ -526,6 +593,9 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	private static final String _PLUGIN_PACKAGE_PROPERTIES_PATH =
 		"WEB-INF/liferay-plugin-package.properties";
 
+	private static final String _SITE_INITIALIZER_JSON_PATH =
+		"site-initializer/site-initializer.json";
+
 	private static final Set<String> _groupBatch = Sets.newHashSet(
 		"batch", "configuration");
 	private static final Set<String> _groupConfiguration = Sets.newHashSet(
@@ -534,6 +604,18 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		"configuration", "frontend");
 	private static final Set<String> _groupMicroservice = Sets.newHashSet(
 		"configuration", "microservice");
+	private static final Map<String, String>
+		_typeSettingsToSiteInitializerJsonKeyMap =
+			new HashMap<String, String>() {
+				{
+					put("builtInTemplateKey", "templateKey");
+					put("builtInTemplateType", "templateType");
+					put("membershipType", "membershipType");
+					put("parentSiteKey", "parentSiteKey");
+					put("siteExternalReferenceCode", "externalReferenceCode");
+					put("siteName", "name");
+				}
+			};
 
 	private final Object _clientExtensionConfigFile;
 	private Properties _clientExtensionProperties;
@@ -543,6 +625,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	private final ObjectMapper _objectMapper = new ObjectMapper();
 	private final Object _pluginPackagePropertiesFile;
 	private final Project _project = getProject();
+	private final Object _siteInitializerJsonFile;
 	private String _type = "frontend";
 
 }

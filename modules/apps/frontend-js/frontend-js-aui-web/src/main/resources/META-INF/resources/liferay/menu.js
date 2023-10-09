@@ -210,9 +210,7 @@ AUI.add(
 					instance._overlayMap = new Map();
 				}
 
-				if (!instance._trigger) {
-					instance._trigger = trigger;
-				}
+				instance._trigger = trigger;
 
 				let overlay = instance._overlayMap.get(trigger.generateID());
 
@@ -534,9 +532,15 @@ AUI.add(
 			() => {
 				const menuInstance = Menu._INSTANCE;
 
-				let focusManager = menuInstance._focusManager;
-
 				const trigger = menuInstance._trigger;
+
+				if (!menuInstance._focusManagerMap) {
+					menuInstance._focusManagerMap = new Map();
+				}
+
+				let focusManager = menuInstance._focusManagerMap.get(
+					trigger.generateID()
+				);
 
 				if (!focusManager) {
 					const bodyNode = menuInstance._overlayMap.get(
@@ -598,7 +602,10 @@ AUI.add(
 						}
 					});
 
-					menuInstance._focusManager = focusManager;
+					menuInstance._focusManagerMap.set(
+						trigger.generateID(),
+						focusManager
+					);
 
 					Liferay.once('beforeScreenFlip', () => {
 						menuInstance._focusManager = null;

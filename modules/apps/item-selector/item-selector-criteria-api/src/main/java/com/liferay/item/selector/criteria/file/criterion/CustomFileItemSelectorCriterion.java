@@ -16,10 +16,19 @@ public class CustomFileItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _extensions;
 	}
 
+	public long getMaxFileSize() {
+		return _maxFileSize;
+	}
+
 	public void setExtensions(String[] extensions) {
 		_extensions = extensions;
 	}
 
+	public void setMaxFileSize(long maxFileSize) {
+		_maxFileSize = maxFileSize;
+	}
+
 	private String[] _extensions;
+	private long _maxFileSize;
 
 }

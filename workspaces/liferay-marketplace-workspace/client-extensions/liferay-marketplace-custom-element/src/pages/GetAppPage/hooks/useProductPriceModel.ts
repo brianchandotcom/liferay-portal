@@ -7,6 +7,7 @@ import {useEffect, useState} from 'react';
 
 const useProductPriceModel = (product: Product | undefined) => {
 	const [isFreeApp, setIsFreeApp] = useState<boolean>(false);
+	const [isPaidApp, setIsPaidApp] = useState<boolean>(false);
 	const [priceModel, setPriceModel] = useState<string | undefined>('');
 
 	useEffect(() => {
@@ -19,10 +20,14 @@ const useProductPriceModel = (product: Product | undefined) => {
 		if (productPriceModel?.value.en_US.toLowerCase() === 'free') {
 			setIsFreeApp(true);
 		}
+		if (productPriceModel?.value.en_US.toLowerCase() === 'paid') {
+			setIsPaidApp(true);
+		}
 	}, [product?.productSpecifications]);
 
 	return {
 		isFreeApp,
+		isPaidApp,
 		priceModel,
 	};
 };

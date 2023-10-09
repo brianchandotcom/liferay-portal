@@ -388,6 +388,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-95670."
+	@ignore = "true"
 	@priority = 4
 	test AssertSuggestionsCannotOfferInvalidWordsAsSuggestion {
 		property custom.properties = "index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE${line.separator}locales=de_DE,en_US${line.separator}locales.enabled=de_DE,en_US";

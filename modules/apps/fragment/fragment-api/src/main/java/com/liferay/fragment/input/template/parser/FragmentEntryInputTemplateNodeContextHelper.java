@@ -33,7 +33,7 @@ import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.item.selector.criteria.file.criterion.CustomFileItemSelectorCriterion;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -288,9 +288,10 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		if (Validator.isNotNull(allowedFileExtensions)) {
 			StringBundler sb = new StringBundler();
 
-			for (String allowedFileExtension :
-					StringUtil.split(allowedFileExtensions)) {
+			String[] allowedFileExtensionsArray = StringUtil.split(
+				allowedFileExtensions);
 
+			for (String allowedFileExtension : allowedFileExtensionsArray) {
 				sb.append(StringPool.PERIOD);
 				sb.append(allowedFileExtension.trim());
 				sb.append(StringPool.COMMA);
@@ -354,11 +355,17 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		inputTemplateNode.addAttribute(
 			"selectFromDocumentLibrary", selectFromDocumentLibrary);
 
-		if (selectFromDocumentLibrary) {
-			FileItemSelectorCriterion fileItemSelectorCriterion =
-				new FileItemSelectorCriterion();
+		if (selectFromDocumentLibrary &&
+			Validator.isNotNull(allowedFileExtensions)) {
 
-			fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			CustomFileItemSelectorCriterion customFileItemSelectorCriterion =
+				new CustomFileItemSelectorCriterion();
+
+			customFileItemSelectorCriterion.setExtensions(
+				StringUtil.split(allowedFileExtensions));
+			customFileItemSelectorCriterion.setMaxFileSize(maximumFileSize);
+
+			customFileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 				new FileEntryItemSelectorReturnType());
 
 			inputTemplateNode.addAttribute(
@@ -368,7 +375,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 						RequestBackedPortletURLFactoryUtil.create(
 							httpServletRequest),
 						fragmentEntryLink.getNamespace() + "selectFileEntry",
-						fileItemSelectorCriterion)));
+						customFileItemSelectorCriterion)));
 		}
 	}
 

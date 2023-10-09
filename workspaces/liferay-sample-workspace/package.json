@@ -1,0 +1,19 @@
+{
+	"private": true,
+	"workspaces": {
+		"packages": [
+			"client-extensions/liferay-sample-custom-element-2",
+			"client-extensions/liferay-sample-custom-element-3",
+			"client-extensions/liferay-sample-fds-cell-renderer",
+			"client-extensions/liferay-sample-theme-spritemap-2",
+			"client-extensions/liferay-sample-custom-element-4",
+			"client-extensions/liferay-sample-etc-frontend-1",
+			"client-extensions/liferay-sample-etc-frontend-2",
+			"client-extensions/liferay-sample-etc-frontend-3",
+			"client-extensions/liferay-sample-theme-css-1",
+			"client-extensions/liferay-sample-theme-css-2",
+			"client-extensions/liferay-sample-etc-node",
+			"client-extensions/liferay-sample-fds-filter"
+		]
+	}
+}

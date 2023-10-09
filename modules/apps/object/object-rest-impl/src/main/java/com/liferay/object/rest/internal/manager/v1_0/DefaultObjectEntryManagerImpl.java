@@ -736,8 +736,8 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		if (objectEntry.getProperties() != null) {
-			Map<String, Object> properties =
-				existingObjectEntry.getProperties();
+			Map<String, Object> properties = _toObjectProperties(
+				objectDefinition, existingObjectEntry);
 
 			properties.putAll(objectEntry.getProperties());
 
@@ -1569,6 +1569,49 @@ public class DefaultObjectEntryManagerImpl
 
 		return _objectEntryDTOConverter.toDTO(
 			defaultDTOConverterContext, serviceBuilderObjectEntry);
+	}
+
+	private Map<String, Object> _toObjectProperties(
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
+
+		Map<String, Object> values = new HashMap<>();
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		for (ObjectField objectField :
+				objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId(), false)) {
+
+			Object fieldValue = properties.get(objectField.getName());
+
+			if (Validator.isNotNull(fieldValue)) {
+				if (objectField.compareBusinessType(
+						ObjectFieldConstants.
+							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+					ArrayList<String> list = new ArrayList<>();
+
+					if (fieldValue instanceof List) {
+						List<String> listTypeFieldValue =
+							(List<String>)fieldValue;
+
+						for (Object value : listTypeFieldValue) {
+							if (value instanceof ListEntry) {
+								ListEntry listEntry = (ListEntry)value;
+
+								list.add(listEntry.getKey());
+							}
+						}
+					}
+
+					values.put(objectField.getName(), list);
+				}
+				else {
+					values.put(objectField.getName(), fieldValue);
+				}
+			}
+		}
+
+		return values;
 	}
 
 	private Map<String, Serializable> _toObjectValues(

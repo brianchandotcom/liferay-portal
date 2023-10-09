@@ -913,6 +913,8 @@ definition {
 			videoShortcutTitle = "Test YouTube Video",
 			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
+		Refresh();
+
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Test YouTube Video",
 			groupName = "Site Name",

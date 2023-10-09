@@ -175,8 +175,8 @@ export default function getMDFClaimListColumns(
 			label: 'Amount Claimed',
 		},
 		{
-			columnKey: MDFClaimColumnKey.PAID,
-			label: 'Paid',
+			columnKey: MDFClaimColumnKey.AMOUNT_PAID,
+			label: 'Amount Paid',
 		},
 		{
 			columnKey: MDFClaimColumnKey.DATE_SUBMITTED,

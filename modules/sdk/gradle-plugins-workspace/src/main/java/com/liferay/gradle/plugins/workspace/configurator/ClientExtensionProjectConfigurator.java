@@ -1071,10 +1071,12 @@ public class ClientExtensionProjectConfigurator
 			_validateRequiredTypeSettingsKeys(
 				clientExtension, "oAuthApplicationHeadlessServer");
 		}
-		else if (Objects.equals(clientExtension.type, "instanceSettings")) {
+
+		if (Objects.equals(clientExtension.type, "instanceSettings")) {
 			_validateRequiredTypeSettingsKeys(clientExtension, "pid");
 		}
-		else if (Objects.equals(clientExtension.type, "siteInitializer")) {
+
+		if (Objects.equals(clientExtension.type, "siteInitializer")) {
 			_validateRequiredDirectory(
 				clientExtension, project, "site-initializer");
 			_validateRequiredTypeSettingsKeys(

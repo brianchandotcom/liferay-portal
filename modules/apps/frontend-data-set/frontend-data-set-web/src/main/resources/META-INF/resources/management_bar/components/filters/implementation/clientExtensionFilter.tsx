@@ -15,6 +15,8 @@ import type {
 	SetFilterArgs,
 } from '../Filter';
 
+const LOADING_LABEL = '...';
+
 export interface ClientExtensionFilterImplementationArgs
 	extends FilterImplementationArgs<unknown> {
 	cxFilterImplementation?: FDSFilter<unknown>;
@@ -27,7 +29,7 @@ function getSelectedItemsLabel({
 	selectedData,
 }: ClientExtensionFilterImplementationArgs) {
 	if (!cxFilterImplementation) {
-		return '...';
+		return LOADING_LABEL;
 	}
 
 	if (!cxFilterImplementation.descriptionBuilder) {

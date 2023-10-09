@@ -45,10 +45,10 @@ renderResponse.setTitle((auditEvent == null) ? "audit-event" : auditEvent.getEve
 			<aui:field-wrapper label="create-date">
 
 				<%
-				Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+				Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 				%>
 
-				<%= dateFormatDateTime.format(auditEvent.getCreateDate()) %>
+				<%= dateTimeFormat.format(auditEvent.getCreateDate()) %>
 			</aui:field-wrapper>
 
 			<aui:field-wrapper label="group-id">

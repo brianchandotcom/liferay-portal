@@ -104,13 +104,13 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 					<span>
 						<c:choose>
 							<c:when test="<%= userName == null %>">
-								<%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %>
+								<%= displayDateFormat.format(kaleoDefinitionVersion.getModifiedDate()) %>
 							</c:when>
 							<c:when test="<%= Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) %>">
-								<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
+								<liferay-ui:message arguments="<%= new String[] {displayDateFormat.format(kaleoDefinitionVersion.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x,-by-x" translateArguments="<%= false %>" />
+								<liferay-ui:message arguments="<%= new String[] {displayDateFormat.format(kaleoDefinitionVersion.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x,-by-x" translateArguments="<%= false %>" />
 							</c:otherwise>
 						</c:choose>
 					</span>

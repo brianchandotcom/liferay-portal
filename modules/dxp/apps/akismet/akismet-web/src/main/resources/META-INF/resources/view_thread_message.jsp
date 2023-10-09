@@ -104,7 +104,7 @@ if (messageId > 0) {
 							<span><liferay-ui:message key="posts" />:</span> <%= MBStatsUserLocalServiceUtil.getMessageCount(scopeGroupId, message.getUserId()) %>
 						</span>
 						<span class="h5 text-default">
-							<span><liferay-ui:message key="join-date" />:</span> <%= dateFormatDate.format(messageUser.getCreateDate()) %>
+							<span><liferay-ui:message key="join-date" />:</span> <%= dateFormat.format(messageUser.getCreateDate()) %>
 						</span>
 
 						<c:if test="<%= !message.isApproved() %>">

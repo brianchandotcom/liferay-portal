@@ -15,5 +15,5 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 String userName = kaleoDesignerDisplayContext.getUserNameOrBlank(kaleoDefinitionVersion);
 %>
 
-<div class="list-group-title"><%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %></div>
+<div class="list-group-title"><%= displayDateFormat.format(kaleoDefinitionVersion.getModifiedDate()) %></div>
 <div class="list-group-subtitle"><%= HtmlUtil.escape(userName) %></div>

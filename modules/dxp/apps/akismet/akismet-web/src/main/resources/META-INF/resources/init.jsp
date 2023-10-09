@@ -57,5 +57,5 @@ DateFormat longDateFormatDate = DateFormat.getDateInstance(DateFormat.LONG, loca
 
 longDateFormatDate.setTimeZone(timeZone);
 
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+Format dateFormat = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

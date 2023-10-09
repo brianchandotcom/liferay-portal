@@ -91,13 +91,13 @@ else if (StringUtil.equals(navigation, "not-published")) {
 	displayedStatus = WorkflowConstants.STATUS_DRAFT;
 }
 
-Format dateFormatTime = null;
+Format displayDateFormat = null;
 
 if (DateUtil.isFormatAmPm(locale)) {
-	dateFormatTime = FastDateFormatFactoryUtil.getSimpleDateFormat(LanguageUtil.get(request, "mmm-d-yyyy-hh-mm-a"), locale, timeZone);
+	displayDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(LanguageUtil.get(request, "mmm-d-yyyy-hh-mm-a"), locale, timeZone);
 }
 else {
-	dateFormatTime = FastDateFormatFactoryUtil.getSimpleDateFormat(LanguageUtil.get(request, "mmm-d-yyyy-hh-mm"), locale, timeZone);
+	displayDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(LanguageUtil.get(request, "mmm-d-yyyy-hh-mm"), locale, timeZone);
 }
 %>
 

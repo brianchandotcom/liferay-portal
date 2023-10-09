@@ -39,6 +39,7 @@ import com.liferay.object.internal.uad.display.ObjectEntryUADDisplay;
 import com.liferay.object.internal.uad.exporter.ObjectEntryUADExporter;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
@@ -82,7 +83,8 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContri
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
-import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
+import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
+import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.exporter.UADExporter;
@@ -113,7 +115,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			dynamicQueryBatchIndexingActionableFactory,
 		GroupLocalService groupLocalService,
 		ListTypeLocalService listTypeLocalService,
-		ModelSearchRegistrarHelper modelSearchRegistrarHelper,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
@@ -145,7 +146,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			dynamicQueryBatchIndexingActionableFactory;
 		_groupLocalService = groupLocalService;
 		_listTypeLocalService = listTypeLocalService;
-		_modelSearchRegistrarHelper = modelSearchRegistrarHelper;
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
@@ -325,14 +325,31 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
 				).build()),
-			_modelSearchRegistrarHelper.register(
-				objectDefinition.getClassName(), _bundleContext,
-				modelSearchConfigurator -> {
-					modelSearchConfigurator.setModelIndexWriteContributor(
-						objectEntryModelIndexerWriterContributor);
-					modelSearchConfigurator.setModelSummaryContributor(
-						objectEntryModelSummaryContributor);
-				}),
+			_bundleContext.registerService(
+				ModelSearchConfigurator.class,
+				new ModelSearchConfigurator<ObjectEntry>() {
+
+					@Override
+					public String getClassName() {
+						return objectDefinition.getClassName();
+					}
+
+					@Override
+					public ModelIndexerWriterContributor<ObjectEntry>
+						getModelIndexerWriterContributor() {
+
+						return objectEntryModelIndexerWriterContributor;
+					}
+
+					@Override
+					public ModelSummaryContributor
+						getModelSummaryContributor() {
+
+						return objectEntryModelSummaryContributor;
+					}
+
+				},
+				null),
 			_objectRelatedModelsProviderRegistrarHelper.register(
 				_bundleContext, objectDefinition,
 				new ObjectEntryMtoMObjectRelatedModelsProviderImpl(
@@ -499,7 +516,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final GroupLocalService _groupLocalService;
 	private final ListTypeLocalService _listTypeLocalService;
-	private final ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;

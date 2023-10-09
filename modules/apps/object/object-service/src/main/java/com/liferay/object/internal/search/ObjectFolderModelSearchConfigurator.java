@@ -1,0 +1,49 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.object.internal.search;
+
+import com.liferay.object.model.ObjectFolder;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Murilo Stodolni
+ */
+@Component(service = ModelSearchConfigurator.class)
+public class ObjectFolderModelSearchConfigurator
+	implements ModelSearchConfigurator<ObjectFolder> {
+
+	@Override
+	public String getClassName() {
+		return ObjectFolder.class.getName();
+	}
+
+	@Override
+	public String[] getDefaultSelectedFieldNames() {
+		return new String[] {
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.NAME, Field.UID
+		};
+	}
+
+	@Override
+	public ModelIndexerWriterContributor<ObjectFolder>
+		getModelIndexerWriterContributor() {
+
+		return _modelIndexWriterContributor;
+	}
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.object.model.ObjectFolder)"
+	)
+	private ModelIndexerWriterContributor<ObjectFolder>
+		_modelIndexWriterContributor;
+
+}

@@ -34,7 +34,7 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 				<liferay-ui:message arguments="<%= dlSizeLimitConfigurationDisplayContext.getFileMaxSizeHelpArguments() %>" key="file-max-size-help" />
 			</p>
 
-			<aui:input label="file-max-size" name="fileMaxSize" value="<%= dlSizeLimitConfigurationDisplayContext.getFileMaxSize() %>" />
+			<aui:input label="file-max-size" name="fileMaxSize" type="number" value="<%= dlSizeLimitConfigurationDisplayContext.getFileMaxSize() %>" />
 		</clay:sheet-section>
 
 		<clay:sheet-section>
@@ -57,7 +57,7 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 				<liferay-ui:message key="copy-limit-help" />
 			</p>
 
-			<aui:input label="size-limit-copy-files" name="maxSizeToCopy" value="<%= dlSizeLimitConfigurationDisplayContext.getMaxSizeToCopy() %>" />
+			<aui:input label="size-limit-copy-files" name="maxSizeToCopy" type="number" value="<%= dlSizeLimitConfigurationDisplayContext.getMaxSizeToCopy() %>" />
 		</clay:sheet-section>
 
 		<clay:sheet-footer>

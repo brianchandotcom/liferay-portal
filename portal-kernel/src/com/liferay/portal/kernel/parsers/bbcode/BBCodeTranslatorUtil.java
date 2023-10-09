@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.parsers.bbcode;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Iliyan Peychev
@@ -14,39 +14,49 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class BBCodeTranslatorUtil {
 
 	public static BBCodeTranslator getBBCodeTranslator() {
-		return _bbCodeTranslator;
+		return _bbCodeTranslatorSnapshot.get();
 	}
 
 	public static String[] getEmoticonDescriptions() {
-		return _bbCodeTranslator.getEmoticonDescriptions();
+		BBCodeTranslator bbCodeTranslator = _bbCodeTranslatorSnapshot.get();
+
+		return bbCodeTranslator.getEmoticonDescriptions();
 	}
 
 	public static String[] getEmoticonFiles() {
-		return _bbCodeTranslator.getEmoticonFiles();
+		BBCodeTranslator bbCodeTranslator = _bbCodeTranslatorSnapshot.get();
+
+		return bbCodeTranslator.getEmoticonFiles();
 	}
 
 	public static String[][] getEmoticons() {
-		return _bbCodeTranslator.getEmoticons();
+		BBCodeTranslator bbCodeTranslator = _bbCodeTranslatorSnapshot.get();
+
+		return bbCodeTranslator.getEmoticons();
 	}
 
 	public static String[] getEmoticonSymbols() {
-		return _bbCodeTranslator.getEmoticonSymbols();
+		BBCodeTranslator bbCodeTranslator = _bbCodeTranslatorSnapshot.get();
+
+		return bbCodeTranslator.getEmoticonSymbols();
 	}
 
 	public static String getHTML(String bbcode) {
-		return _bbCodeTranslator.getHTML(bbcode);
+		BBCodeTranslator bbCodeTranslator = _bbCodeTranslatorSnapshot.get();
+
+		return bbCodeTranslator.getHTML(bbcode);
 	}
 
 	public static String parse(String message) {
-		return _bbCodeTranslator.parse(message);
+		BBCodeTranslator bbCodeTranslator = _bbCodeTranslatorSnapshot.get();
+
+		return bbCodeTranslator.parse(message);
 	}
 
 	private BBCodeTranslatorUtil() {
 	}
 
-	private static volatile BBCodeTranslator _bbCodeTranslator =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			BBCodeTranslator.class, BBCodeTranslatorUtil.class,
-			"_bbCodeTranslator", false, true);
+	private static final Snapshot<BBCodeTranslator> _bbCodeTranslatorSnapshot =
+		new Snapshot<>(BBCodeTranslatorUtil.class, BBCodeTranslator.class);
 
 }

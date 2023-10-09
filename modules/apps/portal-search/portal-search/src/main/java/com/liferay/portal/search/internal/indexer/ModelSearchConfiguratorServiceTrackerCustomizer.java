@@ -84,10 +84,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		ModelSearchConfigurator<T> modelSearchConfigurator =
 			_bundleContext.getService(serviceReference);
 
-		ModelSearchSettings modelSearchSettings =
-			modelSearchConfigurator.getModelSearchSettings();
-
-		String className = modelSearchSettings.getClassName();
+		String className = modelSearchConfigurator.getClassName();
 
 		ServiceRegistrationHolder serviceRegistrationHolder =
 			_serviceRegistrationHolders.get(className);
@@ -142,12 +139,9 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		ServiceReference<ModelSearchConfigurator<T>> serviceReference,
 		ModelSearchConfigurator<T> modelSearchConfigurator) {
 
-		ModelSearchSettings modelSearchSettings =
-			modelSearchConfigurator.getModelSearchSettings();
-
 		ServiceRegistrationHolder serviceRegistrationHolder =
 			_serviceRegistrationHolders.remove(
-				modelSearchSettings.getClassName());
+				modelSearchConfigurator.getClassName());
 
 		if (serviceRegistrationHolder != null) {
 			serviceRegistrationHolder.close();
@@ -257,10 +251,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		Iterable<DocumentContributor<?>> documentContributors =
 			_documentContributors;
 
-		ModelSearchSettings modelSearchSettings =
-			modelSearchConfigurator.getModelSearchSettings();
-
-		String className = modelSearchSettings.getClassName();
+		String className = modelSearchConfigurator.getClassName();
 
 		IndexerDocumentBuilder indexerDocumentBuilder =
 			new IndexerDocumentBuilderImpl(
@@ -272,6 +263,9 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			_bundleContext.registerService(
 				IndexerDocumentBuilder.class, indexerDocumentBuilder,
 				serviceProperties));
+
+		ModelSearchSettings modelSearchSettings =
+			modelSearchConfigurator.getModelSearchSettings();
 
 		IndexerQueryBuilderImpl indexerQueryBuilderImpl =
 			new IndexerQueryBuilderImpl<>(

@@ -18,6 +18,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ModelSearchConfigurator<T extends BaseModel<?>> {
 
+	public String getClassName();
+
 	public ModelIndexerWriterContributor<T> getModelIndexerWriterContributor();
 
 	public ModelSearchSettings getModelSearchSettings();

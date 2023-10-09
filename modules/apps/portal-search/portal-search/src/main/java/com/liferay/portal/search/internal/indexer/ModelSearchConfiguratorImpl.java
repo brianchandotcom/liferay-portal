@@ -19,7 +19,14 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 	implements ModelSearchConfigurator<T> {
 
 	public ModelSearchConfiguratorImpl(String className) {
+		_className = className;
+
 		_modelSearchSettingsImpl = new ModelSearchSettingsImpl(className);
+	}
+
+	@Override
+	public String getClassName() {
+		return _className;
 	}
 
 	@Override
@@ -102,6 +109,7 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 		_modelSearchSettingsImpl.setStagingAware(stagingAware);
 	}
 
+	private final String _className;
 	private ModelIndexerWriterContributor<?> _modelIndexerWriterContributor;
 	private final ModelSearchSettingsImpl _modelSearchSettingsImpl;
 	private ModelSummaryContributor _modelSummaryContributor;

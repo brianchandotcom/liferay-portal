@@ -1,11 +1,10 @@
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Paths;
+import org.gradle.util.GUtil
 
 apply plugin: "com.liferay.maven.plugin.builder"
 
-task installStandalone(type: Copy)
-task unzipStandalone(type: Copy)
+task installDistCache(type: Copy)
+
+File userHomeDistDir = new File(System.getProperty("user.home"), ".liferay/install/dist")
 
 buildPluginDescriptor {
 	ext {
@@ -67,25 +66,12 @@ deployDependencies {
 	rename(/checkstyle-(.+)\.jar/, "checkstyle" + renameSuffix)
 }
 
-installStandalone {
-	doLast {
-		println "Source formatter standalone is installed into ${ext.installPath}"
-	}
+installDistCache {
+	description = "Installs the distribution content to ${userHomeDistDir} for testing."
+	group = "Publishing"
 
-	eachFile {
-		fileCopyDetails ->
-		FileSystem defaultFileSystem = FileSystems.getDefault()
-
-		int index = fileCopyDetails.path.indexOf(defaultFileSystem.getSeparator())
-
-		fileCopyDetails.path = fileCopyDetails.path.substring(index)
-	}
-
-	ext.installPath = Paths.get(System.properties['user.home'], ".liferay", "source-formatter-standalone")
-
-	from(unzipStandalone)
-
-	into ext.installPath
+	from installDist
+	into new File(userHomeDistDir, GUtil.loadProperties(file("bnd.bnd"))["Bundle-SymbolicName"])
 }
 
 liferay {
@@ -103,11 +89,6 @@ publishing {
 			artifact distZip
 		}
 	}
-}
-
-unzipStandalone {
-	from zipTree(distZip.archiveFile)
-	into "${buildDir}/source-formatter-standalone"
 }
 
 updateFileVersions {

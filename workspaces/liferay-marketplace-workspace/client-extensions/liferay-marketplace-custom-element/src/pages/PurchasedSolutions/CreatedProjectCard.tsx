@@ -11,9 +11,6 @@ import './PurchasedSolutions.scss';
 
 import ClayIcon from '@clayui/icon';
 
-import {getSiteURL} from '../../components/InviteMemberModal/services';
-import {Liferay} from '../../liferay/liferay';
-
 type CreatedProjectCardProps = {
 	product?: Product;
 };
@@ -44,8 +41,9 @@ const CreatedProjectCard: React.FC<CreatedProjectCardProps> = ({product}) => {
 					<div className="col-8 text-center">
 						<div>
 							<span>
-								Expect an email in 10 minutes or less to verify
-								your project is ready.
+								Expect two emails in 10 minutes or less to
+								verify your project and extension environments
+								are ready.
 							</span>
 						</div>
 					</div>
@@ -54,10 +52,11 @@ const CreatedProjectCard: React.FC<CreatedProjectCardProps> = ({product}) => {
 						<ClayButton
 							className="py-3"
 							onClick={() => {
-								window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/solutions-marketplace`;
+								window.location.href =
+									'https://www.liferay.com/pt/home';
 							}}
 						>
-							Return to Dashboard
+							Return to Liferay.com
 							<span className="ml-3">
 								<ClayIcon symbol="order-arrow-right" />
 							</span>

@@ -21,8 +21,6 @@ public interface ModelSearchSettings {
 
 	public String[] getSearchClassNames();
 
-	public boolean isCommitImmediately();
-
 	public boolean isPermissionAware();
 
 	public boolean isSearchResultPermissionFilterSuppressed();

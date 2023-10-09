@@ -39,11 +39,6 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 	}
 
 	@Override
-	public boolean isCommitImmediately() {
-		return _commitImmediately;
-	}
-
-	@Override
 	public boolean isPermissionAware() {
 		return _permissionAware;
 	}
@@ -61,10 +56,6 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 	@Override
 	public boolean isStagingAware() {
 		return _stagingAware;
-	}
-
-	public void setCommitImmediately(boolean commitImmediately) {
-		_commitImmediately = commitImmediately;
 	}
 
 	public void setDefaultSelectedFieldNames(
@@ -104,7 +95,6 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 	}
 
 	private final String _className;
-	private boolean _commitImmediately;
 	private String[] _defaultSelectedFieldNames;
 	private String[] _defaultSelectedLocalizedFieldNames;
 	private boolean _permissionAware = true;

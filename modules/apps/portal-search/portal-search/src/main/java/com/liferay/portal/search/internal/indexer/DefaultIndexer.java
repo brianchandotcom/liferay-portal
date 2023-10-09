@@ -175,7 +175,7 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 
 	@Override
 	public boolean isCommitImmediately() {
-		return _modelSearchSettings.isCommitImmediately();
+		return false;
 	}
 
 	@Override

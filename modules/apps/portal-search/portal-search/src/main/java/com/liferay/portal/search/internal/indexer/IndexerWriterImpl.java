@@ -71,8 +71,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 		}
 
 		try {
-			_indexWriterHelper.deleteDocument(
-				companyId, uid, _modelSearchSettings.isCommitImmediately());
+			_indexWriterHelper.deleteDocument(companyId, uid, false);
 		}
 		catch (SearchException searchException) {
 			throw new RuntimeException(searchException);
@@ -250,7 +249,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 	public void updatePermissionFields(T baseModel) {
 		_searchPermissionIndexWriter.updatePermissionFields(
 			baseModel, _modelIndexerWriterContributor.getCompanyId(baseModel),
-			_modelSearchSettings.isCommitImmediately());
+			false);
 	}
 
 	private IndexerWriterMode _getIndexerWriterMode(T baseModel) {

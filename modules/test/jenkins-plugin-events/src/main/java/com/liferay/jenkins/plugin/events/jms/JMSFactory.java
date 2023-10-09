@@ -26,17 +26,19 @@ public class JMSFactory {
 	}
 
 	public static JMSQueue newJMSQueue(
-		JMSConnection jmsConnection, String queueName) {
+		String jmsBrokerURL, String queueName) {
 
-		JMSQueue jmsQueue = _jmsQueues.get(queueName);
+		String key = jmsBrokerURL + "/" + queueName;
+
+		JMSQueue jmsQueue = _jmsQueues.get(key);
 
 		if (jmsQueue == null) {
-			jmsQueue = new JMSQueue(jmsConnection.getConnection(), queueName);
+			jmsQueue = new JMSQueue(jmsBrokerURL, queueName);
 
-			_jmsQueues.put(queueName, jmsQueue);
+			_jmsQueues.put(key, jmsQueue);
 		}
 
-		return jmsQueue;
+		return _jmsQueues.get(key);
 	}
 
 	public static JMSTopic newJMSTopic(

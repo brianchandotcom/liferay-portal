@@ -108,6 +108,8 @@ definition {
 
 		DMNavigator.openToConfigInInstanceSettings(portlet = "PDF Preview");
 
+		WaitForPageLoad();
+
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
@@ -118,8 +120,14 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
 
 		DMNavigator.openToConfigInSiteSettings(
-			portlet = "PDF Preview",
-			siteURLKey = "guest");
+			portlet = "Documents and Media",
+			siteURLKey = "Guest");
+
+		Click(
+			key_menuBar = "File Preview Limits",
+			locator1 = "MenuBar#NAV_LINK");
+
+		Refresh();
 
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",
@@ -128,11 +136,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
-			value1 = "This limit is higher than the System Settings limit. Please enter a maximum value no larger than 2.");
+			value1 = "This limit is higher than the Instance Settings limit. Please enter a maximum value no larger than 2.");
 
 		SystemSettings.saveConfiguration();
 
-		Alert.viewErrorMessage(errorMessage = "Maximum number of pages limit is not valid.");
+		Alert.viewErrorMessage(errorMessage = "Error: Maximum number of pages limit is not valid.");
+
+		Refresh();
 
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",

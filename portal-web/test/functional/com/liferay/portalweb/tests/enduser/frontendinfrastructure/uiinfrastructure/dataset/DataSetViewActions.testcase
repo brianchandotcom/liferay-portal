@@ -83,6 +83,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-191488. Confirm that is not possible to edit the Type field."
+	@priority = 5
+	test CannotEditTypeField {
+		task ("And creates a new item action") {
+			DataSetAdmin.addActions(
+				actionName = "delete",
+				confirmationMessage = "This item was deleted successfully.",
+				icon = "trash",
+				messageType = "Info",
+				type = "Link",
+				url = "http://localhost:8080/o/data-set-manager/");
+		}
+
+		task ("When the user clicks on the new item action 3 dots button") {
+			Click(
+				key_tableEntry = "delete",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("And clicks on the Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And the Type field is not editable") {
+			AssertElementPresent(
+				key_fieldName = "Type",
+				locator1 = "DataSet#VIEW_SELECT_DISABLED");
+		}
+	}
+
 	@description = "LPS-191488. Verify if the user can edit a created Action and see the informations"
 	@priority = 5
 	test CanSeeModalWhenClicksOnEditAction {

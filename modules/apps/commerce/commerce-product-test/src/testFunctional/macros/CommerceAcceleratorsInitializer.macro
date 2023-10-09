@@ -311,10 +311,18 @@ definition {
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_NAME",
 			value1 = ${productName});
 
-		AssertTextEquals(
-			key_productName = ${productName},
-			locator1 = "CommerceAccelerators#ORDER_DETAILS_UNIT_PRICE",
-			value1 = "$ ${productUnitPrice}");
+		if (isSet(priceOnApplication)) {
+			AssertTextEquals(
+				key_productName = ${productName},
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_UNIT_PRICE",
+				value1 = "Price on Application");
+		}
+		else {
+			AssertTextEquals(
+				key_productName = ${productName},
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_UNIT_PRICE",
+				value1 = "$ ${productUnitPrice}");
+		}
 
 		if (isSet(productDiscount)) {
 			AssertTextEquals(
@@ -328,10 +336,27 @@ definition {
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_QUANTITY",
 			value1 = ${productQuantity});
 
-		AssertTextEquals(
-			key_productName = ${productName},
-			locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE",
-			value1 = "$ ${productPrice}");
+		if (isSet(uomKey)) {
+			AssertTextEquals(
+				key_productName = ${productName},
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_UOM",
+				value1 = "${uomKey}");
+
+			if (!(isSet(priceOnApplication))) {
+				AssertTextEquals(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE_2",
+					value1 = "$ ${productPrice}");
+			}
+		} 
+		else {
+			if (!(isSet(priceOnApplication))) { 
+				AssertTextEquals(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE",
+					value1 = "$ ${productPrice}");
+			}			
+		}
 
 		if (isSet(deliveryTerm)) {
 			AssertElementPresent(

@@ -11,10 +11,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.BundleUtil;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
-import com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl;
+import com.liferay.portal.upgrade.internal.release.util.ReleaseManagerUtil;
 
 import java.util.HashSet;
 import java.util.List;
@@ -43,12 +45,12 @@ public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("List pending upgrades")
 	public String check() {
-		return _releaseManagerImpl.getStatusMessage(false);
+		return _releaseManager.getStatusMessage(false);
 	}
 
 	@Descriptor("List pending upgrade processes and their upgrade steps")
 	public String checkAll() {
-		return _releaseManagerImpl.getStatusMessage(true);
+		return _releaseManager.getStatusMessage(true);
 	}
 
 	@Descriptor("Execute upgrade for a specific module")
@@ -95,8 +97,8 @@ public class ReleaseManagerOSGiCommands {
 			() -> _upgradeExecutor.executeUpgradeInfos(
 				BundleUtil.getBundle(_bundleContext, bundleSymbolicName),
 				releaseGraphManager.getUpgradeInfos(
-					_releaseManagerImpl.getSchemaVersionString(
-						bundleSymbolicName),
+					ReleaseManagerUtil.getSchemaVersionString(
+						_releaseLocalService.fetchRelease(bundleSymbolicName)),
 					toVersionString)));
 
 		return null;
@@ -160,7 +162,8 @@ public class ReleaseManagerOSGiCommands {
 		sb.append(bundleSymbolicName);
 		sb.append(StringPool.SPACE);
 		sb.append(
-			_releaseManagerImpl.getSchemaVersionString(bundleSymbolicName));
+			ReleaseManagerUtil.getSchemaVersionString(
+				_releaseLocalService.fetchRelease(bundleSymbolicName)));
 		sb.append(StringPool.NEW_LINE);
 
 		for (UpgradeInfo upgradeProcess : upgradeInfos) {
@@ -184,7 +187,9 @@ public class ReleaseManagerOSGiCommands {
 
 		while (true) {
 			Set<String> upgradableBundleSymbolicNames =
-				_releaseManagerImpl.getUpgradableBundleSymbolicNames();
+				ReleaseManagerUtil.getUpgradableBundleSymbolicNames(
+					_upgradeExecutor.getBundleSymbolicNames(),
+					_releaseLocalService, _upgradeExecutor);
 
 			upgradableBundleSymbolicNames.removeAll(
 				upgradeThrewExceptionBundleSymbolicNames);
@@ -225,7 +230,10 @@ public class ReleaseManagerOSGiCommands {
 	private BundleContext _bundleContext;
 
 	@Reference
-	private ReleaseManagerImpl _releaseManagerImpl;
+	private ReleaseLocalService _releaseLocalService;
+
+	@Reference
+	private ReleaseManager _releaseManager;
 
 	@Reference
 	private UpgradeExecutor _upgradeExecutor;

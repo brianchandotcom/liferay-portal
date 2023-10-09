@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luan Maoski
  */
 @Component(service = {})
-public class MBMessageSearcherRegistrar {
+public class MBMessageSearchRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

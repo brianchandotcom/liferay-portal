@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luan Maoski
  */
 @Component(service = {})
-public class MBThreadSearcherRegistrar {
+public class MBThreadSearchRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier Gamarra
  */
 @Component(service = {})
-public class MBCategorySearcherRegistrar {
+public class MBCategorySearchRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

@@ -440,6 +440,106 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12394. Buyer user can view quantity selector Popover errors for not allowed quantities"
+	@priority = 4
+	test CanAssertQuantitySelectorPopUpUOMErrors {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("2 UOMs are created to MIN55861 with incremental and precision order quantity") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 20,
+				incrementalOrderQuantity = "0.444",
+				precision = 3,
+				productSKU = "MIN55861",
+				uomKey = "UOM1KEY",
+				uomName = "UOM1");
+
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 20,
+				incrementalOrderQuantity = "0.25",
+				precision = 2,
+				productSKU = "MIN55861",
+				uomKey = "UOM2KEY",
+				uomName = "UOM2");
+		}
+
+		task ("And from the MIN55861 product configuration, multiple quantity is set as 0.01") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				multipleOrderQuantity = "0.01",
+				productName = "U-Joint");
+		}
+
+		task ("When the buyer navigates to the U-Joint Product Detail page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+		}
+
+		task ("And for UOM1, the buyer sets the quantity to 0.0555") {
+			Type(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = "0.0555");
+		}
+
+		task ("Then assert that the errors are shown in the quantity selector popover") {
+			FrontStore.viewQuantitySelectorPopoverListItem(
+				conditionNotSatisfied = "true",
+				quantity = "0.444",
+				quantityConfiguration = "multiple",
+				quantityConfigurationDecimalText = 3);
+		}
+
+		task ("When the buyer sets the quantity to a valid quantity(0.888)") {
+			Type(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = "0.888");
+		}
+
+		task ("Then assert that the popover does not show any error") {
+			FrontStore.viewQuantitySelectorPopoverListItem(
+				conditionNotSatisfied = "false",
+				quantity = "0.444",
+				quantityConfiguration = "multiple");
+		}
+
+		task ("When the buyer selects UOM2") {
+			Select(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_UOM_SELECT",
+				value1 = "UOM2");
+		}
+
+		task ("Then assert that the following errors are shown in the quantity selector popover") {
+			Type(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = "0.888");
+
+			FrontStore.viewQuantitySelectorPopoverListItem(
+				conditionNotSatisfied = "true",
+				quantity = "0.25",
+				quantityConfiguration = "multiple",
+				quantityConfigurationDecimalText = 2);
+		}
+	}
+
 	@description = "COMMERCE-12393. As a buyer I can view the UOMs sorted by priority on the UOM selector from the product details page."
 	@priority = 4
 	test CanAssertUOMsAreSortedByPriority {

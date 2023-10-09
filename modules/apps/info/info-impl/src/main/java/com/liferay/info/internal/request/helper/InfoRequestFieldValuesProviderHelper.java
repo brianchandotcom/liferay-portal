@@ -56,6 +56,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -132,7 +133,7 @@ public class InfoRequestFieldValuesProviderHelper {
 
 				infoFieldValues.put(
 					infoField.getUniqueId(),
-					_getInfoFieldValue(
+					_getMultiselectInfoFieldValue(
 						infoField, themeDisplay.getLocale(),
 						regularParameterMap.get(infoField.getName())));
 
@@ -326,6 +327,16 @@ public class InfoRequestFieldValuesProviderHelper {
 		}
 
 		return null;
+	}
+
+	private InfoFieldValue<Object> _getMultiselectInfoFieldValue(
+		InfoField infoField, Locale locale, Object value) {
+
+		if (Validator.isNull(value)) {
+			value = Collections.emptyList();
+		}
+
+		return _getInfoFieldValue(infoField, locale, value);
 	}
 
 	private InfoFieldValue<Object> _getNumberInfoFieldValue(

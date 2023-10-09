@@ -61,7 +61,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	@Test
 	public void testSendNotification() throws Exception {
 
-		// Multiples emails for each main recipient, comma separator
+		// Multiples emails for each main recipient with a "," separator
 
 		_testSendNotification(
 			2,
@@ -73,7 +73,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				user1.getEmailAddress(), StringPool.COMMA,
 				user2.getEmailAddress()));
 
-		// Multiples emails for each main recipient, comma and space separator
+		// Multiples emails for each main recipient with a ", " separator
 
 		_testSendNotification(
 			2,
@@ -85,7 +85,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				user1.getEmailAddress(), StringPool.COMMA_AND_SPACE,
 				user2.getEmailAddress()));
 
-		// Multiples emails for each main recipient, semicolon separator
+		// Multiples emails for each main recipient with a ";" separator
 
 		_testSendNotification(
 			2,
@@ -97,7 +97,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				user1.getEmailAddress(), StringPool.SEMICOLON,
 				user2.getEmailAddress()));
 
-		// Multiples emails for each main recipient, terms, comma separator
+		// Multiples emails for each main recipient and terms with a ","
+		// separator
 
 		_testSendNotification(
 			2,
@@ -110,7 +111,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			"[%CURRENT_USER_EMAIL_ADDRESS%]," +
 				getTermName("emailTextObjectField"));
 
-		// Multiples emails for each main recipient, terms, comma and space
+		// Multiples emails for each main recipient and terms with a ", "
 		// separator
 
 		_testSendNotification(
@@ -124,7 +125,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			"[%CURRENT_USER_EMAIL_ADDRESS%], " +
 				getTermName("emailTextObjectField"));
 
-		// Multiples emails for each main recipient, terms, semicolon separator
+		// Multiples emails for each main recipient and terms with a ";"
+		// separator
 
 		_testSendNotification(
 			2,

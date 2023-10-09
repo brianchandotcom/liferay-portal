@@ -42,7 +42,7 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 	}
 
 	@Override
-	public ModelSummaryContributor getModelSummaryBuilder() {
+	public ModelSummaryContributor getModelSummaryContributor() {
 		return _modelSummaryContributor;
 	}
 

@@ -34,7 +34,7 @@ public interface ModelSearchConfigurator<T extends BaseModel<?>> {
 		return null;
 	}
 
-	public default ModelSummaryContributor getModelSummaryBuilder() {
+	public default ModelSummaryContributor getModelSummaryContributor() {
 		return null;
 	}
 

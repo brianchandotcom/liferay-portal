@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.security.service.access.policy;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -17,46 +17,59 @@ public class ServiceAccessPolicyManagerUtil {
 	public static String getDefaultApplicationServiceAccessPolicyName(
 		long companyId) {
 
-		return _serviceAccessPolicyManager.
+		ServiceAccessPolicyManager serviceAccessPolicyManager =
+			_serviceAccessPolicyManagerSnapshot.get();
+
+		return serviceAccessPolicyManager.
 			getDefaultApplicationServiceAccessPolicyName(companyId);
 	}
 
 	public static String getDefaultUserServiceAccessPolicyName(long companyId) {
-		return _serviceAccessPolicyManager.
-			getDefaultUserServiceAccessPolicyName(companyId);
+		ServiceAccessPolicyManager serviceAccessPolicyManager =
+			_serviceAccessPolicyManagerSnapshot.get();
+
+		return serviceAccessPolicyManager.getDefaultUserServiceAccessPolicyName(
+			companyId);
 	}
 
 	public static List<ServiceAccessPolicy> getServiceAccessPolicies(
 		long companyId, int start, int end) {
 
-		return _serviceAccessPolicyManager.getServiceAccessPolicies(
+		ServiceAccessPolicyManager serviceAccessPolicyManager =
+			_serviceAccessPolicyManagerSnapshot.get();
+
+		return serviceAccessPolicyManager.getServiceAccessPolicies(
 			companyId, start, end);
 	}
 
 	public static int getServiceAccessPoliciesCount(long companyId) {
-		return _serviceAccessPolicyManager.getServiceAccessPoliciesCount(
+		ServiceAccessPolicyManager serviceAccessPolicyManager =
+			_serviceAccessPolicyManagerSnapshot.get();
+
+		return serviceAccessPolicyManager.getServiceAccessPoliciesCount(
 			companyId);
 	}
 
 	public static ServiceAccessPolicy getServiceAccessPolicy(
 		long companyId, String name) {
 
-		return _serviceAccessPolicyManager.getServiceAccessPolicy(
+		ServiceAccessPolicyManager serviceAccessPolicyManager =
+			_serviceAccessPolicyManagerSnapshot.get();
+
+		return serviceAccessPolicyManager.getServiceAccessPolicy(
 			companyId, name);
 	}
 
 	public static ServiceAccessPolicyManager getServiceAccessPolicyManager() {
-		return _serviceAccessPolicyManager;
+		return _serviceAccessPolicyManagerSnapshot.get();
 	}
 
 	private ServiceAccessPolicyManagerUtil() {
 	}
 
-	private static volatile ServiceAccessPolicyManager
-		_serviceAccessPolicyManager =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ServiceAccessPolicyManager.class,
-				ServiceAccessPolicyManagerUtil.class,
-				"_serviceAccessPolicyManager", false, true);
+	private static final Snapshot<ServiceAccessPolicyManager>
+		_serviceAccessPolicyManagerSnapshot = new Snapshot<>(
+			ServiceAccessPolicyManagerUtil.class,
+			ServiceAccessPolicyManager.class);
 
 }

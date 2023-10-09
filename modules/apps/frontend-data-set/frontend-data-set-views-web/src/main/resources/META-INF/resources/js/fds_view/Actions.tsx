@@ -17,6 +17,8 @@ import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 import ActionForm from './actions/ActionForm';
 import ActionList from './actions/ActionList';
 
+import '../../css/Actions.scss';
+
 const SECTIONS = {
 	CREATION_ACTIONS: 'creation-actions',
 	EDIT_CREATION_ACTION: 'edit-creation-action',

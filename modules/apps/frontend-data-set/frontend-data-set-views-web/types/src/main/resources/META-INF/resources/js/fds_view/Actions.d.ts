@@ -7,6 +7,7 @@
 
 import {OBJECT_RELATIONSHIP} from '../Constants';
 import {IFDSViewSectionProps} from '../FDSView';
+import '../../css/Actions.scss';
 declare const SECTIONS: {
 	CREATION_ACTIONS: string;
 	EDIT_CREATION_ACTION: string;

@@ -126,28 +126,30 @@ export function UniqueCompositeKey({
 			header: Liferay.Language.get('add-fields-to-unique-composite-key'),
 			items: modalSelectObjectFieldsItems,				
 			onSave: async (selectedObjectFields: ObjectField[]) => {
-				const objectFieldsIds = selectedObjectFields.map(
-					(selectedObjectField) => selectedObjectField.id
-				);
+				if (selectedObjectFields.length) {
+					const objectFieldsIds = selectedObjectFields.map(
+						(selectedObjectField) => selectedObjectField.id
+					);
 
-				const addObjectFieldKeyCandidatesUrl = createResourceURL(
-					baseResourceURL,
-					{
-						objectDefinitionId: (objectDefinition as ObjectDefinition)
-							.id,
-						objectFieldsIds:
-							objectFieldsIds.length > 1
-								? objectFieldsIds.join(', ')
-								: objectFieldsIds[0],
-						p_p_resource_id:
-							'/object_definitions/add_object_field_key_candidates',
-					}
-				).href;
+					const addObjectFieldKeyCandidatesUrl = createResourceURL(
+						baseResourceURL,
+						{
+							objectDefinitionId: (objectDefinition as ObjectDefinition)
+								.id,
+							objectFieldsIds:
+								objectFieldsIds.length > 1
+									? objectFieldsIds.join(', ')
+									: objectFieldsIds[0],
+							p_p_resource_id:
+								'/object_definitions/add_object_field_key_candidates',
+						}
+					).href;
 
-				const response = await API.fetchJSON<{
-					errorLabel: string;
-					status: string;
-				}>(addObjectFieldKeyCandidatesUrl);
+					const response = await API.fetchJSON<{
+						errorLabel: string;
+						status: string;
+					}>(addObjectFieldKeyCandidatesUrl);
+				}
 
 				const objectValidationRuleSettings : ObjectValidationRuleSetting[] = [];
 

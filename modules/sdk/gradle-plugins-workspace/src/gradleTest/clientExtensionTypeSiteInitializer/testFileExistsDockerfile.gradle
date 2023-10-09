@@ -1,0 +1,4 @@
+ext.expectedContentStrings = ["COPY /site-initializer /opt/liferay/site-initializer"]
+ext.expectedFilePath = "Dockerfile"
+
+apply from: "./_baseFileContentTestCase.gradle"

@@ -1,0 +1,41 @@
+task runGradleTest
+
+assert ext.properties.containsKey("taskPath") : "No ext.taskPath extension property set"
+assert ext.properties.containsKey("expectedErrorMessage") : "No ext.expectedErrorMessage extension property set"
+
+ext.disabledTaskNames = ["validateClientExtensionIds", "validateClientExtensions"]
+
+gradle.taskGraph.beforeTask {
+	Task task ->
+
+	if (task.name in ext.disabledTaskNames && task.path != ext.taskPath) {
+		task.enabled = false
+	}
+}
+
+gradle.taskGraph.afterTask {
+	Task task, TaskState taskState ->
+
+	if (task.ext.properties.containsKey("expectedErrorMessage")) {
+		assert taskState.failure != null : "expected task ${task.path} to fail"
+
+		String actualErrorMessage = taskState.failure.cause.message
+		String expectedErrorMessage = task.ext.expectedErrorMessage
+
+		assert actualErrorMessage.equals(expectedErrorMessage)
+
+		taskState.failure = null
+	}
+}
+
+Task task = tasks.getByPath(ext.taskPath)
+
+task.ext.expectedErrorMessage = ext.expectedErrorMessage
+
+runGradleTest {
+	dependsOn task
+
+	doLast {
+		assert true
+	}
+}

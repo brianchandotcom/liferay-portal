@@ -1,0 +1,25 @@
+task runGradleTest
+
+assert ext.properties.containsKey("expectedContentStrings") : "No ext.expectedContentStrings extension property set"
+assert ext.properties.containsKey("expectedFilePath") : "No ext.expectedFilePath extension property set"
+
+String expectedFilePath = ext.expectedFilePath
+String[] expectedContentStrings = ext.expectedContentStrings
+
+runGradleTest {
+	dependsOn ":site-initializer-cx:createClientExtensionConfig"
+
+	doLast {
+		Project siteInitializerCxProject = project(":site-initializer-cx")
+
+		File cxBuildDir = siteInitializerCxProject.file("${siteInitializerCxProject.buildDir}/liferay-client-extension-build")
+
+		File file = siteInitializerCxProject.file("${cxBuildDir}/${expectedFilePath}")
+
+		assert file.exists()
+
+		expectedContentStrings.each {
+			assert file.text.contains(it)
+		}
+	}
+}

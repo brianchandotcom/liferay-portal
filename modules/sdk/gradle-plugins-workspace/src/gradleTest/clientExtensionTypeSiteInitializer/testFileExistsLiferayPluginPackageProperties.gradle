@@ -1,0 +1,4 @@
+ext.expectedContentStrings = ["Liferay-Client-Extension-Site-Initializer=site-initializer/"]
+ext.expectedFilePath = "WEB-INF/liferay-plugin-package.properties"
+
+apply from: "./_baseFileContentTestCase.gradle"

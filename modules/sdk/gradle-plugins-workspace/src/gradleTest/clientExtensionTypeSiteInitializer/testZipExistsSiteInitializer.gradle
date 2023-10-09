@@ -1,0 +1,19 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":site-initializer-cx:createClientExtensionConfig"
+
+	doLast {
+		Project siteInitializerCxProject = project(":site-initializer-cx")
+
+		File cxBuildDir = siteInitializerCxProject.file("${siteInitializerCxProject.buildDir}/liferay-client-extension-build")
+
+		File siteInitializerZipFile = siteInitializerCxProject.file("${cxBuildDir}/site-initializer/site-initializer.zip")
+
+		assert siteInitializerZipFile.exists()
+
+		FileTree siteInitializerZipTree = zipTree(siteInitializerZipFile)
+
+		assert !siteInitializerZipTree.isEmpty()
+	}
+}

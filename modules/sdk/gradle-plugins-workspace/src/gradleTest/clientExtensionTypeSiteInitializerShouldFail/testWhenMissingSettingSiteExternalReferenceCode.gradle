@@ -1,0 +1,4 @@
+ext.expectedErrorMessage = "Client extension site-initializer-cx with type siteInitializer must define the property \"siteExternalReferenceCode\""
+ext.taskPath = ":missing-setting-siteExternalReferenceCode:validateClientExtensions"
+
+apply from: "./_baseShouldFailTestCase.gradle"

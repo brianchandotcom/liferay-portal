@@ -1,0 +1,11 @@
+ext.expectedContentStrings = [
+	'"externalReferenceCode" : "External Reference Code"',
+	'"membershipType" : "open"',
+	'"name" : "Site Name"',
+	'"parentSiteKey" : "Parent Site Name"',
+	'"templateKey" : "Sample Template Key"',
+	'"templateType" : "site-initializer"',
+]
+ext.expectedFilePath = "site-initializer/site-initializer.json"
+
+apply from: "./_baseFileContentTestCase.gradle"

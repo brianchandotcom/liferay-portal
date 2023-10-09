@@ -5,35 +5,17 @@
 
 package com.liferay.adaptive.media.blogs.web.internal.optimizer;
 
-import com.liferay.adaptive.media.constants.AMOptimizeImagesBackgroundTaskConstants;
-import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
-import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.adaptive.media.image.counter.AMImageCounter;
-import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.optimizer.AMImageOptimizer;
-import com.liferay.adaptive.media.processor.AMProcessor;
+import com.liferay.adaptive.media.image.optimizer.BaseAMImageOptimizer;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.configuration.DLFileEntryConfigurationProvider;
-import com.liferay.document.library.constants.DLFileEntryConfigurationConstants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
-import java.util.Collection;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,160 +26,29 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "adaptive.media.key=blogs", service = AMImageOptimizer.class
 )
-public class BlogsAMImageOptimizer implements AMImageOptimizer {
+public class BlogsAMImageOptimizer extends BaseAMImageOptimizer {
 
 	@Override
-	public void optimize(long companyId) {
-		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
-			_amImageConfigurationHelper.getAMImageConfigurationEntries(
-				companyId);
-
-		int count = _amImageCounter.countExpectedAMImageEntries(companyId);
-
-		int total = count * amImageConfigurationEntries.size();
-
-		AtomicInteger successCounter = new AtomicInteger(0);
-		AtomicInteger errorCounter = new AtomicInteger(0);
-
-		for (AMImageConfigurationEntry amImageConfigurationEntry :
-				amImageConfigurationEntries) {
-
-			_optimize(
-				companyId, amImageConfigurationEntry.getUUID(), total,
-				successCounter, errorCounter);
-		}
+	protected int countExpectedAMImageEntries(long companyId) {
+		return _amImageCounter.countExpectedAMImageEntries(companyId);
 	}
 
 	@Override
-	public void optimize(long companyId, String configurationEntryUuid) {
-		int total = _amImageCounter.countExpectedAMImageEntries(companyId);
+	protected void forEachFileEntry(
+			long companyId, Consumer<DLFileEntry> consumer)
+		throws PortalException {
 
-		AtomicInteger successCounter = new AtomicInteger(0);
-		AtomicInteger errorCounter = new AtomicInteger(0);
-
-		_optimize(
-			companyId, configurationEntryUuid, total, successCounter,
-			errorCounter);
+		_dlFileEntryLocalService.forEachFileEntry(
+			companyId,
+			_classNameLocalService.getClassNameId(BlogsEntry.class.getName()),
+			consumer,
+			_dlFileEntryConfigurationProvider.
+				getCompanyPreviewableProcessorMaxSize(companyId),
+			getMimeTypes());
 	}
-
-	private void _optimize(
-		long companyId, String configurationEntryUuid, int total,
-		AtomicInteger successCounter, AtomicInteger errorCounter) {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			_dlFileEntryLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property companyIdProperty = PropertyFactoryUtil.forName(
-					"companyId");
-
-				dynamicQuery.add(companyIdProperty.eq(companyId));
-
-				Property classNameIdProperty = PropertyFactoryUtil.forName(
-					"classNameId");
-
-				dynamicQuery.add(
-					classNameIdProperty.eq(
-						_classNameLocalService.getClassNameId(
-							BlogsEntry.class.getName())));
-
-				Property mimeTypeProperty = PropertyFactoryUtil.forName(
-					"mimeType");
-
-				dynamicQuery.add(
-					mimeTypeProperty.in(
-						_amImageMimeTypeProvider.getSupportedMimeTypes()));
-
-				long previewableProcessorMaxSize =
-					_dlFileEntryConfigurationProvider.
-						getCompanyPreviewableProcessorMaxSize(companyId);
-
-				if (previewableProcessorMaxSize !=
-						DLFileEntryConfigurationConstants.
-							PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED) {
-
-					Property sizeProperty = PropertyFactoryUtil.forName("size");
-
-					dynamicQuery.add(
-						sizeProperty.le(previewableProcessorMaxSize));
-				}
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(DLFileEntry dlFileEntry) -> {
-				FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
-
-				try {
-					_amProcessor.process(
-						fileEntry.getFileVersion(), configurationEntryUuid);
-
-					_sendStatusMessage(
-						successCounter.incrementAndGet(), errorCounter.get(),
-						total);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to process file entry " +
-								fileEntry.getFileEntryId(),
-							exception);
-					}
-
-					_sendStatusMessage(
-						successCounter.get(), errorCounter.incrementAndGet(),
-						total);
-				}
-			});
-
-		try {
-			actionableDynamicQuery.performActions();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-	}
-
-	private void _sendStatusMessage(int count, int errors, int total) {
-		Message message = new Message();
-
-		message.put(
-			BackgroundTaskConstants.BACKGROUND_TASK_ID,
-			BackgroundTaskThreadLocal.getBackgroundTaskId());
-
-		Class<? extends BlogsAMImageOptimizer> clazz = getClass();
-
-		message.put(
-			AMOptimizeImagesBackgroundTaskConstants.CLASS_NAME,
-			clazz.getName());
-
-		message.put(AMOptimizeImagesBackgroundTaskConstants.COUNT, count);
-		message.put(AMOptimizeImagesBackgroundTaskConstants.ERRORS, errors);
-		message.put(AMOptimizeImagesBackgroundTaskConstants.TOTAL, total);
-
-		message.put("status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-
-		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
-			message);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsAMImageOptimizer.class);
-
-	@Reference
-	private AMImageConfigurationHelper _amImageConfigurationHelper;
 
 	@Reference(target = "(adaptive.media.key=blogs)")
 	private AMImageCounter _amImageCounter;
-
-	@Reference
-	private AMImageMimeTypeProvider _amImageMimeTypeProvider;
-
-	@Reference
-	private AMProcessor<FileVersion> _amProcessor;
-
-	@Reference
-	private BackgroundTaskStatusMessageSender
-		_backgroundTaskStatusMessageSender;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

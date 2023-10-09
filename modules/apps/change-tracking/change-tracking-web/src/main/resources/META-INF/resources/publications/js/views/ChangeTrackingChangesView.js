@@ -2756,7 +2756,6 @@ export default function ChangeTrackingChangesView({
 								moveChangesURL={getMoveChangesURL(
 									renderState.node
 								)}
-								namespace={namespace}
 								parentEntries={renderState.parents}
 								showDropdown={showDropdown}
 								showHideable={renderState.showHideable}

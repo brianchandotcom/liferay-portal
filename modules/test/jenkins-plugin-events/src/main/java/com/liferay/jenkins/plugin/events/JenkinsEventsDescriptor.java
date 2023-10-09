@@ -199,10 +199,10 @@ public class JenkinsEventsDescriptor
 	}
 
 	private final List<EventTrigger> _eventTriggers = new ArrayList<>();
-	private String _inboundQueueName;
 	private transient JMSQueue _inboundJMSQueue;
-	private String _outboundQueueName;
+	private String _inboundQueueName;
 	private transient JMSQueue _outboundJMSQueue;
+	private String _outboundQueueName;
 	private String _url;
 	private String _userName;
 	private String _userPassword;

@@ -181,7 +181,7 @@ export default function LeftSidebarTreeView({
 					? newLeftSidebarOtherObjectFolderItems
 					: [leftSidebarSelectedObjectFolderItem]
 			}
-			nestedKey="objectDefinitions"
+			nestedKey="leftSidebarObjectDefinitionItems"
 			onExpandedChange={setExpandedKeys}
 			onSelect={(item) => {
 				if (

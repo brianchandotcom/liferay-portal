@@ -322,6 +322,7 @@ const ActionForm = ({
 				collapsable
 				defaultExpanded
 				displayTitle={Liferay.Language.get('display-options')}
+				displayType="unstyled"
 			>
 				<ClayPanel.Body>
 					<ClayLayout.Row>
@@ -417,6 +418,7 @@ const ActionForm = ({
 				collapsable
 				defaultExpanded
 				displayTitle={Liferay.Language.get('action-behavior')}
+				displayType="unstyled"
 			>
 				<ClayPanel.Body>
 					<ClayLayout.Row justify="start">
@@ -477,83 +479,79 @@ const ActionForm = ({
 						)}
 					</ClayLayout.Row>
 
-					{(
-						actionData.type === ACTION_TYPE.MODAL ||
+					{(actionData.type === ACTION_TYPE.MODAL ||
 						actionData.type === ACTION_TYPE.SIDEPANEL) && (
-							<ClayLayout.Row>
-								<ClayLayout.Col>
-									{Liferay.FeatureFlags['LPS-172017'] ? (
-										<InputLocalized
-											error={
-												titleValidationError
-													? Liferay.Language.get(
-															'this-field-is-required'
-													  )
-													: undefined
-											}
+						<ClayLayout.Row>
+							<ClayLayout.Col>
+								{Liferay.FeatureFlags['LPS-172017'] ? (
+									<InputLocalized
+										error={
+											titleValidationError
+												? Liferay.Language.get(
+														'this-field-is-required'
+												  )
+												: undefined
+										}
+										id={titleFormElementId}
+										label={Liferay.Language.get('title')}
+										onBlur={() => {
+											setTitleValidationError(
+												!translationExists({
+													translations: titleTranslations,
+												})
+											);
+
+											validateForm();
+										}}
+										onChange={setTitleTranslations}
+										placeholder={Liferay.Language.get(
+											actionData.type ===
+												ACTION_TYPE.MODAL
+												? 'action-modal-title-placeholder'
+												: 'action-side-panel-title-placeholder'
+										)}
+										required
+										translations={titleTranslations}
+									/>
+								) : (
+									<ClayForm.Group
+										className={classNames({
+											'has-error': titleValidationError,
+										})}
+									>
+										<label htmlFor={titleFormElementId}>
+											{Liferay.Language.get('title')}
+										</label>
+
+										<ClayInput
 											id={titleFormElementId}
-											label={Liferay.Language.get(
-												'title'
-											)}
 											onBlur={() => {
 												setTitleValidationError(
-													!translationExists({
-														translations: titleTranslations,
-													})
+													!actionData.title
 												);
 
 												validateForm();
 											}}
-											onChange={setTitleTranslations}
-											placeholder={Liferay.Language.get(
-												actionData.type ===
-													ACTION_TYPE.MODAL
-													? 'action-modal-title-placeholder'
-													: 'action-side-panel-title-placeholder'
-											)}
-											required
-											translations={titleTranslations}
+											onChange={(event) =>
+												setActionData({
+													...actionData,
+													title: event.target.value,
+												})
+											}
+											type="text"
+											value={actionData.title}
 										/>
-									) : (
-										<ClayForm.Group
-											className={classNames({
-												'has-error': titleValidationError,
-											})}
-										>
-											<label htmlFor={titleFormElementId}>
-												{Liferay.Language.get('title')}
-											</label>
 
-											<ClayInput
-												id={titleFormElementId}
-												onBlur={() => {
-													setTitleValidationError(
-														!actionData.title
-													);
-
-													validateForm();
-												}}
-												onChange={(event) =>
-													setActionData({
-														...actionData,
-														title:
-															event.target.value,
-													})
-												}
-												type="text"
-												value={actionData.title}
-											/>
-
-											{labelValidationError && (
-												<ValidationFeedback />
-											)}
-										</ClayForm.Group>
-									)}
-								</ClayLayout.Col>
-							</ClayLayout.Row>
+										{labelValidationError && (
+											<ValidationFeedback />
+										)}
+									</ClayForm.Group>
+								)}
+							</ClayLayout.Col>
+						</ClayLayout.Row>
 					)}
 
-					{(actionData.type !== ACTION_TYPE.HEADLESS) && (
+					{actionData.type !== ACTION_TYPE.HEADLESS && (
 						<ClayLayout.Row justify="start">
 							<ClayLayout.Col lg>
 								<ClayForm.Group
@@ -571,7 +569,9 @@ const ActionForm = ({
 										component="textarea"
 										id={urlFormElementId}
 										onBlur={() => {
-											setURLValidationError(!actionData.url);
+											setURLValidationError(
+												!actionData.url
+											);
 
 											validateForm();
 										}}
@@ -587,7 +587,9 @@ const ActionForm = ({
 										value={actionData.url}
 									/>
 
-									{urlValidationError && <ValidationFeedback />}
+									{urlValidationError && (
+										<ValidationFeedback />
+									)}
 								</ClayForm.Group>
 							</ClayLayout.Col>
 						</ClayLayout.Row>
@@ -628,102 +630,94 @@ const ActionForm = ({
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 
-					{activeTab === 0 &&
-						actionData.type === ACTION_TYPE.LINK && (
-							<ClayLayout.Row>
-								<ClayLayout.Col size={8}>
-									<ClayForm.Group>
-										{Liferay.FeatureFlags[
-											'LPS-172017'
-										] ? (
-											<InputLocalized
+					{activeTab === 0 && actionData.type === ACTION_TYPE.LINK && (
+						<ClayLayout.Row>
+							<ClayLayout.Col size={8}>
+								<ClayForm.Group>
+									{Liferay.FeatureFlags['LPS-172017'] ? (
+										<InputLocalized
+											id={
+												confirmationMessageFormElementId
+											}
+											label={Liferay.Language.get(
+												'confirmation-message'
+											)}
+											onChange={
+												setConfirmationMessageTranslations
+											}
+											placeholder={Liferay.Language.get(
+												'add-a-message-here'
+											)}
+											tooltip={Liferay.Language.get(
+												'the-user-will-see-this-message-before-performing-the-action'
+											)}
+											translations={
+												confirmationMessageTranslations
+											}
+										/>
+									) : (
+										<>
+											<label
+												htmlFor={
+													confirmationMessageFormElementId
+												}
+											>
+												{Liferay.Language.get(
+													'confirmation-message'
+												)}
+											</label>
+
+											<ClayInput
 												id={
 													confirmationMessageFormElementId
 												}
-												label={Liferay.Language.get(
-													'confirmation-message'
-												)}
-												onChange={
-													setConfirmationMessageTranslations
+												onChange={(event) =>
+													setActionData({
+														...actionData,
+														confirmationMessage:
+															event.target.value,
+													})
 												}
-												placeholder={Liferay.Language.get(
-													'add-a-message-here'
-												)}
-												tooltip={Liferay.Language.get(
-													'the-user-will-see-this-message-before-performing-the-action'
-												)}
-												translations={
-													confirmationMessageTranslations
+												type="text"
+												value={
+													actionData.confirmationMessage
 												}
 											/>
-										) : (
-											<>
-												<label
-													htmlFor={
-														confirmationMessageFormElementId
-													}
-												>
-													{Liferay.Language.get(
-														'confirmation-message'
-													)}
-												</label>
+										</>
+									)}
+								</ClayForm.Group>
+							</ClayLayout.Col>
 
-												<ClayInput
-													id={
-														confirmationMessageFormElementId
-													}
-													onChange={(event) =>
-														setActionData({
-															...actionData,
-															confirmationMessage:
-																event
-																	.target
-																	.value,
-														})
-													}
-													type="text"
-													value={
-														actionData.confirmationMessage
-													}
-												/>
-											</>
-										)}
-									</ClayForm.Group>
-								</ClayLayout.Col>
+							<ClayLayout.Col size={4}>
+								<ClayForm.Group>
+									<label
+										htmlFor={
+											confirmationMessageTypeFormElementId
+										}
+									>
+										{Liferay.Language.get('message-type')}
+									</label>
 
-								<ClayLayout.Col size={4}>
-									<ClayForm.Group>
-										<label
-											htmlFor={
-												confirmationMessageTypeFormElementId
-											}
-										>
-											{Liferay.Language.get(
-												'message-type'
-											)}
-										</label>
-
-										<ClaySelectWithOption
-											id={
-												confirmationMessageTypeFormElementId
-											}
-											onChange={(event) =>
-												setActionData({
-													...actionData,
-													confirmationMessageType:
-														event.target
-															.value,
-												})
-											}
-											options={MESSAGE_TYPES}
-											value={
-												actionData.confirmationMessageType
-											}
-										/>
-									</ClayForm.Group>
-								</ClayLayout.Col>
-							</ClayLayout.Row>
-						)}
+									<ClaySelectWithOption
+										id={
+											confirmationMessageTypeFormElementId
+										}
+										onChange={(event) =>
+											setActionData({
+												...actionData,
+												confirmationMessageType:
+													event.target.value,
+											})
+										}
+										options={MESSAGE_TYPES}
+										value={
+											actionData.confirmationMessageType
+										}
+									/>
+								</ClayForm.Group>
+							</ClayLayout.Col>
+						</ClayLayout.Row>
+					)}
 				</ClayPanel.Body>
 			</ClayPanel>
 

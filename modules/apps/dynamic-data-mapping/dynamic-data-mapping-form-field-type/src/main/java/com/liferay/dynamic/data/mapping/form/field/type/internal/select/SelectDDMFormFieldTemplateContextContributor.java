@@ -17,11 +17,12 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.list.type.util.comparator.ListTypeEntryNameComparator;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -35,9 +36,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.text.Collator;
 
@@ -45,7 +46,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
@@ -137,41 +137,11 @@ public class SelectDDMFormFieldTemplateContextContributor
 		Locale locale,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		DDMFormInstance ddmFormInstance =
-			_ddmFormInstanceLocalService.fetchDDMFormInstance(
-				ddmFormFieldRenderingContext.getDDMFormInstanceId());
+		List<Map<String, String>> objectFieldOptions = _getObjectFieldOptions(
+			ddmFormField, ddmFormFieldOptions, ddmFormFieldRenderingContext);
 
-		ObjectDefinition objectDefinition = null;
-
-		try {
-			if (ddmFormInstance != null) {
-				objectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						ddmFormInstance.getObjectDefinitionId());
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		String objectFieldName = GetterUtil.getString(
-			ddmFormField.getProperty("objectFieldName"));
-
-		boolean alphabeticalOrder = GetterUtil.getBoolean(
-			ddmFormField.getProperty("alphabeticalOrder"));
-
-		if ((objectDefinition != null) &&
-			Validator.isNotNull(objectFieldName)) {
-
-			List<Map<String, String>> options = _getOptionsFromObjectField(
-				ddmFormFieldOptions, objectDefinition.getObjectDefinitionId(),
-				objectFieldName);
-
-			if (ListUtil.isNotEmpty(options) && !alphabeticalOrder) {
-				return options;
-			}
+		if (ListUtil.isNotEmpty(objectFieldOptions)) {
+			return objectFieldOptions;
 		}
 
 		List<Map<String, String>> options = new ArrayList<>();
@@ -197,6 +167,9 @@ public class SelectDDMFormFieldTemplateContextContributor
 					"value", optionValue
 				).build());
 		}
+
+		boolean alphabeticalOrder = GetterUtil.getBoolean(
+			ddmFormField.getProperty("alphabeticalOrder"));
 
 		if (alphabeticalOrder) {
 			Collator collator = CollatorUtil.getInstance(locale);
@@ -257,38 +230,63 @@ public class SelectDDMFormFieldTemplateContextContributor
 	@Reference
 	protected Portal portal;
 
-	private List<Map<String, String>> _getOptionsFromObjectField(
-		DDMFormFieldOptions ddmFormFieldOptions, long objectDefinitionId,
-		String objectFieldName) {
+	private List<Map<String, String>> _getObjectFieldOptions(
+		DDMFormField ddmFormField, DDMFormFieldOptions ddmFormFieldOptions,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectDefinitionId,
-			objectFieldName.replaceAll("\\[|\\]|\"", StringPool.BLANK));
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceLocalService.fetchDDMFormInstance(
+				ddmFormFieldRenderingContext.getDDMFormInstanceId());
 
-		List<ListTypeEntry> listTypeEntries =
-			_listTypeEntryLocalService.getListTypeEntries(
-				objectField.getListTypeDefinitionId());
-
-		if (ListUtil.isEmpty(listTypeEntries)) {
+		if (ddmFormInstance == null) {
 			return null;
 		}
 
-		List<Map<String, String>> options = new ArrayList<>();
+		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					ddmFormInstance.getObjectDefinitionId());
 
-		for (ListTypeEntry listTypeEntry : listTypeEntries) {
-			Map<Locale, String> nameMap = listTypeEntry.getNameMap();
+			if (objectDefinition == null) {
+				return null;
+			}
 
-			for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
-				if (!Objects.equals(
-						entry.getKey(),
-						LocaleThreadLocal.getThemeDisplayLocale())) {
+			JSONArray jsonArray = jsonFactory.createJSONArray(
+				GetterUtil.getString(
+					ddmFormField.getProperty("objectFieldName")));
 
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				objectDefinition.getObjectDefinitionId(),
+				jsonArray.getString(0));
+
+			OrderByComparator<ListTypeEntry> orderByComparator = null;
+
+			Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+			if (GetterUtil.getBoolean(
+					ddmFormField.getProperty("alphabeticalOrder"))) {
+
+				orderByComparator = new ListTypeEntryNameComparator(
+					true, locale);
+			}
+
+			List<Map<String, String>> options = new ArrayList<>();
+
+			for (ListTypeEntry listTypeEntry :
+					_listTypeEntryLocalService.getListTypeEntries(
+						objectField.getListTypeDefinitionId(),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+						orderByComparator)) {
+
+				Map<Locale, String> nameMap = listTypeEntry.getNameMap();
+
+				if (!nameMap.containsKey(locale)) {
 					continue;
 				}
 
 				options.add(
 					HashMapBuilder.put(
-						"label", entry.getValue()
+						"label", nameMap.get(locale)
 					).put(
 						"reference", listTypeEntry.getKey()
 					).put(
@@ -297,9 +295,16 @@ public class SelectDDMFormFieldTemplateContextContributor
 							listTypeEntry.getKey())
 					).build());
 			}
-		}
 
-		return options;
+			return options;
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
 	}
 
 	private Map<String, String> _getStrings(

@@ -18,6 +18,5 @@ export declare function ModalAddObjectDefinition({
 	objectDefinitionsStorageTypes,
 	objectFolderExternalReferenceCode,
 	onAfterSubmit,
-	reload,
 }: ModalAddObjectDefinitionProps): JSX.Element;
 export {};

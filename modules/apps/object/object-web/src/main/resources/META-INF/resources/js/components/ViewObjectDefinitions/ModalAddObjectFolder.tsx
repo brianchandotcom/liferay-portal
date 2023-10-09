@@ -23,6 +23,10 @@ import {normalizeName} from './objectDefinitionUtil';
 
 interface ModalAddObjectFolderProps {
 	handleOnClose: () => void;
+	setObjectFolders: React.Dispatch<
+		React.SetStateAction<Partial<ObjectFolder>[]>
+	>;
+	setSelectedObjectFolder: (values: Partial<ObjectFolder>) => void;
 }
 
 type TInitialValues = {
@@ -32,6 +36,8 @@ type TInitialValues = {
 
 export function ModalAddObjectFolder({
 	handleOnClose,
+	setObjectFolders,
+	setSelectedObjectFolder,
 }: ModalAddObjectFolderProps) {
 	const [error, setError] = useState<string>('');
 
@@ -53,11 +59,12 @@ export function ModalAddObjectFolder({
 		};
 
 		try {
-			await API.save({
+			const newObjectFolder = (await API.save<ObjectFolder>({
 				item: objectFolder,
 				method: 'POST',
+				returnValue: true,
 				url: '/o/object-admin/v1.0/object-folders',
-			});
+			})) as ObjectFolder;
 
 			onClose();
 
@@ -69,7 +76,8 @@ export function ModalAddObjectFolder({
 				type: 'success',
 			});
 
-			setTimeout(() => window.location.reload(), 1000);
+			setObjectFolders((prevValues) => [...prevValues, newObjectFolder]);
+			setSelectedObjectFolder(newObjectFolder);
 		}
 		catch (error) {
 			setError((error as Error).message);

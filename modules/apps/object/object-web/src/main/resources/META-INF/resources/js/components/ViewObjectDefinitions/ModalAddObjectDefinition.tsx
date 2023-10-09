@@ -45,7 +45,6 @@ export function ModalAddObjectDefinition({
 	objectDefinitionsStorageTypes,
 	objectFolderExternalReferenceCode,
 	onAfterSubmit,
-	reload = true,
 }: ModalAddObjectDefinitionProps) {
 	const [error, setError] = useState<string>('');
 
@@ -122,10 +121,6 @@ export function ModalAddObjectDefinition({
 
 			if (onAfterSubmit) {
 				onAfterSubmit(newObjectDefinition);
-			}
-
-			if (reload) {
-				setTimeout(() => window.location.reload(), 1000);
 			}
 		}
 		catch (error) {

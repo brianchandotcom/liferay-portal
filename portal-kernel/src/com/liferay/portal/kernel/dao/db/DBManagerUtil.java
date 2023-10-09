@@ -35,7 +35,7 @@ public class DBManagerUtil {
 	public static int getDBInMaxParameters() {
 		DBManager dbManager = _dbManager;
 
-		return dbManager.getDBMaxParameters();
+		return dbManager.getDBInMaxParameters();
 	}
 
 	public static int getDBMaxParameters() {

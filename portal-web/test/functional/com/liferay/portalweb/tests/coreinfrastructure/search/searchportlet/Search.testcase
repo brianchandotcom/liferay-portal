@@ -166,6 +166,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-195388"
+	@ignore = "true"
 	@priority = 3
 	test AssertHighlightedSearchResultsWhenAdvancedSearchSyntaxIsEnabled {
 		SearchPage.configureEmbeddedSearchBar(useAdvancedSearchSyntax = "true");

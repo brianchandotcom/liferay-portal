@@ -708,6 +708,64 @@ public class GraphQLServletExtender {
 		).build();
 	}
 
+	private static Object _parseLiteral(Object value)
+		throws CoercingParseLiteralException {
+
+		if (value instanceof ArrayValue) {
+			ArrayValue arrayValue = (ArrayValue)value;
+
+			return TransformUtil.transform(
+				arrayValue.getValues(), GraphQLServletExtender::_parseLiteral);
+		}
+		else if (value instanceof BooleanValue) {
+			BooleanValue booleanValue = (BooleanValue)value;
+
+			return booleanValue.isValue();
+		}
+		else if (value instanceof EnumValue) {
+			EnumValue enumValue = (EnumValue)value;
+
+			return enumValue.getName();
+		}
+		else if (value instanceof FloatValue) {
+			FloatValue floatValue = (FloatValue)value;
+
+			return floatValue.getValue();
+		}
+		else if (value instanceof IntValue) {
+			IntValue intValue = (IntValue)value;
+
+			return intValue.getValue();
+		}
+		else if (value instanceof NullValue) {
+			return null;
+		}
+		else if (value instanceof ObjectValue) {
+			return _parseObjectValue((ObjectValue)value);
+		}
+		else if (value instanceof StringValue) {
+			StringValue stringValue = (StringValue)value;
+
+			return stringValue.getValue();
+		}
+
+		throw new CoercingSerializeException("Unable to parse " + value);
+	}
+
+	private static Map<String, Object> _parseObjectValue(
+		ObjectValue objectValue) {
+
+		return new HashMap<String, Object>() {
+			{
+				for (ObjectField objectField : objectValue.getObjectFields()) {
+					put(
+						objectField.getName(),
+						_parseLiteral(objectField.getValue()));
+				}
+			}
+		};
+	}
+
 	private GraphQLArgument _addGraphQLArgument(
 		GraphQLInputType graphQLInputType, String name) {
 
@@ -1798,58 +1856,7 @@ public class GraphQLServletExtender {
 				public Object parseLiteral(Object value)
 					throws CoercingParseLiteralException {
 
-					if (value instanceof ArrayValue) {
-						ArrayValue arrayValue = (ArrayValue)value;
-
-						return TransformUtil.transform(
-							arrayValue.getValues(), this::parseLiteral);
-					}
-					else if (value instanceof BooleanValue) {
-						BooleanValue booleanValue = (BooleanValue)value;
-
-						return booleanValue.isValue();
-					}
-					else if (value instanceof EnumValue) {
-						EnumValue enumValue = (EnumValue)value;
-
-						return enumValue.getName();
-					}
-					else if (value instanceof FloatValue) {
-						FloatValue floatValue = (FloatValue)value;
-
-						return floatValue.getValue();
-					}
-					else if (value instanceof IntValue) {
-						IntValue intValue = (IntValue)value;
-
-						return intValue.getValue();
-					}
-					else if (value instanceof NullValue) {
-						return null;
-					}
-					else if (value instanceof ObjectValue) {
-						return new HashMap<String, Object>() {
-							{
-								ObjectValue objectValue = (ObjectValue)value;
-
-								for (ObjectField objectField :
-										objectValue.getObjectFields()) {
-
-									put(
-										objectField.getName(),
-										parseLiteral(objectField.getValue()));
-								}
-							}
-						};
-					}
-					else if (value instanceof StringValue) {
-						StringValue stringValue = (StringValue)value;
-
-						return stringValue.getValue();
-					}
-
-					throw new CoercingSerializeException(
-						"Unable to parse " + value);
+					return _parseLiteral(value);
 				}
 
 				@Override

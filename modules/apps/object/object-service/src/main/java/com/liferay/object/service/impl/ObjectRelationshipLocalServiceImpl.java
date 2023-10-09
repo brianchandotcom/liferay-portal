@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -215,11 +216,12 @@ public class ObjectRelationshipLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		objectRelationship.setDBTableName(
-			StringBundler.concat(
-				"R_", user.getCompanyId(), objectDefinition1.getShortName(),
-				"_", objectDefinition2.getShortName(), "_",
-				objectRelationship.getName()));
+		String dbTableName = StringBundler.concat(
+			"R_", StringUtil.randomString(1), RandomUtil.nextInt(1),
+			StringUtil.randomString(1), RandomUtil.nextInt(1));
+		StringUtil.upperCase(dbTableName);
+
+		objectRelationship.setDBTableName(dbTableName);
 
 		objectRelationship =
 			objectRelationshipLocalService.updateObjectRelationship(

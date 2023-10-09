@@ -120,6 +120,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		}
 		else {
 			reportsDir = new File(_upgradeReportDir);
+
 			_upgradeReportDir = "";
 		}
 

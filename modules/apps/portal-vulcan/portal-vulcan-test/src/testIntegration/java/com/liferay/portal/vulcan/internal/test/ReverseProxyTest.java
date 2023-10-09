@@ -52,13 +52,15 @@ public class ReverseProxyTest {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"WEB_SERVER_FORWARDED_PROTOCOL_ENABLED", true)) {
 
-			urlConnection.addRequestProperty("X-Forwarded-Host", "myHost");
+			urlConnection.addRequestProperty(
+				"X-Forwarded-Host", "[0:0:0:0:0:0:0:1]");
 			urlConnection.addRequestProperty("X-Forwarded-Port", "12345");
 			urlConnection.addRequestProperty("X-Forwarded-Proto", "https");
 
 			String href = _getHref(urlConnection);
 
-			Assert.assertTrue(href, href.startsWith("https://myHost:12345"));
+			Assert.assertTrue(
+				href, href.startsWith("https://[0:0:0:0:0:0:0:1]:12345"));
 		}
 	}
 

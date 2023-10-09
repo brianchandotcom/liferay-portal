@@ -170,10 +170,10 @@ definition {
 	test AssertHighlightedSearchResultsWhenAdvancedSearchSyntaxIsEnabled {
 		SearchPage.configureEmbeddedSearchBar(useAdvancedSearchSyntax = "true");
 
-		SearchPage.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "home");
 
 		AssertCssValue(
-			key_searchAssetTitle = "Test",
+			key_searchAssetTitle = "Home",
 			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC_HIGHLIGHT",
 			locator2 = "background-color",
 			value1 = "rgba(252, 248, 227, 1)");

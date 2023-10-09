@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -55,22 +54,19 @@ public class CTEntryDTOConverter
 		return _toCTEntry(dtoConverterContext, ctEntry);
 	}
 
-	private String _getChangeTypeLabel(
+	private <T extends BaseModel<T>> String _getChangeTypeLabel(
 		Locale locale, com.liferay.change.tracking.model.CTEntry ctEntry,
-		BaseModel<?> model) {
+		T model) {
 
-		if (model instanceof WorkflowedModel) {
-			WorkflowedModel workflowedModel = (WorkflowedModel)model;
+		int changeType = _ctDisplayRendererRegistry.getChangeType(
+			ctEntry, model);
 
-			if (workflowedModel.getStatus() ==
-					WorkflowConstants.STATUS_IN_TRASH) {
-
-				return _language.get(locale, "deleted");
-			}
+		if (changeType == CTConstants.CT_CHANGE_TYPE_ADDITION) {
+			return _language.get(locale, "added");
 		}
 
-		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) {
-			return _language.get(locale, "added");
+		if (changeType == CTConstants.CT_CHANGE_TYPE_DELETION) {
+			return _language.get(locale, "deleted");
 		}
 
 		return _language.get(locale, "modified");

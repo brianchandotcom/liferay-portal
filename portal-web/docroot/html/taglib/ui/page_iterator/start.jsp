@@ -116,7 +116,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 				</ul>
 			</div>
-	
+
 			<script data-senna-track="temporary" type="text/javascript">
 				(function() {
 					var dropdown = document.getElementById("<%= ariaPagination %>");
@@ -158,14 +158,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							if (currentIndex < options.length - 1) {
 								options[currentIndex + 1].focus();
 							}
-						} 
+						}
 						else if (event.key === 'ArrowUp') {
 							event.preventDefault();
 
 							if (currentIndex > 0) {
 								options[currentIndex - 1].focus();
 							}
-						} 
+						}
 						else if (event.key === 'Escape') {
 							button.focus();
 							onLeaveDropdown();

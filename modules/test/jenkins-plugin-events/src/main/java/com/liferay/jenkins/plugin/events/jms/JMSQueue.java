@@ -24,16 +24,67 @@ import org.apache.commons.logging.LogFactory;
  */
 public class JMSQueue {
 
+	public void connect() {
+		synchronized (_log) {
+			if (_connection != null) {
+				return;
+			}
+
+			ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
+				_jmsBrokerURL);
+
+			try {
+				_connection = connectionFactory.createConnection();
+
+				_connection.start();
+
+				_session = _connection.createSession(
+					false, Session.AUTO_ACKNOWLEDGE);
+
+				_queue = _session.createQueue(_queueName);
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Connected to " + _jmsBrokerURL + " at " + _queueName);
+				}
+			}
+			catch (JMSException jmsException) {
+				throw new RuntimeException(jmsException);
+			}
+		}
+	}
+
+	public void disconnect() {
+		synchronized (_log) {
+			try {
+				if (_messageConsumer != null) {
+					_messageConsumer.close();
+				}
+
+				if (_connection != null) {
+					_connection.close();
+				}
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Disconnected from " + _jmsBrokerURL + " at " +
+							_queueName);
+				}
+			}
+			catch (JMSException jmsException) {
+				throw new RuntimeException(jmsException);
+			}
+			finally {
+				_connection = null;
+				_messageConsumer = null;
+				_queue = null;
+				_session = null;
+			}
+		}
+	}
+
 	public String getQueueName() {
 		return _queueName;
-	}
-
-	public void setBrokerURL(String jmsBrokerURL) {
-		_jmsBrokerURL = jmsBrokerURL;
-	}
-
-	public void setQueueName(String queueName) {
-		_queueName = queueName;
 	}
 
 	public void publish(String message) {
@@ -51,6 +102,14 @@ public class JMSQueue {
 		catch (JMSException jmsException) {
 			throw new RuntimeException(jmsException);
 		}
+	}
+
+	public void setBrokerURL(String jmsBrokerURL) {
+		_jmsBrokerURL = jmsBrokerURL;
+	}
+
+	public void setQueueName(String queueName) {
+		_queueName = queueName;
 	}
 
 	public void subscribe(MessageListener messageListener) {
@@ -90,7 +149,8 @@ public class JMSQueue {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Unsubscribed from " + _jmsBrokerURL + " at " + _queueName);
+						"Unsubscribed from " + _jmsBrokerURL + " at " +
+							_queueName);
 				}
 			}
 			catch (JMSException jmsException) {
@@ -104,69 +164,13 @@ public class JMSQueue {
 		_queueName = queueName;
 	}
 
-	public void connect() {
-		synchronized (_log) {
-			if (_connection != null) {
-				return;
-			}
-
-			ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
-				_jmsBrokerURL);
-
-			try {
-				_connection = connectionFactory.createConnection();
-
-				_connection.start();
-
-				_session = _connection.createSession(
-					false, Session.AUTO_ACKNOWLEDGE);
-
-				_queue = _session.createQueue(_queueName);
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Connected to " + _jmsBrokerURL + " at " + _queueName);
-				}
-			}
-			catch (JMSException jmsException) {
-				throw new RuntimeException(jmsException);
-			}
-		}
-	}
-
-	public void disconnect() {
-		synchronized (_log) {
-			try {
-				if (_messageConsumer != null) {
-					_messageConsumer.close();
-				}
-
-				if (_connection != null) {
-					_connection.close();
-				}
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Disconnected from " + _jmsBrokerURL + " at " + _queueName);
-				}
-			}
-			catch (JMSException jmsException) {
-				throw new RuntimeException(jmsException);
-			}
-			finally {
-				_connection = null;
-				_messageConsumer = null;
-				_queue = null;
-				_session = null;
-			}
-		}
-	}
-
 	private static final Log _log = LogFactory.getLog(JMSQueue.class);
 
+	private Connection _connection;
 	private String _jmsBrokerURL;
 	private MessageConsumer _messageConsumer;
 	private Queue _queue;
 	private String _queueName;
 	private Session _session;
-	private Connection _connection;
 
 }

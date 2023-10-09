@@ -13,9 +13,7 @@ import java.util.Map;
  */
 public class JMSFactory {
 
-	public static JMSQueue newJMSQueue(
-		String jmsBrokerURL, String queueName) {
-
+	public static JMSQueue newJMSQueue(String jmsBrokerURL, String queueName) {
 		String key = jmsBrokerURL + "/" + queueName;
 
 		JMSQueue jmsQueue = _jmsQueues.get(key);

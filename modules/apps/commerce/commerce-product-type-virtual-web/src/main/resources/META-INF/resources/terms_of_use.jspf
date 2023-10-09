@@ -29,7 +29,13 @@
 		<aui:fieldset>
 			<p class="text-default">
 				<span class="<%= (termsOfUseJournalArticleResourcePrimKey > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />journalArticleRemove" role="button">
-					<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+					<clay:button
+						aria-label='<%= LanguageUtil.format(locale, "remove-x", "web-content") %>'
+						cssClass="lfr-portal-tooltip"
+						displayType="unstyled"
+						icon="times"
+						title="remove"
+					/>
 				</span>
 				<span id="<portlet:namespace />journalArticleNameInput">
 					<c:choose>

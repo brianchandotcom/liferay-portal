@@ -65,7 +65,13 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 
 						<p class="text-default">
 							<span class="<%= (fileEntryId > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />fileEntryRemove" role="button">
-								<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+								<clay:button
+									aria-label='<%= LanguageUtil.format(locale, "remove-x", "file") %>'
+									cssClass="lfr-portal-tooltip"
+									displayType="unstyled"
+									icon="times"
+									title="remove"
+								/>
 							</span>
 							<span id="<portlet:namespace />fileEntryNameInput">
 								<c:choose>

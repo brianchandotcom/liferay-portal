@@ -7,6 +7,7 @@ package com.liferay.portal.search.elasticsearch7.internal;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -22,9 +23,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.elasticsearch7.configuration.DeepPaginationConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch7.internal.deep.pagination.configuration.DeepPaginationConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.indexing.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.internal.sort.FieldSortImpl;
 import com.liferay.portal.search.internal.sort.ScoreSortImpl;
@@ -217,27 +218,36 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		};
 	}
 
-	private static void _setUpDeepPagination(int pointInTimeKeepAliveSeconds) {
-		DeepPaginationConfigurationWrapper deepPaginationConfigurationWrapper =
-			Mockito.mock(DeepPaginationConfigurationWrapper.class);
+	private static void _setUpDeepPagination(int pointInTimeKeepAliveSeconds)
+		throws Exception {
 
-		Mockito.doReturn(
-			true
-		).when(
-			deepPaginationConfigurationWrapper
-		).isEnableDeepPagination(
-			_indexingFixture.getCompanyId()
+		DeepPaginationConfiguration deepPaginationConfiguration = Mockito.mock(
+			DeepPaginationConfiguration.class);
+
+		Mockito.when(
+			deepPaginationConfiguration.pointInTimeKeepAliveSeconds()
+		).thenReturn(
+			pointInTimeKeepAliveSeconds
 		);
 
-		Mockito.doReturn(
-			pointInTimeKeepAliveSeconds
-		).when(
-			deepPaginationConfigurationWrapper
-		).getPointInTimeKeepAliveSeconds();
+		Mockito.when(
+			deepPaginationConfiguration.enableDeepPagination()
+		).thenReturn(
+			true
+		);
+
+		ConfigurationProvider configurationProvider = Mockito.mock(
+			ConfigurationProvider.class);
+
+		Mockito.when(
+			configurationProvider.getSystemConfiguration(
+				Mockito.eq(DeepPaginationConfiguration.class))
+		).thenReturn(
+			deepPaginationConfiguration
+		);
 
 		ReflectionTestUtil.setFieldValue(
-			_indexSearcher, "_deepPaginationConfigurationWrapper",
-			deepPaginationConfigurationWrapper);
+			_indexSearcher, "_configurationProvider", configurationProvider);
 	}
 
 	private static void _setUpIndexingFixture() throws Exception {

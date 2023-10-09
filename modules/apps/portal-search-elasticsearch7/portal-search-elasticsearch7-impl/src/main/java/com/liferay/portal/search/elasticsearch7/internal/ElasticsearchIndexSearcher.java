@@ -5,12 +5,15 @@
 
 package com.liferay.portal.search.elasticsearch7.internal;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.BaseIndexSearcher;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
@@ -29,9 +32,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.constants.SearchContextAttributes;
+import com.liferay.portal.search.elasticsearch7.configuration.DeepPaginationConfiguration;
 import com.liferay.portal.search.elasticsearch7.constants.ElasticsearchSearchContextAttributes;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
-import com.liferay.portal.search.elasticsearch7.internal.deep.pagination.configuration.DeepPaginationConfigurationWrapper;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchResponse;
@@ -129,8 +132,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			Hits hits = null;
 
 			if (FeatureFlagManagerUtil.isEnabled("LPS-172416") &&
-				_deepPaginationConfigurationWrapper.isEnableDeepPagination(
-					searchContext.getCompanyId())) {
+				_isEnableDeepPagination(searchContext.getCompanyId())) {
 
 				hits = _searchWithDeepPagination(
 					query, searchContext, searchRequest, searchResponseBuilder,
@@ -353,8 +355,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		pointInTime.setKeepAlive(
 			_validatePointInTimeKeepAliveSeconds(
-				_deepPaginationConfigurationWrapper.
-					getPointInTimeKeepAliveSeconds()));
+				_getPointInTimeKeepAliveSeconds(searchContext.getCompanyId())));
 
 		return pointInTime;
 	}
@@ -384,6 +385,26 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		searchSearchRequest.setSorts(searchRequest.getSorts());
 
 		return searchSearchRequest;
+	}
+
+	private DeepPaginationConfiguration _getDeepPaginationConfiguration(
+		long companyId) {
+
+		try {
+			DeepPaginationConfiguration deepPaginationConfiguration =
+				_configurationProvider.getSystemConfiguration(
+					DeepPaginationConfiguration.class);
+
+			if (!deepPaginationConfiguration.enableDeepPagination()) {
+				return _configurationProvider.getCompanyConfiguration(
+					DeepPaginationConfiguration.class, companyId);
+			}
+
+			return deepPaginationConfiguration;
+		}
+		catch (ConfigurationException configurationException) {
+			return ReflectionUtil.throwException(configurationException);
+		}
 	}
 
 	private String _getExceptionMessage(RuntimeException runtimeException) {
@@ -442,6 +463,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		return searchHitList.get(searchHitList.size() - 1);
 	}
 
+	private int _getPointInTimeKeepAliveSeconds(long companyId) {
+		DeepPaginationConfiguration deepPaginationConfiguration =
+			_getDeepPaginationConfiguration(companyId);
+
+		return deepPaginationConfiguration.pointInTimeKeepAliveSeconds();
+	}
+
 	private SearchRequest _getSearchRequest(SearchContext searchContext) {
 		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
 			searchContext);
@@ -459,6 +487,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		SearchContext searchContext) {
 
 		return _searchResponseBuilderFactory.builder(searchContext);
+	}
+
+	private boolean _isEnableDeepPagination(long companyId) {
+		DeepPaginationConfiguration deepPaginationConfiguration =
+			_getDeepPaginationConfiguration(companyId);
+
+		return deepPaginationConfiguration.enableDeepPagination();
 	}
 
 	private void _populateResponse(
@@ -743,8 +778,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		ElasticsearchIndexSearcher.class);
 
 	@Reference
-	private DeepPaginationConfigurationWrapper
-		_deepPaginationConfigurationWrapper;
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private ElasticsearchConfigurationWrapper

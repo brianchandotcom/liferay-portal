@@ -341,6 +341,17 @@ public class ListTypeEntryLocalServiceWrapper
 			listTypeDefinitionId, start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.list.type.model.ListTypeEntry>
+		getListTypeEntries(
+			long listTypeDefinitionId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.list.type.model.ListTypeEntry> orderByComparator) {
+
+		return _listTypeEntryLocalService.getListTypeEntries(
+			listTypeDefinitionId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of list type entries.
 	 *

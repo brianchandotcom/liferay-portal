@@ -271,6 +271,15 @@ public class ObjectRelationshipPersistenceTest {
 	}
 
 	@Test
+	public void testCountByDBTableName() throws Exception {
+		_persistence.countByDBTableName("");
+
+		_persistence.countByDBTableName("null");
+
+		_persistence.countByDBTableName((String)null);
+	}
+
+	@Test
 	public void testCountByODI1_E() throws Exception {
 		_persistence.countByODI1_E(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
@@ -688,6 +697,12 @@ public class ObjectRelationshipPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				objectRelationship, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "objectFieldId2"));
+
+		Assert.assertEquals(
+			objectRelationship.getDBTableName(),
+			ReflectionTestUtil.invoke(
+				objectRelationship, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "dbTableName"));
 
 		Assert.assertEquals(
 			Long.valueOf(objectRelationship.getObjectDefinitionId1()),

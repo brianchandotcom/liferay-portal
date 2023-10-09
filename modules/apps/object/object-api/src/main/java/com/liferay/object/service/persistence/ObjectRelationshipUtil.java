@@ -1061,6 +1061,64 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
+	 * Returns the object relationship where dbTableName = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
+	 *
+	 * @param dbTableName the db table name
+	 * @return the matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship findByDBTableName(String dbTableName)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByDBTableName(dbTableName);
+	}
+
+	/**
+	 * Returns the object relationship where dbTableName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param dbTableName the db table name
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByDBTableName(String dbTableName) {
+		return getPersistence().fetchByDBTableName(dbTableName);
+	}
+
+	/**
+	 * Returns the object relationship where dbTableName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param dbTableName the db table name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByDBTableName(
+		String dbTableName, boolean useFinderCache) {
+
+		return getPersistence().fetchByDBTableName(dbTableName, useFinderCache);
+	}
+
+	/**
+	 * Removes the object relationship where dbTableName = &#63; from the database.
+	 *
+	 * @param dbTableName the db table name
+	 * @return the object relationship that was removed
+	 */
+	public static ObjectRelationship removeByDBTableName(String dbTableName)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().removeByDBTableName(dbTableName);
+	}
+
+	/**
+	 * Returns the number of object relationships where dbTableName = &#63;.
+	 *
+	 * @param dbTableName the db table name
+	 * @return the number of matching object relationships
+	 */
+	public static int countByDBTableName(String dbTableName) {
+		return getPersistence().countByDBTableName(dbTableName);
+	}
+
+	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
 	 *
 	 * @param objectDefinitionId1 the object definition id1

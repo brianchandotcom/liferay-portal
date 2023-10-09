@@ -338,6 +338,19 @@
 			"name": "primaryPartnerPhone",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "OwnerId",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Lead Owner"
+			},
+			"name": "leadOwner",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:LeadSF$]"

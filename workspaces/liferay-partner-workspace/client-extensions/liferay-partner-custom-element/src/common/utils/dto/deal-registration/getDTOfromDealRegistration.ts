@@ -25,7 +25,9 @@ export function getDTOFromDealRegistration(
 			dealRegistration.additionalInformationAboutTheOpportunity,
 		currency: dealRegistration.currency,
 		leadExternalReferenceCode,
+		leadOwner: dealRegistration.leadOwner,
 		leadStatusDetail: dealRegistration.leadStatusDetails,
+		leadType: dealRegistration.leadType,
 		mdfActivityExternalReferenceCode:
 			dealRegistration.mdfActivityAssociated.externalReferenceCode,
 		mdfActivityName: dealRegistration.mdfActivityAssociated.name,

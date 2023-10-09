@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -54,35 +55,47 @@ public class DLAMImageCounterTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_count = _amImageCounter.countExpectedAMImageEntries(
+			TestPropsValues.getCompanyId());
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testDLAMImageCounterCountsImagesWithMultipleGroups()
+		throws Exception {
+
+		_addFileEntry();
+
+		Assert.assertEquals(
+			_count + 1,
+			_amImageCounter.countExpectedAMImageEntries(
+				TestPropsValues.getCompanyId()));
+
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			_addFileEntry(group);
+
+			Assert.assertEquals(
+				_count + 2,
+				_amImageCounter.countExpectedAMImageEntries(
+					TestPropsValues.getCompanyId()));
+		}
+		finally {
+			_groupLocalService.deleteGroup(group);
+		}
 	}
 
 	@Test
 	public void testDLAMImageCounterOnlyCountsDefaultRepositoryImages()
 		throws Exception {
 
-		int count = _amImageCounter.countExpectedAMImageEntries(
-			TestPropsValues.getCompanyId());
+		_addFileEntry();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		_dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), null, null, serviceContext);
-
-		_portletFileRepository.addPortletFileEntry(
-			_group.getGroupId(), TestPropsValues.getUserId(),
-			BlogsEntry.class.getName(), RandomTestUtil.randomLong(),
-			BlogsConstants.SERVICE_NAME,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _getImageBytes(),
-			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG, true);
+		_addPortletFileEntry();
 
 		Assert.assertEquals(
-			count + 1,
+			_count + 1,
 			_amImageCounter.countExpectedAMImageEntries(
 				TestPropsValues.getCompanyId()));
 	}
@@ -91,42 +104,27 @@ public class DLAMImageCounterTest {
 	public void testDLAMImageCounterOnlyCountsDefaultRepositoryImagesPerCompany()
 		throws Exception {
 
-		Company company2 = CompanyTestUtil.addCompany();
+		Company company = CompanyTestUtil.addCompany();
 
 		try {
-			int company1Count = _amImageCounter.countExpectedAMImageEntries(
-				TestPropsValues.getCompanyId());
-			int company2Count = _amImageCounter.countExpectedAMImageEntries(
-				company2.getCompanyId());
+			int count = _amImageCounter.countExpectedAMImageEntries(
+				company.getCompanyId());
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId());
+			_addFileEntry();
 
-			_dlAppLocalService.addFileEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-				_getImageBytes(), null, null, serviceContext);
-
-			_portletFileRepository.addPortletFileEntry(
-				_group.getGroupId(), TestPropsValues.getUserId(),
-				BlogsEntry.class.getName(), RandomTestUtil.randomLong(),
-				BlogsConstants.SERVICE_NAME,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _getImageBytes(),
-				RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG, true);
+			_addPortletFileEntry();
 
 			Assert.assertEquals(
-				company1Count + 1,
+				_count + 1,
 				_amImageCounter.countExpectedAMImageEntries(
 					TestPropsValues.getCompanyId()));
 			Assert.assertEquals(
-				company2Count,
+				count,
 				_amImageCounter.countExpectedAMImageEntries(
-					company2.getCompanyId()));
+					company.getCompanyId()));
 		}
 		finally {
-			_companyLocalService.deleteCompany(company2);
+			_companyLocalService.deleteCompany(company);
 		}
 	}
 
@@ -134,21 +132,10 @@ public class DLAMImageCounterTest {
 	public void testDLAMImageCounterOnlyCountsImagesNotInTrash()
 		throws Exception {
 
-		int count = _amImageCounter.countExpectedAMImageEntries(
-			TestPropsValues.getCompanyId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), null, null, serviceContext);
+		FileEntry fileEntry = _addFileEntry();
 
 		Assert.assertEquals(
-			count + 1,
+			_count + 1,
 			_amImageCounter.countExpectedAMImageEntries(
 				TestPropsValues.getCompanyId()));
 
@@ -157,7 +144,7 @@ public class DLAMImageCounterTest {
 			fileEntry.getFileEntryId());
 
 		Assert.assertEquals(
-			count,
+			_count,
 			_amImageCounter.countExpectedAMImageEntries(
 				TestPropsValues.getCompanyId()));
 	}
@@ -166,30 +153,46 @@ public class DLAMImageCounterTest {
 	public void testDLAMImageCounterOnlyCountsImagesWithSupportedMimeTypes()
 		throws Exception {
 
-		int count = _amImageCounter.countExpectedAMImageEntries(
-			TestPropsValues.getCompanyId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		_dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), null, null, serviceContext);
+		_addFileEntry();
 
 		_dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
 
 		Assert.assertEquals(
-			count + 1,
+			_count + 1,
 			_amImageCounter.countExpectedAMImageEntries(
 				TestPropsValues.getCompanyId()));
+	}
+
+	private FileEntry _addFileEntry() throws Exception {
+		return _addFileEntry(_group);
+	}
+
+	private FileEntry _addFileEntry(Group group) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId());
+
+		return _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			_getImageBytes(), null, null, serviceContext);
+	}
+
+	private void _addPortletFileEntry() throws Exception {
+		_portletFileRepository.addPortletFileEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			BlogsEntry.class.getName(), RandomTestUtil.randomLong(),
+			BlogsConstants.SERVICE_NAME,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _getImageBytes(),
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG, true);
 	}
 
 	private byte[] _getImageBytes() throws Exception {
@@ -206,6 +209,8 @@ public class DLAMImageCounterTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	private int _count;
+
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
@@ -214,6 +219,9 @@ public class DLAMImageCounterTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;

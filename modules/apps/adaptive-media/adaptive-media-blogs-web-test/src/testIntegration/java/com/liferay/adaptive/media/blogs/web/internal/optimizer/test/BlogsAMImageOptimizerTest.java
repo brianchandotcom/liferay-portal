@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -37,8 +38,11 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -62,19 +66,63 @@ public class BlogsAMImageOptimizerTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_deleteAllAMImageConfigurationEntries();
+	}
+
 	@Test
 	public void testBlogsAMImageOptimizerOptimizesEveryAMImageConfigurationEntryInSpecificCompany()
 		throws Exception {
 
-		_addBlogEntryWithCoverImage(
-			TestPropsValues.getUserId(), _group.getGroupId());
+		_addBlogEntryWithCoverImage();
 
 		AMImageConfigurationEntry amImageConfigurationEntry1 =
 			_addAMImageConfigurationEntry(TestPropsValues.getCompanyId());
 		AMImageConfigurationEntry amImageConfigurationEntry2 =
 			_addAMImageConfigurationEntry(TestPropsValues.getCompanyId());
 
+		Assert.assertEquals(
+			0,
+			_amImageEntryLocalService.getAMImageEntriesCount(
+				TestPropsValues.getCompanyId(),
+				amImageConfigurationEntry1.getUUID()));
+		Assert.assertEquals(
+			0,
+			_amImageEntryLocalService.getAMImageEntriesCount(
+				TestPropsValues.getCompanyId(),
+				amImageConfigurationEntry2.getUUID()));
+
+		_amImageOptimizer.optimize(TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			1,
+			_amImageEntryLocalService.getAMImageEntriesCount(
+				TestPropsValues.getCompanyId(),
+				amImageConfigurationEntry1.getUUID()));
+		Assert.assertEquals(
+			1,
+			_amImageEntryLocalService.getAMImageEntriesCount(
+				TestPropsValues.getCompanyId(),
+				amImageConfigurationEntry2.getUUID()));
+	}
+
+	@Test
+	public void testBlogsAMImageOptimizerOptimizesEveryAMImageConfigurationEntryInSpecificCompanyWithMultipleGroups()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
 		try {
+			_addBlogEntryWithCoverImage();
+			_addBlogEntryWithCoverImage(
+				TestPropsValues.getUserId(), group.getGroupId());
+
+			AMImageConfigurationEntry amImageConfigurationEntry1 =
+				_addAMImageConfigurationEntry(TestPropsValues.getCompanyId());
+			AMImageConfigurationEntry amImageConfigurationEntry2 =
+				_addAMImageConfigurationEntry(TestPropsValues.getCompanyId());
+
 			Assert.assertEquals(
 				0,
 				_amImageEntryLocalService.getAMImageEntriesCount(
@@ -89,23 +137,18 @@ public class BlogsAMImageOptimizerTest {
 			_amImageOptimizer.optimize(TestPropsValues.getCompanyId());
 
 			Assert.assertEquals(
-				1,
+				2,
 				_amImageEntryLocalService.getAMImageEntriesCount(
 					TestPropsValues.getCompanyId(),
 					amImageConfigurationEntry1.getUUID()));
 			Assert.assertEquals(
-				1,
+				2,
 				_amImageEntryLocalService.getAMImageEntriesCount(
 					TestPropsValues.getCompanyId(),
 					amImageConfigurationEntry2.getUUID()));
 		}
 		finally {
-			_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
-				TestPropsValues.getCompanyId(),
-				amImageConfigurationEntry1.getUUID());
-			_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
-				TestPropsValues.getCompanyId(),
-				amImageConfigurationEntry2.getUUID());
+			_groupLocalService.deleteGroup(group);
 		}
 	}
 
@@ -126,8 +169,7 @@ public class BlogsAMImageOptimizerTest {
 		try {
 			PrincipalThreadLocal.setName(user.getUserId());
 
-			_addBlogEntryWithCoverImage(
-				TestPropsValues.getUserId(), _group.getGroupId());
+			_addBlogEntryWithCoverImage();
 			_addBlogEntryWithCoverImage(user.getUserId(), group.getGroupId());
 
 			AMImageConfigurationEntry amImageConfigurationEntry1 =
@@ -135,54 +177,42 @@ public class BlogsAMImageOptimizerTest {
 			AMImageConfigurationEntry amImageConfigurationEntry2 =
 				_addAMImageConfigurationEntry(company.getCompanyId());
 
-			try {
-				Assert.assertEquals(
-					0,
-					_amImageEntryLocalService.getAMImageEntriesCount(
-						TestPropsValues.getCompanyId(),
-						amImageConfigurationEntry1.getUUID()));
-				Assert.assertEquals(
-					0,
-					_amImageEntryLocalService.getAMImageEntriesCount(
-						company.getCompanyId(),
-						amImageConfigurationEntry2.getUUID()));
+			Assert.assertEquals(
+				0,
+				_amImageEntryLocalService.getAMImageEntriesCount(
+					TestPropsValues.getCompanyId(),
+					amImageConfigurationEntry1.getUUID()));
+			Assert.assertEquals(
+				0,
+				_amImageEntryLocalService.getAMImageEntriesCount(
+					company.getCompanyId(),
+					amImageConfigurationEntry2.getUUID()));
 
-				_amImageOptimizer.optimize(TestPropsValues.getCompanyId());
+			_amImageOptimizer.optimize(TestPropsValues.getCompanyId());
 
-				Assert.assertEquals(
-					1,
-					_amImageEntryLocalService.getAMImageEntriesCount(
-						TestPropsValues.getCompanyId(),
-						amImageConfigurationEntry1.getUUID()));
-				Assert.assertEquals(
-					0,
-					_amImageEntryLocalService.getAMImageEntriesCount(
-						company.getCompanyId(),
-						amImageConfigurationEntry2.getUUID()));
+			Assert.assertEquals(
+				1,
+				_amImageEntryLocalService.getAMImageEntriesCount(
+					TestPropsValues.getCompanyId(),
+					amImageConfigurationEntry1.getUUID()));
+			Assert.assertEquals(
+				0,
+				_amImageEntryLocalService.getAMImageEntriesCount(
+					company.getCompanyId(),
+					amImageConfigurationEntry2.getUUID()));
 
-				_amImageOptimizer.optimize(company.getCompanyId());
+			_amImageOptimizer.optimize(company.getCompanyId());
 
-				Assert.assertEquals(
-					1,
-					_amImageEntryLocalService.getAMImageEntriesCount(
-						TestPropsValues.getCompanyId(),
-						amImageConfigurationEntry1.getUUID()));
-				Assert.assertEquals(
-					1,
-					_amImageEntryLocalService.getAMImageEntriesCount(
-						company.getCompanyId(),
-						amImageConfigurationEntry2.getUUID()));
-			}
-			finally {
-				_amImageConfigurationHelper.
-					forceDeleteAMImageConfigurationEntry(
-						TestPropsValues.getCompanyId(),
-						amImageConfigurationEntry1.getUUID());
-				_amImageConfigurationHelper.
-					forceDeleteAMImageConfigurationEntry(
-						company.getCompanyId(),
-						amImageConfigurationEntry2.getUUID());
-			}
+			Assert.assertEquals(
+				1,
+				_amImageEntryLocalService.getAMImageEntriesCount(
+					TestPropsValues.getCompanyId(),
+					amImageConfigurationEntry1.getUUID()));
+			Assert.assertEquals(
+				1,
+				_amImageEntryLocalService.getAMImageEntriesCount(
+					company.getCompanyId(),
+					amImageConfigurationEntry2.getUUID()));
 		}
 		finally {
 			_companyLocalService.deleteCompany(company);
@@ -195,64 +225,53 @@ public class BlogsAMImageOptimizerTest {
 	public void testBlogsAMImageOptimizerOptimizesForSpecificAMImageConfigurationEntry()
 		throws Exception {
 
-		_addBlogEntryWithCoverImage(
-			TestPropsValues.getUserId(), _group.getGroupId());
+		_addBlogEntryWithCoverImage();
 
 		AMImageConfigurationEntry amImageConfigurationEntry1 =
 			_addAMImageConfigurationEntry(TestPropsValues.getCompanyId());
 		AMImageConfigurationEntry amImageConfigurationEntry2 =
 			_addAMImageConfigurationEntry(TestPropsValues.getCompanyId());
 
-		try {
-			Assert.assertEquals(
-				0,
-				_amImageEntryLocalService.getAMImageEntriesCount(
-					TestPropsValues.getCompanyId(),
-					amImageConfigurationEntry1.getUUID()));
-			Assert.assertEquals(
-				0,
-				_amImageEntryLocalService.getAMImageEntriesCount(
-					TestPropsValues.getCompanyId(),
-					amImageConfigurationEntry2.getUUID()));
-
-			_amImageOptimizer.optimize(
+		Assert.assertEquals(
+			0,
+			_amImageEntryLocalService.getAMImageEntriesCount(
 				TestPropsValues.getCompanyId(),
-				amImageConfigurationEntry1.getUUID());
-
-			Assert.assertEquals(
-				1,
-				_amImageEntryLocalService.getAMImageEntriesCount(
-					TestPropsValues.getCompanyId(),
-					amImageConfigurationEntry1.getUUID()));
-			Assert.assertEquals(
-				0,
-				_amImageEntryLocalService.getAMImageEntriesCount(
-					TestPropsValues.getCompanyId(),
-					amImageConfigurationEntry2.getUUID()));
-
-			_amImageOptimizer.optimize(
+				amImageConfigurationEntry1.getUUID()));
+		Assert.assertEquals(
+			0,
+			_amImageEntryLocalService.getAMImageEntriesCount(
 				TestPropsValues.getCompanyId(),
-				amImageConfigurationEntry2.getUUID());
+				amImageConfigurationEntry2.getUUID()));
 
-			Assert.assertEquals(
-				1,
-				_amImageEntryLocalService.getAMImageEntriesCount(
-					TestPropsValues.getCompanyId(),
-					amImageConfigurationEntry1.getUUID()));
-			Assert.assertEquals(
-				1,
-				_amImageEntryLocalService.getAMImageEntriesCount(
-					TestPropsValues.getCompanyId(),
-					amImageConfigurationEntry2.getUUID()));
-		}
-		finally {
-			_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
+		_amImageOptimizer.optimize(
+			TestPropsValues.getCompanyId(),
+			amImageConfigurationEntry1.getUUID());
+
+		Assert.assertEquals(
+			1,
+			_amImageEntryLocalService.getAMImageEntriesCount(
 				TestPropsValues.getCompanyId(),
-				amImageConfigurationEntry1.getUUID());
-			_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
+				amImageConfigurationEntry1.getUUID()));
+		Assert.assertEquals(
+			0,
+			_amImageEntryLocalService.getAMImageEntriesCount(
 				TestPropsValues.getCompanyId(),
-				amImageConfigurationEntry2.getUUID());
-		}
+				amImageConfigurationEntry2.getUUID()));
+
+		_amImageOptimizer.optimize(
+			TestPropsValues.getCompanyId(),
+			amImageConfigurationEntry2.getUUID());
+
+		Assert.assertEquals(
+			1,
+			_amImageEntryLocalService.getAMImageEntriesCount(
+				TestPropsValues.getCompanyId(),
+				amImageConfigurationEntry1.getUUID()));
+		Assert.assertEquals(
+			1,
+			_amImageEntryLocalService.getAMImageEntriesCount(
+				TestPropsValues.getCompanyId(),
+				amImageConfigurationEntry2.getUUID()));
 	}
 
 	protected static final String IMAGE_CROP_REGION =
@@ -262,16 +281,26 @@ public class BlogsAMImageOptimizerTest {
 			long companyId)
 		throws Exception {
 
-		String amImageConfigurationEntry1Name = RandomTestUtil.randomString();
+		String amImageConfigurationEntryName = RandomTestUtil.randomString();
 
-		return _amImageConfigurationHelper.addAMImageConfigurationEntry(
-			companyId, amImageConfigurationEntry1Name, StringPool.BLANK,
-			amImageConfigurationEntry1Name,
-			HashMapBuilder.put(
-				"max-height", String.valueOf(RandomTestUtil.randomLong())
-			).put(
-				"max-width", String.valueOf(RandomTestUtil.randomLong())
-			).build());
+		AMImageConfigurationEntry amImageConfigurationEntry =
+			_amImageConfigurationHelper.addAMImageConfigurationEntry(
+				companyId, amImageConfigurationEntryName, StringPool.BLANK,
+				amImageConfigurationEntryName,
+				HashMapBuilder.put(
+					"max-height", String.valueOf(RandomTestUtil.randomLong())
+				).put(
+					"max-width", String.valueOf(RandomTestUtil.randomLong())
+				).build());
+
+		_amImageConfigurationEntries.add(amImageConfigurationEntry);
+
+		return amImageConfigurationEntry;
+	}
+
+	private BlogsEntry _addBlogEntryWithCoverImage() throws Exception {
+		return _addBlogEntryWithCoverImage(
+			TestPropsValues.getUserId(), _group.getGroupId());
 	}
 
 	private BlogsEntry _addBlogEntryWithCoverImage(long userId, long groupId)
@@ -289,20 +318,32 @@ public class BlogsAMImageOptimizerTest {
 			userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new Date(), serviceContext);
 
-		ImageSelector imageSelector = new ImageSelector(
-			_getImageBytes(), RandomTestUtil.randomString() + ".jpg",
-			ContentTypes.IMAGE_JPEG, IMAGE_CROP_REGION);
-
 		_blogsEntryLocalService.addCoverImage(
-			blogsEntry.getEntryId(), imageSelector);
+			blogsEntry.getEntryId(),
+			new ImageSelector(
+				_getImageBytes(), RandomTestUtil.randomString() + ".jpg",
+				ContentTypes.IMAGE_JPEG, IMAGE_CROP_REGION));
 
 		return _blogsEntryLocalService.getEntry(blogsEntry.getEntryId());
+	}
+
+	private void _deleteAllAMImageConfigurationEntries() throws Exception {
+		for (AMImageConfigurationEntry amImageConfigurationEntry :
+				_amImageConfigurationEntries) {
+
+			_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(),
+				amImageConfigurationEntry.getUUID());
+		}
 	}
 
 	private byte[] _getImageBytes() throws Exception {
 		return FileUtil.getBytes(
 			BlogsAMImageOptimizerTest.class, "dependencies/image.jpg");
 	}
+
+	private final List<AMImageConfigurationEntry> _amImageConfigurationEntries =
+		new ArrayList<>();
 
 	@Inject
 	private AMImageConfigurationHelper _amImageConfigurationHelper;
@@ -324,5 +365,8 @@ public class BlogsAMImageOptimizerTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 }

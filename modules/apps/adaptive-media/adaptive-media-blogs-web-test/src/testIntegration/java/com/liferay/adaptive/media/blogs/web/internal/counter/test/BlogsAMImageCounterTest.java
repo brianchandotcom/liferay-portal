@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -53,6 +54,8 @@ public class BlogsAMImageCounterTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_count = _amImageCounter.countExpectedAMImageEntries(
+			TestPropsValues.getCompanyId());
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -60,34 +63,17 @@ public class BlogsAMImageCounterTest {
 	public void testBlogsAMImageCounterOnlyCountsBlogsImages()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		_dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), null, null, serviceContext);
-
-		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(), serviceContext);
+		BlogsEntry blogsEntry = _addBlogsEntry();
 
 		Assert.assertEquals(
-			0,
+			_count,
 			_amImageCounter.countExpectedAMImageEntries(
 				TestPropsValues.getCompanyId()));
 
-		ImageSelector imageSelector = new ImageSelector(
-			_getImageBytes(), RandomTestUtil.randomString() + ".jpg",
-			ContentTypes.IMAGE_JPEG, IMAGE_CROP_REGION);
-
-		_blogsEntryLocalService.addCoverImage(
-			blogsEntry.getEntryId(), imageSelector);
+		_addCoverImage(blogsEntry);
 
 		Assert.assertEquals(
-			1,
+			_count + 1,
 			_amImageCounter.countExpectedAMImageEntries(
 				TestPropsValues.getCompanyId()));
 	}
@@ -105,22 +91,10 @@ public class BlogsAMImageCounterTest {
 		try {
 			PrincipalThreadLocal.setName(user.getUserId());
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId());
-
-			_dlAppLocalService.addFileEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-				_getImageBytes(), null, null, serviceContext);
-
-			BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), new Date(), serviceContext);
+			BlogsEntry blogsEntry = _addBlogsEntry();
 
 			Assert.assertEquals(
-				0,
+				_count,
 				_amImageCounter.countExpectedAMImageEntries(
 					TestPropsValues.getCompanyId()));
 			Assert.assertEquals(
@@ -128,15 +102,10 @@ public class BlogsAMImageCounterTest {
 				_amImageCounter.countExpectedAMImageEntries(
 					company.getCompanyId()));
 
-			ImageSelector imageSelector = new ImageSelector(
-				_getImageBytes(), RandomTestUtil.randomString() + ".jpg",
-				ContentTypes.IMAGE_JPEG, IMAGE_CROP_REGION);
-
-			_blogsEntryLocalService.addCoverImage(
-				blogsEntry.getEntryId(), imageSelector);
+			_addCoverImage(blogsEntry);
 
 			Assert.assertEquals(
-				1,
+				_count + 1,
 				_amImageCounter.countExpectedAMImageEntries(
 					TestPropsValues.getCompanyId()));
 			Assert.assertEquals(
@@ -151,8 +120,71 @@ public class BlogsAMImageCounterTest {
 		}
 	}
 
+	@Test
+	public void testBlogsAMImageCounterOnlyCountsBlogsImagesWithMultipleGroups()
+		throws Exception {
+
+		BlogsEntry blogsEntry1 = _addBlogsEntry();
+
+		Assert.assertEquals(
+			_count,
+			_amImageCounter.countExpectedAMImageEntries(
+				TestPropsValues.getCompanyId()));
+
+		_addCoverImage(blogsEntry1);
+
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			BlogsEntry blogsEntry2 = _addBlogsEntry(group);
+
+			Assert.assertEquals(
+				_count + 1,
+				_amImageCounter.countExpectedAMImageEntries(
+					TestPropsValues.getCompanyId()));
+
+			_addCoverImage(blogsEntry2);
+
+			Assert.assertEquals(
+				_count + 2,
+				_amImageCounter.countExpectedAMImageEntries(
+					TestPropsValues.getCompanyId()));
+		}
+		finally {
+			_groupLocalService.deleteGroup(group);
+		}
+	}
+
 	protected static final String IMAGE_CROP_REGION =
 		"{\"height\": 0, \"width\": 00, \"x\": 0, \"y\": 0}";
+
+	private BlogsEntry _addBlogsEntry() throws Exception {
+		return _addBlogsEntry(_group);
+	}
+
+	private BlogsEntry _addBlogsEntry(Group group) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId());
+
+		_dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			_getImageBytes(), null, null, serviceContext);
+
+		return _blogsEntryLocalService.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new Date(), serviceContext);
+	}
+
+	private void _addCoverImage(BlogsEntry blogsEntry) throws Exception {
+		_blogsEntryLocalService.addCoverImage(
+			blogsEntry.getEntryId(),
+			new ImageSelector(
+				_getImageBytes(), RandomTestUtil.randomString() + ".jpg",
+				ContentTypes.IMAGE_JPEG, IMAGE_CROP_REGION));
+	}
 
 	private byte[] _getImageBytes() throws Exception {
 		return FileUtil.getBytes(
@@ -168,10 +200,15 @@ public class BlogsAMImageCounterTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	private int _count;
+
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 }

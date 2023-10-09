@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.TrashedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -132,6 +134,35 @@ public class CTDisplayRendererRegistryImpl
 
 			return ctDisplayRenderer.getAvailableLanguageIds(model);
 		}
+	}
+
+	@Override
+	public <T extends BaseModel<T>> int getChangeType(
+		CTEntry ctEntry, T model) {
+
+		if (model instanceof TrashedModel) {
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctEntry.getCtCollectionId())) {
+
+				TrashedModel trashedModel = (TrashedModel)model;
+
+				if (trashedModel.isInTrash()) {
+					return CTConstants.CT_CHANGE_TYPE_DELETION;
+				}
+			}
+		}
+		else if (model instanceof WorkflowedModel) {
+			WorkflowedModel workflowedModel = (WorkflowedModel)model;
+
+			if (workflowedModel.getStatus() ==
+					WorkflowConstants.STATUS_IN_TRASH) {
+
+				return CTConstants.CT_CHANGE_TYPE_DELETION;
+			}
+		}
+
+		return ctEntry.getChangeType();
 	}
 
 	@Override

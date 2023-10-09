@@ -44,8 +44,8 @@ public class CTEntryEntityModel implements EntityModel {
 			new StringEntityField(
 				"changeType",
 				locale -> Field.getSortableFieldName(
-					"changeTypeLabel_".concat(
-						LocaleUtil.toLanguageId(locale)))),
+					"changeTypeLabel_".concat(LocaleUtil.toLanguageId(locale))),
+				locale -> "changeTypeLabel"),
 			new StringEntityField("ownerName", locale -> Field.USER_NAME),
 			new StringEntityField(
 				"siteName",

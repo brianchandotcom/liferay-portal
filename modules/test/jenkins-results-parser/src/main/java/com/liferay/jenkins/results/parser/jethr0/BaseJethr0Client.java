@@ -53,22 +53,25 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 		try {
 			Connection connection = connectionFactory.createConnection();
 
-			connection.start();
+			try {
+				connection.start();
 
-			Session session = connection.createSession(
-				false, Session.AUTO_ACKNOWLEDGE);
+				Session session = connection.createSession(
+					false, Session.AUTO_ACKNOWLEDGE);
 
-			Queue queue = session.createQueue(getActiveMQQueueName());
+				Queue queue = session.createQueue(getActiveMQQueueName());
 
-			MessageProducer messageProducer = session.createProducer(queue);
+				MessageProducer messageProducer = session.createProducer(queue);
 
-			TextMessage textMessage = session.createTextMessage();
+				TextMessage textMessage = session.createTextMessage();
 
-			textMessage.setText(message);
+				textMessage.setText(message);
 
-			messageProducer.send(textMessage);
-
-			connection.close();
+				messageProducer.send(textMessage);
+			}
+			finally {
+				connection.close();
+			}
 		}
 		catch (JMSException jmsException) {
 			throw new RuntimeException(jmsException);

@@ -51,6 +51,8 @@ definition {
 
 		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
 
+		DMDocument.expandInfo();
+
 		DMDocument.viewDocumentMetadataCP(
 			metadataData = 313,
 			metadataLabel = "Image Length");
@@ -85,6 +87,8 @@ definition {
 		Refresh();
 
 		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
+
+		DMDocument.expandInfo();
 
 		DMDocument.viewDocumentMetadataCP(
 			metadataData = 312,
@@ -133,6 +137,8 @@ definition {
 
 		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
 
+		DMDocument.expandInfo();
+
 		DMDocument.viewDocumentMetadataCP(
 			metadataData = 313,
 			metadataLabel = "Image Length");
@@ -144,6 +150,8 @@ definition {
 		Refresh();
 
 		LexiconCard.checkCardCheckbox(card = "Document_2 (1).jpg");
+
+		DMDocument.expandInfo();
 
 		DMDocument.viewDocumentMetadataCP(
 			metadataData = 312,
@@ -178,6 +186,8 @@ definition {
 		Refresh();
 
 		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
+
+		DMDocument.expandInfo();
 
 		DMDocument.viewDocumentMetadataCP(
 			metadataData = 313,

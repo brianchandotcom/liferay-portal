@@ -869,4 +869,81 @@ definition {
 		}
 	}
 
+	macro changeQuantityByUsingKeyArrows {
+		if(${quantitySelectorType} == "Product Card") {
+			Click(
+				key_productName = "${productName}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
+
+			if(${arrowAction} == "UP") {
+				KeyPress(
+					key_productName = "${productName}",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = "\UP");
+
+				KeyPress(
+					key_productName = "${productName}",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = "\TAB");
+			}
+			if(${arrowAction} == "DOWN") {
+				KeyPress(
+					key_productName = "${productName}",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = "\DOWN");
+
+				KeyPress(
+					key_productName = "${productName}",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = "\TAB");
+			}
+		} 
+		else {
+			if(${quantitySelectorType} == "Product Details") { 
+				Click(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD");
+
+				if(${arrowAction} == "UP") {
+					KeyPress(
+						locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+						value1 = "\UP");
+				}
+				if(${arrowAction} == "DOWN") {
+					KeyPress(
+						locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+						value1 = "\DOWN");
+				}
+			}
+			else {
+				if(${quantitySelectorType} == "Mini-cart") {
+					Click(
+						key_cartItemSku = "${productSKU}",
+						locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY");
+
+					if(${arrowAction} == "UP") {
+						KeyPress(
+							key_cartItemSku = "${productSKU}",
+							locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+							value1 = "\UP");
+
+						KeyPress(
+							key_cartItemSku = "${productSKU}",
+							locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+							value1 = "\TAB");	
+					}
+					if(${arrowAction} == "DOWN") {
+						KeyPress(
+							key_cartItemSku = "${productSKU}",
+							locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+							value1 = "\DOWN");
+
+						KeyPress(
+							key_cartItemSku = "${productSKU}",
+							locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+							value1 = "\TAB");
+					}
+				}
+			}
+		}
+	}
+
 }

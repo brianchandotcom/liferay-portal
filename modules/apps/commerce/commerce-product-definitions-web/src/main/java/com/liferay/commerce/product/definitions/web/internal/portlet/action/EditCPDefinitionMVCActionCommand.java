@@ -616,9 +616,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		String allowedOrderQuantities = ParamUtil.getString(
 			actionRequest, "allowedOrderQuantities");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPDefinitionInventory.class.getName(), actionRequest);
-
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryService.
 				fetchCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
@@ -641,7 +638,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
 			cpdAvailabilityEstimateEntryId, cpDefinitionId,
-			commerceAvailabilityEstimateId, serviceContext);
+			commerceAvailabilityEstimateId);
 	}
 
 	private void _updateTaxCategoryInfo(

@@ -47,26 +47,14 @@ public class UserServiceWhenUpdatingUserStatusTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testActivateUserWithActivatePermissionSucceeds()
-		throws Exception {
-
+	public void testActivateUser() throws Exception {
 		_testUpdateUserStatusWithValidPermission(
 			ActionKeys.ACTIVATE, WorkflowConstants.STATUS_INACTIVE,
 			WorkflowConstants.STATUS_APPROVED);
-	}
-
-	@Test
-	public void testActivateUserWithDeactivatePermissionFails()
-		throws Exception {
 
 		_testUpdateUserStatusWithInvalidPermission(
 			ActionKeys.DEACTIVATE, WorkflowConstants.STATUS_INACTIVE,
 			WorkflowConstants.STATUS_APPROVED, "ACTIVATE,DELETE");
-	}
-
-	@Test
-	public void testActivateUserWithDeletePermissionSucceeds()
-		throws Exception {
 
 		_testUpdateUserStatusWithValidPermission(
 			ActionKeys.DELETE, WorkflowConstants.STATUS_INACTIVE,
@@ -74,26 +62,14 @@ public class UserServiceWhenUpdatingUserStatusTest {
 	}
 
 	@Test
-	public void testDeactivateUserWithActivatePermissionFails()
-		throws Exception {
-
+	public void testDeactivateUser() throws Exception {
 		_testUpdateUserStatusWithInvalidPermission(
 			ActionKeys.ACTIVATE, WorkflowConstants.STATUS_APPROVED,
 			WorkflowConstants.STATUS_INACTIVE, "DEACTIVATE,DELETE");
-	}
-
-	@Test
-	public void testDeactivateUserWithDeactivatePermissionSucceeds()
-		throws Exception {
 
 		_testUpdateUserStatusWithValidPermission(
 			ActionKeys.DEACTIVATE, WorkflowConstants.STATUS_APPROVED,
 			WorkflowConstants.STATUS_INACTIVE);
-	}
-
-	@Test
-	public void testDeactivateUserWithDeletePermissionSucceeds()
-		throws Exception {
 
 		_testUpdateUserStatusWithValidPermission(
 			ActionKeys.DELETE, WorkflowConstants.STATUS_APPROVED,
@@ -101,17 +77,11 @@ public class UserServiceWhenUpdatingUserStatusTest {
 	}
 
 	@Test
-	public void testDeleteUserWithActivatePermissionFails() throws Exception {
+	public void testDeleteUser() throws Exception {
 		_testDeleteUserWithInvalidPermission(ActionKeys.ACTIVATE, "DELETE");
-	}
 
-	@Test
-	public void testDeleteUserWithDeactivatePermissionFails() throws Exception {
 		_testDeleteUserWithInvalidPermission(ActionKeys.DEACTIVATE, "DELETE");
-	}
 
-	@Test
-	public void testDeleteUserWithDeletePermissionSucceeds() throws Exception {
 		_user1 = UserTestUtil.addUser();
 		_user2 = UserTestUtil.addUser();
 
@@ -140,7 +110,7 @@ public class UserServiceWhenUpdatingUserStatusTest {
 	}
 
 	private void _testDeleteUserWithInvalidPermission(
-		String actionId, String expectedPermissions)
+			String actionId, String expectedPermissions)
 		throws Exception {
 
 		_user1 = UserTestUtil.addUser();
@@ -169,7 +139,7 @@ public class UserServiceWhenUpdatingUserStatusTest {
 			Assert.assertEquals(
 				String.format(
 					"User %s must have %s permission for " +
-					"com.liferay.portal.kernel.model.User %s",
+						"com.liferay.portal.kernel.model.User %s",
 					_user1.getUserId(), expectedPermissions,
 					_user2.getUserId()),
 				principalException.getMessage());
@@ -182,8 +152,8 @@ public class UserServiceWhenUpdatingUserStatusTest {
 	}
 
 	private void _testUpdateUserStatusWithInvalidPermission(
-		String actionId, int sourceStatus, int targetStatus,
-		String expectedPermissions)
+			String actionId, int sourceStatus, int targetStatus,
+			String expectedPermissions)
 		throws Exception {
 
 		_user1 = UserTestUtil.addUser();
@@ -220,7 +190,7 @@ public class UserServiceWhenUpdatingUserStatusTest {
 			Assert.assertEquals(
 				String.format(
 					"User %s must have %s permission for " +
-					"com.liferay.portal.kernel.model.User %s",
+						"com.liferay.portal.kernel.model.User %s",
 					_user1.getUserId(), expectedPermissions,
 					_user2.getUserId()),
 				principalException.getMessage());
@@ -235,7 +205,7 @@ public class UserServiceWhenUpdatingUserStatusTest {
 	}
 
 	private void _testUpdateUserStatusWithValidPermission(
-		String actionId, int sourceStatus, int targetStatus)
+			String actionId, int sourceStatus, int targetStatus)
 		throws Exception {
 
 		_user1 = UserTestUtil.addUser();

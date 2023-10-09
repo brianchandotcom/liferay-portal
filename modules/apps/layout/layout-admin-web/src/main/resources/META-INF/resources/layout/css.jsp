@@ -35,18 +35,16 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	/>
 </liferay-frontend:fieldset>
 
-<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-166479") %>'>
-	<liferay-frontend:fieldset
-		collapsed="<%= false %>"
-		collapsible="<%= true %>"
-		label="theme-spritemap-client-extension"
-	>
-		<react:component
-			module="js/layout/look_and_feel/ThemeSpritemapCETsConfiguration"
-			props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
-		/>
-	</liferay-frontend:fieldset>
-</c:if>
+<liferay-frontend:fieldset
+	collapsed="<%= false %>"
+	collapsible="<%= true %>"
+	label="theme-spritemap-client-extension"
+>
+	<react:component
+		module="js/layout/look_and_feel/ThemeSpritemapCETsConfiguration"
+		props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
+	/>
+</liferay-frontend:fieldset>
 
 <liferay-frontend:fieldset
 	collapsed="<%= false %>"

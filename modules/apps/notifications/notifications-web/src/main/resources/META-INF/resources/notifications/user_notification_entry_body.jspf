@@ -9,6 +9,6 @@
 	<%= userNotificationFeedEntry.getBody() %>
 </a>
 
-<span class="text-default" title="<%= dateFormatDateTime.format(userNotificationEvent.getTimestamp()) %>">
-	<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime) %>
+<span class="text-default" title="<%= dateTimeFormat.format(userNotificationEvent.getTimestamp()) %>">
+	<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateTimeFormat) %>
 </span>

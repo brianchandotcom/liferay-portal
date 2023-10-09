@@ -37,7 +37,7 @@ boolean repost = ParamUtil.getBoolean(request, "repost");
 User receiverUser = null;
 
 if ((microblogsEntry != null) && !edit) {
-	modifiedDate = dateFormatDateTime.format(microblogsEntry.getModifiedDate());
+	modifiedDate = dateTimeFormat.format(microblogsEntry.getModifiedDate());
 
 	receiverUserFullName = HtmlUtil.escape(PortalUtil.getUserName(microblogsEntry));
 

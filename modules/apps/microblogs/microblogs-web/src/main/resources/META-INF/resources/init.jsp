@@ -65,5 +65,5 @@ page import="javax.portlet.WindowState" %>
 <%
 boolean showStatus = PrefsParamUtil.getBoolean(portletPreferences, request, "showStatus", true);
 
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

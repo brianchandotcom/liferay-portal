@@ -81,7 +81,7 @@ PortletURL microblogsEntriesURL = (PortletURL)request.getAttribute(WebKeys.MICRO
 
 				<div class="footer">
 					<div class="modified-date">
-						<%= dateFormatDateTime.format(microblogsEntry.getModifiedDate()) %>
+						<%= dateTimeFormat.format(microblogsEntry.getModifiedDate()) %>
 					</div>
 
 					<div class="action-container">

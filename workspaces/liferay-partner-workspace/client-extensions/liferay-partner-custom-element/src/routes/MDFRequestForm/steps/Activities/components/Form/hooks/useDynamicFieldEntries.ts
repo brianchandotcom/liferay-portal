@@ -13,21 +13,17 @@ import useGet from '../../../../../../../common/services/liferay/object/useGet';
 import getEntriesByListTypeDefinitions from '../../../../../../../common/utils/getEntriesByListTypeDefinitions';
 
 export default function useDynamicFieldEntries() {
-	const pickListNames = [
-		LiferayPicklistName.LEAD_FOLLOW_UP_STRATEGIES,
-		LiferayPicklistName.BUDGET_EXPENSES,
-		LiferayPicklistName.TYPE_OF_ACTIVITY,
-		LiferayPicklistName.TACTIC,
-	];
-
 	const {data: listTypeDefinitions} = useGet<
 		LiferayItems<ListTypeDefinition[]>
 	>(
 		`/o/${
 			LiferayAPIs.HEADERLESS_ADMIN_LIST_TYPE
-		}/list-type-definitions?filter=name in ('${pickListNames.join(
-			"', '"
-		)}')`
+		}/list-type-definitions?filter=name in ('${[
+			LiferayPicklistName.LEAD_FOLLOW_UP_STRATEGIES,
+			LiferayPicklistName.BUDGET_EXPENSES,
+			LiferayPicklistName.TYPE_OF_ACTIVITY,
+			LiferayPicklistName.TACTIC,
+		].join("', '")}')`
 	);
 
 	const fieldEntries = useMemo(

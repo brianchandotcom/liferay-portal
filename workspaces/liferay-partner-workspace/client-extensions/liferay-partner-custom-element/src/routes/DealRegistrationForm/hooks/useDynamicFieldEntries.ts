@@ -25,26 +25,22 @@ export default function useDynamicFieldEntries(
 		`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`
 	);
 
-	const pickListNames = [
-		LiferayPicklistName.COUNTRIES,
-		LiferayPicklistName.STATES,
-		LiferayPicklistName.PROJECT_CATEGORIES,
-		LiferayPicklistName.PROJECT_INFORMATIONS,
-		LiferayPicklistName.JOB_ROLES,
-		LiferayPicklistName.DEPARTMENTS,
-		LiferayPicklistName.INDUSTRIES,
-		LiferayPicklistName.STATES,
-		LiferayPicklistName.CURRENCIES,
-	];
-
 	const {data: listTypeDefinitions} = useGet<
 		LiferayItems<ListTypeDefinition[]>
 	>(
 		`/o/${
 			LiferayAPIs.HEADERLESS_ADMIN_LIST_TYPE
-		}/list-type-definitions?filter=name in ('${pickListNames.join(
-			"', '"
-		)}')`
+		}/list-type-definitions?filter=name in ('${[
+			LiferayPicklistName.COUNTRIES,
+			LiferayPicklistName.STATES,
+			LiferayPicklistName.PROJECT_CATEGORIES,
+			LiferayPicklistName.PROJECT_INFORMATIONS,
+			LiferayPicklistName.JOB_ROLES,
+			LiferayPicklistName.DEPARTMENTS,
+			LiferayPicklistName.INDUSTRIES,
+			LiferayPicklistName.STATES,
+			LiferayPicklistName.CURRENCIES,
+		].join("', '")}')`
 	);
 
 	const companiesEntries = useMemo(

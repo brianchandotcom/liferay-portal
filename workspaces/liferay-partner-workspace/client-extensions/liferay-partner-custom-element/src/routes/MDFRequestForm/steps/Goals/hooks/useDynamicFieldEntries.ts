@@ -20,23 +20,19 @@ export default function useDynamicFieldEntries(skipCompanies?: boolean) {
 			: `/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`
 	);
 
-	const pickListNames = [
-		LiferayPicklistName.ADDITIONAL_OPTIONS,
-		LiferayPicklistName.COUNTRIES,
-		LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS,
-		LiferayPicklistName.TARGET_AUDIENCE_ROLES,
-		LiferayPicklistName.TARGET_MARKETS,
-		LiferayPicklistName.CURRENCIES,
-	];
-
 	const {data: listTypeDefinitions} = useGet<
 		LiferayItems<ListTypeDefinition[]>
 	>(
 		`/o/${
 			LiferayAPIs.HEADERLESS_ADMIN_LIST_TYPE
-		}/list-type-definitions?filter=name in ('${pickListNames.join(
-			"', '"
-		)}')`
+		}/list-type-definitions?filter=name in ('${[
+			LiferayPicklistName.ADDITIONAL_OPTIONS,
+			LiferayPicklistName.COUNTRIES,
+			LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS,
+			LiferayPicklistName.TARGET_AUDIENCE_ROLES,
+			LiferayPicklistName.TARGET_MARKETS,
+			LiferayPicklistName.CURRENCIES,
+		].join("', '")}')`
 	);
 
 	const companiesEntries = useMemo(

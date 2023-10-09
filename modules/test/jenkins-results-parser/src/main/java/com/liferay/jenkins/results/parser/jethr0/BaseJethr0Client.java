@@ -265,7 +265,7 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 			throw new RuntimeException(ioException);
 		}
 
-		throw new RuntimeException("Unable to find Jethr0 Environment");
+		throw new RuntimeException("Unable to get environment");
 	}
 
 	private String _getOAuthAccessToken() {

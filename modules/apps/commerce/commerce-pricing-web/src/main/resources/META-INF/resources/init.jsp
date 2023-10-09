@@ -38,6 +38,7 @@ page import="com.liferay.commerce.price.list.exception.CommercePriceListCurrency
 page import="com.liferay.commerce.price.list.exception.CommercePriceListExpirationDateException" %><%@
 page import="com.liferay.commerce.price.list.exception.CommercePriceListMaxPriceValueException" %><%@
 page import="com.liferay.commerce.price.list.exception.CommercePriceListParentPriceListGroupIdException" %><%@
+page import="com.liferay.commerce.price.list.exception.CommerceTierPriceEntryMinQuantityException" %><%@
 page import="com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException" %><%@
 page import="com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException" %><%@
 page import="com.liferay.commerce.price.list.model.CommercePriceEntry" %><%@

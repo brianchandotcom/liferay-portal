@@ -1100,8 +1100,8 @@ public class JournalArticleContentDashboardItemTest {
 				_group.getCreatorUserId(), journalArticle.getGroupId(), 0,
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				ddmStructure.getStructureId(), RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, true,
-				0, 0, 0, 0, _serviceContext);
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
+				0, 0, 0, _serviceContext);
 
 		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 			journalArticle.getUserId(), journalArticle.getGroupId(),

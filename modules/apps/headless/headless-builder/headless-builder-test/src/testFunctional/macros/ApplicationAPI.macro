@@ -35,15 +35,16 @@ definition {
 
 		var curl = ApplicationAPI._curlAPIApplication(virtualHost = ${virtualHost});
 
-		if (!(isSet(externalReferenceCodeApp))) {
+		if (!(isSet(externalReferenceCode))) {
 			var title = StringUtil.removeSpaces(${title});
 
-			var externalReferenceCodeApp = ${title};
+			var externalReferenceCode = ${title};
 		}
 
 		var body = '''
 			"applicationStatus": {"key": "${status}","name": "${status}"},
 			"baseURL": "${baseURL}",
+			"externalReferenceCode": "${externalReferenceCode}",
 			"title": "${title}"
 		''';
 

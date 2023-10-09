@@ -14,7 +14,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommerceShipmentItemFinder {
 
-	public int getCommerceShipmentOrderItemsQuantity(
+	public java.math.BigDecimal getCommerceShipmentOrderItemsQuantity(
 		long commerceShipmentId, long commerceOrderItemId);
 
 }

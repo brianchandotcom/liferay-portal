@@ -55,7 +55,7 @@ public class MappingContentPageEditorSidebarPanel
 
 		if ((layout == null) ||
 			((layoutType !=
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) &&
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) &&
 			 !Objects.equals(
 				 layout.getType(), LayoutConstants.TYPE_COLLECTION))) {
 

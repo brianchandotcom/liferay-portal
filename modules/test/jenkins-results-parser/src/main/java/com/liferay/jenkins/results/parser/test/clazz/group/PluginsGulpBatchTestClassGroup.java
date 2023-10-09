@@ -89,6 +89,12 @@ public class PluginsGulpBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
+		if (ignore()) {
+			_modifiedFilesList = null;
+
+			return;
+		}
+
 		_modifiedFilesList = portalGitWorkingDirectory.getModifiedFilesList();
 
 		PluginsGitWorkingDirectory pluginsGitWorkingDirectory =

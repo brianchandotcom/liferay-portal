@@ -1515,7 +1515,7 @@ public class BundleSiteInitializerTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(), "Test Display Page Template",
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		Assert.assertNotNull(layoutPageTemplateEntry);
 		Assert.assertEquals(
@@ -1564,7 +1564,7 @@ public class BundleSiteInitializerTest {
 		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(), "Test Master Page",
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNotNull(layoutPageTemplateEntry);
 		Assert.assertEquals(
@@ -2833,7 +2833,7 @@ public class BundleSiteInitializerTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(), "Test Display Page Template",
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		role = _roleLocalService.fetchRole(
 			_group.getCompanyId(), "Test Role 4");
@@ -2906,7 +2906,7 @@ public class BundleSiteInitializerTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(), "Test Display Page Template",
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		String className =
 			"com.liferay.layout.page.template.model.LayoutPageTemplateEntry";
@@ -2926,7 +2926,7 @@ public class BundleSiteInitializerTest {
 		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(), "Test Master Page",
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		resourcePermission =
 			_resourcePermissionLocalService.fetchResourcePermission(

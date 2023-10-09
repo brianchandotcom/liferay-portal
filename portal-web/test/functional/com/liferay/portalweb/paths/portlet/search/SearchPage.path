@@ -1,0 +1,215 @@
+<html>
+<head>
+<title>SearchPage</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SearchPage</td></tr>
+</thead>
+
+<tbody>
+
+<!--ASSET_DETAILS-->
+
+<tr>
+	<td>ASSET_DETAILS_TITLE</td>
+	<td>//div[contains(@id,'SearchResultsPortlet')]//span[contains(@class,'asset-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_DETAILS_EDIT_BUTTON</td>
+	<td>//span[contains(@class,'d-inline-flex')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_DETAILS_YOUTUBE_PREVIEW</td>
+	<td>//div[contains(@class,'ytp-cued-thumbnail-overlay-image')]</td>
+	<td></td>
+</tr>
+
+<!--USER_FACET-->
+
+<tr>
+	<td>USER_FACET_TERM</td>
+	<td>//div[contains(@class,'search-facet')]//ul/li[contains(@class,'facet-value') and contains(.,'${key_term}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
+<!--RESULT-->
+
+<tr>
+	<td>RESULT_DOCUMENT_DETAILS_BUTTON</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//a[contains(.,'Details...')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_DOCUMENT_DETAILS_COLLAPSED</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//div[contains(@class,'table-details') and contains(@class,'hide')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_DOCUMENT_DETAILS_KEY</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//td[contains(@class,'table-cell-text-end') and contains(.,'${key_documentDetailKey}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_DOCUMENT_DETAILS_KEY_VALUE</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//tr[./td[contains(@class,'table-cell-text-end') and contains(.,'${key_documentDetailKey}')]]/td[contains(@class,'table-details-content')][./code]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_TITLE</td>
+	<td>//li[contains(@class,'list-group-item')]//a[contains(.,'${key_searchAssetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_TITLE_SPECIFIC</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')][.//span[@class='subtext-item' and contains(.,'${key_searchAssetType}')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_TITLE_SPECIFIC_HIGHLIGHT</td>
+	<td>//span[contains(@class,'highlight') and contains(.,'${key_searchAssetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_TITLE_SPECIFIC_ORDER</td>
+	<td>//div[contains(@id,'SearchResultsPortlet')]//li[${resultOrder}]/div//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_TYPE</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//span[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_TYPE_SPECIFIC_DATE</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//span[contains(.,'${key_searchAssetType}')]/../span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_SUMMARY</td>
+	<td>xpath=(//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')])span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_SUMMARY_SPECIFIC</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//span[contains(.,'${searchAssetSummary}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
+<!--PREVIEW-->
+
+<tr>
+	<td>PREVIEW_BACK_BUTTON</td>
+	<td>//a[@aria-label='Back']</td>
+	<td></td>
+</tr>
+
+<!--RESULTS_PORTLET-->
+
+<tr>
+	<td>RESULTS_PORTLET_PAGINATION_CONFIG</td>
+	<td>//input[contains(@name,'paginationDelta')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULTS_PORTLET_SEARCH_QUERY</td>
+	<td>//div[contains(@class,'search-total-label')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULTS_PORTLET_WIDGET_ELLIPSIS_ICON_SPECIFIC</td>
+	<td>xpath=(//header[contains(@class,'portlet-topper') and contains(.,'Search Results')][not(ancestor::header[@id='banner'])]//button[*//*[name()='svg'][contains(@class,'icon-ellipsis-v')]])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
+<!--FACET-->
+
+<tr>
+	<td>FACET_CHECKBOX_SPECIFIC</td>
+	<td>//section[contains(@class,'portlet') and contains(.,'${key_facetName}')]//label[contains(.,'${key_checkboxName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACET_CHECKBOX_LABEL_SPECIFIC</td>
+	<td>//section[contains(@class,'portlet') and contains(.,'${key_facetName}')]//label[contains(.,'${key_checkboxName}')][input[@type='checkbox']]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACET_CLEAR_GENERIC</td>
+	<td>//div[contains(@class,'search-facet')]//button[contains(@onclick,'clearSelections(event);')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACET_CLEAR_SPECIFIC</td>
+	<td>//div[contains(@id,'${key_facetIDName}')]//button[contains(@onclick,'clearSelections(event);')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACET_ITEMS_SPECIFIC_ORDER</td>
+	<td>xpath=(//header[contains(., '${key_facetName}')]/following-sibling::div//div[contains(@class, 'panel-body')]//span[not(descendant::span)])[${key_termOrderNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACET_WITH_CLEAR_BUTTON</td>
+	<td>//div[contains(@class,'facet_portlet')][.//button[contains(.,'Clear')]]//h2[contains(@class,'portlet-title-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
+<!--SEARCH_INSIGHTS_WIDGET-->
+
+<tr>
+	<td>SEARCH_INSIGHTS_WIDGET_REQUEST_COPY_BUTTON</td>
+	<td>//*[span[contains(., 'Request String')]]/following-sibling::div//button[contains(.,'Copy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_INSIGHTS_WIDGET_RESPONSE_COPY_BUTTON</td>
+	<td>//*[span[contains(., 'Response String')]]/following-sibling::div//button[contains(.,'Copy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY</td>
+	<td>//*[span[contains(., 'Request String')]]/following-sibling::*//div[contains(@class,'CodeMirror cm-s-default')]//span[contains(.,'${key_text}') and not(child::span)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY</td>
+	<td>//*[span[contains(., 'Response String')]]/following-sibling::*//div[contains(@class,'CodeMirror cm-s-default')]//span[contains(.,'${key_text}') and not(child::span)]</td>
+	<td></td>
+</tr>
+
+<!--CUSTOM_FACET-->
+
+<tr>
+	<td>CUSTOM_FACET_CONFIG_AGGREGATION_FIELD</td>
+	<td>//input[contains(@name,'aggregationField')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -5,19 +5,13 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
 import com.liferay.portal.kernel.dao.orm.Type;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,18 +23,6 @@ import org.hibernate.criterion.Restrictions;
  * @author Raymond Augé
  */
 public class RestrictionsFactoryImpl implements RestrictionsFactory {
-
-	public void afterPropertiesSet() {
-		DB db = DBManagerUtil.getDB();
-
-		DBType dbType = db.getDBType();
-
-		_databaseInMaxParameters = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.DATABASE_IN_MAX_PARAMETERS,
-				new Filter(dbType.getName())),
-			Integer.MAX_VALUE);
-	}
 
 	@Override
 	public Criterion allEq(Map<String, Criterion> propertyNameValues) {
@@ -115,9 +97,9 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 	public Criterion in(String propertyName, Collection<?> values) {
 		int size = values.size();
 
-		if (size > _databaseInMaxParameters) {
+		if (size > DBManagerUtil.getDBInMaxParameters()) {
 			Disjunction disjunction = disjunction();
-			int end = _databaseInMaxParameters;
+			int end = DBManagerUtil.getDBInMaxParameters();
 			List<?> list = ListUtil.fromCollection(values);
 			int start = 0;
 
@@ -127,8 +109,8 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 						Restrictions.in(
 							propertyName, ListUtil.subList(list, start, end))));
 
-				end += _databaseInMaxParameters;
-				start += _databaseInMaxParameters;
+				end += DBManagerUtil.getDBInMaxParameters();
+				start += DBManagerUtil.getDBInMaxParameters();
 			}
 
 			return disjunction;
@@ -273,7 +255,5 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 		return new CriterionImpl(
 			Restrictions.sqlRestriction(sql, values, hibernateTypes));
 	}
-
-	private int _databaseInMaxParameters;
 
 }

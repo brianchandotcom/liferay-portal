@@ -18,6 +18,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentTestUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -506,7 +507,7 @@ public class FragmentEntryLinkLocalServiceTest {
 			_fragmentEntryLinkLocalService.
 				getLayoutPageTemplateFragmentEntryLinksByFragmentEntryId(
 					_group.getGroupId(), _fragmentEntry.getFragmentEntryId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateEntryTypeConstants.BASIC,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertFalse(fragmentEntryLinks.contains(fragmentEntryLink1));
@@ -525,7 +526,7 @@ public class FragmentEntryLinkLocalServiceTest {
 			_fragmentEntryLinkLocalService.
 				getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryId(
 					_group.getGroupId(), _fragmentEntry.getFragmentEntryId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC));
+					LayoutPageTemplateEntryTypeConstants.BASIC));
 	}
 
 	@Test
@@ -852,7 +853,7 @@ public class FragmentEntryLinkLocalServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Page Template Collection", StringPool.BLANK,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					_serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -860,9 +861,8 @@ public class FragmentEntryLinkLocalServiceTest {
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Page Template One",
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+				"Page Template One", LayoutPageTemplateEntryTypeConstants.BASIC,
+				0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,

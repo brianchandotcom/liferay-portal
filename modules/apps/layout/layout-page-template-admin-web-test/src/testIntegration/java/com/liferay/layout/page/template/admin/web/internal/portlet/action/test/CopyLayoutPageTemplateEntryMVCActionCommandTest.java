@@ -79,7 +79,7 @@ public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				StringUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
@@ -100,7 +100,7 @@ public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
 		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(), _getName(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNull(targetLayoutPageTemplateEntry);
 
@@ -109,7 +109,7 @@ public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
 		targetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(), _getName(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNotNull(targetLayoutPageTemplateEntry);
 	}
@@ -131,7 +131,7 @@ public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
 		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(), _getName(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNull(targetLayoutPageTemplateEntry);
 
@@ -151,7 +151,7 @@ public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
 		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(), _getName(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNull(targetLayoutPageTemplateEntry);
 
@@ -162,7 +162,7 @@ public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
 		targetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(), _getName(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		LayoutPageTemplateEntry secondTargetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
@@ -171,7 +171,7 @@ public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
 					_layoutPageTemplateEntry.getName(),
 					LanguageUtil.get(_serviceContext.getLocale(), "copy") +
 						StringPool.SPACE + 1),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNotNull(targetLayoutPageTemplateEntry);
 		Assert.assertNotNull(secondTargetLayoutPageTemplateEntry);

@@ -438,9 +438,9 @@ definition {
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 		}
 
-		Search.openSearchPage();
+		SearchPage.openSearchPage();
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 
@@ -459,18 +459,18 @@ definition {
 		}
 
 		AssertElementPresent(
-			facetName = "Category Facet",
-			facetValue = "fruit",
+			key_facetName = "Category Facet",
+			key_termValue = "fruit",
 			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 
 		AssertElementPresent(
-			facetName = "Custom Facet",
-			facetValue = "test",
+			key_facetName = "Custom Facet",
+			key_termValue = "test",
 			locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 
 		AssertElementPresent(
-			facetName = "Folder Facet",
-			facetValue = "WC Folder",
+			key_facetName = "Folder Facet",
+			key_termValue = "WC Folder",
 			locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 
 		AssertElementPresent(
@@ -478,23 +478,23 @@ definition {
 			range = "Past Hour");
 
 		AssertElementPresent(
-			facetName = "Site Facet",
-			facetValue = "Test Test",
+			key_facetName = "Site Facet",
+			key_termValue = "Test Test",
 			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 
 		AssertElementPresent(
-			facetName = "Tag Facet",
-			facetValue = "food",
+			key_facetName = "Tag Facet",
+			key_termValue = "food",
 			locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
 
 		AssertElementPresent(
-			facetName = "Type Facet",
-			facetValue = "Web Content Article",
+			key_facetName = "Type Facet",
+			key_termValue = "Web Content Article",
 			locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 
 		AssertElementPresent(
-			facetName = "User Facet",
-			facetValue = "Test Test",
+			key_facetName = "User Facet",
+			key_termValue = "Test Test",
 			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 	}
 

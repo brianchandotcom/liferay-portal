@@ -126,12 +126,12 @@ public class DSAccessTokenWebCacheItem implements WebCacheItem {
 			"typ", "JWT"
 		).toString();
 
-		long unixTime = System.currentTimeMillis() / Time.SECOND;
+		Long unixTime = System.currentTimeMillis() / Time.SECOND;
 
 		String bodyJSON = JSONUtil.put(
 			"aud", _environmentBaseURI
 		).put(
-			"exp", unixTime + 3600
+			"exp", Long.valueOf(unixTime + 3600)
 		).put(
 			"iat", unixTime
 		).put(

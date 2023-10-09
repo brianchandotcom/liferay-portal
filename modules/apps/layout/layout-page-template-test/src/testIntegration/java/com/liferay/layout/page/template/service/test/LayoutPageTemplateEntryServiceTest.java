@@ -109,11 +109,11 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
 			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			name, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+			name, LayoutPageTemplateEntryTypeConstants.BASIC,
 			WorkflowConstants.STATUS_APPROVED);
 		LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
 			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			name, LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+			name, LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
@@ -144,12 +144,12 @@ public class LayoutPageTemplateEntryServiceTest {
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
 				_layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				name, LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+				name, LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				WorkflowConstants.STATUS_DRAFT);
 
 		Assert.assertEquals(name, layoutPageTemplateEntry.getName());
 		Assert.assertEquals(
-			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 			layoutPageTemplateEntry.getType());
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
@@ -172,7 +172,7 @@ public class LayoutPageTemplateEntryServiceTest {
 				_layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
 				WorkflowConstants.STATUS_APPROVED);
 
 		LayoutPageTemplateEntry persistedLayoutPageTemplateEntry =
@@ -395,7 +395,7 @@ public class LayoutPageTemplateEntryServiceTest {
 				_layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
 				WorkflowConstants.STATUS_APPROVED);
 
 		_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry(

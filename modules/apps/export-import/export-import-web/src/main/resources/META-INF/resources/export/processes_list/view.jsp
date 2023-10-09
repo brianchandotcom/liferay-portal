@@ -27,7 +27,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 			<liferay-util:param name="navigation" value='<%= ParamUtil.getString(request, "navigation", "all") %>' />
 			<liferay-util:param name="orderByCol" value='<%= ParamUtil.getString(request, "orderByCol") %>' />
 			<liferay-util:param name="orderByType" value='<%= ParamUtil.getString(request, "orderByType") %>' />
-			<liferay-util:param name="searchContainerId" value='<%= ParamUtil.getString(request, "searchContainerId") %>' />
+			<liferay-util:param name="searchContainerId" value='<%= HtmlUtil.escapeJS(ParamUtil.getString(request, "searchContainerId")) %>' />
 		</liferay-util:include>
 	</clay:container-fluid>
 </div>

@@ -11,6 +11,7 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.util.Locale;
 
@@ -31,13 +32,19 @@ public class CommerceShippableOrderItemsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		return fdsTableSchemaBuilder.add(
+		fdsTableSchemaBuilder.add(
 			"sku", "sku"
 		).add(
 			"orderId", "order-id"
 		).add(
 			"quantity", "outstanding-quantity"
-		).add(
+		);
+
+		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
+			fdsTableSchemaBuilder.add("unitOfMeasureKey", "uom");
+		}
+
+		return fdsTableSchemaBuilder.add(
 			"available", "available"
 		).add(
 			"icon", "address-matches-shipment"

@@ -843,7 +843,7 @@ public class ContentPageEditorDisplayContext {
 
 	public boolean isMasterLayout() {
 		if (_getLayoutType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
 
 			return true;
 		}
@@ -1644,7 +1644,7 @@ public class ContentPageEditorDisplayContext {
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				themeDisplay.getScopeGroupId(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
 				new LayoutPageTemplateEntryNameComparator(true));
@@ -1899,7 +1899,7 @@ public class ContentPageEditorDisplayContext {
 
 	private boolean _isMasterUsed() {
 		if (_getLayoutType() !=
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
 
 			return false;
 		}

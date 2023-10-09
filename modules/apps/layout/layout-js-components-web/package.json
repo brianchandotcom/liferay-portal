@@ -18,7 +18,8 @@
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "16.12.0",
-		"react-dnd": "11.1.1"
+		"react-dnd": "11.1.1",
+		"react-dom": "16.12.0"
 	},
 	"main": "js/index.js",
 	"name": "@liferay/layout-js-components-web",
@@ -31,5 +32,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "1.0.7"
+	"version": "1.0.8"
 }

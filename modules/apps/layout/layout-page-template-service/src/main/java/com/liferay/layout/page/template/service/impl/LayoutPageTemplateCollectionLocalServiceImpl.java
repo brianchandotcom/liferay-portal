@@ -269,6 +269,31 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
+			long layoutPageTemplateCollectionId, String name)
+		throws PortalException {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			layoutPageTemplateCollectionPersistence.findByPrimaryKey(
+				layoutPageTemplateCollectionId);
+
+		if (!Objects.equals(layoutPageTemplateCollection.getName(), name)) {
+			_validate(
+				layoutPageTemplateCollection.getGroupId(), name,
+				layoutPageTemplateCollection.getType());
+		}
+
+		layoutPageTemplateCollection.setLayoutPageTemplateCollectionKey(
+			_generateLayoutPageTemplateCollectionKey(
+				layoutPageTemplateCollection.getGroupId(), name,
+				layoutPageTemplateCollection.getType()));
+		layoutPageTemplateCollection.setName(name);
+
+		return layoutPageTemplateCollectionPersistence.update(
+			layoutPageTemplateCollection);
+	}
+
+	@Override
+	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name,
 			String description)
 		throws PortalException {

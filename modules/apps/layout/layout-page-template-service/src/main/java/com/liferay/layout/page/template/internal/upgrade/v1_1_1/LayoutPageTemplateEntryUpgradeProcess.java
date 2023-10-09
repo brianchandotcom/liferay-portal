@@ -44,8 +44,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 							"select layoutPageTemplateEntryId, companyId, ",
 							"name, layoutPrototypeId from ",
 							"LayoutPageTemplateEntry where type_ = ",
-							LayoutPageTemplateEntryTypeConstants.
-								TYPE_WIDGET_PAGE,
+							LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
 							" and groupId in (select groupId from Group_ ",
 							"where site = [$FALSE$])")));
 			PreparedStatement updatePreparedStatement =
@@ -91,7 +90,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 
 				deletePreparedStatement.setLong(1, company.getGroupId());
 				deletePreparedStatement.setInt(
-					2, LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE);
+					2, LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE);
 				deletePreparedStatement.setLong(3, layoutPrototypeId);
 
 				deletePreparedStatement.executeUpdate();

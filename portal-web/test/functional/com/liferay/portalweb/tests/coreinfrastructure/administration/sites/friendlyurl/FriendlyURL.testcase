@@ -149,7 +149,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "éöő");
 
-		WebContent.viewFriendlyURLCP(friendlyURL = "eoo");
+		WebContent.viewFriendlyURLCP(friendlyURL = "éöő");
 	}
 
 	@description = "This is a use case for LPS-161024. Verify uppercase virtual host names added to a site's url are converted to lowercase."

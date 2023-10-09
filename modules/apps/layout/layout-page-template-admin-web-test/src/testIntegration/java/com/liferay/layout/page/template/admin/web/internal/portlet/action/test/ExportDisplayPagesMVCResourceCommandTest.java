@@ -305,7 +305,7 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(), 0,
 			_portal.getClassNameId(className), _getClassTypeId(className), name,
-			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, status,
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, status,
 			_serviceContext);
 	}
 

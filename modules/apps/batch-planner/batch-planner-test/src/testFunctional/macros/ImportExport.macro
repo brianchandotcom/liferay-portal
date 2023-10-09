@@ -89,6 +89,14 @@ definition {
 		var expectedFileContent = TestCase.getFileContent(fileName = ${comparisonFileName});
 
 		if (${fileContent} != ${expectedFileContent}) {
+			echo("expected file content");
+
+			echo(${expectedFileContent});
+
+			echo("actual file content");
+
+			echo(${fileContent});
+
 			fail("The file content does not match the expected file content.");
 		}
 	}
@@ -304,7 +312,9 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		ImportExport.mapExport(exportFields = ${exportFields});
+		if (isSet(exportFields)) {
+			ImportExport.mapExport(exportFields = ${exportFields});
+		}
 
 		Button.click(button = "Export");
 
@@ -386,11 +396,9 @@ definition {
 			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 
 		for (var exportField : list ${exportFields}) {
-			if (${exportField} != "") {
-				Click.clickAtNotVisible(
-					key_checkboxOption = ${exportField},
-					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
-			}
+			Click.clickAtNotVisible(
+				key_checkboxOption = ${exportField},
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 		}
 	}
 

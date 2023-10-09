@@ -412,12 +412,12 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		if (Objects.equals(
 				lockedLayoutType, LockedLayoutType.CONTENT_PAGE_TEMPLATE)) {
 
-			return LayoutPageTemplateEntryTypeConstants.TYPE_BASIC;
+			return LayoutPageTemplateEntryTypeConstants.BASIC;
 		}
 		else if (Objects.equals(
 					lockedLayoutType, LockedLayoutType.MASTER_PAGE)) {
 
-			return LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT;
+			return LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT;
 		}
 
 		return null;
@@ -428,21 +428,21 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 		if (Objects.equals(
 				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
+				LayoutPageTemplateEntryTypeConstants.BASIC)) {
 
 			return _language.get(locale, "content-page-template");
 		}
 
 		if (Objects.equals(
 				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)) {
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE)) {
 
 			return _language.get(locale, "display-page-template");
 		}
 
 		if (Objects.equals(
 				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
 			return _language.get(locale, "master");
 		}

@@ -18,15 +18,11 @@ import React, {useEffect, useState} from 'react';
 
 const DLFolderSelector = ({
 	copyActionURL,
-	fileShortcutId,
-	itemType,
+	dlObjectIds,
+	dlObjectName,
 	portletNamespace,
 	redirect,
 	selectionModalURL,
-	sourceFileEntryId,
-	sourceFileName,
-	sourceFolderId,
-	sourceFolderName,
 	sourceRepositoryId,
 }) => {
 	const [copyButtonDisabled, setCopyButtonDisabled] = useState(true);
@@ -87,31 +83,22 @@ const DLFolderSelector = ({
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
-		const bodyContentObject = objectToFormData(
-			itemType === 'folder'
-				? {
-						[`${portletNamespace}sourceRepositoryId`]: sourceRepositoryId,
-						[`${portletNamespace}sourceFolderId`]: sourceFolderId,
-						[`${portletNamespace}destinationParentFolderId`]: destinationParentFolderId,
-						[`${portletNamespace}destinationRepositoryId`]: destinationRepositoryId,
-				  }
-				: {
-						[`${portletNamespace}fileEntryId`]: sourceFileEntryId,
-						[`${portletNamespace}fileShortcutId`]: fileShortcutId,
-						[`${portletNamespace}destinationFolderId`]: destinationParentFolderId,
-						[`${portletNamespace}destinationRepositoryId`]: destinationRepositoryId,
-				  }
-		);
+		const bodyContentObject = objectToFormData({
+			[`${portletNamespace}dlObjectIds`]: dlObjectIds,
+			[`${portletNamespace}sourceRepositoryId`]: sourceRepositoryId,
+			[`${portletNamespace}destinationParentFolderId`]: destinationParentFolderId,
+			[`${portletNamespace}destinationRepositoryId`]: destinationRepositoryId,
+		});
 
 		fetch(copyActionURL, {
 			body: bodyContentObject,
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then(({errorMessage}) => {
-				if (errorMessage) {
+			.then(({errorMessages}) => {
+				if (errorMessages) {
 					openToast({
-						message: errorMessage,
+						message: errorMessages[0],
 						title: Liferay.Language.get('error'),
 						type: 'danger',
 					});
@@ -148,7 +135,7 @@ const DLFolderSelector = ({
 					className="c-mb-3"
 					disabled
 					id={`${portletNamespace}copyFromInput`}
-					placeholder={sourceFolderName || sourceFileName}
+					placeholder={dlObjectName}
 					type="text"
 				/>
 

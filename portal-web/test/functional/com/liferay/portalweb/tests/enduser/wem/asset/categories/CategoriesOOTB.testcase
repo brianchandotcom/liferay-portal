@@ -971,9 +971,9 @@ definition {
 		task ("Search for Web Content and Assert") {
 			Navigator.openURL();
 
-			SearchPortlets.searchEmbedded(searchTerm = "Internal Category");
+			SearchPage.searchEmbedded(searchTerm = "Internal Category");
 
-			SearchResultPortlet.viewNoSearchResults(searchTerm = "Internal Category");
+			SearchResults.viewNoSearchResults(searchTerm = "Internal Category");
 		}
 	}
 
@@ -1040,9 +1040,9 @@ definition {
 		task ("Search for Web Content and Assert") {
 			Navigator.openURL();
 
-			SearchPortlets.searchEmbedded(searchTerm = "Internal Category");
+			SearchPage.searchEmbedded(searchTerm = "Internal Category");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Web Content Title",
 				searchAssetType = "Web Content Article");
 		}

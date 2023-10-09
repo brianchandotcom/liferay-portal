@@ -86,13 +86,7 @@ function AddFDSFilterModalContent({
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
 		fdsFilterLabelTranslations
 	);
-	const [includeMode, setIncludeMode] = useState<string>(
-		filter
-			? (filter as ISelectionFilter)?.include
-				? 'include'
-				: 'exclude'
-			: 'include'
-	);
+	const [includeMode, setIncludeMode] = useState<string>('include');
 	const [isValidDateRange, setIsValidDateRange] = useState<boolean>(true);
 	const [multiple, setMultiple] = useState<boolean>(
 		(filter as ISelectionFilter)?.multiple ?? true
@@ -110,22 +104,31 @@ function AddFDSFilterModalContent({
 		getAllPicklists().then((items) => {
 			setPicklists(items);
 
-			const newVal = items.find(
+			const picklist = items.find(
 				(item) =>
 					String(item.externalReferenceCode) ===
 					(filter as any)?.listTypeDefinitionERC
 			);
 
-			if (newVal) {
-				setSelectedPicklist(newVal);
+			if (picklist) {
+				setSelectedPicklist(picklist);
 
-				setPreselectedValues(
-					newVal.listTypeEntries.filter((item) =>
+				const validSavedPreselectedValues = picklist.listTypeEntries.filter(
+					(item) =>
 						JSON.parse(
 							(filter as ISelectionFilter).preselectedValues ||
 								'[]'
 						).includes(item.externalReferenceCode)
-					)
+				);
+
+				setPreselectedValues(validSavedPreselectedValues);
+
+				setIncludeMode(
+					validSavedPreselectedValues?.length
+						? filter && (filter as ISelectionFilter).include
+							? 'include'
+							: 'exclude'
+						: 'include'
 				);
 			}
 		});
@@ -400,7 +403,19 @@ function AddFDSFilterModalContent({
 								namespace={namespace}
 								onIncludeModeChange={setIncludeMode}
 								onMultipleChange={setMultiple}
-								onPreselectedValuesChange={setPreselectedValues}
+								onPreselectedValuesChange={(values) => {
+									setPreselectedValues(values);
+
+									setIncludeMode(
+										values.length
+											? filter &&
+											  (filter as ISelectionFilter)
+													.include
+												? 'include'
+												: 'exclude'
+											: 'include'
+									);
+								}}
 								onSelectedPicklistChange={setSelectedPicklist}
 								picklists={picklists}
 								preselectedValues={preselectedValues}

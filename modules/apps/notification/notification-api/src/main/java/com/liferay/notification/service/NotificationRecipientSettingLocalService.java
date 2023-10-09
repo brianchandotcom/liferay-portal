@@ -6,7 +6,6 @@
 package com.liferay.notification.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.notification.exception.NoSuchNotificationRecipientSettingException;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -199,6 +198,10 @@ public interface NotificationRecipientSettingLocalService
 	public NotificationRecipientSetting fetchNotificationRecipientSetting(
 		long notificationRecipientSettingId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public NotificationRecipientSetting fetchNotificationRecipientSetting(
+		long notificationRecipientId, String name);
+
 	/**
 	 * Returns the notification recipient setting with the matching UUID and company.
 	 *
@@ -232,11 +235,6 @@ public interface NotificationRecipientSettingLocalService
 	public NotificationRecipientSetting getNotificationRecipientSetting(
 			long notificationRecipientSettingId)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public NotificationRecipientSetting getNotificationRecipientSetting(
-			long notificationRecipientId, String name)
-		throws NoSuchNotificationRecipientSettingException;
 
 	/**
 	 * Returns the notification recipient setting with the matching UUID and company.

@@ -10,12 +10,12 @@ package com.liferay.layout.page.template.constants;
  */
 public class LayoutPageTemplateEntryTypeConstants {
 
-	public static final int TYPE_BASIC = 0;
+	public static final int BASIC = 0;
 
-	public static final int TYPE_DISPLAY_PAGE = 1;
+	public static final int DISPLAY_PAGE = 1;
 
-	public static final int TYPE_MASTER_LAYOUT = 3;
+	public static final int MASTER_LAYOUT = 3;
 
-	public static final int TYPE_WIDGET_PAGE = 2;
+	public static final int WIDGET_PAGE = 2;
 
 }

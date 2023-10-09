@@ -121,7 +121,7 @@ definition {
 			for (var suggestionItem : list "Catalog,Accounts,Orders,All Content") {
 				AssertElementPresent(
 					key_entryName = "検索 U-Joint で ${suggestionItem}",
-					locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
+					locator1 = "Search#GLOBAL_SEARCH_SEARCH_ENTRY_IN_CONTENT");
 			}
 		}
 	}
@@ -301,15 +301,18 @@ definition {
 
 			Click(locator1 = "AppBuilder#SEARCH_BUTTON");
 
-			Type(
+			SelectFrameTop();
+
+			Type.sendKeys(
 				locator1 = "Search#GLOBAL_SEARCH_BAR",
 				value1 = "Sensor ABS");
 		}
 
 		task ("Then the short description is shown in pt-BR") {
 			AssertElementPresent(
-				key_entryName = "Produto projetado e fabricado para acomodar aplicações OEM",
-				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
+				key_suggestionDescription = "Produto projetado e fabricado para acomodar aplicações OEM",
+				key_suggestionName = "Sensor ABS",
+				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION_PRODUCT_DESCRIPTION");
 		}
 	}
 
@@ -374,8 +377,8 @@ definition {
 			value1 = "U-Joint");
 
 		Click(
-			key_suggestionName = "All Content",
-			locator1 = "Search#GLOBAL_SEARCH_SUGGESTIONS");
+			key_entryName = "Search U-Joint in All Content",
+			locator1 = "Search#GLOBAL_SEARCH_SEARCH_ENTRY_IN_CONTENT");
 
 		AssertElementPresent(
 			key_contentName = "U-Joint",
@@ -410,8 +413,8 @@ definition {
 			value1 = "U-Joint");
 
 		Click(
-			key_entryName = "Search ",
-			locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
+			key_entryName = "Search U-Joint in Catalog",
+			locator1 = "Search#GLOBAL_SEARCH_SEARCH_ENTRY_IN_CONTENT");
 
 		AssertElementPresent(
 			key_entryName = "U-Joint",
@@ -448,51 +451,29 @@ definition {
 
 		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
 
-		Type(
+		SelectFrameTop();
+
+		Type.sendKeys(
 			locator1 = "Search#GLOBAL_SEARCH_BAR",
 			value1 = "Exhaust System");
 
-		AssertElementPresent(
-			key_errorMessage = "Lift Support",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
-
-		AssertElementPresent(
-			key_errorMessage = "Muffler/Resonators",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
-
-		AssertElementPresent(
-			key_errorMessage = "Exhaust Clamps",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
-
-		AssertElementPresent(
-			key_errorMessage = "Catalytic Converters",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+		for (var productName : list "Lift Support,Muffler/Resonators,Exhaust Clamps,Catalytic Converters") {
+			AssertElementPresent(
+				key_suggestionName = ${productName},
+				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
+		}
 
 		Click(locator1 = "Search#GLOBAL_SEARCH_CLEAN_BUTTON");
 
-		Type(
+		Type.sendKeys(
 			locator1 = "Search#GLOBAL_SEARCH_BAR",
 			value1 = "Exhaust System, Engine");
 
-		AssertElementPresent(
-			key_errorMessage = "Lift Support",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
-
-		AssertElementPresent(
-			key_errorMessage = "Muffler/Resonators",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
-
-		AssertElementPresent(
-			key_errorMessage = "Exhaust Clamps",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
-
-		AssertElementPresent(
-			key_errorMessage = "Catalytic Converters",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
-
-		AssertElementPresent(
-			key_errorMessage = "Engine Mount",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+		for (var productName : list "Lift Support,Muffler/Resonators,Exhaust Clamps,Catalytic Converters,Engine Mount") {
+			AssertElementPresent(
+				key_suggestionName = ${productName},
+				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
+		}
 	}
 
 	@description = "COMMERCE-6327. As a buyer, I want to search for different products by typing their SKUs in the Global Search and I want to see the products with that SKUs in the suggestions(single SKU, multiple SKUs)"
@@ -515,24 +496,20 @@ definition {
 			value1 = "MIN93015");
 
 		AssertElementPresent(
-			key_entryName = "ABS Sensor",
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+			key_suggestionName = "ABS Sensor",
+			locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
 
 		Click(locator1 = "Search#GLOBAL_SEARCH_CLEAN_BUTTON");
 
-		SelectFrameTop();
-
-		Type(
+		Type.sendKeys(
 			locator1 = "Search#GLOBAL_SEARCH_BAR",
 			value1 = "MIN93015 MIN55861");
 
-		AssertElementPresent(
-			key_entryName = "ABS Sensor",
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
-
-		AssertElementPresent(
-			key_entryName = "U-Joint",
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+		for (var productName : list "ABS Sensor,U-Joint") {
+			AssertElementPresent(
+				key_suggestionName = ${productName},
+				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
+		}
 	}
 
 	@description = "COMMERCE-6328. As a buyer, I want to search for products by typing different Specification Values in Global Search and I want to see the products with that specification values in the suggestions(single specification, multiple specifications)"
@@ -550,29 +527,25 @@ definition {
 
 		SelectFrameTop();
 
-		Type(
+		Type.sendKeys(
 			locator1 = "Search#GLOBAL_SEARCH_BAR",
 			value1 = "Plastic");
 
 		AssertElementPresent(
-			key_entryName = "Timing Chain Tensioner",
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+			key_suggestionName = "Timing Chain Tensioner",
+			locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
 
 		Click(locator1 = "Search#GLOBAL_SEARCH_CLEAN_BUTTON");
 
-		SelectFrameTop();
-
-		Type(
+		Type.sendKeys(
 			locator1 = "Search#GLOBAL_SEARCH_BAR",
 			value1 = "Plastic, Ceramic");
 
-		AssertElementPresent(
-			key_entryName = "Timing Chain Tensioner",
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
-
-		AssertElementPresent(
-			key_entryName = "Premium Brake Pads",
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+		for (var productName : list "Timing Chain Tensioner,Premium Brake Pads") {
+			AssertElementPresent(
+				key_suggestionName = ${productName},
+				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
+		}
 	}
 
 	@description = "COMMERCE-6320. As a buyer, I want to be able to search an Accounts entry using Global Search and I want to be able to click on a suggested entry and get redirected to that account page"
@@ -598,55 +571,51 @@ definition {
 
 		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
 
-		Type(
+		SelectFrameTop();
+
+		Type.sendKeys(
 			locator1 = "Search#GLOBAL_SEARCH_BAR",
 			value1 = "ABS Sensor");
 
-		AssertElementPresent(
-			key_entryName = "ABS Sensor",
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+		for (var productName : list "ABS Sensor,Wear Sensors") {
+			AssertElementPresent(
+				key_suggestionName = ${productName},
+				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
+		}
 
-		AssertElementPresent(
-			key_entryName = "Wear Sensors",
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+		Click(locator1 = "Search#GLOBAL_SEARCH_CLEAN_BUTTON");
 
-		Click(locator1 = "Button#SEARCH_CLOSE");
-
-		Type(
+		Type.sendKeys(
 			locator1 = "Search#GLOBAL_SEARCH_BAR",
 			value1 = "'ABS Sensor'");
 
-		AssertElementPresent(
-			key_entryName = "ABS Sensor",
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+		for (var productName : list "ABS Sensor,Wear Sensors") {
+			AssertElementPresent(
+				key_suggestionName = ${productName},
+				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
+		}
 
-		AssertElementPresent(
-			key_entryName = "Wear Sensors",
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+		Click(locator1 = "Search#GLOBAL_SEARCH_CLEAN_BUTTON");
 
-		Click(locator1 = "Button#SEARCH_CLOSE");
+		var searchTerm = '''"ABS Sensor"''';
 
-		var product = '''"ABS Sensor"''';
-
-		Type(
+		Type.sendKeys(
 			locator1 = "Search#GLOBAL_SEARCH_BAR",
-			value1 = ${product});
+			value1 = ${searchTerm});
 
 		AssertElementPresent(
-			key_entryName = "ABS Sensor",
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+			key_suggestionName = "ABS Sensor",
+			locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
 
-		AssertElementNotPresent(
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION",
-			value1 = "Shock Absorber");
-
-		AssertElementNotPresent(
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION",
-			value1 = "Wear Sensors");
+		for (var productName : list "Shock Absorber,Wear Sensors") {
+			AssertElementNotPresent(
+				key_suggestionName = ${productName},
+				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
+		}
 
 		Click(
-			key_entryName = "ABS Sensor",
-			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+			key_suggestionName = "ABS Sensor",
+			locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
 
 		AssertTextEquals(
 			locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",
@@ -713,8 +682,7 @@ definition {
 		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
 
 		Type(
-			key_text = "Search",
-			locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
+			locator1 = "Search#GLOBAL_SEARCH_BAR",
 			value1 = ${orderId});
 
 		AssertElementPresent(
@@ -724,8 +692,7 @@ definition {
 		Click(locator1 = "Button#SEARCH_CLOSE");
 
 		Type(
-			key_text = "Search",
-			locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
+			locator1 = "Search#GLOBAL_SEARCH_BAR",
 			value1 = "buyer@liferay.com");
 
 		AssertElementPresent(

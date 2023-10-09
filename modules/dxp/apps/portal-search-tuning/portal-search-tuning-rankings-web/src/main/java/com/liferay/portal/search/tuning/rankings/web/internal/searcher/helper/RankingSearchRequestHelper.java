@@ -14,8 +14,8 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingUtil;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,14 +66,15 @@ public class RankingSearchRequestHelper {
 		).build();
 	}
 
-	private IdsQuery _getIdsQuery(Collection<String> ids) {
+	private IdsQuery _getIdsQuery(List<String> ids) {
 		if (ids.isEmpty()) {
 			return null;
 		}
 
 		IdsQuery idsQuery = queries.ids();
 
-		idsQuery.addIds(ArrayUtil.toStringArray(ids));
+		idsQuery.addIds(
+			ArrayUtil.toStringArray(RankingUtil.translateDocumentIds(ids)));
 
 		return idsQuery;
 	}
@@ -81,7 +82,7 @@ public class RankingSearchRequestHelper {
 	private IdsQuery _getIdsQuery(Ranking.Pin pin, int size) {
 		IdsQuery idsQuery = queries.ids();
 
-		idsQuery.addIds(pin.getDocumentId());
+		idsQuery.addIds(RankingUtil.getDocumentId(pin.getDocumentId()));
 
 		idsQuery.setBoost((size - pin.getPosition()) * 10000F);
 

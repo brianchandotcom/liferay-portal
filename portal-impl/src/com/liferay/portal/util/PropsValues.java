@@ -2228,9 +2228,6 @@ public class PropsValues {
 	public static final String[] SPRING_INFRASTRUCTURE_CONFIGS =
 		PropsUtil.getArray(PropsKeys.SPRING_INFRASTRUCTURE_CONFIGS);
 
-	public static final int SQL_DATA_MAX_PARAMETERS = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.SQL_DATA_MAX_PARAMETERS));
-
 	public static int STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL =
 		GetterUtil.getInteger(
 			PropsUtil.get(

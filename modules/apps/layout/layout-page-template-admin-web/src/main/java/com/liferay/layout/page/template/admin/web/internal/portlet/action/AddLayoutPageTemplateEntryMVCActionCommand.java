@@ -63,8 +63,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		int type = ParamUtil.getInteger(
-			actionRequest, "type",
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+			actionRequest, "type", LayoutPageTemplateEntryTypeConstants.BASIC);
 		long masterLayoutPlid = ParamUtil.getLong(
 			actionRequest, "masterLayoutPlid");
 
@@ -86,7 +85,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
 
-			if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+			if (type == LayoutPageTemplateEntryTypeConstants.BASIC) {
 				MultiSessionMessages.add(
 					actionRequest, "layoutPageTemplateAdded");
 			}

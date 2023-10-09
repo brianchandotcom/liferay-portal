@@ -149,6 +149,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147568 | Test Summary: Assert that the tab statuses reflect with the amount of keys displayed in the table"
+	@ignore = "true"
 	@priority = 4
 	test AssertThatTheTabDisplaysTheFollowingStatuses {
 

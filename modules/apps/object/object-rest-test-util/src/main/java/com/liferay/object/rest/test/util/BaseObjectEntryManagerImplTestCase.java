@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -23,7 +24,10 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import java.text.DateFormat;
+
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -93,6 +97,17 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 		return StringBundler.concat(fieldName, " eq ", getValue(value));
 	}
 
+	protected String buildRangeExpression(
+		Date date1, Date date2, String fieldName, String pattern) {
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			pattern);
+
+		return StringBundler.concat(
+			"(( ", fieldName, " ge ", dateFormat.format(date1), ") and ( ",
+			fieldName, " le ", dateFormat.format(date2), "))");
+	}
+
 	protected Page<ObjectEntry> getObjectEntries(
 			Map<String, String> context, Sort[] sorts)
 		throws Exception {
@@ -101,7 +116,13 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 	}
 
 	protected String getValue(Object value) {
-		if (value instanceof String) {
+		if (value instanceof Date) {
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyy-MM-dd");
+
+			return dateFormat.format(value);
+		}
+		else if (value instanceof String) {
 			return StringUtil.quote(String.valueOf(value));
 		}
 

@@ -120,7 +120,7 @@ public class DisplayPageActionDropdownItemsProvider {
 							Objects.equals(
 								_layoutPageTemplateEntry.getType(),
 								LayoutPageTemplateEntryTypeConstants.
-									TYPE_DISPLAY_PAGE) &&
+									DISPLAY_PAGE) &&
 							(_layoutPageTemplateEntry.getClassNameId() > 0) &&
 							hasUpdatePermission,
 						_getMarkAsDefaultDisplayPageActionUnsafeConsumer()

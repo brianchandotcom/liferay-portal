@@ -99,7 +99,7 @@ public class MasterLayoutPageTemplateEntryItemSelectorViewDescriptor
 			LayoutPageTemplateEntryServiceUtil.
 				fetchDefaultLayoutPageTemplateEntry(
 					_themeDisplay.getScopeGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 					WorkflowConstants.STATUS_APPROVED);
 
 		if (defaultLayoutPageTemplateEntry == null) {
@@ -125,7 +125,7 @@ public class MasterLayoutPageTemplateEntryItemSelectorViewDescriptor
 		masterLayoutPageTemplateEntries.addAll(
 			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 				scopeGroupId,
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null));
 

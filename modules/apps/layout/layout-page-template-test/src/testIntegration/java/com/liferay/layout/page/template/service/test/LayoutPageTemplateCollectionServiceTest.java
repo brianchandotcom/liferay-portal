@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
@@ -70,14 +71,14 @@ public class LayoutPageTemplateCollectionServiceTest {
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Layout Page Template Collection", null,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
+			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
 			_group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Layout Page Template Collection", null,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
+			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 	}
 
 	@Test
@@ -89,7 +90,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection", null,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -107,7 +108,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			StringPool.BLANK, null,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+			LayoutPageTemplateCollectionTypeConstants.BASIC,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
@@ -120,7 +121,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			_group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			null, null, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+			null, null, LayoutPageTemplateCollectionTypeConstants.BASIC,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
@@ -137,27 +138,27 @@ public class LayoutPageTemplateCollectionServiceTest {
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollectionsCount(
 					_group.getGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+					LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
 			_group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Layout Page Template Collection 1", StringPool.BLANK,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
+			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
 			_group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Layout Page Template Collection 2", StringPool.BLANK,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
+			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		int actualLayoutPageTemplateCollectionsCount =
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollectionsCount(
 					_group.getGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+					LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		Assert.assertEquals(
 			originalLayoutPageTemplateCollectionsCount + 2,
@@ -173,7 +174,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection", null,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -200,7 +201,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection 1", null,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection2 =
@@ -210,7 +211,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection 2", null,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 
 		_layoutPageTemplateCollectionService.
@@ -248,7 +249,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection 1", null,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection2 =
@@ -258,14 +259,14 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection 2", null,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 
 		List<LayoutPageTemplateCollection> actualLayoutPageTemplateCollections =
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollections(
 					_group.getGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+					LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		Assert.assertTrue(
 			actualLayoutPageTemplateCollections.contains(
@@ -290,7 +291,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"AA Page Template Collection", null,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
@@ -298,14 +299,14 @@ public class LayoutPageTemplateCollectionServiceTest {
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"AB Page Template Collection", null,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
+			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
 			_group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"AC Page Template Collection", null,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
+			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator =
 			new LayoutPageTemplateCollectionNameComparator(true);
@@ -314,7 +315,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollections(
 					_group.getGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 
 		LayoutPageTemplateCollection firstLayoutPageTemplateCollection =
@@ -330,7 +331,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollections(
 					_group.getGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateEntryTypeConstants.BASIC,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 
 		LayoutPageTemplateCollection lastLayoutPageTemplateCollection =
@@ -353,27 +354,27 @@ public class LayoutPageTemplateCollectionServiceTest {
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollectionsCount(
 					_group.getGroupId(), "Theme",
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+					LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
 			_group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Fjord Theme collection", null,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
+			LayoutPageTemplateEntryTypeConstants.BASIC, serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
 			_group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Theme Westeros collection", null,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
+			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		int actualLayoutPageTemplateCollectionsCount =
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollectionsCount(
 					_group.getGroupId(), "Theme",
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+					LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		Assert.assertEquals(
 			originalLayoutPageTemplateCollectionsCount + 2,
@@ -393,7 +394,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"AA Fjord Collection", null,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
+			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
@@ -402,7 +403,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"AB Theme Collection", null,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
@@ -410,7 +411,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"AC Theme Collection", null,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
+			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator =
 			new LayoutPageTemplateCollectionNameComparator(true);
@@ -419,7 +420,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollections(
 					_group.getGroupId(), "Theme",
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateEntryTypeConstants.BASIC,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 
 		LayoutPageTemplateCollection firstLayoutPageTemplateCollection =
@@ -435,7 +436,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollections(
 					_group.getGroupId(), "Theme",
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateEntryTypeConstants.BASIC,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 
 		LayoutPageTemplateCollection lastLayoutPageTemplateCollection =
@@ -459,7 +460,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection 1", null,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection2 =
@@ -469,14 +470,14 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection 2", null,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 
 		List<LayoutPageTemplateCollection> actualLayoutPageTemplateCollections =
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollections(
 					_group.getGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0, 2);
+					LayoutPageTemplateEntryTypeConstants.BASIC, 0, 2);
 
 		Assert.assertTrue(
 			actualLayoutPageTemplateCollections.contains(
@@ -501,14 +502,14 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection", null,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 
 		_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			"Layout Page Template Entry",
-			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		_layoutPageTemplateCollectionService.deleteLayoutPageTemplateCollection(
@@ -532,7 +533,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection", null,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId(), TestPropsValues.getUserId()));
 

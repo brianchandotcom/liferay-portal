@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/alert": "3.93.0",
+		"@clayui/badge": "3.100.0",
 		"@clayui/breadcrumb": "3.104.0",
 		"@clayui/button": "3.100.0",
 		"@clayui/core": "3.104.0",
@@ -41,5 +42,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "2.0.111"
+	"version": "2.0.112"
 }

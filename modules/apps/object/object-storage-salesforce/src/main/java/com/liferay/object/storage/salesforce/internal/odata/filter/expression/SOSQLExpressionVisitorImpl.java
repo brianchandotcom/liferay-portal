@@ -125,14 +125,22 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		throws ExpressionVisitException {
 
 		if (!Objects.equals(
+				LiteralExpression.Type.DATE, literalExpression.getType()) &&
+			!Objects.equals(
 				LiteralExpression.Type.STRING, literalExpression.getType())) {
 
 			throw new UnsupportedOperationException();
 		}
 
-		return StringUtil.replace(
-			literalExpression.getText(), StringPool.DOUBLE_APOSTROPHE,
-			StringPool.APOSTROPHE);
+		if (Objects.equals(
+				LiteralExpression.Type.STRING, literalExpression.getType())) {
+
+			return StringUtil.replace(
+				literalExpression.getText(), StringPool.DOUBLE_APOSTROPHE,
+				StringPool.APOSTROPHE);
+		}
+
+		return literalExpression.getText();
 	}
 
 	@Override

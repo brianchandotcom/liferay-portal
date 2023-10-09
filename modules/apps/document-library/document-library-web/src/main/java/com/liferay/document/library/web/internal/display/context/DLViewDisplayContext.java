@@ -98,7 +98,7 @@ public class DLViewDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
-			"/document_library/copy_folder"
+			"/document_library/copy_dl_objects"
 		).setRedirect(
 			_getRedirect()
 		).setParameter(

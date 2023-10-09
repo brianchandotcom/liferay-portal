@@ -165,7 +165,7 @@ public class LayoutLockManagerTest {
 
 		_addLayoutPageTemplateEntry(
 			draftLayout.getClassPK(),
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+			LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		_lockLayout(draftLayout, _user);
 
@@ -187,7 +187,7 @@ public class LayoutLockManagerTest {
 
 		_addLayoutPageTemplateEntry(
 			draftLayout.getClassPK(),
-			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		_lockLayout(draftLayout, _user);
 
@@ -206,7 +206,7 @@ public class LayoutLockManagerTest {
 
 		_addLayoutPageTemplateEntry(
 			draftLayout.getClassPK(),
-			LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
+			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		_lockLayout(draftLayout, _user);
 

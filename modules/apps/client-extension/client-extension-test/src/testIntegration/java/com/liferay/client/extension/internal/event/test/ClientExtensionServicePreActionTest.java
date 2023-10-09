@@ -211,7 +211,7 @@ public class ClientExtensionServicePreActionTest {
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -240,7 +240,7 @@ public class ClientExtensionServicePreActionTest {
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

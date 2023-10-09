@@ -5,8 +5,10 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Locale;
 
@@ -49,6 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 		"mvc.command.name=/layout_content_page_editor/create_layout_page_template_entry"
 	},
 	service = MVCActionCommand.class
@@ -64,10 +68,19 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long plid = ParamUtil.getLong(actionRequest, "plid");
+
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
-		Layout sourceLayout = _layoutLocalService.getLayout(
-			themeDisplay.getPlid());
+		Layout sourceLayout = themeDisplay.getLayout();
+
+		if (plid > 0) {
+			segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(plid);
+			sourceLayout = _layoutLocalService.getLayout(plid);
+		}
+
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateCollectionId");
 
@@ -89,7 +102,7 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						layoutPageTemplateCollectionName,
 						layoutPageTemplateCollectionDescription,
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateCollectionTypeConstants.BASIC,
 						serviceContext);
 
 			layoutPageTemplateCollectionId =
@@ -193,7 +206,7 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 				_layoutPageTemplateEntryLocalService.
 					fetchLayoutPageTemplateEntry(
 						layout.getGroupId(), name,
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+						LayoutPageTemplateEntryTypeConstants.BASIC);
 
 			if (targetLayoutPageTemplateEntry == null) {
 				break;
@@ -226,5 +239,8 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

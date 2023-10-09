@@ -23,8 +23,6 @@ definition {
 				schemaName = "testSchema",
 				status = "published",
 				title = "My-app");
-
-			ApplicationAPI.setUpGlobalAPIApplicationId();
 		}
 
 		task ("And Given a virtual instance is created") {

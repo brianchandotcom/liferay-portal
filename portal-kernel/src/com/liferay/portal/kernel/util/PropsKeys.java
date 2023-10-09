@@ -548,6 +548,9 @@ public interface PropsKeys {
 	public static final String DATABASE_INDEXES_UPDATE_ON_STARTUP =
 		"database.indexes.update.on.startup";
 
+	public static final String DATABASE_MAX_PARAMETERS =
+		"database.max.parameters";
+
 	public static final String DATABASE_MYSQL_ENGINE = "database.mysql.engine";
 
 	public static final String DATABASE_ORDER_BY_MAX_COLUMNS =
@@ -2565,9 +2568,6 @@ public interface PropsKeys {
 	public static final String
 		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_REGION_REGION_ID =
 			"sql.data.com.liferay.portal.kernel.model.Region.region.id";
-
-	public static final String SQL_DATA_MAX_PARAMETERS =
-		"sql.data.max.parameters";
 
 	public static final String
 		STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL =

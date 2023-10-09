@@ -93,7 +93,7 @@ public class ClientExtensionTopHeadDynamicIncludeTest {
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

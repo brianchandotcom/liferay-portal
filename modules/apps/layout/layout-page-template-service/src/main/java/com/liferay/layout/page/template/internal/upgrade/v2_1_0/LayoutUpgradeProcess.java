@@ -61,7 +61,7 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 			long layoutPrototypeId, ServiceContext serviceContext)
 		throws Exception {
 
-		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) &&
+		if ((type == LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) &&
 			(layoutPrototypeId > 0)) {
 
 			LayoutPrototype layoutPrototype =
@@ -76,7 +76,7 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 		boolean privateLayout = false;
 		String layoutType = LayoutConstants.TYPE_ASSET_DISPLAY;
 
-		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+		if (type == LayoutPageTemplateEntryTypeConstants.BASIC) {
 			layoutType = LayoutConstants.TYPE_CONTENT;
 			privateLayout = true;
 		}

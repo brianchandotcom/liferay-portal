@@ -76,7 +76,7 @@ public class AddContentLayoutMVCActionCommandCopyFaviconTest {
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+				LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

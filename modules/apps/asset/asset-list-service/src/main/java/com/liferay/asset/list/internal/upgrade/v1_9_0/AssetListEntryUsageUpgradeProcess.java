@@ -230,7 +230,7 @@ public class AssetListEntryUsageUpgradeProcess extends UpgradeProcess {
 		}
 
 		if (layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 
 			return AssetListEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE;
 		}

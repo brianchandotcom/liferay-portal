@@ -6,7 +6,6 @@
 package com.liferay.change.tracking.internal;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -158,9 +157,7 @@ public class CTRowUtil {
 	private static boolean _isPostgresBlobTable(
 		Map<String, Integer> tableColumnsMap) {
 
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() != DBType.POSTGRESQL) {
+		if (DBManagerUtil.getDBType() != DBType.POSTGRESQL) {
 			return false;
 		}
 

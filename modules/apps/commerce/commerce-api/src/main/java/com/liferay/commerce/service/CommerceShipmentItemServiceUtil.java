@@ -153,7 +153,7 @@ public class CommerceShipmentItemServiceUtil {
 			commerceOrderItemId);
 	}
 
-	public static int getCommerceShipmentOrderItemsQuantity(
+	public static java.math.BigDecimal getCommerceShipmentOrderItemsQuantity(
 			long commerceShipmentId, long commerceOrderItemId)
 		throws PortalException {
 

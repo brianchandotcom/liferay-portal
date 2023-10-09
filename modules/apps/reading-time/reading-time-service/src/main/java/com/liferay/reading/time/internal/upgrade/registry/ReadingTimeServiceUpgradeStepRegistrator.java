@@ -5,7 +5,6 @@
 
 package com.liferay.reading.time.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
@@ -26,9 +25,7 @@ public class ReadingTimeServiceUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.SQLSERVER) {
+		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
 			registry.register(
 				"1.0.0", "2.0.0",
 				new BaseSQLServerDatetimeUpgradeProcess(

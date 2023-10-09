@@ -289,8 +289,12 @@ public abstract class BaseNotificationType implements NotificationType {
 
 		NotificationRecipientSetting notificationTemplateRecipientSetting =
 			notificationRecipientSettingLocalService.
-				getNotificationRecipientSetting(
+				fetchNotificationRecipientSetting(
 					notificationTemplateRecipientId, settingName);
+
+		if (notificationTemplateRecipientSetting == null) {
+			return "";
+		}
 
 		String content = formatLocalizedContent(
 			notificationTemplateRecipientSetting.getValue(),

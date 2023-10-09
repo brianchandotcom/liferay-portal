@@ -45,12 +45,25 @@ if (rssFeeds.isEmpty()) {
 						displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>"
 						entries="<%= rssFeeds %>"
 					>
-						<% for (int i = 0; i < rssFeeds.size(); i++) { RSSFeed
-						rssFeed = rssFeeds.get(i); boolean last = false; if (i
-						== (rssFeeds.size() - 1)) { last = true; } SyndFeed
-						syndFeed = rssFeed.getSyndFeed(); %> <%@ include file="/feed.jspf" %> <%
+
+						<%
+						for (int i = 0; i < rssFeeds.size(); i++) {
+							RSSFeed rssFeed = rssFeeds.get(i);
+
+							boolean last = false;
+
+							if (i == (rssFeeds.size() - 1)) {
+								last = true;
 							}
-%>
+
+							SyndFeed syndFeed = rssFeed.getSyndFeed();
+						%>
+
+						<%@ include file="/feed.jspf" %>
+
+						<%
+						}
+						%>
 
 					</liferay-ddm:template-renderer>
 				</c:otherwise>

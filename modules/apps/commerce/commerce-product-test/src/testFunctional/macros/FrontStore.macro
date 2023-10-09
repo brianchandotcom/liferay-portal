@@ -554,6 +554,19 @@ definition {
 				value1 = "$ ${cartItemPriceValue}");
 		}
 
+		if (isSet(cartItemPromoPriceValue)) {
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_PROMO",
+				value1 = "$ ${cartItemPromoPriceValue}");
+		}
+
+		if (isSet(cartItemUOMKey)) {
+			AssertTextEquals.assertPartialText(
+				key_uom = ${cartItemUOMKey},
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_UOM_NAME",
+				value1 = ${cartItemUOMKey});
+		}
+
 		AssertElementPresent(
 			key_cartItemSku = ${cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_THUMBNAIL");

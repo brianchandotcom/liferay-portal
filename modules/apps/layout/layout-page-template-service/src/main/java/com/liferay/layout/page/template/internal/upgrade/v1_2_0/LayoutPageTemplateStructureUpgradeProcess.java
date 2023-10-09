@@ -133,9 +133,8 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					"select layoutPageTemplateEntryId, groupId, companyId, ",
 					"userId, userName, createDate from ",
 					"LayoutPageTemplateEntry where type_ in (",
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, ", ",
-					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
-					")"))) {
+					LayoutPageTemplateEntryTypeConstants.BASIC, ", ",
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, ")"))) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {

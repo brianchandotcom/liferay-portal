@@ -5,7 +5,6 @@
 
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import MetalComponent from 'metal-component';
 import React, {
 	Suspense,
 	lazy,
@@ -23,7 +22,6 @@ import {AutoFocus} from '../AutoFocus.es';
 import {ErrorBoundary} from '../ErrorBoundary.es';
 
 import './Field.scss';
-import {MetalComponentAdapter} from './MetalComponentAdapter.es';
 import {ParentFieldContext} from './ParentFieldContext.es';
 
 const getModule = (fieldTypes, fieldType) => {
@@ -42,6 +40,13 @@ const load = (fieldModule) => {
 	});
 };
 
+/**
+ * @see https://github.com/metal/metal.js/blob/master/packages/metal-component/src/Component.js#L517-L519
+ */
+const isMetalComponentConstructor = (fn) => {
+	return fn && fn.prototype && fn.prototype['__metal_component__'];
+};
+
 const useLazy = () => {
 	const {components} = useStorage();
 
@@ -55,15 +60,13 @@ const useLazy = () => {
 								return null;
 							}
 
-							// To maintain compatibility with fields in Metal+Soy,
-							// we call the bridge component to handle this component.
+							if (isMetalComponentConstructor(instance.default)) {
+								console.error(
+									'Metal is no longer supported',
+									instance
+								);
 
-							if (
-								MetalComponent.isComponentCtor(instance.default)
-							) {
-								return {
-									default: MetalComponentAdapter,
-								};
+								return null;
 							}
 
 							return instance;

@@ -202,6 +202,10 @@ public class SourceFormatterUtil {
 	}
 
 	public static File getFile(String baseDirName, String fileName, int level) {
+		if (Validator.isBlank(baseDirName)) {
+			baseDirName = "./";
+		}
+
 		for (int i = 0; i < level; i++) {
 			File file = new File(baseDirName + fileName);
 
@@ -411,7 +415,7 @@ public class SourceFormatterUtil {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(allArgs);
 
-		if (baseDirName != null) {
+		if (!Validator.isBlank(baseDirName)) {
 			processBuilder.directory(new File(baseDirName));
 		}
 

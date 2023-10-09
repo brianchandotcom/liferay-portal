@@ -124,6 +124,15 @@ public class LayoutPageTemplateCollectionServiceUtil {
 
 	public static LayoutPageTemplateCollection
 			updateLayoutPageTemplateCollection(
+				long layoutPageTemplateCollectionId, String name)
+		throws PortalException {
+
+		return getService().updateLayoutPageTemplateCollection(
+			layoutPageTemplateCollectionId, name);
+	}
+
+	public static LayoutPageTemplateCollection
+			updateLayoutPageTemplateCollection(
 				long layoutPageTemplateCollectionId, String name,
 				String description)
 		throws PortalException {

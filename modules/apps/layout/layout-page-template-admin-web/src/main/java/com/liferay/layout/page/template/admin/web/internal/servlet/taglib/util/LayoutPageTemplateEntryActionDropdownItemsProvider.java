@@ -107,7 +107,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 							!Objects.equals(
 								_layoutPageTemplateEntry.getType(),
 								LayoutPageTemplateEntryTypeConstants.
-									TYPE_WIDGET_PAGE),
+									WIDGET_PAGE),
 						_getViewLayoutPageTemplateEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -316,7 +316,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 		if (Objects.equals(
 				_layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
 
 			LayoutPrototype layoutPrototype =
 				LayoutPrototypeLocalServiceUtil.fetchLayoutPrototype(
@@ -480,7 +480,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 		if (Objects.equals(
 				_layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
 
 			LayoutPrototype layoutPrototype =
 				LayoutPrototypeServiceUtil.fetchLayoutPrototype(

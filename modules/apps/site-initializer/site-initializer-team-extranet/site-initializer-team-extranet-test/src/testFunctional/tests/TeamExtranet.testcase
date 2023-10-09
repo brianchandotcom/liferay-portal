@@ -286,7 +286,7 @@ definition {
 
 			TeamExtranet.searchEmbedded(searchTerm = "careers");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Careers",
 				searchAssetType = "Page");
 		}
@@ -304,7 +304,7 @@ definition {
 		task ("Search for Careers in Search Bar") {
 			TeamExtranet.searchEmbedded(searchTerm = "careers");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Careers",
 				searchAssetType = "Page");
 		}

@@ -382,6 +382,10 @@ public interface LayoutPageTemplateCollectionLocalService
 		LayoutPageTemplateCollection layoutPageTemplateCollection);
 
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
+			long layoutPageTemplateCollectionId, String name)
+		throws PortalException;
+
+	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name,
 			String description)
 		throws PortalException;

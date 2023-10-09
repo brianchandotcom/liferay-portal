@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
-import com.liferay.commerce.price.list.constants.CommercePriceListPortletKeys;
+import com.liferay.commerce.price.list.exception.CommerceTierPriceEntryMinQuantityException;
 import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -117,7 +117,9 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (exception instanceof
-						DuplicateCommerceTierPriceEntryException) {
+						CommerceTierPriceEntryMinQuantityException ||
+					 exception instanceof
+						 DuplicateCommerceTierPriceEntryException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
@@ -126,6 +128,10 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 
 				String redirect = getSaveAndContinueRedirect(
 					actionRequest, commerceTierPriceEntryId);
+
+				if (cmd.equals(Constants.ADD)) {
+					redirect = ParamUtil.getString(actionRequest, redirect);
+				}
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -141,7 +147,7 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 
 		PortletURL portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
-				actionRequest, CommercePriceListPortletKeys.COMMERCE_PRICE_LIST,
+				actionRequest, CommercePricingPortletKeys.COMMERCE_PRICE_LIST,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/commerce_price_list/edit_commerce_tier_price_entry"

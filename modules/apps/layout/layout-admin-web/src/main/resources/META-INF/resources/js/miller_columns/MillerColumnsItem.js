@@ -11,6 +11,7 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {PageTemplateModal} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
@@ -158,6 +159,8 @@ function filterEmptyGroups(items) {
 const noop = () => {};
 
 const MillerColumnsItem = ({
+	createPageTemplateURL,
+	getPageTemplateCollectionsURL,
 	getItemActionsURL,
 	isLayoutSetPrototype,
 	isPrivateLayoutsEnabled,
@@ -191,6 +194,12 @@ const MillerColumnsItem = ({
 }) => {
 	const ref = useRef();
 	const timeoutRef = useRef();
+
+	const onClose = () => {
+		setOpenModal(false);
+	};
+
+	const [openModal, setOpenModal] = useState(false);
 
 	const [dropZone, setDropZone] = useState();
 
@@ -236,7 +245,10 @@ const MillerColumnsItem = ({
 							onClick(event) {
 								const action = item.data?.action;
 
-								if (action) {
+								if (action === 'convertToPageTemplate') {
+									setOpenModal(true);
+								}
+								else if (action) {
 									event.preventDefault();
 
 									ACTIONS[action]?.(item.data);
@@ -551,6 +563,16 @@ const MillerColumnsItem = ({
 					<span aria-live="polite" className="sr-only">
 						{loadMessage}
 					</span>
+
+					{openModal && (
+						<PageTemplateModal
+							createTemplateURL={createPageTemplateURL}
+							getCollectionsURL={getPageTemplateCollectionsURL}
+							layoutId={itemId}
+							namespace={namespace}
+							onClose={onClose}
+						/>
+					)}
 				</ClayLayout.ContentCol>
 			)}
 

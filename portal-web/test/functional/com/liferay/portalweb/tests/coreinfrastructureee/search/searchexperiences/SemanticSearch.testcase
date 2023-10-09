@@ -319,13 +319,13 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPage.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Test Web Content",
 			searchAssetType = "Web Content Article");
 
@@ -363,14 +363,14 @@ definition {
 			wikiPageContent = "",
 			wikiPageName = "Test Wiki Page");
 
-		Search.openSearchPage();
+		SearchPage.openSearchPage();
 
-		SearchResultPortlet.configureSearchResults(displayDocumentForm = "true");
+		SearchResults.configureSearchResults(displayDocumentForm = "true");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		for (var assetTitle : list "Test Web Content,Test Blog,Test Knowledge Base Article,Test Message Board Thread,Test Wiki Page") {
-			SearchResultPortlet.viewDocumentDetailValue(
+			SearchResults.viewDocumentDetailValue(
 				documentDetailKey = "text_embedding_768_en_US",
 				documentDetailKeyValue = "0.0",
 				searchAssetTitle = ${assetTitle});

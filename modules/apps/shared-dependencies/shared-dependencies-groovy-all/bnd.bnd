@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Shared Dependencies Groovy All
 Bundle-SymbolicName: com.liferay.shared.dependencies.groovy.all
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.2
 Import-Package:\
 	!com.thoughtworks.qdox.*,\
 	!com.thoughtworks.xstream.*,\

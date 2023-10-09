@@ -5,7 +5,7 @@
 
 import {MOVE_ITEM} from './types';
 
-import type {LayoutData} from '../../types/LayoutData';
+import type {LayoutData} from '../../types/layout_data/LayoutData';
 
 export default function moveItem({
 	itemId,

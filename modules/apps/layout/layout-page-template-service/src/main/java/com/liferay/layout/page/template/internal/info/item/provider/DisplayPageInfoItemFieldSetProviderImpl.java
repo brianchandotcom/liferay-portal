@@ -112,7 +112,7 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 				themeDisplay.getScopeGroupId(),
 				_portal.getClassNameId(infoItemReference.getClassName()),
 				GetterUtil.getLong(infoItemFormVariationKey),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {
@@ -236,7 +236,7 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				scopeGroupId, _portal.getClassNameId(itemClassName),
 				GetterUtil.getLong(infoItemFormVariationKey),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				WorkflowConstants.STATUS_APPROVED);
 
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :

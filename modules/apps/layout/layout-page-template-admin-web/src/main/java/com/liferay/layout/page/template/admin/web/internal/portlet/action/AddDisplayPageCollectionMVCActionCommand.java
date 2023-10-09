@@ -6,23 +6,19 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateCollectionExceptionRequestHandlerUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
-import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -64,64 +60,27 @@ public class AddDisplayPageCollectionMVCActionCommand
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT),
 					ParamUtil.getString(actionRequest, "name"),
 					ParamUtil.getString(actionRequest, "description"),
-					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
 					ServiceContextFactory.getInstance(actionRequest));
 
 			jsonObject.put(
 				"redirectURL", ParamUtil.getString(actionRequest, "redirect"));
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
 		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-
-			if (exception instanceof
-					DuplicateLayoutPageTemplateCollectionException) {
-
-				jsonObject.put(
-					"error",
-					_language.get(
-						_portal.getHttpServletRequest(actionRequest),
-						"please-enter-a-unique-folder-name"));
-			}
-			else if (exception instanceof
-						LayoutPageTemplateCollectionNameException) {
-
-				jsonObject.put(
-					"error",
-					_language.get(
-						_portal.getHttpServletRequest(actionRequest),
-						"please-enter-a-valid-folder-name"));
-			}
-			else {
-				jsonObject.put(
-					"error",
-					_language.get(
-						_portal.getHttpServletRequest(actionRequest),
-						"an-unexpected-error-occurred"));
-			}
-
-			jsonObject.put("success", false);
+		catch (PortalException portalException) {
+			LayoutPageTemplateCollectionExceptionRequestHandlerUtil.
+				handlePortalException(
+					actionRequest, actionResponse, portalException);
 		}
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddDisplayPageCollectionMVCActionCommand.class);
 
 	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private Language _language;
-
-	@Reference
 	private LayoutPageTemplateCollectionService
 		_layoutPageTemplateCollectionService;
-
-	@Reference
-	private Portal _portal;
 
 }

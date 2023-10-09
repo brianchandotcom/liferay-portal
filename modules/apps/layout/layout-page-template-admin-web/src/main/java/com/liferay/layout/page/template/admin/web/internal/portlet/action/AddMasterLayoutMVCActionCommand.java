@@ -69,7 +69,7 @@ public class AddMasterLayoutMVCActionCommand extends BaseMVCActionCommand {
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					serviceContext.getScopeGroupId(),
 					layoutPageTemplateCollectionId, name,
-					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 					WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 			JSONObject jsonObject = JSONUtil.put(

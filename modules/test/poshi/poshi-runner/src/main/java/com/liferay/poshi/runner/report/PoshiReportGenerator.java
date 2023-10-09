@@ -91,6 +91,8 @@ public class PoshiReportGenerator {
 			return;
 		}
 
+		PoshiContext.readFiles();
+
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
 
 		File reportCSVFile = new File(

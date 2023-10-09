@@ -230,11 +230,11 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		int layoutPageTemplateEntryType = GetterUtil.getInteger(
 			serviceContext.getAttribute("layout.page.template.entry.type"),
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+			LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		if (!Objects.equals(
 				layoutPageTemplateEntryType,
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
 			return layoutStructure.toString();
 		}

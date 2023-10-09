@@ -5,7 +5,10 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.util;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -18,6 +21,28 @@ import java.util.Set;
  * @author Dante Wang
  */
 public class RankingUtil {
+
+	public static final String JOURNAL_ARTICLE_DOCUMENT_PREFIX =
+		"com.liferay.journal.model.JournalArticle_PORTLET_";
+
+	public static String getDocumentId(String documentId) {
+		if (!documentId.startsWith(JOURNAL_ARTICLE_DOCUMENT_PREFIX)) {
+			return documentId;
+		}
+
+		String[] parts = StringUtil.split(
+			documentId, JOURNAL_ARTICLE_DOCUMENT_PREFIX);
+
+		JournalArticle journalArticle =
+			JournalArticleLocalServiceUtil.fetchJournalArticle(
+				Long.valueOf(parts[1]));
+
+		JournalArticle latestJournalArticle =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				journalArticle.getResourcePrimKey());
+
+		return JOURNAL_ARTICLE_DOCUMENT_PREFIX + latestJournalArticle.getId();
+	}
 
 	public static Collection<String> getQueryStrings(
 		String queryString, List<String> aliases) {
@@ -35,6 +60,16 @@ public class RankingUtil {
 		}
 
 		return ListUtil.sort(new ArrayList<>(queryStrings));
+	}
+
+	public static List<String> translateDocumentIds(List<String> documentIds) {
+		List<String> ids = new ArrayList<>();
+
+		for (String documentId : documentIds) {
+			ids.add(getDocumentId(documentId));
+		}
+
+		return ids;
 	}
 
 }

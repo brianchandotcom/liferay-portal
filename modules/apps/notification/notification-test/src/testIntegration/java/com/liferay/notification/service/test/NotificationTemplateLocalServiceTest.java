@@ -115,7 +115,7 @@ public class NotificationTemplateLocalServiceTest {
 
 		NotificationRecipientSetting notificationRecipientSetting =
 			_notificationRecipientSettingLocalService.
-				getNotificationRecipientSetting(notificationRecipientId, name);
+				fetchNotificationRecipientSetting(notificationRecipientId, name);
 
 		Assert.assertEquals(name, notificationRecipientSetting.getName());
 		Assert.assertEquals(

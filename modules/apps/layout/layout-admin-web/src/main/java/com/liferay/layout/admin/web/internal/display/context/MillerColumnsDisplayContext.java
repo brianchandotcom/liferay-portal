@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -144,9 +145,15 @@ public class MillerColumnsDisplayContext {
 			HashMapBuilder.<String, Object>put(
 				"breadcrumbEntries", _getBreadcrumbEntriesJSONArray()
 			).put(
+				"createLayoutPageTemplateEntryURL",
+				_getCreateLayoutPageTemplateEntryURL()
+			).put(
 				"getItemActionsURL", getLayoutActionsURL()
 			).put(
 				"getItemChildrenURL", getLayoutChildrenURL()
+			).put(
+				"getLayoutPageTemplateCollectionsURL",
+				_getLayoutPageTemplateCollectionsURL()
 			).put(
 				"isLayoutSetPrototype",
 				() -> {
@@ -352,6 +359,18 @@ public class MillerColumnsDisplayContext {
 		return breadcrumbEntriesJSONArray;
 	}
 
+	private String _getCreateLayoutPageTemplateEntryURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/layout_content_page_editor/create_layout_page_template_entry"
+		).setBackURL(
+			ParamUtil.getString(
+				PortalUtil.getOriginalServletRequest(_httpServletRequest),
+				"p_l_back_url", _themeDisplay.getURLCurrent())
+		).buildString();
+	}
+
 	private List<Long> _getDuplicatedFriendlyURLPlids() throws PortalException {
 		if (_duplicatedFriendlyURLPlids != null) {
 			return _duplicatedFriendlyURLPlids;
@@ -496,6 +515,14 @@ public class MillerColumnsDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	private String _getLayoutPageTemplateCollectionsURL() {
+		return ResourceURLBuilder.createResourceURL(
+			_liferayPortletResponse
+		).setResourceID(
+			"/layout_content_page_editor/get_layout_page_template_collections"
+		).buildString();
 	}
 
 	private JSONArray _getLayoutSetBranchesJSONArray() throws Exception {

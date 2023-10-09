@@ -182,7 +182,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 		}
 
 		if (layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 
 			return LayoutClassedModelUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE;
 		}

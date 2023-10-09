@@ -225,7 +225,7 @@ public class DisplayPageManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"create-date", "name"};
+		return new String[] {"create-date", "modified-date", "name"};
 	}
 
 	private String _getDeleteSelectedEntriesURL() {

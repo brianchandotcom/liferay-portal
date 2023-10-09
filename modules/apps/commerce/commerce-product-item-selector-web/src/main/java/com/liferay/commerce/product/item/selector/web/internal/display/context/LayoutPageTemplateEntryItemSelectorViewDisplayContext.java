@@ -109,7 +109,7 @@ public class LayoutPageTemplateEntryItemSelectorViewDisplayContext
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				commerceChannelSiteGroupId,
 				ClassNameLocalServiceUtil.getClassNameId(CPDefinition.class), 0,
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
 				searchContainer.getEnd(),
 				layoutPageTemplateEntryOrderByComparator);

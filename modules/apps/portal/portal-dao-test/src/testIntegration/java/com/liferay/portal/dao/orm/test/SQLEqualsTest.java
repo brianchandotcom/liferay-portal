@@ -150,11 +150,9 @@ public class SQLEqualsTest {
 	private void _assert(String columnName, long expectedPK, String compare)
 		throws Exception {
 
-		DB db = DBManagerUtil.getDB();
-
 		if (columnName.equals("typeBlob") &&
-			((db.getDBType() == DBType.ORACLE) ||
-			 (db.getDBType() == DBType.POSTGRESQL))) {
+			((DBManagerUtil.getDBType() == DBType.ORACLE) ||
+			 (DBManagerUtil.getDBType() == DBType.POSTGRESQL))) {
 
 			return;
 		}
@@ -165,7 +163,7 @@ public class SQLEqualsTest {
 		sb.append("SQLEqualsTest t2 on t1.pk != 1 and t2.pk = 1 and ");
 
 		if (columnName.equals("typeBlob") &&
-			(db.getDBType() == DBType.SQLSERVER)) {
+			(DBManagerUtil.getDBType() == DBType.SQLSERVER)) {
 
 			sb.append("CAST(t1.");
 			sb.append(columnName);

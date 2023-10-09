@@ -14,7 +14,6 @@ Group group = siteAdminDisplayContext.getGroup();
 
 if (group != null) {
 	portletDisplay.setShowBackIcon(true);
-
 	portletDisplay.setURLBack(
 		PortletURLBuilder.createRenderURL(
 			renderResponse
@@ -23,6 +22,7 @@ if (group != null) {
 		).setParameter(
 			"groupId", group.getParentGroupId()
 		).buildString());
+	portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 	renderResponse.setTitle(group.getDescriptiveName(locale));
 }

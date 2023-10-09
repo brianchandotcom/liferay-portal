@@ -2714,7 +2714,7 @@ public class LayoutStagedModelDataHandler
 
 			if (layoutPageTemplateEntry != null) {
 				if (layoutPageTemplateEntry.getType() ==
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+						LayoutPageTemplateEntryTypeConstants.BASIC) {
 
 					layoutElement.addAttribute(
 						"layout-content-page-template",
@@ -2722,8 +2722,7 @@ public class LayoutStagedModelDataHandler
 				}
 
 				if (layoutPageTemplateEntry.getType() ==
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_MASTER_LAYOUT) {
+						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
 
 					layoutElement.addAttribute(
 						"layout-master-page-template", Boolean.TRUE.toString());

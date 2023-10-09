@@ -514,19 +514,19 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder(
 			ranking);
 
-		String[] hiddenIdsAdded = ParamUtil.getStringValues(
-			actionRequest, "hiddenIdsAdded");
-		String[] hiddenIdsRemoved = ParamUtil.getStringValues(
-			actionRequest, "hiddenIdsRemoved");
+		String[] addedHiddenIds = ParamUtil.getStringValues(
+			actionRequest, "addedHiddenIds");
+		String[] removedHiddenIds = ParamUtil.getStringValues(
+			actionRequest, "removedHiddenIds");
 
 		rankingBuilder.aliases(
 			_getAliases(editRankingMVCActionRequest)
 		).groupExternalReferenceCode(
 			editRankingMVCActionRequest.getGroupExternalReferenceCode()
 		).hiddenDocumentIds(
-			_update(
-				ranking.getHiddenDocumentIds(), hiddenIdsAdded,
-				hiddenIdsRemoved)
+			_updateHiddenIds(
+				addedHiddenIds, ranking.getHiddenDocumentIds(),
+				removedHiddenIds)
 		).inactive(
 			_isInactive(editRankingMVCActionRequest)
 		).indexName(
@@ -557,23 +557,25 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			rankingBuilder.build(), getRankingIndexName());
 	}
 
-	private List<String> _update(
-		List<String> strings, String[] addStrings, String[] removeStrings) {
+	private List<String> _updateHiddenIds(
+		String[] addedHiddenIds, List<String> currentHiddenIds,
+		String[] removedHiddenIds) {
 
-		List<String> newStrings;
+		List<String> hiddenIdsUpdated = null;
 
-		if (ListUtil.isEmpty(strings)) {
-			newStrings = Arrays.asList(addStrings);
+		if (ListUtil.isEmpty(currentHiddenIds)) {
+			hiddenIdsUpdated = Arrays.asList(addedHiddenIds);
 		}
 		else {
-			newStrings = new ArrayList<>(strings);
+			hiddenIdsUpdated = RankingUtil.translateDocumentIds(
+				currentHiddenIds);
 
-			Collections.addAll(newStrings, addStrings);
+			Collections.addAll(hiddenIdsUpdated, addedHiddenIds);
 		}
 
-		newStrings.removeAll(Arrays.asList(removeStrings));
+		hiddenIdsUpdated.removeAll(Arrays.asList(removedHiddenIds));
 
-		return newStrings;
+		return hiddenIdsUpdated;
 	}
 
 	private static final String _UPDATE_SPECIAL = StringPool.GREATER_THAN;

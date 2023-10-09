@@ -56,7 +56,7 @@ public class DisplayPageTemplateServiceTest {
 		LayoutPageTemplateEntry displayPageTemplate =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				_group.getGroupId(), 0, name,
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 				WorkflowConstants.STATUS_DRAFT,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));

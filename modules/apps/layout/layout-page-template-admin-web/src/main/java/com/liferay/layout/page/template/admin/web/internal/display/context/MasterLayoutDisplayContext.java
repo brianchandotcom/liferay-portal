@@ -94,8 +94,7 @@ public class MasterLayoutDisplayContext {
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageTemplateEntries(
 							_themeDisplay.getScopeGroupId(), getKeywords(),
-							LayoutPageTemplateEntryTypeConstants.
-								TYPE_MASTER_LAYOUT,
+							LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 							masterLayoutsSearchContainer.getStart(),
 							masterLayoutsSearchContainer.getEnd(),
 							masterLayoutsSearchContainer.
@@ -103,8 +102,7 @@ public class MasterLayoutDisplayContext {
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(), getKeywords(),
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_MASTER_LAYOUT));
+						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
 		}
 		else {
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
@@ -124,16 +122,14 @@ public class MasterLayoutDisplayContext {
 			layoutPageTemplateEntries.addAll(
 				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 					_themeDisplay.getScopeGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
-					start, end,
-					masterLayoutsSearchContainer.getOrderByComparator()));
+					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, start,
+					end, masterLayoutsSearchContainer.getOrderByComparator()));
 
 			int layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(),
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_MASTER_LAYOUT);
+						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 			masterLayoutsSearchContainer.setResultsAndTotal(
 				() -> layoutPageTemplateEntries,

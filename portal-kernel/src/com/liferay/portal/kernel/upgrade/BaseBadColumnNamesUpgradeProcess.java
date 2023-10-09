@@ -8,7 +8,6 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -95,13 +94,11 @@ public abstract class BaseBadColumnNamesUpgradeProcess extends UpgradeProcess {
 			alterColumnNames.add(new String[] {columnName, columnSQL});
 		}
 
-		DB db = DBManagerUtil.getDB();
-
 		for (String[] alterColumnName : alterColumnNames) {
 
 			// Special alter for reserved words like SYSTEM in MySQL
 
-			if (db.getDBType() == DBType.MYSQL) {
+			if (DBManagerUtil.getDBType() == DBType.MYSQL) {
 				runSQL(
 					StringBundler.concat(
 						"alter table ", tableName, " change column `",

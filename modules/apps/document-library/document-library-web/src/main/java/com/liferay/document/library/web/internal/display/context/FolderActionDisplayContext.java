@@ -96,7 +96,13 @@ public class FolderActionDisplayContext {
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
 						}
-					).add(
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
 						this::_isMoveFolderActionVisible,
 						dropdownItem -> {
 							dropdownItem.setHref(_getMoveFolderURL());
@@ -370,11 +376,18 @@ public class FolderActionDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_dlRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
-			"/document_library/copy_folder"
+			"/document_library/copy_dl_objects"
 		).setRedirect(
 			_dlRequestHelper.getCurrentURL()
 		).setParameter(
-			"sourceFolderId", _getFolderId()
+			"dlObjectIds", _getFolderId()
+		).setParameter(
+			"sourceFolderId",
+			() -> {
+				Folder folder = _getFolder();
+
+				return folder.getParentFolderId();
+			}
 		).setParameter(
 			"sourceRepositoryId", _getRepositoryId()
 		).buildString();

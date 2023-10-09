@@ -346,8 +346,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 					}
 
 					if (layoutPageTemplateEntryType ==
-							LayoutPageTemplateEntryTypeConstants.
-								TYPE_DISPLAY_PAGE) {
+							LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 
 						return LayoutClassedModelUsageConstants.
 							TYPE_DISPLAY_PAGE_TEMPLATE;

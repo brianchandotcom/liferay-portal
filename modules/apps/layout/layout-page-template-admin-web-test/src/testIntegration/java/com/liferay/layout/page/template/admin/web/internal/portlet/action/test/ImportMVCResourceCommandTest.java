@@ -7,6 +7,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.importer.LayoutsImportStrategy;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -93,7 +94,7 @@ public class ImportMVCResourceCommandTest {
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				"imported", StringPool.BLANK,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				_serviceContext);
 
 		_assertImportResultsJSONObject(
@@ -103,7 +104,7 @@ public class ImportMVCResourceCommandTest {
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
 					_group.getGroupId(), "imported-(1)",
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC));
+					LayoutPageTemplateEntryTypeConstants.BASIC));
 	}
 
 	@Test
@@ -144,7 +145,7 @@ public class ImportMVCResourceCommandTest {
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				"imported", StringPool.BLANK,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				_serviceContext);
 
 		_assertImportResultsJSONObject(
@@ -154,7 +155,7 @@ public class ImportMVCResourceCommandTest {
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
 					_group.getGroupId(), "imported-(1)",
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC));
+					LayoutPageTemplateEntryTypeConstants.BASIC));
 	}
 
 	@Test
@@ -260,7 +261,7 @@ public class ImportMVCResourceCommandTest {
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			"Existing Master Page",
-			LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}

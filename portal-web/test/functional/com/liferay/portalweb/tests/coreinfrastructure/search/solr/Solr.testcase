@@ -52,9 +52,9 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
+		SearchPage.addWidgets(searchPortletList = "Search Insights");
 
-		Search.openSearchPage();
+		SearchPage.openSearchPage();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",
@@ -68,11 +68,11 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		AssertElementPresent(
 			key_text = "explain",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
+			locator1 = "SearchPage#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",
@@ -88,11 +88,11 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		AssertElementNotPresent(
 			key_text = "explain",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
+			locator1 = "SearchPage#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 	}
 
 	@priority = 3
@@ -146,25 +146,25 @@ definition {
 
 		Navigator.gotoPage(pageName = "Solr Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+		SearchPage.searchEmbedded(searchTerm = "Apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Message Boards Message");
 
 		Navigator.gotoPage(pageName = "Solr Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Orange");
+		SearchPage.searchEmbedded(searchTerm = "Orange");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Message Boards Message");
 	}
@@ -213,25 +213,25 @@ definition {
 
 		Navigator.gotoPage(pageName = "Solr Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+		SearchPage.searchEmbedded(searchTerm = "Apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Message Boards Message");
 
 		Navigator.gotoPage(pageName = "Solr Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Orange");
+		SearchPage.searchEmbedded(searchTerm = "Orange");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Message Boards Message");
 	}
@@ -267,25 +267,25 @@ definition {
 
 		Navigator.gotoPage(pageName = "Solr Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+		SearchPage.searchEmbedded(searchTerm = "Apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Message Boards Message");
 
 		Navigator.gotoPage(pageName = "Solr Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Orange");
+		SearchPage.searchEmbedded(searchTerm = "Orange");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Message Boards Message");
 	}

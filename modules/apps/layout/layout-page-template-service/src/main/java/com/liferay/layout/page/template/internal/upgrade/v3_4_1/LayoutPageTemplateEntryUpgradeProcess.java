@@ -34,7 +34,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 				" where classNameId = ",
 				_portal.getClassNameId(DLFileEntry.class.getName()),
 				" and type_ = ",
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE));
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 	}
 
 	private final Portal _portal;

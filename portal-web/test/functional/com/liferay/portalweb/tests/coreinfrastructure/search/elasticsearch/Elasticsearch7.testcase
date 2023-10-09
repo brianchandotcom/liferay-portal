@@ -102,34 +102,34 @@ definition {
 			key_assetTitle = "WC WebContent Title",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		AssertElementPresent(
 			key_searchAssetTitle = "Blogs Entry Title",
 			key_searchAssetType = "Blogs Entry",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC");
 
 		AssertElementPresent(
 			key_searchAssetTitle = "DM Document Title",
 			key_searchAssetType = "Document",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC");
 
 		AssertElementPresent(
 			key_searchAssetTitle = "Test Test",
 			key_searchAssetType = "User",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC");
 
 		AssertElementPresent(
 			key_searchAssetTitle = "WC WebContent Title",
 			key_searchAssetType = "Web Content Article",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Home");
+		SearchPage.searchEmbedded(searchTerm = "Home");
 
 		AssertElementPresent(
 			key_searchAssetTitle = "Home",
 			key_searchAssetType = "Page",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC");
 	}
 
 	@priority = 5
@@ -182,9 +182,9 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
+		SearchPage.addWidgets(searchPortletList = "Search Insights");
 
-		Search.openSearchPage();
+		SearchPage.openSearchPage();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",
@@ -198,15 +198,15 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		AssertElementPresent(
 			key_text = "\"explain\"",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY");
+			locator1 = "SearchPage#SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY");
 
 		AssertElementPresent(
 			key_text = "\"_explanation\"",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
+			locator1 = "SearchPage#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",
@@ -222,15 +222,15 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		AssertElementPresent(
 			key_text = "\"explain\"",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY");
+			locator1 = "SearchPage#SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY");
 
 		AssertElementNotPresent(
 			key_text = "\"_explanation\"",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
+			locator1 = "SearchPage#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 	}
 
 	@priority = 5
@@ -252,9 +252,9 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 	}
@@ -337,23 +337,23 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		Search.openSearchPage(searchTerm = "Apple");
+		SearchPage.openSearchPage(searchTerm = "Apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Message Boards Message");
 
-		Search.openSearchPage(searchTerm = "Orange");
+		SearchPage.openSearchPage(searchTerm = "Orange");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Message Boards Message");
 	}
@@ -408,44 +408,44 @@ definition {
 			layoutName = "Multiple Connections Page",
 			layoutTemplate = "3 Columns");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Multiple Connections Page",
 			searchPortletList = "Custom Filter");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			column = 2,
 			layoutName = "Multiple Connections Page",
 			searchPortletList = "Search Results");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			column = 3,
 			layoutName = "Multiple Connections Page",
 			searchPortletList = "Search Options");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			column = 3,
 			layoutName = "Multiple Connections Page",
 			searchPortletList = "Low Level Search Options");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/multiple-connections-page");
 
-		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
+		SearchPage.configureSearchOptions(allowEmptySearches = "true");
 
 		Refresh();
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.configureCustomFilter(
+		SearchPage.configureCustomFilter(
 			filterField = "connection2_field",
 			filterQueryType = "Match",
 			filterValue = "cool",
 			occur = "must");
 
-		SearchResultPortlet.configureSearchResults(fieldsToDisplay = "connection2_field");
+		SearchResults.configureSearchResults(fieldsToDisplay = "connection2_field");
 
-		SearchPortlets.configureLowLevelSearchOptions(
+		SearchPage.configureLowLevelSearchOptions(
 			connectionId = "connection2",
 			indexes = "connection2_index");
 
@@ -453,7 +453,7 @@ definition {
 
 		AssertElementPresent(
 			key_searchAssetTitle = "multiple connections is cool",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+			locator1 = "SearchPage#RESULT_TITLE");
 	}
 
 	@priority = 5
@@ -510,7 +510,7 @@ definition {
 		task ("Perform a search and assert that no errors are thrown") {
 			Navigator.openURL();
 
-			SearchPortlets.searchEmbedded(searchTerm = "test");
+			SearchPage.searchEmbedded(searchTerm = "test");
 
 			AssertElementNotPresent(locator1 = "Portlet#ERROR");
 		}
@@ -632,11 +632,11 @@ definition {
 		}
 
 		task ("Assert that search results are still returned during a reindex") {
-			Search.openSearchPage(searchTerm = "test");
+			SearchPage.openSearchPage(searchTerm = "test");
 
 			AssertElementPresent(locator1 = "Search#REINDEX_IN_PROGRESS_INDICATOR");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Test Test",
 				searchAssetType = "User");
 		}
@@ -732,11 +732,11 @@ definition {
 		}
 
 		task ("Assert that search results are still returned during the reindex") {
-			Search.openSearchPage(searchTerm = "test");
+			SearchPage.openSearchPage(searchTerm = "test");
 
 			AssertElementPresent(locator1 = "Search#REINDEX_IN_PROGRESS_INDICATOR");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Test Test",
 				searchAssetType = "User");
 		}
@@ -819,11 +819,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Home");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		AssertElementPresent(
 			key_searchAssetTitle = "Test Test",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+			locator1 = "SearchPage#RESULT_TITLE");
 	}
 
 	@priority = 5
@@ -847,7 +847,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Search Page",
 			searchPortletList = "Custom Filter,Low Level Search Options,Search Results,Search Bar");
 
@@ -855,31 +855,31 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
-		SearchPortlets.configureCustomFilter(
+		SearchPage.configureCustomFilter(
 			customParameterName = "q",
 			federatedSearchKey = "s1",
 			filterField = "case_title,closure_reason",
 			filterQueryType = "Multi Match");
 
-		SearchPortlets.configureLowLevelSearchOptions(
+		SearchPage.configureLowLevelSearchOptions(
 			federatedSearchKey = "s1",
 			indexes = "boston311");
 
-		SearchResultPortlet.configureSearchResults(
+		SearchResults.configureSearchResults(
 			federatedSearchKey = "s1",
 			fieldsToDisplay = "case_title,closure_reason,case_enquiry_id");
 
-		SearchPortlets.configureSearchBarWidget(federatedSearchKey = "s1");
+		SearchPage.configureSearchBarWidget(federatedSearchKey = "s1");
 
-		SearchPortlets.searchWidget(searchTerm = "bicycle");
+		SearchPage.searchWidget(searchTerm = "bicycle");
 
 		AssertTextEquals.assertPartialText(
 			key_searchAssetTitle = "Abandoned Bicycle",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
+			locator1 = "SearchPage#RESULT_TITLE",
 			value1 = "Abandoned Bicycle");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "SearchResults#RESULTS_PORTLET_SEARCH_QUERY",
+			locator1 = "SearchPage#RESULTS_PORTLET_SEARCH_QUERY",
 			value1 = "1 result for bicycle");
 	}
 
@@ -948,9 +948,9 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "WebContent");
+		SearchPage.searchEmbedded(searchTerm = "WebContent");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content Article");
 
@@ -971,9 +971,9 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 
@@ -1016,9 +1016,9 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 	}
@@ -1053,11 +1053,11 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "txt");
+		SearchPage.searchEmbedded(searchTerm = "txt");
 
 		AssertConsoleTextPresent(value1 = "Unable to get asset renderer for class com.liferay.document.library.kernel.model.DLFileEntry with primary key ${fileEntryId}");
 
-		SearchResultPortlet.configureSearchResults(displayTemplate = "Card Layout");
+		SearchResults.configureSearchResults(displayTemplate = "Card Layout");
 
 		AssertConsoleTextNotPresent(value1 = "Error executing FreeMarker template");
 	}

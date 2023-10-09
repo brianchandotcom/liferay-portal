@@ -245,6 +245,15 @@ public class NotificationRecipientSettingLocalServiceWrapper
 			fetchNotificationRecipientSetting(notificationRecipientSettingId);
 	}
 
+	@Override
+	public com.liferay.notification.model.NotificationRecipientSetting
+		fetchNotificationRecipientSetting(
+			long notificationRecipientId, String name) {
+
+		return _notificationRecipientSettingLocalService.
+			fetchNotificationRecipientSetting(notificationRecipientId, name);
+	}
+
 	/**
 	 * Returns the notification recipient setting with the matching UUID and company.
 	 *
@@ -302,17 +311,6 @@ public class NotificationRecipientSettingLocalServiceWrapper
 
 		return _notificationRecipientSettingLocalService.
 			getNotificationRecipientSetting(notificationRecipientSettingId);
-	}
-
-	@Override
-	public com.liferay.notification.model.NotificationRecipientSetting
-			getNotificationRecipientSetting(
-				long notificationRecipientId, String name)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationRecipientSettingException {
-
-		return _notificationRecipientSettingLocalService.
-			getNotificationRecipientSetting(notificationRecipientId, name);
 	}
 
 	/**

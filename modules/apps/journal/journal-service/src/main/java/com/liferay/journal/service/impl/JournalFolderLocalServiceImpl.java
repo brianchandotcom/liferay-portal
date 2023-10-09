@@ -31,6 +31,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -60,7 +61,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.validation.ModelValidator;
 import com.liferay.portal.validation.ModelValidatorRegistryUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
@@ -446,13 +446,13 @@ public class JournalFolderLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status);
 
-		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
+		if (folderIds.size() <= DBManagerUtil.getDBMaxParameters()) {
 			return _journalArticleFinder.countByG_F(
 				groupId, folderIds, queryDefinition);
 		}
 
 		int start = 0;
-		int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
+		int end = DBManagerUtil.getDBMaxParameters();
 
 		int articlesCount = _journalArticleFinder.countByG_F(
 			groupId, folderIds.subList(start, end), queryDefinition);

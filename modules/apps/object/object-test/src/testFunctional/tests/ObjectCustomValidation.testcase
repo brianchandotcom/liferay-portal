@@ -21,56 +21,65 @@ definition {
 		}
 	}
 
-	@description = "LPS-144474 - Verify that, when adding a new entry in the Object, the user only is able to submit the entry successfully if it passes for all validations from that Object"
-	@priority = 4
+	@description = "LPS-144474 - Verify a valid object entry can be added when the validation is set to full validation"
+	@priority = 5
 	test CanAddEntry {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 153556",
-			objectName = "CustomObject153556",
-			pluralLabelName = "Custom Objects 153556");
+		task ("Given a custom object definition with a decimal field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 192625",
+				objectName = "CustomObject192625",
+				pluralLabelName = "Custom Objects 192625");
 
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject153556");
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Decimal",
+				fieldLabelName = "Decimal",
+				fieldName = "decimal",
+				fieldType = "Double",
+				isRequired = "false",
+				objectName = "CustomObject192625");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153556");
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject192625");
+		}
 
-		ObjectAdmin.openObjectAdmin();
+		task ("and Given a groovy script validation set to full validation") {
+			ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153556");
+			ObjectPortlet.selectCustomObject(label = "Custom Object 192625");
 
-		ObjectAdmin.goToValidationsTab();
+			ObjectAdmin.goToValidationsTab();
 
-		ObjectCustomValidation.addObjectValidation(
-			validationName = "Custom Validation",
-			validationType = "Groovy");
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Groovy");
 
-		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
 
-		ObjectCustomValidation.activeValidation();
+			ObjectCustomValidation.activeValidation();
 
-		ObjectCustomValidation.gotoTab(tabName = "Conditions");
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField != 'Allowed Entry')");
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (decimal != 13.579)");
 
-		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
+			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not valid for decimal entry.");
 
-		PortletEntry.save();
+			PortletEntry.save();
+		}
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject153556");
+		task ("When the user creates a valid object entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "decimal",
+				objectName = "CustomObject192625",
+				value = "13.579");
+		}
 
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Allowed Entry");
+		task ("Then the object entry is added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject192625");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject153556");
-
-		ObjectPortlet.viewEntry(entry = "Allowed Entry");
+			ObjectPortlet.viewEntry(entry = "13.579");
+		}
 	}
 
 	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries added after the validation update"
@@ -150,89 +159,6 @@ definition {
 			value1 = "This entry is not possible.");
 	}
 
-	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries updated after the validation update"
-	@priority = 4
-	test CanAffectOnlyEntriesUpdateWhenUpdateValidationWithEntries {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 153560",
-			objectName = "CustomObject153560",
-			pluralLabelName = "Custom Objects 153560");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject153560");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153560");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153560");
-
-		ObjectAdmin.goToValidationsTab();
-
-		ObjectCustomValidation.addObjectValidation(
-			validationName = "Custom Validation",
-			validationType = "Groovy");
-
-		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-		ObjectCustomValidation.activeValidation();
-
-		ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField != 'Allowed Entry')");
-
-		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-		PortletEntry.save();
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customField",
-			objectName = "CustomObject153560",
-			value = "Allowed Entry");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject153560");
-
-		ObjectPortlet.viewEntry(entry = "Allowed Entry");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153560");
-
-		ObjectAdmin.goToValidationsTab();
-
-		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-		ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Update Entry')");
-
-		PortletEntry.save();
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject153560");
-
-		ObjectPortlet.viewEntryDetails(entry = "Allowed Entry");
-
-		ObjectAdmin.editEntryName(
-			invalidEntry = "true",
-			newEntryValue = "Decline Update Entry");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR",
-			value1 = "This entry is not possible.");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject153560");
-
-		ObjectPortlet.viewEntry(entry = "Allowed Entry");
-	}
-
 	@description = "LPS-189641 - Verify if is possible create a validation using the oldValue function with the Text Field using a system object"
 	@priority = 5
 	test CanCreateValidationUsingOldValueFunctionInSystemObject {
@@ -309,6 +235,98 @@ definition {
 
 		task ("Then the error message appears on the log") {
 			AssertConsoleTextPresent(value1 = "Invalid Value");
+		}
+	}
+
+	@description = "LPS-144474 - Verify an invalid object entry can be added after the validation is deactivated"
+	@priority = 4
+	test CanDeactivateValidation {
+		property ci.retries.disabled = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a custom object definition and a long text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 192646",
+				objectName = "CustomObject192646",
+				pluralLabelName = "Custom Objects 192646");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "LongText",
+				fieldLabelName = "Long Text",
+				fieldName = "longText",
+				fieldType = "Clob",
+				isRequired = "false",
+				objectName = "CustomObject192646");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject192646");
+		}
+
+		task ("and Given a groovy script validation set to full validation") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 192646");
+
+			ObjectAdmin.goToValidationsTab();
+
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Groovy");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (longText == 'Build Incredible Digital Experiences with Liferay DXP')");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not valid for long text field.");
+
+			PortletEntry.save();
+		}
+
+		task ("When the user attempts to create an invalid object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject192646");
+
+			LexiconEntry.gotoAdd();
+
+			FormViewBuilder.editClobText(fieldLong = "Build Incredible Digital Experiences with Liferay DXP");
+
+			Button.clickSave();
+		}
+
+		task ("Then the object entry isn't added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject192646");
+
+			ObjectPortlet.assertEntryNotPresent(entry = "Build Incredible Digital Experiences with Liferay DXP");
+		}
+
+		task ("and When deactivating the custom validation") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 192646");
+
+			ObjectAdmin.goToValidationsTab();
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.desactiveValidation();
+
+			PortletEntry.save();
+		}
+
+		task ("and When the user deactivates the custom validation and attempts to create the same invalid object entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "longText",
+				objectName = "CustomObject192646",
+				value = "Build Incredible Digital Experiences with Liferay DXP");
+		}
+
+		task ("Then the object entry is added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject192646");
+
+			ObjectPortlet.viewEntry(entry = "Build Incredible Digital Experiences with Liferay DXP");
 		}
 	}
 
@@ -2168,6 +2186,95 @@ definition {
 		ObjectPortlet.assertEntryNotPresent(entry = "Decline Entry");
 	}
 
+	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries added after the validation update"
+	@priority = 4
+	test CanUpdateValidation {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a custom object definition with a text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 192647",
+				objectName = "CustomObject192647",
+				pluralLabelName = "Custom Objects 192647");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Text",
+				fieldName = "text",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject192647");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject192647");
+		}
+
+		task ("and Given a expression builder validation set to full validation") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 192647");
+
+			ObjectAdmin.goToValidationsTab();
+
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Expression Builder");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "NOT(contains(text, 'lazy'))");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not valid for text entry.");
+
+			PortletEntry.save();
+		}
+
+		task ("and Given a valid object entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "text",
+				objectName = "CustomObject192647",
+				value = "Quick brown fox");
+		}
+
+		task ("When editing the custom validation") {
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.editLabelOnCustomValidation(editValidationName = "Custom Validation Updated");
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "NOT(contains(text, 'dog'))");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not valid for text entry, the field contains the word: dog.");
+
+			PortletEntry.save();
+		}
+
+		task ("When the user changes the validation logic and attempts to create an invalid object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject192647");
+
+			ObjectPortlet.addSingleFieldEntryViaUI(
+				entry = "Lazy dog",
+				invalidEntry = "true");
+		}
+
+		task ("Then the invalid object entry isn't added and the existing object entry isn't affected") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "This entry is not valid for text entry, the field contains the word: dog.");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject192647");
+
+			ObjectPortlet.assertEntryNotPresent(entry = "Lazy dog");
+
+			ObjectPortlet.viewEntry(entry = "Quick brown fox");
+		}
+	}
+
 	@description = "LPS-144474 - Verify that, when editing an entry in an Object, the user only is able to update the entry successfully if it passes for all validations from that Object"
 	@priority = 4
 	test CanUpdateWhenPassesForAllValidations {
@@ -2233,86 +2340,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153558");
 
 		ObjectPortlet.viewEntry(entry = "Update Entry");
-	}
-
-	@description = "LPS-144474 - Verify that, when managing an Object validation, the user is able to define if that validation is active or not"
-	@priority = 4
-	test CanUserDefineValidationActiveOrInactive {
-		property ci.retries.disabled = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given a custom object with a text field") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 153552",
-				objectName = "CustomObject153552",
-				pluralLabelName = "Custom Objects 153552");
-
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Integer",
-				fieldLabelName = "Custom Field",
-				fieldName = "customField",
-				fieldType = "Integer",
-				isRequired = "false",
-				objectName = "CustomObject153552");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153552");
-		}
-
-		task ("And given a deactivated custom validation that prevents entries which have a value greater than 2500") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 153552");
-
-			ObjectAdmin.goToValidationsTab();
-
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Groovy");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField > 2500)");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
-		}
-
-		task ("And given a custom object entry with a value greater than 2500") {
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customField",
-				objectName = "CustomObject153552",
-				value = 4500);
-		}
-
-		task ("When the custom validation is activated and the user attempts to add an entry with a value greater than 2500") {
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			PortletEntry.save();
-
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject153552");
-
-			LexiconEntry.gotoAdd();
-
-			ObjectPortlet.typeCustomField(
-				customField = "Custom Field",
-				entry = 3500);
-
-			Button.clickSave();
-		}
-
-		task ("Then the entry isn't created and the previously added entry is present on the table") {
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject153552");
-
-			ObjectPortlet.assertEntryNotPresent(entry = 3500);
-
-			ObjectPortlet.viewEntry(entry = 4500);
-		}
 	}
 
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Basic Info tab"

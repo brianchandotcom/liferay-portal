@@ -146,7 +146,7 @@ public class LayoutPageTemplateDisplayContext {
 			LayoutPageTemplateCollectionServiceUtil.
 				getLayoutPageTemplateCollections(
 					_themeDisplay.getScopeGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+					LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		return _layoutPageTemplateCollections;
 	}

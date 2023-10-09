@@ -3,15 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useState} from 'react';
-
 import './ProductCard.scss';
 
 import ClaySticker from '@clayui/sticker';
+import {useEffect, useState} from 'react';
 
 import emptyPictureIcon from '../../../assets/icons/avatar.svg';
 import useCart from '../../../hooks/useCart';
-import {getProductById} from '../../../utils/api';
 import {getCustomFieldValue} from '../../../utils/customFieldUtil';
 import {
 	getThumbnailByProductAttachment,
@@ -23,38 +21,19 @@ import {StepType} from '../enums/stepType';
 
 interface ProductCardProps {
 	cartUtil: ReturnType<typeof useCart>;
-	productId: number | null;
+	product?: Product;
 	selectedAccount?: Account;
-	setProductToForm: (product: Product) => void;
 	step: StepType;
 }
 
 const ProductCard = ({
 	cartUtil,
-	productId,
+	product,
 	selectedAccount,
-	setProductToForm,
 	step,
 }: ProductCardProps) => {
-	const [product, setProduct] = useState<Product>();
-	const [hasTrial, setHasTrial] = useState<boolean>(false);
-	const [basePrice, setBasePrice] = useState<Number | undefined>(undefined);
-
-	const totalFormatted = () => {
-		if (step === StepType.LICENSES || step === StepType.PAYMENT) {
-			return (
-				<span className="paid-price-text">
-					{cartUtil?.cart?.id
-						? `${cartUtil?.cart?.summary?.totalFormatted}`
-						: `$0`}
-				</span>
-			);
-		}
-
-		if (basePrice && hasTrial) {
-			return <span>{`30-day trial or $${basePrice}`}</span>;
-		}
-	};
+	const [hasTrial, setHasTrial] = useState(false);
+	const [basePrice, setBasePrice] = useState(0);
 
 	const productHasTrialSKU = (skus: SKU[]) => {
 		skus.forEach(async (sku) => {
@@ -75,7 +54,7 @@ const ProductCard = ({
 		});
 	};
 
-	const getProductBasePrice = async (product: Product) => {
+	const getProductBasePrice = (product: Product) => {
 		product?.skus?.forEach((sku) => {
 			const licenseUsageType = sku?.skuOptions.find(
 				(skuOption) =>
@@ -93,33 +72,29 @@ const ProductCard = ({
 		});
 	};
 
-	useEffect(() => {
-		const getProduct = async () => {
-			if (!productId) {
-				return;
-			}
+	const totalFormatted = () => {
+		if (step === StepType.LICENSES || step === StepType.PAYMENT) {
+			return (
+				<span className="paid-price-text">
+					{cartUtil?.cart?.id
+						? `${cartUtil?.cart?.summary?.totalFormatted}`
+						: `$0`}
+				</span>
+			);
+		}
 
-			const product = await getProductById({
-				nestedFields: 'attachments,productSpecifications,skus,catalog',
-				productId,
-			});
+		if (basePrice && hasTrial) {
+			return <span>{`30-day trial or $${basePrice}`}</span>;
+		}
+	};
 
-			if (product) {
-				setProduct(product);
-				productHasTrialSKU(product.skus);
-				setProductToForm(product);
-				getProductBasePrice(product);
-			}
-		};
+	const getIconUrl = () => {
+		const iconURL = product
+			? getThumbnailByProductAttachment(product.attachments)?.split('/o/')
+			: '';
 
-		getProduct();
-	}, [productId, setProductToForm]);
-
-	const iconURL = product
-		? getThumbnailByProductAttachment(product.attachments)?.split('/o/')
-		: '';
-
-	const convertedIconURL = iconURL ? `/o/${iconURL[1]}` : '';
+		return iconURL ? `/o/${iconURL[1]}` : '';
+	};
 
 	const getLicenseTagText = (product: Product) => {
 		const licenseTypeSpecification = getValueFromSpecifications(
@@ -134,6 +109,13 @@ const ProductCard = ({
 		}
 	};
 
+	useEffect(() => {
+		if (product) {
+			productHasTrialSKU(product.skus);
+			getProductBasePrice(product);
+		}
+	}, [product]);
+
 	if (!product) {
 		return null;
 	}
@@ -142,12 +124,7 @@ const ProductCard = ({
 		<div className="p-5 product-banner">
 			<div className="d-flex flex-row justify-content-between">
 				<div className="d-flex flex-row">
-					<img
-						alt=""
-						height="64px"
-						src={convertedIconURL}
-						width="64px"
-					/>
+					<img alt="" height="64px" src={getIconUrl()} width="64px" />
 					<div className="align-items-center ml-4">
 						<h1 className="text-weight-bold">
 							{product.name.en_US}

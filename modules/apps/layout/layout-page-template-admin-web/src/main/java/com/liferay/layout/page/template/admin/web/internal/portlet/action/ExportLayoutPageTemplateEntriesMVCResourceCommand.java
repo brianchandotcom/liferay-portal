@@ -45,7 +45,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 		try {
 			return _layoutsExporter.exportLayoutPageTemplateEntries(
 				layoutPageTemplateEntryIds,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+				LayoutPageTemplateEntryTypeConstants.BASIC);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);

@@ -7,7 +7,6 @@ package com.liferay.portal.dao.orm.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -1030,9 +1029,7 @@ public class SQLNullTest {
 	}
 
 	protected boolean isDBType(DBType dbType) {
-		DB db = DBManagerUtil.getDB();
-
-		if (dbType == db.getDBType()) {
+		if (dbType == DBManagerUtil.getDBType()) {
 			return true;
 		}
 

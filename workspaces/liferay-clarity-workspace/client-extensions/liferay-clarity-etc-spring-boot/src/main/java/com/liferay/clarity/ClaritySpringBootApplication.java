@@ -21,8 +21,7 @@ import org.springframework.context.annotation.Import;
 public class ClaritySpringBootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(
-			ClaritySpringBootApplication.class, args);
+		SpringApplication.run(ClaritySpringBootApplication.class, args);
 	}
 
 }

@@ -13,11 +13,15 @@ import java.math.BigDecimal;
 public class InstanceTierPriceEntry {
 
 	public InstanceTierPriceEntry(
-		long priceTierEntryId, String createDateString, BigDecimal minQuantity,
+		long priceTierEntryId, String createDateString, String discountLevels,
+		String endDateString, String override, BigDecimal minQuantity,
 		String price) {
 
 		_priceTierEntryId = priceTierEntryId;
 		_createDateString = createDateString;
+		_discountLevels = discountLevels;
+		_endDateString = endDateString;
+		_override = override;
 		_minQuantity = minQuantity;
 		_price = price;
 	}
@@ -26,8 +30,20 @@ public class InstanceTierPriceEntry {
 		return _createDateString;
 	}
 
+	public String getDiscountLevels() {
+		return _discountLevels;
+	}
+
+	public String getEndDateString() {
+		return _endDateString;
+	}
+
 	public BigDecimal getMinQuantity() {
 		return _minQuantity;
+	}
+
+	public String getOverride() {
+		return _override;
 	}
 
 	public String getPrice() {
@@ -39,7 +55,10 @@ public class InstanceTierPriceEntry {
 	}
 
 	private final String _createDateString;
+	private final String _discountLevels;
+	private final String _endDateString;
 	private final BigDecimal _minQuantity;
+	private final String _override;
 	private final String _price;
 	private final long _priceTierEntryId;
 

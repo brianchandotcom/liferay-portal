@@ -486,9 +486,9 @@ definition {
 				position = 1);
 		}
 
-		SearchPortlets.configureSearchBarWidget(searchScope = "Everything");
+		SearchPage.configureSearchBarWidget(searchScope = "Everything");
 
-		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
+		SearchPage.configureSearchOptions(allowEmptySearches = "true");
 
 		PageEditor.publish();
 	}

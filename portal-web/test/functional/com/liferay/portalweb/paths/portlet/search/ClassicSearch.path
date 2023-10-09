@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>ClassicSearch</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ClassicSearch</td></tr>
+</thead>
+
+<tbody>
+
+<!--ASSET_TYPE_FACET-->
+
+<tr>
+	<td>ASSET_TYPE_FACET_ANY_ASSET</td>
+	<td>//div[contains(@class,'search-facet')]//ul/li[contains(@class,'facet-value') and contains(@class,'default')]/a[contains(.,'Any Asset')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TYPE_FACET_FREQUENCY</td>
+	<td>//div[contains(@class,'search-facet')]//ul/li[contains(@class,'facet-value') and contains(.,'${key_searchAssetType}')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TYPE_FACET_ASSET</td>
+	<td>//div[contains(@class,'search-facet')]//ul/li[contains(@class,'facet-value') and contains(.,'${key_searchAssetType}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
+<!--CLASSIC_ASSET_ENTRY_TABLE-->
+
+<tr>
+	<td>CLASSIC_ASSET_ENTRY_TABLE_TITLE</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLASSIC_ASSET_ENTRY_TABLE_TITLE_SPECIFIC</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div[contains(.,'${key_searchAssetType}')]/..//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLASSIC_ASSET_ENTRY_TABLE_TYPE</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLASSIC_ASSET_ENTRY_TABLE_TYPE_SPECIFIC</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div[contains(.,'${key_searchAssetType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLASSIC_ASSET_ENTRY_TABLE_SUMMARY</td>
+	<td>xpath=(//*[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLASSIC_ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//div[contains(.,'${key_searchAssetType}')]/../div[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
+<!--CLASSIC_ASSET_DETAILS-->
+
+<tr>
+	<td>CLASSIC_ASSET_DETAILS_TITLE</td>
+	<td>//section[contains(@id,'templateSearch')]//span[contains(@class,'asset-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BAR_CONFIG_BASIC_DISPLAY_USER_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'UserSearchFacet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLASSIC_SEARCH_BAR</td>
+	<td>//input[contains(@id,'SearchPortlet') and @type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_SEARCH_BAR_SCOPE_SELECT_OPTION</td>
+	<td>//header[@id='banner']//div/select[@title='Scope']/option[contains(.,'${searchScope}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODIFIED_RANGE_FACET_TIME_RANGE</td>
+	<td>//div[contains(@class,'search-facet')]/div/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchModifiedRange}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_FACET_TERM_FREQUENCY</td>
+	<td>//div[contains(@class,'search-facet')]//ul/li[contains(@class,'facet-value') and contains(.,'${key_term}')]/a/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

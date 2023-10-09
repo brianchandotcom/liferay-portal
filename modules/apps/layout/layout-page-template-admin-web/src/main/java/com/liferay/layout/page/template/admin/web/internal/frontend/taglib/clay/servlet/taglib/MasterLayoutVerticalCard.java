@@ -174,7 +174,7 @@ public class MasterLayoutVerticalCard
 				LayoutPageTemplateEntryServiceUtil.
 					fetchDefaultLayoutPageTemplateEntry(
 						_themeDisplay.getScopeGroupId(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 						WorkflowConstants.STATUS_APPROVED);
 
 			if (defaultLayoutPageTemplateEntry == null) {

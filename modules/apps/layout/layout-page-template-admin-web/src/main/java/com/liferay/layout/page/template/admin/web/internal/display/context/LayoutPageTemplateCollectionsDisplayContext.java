@@ -89,14 +89,14 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 					LayoutPageTemplateCollectionServiceUtil.
 						getLayoutPageTemplateCollections(
 							themeDisplay.getScopeGroupId(), _getKeywords(),
-							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+							LayoutPageTemplateEntryTypeConstants.BASIC,
 							searchContainer.getStart(),
 							searchContainer.getEnd(),
 							searchContainer.getOrderByComparator()),
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollectionsCount(
 						themeDisplay.getScopeGroupId(), _getKeywords(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC));
+						LayoutPageTemplateEntryTypeConstants.BASIC));
 		}
 		else {
 			searchContainer.setResultsAndTotal(
@@ -104,14 +104,14 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 					LayoutPageTemplateCollectionServiceUtil.
 						getLayoutPageTemplateCollections(
 							themeDisplay.getScopeGroupId(),
-							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+							LayoutPageTemplateEntryTypeConstants.BASIC,
 							searchContainer.getStart(),
 							searchContainer.getEnd(),
 							searchContainer.getOrderByComparator()),
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollectionsCount(
 						themeDisplay.getScopeGroupId(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC));
+						LayoutPageTemplateEntryTypeConstants.BASIC));
 		}
 
 		searchContainer.setRowChecker(

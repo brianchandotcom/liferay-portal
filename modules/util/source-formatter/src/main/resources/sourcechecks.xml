@@ -1357,6 +1357,10 @@
 			<category name="Performance" />
 			<description name="Finds missing comment with JIRA project when using `Pause`." />
 		</check>
+		<check name="PoshiPropertiesOrderCheck">
+			<category name="Styling" />
+			<description name="Sorts the values of properties in `.testcase` file." />
+		</check>
 		<check name="PoshiSmokeTestCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks for missing and unnecessary `property ci.retries.disabled = true` in smoke test." />

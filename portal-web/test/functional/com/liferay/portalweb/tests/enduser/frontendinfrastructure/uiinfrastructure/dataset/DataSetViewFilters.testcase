@@ -17,7 +17,7 @@ definition {
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
 
-			JSONDataSet._createDataSetEntry(
+			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
 				restApplication = "/data-set-manager/date-filters",
 				restEndpoint = "/",
@@ -25,10 +25,10 @@ definition {
 		}
 
 		task ("And adding a data set view") {
-			JSONDataSet._createFDSViewViaAPI(
+			DataSetAdmin.createFDSViewViaAPI(
 				dataSetName = "Data Set Test",
 				dataSetViewDescription = "FDSViewDescription",
-				dataSetViewName = "View Test");
+				key_dataSetViewNameList = "View Test");
 		}
 
 		task ("When go to the View page of the data set created.") {

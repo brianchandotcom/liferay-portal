@@ -298,17 +298,13 @@ public class ImportDisplayContext {
 	}
 
 	private String _getTypeLabelKey(int type) {
-		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+		if (type == LayoutPageTemplateEntryTypeConstants.BASIC) {
 			return "page-template";
 		}
-		else if (type ==
-					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
-
+		else if (type == LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 			return "display-page-template";
 		}
-		else if (type ==
-					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
-
+		else if (type == LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
 			return "master-page";
 		}
 

@@ -48,13 +48,7 @@ portletDisplay.setURLBack(redirect);
 		>
 			<div class="row text-center">
 				<div class="col-sm-6">
-
-					<%
-					BigDecimal quantity = commerceOrderItem.getQuantity();
-					BigDecimal shippedQuantity = commerceOrderItem.getShippedQuantity();
-					%>
-
-					<liferay-ui:message key="outstanding-quantity" />: <%= quantity.intValue() - shippedQuantity.intValue() %>
+					<liferay-ui:message key="outstanding-quantity" />: <%= commerceShipmentItemDisplayContext.getOutstandingQuantity() %>
 				</div>
 
 				<div class="col-sm-6">

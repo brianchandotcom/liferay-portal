@@ -17,7 +17,7 @@ definition {
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
 
-			JSONDataSet._createDataSetEntry(
+			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Fields Test",
 				restApplication = "/headless-admin-taxonomy/v1.0",
 				restEndpoint = "/v1.0/keywords/ranked",
@@ -25,10 +25,10 @@ definition {
 		}
 
 		task ("And adding a data set view") {
-			JSONDataSet._createFDSViewViaAPI(
+			DataSetAdmin.createFDSViewViaAPI(
 				dataSetName = "Data Set Fields Test",
 				dataSetViewDescription = "FDSViewDescription",
-				dataSetViewName = "View Fields Test");
+				key_dataSetViewNameList = "View Fields Test");
 		}
 
 		task ("When go to the View page of the data set created.") {

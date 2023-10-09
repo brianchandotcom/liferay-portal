@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -90,7 +91,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Page Template Collection One", StringPool.BLANK,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					_serviceContext);
 
 		String name1 = "Page Template One";
@@ -157,7 +158,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Page Template Collection One", StringPool.BLANK,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					_serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -165,9 +166,8 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Page Template One",
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+				"Page Template One", LayoutPageTemplateEntryTypeConstants.BASIC,
+				0, WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
 		String fileName = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "getFileName", new Class<?>[] {long[].class},
@@ -192,7 +192,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Page Template Collection One", StringPool.BLANK,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					_serviceContext);
 
 		String name = "Page Template One";
@@ -237,7 +237,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					RandomTestUtil.randomString(10), StringPool.BLANK,
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					_serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -292,7 +292,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollectionId, name,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0, status,
+				LayoutPageTemplateEntryTypeConstants.BASIC, 0, status,
 				_serviceContext);
 
 		_layoutPageTemplateStructureLocalService.

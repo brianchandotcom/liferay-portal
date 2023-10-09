@@ -65,7 +65,7 @@ definition {
 
 		Search.searchCP(searchTerm = "DM Document Title");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "DM Document Title");
+		SearchResults.viewNoSearchResults(searchTerm = "DM Document Title");
 	}
 
 	@description = "This ensures that a depot web content can be searched on a connected site when searching is reenabled."
@@ -104,13 +104,13 @@ definition {
 
 		Search.searchCP(searchTerm = "WC WebContent Title");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "WC WebContent Title");
+		SearchPage.gotoResultDetails(searchAssetTitle = "WC WebContent Title");
 
-		SearchPortlets.viewResultDetails(searchAssetTitle = "WC WebContent Title");
+		SearchPage.viewResultDetails(searchAssetTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that users can search for depot document from connected site."
@@ -132,13 +132,13 @@ definition {
 
 		Search.searchCP(searchTerm = "DM Document Title");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "DM Document Title");
+		SearchPage.gotoResultDetails(searchAssetTitle = "DM Document Title");
 
-		SearchPortlets.viewResultDetails(searchAssetTitle = "DM Document Title");
+		SearchPage.viewResultDetails(searchAssetTitle = "DM Document Title");
 	}
 
 	@description = "This ensures that a depot document associated with a tag can be searched from the connected site."
@@ -163,13 +163,13 @@ definition {
 
 		Search.searchCP(searchTerm = "depot");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "DM Document Title");
+		SearchPage.gotoResultDetails(searchAssetTitle = "DM Document Title");
 
-		SearchPortlets.viewResultDetails(searchAssetTitle = "DM Document Title");
+		SearchPage.viewResultDetails(searchAssetTitle = "DM Document Title");
 	}
 
 	@description = "This ensures that a depot content associated with the user can be searched with from the connected site."
@@ -197,11 +197,11 @@ definition {
 
 		Search.searchCP(searchTerm = "TEST TEST");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content Article");
 	}
@@ -228,13 +228,13 @@ definition {
 
 		Search.searchCP(searchTerm = "WC WebContent Title");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "WC WebContent Title");
+		SearchPage.gotoResultDetails(searchAssetTitle = "WC WebContent Title");
 
-		SearchPortlets.viewResultDetails(searchAssetTitle = "WC WebContent Title");
+		SearchPage.viewResultDetails(searchAssetTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that a depot document cannot be searched on a connected site when searching is disabled."
@@ -264,7 +264,7 @@ definition {
 
 		Search.searchCP(searchTerm = "DM Document Title");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "DM Document Title");
+		SearchResults.viewNoSearchResults(searchTerm = "DM Document Title");
 	}
 
 	@description = "This ensures that a depot document associated with a tag cannot be searched on a connected site when searching is disabled."
@@ -297,7 +297,7 @@ definition {
 
 		Search.searchCP(searchTerm = "depot");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "depot");
+		SearchResults.viewNoSearchResults(searchTerm = "depot");
 	}
 
 	@description = "This ensures that a depot content associated with the user cannot be searched on a connected site when searching is disabled."
@@ -336,12 +336,12 @@ definition {
 		AssertElementNotPresent(
 			key_searchAssetTitle = "DM Document Title",
 			key_searchAssetType = "Document",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC");
 
 		AssertElementNotPresent(
 			key_searchAssetTitle = "WC WebContent Title",
 			key_searchAssetType = "Web Content Article",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC");
 	}
 
 	@description = "This ensures that a depot web content cannot be searched on a connected site when searching is disabled."
@@ -372,7 +372,7 @@ definition {
 
 		Search.searchCP(searchTerm = "WC WebContent Title");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "WC WebContent Title");
+		SearchResults.viewNoSearchResults(searchTerm = "WC WebContent Title");
 	}
 
 }

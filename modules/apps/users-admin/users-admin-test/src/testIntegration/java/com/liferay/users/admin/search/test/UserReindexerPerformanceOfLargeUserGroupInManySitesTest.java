@@ -145,6 +145,14 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 			).build());
 	}
 
+	@Test
+	public void testReindexGreaterThanDatabaseMaxParameters() throws Exception {
+
+		// See portal property "database.max.parameters[sqlserver]""
+
+		reindex(TestPropsValues.getCompanyId(), new long[3000]);
+	}
+
 	protected Group addGroup() {
 		return groupSearchFixture.addGroup(new GroupBlueprint());
 	}
@@ -282,9 +290,13 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	protected void reindex(List<User> users) {
 		User user = users.get(0);
 
-		_reindexer.reindex(
-			user.getCompanyId(), _CLASS_NAME,
+		reindex(
+			user.getCompanyId(),
 			TransformUtil.transformToLongArray(users, User::getUserId));
+	}
+
+	protected void reindex(long companyId, long... classPKs) {
+		_reindexer.reindex(companyId, _CLASS_NAME, classPKs);
 	}
 
 	protected SearchResponse searchUsersInAllGroups(

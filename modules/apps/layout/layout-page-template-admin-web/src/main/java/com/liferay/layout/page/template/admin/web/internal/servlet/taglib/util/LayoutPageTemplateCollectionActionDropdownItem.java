@@ -8,6 +8,7 @@ package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -53,23 +54,42 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 							layoutPageTemplateCollection, ActionKeys.UPDATE),
 						dropdownItem -> {
 							dropdownItem.setHref(
-								PortletURLBuilder.createRenderURL(
-									_renderResponse
-								).setMVCRenderCommandName(
-									"/layout_page_template_admin" +
-										"/edit_layout_page_template_collection"
-								).setRedirect(
-									themeDisplay.getURLCurrent()
-								).setTabs1(
-									tabs1
-								).setParameter(
-									"layoutPageTemplateCollectionId",
-									layoutPageTemplateCollection.
-										getLayoutPageTemplateCollectionId()
-								).buildString());
+								_getEditLayoutPageTemplateCollectionURL(
+									layoutPageTemplateCollection, tabs1,
+									themeDisplay));
 							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> LayoutPageTemplateCollectionPermission.contains(
+							themeDisplay.getPermissionChecker(),
+							layoutPageTemplateCollection, ActionKeys.UPDATE),
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "updateLayoutPageTemplateCollection");
+							dropdownItem.putData(
+								"dialogTitle",
+								_getRenameDialogTitle(
+									_httpServletRequest,
+									layoutPageTemplateCollection));
+							dropdownItem.putData(
+								"layoutPageTemplateCollectionName",
+								layoutPageTemplateCollection.getName());
+							dropdownItem.putData(
+								"updateLayoutPageTemplateCollectionURL",
+								_getUpdateLayoutPageTemplateCollectionURL(
+									layoutPageTemplateCollection, tabs1));
+							dropdownItem.setIcon("pencil");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "rename"));
 						}
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -88,17 +108,8 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 								"permissionsLayoutPageTemplateCollection");
 							dropdownItem.putData(
 								"permissionsLayoutPageTemplateCollectionURL",
-								PermissionsURLTag.doTag(
-									StringPool.BLANK,
-									LayoutPageTemplateCollection.class.
-										getName(),
-									layoutPageTemplateCollection.getName(),
-									null,
-									String.valueOf(
-										layoutPageTemplateCollection.
-											getLayoutPageTemplateCollectionId()),
-									LiferayWindowState.POP_UP.toString(), null,
-									_httpServletRequest));
+								_getPermissionsLayoutPageTemplateCollectionURL(
+									layoutPageTemplateCollection));
 							dropdownItem.setIcon("password-policies");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
@@ -119,26 +130,8 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 								"action", "deleteLayoutPageTemplateCollection");
 							dropdownItem.putData(
 								"deleteLayoutPageTemplateCollectionURL",
-								PortletURLBuilder.createActionURL(
-									_renderResponse
-								).setActionName(
-									"/layout_page_template_admin/delete_" +
-										"layout_page_template_collection"
-								).setRedirect(
-									PortletURLBuilder.createRenderURL(
-										_renderResponse
-									).setTabs1(
-										tabs1
-									).setParameter(
-										"layoutPageTemplateCollectionId",
-										layoutPageTemplateCollection.
-											getParentLayoutPageTemplateCollectionId()
-									).buildString()
-								).setParameter(
-									"layoutPageTemplateCollectionId",
-									layoutPageTemplateCollection.
-										getLayoutPageTemplateCollectionId()
-								).buildString());
+								_getDeleteLayoutPageTemplateCollectionURL(
+									layoutPageTemplateCollection, tabs1));
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
@@ -148,6 +141,95 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
+	}
+
+	private String _getDeleteLayoutPageTemplateCollectionURL(
+		LayoutPageTemplateCollection layoutPageTemplateCollection,
+		String tabs1) {
+
+		return PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/layout_page_template_admin/delete_layout_page_template_collection"
+		).setRedirect(
+			PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setTabs1(
+				tabs1
+			).setParameter(
+				"layoutPageTemplateCollectionId",
+				layoutPageTemplateCollection.
+					getParentLayoutPageTemplateCollectionId()
+			).buildString()
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
+		).buildString();
+	}
+
+	private String _getEditLayoutPageTemplateCollectionURL(
+		LayoutPageTemplateCollection layoutPageTemplateCollection, String tabs1,
+		ThemeDisplay themeDisplay) {
+
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/layout_page_template_admin/edit_layout_page_template_collection"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setTabs1(
+			tabs1
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
+		).buildString();
+	}
+
+	private String _getPermissionsLayoutPageTemplateCollectionURL(
+			LayoutPageTemplateCollection layoutPageTemplateCollection)
+		throws Exception {
+
+		return PermissionsURLTag.doTag(
+			StringPool.BLANK, LayoutPageTemplateCollection.class.getName(),
+			layoutPageTemplateCollection.getName(), null,
+			String.valueOf(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId()),
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+	}
+
+	private String _getRenameDialogTitle(
+		HttpServletRequest httpServletRequest,
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+
+		if (layoutPageTemplateCollection.getType() ==
+				LayoutPageTemplateCollectionTypeConstants.BASIC) {
+
+			return LanguageUtil.get(
+				httpServletRequest, "rename-page-template-set");
+		}
+
+		return LanguageUtil.get(httpServletRequest, "rename-folder");
+	}
+
+	private String _getUpdateLayoutPageTemplateCollectionURL(
+		LayoutPageTemplateCollection layoutPageTemplateCollection,
+		String tabs1) {
+
+		return PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/layout_page_template_admin/update_layout_page_template_collection"
+		).setRedirect(
+			PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setTabs1(
+				tabs1
+			).buildString()
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
+		).buildString();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

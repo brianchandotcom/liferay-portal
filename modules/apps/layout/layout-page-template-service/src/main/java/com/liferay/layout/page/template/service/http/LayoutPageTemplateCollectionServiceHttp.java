@@ -444,6 +444,51 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
 				updateLayoutPageTemplateCollection(
 					HttpPrincipal httpPrincipal,
+					long layoutPageTemplateCollectionId, String name)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutPageTemplateCollectionServiceUtil.class,
+				"updateLayoutPageTemplateCollection",
+				_updateLayoutPageTemplateCollectionParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, layoutPageTemplateCollectionId, name);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.layout.page.template.model.
+				LayoutPageTemplateCollection)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static
+		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
+				updateLayoutPageTemplateCollection(
+					HttpPrincipal httpPrincipal,
 					long layoutPageTemplateCollectionId, String name,
 					String description)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -452,7 +497,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutPageTemplateCollectionServiceUtil.class,
 				"updateLayoutPageTemplateCollection",
-				_updateLayoutPageTemplateCollectionParameterTypes10);
+				_updateLayoutPageTemplateCollectionParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutPageTemplateCollectionId, name, description);
@@ -534,6 +579,10 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateLayoutPageTemplateCollectionParameterTypes10 = new Class[] {
+			long.class, String.class
+		};
+	private static final Class<?>[]
+		_updateLayoutPageTemplateCollectionParameterTypes11 = new Class[] {
 			long.class, String.class, String.class
 		};
 

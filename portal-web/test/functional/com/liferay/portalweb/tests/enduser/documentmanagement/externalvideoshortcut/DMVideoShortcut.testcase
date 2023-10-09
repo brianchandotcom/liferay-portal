@@ -619,36 +619,36 @@ definition {
 		Search.searchCP(searchTerm = "Category");
 
 		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = ${videoShortcutTitle},
 				searchAssetType = "Document");
 		}
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Test Facebook Video",
 			searchAssetType = "Document");
 
 		Search.searchCP(searchTerm = "Name");
 
 		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = ${videoShortcutTitle},
 				searchAssetType = "Document");
 		}
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Test Facebook Video",
 			searchAssetType = "Document");
 
 		Search.searchCP(searchTerm = "Category Name");
 
 		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = ${videoShortcutTitle},
 				searchAssetType = "Document");
 		}
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Test Facebook Video",
 			searchAssetType = "Document");
 	}
@@ -711,36 +711,36 @@ definition {
 		Search.searchCP(searchTerm = "tag");
 
 		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = ${videoShortcutTitle},
 				searchAssetType = "Document");
 		}
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Test Facebook Video",
 			searchAssetType = "Document");
 
 		Search.searchCP(searchTerm = "name");
 
 		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = ${videoShortcutTitle},
 				searchAssetType = "Document");
 		}
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Test Facebook Video",
 			searchAssetType = "Document");
 
 		Search.searchCP(searchTerm = "tag name");
 
 		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = ${videoShortcutTitle},
 				searchAssetType = "Document");
 		}
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Test Facebook Video",
 			searchAssetType = "Document");
 	}
@@ -817,13 +817,13 @@ definition {
 
 		Search.searchCP(searchTerm = "Test YouTube Video");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Test YouTube Video",
 			searchAssetType = "Document");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test YouTube Video");
+		SearchPage.gotoResultDetails(searchAssetTitle = "Test YouTube Video");
 
-		SearchPortlets.viewResultDetails(searchAssetTitle = "Test YouTube Video");
+		SearchPage.viewResultDetails(searchAssetTitle = "Test YouTube Video");
 
 		WaitForElementPresent(
 			key_videoShortcutPreview = "https://www.youtube.com",

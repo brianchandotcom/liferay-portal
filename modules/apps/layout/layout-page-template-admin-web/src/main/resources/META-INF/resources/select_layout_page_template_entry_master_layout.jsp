@@ -19,7 +19,7 @@ layoutPageTemplateEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 masterLayoutPageTemplateEntries.add(layoutPageTemplateEntry);
 
-masterLayoutPageTemplateEntries.addAll(LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(scopeGroupId, LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+masterLayoutPageTemplateEntries.addAll(LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(scopeGroupId, LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

@@ -20,6 +20,7 @@ import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
@@ -167,7 +168,7 @@ public class PageTemplatesImporterTest {
 						LayoutPageTemplateConstants.
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						name, RandomTestUtil.randomString(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateCollectionTypeConstants.BASIC,
 						serviceContext);
 
 			String layoutPageTemplateEntryName = RandomTestUtil.randomString();
@@ -177,7 +178,7 @@ public class PageTemplatesImporterTest {
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				layoutPageTemplateEntryName,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+				LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			File file = _layoutsExporter.exportLayoutPageTemplateEntries(
@@ -544,7 +545,7 @@ public class PageTemplatesImporterTest {
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateCollectionTypeConstants.BASIC,
 						serviceContext);
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -553,7 +554,7 @@ public class PageTemplatesImporterTest {
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					RandomTestUtil.randomString(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+					LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			FragmentCollection fragmentCollection =
@@ -590,7 +591,7 @@ public class PageTemplatesImporterTest {
 				new long[] {
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 				},
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+				LayoutPageTemplateEntryTypeConstants.BASIC);
 
 			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
@@ -627,7 +628,7 @@ public class PageTemplatesImporterTest {
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateCollectionTypeConstants.BASIC,
 						serviceContext);
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -636,7 +637,7 @@ public class PageTemplatesImporterTest {
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					RandomTestUtil.randomString(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+					LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			FragmentCollection fragmentCollection =
@@ -677,7 +678,7 @@ public class PageTemplatesImporterTest {
 				new long[] {
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 				},
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+				LayoutPageTemplateEntryTypeConstants.BASIC);
 
 			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
@@ -713,7 +714,7 @@ public class PageTemplatesImporterTest {
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateCollectionTypeConstants.BASIC,
 						serviceContext);
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -722,7 +723,7 @@ public class PageTemplatesImporterTest {
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					RandomTestUtil.randomString(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+					LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			FragmentCollection fragmentCollection =
@@ -763,7 +764,7 @@ public class PageTemplatesImporterTest {
 				new long[] {
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 				},
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+				LayoutPageTemplateEntryTypeConstants.BASIC);
 
 			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
@@ -815,7 +816,7 @@ public class PageTemplatesImporterTest {
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplateCollectionTypeConstants.BASIC,
 						serviceContext);
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -824,7 +825,7 @@ public class PageTemplatesImporterTest {
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					RandomTestUtil.randomString(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+					LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			FragmentCollection fragmentCollection =
@@ -861,7 +862,7 @@ public class PageTemplatesImporterTest {
 				new long[] {
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 				},
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+				LayoutPageTemplateEntryTypeConstants.BASIC);
 
 			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
@@ -1056,7 +1057,7 @@ public class PageTemplatesImporterTest {
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				"Test Master Page",
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

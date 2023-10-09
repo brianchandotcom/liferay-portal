@@ -244,17 +244,17 @@ definition {
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
+		SearchPage.searchEmbedded(searchTerm = "DM Document Title");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = '''"DM Document Title"''');
+		SearchPage.searchEmbedded(searchTerm = '''"DM Document Title"''');
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 	}
@@ -395,9 +395,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "asdf");
+		SearchPage.searchEmbedded(searchTerm = "asdf");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "asdf");
+		SearchResults.viewNoSearchResults(searchTerm = "asdf");
 	}
 
 }

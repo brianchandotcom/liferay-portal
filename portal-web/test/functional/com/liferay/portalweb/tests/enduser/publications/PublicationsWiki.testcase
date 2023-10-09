@@ -407,38 +407,48 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
+		SearchPage.searchEmbedded(searchTerm = "Wiki");
 
-		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "Wiki Page Production/Wiki Page,Wiki Page Content Edit/Wiki Page,Wiki Page Publication 2/Wiki Page",
+		SearchResults.viewSearchResults(
+			searchAssetSummary = "Wiki Page Content Edit",
+			searchAssetTitle = "Wiki Page Production",
+			searchTerm = "Wiki");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "Wiki Page Publication 2",
 			searchTerm = "Wiki");
 
 		JSONPublications.selectPublication(publicationName = "Publication 1");
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
+		SearchPage.searchEmbedded(searchTerm = "Wiki");
 
-		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "Wiki Page Production/Wiki Page,Original content/Wiki Page,Wiki Page Publication 1/Wiki Page",
+		SearchResults.viewSearchResults(
+			searchAssetSummary = "Original content",
+			searchAssetTitle = "Wiki Page Production",
+			searchTerm = "Wiki");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "Wiki Page Publication 1",
 			searchTerm = "Wiki");
 
 		Publications.workOnProduction();
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
+		SearchPage.searchEmbedded(searchTerm = "Wiki");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetSummary = "Original content",
 			searchAssetTitle = "Wiki Page Production",
 			searchAssetType = "Wiki Page");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Wiki Page Publication 1",
 			searchAssetType = "Wiki Page");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Wiki Page Publication 2",
 			searchAssetType = "Wiki Page");
 	}

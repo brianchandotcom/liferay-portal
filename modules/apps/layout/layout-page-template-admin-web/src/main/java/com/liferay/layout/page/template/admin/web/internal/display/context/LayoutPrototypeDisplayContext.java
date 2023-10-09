@@ -125,13 +125,13 @@ public class LayoutPrototypeDisplayContext {
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesByType(
 						themeDisplay.getScopeGroupId(), 0,
-						LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+						LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator()),
 			LayoutPageTemplateEntryServiceUtil.
 				getLayoutPageTemplateEntriesCountByType(
 					themeDisplay.getScopeGroupId(), 0,
-					LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE));
+					LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE));
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 

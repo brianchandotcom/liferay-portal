@@ -46,7 +46,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 		</div>
 	</c:when>
 	<c:when test="<%= exception instanceof DLPreviewGenerationInProcessException %>">
-		<clay:alert
+		<clay:stripe
 			message="generating-preview-will-take-a-few-minutes"
 		/>
 	</c:when>

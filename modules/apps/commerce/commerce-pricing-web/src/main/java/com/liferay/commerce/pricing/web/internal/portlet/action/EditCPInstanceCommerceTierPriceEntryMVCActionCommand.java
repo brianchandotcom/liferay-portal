@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
+import com.liferay.commerce.price.list.exception.CommerceTierPriceEntryMinQuantityException;
 import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -107,7 +108,9 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (exception instanceof
-						DuplicateCommerceTierPriceEntryException) {
+						CommerceTierPriceEntryMinQuantityException ||
+					 exception instanceof
+						 DuplicateCommerceTierPriceEntryException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);

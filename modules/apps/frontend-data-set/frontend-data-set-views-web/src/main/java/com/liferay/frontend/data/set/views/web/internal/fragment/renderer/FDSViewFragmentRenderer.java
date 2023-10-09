@@ -520,15 +520,25 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 						"multiple", properties.get("multiple")
 					).put(
 						"preloadedData",
-						JSONUtil.put(
-							"exclude", false
-						).put(
-							"selectedItems",
-							_getSelectedItemsJSONArray(
-								listTypeEntries, themeDisplay.getLocale(),
-								MapUtil.getString(
-									properties, "preselectedValues"))
-						)
+						() -> {
+							JSONArray selectedItemsJSONArray =
+								_getSelectedItemsJSONArray(
+									listTypeEntries, themeDisplay.getLocale(),
+									MapUtil.getString(
+										properties, "preselectedValues"));
+
+							if (JSONUtil.isEmpty(selectedItemsJSONArray)) {
+								return null;
+							}
+
+							return JSONUtil.put(
+								"exclude",
+								() -> Boolean.FALSE.equals(
+									(Boolean)properties.get("include"))
+							).put(
+								"selectedItems", selectedItemsJSONArray
+							);
+						}
 					).put(
 						"type", "selection"
 					);

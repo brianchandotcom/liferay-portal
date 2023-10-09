@@ -51,7 +51,7 @@ public class SelectDisplayPageMasterLayoutDisplayContext {
 		masterLayoutPageTemplateEntries.addAll(
 			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 				_themeDisplay.getScopeGroupId(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null));
 

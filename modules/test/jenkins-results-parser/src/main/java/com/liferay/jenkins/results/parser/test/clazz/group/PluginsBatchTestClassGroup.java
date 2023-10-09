@@ -33,15 +33,6 @@ import org.json.JSONObject;
 public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
-	public int getAxisCount() {
-		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
-			return 0;
-		}
-
-		return super.getAxisCount();
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
 		if (jsonObject != null) {
 			return jsonObject;
@@ -68,6 +59,12 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
+
+		if (ignore()) {
+			_pluginsGitWorkingDirectory = null;
+
+			return;
+		}
 
 		_pluginsGitWorkingDirectory =
 			portalGitWorkingDirectory.getPluginsGitWorkingDirectory();

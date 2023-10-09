@@ -190,7 +190,7 @@ app.get('/marketplace/trials/count', async (req, res) => {
 
 app.post('/marketplace/trial', async (req, res) => {
 	try {
-		const { body } = req;
+		const {body} = req;
 		const bearerToken = req.headers.authorization;
 		const data = {};
 		const token = await getSSABearer();
@@ -224,7 +224,7 @@ app.post('/marketplace/trial', async (req, res) => {
 			throw new Error('Failed to fetch custom fields');
 		}
 
-		const { customFields } = await getCustomFieldsResponse.json();
+		const {customFields} = await getCustomFieldsResponse.json();
 		const accountId = body.modelDTOOrder.accountId;
 		const projectName = customFields['Project Name'];
 		const siteInitializer = customFields['Site Initializer'];
@@ -251,24 +251,29 @@ app.post('/marketplace/trial', async (req, res) => {
 		data.userId = Number(SSA_SERVICE_USER_ID) || body.userId;
 
 		const response = await fetch(uri, {
-			method: 'POST',
+			body: JSON.stringify(data),
 			headers: {
-				Authorization: `Bearer ${token.access_token}`,
+				'Authorization': `Bearer ${token.access_token}`,
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(data),
+			method: 'POST',
 		});
 
 		if (!response.ok) {
-			throw new Error(`Trial request failed with status: ${response.status}`);
+			throw new Error(
+				`Trial request failed with status: ${response.status}`
+			);
 		}
 
 		const responseData = await response.json();
 
-		log.info('Trail request sent for order: ' + JSON.stringify(responseData));
+		log.info(
+			'Trail request sent for order: ' + JSON.stringify(responseData)
+		);
 
 		res.status(200).send(body);
-	} catch (error) {
+	}
+	catch (error) {
 		log.error(error);
 
 		res.status(500).send('Internal Server Error');

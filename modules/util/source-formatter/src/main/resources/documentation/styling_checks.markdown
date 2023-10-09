@@ -125,6 +125,7 @@ PlusStatementCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Performs sev
 PoshiAntCommandParametersOrderCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Sorts parameters in AntCommand call in Poshi Script files. |
 PoshiImportsCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Sorts and groups imports in Poshi Script files. |
 PoshiIndentationCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Finds incorrect indentation in Poshi Script files. |
+PoshiPropertiesOrderCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Sorts the values of properties in `.testcase` file. |
 PoshiStylingCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Applies rules to enforce consistency in code style. |
 PoshiVariableNameCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Checks variable names for correct use of `camelCase`. |
 PoshiWhitespaceCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Finds missing and unnecessary whitespace. |

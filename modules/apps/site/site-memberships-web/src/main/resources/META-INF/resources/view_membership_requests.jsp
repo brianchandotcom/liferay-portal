@@ -14,6 +14,7 @@ PortletURL backURL = renderResponse.createRenderURL();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 %>

@@ -4,8 +4,10 @@
  */
 
 import {useState} from 'react';
+import {UseFormSetValue, UseFormWatch} from 'react-hook-form';
 
 import {Input} from '../../../../components/Input/Input';
+import {GetAppForm} from '../../GetAppPage';
 import {paymentMethod} from '../../enums/paymentMethod';
 import {StepType} from '../../enums/stepType';
 import {BillingAddress} from './components/BillingAddress/BillingAddress';
@@ -18,13 +20,16 @@ interface SelectPaymentMethodProps {
 	billingAddress: BillingAddress;
 	email: string;
 	enableTrialMethod: boolean;
+	form: {
+		setValue: UseFormSetValue<GetAppForm>;
+		watch: UseFormWatch<GetAppForm>;
+	};
 	purchaseOrderNumber: string;
 	selectedPaymentMethod: PaymentMethodSelector;
 	setBillingAddress: (value: BillingAddress) => void;
 	setEmail: (value: string) => void;
 	setEnablePurchaseButton: (value: boolean) => void;
 	setPurchaseOrderNumber: (value: string) => void;
-	setSelectedPaymentMethod: (value: PaymentMethodSelector) => void;
 	step: StepType;
 }
 
@@ -33,13 +38,13 @@ export function SelectPaymentMethod({
 	billingAddress,
 	email,
 	enableTrialMethod,
+	form,
 	purchaseOrderNumber,
 	selectedPaymentMethod,
 	setBillingAddress,
 	setEmail,
 	setEnablePurchaseButton,
 	setPurchaseOrderNumber,
-	setSelectedPaymentMethod,
 	step,
 }: SelectPaymentMethodProps) {
 	const [selectedAddress, setSelectedAddress] = useState('');
@@ -51,7 +56,9 @@ export function SelectPaymentMethod({
 				<PaymentMethodSelector
 					enableTrial={enableTrialMethod}
 					selectedPaymentMethod={selectedPaymentMethod as string}
-					setSelectedPaymentMethod={setSelectedPaymentMethod}
+					setSelectedPaymentMethod={(value: paymentMethod) =>
+						form.setValue('selectedPaymentMethod', value)
+					}
 					step={step}
 				/>
 			</div>

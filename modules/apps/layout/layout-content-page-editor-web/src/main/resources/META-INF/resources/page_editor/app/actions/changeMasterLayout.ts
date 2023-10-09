@@ -5,7 +5,7 @@
 
 import {CHANGE_MASTER_LAYOUT} from './types';
 
-import type {LayoutData} from '../../types/LayoutData';
+import type {LayoutData} from '../../types/layout_data/LayoutData';
 import type {FragmentEntryLinkMap} from './addFragmentEntryLinks';
 
 type MasterLayoutOptions =

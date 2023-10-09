@@ -30,15 +30,6 @@ import org.json.JSONObject;
 public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
-	public int getAxisCount() {
-		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
-			return 0;
-		}
-
-		return super.getAxisCount();
-	}
-
-	@Override
 	public AxisTestClassGroup getAxisTestClassGroup(int axisId) {
 		if (axisId != 0) {
 			throw new IllegalArgumentException("axisId is not 0");
@@ -124,6 +115,10 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
+
+		if (ignore()) {
+			return;
+		}
 
 		List<File> moduleDirs;
 

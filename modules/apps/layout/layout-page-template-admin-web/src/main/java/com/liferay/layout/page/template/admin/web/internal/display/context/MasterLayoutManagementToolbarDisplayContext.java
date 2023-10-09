@@ -145,8 +145,7 @@ public class MasterLayoutManagementToolbarDisplayContext
 							_themeDisplay.getURLCurrent()
 						).setParameter(
 							"type",
-							LayoutPageTemplateEntryTypeConstants.
-								TYPE_MASTER_LAYOUT
+							LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT
 						).buildString()
 					).build());
 				dropdownItem.setLabel(

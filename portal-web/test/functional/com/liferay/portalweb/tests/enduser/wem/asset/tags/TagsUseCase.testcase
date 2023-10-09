@@ -411,9 +411,9 @@ definition {
 			var i = 1;
 
 			for (var searchTerm : list "blue,green,yellow") {
-				SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
+				SearchPage.searchEmbedded(searchTerm = ${searchTerm});
 
-				SearchResultPortlet.viewSearchResults(
+				SearchResults.viewSearchResults(
 					searchAssetTitle = "Blogs Entry Title ${i}",
 					searchAssetType = "Blogs Entry");
 

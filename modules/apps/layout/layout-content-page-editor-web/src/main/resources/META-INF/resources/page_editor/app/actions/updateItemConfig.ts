@@ -5,7 +5,7 @@
 
 import {UPDATE_ITEM_CONFIG} from './types';
 
-import type {LayoutData} from '../../types/LayoutData';
+import type {LayoutData} from '../../types/layout_data/LayoutData';
 import type {PageContent} from './addItem';
 
 export default function updateItemConfig({

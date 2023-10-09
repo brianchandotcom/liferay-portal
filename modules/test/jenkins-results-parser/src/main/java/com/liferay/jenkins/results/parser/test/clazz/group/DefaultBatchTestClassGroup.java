@@ -17,15 +17,6 @@ import org.json.JSONObject;
  */
 public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 
-	@Override
-	public int getAxisCount() {
-		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
-			return 0;
-		}
-
-		return super.getAxisCount();
-	}
-
 	protected DefaultBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
@@ -36,6 +27,10 @@ public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
+
+		if (ignore()) {
+			return;
+		}
 
 		File buildTestBatchFile = new File(
 			portalGitWorkingDirectory.getWorkingDirectory(),

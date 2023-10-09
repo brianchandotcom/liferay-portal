@@ -28,7 +28,6 @@ import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -630,10 +629,8 @@ public class PredicateExpressionVisitorImpl
 
 		EntityField.Type entityType = entityField.getType();
 
-		DB db = DBManagerUtil.getDB();
-
 		if (entityType.equals(EntityField.Type.DATE_TIME) &&
-			(db.getDBType() == DBType.HYPERSONIC)) {
+			(DBManagerUtil.getDBType() == DBType.HYPERSONIC)) {
 
 			try {
 				Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(

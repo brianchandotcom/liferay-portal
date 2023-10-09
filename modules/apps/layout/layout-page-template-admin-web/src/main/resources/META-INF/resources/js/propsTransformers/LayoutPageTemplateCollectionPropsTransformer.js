@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal} from 'frontend-js-web';
+import {openModal, openSimpleInputModal} from 'frontend-js-web';
 
 import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
 
@@ -30,6 +30,25 @@ const ACTIONS = {
 			url: permissionsLayoutPageTemplateCollectionURL,
 		});
 	},
+
+	updateLayoutPageTemplateCollection(
+		{
+			dialogTitle,
+			layoutPageTemplateCollectionName,
+			updateLayoutPageTemplateCollectionURL,
+		},
+		portletNamespace
+	) {
+		openSimpleInputModal({
+			dialogTitle,
+			formSubmitURL: updateLayoutPageTemplateCollectionURL,
+			mainFieldLabel: Liferay.Language.get('name'),
+			mainFieldName: 'name',
+			mainFieldPlaceholder: Liferay.Language.get('name'),
+			mainFieldValue: layoutPageTemplateCollectionName,
+			namespace: portletNamespace,
+		});
+	},
 };
 
 const updateItem = (item, portletNamespace) => {
@@ -47,7 +66,9 @@ const updateItem = (item, portletNamespace) => {
 	};
 
 	if (Array.isArray(item.items)) {
-		newItem.items = item.items.map(updateItem);
+		newItem.items = item.items.map((item) =>
+			updateItem(item, portletNamespace)
+		);
 	}
 
 	return newItem;

@@ -1,14 +1,11 @@
 Bundle-Name: Liferay Commerce Frontend Taglib
 Bundle-SymbolicName: com.liferay.commerce.frontend.taglib
-Bundle-Version: 21.0.1
+Bundle-Version: 22.0.1
 Export-Package: com.liferay.commerce.frontend.taglib.servlet.taglib
 Liferay-JS-Submodules-Bridge: commerce-frontend-taglib
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\
 		uri="http://liferay.com/tld/commerce-ui";\
-		version:Version="${Bundle-Version}",\
-	soy;\
-		type="commerce-frontend-taglib";\
 		version:Version="${Bundle-Version}"
 Web-ContextPath: /commerce-frontend-taglib

@@ -160,7 +160,7 @@ public class LayoutPrototypeUpgradeProcess extends UpgradeProcess {
 				preparedStatement.setLong(9, 0);
 				preparedStatement.setString(10, name);
 				preparedStatement.setInt(
-					11, LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE);
+					11, LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE);
 				preparedStatement.setLong(
 					12, layoutPrototype.getLayoutPrototypeId());
 				preparedStatement.setInt(13, WorkflowConstants.STATUS_APPROVED);

@@ -243,14 +243,14 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 						_layoutPageTemplateCollectionLocalService.
 							getLayoutPageTemplateCollections(
 								_themeDisplay.getScopeGroupId(),
-								LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+								LayoutPageTemplateEntryTypeConstants.BASIC,
 								searchContainer.getStart(),
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),
 					_layoutPageTemplateCollectionLocalService.
 						getLayoutPageTemplateCollectionsCount(
 							_themeDisplay.getScopeGroupId(),
-							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC));
+							LayoutPageTemplateEntryTypeConstants.BASIC));
 			}
 			else {
 				searchContainer.setResultsAndTotal(
@@ -258,14 +258,14 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 						_layoutPageTemplateCollectionLocalService.
 							getLayoutPageTemplateCollections(
 								_themeDisplay.getScopeGroupId(), keywords,
-								LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+								LayoutPageTemplateEntryTypeConstants.BASIC,
 								searchContainer.getStart(),
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),
 					_layoutPageTemplateCollectionLocalService.
 						getLayoutPageTemplateCollectionsCount(
 							_themeDisplay.getScopeGroupId(), keywords,
-							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC));
+							LayoutPageTemplateEntryTypeConstants.BASIC));
 			}
 
 			return searchContainer;

@@ -544,7 +544,7 @@ definition {
 
 		Search.searchCP(searchTerm = "Test");
 
-		Search.gotoResultAssetViaTitle(searchAssetTitle = "WC WebContent Title");
+		SearchPage.gotoResultDetails(searchAssetTitle = "WC WebContent Title");
 
 		for (var imageVariantContent : list "(max-width:300px),(max-width:1000px) and (min-width:300px)") {
 			AssertElementPresent(

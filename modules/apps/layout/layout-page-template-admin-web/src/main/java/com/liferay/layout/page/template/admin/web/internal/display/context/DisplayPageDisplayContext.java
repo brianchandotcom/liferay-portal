@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator;
+import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionLayoutPageTemplateEntryModifiedDateComparator;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -110,7 +111,7 @@ public class DisplayPageDisplayContext {
 							getLayoutPageTemplateEntries(
 								_themeDisplay.getScopeGroupId(), getKeywords(),
 								LayoutPageTemplateEntryTypeConstants.
-									TYPE_DISPLAY_PAGE,
+									DISPLAY_PAGE,
 								displayPagesSearchContainer.getStart(),
 								displayPagesSearchContainer.getEnd(),
 								displayPagesSearchContainer.
@@ -118,8 +119,7 @@ public class DisplayPageDisplayContext {
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageTemplateEntriesCount(
 							_themeDisplay.getScopeGroupId(), getKeywords(),
-							LayoutPageTemplateEntryTypeConstants.
-								TYPE_DISPLAY_PAGE));
+							LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 			}
 			else {
 				displayPagesSearchContainer.setResultsAndTotal(
@@ -128,7 +128,7 @@ public class DisplayPageDisplayContext {
 							getLayoutPageTemplateEntries(
 								_themeDisplay.getScopeGroupId(),
 								LayoutPageTemplateEntryTypeConstants.
-									TYPE_DISPLAY_PAGE,
+									DISPLAY_PAGE,
 								displayPagesSearchContainer.getStart(),
 								displayPagesSearchContainer.getEnd(),
 								displayPagesSearchContainer.
@@ -136,8 +136,7 @@ public class DisplayPageDisplayContext {
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageTemplateEntriesCount(
 							_themeDisplay.getScopeGroupId(),
-							LayoutPageTemplateEntryTypeConstants.
-								TYPE_DISPLAY_PAGE));
+							LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 			}
 
 			displayPagesSearchContainer.setRowChecker(
@@ -166,16 +165,14 @@ public class DisplayPageDisplayContext {
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageTemplateEntries(
 							_themeDisplay.getScopeGroupId(), getKeywords(),
-							LayoutPageTemplateEntryTypeConstants.
-								TYPE_DISPLAY_PAGE,
+							LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 							displayPagesSearchContainer.getStart(),
 							displayPagesSearchContainer.getEnd(),
 							displayPagesSearchContainer.getOrderByComparator()),
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(), getKeywords(),
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_DISPLAY_PAGE));
+						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 
 			displayPagesSearchContainer.setRowChecker(
 				new EmptyOnClickRowChecker(_renderResponse));
@@ -201,7 +198,7 @@ public class DisplayPageDisplayContext {
 					getLayoutPageCollectionsAndLayoutPageTemplateEntries(
 						_themeDisplay.getScopeGroupId(),
 						_getLayoutPageTemplateCollectionId(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 						displayPagesSearchContainer.getStart(),
 						displayPagesSearchContainer.getEnd(),
 						displayPagesSearchContainer.getOrderByComparator()),
@@ -209,7 +206,7 @@ public class DisplayPageDisplayContext {
 				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 					_themeDisplay.getScopeGroupId(),
 					_getLayoutPageTemplateCollectionId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE));
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 
 		displayPagesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
@@ -457,6 +454,10 @@ public class DisplayPageDisplayContext {
 
 		if (Objects.equals(getOrderByCol(), "create-date")) {
 			return new LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator(
+				orderByAsc);
+		}
+		else if (Objects.equals(getOrderByCol(), "modified-date")) {
+			return new LayoutPageTemplateCollectionLayoutPageTemplateEntryModifiedDateComparator(
 				orderByAsc);
 		}
 		else if (Objects.equals(getOrderByCol(), "name")) {

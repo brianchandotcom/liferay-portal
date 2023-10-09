@@ -131,7 +131,7 @@ public class EditStyleBookEntryDisplayContext {
 				JSONUtil.put(
 					"data",
 					_getOptionJSONObject(
-						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)
+						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE)
 				).put(
 					"type", "displayPageTemplate"
 				),
@@ -143,7 +143,7 @@ public class EditStyleBookEntryDisplayContext {
 				JSONUtil.put(
 					"data",
 					_getOptionJSONObject(
-						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)
+						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)
 				).put(
 					"type", "master"
 				),
@@ -155,8 +155,8 @@ public class EditStyleBookEntryDisplayContext {
 				JSONUtil.put(
 					"data",
 					_getOptionJSONObject(
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-						LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)
+						LayoutPageTemplateEntryTypeConstants.BASIC,
+						LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)
 				).put(
 					"type", "pageTemplate"
 				))
@@ -473,7 +473,7 @@ public class EditStyleBookEntryDisplayContext {
 
 		try {
 			if (layoutPageTemplateEntry.getType() ==
-					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 
 				String previewURL = HttpComponentsUtil.addParameters(
 					_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
@@ -569,6 +569,7 @@ public class EditStyleBookEntryDisplayContext {
 
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(_getRedirect());
+		portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 		_renderResponse.setTitle(_getStyleBookEntryTitle());
 	}

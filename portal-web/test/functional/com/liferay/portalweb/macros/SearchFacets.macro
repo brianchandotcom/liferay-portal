@@ -1,0 +1,435 @@
+definition {
+
+	macro checkFacetTerm {
+		if (IsNotChecked.isNotCheckedNotVisible(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "SearchPage#FACET_CHECKBOX_SPECIFIC")) {
+			Click(
+				key_checkboxName = ${facetTerm},
+				key_facetName = ${facetName},
+				locator1 = "SearchPage#FACET_CHECKBOX_LABEL_SPECIFIC");
+		}
+	}
+
+	macro checkFacetTermAndViewURL {
+		SearchFacets.checkFacetTerm(
+			facetName = ${facetName},
+			facetTerm = ${facetTerm});
+
+		var searchURL = SearchFacets.generateFacetCheckedURL(
+			facetName = ${facetName},
+			facetTerm = ${facetTerm},
+			searchPage = ${searchPage},
+			searchTerm = ${searchTerm},
+			searchURL = ${searchURL},
+			termURLValue = ${termURLValue});
+
+		AssertLocation(value1 = ${searchURL});
+
+		return ${searchURL};
+	}
+
+	macro clearAllFacetsAndViewURL {
+		while (IsElementPresent(locator1 = "SearchPage#FACET_CLEAR_GENERIC")) {
+			var facetNameBuilder = selenium.getText("SearchPage#FACET_WITH_CLEAR_BUTTON");
+
+			var facetNameBuilder = StringUtil.toLowerCase(${facetNameBuilder});
+
+			var firstWord = StringUtil.extractFirst(${facetNameBuilder}, " ");
+			var lastWord = StringUtil.extractLast(${facetNameBuilder}, " ");
+			var firstWord = StringUtil.upperCaseFirstLetter(${firstWord});
+			var lastWord = StringUtil.upperCaseFirstLetter(${lastWord});
+
+			var facetName = StringUtil.concat(${firstWord}, " ${lastWord}");
+
+			var searchURL = SearchFacets.clearFacetAndViewURL(
+				facetName = ${facetName},
+				searchURL = ${searchURL});
+		}
+
+		return ${searchURL};
+	}
+
+	macro clearFacet {
+		if (isSet(facetName)) {
+			var facetIDName = StringUtil.replace(${facetName}, " ", "");
+
+			AssertClick.assertPartialTextClickAt(
+				key_facetIDName = ${facetIDName},
+				locator1 = "SearchPage#FACET_CLEAR_SPECIFIC",
+				value1 = "Clear");
+		}
+		else {
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "SearchPage#FACET_CLEAR_GENERIC",
+				value1 = "Clear");
+		}
+	}
+
+	macro clearFacetAndViewURL {
+		if (isSet(facetName)) {
+			SearchFacets.clearFacet(facetName = ${facetName});
+
+			var searchURL = SearchFacets.generateFacetClearedURL(
+				facetName = ${facetName},
+				searchURL = ${searchURL});
+
+			AssertLocation(value1 = ${searchURL});
+
+			return ${searchURL};
+		}
+		else {
+			SearchFacets.clearFacet();
+		}
+	}
+
+	macro configureCategoryFacet {
+		if (isSet(index)) {
+			SearchFacets.gotoSearchFacetOptionsSpecific(
+				index = ${index},
+				portletName = "Category Facet",
+				portletOption = "Configuration");
+		}
+		else {
+			SearchFacets.gotoSearchFacetOptionsSpecific(
+				index = 1,
+				portletName = "Category Facet",
+				portletOption = "Configuration");
+		}
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
+
+		if (isSet(vocabularyScope)) {
+			if (${vocabularyScope} == "Select Vocabularies") {
+				Check.checkNotVisible(
+					key_radioName = ${vocabularyScope},
+					locator1 = "Search#CATEGORY_FACET_VOCABULARY_SCOPE_RADIO");
+
+				Click(
+					key_siteName = ${siteName},
+					locator1 = "Search#CATEGORY_FACET_EXPAND_VOCABULARIES");
+
+				for (var vocabularyName : list ${vocabularyName}) {
+					Check.checkNotVisible(
+						key_vocabularyName = ${vocabularyName},
+						locator1 = "Search#CATEGORY_FACET_VOCABULARY_CHECKBOX");
+				}
+			}
+			else if (${vocabularyScope} == "All Vocabularies") {
+				Check.checkNotVisible(
+					key_radioName = ${vocabularyScope},
+					locator1 = "Search#CATEGORY_FACET_VOCABULARY_SCOPE_RADIO");
+			}
+			else {
+				fail("Invalid vocabulary scope. Must be (All Vocabularies|Select Vocabularies).");
+			}
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro configureCustomFacet {
+		Portlet.gotoPortletOptions(
+			portletName = "Custom Facet",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(aggregationField)) {
+			Type(
+				locator1 = "SearchPage#CUSTOM_FACET_CONFIG_AGGREGATION_FIELD",
+				value1 = ${aggregationField});
+		}
+
+		if (isSet(customParameterName)) {
+			Type(
+				key_fieldLabel = "Custom Parameter Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${customParameterName});
+		}
+
+		if (isSet(customHeading)) {
+			Type(
+				key_fieldLabel = "Custom Heading",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${customHeading});
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro generateFacetCheckedURL {
+		if (!(isSet(searchURL))) {
+			var searchURL = SearchPage.getSearchTermURL(
+				searchPage = ${searchPage},
+				searchTerm = ${searchTerm});
+		}
+
+		if (${facetName} == "Type Facet") {
+			var termURLValue = SearchFacets.getTypeFacetTermURLValue(typeFacetTerm = ${facetTerm});
+		}
+		else if (${facetName} == "User Facet") {
+			var termURLValue = SearchFacets.getUserFacetTermURLValue(userFacetTerm = ${facetTerm});
+		}
+		else if (!(isSet(termURLValue))) {
+			var termURLValue = ${facetTerm};
+		}
+
+		var searchURLList = StringUtil.replace(${searchURL}, "&", ",");
+		var termURLValue = StringUtil.replace(${termURLValue}, " ", "%20");
+		var facetURLName = StringUtil.replace(${facetName}, " Facet", "");
+
+		var facetURLName = StringUtil.toLowerCase(${facetURLName});
+		var termURLValueList = ${termURLValue};
+
+		for (var facetKeyValuePair : list ${searchURLList}) {
+			if (contains(${facetKeyValuePair}, ${facetURLName})) {
+				var facetKeyValue = StringUtil.stripBetween(${facetKeyValuePair}, ${facetURLName}, "=");
+
+				var termURLValueList = StringUtil.add(${termURLValueList}, ${facetKeyValue});
+				var searchURL = StringUtil.stripBetween(${searchURL}, "&${facetURLName}", ${facetKeyValue});
+				var facetURLNameFound = "true";
+			}
+		}
+
+		if (${facetURLNameFound} == "true") {
+			var termURLValueList = RegexUtil.replace(${termURLValueList}, "(.*),$", 1);
+
+			var termURLValueList = ListUtil.sort(${termURLValueList});
+
+			for (var termURLValueListItem : list ${termURLValueList}) {
+				var searchURL = "${searchURL}&${facetURLName}=${termURLValueListItem}";
+			}
+		}
+		else {
+			var searchURL = "${searchURL}&${facetURLName}=${termURLValue}";
+		}
+
+		return ${searchURL};
+	}
+
+	macro generateFacetClearedURL {
+		var facetURLName = StringUtil.replace(${facetName}, " Facet", "");
+
+		var facetURLName = StringUtil.toLowerCase(${facetURLName});
+
+		var beforeFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 1);
+		var afterFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 3);
+
+		var searchURL = "${beforeFacetGroup}${afterFacetGroup}";
+
+		return ${searchURL};
+	}
+
+	macro generateFacetUncheckedURL {
+		if (${facetName} == "Type Facet") {
+			var termURLValue = SearchFacets.getTypeFacetTermURLValue(typeFacetTerm = ${facetTerm});
+		}
+		else if (${facetName} == "User Facet") {
+			var termURLValue = SearchFacets.getUserFacetTermURLValue(userFacetTerm = ${facetTerm});
+		}
+		else if (!(isSet(termURLValue))) {
+			var termURLValue = ${facetTerm};
+		}
+
+		var facetURLName = StringUtil.replace(${facetName}, " Facet", "");
+
+		var facetURLName = StringUtil.toLowerCase(${facetURLName});
+
+		var beforeFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 1);
+		var facetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 2);
+		var afterFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 3);
+		var termURLValue = StringUtil.replace(${termURLValue}, " ", "%20");
+		var facetGroupList = ${facetGroup};
+
+		while (${termURLValueFound} != "true") {
+			var facetKeyValuePair = RegexUtil.replace(${facetGroupList}, "(&[^&]+)(.*)", 1);
+
+			if (contains(${facetKeyValuePair}, ${termURLValue})) {
+				var facetGroup = StringUtil.replaceFirst(${facetGroup}, ${facetKeyValuePair}, "");
+				var termURLValueFound = "true";
+			}
+			else {
+				var facetGroupList = StringUtil.replaceFirst(${facetGroupList}, ${facetKeyValuePair}, "");
+			}
+		}
+
+		var searchURL = "${beforeFacetGroup}${afterFacetGroup}${facetGroup}";
+
+		return ${searchURL};
+	}
+
+	macro getTypeFacetTermURLValue {
+		if (contains(${typeFacetTerm}, "Blogs")) {
+			var typeFacetTermURLValue = "com.liferay.blogs.model.BlogsEntry";
+			var termURLValueFound = "true";
+		}
+
+		if (contains(${typeFacetTerm}, "Document")) {
+			var typeFacetTermURLValue = "com.liferay.document.library.kernel.model.DLFileEntry";
+			var termURLValueFound = "true";
+		}
+
+		if (contains(${typeFacetTerm}, "Web Content Article")) {
+			var typeFacetTermURLValue = "com.liferay.journal.model.JournalArticle";
+			var termURLValueFound = "true";
+		}
+
+		if (contains(${typeFacetTerm}, "Web Content Folder")) {
+			var typeFacetTermURLValue = "com.liferay.journal.model.JournalArticle";
+			var termURLValueFound = "true";
+		}
+
+		if (${termURLValueFound} != "true") {
+			fail("Type Facet term URL value has not been set correctly.");
+		}
+
+		return ${typeFacetTermURLValue};
+	}
+
+	macro getUserFacetTermURLValue {
+		var firstName = StringUtil.extractFirst(${userFacetTerm}, " ");
+
+		var userFacetTermURLValue = JSONUserGetter.getUserIdByFirstName(firstName = ${firstName});
+
+		return ${userFacetTermURLValue};
+	}
+
+	macro gotoSearchFacetOptionsSpecific {
+		MouseOver.mouseOverNotVisible(
+			key_index = ${index},
+			key_portletName = ${portletName},
+			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON_SPECIFIC");
+
+		Click(
+			key_index = ${index},
+			key_portletName = ${portletName},
+			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON_SPECIFIC");
+
+		if (isSet(portletOption)) {
+			var key_menuItem = ${portletOption};
+
+			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+	}
+
+	macro moveAssetTypesToAvailable {
+		Portlet.gotoPortletOptions(
+			portletName = "Type Facet",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		for (var assetType : list ${assetType}) {
+			AssertClick(
+				locator1 = "Search#TYPE_FACET_CURRENT_ASSET_TYPE",
+				value1 = ${assetType});
+
+			Click(locator1 = "Button#MOVE_CURRENT_TO_AVAILABLE");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Search#TYPE_FACET_AVAILABLE_ASSET_TYPE",
+				value1 = ${assetType});
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro uncheckFacetTerm {
+		if (IsChecked(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "SearchPage#FACET_CHECKBOX_SPECIFIC")) {
+			Click(
+				key_checkboxName = ${facetTerm},
+				key_facetName = ${facetName},
+				locator1 = "SearchPage#FACET_CHECKBOX_LABEL_SPECIFIC");
+		}
+	}
+
+	macro uncheckFacetTermAndViewURL {
+		SearchFacets.uncheckFacetTerm(
+			facetName = ${facetName},
+			facetTerm = ${facetTerm});
+
+		var searchURL = SearchFacets.generateFacetUncheckedURL(
+			facetName = ${facetName},
+			facetTerm = ${facetTerm},
+			searchURL = ${searchURL},
+			termURLValue = ${termURLValue});
+
+		AssertLocation(value1 = ${searchURL});
+
+		return ${searchURL};
+	}
+
+	macro updateFacetConfiguration {
+		Portlet.gotoPortletOptions(
+			portletName = ${portletName},
+			portletOption = "Configuration");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		SelectFrameTop();
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(sortOption)) {
+			Select(
+				key_fieldLabel = "Order Terms By",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${sortOption});
+		}
+
+		if (isSet(displayTemplate)) {
+			Select(
+				key_fieldLabel = "Display Template",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${displayTemplate});
+		}
+
+		if (isSet(parameterName)) {
+			FormFields.editText(
+				fieldName = "parameterName",
+				fieldValue = ${parameterName});
+		}
+
+		if (isSet(maxTerms)) {
+			FormFields.editText(
+				fieldName = "maxTerms",
+				fieldValue = ${maxTerms});
+		}
+
+		if (isSet(frequencyThreshold)) {
+			FormFields.editText(
+				fieldName = "frequencyThreshold",
+				fieldValue = ${frequencyThreshold});
+		}
+
+		if (${displayFrequencies} == "disable") {
+			FormFields.disableCheckbox(fieldName = "frequenciesVisible");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro viewFacetTermsSpecificOrder {
+		var termOrder = 0;
+
+		for (var termItem : list ${termList}) {
+			var termOrder = ${termOrder} + 1;
+
+			AssertTextEquals.assertPartialText(
+				key_facetName = ${facetName},
+				key_termOrderNumber = ${termOrder},
+				locator1 = "SearchPage#FACET_ITEMS_SPECIFIC_ORDER",
+				value1 = ${termItem});
+		}
+	}
+
+}

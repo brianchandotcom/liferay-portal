@@ -72,7 +72,7 @@ public class DisplayPageRendererUtil {
 			layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				groupId, PortalUtil.getClassNameId(itemClassName),
 				itemClassTypeId,
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE),
 			layoutPageTemplateEntry -> new RenderedContent() {
 				{
 					contentTemplateId =
@@ -126,7 +126,7 @@ public class DisplayPageRendererUtil {
 				groupId, displayPageKey);
 
 		if ((layoutPageTemplateEntry.getType() !=
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) &&
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) &&
 			(layoutPageTemplateEntry.getClassNameId() !=
 				PortalUtil.getClassNameId(itemClassName)) &&
 			(layoutPageTemplateEntry.getClassTypeId() != itemClassTypeId)) {

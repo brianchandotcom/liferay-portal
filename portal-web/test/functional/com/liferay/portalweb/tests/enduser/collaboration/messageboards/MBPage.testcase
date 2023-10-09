@@ -401,9 +401,9 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
+		SearchPage.searchEmbedded(searchTerm = "Category Name");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetSummary = "MB Thread Message Body",
 			searchAssetTitle = "MB Thread Message Subject",
 			searchAssetType = "Message Boards Message");

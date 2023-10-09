@@ -4,6 +4,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayBadge from '@clayui/badge';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
@@ -874,7 +875,15 @@ export default function ChangeTrackingRenderView({
 
 		if (moveChangesURL !== null) {
 			dropdownItems.push({
-				label: Liferay.Language.get('move-changes'),
+				label: (
+					<>
+						{Liferay.Language.get('move-changes')}
+
+						<div className="float-right">
+							<ClayBadge displayType="beta" label="beta" />
+						</div>
+					</>
+				),
 				onClick: () => navigate(moveChangesURL),
 				symbolLeft: 'move-folder',
 			});

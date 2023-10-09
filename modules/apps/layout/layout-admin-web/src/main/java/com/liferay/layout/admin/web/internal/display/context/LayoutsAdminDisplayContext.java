@@ -1509,7 +1509,7 @@ public class LayoutsAdminDisplayContext {
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollections(
 						themeDisplay.getScopeGroupId(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
+						LayoutPageTemplateEntryTypeConstants.BASIC)) {
 
 			int layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
@@ -1641,7 +1641,7 @@ public class LayoutsAdminDisplayContext {
 		if ((layoutPageTemplateEntry == null) ||
 			!Objects.equals(
 				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
 			hasEditableMasterLayout = true;
 		}
@@ -2003,7 +2003,7 @@ public class LayoutsAdminDisplayContext {
 		if ((layoutPageTemplateEntry != null) &&
 			Objects.equals(
 				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
 			return false;
 		}

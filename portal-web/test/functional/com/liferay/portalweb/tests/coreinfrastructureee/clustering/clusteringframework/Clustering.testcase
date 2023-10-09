@@ -149,9 +149,9 @@ definition {
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Entry2");
+		SearchPage.searchEmbedded(searchTerm = "Entry2");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Blogs Entry2 Title",
 			searchAssetType = "Blogs Entry");
 	}

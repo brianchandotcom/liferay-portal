@@ -91,7 +91,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 
 		return LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 			_themeDisplay.getCompanyGroupId(),
-			LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+			LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, orderByComparator);
 	}
@@ -100,7 +100,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		return LayoutPageTemplateEntryServiceUtil.
 			getLayoutPageTemplateEntriesCount(
 				_themeDisplay.getCompanyGroupId(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
 				WorkflowConstants.STATUS_APPROVED);
 	}
 
@@ -164,8 +164,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 			() -> {
 				if (Objects.equals(
 						layoutPageTemplateEntry.getType(),
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_WIDGET_PAGE)) {
+						LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
 
 					return LanguageUtil.get(
 						_httpServletRequest, "widget-page-template");
@@ -211,7 +210,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		masterLayoutPageTemplateEntries.addAll(
 			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 				scopeGroupId,
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null));
 

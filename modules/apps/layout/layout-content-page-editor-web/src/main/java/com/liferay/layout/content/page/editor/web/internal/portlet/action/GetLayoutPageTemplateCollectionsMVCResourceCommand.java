@@ -5,6 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -34,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 		"mvc.command.name=/layout_content_page_editor/get_layout_page_template_collections"
 	},
 	service = MVCResourceCommand.class
@@ -55,7 +57,7 @@ public class GetLayoutPageTemplateCollectionsMVCResourceCommand
 			_layoutPageTemplateCollectionLocalService.
 				getLayoutPageTemplateCollections(
 					themeDisplay.getScopeGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					LayoutPageTemplateEntryTypeConstants.BASIC,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					new LayoutPageTemplateCollectionNameComparator(true));
 

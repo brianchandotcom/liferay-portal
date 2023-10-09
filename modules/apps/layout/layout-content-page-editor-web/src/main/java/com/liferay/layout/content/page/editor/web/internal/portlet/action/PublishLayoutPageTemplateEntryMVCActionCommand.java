@@ -79,12 +79,12 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 		String key = "layoutPageTemplatePublished";
 
 		if (layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 
 			key = "displayPagePublished";
 		}
 		else if (layoutPageTemplateEntry.getType() ==
-					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
+					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
 
 			key = "masterPagePublished";
 		}

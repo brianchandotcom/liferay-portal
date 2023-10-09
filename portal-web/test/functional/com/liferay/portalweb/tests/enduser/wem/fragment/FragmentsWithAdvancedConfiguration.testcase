@@ -191,9 +191,9 @@ definition {
 				pageName = "Home",
 				siteName = ${randomSiteName});
 
-			SearchPortlets.searchEmbedded(searchTerm = "Go Somewhere");
+			SearchPage.searchEmbedded(searchTerm = "Go Somewhere");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Go Somewhere",
 				searchAssetType = "Page");
 		}
@@ -217,9 +217,9 @@ definition {
 				pageName = "Home",
 				siteName = ${randomSiteName});
 
-			SearchPortlets.searchEmbedded(searchTerm = "Go Somewhere");
+			SearchPage.searchEmbedded(searchTerm = "Go Somewhere");
 
-			SearchResultPortlet.viewNoSearchResults(searchTerm = "Go Somewhere");
+			SearchResults.viewNoSearchResults(searchTerm = "Go Somewhere");
 		}
 	}
 
@@ -280,10 +280,10 @@ definition {
 				pageName = "Home",
 				siteName = ${randomSiteName});
 
-			SearchPortlets.searchEmbedded(searchTerm = "footer");
+			SearchPage.searchEmbedded(searchTerm = "footer");
 
 			for (var pageNum : list "1,2,3,4") {
-				SearchResultPortlet.viewSearchResults(
+				SearchResults.viewSearchResults(
 					searchAssetTitle = "Page Name ${pageNum}",
 					searchAssetType = "Page");
 			}
@@ -306,14 +306,14 @@ definition {
 				pageName = "Home",
 				siteName = ${randomSiteName});
 
-			SearchPortlets.searchEmbedded(searchTerm = "footer");
+			SearchPage.searchEmbedded(searchTerm = "footer");
 
-			SearchResultPortlet.viewSearchResultNotPresent(
+			SearchResults.viewSearchResultNotPresent(
 				searchAssetTitle = "Page Name 1",
 				searchAssetType = "Page");
 
 			for (var pageNum : list "2,3,4") {
-				SearchResultPortlet.viewSearchResults(
+				SearchResults.viewSearchResults(
 					searchAssetTitle = "Page Name ${pageNum}",
 					searchAssetType = "Page");
 			}

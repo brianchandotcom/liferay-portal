@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>PROJECT_LOGO</td>
-	<td>//div[contains(@class,'account-subscription-card')]//div[contains(@class,'mb-3')]</td>
+	<td>//div[@class="d-flex flex-column"]//div[contains(@class,"cp-account-subscription-card-iconSvg")]</td>
 	<td></td>
 </tr>
 <tr>
@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>CARD_DATE</td>
-	<td>//*[contains(@class, 'card-body')]//*[(text()='${key_date}')]//..//*[(text()='${key_status}')]</td>
+	<td>//div[@class="d-flex flex-column"]//p[normalize-space(text())='${startdate}' and '${enddate}']</td>
 	<td></td>
 </tr>
 <tr>

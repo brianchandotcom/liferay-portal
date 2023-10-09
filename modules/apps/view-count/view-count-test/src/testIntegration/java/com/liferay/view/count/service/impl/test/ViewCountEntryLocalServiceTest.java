@@ -7,7 +7,6 @@ package com.liferay.view.count.service.impl.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -63,14 +62,13 @@ public class ViewCountEntryLocalServiceTest {
 	public void setUp() {
 		_className = _classNameLocalService.getClassName(
 			ViewCountEntryLocalServiceTest.class.getName());
-		_db = DBManagerUtil.getDB();
 	}
 
 	@Test
 	public void testLazyCreationWithRaceCondition() throws Throwable {
 		Assume.assumeFalse(
 			"HSQL does not allow concurrent Session assess, skip test.",
-			_db.getDBType() == DBType.HYPERSONIC);
+			DBManagerUtil.getDBType() == DBType.HYPERSONIC);
 
 		long classPK = 0;
 		int viewCount = 100;
@@ -173,7 +171,7 @@ public class ViewCountEntryLocalServiceTest {
 					Assert.assertNull(viewCountEntries.get(0));
 
 					if (viewCountEntries.size() == 2) {
-						if (_db.getDBType() == DBType.SQLSERVER) {
+						if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
 							Assert.assertNotNull(viewCountEntries.get(1));
 						}
 						else {
@@ -204,8 +202,6 @@ public class ViewCountEntryLocalServiceTest {
 
 	@Inject
 	private static ViewCountEntryLocalService _viewCountEntryLocalService;
-
-	private DB _db;
 
 	@DeleteAfterTestRun
 	private ViewCountEntry _viewCountEntry;

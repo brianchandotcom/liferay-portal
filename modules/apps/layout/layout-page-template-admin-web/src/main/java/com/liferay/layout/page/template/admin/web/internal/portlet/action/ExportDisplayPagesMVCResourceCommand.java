@@ -45,7 +45,7 @@ public class ExportDisplayPagesMVCResourceCommand
 		try {
 			return _layoutsExporter.exportLayoutPageTemplateEntries(
 				layoutPageTemplateEntryIds,
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);

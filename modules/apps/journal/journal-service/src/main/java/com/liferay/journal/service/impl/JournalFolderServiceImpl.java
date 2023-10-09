@@ -13,6 +13,7 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.base.JournalFolderServiceBaseImpl;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -256,13 +256,13 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status);
 
-		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
+		if (folderIds.size() <= DBManagerUtil.getDBMaxParameters()) {
 			return _journalArticleFinder.filterCountByG_F(
 				groupId, folderIds, queryDefinition);
 		}
 
 		int start = 0;
-		int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
+		int end = DBManagerUtil.getDBMaxParameters();
 
 		int articlesCount = _journalArticleFinder.filterCountByG_F(
 			groupId, folderIds.subList(start, end), queryDefinition);

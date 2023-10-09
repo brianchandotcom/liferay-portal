@@ -16,7 +16,7 @@ export interface Widget {
 }
 
 export interface WidgetSet {
-	categories: string[];
+	categories: WidgetSet[] | null;
 	path: string;
 	portlets: Widget[];
 	title: string;

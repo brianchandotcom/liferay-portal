@@ -76,7 +76,7 @@ public class MasterLayoutActionDropdownItemsProvider {
 			LayoutPageTemplateEntryServiceUtil.
 				fetchDefaultLayoutPageTemplateEntry(
 					_themeDisplay.getScopeGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 					WorkflowConstants.STATUS_APPROVED);
 		boolean hasUpdatePermission =
 			LayoutPageTemplateEntryPermission.contains(
@@ -441,7 +441,7 @@ public class MasterLayoutActionDropdownItemsProvider {
 				LayoutPageTemplateEntryServiceUtil.
 					fetchDefaultLayoutPageTemplateEntry(
 						_layoutPageTemplateEntry.getGroupId(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 						WorkflowConstants.STATUS_APPROVED);
 
 			if (defaultLayoutPageTemplateEntry != null) {

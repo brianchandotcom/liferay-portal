@@ -342,7 +342,7 @@ public class LayoutLookAndFeelDisplayContext {
 		if ((layoutPageTemplateEntry == null) ||
 			!Objects.equals(
 				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
 			hasEditableMasterLayout = true;
 		}
@@ -397,7 +397,7 @@ public class LayoutLookAndFeelDisplayContext {
 		if ((layoutPageTemplateEntry != null) &&
 			Objects.equals(
 				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
 			return false;
 		}

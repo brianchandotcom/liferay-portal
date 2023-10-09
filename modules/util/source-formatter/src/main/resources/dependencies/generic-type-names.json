@@ -274,10 +274,6 @@
 		},
 		{
 			"genericTypeCount": 1,
-			"name": "com.liferay.frontend.taglib.chart.model.ChartConfig"
-		},
-		{
-			"genericTypeCount": 1,
 			"name": "com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSource"
 		},
 		{

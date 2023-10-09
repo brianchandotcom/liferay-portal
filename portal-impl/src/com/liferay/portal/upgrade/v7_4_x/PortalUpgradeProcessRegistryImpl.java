@@ -66,7 +66,10 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(new Version(9, 2, 0), new UpgradeCountry());
 
-		upgradeVersionTreeMap.put(new Version(9, 2, 1), new UpgradeListType());
+		upgradeVersionTreeMap.put(
+			new Version(9, 2, 1), new UpgradeListType(),
+			UpgradeModulesFactory.create(
+				new String[] {"com.liferay.address.impl"}, null));
 
 		upgradeVersionTreeMap.put(
 			new Version(10, 0, 0), new UpgradePortletPreferences());

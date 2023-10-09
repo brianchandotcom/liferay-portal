@@ -17,6 +17,7 @@ import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryServiceBaseImpl;
 import com.liferay.ratings.kernel.model.RatingsEntryTable;
@@ -559,13 +559,13 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>(
 			status);
 
-		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
+		if (folderIds.size() <= DBManagerUtil.getDBMaxParameters()) {
 			return dlFileEntryFinder.filterCountByG_F(
 				groupId, folderIds, queryDefinition);
 		}
 
 		int start = 0;
-		int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
+		int end = DBManagerUtil.getDBMaxParameters();
 
 		int filesCount = dlFileEntryFinder.filterCountByG_F(
 			groupId, folderIds.subList(start, end), queryDefinition);

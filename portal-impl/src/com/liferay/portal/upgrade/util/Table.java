@@ -8,7 +8,6 @@ package com.liferay.portal.upgrade.util;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -362,9 +361,7 @@ public class Table {
 			value = GetterUtil.getBoolean(resultSet.getBoolean(name));
 		}
 		else if ((t == Types.BLOB) || (t == Types.LONGVARBINARY)) {
-			DB db = DBManagerUtil.getDB();
-
-			DBType dbType = db.getDBType();
+			DBType dbType = DBManagerUtil.getDBType();
 
 			if (dbType.equals(DBType.POSTGRESQL) &&
 				PostgreSQLJDBCUtil.isPGStatement(resultSet.getStatement())) {

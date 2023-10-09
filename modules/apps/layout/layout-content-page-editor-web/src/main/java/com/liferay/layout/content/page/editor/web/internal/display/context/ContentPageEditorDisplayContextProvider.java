@@ -116,7 +116,7 @@ public class ContentPageEditorDisplayContextProvider {
 
 		if ((layoutPageTemplateEntry != null) &&
 			(layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)) {
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE)) {
 
 			pageIsDisplayPage = true;
 		}

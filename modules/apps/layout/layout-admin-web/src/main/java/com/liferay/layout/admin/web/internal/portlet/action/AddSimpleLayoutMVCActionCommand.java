@@ -91,7 +91,7 @@ public class AddSimpleLayoutMVCActionCommand
 				_layoutPageTemplateEntryService.
 					fetchDefaultLayoutPageTemplateEntry(
 						groupId,
-						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 						WorkflowConstants.STATUS_APPROVED);
 
 			if (defaultLayoutPageTemplateEntry != null) {

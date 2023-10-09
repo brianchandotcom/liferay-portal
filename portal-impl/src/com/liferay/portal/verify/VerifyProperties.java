@@ -2237,7 +2237,8 @@ public class VerifyProperties {
 		{
 			"tags.asset.increment.view.counter.enabled",
 			"asset.entry.increment.view.counter.enabled"
-		}
+		},
+		{"sql.data.max.parameters", "database.max.parameters"}
 	};
 
 	private static final String[][] _RENAMED_SYSTEM_KEYS = {

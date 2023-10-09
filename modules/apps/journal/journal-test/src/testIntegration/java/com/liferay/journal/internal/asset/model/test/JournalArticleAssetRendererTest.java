@@ -84,8 +84,8 @@ public class JournalArticleAssetRendererTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				classNameId, ddmStructure.getStructureId(),
 				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, true,
-				0, 0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		AssetRendererFactory<JournalArticle> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(

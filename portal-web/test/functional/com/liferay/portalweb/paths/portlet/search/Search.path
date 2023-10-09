@@ -16,11 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GLOBAL_SEARCH_SUGGESTION</td>
-	<td>//div[contains(@class,'commerce-suggestions__item ') and contains(.,'${key_entryName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CATEGORY_FACET_EXPAND_VOCABULARIES</td>
 	<td>//span[*[name()='svg'][contains(@class,'lexicon-icon-angle-right component-expanded-d-none')]]/../../..//div[contains(.,'${key_siteName}')]</td>
 	<td></td>
@@ -47,17 +42,17 @@
 </tr>
 <tr>
 	<td>FACET_CLOUD_LAYOUT_ITEM</td>
-	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${facetName}')]]//ul[contains(@class,'tag-cloud')]//button[contains(.,'${facetValue}')]</td>
+	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${key_facetName}')]]//ul[contains(@class,'tag-cloud')]//button[contains(.,'${key_termValue}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FACET_COMPACT_LAYOUT_ITEM</td>
-	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${facetName}')]]//ul[contains(@class,'list-unstyled')]//button[contains(.,'${facetValue}')]</td>
+	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${key_facetName}')]]//ul[contains(@class,'list-unstyled')]//button[contains(.,'${key_termValue}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FACET_LABEL_LAYOUT_ITEM</td>
-	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${facetName}')]]//div[contains(@class,'label-container')]//button[contains(.,'${facetValue}')]</td>
+	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${key_facetName}')]]//div[contains(@class,'label-container')]//button[contains(.,'${key_termValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,18 +66,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GLOBAL_SEARCH_SUGGESTIONS</td>
-	<td>//div[contains(@class, 'commerce-suggestions__item') and contains (.,'${key_suggestionName}')]</td>
+	<td>GLOBAL_SEARCH_SEARCH_ENTRY_IN_CONTENT</td>
+	<td>//a[contains(@class,'commerce-suggestions__item') and (text()='${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACCOUNT_SEARCH_SUGGESTION</td>
-	<td>//div[contains(@class,'commerce-item__content') and contains(.,'${key_entryName}')]</td>
+	<td>GLOBAL_SEARCH_SUGGESTION</td>
+	<td>//a[contains(@class,'commerce-suggestions__item')]//p[text()='${key_suggestionName}']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CLASSIC_SEARCH_BAR</td>
-	<td>//input[contains(@id,'SearchPortlet') and @type='text']</td>
+	<td>GLOBAL_SEARCH_SUGGESTION_PRODUCT_DESCRIPTION</td>
+	<td>//a[contains(@class,'commerce-suggestions__item')]//p[text()='${key_suggestionName}']/following-sibling::p[text()='${key_suggestionDescription}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -103,11 +98,6 @@
 <tr>
 	<td>EMBEDDED_SEARCH_BAR_SCOPE_SELECT</td>
 	<td>//header[@id='banner']//div/select[@name='scope']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_SEARCH_BAR_SCOPE_SELECT_OPTION</td>
-	<td>//header[@id='banner']//div/select[@title='Scope']/option[contains(.,'${searchScope}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,13 +131,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MODIFIED_FACET_SPECIFIC_ORDER</td>
-	<td>//div[contains(@id,'ModifiedFacet')]//li[${resultOrder}]/a</td>
+	<td>REINDEX_IN_PROGRESS_INDICATOR</td>
+	<td>//div[contains(.,'The portal is currently reindexing.')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>REINDEX_IN_PROGRESS_INDICATOR</td>
-	<td>//div[contains(.,'The portal is currently reindexing.')]</td>
+	<td>SEARCH_BAR_CONFIG_DESTINATION_PAGE</td>
+	<td>//input[contains(@name,'destination')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BAR_CONFIG_KEYWORDS_PARAMETER_NAME</td>
+	<td>//input[contains(@name,'keywordsParameterName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BAR_CONFIG_SCOPE_PARAMETER_NAME</td>
+	<td>//input[contains(@name,'scopeParameterName')]</td>
 	<td></td>
 </tr>
 <tr>

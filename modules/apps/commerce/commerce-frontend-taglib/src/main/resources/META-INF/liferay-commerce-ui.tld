@@ -96,11 +96,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>commerce-product-details-modal</name>
-		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.ProductDetailsModalTag</tag-class>
-		<body-content>empty</body-content>
-	</tag>
-	<tag>
 		<name>compare-checkbox</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.CompareCheckboxTag</tag-class>
 		<body-content>empty</body-content>
@@ -566,11 +561,6 @@
 		<name>search-results</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.SearchResultsTag</tag-class>
 		<body-content>empty</body-content>
-		<attribute>
-			<name>id</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 	</tag>
 	<tag>
 		<name>step-tracker</name>

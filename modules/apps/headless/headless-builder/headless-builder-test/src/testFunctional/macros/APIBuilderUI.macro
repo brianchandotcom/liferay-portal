@@ -97,6 +97,26 @@ definition {
 			value1 = "Save");
 	}
 
+	macro createAPISchema {
+		Variables.assertDefined(parameterList = "${name},${objectDefinitionName}");
+
+		Click(locator1 = "APIBuilder#ADD_NEW_SCHEMA");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = ${name});
+
+		Click(locator1 = "APIBuilder#SELECT_AN_OBJECT_DEFINITION");
+
+		Click(
+			key_kebabOption = ${objectDefinitionName},
+			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+
+		if (isSet(confirmCreation)) {
+			Click(locator1 = "APIBuilder#CREATE_BUTTON");
+		}
+	}
+
 	macro deleteAPIApplication {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",

@@ -96,6 +96,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTER_NAME</td>
+	<td>//input[(@placeholder='Enter name.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTER_TITLE</td>
 	<td>//input[(@placeholder='Enter title.')]</td>
 	<td></td>
@@ -123,6 +128,11 @@
 <tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(text(),'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_AN_OBJECT_DEFINITION</td>
+	<td>//div[contains(@class,'dropdown-toggle')]//button[contains(text(),'Select an Object Definition') or contains(text(),'${objectDefinitionName}')]</td>
 	<td></td>
 </tr>
 <tr>

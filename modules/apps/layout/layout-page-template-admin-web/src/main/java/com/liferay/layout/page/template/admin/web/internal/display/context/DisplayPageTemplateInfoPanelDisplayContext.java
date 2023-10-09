@@ -61,7 +61,7 @@ public class DisplayPageTemplateInfoPanelDisplayContext {
 				scopeGroupId,
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 	}
 
 	public LayoutPageTemplateCollection getLayoutPageTemplateCollection(

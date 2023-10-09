@@ -45,6 +45,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
 	public int getAxisCount() {
+		if (ignore()) {
+			return 0;
+		}
+
 		int axisCount = super.getAxisCount();
 
 		if ((axisCount == 0) && _includeAutoBalanceTests) {
@@ -235,6 +239,12 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
+
+		if (ignore()) {
+			_includeUnstagedTestClassFiles = false;
+
+			return;
+		}
 
 		if (portalTestClassJob instanceof PortalAcceptancePullRequestJob) {
 			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
@@ -477,6 +487,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				JobProperty.Type.INCLUDE_GLOB));
 
 		return includesJobProperties;
+	}
+
+	@Override
+	protected boolean ignore() {
+		return false;
 	}
 
 	@Override

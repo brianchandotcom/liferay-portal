@@ -79,6 +79,8 @@ public interface Job {
 
 	public boolean isDownstreamEnabled();
 
+	public boolean isJUnitTestsModifiedOnly();
+
 	public boolean isSegmentEnabled();
 
 	public boolean isValidationRequired();
@@ -90,6 +92,8 @@ public interface Job {
 	public boolean testReleaseBundle();
 
 	public boolean testRelevantChanges();
+
+	public boolean testRelevantChangesInStable();
 
 	public static enum BuildProfile {
 

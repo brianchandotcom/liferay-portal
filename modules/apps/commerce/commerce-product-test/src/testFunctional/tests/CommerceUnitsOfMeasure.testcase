@@ -440,6 +440,131 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12374, As a buyer user I can add to cart products SKU with multiple UOMs"
+	@priority = 5
+	test CanAddToCartSKUWithMultipleUOMs {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("2 UOMs are created to MIN55861 with 0.6 as incremental order quantity") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 20,
+				incrementalOrderQuantity = "0.6",
+				productSKU = "MIN55861",
+				uomKey = "UOM1KEY",
+				uomName = "UOM1");
+
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 20,
+				incrementalOrderQuantity = "0.6",
+				productSKU = "MIN55861",
+				promoPrice = 15,
+				uomKey = "UOM2KEY",
+				uomName = "UOM2");
+		}
+
+		task ("And from the MIN55861 product configuration, multiple quantity is set as 0.6") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				multipleOrderQuantity = "0.6",
+				productName = "U-Joint");
+		}
+
+		task ("Then assert U-Joint product card shows the"View All Variants" button instead of the add to cart") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.searchEntry(entryName = "U-Joint");
+
+			AssertElementPresent(
+				key_text = "View all variants",
+				locator1 = "Button#ANY");
+		}
+
+		task ("When the buyer navigates to Minium catalog → MIN55861 product details") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+		}
+
+		task ("And assert that the information shown on the page is related to the selected SKU/UOM(availability, stock quantity, list price, promo price)") {
+			FrontStore.assertProductDetails(
+				productAvailability = "Available",
+				productListPrice = "20.00",
+				productName = "Virtual Product",
+				productSKU = "MIN55861",
+				productStockQuantity = 120);
+		}
+
+		task ("And adds to the cart the SKU/first UOM combination with quantity 3") {
+			FrontStore.addInitializerProductToCartFromProductDetails(
+				productName = "U-Joint",
+				productQuantity = 3);
+		}
+
+		task ("And selects the second UOM") {
+			Select(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_UOM_SELECT",
+				value1 = "UOM2");
+		}
+
+		task ("And assert that the information shown on the page is related to the selected SKU/UOM(availability, stock quantity, list price, promo price)") {
+			FrontStore.assertProductDetails(
+				productAvailability = "Unavailable",
+				productName = "Virtual Product",
+				productSalePrice = "15.00",
+				productSKU = "MIN55861",
+				productStockQuantity = 0);
+		}
+
+		task ("And adds to the cart the SKU/Second UOM combination with quantity 6") {
+			Type(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = 6);
+
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		}
+
+		task ("And selects the first UOM again and adds it to the cart with quantity 3") {
+			FrontStore.addInitializerProductToCartFromProductDetails(
+				productName = "U-Joint",
+				productQuantity = 3);
+		}
+
+		task ("Then the SKUs/UOMs are correctly shown on the minicart showing the right UOM keys, quantities, unit price and total price") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCart(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "20.00",
+				cartItemQuantity = 6,
+				cartItemSku = "MIN55861",
+				cartItemUOMKey = "UOM1KEY",
+				cartSummaryTotal = "350.00");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPromoPriceValue = "15.00",
+				cartItemQuantity = 6,
+				cartItemSku = "MIN55861",
+				cartItemUOMKey = "UOM2KEY");
+		}
+	}
+
 	@description = "COMMERCE-12393. As a buyer I can view the UOMs sorted by priority on the UOM selector from the product details page."
 	@priority = 4
 	test CanAssertUOMsAreSortedByPriority {

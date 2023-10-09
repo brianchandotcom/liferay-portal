@@ -218,7 +218,7 @@ public class ManageLayoutProductNavigationControlMenuEntry
 		if ((layout.getMasterLayoutPlid() > 0) ||
 			(layoutPageTemplateEntry == null) ||
 			(layoutPageTemplateEntry.getType() !=
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
 			return false;
 		}

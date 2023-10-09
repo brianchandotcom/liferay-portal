@@ -190,7 +190,7 @@ public class LayoutClassedModelUsagesHelper {
 
 		if ((layoutPageTemplateEntry == null) ||
 			(layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
 
 			return false;
 		}

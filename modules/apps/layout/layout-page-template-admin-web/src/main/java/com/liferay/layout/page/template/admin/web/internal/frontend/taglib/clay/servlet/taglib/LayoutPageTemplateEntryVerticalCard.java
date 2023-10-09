@@ -91,7 +91,7 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 
 			if (Objects.equals(
 					_layoutPageTemplateEntry.getType(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
+					LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
 
 				LayoutPrototype layoutPrototype =
 					LayoutPrototypeServiceUtil.fetchLayoutPrototype(
@@ -132,7 +132,7 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 	public String getIcon() {
 		if (Objects.equals(
 				_layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
 
 			return "page-template";
 		}
@@ -149,7 +149,7 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 	public List<LabelItem> getLabels() {
 		if (Objects.equals(
 				_layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
 
 			return super.getLabels();
 		}
@@ -179,7 +179,7 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 	public String getSubtitle() {
 		if (Objects.equals(
 				_layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
 
 			return LanguageUtil.get(
 				_httpServletRequest, "widget-page-template");

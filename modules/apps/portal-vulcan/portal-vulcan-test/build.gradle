@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationImplementation group: "org.apache.cxf", name: "cxf-core", version: "3.4.10"
 	testIntegrationImplementation group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.4.10"
 	testIntegrationImplementation group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationImplementation group: "org.springframework", name: "spring-test", version: "5.2.24.RELEASE"
 	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")

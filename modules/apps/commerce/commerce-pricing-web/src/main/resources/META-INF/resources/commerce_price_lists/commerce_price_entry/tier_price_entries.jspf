@@ -33,6 +33,7 @@
 			selectedItemsKey="tierPriceEntryId"
 			showManagementBar="<%= true %>"
 			showSearch="<%= true %>"
+			style="stacked"
 		/>
 	</aui:fieldset>
 </div>

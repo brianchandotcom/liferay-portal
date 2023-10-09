@@ -154,7 +154,7 @@ public class SelectStylebookLayoutVerticalCard implements VerticalCard {
 		if ((layoutPageTemplateEntry == null) ||
 			!Objects.equals(
 				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
 			return true;
 		}

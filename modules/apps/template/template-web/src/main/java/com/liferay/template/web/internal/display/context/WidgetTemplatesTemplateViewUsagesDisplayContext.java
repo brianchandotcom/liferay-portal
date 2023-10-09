@@ -98,19 +98,17 @@ public class WidgetTemplatesTemplateViewUsagesDisplayContext {
 
 		if (layoutPageTemplateEntry != null) {
 			if (layoutPageTemplateEntry.getType() ==
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+					LayoutPageTemplateEntryTypeConstants.BASIC) {
 
 				return "page-template";
 			}
 			else if (layoutPageTemplateEntry.getType() ==
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_DISPLAY_PAGE) {
+						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 
 				return "display-page-template";
 			}
 			else if (layoutPageTemplateEntry.getType() ==
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_MASTER_LAYOUT) {
+						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
 
 				return "master-page";
 			}

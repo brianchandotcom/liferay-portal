@@ -1436,7 +1436,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/search");
 
-		SearchPortlets.addWidgetsViaUI(searchPortletList = "Search Results");
+		SearchPage.addWidgetsViaUI(searchPortletList = "Search Results");
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -1484,9 +1484,9 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name-staging/test-content-page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
+		SearchPage.searchEmbedded(searchTerm = "Category Name");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content");
 
@@ -1498,9 +1498,9 @@ definition {
 			pageName = "Search",
 			siteName = "Site Name");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
+		SearchPage.searchEmbedded(searchTerm = "Category Name");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content");
 	}

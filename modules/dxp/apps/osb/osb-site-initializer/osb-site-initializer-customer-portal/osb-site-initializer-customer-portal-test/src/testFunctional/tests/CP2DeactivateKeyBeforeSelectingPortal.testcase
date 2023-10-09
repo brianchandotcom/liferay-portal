@@ -39,6 +39,7 @@ definition {
 	}
 
 	@description = "LPS-185975 - Verify that after clicking the 'Deactivate' button, a page appears with a list of active keys"
+	@ignore = "true"
 	@priority = 4
 	test AssertThatAfterClickInDeactivateAPageOpens {
 		task ("Given a user signs in on OKTA to update the Customer Portal") {

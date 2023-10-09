@@ -83,7 +83,7 @@ public class GetLayoutPageTemplateEntryListMVCResourceCommand
 						if (Objects.equals(
 								layoutPageTemplateEntry.getType(),
 								LayoutPageTemplateEntryTypeConstants.
-									TYPE_WIDGET_PAGE)) {
+									WIDGET_PAGE)) {
 
 							LayoutPrototype layoutPrototype =
 								_layoutPrototypeLocalService.

@@ -282,9 +282,9 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "fruit");
+		SearchPage.searchEmbedded(searchTerm = "fruit");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Document");
 	}
@@ -311,9 +311,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
+		SearchPage.searchEmbedded(searchTerm = "DM Document Title");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 	}
@@ -332,9 +332,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "This is a *.doc file.");
+		SearchPage.searchEmbedded(searchTerm = "This is a *.doc file.");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetSummary = "This is a *.doc file.",
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
@@ -378,9 +378,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
+		SearchPage.searchEmbedded(searchTerm = "DM Document Title");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 	}

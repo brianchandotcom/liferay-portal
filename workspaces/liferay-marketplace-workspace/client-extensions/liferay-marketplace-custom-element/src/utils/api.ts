@@ -626,7 +626,7 @@ export async function getProductById({
 	productId,
 }: {
 	nestedFields?: string;
-	productId: number;
+	productId: string | number;
 }) {
 	let url = `${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}`;
 

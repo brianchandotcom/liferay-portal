@@ -14,7 +14,7 @@ interface PaymentMethodInfo {
 	description: string;
 	disabled?: boolean;
 	icon: string;
-	method: PaymentMethodSelector;
+	method: paymentMethod;
 	title: string;
 }
 
@@ -25,7 +25,7 @@ export function PaymentMethodSelector({
 }: {
 	enableTrial: boolean;
 	selectedPaymentMethod: string;
-	setSelectedPaymentMethod: (value: PaymentMethodSelector) => void;
+	setSelectedPaymentMethod: (value: paymentMethod) => void;
 	step: StepType;
 }) {
 	const paymentMethods: PaymentMethodInfo[] = [

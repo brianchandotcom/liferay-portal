@@ -53,8 +53,6 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.math.BigDecimal" %>
-
 <%@ page import="java.text.DateFormat" %><%@
 page import="java.text.Format" %>
 

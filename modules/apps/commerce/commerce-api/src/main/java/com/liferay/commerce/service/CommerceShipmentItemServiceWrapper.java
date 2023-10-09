@@ -177,7 +177,7 @@ public class CommerceShipmentItemServiceWrapper
 	}
 
 	@Override
-	public int getCommerceShipmentOrderItemsQuantity(
+	public java.math.BigDecimal getCommerceShipmentOrderItemsQuantity(
 			long commerceShipmentId, long commerceOrderItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

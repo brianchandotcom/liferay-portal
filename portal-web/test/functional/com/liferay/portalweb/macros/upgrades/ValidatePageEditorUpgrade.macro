@@ -452,9 +452,9 @@ definition {
 			locator1 = "NavBar#NAV_ITEM_LINK",
 			value1 = "Content Page Name");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Awesome Button");
+		SearchPage.searchEmbedded(searchTerm = "Awesome Button");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Awesome Button");
+		SearchResults.viewNoSearchResults(searchTerm = "Awesome Button");
 	}
 
 }

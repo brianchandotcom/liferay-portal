@@ -730,7 +730,7 @@ definition {
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
 
-		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "Staging DM Page");
+		SearchPage.configureEmbeddedSearchBar(destinationPage = "Staging DM Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",

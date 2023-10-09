@@ -177,9 +177,9 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 		}
 
 		if ((layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) ||
+				LayoutPageTemplateEntryTypeConstants.BASIC) ||
 			(layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
 			return true;
 		}

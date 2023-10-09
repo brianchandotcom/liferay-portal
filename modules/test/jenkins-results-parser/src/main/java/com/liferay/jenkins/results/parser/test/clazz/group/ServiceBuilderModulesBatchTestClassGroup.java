@@ -29,7 +29,7 @@ public class ServiceBuilderModulesBatchTestClassGroup
 
 	@Override
 	public int getAxisCount() {
-		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
+		if (ignore()) {
 			return 0;
 		}
 

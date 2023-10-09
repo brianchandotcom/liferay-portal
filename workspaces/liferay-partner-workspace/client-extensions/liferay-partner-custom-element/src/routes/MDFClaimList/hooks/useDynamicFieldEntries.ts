@@ -18,16 +18,14 @@ export default function useDynamicFieldEntries() {
 		`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`
 	);
 
-	const pickListNames = [LiferayPicklistName.MDF_CLAIM_STATUS];
-
 	const {data: listTypeDefinitions} = useGet<
 		LiferayItems<ListTypeDefinition[]>
 	>(
 		`/o/${
 			LiferayAPIs.HEADERLESS_ADMIN_LIST_TYPE
-		}/list-type-definitions?filter=name in ('${pickListNames.join(
-			"', '"
-		)}')`
+		}/list-type-definitions?filter=name in ('${[
+			LiferayPicklistName.MDF_CLAIM_STATUS,
+		].join("', '")}')`
 	);
 
 	const companiesEntries = useMemo(

@@ -6,7 +6,7 @@
 package com.liferay.portal.kernel.security.auth.http;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,14 +21,18 @@ public class HttpAuthManagerUtil {
 		HttpServletResponse httpServletResponse,
 		HttpAuthorizationHeader httpAuthorizationHeader) {
 
-		_httpAuthManager.generateChallenge(
+		HttpAuthManager httpAuthManager = _httpAuthManagerSnapshot.get();
+
+		httpAuthManager.generateChallenge(
 			httpServletRequest, httpServletResponse, httpAuthorizationHeader);
 	}
 
 	public static long getBasicUserId(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		return _httpAuthManager.getBasicUserId(httpServletRequest);
+		HttpAuthManager httpAuthManager = _httpAuthManagerSnapshot.get();
+
+		return httpAuthManager.getBasicUserId(httpServletRequest);
 	}
 
 	/**
@@ -38,7 +42,9 @@ public class HttpAuthManagerUtil {
 	public static long getDigestUserId(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		return _httpAuthManager.getDigestUserId(httpServletRequest);
+		HttpAuthManager httpAuthManager = _httpAuthManagerSnapshot.get();
+
+		return httpAuthManager.getDigestUserId(httpServletRequest);
 	}
 
 	public static long getUserId(
@@ -46,22 +52,24 @@ public class HttpAuthManagerUtil {
 			HttpAuthorizationHeader httpAuthorizationHeader)
 		throws PortalException {
 
-		return _httpAuthManager.getUserId(
+		HttpAuthManager httpAuthManager = _httpAuthManagerSnapshot.get();
+
+		return httpAuthManager.getUserId(
 			httpServletRequest, httpAuthorizationHeader);
 	}
 
 	public static HttpAuthorizationHeader parse(
 		HttpServletRequest httpServletRequest) {
 
-		return _httpAuthManager.parse(httpServletRequest);
+		HttpAuthManager httpAuthManager = _httpAuthManagerSnapshot.get();
+
+		return httpAuthManager.parse(httpServletRequest);
 	}
 
 	private HttpAuthManagerUtil() {
 	}
 
-	private static volatile HttpAuthManager _httpAuthManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			HttpAuthManager.class, HttpAuthManagerUtil.class,
-			"_httpAuthManager", false, true);
+	private static final Snapshot<HttpAuthManager> _httpAuthManagerSnapshot =
+		new Snapshot<>(HttpAuthManagerUtil.class, HttpAuthManager.class);
 
 }

@@ -6,8 +6,8 @@
 package com.liferay.dynamic.data.mapping.kernel;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.List;
 import java.util.Locale;
@@ -25,7 +25,10 @@ public class DDMStructureManagerUtil {
 			String storageType, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		return _ddmStructureManager.addStructure(
+		DDMStructureManager ddmStructureManager =
+			_ddmStructureManagerSnapshot.get();
+
+		return ddmStructureManager.addStructure(
 			userId, groupId, parentStructureKey, classNameId, structureKey,
 			nameMap, descriptionMap, ddmForm, storageType, type,
 			serviceContext);
@@ -34,24 +37,36 @@ public class DDMStructureManagerUtil {
 	public static void deleteStructure(long structureId)
 		throws PortalException {
 
-		_ddmStructureManager.deleteStructure(structureId);
+		DDMStructureManager ddmStructureManager =
+			_ddmStructureManagerSnapshot.get();
+
+		ddmStructureManager.deleteStructure(structureId);
 	}
 
 	public static DDMStructure fetchStructure(long structureId) {
-		return _ddmStructureManager.fetchStructure(structureId);
+		DDMStructureManager ddmStructureManager =
+			_ddmStructureManagerSnapshot.get();
+
+		return ddmStructureManager.fetchStructure(structureId);
 	}
 
 	public static DDMStructure fetchStructure(
 		long groupId, long classNameId, String structureKey) {
 
-		return _ddmStructureManager.fetchStructure(
+		DDMStructureManager ddmStructureManager =
+			_ddmStructureManagerSnapshot.get();
+
+		return ddmStructureManager.fetchStructure(
 			groupId, classNameId, structureKey);
 	}
 
 	public static List<DDMStructure> getClassStructures(
 		long companyId, long classNameId) {
 
-		return _ddmStructureManager.getClassStructures(companyId, classNameId);
+		DDMStructureManager ddmStructureManager =
+			_ddmStructureManagerSnapshot.get();
+
+		return ddmStructureManager.getClassStructures(companyId, classNameId);
 	}
 
 	public static DDMStructure updateStructure(
@@ -60,7 +75,10 @@ public class DDMStructureManagerUtil {
 			DDMForm ddmForm, ServiceContext serviceContext)
 		throws PortalException {
 
-		return _ddmStructureManager.updateStructure(
+		DDMStructureManager ddmStructureManager =
+			_ddmStructureManagerSnapshot.get();
+
+		return ddmStructureManager.updateStructure(
 			userId, structureId, parentStructureId, nameMap, descriptionMap,
 			ddmForm, serviceContext);
 	}
@@ -68,12 +86,14 @@ public class DDMStructureManagerUtil {
 	public static void updateStructureKey(long structureId, String structureKey)
 		throws PortalException {
 
-		_ddmStructureManager.updateStructureKey(structureId, structureKey);
+		DDMStructureManager ddmStructureManager =
+			_ddmStructureManagerSnapshot.get();
+
+		ddmStructureManager.updateStructureKey(structureId, structureKey);
 	}
 
-	private static volatile DDMStructureManager _ddmStructureManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			DDMStructureManager.class, DDMStructureManagerUtil.class,
-			"_ddmStructureManager", false, true);
+	private static final Snapshot<DDMStructureManager>
+		_ddmStructureManagerSnapshot = new Snapshot<>(
+			DDMStructureManagerUtil.class, DDMStructureManager.class);
 
 }

@@ -8,7 +8,6 @@ public class UpgradeJavaCommerceOrderValidatorCheck implements CommerceOrderVali
 		throws PortalException {
 
 		int validateQuantity = quantity;
-
 	}
 
 }

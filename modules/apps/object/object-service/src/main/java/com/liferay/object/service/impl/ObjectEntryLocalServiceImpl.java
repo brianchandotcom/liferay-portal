@@ -6,11 +6,9 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRelTable;
 import com.liferay.account.model.AccountEntryTable;
 import com.liferay.account.model.AccountEntryUserRelTable;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.link.constants.AssetLinkConstants;
@@ -106,7 +104,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -2423,8 +2420,7 @@ public class ObjectEntryLocalServiceImpl
 					}
 
 					return _getPermissionWherePredicate(
-						groupId, objectDefinition2,
-						dynamicObjectDefinitionTablePrimaryKeyColumn);
+						dynamicObjectDefinitionTable, groupId);
 				}
 			).and(
 				() -> {
@@ -2619,10 +2615,7 @@ public class ObjectEntryLocalServiceImpl
 					}
 
 					return _getPermissionWherePredicate(
-						groupId,
-						_objectDefinitionPersistence.findByPrimaryKey(
-							objectRelationship.getObjectDefinitionId2()),
-						primaryKeyColumn);
+						dynamicObjectDefinitionTable, groupId);
 				}
 			).and(
 				ObjectEntrySearchUtil.getRelatedModelsPredicate(
@@ -2681,34 +2674,6 @@ public class ObjectEntryLocalServiceImpl
 					permissionChecker.getUserId())
 			).withParentheses()
 		).withParentheses();
-	}
-
-	private Predicate _getPermissionWherePredicate(
-			long groupId, ObjectDefinition objectDefinition,
-			Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn)
-		throws PortalException {
-
-		long[] groupIds = {groupId};
-
-		if (objectDefinition.isAccountEntryRestricted()) {
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
-			groupIds = ListUtil.toLongArray(
-				_accountEntryLocalService.getUserAccountEntries(
-					permissionChecker.getUserId(),
-					AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
-					new String[] {
-						AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-						AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
-					},
-					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS),
-				AccountEntry::getAccountEntryGroupId);
-		}
-
-		return _inlineSQLHelper.getPermissionWherePredicate(
-			objectDefinition.getClassName(), primaryKeyColumn, groupIds);
 	}
 
 	private Object _getResult(
@@ -4551,9 +4516,6 @@ public class ObjectEntryLocalServiceImpl
 		new CentralizedThreadLocal<>(
 			ObjectEntryLocalServiceImpl.class + "._skipModelListeners",
 			() -> false);
-
-	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

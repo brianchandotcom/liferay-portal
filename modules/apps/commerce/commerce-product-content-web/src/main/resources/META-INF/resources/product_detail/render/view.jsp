@@ -353,7 +353,11 @@ String navSpecificationsId = liferayPortletResponse.getNamespace() + "navSpecifi
 
 					<li class="list-group-item list-group-item-flex">
 						<div class="autofit-col my-auto">
-							<aui:icon cssClass="icon-monospaced" image="document-default" markupView="lexicon" />
+							<span class="icon-monospaced">
+								<clay:icon
+									symbol="document-default"
+								/>
+							</span>
 						</div>
 
 						<div class="autofit-col autofit-col-expand">

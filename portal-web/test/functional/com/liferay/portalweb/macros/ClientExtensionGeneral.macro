@@ -74,6 +74,30 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro addFrontendDataSetFilter {
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Add Frontend Data Set Filter");
+
+		Type(
+			index = 1,
+			key_fieldLabel = "Description",
+			locator1 = "CKEditor#ANY_BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE",
+			value1 = ${description});
+
+		Type(
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = ${name});
+
+		Type(
+			key_text = "JavaScript URL",
+			locator1 = "TextInput#ANY",
+			value1 = ${javaScriptURL});
+
+		PortletEntry.publish();
+	}
+
 	macro addThemeSvgSpritemap {
 		ClientExtensionGeneral.addType(type = "Add Theme SVG Spritemap");
 

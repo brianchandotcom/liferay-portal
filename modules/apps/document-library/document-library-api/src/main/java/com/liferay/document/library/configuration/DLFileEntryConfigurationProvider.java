@@ -7,6 +7,8 @@ package com.liferay.document.library.configuration;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
+import java.util.Map;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -22,6 +24,8 @@ public interface DLFileEntryConfigurationProvider {
 	public int getGroupMaxNumberOfPages(long groupId);
 
 	public long getGroupPreviewableProcessorMaxSize(long groupId);
+
+	public Map<Long, Long> getGroupPreviewableProcessorMaxSizeMap();
 
 	public int getMaxNumberOfPages(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK);

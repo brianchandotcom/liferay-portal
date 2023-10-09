@@ -160,6 +160,8 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return getDefaultEditTemplateTitle(locale);
 	}
 
+	public abstract String getPortletId();
+
 	@Override
 	public String getStorageType() {
 		return StringPool.BLANK;

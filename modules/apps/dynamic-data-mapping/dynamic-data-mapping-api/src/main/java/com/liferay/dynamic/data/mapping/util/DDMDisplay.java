@@ -55,8 +55,6 @@ public interface DDMDisplay {
 
 	public String getEditTemplateTitle(long classNameId, Locale locale);
 
-	public String getPortletId();
-
 	public String getStorageType();
 
 	public String getStructureName(Locale locale);

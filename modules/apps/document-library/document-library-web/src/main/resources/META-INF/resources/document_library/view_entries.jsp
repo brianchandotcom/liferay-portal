@@ -113,7 +113,11 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 
 														</c:when>
 														<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
-															<aui:icon cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon" image="documents-and-media" markupView="lexicon" />
+															<span class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+																<clay:icon
+																	symbol="documents-and-media"
+																/>
+															</span>
 														</c:when>
 														<c:otherwise>
 															<img alt="" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= thumbnailSrc %>" />
@@ -144,21 +148,24 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 
 														<c:choose>
 															<c:when test="<%= fileShortcut != null %>">
-																<span class="inline-item inline-item-after state-icon">
-																	<aui:icon image="shortcut" markupView="lexicon" message="shortcut" />
-																</span>
+																<clay:icon
+																	cssClass="inline-item inline-item-after state-icon"
+																	symbol="shortcut"
+																/>
 															</c:when>
 															<c:when test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-																<span class="inline-item inline-item-after state-icon">
-																	<aui:icon image="lock" markupView="lexicon" message="locked" />
-																</span>
+																<clay:icon
+																	cssClass="inline-item inline-item-after state-icon"
+																	symbol="lock"
+																/>
 															</c:when>
 														</c:choose>
 
 														<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
-															<span class="inline-item inline-item-after lfr-portal-tooltip state-icon" title="<%= LanguageUtil.get(request, "shared") %>">
-																<aui:icon image="users" markupView="lexicon" message="shared" />
-															</span>
+															<clay:icon
+																cssClass="inline-item inline-item-after lfr-portal-tooltip state-icon"
+																symbol="users"
+															/>
 														</c:if>
 													</div>
 												</div>
@@ -206,31 +213,24 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 														/>
 
 														<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-															<span class="inline-item inline-item-after state-icon">
-																<clay:icon
-																	aria-label='<%= LanguageUtil.get(request, "locked") %>'
-																	symbol="lock"
-																/>
-															</span>
+															<clay:icon
+																cssClass="inline-item inline-item-after state-icon"
+																symbol="lock"
+															/>
 														</c:if>
 
 														<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
-															<span class="inline-item inline-item-after lfr-portal-tooltip state-icon" title="<%= LanguageUtil.get(request, "shared") %>">
-																<clay:icon
-																	aria-label='<%= LanguageUtil.get(request, "shared") %>'
-																	symbol="users"
-																/>
-															</span>
+															<clay:icon
+																cssClass="inline-item inline-item-after lfr-portal-tooltip state-icon"
+																symbol="users"
+															/>
 														</c:if>
 
 														<c:if test="<%= fileShortcut != null %>">
-															<span class="inline-item inline-item-after state-icon">
-																<clay:icon
-																	aria-label='<%= LanguageUtil.get(request, "shortcut") %>'
-																	symbol="shortcut"
-																	title='<%= LanguageUtil.get(request, "shortcut") %>'
-																/>
-															</span>
+															<clay:icon
+																cssClass="inline-item inline-item-after state-icon"
+																symbol="shortcut"
+															/>
 														</c:if>
 													</div>
 												</div>

@@ -107,20 +107,23 @@ else {
 
 	<c:choose>
 		<c:when test="<%= fileShortcut != null %>">
-			<span class="inline-item inline-item-after state-icon">
-				<aui:icon image="shortcut" markupView="lexicon" message="shortcut" />
-			</span>
+			<clay:icon
+				cssClass="inline-item inline-item-after state-icon"
+				symbol="shortcut"
+			/>
 		</c:when>
 		<c:when test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-			<span class="inline-item inline-item-after state-icon">
-				<aui:icon image="lock" markupView="lexicon" message="locked" />
-			</span>
+			<clay:icon
+				cssClass="inline-item inline-item-after state-icon"
+				symbol="lock"
+			/>
 		</c:when>
 	</c:choose>
 
 	<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
-		<span class="inline-item inline-item-after lfr-portal-tooltip state-icon" title="<%= LanguageUtil.get(request, "shared") %>">
-			<aui:icon image="users" markupView="lexicon" message="shared" />
-		</span>
+		<clay:icon
+			cssClass="inline-item inline-item-after lfr-portal-tooltip state-icon"
+			symbol="users"
+		/>
 	</c:if>
 </span>

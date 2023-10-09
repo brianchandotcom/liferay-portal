@@ -1,0 +1,16 @@
+{
+  ":configurator:policy" : "force",
+  "com.liferay.client.extension.type.configuration.CETConfiguration~liferay-sample-fds-cell-renderer" : {
+    "baseURL" : "${portalURL}/o/liferay-sample-fds-cell-renderer",
+    "description" : "",
+    "dxp.lxc.liferay.com.virtualInstanceId" : "default",
+    "name" : "Liferay Sample Frontend Data Set Cell Renderer",
+    "projectId" : "liferaysamplefdscellrenderer",
+    "projectName" : "liferay-sample-fds-cell-renderer",
+    "properties" : [ ],
+    "sourceCodeURL" : "",
+    "type" : "fdsCellRenderer",
+    "typeSettings" : [ "url=index.js" ],
+    "webContextPath" : "/liferay-sample-fds-cell-renderer"
+  }
+}

@@ -341,14 +341,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		String methodCall = JavaSourceUtil.getMethodCall(
 			javaMethodContent, matcher.start());
 
-		// e.g. classNames, fileName, from, javaMethodContent, jsonObject,
-		// matcher newContent, to
-
 		List<String> parameterNames = JavaSourceUtil.getParameterList(
 			methodCall);
-
-		// e.g. String[], String, String, String, JSONObject, Matcher, String,
-		// String
 
 		List<String> parameterTypes = JavaSourceUtil.getParameterList(from);
 

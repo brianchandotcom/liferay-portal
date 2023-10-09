@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {API} from '@liferay/object-js-components-web';
+import React, {useCallback, useState} from 'react';
 import ReactFlow, {
 	Background,
 	Connection,
@@ -13,15 +15,8 @@ import ReactFlow, {
 	MiniMap,
 	Node,
 	isNode,
+	useStore,
 } from 'react-flow-renderer';
-
-import {EmptyNode} from '../ObjectDefinitionNode/EmptyNode';
-import {ObjectDefinitionNode} from '../ObjectDefinitionNode/ObjectDefinitionNode';
-
-import './Diagram.scss';
-
-import {API} from '@liferay/object-js-components-web';
-import React, {MouseEvent, useCallback, useState} from 'react';
 
 import {ModalAddObjectRelationship} from '../../ObjectRelationship/ModalAddObjectRelationship';
 import {getUpdatedModelBuilderStructurePayload} from '../../ViewObjectDefinitions/objectDefinitionUtil';
@@ -29,6 +24,10 @@ import DefaultObjectRelationshipEdge from '../Edges/DefaultObjectRelationshipEdg
 import SelfObjectRelationshipEdge from '../Edges/SelfObjectRelationshipEdge';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
+import {EmptyNode} from '../ObjectDefinitionNode/EmptyNode';
+import {ObjectDefinitionNode} from '../ObjectDefinitionNode/ObjectDefinitionNode';
+
+import './Diagram.scss';
 
 const NODE_TYPES = {
 	emptyNode: EmptyNode,
@@ -87,6 +86,8 @@ function DiagramBuilder({
 		},
 	];
 
+	const store = useStore();
+
 	const onConnect = useCallback(
 		(connection: Connection | Edge) => {
 			const sourceNode = elements.find(
@@ -123,10 +124,7 @@ function DiagramBuilder({
 		[elements]
 	);
 
-	const onNodeDragStop = async (
-		event: MouseEvent,
-		node: Node<ObjectDefinitionNodeData>
-	) => {
+	const onNodeDragStop = async (node: Node<ObjectDefinitionNodeData>) => {
 		const objectFolder = await API.getObjectFolderByExternalReferenceCode(
 			selectedObjectFolder.externalReferenceCode
 		);
@@ -156,7 +154,22 @@ function DiagramBuilder({
 			objectFolderItems: updatedObjectFolderItems,
 		};
 
-		API.putObjectFolderByExternalReferenceCode(updatedObjectFolder);
+		await API.putObjectFolderByExternalReferenceCode(updatedObjectFolder);
+
+		const {edges, nodes} = store.getState();
+
+		dispatch({
+			payload: {
+				newObjectDefinitionNodePosition: {
+					x: node.position.x,
+					y: node.position.y,
+				},
+				objectDefinitionNodes: nodes,
+				objectRelationshipEdges: edges,
+				updatedObjectDefinitionNodeId: node.data?.id as number,
+			},
+			type: TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE_POSITION,
+		});
 
 		if (!showChangesSaved) {
 			dispatch({
@@ -223,7 +236,7 @@ function DiagramBuilder({
 				minZoom={0.1}
 				nodeTypes={NODE_TYPES}
 				onConnect={onConnect}
-				onNodeDragStop={onNodeDragStop}
+				onNodeDragStop={(_, node) => onNodeDragStop(node)}
 			>
 				<Background color="#C0C1C3" gap={18} size={1} />
 

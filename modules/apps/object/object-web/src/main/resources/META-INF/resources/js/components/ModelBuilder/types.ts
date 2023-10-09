@@ -146,7 +146,11 @@ export type TAction =
 	| {
 			payload: {
 				currentObjectFolderName: string;
-				updatedObjectDefinitionNode: Partial<ObjectDefinition>;
+				objectDefinitionNodes: Node<ObjectDefinitionNodeData>[];
+				objectDefinitionRelationshipEdges: Edge<
+					ObjectRelationshipEdgeData
+				>[];
+				updatedObjectDefinition: Partial<ObjectDefinition>;
 			};
 			type: TYPES.UPDATE_OBJECT_DEFINITION_NODE;
 	  }

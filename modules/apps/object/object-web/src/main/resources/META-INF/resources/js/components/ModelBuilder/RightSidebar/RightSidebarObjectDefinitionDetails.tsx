@@ -10,7 +10,7 @@ import {
 } from '@liferay/object-js-components-web';
 import {createResourceURL, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
-import {Elements, Node, isNode} from 'react-flow-renderer';
+import {useStore} from 'react-flow-renderer';
 
 import {AccountRestrictionContainer} from '../../ObjectDetails/AccountRestrictionContainer';
 import {ConfigurationContainer} from '../../ObjectDetails/ConfigurationContainer';
@@ -67,14 +67,11 @@ export function RightSidebarObjectDefinitionDetails({
 	] = useState('');
 
 	const [
-		{
-			baseResourceURL,
-			elements,
-			selectedObjectDefinitionNode,
-			selectedObjectFolder,
-		},
+		{baseResourceURL, selectedObjectDefinitionNode, selectedObjectFolder},
 		dispatch,
 	] = useObjectFolderContext();
+
+	const store = useStore();
 
 	const {
 		errors,
@@ -169,9 +166,23 @@ export function RightSidebarObjectDefinitionDetails({
 			}
 
 			try {
-				await API.putObjectDefinitionByExternalReferenceCode(
+				const updatedObjectDefinitionResponse = await API.putObjectDefinitionByExternalReferenceCode(
 					objectDefinition
 				);
+
+				const updatedObjectDefinition = (await updatedObjectDefinitionResponse.json()) as ObjectDefinition;
+
+				const {edges, nodes} = store.getState();
+
+				dispatch({
+					payload: {
+						currentObjectFolderName: selectedObjectFolder.name,
+						objectDefinitionNodes: nodes,
+						objectDefinitionRelationshipEdges: edges,
+						updatedObjectDefinition,
+					},
+					type: TYPES.UPDATE_OBJECT_DEFINITION_NODE,
+				});
 
 				dispatch({
 					payload: {
@@ -185,47 +196,6 @@ export function RightSidebarObjectDefinitionDetails({
 
 				openToast({message, type: 'danger'});
 			}
-
-			let newObjectDefinition = {};
-
-			const updatedElements = elements.map((element) => {
-				if (
-					isNode(element) &&
-					(element as Node<ObjectDefinitionNodeData>).id ===
-						objectDefinition.id?.toString()
-				) {
-					newObjectDefinition = {
-						...element.data,
-						label: objectDefinition.label,
-						name: objectDefinition.name,
-						pluralLabel: {
-							[objectDefinition.defaultLanguageId!]: objectDefinition.pluralLabel,
-						},
-					};
-
-					return {
-						...element,
-						data: newObjectDefinition,
-					};
-				}
-
-				return element;
-			}) as Elements<ObjectDefinitionNodeData>;
-
-			dispatch({
-				payload: {
-					newElements: updatedElements,
-				},
-				type: TYPES.SET_ELEMENTS,
-			});
-
-			dispatch({
-				payload: {
-					currentObjectFolderName: selectedObjectFolder.name,
-					updatedObjectDefinitionNode: newObjectDefinition,
-				},
-				type: TYPES.UPDATE_OBJECT_DEFINITION_NODE,
-			});
 		}
 	};
 

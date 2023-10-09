@@ -166,7 +166,7 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Edit");
 
-		Click(locator1 = "ProcessBuilderSource#PROCESS_DETAILS_ELLIPSIS");
+		Click(locator1 = "ProcessBuilderCE#PROCESS_DETAILS_ELLIPSIS");
 
 		MenuItem.viewNotPresent(menuItem = "Delete");
 	}
@@ -186,7 +186,7 @@ definition {
 
 		Button.clickPublish();
 
-		if (IsElementPresent(locator1 = "ProcessBuilderSource#SOURCE_WAPPER")) {
+		if (IsElementPresent(locator1 = "ProcessBuilderCE#SOURCE_WAPPER")) {
 			Alert.viewErrorMessage(errorMessage = "Please add a workflow title before publishing.");
 		}
 		else {
@@ -274,7 +274,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Revision History");
 
-		Click(locator1 = "ProcessBuilderSource#REVISION_HISTORY_KEBAB");
+		Click(locator1 = "ProcessBuilderCE#REVISION_HISTORY_KEBAB");
 
 		MenuItem.click(menuItem = "Restore");
 
@@ -310,7 +310,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Revision History");
 
-		Click(locator1 = "ProcessBuilderSource#REVISION_HISTORY_KEBAB");
+		Click(locator1 = "ProcessBuilderCE#REVISION_HISTORY_KEBAB");
 
 		MenuItem.click(menuItem = "Preview");
 
@@ -548,7 +548,7 @@ definition {
 
 		AssertElementPresent(
 			key_ruleNumber = 1,
-			locator1 = "ProcessBuilderSource#REVISION_HISTORY_ITEM");
+			locator1 = "ProcessBuilderCE#REVISION_HISTORY_ITEM");
 
 		PortletEntry.inputTitle(title = "New Workflow Definition Title 2");
 
@@ -560,11 +560,11 @@ definition {
 
 		AssertElementPresent(
 			key_ruleNumber = 1,
-			locator1 = "ProcessBuilderSource#REVISION_HISTORY_ITEM");
+			locator1 = "ProcessBuilderCE#REVISION_HISTORY_ITEM");
 
 		AssertElementPresent(
 			key_ruleNumber = 2,
-			locator1 = "ProcessBuilderSource#REVISION_HISTORY_ITEM");
+			locator1 = "ProcessBuilderCE#REVISION_HISTORY_ITEM");
 	}
 
 	@description = "Verify that revision history is not copied to the duplicated definition"
@@ -586,31 +586,31 @@ definition {
 
 		Click(
 			key_tabName = "Revision History",
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS_TAB");
 
 		AssertElementPresent(
 			key_rowNumber = 1,
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS_REVISION_BY_ROW");
 
 		AssertElementPresent(
 			key_rowNumber = 2,
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS_REVISION_BY_ROW");
 
-		Click(locator1 = "ProcessBuilderSource#PROCESS_DETAILS_ELLIPSIS");
+		Click(locator1 = "ProcessBuilderCE#PROCESS_DETAILS_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Duplicate");
 
-		Click(locator1 = "ProcessBuilderSource#MODAL_DUPLICATE_BUTTON");
+		Click(locator1 = "ProcessBuilderCE#MODAL_DUPLICATE_BUTTON");
 
 		Click(locator1 = "Icon#INFO");
 
 		Click(
 			key_tabName = "Revision History",
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS_TAB");
 
 		AssertElementNotPresent(
 			key_rowNumber = 2,
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS_REVISION_BY_ROW");
 	}
 
 	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
@@ -649,11 +649,11 @@ definition {
 
 		AssertElementPresent(
 			key_titleValue = "CREATED",
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS");
 
 		AssertElementPresent(
 			key_titleValue = "LAST MODIFIED",
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
@@ -676,11 +676,11 @@ definition {
 
 		AssertElementNotPresent(
 			key_titleValue = "CRIADO",
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS");
 
 		AssertElementNotPresent(
 			key_titleValue = "ÚLTIMA MODIFICAÇÃO",
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Configurações da Conta");
 
@@ -707,11 +707,11 @@ definition {
 
 		Click(
 			key_tabName = "Revision History",
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS_TAB");
 
 		AssertElementPresent(
 			key_rowNumber = 1,
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS_REVISION_BY_ROW");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
@@ -734,11 +734,11 @@ definition {
 
 		Click(
 			key_tabName = "Histórico de revisão",
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS_TAB");
 
 		AssertElementNotPresent(
 			key_rowNumber = 1,
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
+			locator1 = "ProcessBuilderCE#PROCESS_DETAILS_REVISION_BY_ROW");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Configurações da Conta");
 

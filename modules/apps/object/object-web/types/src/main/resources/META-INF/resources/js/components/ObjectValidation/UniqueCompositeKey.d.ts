@@ -6,7 +6,8 @@
 /// <reference types="react" />
 
 import {ObjectValidationErrors} from './useObjectValidationForm';
-export interface UniqueCompositeKeyProps {
+interface UniqueCompositeKeyProps {
+	baseResourceURL: string;
 	creationLanguageId: Liferay.Language.Locale;
 	customObjectFields: ObjectField[];
 	disabled: boolean;
@@ -18,6 +19,7 @@ export interface UniqueCompositeKeyProps {
 	values: Partial<ObjectValidation>;
 }
 export declare function UniqueCompositeKey({
+	baseResourceURL,
 	creationLanguageId,
 	customObjectFields,
 	disabled,

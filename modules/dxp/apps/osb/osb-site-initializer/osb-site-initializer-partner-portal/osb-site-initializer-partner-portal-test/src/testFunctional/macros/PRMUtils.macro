@@ -1,6 +1,16 @@
 definition {
 
+	static var clientExtension = "";
+	static var companyWebId = "";
+
 	macro addSite {
+		var companyWebId = JSONCompany.getWebId();
+		var clientExtension = "liferay-partner-custom-element";
+
+		AntCommands.runCommand("build-test-workspace.xml", "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");
+
+		WaitForConsoleTextPresent(value1 = "STARTED liferaypartnercustomelement");
+
 		var siteName = "Partner Portal";
 
 		HeadlessSite.addSite(
@@ -156,6 +166,14 @@ definition {
 	}
 
 	macro tearDown {
+		var companyWebId = JSONCompany.getWebId();
+
+		if (isSet(clientExtension)) {
+			var clientExtension = "liferay-partner-custom-element";
+
+			AntCommands.runCommand("build-test-workspace.xml", "undeploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");
+		}
+
 		Navigator.openURL();
 
 		User.logoutAndLoginPG(

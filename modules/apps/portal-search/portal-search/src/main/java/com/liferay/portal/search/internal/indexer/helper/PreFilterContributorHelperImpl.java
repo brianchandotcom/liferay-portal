@@ -8,6 +8,7 @@ package com.liferay.portal.search.internal.indexer.helper;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
@@ -18,7 +19,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.search.internal.indexer.IndexerProvidedClausesUtil;
 import com.liferay.portal.search.internal.indexer.ModelPreFilterContributorsRegistry;
-import com.liferay.portal.search.internal.indexer.ModelSearchConfiguratorImpl;
 import com.liferay.portal.search.internal.indexer.ModelSearchSettingsImpl;
 import com.liferay.portal.search.internal.indexer.QueryPreFilterContributorsRegistry;
 import com.liferay.portal.search.internal.util.SearchStringUtil;
@@ -216,9 +216,19 @@ public class PreFilterContributorHelperImpl
 
 	private ModelSearchSettings _getModelSearchSettings(Indexer<?> indexer) {
 		ModelSearchConfigurator<?> modelSearchConfigurator =
-			new ModelSearchConfiguratorImpl<>(indexer.getClassName());
+			new ModelSearchConfigurator<BaseModel<?>>() {
 
-		modelSearchConfigurator.setStagingAware(indexer.isStagingAware());
+				@Override
+				public String getClassName() {
+					return indexer.getClassName();
+				}
+
+				@Override
+				public boolean isStagingAware() {
+					return indexer.isStagingAware();
+				}
+
+			};
 
 		return new ModelSearchSettingsImpl(modelSearchConfigurator);
 	}

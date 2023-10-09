@@ -38,11 +38,17 @@ public class ChangeTypeSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 		return ListUtil.fromArray(
 			new SelectionFDSFilterItem(
-				"added", CTConstants.CT_CHANGE_TYPE_ADDITION),
+				"added",
+				CTConstants.getCTChangeTypeLabel(
+					CTConstants.CT_CHANGE_TYPE_ADDITION)),
 			new SelectionFDSFilterItem(
-				"modified", CTConstants.CT_CHANGE_TYPE_MODIFICATION),
+				"modified",
+				CTConstants.getCTChangeTypeLabel(
+					CTConstants.CT_CHANGE_TYPE_MODIFICATION)),
 			new SelectionFDSFilterItem(
-				"deleted", CTConstants.CT_CHANGE_TYPE_DELETION));
+				"deleted",
+				CTConstants.getCTChangeTypeLabel(
+					CTConstants.CT_CHANGE_TYPE_DELETION)));
 	}
 
 }

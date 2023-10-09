@@ -44,7 +44,13 @@ if (selLayout != null) {
 		<aui:field-wrapper helpMessage="product-display-page-help" label="product-display-page">
 			<p class="text-default">
 				<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
-					<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+					<clay:button
+						aria-label='<%= LanguageUtil.format(locale, "remove-x", "product-display-page") %>'
+						cssClass="lfr-portal-tooltip"
+						displayType="unstyled"
+						icon="times"
+						title="remove"
+					/>
 				</span>
 				<span id="<portlet:namespace />displayPageNameInput">
 					<c:choose>

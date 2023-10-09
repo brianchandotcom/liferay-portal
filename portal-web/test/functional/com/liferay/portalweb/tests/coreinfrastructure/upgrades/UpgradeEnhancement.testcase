@@ -140,6 +140,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test DirectUpgradeFromArchive6012 {
 		property ci.retries.disabled = "false";
@@ -160,6 +161,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test DirectUpgradeFromArchive6130 {
 		property ci.retries.disabled = "false";

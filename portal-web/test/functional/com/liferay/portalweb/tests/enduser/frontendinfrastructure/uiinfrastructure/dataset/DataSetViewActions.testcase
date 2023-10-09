@@ -227,6 +227,53 @@ definition {
 		}
 	}
 
+	@description = "LPS-191488. Confirm that is possible to leave the URL field empty in the Actions tab."
+	@priority = 4
+	test CannotSaveURLFieldEmpty {
+		task ("And creates a new item action") {
+			DataSetAdmin.addActions(
+				actionName = "delete",
+				confirmationMessage = "This item was deleted successfully.",
+				icon = "trash",
+				messageType = "Info",
+				type = "Link",
+				url = "http://localhost:8080/o/data-set-manager/");
+		}
+
+		task ("When the user clicks on the new item action 3 dots button") {
+			Click(
+				key_tableEntry = "delete",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("And clicks on the Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And leaves the URL field empty") {
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "");
+		}
+
+		task ("And clicks on Save button") {
+			PortletEntry.save();
+		}
+
+		task ("Then an error message is displayed") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "This field is required.");
+		}
+
+		task ("And the changes cannot be saved") {
+			AssertVisible(
+				key_title = "delete",
+				locator1 = "Header#H2_TITLE");
+		}
+	}
+
 	@description = "LPS-191488. Verify if the user can edit a created Action and see the informations"
 	@priority = 5
 	test CanSeeModalWhenClicksOnEditAction {

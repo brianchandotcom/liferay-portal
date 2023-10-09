@@ -7,7 +7,7 @@ package com.liferay.portal.kernel.model.adapter;
 
 import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
 import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilderLocator;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ public class ModelAdapterUtil {
 		Class<V> adaptedModelClass) {
 
 		ModelAdapterBuilderLocator modelAdapterBuilderLocator =
-			_modelAdapterBuilderLocator;
+			_modelAdapterBuilderLocatorSnapshot.get();
 
 		if (modelAdapterBuilderLocator == null) {
 			return null;
@@ -74,10 +74,8 @@ public class ModelAdapterUtil {
 		return modelAdapterBuilder.build(adapteeModel);
 	}
 
-	private static volatile ModelAdapterBuilderLocator
-		_modelAdapterBuilderLocator =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ModelAdapterBuilderLocator.class, ModelAdapterUtil.class,
-				"_modelAdapterBuilderLocator", false, true);
+	private static final Snapshot<ModelAdapterBuilderLocator>
+		_modelAdapterBuilderLocatorSnapshot = new Snapshot<>(
+			ModelAdapterUtil.class, ModelAdapterBuilderLocator.class);
 
 }

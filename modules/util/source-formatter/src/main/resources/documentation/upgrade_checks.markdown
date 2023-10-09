@@ -11,6 +11,7 @@ JavaUpgradeModelPermissionsCheck | .java | Replace setGroupPermissions and setGu
 [PropertiesUpgradeLiferayPluginPackageFileCheck](check/properties_upgrade_liferay_plugin_package_file_check.markdown#propertiesupgradeliferaypluginpackagefilecheck) | .eslintignore, .prettierignore or .properties | Performs several upgrade checks in `liferay-plugin-package.properties` file. |
 PropertiesUpgradeLiferayPluginPackageLiferayVersionsCheck | .eslintignore, .prettierignore or .properties | Validates and upgrades the version in `liferay-plugin-package.properties` file. |
 UpgradeBNDIncludeResourceCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Checks if the property value `-includeresource` or `Include-Resource` exists and removes it |
+UpgradeCatchAllCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Performs replacements on Liferay's outdated code |
 UpgradeDLUtilCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace the getGroupIds method of class `DLUtil` by getCurrentAndAncestorSiteGroupIds of class `PortalUtil`. |
 UpgradeDeprecatedAPICheck | .java | Finds calls to deprecated classes, constructors, fields or methods after an upgrade |
 UpgradeGetClassNamesMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Run code migration of method from 'getClassNames' to 'getSearchClassNames' |
@@ -33,11 +34,9 @@ UpgradeJavaCommerceCountryCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf
 UpgradeJavaCommerceCountryServiceCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replaces the old methods of class `CommerceCountryService` with the new equivalents in the `CountryService` class. |
 UpgradeJavaCommerceOrderItemServicesCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Fill the new parameters of the method `addCommerceOrderItem` and `deleteCommerceOrderItems` of `CommerceOrderItemLocalService`, `CommerceOrderItemLocalServiceUtil`, `CommerceOrderItemService` and `CommerceOrderItemServiceUtil` classes |
 UpgradeJavaCommerceOrderValidatorCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace the parameter Int for BigDecimal of method validate of 'CommerceOrderValidator' interface |
-UpgradeJavaCommerceRegionCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replaces the old methods of class `CommerceRegion` with the new equivalents in the `Region` class. |
 UpgradeJavaCookieKeysCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | CookieKeys class was replaced by CookiesManagerUtil and CookieConstants |
 UpgradeJavaCookieUtilCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace CookieUtilCheck.get by CookiesManagerUtil.getCookieValue and reorder parameters |
 UpgradeJavaDLFolderMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Fill the new parameter of the method addFolder of DLFolderLocalService, DLFolderLocalServiceUtil, DLFolderService and DLFolderServiceUtil |
-UpgradeJavaExtractTextMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class |
 UpgradeJavaFDSActionProviderCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Reorder parameters in the getDropdownItems method of the FDSDataProvider interface |
 UpgradeJavaFDSDataProviderCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface |
 UpgradeJavaFacetedSearcherCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replaces the references of the `Indexer indexer = FacetedSearcher.getInstance();` declaration and `indexer.search` method call. |
@@ -55,7 +54,6 @@ UpgradeJavaPhoneLocalServiceUtilCheck | .bnd, .ftl, .gradle, .java, .json, .jsp,
 UpgradeJavaPortletIdMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace the 'document.get(Field.PORTLET_ID)' by the new interface 'PortletProviderUtil.getPortletId' |
 UpgradeJavaPortletSharedSearchSettingsCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replaces the Optional return type of the methods `getParameterValues` and `getPortletPreferences` of `PortletSharedSearchSettings` class |
 UpgradeJavaSchedulerEntryImplConstructorCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace constructors that use the empty constructor of the SchedulerEntryImpl class. |
-UpgradeJavaSearchVocabulariesMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Fill in the new parameters of the method `searchVocabularies` of 'AssetVocabularyService' and 'AssetVocabularyLocalService' |
 UpgradeJavaServiceReferenceAnnotationCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Run code migration to replace '@ServiceReference' by '@Reference' |
 UpgradeJavaServiceTrackerListCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace the number of generic type arguments in ServiceTrackerList |
 UpgradeJavaUpdateCommerceAddressCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace parameter in updateCommerceAddress method by other parameters list |

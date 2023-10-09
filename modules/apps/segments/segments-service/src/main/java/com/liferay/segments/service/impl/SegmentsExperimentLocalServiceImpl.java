@@ -429,19 +429,19 @@ public class SegmentsExperimentLocalServiceImpl
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				SegmentsExperience callBackVariantSegmentsExperience =
+				SegmentsExperience callbackVariantSegmentsExperience =
 					_segmentsExperienceLocalService.getSegmentsExperience(
 						variantSegmentsExperienceId);
 
 				if (controlSegmentsExperienceKeyDefault) {
-					callBackVariantSegmentsExperience.setSegmentsExperienceKey(
+					callbackVariantSegmentsExperience.setSegmentsExperienceKey(
 						SegmentsExperienceConstants.KEY_DEFAULT);
 				}
 
-				callBackVariantSegmentsExperience.setPriority(originalPriority);
+				callbackVariantSegmentsExperience.setPriority(originalPriority);
 
 				_segmentsExperienceLocalService.updateSegmentsExperience(
-					callBackVariantSegmentsExperience);
+					callbackVariantSegmentsExperience);
 
 				return null;
 			});

@@ -8,43 +8,48 @@ package com.liferay.commerce.order.rule.internal.search;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
+import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(service = {})
-public class COREntrySearchRegistrar {
+@Component(service = ModelSearchConfigurator.class)
+public class COREntryModelSearchConfigurator
+	implements ModelSearchConfigurator<COREntry> {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = _modelSearchRegistrarHelper.register(
-			COREntry.class, bundleContext,
-			modelSearchConfigurator -> {
-				modelSearchConfigurator.setDefaultSelectedFieldNames(
-					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
-					Field.ENTRY_CLASS_PK, Field.UID);
-				modelSearchConfigurator.setModelIndexWriteContributor(
-					_modelIndexWriterContributor);
-				modelSearchConfigurator.setModelSummaryContributor(
-					_modelSummaryContributor);
-				modelSearchConfigurator.setModelVisibilityContributor(
-					_modelVisibilityContributor);
-			});
+	@Override
+	public String getClassName() {
+		return COREntry.class.getName();
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_serviceRegistration.unregister();
+	@Override
+	public String[] getDefaultSelectedFieldNames() {
+		return new String[] {
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.UID
+		};
+	}
+
+	@Override
+	public ModelIndexerWriterContributor<COREntry>
+		getModelIndexerWriterContributor() {
+
+		return _modelIndexWriterContributor;
+	}
+
+	@Override
+	public ModelSummaryContributor getModelSummaryContributor() {
+		return _modelSummaryContributor;
+	}
+
+	@Override
+	public ModelVisibilityContributor getModelVisibilityContributor() {
+		return _modelVisibilityContributor;
 	}
 
 	@Reference(
@@ -52,9 +57,6 @@ public class COREntrySearchRegistrar {
 	)
 	private ModelIndexerWriterContributor<COREntry>
 		_modelIndexWriterContributor;
-
-	@Reference
-	private ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.commerce.order.rule.model.COREntry)"
@@ -65,7 +67,5 @@ public class COREntrySearchRegistrar {
 		target = "(indexer.class.name=com.liferay.commerce.order.rule.model.COREntry)"
 	)
 	private ModelVisibilityContributor _modelVisibilityContributor;
-
-	private ServiceRegistration<?> _serviceRegistration;
 
 }

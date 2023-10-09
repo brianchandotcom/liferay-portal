@@ -274,6 +274,73 @@ definition {
 		}
 	}
 
+	@description = "LPS-191488. Confirm that it's possible to save an Action after changing all fields in the Actions tab."
+	@priority = 5
+	test CanSaveAfterChangeAllFields {
+		task ("And creates a new item action") {
+			DataSetAdmin.addActions(
+				actionName = "delete",
+				confirmationMessage = "This item was deleted successfully.",
+				icon = "trash",
+				messageType = "Info",
+				type = "Link",
+				url = "http://localhost:8080/o/data-set-manager/");
+		}
+
+		task ("When the user clicks on the new item action 3 dots button") {
+			Click(
+				key_tableEntry = "delete",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("And clicks on the Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And changes the Label field content") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "remove");
+		}
+
+		task ("And changes the Headless Action Key field content") {
+			Type(
+				key_placeholder = "Add a value here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER",
+				value1 = "delete");
+		}
+
+		task ("And changes the Confirmation Message field content") {
+			Type(
+				key_placeholder = "Add a message here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER",
+				value1 = "This item was removed successfully.");
+		}
+
+		task ("And changes the URL field content") {
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "http://localhost:8080/o/data-set-manager/");
+		}
+
+		task ("And clicks on Save button") {
+			PortletEntry.save();
+		}
+
+		task ("And a successful toast message is displayed") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the changes are saved") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "remove",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
 	@description = "LPS-191488. Verify if the user can edit a created Action and see the informations"
 	@priority = 5
 	test CanSeeModalWhenClicksOnEditAction {

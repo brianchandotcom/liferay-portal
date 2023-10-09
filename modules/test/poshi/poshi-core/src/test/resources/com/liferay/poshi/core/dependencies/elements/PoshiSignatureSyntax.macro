@@ -1,0 +1,13 @@
+<definition>
+	<command summary="Default summary" name="noParams">
+		<echo message="this macro contains no params"/>
+	</command>
+	<command summary="Default summary" name="nullParams" arguments="varOne = null, varTwo = null">
+		<echo message="${varOne}"/>
+		<echo message="${varTwo}"/>
+	</command>
+	<command summary="Default summary" name="requiredParams" arguments="varOne, varTwo">
+		<echo message="${varOne}"/>
+		<echo message="${varTwo}"/>
+	</command>
+</definition>

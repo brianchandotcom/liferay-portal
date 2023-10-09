@@ -1,0 +1,25 @@
+@default = "open"
+@summary = "Open a URL"
+definition {
+
+	function assertCSSValue() {
+		selenium.assertCSSValue();
+	}
+
+	function executeJavaScript(value2,value1,value3) {
+		selenium.executeJavaScript(${value1}, ${value2}, ${value3});
+	}
+
+	function open(value1) {
+		selenium.open(${value1});
+	}
+
+	function selectPopUp(value1) {
+		selenium.selectPopUp(${value1});
+	}
+
+	function waitForVisible(locator1,value1) {
+		selenium.waitForVisible(${locator1}, ${value1});
+	}
+
+}

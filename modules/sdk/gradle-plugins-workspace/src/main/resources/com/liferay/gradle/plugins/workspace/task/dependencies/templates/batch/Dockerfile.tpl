@@ -2,4 +2,4 @@ FROM liferay/batch:latest
 
 #ENV LIFERAY_BATCH_CURL_OPTIONS="-v"
 
-COPY /batch /opt/liferay/batch
+COPY /__BATCH_TYPE__ /opt/liferay/__BATCH_TYPE__

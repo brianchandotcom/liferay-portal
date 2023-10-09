@@ -98,10 +98,9 @@ public class ProductConfigurationResourceImpl
 			_cpDefinitionInventoryService, productConfiguration,
 			cpDefinition.getCPDefinitionId());
 
-		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
-			0, cpDefinition.getCPDefinitionId(),
-			productConfiguration.getAvailabilityEstimateId(),
-			_serviceContextHelper.getServiceContext(cpDefinition.getGroupId()));
+		ProductConfigurationUtil.updateCPDAvailabilityEstimate(
+			_cpdAvailabilityEstimateService, productConfiguration,
+			cpDefinition.getCPDefinitionId());
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -125,10 +124,9 @@ public class ProductConfigurationResourceImpl
 			_cpDefinitionInventoryService, productConfiguration,
 			cpDefinition.getCPDefinitionId());
 
-		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
-			0, cpDefinition.getCPDefinitionId(),
-			productConfiguration.getAvailabilityEstimateId(),
-			_serviceContextHelper.getServiceContext(cpDefinition.getGroupId()));
+		ProductConfigurationUtil.updateCPDAvailabilityEstimate(
+			_cpdAvailabilityEstimateService, productConfiguration,
+			cpDefinition.getCPDefinitionId());
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 

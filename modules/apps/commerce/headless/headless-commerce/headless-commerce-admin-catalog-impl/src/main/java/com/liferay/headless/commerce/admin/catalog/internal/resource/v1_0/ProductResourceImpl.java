@@ -850,10 +850,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				_cpDefinitionInventoryService, productConfiguration,
 				cpDefinition.getCPDefinitionId());
 
-			_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
-				0, cpDefinition.getCPDefinitionId(),
-				productConfiguration.getAvailabilityEstimateId(),
-				serviceContext);
+			ProductConfigurationUtil.updateCPDAvailabilityEstimate(
+				_cpdAvailabilityEstimateService, productConfiguration,
+				cpDefinition.getCPDefinitionId());
 		}
 
 		// Product shipping configuration

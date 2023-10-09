@@ -1825,6 +1825,10 @@ public class GraphQLServletExtender {
 				public Object parseLiteral(Object value)
 					throws CoercingParseLiteralException {
 
+					if (value instanceof ObjectValue) {
+						return _parseObjectValue((ObjectValue)value);
+					}
+
 					return value;
 				}
 

@@ -171,7 +171,9 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewDocumentTypePG(imageName = "Document_1.jpg");
+		DMDocument.viewDocumentTypePG(
+			imageName = "Document_1.jpg",
+			panelName = "DM Metadata Set Name");
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
@@ -211,7 +213,8 @@ definition {
 
 		DMDocument.viewDocumentTypePG(
 			fieldFieldLabel = "Photo",
-			imageName = "Document_2.jpg");
+			imageName = "Document_2.jpg",
+			panelName = "DM Metadata Set Name Edit");
 	}
 
 	@description = "This ensures that the user can create a document using edited text field inside metadata set."

@@ -25,10 +25,10 @@ definition {
 	test AssertHighlightedSearchResultsWhenAdvancedSearchSyntaxIsEnabled {
 		SearchPortlets.configureEmbeddedSearchBar(useAdvancedSearchSyntax = "true");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPortlets.searchEmbedded(searchTerm = "home");
 
 		AssertCssValue(
-			key_searchAssetTitle = "Test",
+			key_searchAssetTitle = "Home",
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_HIGHLIGHT",
 			locator2 = "background-color",
 			value1 = "rgba(252, 248, 227, 1)");

@@ -3220,6 +3220,21 @@ public class PortalImpl implements Portal {
 			}
 		}
 
+		// Get locale from session click parameter
+
+		String sessionClickLanguageId = ParamUtil.getString(
+			httpServletRequest, "sessionClickLanguageId");
+
+		if (Validator.isNotNull(sessionClickLanguageId) && initialize) {
+			Locale sessionClickLocale = LocaleUtil.fromLanguageId(
+				sessionClickLanguageId);
+
+			setLocale(
+				httpServletRequest, httpServletResponse, sessionClickLocale);
+
+			return sessionClickLocale;
+		}
+
 		if ((user != null) && !user.isGuestUser()) {
 			Locale userLocale = getAvailableLocale(groupId, user.getLocale());
 

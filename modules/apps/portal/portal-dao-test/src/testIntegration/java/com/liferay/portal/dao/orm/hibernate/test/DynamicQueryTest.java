@@ -101,8 +101,6 @@ public class DynamicQueryTest {
 
 	@Test
 	public void testInRestrictionCriterionWithMoreThanDatabaseInMaxParametersValue() {
-		RestrictionsFactory restrictionsFactory = new RestrictionsFactoryImpl();
-
 		DBManager dbManager = (DBManager)ReflectionTestUtil.getFieldValue(
 			DBManagerUtil.class, "_dbManager");
 
@@ -129,6 +127,9 @@ public class DynamicQueryTest {
 			Assert.assertEquals(
 				values.toString(), _DATABASE_IN_MAX_PARAMETERS + 1,
 				values.size());
+
+			RestrictionsFactory restrictionsFactory =
+				new RestrictionsFactoryImpl();
 
 			dynamicQuery.add(restrictionsFactory.in("classNameId", values));
 

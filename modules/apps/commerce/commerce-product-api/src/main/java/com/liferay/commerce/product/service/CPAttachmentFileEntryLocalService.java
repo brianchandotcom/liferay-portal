@@ -128,6 +128,9 @@ public interface CPAttachmentFileEntryLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void deleteCPAttachmentFileEntries(long fileEntryId)
+		throws PortalException;
+
 	public void deleteCPAttachmentFileEntries(String className, long classPK)
 		throws PortalException;
 

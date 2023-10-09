@@ -143,6 +143,14 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteCPAttachmentFileEntries(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntries(
+			fileEntryId);
+	}
+
+	@Override
 	public void deleteCPAttachmentFileEntries(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -132,6 +132,12 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
+	public static void deleteCPAttachmentFileEntries(long fileEntryId)
+		throws PortalException {
+
+		getService().deleteCPAttachmentFileEntries(fileEntryId);
+	}
+
 	public static void deleteCPAttachmentFileEntries(
 			String className, long classPK)
 		throws PortalException {

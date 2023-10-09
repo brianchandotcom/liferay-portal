@@ -2208,6 +2208,31 @@ definition {
 			searchTerm = "Blogs");
 	}
 
+	@description = "This is a use case for LPS-186456 - SearchBar Instance Setting is not updating."
+	@priority = 3
+	test SearchInstanceSettingsAreUpdatedWhenSaved {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Search",
+			configurationName = "Search Bar",
+			configurationScope = "Widget Scope");
+
+		FormFields.editText(
+			fieldName = "InstanceSettingsPortlet_suggestionsDisplayThreshold",
+			fieldValue = 3);
+
+		PortletEntry.save();
+
+		AssertElementPresent(
+			key_fieldName = "InstanceSettingsPortlet_suggestionsDisplayThreshold",
+			locator1 = "FormFields#TEXT_FIELD",
+			value1 = 3);
+	}
+
 	@description = "Runs a basic search test on a non-root portal context."
 	@priority = 4
 	test SearchNonRootContext {

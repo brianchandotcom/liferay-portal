@@ -2126,10 +2126,9 @@ war.path=${app.server.portal.dir}/</echo>
 		<sequential>
 			<if>
 				<and>
+					<contains string="${env.JOB_NAME}" substring="release" />
 					<equals arg1="${env.TEST_PORTAL_BRANCH_NAME}" arg2="master" />
-					<not>
-						<matches pattern="\d.+(-|.)(ga|u)\d+" string="${env.TEST_PORTAL_RELEASE_VERSION}" />
-					</not>
+					<matches pattern="\d{4}.q\d+.\d+" string="${env.TEST_PORTAL_RELEASE_VERSION}" />
 				</and>
 				<then>
 					<property name="quarterly.release" value="true" />
@@ -6837,12 +6836,7 @@ go</echo>
 				</else>
 			</if>
 
-			<if>
-				<contains string="${env.JOB_NAME}" substring="release" />
-				<then>
-					<is-quarterly-release/>
-				</then>
-			</if>
+			<is-quarterly-release/>
 
 			<if>
 				<isset property="quarterly.release" />

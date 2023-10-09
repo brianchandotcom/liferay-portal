@@ -216,10 +216,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		String dbTableName = StringBundler.concat(
-			"R_", StringUtil.randomString(1), RandomUtil.nextInt(1),
-			StringUtil.randomString(1), RandomUtil.nextInt(1));
-		StringUtil.upperCase(dbTableName);
+		String dbTableName = _generateDBTableName();
 
 		objectRelationship.setDBTableName(dbTableName);
 
@@ -264,6 +261,26 @@ public class ObjectRelationshipLocalServiceImpl
 			pkObjectFieldDBColumnName2);
 
 		return objectRelationship;
+	}
+
+	private String _generateDBTableName() {
+
+		boolean invalidSequence = true;
+		String dbTableName = null;
+
+		while (invalidSequence) {
+			dbTableName = StringUtil.upperCase(StringBundler.concat(
+				"R_", StringUtil.randomString(1), RandomUtil.nextInt(1),
+				StringUtil.randomString(1), RandomUtil.nextInt(1)));
+
+			ObjectRelationship objectRelationship =
+				objectRelationshipPersistence.fetchByDBTableName(dbTableName);
+
+			if (objectRelationship == null) {
+				invalidSequence = false;
+			}
+		}
+		return dbTableName;
 	}
 
 	@Override

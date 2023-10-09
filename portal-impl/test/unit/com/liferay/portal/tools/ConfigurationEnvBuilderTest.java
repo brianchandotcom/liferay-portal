@@ -109,7 +109,7 @@ public class ConfigurationEnvBuilderTest {
 
 		for (String line : lines) {
 			if (line.contains("configuration.override")) {
-				line = StringUtil.replace(line, StringPool.POUND, StringPool.BLANK);
+				line = StringUtil.removeSubstring(line, StringPool.POUND);
 
 				result.add(line.trim());
 			}

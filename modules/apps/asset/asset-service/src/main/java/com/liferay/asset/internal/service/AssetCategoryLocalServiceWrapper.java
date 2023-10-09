@@ -50,7 +50,11 @@ public class AssetCategoryLocalServiceWrapper
 		);
 
 		return _assetCategoryLocalService.dslQuery(
-			_getGroupByStep(classNameId, classPK, joinStep));
+			_getGroupByStep(
+				classNameId, classPK, joinStep
+			).limit(
+				start, end
+			));
 	}
 
 	@Override
@@ -135,7 +139,10 @@ public class AssetCategoryLocalServiceWrapper
 					}
 
 					return predicate;
-				}));
+				}
+			).limit(
+				start, end
+			));
 	}
 
 	private GroupByStep _getGroupByStep(

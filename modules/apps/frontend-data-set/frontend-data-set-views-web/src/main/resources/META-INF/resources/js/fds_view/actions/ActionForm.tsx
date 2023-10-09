@@ -29,14 +29,7 @@ const ACTION_TYPE = {
 	SIDEPANEL: 'sidePanel',
 };
 
-const ITEM_ACTION_TYPES = [
-	{
-		label: Liferay.Language.get('link'),
-		value: ACTION_TYPE.LINK,
-	},
-];
-
-const CREATION_ACTION_TYPES = [
+const ACTION_TYPES = [
 	{
 		label: Liferay.Language.get('link'),
 		value: ACTION_TYPE.LINK,
@@ -48,6 +41,17 @@ const CREATION_ACTION_TYPES = [
 	{
 		label: Liferay.Language.get('side-panel'),
 		value: ACTION_TYPE.SIDEPANEL,
+	},
+];
+
+const ITEM_ACTION_TYPES = [
+	{
+		label: Liferay.Language.get('async'),
+		value: ACTION_TYPE.ASYNC,
+	},
+	{
+		label: Liferay.Language.get('headless'),
+		value: ACTION_TYPE.HEADLESS,
 	},
 ];
 
@@ -296,10 +300,6 @@ const ActionForm = ({
 		getIcons();
 	}, [spritemap]);
 
-	useEffect(() => {
-		validateForm();
-	});
-
 	const iconFormElementId = `${namespace}Icon`;
 	const confirmationMessageFormElementId = `${namespace}ConfirmationMessage`;
 	const confirmationMessageTypeFormElementId = `${namespace}ConfirmationMessageType`;
@@ -437,11 +437,7 @@ const ActionForm = ({
 											type: event.target.value,
 										})
 									}
-									options={
-										!activeTab
-											? ITEM_ACTION_TYPES
-											: CREATION_ACTION_TYPES
-									}
+									options={ACTION_TYPES}
 									placeholder={Liferay.Language.get(
 										'please-select-an-option'
 									)}
@@ -481,9 +477,9 @@ const ActionForm = ({
 						)}
 					</ClayLayout.Row>
 
-					{activeTab === 1 &&
-						(actionData.type === ACTION_TYPE.MODAL ||
-							actionData.type === ACTION_TYPE.SIDEPANEL) && (
+					{(
+						actionData.type === ACTION_TYPE.MODAL ||
+						actionData.type === ACTION_TYPE.SIDEPANEL) && (
 							<ClayLayout.Row>
 								<ClayLayout.Col>
 									{Liferay.FeatureFlags['LPS-172017'] ? (
@@ -555,44 +551,50 @@ const ActionForm = ({
 									)}
 								</ClayLayout.Col>
 							</ClayLayout.Row>
-						)}
+					)}
+
+					{(actionData.type !== ACTION_TYPE.HEADLESS) && (
+						<ClayLayout.Row justify="start">
+							<ClayLayout.Col lg>
+								<ClayForm.Group
+									className={classNames({
+										'has-error': urlValidationError,
+									})}
+								>
+									<label htmlFor={urlFormElementId}>
+										{Liferay.Language.get('url')}
+
+										<RequiredMark />
+									</label>
+
+									<ClayInput
+										component="textarea"
+										id={urlFormElementId}
+										onBlur={() => {
+											setURLValidationError(!actionData.url);
+
+											validateForm();
+										}}
+										onChange={(event) =>
+											setActionData({
+												...actionData,
+												url: event.target.value,
+											})
+										}
+										placeholder={Liferay.Language.get(
+											'add-a-url-here'
+										)}
+										value={actionData.url}
+									/>
+
+									{urlValidationError && <ValidationFeedback />}
+								</ClayForm.Group>
+							</ClayLayout.Col>
+						</ClayLayout.Row>
+					)}
 
 					<ClayLayout.Row justify="start">
-						<ClayLayout.Col lg>
-							<ClayForm.Group
-								className={classNames({
-									'has-error': urlValidationError,
-								})}
-							>
-								<label htmlFor={urlFormElementId}>
-									{Liferay.Language.get('url')}
-
-									<RequiredMark />
-								</label>
-
-								<ClayInput
-									component="textarea"
-									id={urlFormElementId}
-									onBlur={() => {
-										setURLValidationError(!actionData.url);
-
-										validateForm();
-									}}
-									onChange={(event) =>
-										setActionData({
-											...actionData,
-											url: event.target.value,
-										})
-									}
-									placeholder={Liferay.Language.get(
-										'add-a-url-here'
-									)}
-									value={actionData.url}
-								/>
-
-								{urlValidationError && <ValidationFeedback />}
-							</ClayForm.Group>
-
+						<ClayLayout.Col>
 							<ClayForm.Group>
 								<label htmlFor={permissionKeyFormElementId}>
 									{Liferay.Language.get(
@@ -623,105 +625,105 @@ const ActionForm = ({
 									value={actionData.permissionKey}
 								/>
 							</ClayForm.Group>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
 
-							{activeTab === 0 &&
-								actionData.type === ACTION_TYPE.LINK && (
-									<ClayLayout.Row>
-										<ClayLayout.Col size={8}>
-											<ClayForm.Group>
-												{Liferay.FeatureFlags[
-													'LPS-172017'
-												] ? (
-													<InputLocalized
-														id={
-															confirmationMessageFormElementId
-														}
-														label={Liferay.Language.get(
-															'confirmation-message'
-														)}
-														onChange={
-															setConfirmationMessageTranslations
-														}
-														placeholder={Liferay.Language.get(
-															'add-a-message-here'
-														)}
-														tooltip={Liferay.Language.get(
-															'the-user-will-see-this-message-before-performing-the-action'
-														)}
-														translations={
-															confirmationMessageTranslations
-														}
-													/>
-												) : (
-													<>
-														<label
-															htmlFor={
-																confirmationMessageFormElementId
-															}
-														>
-															{Liferay.Language.get(
-																'confirmation-message'
-															)}
-														</label>
-
-														<ClayInput
-															id={
-																confirmationMessageFormElementId
-															}
-															onChange={(event) =>
-																setActionData({
-																	...actionData,
-																	confirmationMessage:
-																		event
-																			.target
-																			.value,
-																})
-															}
-															type="text"
-															value={
-																actionData.confirmationMessage
-															}
-														/>
-													</>
+					{activeTab === 0 &&
+						actionData.type === ACTION_TYPE.LINK && (
+							<ClayLayout.Row>
+								<ClayLayout.Col size={8}>
+									<ClayForm.Group>
+										{Liferay.FeatureFlags[
+											'LPS-172017'
+										] ? (
+											<InputLocalized
+												id={
+													confirmationMessageFormElementId
+												}
+												label={Liferay.Language.get(
+													'confirmation-message'
 												)}
-											</ClayForm.Group>
-										</ClayLayout.Col>
-
-										<ClayLayout.Col size={4}>
-											<ClayForm.Group>
+												onChange={
+													setConfirmationMessageTranslations
+												}
+												placeholder={Liferay.Language.get(
+													'add-a-message-here'
+												)}
+												tooltip={Liferay.Language.get(
+													'the-user-will-see-this-message-before-performing-the-action'
+												)}
+												translations={
+													confirmationMessageTranslations
+												}
+											/>
+										) : (
+											<>
 												<label
 													htmlFor={
-														confirmationMessageTypeFormElementId
+														confirmationMessageFormElementId
 													}
 												>
 													{Liferay.Language.get(
-														'message-type'
+														'confirmation-message'
 													)}
 												</label>
 
-												<ClaySelectWithOption
+												<ClayInput
 													id={
-														confirmationMessageTypeFormElementId
+														confirmationMessageFormElementId
 													}
 													onChange={(event) =>
 														setActionData({
 															...actionData,
-															confirmationMessageType:
-																event.target
+															confirmationMessage:
+																event
+																	.target
 																	.value,
 														})
 													}
-													options={MESSAGE_TYPES}
+													type="text"
 													value={
-														actionData.confirmationMessageType
+														actionData.confirmationMessage
 													}
 												/>
-											</ClayForm.Group>
-										</ClayLayout.Col>
-									</ClayLayout.Row>
-								)}
-						</ClayLayout.Col>
-					</ClayLayout.Row>
+											</>
+										)}
+									</ClayForm.Group>
+								</ClayLayout.Col>
+
+								<ClayLayout.Col size={4}>
+									<ClayForm.Group>
+										<label
+											htmlFor={
+												confirmationMessageTypeFormElementId
+											}
+										>
+											{Liferay.Language.get(
+												'message-type'
+											)}
+										</label>
+
+										<ClaySelectWithOption
+											id={
+												confirmationMessageTypeFormElementId
+											}
+											onChange={(event) =>
+												setActionData({
+													...actionData,
+													confirmationMessageType:
+														event.target
+															.value,
+												})
+											}
+											options={MESSAGE_TYPES}
+											value={
+												actionData.confirmationMessageType
+											}
+										/>
+									</ClayForm.Group>
+								</ClayLayout.Col>
+							</ClayLayout.Row>
+						)}
 				</ClayPanel.Body>
 			</ClayPanel>
 

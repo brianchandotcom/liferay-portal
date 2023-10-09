@@ -3596,6 +3596,10 @@ definition {
 			DMDocument.expandInfo();
 		}
 
+		if (isSet(panelName)) {
+			Panel.expandPanel(panel = ${panelName});
+		}
+
 		if (isSet(booleanValue)) {
 			if (${booleanValue} == "checked") {
 				AssertElementPresent(locator1 = "FormFields#ANY_CHECKBOX_CHECKED");

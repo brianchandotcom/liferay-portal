@@ -30,9 +30,9 @@ dependencies {
 	compileInclude group: "net.coobird", name: "thumbnailator", version: "0.4.8"
 
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.11"
-	compileOnly group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
-	compileOnly group: "org.apache.maven", name: "maven-core", version: "3.2.5"
-	compileOnly group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"
+	compileOnly group: "org.apache.maven", name: "maven-artifact", version: "3.8.1"
+	compileOnly group: "org.apache.maven", name: "maven-core", version: "3.8.1"
+	compileOnly group: "org.apache.maven", name: "maven-plugin-api", version: "3.8.1"
 
 	mavenCompile group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "3.0.4"
 	mavenCompile group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "3.0.4"

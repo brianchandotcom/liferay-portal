@@ -10,7 +10,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginUI();
+		User.firstLoginPG();
 
 		task ("Given API Application with Schema created") {
 			ApplicationAPI.createAPIApplication(

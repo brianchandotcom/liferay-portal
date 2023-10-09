@@ -10,7 +10,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginUI();
+		User.firstLoginPG();
 
 		task ("Given an API Application 'App-test' of status 'published' by post request postAPIApplication") {
 			ApplicationAPI.createAPIApplication(

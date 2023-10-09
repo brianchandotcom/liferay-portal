@@ -34,6 +34,24 @@ import java.util.regex.Pattern;
  */
 public class UpgradeCatchAllCheck extends BaseFileCheck {
 
+	public static String[] getExpectedMessages() throws Exception {
+		List<String> expectedMessages = new ArrayList<>();
+
+		JSONArray jsonArray = _getReplacementsJSONArray("replacements.json");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			String from = jsonObject.getString("from");
+
+			if (from.contains(StringPool.OPEN_PARENTHESIS)) {
+				expectedMessages.add(_getMessage(jsonObject));
+			}
+		}
+
+		return ArrayUtil.toStringArray(expectedMessages);
+	}
+
 	public static void setTestMode(boolean testMode) {
 		_testMode = testMode;
 	}
@@ -78,6 +96,43 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		return newContent;
 	}
 
+	private static String _getMessage(JSONObject jsonObject) {
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("See ");
+		sb.append(jsonObject.getString("issueKey"));
+		sb.append(StringPool.COMMA_AND_SPACE);
+
+		String[] classNames = JSONUtil.toStringArray(
+			jsonObject.getJSONArray("classNames"));
+
+		if (classNames.length > 0) {
+			sb.append(StringUtil.merge(classNames, StringPool.SLASH));
+		}
+
+		String from = jsonObject.getString("from");
+
+		int periodIndex = from.indexOf(CharPool.PERIOD);
+
+		if (periodIndex != -1) {
+			from = StringUtil.replace(from, CharPool.PERIOD, CharPool.POUND);
+		}
+		else {
+			sb.append(StringPool.POUND);
+		}
+
+		int parenthesisIndex = from.indexOf(CharPool.OPEN_PARENTHESIS);
+
+		if (parenthesisIndex != -1) {
+			sb.append(from.substring(0, parenthesisIndex));
+		}
+		else {
+			sb.append(from);
+		}
+
+		return sb.toString();
+	}
+
 	private static Pattern _getPattern(JSONObject jsonObject) {
 		String from = jsonObject.getString("from");
 
@@ -92,6 +147,23 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		}
 
 		return Pattern.compile(regex + "\\(");
+	}
+
+	private static JSONArray _getReplacementsJSONArray(String fileName)
+		throws Exception {
+
+		Class<?> clazz = UpgradeCatchAllCheck.class;
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"dependencies/" + fileName);
+
+		if (inputStream == null) {
+			return new JSONArrayImpl();
+		}
+
+		return new JSONArrayImpl(StringUtil.read(inputStream));
 	}
 
 	private String _addNewReference(String content, String newReference) {
@@ -187,8 +259,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 			if (from.contains(StringPool.OPEN_PARENTHESIS)) {
 				newContent = _formatParameters(
-					new String[0], fileName, from, newContent, jsonObject,
-					matcher, newContent, to);
+					fileName, from, newContent, jsonObject, matcher, newContent,
+					to);
 			}
 			else {
 				newContent = StringUtil.replace(
@@ -243,8 +315,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 				if (from.contains(StringPool.OPEN_PARENTHESIS)) {
 					newContent = _formatParameters(
-						classNames, fileName, from, javaMethodContent,
-						jsonObject, matcher, newContent, to);
+						fileName, from, javaMethodContent, jsonObject, matcher,
+						newContent, to);
 				}
 				else {
 					newContent = StringUtil.replaceFirst(
@@ -263,9 +335,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 	}
 
 	private String _formatParameters(
-		String[] classNames, String fileName, String from,
-		String javaMethodContent, JSONObject jsonObject, Matcher matcher,
-		String newContent, String to) {
+		String fileName, String from, String javaMethodContent,
+		JSONObject jsonObject, Matcher matcher, String newContent, String to) {
 
 		String methodCall = JavaSourceUtil.getMethodCall(
 			javaMethodContent, matcher.start());
@@ -291,31 +362,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				ArrayUtil.toStringArray(parameterNames),
 				ArrayUtil.toStringArray(parameterTypes))) {
 
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("See ");
-			sb.append(jsonObject.getString("issueKey"));
-			sb.append(StringPool.COMMA_AND_SPACE);
-
-			if (classNames.length > 0) {
-				sb.append(StringUtil.merge(classNames, StringPool.SLASH));
-			}
-			else {
-				sb.append(getVariableName(methodCall));
-			}
-
-			sb.append(StringPool.POUND);
-
-			int index = from.indexOf(CharPool.OPEN_PARENTHESIS);
-
-			if (from.contains(StringPool.PERIOD)) {
-				sb.append(from.substring(from.indexOf(CharPool.PERIOD), index));
-			}
-			else {
-				sb.append(from.substring(0, index));
-			}
-
-			addMessage(fileName, sb.toString());
+			addMessage(fileName, _getMessage(jsonObject));
 
 			return newContent;
 		}
@@ -332,23 +379,6 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			newMethodCall, parameterNames, JavaSourceUtil.getParameterList(to));
 
 		return StringUtil.replaceFirst(newContent, methodCall, newMethodCall);
-	}
-
-	private JSONArray _getReplacementsJSONArray(String fileName)
-		throws Exception {
-
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"dependencies/" + fileName);
-
-		if (inputStream == null) {
-			return new JSONArrayImpl();
-		}
-
-		return new JSONArrayImpl(StringUtil.read(inputStream));
 	}
 
 	private boolean _hasValidClassName(
@@ -390,4 +420,5 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 	private static boolean _firstExecution = true;
 	private static boolean _testMode;
+
 }

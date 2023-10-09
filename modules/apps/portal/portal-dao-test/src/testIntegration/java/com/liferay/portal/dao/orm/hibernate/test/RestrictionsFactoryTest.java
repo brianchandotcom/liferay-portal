@@ -9,6 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.dao.orm.hibernate.CriterionImpl;
 import com.liferay.portal.dao.orm.hibernate.DisjunctionImpl;
 import com.liferay.portal.dao.orm.hibernate.RestrictionsFactoryImpl;
+import com.liferay.portal.kernel.dao.db.DBManager;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -48,21 +50,30 @@ public class RestrictionsFactoryTest {
 	}
 
 	private void _testInMaxParametersValue(int length, Class<?> expectedClass) {
-		RestrictionsFactory restrictionsFactory = new RestrictionsFactoryImpl();
+		DBManager dbManager = (DBManager)ReflectionTestUtil.getFieldValue(
+			DBManagerUtil.class, "_dbManager");
 
-		ReflectionTestUtil.setFieldValue(
-			restrictionsFactory, "_databaseInMaxParameters",
-			_DATABASE_IN_MAX_PARAMETERS);
+		int databaseInMaxParameters = ReflectionTestUtil.getAndSetFieldValue(
+			dbManager, "_databaseInMaxParameters", _DATABASE_IN_MAX_PARAMETERS);
 
-		List<Integer> values = new ArrayList<>(length);
+		try {
+			List<Integer> values = new ArrayList<>(length);
 
-		for (int i = 0; i < length; i++) {
-			values.add(i);
+			for (int i = 0; i < length; i++) {
+				values.add(i);
+			}
+
+			RestrictionsFactory restrictionsFactory =
+				new RestrictionsFactoryImpl();
+
+			Criterion criterion = restrictionsFactory.in("property", values);
+
+			Assert.assertSame(expectedClass, criterion.getClass());
 		}
-
-		Criterion criterion = restrictionsFactory.in("property", values);
-
-		Assert.assertSame(expectedClass, criterion.getClass());
+		finally {
+			ReflectionTestUtil.getAndSetFieldValue(
+				dbManager, "_databaseInMaxParameters", databaseInMaxParameters);
+		}
 	}
 
 	private static final int _DATABASE_IN_MAX_PARAMETERS = 1000;

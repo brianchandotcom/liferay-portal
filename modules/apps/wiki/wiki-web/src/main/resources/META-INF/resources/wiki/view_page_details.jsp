@@ -84,7 +84,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 			<liferay-ui:message key="created-by" />
 		</th>
 		<td class="table-cell">
-			<%= HtmlUtil.escape(Validator.isNotNull(initialPage.getUserName()) ? initialPage.getUserName() : "Liferay") %> (<%= dateFormatDateTime.format(initialPage.getCreateDate()) %>)
+			<%= HtmlUtil.escape(Validator.isNotNull(initialPage.getUserName()) ? initialPage.getUserName() : "Liferay") %> (<%= dateTimeFormat.format(initialPage.getCreateDate()) %>)
 		</td>
 	</tr>
 	<tr>
@@ -92,7 +92,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 			<liferay-ui:message key="last-changed-by" />
 		</th>
 		<td class="table-cell">
-			<%= HtmlUtil.escape(wikiPage.getUserName()) %> (<%= dateFormatDateTime.format(wikiPage.getModifiedDate()) %>)
+			<%= HtmlUtil.escape(wikiPage.getUserName()) %> (<%= dateTimeFormat.format(wikiPage.getModifiedDate()) %>)
 		</td>
 	</tr>
 	<tr>

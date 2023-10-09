@@ -158,7 +158,7 @@ request.setAttribute("view.jsp-orderByType", wikiNodesManagementToolbarDisplayCo
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 								name="last-post-date"
-								value='<%= (node.getLastPostDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(node.getLastPostDate()) %>'
+								value='<%= (node.getLastPostDate() == null) ? LanguageUtil.get(request, "never") : dateTimeFormat.format(node.getLastPostDate()) %>'
 							/>
 
 							<liferay-ui:search-container-column-jsp

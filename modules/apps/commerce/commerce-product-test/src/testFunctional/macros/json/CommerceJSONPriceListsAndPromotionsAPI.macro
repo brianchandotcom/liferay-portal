@@ -263,6 +263,51 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
+	macro _addTierPriceEntry {
+		Variables.assertDefined(parameterList = "${price},${priceListName},${productSKU}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(active))) {
+			var active = "true";
+		}
+
+		if (!(isSet(minimumQuantity))) {
+			var minimumQuantity = 1;
+		}
+
+		if (!(isSet(unitOfMeasureKey))) {
+			var unitOfMeasureKey = "";
+		}
+
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+		var priceEntryId = CommerceJSONPriceListsAndPromotionsAPI._getPriceEntryId(
+			priceListName = ${priceListName},
+			productSKU = ${productSKU},
+			unitOfMeasureKey = ${unitOfMeasureKey});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-entries/${priceEntryId}/tier-prices \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"active": ${active},
+					"minimumQuantity": "${minimumQuantity}",
+					"price": "${price}",
+					"priceEntryId": ${priceEntryId},
+					"unitOfMeasureKey": "${unitOfMeasureKey}"
+				}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
+	}
+
 	macro _deleteAllNoMasterPriceListsAndPromotions {
 		var baseURL = ${baseURL};
 
@@ -365,6 +410,43 @@ definition {
 		var priceListAndPromotionId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${priceListAndPromotionName}')].['id']");
 
 		return ${priceListAndPromotionId};
+	}
+
+	macro _getPriceEntryId {
+		Variables.assertDefined(parameterList = "${priceListName},${productSKU}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(priceEntriesCount)) {
+			var priceEntriesCount = ${priceEntriesCount};
+		}
+		else {
+			var priceEntriesCount = 100;
+		}
+
+		if (!(isSet(unitOfMeasureKey))) {
+			var unitOfMeasureKey = "";
+		}
+
+		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${priceListName});
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListId}/price-entries?pageSize=${priceEntriesCount} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var priceEntryId = JSONCurlUtil.get(${curl}, "$.items[?(@['unitOfMeasureKey'] == '${unitOfMeasureKey}' && @['skuId'] == ${skuId})].['priceEntryId']");
+
+		echo("The Commerce price entry id is: ${priceEntryId}");
+
+		return ${priceEntryId};
 	}
 
 	macro _getPriceModifierIdByTitle {

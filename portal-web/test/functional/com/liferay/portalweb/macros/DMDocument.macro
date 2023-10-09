@@ -3004,9 +3004,9 @@ definition {
 
 		if (isSet(checkPortletTitle)) {
 			AssertTextEquals(
-				key_portletTitle = "File Upload Limits",
+				key_portletTitle = "File Size Limits",
 				locator1 = "DocumentsAndMedia#PORTLET_TITLE",
-				value1 = "File Upload Limits");
+				value1 = "File Size Limits");
 		}
 
 		if (${indexNumber} == 2) {

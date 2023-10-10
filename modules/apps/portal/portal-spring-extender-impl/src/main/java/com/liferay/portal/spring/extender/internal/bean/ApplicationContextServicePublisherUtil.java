@@ -13,9 +13,9 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ModuleFrameworkPropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
 
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -104,19 +104,13 @@ public class ApplicationContextServicePublisherUtil {
 			InvocationHandler invocationHandler =
 				ProxyUtil.getInvocationHandler(bean);
 
-			Class<?> invocationHandlerClass = invocationHandler.getClass();
+			if (invocationHandler instanceof AopInvocationHandler) {
+				AopInvocationHandler aopInvocationHandler =
+					(AopInvocationHandler)invocationHandler;
 
-			try {
-				Method method = invocationHandlerClass.getMethod("getTarget");
-
-				Object target = method.invoke(invocationHandler);
+				Object target = aopInvocationHandler.getTarget();
 
 				clazz = target.getClass();
-			}
-			catch (ReflectiveOperationException reflectiveOperationException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(reflectiveOperationException);
-				}
 			}
 		}
 

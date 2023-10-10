@@ -91,9 +91,7 @@ export function ERCModal({
 					) {
 						setError(
 							sub(
-								Liferay.Language.get(
-									'the-x-is-already-in-use'
-								),
+								Liferay.Language.get('the-x-is-already-in-use'),
 								[
 									Liferay.Language.get(
 										'external-reference-code'

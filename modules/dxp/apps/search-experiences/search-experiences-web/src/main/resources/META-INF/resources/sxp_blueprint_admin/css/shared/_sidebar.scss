@@ -71,7 +71,9 @@
 	background-color: $white;
 	display: flex;
 	flex-direction: column;
-	height: calc(100% - #{$controlMenuToolbarHeight} - #{$navigationBarHeight});
+	height: calc(
+		100% - var(--control-menu-container-height) - #{$navigationBarHeight}
+	);
 	margin-top: $navigationBarHeight;
 	position: fixed;
 	right: 0;

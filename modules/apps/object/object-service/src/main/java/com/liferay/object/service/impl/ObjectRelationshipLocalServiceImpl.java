@@ -263,26 +263,6 @@ public class ObjectRelationshipLocalServiceImpl
 		return objectRelationship;
 	}
 
-	private String _generateDBTableName() {
-
-		boolean invalidSequence = true;
-		String dbTableName = null;
-
-		while (invalidSequence) {
-			dbTableName = StringUtil.upperCase(StringBundler.concat(
-				"R_", StringUtil.randomString(1), RandomUtil.nextInt(1),
-				StringUtil.randomString(1), RandomUtil.nextInt(1)));
-
-			ObjectRelationship objectRelationship =
-				objectRelationshipPersistence.fetchByDBTableName(dbTableName);
-
-			if (objectRelationship == null) {
-				invalidSequence = false;
-			}
-		}
-		return dbTableName;
-	}
-
 	@Override
 	public ObjectRelationship deleteObjectRelationship(
 			long objectRelationshipId)
@@ -1030,6 +1010,33 @@ public class ObjectRelationshipLocalServiceImpl
 					objectField.getObjectFieldId());
 			}
 		}
+	}
+
+	private String _generateDBTableName() {
+		boolean invalidSequence = true;
+		String dbTableName = null;
+
+		while (invalidSequence) {
+			dbTableName = StringBundler.concat(
+				"R_",
+				StringUtil.randomString(
+					1
+				).toUpperCase(),
+				RandomUtil.nextInt(10),
+				StringUtil.randomString(
+					1
+				).toUpperCase(),
+				RandomUtil.nextInt(10));
+
+			ObjectRelationship objectRelationship =
+				objectRelationshipPersistence.fetchByDBTableName(dbTableName);
+
+			if (objectRelationship == null) {
+				invalidSequence = false;
+			}
+		}
+
+		return dbTableName;
 	}
 
 	private String _getServiceRegistrationKey(

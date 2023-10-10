@@ -83,6 +83,10 @@ function toArray(value = '') {
 		newValue = [newValue];
 	}
 
+	if (newValue.some((i) => typeof i === 'number')) {
+		newValue = newValue.map((item) => item.toString());
+	}
+
 	return newValue;
 }
 

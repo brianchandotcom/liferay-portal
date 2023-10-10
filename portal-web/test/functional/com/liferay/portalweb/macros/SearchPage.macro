@@ -41,18 +41,38 @@ definition {
 		}
 	}
 
-	macro addWidgetsViaContentPageUI {
+	macro addWidgetsOnContentPageViaUI {
+		PageEditor.assertFragmentSidebarLoaded();
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		Navigator.gotoNavTab(navTab = "Widgets");
+
+		Type.sendKeysApplicationSearch(
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
+			value1 = "Search");
+
 		for (var portletName : list ${searchPortletList}) {
 			if (isSet(previousPortletName)) {
-				PageEditor.addWidget(
-					portletName = ${portletName},
-					targetFragmentName = ${previousPortletName});
+				DragAndDrop.javaScriptDragAndDropToBottom(
+					index = 1,
+					key_collectionName = "Search",
+					key_fragmentName = ${portletName},
+					key_targetFragmentName = ${previousPortletName},
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
 			}
 			else {
-				PageEditor.addWidget(portletName = ${portletName});
+				DragAndDrop.javaScriptDragAndDropToObject(
+					key_indexItem = 1,
+					key_portletName = ${portletName},
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+					locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
 			}
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
+
+			PageEditor.viewFragment(fragmentName = ${portletName});
 
 			var previousPortletName = ${portletName};
 		}

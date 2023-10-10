@@ -468,7 +468,7 @@ definition {
 		}
 
 		task ("Add each search widget via the UI and assert no error is present for each") {
-			SearchPage.addWidgetsViaContentPageUI(searchPortletList = "Blueprints Options,Category Facet,Custom Facet,Custom Filter,Elasticsearch Monitoring,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
+			SearchPage.addWidgetsOnContentPageViaUI(searchPortletList = "Blueprints Options,Category Facet,Custom Facet,Custom Filter,Elasticsearch Monitoring,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
 		}
 	}
 

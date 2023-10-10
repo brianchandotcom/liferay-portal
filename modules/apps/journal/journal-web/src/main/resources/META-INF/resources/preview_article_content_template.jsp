@@ -31,7 +31,7 @@ JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentT
 				</aui:select>
 			</li>
 			<li class="tbar-item">
-				<div class="form-group-sm journal-article-button-row tbar-section text-right">
+				<div class="form-group-sm journal-article-button-row mb-0 tbar-section text-right">
 					<clay:button
 						cssClass="selector-button"
 						data-id='<%=

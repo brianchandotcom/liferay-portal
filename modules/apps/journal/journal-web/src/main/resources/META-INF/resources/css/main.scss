@@ -6,7 +6,6 @@ $toolbarDesktopHeight: 4rem;
 $toolbarHeight: 6.875rem;
 $toolbarZIndex: 971;
 
-$controlMenuHeight: 56px;
 $sidebarHeaderHeight: 104px;
 $sidebarWidth: 398px;
 $sidebarWidthClosed: 40px;
@@ -185,9 +184,10 @@ $productMenuWidth: 320px;
 			}
 
 			.sidebar-body {
-				@include media-breakpoint-down(lg) {
+				@include media-breakpoint-down(md) {
 					height: calc(
-						100vh - #{$controlMenuHeight +$sidebarHeaderHeight} - #{$toolbarHeight}
+						100vh - var(--control-menu-container-height) - #{$sidebarHeaderHeight} -
+							#{$toolbarHeight}
 					);
 				}
 			}
@@ -196,19 +196,13 @@ $productMenuWidth: 320px;
 		.edit-article-sidebar {
 			border-left: 1px #e7e7ed solid;
 			box-shadow: none;
-			margin-top: $toolbarHeight;
 			max-width: 90vw;
 			outline: 0;
 			overflow-y: scroll;
 			padding-top: 0;
 			position: fixed;
-			top: auto;
 			width: $productMenuWidth;
 			z-index: 1;
-
-			@include media-breakpoint-up(lg) {
-				margin-top: $toolbarDesktopHeight;
-			}
 
 			.schedule {
 				.form-group-autofit {

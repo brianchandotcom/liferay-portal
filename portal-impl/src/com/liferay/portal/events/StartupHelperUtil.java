@@ -5,6 +5,8 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.petra.io.Deserializer;
+import com.liferay.petra.io.Serializer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -13,12 +15,14 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogContextRegistryUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.patcher.PatcherValues;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,11 +33,19 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.log.UpgradeLogContext;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+
+import java.nio.ByteBuffer;
+
 import java.sql.Connection;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -62,6 +74,51 @@ public class StartupHelperUtil {
 
 	public static boolean isDBNew() {
 		return _dbNew;
+	}
+
+	public static boolean isDBWarmed() {
+		boolean dbWarmed = true;
+
+		if (_dbNew || _upgrading ||
+			DBUpgrader.isUpgradeDatabaseAutoRunEnabled()) {
+
+			dbWarmed = false;
+		}
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		File dataFile = bundleContext.getDataFile("dbWarmed.data");
+
+		if (dbWarmed && dataFile.exists()) {
+			try {
+				Deserializer deserializer = new Deserializer(
+					ByteBuffer.wrap(FileUtil.getBytes(dataFile)));
+
+				if (deserializer.readBoolean()) {
+					dbWarmed = false;
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to read db warmed state", exception);
+				}
+			}
+		}
+
+		Serializer serializer = new Serializer();
+
+		serializer.writeBoolean(_upgrading);
+
+		try (OutputStream outputStream = new FileOutputStream(dataFile)) {
+			serializer.writeTo(outputStream);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to write db warmed state", exception);
+			}
+		}
+
+		return dbWarmed;
 	}
 
 	public static boolean isStartupFinished() {

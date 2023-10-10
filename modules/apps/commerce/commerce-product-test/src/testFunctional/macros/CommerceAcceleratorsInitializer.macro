@@ -340,7 +340,7 @@ definition {
 			AssertTextEquals(
 				key_productName = ${productName},
 				locator1 = "CommerceAccelerators#ORDER_DETAILS_UOM",
-				value1 = "${uomKey}");
+				value1 = ${uomKey});
 
 			if (!(isSet(priceOnApplication))) {
 				AssertTextEquals(
@@ -348,14 +348,14 @@ definition {
 					locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE_2",
 					value1 = "$ ${productPrice}");
 			}
-		} 
+		}
 		else {
-			if (!(isSet(priceOnApplication))) { 
+			if (!(isSet(priceOnApplication))) {
 				AssertTextEquals(
 					key_productName = ${productName},
 					locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE",
 					value1 = "$ ${productPrice}");
-			}			
+			}
 		}
 
 		if (isSet(deliveryTerm)) {

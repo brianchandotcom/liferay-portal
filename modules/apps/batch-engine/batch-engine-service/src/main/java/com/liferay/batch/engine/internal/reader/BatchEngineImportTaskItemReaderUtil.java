@@ -63,13 +63,9 @@ public class BatchEngineImportTaskItemReaderUtil {
 			}
 
 			if (field != null) {
-				JsonDeserialize[] jsonDeserializes = field.getAnnotationsByType(
-					JsonDeserialize.class);
-
 				field.setAccessible(true);
 
-				ObjectMapper objectMapper = _getObjectMapper(
-					field, jsonDeserializes);
+				ObjectMapper objectMapper = _getObjectMapper(field);
 
 				field.set(
 					item,
@@ -145,9 +141,11 @@ public class BatchEngineImportTaskItemReaderUtil {
 		return targetFieldNameValueMap;
 	}
 
-	private static ObjectMapper _getObjectMapper(
-			Field field, JsonDeserialize[] jsonDeserializes)
+	private static ObjectMapper _getObjectMapper(Field field)
 		throws IllegalAccessException, InstantiationException {
+
+		JsonDeserialize[] jsonDeserializes = field.getAnnotationsByType(
+			JsonDeserialize.class);
 
 		if (!ArrayUtil.isEmpty(jsonDeserializes)) {
 			JsonDeserialize jsonDeserialize = jsonDeserializes[0];

@@ -1995,6 +1995,67 @@ public class ServicePreAction extends Action {
 			"X-Liferay-Request-Group",
 			String.valueOf(themeDisplay.getScopeGroupId()));
 
+		Group group = themeDisplay.getScopeGroup();
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (group.getGroupId() == themeDisplay.getCompanyGroupId()) {
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "1x");
+		}
+
+		if (group.getParentGroupId() != 0) {
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "2x");
+		}
+
+		if (group.isStaged()) {
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "3x");
+		}
+
+		if (group.isControlPanel()) {
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "4x");
+		}
+
+		if (group.isUser()) {
+			if (layout.isPrivateLayout()) {
+				httpServletResponse.addHeader("X-Liferay-Request-Group", "5x");
+			}
+			else {
+				httpServletResponse.addHeader("X-Liferay-Request-Group", "10x");
+			}
+
+			if (layout instanceof VirtualLayout) {
+				httpServletResponse.addHeader("X-Liferay-Request-Group", "6x");
+			}
+		}
+
+		if (group.isLayoutSetPrototype()) {
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "7x");
+		}
+
+		if (group.isLayoutPrototype()) {
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "8x");
+		}
+
+		if (group.isOrganization()) {
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "9x");
+		}
+
+		if (group.getType() == GroupConstants.TYPE_SITE_OPEN) {
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "1");
+		}
+		else if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "2");
+		}
+		else if (group.getType() == GroupConstants.TYPE_SITE_PRIVATE) {
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "3");
+		}
+		else if (group.getType() == GroupConstants.TYPE_DEPOT) {
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "5");
+		}
+		else {
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "4");
+		}
+
 		User user = themeDisplay.getUser();
 
 		httpServletResponse.setHeader(

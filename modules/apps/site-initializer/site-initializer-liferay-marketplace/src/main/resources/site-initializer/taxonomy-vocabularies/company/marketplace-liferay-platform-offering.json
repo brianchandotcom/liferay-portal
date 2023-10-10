@@ -3,7 +3,7 @@
 		{
 			"required": false,
 			"subtype": "AllAssetSubtypes",
-			"type": "Commerce Product"
+			"type": "Product"
 		}
 	],
 	"availableLanguages": [

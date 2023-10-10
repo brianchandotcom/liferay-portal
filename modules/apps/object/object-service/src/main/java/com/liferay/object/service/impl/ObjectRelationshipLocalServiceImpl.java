@@ -214,9 +214,7 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship);
 		}
 
-		String dbTableName = _generateDBTableName();
-
-		objectRelationship.setDBTableName(dbTableName);
+		objectRelationship.setDBTableName(_generateDBTableName());
 
 		objectRelationship =
 			objectRelationshipLocalService.updateObjectRelationship(

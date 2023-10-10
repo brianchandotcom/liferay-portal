@@ -116,7 +116,7 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			SearchPortlets.addWidgets(
+			SearchPage.addWidgets(
 				groupName = "Site Name",
 				layoutName = "AC Page",
 				searchPortletList = "Type Facet,Search Results,Search Bar");
@@ -125,11 +125,11 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			SearchPortlets.configureSearchBarWidget(keywordsParameterName = "query");
+			SearchPage.configureSearchBarWidget(keywordsParameterName = "query");
 		}
 
 		task ("Use search bar") {
-			SearchPortlets.searchWidget(searchTerm = "test parameter");
+			SearchPage.searchWidget(searchTerm = "test parameter");
 		}
 
 		task ("Close sessions") {

@@ -20,6 +20,22 @@ definition {
 		}
 	}
 
+	test AddSearchWidgetsOnWidgetPageViaUI {
+		task ("Add a widget page and navigate to said page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Widget Page");
+
+			Navigator.openSitePage(
+				pageName = "Test Widget Page",
+				siteName = "Guest");
+		}
+
+		task ("Add each search widget via the UI and assert no error is present for each") {
+			SearchPage.addWidgetsOnWidgetPageViaUI(searchPortletList = "Blueprints Options,Category Facet,Custom Facet,Custom Filter,Elasticsearch Monitoring,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
+		}
+	}
+
 	@description = "This is a use case for LPS-169035."
 	@priority = 4
 	test AssertCustomSearchResultsDisplayTemplate {
@@ -446,22 +462,6 @@ definition {
 
 		task ("Add each search widget via the UI and assert no error is present for each") {
 			SearchPage.addWidgetsViaContentPageUI(searchPortletList = "Blueprints Options,Category Facet,Custom Facet,Custom Filter,Elasticsearch Monitoring,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
-		}
-	}
-
-	test CanAddSearchWidgetsViaUIOnWidgetPage {
-		task ("Add a widget page and navigate to said page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Widget Page");
-
-			Navigator.openSitePage(
-				pageName = "Test Widget Page",
-				siteName = "Guest");
-		}
-
-		task ("Add each search widget via the UI and assert no error is present for each") {
-			SearchPage.addWidgetsOnWidgetPageViaUI(searchPortletList = "Blueprints Options,Category Facet,Custom Facet,Custom Filter,Elasticsearch Monitoring,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
 		}
 	}
 

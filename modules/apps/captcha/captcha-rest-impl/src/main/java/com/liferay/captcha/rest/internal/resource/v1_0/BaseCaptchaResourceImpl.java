@@ -9,6 +9,7 @@ import com.liferay.captcha.rest.dto.v1_0.Captcha;
 import com.liferay.captcha.rest.dto.v1_0.CaptchaForm;
 import com.liferay.captcha.rest.resource.v1_0.CaptchaResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -22,9 +23,6 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.ActionUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.lang.reflect.Array;
 
 import java.util.Collection;
 import java.util.List;
@@ -48,13 +46,13 @@ public abstract class BaseCaptchaResourceImpl implements CaptchaResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/captcha/v1.0/simple'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/captcha/v1.0/simple-captcha'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Captcha")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/simple")
+	@javax.ws.rs.Path("/simple-captcha")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Captcha getSimpleCaptcha() throws Exception {
@@ -64,13 +62,13 @@ public abstract class BaseCaptchaResourceImpl implements CaptchaResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/captcha/v1.0/simple' -d $'{"answer": ___, "captchaToken": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/captcha/v1.0/simple-captcha' -d $'{"answer": ___, "captchaToken": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Captcha")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/simple")
+	@javax.ws.rs.Path("/simple-captcha")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -211,12 +209,7 @@ public abstract class BaseCaptchaResourceImpl implements CaptchaResource {
 	protected <T, R, E extends Throwable> long[] transformToLongArray(
 		Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction) {
 
-		try {
-			return unsafeTransformToLongArray(collection, unsafeFunction);
-		}
-		catch (Throwable throwable) {
-			throw new RuntimeException(throwable);
-		}
+		return TransformUtil.transformToLongArray(collection, unsafeFunction);
 	}
 
 	protected <T, R, E extends Throwable> List<R> unsafeTransform(
@@ -253,8 +246,8 @@ public abstract class BaseCaptchaResourceImpl implements CaptchaResource {
 			Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction)
 		throws E {
 
-		return (long[])_unsafeTransformToPrimitiveArray(
-			collection, unsafeFunction, long[].class);
+		return TransformUtil.unsafeTransformToLongArray(
+			collection, unsafeFunction);
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
@@ -271,23 +264,6 @@ public abstract class BaseCaptchaResourceImpl implements CaptchaResource {
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
 	protected SortParserProvider sortParserProvider;
-
-	private <T, R, E extends Throwable> Object _unsafeTransformToPrimitiveArray(
-			Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction,
-			Class<?> clazz)
-		throws E {
-
-		List<R> list = unsafeTransform(collection, unsafeFunction);
-
-		Object array = clazz.cast(
-			Array.newInstance(clazz.getComponentType(), list.size()));
-
-		for (int i = 0; i < list.size(); i++) {
-			Array.set(array, i, list.get(i));
-		}
-
-		return array;
-	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseCaptchaResourceImpl.class);

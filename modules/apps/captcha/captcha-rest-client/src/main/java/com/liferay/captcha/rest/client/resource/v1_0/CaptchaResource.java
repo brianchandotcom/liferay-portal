@@ -238,7 +238,7 @@ public interface CaptchaResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/captcha/v1.0/simple");
+						"/o/captcha/v1.0/simple-captcha");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -341,7 +341,7 @@ public interface CaptchaResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/captcha/v1.0/simple");
+						"/o/captcha/v1.0/simple-captcha");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

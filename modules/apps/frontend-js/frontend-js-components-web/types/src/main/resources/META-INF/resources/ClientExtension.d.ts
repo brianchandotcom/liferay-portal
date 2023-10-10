@@ -4,9 +4,12 @@
  */
 
 import React from 'react';
+export interface IHTMLElementBuilder<T> {
+	(args: T): HTMLElement;
+}
 interface IClientExtensionProps<T> {
 	args: T;
-	htmlElementBuilder: (args: T) => HTMLElement;
+	htmlElementBuilder?: IHTMLElementBuilder<T>;
 }
 export default function ClientExtension<T>({
 	args,

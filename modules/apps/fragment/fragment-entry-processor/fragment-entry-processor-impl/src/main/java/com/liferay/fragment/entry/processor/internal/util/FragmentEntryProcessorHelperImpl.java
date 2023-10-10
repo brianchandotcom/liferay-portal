@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -634,7 +634,7 @@ public class FragmentEntryProcessorHelperImpl
 			else if (infoField.getInfoFieldType() instanceof
 						TextInfoFieldType) {
 
-				return _html.escape((String)value);
+				return HtmlUtil.escape((String)value);
 			}
 
 			return (String)value;
@@ -693,9 +693,6 @@ public class FragmentEntryProcessorHelperImpl
 	private static final Map<Locale, String> _defaultPatterns = new HashMap<>();
 	private static final Map<Locale, String> _shortTimeStylePatterns =
 		new HashMap<>();
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

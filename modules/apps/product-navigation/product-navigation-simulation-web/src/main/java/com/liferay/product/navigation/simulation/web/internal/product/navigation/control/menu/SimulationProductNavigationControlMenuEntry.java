@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -137,7 +137,7 @@ public class SimulationProductNavigationControlMenuEntry
 			).buildString());
 		values.put(
 			"title",
-			_html.escape(_language.get(httpServletRequest, "simulation")));
+			HtmlUtil.escape(_language.get(httpServletRequest, "simulation")));
 
 		Writer writer = httpServletResponse.getWriter();
 
@@ -257,9 +257,6 @@ public class SimulationProductNavigationControlMenuEntry
 
 	private static final String _ICON_TMPL_CONTENT = StringUtil.read(
 		SimulationProductNavigationControlMenuEntry.class, "icon.tmpl");
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

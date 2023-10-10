@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -67,7 +67,7 @@ public class SearchDisplayContext {
 
 	public SearchDisplayContext(
 			RenderRequest renderRequest, PortletPreferences portletPreferences,
-			Portal portal, Html html, Language language, Searcher searcher,
+			Portal portal, Language language, Searcher searcher,
 			IndexSearchPropsValues indexSearchPropsValues,
 			PortletURLFactory portletURLFactory,
 			SummaryBuilderFactory summaryBuilderFactory,
@@ -114,7 +114,7 @@ public class SearchDisplayContext {
 		String emptyResultMessage = language.format(
 			httpServletRequest,
 			"no-results-were-found-that-matched-the-keywords-x",
-			"<strong>" + html.escape(keywords) + "</strong>", false);
+			"<strong>" + HtmlUtil.escape(keywords) + "</strong>", false);
 
 		SearchContainer<Document> searchContainer = new SearchContainer<>(
 			_renderRequest, getPortletURL(), null, emptyResultMessage);

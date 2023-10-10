@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -113,8 +113,8 @@ public class ContentTransformerListener extends BaseTransformerListener {
 			for (Element dynamicContentElement : dynamicContentElements) {
 				String text = dynamicContentElement.getText();
 
-				text = _html.stripComments(text);
-				text = _html.stripHtml(text);
+				text = HtmlUtil.stripComments(text);
+				text = HtmlUtil.stripHtml(text);
 				text = text.trim();
 
 				// [@articleId;elementName@]
@@ -249,9 +249,6 @@ public class ContentTransformerListener extends BaseTransformerListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentTransformerListener.class);
-
-	@Reference
-	private Html _html;
 
 	private volatile JournalServiceConfiguration _journalServiceConfiguration;
 

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -122,7 +122,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 			extension.equals("html") || extension.equals("js") ||
 			extension.equals("txt") || extension.equals("xml")) {
 
-			String content = _html.escape(StringUtil.read(inputStream));
+			String content = HtmlUtil.escape(StringUtil.read(inputStream));
 
 			inputStream = new UnsyncByteArrayInputStream(
 				content.getBytes(StandardCharsets.UTF_8));
@@ -150,8 +150,5 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DLAppService _dlAppService;
-
-	@Reference
-	private Html _html;
 
 }

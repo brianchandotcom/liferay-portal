@@ -9,7 +9,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.search.suggest.KeywordsSuggestionHolder;
@@ -23,10 +23,6 @@ import java.util.Objects;
  * @author Adam Brandizzi
  */
 public class SuggestionsPortletDisplayContextBuilder {
-
-	public SuggestionsPortletDisplayContextBuilder(Html html) {
-		_html = html;
-	}
 
 	public SuggestionsPortletDisplayContext build() {
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
@@ -178,12 +174,12 @@ public class SuggestionsPortletDisplayContextBuilder {
 
 		if (changed) {
 			sb.append("changed-keyword\"><strong>");
-			sb.append(_html.escape(keyword));
+			sb.append(HtmlUtil.escape(keyword));
 			sb.append("</strong>");
 		}
 		else {
 			sb.append("unchanged-keyword\">");
-			sb.append(_html.escape(keyword));
+			sb.append(HtmlUtil.escape(keyword));
 		}
 
 		sb.append("</span>");
@@ -201,7 +197,6 @@ public class SuggestionsPortletDisplayContextBuilder {
 		return true;
 	}
 
-	private final Html _html;
 	private String _keywords;
 	private String _keywordsParameterName;
 	private List<String> _relatedQueriesSuggestions;

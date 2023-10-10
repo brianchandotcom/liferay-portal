@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -137,7 +137,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			_portal.getLocale(httpServletRequest), getClass());
 
 		values.put(
-			"title", _html.escape(_language.get(resourceBundle, "ab-test")));
+			"title", HtmlUtil.escape(_language.get(resourceBundle, "ab-test")));
 
 		IconTag iconTag = new IconTag();
 
@@ -471,9 +471,6 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -158,7 +158,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 			url = StringUtil.replaceFirst(
 				url, String.format("{%s}", urlInputParameter.getKey()),
-				_html.escapeURL(urlInputParameter.getValue()));
+				HtmlUtil.escapeURL(urlInputParameter.getValue()));
 		}
 
 		return url;
@@ -606,9 +606,6 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 	@Reference(target = "(ddm.data.provider.type=rest)")
 	private DDMDataProviderSettingsProvider _ddmDataProviderSettingsProvider;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private JSONWebServiceClientFactory _jsonWebServiceClientFactory;

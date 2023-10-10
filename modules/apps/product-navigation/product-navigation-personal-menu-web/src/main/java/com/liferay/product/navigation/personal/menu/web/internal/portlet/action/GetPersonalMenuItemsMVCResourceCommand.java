@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -165,7 +165,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 				changeLanguageLabel = _language.format(
 					realUserLocale, "use-x's-preferred-language-(x)",
 					new String[] {
-						_html.escape(user.getFullName()),
+						HtmlUtil.escape(user.getFullName()),
 						userLocale.getDisplayLanguage(realUserLocale)
 					},
 					false);
@@ -321,9 +321,6 @@ public class GetPersonalMenuItemsMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetPersonalMenuItemsMVCResourceCommand.class);
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private JSONFactory _jsonFactory;

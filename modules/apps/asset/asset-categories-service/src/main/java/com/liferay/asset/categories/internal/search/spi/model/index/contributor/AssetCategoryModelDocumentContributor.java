@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
@@ -64,7 +64,7 @@ public class AssetCategoryModelDocumentContributor
 			document.addText(
 				_localization.getLocalizedName(
 					Field.DESCRIPTION, availableLanguageId),
-				_html.stripHtml(
+				HtmlUtil.stripHtml(
 					assetCategory.getDescription(availableLanguageId)));
 		}
 
@@ -72,7 +72,8 @@ public class AssetCategoryModelDocumentContributor
 
 		document.addText(
 			Field.DESCRIPTION,
-			_html.stripHtml(assetCategory.getDescription(siteDefaultLocale)));
+			HtmlUtil.stripHtml(
+				assetCategory.getDescription(siteDefaultLocale)));
 
 		document.addText(Field.NAME, assetCategory.getName());
 
@@ -151,9 +152,6 @@ public class AssetCategoryModelDocumentContributor
 				titlesArray);
 		}
 	}
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Localization _localization;

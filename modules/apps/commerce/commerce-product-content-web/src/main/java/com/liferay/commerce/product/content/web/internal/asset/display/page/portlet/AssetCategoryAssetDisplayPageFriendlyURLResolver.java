@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -301,7 +301,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 		_portal.addPageSubtitle(
 			assetCategory.getTitle(languageId), httpServletRequest);
 		_portal.addPageDescription(
-			_html.stripHtml(assetCategory.getDescription(languageId)),
+			HtmlUtil.stripHtml(assetCategory.getDescription(languageId)),
 			httpServletRequest);
 
 		List<AssetTag> assetTags = _assetTagLocalService.getTags(
@@ -361,9 +361,6 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

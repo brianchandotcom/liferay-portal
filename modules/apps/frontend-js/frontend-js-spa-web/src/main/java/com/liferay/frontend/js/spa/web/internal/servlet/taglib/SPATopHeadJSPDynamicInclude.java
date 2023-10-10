@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -61,7 +61,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			"excludedPaths", spaHelper.getExcludedPathsJSONArray()
 		).put(
 			"loginRedirect",
-			_html.escapeJS(spaHelper.getLoginRedirect(httpServletRequest))
+			HtmlUtil.escapeJS(spaHelper.getLoginRedirect(httpServletRequest))
 		).put(
 			"navigationExceptionSelectors",
 			spaHelper.getNavigationExceptionSelectors()
@@ -134,9 +134,6 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	private static final Snapshot<SPAHelper> _spaHelperSnapshot =
 		new Snapshot<>(
 			SPATopHeadJSPDynamicInclude.class, SPAHelper.class, null, true);
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

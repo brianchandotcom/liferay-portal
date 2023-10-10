@@ -91,7 +91,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -563,7 +563,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				httpServletRequest,
 				"the-friendly-url-x-was-changed-to-x-to-ensure-uniqueness",
 				new Object[] {
-					"<strong>" + _html.escapeURL(originalUrlTitle) +
+					"<strong>" + HtmlUtil.escapeURL(originalUrlTitle) +
 						"</strong>",
 					"<strong>" + currentUrlTitle + "</strong>"
 				}));
@@ -1445,9 +1445,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private JSONFactory _jsonFactory;

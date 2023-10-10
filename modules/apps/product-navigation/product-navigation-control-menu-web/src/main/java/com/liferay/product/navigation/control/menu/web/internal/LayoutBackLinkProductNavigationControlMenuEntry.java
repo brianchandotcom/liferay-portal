@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -74,7 +74,8 @@ public class LayoutBackLinkProductNavigationControlMenuEntry
 
 		if (Validator.isNotNull(backURLTitle)) {
 			return _language.format(
-				locale, "go-to-x", new String[] {_html.escape(backURLTitle)});
+				locale, "go-to-x",
+				new String[] {HtmlUtil.escape(backURLTitle)});
 		}
 
 		return _language.get(locale, "back");
@@ -140,9 +141,6 @@ public class LayoutBackLinkProductNavigationControlMenuEntry
 
 		return super.isShow(httpServletRequest);
 	}
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

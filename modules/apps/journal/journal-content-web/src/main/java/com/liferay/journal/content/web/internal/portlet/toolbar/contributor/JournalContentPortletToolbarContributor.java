@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -173,10 +173,10 @@ public class JournalContentPortletToolbarContributor
 			urlMenuItem.setData(
 				HashMapBuilder.<String, Object>put(
 					"id",
-					_html.escape(portletDisplay.getNamespace()) + "editAsset"
+					HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset"
 				).put(
 					"title",
-					_html.escape(
+					HtmlUtil.escape(
 						_language.format(
 							themeDisplay.getLocale(), "new-x",
 							ddmStructure.getName(themeDisplay.getLocale())))
@@ -317,9 +317,6 @@ public class JournalContentPortletToolbarContributor
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private ItemSelector _itemSelector;

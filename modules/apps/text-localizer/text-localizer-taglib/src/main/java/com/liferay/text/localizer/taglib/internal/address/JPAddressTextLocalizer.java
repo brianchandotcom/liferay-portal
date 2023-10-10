@@ -8,13 +8,12 @@ package com.liferay.text.localizer.taglib.internal.address;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.text.localizer.address.AddressTextLocalizer;
 import com.liferay.text.localizer.taglib.internal.address.util.AddressUtil;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Yasuyuki Takeo
@@ -29,7 +28,7 @@ public class JPAddressTextLocalizer implements AddressTextLocalizer {
 		String countryName = AddressUtil.getCountryName(address);
 
 		if (countryName != null) {
-			sb.append(html.escape(countryName));
+			sb.append(HtmlUtil.escape(countryName));
 			sb.append(StringPool.NEW_LINE);
 		}
 
@@ -54,7 +53,7 @@ public class JPAddressTextLocalizer implements AddressTextLocalizer {
 				sb.append(StringPool.SPACE);
 			}
 
-			sb.append(html.escape(regionName));
+			sb.append(HtmlUtil.escape(regionName));
 		}
 
 		if (hasCity) {
@@ -90,8 +89,5 @@ public class JPAddressTextLocalizer implements AddressTextLocalizer {
 
 		return s.trim();
 	}
-
-	@Reference
-	protected Html html;
 
 }

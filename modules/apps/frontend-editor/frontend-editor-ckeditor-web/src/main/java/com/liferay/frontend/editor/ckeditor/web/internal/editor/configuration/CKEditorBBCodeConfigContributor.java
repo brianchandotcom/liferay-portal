@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Map;
 
@@ -56,7 +56,8 @@ public class CKEditorBBCodeConfigContributor
 			"format_tags", "p;pre"
 		).put(
 			"imagesPath",
-			_html.escape(themeDisplay.getPathThemeImages()) + "/message_boards/"
+			HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
+				"/message_boards/"
 		).put(
 			"lang", _getLangJSONObject(inputEditorTaglibAttributes)
 		).put(
@@ -74,7 +75,7 @@ public class CKEditorBBCodeConfigContributor
 			toJSONArray(BBCodeTranslatorUtil.getEmoticonFiles())
 		).put(
 			"smiley_path",
-			_html.escape(themeDisplay.getPathThemeImages()) + "/emoticons/"
+			HtmlUtil.escape(themeDisplay.getPathThemeImages()) + "/emoticons/"
 		).put(
 			"smiley_symbols",
 			toJSONArray(BBCodeTranslatorUtil.getEmoticonSymbols())
@@ -89,9 +90,6 @@ public class CKEditorBBCodeConfigContributor
 			_language.get(
 				getContentsLocale(inputEditorTaglibAttributes), "code"));
 	}
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -68,7 +68,7 @@ public class FolderPermissionPortletConfigurationIcon
 			if (folder != null) {
 				return PermissionsURLTag.doTag(
 					null, DLFolderConstants.getClassName(),
-					_html.unescape(folder.getName()), null,
+					HtmlUtil.unescape(folder.getName()), null,
 					String.valueOf(folder.getFolderId()),
 					LiferayWindowState.POP_UP.toString(), null,
 					themeDisplay.getRequest());
@@ -76,7 +76,7 @@ public class FolderPermissionPortletConfigurationIcon
 
 			return PermissionsURLTag.doTag(
 				null, "com.liferay.document.library",
-				_html.unescape(themeDisplay.getScopeGroupName()), null,
+				HtmlUtil.unescape(themeDisplay.getScopeGroupName()), null,
 				String.valueOf(themeDisplay.getScopeGroupId()),
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
@@ -127,9 +127,6 @@ public class FolderPermissionPortletConfigurationIcon
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
 	)
 	private ModelResourcePermission<Folder> _folderModelResourcePermission;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

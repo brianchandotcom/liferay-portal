@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -151,7 +150,7 @@ public class ViewFileEntryMVCRenderCommand
 
 		DLViewFileEntryDisplayContext dlViewFileEntryDisplayContext =
 			new DLViewFileEntryDisplayContext(
-				dlAdminDisplayContext, _dlDisplayContextProvider, _html,
+				dlAdminDisplayContext, _dlDisplayContextProvider,
 				_portal.getHttpServletRequest(renderRequest), _language,
 				_portal, renderRequest, renderResponse);
 
@@ -189,9 +188,6 @@ public class ViewFileEntryMVCRenderCommand
 
 	@Reference
 	private DLDisplayContextProvider _dlDisplayContextProvider;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

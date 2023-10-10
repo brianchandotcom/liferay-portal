@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
@@ -158,7 +158,7 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 				document.addText(
 					_localization.getLocalizedName(
 						Field.DESCRIPTION, availableLanguageId),
-					_html.stripHtml(
+					HtmlUtil.stripHtml(
 						assetCategory.getDescription(availableLanguageId)));
 			}
 
@@ -167,7 +167,7 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 
 			document.addText(
 				Field.DESCRIPTION,
-				_html.stripHtml(
+				HtmlUtil.stripHtml(
 					assetCategory.getDescription(siteDefaultLocale)));
 
 			document.addText(Field.NAME, assetCategory.getName());
@@ -266,9 +266,6 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 
 	@Reference
 	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

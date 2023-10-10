@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -58,7 +58,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		throws PortalException {
 
 		return new LayoutSEOLinkImpl(
-			_html.escapeAttribute(
+			HtmlUtil.escapeAttribute(
 				_layoutSEOCanonicalURLProvider.getCanonicalURL(
 					layout, locale, canonicalURL, themeDisplay)),
 			null, LayoutSEOLink.Relationship.CANONICAL);
@@ -105,7 +105,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		alternateURLs.forEach(
 			(urlLocale, url) -> layoutSEOLinks.add(
 				new LayoutSEOLinkImpl(
-					_html.escapeAttribute(
+					HtmlUtil.escapeAttribute(
 						_getAlternateCustomCanonicalURL(
 							layout, urlLocale, url)),
 					LocaleUtil.toW3cLanguageId(urlLocale),
@@ -120,7 +120,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 		layoutSEOLinks.add(
 			new LayoutSEOLinkImpl(
-				_html.escapeAttribute(defaultLocaleURL), "x-default",
+				HtmlUtil.escapeAttribute(defaultLocaleURL), "x-default",
 				LayoutSEOLink.Relationship.ALTERNATE));
 
 		return layoutSEOLinks;
@@ -133,7 +133,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			ListMergeable<String> subtitleListMergeable, Locale locale)
 		throws PortalException {
 
-		return _html.escape(
+		return HtmlUtil.escape(
 			_getPageTitle(
 				layout, portletId, tilesTitle, titleListMergeable,
 				subtitleListMergeable, locale));
@@ -143,7 +143,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	public String getPageTitleSuffix(Layout layout, String companyName)
 		throws PortalException {
 
-		return _html.escape(_getPageTitleSuffix(layout, companyName));
+		return HtmlUtil.escape(_getPageTitleSuffix(layout, companyName));
 	}
 
 	@Activate
@@ -304,9 +304,6 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

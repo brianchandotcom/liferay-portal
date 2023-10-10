@@ -11,7 +11,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldValueUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Locale;
 
@@ -30,7 +30,7 @@ public class CheckboxMultipleDDMFormFieldValueRenderer
 
 	@Override
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-		return _html.escape(
+		return HtmlUtil.escape(
 			DDMFormFieldValueUtil.getOptionsLabels(ddmFormFieldValue, locale));
 	}
 
@@ -39,8 +39,5 @@ public class CheckboxMultipleDDMFormFieldValueRenderer
 	)
 	protected DDMFormFieldValueAccessor<JSONArray>
 		checkboxMultipleDDMFormFieldValueAccessor;
-
-	@Reference
-	private Html _html;
 
 }

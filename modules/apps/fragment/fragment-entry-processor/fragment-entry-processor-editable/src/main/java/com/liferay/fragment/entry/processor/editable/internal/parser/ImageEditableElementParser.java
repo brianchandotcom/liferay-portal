@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -209,7 +209,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 		Matcher matcher = _pattern.matcher(replaceableElement.attr("src"));
 
 		if (Validator.isNotNull(value) && !matcher.matches()) {
-			replaceableElement.attr("src", _html.unescape(value));
+			replaceableElement.attr("src", HtmlUtil.unescape(value));
 		}
 
 		if (configJSONObject == null) {
@@ -228,7 +228,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 		if (Validator.isNotNull(alt)) {
 			replaceableElement.attr(
-				"alt", StringUtil.trim(_html.unescape(alt)));
+				"alt", StringUtil.trim(HtmlUtil.unescape(alt)));
 		}
 
 		if (configJSONObject.getBoolean("lazyLoading")) {
@@ -342,9 +342,6 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private JSONFactory _jsonFactory;

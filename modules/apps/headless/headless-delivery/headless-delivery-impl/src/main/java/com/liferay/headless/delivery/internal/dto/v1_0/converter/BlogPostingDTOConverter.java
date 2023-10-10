@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -131,7 +131,7 @@ public class BlogPostingDTOConverter
 							return description;
 						}
 
-						return _html.stripHtml(
+						return HtmlUtil.stripHtml(
 							StringUtil.shorten(
 								blogsEntry.getContent(),
 								PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH));
@@ -199,9 +199,6 @@ public class BlogPostingDTOConverter
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

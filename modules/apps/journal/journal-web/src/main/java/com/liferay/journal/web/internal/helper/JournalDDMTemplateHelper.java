@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateVariableDefinition;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -97,7 +97,7 @@ public class JournalDDMTemplateHelper {
 		if (Validator.isNotNull(help)) {
 			sb.append("<p>");
 			sb.append(
-				_html.escape(
+				HtmlUtil.escape(
 					_language.get(httpServletRequest, resourceBundle, help)));
 			sb.append("</p>");
 		}
@@ -123,7 +123,7 @@ public class JournalDDMTemplateHelper {
 			sb.append(_language.get(httpServletRequest, "variable"));
 			sb.append(StringPool.COLON);
 			sb.append(StringPool.NBSP);
-			sb.append(_html.escape(templateVariableDefinition.getName()));
+			sb.append(HtmlUtil.escape(templateVariableDefinition.getName()));
 		}
 
 		sb.append(
@@ -215,9 +215,6 @@ public class JournalDDMTemplateHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalDDMTemplateHelper.class);
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

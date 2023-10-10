@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -37,7 +37,7 @@ public class SearchLocationDDMFormFieldValueRenderer
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		Value value = ddmFormFieldValue.getValue();
 
-		return _html.escape(value.getString(locale));
+		return HtmlUtil.escape(value.getString(locale));
 	}
 
 	@Override
@@ -69,9 +69,6 @@ public class SearchLocationDDMFormFieldValueRenderer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchLocationDDMFormFieldValueRenderer.class);
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private JSONFactory _jsonFactory;

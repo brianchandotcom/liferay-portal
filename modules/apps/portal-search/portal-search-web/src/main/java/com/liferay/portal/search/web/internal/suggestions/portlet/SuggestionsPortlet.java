@@ -6,7 +6,6 @@
 package com.liferay.portal.search.web.internal.suggestions.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.portlet.shared.task.helper.PortletSharedRequestHelper;
@@ -88,9 +87,6 @@ public class SuggestionsPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	protected Html html;
-
-	@Reference
 	protected Portal portal;
 
 	@Reference
@@ -106,7 +102,7 @@ public class SuggestionsPortlet extends MVCPortlet {
 
 		SuggestionsPortletDisplayContextBuilder
 			suggestionsPortletDisplayContextBuilder =
-				new SuggestionsPortletDisplayContextBuilder(html);
+				new SuggestionsPortletDisplayContextBuilder();
 
 		String keywords = portletSharedSearchResponse.getKeywords();
 

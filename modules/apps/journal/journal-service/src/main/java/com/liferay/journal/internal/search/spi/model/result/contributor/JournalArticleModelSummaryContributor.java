@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -20,7 +20,6 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
@@ -71,7 +70,7 @@ public class JournalArticleModelSummaryContributor
 			content = _getDDMContentSummary(document, defaultLocale);
 		}
 
-		content = _html.unescape(
+		content = HtmlUtil.unescape(
 			StringUtil.replace(content, "<br />", StringPool.NEW_LINE));
 
 		Summary summary = new Summary(snippetLocale, title, content);
@@ -136,8 +135,5 @@ public class JournalArticleModelSummaryContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleModelSummaryContributor.class);
-
-	@Reference
-	private Html _html;
 
 }

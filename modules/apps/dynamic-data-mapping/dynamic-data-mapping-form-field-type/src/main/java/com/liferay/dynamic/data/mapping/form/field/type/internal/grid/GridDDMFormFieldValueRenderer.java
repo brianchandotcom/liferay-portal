@@ -15,7 +15,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Locale;
 import java.util.Set;
@@ -89,7 +89,7 @@ public class GridDDMFormFieldValueRenderer
 		LocalizedValue label, String defaultLabel, Locale locale) {
 
 		if (label != null) {
-			return _html.escape(label.getString(locale));
+			return HtmlUtil.escape(label.getString(locale));
 		}
 
 		return defaultLabel;
@@ -100,8 +100,5 @@ public class GridDDMFormFieldValueRenderer
 	)
 	protected DDMFormFieldValueAccessor<JSONObject>
 		gridDDMFormFieldValueAccessor;
-
-	@Reference
-	private Html _html;
 
 }

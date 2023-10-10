@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
@@ -101,7 +101,7 @@ public class JournalArticleModelDocumentContributor
 		for (String descriptionAvailableLanguageId :
 				descriptionAvailableLanguageIds) {
 
-			String description = _html.stripHtml(
+			String description = HtmlUtil.stripHtml(
 				journalArticle.getDescription(descriptionAvailableLanguageId));
 
 			document.addText(
@@ -210,9 +210,6 @@ public class JournalArticleModelDocumentContributor
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -58,7 +58,7 @@ public class FileEntryPermissionPortletConfigurationIcon
 
 			return PermissionsURLTag.doTag(
 				null, DLFileEntryConstants.getClassName(),
-				_html.unescape(fileEntry.getTitle()), null,
+				HtmlUtil.unescape(fileEntry.getTitle()), null,
 				String.valueOf(fileEntry.getFileEntryId()),
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
@@ -98,9 +98,6 @@ public class FileEntryPermissionPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

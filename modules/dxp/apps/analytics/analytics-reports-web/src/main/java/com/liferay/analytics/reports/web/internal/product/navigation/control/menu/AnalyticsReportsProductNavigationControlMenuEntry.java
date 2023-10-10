@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -133,7 +133,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 		values.put(
 			"title",
-			_html.escape(_language.get(resourceBundle, "content-performance")));
+			HtmlUtil.escape(
+				_language.get(resourceBundle, "content-performance")));
 
 		IconTag iconTag = new IconTag();
 
@@ -407,9 +408,6 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

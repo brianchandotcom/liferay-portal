@@ -59,7 +59,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -206,7 +206,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					_language.get(themeDisplay.getLocale(), "production"));
 			}
 			else {
-				writer.write(_html.escape(ctCollection.getName()));
+				writer.write(HtmlUtil.escape(ctCollection.getName()));
 			}
 
 			writer.write("</span></button></div>");
@@ -808,9 +808,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private FastDateFormatFactory _fastDateFormatFactory;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private JSONFactory _jsonFactory;

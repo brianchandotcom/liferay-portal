@@ -32,7 +32,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -146,7 +146,7 @@ public class DDMFormInstanceRecordExporterImpl
 
 		sb.setIndex(sb.index() - 1);
 
-		return _html.unescape(sb.toString());
+		return HtmlUtil.unescape(sb.toString());
 	}
 
 	protected List<Map<String, String>> getDDMFormFieldValues(
@@ -311,9 +311,6 @@ public class DDMFormInstanceRecordExporterImpl
 	private static final String _KEY_MODIFIED_DATE = "modifiedDate";
 
 	private static final String _KEY_STATUS = "status";
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

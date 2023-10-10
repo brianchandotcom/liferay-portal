@@ -6,8 +6,8 @@
 package com.liferay.object.configuration.util;
 
 import com.liferay.object.configuration.ObjectConfiguration;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**

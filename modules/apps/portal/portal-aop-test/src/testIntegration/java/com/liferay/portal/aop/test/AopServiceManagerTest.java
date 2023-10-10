@@ -8,12 +8,14 @@ package com.liferay.portal.aop.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopCacheManager;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
@@ -27,8 +29,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 import java.util.Dictionary;
+import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -44,6 +49,9 @@ import org.osgi.framework.PrototypeServiceFactory;
 import org.osgi.framework.ServiceException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.cm.ConfigurationListener;
 import org.osgi.service.log.LogListener;
 import org.osgi.service.log.LogReaderService;
 import org.osgi.service.log.LogService;
@@ -62,7 +70,7 @@ public class AopServiceManagerTest {
 		new LiferayIntegrationTestRule();
 
 	@Before
-	public void setUp() throws ReflectiveOperationException {
+	public void setUp() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(AopServiceManagerTest.class);
 
 		_bundleContext = bundle.getBundleContext();
@@ -76,6 +84,17 @@ public class AopServiceManagerTest {
 		_getServiceMethod = serviceObjectsClass.getMethod("getService");
 		_ungetServiceMethod = serviceObjectsClass.getMethod(
 			"ungetService", Object.class);
+
+		_configuration = _configurationAdmin.getConfiguration(
+			_CONFIG_NAME, StringPool.QUESTION);
+
+		_updateConfiguration(
+			MapUtil.singletonDictionary("parallel.enabled", false));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_updateConfiguration(null);
 	}
 
 	@Test
@@ -275,7 +294,47 @@ public class AopServiceManagerTest {
 		}
 	}
 
+	private void _updateConfiguration(Dictionary<String, Object> dictionary)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		ServiceRegistration<?> serviceRegistration =
+			_bundleContext.registerService(
+				ConfigurationListener.class,
+				configurationEvent -> {
+					if (Objects.equals(
+							_CONFIG_NAME, configurationEvent.getPid())) {
+
+						countDownLatch.countDown();
+					}
+				},
+				null);
+
+		try {
+			if (dictionary == null) {
+				_configuration.delete();
+			}
+			else {
+				_configuration.update(dictionary);
+			}
+
+			countDownLatch.await();
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
+	private static final String _CONFIG_NAME =
+		"com.liferay.portal.aop.internal.AopServiceManager";
+
 	private BundleContext _bundleContext;
+	private Configuration _configuration;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
+
 	private Method _getServiceMethod;
 	private Method _getServiceObjectsMethod;
 

@@ -1,0 +1,42 @@
+definition {
+
+	macro _curlAPISort {
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var api = "headless-builder/sorts";
+
+		var curl = '''
+			${portalURL}/o/${api} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
+		''';
+
+		return ${curl};
+	}
+
+	macro createAPISort {
+		Variables.assertDefined(parameterList = "${sortValue},${endpointId}");
+
+		var curl = SortAPI._curlAPISort(virtualHost = ${virtualHost});
+		var body = '''
+			"oDataSort": "${sortValue}",
+			"r_apiEndpointToAPISorts_c_apiEndpointId": ${endpointId}
+		''';
+
+		var curl = StringUtil.add(${curl}, " -d { ${body} }", "");
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+}

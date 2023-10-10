@@ -58,7 +58,11 @@
 
 									<span class="custom-control-label"></span>
 
-									<aui:icon cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon" image="users" markupView="lexicon" />
+									<span class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+										<clay:icon
+											symbol="users"
+										/>
+									</span>
 								</label>
 							</div>
 						</div>

@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -517,18 +516,7 @@ public class SalesforceObjectEntryManagerImpl
 
 				StringBundler sb = new StringBundler();
 
-				List<String> listTypeEntryKeys = null;
-
-				if (value instanceof List) {
-					listTypeEntryKeys = (List<String>)value;
-				}
-				else {
-					listTypeEntryKeys = ListUtil.fromString(
-						GetterUtil.getString(value),
-						StringPool.COMMA_AND_SPACE);
-				}
-
-				for (String listTypeEntryKey : listTypeEntryKeys) {
+				for (String listTypeEntryKey : (List<String>)value) {
 					String listTypeEntryExternalReferenceCode =
 						ListTypeEntryUtil.getListTypeEntryExternalReferenceCode(
 							objectField.getListTypeDefinitionId(),
@@ -551,17 +539,9 @@ public class SalesforceObjectEntryManagerImpl
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
-				String listTypeEntryKey = GetterUtil.getString(value);
-
-				if (value instanceof Map) {
-					Map<String, String> valueMap =
-						(HashMap<String, String>)value;
-
-					listTypeEntryKey = valueMap.get("key");
-				}
-
 				value = ListTypeEntryUtil.getListTypeEntryExternalReferenceCode(
-					objectField.getListTypeDefinitionId(), listTypeEntryKey);
+					objectField.getListTypeDefinitionId(),
+					GetterUtil.getString(value));
 			}
 
 			map.put(

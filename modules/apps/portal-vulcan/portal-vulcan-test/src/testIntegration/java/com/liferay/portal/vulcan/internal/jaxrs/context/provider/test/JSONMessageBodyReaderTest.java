@@ -8,7 +8,6 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
@@ -83,53 +82,29 @@ public class JSONMessageBodyReaderTest {
 		// As JSON array
 
 		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"jsonString",
-				JSONUtil.putAll(
-					JSONUtil.put("key", "value")
-				).toString()
-			).toString(),
+			"{\"jsonString\":\"[{\\\"key\\\":\\\"value\\\"}]\"}",
 			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"jsonString", JSONUtil.putAll(JSONUtil.put("key", "value"))
-				).toString(),
-				"test-vulcan/test", Http.Method.POST
+				"{\"jsonString\":[{\"key\":\"value\"}]}", "test-vulcan/test",
+				Http.Method.POST
 			).toString(),
 			true);
 
 		// As JSON object
 
 		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"jsonString",
-				JSONUtil.put(
-					"key", "value"
-				).toString()
-			).toString(),
+			"{\"jsonString\":\"{\\\"key\\\":\\\"value\\\"}\"}",
 			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"jsonString", JSONUtil.put("key", "value")
-				).toString(),
-				"test-vulcan/test", Http.Method.POST
+				"{\"jsonString\":{\"key\":\"value\"}}", "test-vulcan/test",
+				Http.Method.POST
 			).toString(),
 			true);
 
 		// As JSON string
 
 		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"jsonString",
-				JSONUtil.put(
-					"key", "value"
-				).toString()
-			).toString(),
+			"{\"jsonString\":\"{\\\"key\\\":\\\"value\\\"}\"}",
 			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"jsonString",
-					JSONUtil.put(
-						"key", "value"
-					).toString()
-				).toString(),
+				"{\"jsonString\":\"{\\\"key\\\":\\\"value\\\"}\"}",
 				"test-vulcan/test", Http.Method.POST
 			).toString(),
 			true);

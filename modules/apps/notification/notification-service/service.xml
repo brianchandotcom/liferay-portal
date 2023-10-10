@@ -142,6 +142,7 @@
 		<column localized="true" name="name" type="String" />
 		<column name="recipientType" type="String" />
 		<column localized="true" name="subject" type="String" />
+		<column name="system" type="boolean" />
 		<column name="type" type="String" />
 	</entity>
 	<entity local-service="true" name="NotificationTemplateAttachment" remote-service="false" table="NTemplateAttachment" uuid="false">
@@ -180,6 +181,7 @@
 		<exception>NotificationTemplateName</exception>
 		<exception>NotificationTemplateObjectDefinitionId</exception>
 		<exception>NotificationTemplateSubject</exception>
+		<exception>NotificationTemplateSystem</exception>
 		<exception>NotificationTemplateType</exception>
 	</exceptions>
 </service-builder>

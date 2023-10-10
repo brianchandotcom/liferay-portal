@@ -167,13 +167,14 @@
 					</button>
 
 					<c:if test="<%= branchingEnabled %>">
-						<button aria-expanded="false" class="btn btn-primary btn-sm d-block d-sm-none dropdown-toggle" data-toggle="dropdown" type="button">
-							<aui:icon image="angle-down" markupView="lexicon" />
-
-							<span class="sr-only">
-								<liferay-ui:message key="toggle-dropdown" />
-							</span>
-						</button>
+						<clay:button
+							aria-expanded="false"
+							cssClass="d-block d-sm-none dropdown-toggle"
+							data-toggle="dropdown"
+							icon="angle-down"
+							small="<%= true %>"
+							title="toggle-dropdown"
+						/>
 
 						<ul class="dropdown-menu" role="menu">
 							<c:if test="<%= !layoutRevision.isIncomplete() %>">

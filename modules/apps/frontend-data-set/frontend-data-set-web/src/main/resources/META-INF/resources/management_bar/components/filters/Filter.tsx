@@ -17,15 +17,15 @@ import ViewsContext from '../../../views/ViewsContext';
 // @ts-ignore
 
 import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
-import clientExtensionFilterImplementation from './implementation/clientExtensionFilter';
+import clientExtensionFilterImplementation from './implementation/ClientExtensionFilter';
 
 // @ts-ignore
 
-import dateRangeFilterImplementation from './implementation/dateRangeFilter';
+import dateRangeFilterImplementation from './implementation/DateRangeFilter';
 
 // @ts-ignore
 
-import selectionFilterImplementation from './implementation/selectionFilter';
+import selectionFilterImplementation from './implementation/SelectionFilter';
 
 export interface FilterImplementation<
 	T extends FilterImplementationArgs<unknown>

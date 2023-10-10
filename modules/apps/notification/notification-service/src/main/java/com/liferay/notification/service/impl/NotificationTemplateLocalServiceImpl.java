@@ -136,6 +136,7 @@ public class NotificationTemplateLocalServiceImpl
 		notificationTemplate.setEditorType(
 			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
 		notificationTemplate.setName(externalReferenceCode);
+		notificationTemplate.setSystem(false);
 		notificationTemplate.setType(type);
 
 		notificationTemplate = notificationTemplatePersistence.update(

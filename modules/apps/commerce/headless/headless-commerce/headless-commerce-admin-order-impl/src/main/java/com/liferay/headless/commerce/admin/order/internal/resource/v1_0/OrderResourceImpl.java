@@ -33,7 +33,6 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.util.CustomFieldsUtil;
-import com.liferay.headless.commerce.admin.order.internal.helper.v1_0.OrderHelper;
 import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.OrderEntityModel;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.BillingAddressUtil;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.OrderItemUtil;
@@ -42,9 +41,13 @@ import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -57,8 +60,12 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
 
@@ -71,6 +78,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -133,7 +141,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 	@Override
 	public Order getOrder(Long id) throws Exception {
-		return _orderHelper.toOrder(
+		return _toOrder(
 			GetterUtil.getLong(id), contextAcceptLanguage.getPreferredLocale(),
 			contextAcceptLanguage.isAcceptAllLanguages(), contextUser,
 			contextUriInfo,
@@ -156,7 +164,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 					externalReferenceCode);
 		}
 
-		return _orderHelper.toOrder(
+		return _toOrder(
 			commerceOrder.getCommerceOrderId(),
 			contextAcceptLanguage.getPreferredLocale(),
 			contextAcceptLanguage.isAcceptAllLanguages(), contextUser,
@@ -168,9 +176,9 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _orderHelper.getOrdersPage(
+		return _getOrdersPage(
 			contextCompany.getCompanyId(), filter, pagination, search, sorts,
-			document -> _orderHelper.toOrder(
+			document -> _toOrder(
 				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
 				contextAcceptLanguage.getPreferredLocale(),
 				contextAcceptLanguage.isAcceptAllLanguages(), contextUser,
@@ -218,7 +226,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 	public Order postOrder(Order order) throws Exception {
 		CommerceOrder commerceOrder = _addOrUpdateOrder(order);
 
-		return _orderHelper.toOrder(
+		return _toOrder(
 			commerceOrder.getCommerceOrderId(),
 			contextAcceptLanguage.getPreferredLocale(),
 			contextAcceptLanguage.isAcceptAllLanguages(), contextUser,
@@ -525,6 +533,39 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			orderItemIds, orderItemId -> orderItemId, Long.class);
 	}
 
+	private Page<Order> _getOrdersPage(
+			long companyId, Filter filter, Pagination pagination, String search,
+			Sort[] sorts,
+			UnsafeFunction<Document, Order, Exception> transformUnsafeFunction,
+			boolean useSearchResultPermissionFilter)
+		throws Exception {
+
+		return SearchUtil.search(
+			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
+			CommerceOrder.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			object -> {
+				SearchContext searchContext = (SearchContext)object;
+
+				searchContext.setAttribute(
+					"useSearchResultPermissionFilter",
+					useSearchResultPermissionFilter);
+				searchContext.setCompanyId(companyId);
+
+				long[] commerceChannelGroupIds = transformToLongArray(
+					_commerceChannelLocalService.getCommerceChannels(companyId),
+					CommerceChannel::getGroupId);
+
+				if ((commerceChannelGroupIds != null) &&
+					(commerceChannelGroupIds.length > 0)) {
+
+					searchContext.setGroupIds(commerceChannelGroupIds);
+				}
+			},
+			sorts, transformUnsafeFunction);
+	}
+
 	private String _getVersion(UriInfo uriInfo) {
 		List<String> matchedURIs = uriInfo.getMatchedURIs();
 
@@ -533,6 +574,18 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 		}
 
 		return matchedURIs.get(matchedURIs.size() - 1);
+	}
+
+	private Order _toOrder(
+			long commerceOrderId, Locale locale, boolean acceptAllLanguages,
+			User contextUser, UriInfo contextUriInfo,
+			Map<String, Map<String, String>> actions)
+		throws Exception {
+
+		return _orderDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				acceptAllLanguages, actions, _dtoConverterRegistry,
+				commerceOrderId, locale, contextUriInfo, contextUser));
 	}
 
 	private CommerceOrder _updateNestedResources(
@@ -887,7 +940,12 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 	private CPInstanceService _cpInstanceService;
 
 	@Reference
-	private OrderHelper _orderHelper;
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderDTOConverter)"
+	)
+	private DTOConverter<CommerceOrder, Order> _orderDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

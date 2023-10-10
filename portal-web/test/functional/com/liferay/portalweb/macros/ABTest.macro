@@ -247,6 +247,8 @@ definition {
 		Click(
 			key_text = "Publish",
 			locator1 = "Button#ANY");
+
+		Alert.viewSuccessMessageText(successMessage = "Success:Variant name was published successfully.");
 	}
 
 	@summary = "Default summary"

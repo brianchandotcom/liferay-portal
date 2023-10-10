@@ -338,6 +338,10 @@ public class EditableValuesMappingExportImportContentProcessor
 		classPK = MapUtil.getLong(primaryKeys, classPK, classPK);
 
 		editableJSONObject.put("classPK", classPK);
+
+		if (editableJSONObject.has("fileEntryId")) {
+			editableJSONObject.put("fileEntryId", classPK);
+		}
 	}
 
 	private static final String _DDM_TEMPLATE = "ddmTemplate_";

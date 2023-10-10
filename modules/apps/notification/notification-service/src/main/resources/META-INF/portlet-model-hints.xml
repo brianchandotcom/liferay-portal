@@ -76,6 +76,7 @@
 		<field localized="true" name="name" type="String" />
 		<field name="recipientType" type="String" />
 		<field localized="true" name="subject" type="String" />
+		<field name="system" type="boolean" />
 		<field name="type" type="String">
 			<hint name="max-length">255</hint>
 		</field>

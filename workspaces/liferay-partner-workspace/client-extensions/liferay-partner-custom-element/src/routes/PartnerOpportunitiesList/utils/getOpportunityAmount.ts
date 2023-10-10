@@ -4,12 +4,13 @@
  */
 
 import {PartnerOpportunitiesColumnKey} from '../../../common/enums/partnerOpportunitiesColumnKey';
+import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 
-export default function getOpportunityAmount(amount?: number) {
+export default function getOpportunityAmount(amount?: number, currency?: LiferayPicklist) {
 	if (amount) {
 		return {
-			[PartnerOpportunitiesColumnKey.DEAL_AMOUNT]: getIntlNumberFormat().format(
+			[PartnerOpportunitiesColumnKey.DEAL_AMOUNT]: getIntlNumberFormat(currency).format(
 				amount
 			),
 		};

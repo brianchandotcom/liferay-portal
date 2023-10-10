@@ -61,7 +61,7 @@ renderResponse.setTitle((accountEntryAddressId == 0) ? LanguageUtil.get(request,
 			}
 
 			for (String type : types) {
-				ListType listType = ListTypeLocalServiceUtil.getListType(type, AccountEntry.class.getName() + ListTypeConstants.ADDRESS);
+				ListType listType = ListTypeLocalServiceUtil.getListType(themeDisplay.getCompanyId(), type, AccountEntry.class.getName() + ListTypeConstants.ADDRESS);
 			%>
 
 				<aui:option label="<%= LanguageUtil.get(request, type) %>" selected="<%= (address != null) ? Objects.equals(addressListType.getListTypeId(), listType.getListTypeId()) : false %>" value="<%= listType.getListTypeId() %>" />

@@ -17,7 +17,6 @@ import com.liferay.exportimport.portlet.data.handler.helper.PortletDataHandlerHe
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageConstants;
@@ -201,26 +200,8 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 			for (Element layoutPageTemplateEntryElement :
 					layoutPageTemplateEntryElements) {
 
-				LayoutPageTemplateEntry layoutPageTemplateEntry =
-					(LayoutPageTemplateEntry)
-						portletDataContext.getZipEntryAsObject(
-							layoutPageTemplateEntryElement.attributeValue(
-								"path"));
-
-				boolean privateLayout = portletDataContext.isPrivateLayout();
-
-				if ((layoutPageTemplateEntry.getType() ==
-						LayoutPageTemplateEntryTypeConstants.BASIC) ||
-					(layoutPageTemplateEntry.getType() ==
-						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
-
-					portletDataContext.setPrivateLayout(true);
-				}
-
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, layoutPageTemplateEntryElement);
-
-				portletDataContext.setPrivateLayout(privateLayout);
 			}
 		}
 

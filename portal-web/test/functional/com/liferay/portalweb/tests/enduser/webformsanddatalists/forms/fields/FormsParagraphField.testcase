@@ -10,7 +10,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginUI();
+		User.firstLoginPG();
 	}
 
 	tearDown {

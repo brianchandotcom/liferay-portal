@@ -311,12 +311,18 @@ public class NotificationTemplateResourceImpl
 							getNotificationTemplateId())
 				).put(
 					"delete",
-					addAction(
-						ActionKeys.DELETE, "deleteNotificationTemplate",
-						com.liferay.notification.model.NotificationTemplate.
-							class.getName(),
-						serviceBuilderNotificationTemplate.
-							getNotificationTemplateId())
+					() -> {
+						if (serviceBuilderNotificationTemplate.isSystem()) {
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.DELETE, "deleteNotificationTemplate",
+							com.liferay.notification.model.NotificationTemplate.
+								class.getName(),
+							serviceBuilderNotificationTemplate.
+								getNotificationTemplateId());
+					}
 				).put(
 					"get",
 					addAction(

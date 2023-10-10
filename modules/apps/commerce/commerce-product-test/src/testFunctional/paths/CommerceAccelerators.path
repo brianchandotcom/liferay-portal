@@ -645,6 +645,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEMS</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]//../..//div[@class='child-item']//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_RESUME</td>
 	<td>//div[@class='mini-cart-header-resume']</td>
 	<td></td>

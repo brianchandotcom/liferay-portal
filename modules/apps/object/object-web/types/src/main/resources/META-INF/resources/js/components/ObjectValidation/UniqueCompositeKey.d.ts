@@ -6,7 +6,7 @@
 /// <reference types="react" />
 
 import {ObjectValidationErrors} from './useObjectValidationForm';
-interface UniqueCompositeKeyProps {
+export interface UniqueCompositeKeyProps {
 	baseResourceURL: string;
 	creationLanguageId: Liferay.Language.Locale;
 	customObjectFields: ObjectField[];

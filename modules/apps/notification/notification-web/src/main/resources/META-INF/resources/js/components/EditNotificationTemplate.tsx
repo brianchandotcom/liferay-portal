@@ -190,6 +190,7 @@ export default function EditNotificationTemplate({
 		subject: {
 			[defaultLanguageId]: '',
 		},
+		system: false,
 		type: notificationTemplateType,
 	};
 

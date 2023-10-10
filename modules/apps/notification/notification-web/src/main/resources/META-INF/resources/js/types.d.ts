@@ -40,6 +40,7 @@ interface NotificationTemplate {
 		| Partial<UserNotificationRecipients>[]
 		| [];
 	subject: LocalizedValue<string>;
+	system: boolean;
 	type: string;
 }
 

@@ -67,6 +67,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PARAMETER_TYPE</td>
+	<td>//td[@class='parameters-col_name' and contains(.,'${parameter}') and contains(.,'${type}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESPONSE_CODE</td>
 	<td>//div[contains(@id,'${method}')]//tbody//td[contains(@class,'response-col_status')][1]</td>
 	<td></td>

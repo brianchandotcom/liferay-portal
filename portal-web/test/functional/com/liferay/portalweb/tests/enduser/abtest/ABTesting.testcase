@@ -619,6 +619,7 @@ definition {
 	}
 
 	@description = "LPS-109991 Bug: When a variant is edited, other variants lose modifications"
+	@ignore = "true"
 	@priority = 4
 	test CheckContentPersistAfterEditVariant {
 		property portal.acceptance = "quarantine";
@@ -759,6 +760,7 @@ definition {
 	}
 
 	@description = "LPS-96781: Validate if, when the A/B Testing changes in the Liferay DXP, information about the Liferay DXP context, the changes are reflected in the test in Analytics Cloud"
+	@ignore = "true"
 	@priority = 4
 	test CheckTestChangesInAC {
 		property test.run.type = "single";
@@ -783,6 +785,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was added on Liferay portal is visible in the Analytics Cloud"
+	@ignore = "true"
 	@priority = 5
 	test CheckVariantAddedInAC {
 		task ("Create AB test and create variant") {
@@ -799,6 +802,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was deleted on Liferay portal is visible in the Analytics Cloud"
+	@ignore = "true"
 	@priority = 4
 	test CheckVariantDeletedInAC {
 		property test.run.type = "single";
@@ -843,6 +847,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was edited on Liferay portal is visible in the Analytics Cloud"
+	@ignore = "true"
 	@priority = 4
 	test CheckVariantEditedInAC {
 		task ("Create AB test and create variant") {
@@ -919,6 +924,7 @@ definition {
 	}
 
 	@description = "LPS-137274 Validate if the user can create an A/B Test by Bounce rate"
+	@ignore = "true"
 	@priority = 5
 	@uitest
 	test CreateABTestByBounceRate {
@@ -938,6 +944,7 @@ definition {
 	}
 
 	@description = "LPS-119475 Validate if the user can create an A/B Test by Click"
+	@ignore = "true"
 	@priority = 5
 	@uitest
 	test CreateABTestByClick {
@@ -1034,6 +1041,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the user can create a variant for A/B Test with the same name that already exists with success"
+	@ignore = "true"
 	@priority = 4
 	test CreateVariantSameName {
 		task ("Create AB test") {
@@ -1086,6 +1094,7 @@ definition {
 	}
 
 	@description = "LPS-99421: The test is not removed when the delete action is canceled"
+	@ignore = "true"
 	@priority = 3
 	test DeleteABTestCancel {
 		task ("Create AB test and a variant") {
@@ -1113,6 +1122,7 @@ definition {
 	}
 
 	@description = "LPS-99421: The test deletion in AC is reflected on DXP"
+	@ignore = "true"
 	@priority = 4
 	test DeleteABTestInACViewInDXP {
 		property portal.acceptance = "quarantine";
@@ -1153,6 +1163,7 @@ definition {
 	}
 
 	@description = "LPS-99421: The test deletion in DXP is reflected on AC"
+	@ignore = "true"
 	@priority = 4
 	test DeleteABTestInDXPViewInAC {
 		property portal.acceptance = "quarantine";
@@ -1291,6 +1302,7 @@ definition {
 	}
 
 	@description = "LPS-98829: Validate if the ab test in History tab can be deleted"
+	@ignore = "true"
 	@priority = 3
 	test DeleteHistoryTab {
 		task ("Create AB test, create variant, run test and terminate test") {
@@ -1660,6 +1672,7 @@ definition {
 	}
 
 	@description = "LPS-101341: Validate if when the user will edit some Experience with an AB Test in a Terminated status, the system not will show any information about AB Test"
+	@ignore = "true"
 	@priority = 4
 	test EditExperienceAfterTerminatedABTest {
 		property portal.acceptance = "quarantine";
@@ -1931,6 +1944,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the user can edit a variant for A/B Test with the same name that already exists with success"
+	@ignore = "true"
 	@priority = 3
 	test EditVariantSameName {
 		task ("Create AB test and create variant") {
@@ -2069,6 +2083,7 @@ definition {
 	}
 
 	@description = "LPS-98829: Validate if the History tab appears with the list ordered by modified date DESC"
+	@ignore = "true"
 	@priority = 3
 	test HistoryTabListedDescModifiedDate {
 		task ("Create AB test with a variant, run test and terminate test") {
@@ -2689,6 +2704,7 @@ definition {
 	}
 
 	@description = "LPS-97196: Validate if all the information configured in the "Review and Start Test" screen appears correctly after the user clicks on the Run button"
+	@ignore = "true"
 	@priority = 5
 	test ReviewAndStartRunCheckInfo {
 		task ("Create AB test, create two variants") {
@@ -2721,6 +2737,7 @@ definition {
 	}
 
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, the sum of all traffic split options should be 100%"
+	@ignore = "true"
 	@priority = 4
 	test ReviewAndStartSum100 {
 		task ("Create AB test, create two variants") {

@@ -3,22 +3,14 @@
 @import 'CodeMirrorEditor';
 @import 'PropertiesPanel';
 
-$controlMenuHeight: 48px;
-$desktopControlMenuHeight: 56px;
 $desktopToolbarHeight: 4rem;
 $toolbarHeight: 6.875rem;
 
 .ddm_template_editor__App {
 	display: flex;
-	/* stylelint-disable */
 	height: calc(
-		100vh -
-			(
-				var(--control-menu-height) + var(--toolbar-height) +
-					var(--change-tracking-indicator-height, 0px)
-			)
+		100vh - (var(--control-menu-container-height) + var(--toolbar-height))
 	);
-	/* stylelint-enable */
 	left: 0;
 	overflow: hidden;
 	position: absolute;
@@ -45,15 +37,10 @@ $toolbarHeight: 6.875rem;
 
 	&-sidebar {
 		display: flex;
-		/* stylelint-disable */
 		height: calc(
 			100vh -
-				(
-					var(--control-menu-height) + var(--toolbar-height) +
-						var(--change-tracking-indicator-height, 0px)
-				)
+				(var(--control-menu-container-height) + var(--toolbar-height))
 		);
-		/* stylelint-enable */
 		position: fixed;
 		right: 0;
 
@@ -85,17 +72,13 @@ $toolbarHeight: 6.875rem;
 		&-content {
 			background-color: $white;
 			border-left: 1px solid $gray-300;
-
-			/* stylelint-disable */
 			height: calc(
 				100vh -
 					(
-						var(--control-menu-height) + var(--toolbar-height) +
-							var(--change-tracking-indicator-height, 0px)
+						var(--control-menu-container-height) +
+							var(--toolbar-height)
 					)
 			);
-			/* stylelint-enable */
-
 			overflow-y: auto;
 			position: fixed;
 			right: 42px;
@@ -153,17 +136,6 @@ $toolbarHeight: 6.875rem;
 
 body {
 	--toolbar-height: #{$toolbarHeight};
-	/* stylelint-disable */
-	--control-menu-height: 0px;
-	/* stylelint-enable */
-
-	&.has-control-menu {
-		--control-menu-height: #{$controlMenuHeight};
-
-		@include media-breakpoint-up(sm) {
-			--control-menu-height: #{$desktopControlMenuHeight};
-		}
-	}
 
 	@include media-breakpoint-up(xl) {
 		--toolbar-height: #{$desktopToolbarHeight};

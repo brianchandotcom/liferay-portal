@@ -451,13 +451,13 @@ definition {
 
 	test CanAddSearchWidgetsViaUIOnWidgetPage {
 		task ("Add a widget page and navigate to said page") {
-			PagesAdmin.addPage(
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Widget Page");
+
+			Navigator.openSitePage(
 				pageName = "Test Widget Page",
-				sitePageType = "Widget Page");
-
-			Navigator.openURL();
-
-			Navigator.gotoPage(pageName = "Test Widget Page");
+				siteName = "Guest");
 		}
 
 		task ("Add each search widget via the UI and assert no error is present for each") {

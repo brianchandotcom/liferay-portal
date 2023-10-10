@@ -1,9 +1,7 @@
 @import '../../../css/variables';
 @import 'atlas-variables';
 
-$controlMenuHeight: 48px;
 $defaultTransitionDuration: 0.5s;
-$desktopControlMenuHeight: 56px;
 $toolbarDesktopHeight: 64px;
 $toolbarHeight: 110px;
 
@@ -14,50 +12,31 @@ $zIndexContent: 0;
 
 .multi-panel-sidebar {
 	display: flex;
-	height: calc(100vh - #{$toolbarHeight});
+	height: calc(
+		100vh - var(--control-menu-container-height) - #{$toolbarHeight}
+	);
 	position: fixed;
 	right: 0;
-	top: $toolbarHeight;
+	top: calc(var(--control-menu-container-height) + #{$toolbarHeight});
 
-	@include media-breakpoint-up(lg) {
-		height: calc(100vh - #{$toolbarDesktopHeight});
-		top: $toolbarDesktopHeight;
-
-		&-content {
-			height: calc(100vh - #{$toolbarDesktopHeight});
-		}
+	&-content {
+		height: calc(
+			100vh - var(--control-menu-container-height) - #{$toolbarHeight}
+		);
 	}
 
-	body.has-control-menu & {
-		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
-		top: $controlMenuHeight + $toolbarHeight;
+	@include media-breakpoint-up(lg) {
+		height: calc(
+			100vh - var(--control-menu-container-height) - #{$toolbarDesktopHeight}
+		);
+		top: calc(
+			var(--control-menu-container-height) + #{$toolbarDesktopHeight}
+		);
 
 		&-content {
-			height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
-		}
-
-		@include media-breakpoint-up(sm) {
-			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
-			top: $desktopControlMenuHeight + $toolbarHeight;
-
-			&-content {
-				height: calc(
-					100vh - #{$desktopControlMenuHeight + $toolbarHeight}
-				);
-			}
-		}
-
-		@include media-breakpoint-up(lg) {
 			height: calc(
-				100vh - #{$desktopControlMenuHeight + $toolbarDesktopHeight}
+				100vh - var(--control-menu-container-height) - #{$toolbarDesktopHeight}
 			);
-			top: $desktopControlMenuHeight + $toolbarDesktopHeight;
-
-			&-content {
-				height: calc(
-					100vh - #{$desktopControlMenuHeight + $toolbarDesktopHeight}
-				);
-			}
 		}
 	}
 
@@ -155,20 +134,6 @@ $zIndexContent: 0;
 
 			hr {
 				border-color: $gray-600;
-			}
-		}
-	}
-
-	&.menu-indicator-enabled {
-		top: 144px !important;
-
-		.data-layout-builder-sidebar {
-			.sidebar .sidebar-body {
-				height: calc(100vh - 248px);
-			}
-
-			&.display-settings .sidebar .sidebar-body {
-				height: calc(100vh - (248px - #{$displaySettingsHeight}));
 			}
 		}
 	}

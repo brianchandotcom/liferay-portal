@@ -11,7 +11,7 @@
 		box-shadow: none;
 
 		.sidebar-body {
-			height: calc(100vh - 224px);
+			height: calc(100vh - var(--control-menu-container-height) - 168px);
 
 			.component-tbar {
 				height: auto;
@@ -40,17 +40,21 @@
 		margin: 2px 0;
 	}
 
-	&.display-settings .sidebar {
-		.sidebar-body {
-			height: calc(100vh - (224px - #{$displaySettingsHeight}));
-		}
+	&.display-settings {
+		@include sidebar-offset(
+			calc(
+				var(--control-menu-container-height) + 168px - #{$displaySettingsHeight}
+			)
+		);
 	}
 }
 
 .portlet-forms .data-layout-builder-sidebar {
-	@include sidebar-offset(272px);
+	@include sidebar-offset(calc(var(--control-menu-container-height) + 216px));
 
 	&.display-settings {
-		@include sidebar-offset(224px);
+		@include sidebar-offset(
+			calc(var(--control-menu-container-height) + 168px)
+		);
 	}
 }

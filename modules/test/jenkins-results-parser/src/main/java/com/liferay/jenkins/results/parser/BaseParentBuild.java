@@ -620,10 +620,8 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	protected boolean isJenkinsBuildCompleted() {
-		boolean jenkinsBuildCompleted = super.isJenkinsBuildCompleted();
-
-		if (jenkinsBuildCompleted) {
-			return true;
+		if (!super.isJenkinsBuildCompleted()) {
+			return false;
 		}
 
 		for (Build downstreamBuild : getDownstreamBuilds()) {

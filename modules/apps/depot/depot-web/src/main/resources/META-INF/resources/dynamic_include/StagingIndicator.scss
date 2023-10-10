@@ -46,3 +46,7 @@ html#{$cadmin-selector} .cadmin {
 		}
 	}
 }
+
+.has-staging-indicator {
+	--staging-indicator-height: 24px;
+}

@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.ratings.kernel.RatingsType;
 import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil;
@@ -37,7 +37,8 @@ public class RatingsDataTransformerUtil {
 			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
-		RatingsDataTransformer ratingsDataTransformer = _ratingsDataTransformer;
+		RatingsDataTransformer ratingsDataTransformer =
+			_ratingsDataTransformerSnapshot.get();
 
 		if (ratingsDataTransformer == null) {
 			return;
@@ -80,7 +81,8 @@ public class RatingsDataTransformerUtil {
 			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
-		RatingsDataTransformer ratingsDataTransformer = _ratingsDataTransformer;
+		RatingsDataTransformer ratingsDataTransformer =
+			_ratingsDataTransformerSnapshot.get();
 
 		if (ratingsDataTransformer == null) {
 			return;
@@ -159,9 +161,9 @@ public class RatingsDataTransformerUtil {
 	private RatingsDataTransformerUtil() {
 	}
 
-	private static volatile RatingsDataTransformer _ratingsDataTransformer =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			RatingsDataTransformer.class, RatingsDataTransformerUtil.class,
-			"_ratingsDataTransformer", false, true);
+	private static final Snapshot<RatingsDataTransformer>
+		_ratingsDataTransformerSnapshot = new Snapshot<>(
+			RatingsDataTransformerUtil.class, RatingsDataTransformer.class,
+			null, true);
 
 }

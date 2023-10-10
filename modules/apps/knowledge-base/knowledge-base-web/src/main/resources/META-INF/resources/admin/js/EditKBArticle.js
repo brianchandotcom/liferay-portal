@@ -66,7 +66,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 	let scheduleItem;
 	let scheduledButton;
 
-	if (Liferay.FeatureFlags['LPS-188060']) {
+	if (Liferay.FeatureFlags['LPS-188058']) {
 		publishButton = document.getElementById(`${namespace}publishItem`);
 
 		scheduledButton = document.getElementById(
@@ -126,7 +126,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 			}
 		}
 
-		if (Liferay.FeatureFlags['LPS-188060']) {
+		if (Liferay.FeatureFlags['LPS-188058']) {
 			beforeSubmit();
 			submitForm(form);
 		}
@@ -144,7 +144,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 		}),
 	];
 
-	if (Liferay.FeatureFlags['LPS-188060']) {
+	if (Liferay.FeatureFlags['LPS-188058']) {
 		eventHandlers.push(
 			attachListener(scheduleItem, 'click', openScheduleModal)
 		);

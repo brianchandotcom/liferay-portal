@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alicia García
  */
-@FeatureFlags("LPS-188060")
+@FeatureFlags("LPS-188058")
 @RunWith(Arquillian.class)
 @Sync
 public class CheckKBArticleSchedulerJobConfigurationTest {

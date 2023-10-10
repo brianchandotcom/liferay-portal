@@ -356,7 +356,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-188060")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-188058")) {
 			_checkKBArticlesByDisplayDate(company, date, userId);
 		}
 
@@ -1378,7 +1378,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			main = true;
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-188060") &&
+			if (FeatureFlagManagerUtil.isEnabled("LPS-188058") &&
 				date.before(kbArticle.getDisplayDate())) {
 
 				status = WorkflowConstants.STATUS_SCHEDULED;

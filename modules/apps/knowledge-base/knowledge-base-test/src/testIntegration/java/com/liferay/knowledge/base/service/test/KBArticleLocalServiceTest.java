@@ -279,7 +279,7 @@ public class KBArticleLocalServiceTest {
 			_serviceContext);
 	}
 
-	@FeatureFlags("LPS-188060")
+	@FeatureFlags("LPS-188058")
 	@Test
 	public void testAddKBArticleDisplayDateKBArticleStatusScheduled()
 		throws Exception {

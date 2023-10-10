@@ -64,7 +64,7 @@ public class CleanUpStoreAreasSchedulerJobConfiguration
 			StoreAreaConfiguration.class, properties);
 	}
 
-	private void _cleanUpDeletedStoreArea(long companyId) {
+	private void _cleanUpStorageAreas(long companyId) {
 		StoreAreaProcessor storeAreaProcessor =
 			_storeAreaProcessorSnapshot.get();
 
@@ -75,11 +75,6 @@ public class CleanUpStoreAreasSchedulerJobConfiguration
 				name -> !_isDLFileVersionReferenced(companyId, name),
 				_startOffsets.getOrDefault(companyId, StringPool.BLANK),
 				Duration.ofDays(_storeAreaConfiguration.evictionAge())));
-	}
-
-	private void _cleanUpNewStoreArea(long companyId) {
-		StoreAreaProcessor storeAreaProcessor =
-			_storeAreaProcessorSnapshot.get();
 
 		_startOffsets.put(
 			companyId,
@@ -88,11 +83,6 @@ public class CleanUpStoreAreasSchedulerJobConfiguration
 				name -> !_isDLFileVersionReferenced(companyId, name),
 				_startOffsets.getOrDefault(companyId, StringPool.BLANK),
 				Duration.ofDays(_storeAreaConfiguration.evictionAge())));
-	}
-
-	private void _cleanUpStorageAreas(long companyId) {
-		_cleanUpDeletedStoreArea(companyId);
-		_cleanUpNewStoreArea(companyId);
 	}
 
 	private boolean _isDLFileVersionReferenced(Long companyId, String name) {

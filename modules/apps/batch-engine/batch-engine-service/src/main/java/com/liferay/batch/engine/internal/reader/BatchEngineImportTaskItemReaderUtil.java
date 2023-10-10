@@ -147,24 +147,24 @@ public class BatchEngineImportTaskItemReaderUtil {
 		JsonDeserialize[] jsonDeserializes = field.getAnnotationsByType(
 			JsonDeserialize.class);
 
-		if (!ArrayUtil.isEmpty(jsonDeserializes)) {
-			JsonDeserialize jsonDeserialize = jsonDeserializes[0];
-
-			return new ObjectMapper() {
-				{
-					SimpleModule simpleModule = new SimpleModule();
-
-					simpleModule.addDeserializer(
-						field.getType(),
-						jsonDeserialize.using(
-						).newInstance());
-
-					registerModule(simpleModule);
-				}
-			};
+		if (ArrayUtil.isEmpty(jsonDeserializes)) {
+			return _objectMapper;
 		}
 
-		return _objectMapper;
+		JsonDeserialize jsonDeserialize = jsonDeserializes[0];
+
+		return new ObjectMapper() {
+			{
+				SimpleModule simpleModule = new SimpleModule();
+
+				simpleModule.addDeserializer(
+					field.getType(),
+					jsonDeserialize.using(
+					).newInstance());
+
+				registerModule(simpleModule);
+			}
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -209,7 +209,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 
 			Collections.sort(fileNames, new FileNameComparator());
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(fileNames.size() * 2);
 
 			for (String fileName : fileNames) {
 				sb.append(StringPool.NEW_LINE);

@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -67,17 +66,19 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 
 	@Test
 	public void test() throws Exception {
-		String key = StringUtil.lowerCaseFirstLetter(
-			TestDTO.class.getSimpleName());
-
 		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
 			invoke(
 				new GraphQLField(
-					key, new GraphQLField("field"), new GraphQLField("_id"))),
-			"JSONObject/data", "JSONObject/" + key);
+					"testDTO", new GraphQLField("extendedStringField"),
+					new GraphQLField("id"), new GraphQLField("stringField"))),
+			"JSONObject/data", "JSONObject/testDTO");
 
-		Assert.assertEquals(jsonObject.get("field"), _testQuery.getField());
-		Assert.assertEquals(jsonObject.get("_id"), _testQuery.getId());
+		Assert.assertEquals(
+			jsonObject.get("extendedStringField"),
+			_testQuery.getExtendedStringField());
+		Assert.assertEquals(jsonObject.get("id"), _testQuery.getId());
+		Assert.assertEquals(
+			jsonObject.get("stringField"), _testQuery.getStringField());
 	}
 
 	@Test
@@ -104,9 +105,8 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 
 			JSONObject jsonObject = invoke(
 				new GraphQLField(
-					StringUtil.lowerCaseFirstLetter(
-						TestDTO.class.getSimpleName()),
-					new GraphQLField("field"), new GraphQLField("_id")));
+					"testDTO", new GraphQLField("id"),
+					new GraphQLField("stringField")));
 
 			Assert.assertNull(
 				JSONUtil.getValueAsJSONObject(jsonObject, "JSONObject/data"));
@@ -133,18 +133,16 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 					"queryDepthLimit", 2
 				).build());
 
-			String key = StringUtil.lowerCaseFirstLetter(
-				TestDTO.class.getSimpleName());
-
 			jsonObject = JSONUtil.getValueAsJSONObject(
 				invoke(
 					new GraphQLField(
-						key, new GraphQLField("field"),
-						new GraphQLField("_id"))),
-				"JSONObject/data", "JSONObject/" + key);
+						"testDTO", new GraphQLField("id"),
+						new GraphQLField("stringField"))),
+				"JSONObject/data", "JSONObject/testDTO");
 
-			Assert.assertEquals(jsonObject.get("field"), _testQuery.getField());
-			Assert.assertEquals(jsonObject.get("_id"), _testQuery.getId());
+			Assert.assertEquals(jsonObject.get("id"), _testQuery.getId());
+			Assert.assertEquals(
+				jsonObject.get("stringField"), _testQuery.getStringField());
 		}
 		finally {
 			if (configurations == null) {

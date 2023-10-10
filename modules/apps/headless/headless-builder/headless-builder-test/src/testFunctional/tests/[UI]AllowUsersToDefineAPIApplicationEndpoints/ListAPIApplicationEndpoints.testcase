@@ -54,6 +54,34 @@ definition {
 	}
 
 	@priority = 4
+	test CanClickOverEndpointPath {
+		property portal.acceptance = "true";
+
+		task ("And Given I create an endpoint associate to the API application") {
+			EndpointAPI.createAPIEndpoint(
+				externalReferenceCode = "My-app",
+				name = "myEndpoint",
+				path = "/myEndpoint");
+		}
+
+		task ("When I click over the path of the endpoint") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+
+			Click(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "/myEndpoint/");
+		}
+
+		task ("Then it navigates to another page") {
+			AssertElementPresent(
+				key_breadcrumbName = "GET /myEndpoint",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
+		}
+	}
+
+	@priority = 4
 	test CanCopyURLOfAPIEndpoint {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";

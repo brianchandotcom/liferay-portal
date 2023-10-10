@@ -300,10 +300,8 @@ definition {
 			}
 		}
 
-		task ("Click to terminate the test") {
-			Button.click(button = "Terminate Test");
-
-			ABTest.assertTerminateTest();
+		task ("Terminate the test") {
+			ACTests.terminateABTest(testName = ${nameABTest});
 		}
 
 		task ("Click to publish the variant") {

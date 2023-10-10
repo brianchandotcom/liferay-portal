@@ -76,6 +76,10 @@ $toolbarZIndex: 971;
 			.treeview-item a:hover {
 				text-decoration: none;
 			}
+
+			.treeview-link.focus {
+				box-shadow: none;
+			}
 		}
 
 		.tbar-light {

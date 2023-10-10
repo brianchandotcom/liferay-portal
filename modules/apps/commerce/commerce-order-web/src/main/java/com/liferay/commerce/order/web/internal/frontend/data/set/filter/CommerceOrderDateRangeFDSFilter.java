@@ -25,7 +25,7 @@ public class CommerceOrderDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getId() {
-		return "createDate";
+		return "orderDate";
 	}
 
 	@Override

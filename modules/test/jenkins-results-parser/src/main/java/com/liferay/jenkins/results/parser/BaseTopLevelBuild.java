@@ -68,7 +68,7 @@ public abstract class BaseTopLevelBuild
 		String portalReleaseVersion = System.getenv(
 			"TEST_PORTAL_RELEASE_VERSION");
 
-		if (portalReleaseVersion.matches("\\d{4}.q\\d+.\\d+") ||
+		if (PortalRelease.isQuarterlyRelease(portalReleaseVersion) ||
 			!portalBranchName.equals("master")) {
 
 			return "liferay-portal-ee";

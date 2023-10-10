@@ -239,7 +239,6 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		</#if>
 		<#if propertySchema.jsonString>
 			@JsonDeserialize(using = JSONStringStdDeserializer.class)
-
 		</#if>
 		@JsonProperty(
 			<#if propertySchema.readOnly>

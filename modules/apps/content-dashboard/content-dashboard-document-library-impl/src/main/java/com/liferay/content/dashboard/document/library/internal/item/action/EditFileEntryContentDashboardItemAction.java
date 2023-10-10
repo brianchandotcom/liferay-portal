@@ -13,7 +13,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.DynamicServletRequestUtil;
 
 import java.util.Collections;
@@ -63,7 +67,7 @@ public class EditFileEntryContentDashboardItemAction
 	@Override
 	public String getURL() {
 		try {
-			return _infoEditURLProvider.getURL(
+			String url = _infoEditURLProvider.getURL(
 				_fileEntry,
 				DynamicServletRequestUtil.createDynamicServletRequest(
 					_httpServletRequest,
@@ -75,6 +79,16 @@ public class EditFileEntryContentDashboardItemAction
 							_portal.getCurrentURL(_httpServletRequest)
 						}),
 					true));
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			return HttpComponentsUtil.addParameter(
+				url, "p_l_back_url_title",
+				portletDisplay.getPortletDisplayName());
 		}
 		catch (Exception exception) {
 			_log.error(exception);

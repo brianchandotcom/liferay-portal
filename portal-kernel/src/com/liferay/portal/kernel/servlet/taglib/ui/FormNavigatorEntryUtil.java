@@ -27,7 +27,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author     Sergio González
  * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
- *             com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryUtil}
+ *             com.liferay.frontend.taglib.form.navigator.internal.FormNavigatorEntryProviderImpl}
  */
 @Deprecated
 public class FormNavigatorEntryUtil {

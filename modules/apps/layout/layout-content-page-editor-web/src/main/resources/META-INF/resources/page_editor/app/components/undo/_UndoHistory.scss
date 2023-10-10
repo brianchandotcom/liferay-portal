@@ -20,23 +20,13 @@ html#{$cadmin-selector} {
 			}
 
 			&__overlay {
-				height: 100vh;
+				height: calc(100vh - var(--control-menu-container-height));
 				left: 0;
 				position: fixed;
-				top: 0;
+				top: var(--control-menu-container-height);
 				width: 100vw;
 				z-index: $undoHistoryOverlayZIndex;
 			}
-		}
-	}
-
-	body.has-control-menu .cadmin .page-editor__undo-history__overlay {
-		height: calc(100vh - #{$controlMenuHeight});
-		top: $controlMenuHeight;
-
-		@include media-breakpoint-up(sm) {
-			height: calc(100vh - #{$desktopControlMenuHeight});
-			top: $desktopControlMenuHeight;
 		}
 	}
 }

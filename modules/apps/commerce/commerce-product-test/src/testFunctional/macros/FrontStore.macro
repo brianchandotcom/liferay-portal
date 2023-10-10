@@ -551,6 +551,15 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 			value1 = ${cartItemQuantity});
 
+		if (isSet(bundledItems)) {
+			for (var bundledItem : list ${bundledItems}) {
+				AssertTextEquals.assertPartialText(
+					key_cartItemSku = ${cartItemSku},
+					locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEMS",
+					value1 = ${bundledItem});
+			}
+		}
+
 		if (isSet(cartItemPriceValue)) {
 			AssertTextEquals.assertPartialText(
 				key_cartItemSku = ${cartItemSku},

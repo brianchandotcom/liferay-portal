@@ -6,10 +6,9 @@
 package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -47,7 +46,13 @@ public class JSONWebServiceScannerUtil {
 			InvocationHandler invocationHandler =
 				ProxyUtil.getInvocationHandler(service);
 
-			if (invocationHandler instanceof ClassLoaderBeanHandler) {
+			if (invocationHandler instanceof AopInvocationHandler) {
+				AopInvocationHandler aopInvocationHandler =
+					(AopInvocationHandler)invocationHandler;
+
+				service = aopInvocationHandler.getTarget();
+			}
+			else if (invocationHandler instanceof ClassLoaderBeanHandler) {
 				ClassLoaderBeanHandler classLoaderBeanHandler =
 					(ClassLoaderBeanHandler)invocationHandler;
 
@@ -62,29 +67,9 @@ public class JSONWebServiceScannerUtil {
 					service = bean;
 				}
 			}
-			else {
-				Class<?> invocationHandlerClass = invocationHandler.getClass();
-
-				try {
-					Method method = invocationHandlerClass.getMethod(
-						"getTarget");
-
-					service = method.invoke(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(reflectiveOperationException);
-					}
-				}
-			}
 		}
 
 		return service.getClass();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JSONWebServiceScannerUtil.class);
 
 }

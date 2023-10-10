@@ -437,7 +437,11 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 												<div class="aspect-ratio card-item-first">
 													<c:choose>
 														<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
-															<aui:icon cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon" image="documents-and-media" markupView="lexicon" />
+															<span class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+																<clay:icon
+																	symbol="documents-and-media"
+																/>
+															</span>
 														</c:when>
 														<c:otherwise>
 															<img alt="" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= thumbnailSrc %>" />

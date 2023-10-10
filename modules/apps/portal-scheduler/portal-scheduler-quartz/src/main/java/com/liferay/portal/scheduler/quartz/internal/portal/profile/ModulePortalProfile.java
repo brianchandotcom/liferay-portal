@@ -5,6 +5,7 @@
 
 package com.liferay.portal.scheduler.quartz.internal.portal.profile;
 
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
 import com.liferay.portal.scheduler.quartz.internal.QuartzSchedulerEngine;
-import com.liferay.portal.scheduler.quartz.internal.QuartzSchemaManager;
 import com.liferay.portal.scheduler.quartz.internal.QuartzTriggerFactory;
 
 import java.util.ArrayList;
@@ -69,7 +69,6 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 		init(
 			componentContext, supportedPortalProfileNames,
 			QuartzSchedulerEngine.class.getName(),
-			QuartzSchemaManager.class.getName(),
 			QuartzTriggerFactory.class.getName());
 	}
 
@@ -86,6 +85,11 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 
 	@Reference
 	private Props _props;
+
+	@Reference(
+		target = "(release.bundle.symbolic.name=com.liferay.portal.scheduler.quartz)"
+	)
+	private Release _release;
 
 	private ServiceRegistration<SchedulerEngine>
 		_schedulerEngineServiceRegistration;

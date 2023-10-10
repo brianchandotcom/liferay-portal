@@ -779,7 +779,7 @@ public abstract class BaseTopLevelBuild
 
 		@Override
 		public RemoteGitRef getSenderRemoteGitRef() {
-			String remoteURL;
+			String remoteURL = null;
 
 			if (isReleaseBuild()) {
 				remoteURL = JenkinsResultsParserUtil.combine(
@@ -1331,7 +1331,7 @@ public abstract class BaseTopLevelBuild
 		String senderBranchSHA =
 			workspaceBranchInformation.getSenderBranchSHA();
 
-		GitHubRemoteGitCommit gitHubRemoteGitCommit;
+		GitHubRemoteGitCommit gitHubRemoteGitCommit = null;
 
 		if (isReleaseBuild()) {
 			gitHubRemoteGitCommit = GitCommitFactory.newGitHubRemoteGitCommit(

@@ -29,13 +29,13 @@ interface FilterComponentArgs {
 }
 declare const FILTER_IMPLEMENTATIONS: {
 	clientExtension: FilterImplementation<
-		import('./implementation/clientExtensionFilter').ClientExtensionFilterImplementationArgs
+		import('./implementation/ClientExtensionFilter').ClientExtensionFilterImplementationArgs
 	>;
 	dateRange: FilterImplementation<
-		import('./implementation/dateRangeFilter').DateRangeFilterImplementationArgs
+		import('./implementation/DateRangeFilter').DateRangeFilterImplementationArgs
 	>;
 	selection: FilterImplementation<
-		import('./implementation/selectionFilter').SelectionFilterImplementationArgs
+		import('./implementation/SelectionFilter').SelectionFilterImplementationArgs
 	>;
 };
 declare const Filter: ({

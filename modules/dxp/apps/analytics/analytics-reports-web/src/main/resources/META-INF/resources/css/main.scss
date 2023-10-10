@@ -13,14 +13,6 @@ html#{$cadmin-selector} {
 				line-height: 32px;
 			}
 
-			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
-				@include media-breakpoint-down(md, $cadmin-grid-breakpoints) {
-					&.lfr-admin-panel.sidenav-menu-slider {
-						top: 56px;
-					}
-				}
-			}
-
 			.sidebar-body {
 				bottom: 0;
 				left: 0;

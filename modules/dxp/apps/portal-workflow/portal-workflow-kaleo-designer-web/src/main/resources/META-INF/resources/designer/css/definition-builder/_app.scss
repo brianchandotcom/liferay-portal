@@ -1,7 +1,7 @@
 @import 'atlas-variables';
 
 .definition-builder-app {
-	height: calc(100vh - 120px);
+	height: calc(100vh - 64px - var(--control-menu-container-height));
 
 	.diagram-builder {
 		display: flex;

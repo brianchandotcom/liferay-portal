@@ -3302,7 +3302,22 @@ public class JenkinsResultsParserUtil {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("import org.jvnet.jenkins.plugins.nodelabelparameter.");
+		sb.append("LabelParameterDefinition;\n");
+
+		sb.append("import org.jvnet.jenkins.plugins.nodelabelparameter.");
 		sb.append("LabelParameterValue;\n");
+
+		sb.append("Map<String, String> parameters = new HashMap<>();\n");
+
+		for (Map.Entry<String, String> buildParameter :
+				buildParameters.entrySet()) {
+
+			sb.append("parameters.put(\"");
+			sb.append(buildParameter.getKey());
+			sb.append("\", \"");
+			sb.append(buildParameter.getValue());
+			sb.append("\");\n");
+		}
 
 		sb.append("Map<String, TopLevelItem> topLevelItems = ");
 		sb.append("Jenkins.instance.getItemMap();\n");
@@ -3314,26 +3329,39 @@ public class JenkinsResultsParserUtil {
 		sb.append(
 			"List<ParameterValue> parameterValues = new ArrayList<>();\n");
 
-		for (Map.Entry<String, String> buildParameter :
-				buildParameters.entrySet()) {
+		sb.append("JobProperty jobProperty = topLevelItem.getProperty(");
+		sb.append("\"hudson.model.ParametersDefinitionProperty\");\n");
 
-			sb.append("parameterValues.add(");
+		sb.append("for (ParameterDefinition parameterDefinition : ");
+		sb.append("jobProperty.getParameterDefinitions()) {\n");
 
-			String buildParamaterName = buildParameter.getKey();
+		sb.append("String parameterName = parameterDefinition.getName();\n;");
 
-			if (buildParamaterName.equals("SLAVE_LABEL")) {
-				sb.append("new LabelParameterValue");
-			}
-			else {
-				sb.append("new StringParameterValue");
-			}
+		sb.append("String parameterValue = parameters.get(parameterName);\n;");
 
-			sb.append("(\"");
-			sb.append(buildParameter.getKey());
-			sb.append("\", \"");
-			sb.append(buildParameter.getValue());
-			sb.append("\"));\n");
-		}
+		sb.append(
+			"if ((parameterValue == null) || parameterValue.isEmpty()) {\n;");
+		sb.append("parameterValue = parameterDefinition.defaultValue;\n");
+		sb.append("}\n");
+
+		sb.append("if (parameterDefinition instanceof ");
+		sb.append("StringParameterDefinition) {\n");
+
+		sb.append("parameterValues.add(");
+		sb.append(
+			"new StringParameterValue(parameterName, parameterValue));\n");
+
+		sb.append("}\n");
+
+		sb.append("else if (parameterDefinition instanceof ");
+		sb.append("LabelParameterDefinition) {\n");
+
+		sb.append("parameterValues.add(");
+		sb.append("new LabelParameterValue(parameterName, parameterValue));\n");
+
+		sb.append("}\n");
+
+		sb.append("}\n");
 
 		sb.append("def waitingItem = Jenkins.instance.queue.schedule(");
 		sb.append("topLevelItem, 0, new ParametersAction(parameterValues));\n");

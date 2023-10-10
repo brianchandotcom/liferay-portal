@@ -1,20 +1,16 @@
 @import 'atlas-variables';
 
-$controlMenuDesktopHeight: 56px;
-$controlMenuHeight: 48px;
 $toolbarHeight: 56px;
 $sidebarWidth: 320px;
 
 .site_navigation_menu_editor_AppLayout {
 	&-content,
 	&-sidebar {
-		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
+		height: calc(
+			100vh - var(--control-menu-container-height) - #{$toolbarHeight}
+		);
 		overflow-x: hidden;
 		overflow-y: auto;
-
-		@include media-breakpoint-up(sm) {
-			height: calc(100vh - #{$controlMenuDesktopHeight + $toolbarHeight});
-		}
 	}
 
 	&-content {
@@ -39,7 +35,7 @@ $sidebarWidth: 320px;
 		box-sizing: border-box;
 		position: fixed;
 		right: 0;
-		top: $controlMenuHeight + $toolbarHeight;
+		top: calc(var(--control-menu-container-height) + #{$toolbarHeight});
 		transform: translateX($sidebarWidth);
 		transition: transform ease 0.5s, box-shadow ease 0.5s;
 		width: $sidebarWidth;
@@ -58,10 +54,6 @@ $sidebarWidth: 320px;
 			&--visible {
 				transform: translateX(0);
 			}
-		}
-
-		@include media-breakpoint-up(sm) {
-			top: $controlMenuDesktopHeight + $toolbarHeight;
 		}
 	}
 }

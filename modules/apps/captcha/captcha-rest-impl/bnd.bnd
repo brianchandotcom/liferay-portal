@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Captcha REST Implementation
 Bundle-SymbolicName: com.liferay.captcha.rest.impl
 Bundle-Version: 1.0.0
+Require-Capability:\
+	osgi.extender;\
+		filter := "(&(osgi.extender=osgi.configurator)(version>=1.0)(!(version>=2.0)))"
+-includeresource: OSGI-INF/configurator=configurator

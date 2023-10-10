@@ -1,0 +1,7 @@
+{
+	"com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration~captcha": {
+		"graphQLEnabled": false,
+		"path": "/captcha",
+		"restEnabled": true
+	}
+}

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
@@ -89,8 +90,8 @@ public class MultiSessionErrors {
 	private static final Class<?>[] _CLASSES_HIDE_DEFAULT_ERROR_MESSAGE =
 		ArrayUtil.append(
 			new Class<?>[] {
-				NoSuchGroupException.class, NoSuchLayoutException.class,
-				UserPasswordException.class
+				InfoFormException.class, NoSuchGroupException.class,
+				NoSuchLayoutException.class, UserPasswordException.class
 			},
 			UserPasswordException.class.getDeclaredClasses());
 

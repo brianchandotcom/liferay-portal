@@ -22,7 +22,7 @@ private static final Map<String, String> _vegetableMap =
     new HashMap<String, String>() {
         {
             put("Beet", "Red");
-            put("Carrot, "Orange");
+            put("Carrot", "Orange");
             put("Eggplant", "Purple");
             put("Potato", "Yellow");
             put("Spinach", "Green");
@@ -44,7 +44,7 @@ static {
     _fruitMap.put("Strawberry", "Red");
 
     _vegetableMap.put("Beet", "Red");
-    _vegetableMap.put("Carrot, "Orange");
+    _vegetableMap.put("Carrot", "Orange");
     _vegetableMap.put("Eggplant", "Purple");
     _vegetableMap.put("Potato", "Yellow");
     _vegetableMap.put("Spinach", "Green");

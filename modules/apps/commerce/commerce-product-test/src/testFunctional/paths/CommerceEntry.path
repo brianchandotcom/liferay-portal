@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_MENU_ITEM_N</td>
+	<td>//div[@class='autocomplete-items']//li[contains(.,'${key_text}')][${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_ITEM_FROM_LIST</td>
 	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_itemName}')]//following::div//a[contains(.,'Select')]</td>
 	<td></td>

@@ -117,7 +117,10 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 					}
 				},
 				selectEventName: '<portlet:namespace />selectDDMStructure',
-				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
+				title: Liferay.Util.sub(
+					'<%= UnicodeLanguageUtil.get(request, "select-x") %>',
+					'<%= UnicodeLanguageUtil.get(request, "structure") %>'
+				),
 				url: '<%= journalDisplayContext.getSelectDDMStructureURL() %>>',
 			});
 		};

@@ -6,4 +6,6 @@ application:
     name: "Liferay.Captcha.REST"
 author: "Loc Pham"
 clientDir: "../captcha-rest-client/src/main/java"
+compatibilityVersion: 2
+forcePredictableOperationId: true
 testDir: "../captcha-rest-test/src/testIntegration/java"

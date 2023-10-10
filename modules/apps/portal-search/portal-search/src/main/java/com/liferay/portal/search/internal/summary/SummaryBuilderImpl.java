@@ -7,8 +7,7 @@ package com.liferay.portal.search.internal.summary;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
-import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HtmlImpl;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -94,7 +93,7 @@ public class SummaryBuilderImpl implements SummaryBuilder {
 		text = StringUtil.replace(
 			text, _HIGHLIGHT_TAGS, _ESCAPE_SAFE_HIGHLIGHTS);
 
-		text = _html.escape(text);
+		text = HtmlUtil.escape(text);
 
 		return StringUtil.replace(
 			text, _ESCAPE_SAFE_HIGHLIGHTS, _HIGHLIGHT_TAGS);
@@ -176,7 +175,6 @@ public class SummaryBuilderImpl implements SummaryBuilder {
 	private String _content;
 	private boolean _escape = true;
 	private boolean _highlight;
-	private final Html _html = new HtmlImpl();
 	private Locale _locale;
 	private int _maxContentLength;
 	private String _title;

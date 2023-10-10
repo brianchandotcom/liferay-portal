@@ -41,8 +41,6 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HtmlImpl;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -93,7 +91,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		_setUpDLAppLocalService();
 		_setUpFileEntry();
 		_setUpGroupLocalService();
-		_setUpHtml();
 		_setUpItemSelector();
 		_setUpJSONFactory();
 		_setUpJSONFactoryUtil();
@@ -658,12 +655,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		_mockGroupLocalServiceFetchGroup(_group);
 	}
 
-	private void _setUpHtml() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_documentLibraryDDMFormFieldTemplateContextContributor, "_html",
-			_html);
-	}
-
 	private void _setUpItemSelector() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			_documentLibraryDDMFormFieldTemplateContextContributor,
@@ -822,7 +813,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	private final Group _group = Mockito.mock(Group.class);
 	private final GroupLocalService _groupLocalService = Mockito.mock(
 		GroupLocalService.class);
-	private final Html _html = new HtmlImpl();
 	private final ItemSelector _itemSelector = Mockito.mock(ItemSelector.class);
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private final Portal _portal = Mockito.mock(Portal.class);

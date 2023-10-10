@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.HtmlImpl;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -68,7 +66,6 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 
 		setUpDLAppLocalServiceUtil();
 		setUpFastDateFormatFactoryUtil();
-		setUpHtmlUtil();
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpLayoutServiceUtil();
@@ -494,12 +491,6 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			new FastDateFormatFactoryImpl());
-	}
-
-	protected void setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 	protected void setUpLayoutServiceUtil() throws Exception {

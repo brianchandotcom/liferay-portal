@@ -13,8 +13,7 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.CountryWrapper;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.RegionWrapper;
-import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HtmlImpl;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.text.localizer.address.AddressTextLocalizer;
 
@@ -165,9 +164,7 @@ public class JPAddressTextLocalizerTest {
 		_setCountry(unescapedValue);
 		_setRegion(unescapedValue);
 
-		Html html = new HtmlImpl();
-
-		String escapedValue = html.escape(unescapedValue);
+		String escapedValue = HtmlUtil.escape(unescapedValue);
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -193,33 +190,31 @@ public class JPAddressTextLocalizerTest {
 
 			@Override
 			public Address toEscapedModel() {
-				Html html = new HtmlImpl();
-
 				return new AddressWrapper(null) {
 
 					@Override
 					public String getCity() {
-						return html.escape(_city);
+						return HtmlUtil.escape(_city);
 					}
 
 					@Override
 					public String getStreet1() {
-						return html.escape(_street1);
+						return HtmlUtil.escape(_street1);
 					}
 
 					@Override
 					public String getStreet2() {
-						return html.escape(_street2);
+						return HtmlUtil.escape(_street2);
 					}
 
 					@Override
 					public String getStreet3() {
-						return html.escape(_street3);
+						return HtmlUtil.escape(_street3);
 					}
 
 					@Override
 					public String getZip() {
-						return html.escape(_zip);
+						return HtmlUtil.escape(_zip);
 					}
 
 				};
@@ -229,11 +224,7 @@ public class JPAddressTextLocalizerTest {
 	}
 
 	private AddressTextLocalizer _createAddressTextLocalizer() {
-		return new JPAddressTextLocalizer() {
-			{
-				html = new HtmlImpl();
-			}
-		};
+		return new JPAddressTextLocalizer();
 	}
 
 	private void _setCity(String city) {

@@ -62,8 +62,8 @@ definition {
 
 		task ("And add some information in the fields") {
 			Type(
-				key_query = "",
-				locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT",
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
 				value1 = "New Action");
 
 			Type(

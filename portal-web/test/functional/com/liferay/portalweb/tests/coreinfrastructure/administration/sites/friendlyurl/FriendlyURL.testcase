@@ -336,7 +336,7 @@ definition {
 
 		task ("View the inline text on Home page is in English as default") {
 			ContentPages.viewFragmentText(
-				fragmentName = "heading",
+				fragmentName = "paragraph",
 				id = "element-text",
 				text = "Welcome to Liferay");
 		}
@@ -354,7 +354,7 @@ definition {
 
 		task ("View the inline text on Home page is in Chinese") {
 			ContentPages.viewFragmentText(
-				fragmentName = "heading",
+				fragmentName = "paragraph",
 				id = "element-text",
 				text = "欢迎来到Liferay");
 		}
@@ -372,7 +372,7 @@ definition {
 
 		task ("View the inline text on Home page is in Portuguese") {
 			ContentPages.viewFragmentText(
-				fragmentName = "heading",
+				fragmentName = "paragraph",
 				id = "element-text",
 				text = "Bem Vindo ao Liferay");
 		}
@@ -390,7 +390,7 @@ definition {
 
 		task ("View the inline text on Home page is in French") {
 			ContentPages.viewFragmentText(
-				fragmentName = "heading",
+				fragmentName = "paragraph",
 				id = "element-text",
 				text = "Bienvenue à Liferay");
 		}

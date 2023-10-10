@@ -290,7 +290,13 @@ definition {
 		}
 
 		task ("Delete the test in AC") {
-			ABTest.deleteABTestACSide();
+			ACTests.deleteABTestACSide();
+
+			AssertTextEquals.assertPartialText(
+			locator1 = "Modal#MODAL_CONTENT",
+			value1 = "Are you sure you want to delete this test? You will permanently lose all test data and results collected from this test. You will not be able to run this test. You will not be able to undo this operation.");
+
+			Alert.viewSuccessMessageText(successMessage = "Success:The test has been deleted.");
 		}
 
 		task ("Assert the test is no longer present in the list") {

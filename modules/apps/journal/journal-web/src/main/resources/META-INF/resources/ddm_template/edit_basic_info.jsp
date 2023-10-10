@@ -20,14 +20,13 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 <div class="form-group">
 	<label class="control-label" for="<portlet:namespace />ddmStructure">
 		<liferay-ui:message key="structure" />
-
-		<clay:icon
-			aria-label='<%= LanguageUtil.get(request, "structure-help") %>'
-			cssClass="lfr-portal-tooltip"
-			symbol="question-circle-full"
-			title='<%= LanguageUtil.get(request, "structure-help") %>'
-		/>
 	</label>
+
+	<span class="icon-help lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "journal-template-cacheable-help") %>">
+		<clay:icon
+			symbol="question-circle-full"
+		/>
+	</span>
 
 	<div class="input-group">
 		<div class="input-group-item">
@@ -69,7 +68,20 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 	<aui:input name="webDavURL" type="resource" value="<%= ddmTemplate.getWebDavURL(themeDisplay, WebDAVUtil.getStorageToken(portlet)) %>" />
 </c:if>
 
-<aui:input helpMessage="journal-template-cacheable-help" labelCssClass="control-label" name="cacheable" value="<%= journalEditDDMTemplateDisplayContext.isCacheable() %>" />
+<div class="form-group form-inline">
+	<clay:checkbox
+		checked="<%= journalEditDDMTemplateDisplayContext.isCacheable() %>"
+		id='<%= liferayPortletResponse.getNamespace() + "cacheable" %>'
+		label="cacheable"
+		name='<%= liferayPortletResponse.getNamespace() + "cacheable" %>'
+	/>
+
+	<span class="c-ml-1 icon-help lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "journal-template-cacheable-help") %>">
+		<clay:icon
+			symbol="question-circle-full"
+		/>
+	</span>
+</div>
 
 <aui:script>
 	Liferay.Util.toggleBoxes(

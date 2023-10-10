@@ -1798,6 +1798,12 @@ definition {
 			inputFieldId = "expirationDateTime",
 			locator1 = "TextInput#INPUT_ID",
 			value1 = "${hours}${minutes}${ampm}");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
 	}
 
 	macro setPublishTime {

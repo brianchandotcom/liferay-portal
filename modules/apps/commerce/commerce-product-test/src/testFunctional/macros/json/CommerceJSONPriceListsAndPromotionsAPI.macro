@@ -46,6 +46,30 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (isSet(unitOfMeasureKey)) {
+			var body = '''
+				'{
+					"active": true,
+					"neverExpire": true,
+					"price": "${entryPrice}",
+					"priceListId": "${priceListId}",
+					"skuId": "${skuId}",
+  					"unitOfMeasureKey": "${unitOfMeasureKey}"
+				}'
+			''';
+		}
+		else {
+			var body = '''
+				'{
+					"active": true,
+					"neverExpire": true,
+					"price": "${entryPrice}",
+					"priceListId": "${priceListId}",
+					"skuId": "${skuId}"
+				}'
+			''';
+		}
+
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
@@ -53,14 +77,10 @@ definition {
 				-u ${userLoginInfo} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-				-d '{
-					"active": true,
-					"neverExpire": true,
-					"price": "${entryPrice}",
-					"priceListId": "${priceListId}",
-					"skuId": "${skuId}"
-				}'
+				-d ${body}
 		''';
+
+		var curl = StringUtil.add(${curl}, ${body}, " ");
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}

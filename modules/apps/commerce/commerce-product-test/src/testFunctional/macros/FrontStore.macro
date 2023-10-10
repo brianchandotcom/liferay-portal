@@ -44,6 +44,12 @@ definition {
 
 		Refresh();
 
+		if (isSet(uomName)) {
+			Select(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_UOM_SELECT",
+				value1 = ${uomName});
+		}
+
 		Type(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
 			value1 = ${productQuantity});

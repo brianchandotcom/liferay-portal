@@ -959,11 +959,7 @@ public class GetEntryRenderDataMVCResourceCommand
 				).put(
 					"segmentName",
 					() -> {
-						if (Objects.equals(
-								segmentsExperience.getSegmentsExperienceKey(),
-								SegmentsExperienceConstants.KEY_DEFAULT) &&
-							(segmentsExperience.getSegmentsEntryId() == 0)) {
-
+						if (segmentsExperience.getSegmentsEntryId() == 0) {
 							return _language.get(httpServletRequest, "anyone");
 						}
 

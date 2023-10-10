@@ -52,6 +52,7 @@ public class NotificationTemplateWrapper
 		attributes.put("name", getName());
 		attributes.put("recipientType", getRecipientType());
 		attributes.put("subject", getSubject());
+		attributes.put("system", isSystem());
 		attributes.put("type", getType());
 
 		return attributes;
@@ -155,6 +156,12 @@ public class NotificationTemplateWrapper
 
 		if (subject != null) {
 			setSubject(subject);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
 		}
 
 		String type = (String)attributes.get("type");
@@ -523,6 +530,16 @@ public class NotificationTemplateWrapper
 	}
 
 	/**
+	 * Returns the system of this notification template.
+	 *
+	 * @return the system of this notification template
+	 */
+	@Override
+	public boolean getSystem() {
+		return model.getSystem();
+	}
+
+	/**
 	 * Returns the type of this notification template.
 	 *
 	 * @return the type of this notification template
@@ -570,6 +587,16 @@ public class NotificationTemplateWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
+	}
+
+	/**
+	 * Returns <code>true</code> if this notification template is system.
+	 *
+	 * @return <code>true</code> if this notification template is system; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isSystem() {
+		return model.isSystem();
 	}
 
 	@Override
@@ -891,6 +918,16 @@ public class NotificationTemplateWrapper
 		java.util.Locale defaultLocale) {
 
 		model.setSubjectMap(subjectMap, defaultLocale);
+	}
+
+	/**
+	 * Sets whether this notification template is system.
+	 *
+	 * @param system the system of this notification template
+	 */
+	@Override
+	public void setSystem(boolean system) {
+		model.setSystem(system);
 	}
 
 	/**

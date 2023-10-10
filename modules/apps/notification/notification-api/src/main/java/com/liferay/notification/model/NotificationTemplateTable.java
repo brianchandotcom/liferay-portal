@@ -73,6 +73,9 @@ public class NotificationTemplateTable
 	public final Column<NotificationTemplateTable, String> subject =
 		createColumn(
 			"subject", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationTemplateTable, Boolean> system =
+		createColumn(
+			"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, String> type = createColumn(
 		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 

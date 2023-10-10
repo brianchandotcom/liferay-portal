@@ -69,7 +69,7 @@ public class NotificationTemplateCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -103,6 +103,8 @@ public class NotificationTemplateCacheModel
 		sb.append(recipientType);
 		sb.append(", subject=");
 		sb.append(subject);
+		sb.append(", system=");
+		sb.append(system);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append("}");
@@ -202,6 +204,8 @@ public class NotificationTemplateCacheModel
 			notificationTemplateImpl.setSubject(subject);
 		}
 
+		notificationTemplateImpl.setSystem(system);
+
 		if (type == null) {
 			notificationTemplateImpl.setType("");
 		}
@@ -238,6 +242,8 @@ public class NotificationTemplateCacheModel
 		name = objectInput.readUTF();
 		recipientType = objectInput.readUTF();
 		subject = objectInput.readUTF();
+
+		system = objectInput.readBoolean();
 		type = objectInput.readUTF();
 	}
 
@@ -319,6 +325,8 @@ public class NotificationTemplateCacheModel
 			objectOutput.writeUTF(subject);
 		}
 
+		objectOutput.writeBoolean(system);
+
 		if (type == null) {
 			objectOutput.writeUTF("");
 		}
@@ -343,6 +351,7 @@ public class NotificationTemplateCacheModel
 	public String name;
 	public String recipientType;
 	public String subject;
+	public boolean system;
 	public String type;
 
 }

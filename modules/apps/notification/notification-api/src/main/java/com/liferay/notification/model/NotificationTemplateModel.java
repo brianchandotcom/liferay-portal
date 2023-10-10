@@ -575,6 +575,27 @@ public interface NotificationTemplateModel
 		Map<Locale, String> subjectMap, Locale defaultLocale);
 
 	/**
+	 * Returns the system of this notification template.
+	 *
+	 * @return the system of this notification template
+	 */
+	public boolean getSystem();
+
+	/**
+	 * Returns <code>true</code> if this notification template is system.
+	 *
+	 * @return <code>true</code> if this notification template is system; <code>false</code> otherwise
+	 */
+	public boolean isSystem();
+
+	/**
+	 * Sets whether this notification template is system.
+	 *
+	 * @param system the system of this notification template
+	 */
+	public void setSystem(boolean system);
+
+	/**
 	 * Returns the type of this notification template.
 	 *
 	 * @return the type of this notification template

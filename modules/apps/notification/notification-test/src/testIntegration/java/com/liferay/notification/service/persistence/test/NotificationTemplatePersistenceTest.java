@@ -151,6 +151,8 @@ public class NotificationTemplatePersistenceTest {
 
 		newNotificationTemplate.setSubject(RandomTestUtil.randomString());
 
+		newNotificationTemplate.setSystem(RandomTestUtil.randomBoolean());
+
 		newNotificationTemplate.setType(RandomTestUtil.randomString());
 
 		_notificationTemplates.add(
@@ -210,6 +212,9 @@ public class NotificationTemplatePersistenceTest {
 		Assert.assertEquals(
 			existingNotificationTemplate.getSubject(),
 			newNotificationTemplate.getSubject());
+		Assert.assertEquals(
+			existingNotificationTemplate.isSystem(),
+			newNotificationTemplate.isSystem());
 		Assert.assertEquals(
 			existingNotificationTemplate.getType(),
 			newNotificationTemplate.getType());
@@ -299,7 +304,8 @@ public class NotificationTemplatePersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "objectDefinitionId", true,
 			"description", true, "editorType", true, "name", true,
-			"recipientType", true, "subject", true, "type", true);
+			"recipientType", true, "subject", true, "system", true, "type",
+			true);
 	}
 
 	@Test
@@ -640,6 +646,8 @@ public class NotificationTemplatePersistenceTest {
 		notificationTemplate.setRecipientType(RandomTestUtil.randomString());
 
 		notificationTemplate.setSubject(RandomTestUtil.randomString());
+
+		notificationTemplate.setSystem(RandomTestUtil.randomBoolean());
 
 		notificationTemplate.setType(RandomTestUtil.randomString());
 

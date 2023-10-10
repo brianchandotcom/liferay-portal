@@ -80,7 +80,8 @@ public class NotificationTemplateModelImpl
 		{"objectDefinitionId", Types.BIGINT}, {"body", Types.CLOB},
 		{"description", Types.VARCHAR}, {"editorType", Types.VARCHAR},
 		{"name", Types.VARCHAR}, {"recipientType", Types.VARCHAR},
-		{"subject", Types.VARCHAR}, {"type_", Types.VARCHAR}
+		{"subject", Types.VARCHAR}, {"system_", Types.BOOLEAN},
+		{"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -103,11 +104,12 @@ public class NotificationTemplateModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("recipientType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,body TEXT null,description VARCHAR(255) null,editorType VARCHAR(75) null,name STRING null,recipientType VARCHAR(75) null,subject STRING null,type_ VARCHAR(255) null)";
+		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,body TEXT null,description VARCHAR(255) null,editorType VARCHAR(75) null,name STRING null,recipientType VARCHAR(75) null,subject STRING null,system_ BOOLEAN,type_ VARCHAR(255) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationTemplate";
@@ -291,6 +293,8 @@ public class NotificationTemplateModelImpl
 				"recipientType", NotificationTemplate::getRecipientType);
 			attributeGetterFunctions.put(
 				"subject", NotificationTemplate::getSubject);
+			attributeGetterFunctions.put(
+				"system", NotificationTemplate::getSystem);
 			attributeGetterFunctions.put("type", NotificationTemplate::getType);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
@@ -375,6 +379,10 @@ public class NotificationTemplateModelImpl
 				"subject",
 				(BiConsumer<NotificationTemplate, String>)
 					NotificationTemplate::setSubject);
+			attributeSetterBiConsumers.put(
+				"system",
+				(BiConsumer<NotificationTemplate, Boolean>)
+					NotificationTemplate::setSystem);
 			attributeSetterBiConsumers.put(
 				"type",
 				(BiConsumer<NotificationTemplate, String>)
@@ -989,6 +997,27 @@ public class NotificationTemplateModelImpl
 
 	@JSON
 	@Override
+	public boolean getSystem() {
+		return _system;
+	}
+
+	@JSON
+	@Override
+	public boolean isSystem() {
+		return _system;
+	}
+
+	@Override
+	public void setSystem(boolean system) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_system = system;
+	}
+
+	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return "";
@@ -1195,6 +1224,7 @@ public class NotificationTemplateModelImpl
 		notificationTemplateImpl.setName(getName());
 		notificationTemplateImpl.setRecipientType(getRecipientType());
 		notificationTemplateImpl.setSubject(getSubject());
+		notificationTemplateImpl.setSystem(isSystem());
 		notificationTemplateImpl.setType(getType());
 
 		notificationTemplateImpl.resetOriginalValues();
@@ -1239,6 +1269,8 @@ public class NotificationTemplateModelImpl
 			this.<String>getColumnOriginalValue("recipientType"));
 		notificationTemplateImpl.setSubject(
 			this.<String>getColumnOriginalValue("subject"));
+		notificationTemplateImpl.setSystem(
+			this.<Boolean>getColumnOriginalValue("system_"));
 		notificationTemplateImpl.setType(
 			this.<String>getColumnOriginalValue("type_"));
 
@@ -1427,6 +1459,8 @@ public class NotificationTemplateModelImpl
 			notificationTemplateCacheModel.subject = null;
 		}
 
+		notificationTemplateCacheModel.system = isSystem();
+
 		notificationTemplateCacheModel.type = getType();
 
 		String type = notificationTemplateCacheModel.type;
@@ -1517,6 +1551,7 @@ public class NotificationTemplateModelImpl
 	private String _recipientType;
 	private String _subject;
 	private String _subjectCurrentLanguageId;
+	private boolean _system;
 	private String _type;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1567,6 +1602,7 @@ public class NotificationTemplateModelImpl
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("recipientType", _recipientType);
 		_columnOriginalValues.put("subject", _subject);
+		_columnOriginalValues.put("system_", _system);
 		_columnOriginalValues.put("type_", _type);
 	}
 
@@ -1576,6 +1612,7 @@ public class NotificationTemplateModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("system_", "system");
 		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
@@ -1624,7 +1661,9 @@ public class NotificationTemplateModelImpl
 
 		columnBitmasks.put("subject", 32768L);
 
-		columnBitmasks.put("type_", 65536L);
+		columnBitmasks.put("system_", 65536L);
+
+		columnBitmasks.put("type_", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

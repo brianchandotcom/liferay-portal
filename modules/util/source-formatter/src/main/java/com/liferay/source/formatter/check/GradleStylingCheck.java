@@ -314,7 +314,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 	private static final Pattern _stylingPattern2 = Pattern.compile(
 		"(\\A|\n)(\t*\\w+)(?! = .) *=(?!~) *(.*?)(\n|\\Z)");
 
-	private static class FileNameComparator extends PropertyValueComparator {
+	private class FileNameComparator extends PropertyValueComparator {
 
 		@Override
 		public int compare(String fileName1, String fileName2) {

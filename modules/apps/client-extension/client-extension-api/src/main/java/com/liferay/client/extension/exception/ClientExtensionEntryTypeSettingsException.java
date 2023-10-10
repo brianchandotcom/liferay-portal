@@ -6,6 +6,8 @@
 package com.liferay.client.extension.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -14,6 +16,10 @@ public class ClientExtensionEntryTypeSettingsException extends PortalException {
 
 	public ClientExtensionEntryTypeSettingsException(
 		String messageKey, Object... messageArguments) {
+
+		super(
+			LanguageUtil.format(
+				LocaleUtil.getDefault(), messageKey, messageArguments));
 
 		_messageKey = messageKey;
 		_messageArguments = messageArguments;

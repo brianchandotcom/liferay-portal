@@ -1,0 +1,43 @@
+definition {
+
+	macro _curlAPIProperty {
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var api = "headless-builder/properties";
+
+		var curl = '''
+			${portalURL}/o/${api} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
+		''';
+
+		return ${curl};
+	}
+
+	macro createAPIProperty {
+		Variables.assertDefined(parameterList = "${objectFieldERC},${name},${schemaId}");
+
+		var curl = PropertyAPI._curlAPIProperty(virtualHost = ${virtualHost});
+		var body = '''
+			"name": "${name}",
+			"objectFieldERC": "${objectFieldERC}",
+			"r_apiSchemaToAPIProperties_c_apiSchemaId": "${schemaId}"
+		''';
+
+		var curl = StringUtil.add(${curl}, " -d { ${body} }", "");
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+}

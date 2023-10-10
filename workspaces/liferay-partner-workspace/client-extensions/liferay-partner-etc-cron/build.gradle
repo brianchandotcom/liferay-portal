@@ -30,7 +30,7 @@ dependencies {
 	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "latest.release"
 	implementation group: "com.liferay", name: "com.liferay.petra.function", version: "latest.release"
 	implementation group: "com.liferay", name: "com.liferay.petra.string", version: "latest.release"
-	implementation group: "org.json", name: "json", version: "20220320"
+	implementation group: "org.json", name: "json", version: "20230618"
 	implementation group: "org.springframework.boot", name: "spring-boot", version: "2.7.11"
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-client", version: "2.7.11"
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.11"

@@ -873,19 +873,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Resource Library",
-																		"ca_ES": "Resource Library",
-																		"de_DE": "Resource Library",
-																		"en_US": "Resource Library",
-																		"es_ES": "Resource Library",
-																		"fi_FI": "Resource Library",
-																		"fr_FR": "Resource Library",
-																		"hu_HU": "Resource Library",
-																		"ja_JP": "Resource Library",
-																		"nl_NL": "Resource Library",
-																		"pt_BR": "Resource Library",
-																		"sv_SE": "Resource Library",
-																		"zh_CN": "Resource Library"
+																		"ar_SA": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>",
+																		"ca_ES": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>",
+																		"de_DE": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>",
+																		"en_US": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>",
+																		"es_ES": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>",
+																		"fi_FI": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>",
+																		"fr_FR": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>",
+																		"hu_HU": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>",
+																		"ja_JP": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>",
+																		"nl_NL": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>",
+																		"pt_BR": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>",
+																		"sv_SE": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>",
+																		"zh_CN": "<a href=\"https://www.liferay.com/resources\">Resource Library</a>"
 																	}
 																}
 															}
@@ -914,19 +914,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Subscription Services",
-																		"ca_ES": "Subscription Services",
-																		"de_DE": "Subscription Services",
-																		"en_US": "Subscription Services",
-																		"es_ES": "Subscription Services",
-																		"fi_FI": "Subscription Services",
-																		"fr_FR": "Subscription Services",
-																		"hu_HU": "Subscription Services",
-																		"ja_JP": "Subscription Services",
-																		"nl_NL": "Subscription Services",
-																		"pt_BR": "Subscription Services",
-																		"sv_SE": "Subscription Services",
-																		"zh_CN": "Subscription Services"
+																		"ar_SA": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>",
+																		"ca_ES": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>",
+																		"de_DE": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>",
+																		"en_US": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>",
+																		"es_ES": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>",
+																		"fi_FI": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>",
+																		"fr_FR": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>",
+																		"hu_HU": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>",
+																		"ja_JP": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>",
+																		"nl_NL": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>",
+																		"pt_BR": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>",
+																		"sv_SE": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>",
+																		"zh_CN": "<a href=\"https://www.liferay.com/subscription-services\">Subscription Services</a>"
 																	}
 																}
 															}
@@ -955,19 +955,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Request a Demo",
-																		"ca_ES": "Request a Demo",
-																		"de_DE": "Request a Demo",
-																		"en_US": "Request a Demo",
-																		"es_ES": "Request a Demo",
-																		"fi_FI": "Request a Demo",
-																		"fr_FR": "Request a Demo",
-																		"hu_HU": "Request a Demo",
-																		"ja_JP": "Request a Demo",
-																		"nl_NL": "Request a Demo",
-																		"pt_BR": "Request a Demo",
-																		"sv_SE": "Request a Demo",
-																		"zh_CN": "Request a Demo"
+																		"ar_SA": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>",
+																		"ca_ES": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>",
+																		"de_DE": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>",
+																		"en_US": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>",
+																		"es_ES": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>",
+																		"fi_FI": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>",
+																		"fr_FR": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>",
+																		"hu_HU": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>",
+																		"ja_JP": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>",
+																		"nl_NL": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>",
+																		"pt_BR": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>",
+																		"sv_SE": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>",
+																		"zh_CN": "<a href=\"https://www.liferay.com/request-a-demo\">Request a Demo</a>"
 																	}
 																}
 															}
@@ -996,19 +996,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Marketplace Apps",
-																		"ca_ES": "Marketplace Apps",
-																		"de_DE": "Marketplace Apps",
-																		"en_US": "Marketplace Apps",
-																		"es_ES": "Marketplace Apps",
-																		"fi_FI": "Marketplace Apps",
-																		"fr_FR": "Marketplace Apps",
-																		"hu_HU": "Marketplace Apps",
-																		"ja_JP": "Marketplace Apps",
-																		"nl_NL": "Marketplace Apps",
-																		"pt_BR": "Marketplace Apps",
-																		"sv_SE": "Marketplace Apps",
-																		"zh_CN": "Marketplace Apps"
+																		"ar_SA": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>",
+																		"ca_ES": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>",
+																		"de_DE": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>",
+																		"en_US": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>",
+																		"es_ES": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>",
+																		"fi_FI": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>",
+																		"fr_FR": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>",
+																		"hu_HU": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>",
+																		"ja_JP": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>",
+																		"nl_NL": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>",
+																		"pt_BR": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>",
+																		"sv_SE": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>",
+																		"zh_CN": "<a href=\"https://marketplace.liferay.com\">Marketplace Apps</a>"
 																	}
 																}
 															}
@@ -1037,19 +1037,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Downloads",
-																		"ca_ES": "Downloads",
-																		"de_DE": "Downloads",
-																		"en_US": "Downloads",
-																		"es_ES": "Downloads",
-																		"fi_FI": "Downloads",
-																		"fr_FR": "Downloads",
-																		"hu_HU": "Downloads",
-																		"ja_JP": "Downloads",
-																		"nl_NL": "Downloads",
-																		"pt_BR": "Downloads",
-																		"sv_SE": "Downloads",
-																		"zh_CN": "Downloads"
+																		"ar_SA": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>",
+																		"ca_ES": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>",
+																		"de_DE": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>",
+																		"en_US": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>",
+																		"es_ES": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>",
+																		"fi_FI": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>",
+																		"fr_FR": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>",
+																		"hu_HU": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>",
+																		"ja_JP": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>",
+																		"nl_NL": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>",
+																		"pt_BR": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>",
+																		"sv_SE": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>",
+																		"zh_CN": "<a href=\"https://www.liferay.com/products/dxp/30-day-trial\">Downloads</a>"
 																	}
 																}
 															}
@@ -1147,19 +1147,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Press Releases",
-																		"ca_ES": "Press Releases",
-																		"de_DE": "Press Releases",
-																		"en_US": "Press Releases",
-																		"es_ES": "Press Releases",
-																		"fi_FI": "Press Releases",
-																		"fr_FR": "Press Releases",
-																		"hu_HU": "Press Releases",
-																		"ja_JP": "Press Releases",
-																		"nl_NL": "Press Releases",
-																		"pt_BR": "Press Releases",
-																		"sv_SE": "Press Releases",
-																		"zh_CN": "Press Releases"
+																		"ar_SA": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>",
+																		"ca_ES": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>",
+																		"de_DE": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>",
+																		"en_US": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>",
+																		"es_ES": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>",
+																		"fi_FI": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>",
+																		"fr_FR": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>",
+																		"hu_HU": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>",
+																		"ja_JP": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>",
+																		"nl_NL": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>",
+																		"pt_BR": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>",
+																		"sv_SE": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>",
+																		"zh_CN": "<a href=\"https://www.liferay.com/press-releases/-/categories/18043\">Press Releases</a>"
 																	}
 																}
 															}
@@ -1188,19 +1188,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Careers",
-																		"ca_ES": "Careers",
-																		"de_DE": "Careers",
-																		"en_US": "Careers",
-																		"es_ES": "Careers",
-																		"fi_FI": "Careers",
-																		"fr_FR": "Careers",
-																		"hu_HU": "Careers",
-																		"ja_JP": "Careers",
-																		"nl_NL": "Careers",
-																		"pt_BR": "Careers",
-																		"sv_SE": "Careers",
-																		"zh_CN": "Careers"
+																		"ar_SA": "<a href=\"https://www.liferay.com/careers\">Careers</a>",
+																		"ca_ES": "<a href=\"https://www.liferay.com/careers\">Careers</a>",
+																		"de_DE": "<a href=\"https://www.liferay.com/careers\">Careers</a>",
+																		"en_US": "<a href=\"https://www.liferay.com/careers\">Careers</a>",
+																		"es_ES": "<a href=\"https://www.liferay.com/careers\">Careers</a>",
+																		"fi_FI": "<a href=\"https://www.liferay.com/careers\">Careers</a>",
+																		"fr_FR": "<a href=\"https://www.liferay.com/careers\">Careers</a>",
+																		"hu_HU": "<a href=\"https://www.liferay.com/careers\">Careers</a>",
+																		"ja_JP": "<a href=\"https://www.liferay.com/careers\">Careers</a>",
+																		"nl_NL": "<a href=\"https://www.liferay.com/careers\">Careers</a>",
+																		"pt_BR": "<a href=\"https://www.liferay.com/careers\">Careers</a>",
+																		"sv_SE": "<a href=\"https://www.liferay.com/careers\">Careers</a>",
+																		"zh_CN": "<a href=\"https://www.liferay.com/careers\">Careers</a>"
 																	}
 																}
 															}
@@ -1229,19 +1229,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Locations",
-																		"ca_ES": "Locations",
-																		"de_DE": "Locations",
-																		"en_US": "Locations",
-																		"es_ES": "Locations",
-																		"fi_FI": "Locations",
-																		"fr_FR": "Locations",
-																		"hu_HU": "Locations",
-																		"ja_JP": "Locations",
-																		"nl_NL": "Locations",
-																		"pt_BR": "Locations",
-																		"sv_SE": "Locations",
-																		"zh_CN": "Locations"
+																		"ar_SA": "<a href=\"https://www.liferay.com/locations\">Locations</a>",
+																		"ca_ES": "<a href=\"https://www.liferay.com/locations\">Locations</a>",
+																		"de_DE": "<a href=\"https://www.liferay.com/locations\">Locations</a>",
+																		"en_US": "<a href=\"https://www.liferay.com/locations\">Locations</a>",
+																		"es_ES": "<a href=\"https://www.liferay.com/locations\">Locations</a>",
+																		"fi_FI": "<a href=\"https://www.liferay.com/locations\">Locations</a>",
+																		"fr_FR": "<a href=\"https://www.liferay.com/locations\">Locations</a>",
+																		"hu_HU": "<a href=\"https://www.liferay.com/locations\">Locations</a>",
+																		"ja_JP": "<a href=\"https://www.liferay.com/locations\">Locations</a>",
+																		"nl_NL": "<a href=\"https://www.liferay.com/locations\">Locations</a>",
+																		"pt_BR": "<a href=\"https://www.liferay.com/locations\">Locations</a>",
+																		"sv_SE": "<a href=\"https://www.liferay.com/locations\">Locations</a>",
+																		"zh_CN": "<a href=\"https://www.liferay.com/locations\">Locations</a>"
 																	}
 																}
 															}
@@ -1270,19 +1270,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Newsletter Sign Up",
-																		"ca_ES": "Newsletter Sign Up",
-																		"de_DE": "Newsletter Sign Up",
-																		"en_US": "Newsletter Sign Up",
-																		"es_ES": "Newsletter Sign Up",
-																		"fi_FI": "Newsletter Sign Up",
-																		"fr_FR": "Newsletter Sign Up",
-																		"hu_HU": "Newsletter Sign Up",
-																		"ja_JP": "Newsletter Sign Up",
-																		"nl_NL": "Newsletter Sign Up",
-																		"pt_BR": "Newsletter Sign Up",
-																		"sv_SE": "Newsletter Sign Up",
-																		"zh_CN": "Newsletter Sign Up"
+																		"ar_SA": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>",
+																		"ca_ES": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>",
+																		"de_DE": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>",
+																		"en_US": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>",
+																		"es_ES": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>",
+																		"fi_FI": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>",
+																		"fr_FR": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>",
+																		"hu_HU": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>",
+																		"ja_JP": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>",
+																		"nl_NL": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>",
+																		"pt_BR": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>",
+																		"sv_SE": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>",
+																		"zh_CN": "<a href=\"https://www.liferay.com/newsletter-signup\">Newsletter Sign Up</a>"
 																	}
 																}
 															}
@@ -1311,19 +1311,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Our Story",
-																		"ca_ES": "Our Story",
-																		"de_DE": "Our Story",
-																		"en_US": "Our Story",
-																		"es_ES": "Our Story",
-																		"fi_FI": "Our Story",
-																		"fr_FR": "Our Story",
-																		"hu_HU": "Our Story",
-																		"ja_JP": "Our Story",
-																		"nl_NL": "Our Story",
-																		"pt_BR": "Our Story",
-																		"sv_SE": "Our Story",
-																		"zh_CN": "Our Story"
+																		"ar_SA": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>",
+																		"ca_ES": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>",
+																		"de_DE": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>",
+																		"en_US": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>",
+																		"es_ES": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>",
+																		"fi_FI": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>",
+																		"fr_FR": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>",
+																		"hu_HU": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>",
+																		"ja_JP": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>",
+																		"nl_NL": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>",
+																		"pt_BR": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>",
+																		"sv_SE": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>",
+																		"zh_CN": "<a href=\"https://www.liferay.com/company/our-story\">Our Story</a>"
 																	}
 																}
 															}

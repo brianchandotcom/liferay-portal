@@ -1,0 +1,68 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property osgi.modules.includes = "frontend-taglib-clay-sample-web";
+	property portal.accessibility = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Clay";
+	property testray.main.component.name = "Clay";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Clay Sample Portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				layoutTemplate = "1 Column");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				widgetName = "Clay Sample");
+
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+		}
+	}
+
+	@description = "LPS-193598. Verifies that clay portlet tabs are accessible."
+	@priority = 5
+	test AccessibilitySmoke {
+		task ("When access all clay sample portlet tabs ") {
+			for (var key_tab : list "Alerts,Badges,Dropdowns,Icons,Labels,Links,Management Toolbars,Navigation Bars,Stickers,Tabs") {
+				Click(
+					key_tab = ${key_tab},
+					locator1 = "NavTab#NAV_TABS");
+
+				task ("Then axe automation finds no accessibility issues") {
+					AssertAccessible(value1 = "moderate,minor");
+
+					// The other tabs will be included after LPS-198580 is done
+					// Buttons,Cards,Form Elements,Pagination Bars,Panel,Progress Bars,Vertical Nav
+
+				}
+			}
+		}
+	}
+
+}

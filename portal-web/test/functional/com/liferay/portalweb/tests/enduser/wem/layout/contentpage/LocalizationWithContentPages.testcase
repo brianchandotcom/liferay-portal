@@ -241,7 +241,7 @@ definition {
 				menuItem = "Previsualitza l'esborrany",
 				pageName = "Content Page Name");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ControlMenu.viewHeaderDraftTitle(headerTitle = "Content Page Name");
 

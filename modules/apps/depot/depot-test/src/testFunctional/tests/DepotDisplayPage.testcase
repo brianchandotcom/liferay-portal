@@ -74,7 +74,7 @@ definition {
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
@@ -194,7 +194,7 @@ definition {
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		Navigator.gotoNavNested(navNested = "SEO");
 
@@ -283,7 +283,7 @@ definition {
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
@@ -429,7 +429,7 @@ definition {
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		Navigator.gotoNavNested(navNested = "SEO");
 

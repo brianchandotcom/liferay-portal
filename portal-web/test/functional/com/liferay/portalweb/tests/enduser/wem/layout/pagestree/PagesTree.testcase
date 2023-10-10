@@ -720,7 +720,7 @@ definition {
 				item = "Preview Draft",
 				pageName = "Test Page Name*");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
 
@@ -754,7 +754,7 @@ definition {
 				item = "Preview Draft",
 				pageName = "Test Page Name*");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
 		}
@@ -788,7 +788,7 @@ definition {
 				item = "Preview Draft",
 				pageName = "Test Page Name*");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
 		}

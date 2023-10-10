@@ -2042,7 +2042,7 @@ definition {
 			SelectWindow(locator1 = "title=Home - ${siteName}");
 		}
 		else {
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 		}
 
 		UserBar.gotoDropdown();

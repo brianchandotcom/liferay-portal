@@ -41,7 +41,7 @@ definition {
 			value1 = ${menuListOption});
 
 		if (${menuListOption} == "RSS") {
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 		}
 	}
 
@@ -672,7 +672,7 @@ definition {
 	macro viewNoRSS {
 		Navigator.openSpecificURL(url = ${rssURL});
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AssertElementNotPresent(locator1 = "RSS#FEED_TITLE");
 	}

@@ -1761,7 +1761,7 @@ definition {
 			asset = "Form Subject",
 			bodyLink = "Click here to access the form");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text Field",

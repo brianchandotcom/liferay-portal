@@ -506,7 +506,7 @@ definition {
 				menuItem = "Preview",
 				pageName = 500);
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -696,7 +696,7 @@ definition {
 				menuItem = "Preview",
 				pageName = "404 Error Utility Page");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -723,7 +723,7 @@ definition {
 				menuItem = "Preview",
 				pageName = "404 Error Utility Page");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -762,7 +762,7 @@ definition {
 				menuItem = "Preview",
 				pageName = "404 Error Utility Page");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",

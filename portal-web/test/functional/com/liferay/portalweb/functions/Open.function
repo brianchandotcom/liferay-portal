@@ -25,7 +25,7 @@ definition {
 
 		selenium.executeJavaScript("sessionStorage.clear(); window.open();");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		selenium.open();
 	}

@@ -619,7 +619,7 @@ definition {
 				locator1 = "JSFShowcase#GRAPH_IMAGE_LINK");
 		}
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AssertLocation.assertPartialLocation(value1 = ${linkURL});
 

@@ -5,7 +5,7 @@ definition {
 
 		MenuItem.click(menuItem = "RSS");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		WaitForPageLoad();
 

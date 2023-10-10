@@ -1304,9 +1304,7 @@ public class ObjectEntryDisplayContextImpl
 					StringBundler.concat(
 						StringPool.OPEN_BRACKET,
 						StringUtil.merge(
-							ListUtil.toList(
-								(List<ListEntry>)value, ListEntry::getKey),
-							StringPool.COMMA_AND_SPACE),
+							(List<String>)value, StringPool.COMMA_AND_SPACE),
 						StringPool.CLOSE_BRACKET)));
 		}
 		else if (value instanceof FileEntry) {

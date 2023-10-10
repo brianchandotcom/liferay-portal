@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -141,6 +142,14 @@ public class SelectLayoutTag extends IncludeTag {
 		).put(
 			"config",
 			HashMapBuilder.<String, Object>put(
+				"findLayoutsURL",
+				HttpComponentsUtil.addParameter(
+					themeDisplay.getPathMain() + "/portal/find_layouts",
+					"selPlid",
+					ParamUtil.getLong(
+						httpServletRequest, "selPlid",
+						LayoutConstants.DEFAULT_PLID))
+			).put(
 				"loadMoreItemsURL",
 				themeDisplay.getPathMain() + "/portal/get_layouts"
 			).put(

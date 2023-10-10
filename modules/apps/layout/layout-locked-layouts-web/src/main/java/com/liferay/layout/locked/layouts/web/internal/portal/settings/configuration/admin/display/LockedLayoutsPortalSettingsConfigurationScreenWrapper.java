@@ -7,7 +7,7 @@ package com.liferay.layout.locked.layouts.web.internal.portal.settings.configura
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
-import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsConfiguration;
+import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration;
 import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsConfigurationDisplayContext;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -125,7 +125,7 @@ public class LockedLayoutsPortalSettingsConfigurationScreenWrapper
 					new LockedLayoutsConfigurationDisplayContext(
 						_hasConfiguration(themeDisplay.getCompanyId()),
 						_configurationProvider.getCompanyConfiguration(
-							LockedLayoutsConfiguration.class,
+							LockedLayoutsCompanyConfiguration.class,
 							themeDisplay.getCompanyId())));
 			}
 			catch (PortalException portalException) {
@@ -140,8 +140,8 @@ public class LockedLayoutsPortalSettingsConfigurationScreenWrapper
 				String filterString = StringBundler.concat(
 					"(&(", ConfigurationAdmin.SERVICE_FACTORYPID,
 					StringPool.EQUAL,
-					LockedLayoutsConfiguration.class.getName(), ".scoped",
-					")(companyId=", companyId, "))");
+					LockedLayoutsCompanyConfiguration.class.getName(),
+					".scoped", ")(companyId=", companyId, "))");
 
 				Configuration[] configuration =
 					_configurationAdmin.listConfigurations(filterString);

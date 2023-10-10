@@ -6,7 +6,7 @@
 package com.liferay.layout.locked.layouts.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsConfiguration;
+import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -59,7 +59,8 @@ public class SaveLockedLayoutsConfigurationMVCActionCommand
 		}
 
 		_configurationProvider.saveCompanyConfiguration(
-			LockedLayoutsConfiguration.class, themeDisplay.getCompanyId(),
+			LockedLayoutsCompanyConfiguration.class,
+			themeDisplay.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"allowAutomaticUnlockingProcess",
 				ParamUtil.getBoolean(

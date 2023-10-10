@@ -182,14 +182,12 @@ html#{$cadmin-selector} {
 		@import 'ManageCollaborators';
 	}
 
-	.has-control-menu {
-		.loading-indicator-wrapper {
-			height: calc(100% - #{$controlMenuHeight});
-		}
+	.loading-indicator-wrapper {
+		height: calc(100% - var(--control-menu-container-height));
+	}
 
-		.content-dashboard.sidebar {
-			top: $controlMenuHeight;
-		}
+	.content-dashboard.sidebar {
+		top: var(--control-menu-container-height);
 	}
 
 	.sidebar-open {

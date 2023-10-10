@@ -26,7 +26,7 @@ export default function useGetListItemsFromMDFRequests(
 				),
 				[MDFColumnKey.STATUS]: item.mdfRequestStatus?.name,
 				[MDFColumnKey.PARTNER]: item.companyName,
-				[MDFColumnKey.PAID]: !Number(item.totalPaidAmount)
+				[MDFColumnKey.AMOUNT_PAID]: !Number(item.totalPaidAmount)
 					? '-'
 					: getIntlNumberFormat(item.currency).format(
 							Number(item.totalPaidAmount)

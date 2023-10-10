@@ -124,8 +124,8 @@ public class InformationMessagesProductNavigationControlMenuEntry
 
 		if (layout.isTypeControlPanel() || layout.isTypeAssetDisplay() ||
 			(layoutType ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) ||
-			(layoutType == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) ||
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) ||
+			(layoutType == LayoutPageTemplateEntryTypeConstants.BASIC) ||
 			(!_isLinkedLayout(themeDisplay) &&
 			 !_isModifiedLayout(themeDisplay))) {
 

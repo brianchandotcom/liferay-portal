@@ -88,8 +88,8 @@ public class PropagationMessageProductNavigationControlMenuEntry
 
 		if ((layoutSetPrototype == null) || layout.isTypeAssetDisplay() ||
 			(layoutType ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) ||
-			(layoutType == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) ||
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) ||
+			(layoutType == LayoutPageTemplateEntryTypeConstants.BASIC) ||
 			!LayoutSetPrototypePermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				layoutSetPrototype.getLayoutSetPrototypeId(),

@@ -8,6 +8,7 @@ package com.liferay.depot.web.internal.servlet.taglib;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.depot.web.internal.util.StagingIndicatorUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 import com.liferay.site.util.GroupURLProvider;
-import com.liferay.staging.constants.StagingProcessesPortletKeys;
 import com.liferay.taglib.util.HtmlTopTag;
 
 import java.io.IOException;
@@ -73,17 +72,12 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 		throws IOException {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+			if (StagingIndicatorUtil.isShowStagingIndicator(
+					httpServletRequest, _portletPermission)) {
 
-			Group scopeGroup = themeDisplay.getScopeGroup();
-
-			if (scopeGroup.isDepot() && scopeGroup.isStaged() &&
-				_portletPermission.contains(
-					themeDisplay.getPermissionChecker(),
-					StagingProcessesPortletKeys.STAGING_PROCESSES,
-					ActionKeys.VIEW)) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				_includeStagingIndicator(
 					httpServletRequest, httpServletResponse, themeDisplay);

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Set;
 
@@ -19,7 +19,7 @@ public class DeviceDetectionUtil {
 
 	public static Device detectDevice(HttpServletRequest httpServletRequest) {
 		DeviceRecognitionProvider deviceRecognitionProvider =
-			_deviceRecognitionProvider;
+			_deviceRecognitionProviderSnapshot.get();
 
 		if (deviceRecognitionProvider == null) {
 			return UnknownDevice.getInstance();
@@ -29,7 +29,7 @@ public class DeviceDetectionUtil {
 	}
 
 	public static DeviceRecognitionProvider getDeviceRecognitionProvider() {
-		return _deviceRecognitionProvider;
+		return _deviceRecognitionProviderSnapshot.get();
 	}
 
 	public static Set<VersionableName> getKnownBrands() {
@@ -58,7 +58,7 @@ public class DeviceDetectionUtil {
 
 	protected static KnownDevices getKnownDevices() {
 		DeviceRecognitionProvider deviceRecognitionProvider =
-			_deviceRecognitionProvider;
+			_deviceRecognitionProviderSnapshot.get();
 
 		if (deviceRecognitionProvider == null) {
 			return NoKnownDevices.getInstance();
@@ -67,10 +67,8 @@ public class DeviceDetectionUtil {
 		return deviceRecognitionProvider.getKnownDevices();
 	}
 
-	private static volatile DeviceRecognitionProvider
-		_deviceRecognitionProvider =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				DeviceRecognitionProvider.class, DeviceDetectionUtil.class,
-				"_deviceRecognitionProvider", false, true);
+	private static final Snapshot<DeviceRecognitionProvider>
+		_deviceRecognitionProviderSnapshot = new Snapshot<>(
+			DeviceDetectionUtil.class, DeviceRecognitionProvider.class);
 
 }

@@ -43,7 +43,7 @@ export function LicenseSelector({
 	const hasTrialSkuVerification = useCallback(() => {
 		const skus = selectedProduct?.skus;
 
-		const [isTrial] =
+		const [trialSkuOption] =
 			skus?.filter((sku) =>
 				sku?.skuOptions.find(
 					(skuOption) =>
@@ -51,7 +51,7 @@ export function LicenseSelector({
 				)
 			) || [];
 
-		setTrialSKU(isTrial);
+		setTrialSKU(trialSkuOption);
 	}, [selectedProduct?.skus]);
 
 	useEffect(() => {

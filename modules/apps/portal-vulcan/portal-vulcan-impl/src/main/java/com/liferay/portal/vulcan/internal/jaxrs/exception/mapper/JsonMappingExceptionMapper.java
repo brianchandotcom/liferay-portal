@@ -29,6 +29,11 @@ public class JsonMappingExceptionMapper
 		List<JsonMappingException.Reference> references =
 			jsonMappingException.getPath();
 
+		if (references.isEmpty()) {
+			return new Problem(
+				Response.Status.BAD_REQUEST, "Unable to map JSON path");
+		}
+
 		StringBundler sb = new StringBundler(references.size() * 2);
 
 		for (JsonMappingException.Reference reference : references) {

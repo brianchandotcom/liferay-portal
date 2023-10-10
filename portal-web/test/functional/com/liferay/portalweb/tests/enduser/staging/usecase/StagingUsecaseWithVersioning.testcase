@@ -101,6 +101,10 @@ definition {
 	test DeleteHistory {
 		Portlet.addPG(portletName = "Sites Directory");
 
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
 		Staging.deleteHistory();
 
 		Portlet.viewNoSpecificPG(portletName = "Sites Directory");
@@ -503,6 +507,10 @@ definition {
 
 		Portlet.addPG(portletName = "Site Map");
 
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
 		Staging.deletePageVariationPG(pageVariationName = "Monday");
 
 		Navigator.gotoStagedSitePage(
@@ -563,6 +571,10 @@ definition {
 		Staging.addSitePagesVariationPG(sitePagesVariationName = "Wednesday");
 
 		Portlet.addPG(portletName = "Site Map");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
 		Staging.deleteSitePagesVariationPG(sitePagesVariationName = "Monday");
 

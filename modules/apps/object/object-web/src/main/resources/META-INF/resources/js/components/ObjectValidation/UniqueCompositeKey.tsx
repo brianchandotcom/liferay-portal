@@ -14,6 +14,7 @@ import {TBuilderScreenItem} from '@liferay/object-js-components-web/src/main/res
 import {createResourceURL, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {Alert} from '../ModalSelectObjectFields';
 import {ErrorMessage} from './ErrorMessage';
 import {ObjectValidationErrors} from './useObjectValidationForm';
 
@@ -73,6 +74,7 @@ export function UniqueCompositeKey({
 	showUniqueCompositeKeyAlert,
 	values,
 }: UniqueCompositeKeyProps) {
+	const [alerts, setAlerts] = useState<Alert[]>([]);
 	const [builderScreenItems, setBuilderScreenItems] = useState<
 		TBuilderScreenItem[]
 	>([]);
@@ -104,90 +106,127 @@ export function UniqueCompositeKey({
 	const handleAddObjectFields = () => {
 		const parentWindow = Liferay.Util.getOpener();
 
-		parentWindow.Liferay.fire('openModalSelectObjectFields', {
-			alert: {
-				content: sub(
-					Liferay.Language.get(
-						'x-is-already-published.-as-a-result,-you-can-only-add-fields-to-unique-composite-keys-with-no-data'
-					),
-					(objectDefinition as ObjectDefinition).name
-				),
-				otherProps: {
-					displayType: 'info',
-					title: Liferay.Language.get('info'),
-					variant: 'stripe',
-				},
-				showAlert:
-					(objectDefinition as ObjectDefinition).status.label ===
-					'approved',
-			},
-			getName: ({label, name}: ObjectField) =>
-				getLocalizableLabel(creationLanguageId, label, name),
-			header: Liferay.Language.get('add-fields-to-unique-composite-key'),
-			items: modalSelectObjectFieldsItems,				
-			onSave: async (selectedObjectFields: ObjectField[]) => {
-				if (selectedObjectFields.length) {
-					const objectFieldsIds = selectedObjectFields.map(
-						(selectedObjectField) => selectedObjectField.id
-					);
+		if (objectDefinition) {
+			parentWindow.Liferay.fire('openModalSelectObjectFields', {
+				alerts,
+				getName: ({label, name}: ObjectField) =>
+					getLocalizableLabel(creationLanguageId, label, name),
+				header: Liferay.Language.get('add-fields-to-unique-composite-key'),
+				items: modalSelectObjectFieldsItems,
+				onAfterClose: setAlerts(([firstItem]) => {
+					return firstItem ? [firstItem] : [];
+				}),
+				onSave: async (selectedObjectFields: ObjectField[]) => {
+					if (selectedObjectFields.length) {
+						const newSelectedObjectFields = selectedObjectFields?.filter(
+							(selectedObjectField) =>
+								!values.objectValidationRuleSettings?.some(
+									(objectValidationRuleSetting) =>
+										selectedObjectField.externalReferenceCode ===
+											objectValidationRuleSetting.value &&
+										objectValidationRuleSetting.name ===
+											'compositeKeyObjectFieldExternalReferenceCode'
+								)
+						);
 
-					const addObjectFieldKeyCandidatesUrl = createResourceURL(
-						baseResourceURL,
-						{
-							objectDefinitionId: (objectDefinition as ObjectDefinition)
-								.id,
-							objectFieldsIds:
-								objectFieldsIds.length > 1
-									? objectFieldsIds.join(', ')
-									: objectFieldsIds[0],
-							p_p_resource_id:
-								'/object_definitions/add_object_field_key_candidates',
-						}
-					).href;
+						if (
+							newSelectedObjectFields.length &&
+							objectDefinition.status.label === 'approved'
+						) {
+							const newSelectedObjectFieldsIds = newSelectedObjectFields?.map(
+								({id}) => id
+							);
 
-					const response = await API.fetchJSON<{
-						errorLabel: string;
-						status: string;
-					}>(addObjectFieldKeyCandidatesUrl);
-				}
-
-				const objectValidationRuleSettings : ObjectValidationRuleSetting[] = [];
-
-				selectedObjectFields.map((selectedObjectField) =>
-					values.outputType === 'partialValidation'
-						? objectValidationRuleSettings?.push(
+							const addObjectFieldKeyCandidatesUrl = createResourceURL(
+								baseResourceURL,
 								{
+									objectDefinitionId: (objectDefinition as ObjectDefinition)
+										.id,
+									objectFieldsIds:
+										newSelectedObjectFieldsIds.length > 1
+											? newSelectedObjectFieldsIds.join(
+													', '
+											  )
+											: newSelectedObjectFieldsIds[0],
+									p_p_resource_id:
+										'/object_definitions/add_object_field_key_candidates',
+								}
+							).href;
+
+							const addObjectFieldKeyCandidatesResponse = await API.fetchJSON<{
+								errorLabel: string;
+								status: string;
+							}>(addObjectFieldKeyCandidatesUrl);
+
+							if (
+								addObjectFieldKeyCandidatesResponse.status ===
+								'error'
+							) {
+								setAlerts(([previousAlerts]) => [
+									previousAlerts,
+									{
+										content:
+											addObjectFieldKeyCandidatesResponse.errorLabel,
+										otherProps: {
+											displayType: 'danger',
+											title: Liferay.Language.get(
+												'error'
+											),
+											variant: 'stripe',
+										},
+									},
+								]);
+
+								return;
+							}
+						}
+					}
+
+					const objectValidationRuleSettings: ObjectValidationRuleSetting[] = [];
+
+					selectedObjectFields.map((selectedObjectField) =>
+						values.outputType === 'partialValidation'
+							? objectValidationRuleSettings?.push(
+									{
+										name:
+											'compositeKeyObjectFieldExternalReferenceCode',
+										value:
+											selectedObjectField.externalReferenceCode,
+									},
+									{
+										name:
+											'outputObjectFieldExternalReferenceCode',
+										value:
+											selectedObjectField.externalReferenceCode,
+									}
+							  )
+							: objectValidationRuleSettings?.push({
 									name:
 										'compositeKeyObjectFieldExternalReferenceCode',
 									value:
 										selectedObjectField.externalReferenceCode,
-								},
-								{
-									name:
-										'outputObjectFieldExternalReferenceCode',
-									value:
-										selectedObjectField.externalReferenceCode,
-								}
-						  )
-						: objectValidationRuleSettings?.push({
-								name:
-									'compositeKeyObjectFieldExternalReferenceCode',
-								value:
-									selectedObjectField.externalReferenceCode,
-						  })
-				);
+							  })
+					);
 
-				setValues({
-					objectValidationRuleSettings,
-				});
-			},
-			selected: modalSelectObjectFieldsItems.filter(
-				(modalSelectObjectFieldsItem) =>
-					modalSelectObjectFieldsItem.checked
-			),
-			title: Liferay.Language.get('select-the-fields'),
-		});
+					setValues({
+						objectValidationRuleSettings,
+					});
+				},
+				selected: modalSelectObjectFieldsItems.filter(
+					(modalSelectObjectFieldsItem) =>
+						modalSelectObjectFieldsItem.checked
+				),
+				title: Liferay.Language.get('select-the-fields'),
+			});
+		}
 	};
+
+	useEffect(() => {
+		if (alerts.length >= 2) {
+			handleAddObjectFields();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [alerts]);
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -196,10 +235,26 @@ export function UniqueCompositeKey({
 			);
 
 			setObjectDefinition(objectDefinitionResponse);
+			if (objectDefinitionResponse.status.label === 'approved') {
+				setAlerts([
+					{
+						content: sub(
+							Liferay.Language.get(
+								'x-is-already-published.-as-a-result,-you-can-only-add-fields-to-unique-composite-keys-with-no-data'
+							),
+							objectDefinitionResponse.name!
+						),
+						otherProps: {
+							displayType: 'info',
+							title: Liferay.Language.get('info'),
+							variant: 'stripe',
+						},
+					},
+				]);
+			}
 		};
 
 		makeFetch();
-
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

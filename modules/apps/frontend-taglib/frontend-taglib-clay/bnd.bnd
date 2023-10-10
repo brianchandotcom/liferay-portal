@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.frontend.taglib.clay
 Bundle-Version: 13.13.2
 Export-Package:\
 	com.liferay.frontend.taglib.clay.servlet.taglib,\
-	com.liferay.frontend.taglib.clay.servlet.taglib.base,\
 	com.liferay.frontend.taglib.clay.servlet.taglib.contributor,\
 	com.liferay.frontend.taglib.clay.servlet.taglib.display.context,\
 	com.liferay.frontend.taglib.clay.servlet.taglib.util

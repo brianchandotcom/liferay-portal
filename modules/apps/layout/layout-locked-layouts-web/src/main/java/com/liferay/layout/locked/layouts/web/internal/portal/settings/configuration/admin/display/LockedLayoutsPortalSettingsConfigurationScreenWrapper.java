@@ -9,6 +9,7 @@ import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration;
 import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsConfigurationDisplayContext;
+import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsPortalSettingsConfigurationDisplayContext;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -122,7 +123,7 @@ public class LockedLayoutsPortalSettingsConfigurationScreenWrapper
 			try {
 				httpServletRequest.setAttribute(
 					LockedLayoutsConfigurationDisplayContext.class.getName(),
-					new LockedLayoutsConfigurationDisplayContext(
+					new LockedLayoutsPortalSettingsConfigurationDisplayContext(
 						_hasConfiguration(themeDisplay.getCompanyId()),
 						_configurationProvider.getCompanyConfiguration(
 							LockedLayoutsCompanyConfiguration.class,
@@ -141,7 +142,7 @@ public class LockedLayoutsPortalSettingsConfigurationScreenWrapper
 					"(&(", ConfigurationAdmin.SERVICE_FACTORYPID,
 					StringPool.EQUAL,
 					LockedLayoutsCompanyConfiguration.class.getName(),
-					".scoped", ")(companyId=", companyId, "))");
+					".scoped)(companyId=", companyId, "))");
 
 				Configuration[] configuration =
 					_configurationAdmin.listConfigurations(filterString);

@@ -17,14 +17,9 @@ public class FullNameGeneratorFactory {
 		return _fullNameGeneratorSnapshot.get();
 	}
 
-	public void setFullNameGenerator(FullNameGenerator fullNameGenerator) {
-		_fullNameGenerator = fullNameGenerator;
-	}
-
 	private FullNameGeneratorFactory() {
 	}
 
-	private static FullNameGenerator _fullNameGenerator;
 	private static final Snapshot<FullNameGenerator>
 		_fullNameGeneratorSnapshot = new Snapshot<>(
 			FullNameGeneratorFactory.class, FullNameGenerator.class, null,

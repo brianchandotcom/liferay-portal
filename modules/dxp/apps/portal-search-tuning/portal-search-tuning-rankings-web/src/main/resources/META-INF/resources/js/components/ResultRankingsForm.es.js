@@ -754,14 +754,14 @@ class ResultRankingsForm extends Component {
 			<div className="result-rankings-form-root">
 				<HiddenInputs
 					valueMap={{
+						addedHiddenIds: this._getHiddenAdded(),
 						aliases,
 						groupExternalReferenceCode: initialGroupExternalReferenceCode,
-						hiddenIdsAdded: this._getHiddenAdded(),
-						hiddenIdsRemoved: this._getHiddenRemoved(),
 						inactive,
 						pinnedIds: resultIdsPinned,
 						pinnedIdsEndIndex: dataLoadIndex.pinned.end,
 						pinnedIdsStartIndex: dataLoadIndex.pinned.start,
+						removedHiddenIds: this._getHiddenRemoved(),
 						sxpBlueprintExternalReferenceCode: initialSXPBlueprintExternalReferenceCode,
 						workflowAction,
 					}}
@@ -916,16 +916,12 @@ class ResultRankingsForm extends Component {
 					<FormValueDebugger
 						values={[
 							{
-								name: `${namespace}aliases`,
-								value: aliases,
-							},
-							{
-								name: `${namespace}hiddenIdsAdded`,
+								name: `${namespace}addedHiddenIds`,
 								value: this._getHiddenAdded(),
 							},
 							{
-								name: `${namespace}hiddenIdsRemoved`,
-								value: this._getHiddenRemoved(),
+								name: `${namespace}aliases`,
+								value: aliases,
 							},
 							{
 								name: `${namespace}pinnedIds`,
@@ -938,6 +934,10 @@ class ResultRankingsForm extends Component {
 							{
 								name: `${namespace}pinnedIdsStartIndex`,
 								value: dataLoadIndex.pinned.start,
+							},
+							{
+								name: `${namespace}removedHiddenIds`,
+								value: this._getHiddenRemoved(),
 							},
 							{
 								name: `${namespace}workflowAction`,

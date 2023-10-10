@@ -480,20 +480,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 		ItemSelectorCriterion itemSelectorCriterion = _itemSelectorCriterion;
 
-		if (itemSelectorCriterion instanceof InfoItemItemSelectorCriterion) {
-			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
-				(InfoItemItemSelectorCriterion)itemSelectorCriterion;
-
-			String[] infoItemSelectorMimeTypes =
-				infoItemItemSelectorCriterion.getMimeTypes();
-
-			if (ArrayUtil.isNotEmpty(infoItemSelectorMimeTypes)) {
-				mimeTypes = infoItemItemSelectorCriterion.getMimeTypes();
-			}
-		}
-		else if (itemSelectorCriterion instanceof
-					CustomFileItemSelectorCriterion) {
-
+		if (itemSelectorCriterion instanceof CustomFileItemSelectorCriterion) {
 			String[] customFileItemSelectorMimeTypes = new String[0];
 
 			for (String extension :
@@ -507,6 +494,19 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 			if (ArrayUtil.isNotEmpty(customFileItemSelectorMimeTypes)) {
 				mimeTypes = customFileItemSelectorMimeTypes;
+			}
+		}
+		else if (itemSelectorCriterion instanceof
+					InfoItemItemSelectorCriterion) {
+
+			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
+				(InfoItemItemSelectorCriterion)itemSelectorCriterion;
+
+			String[] infoItemSelectorMimeTypes =
+				infoItemItemSelectorCriterion.getMimeTypes();
+
+			if (ArrayUtil.isNotEmpty(infoItemSelectorMimeTypes)) {
+				mimeTypes = infoItemItemSelectorCriterion.getMimeTypes();
 			}
 		}
 

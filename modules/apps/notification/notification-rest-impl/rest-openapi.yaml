@@ -106,6 +106,8 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                system:
+                    type: boolean
                 type:
                     type: string
                 typeLabel:

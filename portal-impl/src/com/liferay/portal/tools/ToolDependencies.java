@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.kernel.util.HtmlImpl;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -105,10 +103,6 @@ public class ToolDependencies {
 				ToolDependencies.class.getClassLoader(),
 				new Class<?>[] {FriendlyURLNormalizer.class},
 				(proxy, method, args) -> null));
-
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 

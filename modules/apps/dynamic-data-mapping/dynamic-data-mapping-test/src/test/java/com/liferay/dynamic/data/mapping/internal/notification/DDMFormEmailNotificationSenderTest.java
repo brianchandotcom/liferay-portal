@@ -17,8 +17,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.HtmlImpl;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -48,7 +46,6 @@ public class DDMFormEmailNotificationSenderTest {
 	public static void setUpClass() throws Exception {
 		_setUpDDMFormEmailNotificationSender();
 		_setUpDDMFormFieldTypeServicesRegistry();
-		_setUpHtmlUtil();
 	}
 
 	@Test
@@ -153,12 +150,6 @@ public class DDMFormEmailNotificationSenderTest {
 		).thenReturn(
 			_defaultDDMFormFieldValueRenderer
 		);
-	}
-
-	private static void _setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 	private DDMForm _createDDMForm(DDMFormField ddmFormField) {

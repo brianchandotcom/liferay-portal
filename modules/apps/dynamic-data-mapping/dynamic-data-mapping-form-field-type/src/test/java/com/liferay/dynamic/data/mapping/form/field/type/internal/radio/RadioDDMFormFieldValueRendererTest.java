@@ -13,8 +13,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.HtmlImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -60,25 +58,12 @@ public class RadioDDMFormFieldValueRendererTest {
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		RadioDDMFormFieldValueRenderer radioDDMFormFieldValueRenderer =
-			_createRadioDDMFormFieldValueRenderer();
+			new RadioDDMFormFieldValueRenderer();
 
 		Assert.assertEquals(
 			"option with &amp;",
 			radioDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.US));
-	}
-
-	private RadioDDMFormFieldValueRenderer
-			_createRadioDDMFormFieldValueRenderer()
-		throws Exception {
-
-		RadioDDMFormFieldValueRenderer radioDDMFormFieldValueRenderer =
-			new RadioDDMFormFieldValueRenderer();
-
-		ReflectionTestUtil.setFieldValue(
-			radioDDMFormFieldValueRenderer, "_html", new HtmlImpl());
-
-		return radioDDMFormFieldValueRenderer;
 	}
 
 }

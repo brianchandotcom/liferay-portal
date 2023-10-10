@@ -9,7 +9,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.HtmlImpl;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -37,9 +36,6 @@ public class DDMFormXSDDeserializerTest
 
 		_setUpSAXReaderUtil();
 		_setUpDDMFormXSDDeserializer();
-
-		ReflectionTestUtil.setFieldValue(
-			_ddmFormXSDDeserializer, "_html", new HtmlImpl());
 	}
 
 	@Override

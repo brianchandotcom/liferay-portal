@@ -11,14 +11,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.HtmlImpl;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,18 +30,11 @@ public class SearchLocationDDMFormFieldValueRendererTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@BeforeClass
-	public static void setUpClass() {
-		_setUpHtmlUtil();
-	}
-
 	@Before
 	public void setUp() {
 		_searchLocationDDMFormFieldValueRenderer =
 			new SearchLocationDDMFormFieldValueRenderer();
 
-		ReflectionTestUtil.setFieldValue(
-			_searchLocationDDMFormFieldValueRenderer, "_html", new HtmlImpl());
 		ReflectionTestUtil.setFieldValue(
 			_searchLocationDDMFormFieldValueRenderer, "_jsonFactory",
 			new JSONFactoryImpl());
@@ -112,12 +102,6 @@ public class SearchLocationDDMFormFieldValueRendererTest {
 			StringPool.BLANK,
 			_searchLocationDDMFormFieldValueRenderer.render(
 				"city", ddmFormFieldValue, LocaleUtil.US));
-	}
-
-	private static void _setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 	private SearchLocationDDMFormFieldValueRenderer

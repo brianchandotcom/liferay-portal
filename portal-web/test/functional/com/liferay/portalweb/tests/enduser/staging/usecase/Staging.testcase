@@ -1436,7 +1436,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/search");
 
-		SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Search Results");
+		SearchPage.addWidgetsOnWidgetPageViaUI(searchPortletList = "Search Results");
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 

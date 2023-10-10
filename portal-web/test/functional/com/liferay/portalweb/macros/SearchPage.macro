@@ -58,7 +58,7 @@ definition {
 		}
 	}
 
-	macro addWidgetsViaWidgetPageUI {
+	macro addWidgetsOnWidgetPageViaUI {
 		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
 			Click.clickAt(locator1 = "ControlMenu#ADD");
 		}

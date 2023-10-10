@@ -2200,7 +2200,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Search Results,Search Bar");
+		SearchPage.addWidgetsOnWidgetPageViaUI(searchPortletList = "Search Results,Search Bar");
 
 		SearchPage.searchWidget(searchTerm = "DM Document Title");
 

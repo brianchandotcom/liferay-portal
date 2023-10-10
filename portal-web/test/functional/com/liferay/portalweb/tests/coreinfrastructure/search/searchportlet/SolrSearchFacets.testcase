@@ -123,7 +123,7 @@ definition {
 			layoutName = "Search Page",
 			searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar");
 
-		SearchPage.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
+		SearchPage.addWidgetsOnWidgetPageViaUI(searchPortletList = "Sort");
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 

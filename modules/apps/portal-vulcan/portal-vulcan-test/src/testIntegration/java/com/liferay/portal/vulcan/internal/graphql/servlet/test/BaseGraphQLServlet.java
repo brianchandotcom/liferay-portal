@@ -5,13 +5,19 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet.test;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.lang.reflect.Field;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,21 +31,54 @@ public class BaseGraphQLServlet {
 
 	public static class TestDTO {
 
+		public TestDTO() {
+			this(_EXTENDED_STRING_FIELD, _ID, _mapField, _STRING_FIELD);
+		}
+
 		public TestDTO(
-			String extendedStringField, long id, String stringField) {
+			String extendedStringField, long id, Map<String, String> mapField,
+			String stringField) {
 
 			_extendedStringField = extendedStringField;
 			this.id = id;
+			this.mapField = mapField;
 			this.stringField = stringField;
+		}
+
+		public long getId() {
+			return id;
+		}
+
+		public Map<String, String> getMapField() {
+			return mapField;
+		}
+
+		public String getStringField() {
+			return stringField;
 		}
 
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		protected long id;
 
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		protected Map<String, String> mapField;
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		protected String stringField;
 
 		private final String _extendedStringField;
+
+	}
+
+	public static class TestMutation {
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		public BaseGraphQLServlet.TestDTO createTestDTO(
+				@GraphQLName("testDTO") TestDTO testDTO)
+			throws Exception {
+
+			return testDTO;
+		}
 
 	}
 
@@ -53,13 +92,18 @@ public class BaseGraphQLServlet {
 			return _ID;
 		}
 
+		public Map<String, String> getMapField() {
+			return _mapField;
+		}
+
 		public String getStringField() {
 			return _STRING_FIELD;
 		}
 
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		public BaseGraphQLServlet.TestDTO testDTO() throws Exception {
-			return new TestDTO(_EXTENDED_STRING_FIELD, _ID, _STRING_FIELD);
+			return new TestDTO(
+				_EXTENDED_STRING_FIELD, _ID, _mapField, _STRING_FIELD);
 		}
 
 		@GraphQLTypeExtension(TestDTO.class)
@@ -84,7 +128,7 @@ public class BaseGraphQLServlet {
 
 		@Override
 		public Object getMutation() {
-			return null;
+			return _testMutation;
 		}
 
 		@Override
@@ -102,19 +146,48 @@ public class BaseGraphQLServlet {
 			return false;
 		}
 
+		private final TestMutation _testMutation = new TestMutation();
 		private final TestQuery _testQuery = new TestQuery();
 
 	}
 
-	protected JSONObject invoke(GraphQLField graphQLField) throws Exception {
-		GraphQLField queryGraphQLField = new GraphQLField(
-			"query", graphQLField);
+	protected JSONObject invoke(GraphQLField graphQLField, String type)
+		throws Exception {
+
+		GraphQLField queryGraphQLField = new GraphQLField(type, graphQLField);
 
 		return HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"query", queryGraphQLField.toString()
 			).toString(),
 			"graphql", Http.Method.POST);
+	}
+
+	protected String toGraphQLString(TestDTO testDTO) throws Exception {
+		StringBuilder sb = new StringBuilder("{");
+
+		for (Field field : ReflectionUtil.getDeclaredFields(TestDTO.class)) {
+			if (ArrayUtil.isEmpty(
+					field.getAnnotationsByType(
+						com.liferay.portal.vulcan.graphql.annotation.
+							GraphQLField.class))) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			_appendGraphQLFieldValue(sb, field.get(testDTO));
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	protected class GraphQLField {
@@ -175,11 +248,51 @@ public class BaseGraphQLServlet {
 
 	}
 
+	private void _appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Map) {
+			Map<String, Object> map = (Map)value;
+
+			sb.append("{");
+
+			StringBuilder stringBuilder = new StringBuilder();
+
+			for (Map.Entry<String, Object> entry : map.entrySet()) {
+				if (stringBuilder.length() > 1) {
+					stringBuilder.append(", ");
+				}
+
+				stringBuilder.append(entry.getKey());
+				stringBuilder.append(": ");
+
+				_appendGraphQLFieldValue(stringBuilder, entry.getValue());
+			}
+
+			sb.append(stringBuilder.toString());
+			sb.append("}");
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
+	}
+
 	private static final String _EXTENDED_STRING_FIELD =
 		RandomTestUtil.randomString();
 
 	private static final long _ID = RandomTestUtil.randomLong();
 
 	private static final String _STRING_FIELD = RandomTestUtil.randomString();
+
+	private static final Map<String, String> _mapField = HashMapBuilder.put(
+		RandomTestUtil.randomString(), RandomTestUtil.randomString()
+	).put(
+		RandomTestUtil.randomString(), RandomTestUtil.randomString()
+	).build();
 
 }

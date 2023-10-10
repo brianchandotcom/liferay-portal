@@ -16,6 +16,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
+import java.util.Collections;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,17 +67,45 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void testMutation() throws Exception {
+		TestDTO testDTO = new TestDTO();
+
+		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
+			invoke(
+				new GraphQLField(
+					"createTestDTO",
+					Collections.singletonMap(
+						"testDTO", toGraphQLString(testDTO)),
+					new GraphQLField("id"), new GraphQLField("mapField"),
+					new GraphQLField("stringField")),
+				"mutation"),
+			"JSONObject/data", "JSONObject/createTestDTO");
+
+		Assert.assertEquals(jsonObject.get("id"), testDTO.getId());
+		Assert.assertEquals(
+			JSONUtil.toStringMap(jsonObject.getJSONObject("mapField")),
+			testDTO.getMapField());
+		Assert.assertEquals(
+			jsonObject.get("stringField"), testDTO.getStringField());
+	}
+
+	@Test
+	public void testQuery() throws Exception {
 		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
 			invoke(
 				new GraphQLField(
 					"testDTO", new GraphQLField("extendedStringField"),
-					new GraphQLField("id"), new GraphQLField("stringField"))),
+					new GraphQLField("id"), new GraphQLField("mapField"),
+					new GraphQLField("stringField")),
+				"query"),
 			"JSONObject/data", "JSONObject/testDTO");
 
 		Assert.assertEquals(
 			jsonObject.get("extendedStringField"),
 			_testQuery.getExtendedStringField());
+		Assert.assertEquals(
+			JSONUtil.toStringMap(jsonObject.getJSONObject("mapField")),
+			_testQuery.getMapField());
 		Assert.assertEquals(jsonObject.get("id"), _testQuery.getId());
 		Assert.assertEquals(
 			jsonObject.get("stringField"), _testQuery.getStringField());
@@ -106,7 +136,8 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 			JSONObject jsonObject = invoke(
 				new GraphQLField(
 					"testDTO", new GraphQLField("id"),
-					new GraphQLField("stringField")));
+					new GraphQLField("stringField")),
+				"query");
 
 			Assert.assertNull(
 				JSONUtil.getValueAsJSONObject(jsonObject, "JSONObject/data"));
@@ -137,7 +168,8 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 				invoke(
 					new GraphQLField(
 						"testDTO", new GraphQLField("id"),
-						new GraphQLField("stringField"))),
+						new GraphQLField("stringField")),
+					"query"),
 				"JSONObject/data", "JSONObject/testDTO");
 
 			Assert.assertEquals(jsonObject.get("id"), _testQuery.getId());

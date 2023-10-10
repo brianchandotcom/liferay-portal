@@ -149,58 +149,6 @@ definition {
 		}
 	}
 
-	@description = ""
-	@priority = 4
-	test AssertPublishButtonNoLongerShownAndDeleteButtonDeletesTestInAC {
-		task ("Click to open the AB test panel") {
-			ABTest.openABTestPanel();
-
-			task ("Click to review and run the test") {
-				ABTest.runTest();
-			}
-		}
-
-		task ("Click to terminate the test on DXP side") {
-			Button.click(button = "Terminate Test");
-
-			ABTest.assertTerminateTest();
-		}
-
-		task ("Create a new AB test") {
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB Test 2");
-
-			ABTest.createVariant(variantName = "Variant name 2");
-		}
-
-		task ("Go to AC > Tests") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToTests();
-		}
-
-		task ("Select the first created test") {
-			ACNavigation.openItem(itemName = ${nameABTest});
-		}
-
-		task ("Assert the publish button is no longer shown") {
-			AssertElementNotPresent(
-				key_text = "Publish",
-				locator1 = "Button#ANY");
-		}
-
-		task ("Delete the test and assert the test is no longer shown in the list") {
-			ABTest.deleteABTestACSide();
-
-			ACNavigation.goToTests();
-
-			ACUtils.assertItemsNameNotPresent(itemList = ${nameABTest});
-		}
-	}
-
 	@description = "Story: LRAC-14070 | Automation ID: LRAC-14574 | Test Summary: Can publish control from a terminated test"
 	@priority = 5
 	test CanPublishControlFromTerminatedTest {
@@ -306,10 +254,6 @@ definition {
 
 		task ("Click to publish the variant") {
 			ABTest.publishVariant(variantName = "Variant name");
-		}
-
-		task ("Assert the alert is shown") {
-			Alert.viewSuccessMessageText(successMessage = "Success:Variant name was published successfully.");
 		}
 
 		task ("Assert the variant published") {

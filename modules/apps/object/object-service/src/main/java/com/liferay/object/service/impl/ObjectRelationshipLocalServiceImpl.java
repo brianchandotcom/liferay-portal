@@ -214,8 +214,6 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship);
 		}
 
-		User user = _userLocalService.getUser(userId);
-
 		String dbTableName = _generateDBTableName();
 
 		objectRelationship.setDBTableName(dbTableName);

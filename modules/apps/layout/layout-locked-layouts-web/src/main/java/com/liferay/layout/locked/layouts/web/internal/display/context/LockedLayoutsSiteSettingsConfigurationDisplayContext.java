@@ -5,7 +5,7 @@
 
 package com.liferay.layout.locked.layouts.web.internal.display.context;
 
-import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsGroupConfiguration;
+import com.liferay.layout.configuration.LockedLayoutsGroupConfiguration;
 
 /**
  * @author Mikel Lorza

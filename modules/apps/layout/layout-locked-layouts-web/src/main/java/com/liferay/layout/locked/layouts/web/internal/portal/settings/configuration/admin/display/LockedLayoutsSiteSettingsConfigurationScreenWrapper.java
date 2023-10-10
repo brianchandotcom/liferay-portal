@@ -7,7 +7,7 @@ package com.liferay.layout.locked.layouts.web.internal.portal.settings.configura
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
-import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsGroupConfiguration;
+import com.liferay.layout.configuration.LockedLayoutsGroupConfiguration;
 import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsConfigurationDisplayContext;
 import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsSiteSettingsConfigurationDisplayContext;
 import com.liferay.petra.reflect.ReflectionUtil;

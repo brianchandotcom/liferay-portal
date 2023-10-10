@@ -10,8 +10,10 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -20,7 +22,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,9 +47,16 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = _groupLocalService.fetchGroup(
+			themeDisplay.getSiteGroupId());
+
 		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
-		if (Validator.isNull(keywords)) {
+		if ((group == null) || Validator.isNull(keywords)) {
 			jsonObject.put("layouts", _jsonFactory.createJSONArray());
 
 			ServletResponseUtil.write(
@@ -59,21 +67,29 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		boolean privateLayout = ParamUtil.getBoolean(
+			httpServletRequest, "privateLayout");
 
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			themeDisplay.getSiteGroupId(), keywords,
+		int layoutsCount = _layoutLocalService.getLayoutsCount(
+			group, privateLayout, keywords,
 			new String[] {
 				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
 				LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-				LayoutConstants.TYPE_LINK_TO_LAYOUT,
-				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
-				LayoutConstants.TYPE_URL
+				LayoutConstants.TYPE_LINK_TO_LAYOUT, LayoutConstants.TYPE_PANEL,
+				LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
+			});
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			themeDisplay.getSiteGroupId(), privateLayout, keywords,
+			new String[] {
+				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
+				LayoutConstants.TYPE_EMBEDDED,
+				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
+				LayoutConstants.TYPE_LINK_TO_LAYOUT, LayoutConstants.TYPE_PANEL,
+				LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
 			},
-			new int[] {WorkflowConstants.STATUS_ANY}, 0, 10, null);
+			0, layoutsCount, null);
 
 		boolean checkDisplayPage = ParamUtil.getBoolean(
 			httpServletRequest, "checkDisplayPage");
@@ -146,6 +162,9 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 
 		return jsonArray;
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

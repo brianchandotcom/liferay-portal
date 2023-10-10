@@ -32,11 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
-		"mvc.command.name=/instance_settings/save_locked_layouts_configuration"
+		"mvc.command.name=/instance_settings/save_locked_layouts_instance_settings"
 	},
 	service = MVCActionCommand.class
 )
-public class SaveLockedLayoutsConfigurationMVCActionCommand
+public class SaveLockedLayoutsInstanceSettingsMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

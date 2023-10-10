@@ -5,8 +5,8 @@
 
 package com.liferay.info.item.creator;
 
-import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.portal.kernel.exception.InfoFormException;
 
 /**
  * @author Rubén Pulido

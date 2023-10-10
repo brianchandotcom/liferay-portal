@@ -5,6 +5,7 @@
 
 package com.liferay.info.exception;
 
+import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;

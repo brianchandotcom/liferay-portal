@@ -309,6 +309,21 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCPAttachmentFileEntries(long fileEntryId)
+		throws PortalException {
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			cpAttachmentFileEntryPersistence.findByFileEntryId(fileEntryId);
+
+		for (CPAttachmentFileEntry cpAttachmentFileEntry :
+				cpAttachmentFileEntries) {
+
+			cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
+				cpAttachmentFileEntry);
+		}
+	}
+
+	@Override
 	public void deleteCPAttachmentFileEntries(String className, long classPK)
 		throws PortalException {
 

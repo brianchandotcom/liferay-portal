@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClientExtension} from 'frontend-js-components-web';
+import {ClientExtension, IHTMLElementBuilder} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -14,6 +14,13 @@ import type {
 	FilterImplementationArgs,
 	SetFilterArgs,
 } from '../Filter';
+
+interface ClientExtensionHTMLElementBuilderArgs {
+	filter: {
+		selectedData: unknown;
+	};
+	setFilter: (args: SetFilterArgs) => void;
+}
 
 const LOADING_LABEL = '...';
 
@@ -99,33 +106,19 @@ function getOdataString({
 	}
 }
 
-function spinnerHTMLElementBuilder(): HTMLElement {
-	const span = document.createElement('span');
-
-	span.ariaHidden = 'true';
-	span.className =
-		'loading-animation loading-animation-secondary loading-animation-sm';
-
-	const div = document.createElement('div');
-
-	div.appendChild(span);
-
-	return div;
-}
-
 function ClientExtensionFilter({
 	cxFilterImplementation,
 	cxFilterURL,
 	selectedData,
 	setFilter,
 }: ClientExtensionFilterImplementationArgs) {
-	const [htmlElementBuilder, setHTMLElementBuilder] = useState(
-		() => spinnerHTMLElementBuilder
-	);
+	const [htmlElementBuilder, setHTMLElementBuilder] = useState<
+		IHTMLElementBuilder<ClientExtensionHTMLElementBuilderArgs> | undefined
+	>(undefined);
 
 	useEffect(() => {
 		if (!cxFilterImplementation) {
-			setHTMLElementBuilder(() => spinnerHTMLElementBuilder);
+			setHTMLElementBuilder(undefined);
 
 			return;
 		}
@@ -145,7 +138,10 @@ function ClientExtensionFilter({
 		}
 
 		setHTMLElementBuilder(
-			() => cxFilterImplementation.htmlElementBuilder as () => HTMLElement
+			() =>
+				cxFilterImplementation.htmlElementBuilder as IHTMLElementBuilder<
+					ClientExtensionHTMLElementBuilderArgs
+				>
 		);
 	}, [cxFilterImplementation, cxFilterURL]);
 

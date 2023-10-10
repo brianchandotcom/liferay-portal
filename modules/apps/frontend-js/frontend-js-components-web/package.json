@@ -8,6 +8,7 @@
 		"@clayui/label": "3.106.1",
 		"@clayui/layout": "3.106.1",
 		"@clayui/link": "3.106.1",
+		"@clayui/loading-indicator": "3.106.1",
 		"@clayui/localized-input": "3.106.1",
 		"@clayui/modal": "3.106.1",
 		"@clayui/popover": "3.106.1",

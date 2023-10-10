@@ -6,7 +6,7 @@
 export {default as BetaBadge} from './beta_indicator/BetaBadge';
 export {default as BetaButton} from './beta_indicator/BetaButton';
 
-export {default as ClientExtension} from './ClientExtension';
+export {default as ClientExtension, IHTMLElementBuilder} from './ClientExtension';
 export {default as CodeMirrorKeyboardMessage} from './code_mirror_keyboard_message/CodeMirrorKeyboardMessage';
 
 export {default as useId} from './hooks/useId';

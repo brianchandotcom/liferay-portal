@@ -42,12 +42,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlImpl;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Locale;
 import java.util.Map;

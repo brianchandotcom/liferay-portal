@@ -9,10 +9,10 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.HtmlImpl;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
 
 import org.junit.Before;

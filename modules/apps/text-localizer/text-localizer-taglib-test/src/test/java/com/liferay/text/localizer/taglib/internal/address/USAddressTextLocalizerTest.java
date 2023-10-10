@@ -15,8 +15,8 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.RegionWrapper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HtmlImpl;
 import com.liferay.text.localizer.address.AddressTextLocalizer;
 
 import java.util.Locale;

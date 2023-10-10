@@ -11,10 +11,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.HtmlImpl;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HtmlImpl;
 
 import org.junit.Assert;
 import org.junit.Before;

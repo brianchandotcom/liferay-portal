@@ -17,10 +17,10 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.HtmlImpl;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Arrays;
 import java.util.List;

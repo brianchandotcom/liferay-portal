@@ -5,9 +5,9 @@
 
 package com.liferay.wiki.engine.creole;
 
+import com.liferay.portal.kernel.util.HtmlImpl;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HtmlImpl;
 import com.liferay.wiki.engine.creole.internal.antlrwiki.translator.XhtmlTranslator;
 import com.liferay.wiki.engine.creole.util.test.CreoleTestUtil;
 import com.liferay.wiki.model.WikiPage;

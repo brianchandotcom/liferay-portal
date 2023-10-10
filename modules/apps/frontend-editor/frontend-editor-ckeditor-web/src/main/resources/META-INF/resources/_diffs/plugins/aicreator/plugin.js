@@ -136,7 +136,7 @@
 				button.classList.add('lfr-portal-tooltip');
 
 				button.setAttribute(
-					'data-title',
+					'title',
 					Liferay.Language.get('create-ai-content')
 				);
 			});

@@ -241,7 +241,7 @@ div.lfr-de__partial-results--background {
 	.navigation-bar-secondary,
 	.management-bar {
 		position: sticky;
-		top: 56px;
+		top: var(--control-menu-container-height);
 		width: 100%;
 		z-index: 51;
 	}
@@ -261,7 +261,9 @@ div.lfr-de__partial-results--background {
 	}
 
 	.management-bar {
-		top: 104px;
+		top: calc(
+			var(--control-menu-container-height) + #{$form-navigation-bar-height}
+		);
 	}
 
 	.radio-inline {

@@ -1,7 +1,14 @@
 .portlet-forms {
 	.ddm-form-builder {
 		.multi-panel-sidebar {
-			top: 168px;
+			height: calc(
+				100vh - var(--control-menu-container-height) - #{$form-navigation-bar-height +
+					$form-management-bar-height}
+			);
+			top: calc(
+				var(--control-menu-container-height) + #{$form-navigation-bar-height +
+					$form-management-bar-height}
+			);
 		}
 
 		transition: padding ease 0.5s;

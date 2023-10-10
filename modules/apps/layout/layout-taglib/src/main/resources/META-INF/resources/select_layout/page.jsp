@@ -13,7 +13,7 @@
 
 <div>
 	<react:component
-		module="select_layout/js/SelectLayout.es"
+		module="select_layout/js/SelectLayout"
 		props='<%= (Map<String, Object>)request.getAttribute("liferay-layout:select-layout:data") %>'
 	/>
 </div>

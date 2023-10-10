@@ -10,7 +10,7 @@ import ClayLayout from '@clayui/layout';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {SelectLayoutTree} from './SelectLayoutTree.es';
+import {SelectLayoutTree} from './SelectLayoutTree';
 
 /**
  * SelectLayout

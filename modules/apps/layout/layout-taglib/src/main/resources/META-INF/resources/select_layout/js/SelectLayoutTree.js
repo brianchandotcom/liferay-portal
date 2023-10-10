@@ -41,7 +41,7 @@ export function SelectLayoutTree({
 
 	const [items, setItems] = useState(initialItems);
 
-	const [selectedKeys, setSelectionChange] = useState(
+	const [selectedKeys, setSelectedKeys] = useState(
 		new Set(selectedLayoutIds)
 	);
 
@@ -234,7 +234,7 @@ export function SelectLayoutTree({
 				items={filteredItems}
 				onItemsChange={(items) => setItems(items)}
 				onLoadMore={onLoadMore}
-				onSelectionChange={(keys) => setSelectionChange(keys)}
+				onSelectionChange={(keys) => setSelectedKeys(keys)}
 				selectedKeys={selectedKeys}
 				selectionMode={multiSelection ? 'multiple' : 'single'}
 				showExpanderOnHover={false}

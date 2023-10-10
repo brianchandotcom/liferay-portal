@@ -281,6 +281,7 @@ export function NextStepPage({
 							})
 						}
 						showBackButton={showBackButton}
+						showContinueButton={false}
 					/>
 				</div>
 			</div>

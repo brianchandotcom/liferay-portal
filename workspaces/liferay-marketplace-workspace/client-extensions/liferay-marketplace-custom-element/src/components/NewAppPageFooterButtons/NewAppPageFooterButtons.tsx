@@ -12,6 +12,7 @@ interface NewAppPageFooterButtonsProps {
 	onClickBack?: () => void;
 	onClickContinue: () => void;
 	showBackButton?: boolean;
+	showContinueButton?: boolean;
 }
 
 export function NewAppPageFooterButtons({
@@ -21,6 +22,7 @@ export function NewAppPageFooterButtons({
 	onClickBack,
 	onClickContinue,
 	showBackButton = true,
+	showContinueButton = true,
 }: NewAppPageFooterButtonsProps) {
 	return (
 		<div className="new-app-page-footer-button-container">
@@ -33,7 +35,7 @@ export function NewAppPageFooterButtons({
 				</button>
 			)}
 
-			{continueButtonText && (
+			{showContinueButton && (
 				<button
 					className="new-app-page-footer-button-continue"
 					disabled={disableContinueButton}

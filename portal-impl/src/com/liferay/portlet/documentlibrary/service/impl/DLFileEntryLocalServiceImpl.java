@@ -87,6 +87,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WebDAVProps;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -753,7 +754,9 @@ public class DLFileEntryLocalServiceImpl
 
 		// View count
 
-		_viewCountManager.deleteViewCount(
+		ViewCountManager viewCountManager = _viewCountManagerSnapshot.get();
+
+		viewCountManager.deleteViewCount(
 			dlFileEntry.getCompanyId(),
 			_classNameLocalService.getClassNameId(DLFileEntry.class),
 			dlFileEntry.getFileEntryId());
@@ -1551,7 +1554,9 @@ public class DLFileEntryLocalServiceImpl
 			return;
 		}
 
-		_viewCountManager.incrementViewCount(
+		ViewCountManager viewCountManager = _viewCountManagerSnapshot.get();
+
+		viewCountManager.incrementViewCount(
 			dlFileEntry.getCompanyId(),
 			_classNameLocalService.getClassNameId(DLFileEntry.class),
 			dlFileEntry.getFileEntryId(), increment);
@@ -2381,7 +2386,8 @@ public class DLFileEntryLocalServiceImpl
 			return DLVersionNumberIncrease.MINOR;
 		}
 
-		VersioningStrategy versioningStrategy = _versioningStrategy;
+		VersioningStrategy versioningStrategy =
+			_versioningStrategySnapshot.get();
 
 		if (versioningStrategy == null) {
 			if ((dlVersionNumberIncrease == null) ||
@@ -3658,14 +3664,12 @@ public class DLFileEntryLocalServiceImpl
 		ServiceProxyFactory.newServiceTrackedInstance(
 			TrashHelper.class, DLFileEntryLocalServiceImpl.class,
 			"_trashHelper", false);
-	private static volatile VersioningStrategy _versioningStrategy =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			VersioningStrategy.class, DLFileEntryLocalServiceImpl.class,
-			"_versioningStrategy", false, true);
-	private static volatile ViewCountManager _viewCountManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ViewCountManager.class, DLFileEntryLocalServiceImpl.class,
-			"_viewCountManager", false, true);
+	private static final Snapshot<VersioningStrategy>
+		_versioningStrategySnapshot = new Snapshot<>(
+			DLFileEntryLocalServiceImpl.class, VersioningStrategy.class);
+	private static final Snapshot<ViewCountManager> _viewCountManagerSnapshot =
+		new Snapshot<>(
+			DLFileEntryLocalServiceImpl.class, ViewCountManager.class);
 
 	@BeanReference(type = AssetEntryLocalService.class)
 	private AssetEntryLocalService _assetEntryLocalService;

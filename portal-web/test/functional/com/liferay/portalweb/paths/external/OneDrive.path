@@ -65,7 +65,7 @@
 
 <tr>
 	<td>DOCUMENTS_SAVE_STATUS</td>
-	<td>//div[contains(@aria-label,'aved') and not(contains(@aria-label,'Saving'))]</td>
+	<td>//div[contains(@aria-label,'aved') and not(contains(@aria-label,'Saving'))] | //i[contains(@data-icon-name,'BreadcrumbTitle')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.format;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Brian Wing Shun Chan
@@ -15,27 +15,32 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class PhoneNumberFormatUtil {
 
 	public static String format(String phoneNumber) {
-		return _phoneNumberFormat.format(phoneNumber);
+		PhoneNumberFormat phoneNumberFormat = _phoneNumberFormatSnapshot.get();
+
+		return phoneNumberFormat.format(phoneNumber);
 	}
 
 	public static PhoneNumberFormat getPhoneNumberFormat() {
-		return _phoneNumberFormat;
+		return _phoneNumberFormatSnapshot.get();
 	}
 
 	public static String strip(String phoneNumber) {
-		return _phoneNumberFormat.strip(phoneNumber);
+		PhoneNumberFormat phoneNumberFormat = _phoneNumberFormatSnapshot.get();
+
+		return phoneNumberFormat.strip(phoneNumber);
 	}
 
 	public static boolean validate(String phoneNumber) {
-		return _phoneNumberFormat.validate(phoneNumber);
+		PhoneNumberFormat phoneNumberFormat = _phoneNumberFormatSnapshot.get();
+
+		return phoneNumberFormat.validate(phoneNumber);
 	}
 
 	private PhoneNumberFormatUtil() {
 	}
 
-	private static volatile PhoneNumberFormat _phoneNumberFormat =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			PhoneNumberFormat.class, PhoneNumberFormatUtil.class,
-			"_phoneNumberFormat", false, true);
+	private static final Snapshot<PhoneNumberFormat>
+		_phoneNumberFormatSnapshot = new Snapshot<>(
+			PhoneNumberFormatUtil.class, PhoneNumberFormat.class, null, true);
 
 }

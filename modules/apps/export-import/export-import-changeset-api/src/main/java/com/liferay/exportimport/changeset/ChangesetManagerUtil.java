@@ -5,29 +5,24 @@
 
 package com.liferay.exportimport.changeset;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
+
 /**
  * @author Máté Thurzó
  */
 public class ChangesetManagerUtil {
 
 	public static ChangesetManager getChangesetManager() {
-		if (_changesetManager != null) {
-			return _changesetManager;
+		ChangesetManager changesetManager = _changesetManagerSnapshot.get();
+
+		if (changesetManager == null) {
+			throw new NullPointerException("Changeset manager is null");
 		}
 
-		throw new NullPointerException("Changeset manager is null");
+		return changesetManager;
 	}
 
-	public static void setChangesetManager(ChangesetManager changesetManager) {
-		if (_changesetManager != null) {
-			changesetManager = _changesetManager;
-
-			return;
-		}
-
-		_changesetManager = changesetManager;
-	}
-
-	private static ChangesetManager _changesetManager;
+	private static final Snapshot<ChangesetManager> _changesetManagerSnapshot =
+		new Snapshot<>(ChangesetManagerUtil.class, ChangesetManager.class);
 
 }

@@ -12,19 +12,6 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {debounce, fetch, getOpener, openToast, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-const nodeByName = (items, name) => {
-	return items.reduce(function reducer(acc, item) {
-		if (item.name?.toLowerCase().includes(name.toLowerCase())) {
-			acc.push(item);
-		}
-		else if (item.children) {
-			acc.concat(item.children.reduce(reducer, acc));
-		}
-
-		return acc;
-	}, []);
-};
-
 export function SelectLayoutTree({
 	checkDisplayPage,
 	config,
@@ -45,14 +32,6 @@ export function SelectLayoutTree({
 	const [selectedKeys, setSelectedKeys] = useState(
 		new Set(selectedLayoutIds)
 	);
-
-	const filteredItems = useMemo(() => {
-		if (!filter) {
-			return items;
-		}
-
-		return nodeByName(items, filter);
-	}, [items, filter]);
 
 	const selectedItemsRef = useRef(new Map());
 
@@ -214,7 +193,7 @@ export function SelectLayoutTree({
 		]
 	);
 
-	return filteredItems.length ? (
+	return items.length ? (
 		<div className="cadmin pt-3 px-3">
 			{multiSelection && (
 				<p
@@ -232,7 +211,7 @@ export function SelectLayoutTree({
 
 			<ClayTreeView
 				defaultExpandedKeys={new Set(['0'])}
-				items={filteredItems}
+				items={items}
 				onItemsChange={(items) => setItems(items)}
 				onLoadMore={onLoadMore}
 				onSelectionChange={(keys) => setSelectedKeys(keys)}

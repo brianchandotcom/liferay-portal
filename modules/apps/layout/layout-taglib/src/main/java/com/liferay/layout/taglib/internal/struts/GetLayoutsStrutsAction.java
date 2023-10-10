@@ -6,7 +6,6 @@
 package com.liferay.layout.taglib.internal.struts;
 
 import com.liferay.layout.taglib.internal.util.LayoutUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -83,9 +82,6 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 
 		return null;
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutService _layoutService;

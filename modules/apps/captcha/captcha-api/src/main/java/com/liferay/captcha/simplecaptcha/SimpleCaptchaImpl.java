@@ -132,6 +132,30 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	@Override
+	public String serveImage(
+			HttpServletRequest httpServletRequest, OutputStream outputStream)
+		throws IOException {
+
+		HttpSession httpSession = _getHttpSession(httpServletRequest);
+
+		String key = WebKeys.CAPTCHA_TEXT;
+
+		String portletId = ParamUtil.getString(httpServletRequest, "portletId");
+
+		if (Validator.isNotNull(portletId)) {
+			key = portal.getPortletNamespace(portletId) + key;
+		}
+
+		nl.captcha.Captcha simpleCaptcha = getSimpleCaptcha();
+
+		httpSession.setAttribute(key, simpleCaptcha.getAnswer());
+
+		CaptchaServletUtil.writeImage(outputStream, simpleCaptcha.getImage());
+
+		return simpleCaptcha.getAnswer();
+	}
+
+	@Override
 	public void serveImage(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
@@ -155,30 +179,6 @@ public class SimpleCaptchaImpl implements Captcha {
 		CaptchaServletUtil.writeImage(
 			resourceResponse.getPortletOutputStream(),
 			simpleCaptcha.getImage());
-	}
-
-	@Override
-	public String serveImageOutputStream(
-			HttpServletRequest httpServletRequest, OutputStream outputStream)
-		throws IOException {
-
-		HttpSession httpSession = _getHttpSession(httpServletRequest);
-
-		String key = WebKeys.CAPTCHA_TEXT;
-
-		String portletId = ParamUtil.getString(httpServletRequest, "portletId");
-
-		if (Validator.isNotNull(portletId)) {
-			key = portal.getPortletNamespace(portletId) + key;
-		}
-
-		nl.captcha.Captcha simpleCaptcha = getSimpleCaptcha();
-
-		httpSession.setAttribute(key, simpleCaptcha.getAnswer());
-
-		CaptchaServletUtil.writeImage(outputStream, simpleCaptcha.getImage());
-
-		return simpleCaptcha.getAnswer();
 	}
 
 	protected void activate() {

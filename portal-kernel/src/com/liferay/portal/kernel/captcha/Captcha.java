@@ -36,12 +36,12 @@ public interface Captcha {
 			HttpServletResponse httpServletResponse)
 		throws IOException;
 
-	public void serveImage(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+	public String serveImage(
+			HttpServletRequest httpServletRequest, OutputStream outputStream)
 		throws IOException;
 
-	public String serveImageOutputStream(
-			HttpServletRequest httpServletRequest, OutputStream outputStream)
+	public void serveImage(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException;
 
 }

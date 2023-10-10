@@ -1025,7 +1025,7 @@ public class ObjectRelationshipLocalServiceImpl
 				RandomUtil.nextInt(10));
 
 			ObjectRelationship objectRelationship =
-				objectRelationshipPersistence.fetchByDBTableName(dbTableName);
+				objectRelationshipPersistence.fetchByDTN_R(dbTableName, false);
 
 			if (objectRelationship == null) {
 				invalidSequence = false;

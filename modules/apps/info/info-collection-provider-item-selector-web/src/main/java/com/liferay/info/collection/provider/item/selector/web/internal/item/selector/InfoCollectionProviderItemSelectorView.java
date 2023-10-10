@@ -109,7 +109,8 @@ public class InfoCollectionProviderItemSelectorView
 					Comparator.comparing(
 						infoCollectionProvider ->
 							infoCollectionProvider.getLabel(
-								themeDisplay.getLocale()))));
+								themeDisplay.getLocale()),
+						String.CASE_INSENSITIVE_ORDER)));
 		}
 
 		String itemType =
@@ -132,7 +133,8 @@ public class InfoCollectionProviderItemSelectorView
 					InfoCollectionProvider::isAvailable),
 				Comparator.comparing(
 					infoCollectionProvider -> infoCollectionProvider.getLabel(
-						themeDisplay.getLocale()))));
+						themeDisplay.getLocale()),
+					String.CASE_INSENSITIVE_ORDER)));
 	}
 
 	private static final List<ItemSelectorReturnType>

@@ -90,7 +90,8 @@ public class InfoCollectionProviderDisplayContext {
 				infoCollectionProviders, InfoCollectionProvider::isAvailable),
 			Comparator.comparing(
 				infoCollectionProvider -> infoCollectionProvider.getLabel(
-					_themeDisplay.getLocale())));
+					_themeDisplay.getLocale()),
+				String.CASE_INSENSITIVE_ORDER));
 	}
 
 	private PortletURL _getPortletURL() {

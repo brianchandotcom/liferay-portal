@@ -222,7 +222,8 @@ public class SelectLayoutCollectionDisplayContext {
 				}),
 			Comparator.comparing(
 				infoCollectionProvider -> infoCollectionProvider.getLabel(
-					_themeDisplay.getLocale())));
+					_themeDisplay.getLocale()),
+				String.CASE_INSENSITIVE_ORDER));
 	}
 
 	private List<String> _getInfoItemFormProviderSearchClassNames() {

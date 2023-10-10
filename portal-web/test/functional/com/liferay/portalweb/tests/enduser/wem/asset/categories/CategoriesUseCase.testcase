@@ -667,11 +667,11 @@ definition {
 		}
 
 		task ("View the category is assigned to the copy of web content") {
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Duplicate 1");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title (Copy 1)");
 
 			WebContent.viewCP(
 				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title Duplicate 1");
+				webContentTitle = "Web Content Title (Copy 1)");
 
 			WebContent.viewCategorizationVocabularyCP(vocabularyNameList = "Vocabulary Name");
 

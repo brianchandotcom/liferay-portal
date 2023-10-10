@@ -744,6 +744,16 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				StringPool.BLANK);
 		}
 
+		if ((infoField.getInfoFieldType() == NumberInfoFieldType.INSTANCE) &&
+			(infoFieldValue.getValue() instanceof BigDecimal)) {
+
+			BigDecimal bigDecimal = (BigDecimal)infoFieldValue.getValue();
+
+			if (Objects.equals(bigDecimal.signum(), 0)) {
+				return "0";
+			}
+		}
+
 		if (infoField.getInfoFieldType() == SelectInfoFieldType.INSTANCE) {
 			List<KeyLocalizedLabelPair> values =
 				(List<KeyLocalizedLabelPair>)infoFieldValue.getValue();

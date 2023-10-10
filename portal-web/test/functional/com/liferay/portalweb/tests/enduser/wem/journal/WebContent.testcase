@@ -1387,9 +1387,9 @@ definition {
 				pageName = "Test Page Name 1",
 				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent 1 Duplicate 2");
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent 1 (Copy 1)");
 
-			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/-/wc-webcontent-1-duplicate-2");
+			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/-/wc-webcontent-1-copy-1");
 		}
 	}
 

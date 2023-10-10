@@ -122,6 +122,11 @@ public class NotificationUpgradeStepRegistrator
 			"3.9.0", "3.9.1",
 			UpgradeProcessFactory.alterColumnType(
 				"NotificationTemplate", "type_", "VARCHAR(255) null"));
+
+		registry.register(
+			"3.9.1", "3.10.0",
+			new com.liferay.notification.internal.upgrade.v3_10_0.
+				NotificationTemplateUpgradeProcess());
 	}
 
 	@Reference

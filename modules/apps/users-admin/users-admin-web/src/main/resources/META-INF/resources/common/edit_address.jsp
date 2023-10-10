@@ -88,7 +88,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 						<liferay-ui:message key="postal-code" />
 
 						<span hidden id="<portlet:namespace />addressZipRequiredWrapper">
-							<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
+							<clay:icon
+								cssClass="reference-mark text-warning"
+								symbol="asterisk"
+							/>
 
 							<span class="hide-accessible sr-only"><liferay-ui:message key="required" /></span>
 						</span>

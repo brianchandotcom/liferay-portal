@@ -59,7 +59,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 						/>
 
 						<c:choose>
-							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188060") %>'>
+							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188058") %>'>
 								<c:choose>
 									<c:when test="<%= editKBArticleDisplayContext.isScheduled() %>">
 										<span class="lfr-portal-tooltip">

@@ -52,14 +52,20 @@ if (liveLayout != null) {
 							<li class="nav-item">
 								<c:choose>
 									<c:when test="<%= !remoteSiteURL.isEmpty() %>">
-										<a class="nav-link" href="<%= HtmlUtil.escape(remoteSiteURL) %>" value="go-to-remote-live">
-											<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
-										</a>
+										<clay:link
+											cssClass="nav-link"
+											href="<%= HtmlUtil.escape(remoteSiteURL) %>"
+											icon="home"
+											label="go-to-remote-live"
+										/>
 									</c:when>
 									<c:when test="<%= SessionErrors.contains(renderRequest, AuthException.class) %>">
-										<a class="nav-link" value="go-to-remote-live">
-											<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
-										</a>
+										<clay:button
+											cssClass="nav-link"
+											displayType="unstyled"
+											icon="home"
+											label="go-to-remote-live"
+										/>
 
 										<liferay-ui:icon
 											icon="exclamation-full"
@@ -69,9 +75,12 @@ if (liveLayout != null) {
 										/>
 									</c:when>
 									<c:when test="<%= SessionErrors.contains(renderRequest, RemoteExportException.class) %>">
-										<a class="nav-link" value="go-to-remote-live">
-											<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
-										</a>
+										<clay:button
+											cssClass="nav-link"
+											displayType="unstyled"
+											icon="home"
+											label="go-to-remote-live"
+										/>
 
 										<liferay-ui:icon
 											icon="exclamation-full"
@@ -81,9 +90,12 @@ if (liveLayout != null) {
 										/>
 									</c:when>
 									<c:otherwise>
-										<a class="nav-link" value="go-to-remote-live">
-											<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
-										</a>
+										<clay:button
+											cssClass="nav-link"
+											displayType="unstyled"
+											icon="home"
+											label="go-to-remote-live"
+										/>
 
 										<liferay-ui:icon
 											icon="exclamation-full"

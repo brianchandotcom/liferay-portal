@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.RemoteAuthException;
-import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.tunnel.TunnelAuthenticationManager;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -21,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 

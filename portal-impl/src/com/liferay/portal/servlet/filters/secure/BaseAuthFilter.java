@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PropsUtil;
 

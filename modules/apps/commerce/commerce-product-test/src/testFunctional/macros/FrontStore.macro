@@ -361,6 +361,50 @@ definition {
 			value1 = ${basePrice});
 	}
 
+	macro changeQuantityByUsingKeyArrows {
+		if (${quantitySelectorType} == "Product Card") {
+			Click(
+				key_productName = ${productName},
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
+
+			KeyPress(
+				key_productName = ${productName},
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = "\${arrowAction}");
+
+			KeyPress(
+				key_productName = ${productName},
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = "\TAB");
+		}
+		else {
+			if (${quantitySelectorType} == "Product Details") {
+				Click(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD");
+
+				KeyPress(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = "\${arrowAction}");
+			}
+			else {
+				if (${quantitySelectorType} == "Mini-cart") {
+					Click(
+						key_cartItemSku = ${productSKU},
+						locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY");
+
+					KeyPress(
+						key_cartItemSku = ${productSKU},
+						locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+						value1 = "\${arrowAction}");
+
+					KeyPress(
+						key_cartItemSku = ${productSKU},
+						locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+						value1 = "\TAB");
+				}
+			}
+		}
+	}
+
 	macro compareProducts {
 		var comparisonItems = 0;
 
@@ -866,50 +910,6 @@ definition {
 				key_quantity = ${quantity},
 				key_quantityConfigurationText = ${quantityConfigurationText},
 				locator1 = "CommerceFrontStore#QUANTITY_SELECTOR_POPOVER_LIST_ITEM");
-		}
-	}
-
-	macro changeQuantityByUsingKeyArrows {
-		if (${quantitySelectorType} == "Product Card") {
-			Click(
-				key_productName = ${productName},
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
-
-			KeyPress(
-				key_productName = ${productName},
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "\${arrowAction}");
-
-			KeyPress(
-				key_productName = ${productName},
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "\TAB");
-		}
-		else {
-			if (${quantitySelectorType} == "Product Details") {
-				Click(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD");
-
-				KeyPress(
-					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
-					value1 = "\${arrowAction}");
-			}
-			else {
-				if (${quantitySelectorType} == "Mini-cart") {
-					Click(
-						key_cartItemSku = ${productSKU},
-						locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY");
-
-					KeyPress(
-						key_cartItemSku = ${productSKU},
-						locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-						value1 = "\${arrowAction}");
-
-					KeyPress(
-						key_cartItemSku = ${productSKU},
-						locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-						value1 = "\TAB");
-				}
-			}
 		}
 	}
 

@@ -13,19 +13,22 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
-import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.CategoryHelper;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.ws.rs.core.Response;
 
@@ -72,7 +75,7 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 			cpDefinition.getCPDefinitionId());
 
 		return Page.of(
-			_categoryHelper.toProductCategories(
+			_toProductCategories(
 				assetCategories, contextAcceptLanguage.getPreferredLocale()),
 			pagination, totalItems);
 	}
@@ -83,7 +86,7 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 			@NestedFieldId(value = "productId") Long id, Pagination pagination)
 		throws Exception {
 
-		return _categoryHelper.getCategoriesPage(
+		return _getCategoriesPage(
 			id, contextAcceptLanguage.getPreferredLocale(), pagination);
 	}
 
@@ -129,6 +132,50 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 		return responseBuilder.build();
 	}
 
+	private Page<Category> _getCategoriesPage(
+			long id, Locale locale, Pagination pagination)
+		throws Exception {
+
+		CPDefinition cpDefinition =
+			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
+
+		if (cpDefinition == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find Product with ID: " + id);
+		}
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryService.getCategories(
+				_classNameLocalService.getClassNameId(
+					cpDefinition.getModelClass()),
+				cpDefinition.getCPDefinitionId(), pagination.getStartPosition(),
+				pagination.getEndPosition());
+
+		int totalItems = _assetCategoryService.getCategoriesCount(
+			_classNameLocalService.getClassNameId(cpDefinition.getModelClass()),
+			cpDefinition.getCPDefinitionId());
+
+		return Page.of(
+			_toProductCategories(assetCategories, locale), pagination,
+			totalItems);
+	}
+
+	private List<Category> _toProductCategories(
+			List<AssetCategory> assetCategories, Locale locale)
+		throws Exception {
+
+		List<Category> categories = new ArrayList<>();
+
+		for (AssetCategory category : assetCategories) {
+			categories.add(
+				_categoryDTOConverter.toDTO(
+					new DefaultDTOConverterContext(
+						category.getCategoryId(), locale)));
+		}
+
+		return categories;
+	}
+
 	private void _updateProductCategories(
 			CPDefinition cpDefinition, Category[] categories)
 		throws Exception {
@@ -160,8 +207,10 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 	@Reference
 	private AssetCategoryService _assetCategoryService;
 
-	@Reference
-	private CategoryHelper _categoryHelper;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.CategoryDTOConverter)"
+	)
+	private DTOConverter<AssetCategory, Category> _categoryDTOConverter;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

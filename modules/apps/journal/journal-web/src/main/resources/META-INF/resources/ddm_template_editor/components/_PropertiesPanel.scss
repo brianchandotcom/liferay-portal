@@ -1,43 +1,15 @@
 @import 'atlas-variables';
 
 .journal-ddm-template-properties {
-	.control-label {
+	.article-structure,
+	.collapse-icon,
+	.control-label,
+	.form-group .icon-help {
 		font-size: 0.75rem;
 	}
 
-	.article-structure {
-		font-size: 0.75rem;
-	}
-
-	.panel-body {
-		margin-bottom: 0;
-	}
-
-	.form-group {
-		margin-bottom: 1rem;
-	}
-
-	.collapse-icon {
-		border-bottom: 1px solid $light;
-		color: $secondary;
-		font-size: 0.75rem;
-		margin-bottom: 16px;
-
-		&:hover {
-			color: $dark;
-		}
-
-		.collapse-icon-open {
-			color: $dark;
-		}
-	}
-
-	.input-boolean-wrapper .control-label {
-		display: flex;
-
-		.field {
-			margin-right: 0.5rem;
-		}
+	.form-group .icon-help {
+		cursor: pointer;
 	}
 
 	.input-localized-trigger {

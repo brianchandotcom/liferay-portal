@@ -57,25 +57,40 @@ definition {
 				var externalReferenceCodeEndpoint = ${endpointName};
 			}
 
-			var relatedEndpoint = '''
+			if (isSet(retrieveType)) {
+				var relatedEndpoint = '''
 				"apiApplicationToAPIEndpoints": [{
-					"externalReferenceCode": "${externalReferenceCodeEndpoint}",
-					"httpMethod": "get",
-					"name": "${endpointName}",
-					"path": "${endpointPath}",
-					"scope": {"key": "${scopeKey}"}
-				}]
+						"externalReferenceCode": "${externalReferenceCodeEndpoint}",
+						"httpMethod": "get",
+						"name": "${endpointName}",
+						"path": "${endpointPath}",
+						"pathParameter": "${pathParameter}",
+						"retrieveType": "${retrieveType}",
+						"scope": {"key": "${scopeKey}"}
+					}]
 			''';
+			}
+			else {
+				var relatedEndpoint = '''
+				"apiApplicationToAPIEndpoints": [{
+						"externalReferenceCode": "${externalReferenceCodeEndpoint}",
+						"httpMethod": "get",
+						"name": "${endpointName}",
+						"path": "${endpointPath}",
+						"scope": {"key": "${scopeKey}"}
+					}]
+			''';
+			}
 
 			var body = StringUtil.add(${body}, ", ${relatedEndpoint}", "");
 		}
 
+		if (!(isSet(externalReferenceCodeSchema))) {
+			var externalReferenceCodeSchema = ${schemaName};
+		}
+
 		if (isSet(relatedSchema)) {
 			if (isSet(objectFieldErc) && isSet(mainObjectDefinitionErc)) {
-				if (!(isSet(externalReferenceCodeSchema))) {
-					var externalReferenceCodeSchema = ${schemaName};
-				}
-
 				var relatedSchema = '''
 				"apiApplicationToAPISchemas": [
     				{
@@ -97,6 +112,7 @@ definition {
 			else {
 				var relatedSchema = '''
 				"apiApplicationToAPISchemas": [{
+					"externalReferenceCode": "${externalReferenceCodeSchema}",
 					"mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
 					"name": "${schemaName}"
 				}]

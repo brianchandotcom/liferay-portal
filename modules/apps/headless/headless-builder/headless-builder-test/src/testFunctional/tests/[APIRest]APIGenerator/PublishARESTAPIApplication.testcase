@@ -61,7 +61,7 @@ definition {
 
 		task ("And Then I can see a new schema and an endpoint appear in the page") {
 			WaitForElementPresent(
-				locator1 = "OpenAPI#SCHEMA_TITLE",
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
 				schema = "AppTest");
 
 			WaitForElementPresent(
@@ -113,7 +113,7 @@ definition {
 
 		task ("Then I can see a new schema appear in the page") {
 			WaitForElementPresent(
-				locator1 = "OpenAPI#SCHEMA_TITLE",
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
 				schema = "AppTest");
 		}
 	}

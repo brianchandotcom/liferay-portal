@@ -221,7 +221,7 @@ definition {
 
 		task ("Then the Schemas doesn't contain the field Taxonomy Category Brief") {
 			AssertElementNotPresent(
-				locator1 = "OpenAPI#SCHEMA_TITLE",
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
 				schema = "TaxonomyCategoryBrief");
 		}
 	}

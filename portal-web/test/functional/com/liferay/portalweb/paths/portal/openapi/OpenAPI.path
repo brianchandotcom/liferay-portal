@@ -14,11 +14,6 @@
 <!--SCHEMA-->
 
 <tr>
-	<td>SCHEMA_TITLE</td>
-	<td>//div[@id='model-${schema}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SCHEMA_ENTITY</td>
 	<td>//div[@id='model-${schema}']</td>
 	<td></td>

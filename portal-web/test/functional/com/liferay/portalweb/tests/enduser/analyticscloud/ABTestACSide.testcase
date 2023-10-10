@@ -245,6 +245,34 @@ definition {
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "Heading Example");
 		}
+
+		task ("Click to edit the page and add a widget to the page and then click save") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("Assert if the page is published with the modifications") {
+			PageEditor.viewFragment(fragmentName = "Button");
+		}
+
+		task ("Go to AC and open the AB test") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToTests();
+
+			ACNavigation.openItem(itemName = ${nameABTest});
+		}
+
+		task ("Assert the AB Test") {
+			ACUtils.wGenericTextInOrder(textValueList = ${nameABTest});
+		}
 	}
 
 	@description = "Story: LRAC-14070 | Automation ID: LRAC-14573 | Test Summary: Can publish variant from a terminated test and delete test in AC"

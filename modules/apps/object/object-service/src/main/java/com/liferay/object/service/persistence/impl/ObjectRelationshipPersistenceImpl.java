@@ -2977,250 +2977,6 @@ public class ObjectRelationshipPersistenceImpl
 		_FINDER_COLUMN_PARAMETEROBJECTFIELDID_PARAMETEROBJECTFIELDID_2 =
 			"objectRelationship.parameterObjectFieldId = ?";
 
-	private FinderPath _finderPathFetchByDBTableName;
-	private FinderPath _finderPathCountByDBTableName;
-
-	/**
-	 * Returns the object relationship where dbTableName = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
-	 *
-	 * @param dbTableName the db table name
-	 * @return the matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	@Override
-	public ObjectRelationship findByDBTableName(String dbTableName)
-		throws NoSuchObjectRelationshipException {
-
-		ObjectRelationship objectRelationship = fetchByDBTableName(dbTableName);
-
-		if (objectRelationship == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("dbTableName=");
-			sb.append(dbTableName);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchObjectRelationshipException(sb.toString());
-		}
-
-		return objectRelationship;
-	}
-
-	/**
-	 * Returns the object relationship where dbTableName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param dbTableName the db table name
-	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	@Override
-	public ObjectRelationship fetchByDBTableName(String dbTableName) {
-		return fetchByDBTableName(dbTableName, true);
-	}
-
-	/**
-	 * Returns the object relationship where dbTableName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param dbTableName the db table name
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	@Override
-	public ObjectRelationship fetchByDBTableName(
-		String dbTableName, boolean useFinderCache) {
-
-		dbTableName = Objects.toString(dbTableName, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {dbTableName};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByDBTableName, finderArgs, this);
-		}
-
-		if (result instanceof ObjectRelationship) {
-			ObjectRelationship objectRelationship = (ObjectRelationship)result;
-
-			if (!Objects.equals(
-					dbTableName, objectRelationship.getDBTableName())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_OBJECTRELATIONSHIP_WHERE);
-
-			boolean bindDBTableName = false;
-
-			if (dbTableName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_DBTABLENAME_DBTABLENAME_3);
-			}
-			else {
-				bindDBTableName = true;
-
-				sb.append(_FINDER_COLUMN_DBTABLENAME_DBTABLENAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindDBTableName) {
-					queryPos.add(dbTableName);
-				}
-
-				List<ObjectRelationship> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByDBTableName, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {dbTableName};
-							}
-
-							_log.warn(
-								"ObjectRelationshipPersistenceImpl.fetchByDBTableName(String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					ObjectRelationship objectRelationship = list.get(0);
-
-					result = objectRelationship;
-
-					cacheResult(objectRelationship);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (ObjectRelationship)result;
-		}
-	}
-
-	/**
-	 * Removes the object relationship where dbTableName = &#63; from the database.
-	 *
-	 * @param dbTableName the db table name
-	 * @return the object relationship that was removed
-	 */
-	@Override
-	public ObjectRelationship removeByDBTableName(String dbTableName)
-		throws NoSuchObjectRelationshipException {
-
-		ObjectRelationship objectRelationship = findByDBTableName(dbTableName);
-
-		return remove(objectRelationship);
-	}
-
-	/**
-	 * Returns the number of object relationships where dbTableName = &#63;.
-	 *
-	 * @param dbTableName the db table name
-	 * @return the number of matching object relationships
-	 */
-	@Override
-	public int countByDBTableName(String dbTableName) {
-		dbTableName = Objects.toString(dbTableName, "");
-
-		FinderPath finderPath = _finderPathCountByDBTableName;
-
-		Object[] finderArgs = new Object[] {dbTableName};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OBJECTRELATIONSHIP_WHERE);
-
-			boolean bindDBTableName = false;
-
-			if (dbTableName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_DBTABLENAME_DBTABLENAME_3);
-			}
-			else {
-				bindDBTableName = true;
-
-				sb.append(_FINDER_COLUMN_DBTABLENAME_DBTABLENAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindDBTableName) {
-					queryPos.add(dbTableName);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_DBTABLENAME_DBTABLENAME_2 =
-		"objectRelationship.dbTableName = ?";
-
-	private static final String _FINDER_COLUMN_DBTABLENAME_DBTABLENAME_3 =
-		"(objectRelationship.dbTableName IS NULL OR objectRelationship.dbTableName = '')";
-
 	private FinderPath _finderPathWithPaginationFindByODI1_E;
 	private FinderPath _finderPathWithoutPaginationFindByODI1_E;
 	private FinderPath _finderPathCountByODI1_E;
@@ -5447,6 +5203,276 @@ public class ObjectRelationshipPersistenceImpl
 		"objectRelationship.objectDefinitionId2 = ? AND ";
 
 	private static final String _FINDER_COLUMN_ODI2_R_REVERSE_2 =
+		"objectRelationship.reverse = ?";
+
+	private FinderPath _finderPathFetchByDTN_R;
+	private FinderPath _finderPathCountByDTN_R;
+
+	/**
+	 * Returns the object relationship where dbTableName = &#63; and reverse = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
+	 *
+	 * @param dbTableName the db table name
+	 * @param reverse the reverse
+	 * @return the matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship findByDTN_R(String dbTableName, boolean reverse)
+		throws NoSuchObjectRelationshipException {
+
+		ObjectRelationship objectRelationship = fetchByDTN_R(
+			dbTableName, reverse);
+
+		if (objectRelationship == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("dbTableName=");
+			sb.append(dbTableName);
+
+			sb.append(", reverse=");
+			sb.append(reverse);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchObjectRelationshipException(sb.toString());
+		}
+
+		return objectRelationship;
+	}
+
+	/**
+	 * Returns the object relationship where dbTableName = &#63; and reverse = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param dbTableName the db table name
+	 * @param reverse the reverse
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship fetchByDTN_R(
+		String dbTableName, boolean reverse) {
+
+		return fetchByDTN_R(dbTableName, reverse, true);
+	}
+
+	/**
+	 * Returns the object relationship where dbTableName = &#63; and reverse = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param dbTableName the db table name
+	 * @param reverse the reverse
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship fetchByDTN_R(
+		String dbTableName, boolean reverse, boolean useFinderCache) {
+
+		dbTableName = Objects.toString(dbTableName, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {dbTableName, reverse};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByDTN_R, finderArgs, this);
+		}
+
+		if (result instanceof ObjectRelationship) {
+			ObjectRelationship objectRelationship = (ObjectRelationship)result;
+
+			if (!Objects.equals(
+					dbTableName, objectRelationship.getDBTableName()) ||
+				(reverse != objectRelationship.isReverse())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_OBJECTRELATIONSHIP_WHERE);
+
+			boolean bindDBTableName = false;
+
+			if (dbTableName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_DTN_R_DBTABLENAME_3);
+			}
+			else {
+				bindDBTableName = true;
+
+				sb.append(_FINDER_COLUMN_DTN_R_DBTABLENAME_2);
+			}
+
+			sb.append(_FINDER_COLUMN_DTN_R_REVERSE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindDBTableName) {
+					queryPos.add(dbTableName);
+				}
+
+				queryPos.add(reverse);
+
+				List<ObjectRelationship> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByDTN_R, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									dbTableName, reverse
+								};
+							}
+
+							_log.warn(
+								"ObjectRelationshipPersistenceImpl.fetchByDTN_R(String, boolean, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					ObjectRelationship objectRelationship = list.get(0);
+
+					result = objectRelationship;
+
+					cacheResult(objectRelationship);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ObjectRelationship)result;
+		}
+	}
+
+	/**
+	 * Removes the object relationship where dbTableName = &#63; and reverse = &#63; from the database.
+	 *
+	 * @param dbTableName the db table name
+	 * @param reverse the reverse
+	 * @return the object relationship that was removed
+	 */
+	@Override
+	public ObjectRelationship removeByDTN_R(String dbTableName, boolean reverse)
+		throws NoSuchObjectRelationshipException {
+
+		ObjectRelationship objectRelationship = findByDTN_R(
+			dbTableName, reverse);
+
+		return remove(objectRelationship);
+	}
+
+	/**
+	 * Returns the number of object relationships where dbTableName = &#63; and reverse = &#63;.
+	 *
+	 * @param dbTableName the db table name
+	 * @param reverse the reverse
+	 * @return the number of matching object relationships
+	 */
+	@Override
+	public int countByDTN_R(String dbTableName, boolean reverse) {
+		dbTableName = Objects.toString(dbTableName, "");
+
+		FinderPath finderPath = _finderPathCountByDTN_R;
+
+		Object[] finderArgs = new Object[] {dbTableName, reverse};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_OBJECTRELATIONSHIP_WHERE);
+
+			boolean bindDBTableName = false;
+
+			if (dbTableName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_DTN_R_DBTABLENAME_3);
+			}
+			else {
+				bindDBTableName = true;
+
+				sb.append(_FINDER_COLUMN_DTN_R_DBTABLENAME_2);
+			}
+
+			sb.append(_FINDER_COLUMN_DTN_R_REVERSE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindDBTableName) {
+					queryPos.add(dbTableName);
+				}
+
+				queryPos.add(reverse);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_DTN_R_DBTABLENAME_2 =
+		"objectRelationship.dbTableName = ? AND ";
+
+	private static final String _FINDER_COLUMN_DTN_R_DBTABLENAME_3 =
+		"(objectRelationship.dbTableName IS NULL OR objectRelationship.dbTableName = '') AND ";
+
+	private static final String _FINDER_COLUMN_DTN_R_REVERSE_2 =
 		"objectRelationship.reverse = ?";
 
 	private FinderPath _finderPathWithPaginationFindByODI1_ODI2_T;
@@ -9126,8 +9152,11 @@ public class ObjectRelationshipPersistenceImpl
 			objectRelationship);
 
 		finderCache.putResult(
-			_finderPathFetchByDBTableName,
-			new Object[] {objectRelationship.getDBTableName()},
+			_finderPathFetchByDTN_R,
+			new Object[] {
+				objectRelationship.getDBTableName(),
+				objectRelationship.isReverse()
+			},
 			objectRelationship);
 
 		finderCache.putResult(
@@ -9225,12 +9254,14 @@ public class ObjectRelationshipPersistenceImpl
 			_finderPathFetchByObjectFieldId2, args,
 			objectRelationshipModelImpl);
 
-		args = new Object[] {objectRelationshipModelImpl.getDBTableName()};
+		args = new Object[] {
+			objectRelationshipModelImpl.getDBTableName(),
+			objectRelationshipModelImpl.isReverse()
+		};
 
+		finderCache.putResult(_finderPathCountByDTN_R, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByDBTableName, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByDBTableName, args, objectRelationshipModelImpl);
+			_finderPathFetchByDTN_R, args, objectRelationshipModelImpl);
 
 		args = new Object[] {
 			objectRelationshipModelImpl.getObjectDefinitionId1(),
@@ -9832,16 +9863,6 @@ public class ObjectRelationshipPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"parameterObjectFieldId"}, false);
 
-		_finderPathFetchByDBTableName = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByDBTableName",
-			new String[] {String.class.getName()}, new String[] {"dbTableName"},
-			true);
-
-		_finderPathCountByDBTableName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDBTableName",
-			new String[] {String.class.getName()}, new String[] {"dbTableName"},
-			false);
-
 		_finderPathWithPaginationFindByODI1_E = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_E",
 			new String[] {
@@ -9917,6 +9938,16 @@ public class ObjectRelationshipPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI2_R",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"objectDefinitionId2", "reverse"}, false);
+
+		_finderPathFetchByDTN_R = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByDTN_R",
+			new String[] {String.class.getName(), Boolean.class.getName()},
+			new String[] {"dbTableName", "reverse"}, true);
+
+		_finderPathCountByDTN_R = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDTN_R",
+			new String[] {String.class.getName(), Boolean.class.getName()},
+			new String[] {"dbTableName", "reverse"}, false);
 
 		_finderPathWithPaginationFindByODI1_ODI2_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_ODI2_T",

@@ -808,51 +808,6 @@ public interface ObjectRelationshipPersistence
 	public int countByParameterObjectFieldId(long parameterObjectFieldId);
 
 	/**
-	 * Returns the object relationship where dbTableName = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
-	 *
-	 * @param dbTableName the db table name
-	 * @return the matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public ObjectRelationship findByDBTableName(String dbTableName)
-		throws NoSuchObjectRelationshipException;
-
-	/**
-	 * Returns the object relationship where dbTableName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param dbTableName the db table name
-	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public ObjectRelationship fetchByDBTableName(String dbTableName);
-
-	/**
-	 * Returns the object relationship where dbTableName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param dbTableName the db table name
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public ObjectRelationship fetchByDBTableName(
-		String dbTableName, boolean useFinderCache);
-
-	/**
-	 * Removes the object relationship where dbTableName = &#63; from the database.
-	 *
-	 * @param dbTableName the db table name
-	 * @return the object relationship that was removed
-	 */
-	public ObjectRelationship removeByDBTableName(String dbTableName)
-		throws NoSuchObjectRelationshipException;
-
-	/**
-	 * Returns the number of object relationships where dbTableName = &#63;.
-	 *
-	 * @param dbTableName the db table name
-	 * @return the number of matching object relationships
-	 */
-	public int countByDBTableName(String dbTableName);
-
-	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -1473,6 +1428,56 @@ public interface ObjectRelationshipPersistence
 	 * @return the number of matching object relationships
 	 */
 	public int countByODI2_R(long objectDefinitionId2, boolean reverse);
+
+	/**
+	 * Returns the object relationship where dbTableName = &#63; and reverse = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
+	 *
+	 * @param dbTableName the db table name
+	 * @param reverse the reverse
+	 * @return the matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public ObjectRelationship findByDTN_R(String dbTableName, boolean reverse)
+		throws NoSuchObjectRelationshipException;
+
+	/**
+	 * Returns the object relationship where dbTableName = &#63; and reverse = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param dbTableName the db table name
+	 * @param reverse the reverse
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public ObjectRelationship fetchByDTN_R(String dbTableName, boolean reverse);
+
+	/**
+	 * Returns the object relationship where dbTableName = &#63; and reverse = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param dbTableName the db table name
+	 * @param reverse the reverse
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public ObjectRelationship fetchByDTN_R(
+		String dbTableName, boolean reverse, boolean useFinderCache);
+
+	/**
+	 * Removes the object relationship where dbTableName = &#63; and reverse = &#63; from the database.
+	 *
+	 * @param dbTableName the db table name
+	 * @param reverse the reverse
+	 * @return the object relationship that was removed
+	 */
+	public ObjectRelationship removeByDTN_R(String dbTableName, boolean reverse)
+		throws NoSuchObjectRelationshipException;
+
+	/**
+	 * Returns the number of object relationships where dbTableName = &#63; and reverse = &#63;.
+	 *
+	 * @param dbTableName the db table name
+	 * @param reverse the reverse
+	 * @return the number of matching object relationships
+	 */
+	public int countByDTN_R(String dbTableName, boolean reverse);
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and type = &#63;.

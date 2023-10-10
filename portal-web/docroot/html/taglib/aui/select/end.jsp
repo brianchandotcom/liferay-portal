@@ -44,7 +44,7 @@
 			<%
 			long listTypeId = ParamUtil.getLong(request, name, BeanParamUtil.getLong(bean, request, listTypeFieldName));
 
-			List<ListType> listTypeModels = ListTypeServiceUtil.getListTypes(listType);
+			List<ListType> listTypeModels = ListTypeServiceUtil.getListTypes(themeDisplay.getCompanyId(), listType);
 
 			for (ListType listTypeModel : listTypeModels) {
 			%>

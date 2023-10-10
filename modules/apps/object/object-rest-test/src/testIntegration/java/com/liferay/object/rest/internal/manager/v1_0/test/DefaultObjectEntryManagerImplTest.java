@@ -9,7 +9,6 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
@@ -1983,6 +1982,8 @@ public class DefaultObjectEntryManagerImplTest
 	public void testGetObjectEntryRelatedObjectEntriesWithAccountEntryRestricted()
 		throws Exception {
 
+		// Account entry restricted scope
+
 		ObjectDefinition childObjectDefinition = _createObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
@@ -2026,48 +2027,73 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.updateObjectDefinition(
 				childObjectDefinition);
 
-		_addRelatedObjectEntries(
-			_objectDefinition3, childObjectDefinition,
-			"parentExternalReferenceCode", StringUtil.randomId(),
-			objectRelationship1);
-
 		AccountEntry accountEntry = _addAccountEntry();
 
-		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition3,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry.getAccountEntryId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		User user = _addUser();
+		ObjectField objectField1 = objectFieldLocalService.getObjectField(
+			objectRelationship1.getObjectFieldId2());
+		ObjectField objectField2 = objectFieldLocalService.getObjectField(
+			objectRelationship2.getObjectFieldId2());
+
+		_defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, childObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						objectField1.getName(), objectEntry.getId()
+					).put(
+						objectField2.getName(), accountEntry.getAccountEntryId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, childObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						objectField1.getName(), objectEntry.getId()
+					).put(
+						objectField2.getName(),
+						_addAccountEntry().getAccountEntryId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_user = _addUser();
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), user.getUserId());
-
-		_accountRoleLocalService.associateUser(
-			accountEntry.getAccountEntryId(), accountRole.getAccountRoleId(),
-			user.getUserId());
-
-		Role role = accountRole.getRole();
-
-		_addResourcePermission(ActionKeys.VIEW, role);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			companyId, childObjectDefinition.getClassName(),
-			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", role.getRoleId(),
-			ActionKeys.VIEW);
-
-		ObjectEntry parentObjectEntry =
-			_defaultObjectEntryManager.getObjectEntry(
-				companyId, _simpleDTOConverterContext,
-				"parentExternalReferenceCode", _objectDefinition3, null);
+			accountEntry.getAccountEntryId(), _user.getUserId());
 
 		Page<ObjectEntry> page =
 			_defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
 				_simpleDTOConverterContext, _objectDefinition3,
-				parentObjectEntry.getId(), objectRelationship1.getName(), null);
+				objectEntry.getId(), objectRelationship1.getName(), null);
 
 		Collection<ObjectEntry> objectEntries = page.getItems();
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+
+		_defaultObjectEntryManager.deleteObjectEntry(
+			_objectDefinition3, objectEntry.getId());
 
 		objectDefinitionLocalService.deleteObjectDefinition(
 			childObjectDefinition);

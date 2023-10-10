@@ -13,8 +13,6 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import java.io.IOException;
 
-import java.util.Objects;
-
 /**
  * @author Sergio Jiménez del Coso
  */
@@ -30,15 +28,13 @@ public class JSONStringStdDeserializer extends StdDeserializer<String> {
 			DeserializationContext deserializationContext)
 		throws IOException {
 
-		if (Objects.equals(
-				jsonParser.getCurrentToken(), JsonToken.START_OBJECT)) {
-
-			TreeNode treeNode = jsonParser.readValueAsTree();
-
-			return treeNode.toString();
+		if (jsonParser.hasToken(JsonToken.VALUE_STRING)) {
+			return jsonParser.getText();
 		}
 
-		return jsonParser.getText();
+		TreeNode treeNode = jsonParser.readValueAsTree();
+
+		return treeNode.toString();
 	}
 
 }

@@ -40,6 +40,7 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 					icon="plus"
 					id='<%= liferayPortletResponse.getNamespace() + "selectDDMStructure" %>'
 					small="<%= true %>"
+					title='<%= LanguageUtil.format(locale, "select-x", "structure") %>'
 				/>
 			</div>
 		</c:if>

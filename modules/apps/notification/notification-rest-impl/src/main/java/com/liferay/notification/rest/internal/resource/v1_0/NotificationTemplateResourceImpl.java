@@ -390,6 +390,7 @@ public class NotificationTemplateResourceImpl
 					serviceBuilderNotificationTemplate.getRecipientType();
 				subject = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderNotificationTemplate.getSubjectMap());
+				system = serviceBuilderNotificationTemplate.isSystem();
 				type = serviceBuilderNotificationTemplate.getType();
 				typeLabel = _language.get(
 					_getLocale(), notificationType.getTypeLanguageKey());

@@ -44,17 +44,6 @@ const ACTION_TYPES = [
 	},
 ];
 
-const ITEM_ACTION_TYPES = [
-	{
-		label: Liferay.Language.get('async'),
-		value: ACTION_TYPE.ASYNC,
-	},
-	{
-		label: Liferay.Language.get('headless'),
-		value: ACTION_TYPE.HEADLESS,
-	},
-];
-
 const MESSAGE_TYPES = [
 	{
 		label: Liferay.Language.get('info'),
@@ -232,7 +221,7 @@ const ActionForm = ({
 		) {
 			valid = false;
 		}
-	
+
 		setSaveButtonDisabled(!valid);
 	};
 
@@ -298,7 +287,7 @@ const ActionForm = ({
 									labelValidationError
 										? Liferay.Language.get(
 												'this-field-is-required'
-											)
+										  )
 										: undefined
 								}
 								id={labelFormElementId}
@@ -434,7 +423,7 @@ const ActionForm = ({
 										titleValidationError
 											? Liferay.Language.get(
 													'this-field-is-required'
-												)
+											  )
 											: undefined
 									}
 									id={titleFormElementId}
@@ -450,8 +439,7 @@ const ActionForm = ({
 									}}
 									onChange={setTitleTranslations}
 									placeholder={Liferay.Language.get(
-										actionData.type ===
-											ACTION_TYPE.MODAL
+										actionData.type === ACTION_TYPE.MODAL
 											? 'action-modal-title-placeholder'
 											: 'action-side-panel-title-placeholder'
 									)}
@@ -546,9 +534,7 @@ const ActionForm = ({
 							<ClayLayout.Col size={8}>
 								<ClayForm.Group>
 									<InputLocalized
-										id={
-											confirmationMessageFormElementId
-										}
+										id={confirmationMessageFormElementId}
 										label={Liferay.Language.get(
 											'confirmation-message'
 										)}

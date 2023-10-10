@@ -39,8 +39,6 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-186938"
-	@ignore = "true"
 	@priority = 4
 	test CanGenerateOpenAPIForObjectWithRelationshipToUnpublishedObject {
 		task ("And Given an unpublished custom object definition is created with post request") {
@@ -74,7 +72,7 @@ definition {
 		task ("Then the 'Subject' is shown without errors") {
 			AssertElementPresent.assertElementPresent(
 				field = "subjectsStudents",
-				locator1 = "OpenAPI#SCHEMA_TITLE",
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
 				schema = "Subject");
 
 			AssertElementNotPresent(locator1 = "OpenAPI#ERROR_WRAPPER");
@@ -102,7 +100,7 @@ definition {
 
 			AssertElementPresent.assertElementPresent(
 				field = "usersSubjects",
-				locator1 = "OpenAPI#SCHEMA_TITLE",
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
 				schema = "Subject");
 
 			APIExplorer.navigateToOpenAPI(
@@ -111,7 +109,7 @@ definition {
 
 			AssertElementPresent.assertElementPresent(
 				field = "usersSubjects",
-				locator1 = "OpenAPI#SCHEMA_TITLE",
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
 				schema = "UserAccount");
 		}
 	}
@@ -147,7 +145,7 @@ definition {
 
 			AssertElementPresent.assertElementPresent(
 				field = "r_universityUsers_c_universityId",
-				locator1 = "OpenAPI#SCHEMA_TITLE",
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
 				schema = "UserAccount");
 		}
 
@@ -158,7 +156,7 @@ definition {
 
 			AssertElementPresent.assertElementPresent(
 				field = "universityUsers",
-				locator1 = "OpenAPI#SCHEMA_TITLE",
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
 				schema = "University");
 		}
 	}
@@ -176,7 +174,7 @@ definition {
 		task ("Then a new schema with properties is created successfully") {
 			AssertElementPresent.assertElementPresent(
 				field = "name",
-				locator1 = "OpenAPI#SCHEMA_TITLE",
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
 				schema = "Subject");
 		}
 	}
@@ -194,7 +192,7 @@ definition {
 		task ("Then the new added field is added successfully in the schema") {
 			AssertElementPresent.assertElementPresent(
 				field = "passportNumber",
-				locator1 = "OpenAPI#SCHEMA_TITLE",
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
 				schema = "UserAccount");
 		}
 	}

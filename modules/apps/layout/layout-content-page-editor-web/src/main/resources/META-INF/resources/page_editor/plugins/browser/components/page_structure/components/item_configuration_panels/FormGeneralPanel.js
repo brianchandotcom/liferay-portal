@@ -11,7 +11,6 @@ import {useId} from 'frontend-js-components-web';
 import {openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {addMappingFields} from '../../../../../../app/actions/index';
 import updateItemLocalConfig from '../../../../../../app/actions/updateItemLocalConfig';
 import {CheckboxField} from '../../../../../../app/components/fragment_configuration_fields/CheckboxField';
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
@@ -22,17 +21,15 @@ import {
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
-import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateFormItemConfig from '../../../../../../app/thunks/updateFormItemConfig';
 import {formIsMapped} from '../../../../../../app/utils/formIsMapped';
 import {formIsRestricted} from '../../../../../../app/utils/formIsRestricted';
 import {formIsUnavailable} from '../../../../../../app/utils/formIsUnavailable';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
-import getMappingFieldsKey from '../../../../../../app/utils/getMappingFieldsKey';
 import {setIn} from '../../../../../../app/utils/setIn';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
+import DisplayPageSelector from '../../../../../../common/components/DisplayPageSelector';
 import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
-import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
 import {CommonStyles} from './CommonStyles';
 import ContainerDisplayOptions from './ContainerDisplayOptions';
 import FormMappingOptions from './FormMappingOptions';
@@ -355,10 +352,10 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 
 			{type === DISPLAY_PAGE_OPTION && (
 				<DisplayPageSelector
-					item={item}
+					classNameId={item.config.classNameId}
+					classTypeId={item.config.classTypeId}
 					onConfigChange={onConfigChange}
 					selectedValue={displayPage}
-					type={type}
 				/>
 			)}
 
@@ -443,74 +440,4 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 			)}
 		</>
 	);
-}
-
-function DisplayPageSelector({item, onConfigChange, selectedValue, type}) {
-	const dispatch = useDispatch();
-
-	const mappingFields = useSelector((state) => state.mappingFields);
-
-	const [displayPageFields, setDisplayPageFields] = useState(null);
-
-	useEffect(() => {
-		if (type !== DISPLAY_PAGE_OPTION) {
-			return;
-		}
-
-		const {classNameId, classTypeId} = item.config;
-
-		const key = getMappingFieldsKey({classNameId, classTypeId});
-
-		const fieldSets = mappingFields[key];
-
-		if (fieldSets) {
-			setDisplayPageFields(filterFields(fieldSets));
-		}
-		else {
-			InfoItemService.getAvailableStructureMappingFields({
-				classNameId,
-				classTypeId,
-			}).then((newFields) => {
-				dispatch(addMappingFields({fields: newFields, key}));
-			});
-		}
-	}, [dispatch, item, mappingFields, type]);
-
-	return (
-		<MappingFieldSelector
-			className="mb-3"
-			defaultLabel={`-- ${Liferay.Language.get('none')} --`}
-			fields={displayPageFields}
-			label={Liferay.Language.get('display-page')}
-			onValueSelect={(event) =>
-				onConfigChange({
-					displayPage:
-						event.target.value === 'unmapped'
-							? null
-							: event.target.value,
-				})
-			}
-			value={selectedValue}
-		/>
-	);
-}
-
-function filterFields(fieldSets) {
-	return fieldSets.reduce((acc, fieldSet) => {
-		const newFields = fieldSet.fields.filter(
-			(field) => field.type === 'display-page'
-		);
-
-		if (newFields.length) {
-			return [
-				...acc,
-				{
-					...fieldSet,
-					fields: newFields,
-				},
-			];
-		}
-
-		return acc;
-	}, []);
 }

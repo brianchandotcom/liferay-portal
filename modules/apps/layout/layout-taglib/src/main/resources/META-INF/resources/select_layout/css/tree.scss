@@ -8,3 +8,7 @@
 .select-layout-filter {
 	border-bottom: 1px solid $cadmin-secondary-l3;
 }
+
+html#{$cadmin-selector} .cadmin .treeview .search-result-button {
+	font-size: 14px;
+}

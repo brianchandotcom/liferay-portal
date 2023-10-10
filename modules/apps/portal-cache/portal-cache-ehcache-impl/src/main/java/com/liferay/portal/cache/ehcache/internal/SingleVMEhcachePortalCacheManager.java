@@ -6,11 +6,11 @@
 package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
-import com.liferay.portal.cache.ehcache.internal.configurator.SingleVMEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.io.Serializable;
@@ -65,7 +65,14 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 		SingleVMEhcachePortalCacheManager.class);
 
 	@Reference
-	private SingleVMEhcachePortalCacheManagerConfigurator
-		_singleVMEhcachePortalCacheManagerConfigurator;
+	private Props _props;
+
+	private final SingleVMEhcachePortalCacheManagerConfigurator
+		_singleVMEhcachePortalCacheManagerConfigurator =
+			new SingleVMEhcachePortalCacheManagerConfigurator();
+
+	private static class SingleVMEhcachePortalCacheManagerConfigurator
+		extends BaseEhcachePortalCacheManagerConfigurator {
+	}
 
 }

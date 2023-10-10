@@ -119,7 +119,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-154568 and LPS-155167. The page designer can map a Form Container to Object field with relationship on custom object. There is an input search when the mapped field has more than 10 items and the max number of precharged options is 10."
+	@description = "This is a test for LPS-154568,LPS-155167 and LPS-194759. The page designer can map a Form Container to Object field with relationship on custom object. Select from List fragment shows the entire list of items."
 	@priority = 5
 	test MapRelationshipWithCustomObject {
 		property portal.acceptance = "true";
@@ -202,15 +202,13 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		task ("Then the page designer can only see 10 options on dropdown menu") {
+		task ("Then the page designer can see all the 11 options on dropdown menu") {
 			Click(
 				index = 1,
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
-			MenuItem.viewOrder(menuItemList = "Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
-
-			MenuItem.viewNotPresent(menuItem = "Rice");
+			MenuItem.viewOrder(menuItemList = "Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta,Rice");
 		}
 
 		task ("When the page designer searches an non-existing option") {
@@ -223,29 +221,6 @@ definition {
 
 		task ("Then the pages designer should see the no results found message") {
 			MenuItem.viewPresent(menuItem = "No results were found.");
-		}
-
-		task ("When the page designer searches for the 11th entry") {
-			Click(
-				index = 1,
-				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select-from-list");
-
-			Type.sendKeys(
-				index = 1,
-				locator1 = "Fragment#INPUT_FIELD",
-				type = "select-from-list",
-				value1 = "Rice");
-		}
-
-		task ("Then the pages designer can see the 11th entry on select from list dropdown menu") {
-			MenuItem.viewPresent(menuItem = "Rice");
-
-			MenuItem.viewNotPresent(menuItem = "Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
-
-			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "MenuList");
-
-			ObjectDefinitionAPI.deleteRelationship(objectDefinitionId = ${objectDefinitionId});
 		}
 	}
 

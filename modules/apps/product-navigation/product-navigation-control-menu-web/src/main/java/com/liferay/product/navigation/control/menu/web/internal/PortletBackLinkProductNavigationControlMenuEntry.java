@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
@@ -60,11 +61,7 @@ public class PortletBackLinkProductNavigationControlMenuEntry
 			return _language.get(locale, "back");
 		}
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String urlBackTitle = portletDisplay.getURLBackTitle();
+		String urlBackTitle = _getBackURLTitle(serviceContext);
 
 		if (Validator.isNotNull(urlBackTitle)) {
 			return _language.format(
@@ -106,6 +103,21 @@ public class PortletBackLinkProductNavigationControlMenuEntry
 		}
 
 		return super.isShow(httpServletRequest);
+	}
+
+	private String _getBackURLTitle(ServiceContext serviceContext) {
+		String backURLTitle = ParamUtil.getString(
+			serviceContext.getRequest(), "p_l_back_url_title");
+
+		if (Validator.isNotNull(backURLTitle)) {
+			return backURLTitle;
+		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getURLBackTitle();
 	}
 
 	@Reference

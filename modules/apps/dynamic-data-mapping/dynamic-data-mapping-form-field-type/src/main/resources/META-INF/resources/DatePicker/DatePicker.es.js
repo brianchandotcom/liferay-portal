@@ -179,6 +179,22 @@ export default function DatePicker({
 					aria-required={otherProps.required}
 				>
 					<ClayDatePicker
+						ariaLabels={{
+							buttonChooseDate: `${Liferay.Language.get(
+								'select-date'
+							)}`,
+							buttonDot: `${Liferay.Language.get(
+								'select-current-date'
+							)}`,
+							buttonNextMonth: `${Liferay.Language.get(
+								'select-next-month'
+							)}`,
+							buttonPreviousMonth: `${Liferay.Language.get(
+								'select-previous-month'
+							)}`,
+							dialog: `${Liferay.Language.get('select-date')}`,
+							input: `${Liferay.Language.get('input-a-value')}`,
+						}}
 						dateFormat={clayFormat}
 						dir={dir}
 						disabled={readOnly}

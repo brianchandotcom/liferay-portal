@@ -50,6 +50,10 @@ const ClayColorPickerWithState = ({
 			<input name={name} type="hidden" value={color} />
 			<ClayColorPicker
 				{...accessibleProps}
+				ariaLabels={{
+					selectColor: `${Liferay.Language.get('select-color')}`,
+					selectionIs: `${Liferay.Language.get('color-x-selected')}`,
+				}}
 				colors={customColors}
 				disabled={readOnly}
 				label={Liferay.Language.get('color-field-type-label')}

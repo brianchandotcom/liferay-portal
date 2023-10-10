@@ -95,6 +95,7 @@ const VisibleSelectInput = forwardRef(
 					)}
 					disabled={readOnly}
 					id={id}
+					tabIndex="0"
 				>
 					{isValueEmpty || (value.length === 1 && !multiple) ? (
 						<OptionSelected

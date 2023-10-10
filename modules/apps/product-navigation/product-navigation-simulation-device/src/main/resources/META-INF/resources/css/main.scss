@@ -73,7 +73,7 @@ html#{$cadmin-selector} {
 			overflow: auto;
 			position: fixed;
 			right: 320px;
-			top: 56px;
+			top: var(--control-menu-container-height);
 
 			.device {
 				box-sizing: content-box;

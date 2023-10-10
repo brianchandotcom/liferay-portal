@@ -456,8 +456,15 @@ definition {
 	}
 
 	test CanAddSearchWidgetsViaUIOnContentPage {
-		task ("Add a content page and navigate to said page") {
-			ContentPages.addPage(pageName = "Test Content Page");
+		task ("Add a content page and navigate to the edit screen of said page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Content Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page",
+				siteName = "Guest");
 		}
 
 		task ("Add each search widget via the UI and assert no error is present for each") {

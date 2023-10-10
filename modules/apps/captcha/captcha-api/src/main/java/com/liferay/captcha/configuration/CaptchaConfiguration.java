@@ -7,7 +7,6 @@ package com.liferay.captcha.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -63,13 +62,6 @@ public interface CaptchaConfiguration {
 		required = false
 	)
 	public String captchaEngine();
-
-	@ExtendedAttributeDefinition(featureFlagKey = "LPS-185213")
-	@Meta.AD(
-		deflt = "false", name = "enable-simple-captcha-headless-api",
-		required = false
-	)
-	public boolean enableSimpleCaptchaHeadlessAPI();
 
 	@Meta.AD(name = "recaptcha-public-key", required = false)
 	public String reCaptchaPublicKey();

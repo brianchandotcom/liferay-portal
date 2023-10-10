@@ -247,6 +247,8 @@ export default function _JournalPortlet({
 				: '/journal/add_data_engine_default_values';
 		}
 		else {
+			articleId = document.getElementById(`${namespace}articleId`).value;
+
 			actionInput.value = articleId
 				? '/journal/update_article'
 				: '/journal/add_article';

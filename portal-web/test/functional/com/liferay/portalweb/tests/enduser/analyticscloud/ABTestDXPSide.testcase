@@ -365,4 +365,158 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-14070 | Automation ID: LRAC-14573 | Test Summary: Can publish variant from a terminated test and delete test in AC"
+	@priority = 5
+	test CanPublishVariantFromTerminatedTestAndDeleteTest {
+		task ("Edit the variant created") {
+			ABTest.editVariant(variantName = "Variant name");
+		}
+
+		task ("Add a heading to the page to diferentiate from the control") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Click to save the variant") {
+			ABTest.saveVariant();
+		}
+
+		task ("Click to open the AB test panel") {
+			ABTest.openABTestPanel();
+
+			task ("Click to review and run the test") {
+				ABTest.runTest();
+			}
+		}
+
+		task ("Terminate the test") {
+			ACTests.terminateABTest(testName = ${nameABTest});
+		}
+
+		task ("Click to publish the variant") {
+			ABTest.publishVariant(variantName = "Variant name");
+		}
+
+		task ("Assert the variant published") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+		}
+
+		task ("Now edit the variant and add a widget to the page and then click save") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("Assert if the page is published with the modifications") {
+			PageEditor.viewFragment(fragmentName = "Button");
+		}
+
+		task ("Go to AC > Tests") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToTests();
+		}
+
+		task ("Open the AB test") {
+			ACNavigation.openItem(itemName = ${nameABTest});
+		}
+
+		task ("Delete the test in AC") {
+			ACTests.deleteABTestACSide();
+
+			AssertTextEquals.assertPartialText(
+			locator1 = "Modal#MODAL_CONTENT",
+			value1 = "Are you sure you want to delete this test? You will permanently lose all test data and results collected from this test. You will not be able to run this test. You will not be able to undo this operation.");
+
+			Alert.viewSuccessMessageText(successMessage = "Success:The test has been deleted.");
+		}
+
+		task ("Assert the test is no longer present in the list") {
+			ACUtils.assertItemsNameNotPresent(itemList = ${nameABTest});
+		}
+	}
+
+	@description = "Story: LRAC-14070 | Automation ID: LRAC-14574 | Test Summary: Can publish control from a terminated test"
+	@priority = 5
+	test CanPublishControlFromTerminatedTest {
+		task ("Edit the variant created") {
+			ABTest.editVariant(variantName = "Variant name");
+		}
+
+		task ("Add a heading to the page to diferentiate from the control") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Click to save the variant") {
+			ABTest.saveVariant();
+		}
+
+		task ("Click to open the AB test panel") {
+			ABTest.openABTestPanel();
+
+			task ("Click to review and run the test") {
+				ABTest.runTest();
+			}
+		}
+
+		task ("Click to terminate the test") {
+			Button.click(button = "Terminate Test");
+
+			ABTest.assertTerminateTest();
+		}
+
+		task ("Click to publish the control") {
+			ABTest.publishVariant(variantName = "Control");
+		}
+
+		task ("Assert the alert is shown") {
+			Alert.viewSuccessMessageText(successMessage = "Success:Control was published successfully.");
+		}
+
+		task ("Assert the control is published") {
+			AssertElementNotPresent(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "Heading Example");
+		}
+
+		task ("Click to edit the page and add a widget to the page and then click save") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("Assert if the page is published with the modifications") {
+			PageEditor.viewFragment(fragmentName = "Button");
+		}
+
+		task ("Go to AC and open the AB test") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToTests();
+
+			ACNavigation.openItem(itemName = ${nameABTest});
+		}
+
+		task ("Assert the AB Test") {
+			ACUtils.viewGenericTextInOrder(textValueList = ${nameABTest});
+		}
+	}
 }

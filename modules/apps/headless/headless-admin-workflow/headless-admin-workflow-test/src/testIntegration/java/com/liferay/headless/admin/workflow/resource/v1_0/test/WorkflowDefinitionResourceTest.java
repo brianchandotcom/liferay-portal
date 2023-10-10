@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.Arrays;
@@ -37,6 +38,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Javier Gamarra
@@ -185,18 +188,32 @@ public class WorkflowDefinitionResourceTest
 
 		// content is in json format
 
-		assertValid(
-			_postWorkflowDefinition(
-				JSONFactoryUtil.createJSONObject(
-					_getWorkflowDefinitionString("workflow-definition.json"))));
+		JSONObject jsonObject = _getWorkflowDefinitionJSONObject(
+			"workflow-definition.json");
+
+		JSONObject workflowDefinitionJSONObject = _postWorkflowDefinition(
+			jsonObject);
+
+		JSONAssert.assertEquals(
+			jsonObject.getJSONObject(
+				"content"
+			).toString(),
+			WorkflowDefinitionContentUtil.toJSON(
+				workflowDefinitionJSONObject.getString("content")),
+			true);
 
 		// content is json string format
 
-		assertValid(
-			_postWorkflowDefinition(
-				JSONFactoryUtil.createJSONObject(
-					_getWorkflowDefinitionString(
-						"workflow-definition-json-string.json"))));
+		jsonObject = _getWorkflowDefinitionJSONObject(
+			"workflow-definition-json-string.json");
+
+		workflowDefinitionJSONObject = _postWorkflowDefinition(jsonObject);
+
+		JSONAssert.assertEquals(
+			jsonObject.getString("content"),
+			WorkflowDefinitionContentUtil.toJSON(
+				workflowDefinitionJSONObject.getString("content")),
+			true);
 	}
 
 	@Override
@@ -459,26 +476,25 @@ public class WorkflowDefinitionResourceTest
 			workflowDefinitionName, workflowDefinitionVersion);
 	}
 
-	private String _getWorkflowDefinitionString(String templateName)
+	private JSONObject _getWorkflowDefinitionJSONObject(String templateName)
 		throws Exception {
 
-		return StreamUtil.toString(
-			getClass().getResourceAsStream(
-				StringBundler.concat(
-					"/com/liferay/headless/admin/workflow/resource/v1_0/test",
-					"/util/dependencies/", templateName)));
+		return JSONFactoryUtil.createJSONObject(
+			StreamUtil.toString(
+				getClass().getResourceAsStream(
+					StringBundler.concat(
+						"/com/liferay/headless/admin/workflow/resource/v1_0",
+						"/test/util/dependencies/", templateName))));
 	}
 
-	private WorkflowDefinition _postWorkflowDefinition(
+	private JSONObject _postWorkflowDefinition(
 			JSONObject workflowDefinitionJSONObject)
 		throws Exception {
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+		return HTTPTestUtil.invokeToJSONObject(
 			workflowDefinitionJSONObject.toString(),
 			"headless-admin-workflow/v1.0/workflow-definitions",
 			Http.Method.POST);
-
-		return WorkflowDefinition.toDTO(jsonObject.toString());
 	}
 
 	private static com.liferay.portal.kernel.workflow.WorkflowDefinition

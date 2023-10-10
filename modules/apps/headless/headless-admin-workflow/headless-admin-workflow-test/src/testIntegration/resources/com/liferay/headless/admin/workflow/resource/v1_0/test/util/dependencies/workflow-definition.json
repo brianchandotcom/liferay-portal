@@ -18,14 +18,12 @@
 					},
 					{
 						"#cdata-value": [
-							"",
 							"                {",
 							"                    \"xy\": [",
 							"                        165,",
 							"                        76",
 							"                    ]",
-							"                }",
-							"            "
+							"                }"
 						],
 						"#tag-name": "metadata"
 					},
@@ -86,15 +84,13 @@
 					},
 					{
 						"#cdata-value": [
-							"",
 							"                {",
 							"                    \"xy\": [",
 							"                        539,",
 							"                        74",
 							"                    ],",
 							"                    \"terminal\": true",
-							"                }",
-							"            "
+							"                }"
 						],
 						"#tag-name": "metadata"
 					},
@@ -108,12 +104,9 @@
 									},
 									{
 										"#cdata-value": [
-											"",
 											"                        import com.liferay.portal.kernel.workflow.WorkflowConstants;",
 											"                        import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;",
-											"",
-											"                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus(\"approved\"), workflowContext);",
-											"                    "
+											"                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus(\"approved\"), workflowContext);"
 										],
 										"#tag-name": "script"
 									},
@@ -152,14 +145,12 @@
 					},
 					{
 						"#cdata-value": [
-							"",
 							"                {",
 							"                    \"xy\": [",
 							"                        164,",
 							"                        533",
 							"                    ]",
-							"                }",
-							"            "
+							"                }"
 						],
 						"#tag-name": "metadata"
 					},
@@ -173,13 +164,10 @@
 									},
 									{
 										"#cdata-value": [
-											"",
 											"                        import com.liferay.portal.kernel.workflow.WorkflowConstants;",
 											"                        import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;",
-											"",
 											"                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus(\"denied\"), workflowContext);",
-											"                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus(\"pending\"), workflowContext);",
-											"                    "
+											"                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus(\"pending\"), workflowContext);"
 										],
 										"#tag-name": "script"
 									},
@@ -302,14 +290,12 @@
 					},
 					{
 						"#cdata-value": [
-							"",
 							"                {",
 							"                    \"xy\": [",
 							"                        165,",
 							"                        292",
 							"                    ]",
-							"                }",
-							"            "
+							"                }"
 						],
 						"#tag-name": "metadata"
 					},

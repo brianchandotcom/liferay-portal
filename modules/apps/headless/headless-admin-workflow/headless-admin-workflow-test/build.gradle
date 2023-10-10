@@ -4,10 +4,12 @@ dependencies {
 	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
 	testIntegrationImplementation group: "commons-lang", name: "commons-lang", version: "2.6"
 	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationImplementation project(":apps:headless:headless-admin-workflow:headless-admin-workflow-api")
 	testIntegrationImplementation project(":apps:headless:headless-admin-workflow:headless-admin-workflow-client")
 	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationImplementation project(":apps:portal-workflow:portal-workflow-api")
+	testIntegrationImplementation project(":apps:portal-workflow:portal-workflow-kaleo-definition-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

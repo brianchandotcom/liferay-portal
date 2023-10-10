@@ -216,11 +216,11 @@ public class GradleStylingCheck extends BaseFileCheck {
 				sb.append(fileName);
 			}
 
-			String newFileNamesContent = sb.toString();
+			String replacement = sb.toString();
 
-			if (!StringUtil.equals(newFileNamesContent, match)) {
+			if (!StringUtil.equals(replacement, match)) {
 				return StringUtil.replaceFirst(
-					content, match, newFileNamesContent, matcher.start());
+					content, match, replacement, matcher.start());
 			}
 		}
 

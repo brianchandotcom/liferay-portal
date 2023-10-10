@@ -33,6 +33,51 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LayoutUtil {
 
+	public static String getLayoutPayload(
+			HttpServletRequest httpServletRequest,
+			String itemSelectorReturnType, Layout layout,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (Objects.equals(
+				LayoutItemSelectorReturnType.class.getName(),
+				itemSelectorReturnType)) {
+
+			return JSONUtil.put(
+				"layoutId", layout.getLayoutId()
+			).put(
+				"name", layout.getName(themeDisplay.getLocale())
+			).put(
+				"plid", layout.getPlid()
+			).put(
+				"previewURL",
+				() -> {
+					String layoutURL = HttpComponentsUtil.addParameter(
+						PortalUtil.getLayoutFullURL(layout, themeDisplay),
+						"p_l_mode", Constants.PREVIEW);
+
+					return HttpComponentsUtil.addParameter(
+						layoutURL, "p_p_auth",
+						AuthTokenUtil.getToken(httpServletRequest));
+				}
+			).put(
+				"private", layout.isPrivateLayout()
+			).put(
+				"url", PortalUtil.getLayoutFullURL(layout, themeDisplay)
+			).put(
+				"uuid", layout.getUuid()
+			).toString();
+		}
+		else if (Objects.equals(
+					UUIDItemSelectorReturnType.class.getName(),
+					itemSelectorReturnType)) {
+
+			return layout.getUuid();
+		}
+
+		return PortalUtil.getLayoutRelativeURL(layout, themeDisplay, false);
+	}
+
 	public static JSONArray getLayoutsJSONArray(
 			boolean checkDisplayPage, boolean enableCurrentPage, long groupId,
 			HttpServletRequest httpServletRequest,
@@ -100,7 +145,7 @@ public class LayoutUtil {
 					}
 				).put(
 					"payload",
-					_getPayload(
+					getLayoutPayload(
 						httpServletRequest, itemSelectorReturnType, layout,
 						themeDisplay)
 				).put(
@@ -127,51 +172,6 @@ public class LayoutUtil {
 		}
 
 		return jsonArray;
-	}
-
-	private static String _getPayload(
-			HttpServletRequest httpServletRequest,
-			String itemSelectorReturnType, Layout layout,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		if (Objects.equals(
-				LayoutItemSelectorReturnType.class.getName(),
-				itemSelectorReturnType)) {
-
-			return JSONUtil.put(
-				"layoutId", layout.getLayoutId()
-			).put(
-				"name", layout.getName(themeDisplay.getLocale())
-			).put(
-				"plid", layout.getPlid()
-			).put(
-				"previewURL",
-				() -> {
-					String layoutURL = HttpComponentsUtil.addParameter(
-						PortalUtil.getLayoutFullURL(layout, themeDisplay),
-						"p_l_mode", Constants.PREVIEW);
-
-					return HttpComponentsUtil.addParameter(
-						layoutURL, "p_p_auth",
-						AuthTokenUtil.getToken(httpServletRequest));
-				}
-			).put(
-				"private", layout.isPrivateLayout()
-			).put(
-				"url", PortalUtil.getLayoutFullURL(layout, themeDisplay)
-			).put(
-				"uuid", layout.getUuid()
-			).toString();
-		}
-		else if (Objects.equals(
-					UUIDItemSelectorReturnType.class.getName(),
-					itemSelectorReturnType)) {
-
-			return layout.getUuid();
-		}
-
-		return PortalUtil.getLayoutRelativeURL(layout, themeDisplay, false);
 	}
 
 	private static long _getSelPlid(HttpServletRequest httpServletRequest) {

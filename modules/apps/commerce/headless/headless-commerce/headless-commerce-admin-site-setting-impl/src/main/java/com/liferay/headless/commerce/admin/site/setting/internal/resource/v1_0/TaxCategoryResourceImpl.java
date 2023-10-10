@@ -5,8 +5,9 @@
 
 package com.liferay.headless.commerce.admin.site.setting.internal.resource.v1_0;
 
+import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.TaxCategory;
-import com.liferay.headless.commerce.admin.site.setting.internal.helper.v1_0.TaxCategoryHelper;
+import com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.util.DTOMapperUtil;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.TaxCategoryResource;
 
 import javax.ws.rs.core.Response;
@@ -26,7 +27,7 @@ public class TaxCategoryResourceImpl extends BaseTaxCategoryResourceImpl {
 
 	@Override
 	public Response deleteTaxCategory(Long id) throws Exception {
-		_taxCategoryHelper.deleteTaxCategory(id);
+		_cpTaxCategoryService.deleteCPTaxCategory(id);
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -35,10 +36,11 @@ public class TaxCategoryResourceImpl extends BaseTaxCategoryResourceImpl {
 
 	@Override
 	public TaxCategory getTaxCategory(Long id) throws Exception {
-		return _taxCategoryHelper.getTaxCategory(id);
+		return DTOMapperUtil.modelToDTO(
+			_cpTaxCategoryService.getCPTaxCategory(id));
 	}
 
 	@Reference
-	private TaxCategoryHelper _taxCategoryHelper;
+	private CPTaxCategoryService _cpTaxCategoryService;
 
 }

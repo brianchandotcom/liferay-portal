@@ -25,31 +25,10 @@
 	}
 }
 
-.commerce-admin-header {
-	position: sticky;
-	z-index: 989;
-
-	.has-control-menu & {
-		top: 56px;
-	}
-
-	.ie11 & {
-		position: static;
-	}
-}
-
 .commerce-header {
 	position: sticky;
-	top: 0;
+	top: var(--control-menu-container-height);
 	z-index: 900;
-
-	.has-control-menu & {
-		top: 48px;
-
-		@media screen and (min-width: 576px) {
-			top: 56px;
-		}
-	}
 
 	.header-details {
 		max-width: 300px;

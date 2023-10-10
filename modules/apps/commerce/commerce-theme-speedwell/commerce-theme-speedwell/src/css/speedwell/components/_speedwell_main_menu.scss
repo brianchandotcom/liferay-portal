@@ -86,7 +86,8 @@
 			position: fixed;
 			right: 0;
 			top: calc(
-				#{$liferay-topbar-height-small} + #{$topbar-height-small} - 5px
+				var(--control-menu-container-height) + #{$topbar-height-small} -
+					5px
 			);
 		}
 
@@ -98,7 +99,8 @@
 			position: fixed;
 			right: 0;
 			top: calc(
-				#{$liferay-topbar-height-small} + #{$topbar-height-small} - 11px
+				var(--control-menu-container-height) + #{$topbar-height-small} -
+					11px
 			);
 		}
 	}
@@ -114,7 +116,7 @@
 		left: 0;
 		position: fixed;
 		right: 0;
-		top: calc(#{$liferay-topbar-height} + #{$topbar-height});
+		top: calc(var(--control-menu-container-height) + #{$topbar-height});
 		transition: all ease 200ms;
 		transition-delay: 500ms;
 	}

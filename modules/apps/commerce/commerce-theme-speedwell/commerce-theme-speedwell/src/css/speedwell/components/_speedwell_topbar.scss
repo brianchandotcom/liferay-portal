@@ -7,13 +7,9 @@
 	padding-right: $topbar-height;
 	position: fixed;
 	right: 0;
-	top: $liferay-topbar-height;
+	top: var(--control-menu-container-height);
 	transition: background-color 0.2s $easeOutQuart, margin 500ms ease;
 	z-index: 988;
-
-	@media screen and (max-width: $bp-xsmall) {
-		top: $liferay-topbar-height-small;
-	}
 
 	body.product-menu-open & {
 		margin-left: $liferay-sidebars-width;

@@ -11,12 +11,12 @@
 
 	&__content {
 		max-width: 1440px;
-		padding: 156px 0 40px;
+		padding: calc(100px + var(--control-menu-container-height)) 0 40px;
 		z-index: 21;
 
 		@media screen and (max-width: $bp-xsmall) {
 			min-height: calc(100vh - #{$topbar-height-small});
-			padding: 80px 0 40px;
+			padding: calc(24px + var(--control-menu-container-height)) 0 40px;
 		}
 
 		&--wide {

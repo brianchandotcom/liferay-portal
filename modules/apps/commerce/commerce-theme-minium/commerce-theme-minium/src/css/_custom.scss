@@ -16,25 +16,18 @@ html {
 #minium {
 	transition: padding ease 500ms;
 
-	body.has-control-menu.signed-in & {
+	body.signed-in & {
 		.minium-frame__sidebar,
 		.minium-frame__topbar {
-			top: $liferay-topbar-size;
+			top: var(--control-menu-container-height);
 
 			@media screen and (hover: none) {
 				top: auto;
 			}
-
-			@media screen and (max-width: $bp-xsmall) {
-				top: $liferay-topbar-size-small;
-			}
 		}
 
 		.minium-frame__toolbar {
-			margin-top: $liferay-topbar-size;
-			@media screen and (max-width: $bp-xsmall) {
-				margin-top: $liferay-topbar-size-small;
-			}
+			margin-top: var(--control-menu-container-height);
 		}
 	}
 

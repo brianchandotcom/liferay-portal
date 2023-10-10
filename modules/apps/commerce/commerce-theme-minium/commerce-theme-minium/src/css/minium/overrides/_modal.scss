@@ -3,7 +3,7 @@
 	top: 0;
 
 	body.signed-in & {
-		top: $liferay-topbar-size;
+		top: var(--control-menu-container-height);
 	}
 
 	body.product-menu-open & {

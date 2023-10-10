@@ -71,13 +71,13 @@
 		opacity: 1;
 		position: fixed;
 		right: 0;
-		top: calc(#{$liferay-topbar-height} + #{$topbar-height});
+		top: calc(var(--control-menu-container-height) + #{$topbar-height});
 		transition: opacity 200ms ease-in;
 		transition-delay: 500ms !important;
 
 		@media screen and (min-width: $bp-xxsmall) and (max-width: $bp-small) {
 			top: calc(
-				#{$liferay-topbar-height-small} + #{$topbar-height-small}
+				var(--control-menu-container-height) + #{$topbar-height-small}
 			);
 
 			.commerce-suggestions {
@@ -89,7 +89,8 @@
 
 		@media screen and (max-width: 375px) {
 			top: calc(
-				#{$liferay-topbar-height-small} + #{$topbar-height-small} - 11px
+				var(--control-menu-container-height) + #{$topbar-height-small} -
+					11px
 			);
 
 			.commerce-suggestions {

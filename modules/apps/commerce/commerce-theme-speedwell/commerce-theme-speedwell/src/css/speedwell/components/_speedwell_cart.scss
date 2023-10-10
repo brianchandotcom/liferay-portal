@@ -7,7 +7,7 @@
 	}
 
 	.signed-in &.is-open {
-		height: calc(100vh - #{$liferay-topbar-height});
+		height: calc(100vh - var(--control-menu-container-height));
 	}
 
 	&-header {

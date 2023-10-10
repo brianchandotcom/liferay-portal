@@ -8,7 +8,8 @@
 		display: none;
 		height: 530px;
 		max-height: calc(
-			100vh - #{$frame-size * 2 + $liferay-topbar-size + 60px}
+			100vh - #{$frame-size * 2 + var(--control-menu-container-height) +
+				60px}
 		);
 		opacity: 0;
 		position: absolute;

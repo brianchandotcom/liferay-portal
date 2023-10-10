@@ -192,6 +192,6 @@
 	}
 
 	@media screen and (max-width: $bp-xsmall) {
-		height: calc(100vh - #{$liferay-topbar-height-small});
+		height: calc(100vh - var(--control-menu-container-height));
 	}
 }

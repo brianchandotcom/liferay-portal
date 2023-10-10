@@ -4193,11 +4193,18 @@ public class ObjectEntryLocalServiceImpl
 					column.eq(
 						value
 					).and(
-						((DynamicObjectDefinitionLocalizationTable)table).
-							getLanguageIdColumn(
-							).eq(
-								languageId
-							)
+						() -> {
+							DynamicObjectDefinitionLocalizationTable
+								dynamicObjectDefinitionLocalizationTable =
+									(DynamicObjectDefinitionLocalizationTable)
+										table;
+
+							return dynamicObjectDefinitionLocalizationTable.
+								getLanguageIdColumn(
+								).eq(
+									languageId
+								);
+						}
 					),
 					sqlException, table, user, value);
 			}

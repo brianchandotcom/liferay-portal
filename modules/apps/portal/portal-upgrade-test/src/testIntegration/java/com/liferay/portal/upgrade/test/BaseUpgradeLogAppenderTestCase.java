@@ -512,8 +512,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	public void testUpgradeReportDirectory() throws Exception {
 		String originalUpgradeReportDir =
 			ReflectionTestUtil.getAndSetFieldValue(
-				PropsValues.class, "UPGRADE_REPORT_DIR",
-				"./test_reports");
+				PropsValues.class, "UPGRADE_REPORT_DIR", "./test_reports");
 
 		try {
 			_upgradeReportDir = PropsValues.UPGRADE_REPORT_DIR;
@@ -534,8 +533,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.stop();
 
-			_assertReport(
-				"Upgrade report generated in " + _upgradeReportDir);
+			_assertReport("Upgrade report generated in " + _upgradeReportDir);
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -724,6 +722,5 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private final UnsyncStringWriter _unsyncStringWriter =
 		new UnsyncStringWriter();
 	private String _upgradeReportDir = "";
-
 
 }

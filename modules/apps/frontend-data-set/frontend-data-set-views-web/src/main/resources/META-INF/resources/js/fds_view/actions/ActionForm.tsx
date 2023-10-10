@@ -311,7 +311,7 @@ const ActionForm = ({
 						</ClayLayout.Col>
 
 						<ClayLayout.Col
-							className="align-items-center d-flex justify-content-center"
+							className="align-items-center d-flex justify-content-end"
 							size={4}
 						>
 							<ClayIcon

@@ -5,14 +5,16 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
-import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.ProductSpecificationHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductSpecificationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -26,6 +28,10 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,7 +68,7 @@ public class ProductSpecificationResourceImpl
 			@NestedFieldId(value = "productId") Long id, Pagination pagination)
 		throws Exception {
 
-		return _productSpecificationHelper.getProductSpecificationsPage(
+		return _getProductSpecificationsPage(
 			id, contextAcceptLanguage.getPreferredLocale(), pagination);
 	}
 
@@ -144,6 +150,37 @@ public class ProductSpecificationResourceImpl
 				getCPDefinitionSpecificationOptionValueId());
 	}
 
+	private Page<ProductSpecification> _getProductSpecificationsPage(
+			long productId, Locale locale, Pagination pagination)
+		throws Exception {
+
+		CPDefinition cpDefinition =
+			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+
+		if (cpDefinition == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find Product with ID: " + productId);
+		}
+
+		List<CPDefinitionSpecificationOptionValue>
+			cpDefinitionSpecificationOptionValues =
+				_cpDefinitionSpecificationOptionValueService.
+					getCPDefinitionSpecificationOptionValues(
+						cpDefinition.getCPDefinitionId(),
+						pagination.getStartPosition(),
+						pagination.getEndPosition(), null);
+
+		int totalItems =
+			_cpDefinitionSpecificationOptionValueService.
+				getCPDefinitionSpecificationOptionValuesCount(
+					cpDefinition.getCPDefinitionId());
+
+		return Page.of(
+			_toProductSpecifications(
+				cpDefinitionSpecificationOptionValues, locale),
+			pagination, totalItems);
+	}
+
 	private ProductSpecification _toProductSpecification(
 			Long cpDefinitionSpecificationOptionValueId)
 		throws Exception {
@@ -152,6 +189,29 @@ public class ProductSpecificationResourceImpl
 			new DefaultDTOConverterContext(
 				cpDefinitionSpecificationOptionValueId,
 				contextAcceptLanguage.getPreferredLocale()));
+	}
+
+	private List<ProductSpecification> _toProductSpecifications(
+			List<CPDefinitionSpecificationOptionValue>
+				cpDefinitionSpecificationOptionValues,
+			Locale locale)
+		throws Exception {
+
+		List<ProductSpecification> productSpecifications = new ArrayList<>();
+
+		for (CPDefinitionSpecificationOptionValue
+				cpDefinitionSpecificationOptionValue :
+					cpDefinitionSpecificationOptionValues) {
+
+			productSpecifications.add(
+				_productSpecificationDTOConverter.toDTO(
+					new DefaultDTOConverterContext(
+						cpDefinitionSpecificationOptionValue.
+							getCPDefinitionSpecificationOptionValueId(),
+						locale)));
+		}
+
+		return productSpecifications;
 	}
 
 	private CPDefinitionSpecificationOptionValue _updateProductSpecification(
@@ -175,6 +235,9 @@ public class ProductSpecificationResourceImpl
 		ProductSpecificationResourceImpl.class);
 
 	@Reference
+	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
 	private CPDefinitionSpecificationOptionValueService
 		_cpDefinitionSpecificationOptionValueService;
 
@@ -187,9 +250,6 @@ public class ProductSpecificationResourceImpl
 	private DTOConverter
 		<CPDefinitionSpecificationOptionValue, ProductSpecification>
 			_productSpecificationDTOConverter;
-
-	@Reference
-	private ProductSpecificationHelper _productSpecificationHelper;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

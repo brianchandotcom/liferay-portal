@@ -72,8 +72,7 @@ definition {
 	macro executeAPIMethod {
 		Variables.assertDefined(parameterList = "${service},${method}");
 
-		Click(
-			locator1 = "OpenAPI#API_METHOD",
+		APIExplorer.expandAPIMethod(
 			method = ${method},
 			service = ${service});
 
@@ -100,6 +99,14 @@ definition {
 					method = ${method},
 					parameter = ${parameter_two},
 					value1 = ${value_two});
+			}
+
+			if (isSet(scopeKey)) {
+				Type(
+					locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
+					method = ${method},
+					parameter = "scopeKey",
+					value1 = ${scopeKey});
 			}
 		}
 
@@ -137,6 +144,15 @@ definition {
 		Click(
 			locator1 = "Button#BUTTON_WITH_VALUE",
 			value = "Execute Query (Ctrl-Enter)");
+	}
+
+	macro expandAPIMethod {
+		Variables.assertDefined(parameterList = "${service},${method}");
+
+		Click(
+			locator1 = "OpenAPI#API_METHOD",
+			method = ${method},
+			service = ${service});
 	}
 
 	macro expandPropertyInActionsSchema {

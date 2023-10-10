@@ -56,8 +56,7 @@ definition {
 			}
 			else {
 				AssertTextEquals(
-					key_title = "Description",
-					locator1 = "Header#H3_TITLE",
+					locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION_HEADER",
 					value1 = "Description");
 
 				AssertTextEquals(

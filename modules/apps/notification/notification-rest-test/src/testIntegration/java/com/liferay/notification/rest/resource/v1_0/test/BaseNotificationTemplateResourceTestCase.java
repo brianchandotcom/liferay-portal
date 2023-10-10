@@ -1270,6 +1270,14 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (notificationTemplate.getSystem() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (notificationTemplate.getType() == null) {
 					valid = false;
@@ -1603,6 +1611,17 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				if (!equals(
 						(Map)notificationTemplate1.getSubject(),
 						(Map)notificationTemplate2.getSubject())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationTemplate1.getSystem(),
+						notificationTemplate2.getSystem())) {
 
 					return false;
 				}
@@ -2087,6 +2106,11 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("system")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("type")) {
 			Object object = notificationTemplate.getType();
 
@@ -2238,6 +2262,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				objectDefinitionId = RandomTestUtil.randomLong();
 				recipientType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				system = RandomTestUtil.randomBoolean();
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				typeLabel = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

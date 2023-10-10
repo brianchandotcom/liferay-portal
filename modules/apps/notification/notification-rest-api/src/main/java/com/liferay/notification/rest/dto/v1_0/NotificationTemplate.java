@@ -558,6 +558,34 @@ public class NotificationTemplate implements Serializable {
 	protected Map<String, String> subject;
 
 	@Schema
+	public Boolean getSystem() {
+		return system;
+	}
+
+	public void setSystem(Boolean system) {
+		this.system = system;
+	}
+
+	@JsonIgnore
+	public void setSystem(
+		UnsafeSupplier<Boolean, Exception> systemUnsafeSupplier) {
+
+		try {
+			system = systemUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean system;
+
+	@Schema
 	public String getType() {
 		return type;
 	}
@@ -885,6 +913,16 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"subject\": ");
 
 			sb.append(_toJSON(subject));
+		}
+
+		if (system != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"system\": ");
+
+			sb.append(system);
 		}
 
 		if (type != null) {

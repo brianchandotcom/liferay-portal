@@ -138,7 +138,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationTemplateByExternalReferenceCode(externalReferenceCode: ___){actions, attachmentObjectFieldExternalReferenceCodes, attachmentObjectFieldIds, body, dateCreated, dateModified, description, editorType, externalReferenceCode, id, name, name_i18n, objectDefinitionExternalReferenceCode, objectDefinitionId, recipientType, recipients, subject, type, typeLabel}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationTemplateByExternalReferenceCode(externalReferenceCode: ___){actions, attachmentObjectFieldExternalReferenceCodes, attachmentObjectFieldIds, body, dateCreated, dateModified, description, editorType, externalReferenceCode, id, name, name_i18n, objectDefinitionExternalReferenceCode, objectDefinitionId, recipientType, recipients, subject, system, type, typeLabel}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public NotificationTemplate notificationTemplateByExternalReferenceCode(
@@ -157,7 +157,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationTemplate(notificationTemplateId: ___){actions, attachmentObjectFieldExternalReferenceCodes, attachmentObjectFieldIds, body, dateCreated, dateModified, description, editorType, externalReferenceCode, id, name, name_i18n, objectDefinitionExternalReferenceCode, objectDefinitionId, recipientType, recipients, subject, type, typeLabel}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationTemplate(notificationTemplateId: ___){actions, attachmentObjectFieldExternalReferenceCodes, attachmentObjectFieldIds, body, dateCreated, dateModified, description, editorType, externalReferenceCode, id, name, name_i18n, objectDefinitionExternalReferenceCode, objectDefinitionId, recipientType, recipients, subject, system, type, typeLabel}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public NotificationTemplate notificationTemplate(

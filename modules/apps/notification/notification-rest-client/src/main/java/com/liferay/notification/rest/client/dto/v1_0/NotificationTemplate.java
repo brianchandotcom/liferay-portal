@@ -402,6 +402,27 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected Map<String, String> subject;
 
+	public Boolean getSystem() {
+		return system;
+	}
+
+	public void setSystem(Boolean system) {
+		this.system = system;
+	}
+
+	public void setSystem(
+		UnsafeSupplier<Boolean, Exception> systemUnsafeSupplier) {
+
+		try {
+			system = systemUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean system;
+
 	public String getType() {
 		return type;
 	}

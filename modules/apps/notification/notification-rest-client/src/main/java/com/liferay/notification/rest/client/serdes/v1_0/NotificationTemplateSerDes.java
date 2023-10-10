@@ -323,6 +323,16 @@ public class NotificationTemplateSerDes {
 			sb.append(_toJSON(notificationTemplate.getSubject()));
 		}
 
+		if (notificationTemplate.getSystem() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"system\": ");
+
+			sb.append(notificationTemplate.getSystem());
+		}
+
 		if (notificationTemplate.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -532,6 +542,13 @@ public class NotificationTemplateSerDes {
 				"subject", String.valueOf(notificationTemplate.getSubject()));
 		}
 
+		if (notificationTemplate.getSystem() == null) {
+			map.put("system", null);
+		}
+		else {
+			map.put("system", String.valueOf(notificationTemplate.getSystem()));
+		}
+
 		if (notificationTemplate.getType() == null) {
 			map.put("type", null);
 		}
@@ -687,6 +704,12 @@ public class NotificationTemplateSerDes {
 					notificationTemplate.setSubject(
 						(Map)NotificationTemplateSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "system")) {
+				if (jsonParserFieldValue != null) {
+					notificationTemplate.setSystem(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

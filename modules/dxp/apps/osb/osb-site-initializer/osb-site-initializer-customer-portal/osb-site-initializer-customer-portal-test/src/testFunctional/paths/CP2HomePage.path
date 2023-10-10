@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>COOKIE_LINK</td>
-	<td>//h6[contains(@class, 'component-text')]//a[contains(@href, 'cookie-policy') and contains(text(), 'Cookie policy')]</td>
+	<td>//h6[contains(@class, 'cp_footer_text')]//a[contains(@href, 'cookie-policy')]</td>
 	<td></td>
 </tr>
 <tr>

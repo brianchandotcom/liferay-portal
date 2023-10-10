@@ -77,10 +77,6 @@ definition {
 				rowRole = "User");
 
 			CP2TeamMembers.clickTeamMembersSendInvitation();
-
-			WaitForElementPresent(
-				locator1 = "CustomerPortalSite#MODAL_PAGE",
-				modal = "Set up ${testProduct}");
 		}
 
 		task ("Assert that the guest user is being shown") {

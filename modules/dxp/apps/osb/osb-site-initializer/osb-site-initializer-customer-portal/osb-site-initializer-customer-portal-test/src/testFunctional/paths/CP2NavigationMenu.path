@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>QUICK_LINKS_COLLAPSED</td>
-	<td>//div[contains(@class, 'cp-link-body quick-links-container rounded position-absolute px-3 py-4')]</td>
+	<td>//div[contains(@class, 'cp-link-body quick-links-container')]</td>
 	<td></td>
 </tr>
 <tr>

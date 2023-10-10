@@ -243,6 +243,8 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			jsonObject.put(
 				"label", personalMenuEntry.getLabel(themeDisplay.getLocale())
 			).put(
+				"onClickJSModuleURL", personalMenuEntry.getOnClickJSModuleURL()
+			).put(
 				"symbolRight", personalMenuEntry.getIcon(portletRequest)
 			);
 

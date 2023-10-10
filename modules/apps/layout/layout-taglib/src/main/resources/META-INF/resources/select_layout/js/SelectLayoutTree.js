@@ -106,9 +106,11 @@ export function SelectLayoutTree({
 			data,
 		});
 
-		requestAnimationFrame(() => {
-			selection.toggle(item.id);
-		});
+		if (selection) {
+			requestAnimationFrame(() => {
+				selection.toggle(item.id);
+			});
+		}
 	};
 
 	const onClick = (event, item, selection, expand) => {
@@ -138,6 +140,15 @@ export function SelectLayoutTree({
 			else {
 				handleSingleSelection(item, selection);
 			}
+		}
+	};
+
+	const onSearchResultSelect = (item, selection) => {
+		if (selection) {
+			handleMultipleSelectionChange(item, selection);
+		}
+		else {
+			handleSingleSelection(item, selection);
 		}
 	};
 
@@ -195,7 +206,7 @@ export function SelectLayoutTree({
 
 	return items.length ? (
 		<div className="cadmin pt-3 px-3">
-			{multiSelection && (
+			{multiSelection && !filter && (
 				<p
 					className="mb-4"
 					dangerouslySetInnerHTML={{
@@ -219,99 +230,125 @@ export function SelectLayoutTree({
 				selectionMode={multiSelection ? 'multiple' : 'single'}
 				showExpanderOnHover={false}
 			>
-				{(item, selection, expand, load) => (
-					<ClayTreeView.Item active={false}>
-						<ClayTreeView.ItemStack
-							active={false}
-							onClick={(event) =>
-								onClick(event, item, selection, expand)
-							}
-							onKeyDown={(event) =>
-								onKeyDown(event, item, selection)
-							}
-						>
-							{multiSelection && !item.disabled && (
-								<Checkbox
-									checked={selection.has(item.id)}
-									onChange={(event) =>
-										handleMultipleSelectionChange(
-											item,
-											selection,
-											event.nativeEvent.shiftKey
-										)
-									}
-									onClick={(event) => event.stopPropagation()}
-									tabIndex="-1"
-								/>
-							)}
+				{(item, selection, expand, load) => {
+					if (filter) {
+						return (
+							<SearchResults
+								checkDisplayPage={checkDisplayPage}
+								filter={filter}
+								findLayoutsURL={config.findLayoutsURL}
+								itemSelectorReturnType={itemSelectorReturnType}
+								multiSelection={multiSelection}
+								onSelect={onSearchResultSelect}
+								selection={selection}
+							/>
+						);
+					}
 
-							<ClayIcon symbol={item.icon} />
+					return (
+						<ClayTreeView.Item active={false}>
+							<ClayTreeView.ItemStack
+								active={false}
+								onClick={(event) =>
+									onClick(event, item, selection, expand)
+								}
+								onKeyDown={(event) =>
+									onKeyDown(event, item, selection)
+								}
+							>
+								{multiSelection && !item.disabled && (
+									<Checkbox
+										checked={selection.has(item.id)}
+										onChange={(event) =>
+											handleMultipleSelectionChange(
+												item,
+												selection,
+												event.nativeEvent.shiftKey
+											)
+										}
+										onClick={(event) =>
+											event.stopPropagation()
+										}
+										tabIndex="-1"
+									/>
+								)}
 
-							<div className="d-flex">
-								<span className="flex-grow-0" title={item.url}>
-									{item.name}
-								</span>
-							</div>
-						</ClayTreeView.ItemStack>
+								<ClayIcon symbol={item.icon} />
 
-						<ClayTreeView.Group items={item.children}>
-							{(item) => (
-								<ClayTreeView.Item
-									disabled={item.disabled}
-									expandable={item.hasChildren}
-									expanderDisabled={false}
-									onClick={(event) =>
-										onClick(event, item, selection)
-									}
-									onKeyDown={(event) =>
-										onKeyDown(event, item, selection)
-									}
-								>
-									{multiSelection && !item.disabled && (
-										<Checkbox
-											checked={selection.has(item.id)}
-											onChange={(event) =>
-												handleMultipleSelectionChange(
-													item,
-													selection,
-													event.nativeEvent.shiftKey
-												)
-											}
-											onClick={(event) =>
-												event.stopPropagation()
-											}
-											tabIndex="-1"
-										/>
-									)}
+								<div className="d-flex">
+									<span
+										className="flex-grow-0"
+										title={item.url}
+									>
+										{item.name}
+									</span>
+								</div>
+							</ClayTreeView.ItemStack>
 
-									<ClayIcon symbol={item.icon} />
+							<ClayTreeView.Group items={item.children}>
+								{(item) => (
+									<ClayTreeView.Item
+										disabled={item.disabled}
+										expandable={item.hasChildren}
+										expanderDisabled={false}
+										onClick={(event) =>
+											onClick(event, item, selection)
+										}
+										onKeyDown={(event) =>
+											onKeyDown(event, item, selection)
+										}
+									>
+										{multiSelection && !item.disabled && (
+											<Checkbox
+												checked={selection.has(item.id)}
+												onChange={(event) =>
+													handleMultipleSelectionChange(
+														item,
+														selection,
+														event.nativeEvent
+															.shiftKey
+													)
+												}
+												onClick={(event) =>
+													event.stopPropagation()
+												}
+												tabIndex="-1"
+											/>
+										)}
 
-									<div className="d-flex">
-										<span
-											className="flex-grow-0"
-											title={item.url}
-										>
-											{item.name}
-										</span>
-									</div>
-								</ClayTreeView.Item>
-							)}
-						</ClayTreeView.Group>
+										<ClayIcon symbol={item.icon} />
 
-						{load.get(item.id) !== null &&
-							expand.has(item.id) &&
-							item.paginated && (
-								<ClayButton
-									borderless
-									className="ml-3 mt-2 text-secondary"
-									displayType="secondary"
-									onClick={() => load.loadMore(item.id, item)}
-								>
-									{Liferay.Language.get('load-more-results')}
-								</ClayButton>
-							)}
-					</ClayTreeView.Item>
-				)}
+										<div className="d-flex">
+											<span
+												className="flex-grow-0"
+												title={item.url}
+											>
+												{item.name}
+											</span>
+										</div>
+									</ClayTreeView.Item>
+								)}
+							</ClayTreeView.Group>
+
+							{load.get(item.id) !== null &&
+								expand.has(item.id) &&
+								item.paginated && (
+									<ClayButton
+										borderless
+										className="ml-3 mt-2 text-secondary"
+										displayType="secondary"
+										onClick={() =>
+											load.loadMore(item.id, item)
+										}
+									>
+										{Liferay.Language.get(
+											'load-more-results'
+										)}
+									</ClayButton>
+								)}
+						</ClayTreeView.Item>
+					);
+				}}
 			</ClayTreeView>
 		</div>
 	) : (

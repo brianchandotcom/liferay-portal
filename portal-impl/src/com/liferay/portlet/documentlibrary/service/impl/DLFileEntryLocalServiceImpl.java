@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WebDAVProps;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -134,7 +135,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Time;
@@ -679,7 +679,7 @@ public class DLFileEntryLocalServiceImpl
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLFileEntry dlFileEntry) -> {
 				if (includeTrashedEntries ||
-					!_trashHelper.isInTrashExplicitly(dlFileEntry)) {
+					!_isInTrashExplicitly(dlFileEntry)) {
 
 					repositoryEventTrigger.trigger(
 						RepositoryEventType.Delete.class, FileEntry.class,
@@ -987,7 +987,7 @@ public class DLFileEntryLocalServiceImpl
 
 				for (DLFileEntry dlFileEntry : dlFileEntries) {
 					if (includeTrashedEntries ||
-						!_trashHelper.isInTrashExplicitly(dlFileEntry)) {
+						!_isInTrashExplicitly(dlFileEntry)) {
 
 						repositoryEventTrigger.trigger(
 							RepositoryEventType.Delete.class, FileEntry.class,
@@ -2790,6 +2790,16 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
+	private boolean _isInTrashExplicitly(TrashedModel trashedModel) {
+		TrashHelper trashHelper = _trashHelperSnapshot.get();
+
+		if (trashHelper == null) {
+			return GetterUtil.DEFAULT_BOOLEAN;
+		}
+
+		return trashHelper.isInTrashExplicitly(trashedModel);
+	}
+
 	private boolean _isValidFileVersionNumber(String version) {
 		if (Validator.isNull(version)) {
 			return false;
@@ -3660,10 +3670,8 @@ public class DLFileEntryLocalServiceImpl
 
 	private static final Pattern _fileVersionPattern = Pattern.compile(
 		"\\d+\\.\\d+");
-	private static volatile TrashHelper _trashHelper =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			TrashHelper.class, DLFileEntryLocalServiceImpl.class,
-			"_trashHelper", false);
+	private static final Snapshot<TrashHelper> _trashHelperSnapshot =
+		new Snapshot<>(DLFileEntryLocalServiceImpl.class, TrashHelper.class);
 	private static final Snapshot<VersioningStrategy>
 		_versioningStrategySnapshot = new Snapshot<>(
 			DLFileEntryLocalServiceImpl.class, VersioningStrategy.class);

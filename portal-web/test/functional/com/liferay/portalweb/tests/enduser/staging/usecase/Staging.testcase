@@ -1827,6 +1827,10 @@ definition {
 
 			Portlet.addPG(portletName = "Web Content Display");
 
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page ${pageCount}",
+				siteName = "Site Name");
+
 			Staging.submitForWorkflowPageRevision();
 		}
 
@@ -1878,6 +1882,10 @@ definition {
 				siteName = "Site Name");
 
 			Portlet.addPG(portletName = "Asset Publisher");
+
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page ${pageCount}",
+				siteName = "Site Name");
 
 			Staging.submitForWorkflowPageRevision();
 		}

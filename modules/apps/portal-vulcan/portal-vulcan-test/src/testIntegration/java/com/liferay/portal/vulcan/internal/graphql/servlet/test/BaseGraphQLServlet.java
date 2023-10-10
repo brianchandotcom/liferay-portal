@@ -25,32 +25,41 @@ public class BaseGraphQLServlet {
 
 	public static class TestDTO {
 
-		public TestDTO(long id) {
-			_id = id;
-		}
+		public TestDTO(
+			String extendedStringField, long id, String stringField) {
 
-		public long getId() {
-			return _id;
+			_extendedStringField = extendedStringField;
+			this.id = id;
+			this.stringField = stringField;
 		}
 
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		private long _id;
+		protected long id;
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		protected String stringField;
+
+		private final String _extendedStringField;
 
 	}
 
 	public static class TestQuery {
 
-		public String getField() {
-			return _FIELD;
+		public String getExtendedStringField() {
+			return _EXTENDED_STRING_FIELD;
 		}
 
 		public long getId() {
 			return _ID;
 		}
 
+		public String getStringField() {
+			return _STRING_FIELD;
+		}
+
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		public BaseGraphQLServlet.TestDTO testDTO() throws Exception {
-			return new TestDTO(_ID);
+			return new TestDTO(_EXTENDED_STRING_FIELD, _ID, _STRING_FIELD);
 		}
 
 		@GraphQLTypeExtension(TestDTO.class)
@@ -61,8 +70,8 @@ public class BaseGraphQLServlet {
 			}
 
 			@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-			public String field() {
-				return _FIELD;
+			public String extendedStringField() {
+				return _EXTENDED_STRING_FIELD;
 			}
 
 			private final TestDTO _testDTO;
@@ -166,8 +175,11 @@ public class BaseGraphQLServlet {
 
 	}
 
-	private static final String _FIELD = RandomTestUtil.randomString();
+	private static final String _EXTENDED_STRING_FIELD =
+		RandomTestUtil.randomString();
 
 	private static final long _ID = RandomTestUtil.randomLong();
+
+	private static final String _STRING_FIELD = RandomTestUtil.randomString();
 
 }

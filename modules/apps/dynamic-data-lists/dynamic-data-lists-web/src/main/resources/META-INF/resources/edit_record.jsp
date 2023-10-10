@@ -106,7 +106,14 @@ else {
 		<div class="sidenav-menu-slider">
 			<div class="sidebar sidebar-light sidenav-menu">
 				<div class="sidebar-header">
-					<aui:icon cssClass="d-inline-block d-sm-none icon-monospaced sidenav-close text-default" image="times" markupView="lexicon" url="javascript:void(0);" />
+					<clay:button
+						aria-label="<%= LanguageUtil.get(request, "close") %>"
+						cssClass="d-sm-none icon-monospaced lfr-portal-tooltip sidenav-close"
+						displayType="unstyled"
+						icon="times"
+						small="<%= true %>"
+						title="close"
+					/>
 				</div>
 
 				<liferay-ui:tabs

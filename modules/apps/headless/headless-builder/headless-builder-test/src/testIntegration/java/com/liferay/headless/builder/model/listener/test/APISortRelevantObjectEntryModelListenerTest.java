@@ -73,24 +73,6 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "The API endpoint already has an associated API sort."
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"objectFieldERC", RandomTestUtil.randomString()
-				).put(
-					"oDataSort", "test:desc"
-				).put(
-					"r_apiEndpointToAPISorts_c_apiEndpointERC",
-					_API_ENDPOINT_ERC
-				).toString(),
-				"headless-builder/sorts", Http.Method.POST
-			).toString(),
-			JSONCompareMode.LENIENT);
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
 				"title", "An API sort must be related to an API endpoint."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
@@ -105,13 +87,6 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 				"headless-builder/sorts", Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
-	}
-
-	@Test
-	public void testPostSortOverExpressionLimit() throws Exception {
-		_addAPIApplication(
-			_objectDefinitionJSONObject.getString("externalReferenceCode"));
-
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
@@ -125,6 +100,24 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 					"objectFieldERC", RandomTestUtil.randomString()
 				).put(
 					"oDataSort", RandomTestUtil.randomString(1001)
+				).put(
+					"r_apiEndpointToAPISorts_c_apiEndpointERC",
+					_API_ENDPOINT_ERC
+				).toString(),
+				"headless-builder/sorts", Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title", "The API endpoint already has an associated API sort."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"objectFieldERC", RandomTestUtil.randomString()
+				).put(
+					"oDataSort", "test:desc"
 				).put(
 					"r_apiEndpointToAPISorts_c_apiEndpointERC",
 					_API_ENDPOINT_ERC

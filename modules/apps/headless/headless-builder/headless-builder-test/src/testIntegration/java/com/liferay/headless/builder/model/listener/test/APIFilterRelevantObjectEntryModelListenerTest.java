@@ -147,7 +147,6 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 				"headless-builder/filters", Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
-
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
@@ -166,33 +165,6 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 				"headless-builder/filters", Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title",
-				"The API endpoint already has an associated API filter."
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"objectFieldERC", RandomTestUtil.randomString()
-				).put(
-					"oDataFilter", "test ne 1"
-				).put(
-					"r_apiEndpointToAPIFilters_c_apiEndpointERC",
-					_API_ENDPOINT_ERC
-				).toString(),
-				"headless-builder/filters", Http.Method.POST
-			).toString(),
-			JSONCompareMode.LENIENT);
-	}
-
-	@Test
-	public void testPostFilterOverExpressionLimit() throws Exception {
-		_addAPIApplication(
-			_objectDefinitionJSONObject.getString("externalReferenceCode"));
-
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
@@ -206,6 +178,25 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 					"objectFieldERC", RandomTestUtil.randomString()
 				).put(
 					"oDataFilter", RandomTestUtil.randomString(1001)
+				).put(
+					"r_apiEndpointToAPIFilters_c_apiEndpointERC",
+					_API_ENDPOINT_ERC
+				).toString(),
+				"headless-builder/filters", Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"The API endpoint already has an associated API filter."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"objectFieldERC", RandomTestUtil.randomString()
+				).put(
+					"oDataFilter", "test ne 1"
 				).put(
 					"r_apiEndpointToAPIFilters_c_apiEndpointERC",
 					_API_ENDPOINT_ERC

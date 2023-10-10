@@ -333,14 +333,7 @@ public class ObjectValidationRuleLocalServiceTest {
 		ObjectField dateObjectField = _objectFieldLocalService.fetchObjectField(
 			_objectDefinition.getObjectDefinitionId(), "dateObjectField");
 
-		_assertObjectValidationRule(
-			false, ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-			LocalizedMapUtil.getLocalizedMap("Field must be an URL"),
-			"externalReferenceCode",
-			LocalizedMapUtil.getLocalizedMap("URL Validation"),
-			String.valueOf(dateObjectField.getObjectFieldId()),
-			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
-			"isURL(textObjectField)",
+		objectValidationRule =
 			_objectValidationRuleLocalService.updateObjectValidationRule(
 				objectValidationRule.getExternalReferenceCode(),
 				objectValidationRule.getObjectValidationRuleId(), false,
@@ -356,7 +349,36 @@ public class ObjectValidationRuleLocalServiceTest {
 							NAME_OUTPUT_OBJECT_FIELD_ID
 					).value(
 						String.valueOf(dateObjectField.getObjectFieldId())
-					).build())));
+					).build()));
+
+		_assertObjectValidationRule(
+			false, ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap("Field must be an URL"),
+			"externalReferenceCode",
+			LocalizedMapUtil.getLocalizedMap("URL Validation"),
+			String.valueOf(dateObjectField.getObjectFieldId()),
+			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
+			"isURL(textObjectField)", objectValidationRule);
+
+		Map<Locale, String> errorLabelMap = LocalizedMapUtil.getLocalizedMap(
+			RandomTestUtil.randomString());
+
+		_assertObjectValidationRule(
+			objectValidationRule.isActive(), objectValidationRule.getEngine(),
+			errorLabelMap, objectValidationRule.getExternalReferenceCode(),
+			objectValidationRule.getNameMap(),
+			String.valueOf(dateObjectField.getObjectFieldId()),
+			objectValidationRule.getOutputType(),
+			objectValidationRule.getScript(),
+			_objectValidationRuleLocalService.updateObjectValidationRule(
+				objectValidationRule.getExternalReferenceCode(),
+				objectValidationRule.getObjectValidationRuleId(),
+				objectValidationRule.isActive(),
+				objectValidationRule.getEngine(), errorLabelMap,
+				objectValidationRule.getNameMap(),
+				objectValidationRule.getOutputType(),
+				objectValidationRule.getScript(),
+				objectValidationRule.getObjectValidationRuleSettings()));
 	}
 
 	private ObjectValidationRule _addObjectValidationRule(

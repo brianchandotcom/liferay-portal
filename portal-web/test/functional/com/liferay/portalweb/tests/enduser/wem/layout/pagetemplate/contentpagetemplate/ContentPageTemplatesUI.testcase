@@ -125,7 +125,7 @@ definition {
 				key_headerName = "Page Template Collection",
 				locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
 
-			MenuItem.viewOrder(menuItemList = "Edit,Permissions,Delete");
+			MenuItem.viewOrder(menuItemList = "Edit,Rename,Permissions,Delete");
 
 			Click.waitForMenuToggleJSClick(
 				key_headerName = "Page Template Collection",

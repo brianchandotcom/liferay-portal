@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>PAGE_VARIATION_IFRAME</td>
-	<td>//iframe[contains(@id,'pagesVariationsDialog_iframe_')]</td>
+	<td>//iframe[contains(@id,'pagesVariationDialog_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>

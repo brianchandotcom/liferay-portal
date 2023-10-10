@@ -529,10 +529,6 @@ public class HtmlUtil {
 		return sb.toString();
 	}
 
-	public static Html getHtml() {
-		return _html;
-	}
-
 	/**
 	 * Replaces all new lines or carriage returns with the <code><br /></code>
 	 * HTML tag.

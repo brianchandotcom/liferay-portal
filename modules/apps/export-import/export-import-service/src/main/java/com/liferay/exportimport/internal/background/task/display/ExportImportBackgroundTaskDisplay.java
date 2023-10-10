@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlUtil_IW;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -143,7 +144,7 @@ public class ExportImportBackgroundTaskDisplay
 			"exported",
 			MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "exported")
 		).put(
-			"htmlUtil", HtmlUtil.getHtml()
+			"htmlUtil", HtmlUtil_IW.getInstance()
 		).put(
 			"validated",
 			MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "validated")

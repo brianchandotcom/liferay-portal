@@ -31,6 +31,10 @@
 	/>
 	<instance-wrapper
 		parent-dir="../portal-kernel/src"
+		src-file="com/liferay/portal/kernel/util/HtmlUtil.java"
+	/>
+	<instance-wrapper
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/service/permission/GroupPermissionUtil.java"
 	/>
 	<instance-wrapper

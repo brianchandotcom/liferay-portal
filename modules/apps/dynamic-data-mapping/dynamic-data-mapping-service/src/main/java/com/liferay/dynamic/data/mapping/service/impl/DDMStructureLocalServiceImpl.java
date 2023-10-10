@@ -2406,7 +2406,4 @@ public class DDMStructureLocalServiceImpl
 	@Reference
 	private UserLocalService _userLocalService;
 
-	@Reference(target = "(ddm.form.deserializer.type=xsd)")
-	private DDMFormDeserializer _xsdDDMFormDeserializer;
-
 }

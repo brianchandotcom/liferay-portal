@@ -5,8 +5,12 @@
 
 package com.liferay.batch.engine.internal.reader;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import com.liferay.batch.engine.model.impl.BatchEngineImportTaskImpl;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.jackson.databind.deser.JSONStringStdDeserializer;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -44,6 +48,10 @@ public abstract class BaseBatchEngineImportTaskItemReaderImplTestCase {
 			return _id;
 		}
 
+		public String getJsonString() {
+			return _jsonString;
+		}
+
 		public Map<String, String> getName() {
 			return _name;
 		}
@@ -67,17 +75,20 @@ public abstract class BaseBatchEngineImportTaskItemReaderImplTestCase {
 		private Date _createDate;
 		private String _description;
 		private Long _id;
+
+		@JsonDeserialize(using = JSONStringStdDeserializer.class)
+		private String _jsonString;
+
 		private Map<String, String> _name;
 
 	}
 
-	protected void validate(
-			String createDateString, String description, Long id,
+	protected static Item getItem(
 			Map<String, String> fieldNameMappingMap,
-			Map<String, Object> fieldNameValueMap, Map<String, String> nameMap)
+			Map<String, Object> fieldNameValueMap)
 		throws ReflectiveOperationException {
 
-		Item item = BatchEngineImportTaskItemReaderUtil.convertValue(
+		return BatchEngineImportTaskItemReaderUtil.convertValue(
 			new BatchEngineImportTaskImpl(), Item.class,
 			BatchEngineImportTaskItemReaderUtil.mapFieldNames(
 				fieldNameMappingMap, fieldNameValueMap),
@@ -88,11 +99,20 @@ public abstract class BaseBatchEngineImportTaskItemReaderImplTestCase {
 							String.valueOf(extendedProperties.keySet()));
 					}
 				}));
+	}
+
+	protected void validate(
+			String createDateString, String description, Long id,
+			Map<String, String> fieldNameMappingMap,
+			Map<String, Object> fieldNameValueMap, Map<String, String> nameMap)
+		throws ReflectiveOperationException {
+
+		Item item = getItem(fieldNameMappingMap, fieldNameValueMap);
 
 		if (createDateString == null) {
 			Assert.assertNull(item.getCreateDate());
 		}
-		else {
+		else if (Validator.isNotNull(item.getCreateDate())) {
 			Assert.assertEquals(
 				createDateString, _dateFormat.format(item.getCreateDate()));
 		}

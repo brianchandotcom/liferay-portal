@@ -41,11 +41,9 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.Serializable;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -656,56 +654,6 @@ public class BatchEngineImportTaskExecutorTest
 	}
 
 	@Test
-	public void testImportWorkflowDefinition() throws Exception {
-
-		// Import in json format
-
-		_batchEngineImportTask =
-			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				null, TestPropsValues.getCompanyId(), user.getUserId(),
-				_BATCH_SIZE, null,
-				"com.liferay.headless.admin.workflow.dto.v1_0." +
-					"WorkflowDefinition",
-				_compressContent(
-					_readWorkflowDefinitionJSONBytes(
-						"workflow-definition.json"),
-					"JSON"),
-				"JSON", BatchEngineTaskExecuteStatus.INITIAL.name(), null,
-				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
-				BatchEngineTaskOperation.CREATE.toString(), new HashMap<>(),
-				null);
-
-		_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
-
-		Assert.assertEquals(
-			BatchEngineTaskExecuteStatus.COMPLETED.toString(),
-			_batchEngineImportTask.getExecuteStatus());
-
-		// Import in json string format
-
-		_batchEngineImportTask =
-			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				null, TestPropsValues.getCompanyId(), user.getUserId(),
-				_BATCH_SIZE, null,
-				"com.liferay.headless.admin.workflow.dto.v1_0." +
-					"WorkflowDefinition",
-				_compressContent(
-					_readWorkflowDefinitionJSONBytes(
-						"workflow-definition-json-string.json"),
-					"JSON"),
-				"JSON", BatchEngineTaskExecuteStatus.INITIAL.name(), null,
-				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
-				BatchEngineTaskOperation.CREATE.toString(), new HashMap<>(),
-				null);
-
-		_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
-
-		Assert.assertEquals(
-			BatchEngineTaskExecuteStatus.COMPLETED.toString(),
-			_batchEngineImportTask.getExecuteStatus());
-	}
-
-	@Test
 	public void testUpdateBlogPostingsFromCSVFile() throws Exception {
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
 
@@ -1282,21 +1230,6 @@ public class BatchEngineImportTaskExecutorTest
 		_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
 	}
 
-	private byte[] _readWorkflowDefinitionJSONBytes(String templateName)
-		throws Exception {
-
-		File file = _file.createTempFile("json");
-
-		Files.copy(
-			getClass().getResourceAsStream(
-				StringBundler.concat(
-					"/com/liferay/batch/engine/internal/test/dependencies",
-					"/batch10/batch10/", templateName)),
-			file.toPath());
-
-		return _file.getBytes(file);
-	}
-
 	private byte[] _toContent(String contentType, StringBundler sb)
 		throws Exception {
 
@@ -1353,9 +1286,6 @@ public class BatchEngineImportTaskExecutorTest
 	@Inject
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
-
-	@Inject
-	private com.liferay.portal.kernel.util.File _file;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -169,6 +169,46 @@ public class JSONBatchEngineImportTaskItemReaderImplTest
 	}
 
 	@Test
+	public void testJSONStringColumnMapping() throws Exception {
+
+		// As JSON object
+
+		try (JSONBatchEngineImportTaskItemReaderImpl
+				jsonBatchEngineImportTaskItemReaderImpl =
+					_getJSONBatchEngineImportTaskItemReader(
+						new String[] {"jsonString1"},
+						new Object[][] {{"{\"key\": \"value\"}"}})) {
+
+			Item item = getItem(
+				HashMapBuilder.put(
+					"jsonString1", "jsonString"
+				).build(),
+				jsonBatchEngineImportTaskItemReaderImpl.read());
+
+			Assert.assertEquals("{\"key\":\"value\"}", item.getJsonString());
+		}
+
+		// As JSON string
+
+		try (JSONBatchEngineImportTaskItemReaderImpl
+				jsonBatchEngineImportTaskItemReaderImpl =
+					_getJSONBatchEngineImportTaskItemReader(
+						new String[] {"jsonString1"},
+						new Object[][] {
+							{"\"{\\\"key\\\": \\\"value\\\"}\""}
+						})) {
+
+			Item item = getItem(
+				HashMapBuilder.put(
+					"jsonString1", "jsonString"
+				).build(),
+				jsonBatchEngineImportTaskItemReaderImpl.read());
+
+			Assert.assertEquals("{\"key\": \"value\"}", item.getJsonString());
+		}
+	}
+
+	@Test
 	public void testReadInvalidRow() throws Exception {
 		try (JSONBatchEngineImportTaskItemReaderImpl
 				jsonBatchEngineImportTaskItemReaderImpl =

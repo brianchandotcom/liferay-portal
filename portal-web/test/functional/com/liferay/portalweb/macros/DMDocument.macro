@@ -2968,7 +2968,7 @@ definition {
 		}
 
 		Type(
-			key_fieldLabel = "File Max Size",
+			key_fieldLabel = "Maximum File Upload Size",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = ${fieldValue});
 

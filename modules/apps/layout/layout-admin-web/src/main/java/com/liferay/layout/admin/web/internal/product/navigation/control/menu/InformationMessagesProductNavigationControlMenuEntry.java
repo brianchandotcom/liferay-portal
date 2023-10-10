@@ -8,6 +8,8 @@ package com.liferay.layout.admin.web.internal.product.navigation.control.menu;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -128,7 +130,16 @@ public class InformationMessagesProductNavigationControlMenuEntry
 
 		if ((layoutType ==
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) ||
-			(layoutType == LayoutPageTemplateEntryTypeConstants.BASIC) ||
+			(layoutType == LayoutPageTemplateEntryTypeConstants.BASIC)) {
+
+			return false;
+		}
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByPlid(layout.getClassPK());
+
+		if ((layoutUtilityPageEntry != null) ||
 			(!_isLinkedLayout(themeDisplay) &&
 			 !_isModifiedLayout(themeDisplay))) {
 
@@ -190,6 +201,10 @@ public class InformationMessagesProductNavigationControlMenuEntry
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
 	private ServletContext _servletContext;

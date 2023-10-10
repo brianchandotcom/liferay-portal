@@ -8,6 +8,8 @@ package com.liferay.layout.set.prototype.web.internal.product.navigation.control
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -92,7 +94,16 @@ public class PropagationMessageProductNavigationControlMenuEntry
 
 		if ((layoutType ==
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) ||
-			(layoutType == LayoutPageTemplateEntryTypeConstants.BASIC) ||
+			(layoutType == LayoutPageTemplateEntryTypeConstants.BASIC)) {
+
+			return false;
+		}
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByPlid(layout.getClassPK());
+
+		if ((layoutUtilityPageEntry != null) ||
 			!LayoutSetPrototypePermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				layoutSetPrototype.getLayoutSetPrototypeId(),
@@ -115,6 +126,10 @@ public class PropagationMessageProductNavigationControlMenuEntry
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.set.prototype.web)"

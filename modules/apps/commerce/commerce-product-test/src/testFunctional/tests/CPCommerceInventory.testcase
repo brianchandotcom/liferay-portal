@@ -404,7 +404,7 @@ definition {
 	@description = "This is a test for COMMERCE-12326. If the SKU/UOM combination is set, when the admin deletes a placed order, can view the inventory quantities from the SKU/UOM combination be restocked correctly"
 	@priority = 5
 	test CanRestockSKUUOMInventoryAfterDeletingAnOrder {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11287=true";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given the buyer adds the product ABS Sensor to the cart in the quantity of 2") {
@@ -492,7 +492,7 @@ definition {
 	@description = "This is a test for COMMERCE-12327. If the SKU/UOM combination is set, when the admin deletes the shipment for a placed order, can view the inventory quantities from the SKU/UOM combination be restocked correctly"
 	@priority = 5
 	test CanRestockSKUUOMInventoryAfterDeletingAShipment {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11287=true";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given the buyer adds the product ABS Sensor to the cart in the quantity of 2") {
@@ -720,7 +720,7 @@ definition {
 	@description = "This is a test for COMMERCE-12325. If the SKU/UOM combination is set, when the admin completes the order with shipments, can view the inventory quantities from the SKU/UOM combination be updated correctly"
 	@priority = 5
 	test CanViewSKUUOMInventoryQuantitiesUpdatedCorrectly {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11287=true";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given the buyer adds the product ABS Sensor to the cart in the quantity of 2") {

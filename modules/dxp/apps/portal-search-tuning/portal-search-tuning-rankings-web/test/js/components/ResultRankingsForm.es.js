@@ -134,8 +134,8 @@ describe('ResultRankingsForm', () => {
 
 	it.each`
 		id       | button               | selector
-		${'100'} | ${HIDE_BUTTON_LABEL} | ${'#hiddenIdsAdded'}
-		${'200'} | ${SHOW_BUTTON_LABEL} | ${'#hiddenIdsRemoved'}
+		${'100'} | ${HIDE_BUTTON_LABEL} | ${'#addedHiddenIds'}
+		${'200'} | ${SHOW_BUTTON_LABEL} | ${'#removedHiddenIds'}
 	`('updates the $selector', async ({button, id, selector}) => {
 		const {
 			container,
@@ -156,8 +156,8 @@ describe('ResultRankingsForm', () => {
 
 	it.each`
 		id       | button               | newButton            | selector
-		${'100'} | ${HIDE_BUTTON_LABEL} | ${SHOW_BUTTON_LABEL} | ${'#hiddenIdsAdded'}
-		${'200'} | ${SHOW_BUTTON_LABEL} | ${HIDE_BUTTON_LABEL} | ${'#hiddenIdsRemoved'}
+		${'100'} | ${HIDE_BUTTON_LABEL} | ${SHOW_BUTTON_LABEL} | ${'#addedHiddenIds'}
+		${'200'} | ${SHOW_BUTTON_LABEL} | ${HIDE_BUTTON_LABEL} | ${'#removedHiddenIds'}
 	`(
 		'updates the $selector back',
 		async ({button, id, newButton, selector}) => {

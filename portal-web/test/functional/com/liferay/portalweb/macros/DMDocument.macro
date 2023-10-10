@@ -3252,7 +3252,7 @@ definition {
 	macro viewCheckedoutCP {
 		if (${dmRepositoryName} == "true") {
 			AssertTextEquals.assertPartialText(
-				locator1 = "Message#INFO",
+				locator1 = "Message#INFO_1",
 				value1 = "You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.");
 		}
 		else {

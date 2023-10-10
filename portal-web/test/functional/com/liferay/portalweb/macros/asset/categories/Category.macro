@@ -210,7 +210,7 @@ definition {
 	macro assertLearnHowLink {
 		Click(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AssertLocation.assertPartialLocation(value1 = "tags-and-categories/defining-categories-and-vocabularies-for-content");
 	}

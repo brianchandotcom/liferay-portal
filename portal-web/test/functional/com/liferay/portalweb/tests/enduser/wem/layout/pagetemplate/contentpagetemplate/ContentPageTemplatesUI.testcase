@@ -56,7 +56,7 @@ definition {
 		task ("Then the page creator could configure content page template in a new tab") {
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			AssertElementPresent(
 				key_title = "General",

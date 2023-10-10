@@ -4576,7 +4576,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	macro previewInANewTab {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Preview in a New Tab");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 	}
 
 	macro previewSuccessNotification {

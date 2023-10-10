@@ -130,7 +130,7 @@ definition {
 		task ("Then the page creator could configure display page template in a new tab") {
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			Navigator.gotoNavTab(navTab = "SEO");
 
@@ -190,7 +190,7 @@ definition {
 
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			PagesAdmin.viewCurrentTheme(themeName = "Speedwell");
 		}

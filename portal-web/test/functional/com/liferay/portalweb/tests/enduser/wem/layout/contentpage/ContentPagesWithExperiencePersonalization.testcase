@@ -175,7 +175,7 @@ definition {
 				menuItem = "Preview Draft",
 				pageName = "Test Page Name");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
 
@@ -536,7 +536,7 @@ definition {
 				menuItem = "Preview Draft",
 				pageName = "Test Page Name");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
 
@@ -794,7 +794,7 @@ definition {
 		}
 
 		task ("Change to new experience and view the new experience shown in experience selector") {
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ContentPages.changeExperience(experienceName = "New Experience");
 
@@ -820,7 +820,7 @@ definition {
 		task ("Back to view page mode and view the new experience still selected in experience selector") {
 			Close.closeWindow();
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			PageEditor.clickBack();
 

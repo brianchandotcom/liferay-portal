@@ -68,7 +68,7 @@ definition {
 				item = "Go to Pages",
 				tableEntry = "Site Name");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ContentPages.gotoPageEditor();
 

@@ -237,7 +237,7 @@ definition {
 
 		WaitForPageLoad();
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 	}
 
 }

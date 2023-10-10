@@ -9,7 +9,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.security.auth.http.HttpAuthManagerImpl;
+import com.liferay.portal.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Map;
@@ -26,7 +26,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Tomas Polesovsky
  */
-public class HttpAuthManagerImplTest {
+public class HttpAuthManagerUtilTest {
 
 	@ClassRule
 	@Rule
@@ -43,7 +43,7 @@ public class HttpAuthManagerImplTest {
 			"Basic " + Base64.encode("test@liferay.com:te:st".getBytes()));
 
 		HttpAuthorizationHeader httpAuthorizationHeader =
-			_httpAuthManagerImpl.parse(mockHttpServletRequest);
+			HttpAuthManagerUtil.parse(mockHttpServletRequest);
 
 		Assert.assertEquals(
 			"te:st",
@@ -61,7 +61,7 @@ public class HttpAuthManagerImplTest {
 			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
 
 		HttpAuthorizationHeader httpAuthorizationHeader =
-			_httpAuthManagerImpl.parse(mockHttpServletRequest);
+			HttpAuthManagerUtil.parse(mockHttpServletRequest);
 
 		Assert.assertEquals(
 			HttpAuthorizationHeader.SCHEME_BASIC,
@@ -94,7 +94,7 @@ public class HttpAuthManagerImplTest {
 			"Basic " + Base64.encode("test@liferay.com".getBytes()));
 
 		HttpAuthorizationHeader httpAuthorizationHeader =
-			_httpAuthManagerImpl.parse(mockHttpServletRequest);
+			HttpAuthManagerUtil.parse(mockHttpServletRequest);
 
 		Assert.assertEquals(
 			HttpAuthorizationHeader.SCHEME_BASIC,
@@ -122,7 +122,7 @@ public class HttpAuthManagerImplTest {
 			HttpHeaders.AUTHORIZATION,
 			"Basic " + Base64.encode("test@liferay.com:".getBytes()));
 
-		httpAuthorizationHeader = _httpAuthManagerImpl.parse(
+		httpAuthorizationHeader = HttpAuthManagerUtil.parse(
 			mockHttpServletRequest);
 
 		Assert.assertEquals(
@@ -136,7 +136,7 @@ public class HttpAuthManagerImplTest {
 			HttpHeaders.AUTHORIZATION,
 			"Basic " + Base64.encode(":".getBytes()));
 
-		httpAuthorizationHeader = _httpAuthManagerImpl.parse(
+		httpAuthorizationHeader = HttpAuthManagerUtil.parse(
 			mockHttpServletRequest);
 
 		Assert.assertEquals(
@@ -160,7 +160,7 @@ public class HttpAuthManagerImplTest {
 			"Basic " + Base64.encode(" test@liferay.com : test ".getBytes()));
 
 		HttpAuthorizationHeader httpAuthorizationHeader =
-			_httpAuthManagerImpl.parse(mockHttpServletRequest);
+			HttpAuthManagerUtil.parse(mockHttpServletRequest);
 
 		Assert.assertEquals(
 			HttpAuthorizationHeader.SCHEME_BASIC,
@@ -194,7 +194,7 @@ public class HttpAuthManagerImplTest {
 				Base64.encode("test%40liferay%253ecom:test%40".getBytes()));
 
 		HttpAuthorizationHeader httpAuthorizationHeader =
-			_httpAuthManagerImpl.parse(mockHttpServletRequest);
+			HttpAuthManagerUtil.parse(mockHttpServletRequest);
 
 		Assert.assertEquals(
 			HttpAuthorizationHeader.SCHEME_BASIC,
@@ -236,7 +236,7 @@ public class HttpAuthManagerImplTest {
 			"DIGEST " + StringUtil.join(digestParams, ",\n"));
 
 		HttpAuthorizationHeader httpAuthorizationHeader =
-			_httpAuthManagerImpl.parse(mockHttpServletRequest);
+			HttpAuthManagerUtil.parse(mockHttpServletRequest);
 
 		Assert.assertEquals(
 			HttpAuthorizationHeader.SCHEME_DIGEST,
@@ -276,7 +276,7 @@ public class HttpAuthManagerImplTest {
 			new MockHttpServletRequest();
 
 		Assert.assertEquals(
-			null, _httpAuthManagerImpl.parse(mockHttpServletRequest));
+			null, HttpAuthManagerUtil.parse(mockHttpServletRequest));
 
 		mockHttpServletRequest = new MockHttpServletRequest();
 
@@ -284,7 +284,7 @@ public class HttpAuthManagerImplTest {
 			HttpHeaders.AUTHORIZATION, StringPool.BLANK);
 
 		Assert.assertEquals(
-			null, _httpAuthManagerImpl.parse(mockHttpServletRequest));
+			null, HttpAuthManagerUtil.parse(mockHttpServletRequest));
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -295,10 +295,7 @@ public class HttpAuthManagerImplTest {
 		mockHttpServletRequest.addHeader(
 			HttpHeaders.AUTHORIZATION, "Unsupported");
 
-		_httpAuthManagerImpl.parse(mockHttpServletRequest);
+		HttpAuthManagerUtil.parse(mockHttpServletRequest);
 	}
-
-	private final HttpAuthManagerImpl _httpAuthManagerImpl =
-		new HttpAuthManagerImpl();
 
 }

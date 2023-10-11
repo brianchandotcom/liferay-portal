@@ -23,7 +23,7 @@ definition {
 	function openInTheNewTab {
 		WaitForSPARefresh();
 
-		selenium.executeJavaScript("sessionStorage.clear(); window.open();");
+		ExecuteJavaScript(value1 = "sessionStorage.clear(); window.open();");
 
 		SelectWindow.selectPopUp(value1 = "null");
 
@@ -55,7 +55,7 @@ definition {
 window.open("${locator1}","_self");
 		''';
 
-		selenium.executeJavaScript(${javascript});
+		ExecuteJavaScript(value1 = ${javaScript});
 	}
 
 }

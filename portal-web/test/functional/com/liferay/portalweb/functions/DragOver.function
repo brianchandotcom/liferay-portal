@@ -40,7 +40,10 @@ Simulate = {
 Simulate.dragOver(arguments[0], arguments[1], ${ratio});
 		''';
 
-		selenium.executeJavaScript(${javaScript}, ${locator1}, ${locator2});
+		ExecuteJavaScript(
+			value1 = ${javaScript},
+			value2 = ${locator1},
+			value3 = ${locator2});
 
 		selenium.assertJavaScriptErrors();
 
@@ -82,7 +85,10 @@ Simulate = {
 Simulate.dragOver(arguments[0], arguments[1]);
 		''';
 
-		selenium.executeJavaScript(${javaScript}, ${locator1}, ${locator2});
+		ExecuteJavaScript(
+			value1 = ${javaScript},
+			value2 = ${locator1},
+			value3 = ${locator2});
 
 		selenium.assertJavaScriptErrors();
 

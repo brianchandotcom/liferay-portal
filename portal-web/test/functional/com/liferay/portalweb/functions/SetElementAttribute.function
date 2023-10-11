@@ -12,7 +12,7 @@ var element = document.evaluate("${locator1}", document, null, XPathResult.FIRST
 element.setAttribute("${attribute1}", "${value1}");
 		''';
 
-		selenium.executeJavaScript(${javaScript});
+		ExecuteJavaScript(value1 = ${javascript});
 
 		selenium.assertJavaScriptErrors();
 

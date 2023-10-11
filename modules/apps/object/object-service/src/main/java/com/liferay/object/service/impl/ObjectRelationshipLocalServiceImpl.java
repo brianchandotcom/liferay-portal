@@ -1015,11 +1015,11 @@ public class ObjectRelationshipLocalServiceImpl
 		while (invalidSequence) {
 			dbTableName = StringBundler.concat(
 				"R_",
-				StringUtil.randomString(
+				StringUtil.randomAlphabeticString(
 					1
 				).toUpperCase(),
 				RandomUtil.nextInt(10),
-				StringUtil.randomString(
+				StringUtil.randomAlphabeticString(
 					1
 				).toUpperCase(),
 				RandomUtil.nextInt(10));

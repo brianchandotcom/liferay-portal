@@ -502,6 +502,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKOUT_SUMMARY_PRODUCT_TABLE_UOM</td>
+	<td>//tr[${key_row}]//td[contains(@class,'uom-column')]//*/*[contains(.,'${key_uom}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKOUT_SUMMARY_BILLING_ADDRESS</td>
 	<td>//address[@class='billing-address' and contains(.,'${key_addressInfo}')]</td>
 	<td></td>

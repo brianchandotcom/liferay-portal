@@ -22,8 +22,6 @@ import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
 
-import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -79,7 +77,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				content = _formatGeneral(content, fileName, jsonObject);
 			}
 
-			if (_testMode && _firstExecution && oldContent.equals(content)) {
+			if (_testMode && oldContent.equals(content)) {
 				throw new UpgradeCatchAllException(
 					"Unable to process pattern " +
 						jsonObject.getString("from") +
@@ -87,7 +85,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			}
 		}
 
-		_firstExecution = false;
+		_testMode = false;
 
 		return content;
 	}
@@ -150,14 +148,9 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		ClassLoader classLoader = UpgradeCatchAllCheck.class.getClassLoader();
 
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"dependencies/" + fileName);
-
-		if (inputStream == null) {
-			return new JSONArrayImpl();
-		}
-
-		return new JSONArrayImpl(StringUtil.read(inputStream));
+		return new JSONArrayImpl(
+			StringUtil.read(
+				classLoader.getResourceAsStream("dependencies/" + fileName)));
 	}
 
 	private String _addNewReference(String content, String newReference) {
@@ -406,7 +399,6 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private static boolean _firstExecution = true;
 	private static boolean _testMode;
 
 }

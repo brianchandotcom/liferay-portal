@@ -607,7 +607,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			metadataManagerImpl, "_credentialResolver", credentialResolver);
 		ReflectionTestUtil.setFieldValue(
-			metadataManagerImpl, "_localEntityManager", credentialResolver);
+			metadataManagerImpl, "_localEntityManager",
+			keyStoreLocalEntityManager);
 		ReflectionTestUtil.setFieldValue(
 			metadataManagerImpl, "_portal", portal);
 		ReflectionTestUtil.setFieldValue(

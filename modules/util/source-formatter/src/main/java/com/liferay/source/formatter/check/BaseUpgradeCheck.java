@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -47,15 +48,36 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 
 		Arrays.sort(newImports);
 
+		List<String> missingImports = new ArrayList<>();
+
+		for (String newImport : newImports) {
+			if (!newContent.contains("import=\"" + newImport)) {
+				missingImports.add(newImport);
+			}
+		}
+
+		if (missingImports.isEmpty()) {
+			return newContent;
+		}
+
+		newImports = missingImports.toArray(new String[0]);
+
 		Matcher includesMatcher = _includesPattern.matcher(newContent);
 
-		if (includesMatcher.find()) {
-			String jspHeader = includesMatcher.group();
+		int index = -1;
+
+		while (includesMatcher.find()) {
+			index = includesMatcher.start();
+		}
+
+		if (index != -1) {
+			includesMatcher.find(index);
+
+			String lastJSPHeader = includesMatcher.group();
 
 			return StringUtil.replaceFirst(
-				newContent, jspHeader,
-				getNewImportsJSPHeader(
-					StringUtil.splitLines(jspHeader), newImports));
+				newContent, lastJSPHeader,
+				getNewImportsJSPHeader(lastJSPHeader, newImports), index);
 		}
 
 		Matcher copyrightMatcher = _copyrightPattern.matcher(newContent);
@@ -65,29 +87,28 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 
 			return StringUtil.replaceFirst(
 				newContent, jspHeader,
-				getNewImportsJSPHeader(new String[] {jspHeader}, newImports));
+				getNewImportsJSPHeader(jspHeader, newImports));
 		}
 
-		return getNewImportsJSPHeader(new String[0], newImports) + newContent;
+		return getNewImportsJSPHeader("", newImports) + newContent;
 	}
 
 	protected static String getNewImportsJSPHeader(
-		String[] jspHeaders, String[] newImports) {
+		String lastJSPHeader, String[] newImports) {
 
 		StringBundler sb = new StringBundler(4);
 
-		for (String jspHeader : jspHeaders) {
-			sb.append(jspHeader);
+		if (!lastJSPHeader.isEmpty()) {
+			sb.append(lastJSPHeader);
+			sb.append(StringPool.NEW_LINE);
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		for (String newImport : newImports) {
-			sb.append("<%@ page import=\"");
-			sb.append(newImport);
-			sb.append("\" %>");
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.NEW_LINE);
+		for (int i = 0; i < newImports.length; i++) {
+			newImports[i] = "<%@ page import=\"" + newImports[i] + "\" %>";
 		}
+
+		sb.append(StringUtil.merge(newImports, StringPool.NEW_LINE));
 
 		return sb.toString();
 	}
@@ -160,6 +181,6 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 	private static final Pattern _copyrightPattern = Pattern.compile(
 		"(<%--\\s*(\\/\\*)+(\\n|.)*(\\*\\/)+\\s*--%>)");
 	private static final Pattern _includesPattern = Pattern.compile(
-		"(<%@\\s*include\\s*(.+)%>\\s*)+", Pattern.MULTILINE);
+		"<%@\\s*include\\s+file\\s*=[\"/\\w\\.]+\\s*%>", Pattern.MULTILINE);
 
 }

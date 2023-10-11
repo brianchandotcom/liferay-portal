@@ -13,7 +13,11 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
@@ -22,6 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -102,6 +107,11 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				ActionKeys.UPDATE);
 		}
 
+		long currentCompanyId = CompanyThreadLocal.getCompanyId();
+		PermissionChecker currentPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String currentPrincipalThreadLocalName = PrincipalThreadLocal.getName();
+
 		File tempFile = FileUtil.createTempFile(
 			multipartBody.getBinaryFileAsBytes("file"));
 		File tempFolder = FileUtil.createTempFolder();
@@ -111,13 +121,30 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		tempFile.delete();
 
 		try {
+			CompanyThreadLocal.setCompanyId(contextCompany.getCompanyId());
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(contextUser));
+			PrincipalThreadLocal.setName(contextUser.getUserId());
+			ServiceContextThreadLocal.pushServiceContext(
+				_getServiceContext(group));
+
 			SiteInitializer siteInitializer = _siteInitializerFactory.create(
 				new File(tempFolder, "site-initializer"),
 				group.getName(LocaleUtil.getDefault()));
 
 			siteInitializer.initialize(group.getGroupId());
 		}
+		catch (Exception exception) {
+			PermissionCacheUtil.clearCache(contextUser.getUserId());
+
+			throw exception;
+		}
 		finally {
+			CompanyThreadLocal.setCompanyId(currentCompanyId);
+			PermissionThreadLocal.setPermissionChecker(
+				currentPermissionChecker);
+			PrincipalThreadLocal.setName(currentPrincipalThreadLocalName);
+			ServiceContextThreadLocal.popServiceContext();
 			tempFolder.delete();
 		}
 
@@ -277,6 +304,33 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		}
 
 		return group;
+	}
+
+	private ServiceContext _getServiceContext(Group group) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
+
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
+		serviceContext.setRequest(contextHttpServletRequest);
+		serviceContext.setScopeGroupId(group.getGroupId());
+		serviceContext.setUserId(contextUser.getUserId());
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if (themeDisplay == null) {
+			_initThemeDisplay();
+
+			themeDisplay = (ThemeDisplay)contextHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		themeDisplay.setResponse(new DummyHttpServletResponse());
+
+		return serviceContext;
 	}
 
 	private void _initThemeDisplay() throws Exception {

@@ -135,8 +135,15 @@
 
 				button.classList.add('lfr-portal-tooltip');
 
+				button.removeAttribute('aria-labelledby');
+
 				button.setAttribute(
-					'data-title',
+					'aria-label',
+					Liferay.Language.get('create-ai-content')
+				);
+
+				button.setAttribute(
+					'title',
 					Liferay.Language.get('create-ai-content')
 				);
 			});

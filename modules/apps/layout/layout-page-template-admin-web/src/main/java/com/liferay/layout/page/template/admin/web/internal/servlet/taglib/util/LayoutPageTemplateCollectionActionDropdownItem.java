@@ -49,9 +49,14 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> LayoutPageTemplateCollectionPermission.contains(
-							themeDisplay.getPermissionChecker(),
-							layoutPageTemplateCollection, ActionKeys.UPDATE),
+						() ->
+							(layoutPageTemplateCollection.getType() ==
+								LayoutPageTemplateCollectionTypeConstants.
+									BASIC) &&
+							LayoutPageTemplateCollectionPermission.contains(
+								themeDisplay.getPermissionChecker(),
+								layoutPageTemplateCollection,
+								ActionKeys.UPDATE),
 						dropdownItem -> {
 							dropdownItem.setHref(
 								_getEditLayoutPageTemplateCollectionURL(
@@ -68,9 +73,14 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> LayoutPageTemplateCollectionPermission.contains(
-							themeDisplay.getPermissionChecker(),
-							layoutPageTemplateCollection, ActionKeys.UPDATE),
+						() ->
+							(layoutPageTemplateCollection.getType() ==
+								LayoutPageTemplateCollectionTypeConstants.
+									DISPLAY_PAGE) &&
+							LayoutPageTemplateCollectionPermission.contains(
+								themeDisplay.getPermissionChecker(),
+								layoutPageTemplateCollection,
+								ActionKeys.UPDATE),
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "updateLayoutPageTemplateCollection");

@@ -367,6 +367,14 @@
 	<td></td>
 </tr>
 
+<!-- DATA SET ACTIONS -->
+
+<tr>
+	<td>ACTION_ICON_IN_FRAGMENT</td>
+	<td>//div[contains(@class,'item-actions')]//*[@title="${key_actionIcon}"]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

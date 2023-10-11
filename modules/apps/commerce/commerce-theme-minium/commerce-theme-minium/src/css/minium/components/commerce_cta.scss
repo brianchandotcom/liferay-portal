@@ -32,7 +32,7 @@
 		pointer-events: auto;
 	}
 
-	body.open & {
+	body.product-menu-open & {
 		left: calc(320px + #{$frame-size});
 	}
 

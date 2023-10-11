@@ -1113,30 +1113,6 @@ public class ContextController {
 		activeSessions.remove(id);
 	}
 
-	public void fireSessionIdChanged(String oldSessionId) {
-		if (shutdown) {
-			return;
-		}
-
-		ServletContext servletContext = servletContextHelperDataContext.getServletContext();
-		if ((servletContext.getMajorVersion() <= 3) && (servletContext.getMinorVersion() < 1)) {
-			return;
-		}
-
-		List<javax.servlet.http.HttpSessionIdListener> listeners = eventListeners.get(javax.servlet.http.HttpSessionIdListener.class);
-
-		if (listeners.isEmpty()) {
-			return;
-		}
-
-		for (HttpSessionAdaptor httpSessionAdaptor : activeSessions.values()) {
-			HttpSessionEvent httpSessionEvent = new HttpSessionEvent(httpSessionAdaptor);
-			for (javax.servlet.http.HttpSessionIdListener listener : listeners) {
-				listener.sessionIdChanged(httpSessionEvent, oldSessionId);
-			}
-		}
-	}
-
 	public HttpSessionAdaptor getSessionAdaptor(
 		HttpSession session, ServletContext servletContext) {
 

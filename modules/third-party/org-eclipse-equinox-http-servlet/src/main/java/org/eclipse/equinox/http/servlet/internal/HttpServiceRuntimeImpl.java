@@ -801,12 +801,6 @@ public class HttpServiceRuntimeImpl
 		}
 	}
 
-	public void fireSessionIdChanged(String oldSessionId) {
-		for (ContextController contextController : controllerMap.values()) {
-			contextController.fireSessionIdChanged(oldSessionId);
-		}
-	}
-
 	private Map<String, Object> attributes;
 	private final String targetFilter;
 	private final ServiceRegistration<ServletContextHelper> defaultContextReg;

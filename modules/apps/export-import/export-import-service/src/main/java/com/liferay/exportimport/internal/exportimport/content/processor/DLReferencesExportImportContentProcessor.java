@@ -930,8 +930,9 @@ public class DLReferencesExportImportContentProcessor
 		StringPool.BACK_SLASH + StringPool.APOSTROPHE,
 		StringPool.BACK_SLASH + StringPool.QUOTE, StringPool.CLOSE_BRACKET,
 		StringPool.CLOSE_CURLY_BRACE, StringPool.CLOSE_PARENTHESIS,
-		StringPool.GREATER_THAN, StringPool.LESS_THAN, StringPool.PIPE, StringPool.POUND,
-		StringPool.QUOTE, StringPool.QUOTE_ENCODED, StringPool.SPACE
+		StringPool.GREATER_THAN, StringPool.LESS_THAN, StringPool.PIPE,
+		StringPool.POUND, StringPool.QUOTE, StringPool.QUOTE_ENCODED,
+		StringPool.SPACE
 	};
 
 	private static final String[] _DL_REFERENCE_STOP_STRINGS = {
@@ -940,8 +941,8 @@ public class DLReferencesExportImportContentProcessor
 		StringPool.BACK_SLASH + StringPool.QUOTE, StringPool.CLOSE_BRACKET,
 		StringPool.CLOSE_CURLY_BRACE, StringPool.CLOSE_PARENTHESIS,
 		StringPool.GREATER_THAN, StringPool.LESS_THAN, StringPool.NEW_LINE,
-		StringPool.PIPE, StringPool.POUND, StringPool.QUESTION, StringPool.QUOTE,
-		StringPool.QUOTE_ENCODED, StringPool.SPACE
+		StringPool.PIPE, StringPool.POUND, StringPool.QUESTION,
+		StringPool.QUOTE, StringPool.QUOTE_ENCODED, StringPool.SPACE
 	};
 
 	private static final int _OFFSET_COLON_PORT = 6;

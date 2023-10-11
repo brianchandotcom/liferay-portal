@@ -23,7 +23,9 @@ definition {
 
 			FormFields.enableCheckbox(fieldName = "enabled");
 
-			DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+			DigitalSignature.enableDigitalSignature(
+				environment = "Sandbox",
+				siteStrategy = "Always Inherit");
 
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 		}

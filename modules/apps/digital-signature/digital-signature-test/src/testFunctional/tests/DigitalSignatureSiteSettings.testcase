@@ -48,7 +48,7 @@ definition {
 		task ("When the user set the credentials by site settings") {
 			DigitalSignature.goToDigitalSignatureByPortlet(nameComponent = "Digital Signature");
 
-			DigitalSignature.enableDigitalSignature();
+			DigitalSignature.enableDigitalSignature(environment = "Sandbox");
 
 			SystemSettings.saveConfiguration();
 		}
@@ -74,7 +74,9 @@ definition {
 	@priority = 5
 	test DataPersistsAfterEnabledAlwaysInheritStrategy {
 		task ("Given the digital signature credentials are set with Always Inherit strategy") {
-			DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+			DigitalSignature.enableDigitalSignature(
+				environment = "Sandbox",
+				siteStrategy = "Always Inherit");
 		}
 
 		task ("When the user goes to Digital Signature by portlet") {
@@ -90,7 +92,9 @@ definition {
 	@priority = 5
 	test DataPersistsAfterEnabledInheritOrOverrideStrategy {
 		task ("Given the digital signature using the Inherit or Override strategy") {
-			DigitalSignature.enableDigitalSignature(siteStrategy = "Inherit or Override");
+			DigitalSignature.enableDigitalSignature(
+				environment = "Sandbox",
+				siteStrategy = "Inherit or Override");
 		}
 
 		task ("When the user goes to Digital Signature by portlet") {

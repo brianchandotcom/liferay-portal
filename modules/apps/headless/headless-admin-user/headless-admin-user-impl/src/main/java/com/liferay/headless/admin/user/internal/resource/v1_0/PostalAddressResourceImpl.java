@@ -147,7 +147,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		}
 
 		if ((postalAddress.getAddressRegion() != null) && (country == null)) {
-
 			country = _countryService.getCountry(address.getCountryId());
 
 			address.setRegionId(_getRegionId(postalAddress, country));

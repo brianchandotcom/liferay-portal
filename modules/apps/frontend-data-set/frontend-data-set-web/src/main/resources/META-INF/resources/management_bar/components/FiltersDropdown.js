@@ -6,7 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import ViewsContext from '../../views/ViewsContext';
 import Filter from './filters/Filter';
@@ -30,6 +30,10 @@ const FiltersDropdown = () => {
 				: initialFilters
 		);
 	};
+
+	useEffect(() => {
+		setFilters(initialFilters);
+	}, [initialFilters]);
 
 	return (
 		<ClayDropDown

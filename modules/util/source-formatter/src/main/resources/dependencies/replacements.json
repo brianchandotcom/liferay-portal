@@ -35,5 +35,41 @@
 		],
 		"newReference": "HtmlParser _htmlParser",
 		"to": "_htmlParser.extractText"
+	},
+	{
+		"from": "CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED",
+		"issueKey": "LPS-197623",
+		"newImports": [
+			"com.liferay.commerce.constants.CommerceOrderPaymentConstants"
+		],
+		"to": "CommerceOrderPaymentConstants.STATUS_AUTHORIZED",
+		"validExtensions": [
+			"java",
+			"jsp"
+		]
+	},
+	{
+		"from": "CommerceOrderConstants.PAYMENT_STATUS_PAID",
+		"issueKey": "LPS-197623",
+		"newImports": [
+			"com.liferay.commerce.constants.CommerceOrderPaymentConstants"
+		],
+		"to": "CommerceOrderPaymentConstants.STATUS_COMPLETED",
+		"validExtensions": [
+			"java",
+			"jsp"
+		]
+	},
+	{
+		"from": "CommerceOrderConstants.PAYMENT_STATUS_PENDING",
+		"issueKey": "LPS-197623",
+		"newImports": [
+			"com.liferay.commerce.constants.CommerceOrderPaymentConstants"
+		],
+		"to": "CommerceOrderPaymentConstants.STATUS_PENDING",
+		"validExtensions": [
+			"java",
+			"jsp"
+		]
 	}
 ]

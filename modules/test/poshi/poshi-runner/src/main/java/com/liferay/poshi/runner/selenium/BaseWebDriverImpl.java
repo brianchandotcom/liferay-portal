@@ -147,7 +147,19 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		WebDriver.Window window = options.window();
 
-		window.setSize(new Dimension(1280, 1040));
+		String browserResolution = poshiProperties.browserResolution;
+
+		if (Validator.isNotNull(browserResolution)) {
+			if (browserResolution.equals("maximize")) {
+				window.maximize();
+			}
+			else {
+				setWindowSize(browserResolution);
+			}
+		}
+		else {
+			window.setSize(new Dimension(1280, 1040));
+		}
 
 		try {
 			webDriver.get(browserURL);

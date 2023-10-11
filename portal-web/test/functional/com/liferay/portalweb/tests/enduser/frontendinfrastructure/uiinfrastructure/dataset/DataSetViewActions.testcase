@@ -51,6 +51,51 @@ definition {
 		}
 	}
 
+	@description = "LPS-191486. Verify if the user can cancel the deletion of an entry by clicking the Cancel button"
+	@priority = 4
+	test CanCancelADeletionInCancelButton {
+		task ("And creates an item action") {
+			DataSetAdmin.addActions(
+				actionName = "delete",
+				icon = "trash",
+				type = "Link",
+				url = "http://localhost:8080/o/data-set-manager/");
+		}
+
+		task ("When the user clicks on the new item action 3 dots button") {
+			Click(
+				key_tableEntry = "delete",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("Then the Delete option is displayed in the item action dropdown menu") {
+			MenuItem.viewPresent(menuItem = "Delete");
+		}
+
+		task ("When the user clicks on the Delete option") {
+			MenuItem.click(menuItem = "Delete");
+		}
+
+		task ("Then the Delete modal appears") {
+			AssertVisible(locator1 = "Modal#BODY");
+		}
+
+		task ("When the user clicks on Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then the Delete modal is closed") {
+			AssertElementNotPresent(locator1 = "Modal#BODY");
+		}
+
+		task ("And the item action is present in the item action list") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "delete",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
 	@description = "LPS-191486. Verify if the user can cancel the deletion of an entry by clicking the Close(x) button"
 	@priority = 3
 	test CanCancelADeletionInXButton {

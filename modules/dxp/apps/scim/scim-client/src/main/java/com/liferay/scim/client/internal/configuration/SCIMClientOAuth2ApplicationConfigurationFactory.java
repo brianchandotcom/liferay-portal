@@ -9,6 +9,7 @@ import com.liferay.oauth.client.LocalOAuthClient;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
@@ -25,13 +26,17 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.scim.client.internal.spi.bearer.token.provider.SCIMClientBearerTokenProvider;
 
 import java.util.Collections;
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -49,7 +54,10 @@ import org.osgi.service.component.annotations.Reference;
 public class SCIMClientOAuth2ApplicationConfigurationFactory {
 
 	@Activate
-	protected void activate(Map<String, Object> properties) throws Exception {
+	protected void activate(
+			BundleContext bundleContext, Map<String, Object> properties)
+		throws Exception {
+
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-96845")) {
 			return;
 		}
@@ -65,6 +73,15 @@ public class SCIMClientOAuth2ApplicationConfigurationFactory {
 
 				_oAuth2Application = _getOrAddOAuth2Application(
 					companyId, scimClientOAuth2ApplicationConfiguration);
+
+				_serviceRegistration = bundleContext.registerService(
+					BearerTokenProvider.class,
+					new SCIMClientBearerTokenProvider(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"clientId", _oAuth2Application.getClientId()
+					).put(
+						"companyId", companyId.toString()
+					).build());
 
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					_localOAuthClient.requestTokens(
@@ -94,6 +111,12 @@ public class SCIMClientOAuth2ApplicationConfigurationFactory {
 
 		_oAuth2ApplicationLocalService.deleteOAuth2Application(
 			_oAuth2Application);
+
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+
+			_serviceRegistration = null;
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -172,5 +195,8 @@ public class SCIMClientOAuth2ApplicationConfigurationFactory {
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
+
+	private volatile ServiceRegistration<BearerTokenProvider>
+		_serviceRegistration;
 
 }

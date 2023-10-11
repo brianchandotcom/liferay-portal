@@ -1,0 +1,452 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given custom object Student with name text field is created and published") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Student",
+				en_US_plural_label = "Students",
+				name = "Student",
+				objectDefinitionExternalReferenceCode = "student",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "studentName");
+		}
+
+		task ("And Given Students Able, Tom and Test are created") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "Students",
+				name = "Able");
+
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "Students",
+				name = "Tom");
+
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "Students",
+				name = "Test");
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		JSONObject.deleteAllCustomObjects();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 5
+	test CanApplyFilterParameter {
+		property portal.acceptance = "true";
+
+		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				mainObjectDefinitionErc = "student",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				schemaName = "testSchema",
+				status = "published",
+				title = "My-app");
+
+			SchemaAPI.relateRequestSchemaToEndpointByErc(
+				endpointErc = "testEndpoint",
+				requestSchemaErc = "testSchema");
+
+			SchemaAPI.relateResponseSchemaToEndpointByErc(
+				endpointErc = "testEndpoint",
+				responseSchemaErc = "testSchema");
+		}
+
+		task ("And Given I create schema a property with erc of name field") {
+			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
+
+			PropertyAPI.createAPIProperty(
+				name = "entryName",
+				objectFieldERC = "studentName",
+				schemaId = ${schemaId});
+		}
+
+		task ("When execute get{Endpoint}Page with filter={property} eq 'Able' in API Explorer") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			APIExplorer.executeAPIMethod(
+				method = "getTestEndpointPage",
+				parameter = "filter",
+				service = "testSchema",
+				value = "entryName eq 'Able'");
+		}
+
+		task ("Then I can see correct response with property equals to Able") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getTestEndpointPage",
+				value1 = "\"items\": [     {       \"entryName\": \"Able\"     }   ]");
+		}
+	}
+
+	@priority = 4
+	test CanApplyFilterParameterAndPreFilter {
+		property portal.acceptance = "true";
+
+		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				mainObjectDefinitionErc = "student",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				schemaName = "testSchema",
+				status = "published",
+				title = "My-app");
+
+			SchemaAPI.relateRequestSchemaToEndpointByErc(
+				endpointErc = "testEndpoint",
+				requestSchemaErc = "testSchema");
+
+			SchemaAPI.relateResponseSchemaToEndpointByErc(
+				endpointErc = "testEndpoint",
+				responseSchemaErc = "testSchema");
+		}
+
+		task ("And Given I create schema a property with erc of name field") {
+			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
+
+			PropertyAPI.createAPIProperty(
+				name = "entryName",
+				objectFieldERC = "studentName",
+				schemaId = ${schemaId});
+		}
+
+		task ("And Given I create endpoint a filter with name ne 'Test'") {
+			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");
+
+			FilterAPI.createAPIFilter(
+				endpointId = ${endpointId},
+				filterValue = "name ne '\''Test'\''");
+		}
+
+		task ("When execute get{Endpoint}Page with filter={property} ne 'Able' in API Explorer") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			APIExplorer.executeAPIMethod(
+				method = "getTestEndpointPage",
+				parameter = "filter",
+				service = "testSchema",
+				value = "entryName ne 'Able'");
+		}
+
+		task ("Then only Tom returned in response") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getTestEndpointPage",
+				value1 = "\"items\": [     {       \"entryName\": \"Tom\"     }   ]");
+		}
+	}
+
+	@priority = 4
+	test CanApplyFilterSortAndPreFilterWithSiteScopedEndpoint {
+		property portal.acceptance = "true";
+
+		task ("And Given an published API application with site scoped endpoint with related schema with Student as the main object") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				mainObjectDefinitionErc = "student",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				schemaName = "testSchema",
+				scopeKey = "group",
+				status = "published",
+				title = "My-app");
+
+			SchemaAPI.relateRequestSchemaToEndpointByErc(
+				endpointErc = "testEndpoint",
+				requestSchemaErc = "testSchema");
+
+			SchemaAPI.relateResponseSchemaToEndpointByErc(
+				endpointErc = "testEndpoint",
+				responseSchemaErc = "testSchema");
+		}
+
+		task ("And Given I create schema a property with erc of name field") {
+			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
+
+			PropertyAPI.createAPIProperty(
+				name = "entryName",
+				objectFieldERC = "studentName",
+				schemaId = ${schemaId});
+		}
+
+		task ("And Given I create endpoint a filter with name ne 'Test'") {
+			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");
+
+			FilterAPI.createAPIFilter(
+				endpointId = ${endpointId},
+				filterValue = "name ne '\''Test'\''");
+		}
+
+		task ("When execute getScopeScopeKey{Endpoint}Page with scopeKey and ?filter={property} ne 'Test'&sort={property}:desc in API Explorer") {
+			var scopeKey = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			APIExplorer.executeAPIMethod(
+				method = "getScopeScopeKeyTestEndpointPage",
+				parameter = "filter",
+				parameter_two = "sort",
+				scopeKey = ${scopeKey},
+				service = "testSchema",
+				value = "entryName ne 'Test'",
+				value_two = "entryName:desc");
+		}
+
+		task ("Then I can get correct response with items in desc {Tom, Able}") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getScopeScopeKeyTestEndpointPage",
+				value1 = "\"items\": [     {       \"entryName\": \"Tom\"     },     {       \"entryName\": \"Able\"     }   ]");
+		}
+	}
+
+	@priority = 5
+	test CanApplySortParameter {
+		property portal.acceptance = "true";
+
+		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				mainObjectDefinitionErc = "student",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				schemaName = "testSchema",
+				status = "published",
+				title = "My-app");
+
+			SchemaAPI.relateRequestSchemaToEndpointByErc(
+				endpointErc = "testEndpoint",
+				requestSchemaErc = "testSchema");
+
+			SchemaAPI.relateResponseSchemaToEndpointByErc(
+				endpointErc = "testEndpoint",
+				responseSchemaErc = "testSchema");
+		}
+
+		task ("And Given I create schema a property with erc of name field") {
+			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
+
+			PropertyAPI.createAPIProperty(
+				name = "entryName",
+				objectFieldERC = "studentName",
+				schemaId = ${schemaId});
+		}
+
+		task ("When execute get{Endpoint}Page with sort={property}:desc in API Explorer") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			APIExplorer.executeAPIMethod(
+				method = "getTestEndpointPage",
+				parameter = "sort",
+				service = "testSchema",
+				value = "entryName:desc");
+		}
+
+		task ("Then I can see correct response with items in desc {Test,Tom,Able}") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getTestEndpointPage",
+				value1 = "\"items\": [     {       \"entryName\": \"Tom\"     },     {       \"entryName\": \"Test\"     },     {       \"entryName\": \"Able\"     }   ]");
+		}
+	}
+
+	@priority = 4
+	test CanApplySortParameterAndPreSort {
+		property portal.acceptance = "true";
+
+		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				mainObjectDefinitionErc = "student",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				schemaName = "testSchema",
+				status = "published",
+				title = "My-app");
+
+			SchemaAPI.relateRequestSchemaToEndpointByErc(
+				endpointErc = "testEndpoint",
+				requestSchemaErc = "testSchema");
+
+			SchemaAPI.relateResponseSchemaToEndpointByErc(
+				endpointErc = "testEndpoint",
+				responseSchemaErc = "testSchema");
+		}
+
+		task ("And Given I create schema a property with erc of name field") {
+			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
+
+			PropertyAPI.createAPIProperty(
+				name = "entryName",
+				objectFieldERC = "studentName",
+				schemaId = ${schemaId});
+		}
+
+		task ("And Given I create endpoint a sort with name:asc") {
+			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");
+
+			SortAPI.createAPISort(
+				endpointId = ${endpointId},
+				sortValue = "name:asc");
+		}
+
+		task ("When execute get{Endpoint}Page with sort {property}:desc in API Explorer") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			APIExplorer.executeAPIMethod(
+				method = "getTestEndpointPage",
+				parameter = "sort",
+				service = "testSchema",
+				value = "entryName:desc");
+		}
+
+		task ("Then I can see items in desc sort order in response") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getTestEndpointPage",
+				value1 = "\"items\": [     {       \"entryName\": \"Tom\"     },     {       \"entryName\": \"Test\"     },     {       \"entryName\": \"Able\"     }   ]");
+		}
+	}
+
+	@priority = 4
+	test CannotSeeFilterAndSortParametersForSingleElementEndpoint {
+		property portal.acceptance = "true";
+
+		task ("Given an published API application with singleElement endpoint") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint/{id}",
+				pathParameter = "ID",
+				relatedEndpoint = "true",
+				retrieveType = "singleElement",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("When I expand get{EndpointPath} in /o/c/{aPIApplication}") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			APIExplorer.expandAPIMethod(
+				method = "getTestEndpointId",
+				service = "default");
+		}
+
+		task ("Then filter and sort parameters are not present") {
+			AssertElementNotPresent(
+				locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
+				method = "getTestEndpointId",
+				parameter = "filter");
+
+			AssertElementNotPresent(
+				locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
+				method = "getTestEndpointId",
+				parameter = "sort");
+		}
+	}
+
+	@priority = 4
+	test CanSeeFilterAndSortParametersInComapnyScopedEndpoint {
+		property portal.acceptance = "true";
+
+		task ("Given an published API application with company scoped endpoint") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("When I expand get{endpoint}Page in /o/c/{aPIApplication}") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			APIExplorer.expandAPIMethod(
+				method = "getTestEndpointPage",
+				service = "default");
+		}
+
+		task ("Then I can see filter and sort parameters with string type are present") {
+			AssertElementPresent(
+				locator1 = "OpenAPI#PARAMETER_TYPE",
+				parameter = "filter",
+				type = "string");
+
+			AssertElementPresent(
+				locator1 = "OpenAPI#PARAMETER_TYPE",
+				parameter = "sort",
+				type = "string");
+		}
+	}
+
+	@priority = 4
+	test CanSeeFilterAndSortParametersInSiteScopedEndpoint {
+		property portal.acceptance = "true";
+
+		task ("Given an published API application with site scoped endpoint") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testEndpoint",
+				relatedEndpoint = "true",
+				scopeKey = "group",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("When I expand getscopeScopeKey{Endpoint}Page in /o/c/{aPIApplication}") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			APIExplorer.expandAPIMethod(
+				method = "getScopeScopeKeyTestEndpointPage",
+				service = "default");
+		}
+
+		task ("Then I can see filter and sort parameters with string type are present") {
+			AssertElementPresent(
+				locator1 = "OpenAPI#PARAMETER_TYPE",
+				parameter = "filter",
+				type = "string");
+
+			AssertElementPresent(
+				locator1 = "OpenAPI#PARAMETER_TYPE",
+				parameter = "sort",
+				type = "string");
+		}
+	}
+
+}

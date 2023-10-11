@@ -6,7 +6,6 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.base.AccountRoleLocalServiceBaseImpl;
@@ -16,25 +15,20 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SortFactory;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,7 +42,6 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.util.PortalInstances;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -125,33 +118,6 @@ public class AccountRoleLocalServiceImpl
 
 		for (long accountRoleId : accountRoleIds) {
 			associateUser(accountEntryId, accountRoleId, userId);
-		}
-	}
-
-	@Override
-	public void checkCompanyAccountRoles(long companyId)
-		throws PortalException {
-
-		Company company = _companyLocalService.getCompany(companyId);
-
-		_checkAccountRole(
-			company, AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER);
-		_checkAccountRole(
-			company,
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
-
-		Role role = _roleLocalService.fetchRole(
-			companyId, AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
-
-		if (role == null) {
-			User guestUser = company.getGuestUser();
-
-			_roleLocalService.addRole(
-				guestUser.getUserId(), null, 0,
-				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER, null,
-				_roleDescriptionsMaps.get(
-					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER),
-				RoleConstants.TYPE_ORGANIZATION, null, null);
 		}
 	}
 
@@ -346,30 +312,6 @@ public class AccountRoleLocalServiceImpl
 			new long[] {accountRole.getRoleId()});
 	}
 
-	private void _checkAccountRole(Company company, String roleName)
-		throws PortalException {
-
-		Role role = _roleLocalService.fetchRole(
-			company.getCompanyId(), roleName);
-
-		if (role != null) {
-			if (MapUtil.isEmpty(role.getDescriptionMap())) {
-				role.setDescriptionMap(
-					_roleDescriptionsMaps.get(role.getName()));
-
-				_roleLocalService.updateRole(role);
-			}
-
-			return;
-		}
-
-		User guestUser = company.getGuestUser();
-
-		addAccountRole(
-			guestUser.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			roleName, null, _roleDescriptionsMaps.get(roleName));
-	}
-
 	private SearchRequest _getSearchRequest(
 		long companyId, long[] accountEntryIds, String keywords,
 		LinkedHashMap<String, Object> params, int start, int end,
@@ -435,31 +377,8 @@ public class AccountRoleLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountRoleLocalServiceImpl.class);
 
-	private static final Map<String, Map<Locale, String>>
-		_roleDescriptionsMaps = HashMapBuilder.<String, Map<Locale, String>>put(
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
-			Collections.singletonMap(
-				LocaleUtil.US,
-				"Account Administrators are super users of their account.")
-		).put(
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
-			Collections.singletonMap(
-				LocaleUtil.US,
-				"Account Managers who belong to an organization can " +
-					"administer all accounts associated to that organization.")
-		).put(
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER,
-			Collections.singletonMap(
-				LocaleUtil.US,
-				"All users who belong to an account have this role within " +
-					"that account.")
-		).build();
-
 	@Reference
 	private AccountEntryPersistence _accountEntryPersistence;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

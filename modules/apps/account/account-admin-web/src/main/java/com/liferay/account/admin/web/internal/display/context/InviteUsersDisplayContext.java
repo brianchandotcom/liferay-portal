@@ -8,10 +8,11 @@ package com.liferay.account.admin.web.internal.display.context;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountRole;
-import com.liferay.account.service.AccountRoleLocalServiceUtil;
+import com.liferay.account.service.AccountRoleServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.MultiselectItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.MultiselectItemBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
@@ -25,10 +26,11 @@ import java.util.List;
 public class InviteUsersDisplayContext {
 
 	public List<MultiselectItem> getAvailableAccountRolesMultiselectItems(
-		long accountEntryId, long companyId) {
+			long accountEntryId, long companyId)
+		throws PortalException {
 
 		BaseModelSearchResult<AccountRole> baseModelSearchResult =
-			AccountRoleLocalServiceUtil.searchAccountRoles(
+			AccountRoleServiceUtil.searchAccountRoles(
 				companyId,
 				new long[] {
 					accountEntryId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT

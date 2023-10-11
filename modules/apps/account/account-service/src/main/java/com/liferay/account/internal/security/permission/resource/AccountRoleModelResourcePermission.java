@@ -8,20 +8,27 @@ package com.liferay.account.internal.security.permission.resource;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.role.AccountRolePermissionThreadLocal;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -125,11 +132,7 @@ public class AccountRoleModelResourcePermission
 		for (long accountEntryId :
 				new long[] {accountRoleAccountEntryId, contextAccountEntryId}) {
 
-			if ((Objects.equals(actionId, ActionKeys.VIEW) &&
-				 (accountEntryId > 0) &&
-				 _accountEntryModelResourcePermission.contains(
-					 permissionChecker, accountEntryId,
-					 AccountActionKeys.VIEW_ACCOUNT_ROLES)) ||
+			if (Objects.equals(actionId, ActionKeys.VIEW) &&
 				RolePermissionUtil.contains(
 					permissionChecker, role.getRoleId(), ActionKeys.VIEW)) {
 
@@ -141,6 +144,13 @@ public class AccountRoleModelResourcePermission
 				_accountEntryModelResourcePermission.contains(
 					permissionChecker, accountEntryId,
 					ActionKeys.MANAGE_USERS)) {
+
+				return true;
+			}
+
+			if (_checkOrganizationRolesPermission(
+					accountEntryId, accountRoleId, actionId,
+					permissionChecker)) {
 
 				return true;
 			}
@@ -168,6 +178,62 @@ public class AccountRoleModelResourcePermission
 		return _portletResourcePermission;
 	}
 
+	private boolean _checkOrganizationRolesPermission(
+			long accountEntryId, long accountRoleId, String actionId,
+			PermissionChecker permissionChecker)
+		throws PortalException {
+
+		if (accountEntryId == 0) {
+			return false;
+		}
+
+		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRels(accountEntryId);
+
+		long[] userOrganizationIds =
+			_organizationLocalService.getUserOrganizationIds(
+				permissionChecker.getUserId(), true);
+
+		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
+				accountEntryOrganizationRels) {
+
+			Organization organization =
+				_organizationLocalService.fetchOrganization(
+					accountEntryOrganizationRel.getOrganizationId());
+
+			Organization originalOrganization = organization;
+
+			while (organization != null) {
+				if (Objects.equals(organization, originalOrganization) &&
+					permissionChecker.hasPermission(
+						organization.getGroupId(), AccountRole.class.getName(),
+						accountRoleId, actionId)) {
+
+					return true;
+				}
+
+				if (!Objects.equals(organization, originalOrganization) &&
+					OrganizationPermissionUtil.contains(
+						permissionChecker, organization,
+						AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS) &&
+					ArrayUtil.contains(
+						userOrganizationIds,
+						organization.getOrganizationId()) &&
+					permissionChecker.hasPermission(
+						organization.getGroupId(), AccountRole.class.getName(),
+						accountRoleId, actionId)) {
+
+					return true;
+				}
+
+				organization = organization.getParentOrganization();
+			}
+		}
+
+		return false;
+	}
+
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -180,7 +246,14 @@ public class AccountRoleModelResourcePermission
 		_accountEntryModelResourcePermission;
 
 	@Reference
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
+
+	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference(
 		target = "(resource.name=" + AccountConstants.RESOURCE_NAME + ")"

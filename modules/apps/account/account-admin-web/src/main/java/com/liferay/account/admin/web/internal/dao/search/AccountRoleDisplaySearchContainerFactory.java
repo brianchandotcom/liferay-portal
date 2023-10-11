@@ -12,9 +12,10 @@ import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
-import com.liferay.account.service.AccountRoleLocalServiceUtil;
+import com.liferay.account.service.AccountRoleServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -38,8 +39,9 @@ import java.util.Objects;
 public class AccountRoleDisplaySearchContainerFactory {
 
 	public static SearchContainer<AccountRoleDisplay> create(
-		long accountEntryId, LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+			long accountEntryId, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
@@ -85,7 +87,7 @@ public class AccountRoleDisplaySearchContainerFactory {
 		}
 
 		BaseModelSearchResult<AccountRole> baseModelSearchResult =
-			AccountRoleLocalServiceUtil.searchAccountRoles(
+			AccountRoleServiceUtil.searchAccountRoles(
 				themeDisplay.getCompanyId(),
 				new long[] {
 					accountEntryId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT

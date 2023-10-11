@@ -1,0 +1,431 @@
+diff --git a/org/eclipse/equinox/http/servlet/internal/context/ContextController.java b/org/eclipse/equinox/http/servlet/internal/context/ContextController.java
+index de9472db194fd..f074060e08239 100644
+--- a/org/eclipse/equinox/http/servlet/internal/context/ContextController.java
++++ b/org/eclipse/equinox/http/servlet/internal/context/ContextController.java
+@@ -108,7 +108,8 @@ public class ContextController {
+ 	public ContextController(
+ 		BundleContext trackingContextParam, BundleContext consumingContext,
+ 		ServiceReference<ServletContextHelper> servletContextHelperRef,
+-		ProxyContext proxyContext, HttpServletEndpointController httpServletEndpointController,
++		ServletContextHelperDataContext servletContextHelperDataContext,
++		HttpServletEndpointController httpServletEndpointController,
+ 		String contextName, String contextPath) {
+ 
+ 		validate(contextName, contextPath);
+@@ -117,7 +118,7 @@ public class ContextController {
+ 
+ 		long serviceId = (Long)servletContextHelperRef.getProperty(Constants.SERVICE_ID);
+ 
+-		this.proxyContext = proxyContext;
++		this.servletContextHelperDataContext = servletContextHelperDataContext;
+ 		this.httpServletEndpointController = httpServletEndpointController;
+ 		this.contextName = contextName;
+ 
+@@ -129,7 +130,7 @@ public class ContextController {
+ 		this.contextServiceId = serviceId;
+ 
+ 		this.initParams = ServiceProperties.parseInitParams(
+-			servletContextHelperRef, HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX, proxyContext.getServletContext());
++			servletContextHelperRef, HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX, servletContextHelperDataContext.getServletContext());
+ 
+ 		this.trackingContext = trackingContextParam;
+ 		this.consumingContext = consumingContext;
+@@ -639,23 +640,11 @@ public class ContextController {
+ 		filterRegistrations.clear();
+ 		listenerRegistrations.clear();
+ 		eventListeners.clear();
+-		proxyContext.destroy();
++		servletContextHelperDataContext.destroy();
+ 
+ 		shutdown = true;
+ 	}
+ 
+-	public void createContextAttributes() {
+-		getProxyContext().createContextAttributes(this);
+-	}
+-
+-	public void destroyContextAttributes() {
+-		if (shutdown) {
+-			return;
+-		}
+-
+-		proxyContext.destroyContextAttributes(this);
+-	}
+-
+ 	public String getContextName() {
+ 		return contextName;
+ 	}
+@@ -834,7 +823,7 @@ public class ContextController {
+ 		List<String> endpoints = httpServletEndpointController.getHttpServiceEndpoints();
+ 
+ 		if (endpoints.isEmpty()) {
+-			return proxyContext.getServletPath().concat(contextPath);
++			return contextPath;
+ 		}
+ 
+ 		String defaultEndpoint = endpoints.get(0);
+@@ -859,10 +848,6 @@ public class ContextController {
+ 		return listenerRegistrations;
+ 	}
+ 
+-	public ProxyContext getProxyContext() {
+-		return proxyContext;
+-	}
+-
+ 	public long getServiceId() {
+ 		return contextServiceId;
+ 	}
+@@ -870,7 +855,7 @@ public class ContextController {
+ 	public synchronized ServletContextDTO getServletContextDTO(){
+ 		ServletContextDTO servletContextDTO = new ServletContextDTO();
+ 
+-		ServletContext servletContext = proxyContext.getServletContext();
++		ServletContext servletContext = servletContextHelperDataContext.getServletContext();
+ 
+ 		servletContextDTO.attributes = getDTOAttributes(servletContext);
+ 		servletContextDTO.contextPath = getContextPath();
+@@ -1058,8 +1043,8 @@ public class ContextController {
+ 		Bundle curBundle, ServletContextHelper curServletContextHelper) {
+ 
+ 		ServletContextAdaptor adaptor = new ServletContextAdaptor(
+-			this, curBundle, curServletContextHelper, eventListeners,
+-			AccessController.getContext());
++			this, curBundle, curServletContextHelper, servletContextHelperDataContext,
++			eventListeners, AccessController.getContext());
+ 
+ 		return adaptor.createServletContext();
+ 	}
+@@ -1161,7 +1146,7 @@ public class ContextController {
+ 			classes.add(HttpSessionAttributeListener.class);
+ 		}
+ 
+-		ServletContext servletContext = proxyContext.getServletContext();
++		ServletContext servletContext = servletContextHelperDataContext.getServletContext();
+ 		if ((servletContext.getMajorVersion() >= 3) && (servletContext.getMinorVersion() > 0)) {
+ 			if (objectClassList.contains(javax.servlet.http.HttpSessionIdListener.class.getName())) {
+ 				classes.add(javax.servlet.http.HttpSessionIdListener.class);
+@@ -1221,7 +1206,7 @@ public class ContextController {
+ 			return;
+ 		}
+ 
+-		ServletContext servletContext = proxyContext.getServletContext();
++		ServletContext servletContext = servletContextHelperDataContext.getServletContext();
+ 		if ((servletContext.getMajorVersion() <= 3) && (servletContext.getMinorVersion() < 1)) {
+ 			return;
+ 		}
+@@ -1315,7 +1300,7 @@ public class ContextController {
+ 
+ 	private final HttpServletEndpointController httpServletEndpointController;
+ 	private final Set<ListenerRegistration> listenerRegistrations = new HashSet<ListenerRegistration>();
+-	private final ProxyContext proxyContext;
++	private final ServletContextHelperDataContext servletContextHelperDataContext;
+ 	private final ServiceReference<ServletContextHelper> servletContextHelperRef;
+ 	private boolean shutdown;
+ 	private String string;
+diff --git a/org/eclipse/equinox/http/servlet/internal/context/ProxyContext.java b/org/eclipse/equinox/http/servlet/internal/context/ProxyContext.java
+index d722af577672f..273a86bf38931 100644
+--- a/org/eclipse/equinox/http/servlet/internal/context/ProxyContext.java
++++ b/org/eclipse/equinox/http/servlet/internal/context/ProxyContext.java
+@@ -19,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
+ import java.util.concurrent.ConcurrentMap;
+ import java.util.concurrent.atomic.AtomicInteger;
+ import javax.servlet.ServletContext;
+-import org.eclipse.equinox.http.servlet.internal.util.Const;
+ 
+ /**
+  * The ProxyContext provides something similar to a ServletContext for all servlets and resources under a particular ProxyServlet.
+@@ -29,11 +28,10 @@ import org.eclipse.equinox.http.servlet.internal.util.Const;
+  * are reference counted so that when the HttpContext is no longer referenced the associated context attributes can be
+  * garbage collected and the context temp dir deleteted.
+  */
+-public class ProxyContext {
++public class ProxyContext implements ServletContextHelperDataContext {
+ 	private static final String JAVAX_SERVLET_CONTEXT_TEMPDIR = "javax.servlet.context.tempdir"; //$NON-NLS-1$
+ 
+-	private final ConcurrentMap<ContextController, ContextAttributes> attributesMap =
+-		new ConcurrentHashMap<ContextController, ContextAttributes>();
++	private final ContextAttributes contextAttributes = new ContextAttributes();
+ 	File proxyContextTempDir;
+ 	private ServletContext servletContext;
+ 
+@@ -53,47 +51,8 @@ public class ProxyContext {
+ 			deleteDirectory(proxyContextTempDir);
+ 	}
+ 
+-	public String getServletPath() {
+-		return Const.BLANK;
+-	}
+-
+-	public void createContextAttributes(
+-		ContextController controller) {
+-
+-		synchronized (attributesMap) {
+-			ContextAttributes contextAttributes = attributesMap.get(controller);
+-
+-			if (contextAttributes == null) {
+-				contextAttributes = new ContextAttributes(controller);
+-
+-				attributesMap.put(controller, contextAttributes);
+-			}
+-
+-			contextAttributes.addReference();
+-		}
+-	}
+-
+-	public void destroyContextAttributes(
+-		ContextController controller) {
+-
+-		synchronized (attributesMap) {
+-			ContextAttributes contextAttributes = attributesMap.get(controller);
+-
+-			if (contextAttributes == null) {
+-				throw new IllegalStateException("too many calls");
+-			}
+-
+-			if (contextAttributes.removeReference() == 0) {
+-				attributesMap.remove(controller);
+-				contextAttributes.destroy();
+-			}
+-		}
+-	}
+-
+-	public Dictionary<String, Object> getContextAttributes(
+-		ContextController controller) {
+-
+-		return attributesMap.get(controller);
++	public Dictionary<String, Object> getContextAttributes() {
++		return contextAttributes;
+ 	}
+ 
+ 	public ServletContext getServletContext() {
+@@ -125,11 +84,11 @@ public class ProxyContext {
+ 		private static final long serialVersionUID = 1916670423277243587L;
+ 		private final AtomicInteger referenceCount = new AtomicInteger();
+ 
+-		public ContextAttributes(ContextController controller) {
++		public ContextAttributes() {
+ 			if (proxyContextTempDir != null) {
+ 				File contextTempDir = new File(
+ 					proxyContextTempDir,
+-					"hc_" + controller.hashCode()); //$NON-NLS-1$
++					"hc_" + ProxyContext.this.hashCode()); //$NON-NLS-1$
+ 
+ 				contextTempDir.mkdirs();
+ 
+@@ -195,3 +154,4 @@ public class ProxyContext {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/context/ServletContextHelperDataContext.java b/org/eclipse/equinox/http/servlet/internal/context/ServletContextHelperDataContext.java
+new file mode 100644
+index 0000000000000..e1c3bb63d503f
+--- /dev/null
++++ b/org/eclipse/equinox/http/servlet/internal/context/ServletContextHelperDataContext.java
+@@ -0,0 +1,23 @@
++/**
++ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
++ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
++ */
++
++package org.eclipse.equinox.http.servlet.internal.context;
++
++import java.util.Dictionary;
++
++import javax.servlet.ServletContext;
++
++/**
++ * @author Dante Wang
++ */
++public interface ServletContextHelperDataContext {
++
++	public void destroy();
++
++	public Dictionary<String, Object> getContextAttributes();
++
++	public ServletContext getServletContext();
++
++}
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java b/org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java
+index 70754a28b7194..c50fba584941e 100644
+--- a/org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java
++++ b/org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java
+@@ -62,7 +62,6 @@ public abstract class EndpointRegistration<D extends DTO>
+ 			getT().destroy();
+ 		}
+ 		finally {
+-			destroyContextAttributes();
+ 			Thread.currentThread().setContextClassLoader(original);
+ 			servletHolder.release();
+ 		}
+@@ -86,19 +85,14 @@ public abstract class EndpointRegistration<D extends DTO>
+ 
+ 	//Delegate the init call to the actual servlet
+ 	public void init(ServletConfig servletConfig) throws ServletException {
+-		boolean initialized = false;
+ 		ClassLoader original = Thread.currentThread().getContextClassLoader();
+ 		try {
+ 			Thread.currentThread().setContextClassLoader(classLoader);
+ 
+-			createContextAttributes();
+ 			getT().init(servletConfig);
+-			initialized = true;
++
+ 		}
+ 		finally {
+-			if (!initialized) {
+-				destroyContextAttributes();
+-			}
+ 			Thread.currentThread().setContextClassLoader(original);
+ 		}
+ 	}
+@@ -156,14 +150,6 @@ public abstract class EndpointRegistration<D extends DTO>
+ 		}
+ 	}
+ 
+-	private void createContextAttributes() {
+-		contextController.createContextAttributes();
+-	}
+-
+-	private void destroyContextAttributes() {
+-		contextController.destroyContextAttributes();
+-	}
+-
+ 	@Override
+ 	public int compareTo(EndpointRegistration<?> o) {
+ 		return servletHolder.compareTo(o.servletHolder);
+diff --git a/org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java b/org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java
+index 4b6cc2b656344..c816dd586aa76 100644
+--- a/org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java
++++ b/org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java
+@@ -98,7 +98,6 @@ public class FilterRegistration
+ 			getT().destroy();
+ 		}
+ 		finally {
+-			destroyContextAttributes();
+ 			Thread.currentThread().setContextClassLoader(original);
+ 			filterHolder.release();
+ 		}
+@@ -146,19 +145,13 @@ public class FilterRegistration
+ 		if (!initDestoyWithContextController) {
+ 			return;
+ 		}
+-		boolean initialized = false;
+ 		ClassLoader original = Thread.currentThread().getContextClassLoader();
+ 		try {
+ 			Thread.currentThread().setContextClassLoader(classLoader);
+ 
+-			createContextAttributes();
+ 			getT().init(filterConfig);
+-			initialized = true;
+ 		}
+ 		finally {
+-			if (!initialized) {
+-				destroyContextAttributes();
+-			}
+ 			Thread.currentThread().setContextClassLoader(original);
+ 		}
+ 	}
+@@ -199,14 +192,6 @@ public class FilterRegistration
+ 		throw new UnsupportedOperationException("Should not be calling this method on FilterRegistration"); //$NON-NLS-1$
+ 	}
+ 
+-	private void createContextAttributes() {
+-		contextController.createContextAttributes();
+-	}
+-
+-	private void destroyContextAttributes() {
+-		contextController.destroyContextAttributes();
+-	}
+-
+ 	protected boolean isPathWildcardMatch(String pattern, String path) {
+ 		if (path == null) {
+ 			return false;
+diff --git a/org/eclipse/equinox/http/servlet/internal/registration/ListenerRegistration.java b/org/eclipse/equinox/http/servlet/internal/registration/ListenerRegistration.java
+index 74dc82b929a16..074bc08f3907a 100644
+--- a/org/eclipse/equinox/http/servlet/internal/registration/ListenerRegistration.java
++++ b/org/eclipse/equinox/http/servlet/internal/registration/ListenerRegistration.java
+@@ -46,8 +46,6 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
+ 
+ 		classLoader = listenerHolder.getBundle().adapt(BundleWiring.class).getClassLoader();
+ 
+-		createContextAttributes();
+-
+ 		proxy = (EventListener)Proxy.newProxyInstance(
+ 			getClass().getClassLoader(), classes.toArray(new Class[0]),
+ 			new EventListenerInvocationHandler());
+@@ -87,7 +85,6 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
+ 			}
+ 		}
+ 		finally {
+-			destroyContextAttributes();
+ 			Thread.currentThread().setContextClassLoader(original);
+ 			listenerHolder.release();
+ 		}
+@@ -118,14 +115,6 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
+ 		return proxy;
+ 	}
+ 
+-	private void createContextAttributes() {
+-		contextController.createContextAttributes();
+-	}
+-
+-	private void destroyContextAttributes() {
+-		contextController.destroyContextAttributes();
+-	}
+-
+ 	private class EventListenerInvocationHandler implements InvocationHandler {
+ 
+ 		public EventListenerInvocationHandler() {
+@@ -151,4 +140,5 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
+ 		}
+ 	}
+ 
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/servlet/ServletContextAdaptor.java b/org/eclipse/equinox/http/servlet/internal/servlet/ServletContextAdaptor.java
+index 37a0eeff40719..10257abe0806d 100644
+--- a/org/eclipse/equinox/http/servlet/internal/servlet/ServletContextAdaptor.java
++++ b/org/eclipse/equinox/http/servlet/internal/servlet/ServletContextAdaptor.java
+@@ -74,11 +74,12 @@ public class ServletContextAdaptor {
+ 	public ServletContextAdaptor(
+ 		ContextController contextController, Bundle bundle,
+ 		ServletContextHelper servletContextHelper,
++		ServletContextHelperDataContext servletContextHelperDataContext,
+ 		EventListeners eventListeners, AccessControlContext acc) {
+ 
+ 		this.contextController = contextController;
+-		this.proxyContext = contextController.getProxyContext();
+-		this.servletContext = proxyContext.getServletContext();
++		this.servletContextHelperDataContext = servletContextHelperDataContext;
++		this.servletContext = servletContextHelperDataContext.getServletContext();
+ 		this.servletContextHelper = servletContextHelper;
+ 		this.eventListeners = eventListeners;
+ 		this.acc = acc;
+@@ -418,7 +419,7 @@ public class ServletContextAdaptor {
+ 	}
+ 
+ 	private Dictionary<String, Object> getContextAttributes() {
+-		return proxyContext.getContextAttributes(contextController);
++		return servletContextHelperDataContext.getContextAttributes();
+ 	}
+ 
+ 	private class AdaptorInvocationHandler implements InvocationHandler {
+@@ -445,9 +446,10 @@ public class ServletContextAdaptor {
+ 	private final ClassLoader classLoader;
+ 	final ContextController contextController;
+ 	private final EventListeners eventListeners;
+-	private final ProxyContext proxyContext;
++	private final ServletContextHelperDataContext servletContextHelperDataContext;
+ 	private final ServletContext servletContext;
+ 	final ServletContextHelper servletContextHelper;
+ 	private String string;
+ 
+ }
++/* @generated */
+\ No newline at end of file

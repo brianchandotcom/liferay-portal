@@ -284,9 +284,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 			}
 
 			SessionErrors.add(
-				httpServletRequest,
-				String.valueOf(
-					infoFormValidationException.getFragmentEntryLinkId()),
+				httpServletRequest, InfoFormException.class,
 				infoFormValidationException);
 		}
 		catch (InfoFormValidationException infoFormValidationException) {

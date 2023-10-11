@@ -224,6 +224,55 @@ definition {
 		}
 	}
 
+	@description = "LPS-191486. Verify if the user can delete an Action entry"
+	@priority = 5
+	test CanDeleteAction {
+		task ("And creates an item action") {
+			DataSetAdmin.addActions(
+				actionName = "delete",
+				icon = "trash",
+				type = "Link",
+				url = "http://localhost:8080/o/data-set-manager/");
+		}
+
+		task ("When the user clicks on the new item action 3 dots button") {
+			Click(
+				key_tableEntry = "delete",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("Then the Delete option is displayed in the item action dropdown menu") {
+			MenuItem.viewPresent(menuItem = "Delete");
+		}
+
+		task ("When the user clicks on the Delete option") {
+			MenuItem.click(menuItem = "Delete");
+		}
+
+		task ("Then the Delete modal appears") {
+			AssertVisible(locator1 = "Modal#BODY");
+		}
+
+		task ("When the user clicks on Delete button") {
+			Button.clickDelete();
+		}
+
+		task ("Then the Delete modal is closed") {
+			AssertElementNotPresent(locator1 = "Modal#BODY");
+		}
+
+		task ("And an confirmation toast message is displayed") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the item action is present in the item action list") {
+			AssertElementNotPresent(
+				key_position = 1,
+				keyName = "delete",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
 	@description = "LPS-191488. Confirm that is possible to save an Action only with mandatory fields filled and the rest empty"
 	@priority = 4
 	test CanFillOnlyMandatoryFields {

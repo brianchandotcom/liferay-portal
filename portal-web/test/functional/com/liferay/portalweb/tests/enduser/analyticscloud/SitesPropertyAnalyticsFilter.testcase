@@ -199,8 +199,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8323 | Test Summary: A user lost access to a given property (because the admin removed the user's access or someone deleted the property of the system)"
+	@ignore = "true"
 	@priority = 4
 	test UserLostAccess {
+
+		// Ignored because of this bug: LRAC-14553
+
 		task ("AC launch and go to the porpreties menu") {
 			ACUtils.launchAC();
 

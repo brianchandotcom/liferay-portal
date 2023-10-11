@@ -118,8 +118,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Hugo Huijser
  * @author Edward C. Han
  */
-@Component(service = {LDAPUserImporter.class, UserImporter.class})
-public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
+@Component(service = LDAPUserImporter.class)
+public class LDAPUserImporterImpl implements LDAPUserImporter {
 
 	@Override
 	public long getLastImportTime() {

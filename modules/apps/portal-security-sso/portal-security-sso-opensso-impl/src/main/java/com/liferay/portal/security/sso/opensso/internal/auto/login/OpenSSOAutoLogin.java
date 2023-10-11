@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.exportimport.UserImporter;
+import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOWebKeys;
@@ -327,7 +327,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 	private ScreenNameGenerator _screenNameGenerator;
 
 	@Reference
-	private UserImporter _userImporter;
+	private LDAPUserImporter _userImporter;
 
 	@Reference
 	private UserLocalService _userLocalService;

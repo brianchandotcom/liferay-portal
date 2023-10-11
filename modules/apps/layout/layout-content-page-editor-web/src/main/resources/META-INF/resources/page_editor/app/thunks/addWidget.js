@@ -14,7 +14,7 @@ export default function addWidget({
 	selectItem = () => {},
 }) {
 	return (dispatch, getState) => {
-		WidgetService.addPortlet({
+		return WidgetService.addPortlet({
 			onNetworkStatus: dispatch,
 			parentItemId,
 			portletId,

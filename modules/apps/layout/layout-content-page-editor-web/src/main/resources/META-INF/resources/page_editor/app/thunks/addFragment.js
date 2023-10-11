@@ -39,7 +39,7 @@ export default function addFragment({
 		};
 
 		if (type === FRAGMENT_ENTRY_TYPES.composition) {
-			FragmentService.addFragmentEntryLinks(params).then(
+			return FragmentService.addFragmentEntryLinks(params).then(
 				({addedItemId, fragmentEntryLinks, layoutData}) => {
 					updateState(
 						Object.values(fragmentEntryLinks),
@@ -50,7 +50,7 @@ export default function addFragment({
 			);
 		}
 		else {
-			FragmentService.addFragmentEntryLink(params).then(
+			return FragmentService.addFragmentEntryLink(params).then(
 				({addedItemId, fragmentEntryLink, layoutData}) => {
 					updateState([fragmentEntryLink], layoutData, addedItemId);
 				}

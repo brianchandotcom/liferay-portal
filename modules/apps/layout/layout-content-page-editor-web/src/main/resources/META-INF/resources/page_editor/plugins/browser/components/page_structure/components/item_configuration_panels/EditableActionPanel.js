@@ -31,6 +31,7 @@ import isMapped from '../../../../../../app/utils/editable_value/isMapped';
 import {updateIn} from '../../../../../../app/utils/updateIn';
 import useCache from '../../../../../../app/utils/useCache';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
+import DisplayPageSelector from '../../../../../../common/components/DisplayPageSelector';
 import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
 import MappingSelector from '../../../../../../common/components/MappingSelector';
 import {getEditableItemPropTypes} from '../../../../../../prop_types/index';
@@ -39,8 +40,9 @@ const INTERACTION_NONE = 'none';
 const INTERACTION_NOTIFICATION = 'notification';
 const INTERACTION_PAGE = 'page';
 const INTERACTION_URL = 'url';
+const INTERACTION_DISPLAY_PAGE = 'displayPage';
 
-const INTERACTION_OPTIONS = [
+const ERROR_INTERACTION_OPTIONS = [
 	{
 		label: Liferay.Language.get('none'),
 		value: INTERACTION_NONE,
@@ -56,6 +58,14 @@ const INTERACTION_OPTIONS = [
 	{
 		label: Liferay.Language.get('go-to-external-url'),
 		value: INTERACTION_URL,
+	},
+];
+
+const SUCCESS_INTERACTION_OPTIONS = [
+	...ERROR_INTERACTION_OPTIONS,
+	{
+		label: Liferay.Language.get('go-to-entry-display-page'),
+		value: INTERACTION_DISPLAY_PAGE,
 	},
 ];
 
@@ -90,7 +100,6 @@ export default function EditableActionPanel({item}) {
 			),
 		[item.fragmentEntryLinkId]
 	);
-
 	const onValueSelect = (name, value) => {
 		dispatch(
 			updateEditableValues({
@@ -139,6 +148,7 @@ export default function EditableActionPanel({item}) {
 						config={editableValue.config}
 						data={INTERACTION_DATA.success}
 						fragmentId={item.parentId}
+						interactionOptions={SUCCESS_INTERACTION_OPTIONS}
 						onValueSelect={onValueSelect}
 					/>
 
@@ -149,6 +159,7 @@ export default function EditableActionPanel({item}) {
 							defaultMessage: defaultError,
 						}}
 						fragmentId={item.parentId}
+						interactionOptions={ERROR_INTERACTION_OPTIONS}
 						onValueSelect={onValueSelect}
 					/>
 				</>
@@ -161,12 +172,19 @@ EditableActionPanel.propTypes = {
 	item: getEditableItemPropTypes(),
 };
 
-function InteractionSelector({config, data, fragmentId, onValueSelect}) {
+function InteractionSelector({
+	config,
+	data,
+	fragmentId,
+	interactionOptions,
+	onValueSelect,
+}) {
 	const {defaultMessage, field, label, type} = data;
 
 	const interactionConfig = config[field];
 
-	const {interaction, page, reload, text, url} = interactionConfig || {};
+	const {displayPage, interaction, page, reload, text, url} =
+		interactionConfig || {};
 
 	const languageId = useSelector(selectLanguageId);
 	const fragmentConfig = useSelector(
@@ -222,7 +240,7 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 					label: sub(Liferay.Language.get('x-interaction'), label),
 					name: 'interaction',
 					typeOptions: {
-						validValues: INTERACTION_OPTIONS,
+						validValues: interactionOptions,
 					},
 				}}
 				onValueSelect={(name, value) => {
@@ -230,6 +248,19 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 				}}
 				value={interaction}
 			/>
+
+			{interaction === INTERACTION_DISPLAY_PAGE && (
+				<DisplayPageSelector
+					classNameId={config.mappedAction.classNameId}
+					onConfigChange={(layout) => {
+						onConfigChange(
+							INTERACTION_DISPLAY_PAGE,
+							layout.displayPage
+						);
+					}}
+					selectedValue={displayPage}
+				/>
+			)}
 
 			{(!interaction ||
 				[INTERACTION_NONE, INTERACTION_NOTIFICATION].includes(

@@ -39,6 +39,7 @@ import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -127,21 +128,31 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			SessionErrors.remove(httpServletRequest, infoField.getUniqueId());
 		}
 		else if (SessionErrors.contains(
-					httpServletRequest,
-					String.valueOf(
-						fragmentEntryLink.getFragmentEntryLinkId()))) {
+					httpServletRequest, InfoFormException.class)) {
 
-			InfoFormValidationException infoFormValidationException =
-				(InfoFormValidationException)SessionErrors.get(
-					httpServletRequest,
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
+			InfoFormException infoFormException =
+				(InfoFormException)SessionErrors.get(
+					httpServletRequest, InfoFormException.class);
 
-			errorMessage = infoFormValidationException.getLocalizedMessage(
-				locale);
+			if (infoFormException instanceof
+					InfoFormValidationException.InvalidCaptcha) {
 
-			SessionErrors.remove(
-				httpServletRequest,
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
+				InfoFormValidationException.InvalidCaptcha
+					infoFormValidationExceptionInvalidCaptcha =
+						(InfoFormValidationException.InvalidCaptcha)
+							infoFormException;
+
+				if (fragmentEntryLink.getFragmentEntryLinkId() ==
+						infoFormValidationExceptionInvalidCaptcha.
+							getFragmentEntryLinkId()) {
+
+					errorMessage = infoFormException.getLocalizedMessage(
+						locale);
+
+					SessionErrors.remove(
+						httpServletRequest, InfoFormException.class);
+				}
+			}
 		}
 
 		String inputHelpText = GetterUtil.getString(

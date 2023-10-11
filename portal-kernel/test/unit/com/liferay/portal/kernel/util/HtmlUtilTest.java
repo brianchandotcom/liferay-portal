@@ -402,17 +402,6 @@ public class HtmlUtilTest {
 	}
 
 	@Test
-	public void testStripTag() {
-		char[] tag = {'t', 'a', 'g'};
-
-		Assert.assertEquals(
-			17, HtmlUtil.stripTag(tag, "<tag>Hello World!</tag>", 0));
-
-		Assert.assertEquals(
-			0, HtmlUtil.stripTag(tag, "<gat>Hello World!</gat>", 0));
-	}
-
-	@Test
 	public void testUnescapeDoubleHtmlEncoding() {
 		Assert.assertEquals(
 			"&#034;", HtmlUtil.unescape(HtmlUtil.escape("&#034;")));

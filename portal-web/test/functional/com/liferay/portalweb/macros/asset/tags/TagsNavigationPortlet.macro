@@ -22,9 +22,12 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(displayTemplate)) {
-			Select(
-				locator1 = "Select#DISPLAY_TEMPLATE",
-				value1 = ${displayTemplate});
+			Click(
+				key_class = "display-template-selector",
+				key_index = 1,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+			MenuItem.click(menuItem = ${displayTemplate});
 		}
 
 		PortletEntry.save();

@@ -20,9 +20,12 @@ definition {
 		}
 
 		if (isSet(selectAdtType)) {
-			Select(
-				locator1 = "Select#DISPLAY_TEMPLATE",
-				value1 = ${selectAdtType});
+			Click(
+				key_class = "display-template-selector",
+				key_index = 1,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+			MenuItem.click(menuItem = ${selectAdtType});
 		}
 
 		if (${configureWithoutSave} == "true") {

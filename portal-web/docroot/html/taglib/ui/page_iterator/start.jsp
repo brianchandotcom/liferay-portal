@@ -79,9 +79,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 		<%
 		String ariaPagination = namespace + id + "_ariaPagination";
-
 		String ariaPaginationPicker = namespace + id + "_ariaPaginationPicker";
-
 		String ariaPaginationResults = namespace + id + "_ariaPaginationResults";
 		%>
 

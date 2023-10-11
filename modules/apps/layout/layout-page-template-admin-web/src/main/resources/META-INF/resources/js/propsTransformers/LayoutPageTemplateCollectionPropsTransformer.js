@@ -10,6 +10,7 @@ import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
 const ACTIONS = {
 	deleteLayoutPageTemplateCollection({
 		deleteLayoutPageTemplateCollectionURL,
+		dialogTitle,
 	}) {
 		openDeletePageTemplateModal({
 			onDelete: () => {
@@ -18,7 +19,7 @@ const ACTIONS = {
 					deleteLayoutPageTemplateCollectionURL
 				);
 			},
-			title: Liferay.Language.get('page-template-set'),
+			title: dialogTitle,
 		});
 	},
 

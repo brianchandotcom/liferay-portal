@@ -132,6 +132,11 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 								"deleteLayoutPageTemplateCollectionURL",
 								_getDeleteLayoutPageTemplateCollectionURL(
 									layoutPageTemplateCollection, tabs1));
+							dropdownItem.putData(
+								"dialogTitle",
+								_getDeleteDialogTitle(
+									_httpServletRequest,
+									layoutPageTemplateCollection));
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
@@ -141,6 +146,19 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
+	}
+
+	private String _getDeleteDialogTitle(
+		HttpServletRequest httpServletRequest,
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+
+		if (layoutPageTemplateCollection.getType() ==
+				LayoutPageTemplateCollectionTypeConstants.BASIC) {
+
+			return LanguageUtil.get(httpServletRequest, "page-template-set");
+		}
+
+		return LanguageUtil.get(httpServletRequest, "folder");
 	}
 
 	private String _getDeleteLayoutPageTemplateCollectionURL(

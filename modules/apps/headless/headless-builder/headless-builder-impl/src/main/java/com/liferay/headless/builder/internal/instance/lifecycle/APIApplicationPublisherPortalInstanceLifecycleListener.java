@@ -13,6 +13,7 @@ import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,13 +35,19 @@ public class APIApplicationPublisherPortalInstanceLifecycleListener
 			return;
 		}
 
-		for (APIApplication apiApplication :
-				_apiApplicationProvider.getPublishedAPIApplications(
-					company.getCompanyId())) {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				for (APIApplication apiApplication :
+						_apiApplicationProvider.getPublishedAPIApplications(
+							company.getCompanyId())) {
 
-			_apiApplicationPublisher.publish(
-				apiApplication.getBaseURL(), apiApplication.getCompanyId());
-		}
+					_apiApplicationPublisher.publish(
+						apiApplication.getBaseURL(),
+						apiApplication.getCompanyId());
+				}
+
+				return null;
+			});
 	}
 
 	@Reference

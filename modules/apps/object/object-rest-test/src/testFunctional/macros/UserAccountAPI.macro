@@ -350,6 +350,7 @@ definition {
 				"emailAddress": "${emailAddress}",
 				"familyName": "${familyName}",
 				"givenName": "${givenName}",
+				"status": "Active",
 				"${fieldName}":"${updatedFieldValue}"
 			}
 		''';
@@ -484,7 +485,7 @@ definition {
 		var curl = UserAccountAPI._curlUserAccount(
 			userAccountId = ${userAccountId},
 			virtualHost = ${virtualHost});
-		var body = '''"alternateName": "${alternateName}","emailAddress": "${emailAddress}","familyName": "${familyName}","givenName": "${givenName}"''';
+		var body = '''"alternateName": "${alternateName}","emailAddress": "${emailAddress}","familyName": "${familyName}","givenName": "${givenName}","status": "Active"''';
 
 		if (isSet(fieldName) && isSet(fieldValue)) {
 			var body = StringUtil.add("${body},", "\"${fieldName}\":\"${fieldValue}\"", "");

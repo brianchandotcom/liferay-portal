@@ -13,6 +13,18 @@ import org.osgi.service.component.annotations.Reference;
 public class UpgradeCatchAllCheck {
 
 	public void method() {
+		CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED;
+	}
+
+	public void method() {
+		CommerceOrderConstants.PAYMENT_STATUS_PAID;
+	}
+
+	public void method() {
+		CommerceOrderConstants.PAYMENT_STATUS_PENDING;
+	}
+
+	public void method() {
 		HtmlUtil.extractText(testEntry.getContent());
 
 		if (true) {

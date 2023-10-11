@@ -5,6 +5,8 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
+
 import com.liferay.portal.kernel.util.HtmlParser;
 
 import com.liferay.portal.kernel.search.Sort;
@@ -15,6 +17,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Nícolas Moura
  */
 public class UpgradeCatchAllCheck {
+
+	public void method() {
+		CommerceOrderPaymentConstants.STATUS_AUTHORIZED;
+	}
+
+	public void method() {
+		CommerceOrderPaymentConstants.STATUS_COMPLETED;
+	}
+
+	public void method() {
+		CommerceOrderPaymentConstants.STATUS_PENDING;
+	}
 
 	public void method() {
 		_htmlParser.extractText(testEntry.getContent());

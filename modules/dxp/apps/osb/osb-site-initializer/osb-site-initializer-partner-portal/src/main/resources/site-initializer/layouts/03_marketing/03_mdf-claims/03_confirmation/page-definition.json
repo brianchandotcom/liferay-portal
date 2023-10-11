@@ -13,16 +13,8 @@
 					},
 					"indexed": true,
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"paddingBottom": 6,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 2,
-						"widthType": "Fluid"
+						"paddingTop": 2
 					}
 				},
 				"pageElements": [
@@ -257,19 +249,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"ar_SA": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>",
-																"ca_ES": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>",
-																"de_DE": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>",
-																"en_US": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>",
-																"es_ES": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>",
-																"fi_FI": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>",
-																"fr_FR": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>",
-																"hu_HU": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>",
-																"ja_JP": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>",
-																"nl_NL": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>",
-																"pt_BR": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>",
-																"sv_SE": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>",
-																"zh_CN": "<span><span data-testid=\"comment-base-item-2466150\">Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.</span></span>"
+																"ar_SA": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.",
+																"ca_ES": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.",
+																"de_DE": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.",
+																"en_US": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.",
+																"es_ES": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.",
+																"fi_FI": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.",
+																"fr_FR": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.",
+																"hu_HU": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.",
+																"ja_JP": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.",
+																"nl_NL": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.",
+																"pt_BR": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.",
+																"sv_SE": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments.",
+																"zh_CN": "Success! Your MDF Claim submission has been sent. Please contact your Liferay Channel Team with any questions or comments."
 															}
 														}
 													}
@@ -296,7 +288,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "dialect-dialect-button"
+														"key": "DIALECT-dialect-button"
 													},
 													"fragmentConfig": {
 														"buttonSize": "",

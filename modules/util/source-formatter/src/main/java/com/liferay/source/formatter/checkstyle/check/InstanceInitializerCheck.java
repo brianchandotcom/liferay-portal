@@ -57,14 +57,14 @@ public class InstanceInitializerCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST childDetailAST = detailAST.getFirstChild();
+		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
-		if (childDetailAST.getType() != TokenTypes.SLIST) {
+		if (firstChildDetailAST.getType() != TokenTypes.SLIST) {
 			return;
 		}
 
 		List<DetailAST> exprDetailASTList = getAllChildTokens(
-			childDetailAST, false, TokenTypes.EXPR);
+			firstChildDetailAST, false, TokenTypes.EXPR);
 
 		if (exprDetailASTList.size() >= 2) {
 			_checkAttributeOrder(exprDetailASTList);
@@ -91,7 +91,7 @@ public class InstanceInitializerCheck extends BaseCheck {
 
 		for (DetailAST literalIfDetailAST :
 				getAllChildTokens(
-					childDetailAST, false, TokenTypes.LITERAL_IF)) {
+					firstChildDetailAST, false, TokenTypes.LITERAL_IF)) {
 
 			_checkIfStatement(literalIfDetailAST, javaClass);
 		}
@@ -102,15 +102,15 @@ public class InstanceInitializerCheck extends BaseCheck {
 		String previousMethodName = null;
 
 		for (DetailAST exprDetailAST : exprDetailASTList) {
-			DetailAST childDetailAST = exprDetailAST.getFirstChild();
+			DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
 
-			if (childDetailAST.getType() == TokenTypes.ASSIGN) {
-				String variableName = getName(childDetailAST);
+			if (firstChildDetailAST.getType() == TokenTypes.ASSIGN) {
+				String variableName = getName(firstChildDetailAST);
 
 				if (Validator.isNotNull(
 						getTypeName(
 							getVariableTypeDetailAST(
-								childDetailAST, variableName, false),
+								firstChildDetailAST, variableName, false),
 							false))) {
 
 					continue;
@@ -123,19 +123,19 @@ public class InstanceInitializerCheck extends BaseCheck {
 					log(
 						exprDetailAST, _MSG_INCORRECT_ASSIGN_ORDER,
 						variableName, previousVariableName,
-						childDetailAST.getLineNo());
+						firstChildDetailAST.getLineNo());
 				}
 				else if (Validator.isNotNull(previousMethodName)) {
 					log(
 						exprDetailAST, _MSG_MOVE_ASSIGN_BEFORE_METHOD_CALL,
 						variableName, previousMethodName,
-						childDetailAST.getLineNo());
+						firstChildDetailAST.getLineNo());
 				}
 
 				previousVariableName = variableName;
 			}
-			else if (childDetailAST.getType() == TokenTypes.METHOD_CALL) {
-				String methodName = getName(childDetailAST);
+			else if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
+				String methodName = getName(firstChildDetailAST);
 
 				if (Validator.isNull(methodName) ||
 					!methodName.matches("set[A-Z].+")) {
@@ -149,7 +149,7 @@ public class InstanceInitializerCheck extends BaseCheck {
 					log(
 						exprDetailAST, _MSG_INCORRECT_METHOD_CALL_ORDER,
 						methodName, previousMethodName,
-						childDetailAST.getLineNo());
+						firstChildDetailAST.getLineNo());
 				}
 
 				previousMethodName = methodName;

@@ -84,68 +84,68 @@ public class PaginationContextProviderTest {
 
 		// Default limited page size and limited page size requested
 
-		_testPagination(1, 20, null, null);
-		_testPagination(1, 5, null, 5);
-		_testPagination(1, 30, null, 30);
-		_testPagination(1, 20, null, null);
-		_testPagination(1, 15, null, 15);
-		_testPagination(1, 30, null, 30);
-		_testPagination(1, 40, null, 40);
-		_testPagination(2, 20, 2, null);
-		_testPagination(3, 20, 3, null);
+		_test(1, 20, null, null);
+		_test(1, 5, null, 5);
+		_test(1, 30, null, 30);
+		_test(1, 20, null, null);
+		_test(1, 15, null, 15);
+		_test(1, 30, null, 30);
+		_test(1, 40, null, 40);
+		_test(2, 20, 2, null);
+		_test(3, 20, 3, null);
 
 		// Default limited page size and unlimited page size requested
 
-		_testPagination(1, 500, null, -1);
-		_testPagination(1, 500, null, 0);
-		_testPagination(1, 500, -1, null);
-		_testPagination(1, 500, 0, null);
+		_test(1, 500, null, -1);
+		_test(1, 500, null, 0);
+		_test(1, 500, -1, null);
+		_test(1, 500, 0, null);
 
 		// Limited page size configured and limited page size requested
 
-		_withPageSizeLimit(10, () -> _testPagination(1, 10, null, null));
-		_withPageSizeLimit(10, () -> _testPagination(1, 5, null, 5));
-		_withPageSizeLimit(10, () -> _testPagination(1, 10, null, 30));
-		_withPageSizeLimit(30, () -> _testPagination(1, 20, null, null));
-		_withPageSizeLimit(30, () -> _testPagination(1, 15, null, 15));
-		_withPageSizeLimit(30, () -> _testPagination(1, 30, null, 30));
-		_withPageSizeLimit(30, () -> _testPagination(1, 30, null, 40));
-		_withPageSizeLimit(50, () -> _testPagination(2, 20, 2, null));
-		_withPageSizeLimit(50, () -> _testPagination(3, 20, 3, null));
+		_withPageSizeLimit(10, () -> _test(1, 10, null, null));
+		_withPageSizeLimit(10, () -> _test(1, 5, null, 5));
+		_withPageSizeLimit(10, () -> _test(1, 10, null, 30));
+		_withPageSizeLimit(30, () -> _test(1, 20, null, null));
+		_withPageSizeLimit(30, () -> _test(1, 15, null, 15));
+		_withPageSizeLimit(30, () -> _test(1, 30, null, 30));
+		_withPageSizeLimit(30, () -> _test(1, 30, null, 40));
+		_withPageSizeLimit(50, () -> _test(2, 20, 2, null));
+		_withPageSizeLimit(50, () -> _test(3, 20, 3, null));
 
 		// Limited page size configured and unlimited page size requested
 
-		_withPageSizeLimit(50, () -> _testPagination(1, 50, null, -1));
-		_withPageSizeLimit(50, () -> _testPagination(1, 50, null, 0));
-		_withPageSizeLimit(50, () -> _testPagination(1, 50, -1, null));
-		_withPageSizeLimit(50, () -> _testPagination(1, 50, 0, null));
+		_withPageSizeLimit(50, () -> _test(1, 50, null, -1));
+		_withPageSizeLimit(50, () -> _test(1, 50, null, 0));
+		_withPageSizeLimit(50, () -> _test(1, 50, -1, null));
+		_withPageSizeLimit(50, () -> _test(1, 50, 0, null));
 
 		// Unlimited page size configured and limited page size requested
 
-		_withPageSizeLimit(-1, () -> _testPagination(1, 20, null, null));
-		_withPageSizeLimit(-1, () -> _testPagination(1, 25, null, 25));
-		_withPageSizeLimit(-1, () -> _testPagination(2, 20, 2, null));
-		_withPageSizeLimit(-1, () -> _testPagination(2, 25, 2, 25));
+		_withPageSizeLimit(-1, () -> _test(1, 20, null, null));
+		_withPageSizeLimit(-1, () -> _test(1, 25, null, 25));
+		_withPageSizeLimit(-1, () -> _test(2, 20, 2, null));
+		_withPageSizeLimit(-1, () -> _test(2, 25, 2, 25));
 
-		_withPageSizeLimit(0, () -> _testPagination(1, 20, null, null));
-		_withPageSizeLimit(0, () -> _testPagination(1, 25, null, 25));
-		_withPageSizeLimit(0, () -> _testPagination(2, 20, 2, null));
-		_withPageSizeLimit(0, () -> _testPagination(2, 25, 2, 25));
+		_withPageSizeLimit(0, () -> _test(1, 20, null, null));
+		_withPageSizeLimit(0, () -> _test(1, 25, null, 25));
+		_withPageSizeLimit(0, () -> _test(2, 20, 2, null));
+		_withPageSizeLimit(0, () -> _test(2, 25, 2, 25));
 
 		// Unlimited page size configured and unlimited page size requested
 
-		_withPageSizeLimit(-1, () -> _testPagination(-1, -1, -1, null));
-		_withPageSizeLimit(-1, () -> _testPagination(-1, -1, 0, null));
-		_withPageSizeLimit(-1, () -> _testPagination(-1, -1, null, -1));
-		_withPageSizeLimit(-1, () -> _testPagination(-1, -1, null, 0));
+		_withPageSizeLimit(-1, () -> _test(-1, -1, -1, null));
+		_withPageSizeLimit(-1, () -> _test(-1, -1, 0, null));
+		_withPageSizeLimit(-1, () -> _test(-1, -1, null, -1));
+		_withPageSizeLimit(-1, () -> _test(-1, -1, null, 0));
 
-		_withPageSizeLimit(0, () -> _testPagination(-1, -1, -1, null));
-		_withPageSizeLimit(0, () -> _testPagination(-1, -1, 0, null));
-		_withPageSizeLimit(0, () -> _testPagination(-1, -1, null, -1));
-		_withPageSizeLimit(0, () -> _testPagination(-1, -1, null, 0));
+		_withPageSizeLimit(0, () -> _test(-1, -1, -1, null));
+		_withPageSizeLimit(0, () -> _test(-1, -1, 0, null));
+		_withPageSizeLimit(0, () -> _test(-1, -1, null, -1));
+		_withPageSizeLimit(0, () -> _test(-1, -1, null, 0));
 	}
 
-	private void _testPagination(
+	private void _test(
 			int expectedPage, int expectedPageSize, Integer requestPage,
 			Integer requestPageSize)
 		throws Exception {

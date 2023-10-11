@@ -81,7 +81,6 @@ const loadCollectionFields = (
 	CollectionService.getCollectionMappingFields({
 		itemSubtype: itemSubtype || '',
 		itemType,
-		onNetworkStatus: () => {},
 	})
 		.then((response) => {
 			dispatch(

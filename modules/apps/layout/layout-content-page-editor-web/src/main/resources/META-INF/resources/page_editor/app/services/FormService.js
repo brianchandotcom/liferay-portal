@@ -4,6 +4,7 @@
  */
 
 import {config} from '../config/index';
+import draftServiceFetch from './draftServiceFetch';
 import serviceFetch from './serviceFetch';
 
 export default {
@@ -12,18 +13,13 @@ export default {
 	 * Get form config
 	 * @param {object} options
 	 * @param {string} options.classNameId Form classNameId
-	 * @param {function} options.onNetworkStatus
 	 */
-	getFormConfig({classNameId, onNetworkStatus = () => {}}) {
-		return serviceFetch(
-			config.getFormConfigURL,
-			{
-				body: {
-					classNameId,
-				},
+	getFormConfig({classNameId}) {
+		return serviceFetch(config.getFormConfigURL, {
+			body: {
+				classNameId,
 			},
-			onNetworkStatus
-		);
+		});
 	},
 
 	/**
@@ -31,42 +27,28 @@ export default {
 	 * @param {object} options
 	 * @param {string} options.classNameId Form classNameId
 	 * @param {string} options.classTypeId Form classTypeId
-	 * @param {function} options.onNetworkStatus
 	 */
-	getFormFields({classNameId, classTypeId, onNetworkStatus = () => {}}) {
-		return serviceFetch(
-			config.getFormFieldsURL,
-			{
-				body: {
-					classNameId,
-					classTypeId,
-				},
+	getFormFields({classNameId, classTypeId}) {
+		return serviceFetch(config.getFormFieldsURL, {
+			body: {
+				classNameId,
+				classTypeId,
 			},
-			onNetworkStatus
-		);
+		});
 	},
 
 	/**
 	 * Get allowed field types for a given fragment entry
 	 * @param {object} options
 	 * @param {string} options.fragmentEntryKey
-	 * @param {function} options.onNetworkStatus
 	 */
-	getFragmentEntryInputFieldTypes({
-		fragmentEntryKey,
-		groupId,
-		onNetworkStatus = () => {},
-	}) {
-		return serviceFetch(
-			config.getFragmentEntryInputFieldTypesURL,
-			{
-				body: {
-					fragmentEntryKey,
-					groupId: groupId || null,
-				},
+	getFragmentEntryInputFieldTypes({fragmentEntryKey, groupId}) {
+		return serviceFetch(config.getFragmentEntryInputFieldTypesURL, {
+			body: {
+				fragmentEntryKey,
+				groupId: groupId || null,
 			},
-			onNetworkStatus
-		);
+		});
 	},
 
 	/**
@@ -84,7 +66,7 @@ export default {
 		onNetworkStatus,
 		segmentsExperienceId,
 	}) {
-		return serviceFetch(
+		return draftServiceFetch(
 			config.updateFormItemConfigURL,
 			{
 				body: {
@@ -93,8 +75,7 @@ export default {
 					segmentsExperienceId,
 				},
 			},
-			onNetworkStatus,
-			{requestGenerateDraft: true}
+			onNetworkStatus
 		);
 	},
 };

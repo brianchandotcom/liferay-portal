@@ -4,13 +4,7 @@
  */
 
 import {config} from '../config/index';
-import serviceFetch from './serviceFetch';
-
-const layoutServiceFetch = (url, options, onNetworkStatus) => {
-	return serviceFetch(url, options, onNetworkStatus, {
-		requestGenerateDraft: true,
-	});
-};
+import draftServiceFetch from './draftServiceFetch';
 
 export default {
 
@@ -31,7 +25,7 @@ export default {
 		position,
 		segmentsExperienceId,
 	}) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.addItemURL,
 			{
 				body: {
@@ -53,7 +47,7 @@ export default {
 	 * @return {Promise<object>}
 	 */
 	changeMasterLayout({masterLayoutPlid, onNetworkStatus}) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.changeMasterLayoutURL,
 			{
 				body: {
@@ -72,7 +66,7 @@ export default {
 	 * @return {Promise<object>}
 	 */
 	changeStyleBookEntry({onNetworkStatus, styleBookEntryId}) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.changeStyleBookEntryURL,
 			{
 				body: {
@@ -89,7 +83,7 @@ export default {
 		templateSetId,
 		templateSetName,
 	}) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.createLayoutPageTemplateEntryURL,
 			{
 				body: {
@@ -108,7 +102,7 @@ export default {
 	 * @returns {Promise<{error: Error, friendlyURL: string}>}
 	 */
 	getLayoutFriendlyURL(layout) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.getLayoutFriendlyURL,
 			{
 				body: layout,
@@ -118,7 +112,7 @@ export default {
 	},
 
 	getLayoutPageTemplateCollections() {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.getLayoutPageTemplateCollectionsURL,
 			{},
 			() => {}
@@ -141,7 +135,7 @@ export default {
 		portletIds = [],
 		segmentsExperienceId,
 	}) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.markItemForDeletionURL,
 			{
 				body: {
@@ -171,7 +165,7 @@ export default {
 		position,
 		segmentsExperienceId,
 	}) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.moveItemURL,
 			{
 				body: {
@@ -202,7 +196,7 @@ export default {
 		onNetworkStatus,
 		segmentsExperienceId,
 	}) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.restoreCollectionDisplayConfigURL,
 			{
 				body: {
@@ -227,7 +221,7 @@ export default {
 	 * @return {Promise<void>}
 	 */
 	unmarkItemsForDeletion({itemIds, onNetworkStatus, segmentsExperienceId}) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.unmarkItemsForDeletionURL,
 			{
 				body: {
@@ -256,7 +250,7 @@ export default {
 		onNetworkStatus,
 		segmentsExperienceId,
 	}) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.updateCollectionDisplayConfigURL,
 			{
 				body: {
@@ -285,7 +279,7 @@ export default {
 		onNetworkStatus,
 		segmentsExperienceId,
 	}) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.updateItemConfigURL,
 			{
 				body: {
@@ -307,7 +301,7 @@ export default {
 	 * @return {Promise<void>}
 	 */
 	updateLayoutData({layoutData, onNetworkStatus, segmentsExperienceId}) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.updateLayoutPageTemplateDataURL,
 			{
 				body: {
@@ -334,7 +328,7 @@ export default {
 		onNetworkStatus,
 		segmentsExperienceId,
 	}) {
-		return layoutServiceFetch(
+		return draftServiceFetch(
 			config.updateRowColumnsURL,
 			{
 				body: {

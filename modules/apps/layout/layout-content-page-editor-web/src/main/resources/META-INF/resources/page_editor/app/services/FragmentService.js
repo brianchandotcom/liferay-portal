@@ -4,6 +4,7 @@
  */
 
 import {config} from '../config/index';
+import draftServiceFetch from './draftServiceFetch';
 import serviceFetch from './serviceFetch';
 
 /**
@@ -78,7 +79,7 @@ export default {
 		saveMappingConfiguration,
 		segmentsExperienceId,
 	}) {
-		return serviceFetch(
+		return draftServiceFetch(
 			config.addFragmentCompositionURL,
 			{
 				body: {
@@ -92,8 +93,7 @@ export default {
 					segmentsExperienceId,
 				},
 			},
-			onNetworkStatus,
-			{requestGenerateDraft: true}
+			onNetworkStatus
 		);
 	},
 
@@ -117,7 +117,7 @@ export default {
 		position,
 		segmentsExperienceId,
 	}) {
-		return serviceFetch(
+		return draftServiceFetch(
 			config.addFragmentEntryLinkURL,
 			{
 				body: {
@@ -128,8 +128,7 @@ export default {
 					segmentsExperienceId,
 				},
 			},
-			onNetworkStatus,
-			{requestGenerateDraft: true}
+			onNetworkStatus
 		);
 	},
 
@@ -153,7 +152,7 @@ export default {
 		position,
 		segmentsExperienceId,
 	}) {
-		return serviceFetch(
+		return draftServiceFetch(
 			config.addFragmentEntryLinksURL,
 			{
 				body: {
@@ -164,8 +163,7 @@ export default {
 					segmentsExperienceId,
 				},
 			},
-			onNetworkStatus,
-			{requestGenerateDraft: true}
+			onNetworkStatus
 		);
 	},
 
@@ -194,7 +192,7 @@ export default {
 	 * @param {string} options.segmentsExperienceId Experience id
 	 */
 	duplicateItem({itemId, onNetworkStatus, segmentsExperienceId}) {
-		return serviceFetch(
+		return draftServiceFetch(
 			config.duplicateItemURL,
 			{
 				body: {
@@ -202,8 +200,7 @@ export default {
 					segmentsExperienceId,
 				},
 			},
-			onNetworkStatus,
-			{requestGenerateDraft: true}
+			onNetworkStatus
 		);
 	},
 
@@ -238,7 +235,6 @@ export default {
 	 * @param {string} options.itemClassPK Class PK of the collection item
 	 * @param {string} options.fragmentEntryLinkId Id of the fragmentEntryLink
 	 * @param {string} options.languageId Language id
-	 * @param {function} options.onNetworkStatus
 	 * @param {string} options.segmentsExperienceId Experience id
 	 */
 	renderFragmentEntryLinkContent({
@@ -247,7 +243,6 @@ export default {
 		itemClassPK,
 		itemExternalReferenceCode,
 		languageId,
-		onNetworkStatus,
 		segmentsExperienceId,
 	}) {
 		const body = {
@@ -265,13 +260,9 @@ export default {
 			body.itemExternalReferenceCode = itemExternalReferenceCode;
 		}
 
-		return serviceFetch(
-			config.renderFragmentEntryURL,
-			{
-				body,
-			},
-			onNetworkStatus
-		);
+		return serviceFetch(config.renderFragmentEntryURL, {
+			body,
+		});
 	},
 
 	/**
@@ -287,7 +278,7 @@ export default {
 		highlighted,
 		onNetworkStatus,
 	}) {
-		return serviceFetch(
+		return draftServiceFetch(
 			config.updateFragmentsHighlightedConfigurationURL,
 			{
 				body: {
@@ -296,8 +287,7 @@ export default {
 					highlighted,
 				},
 			},
-			onNetworkStatus,
-			{requestGenerateDraft: true}
+			onNetworkStatus
 		);
 	},
 
@@ -316,7 +306,7 @@ export default {
 		onNetworkStatus,
 		segmentsExperienceId,
 	}) {
-		return serviceFetch(
+		return draftServiceFetch(
 			config.updateConfigurationValuesURL,
 			{
 				body: {
@@ -326,8 +316,7 @@ export default {
 					segmentsExperienceId,
 				},
 			},
-			onNetworkStatus,
-			{requestGenerateDraft: true}
+			onNetworkStatus
 		);
 	},
 
@@ -345,7 +334,7 @@ export default {
 		onNetworkStatus,
 		segmentsExperienceId,
 	}) {
-		return serviceFetch(
+		return draftServiceFetch(
 			config.editFragmentEntryLinkURL,
 			{
 				body: {
@@ -355,8 +344,7 @@ export default {
 					segmentsExperienceId,
 				},
 			},
-			onNetworkStatus,
-			{requestGenerateDraft: true}
+			onNetworkStatus
 		);
 	},
 
@@ -372,7 +360,7 @@ export default {
 		onNetworkStatus,
 		portletCategoryKeys,
 	}) {
-		return serviceFetch(
+		return draftServiceFetch(
 			config.updateFragmentPortletSetsSortURL,
 			{
 				body: {
@@ -382,8 +370,7 @@ export default {
 						JSON.stringify(portletCategoryKeys) || null,
 				},
 			},
-			onNetworkStatus,
-			{requestGenerateDraft: true}
+			onNetworkStatus
 		);
 	},
 };

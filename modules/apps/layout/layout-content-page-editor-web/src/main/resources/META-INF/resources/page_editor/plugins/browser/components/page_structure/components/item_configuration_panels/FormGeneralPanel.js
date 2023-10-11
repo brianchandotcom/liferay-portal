@@ -470,7 +470,6 @@ function DisplayPageSelector({item, onConfigChange, selectedValue, type}) {
 			InfoItemService.getAvailableStructureMappingFields({
 				classNameId,
 				classTypeId,
-				onNetworkStatus: dispatch,
 			}).then((newFields) => {
 				dispatch(addMappingFields({fields: newFields, key}));
 			});

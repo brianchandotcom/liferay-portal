@@ -37,7 +37,6 @@ export function NoPaginationOptions({
 		if (collection) {
 			CollectionService.getCollectionItemCount({
 				collection,
-				onNetworkStatus: () => {},
 			}).then(({totalNumberOfItems}) => {
 				if (isMounted()) {
 					setTotalNumberOfItems(totalNumberOfItems);

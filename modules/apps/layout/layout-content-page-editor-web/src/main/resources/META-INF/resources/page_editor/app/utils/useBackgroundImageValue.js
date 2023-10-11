@@ -67,7 +67,6 @@ function loadBackgroundImageMediaQueries(elementId, backgroundImage) {
 
 	return ImageService.getAvailableImageConfigurations({
 		fileEntryId: backgroundImage.fileEntryId,
-		onNetworkStatus: () => {},
 	}).then((imageSizes) => {
 		if (!imageSizes?.length) {
 			return '';

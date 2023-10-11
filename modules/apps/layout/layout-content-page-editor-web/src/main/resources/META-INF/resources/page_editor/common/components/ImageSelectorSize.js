@@ -163,7 +163,6 @@ export function ImageSelectorSize({
 
 		ImageService.getAvailableImageConfigurations({
 			fileEntryId,
-			onNetworkStatus: () => {},
 		}).then((availableImageSizes) => {
 			setImageSizes(
 				[...availableImageSizes].sort(

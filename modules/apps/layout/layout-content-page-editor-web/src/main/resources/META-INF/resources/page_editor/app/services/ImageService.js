@@ -12,29 +12,20 @@ export default {
 	 * Get available image configurations
 	 * @param {object} options
 	 * @param {string} options.fileEntryId File entry ID
-	 * @param {function} options.onNetworkStatus
 	 */
-	getAvailableImageConfigurations({fileEntryId, onNetworkStatus}) {
-		return serviceFetch(
-			config.getAvailableImageConfigurationsURL,
-			{
-				body: {
-					fileEntryId,
-				},
+	getAvailableImageConfigurations({fileEntryId}) {
+		return serviceFetch(config.getAvailableImageConfigurationsURL, {
+			body: {
+				fileEntryId,
 			},
-			onNetworkStatus
-		);
+		});
 	},
 
-	getFileEntry({fileEntryId, onNetworkStatus}) {
-		return serviceFetch(
-			config.getFileEntryURL,
-			{
-				body: {
-					fileEntryId,
-				},
+	getFileEntry({fileEntryId}) {
+		return serviceFetch(config.getFileEntryURL, {
+			body: {
+				fileEntryId,
 			},
-			onNetworkStatus
-		);
+		});
 	},
 };

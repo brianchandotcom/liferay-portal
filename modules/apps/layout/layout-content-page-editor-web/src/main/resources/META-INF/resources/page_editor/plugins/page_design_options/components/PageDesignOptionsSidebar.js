@@ -75,13 +75,13 @@ export default function PageDesignOptionsSidebar() {
 	const onSelectStyleBook = useCallback(
 		(styleBookEntryId) => {
 			LayoutService.changeStyleBookEntry({
-				onNetworkStatus: () => {},
+				onNetworkStatus: dispatch,
 				styleBookEntryId,
 			}).then(({tokenValues}) => {
 				setSelectedStyleBook({styleBookEntryId, tokenValues});
 			});
 		},
-		[setSelectedStyleBook]
+		[setSelectedStyleBook, dispatch]
 	);
 
 	useEffect(() => {

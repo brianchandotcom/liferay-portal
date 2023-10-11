@@ -47,7 +47,6 @@ export default {
 	 * @param {object} options
 	 * @param {string} options.listItemStyle
 	 * @param {string} options.listStyle
-	 * @param {function} options.onNetworkStatus
 	 */
 	getCollectionField({
 		activePage,
@@ -63,7 +62,6 @@ export default {
 		numberOfItems,
 		numberOfItemsPerPage,
 		numberOfPages,
-		onNetworkStatus,
 		paginationType,
 		segmentsExperienceId,
 		showAllItems,
@@ -95,13 +93,9 @@ export default {
 			body.externalReferenceCode = externalReferenceCode;
 		}
 
-		return serviceFetch(
-			config.getCollectionFieldURL,
-			{
-				body,
-			},
-			onNetworkStatus
-		);
+		return serviceFetch(config.getCollectionFieldURL, {
+			body,
+		});
 	},
 
 	getCollectionFilters() {
@@ -114,25 +108,15 @@ export default {
 	 * @param {string} options.classNameId
 	 * @param {string} options.classPK
 	 * @param {object} options.collection
-	 * @param {function} options.onNetworkStatus
 	 */
-	getCollectionItemCount({
-		classNameId,
-		classPK,
-		collection,
-		onNetworkStatus,
-	}) {
-		return serviceFetch(
-			config.getCollectionItemCountURL,
-			{
-				body: {
-					classNameId,
-					classPK,
-					layoutObjectReference: JSON.stringify(collection),
-				},
+	getCollectionItemCount({classNameId, classPK, collection}) {
+		return serviceFetch(config.getCollectionItemCountURL, {
+			body: {
+				classNameId,
+				classPK,
+				layoutObjectReference: JSON.stringify(collection),
 			},
-			onNetworkStatus
-		);
+		});
 	},
 
 	/**
@@ -143,17 +127,13 @@ export default {
 	 * @param {string} options.itemType Collection itemType
 	 * @param {function} options.onNetworkStatus
 	 */
-	getCollectionMappingFields({itemSubtype, itemType, onNetworkStatus}) {
-		return serviceFetch(
-			config.getCollectionMappingFieldsURL,
-			{
-				body: {
-					itemSubtype,
-					itemType,
-				},
+	getCollectionMappingFields({itemSubtype, itemType}) {
+		return serviceFetch(config.getCollectionMappingFieldsURL, {
+			body: {
+				itemSubtype,
+				itemType,
 			},
-			onNetworkStatus
-		);
+		});
 	},
 
 	/**
@@ -161,11 +141,9 @@ export default {
 	 * @returns {Promise<string[]>}
 	 */
 	getCollectionSupportedFilters(collections) {
-		return serviceFetch(
-			config.getCollectionSupportedFiltersURL,
-			{body: {collections: JSON.stringify(collections)}},
-			() => {}
-		);
+		return serviceFetch(config.getCollectionSupportedFiltersURL, {
+			body: {collections: JSON.stringify(collections)},
+		});
 	},
 
 	/**
@@ -173,11 +151,9 @@ export default {
 	 * @returns {Promise<string[]>}
 	 */
 	getCollectionVariations(classPK) {
-		return serviceFetch(
-			config.getCollectionVariationsURL,
-			{body: {classPK}},
-			() => {}
-		);
+		return serviceFetch(config.getCollectionVariationsURL, {
+			body: {classPK},
+		});
 	},
 
 	/**
@@ -187,15 +163,11 @@ export default {
 	 * @returns {Promise<{warningMessage: string}>}
 	 */
 	getCollectionWarningMessage({layoutDataItemId, segmentsExperienceId}) {
-		return serviceFetch(
-			config.getCollectionWarningMessageURL,
-			{
-				body: {
-					itemId: layoutDataItemId,
-					segmentsExperienceId,
-				},
+		return serviceFetch(config.getCollectionWarningMessageURL, {
+			body: {
+				itemId: layoutDataItemId,
+				segmentsExperienceId,
 			},
-			() => {}
-		);
+		});
 	},
 };

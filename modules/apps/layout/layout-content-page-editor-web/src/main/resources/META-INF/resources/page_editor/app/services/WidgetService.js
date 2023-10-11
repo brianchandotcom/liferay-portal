@@ -4,6 +4,7 @@
  */
 
 import {config} from '../config/index';
+import draftServiceFetch from './draftServiceFetch';
 import serviceFetch from './serviceFetch';
 
 export default {
@@ -27,7 +28,7 @@ export default {
 		position,
 		segmentsExperienceId,
 	}) {
-		return serviceFetch(
+		return draftServiceFetch(
 			config.addPortletURL,
 			{
 				body: {
@@ -38,8 +39,7 @@ export default {
 					segmentsExperienceId,
 				},
 			},
-			onNetworkStatus,
-			{requestGenerateDraft: true}
+			onNetworkStatus
 		);
 	},
 
@@ -55,7 +55,7 @@ export default {
 	 * @param {function} options.onNetworkStatus
 	 */
 	toggleWidgetHighlighted({highlighted, onNetworkStatus, portletId}) {
-		return serviceFetch(
+		return draftServiceFetch(
 			config.updatePortletsHighlightedConfigurationURL,
 			{
 				body: {
@@ -63,8 +63,7 @@ export default {
 					portletId,
 				},
 			},
-			onNetworkStatus,
-			{requestGenerateDraft: true}
+			onNetworkStatus
 		);
 	},
 };

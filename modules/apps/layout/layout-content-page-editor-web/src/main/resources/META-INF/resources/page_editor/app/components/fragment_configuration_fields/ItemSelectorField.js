@@ -99,7 +99,6 @@ const TemplateSelector = ({
 				className,
 				classPK,
 				externalReferenceCode,
-				onNetworkStatus: dispatch,
 			}).then((response) => {
 				setAvailableTemplates(response);
 			});

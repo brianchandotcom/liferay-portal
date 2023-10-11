@@ -30,7 +30,6 @@ export default function selectExperience({id}) {
 			})
 			.then(() => {
 				InfoItemService.getPageContents({
-					onNetworkStatus: dispatch,
 					segmentsExperienceId: id,
 				}).then((pageContents) => {
 					dispatch(

@@ -25,7 +25,6 @@ export default function usePortletConfigurationListener() {
 		const onEditConfiguration = ({portletId}) => {
 			if (PAGE_CONTENTS_AWARE_PORTLET_IDS.includes(portletId)) {
 				InfoItemService.getPageContents({
-					onNetworkStatus: dispatch,
 					segmentsExperienceId,
 				}).then((pageContents) => {
 					dispatch(

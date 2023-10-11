@@ -14,43 +14,28 @@ export default {
 	 * @param {string} options.itemSubtype itemSubtype
 	 * @param {string} options.itemType itemType
 	 * @param {string} options.listStyle listStyle
-	 * @param {function} options.onNetworkStatus
 	 */
-	getAvailableListItemRenderers({
-		itemSubtype,
-		itemType,
-		listStyle,
-		onNetworkStatus,
-	}) {
-		return serviceFetch(
-			config.getAvailableListItemRenderersURL,
-			{
-				body: {
-					itemSubtype,
-					itemType,
-					listStyle,
-				},
+	getAvailableListItemRenderers({itemSubtype, itemType, listStyle}) {
+		return serviceFetch(config.getAvailableListItemRenderersURL, {
+			body: {
+				itemSubtype,
+				itemType,
+				listStyle,
 			},
-			onNetworkStatus
-		);
+		});
 	},
 
 	/**
 	 * Get available list renderers for the class name
 	 * @param {object} options
 	 * @param {string} options.className className
-	 * @param {function} options.onNetworkStatus
 	 */
-	getAvailableListRenderers({className, onNetworkStatus}) {
-		return serviceFetch(
-			config.getAvailableListRenderersURL,
-			{
-				body: {
-					className,
-				},
+	getAvailableListRenderers({className}) {
+		return serviceFetch(config.getAvailableListRenderersURL, {
+			body: {
+				className,
 			},
-			onNetworkStatus
-		);
+		});
 	},
 
 	/**
@@ -60,16 +45,12 @@ export default {
 	 * @param {string} options.classTypeId Asset's classTypeId
 	 */
 	getAvailableStructureMappingFields({classNameId, classTypeId}) {
-		return serviceFetch(
-			config.mappingFieldsURL,
-			{
-				body: {
-					classNameId,
-					classTypeId,
-				},
+		return serviceFetch(config.mappingFieldsURL, {
+			body: {
+				classNameId,
+				classTypeId,
 			},
-			() => {}
-		);
+		});
 	},
 
 	/**
@@ -77,14 +58,8 @@ export default {
 	 * @param {object} options
 	 * @param {string} options.className Asset's className
 	 * @param {string} options.classPK Asset's classPK
-	 * @param {function} options.onNetworkStatus
 	 */
-	getAvailableTemplates({
-		className,
-		classPK,
-		externalReferenceCode,
-		onNetworkStatus,
-	}) {
+	getAvailableTemplates({className, classPK, externalReferenceCode}) {
 		const body = {
 			className,
 		};
@@ -97,13 +72,9 @@ export default {
 			body.externalReferenceCode = externalReferenceCode;
 		}
 
-		return serviceFetch(
-			config.getAvailableTemplatesURL,
-			{
-				body,
-			},
-			onNetworkStatus
-		);
+		return serviceFetch(config.getAvailableTemplatesURL, {
+			body,
+		});
 	},
 
 	/**
@@ -113,16 +84,12 @@ export default {
 	 * @param {string} options.fieldId
 	 */
 	getInfoItemActionErrorMessage({classNameId, fieldId}) {
-		return serviceFetch(
-			config.getInfoItemActionErrorMessageURL,
-			{
-				body: {
-					classNameId,
-					fieldId,
-				},
+		return serviceFetch(config.getInfoItemActionErrorMessageURL, {
+			body: {
+				classNameId,
+				fieldId,
 			},
-			() => {}
-		);
+		});
 	},
 
 	/**
@@ -133,7 +100,6 @@ export default {
 	 * @param {string} options.externalReferenceCode Asset's externalReferenceCode
 	 * @param {string} options.fieldId
 	 * @param {string} [options.languageId]
-	 * @param {function} options.onNetworkStatus
 	 */
 	getInfoItemFieldValue({
 		classNameId,
@@ -142,7 +108,6 @@ export default {
 		externalReferenceCode,
 		fieldId,
 		languageId,
-		onNetworkStatus,
 	}) {
 		const body = {
 			classNameId,
@@ -159,29 +124,20 @@ export default {
 			body.externalReferenceCode = externalReferenceCode;
 		}
 
-		return serviceFetch(
-			config.getInfoItemFieldValueURL,
-			{
-				body,
-			},
-			onNetworkStatus
-		);
+		return serviceFetch(config.getInfoItemFieldValueURL, {
+			body,
+		});
 	},
 
 	/**
 	 * Get page contents
 	 * @param {object} options
-	 * @param {function} options.onNetworkStatus
 	 */
-	getPageContents({onNetworkStatus, segmentsExperienceId}) {
-		return serviceFetch(
-			config.getPageContentsURL,
-			{
-				body: {
-					segmentsExperienceId,
-				},
+	getPageContents({segmentsExperienceId}) {
+		return serviceFetch(config.getPageContentsURL, {
+			body: {
+				segmentsExperienceId,
 			},
-			onNetworkStatus
-		);
+		});
 	},
 };

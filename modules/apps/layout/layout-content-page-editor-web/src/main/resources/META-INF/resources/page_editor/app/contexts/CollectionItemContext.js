@@ -154,7 +154,6 @@ const useGetContent = (
 				itemClassPK,
 				itemExternalReferenceCode,
 				languageId,
-				onNetworkStatus: dispatch,
 				segmentsExperienceId,
 			}).then(({content}) => {
 				dispatch(
@@ -259,7 +258,6 @@ const useGetFieldValue = () => {
 			if (isMappedToInfoItem(editable)) {
 				return InfoItemService.getInfoItemFieldValue({
 					...editable,
-					onNetworkStatus: () => {},
 				}).then((response) => {
 					if (!response || !Object.keys(response).length) {
 						throw new Error('Field value does not exist');
@@ -283,7 +281,6 @@ const useGetFieldValue = () => {
 					...displayPagePreviewItem.data,
 					fieldId: editable.mappedField,
 					languageId: editable.languageId,
-					onNetworkStatus: () => {},
 				}).then((response) => {
 					if (!response || !Object.keys(response).length) {
 						throw new Error('Field value does not exist');

@@ -83,7 +83,7 @@ function filterFields(fields, fieldType, filterLinkTypes) {
 	}, []);
 }
 
-function loadMappingFields({dispatch, item, sourceType}) {
+function loadMappingFields({item, sourceType}) {
 	let classNameId;
 	let classTypeId;
 
@@ -104,7 +104,6 @@ function loadMappingFields({dispatch, item, sourceType}) {
 	const promise = InfoItemService.getAvailableStructureMappingFields({
 		classNameId,
 		classTypeId,
-		onNetworkStatus: dispatch,
 	});
 
 	if (promise) {
@@ -354,7 +353,6 @@ function MappingSelector({
 		}
 		else {
 			loadMappingFields({
-				dispatch,
 				item: selectedItem,
 				sourceType: selectedSourceType,
 			}).then((newFields) => {

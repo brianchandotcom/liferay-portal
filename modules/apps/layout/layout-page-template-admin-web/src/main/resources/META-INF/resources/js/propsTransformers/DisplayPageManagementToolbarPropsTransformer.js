@@ -17,7 +17,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					submitForm(form, itemData?.deleteSelectedEntriesURL);
 				}
 			},
-			title: Liferay.Language.get('display-page-templates'),
+			title: Liferay.Language.get('entries'),
 		});
 	};
 

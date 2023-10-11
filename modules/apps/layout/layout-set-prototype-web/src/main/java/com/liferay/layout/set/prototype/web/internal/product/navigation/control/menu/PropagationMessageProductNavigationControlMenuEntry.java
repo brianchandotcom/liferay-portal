@@ -92,9 +92,9 @@ public class PropagationMessageProductNavigationControlMenuEntry
 			layoutType = layoutPageTemplateEntry.getType();
 		}
 
-		if ((layoutType ==
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) ||
-			(layoutType == LayoutPageTemplateEntryTypeConstants.BASIC)) {
+		if ((layoutType == LayoutPageTemplateEntryTypeConstants.BASIC) ||
+			(layoutType ==
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
 			return false;
 		}

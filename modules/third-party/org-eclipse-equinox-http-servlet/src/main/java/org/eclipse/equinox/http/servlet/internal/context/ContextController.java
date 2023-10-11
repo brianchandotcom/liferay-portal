@@ -108,7 +108,8 @@ public class ContextController {
 	public ContextController(
 		BundleContext trackingContextParam, BundleContext consumingContext,
 		ServiceReference<ServletContextHelper> servletContextHelperRef,
-		ProxyContext proxyContext, HttpServletEndpointController httpServletEndpointController,
+		ServletContextHelperDataContext servletContextHelperDataContext,
+		HttpServletEndpointController httpServletEndpointController,
 		String contextName, String contextPath) {
 
 		validate(contextName, contextPath);
@@ -117,7 +118,7 @@ public class ContextController {
 
 		long serviceId = (Long)servletContextHelperRef.getProperty(Constants.SERVICE_ID);
 
-		this.proxyContext = proxyContext;
+		this.servletContextHelperDataContext = servletContextHelperDataContext;
 		this.httpServletEndpointController = httpServletEndpointController;
 		this.contextName = contextName;
 
@@ -129,7 +130,7 @@ public class ContextController {
 		this.contextServiceId = serviceId;
 
 		this.initParams = ServiceProperties.parseInitParams(
-			servletContextHelperRef, HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX, proxyContext.getServletContext());
+			servletContextHelperRef, HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX, servletContextHelperDataContext.getServletContext());
 
 		this.trackingContext = trackingContextParam;
 		this.consumingContext = consumingContext;
@@ -639,13 +640,13 @@ public class ContextController {
 		filterRegistrations.clear();
 		listenerRegistrations.clear();
 		eventListeners.clear();
-		proxyContext.destroy();
+		servletContextHelperDataContext.destroy();
 
 		shutdown = true;
 	}
 
 	public void createContextAttributes() {
-		getProxyContext().createContextAttributes(this);
+		getServletContextHelperDataContext().createContextAttributes(this);
 	}
 
 	public void destroyContextAttributes() {
@@ -653,7 +654,7 @@ public class ContextController {
 			return;
 		}
 
-		proxyContext.destroyContextAttributes(this);
+		servletContextHelperDataContext.destroyContextAttributes(this);
 	}
 
 	public String getContextName() {
@@ -859,8 +860,8 @@ public class ContextController {
 		return listenerRegistrations;
 	}
 
-	public ProxyContext getProxyContext() {
-		return proxyContext;
+	public ServletContextHelperDataContext getServletContextHelperDataContext() {
+		return servletContextHelperDataContext;
 	}
 
 	public long getServiceId() {
@@ -870,7 +871,7 @@ public class ContextController {
 	public synchronized ServletContextDTO getServletContextDTO(){
 		ServletContextDTO servletContextDTO = new ServletContextDTO();
 
-		ServletContext servletContext = proxyContext.getServletContext();
+		ServletContext servletContext = servletContextHelperDataContext.getServletContext();
 
 		servletContextDTO.attributes = getDTOAttributes(servletContext);
 		servletContextDTO.contextPath = getContextPath();
@@ -1161,7 +1162,7 @@ public class ContextController {
 			classes.add(HttpSessionAttributeListener.class);
 		}
 
-		ServletContext servletContext = proxyContext.getServletContext();
+		ServletContext servletContext = servletContextHelperDataContext.getServletContext();
 		if ((servletContext.getMajorVersion() >= 3) && (servletContext.getMinorVersion() > 0)) {
 			if (objectClassList.contains(javax.servlet.http.HttpSessionIdListener.class.getName())) {
 				classes.add(javax.servlet.http.HttpSessionIdListener.class);
@@ -1221,7 +1222,7 @@ public class ContextController {
 			return;
 		}
 
-		ServletContext servletContext = proxyContext.getServletContext();
+		ServletContext servletContext = servletContextHelperDataContext.getServletContext();
 		if ((servletContext.getMajorVersion() <= 3) && (servletContext.getMinorVersion() < 1)) {
 			return;
 		}
@@ -1315,7 +1316,7 @@ public class ContextController {
 
 	private final HttpServletEndpointController httpServletEndpointController;
 	private final Set<ListenerRegistration> listenerRegistrations = new HashSet<ListenerRegistration>();
-	private final ProxyContext proxyContext;
+	private final ServletContextHelperDataContext servletContextHelperDataContext;
 	private final ServiceReference<ServletContextHelper> servletContextHelperRef;
 	private boolean shutdown;
 	private String string;

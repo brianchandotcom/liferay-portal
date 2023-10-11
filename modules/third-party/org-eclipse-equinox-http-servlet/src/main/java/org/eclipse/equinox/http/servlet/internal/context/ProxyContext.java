@@ -28,7 +28,7 @@ import javax.servlet.ServletContext;
  * are reference counted so that when the HttpContext is no longer referenced the associated context attributes can be
  * garbage collected and the context temp dir deleteted.
  */
-public class ProxyContext {
+public class ProxyContext implements ServletContextHelperDataContext {
 	private static final String JAVAX_SERVLET_CONTEXT_TEMPDIR = "javax.servlet.context.tempdir"; //$NON-NLS-1$
 
 	private final ConcurrentMap<ContextController, ContextAttributes> attributesMap =
@@ -190,3 +190,4 @@ public class ProxyContext {
 	}
 
 }
+/* @generated */

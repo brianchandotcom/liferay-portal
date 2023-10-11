@@ -77,8 +77,8 @@ public class ServletContextAdaptor {
 		EventListeners eventListeners, AccessControlContext acc) {
 
 		this.contextController = contextController;
-		this.proxyContext = contextController.getProxyContext();
-		this.servletContext = proxyContext.getServletContext();
+		this.servletContextHelperDataContext = contextController.getServletContextHelperDataContext();
+		this.servletContext = servletContextHelperDataContext.getServletContext();
 		this.servletContextHelper = servletContextHelper;
 		this.eventListeners = eventListeners;
 		this.acc = acc;
@@ -418,7 +418,7 @@ public class ServletContextAdaptor {
 	}
 
 	private Dictionary<String, Object> getContextAttributes() {
-		return proxyContext.getContextAttributes(contextController);
+		return servletContextHelperDataContext.getContextAttributes(contextController);
 	}
 
 	private class AdaptorInvocationHandler implements InvocationHandler {
@@ -445,9 +445,10 @@ public class ServletContextAdaptor {
 	private final ClassLoader classLoader;
 	final ContextController contextController;
 	private final EventListeners eventListeners;
-	private final ProxyContext proxyContext;
+	private final ServletContextHelperDataContext servletContextHelperDataContext;
 	private final ServletContext servletContext;
 	final ServletContextHelper servletContextHelper;
 	private String string;
 
 }
+/* @generated */

@@ -23,15 +23,12 @@ const FUZZY_OPTIONS = {
 const OBJECT_RELATIONSHIP = {
 	FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship',
 	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId',
-	FDS_VIEW_FDS_ACTION_CREATION: 'fdsViewFDSActionCreationRelationship',
-	FDS_VIEW_FDS_ACTION_CREATION_ID:
-		'r_fdsViewFDSActionCreationRelationship_c_fdsViewId',
-	FDS_VIEW_FDS_ACTION_ITEM: 'fdsViewFDSActionItemRelationship',
-	FDS_VIEW_FDS_ACTION_ITEM_ID:
-		'r_fdsViewFDSActionItemRelationship_c_fdsViewId',
 	FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER: 'fdsViewFDSClientExtensionFilter',
 	FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER_ID:
 		'r_fdsViewFDSClientExtensionFilter_c_fdsViewId',
+	FDS_VIEW_FDS_CREATION_ACTION: 'fdsViewFDSCreationActionRelationship',
+	FDS_VIEW_FDS_CREATION_ACTION_ID:
+		'r_fdsViewFDSCreationActionRelationship_c_fdsViewId',
 	FDS_VIEW_FDS_DATE_FILTER: 'fdsViewFDSDateFilterRelationship',
 	FDS_VIEW_FDS_DATE_FILTER_ID:
 		'r_fdsViewFDSDateFilterRelationship_c_fdsViewId',
@@ -40,6 +37,9 @@ const OBJECT_RELATIONSHIP = {
 		'r_fdsViewFDSDynamicFilterRelationship_c_fdsViewId',
 	FDS_VIEW_FDS_FIELD: 'fdsViewFDSFieldRelationship',
 	FDS_VIEW_FDS_FIELD_ID: 'r_fdsViewFDSFieldRelationship_c_fdsViewId',
+	FDS_VIEW_FDS_ITEM_ACTION: 'fdsViewFDSItemActionRelationship',
+	FDS_VIEW_FDS_ITEM_ACTION_ID:
+		'r_fdsViewFDSItemActionRelationship_c_fdsViewId',
 	FDS_VIEW_FDS_SORT: 'fdsViewFDSSortRelationship',
 	FDS_VIEW_FDS_SORT_ID: 'r_fdsViewFDSSortRelationship_c_fdsViewId',
 } as const;

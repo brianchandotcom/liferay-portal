@@ -1,0 +1,254 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp();
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+
+    @description = "COMMERCE-12370. As a buyer I can add to cart a SKU with single UOM."
+    @priority = 5
+    test CanAddToCartSkuWithSingleUOM {
+        property portal.acceptance = "true";
+
+        task ("Given a Minium site") {
+            CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+        }
+
+        task ("And an account with a buyer user is created") {    
+            CommerceEntry.addAccountEntryUser(
+                accountName = "Commerce Account",
+                accountType = "Business",
+                agreeToTermsAndAnswerReminderQuery = "true",
+                createNewAccount = "true",
+                requireReset = "false",
+                userEmailAddress = "buyer@liferay.com",
+                userFirstName = "Buyer",
+                userLastName = "User",
+                userRole = "Buyer",
+                userScreenName = "buyeruser",
+                userSiteMembership = "Minium");
+        }
+
+        task ("And 2 UOMs are created to MIN93015, the first non-purchasable, the second purchasable with 0.6 as incremental order quantity") {
+            for (var uomList : list "1:false:1,2:true:0.6") {
+                var index = StringUtil.extractFirst(${uomList}, ":");
+                var uomList = StringUtil.replaceFirst(${uomList}, "${index}:", "");
+                var active = StringUtil.extractFirst(${uomList}, ":");
+                var incrementalOrderQuantity = StringUtil.extractLast(${uomList}, ":");
+
+                CommerceJSONSKUsAPI._addCommerceUOM(
+                    active = "${active}",
+                    basePrice = 25,
+                    incrementalOrderQuantity = ${incrementalOrderQuantity},
+                    priority = ${index},
+                    productSKU = "MIN93015",
+                    uomKey = "uom${index}",
+                    uomName = "UOM${index}");
+            }
+        }
+
+        task ("When the buyer user logs in ") {
+            User.logoutPG();
+
+            CommerceLogin.miniumLogin(
+                password = "test",
+                urlAppend = "web/minium",
+                userEmailAddress = "buyer@liferay.com");
+        }
+
+        task ("And on the Minium catalog sorts by Name Ascending") {
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+        }
+
+       	task ("Then it's possible to add to cart MIN93015 directly from the add to cart catalog's button") {
+            AssertElementPresent(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+
+			AssertElementNotPresent(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_INVALID");
+        }
+
+		task("When the buyer adds the SKU/UOM to cart with quantity 3") {
+			Type(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = 3);
+		}
+
+		task ("And assert that the quantity selector pop-up does not show any error message") {
+			for (var parameterList : list "min:1,max:10000,multiple:0.6") { 
+				var parameter = StringUtil.extractFirst(${parameterList}, ":");
+                var quantity = StringUtil.extractLast(${parameterList}, ":");
+
+				FrontStore.viewQuantitySelectorPopoverListItem(
+					quantity = "${quantity}",
+					quantityConfiguration = "${parameter}");
+			}
+		}
+
+		task ("Then the SKU is correctly added to cart") {
+			Click(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("And the minicart shows the right UOM key, quantity, unit price and total price") {
+			CommerceNavigator.gotoMiniCart();
+			
+			FrontStore.viewMiniCart(
+				cartItemName = "ABS Sensor",
+				cartItemPriceValue = "25.00",
+				cartItemQuantity = 3,
+				cartItemSku = "MIN93015",
+				cartItemUOMKey = "uom2",
+				cartSummaryTotal = "125.00");
+		}
+
+		task ("When the buyer navigates to the product's Detail page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("And assert that the UOM field is disabled") {
+			AssertElementPresent(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_UOM_SELECT_DISABLED",
+				value1 = "UOM2");
+		}
+
+		task ("And the buyer tries to add the SKU/UOM to cart with quantity 1.2") {
+			Type(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = "1.2");
+
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		}
+
+		task ("Then an error message “The specified quantity is not a multiple of 1.") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "The specified quantity is not a multiple of 1");
+		}
+
+		task ("When the buyer adds the SKU/UOM to cart with quantity 3") {
+			Type(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = "3");
+		}
+
+		task ("Then assert that the quantity selector pop-up does not show any error message") {
+			for (var parameterList : list "min:1,max:10000,multiple:0.6") { 
+				var parameter = StringUtil.extractFirst(${parameterList}, ":");
+                var quantity = StringUtil.extractLast(${parameterList}, ":");
+
+				FrontStore.viewQuantitySelectorPopoverListItem(
+					quantity = "${quantity}",
+					quantityConfiguration = "${parameter}");
+			}
+		}
+
+		task ("And the mini-cart shows the quantity updated (6)") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+			CommerceNavigator.gotoMiniCart();
+			
+			FrontStore.viewMiniCart(
+				cartItemName = "ABS Sensor",
+				cartItemPriceValue = "25.00",
+				cartItemQuantity = 6,
+				cartItemSku = "MIN93015",
+				cartItemUOMKey = "uom2",
+				cartSummaryTotal = "250.00");
+		}
+	}
+
+	@description = "COMMERCE-12368. As a buyer I can quick add to cart purchasable SKU/UOM with highest priority."
+    @priority = 5
+    test CanQuickAddToCartPurchasableSkuUomWithHighestPriority {
+        property portal.acceptance = "true";
+
+        task ("Given a Minium site") {
+            CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+        }
+
+        task ("And an account with a buyer user is created") {    
+            CommerceEntry.addAccountEntryUser(
+                accountName = "Commerce Account",
+                accountType = "Business",
+                agreeToTermsAndAnswerReminderQuery = "true",
+                createNewAccount = "true",
+                requireReset = "false",
+                userEmailAddress = "buyer@liferay.com",
+                userFirstName = "Buyer",
+                userLastName = "User",
+                userRole = "Buyer",
+                userScreenName = "buyeruser",
+                userSiteMembership = "Minium");
+        }
+
+        task ("And 3 UOMs with decreasing priority are created and assigned to a SKU (e.g. MIN93015), the first being non-purchasable") {
+            for (var indexAndActivation : list "1:false,2:true,3:true") {
+                var index = StringUtil.extractFirst(${indexAndActivation}, ":");
+                var active = StringUtil.extractLast(${indexAndActivation}, ":");
+
+                CommerceJSONSKUsAPI._addCommerceUOM(
+                    active = "${active}",
+                    basePrice = 25,
+                    priority = ${index},
+                    productSKU = "MIN93015",
+                    uomKey = "uom${index}",
+                    uomName = "UOM${index}");
+            }
+        }
+
+        task ("When the buyer user logs in ") {
+            User.logoutPG();
+
+            CommerceLogin.miniumLogin(
+                password = "test",
+                urlAppend = "web/minium",
+                userEmailAddress = "buyer@liferay.com");
+        }
+    
+        task ("And adds MIN93015 to cart using quick add to cart") {
+            CommerceNavigator.gotoMiniCart();
+
+            FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN93015");
+
+            Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+        }
+
+        task ("Then the second SKU/UOM is added to cart ") {
+            AssertElementPresent(
+                key_cartItemSku = "MIN93015",
+                uomKey = "uom2",
+                locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU_UOM");
+        }
+
+        task ("And the minicart shows the right quantity, unit price, subtotal and total price") {
+            AssertTextEquals(
+                key_summaryTableItem = "Quantity",
+                locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+                value1 = 1);
+
+			FrontStore.viewMiniCart(
+				cartItemName = "ABS Sensor",
+				cartItemPriceValue = "25.00",
+				cartItemQuantity = 1,
+				cartItemSku = "MIN93015",
+				cartItemUOMKey = "uom2",
+				cartSummarySubtotal = "25.00",
+				cartSummaryTotal = "25.00");
+        }   
+    }    
+}

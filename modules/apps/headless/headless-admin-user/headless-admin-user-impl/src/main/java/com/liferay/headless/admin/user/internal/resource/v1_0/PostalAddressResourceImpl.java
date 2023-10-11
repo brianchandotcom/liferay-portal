@@ -138,16 +138,17 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			country = _getCountryByTitle(postalAddress);
 
 			address.setCountryId(country.getCountryId());
+
+			address.setRegionId(_getRegionId(postalAddress, country));
 		}
 
 		if (postalAddress.getAddressLocality() != null) {
 			address.setCity(postalAddress.getAddressLocality());
 		}
 
-		if (postalAddress.getAddressRegion() != null) {
-			if (country == null) {
-				throw new BadRequestException("Country is not specified");
-			}
+		if ((postalAddress.getAddressRegion() != null) && (country == null)) {
+
+			country = _countryService.getCountry(address.getCountryId());
 
 			address.setRegionId(_getRegionId(postalAddress, country));
 		}
@@ -301,15 +302,20 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	}
 
 	private long _getRegionId(PostalAddress postalAddress, Country country) {
-		if (postalAddress.getAddressType() == null) {
-			return 0;
-		}
-
 		List<Region> regions = _regionService.getRegions(
 			country.getCountryId());
 
-		if (regions.isEmpty()) {
-			return 0;
+		if ((postalAddress.getAddressRegion() == null) ||
+			postalAddress.getAddressRegion(
+			).equals(
+				""
+			)) {
+
+			if (regions.isEmpty()) {
+				return 0;
+			}
+
+			throw new BadRequestException("Region not found");
 		}
 
 		Iterator<Region> regionIterator = regions.iterator();

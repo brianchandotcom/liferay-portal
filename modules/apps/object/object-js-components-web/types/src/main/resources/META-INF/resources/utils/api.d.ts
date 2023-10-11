@@ -57,6 +57,7 @@ export interface NotificationTemplate {
 	recipientType: RecipientType;
 	recipients: Recipient[];
 	subject: LocalizedValue<string>;
+	system: boolean;
 	to: LocalizedValue<string>;
 	type: NotificationTemplateType;
 }

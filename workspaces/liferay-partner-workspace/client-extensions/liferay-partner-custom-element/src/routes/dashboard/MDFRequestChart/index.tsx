@@ -41,8 +41,8 @@ const MDFRequestChart = () => {
 
 		if (response.ok) {
 			const mdfRequests = await response.json();
+			const mdfCurrency = 'USD';
 
-			const mdfCurrency = mdfRequests?.items[0]?.currency?.key;
 			setCurrencyData(mdfCurrency);
 
 			getChartColumns(

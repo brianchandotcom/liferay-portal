@@ -68,8 +68,7 @@ export default function () {
 			const growthRevenueResponseNewBusinessData = await growthRevenueResponseNewBusiness.json();
 			const renewalRevenueData = await renewalRevenueResponse.json();
 
-			const revenueCurrency =
-				growthRevenueResponseNewProjectData?.items[0]?.currency?.key;
+			const revenueCurrency = 'USD';
 
 			setCurrencyData(revenueCurrency);
 

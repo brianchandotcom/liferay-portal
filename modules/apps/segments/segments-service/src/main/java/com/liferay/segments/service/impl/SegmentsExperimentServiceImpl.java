@@ -45,8 +45,8 @@ public class SegmentsExperimentServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), plid, ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutRestrictedUpdatePermission(
+			getPermissionChecker(), plid);
 
 		return segmentsExperimentLocalService.addSegmentsExperiment(
 			segmentsExperienceId, plid, name, description, goal, goalTarget,

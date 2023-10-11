@@ -5,22 +5,27 @@
 
 package com.liferay.captcha.rest.internal.resource.v1_0;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.rest.dto.v1_0.Captcha;
 import com.liferay.captcha.rest.dto.v1_0.CaptchaForm;
 import com.liferay.captcha.rest.internal.util.CaptchaTokenUtil;
 import com.liferay.captcha.rest.resource.v1_0.CaptchaResource;
+import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.ByteArrayOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.NotAcceptableException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -48,7 +53,7 @@ public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
 		ByteArrayOutputStream imageByteArrayOutputStream =
 			new ByteArrayOutputStream();
 
-		String captchaAnswer = captcha.serveImage(
+		String answer = captcha.serveImage(
 			_httpServletRequest, imageByteArrayOutputStream);
 
 		String base64CaptchaImage =
@@ -60,7 +65,7 @@ public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
 		return new Captcha() {
 			{
 				captchaToken = CaptchaTokenUtil.generateCaptchaToken(
-					_contextCompany, captchaAnswer);
+					_contextCompany, answer);
 
 				image = base64CaptchaImage;
 			}
@@ -98,6 +103,18 @@ public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-185213")) {
 			throw new UnsupportedOperationException();
 		}
+
+		CaptchaConfiguration captchaConfiguration =
+			_configurationProvider.getSystemConfiguration(
+				CaptchaConfiguration.class);
+
+		if (!StringUtil.equalsIgnoreCase(
+				captchaConfiguration.captchaEngine(),
+				SimpleCaptchaImpl.class.getName())) {
+
+			throw new ForbiddenException(
+				"Simple Captcha Headless API is not enabled");
+		}
 	}
 
 	@Reference
@@ -108,5 +125,8 @@ public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
 
 	@Context
 	private HttpServletRequest _httpServletRequest;
+
+	@Context
+	private HttpServletResponse _httpServletResponse;
 
 }

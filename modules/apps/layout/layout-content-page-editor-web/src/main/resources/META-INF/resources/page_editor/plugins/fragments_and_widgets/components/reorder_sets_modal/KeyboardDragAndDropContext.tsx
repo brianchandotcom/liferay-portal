@@ -18,6 +18,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
+import {flushSync} from 'react-dom';
 
 import {
 	DRAG_OVER_POSITIONS,
@@ -317,33 +318,36 @@ export function useKeyboardDragItem(
 						return;
 					}
 
+					flushSync(() => {
+						sendMessage(
+							sub(Liferay.Language.get('x-placed-on-x-of-x'), [
+								item.name,
+								DRAG_OVER_POSITIONS_LABELS[position],
+								targetItem.name,
+							])
+						);
+					});
+
 					onDropItem(item.id, targetIndex, position);
-
-					sendMessage(
-						sub(Liferay.Language.get('x-placed-on-x-of-x'), [
-							item.name,
-							DRAG_OVER_POSITIONS_LABELS[position],
-							targetItem.name,
-						])
-					);
-
 					setDragOverPosition(null);
 					setSourceItem(null);
 					setTargetItem(null);
 				}
 				else {
+					flushSync(() => {
+						sendMessage(
+							sub(
+								Liferay.Language.get(
+									'use-up-and-down-arrows-to-move-the-set-and-press-enter-to-place-it-in-desired-position.-currently-targeting-x-of-x'
+								),
+								[DRAG_OVER_POSITIONS_LABELS.top, item.name]
+							)
+						);
+					});
+
 					setDragOverPosition(DRAG_OVER_POSITIONS.top);
 					setSourceItem(item);
 					setTargetItem(item);
-
-					sendMessage(
-						sub(
-							Liferay.Language.get(
-								'use-up-and-down-arrows-to-move-the-set-and-press-enter-to-place-it-in-desired-position.-currently-targeting-x-of-x'
-							),
-							[DRAG_OVER_POSITIONS_LABELS.top, item.name]
-						)
-					);
 				}
 			}
 		};

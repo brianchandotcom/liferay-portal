@@ -42,24 +42,7 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 		return true;
 	}
 
-	protected String addNewImports(String fileName, String newContent) {
-		String[] newImports = getNewImports();
-
-		if (newImports == null) {
-			return newContent;
-		}
-
-		if (fileName.endsWith(".java")) {
-			newContent = JavaSourceUtil.addImports(newContent, newImports);
-		}
-		else if (fileName.endsWith(".jsp")) {
-			newContent = addNewImportsJSPHeader(newContent, newImports);
-		}
-
-		return newContent;
-	}
-
-	protected String addNewImportsJSPHeader(
+	protected static String addNewImportsJSPHeader(
 		String newContent, String[] newImports) {
 
 		Arrays.sort(newImports);
@@ -86,6 +69,44 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 		}
 
 		return getNewImportsJSPHeader(new String[0], newImports) + newContent;
+	}
+
+	protected static String getNewImportsJSPHeader(
+		String[] jspHeaders, String[] newImports) {
+
+		StringBundler sb = new StringBundler(4);
+
+		for (String jspHeader : jspHeaders) {
+			sb.append(jspHeader);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		for (String newImport : newImports) {
+			sb.append("<%@ page import=\"");
+			sb.append(newImport);
+			sb.append("\" %>");
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		return sb.toString();
+	}
+
+	protected String addNewImports(String fileName, String newContent) {
+		String[] newImports = getNewImports();
+
+		if (newImports == null) {
+			return newContent;
+		}
+
+		if (fileName.endsWith(".java")) {
+			newContent = JavaSourceUtil.addImports(newContent, newImports);
+		}
+		else if (fileName.endsWith(".jsp")) {
+			newContent = addNewImportsJSPHeader(newContent, newImports);
+		}
+
+		return newContent;
 	}
 
 	protected String afterFormat(
@@ -120,27 +141,6 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 
 	protected String[] getNewImports() {
 		return null;
-	}
-
-	protected String getNewImportsJSPHeader(
-		String[] jspHeaders, String[] newImports) {
-
-		StringBundler sb = new StringBundler(4);
-
-		for (String jspHeader : jspHeaders) {
-			sb.append(jspHeader);
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		for (String newImport : newImports) {
-			sb.append("<%@ page import=\"");
-			sb.append(newImport);
-			sb.append("\" %>");
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		return sb.toString();
 	}
 
 	protected String[] getValidExtensions() {

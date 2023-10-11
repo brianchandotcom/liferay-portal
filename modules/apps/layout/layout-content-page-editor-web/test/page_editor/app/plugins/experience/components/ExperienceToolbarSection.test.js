@@ -365,8 +365,7 @@ describe('ExperienceToolbarSection', () => {
 					newPriority: 3,
 					segmentsExperienceId: 'test-experience-id-02',
 				}),
-			}),
-			expect.any(Function)
+			})
 		);
 
 		expect(mockDispatch).toHaveBeenCalledWith(
@@ -443,8 +442,7 @@ describe('ExperienceToolbarSection', () => {
 					newPriority: 1,
 					segmentsExperienceId: 'test-experience-id-01',
 				}),
-			}),
-			expect.any(Function)
+			})
 		);
 
 		expect(mockDispatch).toHaveBeenCalledWith(
@@ -539,8 +537,7 @@ describe('ExperienceToolbarSection', () => {
 					name: 'New Experience #1',
 					segmentsEntryId: 'test-segment-id-00',
 				}),
-			}),
-			expect.any(Function)
+			})
 		);
 
 		expect(mockDispatch).toHaveBeenCalledWith(
@@ -632,8 +629,7 @@ describe('ExperienceToolbarSection', () => {
 					segmentsEntryId: 'test-segment-id-00',
 					segmentsExperienceId: 'test-experience-id-01',
 				}),
-			}),
-			expect.any(Function)
+			})
 		);
 
 		expect(mockDispatch).toHaveBeenCalledWith(
@@ -780,8 +776,7 @@ describe('ExperienceToolbarSection', () => {
 				body: expect.objectContaining({
 					segmentsExperienceId: 'test-experience-id-01',
 				}),
-			}),
-			expect.any(Function)
+			})
 		);
 
 		expect(mockDispatch).toHaveBeenCalledWith(
@@ -850,8 +845,7 @@ describe('ExperienceToolbarSection', () => {
 				body: expect.objectContaining({
 					segmentsExperienceId: 'test-experience-id-01',
 				}),
-			}),
-			expect.any(Function)
+			})
 		);
 
 		expect(mockDispatch).toHaveBeenCalledWith(

@@ -41,6 +41,8 @@ public class PoshiProperties extends Properties {
 	public static final String BROWSER_FIREFOX_BIN_FILE =
 		"browser.firefox.bin.file";
 
+	public static final String BROWSER_RESOLUTION = "browser.resolution";
+
 	public static final String BROWSER_TYPE = "browser.type";
 
 	public static final String BROWSER_VERSION = "browser.version";
@@ -338,6 +340,7 @@ public class PoshiProperties extends Properties {
 	public String browserChromeBinArgs = getProperty(BROWSER_CHROME_BIN_ARGS);
 	public String browserChromeBinFile = getProperty(BROWSER_CHROME_BIN_FILE);
 	public String browserFirefoxBinFile = getProperty(BROWSER_FIREFOX_BIN_FILE);
+	public String browserResolution = getProperty(BROWSER_RESOLUTION);
 	public String browserType = getProperty(BROWSER_TYPE);
 	public String browserVersion = getProperty(BROWSER_VERSION);
 	public Boolean debugStacktrace = GetterUtil.getBoolean(

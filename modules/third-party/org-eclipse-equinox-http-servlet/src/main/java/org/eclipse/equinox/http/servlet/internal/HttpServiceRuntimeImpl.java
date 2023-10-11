@@ -255,7 +255,7 @@ public class HttpServiceRuntimeImpl
 		runtimeDTO.failedResourceDTOs = null;
 		runtimeDTO.failedServletContextDTOs = null;
 		runtimeDTO.failedServletDTOs = null;
-		runtimeDTO.servletContextDTOs = getServletContextDTOs();
+		runtimeDTO.servletContextDTOs = null;
 
 		return runtimeDTO;
 	}
@@ -428,17 +428,6 @@ public class HttpServiceRuntimeImpl
 		while (true);
 
 		return null;
-	}
-
-	private ServletContextDTO[] getServletContextDTOs() {
-		List<ServletContextDTO> servletContextDTOs = new ArrayList<ServletContextDTO>();
-
-		for (ContextController contextController : controllerMap.values()) {
-			servletContextDTOs.add(contextController.getServletContextDTO());
-		}
-
-		return servletContextDTOs.toArray(
-			new ServletContextDTO[servletContextDTOs.size()]);
 	}
 
 	public void registerHttpServiceFilter(

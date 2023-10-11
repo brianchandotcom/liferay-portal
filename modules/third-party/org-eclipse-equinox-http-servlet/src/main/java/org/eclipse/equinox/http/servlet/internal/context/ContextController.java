@@ -852,24 +852,6 @@ public class ContextController {
 		return contextServiceId;
 	}
 
-	public synchronized ServletContextDTO getServletContextDTO(){
-		ServletContextDTO servletContextDTO = new ServletContextDTO();
-
-		ServletContext servletContext = servletContextHelperDataContext.getServletContext();
-
-		servletContextDTO.attributes = getDTOAttributes(servletContext);
-		servletContextDTO.contextPath = getContextPath();
-		servletContextDTO.initParams = new HashMap<String, String>(initParams);
-		servletContextDTO.name = getContextName();
-		servletContextDTO.serviceId = getServiceId();
-
-		collectEndpointDTOs(servletContextDTO);
-		collectFilterDTOs(servletContextDTO);
-		collectListenerDTOs(servletContextDTO);
-
-		return servletContextDTO;
-	}
-
 	public boolean matches(ServiceReference<?> whiteBoardService) {
 		String contextSelector = (String) whiteBoardService.getProperty(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT);
@@ -1047,76 +1029,6 @@ public class ContextController {
 			eventListeners, AccessController.getContext());
 
 		return adaptor.createServletContext();
-	}
-
-	private void collectEndpointDTOs(
-		ServletContextDTO servletContextDTO) {
-
-		List<ErrorPageDTO> errorPageDTOs = new ArrayList<ErrorPageDTO>();
-		List<ResourceDTO> resourceDTOs = new ArrayList<ResourceDTO>();
-		List<ServletDTO> servletDTOs = new ArrayList<ServletDTO>();
-
-		for (EndpointRegistration<?> endpointRegistration : endpointRegistrations) {
-			if (endpointRegistration instanceof ResourceRegistration) {
-				resourceDTOs.add(DTOUtil.clone((ResourceDTO)endpointRegistration.getD()));
-			}
-			else {
-				ServletRegistration servletRegistration = (ServletRegistration)endpointRegistration;
-				servletDTOs.add(DTOUtil.clone(servletRegistration.getD()));
-
-				ErrorPageDTO errorPageDTO = servletRegistration.getErrorPageDTO();
-				if (errorPageDTO != null) {
-					errorPageDTOs.add(DTOUtil.clone(errorPageDTO));
-				}
-			}
-		}
-
-		servletContextDTO.errorPageDTOs = errorPageDTOs.toArray(
-			new ErrorPageDTO[errorPageDTOs.size()]);
-		servletContextDTO.resourceDTOs = resourceDTOs.toArray(
-			new ResourceDTO[resourceDTOs.size()]);
-		servletContextDTO.servletDTOs = servletDTOs.toArray(
-			new ServletDTO[servletDTOs.size()]);
-	}
-
-	private void collectFilterDTOs(
-		ServletContextDTO servletContextDTO) {
-
-		List<FilterDTO> filterDTOs = new ArrayList<FilterDTO>();
-
-		for (FilterRegistration filterRegistration : filterRegistrations) {
-			filterDTOs.add(DTOUtil.clone(filterRegistration.getD()));
-		}
-
-		servletContextDTO.filterDTOs = filterDTOs.toArray(
-			new FilterDTO[filterDTOs.size()]);
-	}
-
-	private void collectListenerDTOs(
-		ServletContextDTO servletContextDTO) {
-
-		List<ListenerDTO> listenerDTOs = new ArrayList<ListenerDTO>();
-
-		for (ListenerRegistration listenerRegistration : listenerRegistrations) {
-			listenerDTOs.add(DTOUtil.clone(listenerRegistration.getD()));
-		}
-
-		servletContextDTO.listenerDTOs = listenerDTOs.toArray(
-			new ListenerDTO[listenerDTOs.size()]);
-	}
-
-	private Map<String, Object> getDTOAttributes(ServletContext servletContext) {
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		for (Enumeration<String> names = servletContext.getAttributeNames();
-				names.hasMoreElements();) {
-
-			String name = names.nextElement();
-
-			map.put(name, DTOUtil.mapValue(servletContext.getAttribute(name)));
-		}
-
-		return Collections.unmodifiableMap(map);
 	}
 
 	private List<Class<? extends EventListener>> getListenerClasses(

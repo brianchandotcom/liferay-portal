@@ -3370,6 +3370,8 @@ definition {
 			displayPageName = "Display Page Template Name",
 			item = "Edit");
 
+		PageEditor.assertFragmentSidebarLoaded();
+
 		PageEditor.removeFragment(fragmentName = "Container");
 
 		PageEditor.addFragment(
